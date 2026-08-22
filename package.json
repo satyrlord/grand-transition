@@ -16,6 +16,7 @@
     "assets:validate": "node tools/validate-scaffold.mjs --domain assets",
     "content:validate": "node tools/validate-scaffold.mjs --domain content",
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
+    "boundaries:check": "node tools/check-pure-boundaries.mjs",
     "lint": "oxlint --type-aware --tsconfig tsconfig.json .",
     "format:check": "prettier --check \"src/**/*.{ts,css}\" \"tests/**/*.ts\" \"e2e/**/*.ts\" \"tools/**/*.{mjs,ts}\" \"*.{html,json,mjs,ts}\" \".github/workflows/**/*.{yml,yaml}\"",
     "typecheck": "tsc --noEmit",
@@ -24,7 +25,7 @@
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "test:e2e": "playwright test --config playwright.config.ts",
     "markdown:lint": "markdownlint-cli2 \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"docs/specs/**/*.md\" \".github/**/*.md\"",
-    "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run lint && npm run typecheck",
+    "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run boundaries:check && npm run lint && npm run typecheck",
     "ci": "npm run format:check && npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {

@@ -47,8 +47,9 @@ Private hotseat content must remain private during handovers.
   owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope is only the Milestone 001 title
-  placeholder and toolchain scaffold. It must not add later game behavior.
+- The implemented scope includes Milestones 001 through 003: the static title,
+  toolchain, quality gate, immutable architecture contracts, replaceable ports,
+  and pure-module boundary enforcement. It does not include game behavior.
 
 ## Brand Commitments
 
