@@ -10,7 +10,7 @@ Use analysis mode unless the user explicitly authorizes implementation.
 ## Map the system
 
 Read `AGENTS.md`, approved specifications, project configuration, test
-configuration, and current source.
+configuration, and working-tree source.
 Map the selected behavior across `src/app`, `src/components`, `src/engine`,
 `src/ai`, `src/content`, localization, audio, persistence, visual effects,
 assets, tools, tests, and deployment.
@@ -37,7 +37,7 @@ Do not create networking abstractions for out-of-scope online play.
 
 ## Rank and implement
 
-For each candidate, report its files, current cost, evidence, proposed owner,
+For each candidate, report its files, existing cost, evidence, proposed owner,
 responsibility changes, benefit, risk, contract impact, verifier, and strength.
 Use `Strong`, `Worth exploring`, or `Speculative` for strength.
 Rank candidates and report the strongest candidate first.

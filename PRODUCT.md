@@ -8,13 +8,15 @@ web
 
 ## Stack
 
-The approved stack is Node.js 24 LTS, npm 12, strict TypeScript 7, Vite 8, and
-Lit 3 with native ES modules. The production result is a static browser build.
+The approved stack is Node.js 24 Long-Term Support (LTS), npm 12, strict
+TypeScript 7, Vite 8, and Lit 3. It uses native ECMAScript (ES) modules. The
+production result is a static browser build.
 
 ## Users
 
 Inferred from the approved specifications: the primary users are people who
-want a local tactical word game. They play alone against AI or with another
+want a local tactical word game. They play alone against artificial
+intelligence (AI) or with another
 person in a hotseat session.
 
 ## Product Purpose
@@ -34,8 +36,8 @@ of its score.
 ## Operating Context
 
 The game runs in a browser without accounts, servers, or runtime network calls.
-The MVP supports local single-player and hotseat play. Private hotseat content
-must remain private during handovers.
+The minimum viable product (MVP) supports local single-player and hotseat play.
+Private hotseat content must remain private during handovers.
 
 ## Capabilities and Constraints
 
@@ -45,7 +47,7 @@ must remain private during handovers.
   owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The current implementation request is only the Milestone 001 title
+- The implemented scope is only the Milestone 001 title
   placeholder and toolchain scaffold. It must not add later game behavior.
 
 ## Brand Commitments
@@ -73,7 +75,8 @@ benchmarks exist.
 
 ## Accessibility & Inclusion
 
-Use semantic DOM for controls and required text. Support keyboard use,
-accessible names, readable contrast, zoomed text, reduced motion, and private
-hotseat presentation as their owning milestones become active. The first title
-placeholder must expose an accessible document title and heading.
+Use semantic Document Object Model (DOM) content for controls and required
+text. Support keyboard use, accessible names, readable contrast, zoomed text,
+reduced motion, and private hotseat presentation as their owning milestones
+become active. The first title placeholder must expose an accessible document
+title and heading.

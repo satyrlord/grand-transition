@@ -28,7 +28,8 @@ personal data, and never leave the device automatically.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on UI states affected by final balance or copy edits.
+1. Run `$impeccable audit` on user interface (UI) states affected by final
+   balance or copy edits.
 2. After audit repairs, run `$impeccable critique` on those same affected states.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.

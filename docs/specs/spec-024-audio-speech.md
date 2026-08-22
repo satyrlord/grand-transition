@@ -11,22 +11,24 @@ Implement replaceable sound, music, and speech adapters plus mixer controls.
 Add original slice audio and optional speech voice, rate, volume, cancellation,
 subtitles, unavailable state, and hotseat suppression.
 
-MVP audio includes original menu music, distinct scene treatment, role-select,
-commit, light and heavy hit, weakness, combo, continuation break, comeback,
-fault, victory, and defeat cues. Mixer controls are Master, Music, Effects, and
-Speech.
+Minimum viable product (MVP) audio includes original menu music and distinct
+scene treatment. It includes role-select, commit, light and heavy hit, weakness,
+combo, continuation break, comeback, fault, victory, and defeat cues. Mixer
+controls are Master, Music, Effects, and Speech.
 
 Speech defaults off and stays silent until enabled after user action. Detect
 support safely; load voices immediately and after `voiceschanged`; prefer saved
-`voiceURI`, then language match, then system default. Expose Auto, voice, rate,
+voice Uniform Resource Identifier (`voiceURI`), then language match, then
+system default. Expose Auto, voice, rate,
 and volume. Speak only complete public insults. Cancel on round change, exit, or
 rematch. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
 
-## Impeccable UI validation
+## Impeccable user interface validation
 
 1. Run `$impeccable audit` on mixer, speech, subtitle, and unavailable states.
-2. After audit repairs, run `$impeccable critique` on the same audio UI slice.
+2. After audit repairs, run `$impeccable critique` on the same audio user
+   interface (UI) slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 

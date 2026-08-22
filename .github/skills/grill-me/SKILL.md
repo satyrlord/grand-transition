@@ -9,7 +9,7 @@ Remain read-only unless the user explicitly authorizes document edits.
 
 ## Prepare the decision tree
 
-Read `AGENTS.md`, approved specifications, the current implementation, tests,
+Read `AGENTS.md`, approved specifications, the working-tree implementation, tests,
 and relevant primary sources.
 Resolve every fact that repository evidence or an authoritative source can
 answer.
@@ -26,7 +26,7 @@ delivery, and verification effects.
 
 For the active branch:
 
-1. State the current contract and evidence gap.
+1. State the active contract and evidence gap.
 2. Give two or three materially distinct choices when alternatives exist.
 3. Explain the important effect of each choice.
 4. Recommend one choice with a clear reason and verifier.

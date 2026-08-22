@@ -7,22 +7,26 @@
 
 ## Deliver
 
-Bootstrap Node.js 24 LTS, npm 12, strict TypeScript 7, Vite 8, Lit 3, the approved
-directory skeleton, and an accessible title placeholder. Commit the lockfile.
+Bootstrap Node.js 24 Long-Term Support (LTS), npm 12, strict TypeScript 7, Vite
+8, and Lit 3. Add the approved directory structure and an accessible title
+placeholder. Commit the lockfile.
 Add only `dev`, `preview`, `build`, and `typecheck` scripts in this slice.
 Install Playwright Test project-wide for the required browser evidence and later
-end-to-end use, but do not add test scripts or e2e cases in this slice.
+end-to-end use. Do not add test scripts or end-to-end cases in this slice.
 
-Use native ES modules, semantic HTML, plain CSS with cascade layers and custom
-properties, and static Lit property declarations. Use light DOM for screens.
-Do not add React, another UI framework, a virtual DOM, Tailwind, a component kit,
-runtime CSS-in-JS, server rendering, URL-path routing, or a game engine.
+Use native ECMAScript (ES) modules and semantic Hypertext Markup Language
+(HTML). Use plain Cascading Style Sheets (CSS) with cascade layers and custom
+properties. Use static Lit property declarations and light Document Object
+Model (DOM) for screens. Do not add React, another user interface (UI)
+framework, a virtual DOM, Tailwind, a component kit, runtime CSS-in-JS, server
+rendering, URL-path routing, or a game engine.
 
-Create ownership roots for `src/app`, `src/components`, `src/engine`, `src/ai`,
-`src/content`, `src/localization`, `src/audio`, `src/persistence`, `src/visual`,
-`src/styles`, and `src/assets`; `tests/unit`, `tests/browser`, `e2e`, and `tools`;
-and `.github/workflows`. Keep screens under `src/app/screens` and pure grammar
-under `src/engine/grammar`. Exact versions belong in `package-lock.json`.
+Create source ownership roots for `src/app`, `src/components`, `src/engine`,
+`src/ai`, `src/content`, `src/localization`, `src/audio`, `src/persistence`,
+`src/visual`, `src/styles`, and `src/assets`. Create test and tool roots for
+`tests/unit`, `tests/browser`, `e2e`, and `tools`. Create `.github/workflows`.
+Keep screens under `src/app/screens` and pure grammar under
+`src/engine/grammar`. Record exact versions in `package-lock.json`.
 
 ## Impeccable UI validation
 

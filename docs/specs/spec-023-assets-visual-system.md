@@ -20,13 +20,15 @@ oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 Characters use three-quarter opponent-facing silhouettes, layered parts, at
 least five expressions and six poses, plus idle, selection, thinking, delivery,
 light and heavy hit, weakness, comeback, fault, victory, and defeat states.
-Use CSS, sprite sheets, and Canvas 2D first. WebGL or a graphics runtime needs a
+Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
+first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, accessibility, and alternative proof.
 
-Keep lossless masters ignored or external. Sharp generates committed AVIF and
-WebP runtime variants and a manifest with dimensions, crop, owner, source, and
-license. Import through the manifest. Load setup art first and only the selected
-match package next. Use self-hosted licensed WOFF2 fonts with metric fallbacks.
+Keep lossless masters ignored or external. Sharp generates committed AV1 Image
+File Format (AVIF) and WebP runtime variants. The manifest records dimensions,
+crop, owner, source, and license. Import through the manifest. Load setup art
+first and only the selected match package next. Use self-hosted licensed Web
+Open Font Format 2 (WOFF2) fonts with metric fallbacks.
 
 ## Impeccable UI validation
 

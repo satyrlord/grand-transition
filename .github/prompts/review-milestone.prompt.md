@@ -1,7 +1,7 @@
 # Review a milestone before release
 
 Read [the repository instructions](../../AGENTS.md), the approved specification
-set, and the complete current diff. Use the
+set, and the complete working-tree diff. Use the
 [full-code-review workflow](../skills/full-code-review/SKILL.md) and the
 [release-reviewer](../agents/release-reviewer.agent.md).
 

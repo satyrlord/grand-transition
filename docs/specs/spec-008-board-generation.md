@@ -15,9 +15,9 @@ Each board has three nouns, three verbs, one predicate, and two weighted
 wildcards. Initial wildcard weights are 40% conjunction, 25% continuation, 20%
 verb, 10% noun, and 5% predicate or ending.
 
-Every board has a valid path for each player, unique IDs, compatible number
-options, denial diversity, restriction compliance, and recent-use exclusion
-when a valid alternative exists.
+Every board has a valid path for each player and unique identifiers (IDs). It
+has compatible number options, denial diversity, restriction compliance, and
+recent-use exclusion when a valid alternative exists.
 
 ## Verify and stop
 

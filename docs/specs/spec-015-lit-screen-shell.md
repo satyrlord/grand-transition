@@ -2,21 +2,24 @@
 
 **Status:** Approved  
 **Depends on:** 014  
-**Owns:** App shell, screen flow, setup UI, and view-state boundary  
+**Owns:** Application shell, screen flow, setup user interface (UI), and
+view-state boundary
 **Production-file budget:** 8
 
 ## Deliver
 
-Build light-DOM title and setup screens, screen controller, app shell, and typed
-command events. Support hotseat mode, characters, scene, and timer choices with
-mirror matches allowed. Later milestones add AI, speech, privacy, and saved
-options when their behavior exists.
+Build light Document Object Model (DOM) title and setup screens, a screen
+controller, an application shell, and typed command events. Support hotseat
+mode, characters, scene, and timer choices with mirror matches allowed. Later
+milestones add artificial intelligence (AI), speech, privacy, and saved options
+when their behavior exists.
 
 The title screen shows the fictional-composite satire disclaimer. Setup uses
 semantic controls and prevents only invalid combinations; mirror characters are
 valid. Screens use light DOM. Shadow DOM is limited to isolated leaf controls
 with explicit style and event contracts. Components use native controls before
-ARIA and never duplicate authoritative state.
+Accessible Rich Internet Applications (ARIA) attributes. Components never
+duplicate authoritative state.
 
 ## Impeccable UI validation
 

@@ -7,16 +7,18 @@
 
 ## Deliver
 
-Add explicit handover screens and reveal controls. Hide the next hand, current
-private preview, private history, and private speech until the correct player
-accepts control. Keep public board and resolved facts available.
+Add explicit handover screens and reveal controls. Hide the next hand, the
+active player's private preview, private history, and private speech. Keep this
+information hidden until the correct player accepts control. Keep the public
+board and resolved facts available.
 
-Privacy defaults on and can be disabled only during setup. On each turn, hide
-the next hand, show a curtain, require readiness, reveal only that player's
-phrases, and hide them when the turn ends. Shared cards and public sentence
-fragments stay visible.
+Privacy defaults on. The user can disable privacy only during setup. On each
+turn, hide the next hand, show a curtain, and require readiness. Reveal only
+that player's phrases. Hide them when the turn ends. Shared cards and public
+sentence fragments stay visible.
 
-Hidden values cannot exist in tooltips, labels, live regions, logs, stale DOM,
+Hidden values must not exist in tooltips, labels, live regions, logs, stale
+Document Object Model (DOM) content,
 queued speech, previews, or private history.
 
 ## Impeccable UI validation

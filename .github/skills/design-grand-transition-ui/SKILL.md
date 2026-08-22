@@ -17,7 +17,7 @@ Impeccable workflow with rules from this skill.
 3. Follow its routing rules. Load only the playbook for the explicit or implied
    command. Use its new-work playbook for a new surface or replacement visual
    system.
-4. Inspect the target and at least one representative source of the current
+4. Inspect the target and at least one representative source of the active
    visual implementation before making a recommendation or edit.
 5. Before an authorized UI edit, load the Impeccable craft-floor playbook.
 
@@ -47,7 +47,7 @@ the Impeccable brief; they are not a complete design system.
 Create an original illustrated political-theatre interface that combines
 editorial caricature, stage scenery, post-socialist broadcast graphics,
 bureaucratic materials, and restrained modern overlays. Keep phrase cards and
-tactical state simple, legible, and dominant. Avoid generic dashboards,
+tactical state visually plain, legible, and dominant. Avoid generic dashboards,
 software-as-a-service cards, stock game frames, copied layouts, and remote
 assets. Do not use visual effects that hide state changes.
 
@@ -61,9 +61,9 @@ hidden from accessibility APIs.
 For implementation and verification, test pointer input, keyboard input, focus,
 and accessible names. Test 200 percent text and high contrast. Test reduced
 motion, unavailable speech, speech cancellation, and hotseat privacy. Test the
-required desktop, tablet,
-narrow-landscape, and portrait-mobile states, including 1280 by 720 and 390 by
-844. Check overlap, scrolling, touch targets, sentence visibility, all nine
+required desktop, tablet, narrow-landscape, and portrait-mobile states. Include
+1280 by 720 and 390 by 844. Check overlap, scrolling, touch targets, sentence
+visibility, all nine
 shared cards, private-hand handling, and score explanation.
 
 Use deterministic game state for geometry and screenshots. A screenshot alone

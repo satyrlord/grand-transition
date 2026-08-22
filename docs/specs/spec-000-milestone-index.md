@@ -7,7 +7,7 @@
 
 This file and its linked approved milestone specifications are the complete
 product and implementation authority. Each milestone owns one narrow capability
-and has an objective stop condition. Load this index and only the current
+and has an objective stop condition. Load this index and only the selected
 milestone plus its direct dependencies.
 
 `docs/specs/` is the only source of truth for the application. General product
@@ -23,8 +23,8 @@ complete an approved specification.
 - Use fictional composite archetypes. Do not present unsupported allegations
   about real people or copy protected writing, art, audio, branding, layout, or
   source code.
-- The MVP is English-first and localization-ready. English grammar and prose
-  must not enter locale-neutral rules.
+- The minimum viable product (MVP) is English-first and localization-ready.
+  English grammar and prose must not enter locale-neutral rules.
 - The pure deterministic reducer owns game truth. Lit is view-only. Content is
   data-driven and validated. Runtime network calls are prohibited.
 - Readability has priority over spectacle. The player must understand the turn,
@@ -54,19 +54,20 @@ complete an approved specification.
 - Temporary original assets are permitted only where stated. Do not add future
   compatibility or scaffolding.
 
-## Impeccable UI validation
+## Impeccable user interface validation
 
-Milestones 001 and 014 through 029 affect user-visible UI. Each must complete
-these two separate validations against the implemented slice in its production
-browser build:
+Milestones 001 and 014 through 029 affect the user-visible user interface (UI).
+Each must complete these two separate validations against the implemented slice
+in its production browser build:
 
 1. Run `$impeccable audit` for technical accessibility, performance, theming,
    responsive behavior, and implementation integrity. Run and verify the
-   bundled detector. Record the score, positive findings, each P0-P3 issue, and
-   the disposition of every issue.
+   bundled detector. Record the score and positive findings. Record each
+   priority 0 through priority 3 (P0-P3) issue and its disposition.
 2. After audit repairs, run `$impeccable critique` on the same stable target.
-   Follow the current Impeccable orchestration contract, including isolated
-   design and detector/browser assessments when supported. Record heuristic
+   Follow the Impeccable orchestration contract in the installed skill. Include
+   isolated design and detector or browser assessments when the installed skill
+   supports them. Record heuristic
    scores, cognitive-load and persona findings, design strengths, priorities,
    the persisted snapshot, and every issue disposition.
 
@@ -118,12 +119,12 @@ source-only review does not satisfy them.
     information survives safe handovers.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
     Local options persist or fail safely.
-21. [Easy AI](spec-021-easy-ai.md). Budget: 7. A deterministic valid-action AI
-    completes custom matches.
+21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 7. A
+  deterministic valid-action AI completes custom matches.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
     difficulties and the ladder work.
-23. [Asset pipeline and visual system](spec-023-assets-visual-system.md). Budget:
-    10. One scene and two characters use validated final art.
+23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
+  Budget: 10. One scene and two characters use validated final art.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
 25. [Tutorial and presentation](spec-025-tutorial-presentation.md). Budget: 8.
