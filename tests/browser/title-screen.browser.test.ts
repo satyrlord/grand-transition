@@ -12,7 +12,9 @@ test('renders the title screen in a real browser', async () => {
   await expect
     .element(page.getByText('A Verbal Republic', { exact: true }))
     .toBeVisible();
-  await expect.element(page.getByText('The chamber is')).toBeVisible();
+  await expect
+    .element(page.getByText('The chamber is being prepared', { exact: true }))
+    .toBeVisible();
 });
 
 test('preserves an existing title-screen registration', async () => {

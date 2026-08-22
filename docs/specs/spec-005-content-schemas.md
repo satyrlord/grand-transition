@@ -20,6 +20,22 @@ tier, artificial intelligence (AI) personality, voice profile, and animation
 set. A scene owns localized identity, layered backgrounds, animation, music,
 ambience, phrase pools, and effects.
 
+For this milestone, the complete phrase-role vocabulary is `noun`, `verb`,
+`predicate`, `conjunction`, `ending`, and `continuation`. This milestone defines
+the data labels only. Milestones 006 and 007 own their grammar behavior. Every
+sample role must be reachable. Each character pool and scene pool must include
+at least one noun, verb, and predicate. Each character must have at least three
+private phrases. Each weakness tag must occur on at least two phrases.
+Directness is a numeric balance value: `0` for no bonus and `1` for a direct
+phrase. Comeback tiers use the later rule names `weak`, `medium`, and `strong`.
+
+Locale bundles use canonical BCP 47 tags and identical message-key sets. Every
+content text key and number-form key must exist in each bundle. Game-locale
+messages and title data are plain text and reject HTML, script URLs, and inline
+event handlers. Each locale is a separate data module under `src/localization/`.
+Media fields use logical asset references until Milestone 023 adds the asset
+pipeline.
+
 Fixed user interface (UI) text uses `@lit/localize`. Tactical phrases,
 characters, scenes, and grammar forms use a separate Best Current Practice 47
 (BCP 47) game-locale bundle. Romanian must later
@@ -30,6 +46,12 @@ used as insults, unsupported crime or private health claims, private targets,
 reusable harassment, sexual humiliation, threats, unsafe HTML, real logos, and
 copyrighted broadcast graphics. Title data includes a fictional-composite
 satire disclaimer.
+
+Shipped sample phrases require an approved, original editorial record with no
+safety flags. Media review fields must confirm that a logical asset reference
+does not use a real logo or a copyrighted broadcast graphic. These explicit
+records make semantic editorial decisions auditable. They do not claim that a
+schema can infer meaning from prose.
 
 ## Verify and stop
 
