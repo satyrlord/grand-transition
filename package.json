@@ -12,7 +12,20 @@
     "dev": "vite",
     "preview": "vite preview",
     "build": "vite build",
-    "typecheck": "tsc --noEmit"
+    "assets:build": "node tools/validate-scaffold.mjs --domain assets --mode build",
+    "assets:validate": "node tools/validate-scaffold.mjs --domain assets",
+    "content:validate": "node tools/validate-scaffold.mjs --domain content",
+    "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
+    "lint": "oxlint --type-aware --tsconfig tsconfig.json .",
+    "format:check": "prettier --check \"src/**/*.{ts,css}\" \"tests/**/*.ts\" \"e2e/**/*.ts\" \"tools/**/*.{mjs,ts}\" \"*.{html,json,mjs,ts}\" \".github/workflows/**/*.{yml,yaml}\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --config vitest.config.ts",
+    "test:coverage": "vitest run --config vitest.browser.config.ts --coverage",
+    "test:browser": "vitest run --config vitest.browser.config.ts",
+    "test:e2e": "playwright test --config playwright.config.ts",
+    "markdown:lint": "markdownlint-cli2 \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"docs/specs/**/*.md\" \".github/**/*.md\"",
+    "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run lint && npm run typecheck",
+    "ci": "npm run format:check && npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.3.0",
@@ -20,7 +33,17 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.11",
+    "fast-check": "^4.9.0",
+    "markdownlint-cli2": "^0.23.2",
+    "oxlint": "^1.79.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "prettier": "^3.9.6",
     "typescript": "~7.0.2",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "vitest": "^4.1.11"
   }
 }

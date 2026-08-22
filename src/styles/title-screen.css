@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "Barlow Condensed";
+  font-family: 'Barlow Condensed';
   font-style: normal;
   font-display: swap;
   font-weight: 700;
-  src: url("@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2")
-    format("woff2");
+  src: url('@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2')
+    format('woff2');
 }
 
 @layer reset, tokens, base, screen;
@@ -36,8 +36,8 @@
     --registry-red-deep: #481c1a;
     --registry-rule: rgb(23 25 22 / 38%);
     --registry-brass: #9a7331;
-    --font-display: "Barlow Condensed", sans-serif;
-    --font-record: Georgia, "Times New Roman", serif;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-record: Georgia, 'Times New Roman', serif;
     --space-edge: clamp(1.25rem, 4vw, 4.5rem);
   }
 }
@@ -84,7 +84,7 @@
   .title-screen::after {
     position: absolute;
     z-index: 0;
-    content: "";
+    content: '';
     pointer-events: none;
   }
 
@@ -238,8 +238,8 @@
       background:
         linear-gradient(90deg, var(--registry-red) 1px, transparent 1px) 100%
           0 / 18% 100%,
-        linear-gradient(var(--registry-rule) 1px, transparent 1px) 100% 0 /
-          30% 4rem;
+        linear-gradient(var(--registry-rule) 1px, transparent 1px) 100% 0 / 30%
+          4rem;
     }
 
     .title-screen::after {
