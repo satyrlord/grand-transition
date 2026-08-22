@@ -20,10 +20,11 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 003 provide the runnable project, complete quality gate,
-immutable game contracts, replaceable external ports, and enforced pure-module
-boundaries. The accessible title remains a static placeholder. The game is not
-playable yet. Later milestones add security, rules, content, and the complete
+Milestones 001 through 004 provide the runnable project, complete quality gate,
+immutable game contracts, replaceable external ports, enforced pure-module
+boundaries, and a production shell secured for the `/grand-transition/` GitHub
+Pages subpath. The accessible title remains a static placeholder. The game is
+not playable yet. Later milestones add rules, content, and the complete
 interface in dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
