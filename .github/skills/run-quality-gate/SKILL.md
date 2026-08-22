@@ -14,7 +14,7 @@ description: Run or repair the Grand Transition quality gate. Use for verificati
 Do not add suppressions, exclusions, disabled rules, changed pins, invented
 commands, or lower thresholds without explicit approval.
 
-## Discover the current gate
+## Discover the configured gate
 
 Read `AGENTS.md` and approved delivery specifications.
 Read `package.json` when it exists.
@@ -52,7 +52,7 @@ Include its command or procedure and result.
 Separate pre-existing failures from scoped regressions.
 List changed files, or state `none`.
 Give each blocker its smallest next action.
-Claim an overall pass only when every applicable current check passes.
+Claim an overall pass only when every applicable configured check passes.
 
 The gate report is complete when every applicable check has a status, every
 failure has an owner or next action, and no check is hidden.

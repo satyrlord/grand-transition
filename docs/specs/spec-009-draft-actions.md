@@ -15,9 +15,9 @@ Round start alternates the opener, generates a board, deals hands, resets each
 redraw, restores a surviving continuation, sets both grammar states, and emits a
 banner fact. Players then alternate one phrase at a time.
 
-Each two-card private hand is weighted by its character pool, current scene,
-general pool, weakness opportunities, and rarity. Redraw replaces both cards and
-cannot immediately return either discarded phrase.
+The generator weights each two-card private hand. It uses the character pool,
+active scene, general pool, weakness opportunities, and rarity. Redraw replaces
+both cards and cannot immediately return either discarded phrase.
 
 After selection, recalculate legal phrases, preview text, required role, and
 timer facts. The active player can redraw once without using the turn, commit a

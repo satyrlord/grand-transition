@@ -45,28 +45,30 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Open Civic Ledger"**
+### Design direction: "The Open Civic Ledger"
 
 The title surface presents Grand Transition as the first page of an open civic
 record. A municipal-blue cloth field meets warm official paper at an oxblood
-binding seam. The result is formal, legible, and lightly satirical: a fictional
-public record with enough physical logic to make the title feel filed rather
-than merely displayed.
+binding seam. The result is formal, legible, and subtly satirical. The visual
+structure makes the title resemble a filed public record.
 
-The system is deliberately quiet around one large semantic message. Condensed
-display type gives the product name an official-register voice, while serif
-record text keeps the subtitle and status grounded in the page. Filing rules,
-the seam, and the small registration stamp provide structure without adding
-controls or later-milestone game behavior to the title placeholder.
+The system gives visual priority to one large semantic message. Condensed
+display type makes the product name resemble an official register. Serif text
+makes the subtitle and status resemble ledger entries. Filing rules, the seam,
+and the small registration stamp provide structure. They do not add controls
+or later-milestone game behavior to the title placeholder.
 
 **The Open Record Rule.** Treat the title as an entry in an open civic record:
 formal, legible, and specific to this fictional republic.
 
 **Key Characteristics:**
+
 - Open civic-ledger character with understated political-theatre satire.
 - Asymmetric blue-cloth and warm-paper fields joined by a narrow oxblood seam.
-- One oversized title, precise ruled registration, and a quiet prepared-status stamp.
-- Semantic light-DOM text and code-native material structure.
+- One oversized title, precise ruled registration, and a low-emphasis
+  prepared-status stamp.
+- Semantic light Document Object Model (DOM) text and code-native material
+  structure.
 
 ## Colors
 
@@ -76,20 +78,24 @@ status mark.
 
 ### Primary
 
-- **Official Oxblood**: Use for the subtitle rules, registration stamp, and selected structural emphasis.
+- **Official Oxblood**: Use for the subtitle rules, registration stamp, and
+  selected structural emphasis.
 
 ### Secondary
 
 - **Municipal Blue**: Use as the cloth field behind `Grand`.
-- **Deep Municipal Blue**: Use as the darker seam-adjacent blue in the binding geometry.
+- **Deep Municipal Blue**: Use as the darker seam-adjacent blue in the binding
+  geometry.
 - **Deep Oxblood**: Use as the narrow binding seam that joins the two fields.
 
 ### Neutral
 
-- **Warm Ledger Paper**: Use as the main paper field behind `Transition` and the page body.
+- **Warm Ledger Paper**: Use as the main paper field behind `Transition` and
+  the page body.
 - **Pale Paper**: Use as the light display ink on the blue field.
 - **Registry Ink**: Use for the main title on paper and the body text baseline.
-- **Translucent Rule Ink**: Use for quiet filing lines and registration marks.
+- **Translucent Rule Ink**: Use for low-contrast filing lines and registration
+  marks.
 
 **The Binding Rule.** Keep oxblood as a narrow structural join and precise
 record accent. It connects the two fields; it does not become a broad wash.
@@ -100,14 +106,18 @@ record accent. It connects the two fields; it does not become a broad wash.
 **Body Font:** Georgia (with Times New Roman and serif fallbacks)
 
 **Character:** The pairing combines a condensed official-register voice with a
-serif ledger voice. Display text is assertive and compressed; record text is
-formal and readable.
+serif ledger style. Display text is bold and compressed. Record text is formal
+and readable.
 
 ### Hierarchy
 
-- **Display**: Heavy condensed uppercase for the single product heading. The desktop scale is fluid and the mobile scale remains bounded for reflow.
-- **Record subtitle**: Bold serif uppercase with generous tracking and ruled oxblood edges. It names the fictional republic without competing with the title.
-- **Status**: Condensed uppercase in a small rectangular stamp. It states the prepared condition and does not imply loading or playable behavior.
+- **Display**: Heavy condensed uppercase for the single product heading. The
+  desktop scale is fluid. The mobile scale remains bounded for reflow.
+- **Record subtitle**: Bold serif uppercase with generous tracking and ruled
+  oxblood edges. It names the fictional republic without competing with the
+  title.
+- **Status**: Condensed uppercase in a small rectangular stamp. It states the
+  prepared condition and does not imply loading or playable behavior.
 - **Body**: Georgia is the inherited record face for semantic page text.
 
 **The One Heading Rule.** Keep the product name as one semantic `h1` even when
@@ -117,9 +127,9 @@ the two words occupy separate color fields.
 
 The title record fills the viewport with a minimum height of `100svh` and uses
 an edge spacing token that scales from `1.25rem` to `4.5rem`. On wide screens,
-the record uses a 38/62 column split: `Grand` sits on municipal blue and
-`Transition` sits on warm paper, with the title crossing the seam as one
-heading. Quiet pseudo-element rules stay behind the semantic content.
+the record uses a 38/62 column split. `Grand` sits on municipal blue, and
+`Transition` sits on warm paper. The title crosses the seam as one heading.
+Low-contrast pseudo-element rules stay behind the semantic content.
 
 At the proven `700px` boundary (`max-width: 43.75rem`), the ledger changes to a
 vertical 37/63 blue-to-paper stack. The heading remains one semantic unit, but
@@ -145,7 +155,8 @@ The form language is square and official. The record fields, rules, and stamp
 use sharp corners with no rounded treatment. The status stamp uses a 2px
 oxblood border, compact internal padding, centered uppercase text, and a small
 counter-clockwise rotation to suggest a hand-registered mark. Filing lines are
-thin and quiet; the binding seam is narrow rather than pill-shaped or card-like.
+thin and low-contrast. The binding seam is narrow. It is not pill-shaped or
+card-like.
 
 ## Components
 
@@ -157,27 +168,39 @@ shared button, input, chip, card, or navigation primitives.
 The title record is an edge-to-edge semantic header composition. Its distinctive
 custom mark is the static status stamp at the lower right of the paper field.
 
-- **Record:** A single semantic `h1` crosses the desktop seam and becomes a vertical two-field title below the mobile boundary.
-- **Stamp:** A rectangular oxblood outline contains the prepared-status text in condensed uppercase. It is a status mark, not a control.
-- **Motion:** The stamp arrives once with the source-defined `register-stamp` animation. `prefers-reduced-motion: reduce` removes the animation while retaining the text.
-- **Accessibility:** The title uses light-DOM semantic text with one `main`, one `h1`, and a visible status paragraph. Forced colors remove decorative fields but keep the text hierarchy and border contrast.
-- **Scope:** The Milestone 001 surface has no action, navigation, game state, or claim of playable behavior.
+- **Record:** A single semantic `h1` crosses the desktop seam. It becomes a
+  vertical two-field title below the mobile boundary.
+- **Stamp:** A rectangular oxblood outline contains the prepared-status text in
+  condensed uppercase. It is a status mark, not a control.
+- **Motion:** The stamp arrives once with the source-defined `register-stamp`
+  animation. `prefers-reduced-motion: reduce` removes the animation but retains
+  the text.
+- **Accessibility:** The title uses light-DOM semantic text with one `main`, one
+  `h1`, and a visible status paragraph. Forced colors remove decorative fields
+  but keep the text hierarchy and border contrast.
+- **Scope:** The Milestone 001 surface has no action, navigation, game state, or
+  claim of playable behavior.
 
-## Do's and Don'ts
+## Required and prohibited design
 
 The following guardrails apply to the implemented title record and its direct
 visual descendants. Future screens need their own surface briefs and may add
 patterns that this title-only milestone does not contain.
 
-### Do:
+### Required
 
-- **Do** keep the public-record mood formal, legible, and lightly satirical.
-- **Do** keep `Grand` and `Transition` in one semantic heading while placing them in contrast-safe fields at the responsive seam.
-- **Do** use Barlow Condensed for the display and status voice and Georgia for ledger text.
-- **Do** preserve the visible prepared status and semantic light-DOM text.
+- Keep the public-record presentation formal, legible, and subtly satirical.
+- Keep `Grand` and `Transition` in one semantic heading. Place them in
+  contrast-safe fields at the responsive seam.
+- Use Barlow Condensed for the display and status text. Use Georgia for ledger
+  text.
+- Preserve the visible prepared status and semantic light DOM text.
 
-### Don't:
+### Prohibited
 
-- **Don't** add controls, navigation, gameplay, or playability claims to the Milestone 001 title placeholder; its surface brief has no action.
-- **Don't** add raster grain, metal punches, or literal registry metadata from the approved comp; they are concept evidence, not production requirements.
-- **Don't** invent shared button, input, card, chip, or navigation components from this title-only surface.
+- Do not add controls, navigation, gameplay, or playability claims to the
+  Milestone 001 title placeholder. Its surface brief has no action.
+- Do not add raster grain, metal punches, or literal registry metadata from the
+  approved composition. They are concept evidence, not production requirements.
+- Do not invent shared button, input, card, chip, or navigation components from
+  this title-only surface.

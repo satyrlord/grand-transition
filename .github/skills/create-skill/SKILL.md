@@ -8,7 +8,7 @@ description: Create, import, adapt, revise, or review a Grand Transition reposit
 ## Establish the need
 
 Read `AGENTS.md`, `.github/AI_TOOLING.md`, the skill catalog, and the owning
-product documents. Confirm that no current skill already owns the action. A
+product documents. Confirm that no existing skill already owns the action. A
 skill must change future decisions or reduce repeated discovery. Do not create
 a skill for generic model capability, one isolated task, or rules already owned
 by a specification.

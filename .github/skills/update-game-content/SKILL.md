@@ -9,7 +9,7 @@ description: Add or revise Grand Transition phrases, characters, scenes, localiz
 
 Read `AGENTS.md` and specification sections 2.3, 2.4, 7 through 13, 20, 21,
 and 26.4.
-Inspect the current Zod schemas, locale bundle, grammar adapter, validators,
+Inspect the Zod schemas, locale bundle, grammar adapter, validators,
 pool loaders, tests, asset manifest, and affected siblings.
 If these owners do not exist, update only the approved specification or
 bootstrap scope that the user authorized.
@@ -31,7 +31,8 @@ Reject unsupported crime claims and private health or addiction claims.
 Reject sexual humiliation, threats, private targets, real logos, and unsafe HTML.
 Reject harassment designed for real-world reuse.
 Do not invent public-record claims.
-Verify material historical facts with current primary sources.
+Verify material historical facts with primary sources that are valid on the
+review date.
 
 ## Validate gameplay and provenance
 

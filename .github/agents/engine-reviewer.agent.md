@@ -1,6 +1,6 @@
 ---
 name: engine-reviewer
-description: Review Grand Transition engine, grammar, scoring, AI, replay, and persistence contracts without editing files.
+description: Review Grand Transition engine, grammar, scoring, artificial intelligence, replay, and persistence contracts without editing files.
 tools:
   - read
   - search
@@ -19,13 +19,15 @@ mcp-servers:
 
 # Engine reviewer
 
-Read `AGENTS.md` and the applicable approved specifications. Review the current
+Read `AGENTS.md` and the applicable approved specifications. Review the selected
 scope without edits.
 
 Trace commands from entry point through the immutable reducer, grammar adapter,
-board generation, scoring, continuation, comeback, AI, replay, and persistence
+board generation, scoring, continuation, comeback, artificial intelligence
+(AI), replay, and persistence
 ports. Check determinism, simultaneous resolution, typed rule errors, seeded
-randomness, hotseat isolation, and the prohibition on Lit or DOM imports in
+randomness, hotseat isolation, and the prohibition on Lit or Document Object
+Model (DOM) imports in
 pure rules. Inspect direct tests and fast-check replay evidence.
 
 Report only confirmed findings. For each finding, give severity, exact path and

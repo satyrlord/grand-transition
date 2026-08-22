@@ -9,18 +9,20 @@
 
 Implement Zod 4 phrase, character, scene, and localization schemas. Add original
 sample data for two characters, one scene, and all core phrase roles. Validate
-IDs, references, forms, tags, role reachability, key parity, and unsafe HTML.
+identifiers (IDs), references, forms, tags, role reachability, key parity, and
+unsafe Hypertext Markup Language (HTML).
 
 A phrase owns ID, role, text key, optional number forms, base value, directness,
 tags, optional character and scene restrictions, rarity, optional finisher
 bonus, content rating, and editorial notes. A character owns localized identity,
 assets, palette, two or three weakness tags, phrase pools, comeback lines by
-tier, AI personality, voice profile, and animation set. A scene owns localized
-identity, layered backgrounds, animation, music, ambience, phrase pools, and
-effects.
+tier, artificial intelligence (AI) personality, voice profile, and animation
+set. A scene owns localized identity, layered backgrounds, animation, music,
+ambience, phrase pools, and effects.
 
-Fixed UI text uses `@lit/localize`. Tactical phrases, characters, scenes, and
-grammar forms use a separate BCP 47 game-locale bundle. Romanian must later
+Fixed user interface (UI) text uses `@lit/localize`. Tactical phrases,
+characters, scenes, and grammar forms use a separate Best Current Practice 47
+(BCP 47) game-locale bundle. Romanian must later
 provide its own forms and grammar adapter.
 
 Every phrase has editorial review state. Reject copied lines, protected traits

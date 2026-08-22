@@ -15,9 +15,11 @@ Local exports contain seed, setup, round count, selections, breakdowns, combo
 and weakness events, continuations, comebacks, and winner. They contain no
 personal data and are never sent remotely.
 
-Development controls can set seed, scene, matchup, Pride, and charge; spawn
-phrases; show tags and AI utility; skip animation; run AI versus AI; import or
-export replay JSON; and validate content. They are unavailable in production.
+Development controls set seed, scene, matchup, Pride, and charge. They spawn
+phrases, show tags and artificial intelligence (AI) utility, and skip
+animation. They also run AI versus AI, import or export JavaScript Object
+Notation (JSON) replays, and validate content. Production does not include
+these controls.
 Generated tests preserve legal failure paths, Pride, charge, ownership, command,
 and replay invariants. Never exclude difficult rule files from coverage.
 

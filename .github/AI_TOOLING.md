@@ -1,6 +1,7 @@
-# Grand Transition AI tooling
+# Grand Transition artificial intelligence tooling
 
-This repository keeps AI guidance small and target-owned.
+This repository keeps artificial intelligence (AI) guidance concise. Each
+target owns its guidance.
 
 ## Entry points
 
@@ -11,55 +12,61 @@ This repository keeps AI guidance small and target-owned.
 - [`skills/SKILLS.md`](skills/SKILLS.md) indexes reusable workflows.
 - [`agents/README.md`](agents/README.md) indexes specialist review agents.
 - [`instructions/`](instructions/) supplies path-specific Copilot guidance.
-- [`prompts/`](prompts/) contains optional milestone prompts for supported IDEs.
-- [`.codex/config.toml`](../.codex/config.toml) enables Microsoft Learn for
-  trusted local Codex app, CLI, and IDE sessions.
+- [`prompts/`](prompts/) contains optional milestone prompts for integrated
+  development environments (IDEs) that support prompt files.
+- [`.codex/config.toml`](../.codex/config.toml) gives trusted local Codex
+  application, command-line interface (CLI), and IDE sessions access to
+  Microsoft Learn.
 - [`.vscode/mcp.json`](../.vscode/mcp.json) enables Microsoft Learn for
   VS Code Copilot sessions.
-- Each profile in [`agents/`](agents/) enables the same server for that custom
-  Copilot agent, including supported cloud and CLI use.
+- Each profile in [`agents/`](agents/) gives its custom Copilot agent access to
+  the same server. This access includes cloud and CLI clients that support the
+  profile field.
 
 ## Ownership
 
 The approved specifications own product, architecture, behavior, and delivery.
 AI files route work to those contracts. They do not replace or restate them.
 Keep `.github/skills/` as the canonical skill source. Local `.agents/skills`
-and `.codex/skills` junctions expose the same packages to tools that discover
-skills there. These ignored links are convenience views, not second copies.
+and `.codex/skills` junctions expose the same packages to skill discovery
+tools. These ignored links are views of the canonical files. They are not
+copies.
 Create or verify them on Windows with:
 
 ```powershell
 pwsh -File .github/scripts/setup-skill-links.ps1
 ```
 
-## MCP policy
+## Model Context Protocol policy
 
-The Microsoft Learn MCP server is allowed for current Microsoft and Azure
-documentation and code samples. It is optional and must not block unrelated
-work. Its public streamable HTTP endpoint is documented by
+Agents can use the Microsoft Learn Model Context Protocol (MCP) server for
+Microsoft and Azure documentation and code samples. The server is optional.
+An unavailable server must not block unrelated work. Microsoft documents the
+public streamable Hypertext Transfer Protocol (HTTP) endpoint at
 [Microsoft Learn](https://learn.microsoft.com/en-us/training/support/mcp).
 
-Codex reads project-scoped MCP configuration only for a trusted project. Verify
-it with `codex mcp get microsoft-learn`. If project configuration is
-unavailable, the user can opt in with:
+Codex reads project-level MCP configuration only for a trusted project. Use
+`codex mcp get microsoft-learn` to verify the configuration. If Codex cannot
+use the project configuration, the user can add the server with:
 
 ```powershell
 codex mcp add microsoft-learn --url https://learn.microsoft.com/api/mcp
 ```
 
-The tracked VS Code file does not configure Visual Studio, JetBrains IDEs, or a
-generic Copilot CLI session. The custom Copilot agent profiles carry their own
-server configuration on clients that support that profile field.
+The tracked VS Code file does not configure Visual Studio or JetBrains IDEs. It
+also does not configure a generic Copilot CLI session. Each custom Copilot
+agent profile contains its server configuration. A client uses this
+configuration only when it supports the profile field.
 
 ## Deliberate exclusions
 
-- No other repository MCP server is configured without a target-owned need.
-- No personal hooks or user-specific absolute paths are tracked.
-- No dependency-owned skills or agents are copied from `node_modules`.
-- No generic theme bundle is included. The approved visual milestone
+- Add another repository MCP server only when a target requires it.
+- Do not track personal hooks or user-specific absolute paths.
+- Do not copy dependency-owned skills or agents from `node_modules`.
+- Do not include a generic theme bundle. The approved visual milestone
   specifications define the visual direction.
-- No generic orchestrator or builder agent is included. `AGENTS.md` owns
+- Do not include a generic orchestrator or builder agent. `AGENTS.md` owns
   coordination, implementation authority, verification, and close-out.
 
-Prompt files are an optional GitHub Copilot IDE feature. The skills and
-instructions remain usable without them.
+Prompt files are an optional GitHub Copilot IDE feature. Agents can use the
+skills and instructions without prompt files.

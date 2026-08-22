@@ -9,23 +9,24 @@
 
 Define immutable `GameState`, `GameCommand`, reducer result, typed rule error,
 random source, grammar adapter, storage port, and speech port contracts. Add an
-automated boundary check for pure engine, AI, content, grammar, scoring, and
-replay modules.
+automated boundary check for pure engine, artificial intelligence (AI),
+content, grammar, scoring, and replay modules.
 
 `GameState` contains a schema version, seed, phase, mode, round, opening and
 active player IDs, scene ID, board, player states, optional pending resolution
 and winner, and command history. Every user or AI action reduces to a new
 immutable snapshot or typed rule error.
 
-The app shell owns the current snapshot. Lit children receive immutable values
+The application shell owns the active snapshot. Lit children receive immutable values
 and emit typed events with `bubbles: true` and `composed: true`. Components can
-own focus, tooltip, or animation view state, but not Pride, turn, board, hand,
-score, replay, or rules.
+own focus, tooltip, or animation view state. Components must not own Pride,
+turn, board, hand, score, replay, or rules.
 
 Randomness enters only through the seeded source. Persistence uses pure,
 versioned codecs behind `StoragePort`; engine and codecs do not call browser
 storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
-replay do not import Lit or DOM APIs. Game prose stays in UI messages or
+replay do not import Lit or Document Object Model (DOM) application programming
+interfaces (APIs). Game prose stays in user interface (UI) messages or
 locale-specific bundles. Balance constants stay in validated data.
 
 ## Verify and stop

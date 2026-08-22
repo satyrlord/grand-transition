@@ -28,4 +28,4 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 Codec tests cover round trip and migration. Browser tests cover reload, corrupt
 data, quota and security exceptions, fallback, and notice behavior. Storage
 failure never blocks setup or play. `npm run ci` passes. Stop before audio
-output, speech output, AI, or tutorial content.
+output, speech output, artificial intelligence (AI), or tutorial content.

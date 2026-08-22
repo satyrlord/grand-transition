@@ -1,8 +1,9 @@
-# Milestone 017: Resolution and Results UI
+# Milestone 017: Resolution and Results User Interface
 
 **Status:** Approved  
 **Depends on:** 016  
-**Owns:** Resolution presentation, results, statistics, and rematch UI  
+**Owns:** Resolution presentation, results, statistics, and rematch user
+interface (UI)
 **Production-file budget:** 8
 
 ## Deliver
@@ -12,7 +13,7 @@ simultaneous Pride changes, sudden death, winner, match statistics, setup, and
 rematch actions. Use functional temporary motion only.
 
 Resolution uses speech balloons, reactions, and a complete text breakdown before
-simultaneous meter changes. It distinguishes current and carried phrases,
+simultaneous meter changes. It distinguishes active and carried phrases,
 continuation threshold and result, weakness tags, combo chain, finisher, comeback,
 and grammar fault. Animation reinforces state and cannot hide the explanation.
 
@@ -30,5 +31,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 Playwright completes a full hotseat match including continuation, comeback,
 double knockout, results, and rematch. Every final damage value is explainable
-from visible text. `npm run ci` passes. Stop before final motion, audio, AI,
+from visible text. `npm run ci` passes. Stop before final motion, audio,
+artificial intelligence (AI),
 mobile hardening, or local persistence.

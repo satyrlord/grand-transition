@@ -38,7 +38,7 @@ The durable project documents are under `agent_docs/`:
 - `project_overview.md`: goals, architecture, workflow, and major decisions.
 - `project_core_tech.md`: concise special technology or architecture notes.
 - `project_structure.md`: layout, modules, components, and ownership.
-- `project_progress.md`: goal, overall progress, current position, next
+- `project_progress.md`: goal, overall progress, active position, next
   milestone.
 - `project_diary.md`: lasting decisions, discarded approaches, and lessons.
 - `latest_session_work.md`: detailed handoff evidence and continuation point.
@@ -72,7 +72,7 @@ Heavy requires the session's currently selected main agent to be `gpt-5.6-sol`
 or `gpt-5.6-terra` with subagent support available. This is a session-model
 requirement, not a persistent workflow setting. If the selected model is
 ineligible or its subagent support is unavailable, do not initialize Companion
-or any other worker; ask the user to switch the current session to Sol or Terra.
+or another worker. Ask the user to switch the active session to Sol or Terra.
 Never pin or rewrite the main model in `config.toml`.
 
 The user selects the route for the session. If unspecified, use Light; do not
@@ -83,23 +83,24 @@ ends.
 
 ## Context Loading
 
-- In Light, inspect only material needed for the current task.
+- In Light, inspect only material needed for the active task.
 - Before initializing deployment state, classify the request. Questions and
-  small or odd bounded tasks use the direct main-agent fast path even when
-  Medium or Heavy is selected: call no worker, including Companion and
-  `closure_steward`, and produce no worker statistics.
+  small or unusual bounded tasks use the direct main-agent fast path even when
+  Medium or Heavy is selected. Do not call a worker, including Companion and
+  `closure_steward`. Do not produce worker statistics.
 - For every substantive Medium or Heavy deployment, read the selected route and
   `companion.md`, then initialize or reuse the single persistent Companion. Read
   `investigation_team.md` before a Heavy evidence wave or an explicitly
   requested Medium evidence wave.
 - Give Companion the session goal, known constraints, escalation boundaries, and
-  evidence format. It is the main agent's secretary and office wrapper: it
-  completes routine read-only work, retains context, filters coherent batches of
-  operational reports, and returns the director brief defined in its contract.
+  evidence format. Companion completes routine read-only work and retains
+  context. It filters coherent batches of operational reports. It returns the
+  director brief that its contract defines.
 - Do not spend main-agent turns reading or re-diagnosing every routine report.
-  When a worker batch exists, register one coherent batch with Companion and
-  name it in the dispatch envelopes; dispatched workers deliver detailed
-  terminal reports directly to it and return compact receipts to the main agent.
+  When a worker batch exists, register one coherent batch with Companion. Name
+  the batch in the dispatch envelopes. Dispatched workers deliver detailed
+  terminal reports directly to Companion. They return compact receipts to the
+  main agent.
   Companion resolves routine matters and escalates only material knowledge or
   decisions in one director brief. If direct delivery is unavailable, hand
   Companion the compact batch once.
@@ -124,7 +125,7 @@ ends.
 ## Platform Paths
 
 Workflow documents use `/` as a platform-neutral separator. Translate paths to
-the current operating system and shell when running filesystem commands.
+the active operating system and shell when you run file-system commands.
 <!-- codex-workflow-managed-end -->
 
 <!-- codex-workflow-project-personalization-start -->
@@ -170,8 +171,9 @@ diagnosis are read-only unless the user requests a change. Use the specialist
 review agents under `.github/agents/` for an independent, bounded review when
 the affected domain warrants it.
 
-Codex and Copilot agents may use the Microsoft Learn MCP server when current
-Microsoft or Azure documentation or code samples materially help the task.
+Codex and Copilot agents may use the Microsoft Learn Model Context Protocol
+(MCP) server when Microsoft or Azure information that is valid on the review
+date materially helps the task.
 Search first, then fetch the relevant official page when full context is needed.
 Do not require this server for unrelated work.
 

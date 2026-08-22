@@ -12,7 +12,7 @@ real people, protected game content, or third-party art and audio.
 ## Planned play modes
 
 - A single-player ladder
-- Custom matches against three AI difficulty levels
+- Custom matches against three artificial intelligence (AI) difficulty levels
 - Local hotseat matches with private-hand handover
 
 Online multiplayer, accounts, cloud saves, remote leaderboards, chat, servers,
@@ -34,10 +34,11 @@ approved specification, the specification governs.
 
 ## Planned technology
 
-The approved implementation uses Node.js 24 LTS, npm 12, TypeScript 7, Vite 8,
-Lit 3, plain CSS, a pure deterministic game engine, validated data files, and a
-static GitHub Pages build. The exact contracts and current milestones are in
-`docs/specs/`.
+The approved implementation uses Node.js 24 Long-Term Support (LTS), npm 12,
+TypeScript 7, Vite 8, and Lit 3. It also uses plain Cascading Style Sheets
+(CSS), a pure deterministic game engine, and validated data files. The result
+is a static GitHub Pages build. The exact contracts and active milestones are
+in `docs/specs/`.
 
 ## Local references
 

@@ -11,7 +11,8 @@ Implement setup, round preparation, commit or failure, simultaneous resolution,
 Pride and charge updates, knockout, double-knockout sudden death, winner,
 statistics, and rematch commands.
 
-Setup owns mode, both characters, scene, AI difficulty when applicable, a 15 or
+Setup owns mode, both characters, scene, artificial intelligence (AI)
+difficulty when applicable, a 15 or
 30 second or unlimited timer, optional speech, and optional privacy. Mirror
 matches are valid. Resolution applies both complete breakdowns and damage
 simultaneously, then checks continuation, charge, and knockout.
@@ -26,4 +27,4 @@ highest combo, faults, comebacks, rematch, and setup actions.
 A scripted headless match reaches the expected result. Tests cover alternating
 openers, simultaneous damage, zero-clamped Pride, sudden death, statistics, and
 rematch reset. Fixed seed and commands reproduce state. `npm run ci` passes.
-Stop before replay storage, UI, or AI.
+Stop before replay storage, user interface (UI), or AI.

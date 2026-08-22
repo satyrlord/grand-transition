@@ -10,7 +10,7 @@ Use audit mode unless the user explicitly authorizes removal.
 ## Establish the graph
 
 Read `AGENTS.md`, approved specifications, package and TypeScript configuration,
-Vite, test and asset tools, workflows, and current status. List production,
+Vite, test and asset tools, workflows, and repository status. List production,
 test, content, localization, asset, development-tool, and deployment entry
 points. Run configured compiler or analyzer checks before creating candidates.
 
@@ -33,7 +33,8 @@ In audit mode, report without edits. In cleanup mode, remove only the smallest
 set of proven dead items.
 Do not remove accessibility behavior or hotseat privacy.
 Do not remove diagnostics, content-safety fields, or seeded replay support.
-Do not remove supported-browser paths, fixtures, private master references, or
+Do not remove paths for browsers in the approved support matrix, fixtures,
+private master references, or
 generated files unless the owning workflow authorizes the removal.
 
 Run the narrowest affected checks after each removal. Then use

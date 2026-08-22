@@ -1,8 +1,9 @@
-# Milestone 026: MVP Content Expansion
+# Milestone 026: Minimum Viable Product Content Expansion
 
 **Status:** Approved  
 **Depends on:** 025  
-**Owns:** Complete MVP roster, scenes, phrase volume, art, and audio content  
+**Owns:** Complete minimum viable product (MVP) roster, scenes, phrase volume,
+art, and audio content
 **Production-file budget:** 12
 
 ## Deliver
@@ -52,16 +53,17 @@ Use the existing schemas, pipelines, and presentation contracts.
 
 ## Required scenes
 
-- **Transition-Era Television Studio:** heavy curtains, CRT monitors, geometric
-  carpet, desk microphones, harsh lamps, and analog instability; transition,
+- **Transition-Era Television Studio:** heavy curtains, cathode-ray tube (CRT)
+   monitors, geometric carpet, desk microphones, harsh lamps, and analog
+   instability; transition,
   public television, revolution, archive, emergency broadcast, and national
   salvation phrases.
 - **County Council Ballroom:** municipal ornament, plastic flowers, fake marble,
   ribbon banners, catering, and suspiciously new equipment; procurement,
   relatives, contracts, infrastructure, and development-fund phrases.
 - **Midnight Call-In Studio:** neon ticker, chroma-key skyline, telephones,
-  breaking-news banners, SMS crawl, and ad clock; ratings, sources, callers,
-  footage, commercials, and hidden tapes.
+   breaking-news banners, Short Message Service (SMS) crawl, and ad clock;
+   ratings, sources, callers, footage, commercials, and hidden tapes.
 - **Palace Press Hall:** vast room, tall doors, sparse podiums, polished floor,
   photographers, and empty space; statements, silence, coalition, protocol,
   mandate, and national-interest phrases.
@@ -70,14 +72,16 @@ Use the existing schemas, pipelines, and presentation contracts.
   sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
 Each scene has a 1920x1080 layered master, mobile-safe crops, lighting, ambience,
-motion, music treatment, and 25 to 35 owned phrases. Content targets about 150
-general nouns, 120 verbs, 100 predicates, 6 to 10 conjunctions, 60 finishers,
-20 to 30 character phrases per character, and at least 9 comeback lines per
-character. Exact totals can change only when an hour of play stays varied.
+motion, music treatment, and 25 to 35 owned phrases. Content targets about
+150 general nouns, 120 verbs, and 100 predicates. It also targets 6 to 10
+conjunctions and 60 finishers. Each character has 20 to 30 character phrases
+and at least 9 comeback lines. Exact totals can change only when an hour of
+play stays varied.
 
-## Impeccable UI validation
+## Impeccable user interface validation
 
-1. Run `$impeccable audit` across affected roster and scene UI variants.
+1. Run `$impeccable audit` across affected roster and scene user interface (UI)
+   variants.
 2. After audit repairs, run `$impeccable critique` across the same content slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.

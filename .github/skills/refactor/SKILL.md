@@ -11,7 +11,7 @@ contracts.
 ## Establish the invariant
 
 Read `AGENTS.md`, owning specifications, affected source, callers, consumers,
-tests, and current status.
+tests, and repository status.
 State the exact behavior, contracts, files, and validation that must remain
 unchanged.
 Exclude feature work, balance changes, content edits, dependency upgrades,

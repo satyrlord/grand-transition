@@ -20,13 +20,14 @@ mcp-servers:
 # Content reviewer
 
 Read `AGENTS.md` and specification sections 2.3, 2.4, 7 through 13, 20, 21,
-and 26.4. Review the current scope without edits.
+and 26.4. Review the selected scope without edits.
 
-Check stable IDs, schema and locale parity, grammar reachability, singular and
-plural forms, tag coverage, pool size, scene and character references,
-editorial review fields, fictional-composite boundaries, unsupported factual
-claims, protected characteristics, threats, copied lines, unsafe HTML, asset
-ownership, source, and license metadata.
+Check stable identifiers (IDs), schema parity, and locale parity. Check grammar
+reachability, singular and plural forms, tag coverage, and pool size. Check
+scene references, character references, and editorial review fields. Check
+fictional-composite boundaries and unsupported factual claims. Check protected
+characteristics, threats, copied lines, and unsafe Hypertext Markup Language
+(HTML). Check asset ownership, source, and license metadata.
 
 Report only evidence-backed findings. Give severity, exact record or path,
 broken contract, evidence, impact, smallest remedy, and the validator or review

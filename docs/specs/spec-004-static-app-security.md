@@ -7,8 +7,9 @@
 
 ## Deliver
 
-Set the Vite and Playwright base URL to `/grand-transition/`. Inject the exact
-production-only CSP defined below. Add a production preview smoke test for
+Set the Vite and Playwright base Uniform Resource Locator (URL) to
+`/grand-transition/`. Inject the exact production-only Content Security Policy
+(CSP) defined below. Add a production preview smoke test for
 the entry page, assets, refresh behavior, and forbidden remote connections.
 
 Production injects this policy:
@@ -19,8 +20,9 @@ img-src 'self' data: blob:; media-src 'self'; font-src 'self';
 connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'
 ```
 
-Development omits it for Vite HMR. Production permits no inline script,
-`unsafe-eval`, imported style text, unsafe HTML, remote font, image, or audio.
+Development omits it for Vite Hot Module Replacement (HMR). Production permits
+no inline script, `unsafe-eval`, imported style text, unsafe Hypertext Markup
+Language (HTML), remote font, image, or audio.
 Production code makes no runtime `fetch`, XMLHttpRequest, WebSocket,
 EventSource, or analytics request. Speech synthesis can use a browser or
 operating-system service outside the application network layer.
@@ -30,8 +32,9 @@ rewrites. `dist/` is generated and never committed.
 
 ## Verify and stop
 
-The built shell loads from the subpath. Production has the CSP, development does
-not, and the browser test detects a broken base path or external request.
+The built shell loads from the subpath. Production has the CSP. Development
+does not have the CSP. The browser test detects a broken base path or external
+request.
 `npm run ci` passes. Stop before deployment or game behavior.
 
 ## Reference

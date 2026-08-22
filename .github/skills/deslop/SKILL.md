@@ -10,7 +10,7 @@ description: Remove unsupported Grand Transition repository content without chan
 - Use audit mode to report unsupported content without edits.
 - Use cleanup mode only when the user explicitly authorizes edits.
 
-In this skill, "slop" means content that conflicts with its current owner,
+In this skill, "slop" means content that conflicts with its assigned owner,
 behavior, repository rule, or valid sibling. A warning starts an inspection; it
 does not prove a defect.
 
@@ -19,7 +19,7 @@ does not prove a defect.
 Inventory each in-scope file. Classify it as source, test, specification,
 documentation, content, localization, configuration, generated, vendored,
 locked, fixture, media, or binary content.
-Select the owner and one current comparable file for each file group.
+Select the owner and one valid comparable file for each file group.
 Read each candidate, its owner, and its comparable file.
 Record an unchanged baseline for tests and generated output when a configured
 command exists.
@@ -32,6 +32,8 @@ command exists.
 - Prose: remove repeated meaning, stale facts, vague claims, filler, and
   assumptions from another product. Preserve exact rules, history, sources, and
   user voice.
+- Audit and fix all project documentation, skills, and artificial intelligence
+  (AI) tools to conform to ASD-STE100 Simplified Technical English.
 - Data and configuration: compare schemas, loaders, validators, consumers, and
   siblings. Preserve IDs, balance, locale parity, provenance, and package pins
   unless their owning contract supports a change.
