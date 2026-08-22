@@ -20,11 +20,13 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 004 provide the runnable project, complete quality gate,
+Milestones 001 through 005 provide the runnable project, complete quality gate,
 immutable game contracts, replaceable external ports, enforced pure-module
-boundaries, and a production shell secured for the `/grand-transition/` GitHub
-Pages subpath. The accessible title remains a static placeholder. The game is
-not playable yet. Later milestones add rules, content, and the complete
+boundaries, a secured production shell, and validated sample game content. The
+sample contains original phrases for each core role, two fictional characters,
+one fictional scene, and an English game-locale bundle. The accessible title
+remains a static placeholder. The game is not playable yet. Later milestones
+add grammar, board generation, rules, expanded content, and the complete
 interface in dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
@@ -38,10 +40,10 @@ approved specification, the specification governs.
 ## Planned technology
 
 The approved implementation uses Node.js 24 Long-Term Support (LTS), npm 12,
-TypeScript 7, Vite 8, and Lit 3. It also uses plain Cascading Style Sheets
-(CSS), a pure deterministic game engine, and validated data files. The result
-is a static GitHub Pages build. The exact contracts and active milestones are
-in `docs/specs/`.
+TypeScript 7, Vite 8, Lit 3, `@lit/localize`, and Zod 4. It also uses plain
+Cascading Style Sheets (CSS), a pure deterministic game engine, and validated
+data files. The result is a static GitHub Pages build. The exact contracts and
+active milestones are in `docs/specs/`.
 
 ## Local references
 

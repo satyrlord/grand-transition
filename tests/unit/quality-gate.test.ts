@@ -74,6 +74,18 @@ describe('quality-gate scaffold', () => {
     }
   });
 
+  test('validates content files and the aggregate content contract', async () => {
+    const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
+      scripts: Record<string, string>;
+    };
+    const contentValidation = packageJson.scripts['content:validate'];
+
+    expect(contentValidation).toContain(
+      'node tools/validate-scaffold.mjs --domain content',
+    );
+    expect(contentValidation).toContain('tests/unit/content-schemas.test.ts');
+  });
+
   test('uses the TypeScript 7 type-aware linter', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
