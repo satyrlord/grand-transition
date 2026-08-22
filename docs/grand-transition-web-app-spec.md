@@ -1,30 +1,48 @@
 # The Grand Transition: A Verbal Republic
+
 ## Product and Implementation Specification
 
-**Document type:** Build specification and agent handoff  
-**Target:** Production-quality single-page web game  
-**Language:** English first; Romanian localization later  
-**Primary modes:** Single-player campaign ladder, single player versus AI and local hotseat PvP
-**Out of scope:** Online multiplayer, matchmaking, accounts, cloud saves, public user-generated content, remote leaderboards  
-**Local references:** Optional untracked behavior and visual references can be supplied in `tmp/`; they are not required by a clean checkout.
+**Document type:** Build specification and agent handoff\
+**Target:** Production-quality single-page web game\
+**Language:** English first; Romanian localization later\
+**Primary modes:** Single-player campaign ladder, single player versus AI and
+local hotseat PvP\
+**Out of scope:** Online multiplayer, matchmaking, accounts, cloud saves, public
+user-generated content, remote leaderboards\
+**Local references:** Optional untracked behavior and visual references can be
+supplied in `tmp/`; they are not required by a clean checkout.
 
 ---
 
 ## Specification authority
 
-The approved specification set is the single source of truth for product scope, architecture, behavior, acceptance criteria, and delivery. This file is the initial product and implementation baseline. It is expected to be split into focused milestone specifications as planning matures.
+The approved specification set is the single source of truth for product scope,
+architecture, behavior, acceptance criteria, and delivery. This file is the
+initial product and implementation baseline. It is expected to be split into
+focused milestone specifications as planning matures.
 
-Each future milestone specification must identify its status, scope, dependencies, acceptance criteria, and any baseline sections that it refines or supersedes. A later, more specific approved specification governs its stated scope. Update all affected approved specifications in the same change so the set does not retain conflicting requirements.
+Each future milestone specification must identify its status, scope,
+dependencies, acceptance criteria, and any baseline sections that it refines or
+supersedes. A later, more specific approved specification governs its stated
+scope. Update all affected approved specifications in the same change so the set
+does not retain conflicting requirements.
 
-Contributor guides, research sources, prototypes, untracked `tmp/` files, and implementation notes are supporting context only. They do not override an approved specification.
+Contributor guides, research sources, prototypes, untracked `tmp/` files, and
+implementation notes are supporting context only. They do not override an
+approved specification.
 
 ---
 
 ## 1. Mission
 
-Build a polished, original, browser-based competitive insult-construction game inspired by the broad mechanics of modular sentence dueling games.
+Build a polished, original, browser-based competitive insult-construction game
+inspired by the broad mechanics of modular sentence dueling games.
 
-The game is set in a fictionalized satirical republic shaped by Romanian public life between 1989 and 2026. Players choose exaggerated political and social archetypes, draft phrase fragments from a shared board, assemble grammatically valid insults, exploit character weak spots, build phrase combos, trigger comebacks, and reduce the opponent's Pride to zero.
+The game is set in a fictionalized satirical republic shaped by Romanian public
+life between 1989 and 2026. Players choose exaggerated political and social
+archetypes, draft phrase fragments from a shared board, assemble grammatically
+valid insults, exploit character weak spots, build phrase combos, trigger
+comebacks, and reduce the opponent's Pride to zero.
 
 The finished product must feel like a real game rather than a prototype:
 
@@ -39,7 +57,8 @@ The finished product must feel like a real game rather than a prototype:
 - Accessible keyboard and screen-reader support
 - Clean separation between engine, UI, content, localization, and assets
 
-Do not copy any protected artwork, writing, audio, character design, UI arrangement, branding, or source code from existing commercial games.
+Do not copy any protected artwork, writing, audio, character design, UI
+arrangement, branding, or source code from existing commercial games.
 
 ---
 
@@ -47,7 +66,8 @@ Do not copy any protected artwork, writing, audio, character design, UI arrangem
 
 ### 2.1 The real game is tactical grammar
 
-The game must not behave like a random joke generator. Every phrase selection must create several simultaneous decisions:
+The game must not behave like a random joke generator. Every phrase selection
+must create several simultaneous decisions:
 
 - Improve the current sentence
 - Preserve future grammatical options
@@ -73,7 +93,8 @@ Animation must reinforce state changes, not hide them.
 
 ### 2.3 Original satire, not biography simulation
 
-Characters are fictional stage personas inspired by recognizable public archetypes. Avoid presenting unsupported allegations as facts about real people.
+Characters are fictional stage personas inspired by recognizable public
+archetypes. Avoid presenting unsupported allegations as facts about real people.
 
 Satire should focus on:
 
@@ -88,13 +109,17 @@ Satire should focus on:
 - Public contradictions
 - Historical eras and social habits
 
-Avoid using private medical, sexual, addiction, or criminal claims as character facts.
+Avoid using private medical, sexual, addiction, or criminal claims as character
+facts.
 
 ### 2.4 English-first, localization-ready
 
-All initial content is in English. Do not hard-code English grammar into the engine.
+All initial content is in English. Do not hard-code English grammar into the
+engine.
 
-The architecture must support a future Romanian grammar adapter and a parallel Romanian phrase pack. Romanian text must not be implemented as direct translation of arbitrary English fragments.
+The architecture must support a future Romanian grammar adapter and a parallel
+Romanian phrase pack. Romanian text must not be implemented as direct
+translation of arbitrary English fragments.
 
 ---
 
@@ -127,7 +152,8 @@ The MVP must include:
 - Full match flow
 - Results screen
 - Tutorial overlay or guided first match
-- Optional browser text-to-speech with voice, rate, volume, privacy, and unavailable-state handling
+- Optional browser text-to-speech with voice, rate, volume, privacy, and
+  unavailable-state handling
 - Settings for sound, music, speech, animation, timer, and accessibility
 - Local save for settings and unlocked tutorial state
 - Seeded deterministic random generation
@@ -135,7 +161,8 @@ The MVP must include:
 
 ### 3.2 Post-MVP scope
 
-Design the architecture so these can be added later without rewriting the engine:
+Design the architecture so these can be added later without rewriting the
+engine:
 
 - Character unlocks
 - Scene objectives
@@ -168,7 +195,10 @@ Do not implement:
 
 ## 4. Technology constraints
 
-This section records the current cross-cutting technology contract. A future approved milestone specification can refine it only when that specification identifies the superseded requirements and the affected specification set is updated together.
+This section records the current cross-cutting technology contract. A future
+approved milestone specification can refine it only when that specification
+identifies the superseded requirements and the affected specification set is
+updated together.
 
 ### 4.1 Approved stack
 
@@ -178,14 +208,19 @@ Use:
 - TypeScript 6 in strict mode
 - Vite 8 with the GitHub Pages base path `/grand-transition/`
 - Lit 3 for declarative custom elements
-- Native ES modules, semantic DOM, plain CSS, cascade layers, and custom properties
+- Native ES modules, semantic DOM, plain CSS, cascade layers, and custom
+  properties
 - Zod 4 for content schemas and validation
-- `@lit/localize` for interface messages; separate phrase packs and grammar adapters for game language
+- `@lit/localize` for interface messages; separate phrase packs and grammar
+  adapters for game language
 - Sharp as a build-time image variant generator
 - Canvas 2D only for particles, ambience, and transitions
-- Web Audio API for sound and native `speechSynthesis` for optional text-to-speech
-- `localStorage` for settings and tutorial state; IndexedDB only when save volume requires it
-- Vitest, fast-check, Vitest Browser Mode with `@vitest/browser-playwright`, Playwright, and `@axe-core/playwright`
+- Web Audio API for sound and native `speechSynthesis` for optional
+  text-to-speech
+- `localStorage` for settings and tutorial state; IndexedDB only when save
+  volume requires it
+- Vitest, fast-check, Vitest Browser Mode with `@vitest/browser-playwright`,
+  Playwright, and `@axe-core/playwright`
 - ESLint with typed `typescript-eslint`, Prettier, and markdownlint
 
 Do not use:
@@ -201,17 +236,34 @@ Do not use:
 - Server-side rendering
 - Client-side URL-path routing
 
-The engine, AI, grammar, scoring, replay, and content rules must not import Lit or DOM APIs. Lit receives immutable state snapshots and emits typed commands. Use light DOM for screens and the coordinated match surface. Use Shadow DOM only for isolated leaf controls with an explicit style and event contract.
+The engine, AI, grammar, scoring, replay, and content rules must not import Lit
+or DOM APIs. Lit receives immutable state snapshots and emits typed commands.
+Use light DOM for screens and the coordinated match surface. Use Shadow DOM only
+for isolated leaf controls with an explicit style and event contract.
 
-The production output is the static `dist/` directory. GitHub Actions must run the full quality gate before it deploys that directory to GitHub Pages. Do not commit `dist/`.
+The production output is the static `dist/` directory. GitHub Actions must run
+the full quality gate before it deploys that directory to GitHub Pages. Do not
+commit `dist/`.
 
 ### 4.2 UI decision rationale
 
-React is viable. It provides a familiar component model, mature tools, a large contributor pool, and a broad package ecosystem. React 19 also supports custom elements. These benefits become stronger for server rendering, complex URL routing, shared React component systems, or a large React-focused team.
+React is viable. It provides a familiar component model, mature tools, a large
+contributor pool, and a broad package ecosystem. React 19 also supports custom
+elements. These benefits become stronger for server rendering, complex URL
+routing, shared React component systems, or a large React-focused team.
 
-React is not the default for this product. The game has no server, accounts, remote data, or search-driven routes. Its authoritative state is already a deterministic command reducer. React would add JSX, `react`, `react-dom`, a framework lifecycle, and effect or ref bridges for Web Audio, Canvas, timers, and imperative animation. It does not make game rules, accessibility, or speech synthesis automatic.
+React is not the default for this product. The game has no server, accounts,
+remote data, or search-driven routes. Its authoritative state is already a
+deterministic command reducer. React would add JSX, `react`, `react-dom`, a
+framework lifecycle, and effect or ref bridges for Web Audio, Canvas, timers,
+and imperative animation. It does not make game rules, accessibility, or speech
+synthesis automatic.
 
-Raw Web Components avoid a library runtime but require project-owned template, update, property, and lifecycle code across a dense match interface. Lit is the chosen middle path. It adds declarative templates, batched reactive updates, and custom-element ergonomics in about 5 KB compressed while retaining native HTML elements as the runtime boundary.
+Raw Web Components avoid a library runtime but require project-owned template,
+update, property, and lifecycle code across a dense match interface. Lit is the
+chosen middle path. It adds declarative templates, batched reactive updates, and
+custom-element ergonomics in about 5 KB compressed while retaining native HTML
+elements as the runtime boundary.
 
 Mitigate Lit's smaller ecosystem and Shadow DOM costs as follows:
 
@@ -221,13 +273,20 @@ Mitigate Lit's smaller ecosystem and Shadow DOM costs as follows:
 - Dispatch cross-boundary events with `bubbles: true` and `composed: true`.
 - Use semantic native controls before ARIA.
 - Test components in real browsers.
-- Use static Lit property declarations. Do not enable decorators without an approved specification change.
+- Use static Lit property declarations. Do not enable decorators without an
+  approved specification change.
 
-Reconsider React only if the scope gains server rendering, complex route data, a required React component system, or a React-specialist team large enough that staffing outweighs the additional runtime boundary.
+Reconsider React only if the scope gains server rendering, complex route data, a
+required React component system, or a React-specialist team large enough that
+staffing outweighs the additional runtime boundary.
 
 ### 4.3 Version and command policy
 
-Exact dependency versions belong in `package-lock.json`. Pin supported major versions in `package.json`, review automated update pull requests, and update this section when a major version changes an architectural contract. Use TypeScript 6 until typed linting and other compiler-API tools support TypeScript 7 without a compatibility compiler.
+Exact dependency versions belong in `package-lock.json`. Pin supported major
+versions in `package.json`, review automated update pull requests, and update
+this section when a major version changes an architectural contract. Use
+TypeScript 6 until typed linting and other compiler-API tools support TypeScript
+7 without a compatibility compiler.
 
 The initial package must expose:
 
@@ -248,7 +307,10 @@ npm run validate        Docs, assets, content, localization, lint, and types
 npm run ci              Complete required local and CI gate
 ```
 
-`validate` includes markdownlint, asset-manifest validation, Zod content checks, localization key parity, ESLint, and TypeScript. `ci` runs `format:check`, `validate`, unit tests, browser tests, coverage, and `test:e2e` in that order. The end-to-end script performs the production build.
+`validate` includes markdownlint, asset-manifest validation, Zod content checks,
+localization key parity, ESLint, and TypeScript. `ci` runs `format:check`,
+`validate`, unit tests, browser tests, coverage, and `test:e2e` in that order.
+The end-to-end script performs the production build.
 
 ---
 
@@ -353,7 +415,9 @@ tools/
     pages.yml
 ```
 
-Keep all game rules pure and independent from DOM code. Generated assets must include a manifest with dimensions, formats, crop intent, ownership, and license data.
+Keep all game rules pure and independent from DOM code. Generated assets must
+include a manifest with dimensions, formats, crop intent, ownership, and license
+data.
 
 ---
 
@@ -372,7 +436,8 @@ The player chooses:
 - Optional speech synthesis
 - Optional hotseat privacy mode
 
-Prevent accidental duplicate selection only when a future rule requires it. Mirror matches are valid.
+Prevent accidental duplicate selection only when a future rule requires it.
+Mirror matches are valid.
 
 ### 6.2 Round preparation
 
@@ -390,7 +455,8 @@ At the start of a round:
 
 Players alternate selecting one phrase at a time.
 
-A selected shared phrase becomes unavailable to both players. A private phrase is available only to its owner.
+A selected shared phrase becomes unavailable to both players. A private phrase
+is available only to its owner.
 
 After every selection:
 
@@ -538,7 +604,8 @@ Effects:
 
 A player who ends without reaching a complete grammar state deals zero damage.
 
-Do not apply a self-damage penalty unless a deliberate illegal phrase was selected.
+Do not apply a self-damage penalty unless a deliberate illegal phrase was
+selected.
 
 ---
 
@@ -641,9 +708,11 @@ Examples:
 - elitism
 - nationalism
 
-A phrase may carry multiple tags. Trigger a weakness when the final sentence contains at least one matching tag.
+A phrase may carry multiple tags. Trigger a weakness when the final sentence
+contains at least one matching tag.
 
-For MVP, apply one weakness multiplier regardless of the number of matching tags. Display all matching tags in the breakdown.
+For MVP, apply one weakness multiplier regardless of the number of matching
+tags. Display all matching tags in the breakdown.
 
 ### 9.3 Exact-noun combo
 
@@ -652,12 +721,14 @@ Combos are based on exact noun phrase IDs, not semantic similarity.
 Rules:
 
 - Track noun IDs used in the player's previous completed insult.
-- Reusing an exact noun ID in the next completed insult starts or extends the chain.
+- Reusing an exact noun ID in the next completed insult starts or extends the
+  chain.
 - First consecutive repetition: x2.
 - Second consecutive repetition: x3.
 - Continue increasing by one while uninterrupted.
 - Missing the repeated noun resets that noun's chain.
-- Invalid or incomplete sentences reset all chains unless balance testing proves otherwise.
+- Invalid or incomplete sentences reset all chains unless balance testing proves
+  otherwise.
 
 ### 9.4 Finishers
 
@@ -673,14 +744,16 @@ Ending phrases:
 
 ## 10. Continuations
 
-A continuation lets a player preserve a valid unfinished sentence into the next round.
+A continuation lets a player preserve a valid unfinished sentence into the next
+round.
 
 Rules:
 
 - It may only be chosen from a valid continuation state.
 - The carried phrase sequence remains visible.
 - The player resumes from the same grammar state next round.
-- If the opponent deals 16 or more damage during resolution, the continuation breaks.
+- If the opponent deals 16 or more damage during resolution, the continuation
+  breaks.
 - A broken continuation is discarded with a strong visual and audio effect.
 - A surviving continuation should grant tactical flexibility, not free damage.
 
@@ -707,12 +780,15 @@ Rules:
 
 - Charge cannot exceed 60.
 - Using a comeback spends the corresponding charge.
-- A stronger available tier may be used as a weaker tier only if explicitly supported by design. Default: allow the player to choose any affordable tier.
+- A stronger available tier may be used as a weaker tier only if explicitly
+  supported by design. Default: allow the player to choose any affordable tier.
 - Each tier appends a character-specific closing line.
-- Comeback text is separate from grammar fragments and does not affect noun combos.
+- Comeback text is separate from grammar fragments and does not affect noun
+  combos.
 - The strong comeback alone can break a continuation.
 
-Provide at least three unique lines per character per tier in production content.
+Provide at least three unique lines per character per tier in production
+content.
 
 ---
 
@@ -722,113 +798,139 @@ Provide at least three unique lines per character per tier in production content
 
 Use these fictionalized archetypes:
 
-1. **The Red-Folder Chairman**  
-   Inspiration: old-school Soviet bureaucratic continuity.  
-   Voice: calm, procedural, paternal, faintly menacing.  
-   Weak spots: legacy, modernity, bureaucracy.  
+1. **The Red-Folder Chairman**\
+   Inspiration: old-school Soviet bureaucratic continuity.\
+   Voice: calm, procedural, paternal, faintly menacing.\
+   Weak spots: legacy, modernity, bureaucracy.\
    AI personality: patient denial, safe grammar, long continuations.
 
-2. **The Thunder Tribune**  
-   Inspiration: plebeian nationalist orator.  
-   Voice: theatrical, furious, baroque, permanently at rally volume.  
-   Weak spots: evidence, credibility, restraint.  
+2. **The Thunder Tribune**\
+   Inspiration: plebeian nationalist orator.\
+   Voice: theatrical, furious, baroque, permanently at rally volume.\
+   Weak spots: evidence, credibility, restraint.\
    AI personality: aggressive scoring, finishers, risky long sentences.
 
-3. **The Midnight Sensationalist**  
-   Inspiration: late-night tabloid broadcaster.  
-   Voice: conspiratorial, breathless, commercially interrupted.  
-   Weak spots: ratings, evidence, credibility.  
+3. **The Midnight Sensationalist**\
+   Inspiration: late-night tabloid broadcaster. \
+   Voice: conspiratorial, breathless, commercially interrupted.\
+   Weak spots: ratings, evidence, credibility.\
    AI personality: combo chasing, dramatic comeback use.
 
-4. **The Velvet Mogul**  
-   Inspiration: media tycoon and political broker.  
-   Voice: polished, insinuating, quietly contemptuous.  
-   Weak spots: wealth, influence, credibility.  
+4. **The Velvet Mogul**\
+   Inspiration: media tycoon and political broker.\
+   Voice: polished, insinuating, quietly contemptuous.\
+   Weak spots: wealth, influence, credibility.\
    AI personality: phrase denial, weakness targeting, low-risk play.
 
-5. **The Black Sea Captain**  
-   Inspiration: rough sailor-statesman.  
-   Voice: amused, practical, salty, unexpectedly perceptive.  
-   Weak spots: decorum, consistency, legacy.  
+5. **The Black Sea Captain**\
+   Inspiration: rough sailor-statesman.\
+   Voice: amused, practical, salty, unexpectedly perceptive.\
+   Weak spots: decorum, consistency, legacy.\
    AI personality: adaptive, comeback-heavy, opportunistic.
 
-6. **The Retiring Cassandra**  
-   Inspiration: defeated reformist doomer.  
-   Voice: weary, intellectual, apologetically catastrophic.  
-   Weak spots: competence, hope, results.  
+6. **The Retiring Cassandra**\
+   Inspiration: defeated reformist doomer.\
+   Voice: weary, intellectual, apologetically catastrophic.\
+   Weak spots: competence, hope, results.\
    AI personality: defensive continuations, conservative scoring.
 
-7. **The Oat-Milk Reformist**  
-   Inspiration: imported lifestyle progressivism.  
-   Voice: earnest, jargon-heavy, socially polished, strategically lost.  
-   Weak spots: relevance, authenticity, class.  
+7. **The Oat-Milk Reformist**\
+   Inspiration: imported lifestyle progressivism. \
+   Voice: earnest, jargon-heavy, socially polished, strategically lost.\
+   Weak spots: relevance, authenticity, class.\
    AI personality: long sentences, semantic tag targeting, moderate denial.
 
-8. **The Marble Diplomat**  
-   Inspiration: elitist nouveau-riche statesman.  
-   Voice: cultivated, superior, decorative, museum-grade.  
-   Weak spots: luxury, elitism, corruption.  
+8. **The Marble Diplomat**\
+   Inspiration: elitist nouveau-riche statesman.\
+   Voice: cultivated, superior, decorative, museum-grade.\
+   Weak spots: luxury, elitism, corruption.\
    AI personality: high-value phrases, finishers, status attacks.
 
-9. **The County Baron**  
-   Inspiration: permanent local patronage boss who survives national realignment through contracts, cousins, roads, festivals, and party migration.  
-   Voice: folksy, paternal, practical, and certain that every public project is personal.  
-   Weak spots: procurement, infrastructure, nepotism.  
-   AI personality: excellent denial, local-theme targeting, patient phrase theft, and low-risk continuations.
+9. **The County Baron**\
+   Inspiration: permanent local patronage boss who survives national realignment
+   through contracts, cousins, roads, festivals, and party migration.\
+   Voice: folksy, paternal, practical, and certain that every public project is
+   personal.\
+   Weak spots: procurement, infrastructure, nepotism.\
+   AI personality: excellent denial, local-theme targeting, patient phrase
+   theft, and low-risk continuations.
 
-10. **The Coalition Acrobat**  
-  Inspiration: professional ideological shapeshifter who governs with yesterday's enemy and denounces tomorrow's ally.  
-  Voice: conciliatory, elastic, procedural, and instantly comfortable with a new principle.  
-  Weak spots: consistency, memory, commitment.  
-  AI personality: strong conjunction and continuation vocabulary, opportunistic reversals, and consistency traps.
+10. **The Coalition Acrobat**\
+    Inspiration: professional ideological shapeshifter who governs with
+    yesterday's enemy and denounces tomorrow's ally.\
+    Voice: conciliatory, elastic, procedural, and instantly comfortable with a
+    new principle.\
+    Weak spots: consistency, memory, commitment.\
+    AI personality: strong conjunction and continuation vocabulary,
+    opportunistic reversals, and consistency traps.
 
-11. **The Presidential Sphinx**  
-  Inspiration: remote, ceremonially immaculate head of state who appears rarely and answers slowly.  
-  Voice: polished, distant, grave, and carefully rationed.  
-  Weak spots: absence, silence, leisure.  
-  AI personality: defensive phrase pool, powerful finishers, and deliberately sparse pacing.
+11. **The Presidential Sphinx**\
+    Inspiration: remote, ceremonially immaculate head of state who appears
+    rarely and answers slowly.\
+    Voice: polished, distant, grave, and carefully rationed.\
+    Weak spots: absence, silence, leisure.\
+    AI personality: defensive phrase pool, powerful finishers, and deliberately
+    sparse pacing.
 
-12. **The Algorithmic Prophet**  
-  Inspiration: viral sovereigntist mystic communicating through short videos, cosmic certainty, wellness vocabulary, and feed manipulation.  
-  Voice: prophetic, intimate, absolute, and optimized for the next clip.  
-  Weak spots: evidence, specificity, follow-up questions.  
-  AI personality: scene-specific phrases in livestream levels, feed manipulation, and volatile finishers.
+12. **The Algorithmic Prophet**\
+    Inspiration: viral sovereigntist mystic communicating through short videos,
+    cosmic certainty, wellness vocabulary, and feed manipulation.\
+    Voice: prophetic, intimate, absolute, and optimized for the next clip.\
+    Weak spots: evidence, specificity, follow-up questions. \
+    AI personality: scene-specific phrases in livestream levels, feed
+    manipulation, and volatile finishers.
 
-13. **The Spreadsheet Technocrat**  
-  Inspiration: Brussels vocabulary, dashboards, reform milestones, and consultancy grammar.  
-  Voice: measured, metric-heavy, reassuring, and fluent in implementation frameworks.  
-  Weak spots: delivery, accountability, human scale.  
-  AI personality: reform-stack building, clause-heavy continuations, and dashboard denial.
+13. **The Spreadsheet Technocrat**\
+    Inspiration: Brussels vocabulary, dashboards, reform milestones, and
+    consultancy grammar.\
+    Voice: measured, metric-heavy, reassuring, and fluent in implementation
+    frameworks.\
+    Weak spots: delivery, accountability, human scale.\
+    AI personality: reform-stack building, clause-heavy continuations, and
+    dashboard denial.
 
-14. **The Football-Pulpit Tycoon**  
-  Inspiration: television, football ownership, business, religion, and populism.  
-  Voice: booming, avuncular, devotional, and permanently performing for a crowd.  
-  Weak spots: commercialism, accountability, sincerity.  
-  AI personality: crowd-pleasing finishers, emotional phrase chains, and opportunistic denial.
+14. **The Football-Pulpit Tycoon**\
+    Inspiration: television, football ownership, business, religion, and
+    populism.\
+    Voice: booming, avuncular, devotional, and permanently performing for a
+    crowd.\
+    Weak spots: commercialism, accountability, sincerity.\
+    AI personality: crowd-pleasing finishers, emotional phrase chains, and
+    opportunistic denial.
 
-15. **The Luxury Minister**  
-  Inspiration: photo opportunities, designer status, patronage networks, and conspicuous consumption.  
-  Voice: polished, camera-ready, flattering, and immune to ordinary scale.  
-  Weak spots: austerity, service, authenticity.  
-  AI personality: status phrase prioritization, conspicuous finishers, and patronage denial.
+15. **The Luxury Minister**\
+    Inspiration: photo opportunities, designer status, patronage networks, and
+    conspicuous consumption.\
+    Voice: polished, camera-ready, flattering, and immune to ordinary scale.\
+    Weak spots: austerity, service, authenticity.\
+    AI personality: status phrase prioritization, conspicuous finishers, and
+    patronage denial.
 
-16. **The Diaspora Oracle**  
-  Inspiration: social archetype who explains Romania from thousands of kilometres away through voice notes and Facebook geopolitics.  
-  Voice: intimate, anecdotal, certain, and emotionally connected to a place at a distance.  
-  Weak spots: distance, context, firsthand knowledge.  
-  AI personality: long-distance generalizations, strong conjunctions and continuations, and low respect for local context.
+16. **The Diaspora Oracle**\
+    Inspiration: social archetype who explains Romania from thousands of
+    kilometres away through voice notes and Facebook geopolitics.\
+    Voice: intimate, anecdotal, certain, and emotionally connected to a place at
+    a distance.\
+    Weak spots: distance, context, firsthand knowledge.\
+    AI personality: long-distance generalizations, strong conjunctions and
+    continuations, and low respect for local context.
 
-17. **The Apartment-Block Geopolitician**  
-  Inspiration: taxi, stairwell, market, and family-table expertise on every war, currency, vaccine, and intelligence service.  
-  Voice: conversational, suspicious, encyclopedic, and delivered as settled common sense.  
-  Weak spots: sources, specificity, nuance.  
-  AI personality: broad topic coverage, fast combo chasing, and confident but brittle risk-taking.
+17. **The Apartment-Block Geopolitician**\
+    Inspiration: taxi, stairwell, market, and family-table expertise on every
+    war, currency, vaccine, and intelligence service.\
+    Voice: conversational, suspicious, encyclopedic, and delivered as settled
+    common sense.\
+    Weak spots: sources, specificity, nuance.\
+    AI personality: broad topic coverage, fast combo chasing, and confident but
+    brittle risk-taking.
 
-18. **The EU-Funds Alchemist**  
-  Inspiration: converts feasibility studies into roundabouts, signs, ribbon cuttings, and opaque consulting paperwork.  
-  Voice: grant-ready, ceremonial, optimistic, and fluent in deliverables.  
-  Weak spots: transparency, outcomes, maintenance.  
-  AI personality: excellent denial, procurement and infrastructure targeting, and high-value finishers.
+18. **The EU-Funds Alchemist**\
+    Inspiration: converts feasibility studies into roundabouts, signs, ribbon
+    cuttings, and opaque consulting paperwork.\
+    Voice: grant-ready, ceremonial, optimistic, and fluent in deliverables.\
+    Weak spots: transparency, outcomes, maintenance.\
+    AI personality: excellent denial, procurement and infrastructure targeting,
+    and high-value finishers.
 
 ### 12.3 Character data schema
 
@@ -985,7 +1087,11 @@ interface SceneDefinition {
 
 Create an original illustrated political-theatre aesthetic.
 
-Optional visual references can be supplied in the untracked `tmp/` folder. When present, use them to assess perceived production value, information hierarchy, painterly portrait finish, dramatic broadcast lighting, tactile materials, and stage framing. Do not treat them as final production art, required build inputs, or permission to reuse an unverified source asset.
+Optional visual references can be supplied in the untracked `tmp/` folder. When
+present, use them to assess perceived production value, information hierarchy,
+painterly portrait finish, dramatic broadcast lighting, tactile materials, and
+stage framing. Do not treat them as final production art, required build inputs,
+or permission to reuse an unverified source asset.
 
 The target is a collision of:
 
@@ -997,9 +1103,12 @@ The target is a collision of:
 - Slightly decayed luxury
 - Modern social-media overlays
 
-The result must feel authored for this game. Avoid generic dashboard cards, flat software-as-a-service styling, stock fantasy frames, and an off-the-shelf component-library appearance.
+The result must feel authored for this game. Avoid generic dashboard cards, flat
+software-as-a-service styling, stock fantasy frames, and an off-the-shelf
+component-library appearance.
 
-Do not imitate the visual identity, character silhouettes, scene composition, typography, or UI framing of the reference games.
+Do not imitate the visual identity, character silhouettes, scene composition,
+typography, or UI framing of the reference games.
 
 ### 14.2 Character rendering
 
@@ -1028,11 +1137,16 @@ Minimum animation set:
 - Victory
 - Defeat
 
-Start with layered CSS transforms, sprite sheets, and Canvas 2D effects. Do not add WebGL, Three.js, PixiJS, or a skeletal-animation runtime until the vertical slice shows a specific effect that the chosen stack cannot deliver. Record bundle size, frame time, accessibility impact, and the tested alternative before approving such a dependency.
+Start with layered CSS transforms, sprite sheets, and Canvas 2D effects. Do not
+add WebGL, Three.js, PixiJS, or a skeletal-animation runtime until the vertical
+slice shows a specific effect that the chosen stack cannot deliver. Record
+bundle size, frame time, accessibility impact, and the tested alternative before
+approving such a dependency.
 
 ### 14.3 UI visual language
 
-The interface should feel like a televised civic debate transformed into a card duel.
+The interface should feel like a televised civic debate transformed into a card
+duel.
 
 Recommended motifs:
 
@@ -1047,7 +1161,11 @@ Recommended motifs:
 
 Phrase cards must remain visually simple and highly legible.
 
-Keep every control, phrase, event-log entry, and score explanation in semantic DOM. Mark effects canvases `aria-hidden="true"` and set `pointer-events: none`. Canvas may sit behind or above the interface for non-interactive effects, but it must not contain required text, controls, block focus indicators, or intercept input.
+Keep every control, phrase, event-log entry, and score explanation in semantic
+DOM. Mark effects canvases `aria-hidden="true"` and set `pointer-events: none`.
+Canvas may sit behind or above the interface for non-interactive effects, but it
+must not contain required text, controls, block focus indicators, or intercept
+input.
 
 ### 14.4 Color system
 
@@ -1063,7 +1181,8 @@ Core palette:
 - Television blue
 - Muted cream
 
-Romanian tricolor accents may appear sparingly. Do not turn every screen into a flag.
+Romanian tricolor accents may appear sparingly. Do not turn every screen into a
+flag.
 
 ### 14.5 Typography
 
@@ -1073,7 +1192,8 @@ Use:
 - A display serif or condensed grotesque for headlines
 - Optional monospaced or stamped lettering for metadata
 
-Self-host licensed WOFF2 files. Define metric-compatible fallbacks to reduce layout shift. Avoid novelty fonts for body text.
+Self-host licensed WOFF2 files. Define metric-compatible fallbacks to reduce
+layout shift. Avoid novelty fonts for body text.
 
 ### 14.6 Asset requirements
 
@@ -1099,15 +1219,23 @@ For each scene:
 
 Asset production rules:
 
-- Keep editable, lossless masters in an ignored local `art/masters/` workspace or the approved external art archive.
-- Run `npm run assets:build` to generate responsive AVIF and WebP variants with Sharp.
-- Commit generated runtime variants and their manifest under `src/assets/generated/`; do not edit them by hand.
-- Run `npm run assets:validate` in `validate` and CI. A clean checkout must not require private masters.
+- Keep editable, lossless masters in an ignored local `art/masters/` workspace
+  or the approved external art archive.
+- Run `npm run assets:build` to generate responsive AVIF and WebP variants with
+  Sharp.
+- Commit generated runtime variants and their manifest under
+  `src/assets/generated/`; do not edit them by hand.
+- Run `npm run assets:validate` in `validate` and CI. A clean checkout must not
+  require private masters.
 - Use PNG only when alpha fidelity or source tooling requires it.
-- Record dimensions, format, crop, owner, source, and license in the generated asset manifest.
-- Import runtime assets through the manifest so Vite can apply the GitHub Pages base path.
-- Load setup art first. Lazy-load only the selected character and scene package before a match.
-- Set media budgets after measuring the final-quality vertical slice. Do not use prototype files to claim production performance.
+- Record dimensions, format, crop, owner, source, and license in the generated
+  asset manifest.
+- Import runtime assets through the manifest so Vite can apply the GitHub Pages
+  base path.
+- Load setup art first. Lazy-load only the selected character and scene package
+  before a match.
+- Set media budgets after measuring the final-quality vertical slice. Do not use
+  prototype files to claim production performance.
 
 For UI:
 
@@ -1147,7 +1275,8 @@ Recommended layout:
 └──────────────────────────────────────────────────────────────┘
 ```
 
-Characters should occupy the upper half. The tactical board should occupy the lower half.
+Characters should occupy the upper half. The tactical board should occupy the
+lower half.
 
 Do not let decorative graphics compete with phrase readability.
 
@@ -1186,7 +1315,8 @@ Each card displays:
 Interaction rules:
 
 - Legal cards use a clear active treatment.
-- Illegal cards remain selectable only when deliberate grammar faults are enabled.
+- Illegal cards remain selectable only when deliberate grammar faults are
+  enabled.
 - Hover or focus previews the resulting sentence.
 - Selecting a card animates it into the sentence builder.
 - Shared cards visibly leave an empty slot after selection.
@@ -1201,7 +1331,8 @@ Keyboard support:
 - C opens comeback choices
 - Escape closes overlays
 
-Display keyboard hints only when a keyboard is detected or the setting is enabled.
+Display keyboard hints only when a keyboard is detected or the setting is
+enabled.
 
 ---
 
@@ -1209,7 +1340,8 @@ Display keyboard hints only when a keyboard is detected or the setting is enable
 
 ### 17.1 AI goals
 
-The AI must feel like an opponent with a rhetorical personality, not a random phrase picker.
+The AI must feel like an opponent with a rhetorical personality, not a random
+phrase picker.
 
 Evaluate candidate actions using:
 
@@ -1269,7 +1401,8 @@ Allow a reduced-delay accessibility setting.
 
 ### 17.4 AI determinism
 
-For a fixed match seed, AI difficulty, and action history, AI choices must be reproducible.
+For a fixed match seed, AI difficulty, and action history, AI choices must be
+reproducible.
 
 ---
 
@@ -1280,7 +1413,8 @@ For a fixed match seed, AI difficulty, and action history, AI choices must be re
 Include:
 
 - Original menu music
-- A distinct musical treatment per scene, delivered by a dedicated track or a scene-specific mix of a shared adaptive score
+- A distinct musical treatment per scene, delivered by a dedicated track or a
+  scene-specific mix of a shared adaptive score
 - Phrase selection sounds by role
 - Sentence commit sound
 - Light and heavy damage impacts
@@ -1293,13 +1427,17 @@ Include:
 
 ### 18.2 Speech
 
-MVP uses optional browser speech synthesis through `window.speechSynthesis` and `SpeechSynthesisUtterance`. It is an enhancement, not a gameplay dependency. It defaults to off and must remain silent until the player enables it and performs a user action.
+MVP uses optional browser speech synthesis through `window.speechSynthesis` and
+`SpeechSynthesisUtterance`. It is an enhancement, not a gameplay dependency. It
+defaults to off and must remain silent until the player enables it and performs
+a user action.
 
 The speech system must:
 
 - Detect support without throwing
 - Load voices immediately and again after `voiceschanged`
-- Prefer a saved `voiceURI`, then a voice matching the active language, then the system default
+- Prefer a saved `voiceURI`, then a voice matching the active language, then the
+  system default
 - Expose Auto voice, voice, rate, and speech volume settings
 - Queue complete insult lines
 - Speak only completed insults after they become public
@@ -1307,12 +1445,19 @@ The speech system must:
 - Cancel speech when leaving the match or starting a rematch
 - Suppress speech during handover and private-hand reveal
 - Never speak draft fragments or hidden hotseat text
-- Show a clear unavailable state when synthesis or a suitable voice is unavailable
+- Show a clear unavailable state when synthesis or a suitable voice is
+  unavailable
 - Keep speech synthesis behind a testable adapter
 
-Available voices and processing differ by browser and operating system. Explain this in settings; do not promise offline or on-device processing and do not require one named voice. Automated tests verify selection, queue, cancellation, privacy, and fallback with a fake adapter. Release testing includes one manual audible check and one silent-fallback check.
+Available voices and processing differ by browser and operating system. Explain
+this in settings; do not promise offline or on-device processing and do not
+require one named voice. Automated tests verify selection, queue, cancellation,
+privacy, and fallback with a fake adapter. Release testing includes one manual
+audible check and one silent-fallback check.
 
-Design content so recorded voice acting can replace synthesis later. Keep speech synthesis separate from the Web Audio signal graph because the browser does not expose its output as a normal Web Audio source.
+Design content so recorded voice acting can replace synthesis later. Keep speech
+synthesis separate from the Web Audio signal graph because the browser does not
+expose its output as a normal Web Audio source.
 
 ### 18.3 Audio mixer
 
@@ -1329,7 +1474,8 @@ Persist settings locally.
 
 ## 19. Hotseat privacy
 
-Hotseat mode must support shared-screen privacy. Privacy is enabled by default and can be disabled only from match setup.
+Hotseat mode must support shared-screen privacy. Privacy is enabled by default
+and can be disabled only from match setup.
 
 When privacy is enabled:
 
@@ -1339,7 +1485,8 @@ When privacy is enabled:
 4. Reveal only that player's private phrases.
 5. Hide them again when the turn ends.
 
-Do not display private-hand information in tooltips, accessibility labels, logs, or stale DOM nodes while hidden.
+Do not display private-hand information in tooltips, accessibility labels, logs,
+or stale DOM nodes while hidden.
 
 The shared phrase board and public sentence fragments remain visible.
 
@@ -1372,7 +1519,11 @@ interface PhraseDefinition {
 
 ### 20.2 Localization schema
 
-Do not embed English text directly in phrase definitions. Use `@lit/localize` for fixed interface messages in Lit templates. Use a separate game-language bundle for phrases, characters, scenes, and the locale-specific grammar adapter. Do not send tactical phrase fragments through `@lit/localize` because their agreement and composition rules need the game-language schema.
+Do not embed English text directly in phrase definitions. Use `@lit/localize`
+for fixed interface messages in Lit templates. Use a separate game-language
+bundle for phrases, characters, scenes, and the locale-specific grammar adapter.
+Do not send tactical phrase fragments through `@lit/localize` because their
+agreement and composition rules need the game-language schema.
 
 ```ts
 interface GameLocaleBundle {
@@ -1383,7 +1534,10 @@ interface GameLocaleBundle {
 }
 ```
 
-Validate interface message extraction and game-bundle key parity in `npm run validate`. Use BCP 47 locale tags. Romanian requires its own phrase forms and grammar adapter; it is not a direct string translation of English fragments.
+Validate interface message extraction and game-bundle key parity in
+`npm run validate`. Use BCP 47 locale tags. Romanian requires its own phrase
+forms and grammar adapter; it is not a direct string translation of English
+fragments.
 
 ### 20.3 Initial content target
 
@@ -1398,7 +1552,8 @@ For a production MVP, target approximately:
 - 25 to 35 scene-specific phrases per scene
 - 9 comeback lines per character at minimum
 
-The exact final number may vary, but repetition must not dominate a normal hour of play.
+The exact final number may vary, but repetition must not dominate a normal hour
+of play.
 
 ### 20.4 Content tone
 
@@ -1411,7 +1566,8 @@ The writing should be:
 - Distinct across characters
 - Understandable to international English-speaking players
 
-Avoid overusing untranslated Romanian proper nouns in the English build. Use them only when context makes the joke intelligible.
+Avoid overusing untranslated Romanian proper nouns in the English build. Use
+them only when context makes the joke intelligible.
 
 ---
 
@@ -1442,7 +1598,8 @@ Permit:
 - Ideological contradiction
 - Class and vanity satire when directed at fictional personas
 
-Include a title-screen disclaimer that all characters are fictional composites and the game is a work of satire.
+Include a title-screen disclaimer that all characters are fictional composites
+and the game is a work of satire.
 
 ---
 
@@ -1481,9 +1638,19 @@ Benefits:
 
 Do not place mutable game truth inside Web Components.
 
-The Lit app shell owns the current snapshot and dispatches commands to the reducer. Child components receive typed properties and emit typed custom events. Cross-component command events must use `bubbles: true` and `composed: true`. Components may keep temporary view state such as focus, an open tooltip, or an animation phase, but they must never duplicate authoritative rules, Pride, turn, board, hand, score, or replay state.
+The Lit app shell owns the current snapshot and dispatches commands to the
+reducer. Child components receive typed properties and emit typed custom events.
+Cross-component command events must use `bubbles: true` and `composed: true`.
+Components may keep temporary view state such as focus, an open tooltip, or an
+animation phase, but they must never duplicate authoritative rules, Pride, turn,
+board, hand, score, or replay state.
 
-Persistence uses pure, versioned codecs behind a `StoragePort`. The browser adapter may call `localStorage`; engine and codec code may not. Use an in-memory adapter when storage is blocked, full, or unavailable. A storage failure must not stop setup or a match. Show a non-blocking notice that settings will not persist. Test codec round trips, migrations, corrupt data, quota or security exceptions, and fallback behavior.
+Persistence uses pure, versioned codecs behind a `StoragePort`. The browser
+adapter may call `localStorage`; engine and codec code may not. Use an in-memory
+adapter when storage is blocked, full, or unavailable. A storage failure must
+not stop setup or a match. Show a non-blocking notice that settings will not
+persist. Test codec round trips, migrations, corrupt data, quota or security
+exceptions, and fallback behavior.
 
 ---
 
@@ -1518,7 +1685,8 @@ Requirements:
 - Full keyboard navigation
 - Visible focus states
 - Semantic buttons rather than clickable divs
-- Screen-reader announcements for turn changes, sentence completion, damage, and match result
+- Screen-reader announcements for turn changes, sentence completion, damage, and
+  match result
 - Reduced-motion mode
 - High-contrast option
 - Color must not be the only status indicator
@@ -1553,19 +1721,35 @@ Use image formats appropriate to the assets:
 - PNG only when alpha or tooling requires it
 - Compressed audio such as Ogg and AAC fallbacks
 
-Measure the production build with representative final-quality art. Record the operating system, browser version, hardware, viewport, scene, cache state, tool, and result. A prototype-only measurement does not prove a production target.
+Measure the production build with representative final-quality art. Record the
+operating system, browser version, hardware, viewport, scene, cache state, tool,
+and result. A prototype-only measurement does not prove a production target.
 
 ### 25.2 Browser support
 
-Target the current and two prior major releases of Chromium and Safari, plus current Firefox ESR. CI must run current Playwright Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit projects. Each release also records a manual or hosted result for the oldest target Safari version. If that environment is unavailable, mark old-Safari support unverified rather than claiming it as tested. Support current mobile Safari and Chrome at the responsive sizes in section 15.
+Target the current and two prior major releases of Chromium and Safari, plus
+current Firefox ESR. CI must run current Playwright Chromium, Firefox, WebKit,
+mobile Chromium, and mobile WebKit projects. Each release also records a manual
+or hosted result for the oldest target Safari version. If that environment is
+unavailable, mark old-Safari support unverified rather than claiming it as
+tested. Support current mobile Safari and Chrome at the responsive sizes in
+section 15.
 
-Do not add legacy-browser polyfills or support Internet Explorer, Classic Edge, or old embedded WebViews. Any broader browser requirement needs a new decision with bundle and test costs.
+Do not add legacy-browser polyfills or support Internet Explorer, Classic Edge,
+or old embedded WebViews. Any broader browser requirement needs a new decision
+with bundle and test costs.
 
 ### 25.3 GitHub Pages deployment
 
-Deploy the Vite `dist/` artifact to GitHub Pages with GitHub Actions. Set Vite `base` to `/grand-transition/`. Use one `index.html` entry and in-memory screen state; do not depend on a server rewrite for route fallback.
+Deploy the Vite `dist/` artifact to GitHub Pages with GitHub Actions. Set Vite
+`base` to `/grand-transition/`. Use one `index.html` entry and in-memory screen
+state; do not depend on a server rewrite for route fallback.
 
-The confirmed deployment repository is `satyrlord/grand-transition` with default branch `main`. Vite and Playwright must use the `/grand-transition/` base path. If the repository is renamed, transferred to a user-site root, or changes its default branch, update all affected specifications, Vite, Playwright, and the workflow together.
+The confirmed deployment repository is `satyrlord/grand-transition` with default
+branch `main`. Vite and Playwright must use the `/grand-transition/` base path.
+If the repository is renamed, transferred to a user-site root, or changes its
+default branch, update all affected specifications, Vite, Playwright, and the
+workflow together.
 
 The workflow must:
 
@@ -1574,11 +1758,17 @@ The workflow must:
 3. Run `npm run ci`.
 4. Upload only `dist/` with the official Pages artifact action.
 5. Deploy only after the build job succeeds on the default branch.
-6. Use the minimum `contents: read`, `pages: write`, and `id-token: write` permissions.
+6. Use the minimum `contents: read`, `pages: write`, and `id-token: write`
+   permissions.
 
-Pull requests run the full build and test gate but do not deploy. After deployment, smoke-test the published repository URL, asset paths, refresh behavior, text-to-speech availability state, and one complete match.
+Pull requests run the full build and test gate but do not deploy. After
+deployment, smoke-test the published repository URL, asset paths, refresh
+behavior, text-to-speech availability state, and one complete match.
 
-Production code must make no runtime `fetch`, XMLHttpRequest, WebSocket, EventSource, analytics, font, image, or audio request to another origin. A Vite `transformIndexHtml` plugin must inject this CSP meta policy into production builds only:
+Production code must make no runtime `fetch`, XMLHttpRequest, WebSocket,
+EventSource, analytics, font, image, or audio request to another origin. A Vite
+`transformIndexHtml` plugin must inject this CSP meta policy into production
+builds only:
 
 ```text
 default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
@@ -1586,13 +1776,21 @@ img-src 'self' data: blob:; media-src 'self'; font-src 'self';
 connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'
 ```
 
-Development must omit the production policy so Vite HMR can use its local WebSocket. `style-src 'unsafe-inline'` is a deliberate broad exception for Lit styles and dynamic visual tokens; mitigate it by rejecting unsafe HTML, using text nodes for user text, and forbidding imported style text. Do not allow inline scripts, `unsafe-eval`, remote fonts, remote images, or remote audio. Browser speech synthesis remains opt-in and can use a browser or operating-system service outside the app's network layer.
+Development must omit the production policy so Vite HMR can use its local
+WebSocket. `style-src 'unsafe-inline'` is a deliberate broad exception for Lit
+styles and dynamic visual tokens; mitigate it by rejecting unsafe HTML, using
+text nodes for user text, and forbidding imported style text. Do not allow
+inline scripts, `unsafe-eval`, remote fonts, remote images, or remote audio.
+Browser speech synthesis remains opt-in and can use a browser or
+operating-system service outside the app's network layer.
 
 ---
 
 ## 26. Testing
 
-Use Vitest in a Node environment for pure engine, AI, grammar, replay, and content code. Use `*.test.ts` names. A failing generated test must print the fast-check seed and replay path.
+Use Vitest in a Node environment for pure engine, AI, grammar, replay, and
+content code. Use `*.test.ts` names. A failing generated test must print the
+fast-check seed and replay path.
 
 ### 26.1 Engine unit tests
 
@@ -1623,7 +1821,8 @@ Test at minimum:
 
 ### 26.2 Property tests
 
-Use fast-check to generate thousands of random boards and action sequences. Store a fixed regression example for each defect found by generation.
+Use fast-check to generate thousands of random boards and action sequences.
+Store a fixed regression example for each defect found by generation.
 
 Assert:
 
@@ -1660,7 +1859,11 @@ Fail the build when detecting:
 
 ### 26.5 Browser tests
 
-`npm run test:e2e` must run `npm run build` first. Playwright's `webServer` starts `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort`, waits for `http://127.0.0.1:4173/grand-transition/`, and uses that address as `baseURL`. Set `reuseExistingServer: false` in CI so stale output cannot pass. Use role, label, and visible-text locators. Cover:
+`npm run test:e2e` must run `npm run build` first. Playwright's `webServer`
+starts `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort`, waits for
+`http://127.0.0.1:4173/grand-transition/`, and uses that address as `baseURL`.
+Set `reuseExistingServer: false` in CI so stale output cannot pass. Use role,
+label, and visible-text locators. Cover:
 
 - Complete AI match
 - Complete hotseat match
@@ -1681,13 +1884,20 @@ Fail the build when detecting:
 
 ### 26.6 Component and accessibility tests
 
-Use Vitest Browser Mode for Lit components. Do not rely only on jsdom or another simulated DOM. Test typed properties, command events, focus movement, light- and Shadow-DOM boundaries, and immutable rerendering.
+Use Vitest Browser Mode for Lit components. Do not rely only on jsdom or another
+simulated DOM. Test typed properties, command events, focus movement, light- and
+Shadow-DOM boundaries, and immutable rerendering.
 
-Run `@axe-core/playwright` on every main screen and important overlay state. Automated scans do not replace manual keyboard, focus, screen-reader, zoom, contrast, reduced-motion, or audible speech checks.
+Run `@axe-core/playwright` on every main screen and important overlay state.
+Automated scans do not replace manual keyboard, focus, screen-reader, zoom,
+contrast, reduced-motion, or audible speech checks.
 
 ### 26.7 Coverage policy
 
-Generate coverage for pure TypeScript code. Do not set a numeric threshold before the engine foundation supplies a representative baseline. Before Milestone 2 closes, approve and record per-file statement, branch, function, and line thresholds. Never exclude difficult rule files to make the gate pass.
+Generate coverage for pure TypeScript code. Do not set a numeric threshold
+before the engine foundation supplies a representative baseline. Before
+Milestone 2 closes, approve and record per-file statement, branch, function, and
+line thresholds. Never exclude difficult rule files to make the gate pass.
 
 ---
 
@@ -1695,7 +1905,8 @@ Generate coverage for pure TypeScript code. Do not set a numeric threshold befor
 
 Do not add external analytics by default.
 
-For balancing during development, provide an opt-in local match log export containing:
+For balancing during development, provide an opt-in local match log export
+containing:
 
 - Seed
 - Characters
@@ -1774,7 +1985,8 @@ Acceptance:
 - Visual quality is reviewed against the approved mock north-star
 - Every scoring event is clearly explained
 - Reduced-motion mode works
-- Text-to-speech passes automated adapter checks and manual audible and silent-fallback checks
+- Text-to-speech passes automated adapter checks and manual audible and
+  silent-fallback checks
 
 ### Milestone 4: MVP content completion
 
@@ -1821,10 +2033,12 @@ The web app is complete when:
 
 - It provides a coherent title-to-results game flow.
 - All eighteen MVP archetypes are playable.
-- All five scenes have distinct graphics, ambient motion, musical treatment, and phrase pools.
+- All five scenes have distinct graphics, ambient motion, musical treatment, and
+  phrase pools.
 - AI offers three meaningfully different difficulty levels.
 - Hotseat mode protects private information.
-- Grammar, scoring, combos, weaknesses, continuations, comebacks, and sudden death behave exactly as specified.
+- Grammar, scoring, combos, weaknesses, continuations, comebacks, and sudden
+  death behave exactly as specified.
 - Every scoring result is explainable from visible components.
 - The engine is deterministic and replayable.
 - The content system is data-driven and validated.
@@ -1832,30 +2046,43 @@ The web app is complete when:
 - The UI is responsive and accessible.
 - The artwork, audio, writing, and branding are wholly original.
 - No online functionality exists.
-- The tested production artifact is deployed from GitHub Actions to GitHub Pages.
-- The published app works under `/grand-transition/` with no broken assets or route fallback dependency.
+- The tested production artifact is deployed from GitHub Actions to GitHub
+  Pages.
+- The published app works under `/grand-transition/` with no broken assets or
+  route fallback dependency.
 
 ---
 
 ## 30. Implementation rules for the receiving agent
 
-1. If `tmp/` contains a local proof-of-concept, read it only to understand behavior and tone. Do not preserve its implementation structure merely for convenience.
+1. If `tmp/` contains a local proof-of-concept, read it only to understand
+   behavior and tone. Do not preserve its implementation structure merely for
+   convenience.
 2. Start by extracting a deterministic engine before building visual polish.
 3. Keep game rules out of Web Components.
 4. Use TypeScript strict mode.
-5. Use Lit only for the view layer. Do not add React, another UI framework, or a virtual DOM.
-6. Use original placeholder assets until final art exists. Never scrape images from the web into the product.
+5. Use Lit only for the view layer. Do not add React, another UI framework, or a
+   virtual DOM.
+6. Use original placeholder assets until final art exists. Never scrape images
+   from the web into the product.
 7. Keep all prose in localization files.
 8. Keep all balance constants in configuration.
 9. Validate content at build time.
 10. Add tests with every game-rule change.
-11. Preserve single-player and hotseat scope. Do not add networking abstractions unless they directly benefit deterministic replays.
-12. Treat named politicians only as private creative references. Production-facing characters must use fictional names and original designs.
-13. Update all affected approved specifications when implementation decisions change.
-14. At close-out, provide a detailed handoff containing implemented scope, tests run, known gaps, deferred work, and any specification deviations.
-15. Keep the Vite base path and Playwright subpath test aligned with the GitHub repository name.
-16. Do not add WebGL or another graphics runtime without the evidence required in section 14.2.
-17. Keep text-to-speech optional, private in hotseat mode, and replaceable through the speech adapter.
+11. Preserve single-player and hotseat scope. Do not add networking abstractions
+    unless they directly benefit deterministic replays.
+12. Treat named politicians only as private creative references.
+    Production-facing characters must use fictional names and original designs.
+13. Update all affected approved specifications when implementation decisions
+    change.
+14. At close-out, provide a detailed handoff containing implemented scope, tests
+    run, known gaps, deferred work, and any specification deviations.
+15. Keep the Vite base path and Playwright subpath test aligned with the GitHub
+    repository name.
+16. Do not add WebGL or another graphics runtime without the evidence required
+    in section 14.2.
+17. Keep text-to-speech optional, private in hotseat mode, and replaceable
+    through the speech adapter.
 
 ---
 
@@ -1864,8 +2091,10 @@ The web app is complete when:
 The receiving agent should begin in this order:
 
 1. Create the Node.js 24, npm, TypeScript 6, Vite 8, and Lit 3 project.
-2. Add lint, format, type, content, asset, unit, browser, end-to-end, build, and combined `ci` scripts.
-3. Add the GitHub Pages base path and validation workflow. Do not enable deployment until the first production build passes.
+2. Add lint, format, type, content, asset, unit, browser, end-to-end, build, and
+   combined `ci` scripts.
+3. Add the GitHub Pages base path and validation workflow. Do not enable
+   deployment until the first production build passes.
 4. Define Zod content schemas and sample data for two characters and one scene.
 5. Implement seeded random generation.
 6. Implement the immutable game state and command reducer.
@@ -1874,15 +2103,19 @@ The receiving agent should begin in this order:
 9. Implement scoring, weaknesses, combos, continuations, and comebacks.
 10. Write engine and property tests before connecting the UI.
 11. Build Lit setup and match screens with temporary original vector art.
-12. Add the speech adapter, basic optional text-to-speech, easy AI, and hotseat privacy.
-13. Build the Sharp asset pipeline and complete one polished vertical slice against section 14 and any supplied `tmp/` references.
-14. Expand content and graphics only after the engine and vertical slice are stable.
+12. Add the speech adapter, basic optional text-to-speech, easy AI, and hotseat
+    privacy.
+13. Build the Sharp asset pipeline and complete one polished vertical slice
+    against section 14 and any supplied `tmp/` references.
+14. Expand content and graphics only after the engine and vertical slice are
+    stable.
 
 ---
 
 ## 32. Technology research sources
 
-These primary sources support the decision in section 4. They provide evidence, not a second specification.
+These primary sources support the decision in section 4. They provide evidence,
+not a second specification.
 
 - [Lit overview and size](https://lit.dev/docs/v3/)
 - [Lit browser requirements](https://lit.dev/docs/tools/requirements/)
