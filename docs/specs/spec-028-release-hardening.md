@@ -37,6 +37,13 @@ data-driven content, locale-isolated English, responsive accessible UI, and
 wholly original art, audio, writing, and branding. It has no online behavior.
 Only the artifact that passes the complete gate can proceed to publication.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on the complete production UI and main edge states.
+2. After audit repairs, run `$impeccable critique` on the complete release UI.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 `npm ci` and `npm run ci` pass cleanly. Supported projects have no uncaught

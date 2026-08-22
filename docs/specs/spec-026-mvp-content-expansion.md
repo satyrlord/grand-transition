@@ -75,6 +75,13 @@ general nouns, 120 verbs, 100 predicates, 6 to 10 conjunctions, 60 finishers,
 20 to 30 character phrases per character, and at least 9 comeback lines per
 character. Exact totals can change only when an hour of play stays varied.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` across affected roster and scene UI variants.
+2. After audit repairs, run `$impeccable critique` across the same content slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 All content, localization, asset, reference, license, and minimum-volume checks

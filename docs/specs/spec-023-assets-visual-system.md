@@ -28,6 +28,13 @@ WebP runtime variants and a manifest with dimensions, crop, owner, source, and
 license. Import through the manifest. Load setup art first and only the selected
 match package next. Use self-hosted licensed WOFF2 fonts with metric fallbacks.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on the final-art title, setup, and match surfaces.
+2. After audit repairs, run `$impeccable critique` on the visual-system slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Validation proves formats, sizes, crops, ownership, and licenses. Browser tests

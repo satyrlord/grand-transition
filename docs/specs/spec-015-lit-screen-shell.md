@@ -18,6 +18,13 @@ valid. Screens use light DOM. Shadow DOM is limited to isolated leaf controls
 with explicit style and event contracts. Components use native controls before
 ARIA and never duplicate authoritative state.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on the built title and setup screens.
+2. After audit repairs, run `$impeccable critique` on both screen states.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Browser component tests prove immutable properties, bubbling and composed typed

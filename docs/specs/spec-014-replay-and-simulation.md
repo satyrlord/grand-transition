@@ -21,6 +21,13 @@ export replay JSON; and validate content. They are unavailable in production.
 Generated tests preserve legal failure paths, Pride, charge, ownership, command,
 and replay invariants. Never exclude difficult rule files from coverage.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on all visible developer inspection controls.
+2. After audit repairs, run `$impeccable critique` on those same controls.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Replay reproduces exact final state. Corrupt or unsupported logs fail safely.

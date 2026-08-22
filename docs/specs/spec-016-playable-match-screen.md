@@ -22,6 +22,13 @@ cards; separate keys select private cards; Enter commits; R redraws; C opens
 comebacks; Escape closes overlays. Hints appear only for keyboard use or by
 setting. Illegal cards remain selectable only for deliberate faults.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on all affected match and draft states.
+2. After audit repairs, run `$impeccable critique` on the same match slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Playwright completes both sides of a hotseat draft, redraw, fault, and commit at

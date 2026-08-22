@@ -26,6 +26,13 @@ Simulation reports seed, workload, matchups, difficulties, win rates,
 rule-event rates, failures, and environment. Local logs are opt-in, contain no
 personal data, and never leave the device automatically.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on UI states affected by final balance or copy edits.
+2. After audit repairs, run `$impeccable critique` on those same affected states.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Every matchup completes. No character exceeds 55% simulated win rate without a
