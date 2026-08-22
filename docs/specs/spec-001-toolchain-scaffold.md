@@ -28,13 +28,6 @@ Create source ownership roots for `src/app`, `src/components`, `src/engine`,
 Keep screens under `src/app/screens` and pure grammar under
 `src/engine/grammar`. Record exact versions in `package-lock.json`.
 
-## Impeccable UI validation
-
-1. Run `$impeccable audit` on the built title placeholder.
-2. After audit repairs, run `$impeccable critique` on the same title surface.
-
-Apply the shared Impeccable evidence and severity gate in the milestone index.
-
 ## Verify and stop
 
 `npm ci`, `npm run typecheck`, and `npm run build` pass. The development and
