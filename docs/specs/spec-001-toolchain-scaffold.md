@@ -7,9 +7,11 @@
 
 ## Deliver
 
-Bootstrap Node.js 24 LTS, npm 11, strict TypeScript 6, Vite 8, Lit 3, the approved
+Bootstrap Node.js 24 LTS, npm 12, strict TypeScript 7, Vite 8, Lit 3, the approved
 directory skeleton, and an accessible title placeholder. Commit the lockfile.
 Add only `dev`, `preview`, `build`, and `typecheck` scripts in this slice.
+Install Playwright Test project-wide for the required browser evidence and later
+end-to-end use, but do not add test scripts or e2e cases in this slice.
 
 Use native ES modules, semantic HTML, plain CSS with cascade layers and custom
 properties, and static Lit property declarations. Use light DOM for screens.

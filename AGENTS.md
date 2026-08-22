@@ -12,7 +12,13 @@
 - Define proportionate acceptance and verification before implementation. Keep
   related tests cohesive; never weaken coverage, assertions, or failure
   visibility to save time or tokens.
+- Do not spend effort over-designing or over-engineering placeholder items.
 - Preserve unrelated user work and use verified facts in durable documentation.
+
+## Language Standard
+
+- All agent replies, project documentation, and project skills must conform to
+  ASD-STE100 Simplified Technical English standards.
 
 Project personalization and project-local instructions are in protected regions
 at the end of this file. They override conflicting workflow defaults, but not
@@ -171,7 +177,7 @@ Do not require this server for unrelated work.
 
 ## Coding Style & Naming Conventions
 
-Use Node.js 24 LTS, npm, TypeScript 6 strict mode, Vite 8, and Lit 3. Use two
+Use Node.js 24 LTS, npm, TypeScript 7 strict mode, Vite 8, and Lit 3. Use two
 spaces, `kebab-case` filenames, `PascalCase` types and classes, and `camelCase`
 functions. Lit is view-only: components receive immutable snapshots and emit
 typed commands. Keep rules free of Lit and DOM imports. Use light DOM for

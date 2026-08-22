@@ -20,8 +20,9 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-The repository is in specification and bootstrap planning. It does not yet
-contain a runnable game or an installed Node project.
+Milestone 001 provides a runnable Node project and an accessible title
+placeholder. The game is not playable yet. Later milestones add the quality
+gate, architecture, rules, content, and complete interface in dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
@@ -33,18 +34,12 @@ approved specification, the specification governs.
 
 ## Planned technology
 
-The approved implementation uses Node.js, TypeScript, Vite, Lit, plain CSS, a
-pure deterministic game engine, validated data files, and a static GitHub Pages
-build. The exact contracts and current milestones are in `docs/specs/`.
+The approved implementation uses Node.js 24 LTS, npm 12, TypeScript 7, Vite 8,
+Lit 3, plain CSS, a pure deterministic game engine, validated data files, and a
+static GitHub Pages build. The exact contracts and current milestones are in
+`docs/specs/`.
 
 ## Local references
 
 Untracked files in `tmp/` can provide visual or behavioral context. They are not
 required by a clean checkout and do not define product behavior.
-
-## Contributing
-
-Read [AGENTS.md](AGENTS.md) and the current approved milestone before making a
-change. Do not combine milestones unless the change request explicitly requires
-it. Do not commit generated `dist/` output, secrets, unlicensed assets, or
-private art masters.
