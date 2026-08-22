@@ -130,9 +130,9 @@ the current operating system and shell when running filesystem commands.
 
 ## Project Structure & Module Organization
 
-Approved specs are the single source of truth. The web-app spec is the initial
-baseline; follow approved milestone specs. Untracked `tmp/` files are context
-only. Put Lit screens in `src/app/`, components in `src/components/`, pure rules
+Approved files under `docs/specs/` are the only source of truth for the app.
+README, agent documents, guidance, and untracked `tmp/` files are context only.
+Put Lit screens in `src/app/`, components in `src/components/`, pure rules
 in `src/engine/`, AI in `src/ai/`, data in `src/content/`, and media in
 `src/assets/`. Keep art in `art/masters/`, unit tests in `tests/unit/`,
 component tests in `tests/browser/`, and flows in `e2e/`.

@@ -56,8 +56,8 @@ server configuration on clients that support that profile field.
 - No other repository MCP server is configured without a target-owned need.
 - No personal hooks or user-specific absolute paths are tracked.
 - No dependency-owned skills or agents are copied from `node_modules`.
-- No generic theme bundle is included. Section 14 of the web-app specification
-  already defines the visual direction.
+- No generic theme bundle is included. The approved visual milestone
+  specifications define the visual direction.
 - No generic orchestrator or builder agent is included. `AGENTS.md` owns
   coordination, implementation authority, verification, and close-out.
 

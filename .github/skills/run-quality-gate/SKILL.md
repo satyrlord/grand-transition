@@ -21,8 +21,8 @@ exists, lockfile, Vite, TypeScript, lint, test, Playwright, asset and locale
 configuration, and GitHub workflows. Inspect status and preserve unrelated
 work. Map the change to focused tests and final checks.
 
-The baseline specification requires these script names, but a name is not an
-executable gate until it exists. If project bootstrap is incomplete, report the
+The approved milestone specifications require script names, but a name is not
+an executable gate until it exists. If bootstrap is incomplete, report the
 missing script as `BLOCKED`; do not invent an equivalent command and call it a
 pass.
 

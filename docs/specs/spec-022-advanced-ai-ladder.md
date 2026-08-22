@@ -1,0 +1,29 @@
+# Milestone 022: Advanced AI and Ladder
+
+**Status:** Approved  
+**Depends on:** 021  
+**Owns:** Advanced AI difficulties, personalities, timing, and ladder flow  
+**Production-file budget:** 9
+
+## Deliver
+
+Add Party Strategist and Palace Operator search depth, denial, lethal choice,
+lethal blocking, continuation, comeback, and personality evaluation. Implement
+the single-player ladder and its local progress contract.
+
+Party Strategist uses one-ply evaluation, targets weaknesses, protects
+completion, uses finishers and comebacks, and recognizes immediate denial. It
+thinks for 700 to 1500 ms.
+
+Palace Operator uses two-ply beam search, tracks combos, steals lethal phrases,
+evaluates deliberate faults, predicts continuation breaks, manages charge, and
+applies personality without irrational play. It thinks for 900 to 1800 ms.
+Reduced-delay accessibility can shorten presentation delay, not search budget.
+Fixed seed, difficulty, and history reproduce choices.
+
+## Verify and stop
+
+Fixtures prove lethal preference, lethal blocking, and designed personality
+differences. Fixed seeds are deterministic. Timed tests record their environment
+and meet the approved budget. Playwright completes the ladder. `npm run ci`
+passes. Stop before final roster balance or production presentation.
