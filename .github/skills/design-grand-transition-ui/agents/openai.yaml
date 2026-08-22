@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Grand Transition UI"
+  short_description: "Design the Lit game UI with Impeccable"
+  default_prompt: "Use $design-grand-transition-ui and its required $impeccable flow to design or review this Grand Transition interface scope."
+policy:
+  allow_implicit_invocation: true

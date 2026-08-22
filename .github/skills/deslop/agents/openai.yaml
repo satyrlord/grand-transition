@@ -1,0 +1,6 @@
+interface:
+  display_name: "Deslop"
+  short_description: "Remove unsupported repository content"
+  default_prompt: "Use $deslop to audit and clean the authorized Grand Transition scope."
+policy:
+  allow_implicit_invocation: true
