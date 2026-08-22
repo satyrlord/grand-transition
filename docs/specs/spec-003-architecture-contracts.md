@@ -10,7 +10,8 @@
 Define immutable `GameState`, `GameCommand`, reducer result, typed rule error,
 random source, grammar adapter, storage port, and speech port contracts. Add an
 automated boundary check for pure engine, artificial intelligence (AI),
-content, grammar, scoring, and replay modules.
+content, grammar, scoring, and replay modules. Run the boundary check inside
+`validate` after localization and before typed lint.
 
 `GameState` contains a schema version, seed, phase, mode, round, opening and
 active player IDs, scene ID, board, player states, optional pending resolution
