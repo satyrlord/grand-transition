@@ -4,9 +4,19 @@
 **Document type:** Build specification and agent handoff  
 **Target:** Production-quality single-page web game  
 **Language:** English first; Romanian localization later  
-**Primary modes:** Single-player versus AI and local hotseat PvP  
+**Primary modes:** Single-player campaign ladder, single player versus AI and local hotseat PvP
 **Out of scope:** Online multiplayer, matchmaking, accounts, cloud saves, public user-generated content, remote leaderboards  
-**Behavioral reference:** `tmp/grand-transition-verbal-republic-poc.html`  
+**Local references:** Optional untracked behavior and visual references can be supplied in `tmp/`; they are not required by a clean checkout.
+
+---
+
+## Specification authority
+
+The approved specification set is the single source of truth for product scope, architecture, behavior, acceptance criteria, and delivery. This file is the initial product and implementation baseline. It is expected to be split into focused milestone specifications as planning matures.
+
+Each future milestone specification must identify its status, scope, dependencies, acceptance criteria, and any baseline sections that it refines or supersedes. A later, more specific approved specification governs its stated scope. Update all affected approved specifications in the same change so the set does not retain conflicting requirements.
+
+Contributor guides, research sources, prototypes, untracked `tmp/` files, and implementation notes are supporting context only. They do not override an approved specification.
 
 ---
 
@@ -21,6 +31,7 @@ The finished product must feel like a real game rather than a prototype:
 - Original illustrated characters and environments
 - Strong motion design and audiovisual feedback
 - Clear tactical information
+- A minimalistic but highly functional UI
 - Deterministic and thoroughly tested game rules
 - A scalable data-driven phrase system
 - Competent personality-driven AI
@@ -57,7 +68,6 @@ The player must always understand:
 - Which phrases belong to the shared board or private hand
 - Why an insult caused its final damage
 - Which weak spot, combo, finisher, or comeback activated
-- What the opponent can plausibly do next
 
 Animation must reinforce state changes, not hide them.
 
@@ -96,7 +106,8 @@ The MVP must include:
 
 - Eighteen playable archetypes
 - At least five scenes
-- Single-player versus AI
+- Single-player ladder versus AI
+- Single-player custom match versus AI
 - Three AI difficulty levels
 - Local hotseat PvP
 - Nine-slot shared phrase board
@@ -126,7 +137,6 @@ The MVP must include:
 
 Design the architecture so these can be added later without rewriting the engine:
 
-- Career mode
 - Character unlocks
 - Scene objectives
 - Additional archetypes
@@ -158,7 +168,9 @@ Do not implement:
 
 ## 4. Technology constraints
 
-The approved stack and research record is [`tech-stack-decision.md`](tech-stack-decision.md). It is part of this specification.
+This section records the current cross-cutting technology contract. A future approved milestone specification can refine it only when that specification identifies the superseded requirements and the affected specification set is updated together.
+
+### 4.1 Approved stack
 
 Use:
 
@@ -173,7 +185,7 @@ Use:
 - Canvas 2D only for particles, ambience, and transitions
 - Web Audio API for sound and native `speechSynthesis` for optional text-to-speech
 - `localStorage` for settings and tutorial state; IndexedDB only when save volume requires it
-- Vitest, fast-check, Vitest Browser Mode, Playwright, and `@axe-core/playwright`
+- Vitest, fast-check, Vitest Browser Mode with `@vitest/browser-playwright`, Playwright, and `@axe-core/playwright`
 - ESLint with typed `typescript-eslint`, Prettier, and markdownlint
 
 Do not use:
@@ -192,6 +204,51 @@ Do not use:
 The engine, AI, grammar, scoring, replay, and content rules must not import Lit or DOM APIs. Lit receives immutable state snapshots and emits typed commands. Use light DOM for screens and the coordinated match surface. Use Shadow DOM only for isolated leaf controls with an explicit style and event contract.
 
 The production output is the static `dist/` directory. GitHub Actions must run the full quality gate before it deploys that directory to GitHub Pages. Do not commit `dist/`.
+
+### 4.2 UI decision rationale
+
+React is viable. It provides a familiar component model, mature tools, a large contributor pool, and a broad package ecosystem. React 19 also supports custom elements. These benefits become stronger for server rendering, complex URL routing, shared React component systems, or a large React-focused team.
+
+React is not the default for this product. The game has no server, accounts, remote data, or search-driven routes. Its authoritative state is already a deterministic command reducer. React would add JSX, `react`, `react-dom`, a framework lifecycle, and effect or ref bridges for Web Audio, Canvas, timers, and imperative animation. It does not make game rules, accessibility, or speech synthesis automatic.
+
+Raw Web Components avoid a library runtime but require project-owned template, update, property, and lifecycle code across a dense match interface. Lit is the chosen middle path. It adds declarative templates, batched reactive updates, and custom-element ergonomics in about 5 KB compressed while retaining native HTML elements as the runtime boundary.
+
+Mitigate Lit's smaller ecosystem and Shadow DOM costs as follows:
+
+- Use light DOM for screens and the coordinated match layout.
+- Use Shadow DOM only for isolated leaf controls.
+- Pass immutable values through typed properties.
+- Dispatch cross-boundary events with `bubbles: true` and `composed: true`.
+- Use semantic native controls before ARIA.
+- Test components in real browsers.
+- Use static Lit property declarations. Do not enable decorators without an approved specification change.
+
+Reconsider React only if the scope gains server rendering, complex route data, a required React component system, or a React-specialist team large enough that staffing outweighs the additional runtime boundary.
+
+### 4.3 Version and command policy
+
+Exact dependency versions belong in `package-lock.json`. Pin supported major versions in `package.json`, review automated update pull requests, and update this section when a major version changes an architectural contract. Use TypeScript 6 until typed linting and other compiler-API tools support TypeScript 7 without a compatibility compiler.
+
+The initial package must expose:
+
+```text
+npm run dev             Vite development server
+npm run preview         Serve the production build locally
+npm run build           Validate and create dist
+npm run assets:build    Generate runtime image variants from available masters
+npm run assets:validate Validate committed assets and their manifest
+npm run lint            Typed ESLint checks
+npm run format:check    Prettier check
+npm run typecheck       TypeScript without emit
+npm run test            Vitest unit and property tests
+npm run test:coverage   Coverage for pure TypeScript code
+npm run test:browser    Real-browser Lit component tests
+npm run test:e2e        Production-build Playwright flows
+npm run validate        Docs, assets, content, localization, lint, and types
+npm run ci              Complete required local and CI gate
+```
+
+`validate` includes markdownlint, asset-manifest validation, Zod content checks, localization key parity, ESLint, and TypeScript. `ci` runs `format:check`, `validate`, unit tests, browser tests, coverage, and `test:e2e` in that order. The end-to-end script performs the production build.
 
 ---
 
@@ -928,7 +985,7 @@ interface SceneDefinition {
 
 Create an original illustrated political-theatre aesthetic.
 
-The approved visual north-star is `tmp/ChatGPT Image Jul 31, 2026, 01_27_11 AM.png`. Match its perceived production value, dense but ordered information hierarchy, painterly portrait finish, dramatic broadcast lighting, tactile paper and metal materials, and clear red-versus-blue stage framing. Do not treat the image as final production art or as permission to reuse an unverified source asset.
+Optional visual references can be supplied in the untracked `tmp/` folder. When present, use them to assess perceived production value, information hierarchy, painterly portrait finish, dramatic broadcast lighting, tactile materials, and stage framing. Do not treat them as final production art, required build inputs, or permission to reuse an unverified source asset.
 
 The target is a collision of:
 
@@ -1223,7 +1280,7 @@ For a fixed match seed, AI difficulty, and action history, AI choices must be re
 Include:
 
 - Original menu music
-- One ambient track per scene or a shared adaptive score
+- A distinct musical treatment per scene, delivered by a dedicated track or a scene-specific mix of a shared adaptive score
 - Phrase selection sounds by role
 - Sentence commit sound
 - Light and heavy damage impacts
@@ -1500,7 +1557,7 @@ Measure the production build with representative final-quality art. Record the o
 
 ### 25.2 Browser support
 
-Support the current and two prior major releases of Chromium and Safari, plus current Firefox ESR. Test current Chromium, Firefox, and WebKit with Playwright. Support current mobile Safari and Chrome at the responsive sizes in section 15.
+Target the current and two prior major releases of Chromium and Safari, plus current Firefox ESR. CI must run current Playwright Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit projects. Each release also records a manual or hosted result for the oldest target Safari version. If that environment is unavailable, mark old-Safari support unverified rather than claiming it as tested. Support current mobile Safari and Chrome at the responsive sizes in section 15.
 
 Do not add legacy-browser polyfills or support Internet Explorer, Classic Edge, or old embedded WebViews. Any broader browser requirement needs a new decision with bundle and test costs.
 
@@ -1508,19 +1565,28 @@ Do not add legacy-browser polyfills or support Internet Explorer, Classic Edge, 
 
 Deploy the Vite `dist/` artifact to GitHub Pages with GitHub Actions. Set Vite `base` to `/grand-transition/`. Use one `index.html` entry and in-memory screen state; do not depend on a server rewrite for route fallback.
 
-The current deployment identity assumption is repository `grand-transition` with default branch `main`. Before creating the workflow, verify both values. If the repository slug or branch differs, update this specification, Vite, Playwright, and the workflow together.
+The confirmed deployment repository is `satyrlord/grand-transition` with default branch `main`. Vite and Playwright must use the `/grand-transition/` base path. If the repository is renamed, transferred to a user-site root, or changes its default branch, update all affected specifications, Vite, Playwright, and the workflow together.
 
 The workflow must:
 
 1. Install Node.js 24 LTS and run `npm ci`.
-2. Run `npm run ci`.
-3. Upload only `dist/` with the official Pages artifact action.
-4. Deploy only after the build job succeeds on the default branch.
-5. Use the minimum `contents: read`, `pages: write`, and `id-token: write` permissions.
+2. Run `npx playwright install --with-deps chromium firefox webkit`.
+3. Run `npm run ci`.
+4. Upload only `dist/` with the official Pages artifact action.
+5. Deploy only after the build job succeeds on the default branch.
+6. Use the minimum `contents: read`, `pages: write`, and `id-token: write` permissions.
 
 Pull requests run the full build and test gate but do not deploy. After deployment, smoke-test the published repository URL, asset paths, refresh behavior, text-to-speech availability state, and one complete match.
 
-Production code must make no runtime `fetch`, XMLHttpRequest, WebSocket, EventSource, analytics, font, image, or audio request to another origin. Add the CSP meta policy specified in `tech-stack-decision.md` as the first applicable policy in `index.html`. Do not allow inline scripts or `unsafe-eval`. Browser speech synthesis remains opt-in and can use a browser or operating-system service outside the app's network layer.
+Production code must make no runtime `fetch`, XMLHttpRequest, WebSocket, EventSource, analytics, font, image, or audio request to another origin. A Vite `transformIndexHtml` plugin must inject this CSP meta policy into production builds only:
+
+```text
+default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
+img-src 'self' data: blob:; media-src 'self'; font-src 'self';
+connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'
+```
+
+Development must omit the production policy so Vite HMR can use its local WebSocket. `style-src 'unsafe-inline'` is a deliberate broad exception for Lit styles and dynamic visual tokens; mitigate it by rejecting unsafe HTML, using text nodes for user text, and forbidding imported style text. Do not allow inline scripts, `unsafe-eval`, remote fonts, remote images, or remote audio. Browser speech synthesis remains opt-in and can use a browser or operating-system service outside the app's network layer.
 
 ---
 
@@ -1755,7 +1821,7 @@ The web app is complete when:
 
 - It provides a coherent title-to-results game flow.
 - All eighteen MVP archetypes are playable.
-- All five scenes have distinct graphics, ambient motion, music, and phrase pools.
+- All five scenes have distinct graphics, ambient motion, musical treatment, and phrase pools.
 - AI offers three meaningfully different difficulty levels.
 - Hotseat mode protects private information.
 - Grammar, scoring, combos, weaknesses, continuations, comebacks, and sudden death behave exactly as specified.
@@ -1773,7 +1839,7 @@ The web app is complete when:
 
 ## 30. Implementation rules for the receiving agent
 
-1. Read the existing proof-of-concept HTML only to understand behavior and tone. Do not preserve its implementation structure merely for convenience.
+1. If `tmp/` contains a local proof-of-concept, read it only to understand behavior and tone. Do not preserve its implementation structure merely for convenience.
 2. Start by extracting a deterministic engine before building visual polish.
 3. Keep game rules out of Web Components.
 4. Use TypeScript strict mode.
@@ -1785,7 +1851,7 @@ The web app is complete when:
 10. Add tests with every game-rule change.
 11. Preserve single-player and hotseat scope. Do not add networking abstractions unless they directly benefit deterministic replays.
 12. Treat named politicians only as private creative references. Production-facing characters must use fictional names and original designs.
-13. Update this specification when implementation decisions change.
+13. Update all affected approved specifications when implementation decisions change.
 14. At close-out, provide a detailed handoff containing implemented scope, tests run, known gaps, deferred work, and any specification deviations.
 15. Keep the Vite base path and Playwright subpath test aligned with the GitHub repository name.
 16. Do not add WebGL or another graphics runtime without the evidence required in section 14.2.
@@ -1809,5 +1875,33 @@ The receiving agent should begin in this order:
 10. Write engine and property tests before connecting the UI.
 11. Build Lit setup and match screens with temporary original vector art.
 12. Add the speech adapter, basic optional text-to-speech, easy AI, and hotseat privacy.
-13. Build the Sharp asset pipeline and complete one polished vertical slice against the approved mock.
+13. Build the Sharp asset pipeline and complete one polished vertical slice against section 14 and any supplied `tmp/` references.
 14. Expand content and graphics only after the engine and vertical slice are stable.
+
+---
+
+## 32. Technology research sources
+
+These primary sources support the decision in section 4. They provide evidence, not a second specification.
+
+- [Lit overview and size](https://lit.dev/docs/v3/)
+- [Lit browser requirements](https://lit.dev/docs/tools/requirements/)
+- [Lit testing guidance](https://lit.dev/docs/tools/testing/)
+- [Lit localization](https://lit.dev/docs/localization/overview/)
+- [React state management](https://react.dev/learn/managing-state)
+- [React 19 custom-element support](https://react.dev/blog/2024/12/05/react-19)
+- [Vite 8 release](https://vite.dev/blog/announcing-vite8)
+- [Vite GitHub Pages deployment](https://vite.dev/guide/static-deploy.html#github-pages)
+- [Node.js release status](https://nodejs.org/en/about/previous-releases)
+- [TypeScript 7 compiler API transition](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)
+- [Zod](https://zod.dev/)
+- [Vitest Browser Mode](https://vitest.dev/guide/browser/)
+- [Playwright browser support](https://playwright.dev/docs/browsers)
+- [Playwright continuous integration](https://playwright.dev/docs/ci)
+- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing)
+- [Web Speech synthesis](https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis)
+- [CSP for a static single-page app](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP)
+- [Web Storage exceptions](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- [Sharp image processing](https://sharp.pixelplumbing.com/)
+- [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+- [Archived `satyrlord/mb` deployment precedent](https://github.com/satyrlord/mb)
