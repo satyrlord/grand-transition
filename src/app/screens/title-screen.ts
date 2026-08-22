@@ -33,13 +33,20 @@ export class GrandTransitionTitle extends LitElement {
             </span>
           </h1>
           <p class="subtitle">A Verbal Republic</p>
-          <p class="status">${statusLead}<br /> being ${statusTail}</p>
+          <p class="status">
+            ${statusLead}<br />
+            being ${statusTail}
+          </p>
         </header>
       </main>
     `;
   }
 }
 
-if (!customElements.get(elementName)) {
-  customElements.define(elementName, GrandTransitionTitle);
+export function registerGrandTransitionTitle(): void {
+  if (!customElements.get(elementName)) {
+    customElements.define(elementName, GrandTransitionTitle);
+  }
 }
+
+registerGrandTransitionTitle();
