@@ -56,5 +56,8 @@ Thumbs.db
 *.seed
 *.pid.lock
 
+# Private or external editable art masters
+art/masters/
+
 # Temp paths
 tmp/

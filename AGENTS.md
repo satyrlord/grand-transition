@@ -2,11 +2,11 @@
 
 ## Project Structure & Module Organization
 
-Treat `docs/grand-transition-web-app-spec.md` and `docs/tech-stack-decision.md` as the implementation contract. Files in `tmp/` are references, not production architecture. Put Lit screens in `src/app/`, components in `src/components/`, pure rules in `src/engine/`, AI in `src/ai/`, data in `src/content/`, and media in `src/assets/`. Keep editable art in `art/masters/`, unit tests in `tests/unit/`, component tests in `tests/browser/`, and full flows in `e2e/`.
+Approved specs are the single source of truth. The web-app spec is the initial baseline; follow approved milestone specs. Untracked `tmp/` files are context only. Put Lit screens in `src/app/`, components in `src/components/`, pure rules in `src/engine/`, AI in `src/ai/`, data in `src/content/`, and media in `src/assets/`. Keep art in `art/masters/`, unit tests in `tests/unit/`, component tests in `tests/browser/`, and flows in `e2e/`.
 
 ## Build, Test, and Development Commands
 
-The package has not been bootstrapped yet. Inspect the prototype with `py -m http.server 8000`, then open `/tmp/grand-transition-verbal-republic-poc.html`. The initial package must expose:
+If `tmp/` contains an HTML prototype, inspect it with `py -m http.server 8000`. Bootstrap these scripts:
 
 ```text
 npm run dev | preview | build
@@ -28,7 +28,7 @@ Name tests after behavior, for example `continuation-break.test.ts`. Add a regre
 
 ## Commit & Pull Request Guidelines
 
-This checkout has no Git metadata, so no historic convention is verified. Use short imperative subjects, such as `Add seeded board generator`. Pull requests must cite specification sections, list checks and deviations, and include evidence for visible changes. Update both contracts when architecture or behavior changes.
+History uses short imperative subjects: `Add tmp directory to gitignore`, `Clarify persistence, asset pipeline, and speech privacy contracts`. Pull requests must cite specification sections, list checks and deviations, and include evidence for visible changes. Update all affected specs when architecture or behavior changes.
 
 ## Assets, Security & Deployment
 
