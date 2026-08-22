@@ -16,9 +16,9 @@ do not stop after a document change.
 
 ## Read the owners
 
-Read `AGENTS.md`, the baseline specification, each applicable approved milestone
-specification, current status, the owning source, callers, consumers, tests, and
-tool configuration. Identify affected engine, grammar, AI, content,
+Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, each applicable
+approved milestone specification, current status, owning source, callers,
+tests, and tool configuration. Identify affected engine, grammar, AI, content,
 localization, UI, accessibility, persistence, asset, security, performance, and
 deployment contracts.
 

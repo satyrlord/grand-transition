@@ -1,7 +1,7 @@
 # Implement an approved milestone
 
 Read [the repository instructions](../../AGENTS.md), the
-[approved baseline specification](../../docs/grand-transition-web-app-spec.md),
+[approved specification index](../../docs/specs/spec-000-milestone-index.md),
 and the applicable milestone specification. Use the
 [add-feature workflow](../skills/add-feature/SKILL.md).
 
