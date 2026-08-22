@@ -1508,6 +1508,8 @@ Do not add legacy-browser polyfills or support Internet Explorer, Classic Edge, 
 
 Deploy the Vite `dist/` artifact to GitHub Pages with GitHub Actions. Set Vite `base` to `/grand-transition/`. Use one `index.html` entry and in-memory screen state; do not depend on a server rewrite for route fallback.
 
+The current deployment identity assumption is repository `grand-transition` with default branch `main`. Before creating the workflow, verify both values. If the repository slug or branch differs, update this specification, Vite, Playwright, and the workflow together.
+
 The workflow must:
 
 1. Install Node.js 24 LTS and run `npm ci`.
@@ -1517,6 +1519,8 @@ The workflow must:
 5. Use the minimum `contents: read`, `pages: write`, and `id-token: write` permissions.
 
 Pull requests run the full build and test gate but do not deploy. After deployment, smoke-test the published repository URL, asset paths, refresh behavior, text-to-speech availability state, and one complete match.
+
+Production code must make no runtime `fetch`, XMLHttpRequest, WebSocket, EventSource, analytics, font, image, or audio request to another origin. Add the CSP meta policy specified in `tech-stack-decision.md` as the first applicable policy in `index.html`. Do not allow inline scripts or `unsafe-eval`. Browser speech synthesis remains opt-in and can use a browser or operating-system service outside the app's network layer.
 
 ---
 
@@ -1590,7 +1594,7 @@ Fail the build when detecting:
 
 ### 26.5 Browser tests
 
-Run Playwright against the production build through `vite preview` and the `/grand-transition/` base path. Use role, label, and visible-text locators. Cover:
+`npm run test:e2e` must run `npm run build` first. Playwright's `webServer` starts `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort`, waits for `http://127.0.0.1:4173/grand-transition/`, and uses that address as `baseURL`. Set `reuseExistingServer: false` in CI so stale output cannot pass. Use role, label, and visible-text locators. Cover:
 
 - Complete AI match
 - Complete hotseat match
