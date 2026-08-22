@@ -258,6 +258,11 @@ src/
     audio-manager.ts
     music-manager.ts
     speech-manager.ts
+  persistence/
+    codecs.ts
+    storage-port.ts
+    browser-storage.ts
+    memory-storage.ts
   visual/
     particles.ts
     screen-shake.ts
@@ -985,7 +990,7 @@ Recommended motifs:
 
 Phrase cards must remain visually simple and highly legible.
 
-Keep every control, phrase, event-log entry, and score explanation in semantic DOM. Canvas may sit behind or above the interface for non-interactive effects, but it must not contain required text or controls.
+Keep every control, phrase, event-log entry, and score explanation in semantic DOM. Mark effects canvases `aria-hidden="true"` and set `pointer-events: none`. Canvas may sit behind or above the interface for non-interactive effects, but it must not contain required text, controls, block focus indicators, or intercept input.
 
 ### 14.4 Color system
 
@@ -1037,8 +1042,10 @@ For each scene:
 
 Asset production rules:
 
-- Keep editable, lossless masters under `art/masters/` or in the approved external art archive.
-- Generate responsive AVIF and WebP variants with the Sharp tool in `tools/`.
+- Keep editable, lossless masters in an ignored local `art/masters/` workspace or the approved external art archive.
+- Run `npm run assets:build` to generate responsive AVIF and WebP variants with Sharp.
+- Commit generated runtime variants and their manifest under `src/assets/generated/`; do not edit them by hand.
+- Run `npm run assets:validate` in `validate` and CI. A clean checkout must not require private masters.
 - Use PNG only when alpha fidelity or source tooling requires it.
 - Record dimensions, format, crop, owner, source, and license in the generated asset manifest.
 - Import runtime assets through the manifest so Vite can apply the GitHub Pages base path.
@@ -1238,13 +1245,15 @@ The speech system must:
 - Prefer a saved `voiceURI`, then a voice matching the active language, then the system default
 - Expose Auto voice, voice, rate, and speech volume settings
 - Queue complete insult lines
+- Speak only completed insults after they become public
 - Cancel stale speech when rounds change
 - Cancel speech when leaving the match or starting a rematch
-- Avoid speaking hidden hotseat text
+- Suppress speech during handover and private-hand reveal
+- Never speak draft fragments or hidden hotseat text
 - Show a clear unavailable state when synthesis or a suitable voice is unavailable
 - Keep speech synthesis behind a testable adapter
 
-Available voices differ by browser and operating system. Do not require one named voice. Automated tests verify selection, queue, cancellation, privacy, and fallback with a fake adapter. Release testing includes one manual audible check and one silent-fallback check.
+Available voices and processing differ by browser and operating system. Explain this in settings; do not promise offline or on-device processing and do not require one named voice. Automated tests verify selection, queue, cancellation, privacy, and fallback with a fake adapter. Release testing includes one manual audible check and one silent-fallback check.
 
 Design content so recorded voice acting can replace synthesis later. Keep speech synthesis separate from the Web Audio signal graph because the browser does not expose its output as a normal Web Audio source.
 
@@ -1263,7 +1272,7 @@ Persist settings locally.
 
 ## 19. Hotseat privacy
 
-Hotseat mode must support shared-screen privacy.
+Hotseat mode must support shared-screen privacy. Privacy is enabled by default and can be disabled only from match setup.
 
 When privacy is enabled:
 
@@ -1416,6 +1425,8 @@ Benefits:
 Do not place mutable game truth inside Web Components.
 
 The Lit app shell owns the current snapshot and dispatches commands to the reducer. Child components receive typed properties and emit typed custom events. Cross-component command events must use `bubbles: true` and `composed: true`. Components may keep temporary view state such as focus, an open tooltip, or an animation phase, but they must never duplicate authoritative rules, Pride, turn, board, hand, score, or replay state.
+
+Persistence uses pure, versioned codecs behind a `StoragePort`. The browser adapter may call `localStorage`; engine and codec code may not. Use an in-memory adapter when storage is blocked, full, or unavailable. A storage failure must not stop setup or a match. Show a non-blocking notice that settings will not persist. Test codec round trips, migrations, corrupt data, quota or security exceptions, and fallback behavior.
 
 ---
 
