@@ -21,6 +21,13 @@ applies personality without irrational play. It thinks for 900 to 1800 ms.
 Reduced-delay accessibility can shorten presentation delay, not search budget.
 Fixed seed, difficulty, and history reproduce choices.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on difficulty selection and all ladder states.
+2. After audit repairs, run `$impeccable critique` on the complete ladder slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Fixtures prove lethal preference, lethal blocking, and designed personality

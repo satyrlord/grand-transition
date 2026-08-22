@@ -54,6 +54,28 @@ complete an approved specification.
 - Temporary original assets are permitted only where stated. Do not add future
   compatibility or scaffolding.
 
+## Impeccable UI validation
+
+Milestones 001 and 014 through 029 affect user-visible UI. Each must complete
+these two separate validations against the implemented slice in its production
+browser build:
+
+1. Run `$impeccable audit` for technical accessibility, performance, theming,
+   responsive behavior, and implementation integrity. Run and verify the
+   bundled detector. Record the score, positive findings, each P0-P3 issue, and
+   the disposition of every issue.
+2. After audit repairs, run `$impeccable critique` on the same stable target.
+   Follow the current Impeccable orchestration contract, including isolated
+   design and detector/browser assessments when supported. Record heuristic
+   scores, cognitive-load and persona findings, design strengths, priorities,
+   the persisted snapshot, and every issue disposition.
+
+For both validations, inspect affected desktop and mobile states together in a
+bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
+Record accepted or deferred P2 and P3 findings with rationale and an owning
+future milestone. An unavailable built surface blocks these validations; a
+source-only review does not satisfy them.
+
 ## Dependency sequence
 
 1. [Toolchain scaffold](spec-001-toolchain-scaffold.md). Budget: 8. The empty

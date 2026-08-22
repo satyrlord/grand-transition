@@ -19,6 +19,13 @@ fragments stay visible.
 Hidden values cannot exist in tooltips, labels, live regions, logs, stale DOM,
 queued speech, previews, or private history.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on hidden, handover, ready, and revealed states.
+2. After audit repairs, run `$impeccable critique` on the complete handover flow.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Playwright checks DOM, accessible tree, focus, announcements, and queued speech

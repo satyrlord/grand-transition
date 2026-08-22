@@ -23,6 +23,13 @@ and volume. Speak only complete public insults. Cancel on round change, exit, or
 rematch. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on mixer, speech, subtitle, and unavailable states.
+2. After audit repairs, run `$impeccable critique` on the same audio UI slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Adapter tests cover enabled, disabled, unavailable, cancellation, and privacy

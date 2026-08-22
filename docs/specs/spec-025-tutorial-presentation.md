@@ -21,6 +21,13 @@ microphone plaques, voting panels, tickers, switchboards, and archive labels.
 Phrase cards remain simple. Controls use readable sans-serif type; headings can
 use a licensed serif or condensed grotesque; novelty fonts never carry body text.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on every affected tutorial and presentation state.
+2. After audit repairs, run `$impeccable critique` on the guided vertical slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 A new player can finish the guided flow by pointer and keyboard. Every tactical

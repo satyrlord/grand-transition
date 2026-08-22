@@ -19,6 +19,13 @@ Local Radio Caller lightly weights score, rarely denies or carries, misses some
 weaknesses and combos, and never commits a deliberate fault. Think for 500 to
 1100 ms unless reduced delay is enabled.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on AI setup, thinking, turn, and result states.
+2. After audit repairs, run `$impeccable critique` on the custom AI-match slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Easy AI chooses a valid action when one exists, respects simulated timer bounds,

@@ -19,6 +19,13 @@ and grammar fault. Animation reinforces state and cannot hide the explanation.
 Results display winner, final score, best insult, highest damage, longest valid
 sentence, weaknesses, highest combo, faults, comebacks, rematch, and setup.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on resolution, sudden-death, results, and rematch states.
+2. After audit repairs, run `$impeccable critique` on those same states.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Playwright completes a full hotseat match including continuation, comeback,

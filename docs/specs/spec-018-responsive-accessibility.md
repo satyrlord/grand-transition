@@ -23,6 +23,13 @@ has no forced deadline. Reduced motion disables shake and nonessential motion.
 Effects canvases are `aria-hidden`, ignore pointer input, and never contain
 required text or controls.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on every affected desktop and mobile screen state.
+2. After audit repairs, run `$impeccable critique` on the same responsive slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 Keyboard-only Playwright flows pass at 1280x720 and 390x844. Axe has no serious

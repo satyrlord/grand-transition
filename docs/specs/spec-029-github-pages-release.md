@@ -24,6 +24,13 @@ build. Use only `contents: read`, `pages: write`, and `id-token: write`.
 Pull requests never deploy. Published evidence covers the repository URL,
 subpath assets, refresh, CSP, speech availability, and a complete match.
 
+## Impeccable UI validation
+
+1. Run `$impeccable audit` on the published production application.
+2. After audit repairs, run `$impeccable critique` on the published application.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index.
+
 ## Verify and stop
 
 A pull request runs but does not deploy. `main` deploys the tested artifact.
