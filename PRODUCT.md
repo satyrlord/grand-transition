@@ -47,11 +47,13 @@ Private hotseat content must remain private during handovers.
   owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 005: the static title,
+- The implemented scope includes Milestones 001 through 007: the static title,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
-  content schemas, an English game-locale bundle, and original sample content.
-  It does not include grammar or playable game behavior.
+  content schemas, an English game-locale bundle, original sample content, and
+  minimum and two-clause English grammar, shared-subject forms, endings,
+  incomplete states, and strategic grammar faults. It does not include board
+  generation, drafting, scoring, or playable game behavior.
 
 ## Brand Commitments
 
