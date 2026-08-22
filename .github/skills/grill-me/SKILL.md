@@ -5,19 +5,22 @@ description: Challenge a Grand Transition plan one decision at a time before imp
 
 # Challenge a plan one decision at a time
 
-Remain read-only unless the user authorizes document edits.
+Remain read-only unless the user explicitly authorizes document edits.
 
 ## Prepare the decision tree
 
-Read `AGENTS.md`, the approved specification set, current implementation,
-tests, and relevant primary sources. Resolve every fact that repository evidence
-or an authoritative source can answer. Do not ask the user to rediscover facts.
+Read `AGENTS.md`, approved specifications, the current implementation, tests,
+and relevant primary sources.
+Resolve every fact that repository evidence or an authoritative source can
+answer.
+Do not ask the user to rediscover facts.
 
-List only genuine choices. Order them from parent to child. Put the highest-risk,
-least-reversible, or most dependency-heavy branch first. Probe applicable game
-rules, balance, AI, grammar, content safety, originality, localization,
-accessibility, privacy, browser support, assets, performance, delivery, and
-verification effects.
+List only genuine choices.
+Order choices from parent to child.
+Put the choice that is hardest to reverse or has the most dependencies first.
+Check applicable game rules, balance, AI, grammar, content safety, originality,
+localization, accessibility, privacy, browser support, assets, performance,
+delivery, and verification effects.
 
 ## Resolve one branch
 
@@ -36,14 +39,16 @@ appears, and cite that evidence.
 
 ## Record authorized decisions
 
-Identify one owning specification for each durable decision. If the user gives
-edit authority, update only that owner and every approved specification that
-would otherwise conflict. If the user does not authorize edits, report the
-exact future document change. Do not create a parallel decision log unless the
-repository contract requires one.
+Identify one owning specification for each durable decision.
+If the user gives edit authority, update only that owner and each approved
+specification that conflicts with the decision.
+If the user does not authorize edits, report the exact future document change.
+Do not create a parallel decision log unless the repository contract requires
+one.
 
-The grill is complete when each inventoried branch is resolved or explicitly
-deferred. A deferral must name its owner, reason, dependency, and verification
-step. Route authorized implementation to
+The decision review is complete when each inventoried branch is resolved or
+explicitly deferred.
+For each deferral, name its owner, reason, dependency, and verification step.
+Route authorized implementation to
 [add-feature](../add-feature/SKILL.md),
 [refactor](../refactor/SKILL.md), or [diagnose](../diagnose/SKILL.md).

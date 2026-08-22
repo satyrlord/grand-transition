@@ -7,9 +7,9 @@ description: Add or change Grand Transition product behavior and durable contrac
 
 ## Select the mode
 
-- Use definition mode when the user requests a specification or decision only.
+- Use definition mode when the user requests only a specification or decision.
 - Use implementation mode when the user requests working behavior.
-- Use repair mode when a confirmed defect changes or clarifies a contract.
+- Use repair mode when a confirmed defect requires a contract change or clarification.
 
 Do not edit product code in definition mode. In implementation or repair mode,
 do not stop after a document change.
@@ -28,10 +28,12 @@ Each changed behavior must have one owner and one objective verifier.
 
 Record user value, exact behavior, exclusions, failure behavior, privacy and
 accessibility effects, acceptance criteria, and any manual evidence. Update the
-smallest owning specification when behavior changes. Implement the complete
-authorized slice in the owning layer. Keep rules out of Lit components, route
-randomness through the seed, keep game-language prose out of rule logic, and do
-not add networking or compatibility work without an approved contract.
+smallest owning specification when behavior changes.
+Implement the complete authorized slice in the owning layer.
+Keep rules out of Lit components.
+Route randomness through the seed.
+Keep game-language prose out of rule logic.
+Do not add networking or compatibility work without an approved contract.
 
 Add the narrowest tests that fail for the changed behavior. Update affected
 developer and user documentation. For visible behavior, add real-browser
@@ -40,7 +42,7 @@ listening.
 
 ## Verify
 
-Run focused checks first. Then use
+Run focused checks first. Run the full gate with
 [run-quality-gate](../run-quality-gate/SKILL.md). Use
 [verify-game](../verify-game/SKILL.md) for production-browser evidence.
 

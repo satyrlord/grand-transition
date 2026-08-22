@@ -63,6 +63,7 @@ art/masters/
 
 # Temp paths
 tmp/
+.impeccable/
 
 # codex-workflow-managed-start
 agent_docs/
