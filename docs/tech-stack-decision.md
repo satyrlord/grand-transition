@@ -14,7 +14,7 @@ Use one HTML entry point and in-memory screen state. Do not use URL-path routing
 
 | Area | Choice | Rule |
 | --- | --- | --- |
-| Runtime | TypeScript 6, native ES modules | Enable `strict`, `noUncheckedIndexedAccess`, and `exactOptionalPropertyTypes`. Use TypeScript 6 until TypeScript 7 exposes the compiler API required by typed linting and localization tools. |
+| Runtime | TypeScript 6, native ES modules | Enable `strict`, `noUncheckedIndexedAccess`, and `exactOptionalPropertyTypes`. Use TypeScript 6 until typed linting and other compiler-API tools support TypeScript 7 without a compatibility compiler. |
 | UI | Lit 3 custom elements | Lit renders immutable state snapshots. Components emit typed `CustomEvent` commands. Lit must not own game truth. |
 | Styling | Plain CSS, cascade layers, custom properties | Use project-owned tokens and component styles. Do not use Tailwind, a component kit, or runtime CSS-in-JS. |
 | Build | Node.js 24 LTS, npm 11, Vite 8 | Commit `package-lock.json`. Use `npm ci` in automation. Vite emits the static `dist/` artifact. |
@@ -33,7 +33,7 @@ Exact dependency versions belong in `package-lock.json`. Pin majors in `package.
 
 React is viable. It provides a familiar component model, mature developer tools, a large contributor pool, and a broad package ecosystem. React 19 also supports custom elements. These benefits become stronger when a product needs server rendering, complex URL routing, shared framework components, or a large React-focused team.
 
-React is not the best default here. The product has no server, accounts, remote data, or SEO-driven routes. Its authoritative state is already a deterministic command reducer. React would add a second component lifecycle, JSX tooling, `react` and `react-dom`, and effect or ref bridges for Web Audio, Canvas, timers, and imperative animation. It does not make custom game rules, accessibility, or speech synthesis automatic.
+React is not the best default here. The product has no server, accounts, remote data, or SEO-driven routes. Its authoritative state is already a deterministic command reducer. React would add a framework lifecycle, JSX tooling, `react` and `react-dom`, and effect or ref bridges for Web Audio, Canvas, timers, and imperative animation. It does not make custom game rules, accessibility, or speech synthesis automatic.
 
 Raw Web Components avoid all library runtime cost and maximize platform control. Their disadvantage is project-owned template, update, lifecycle, and property boilerplate across a dense match interface.
 
@@ -61,12 +61,12 @@ The production screen must combine:
 - SVG for sharp ornaments and icons.
 - Responsive AVIF/WebP scene and portrait variants generated from lossless masters.
 - CSS transform and opacity motion for interface elements.
-- One Canvas 2D effects surface behind or above the semantic UI.
+- One non-interactive Canvas 2D effects surface behind or above the semantic UI.
 - Reduced-motion variants that preserve all state feedback.
 
-Do not render interactive cards, controls, event logs, or score explanations into Canvas. Do not add WebGL, Three.js, PixiJS, or a skeletal-animation runtime before the vertical slice proves that CSS and Canvas 2D cannot meet an approved effect. Record bundle, frame-time, and accessibility evidence before adding one.
+Mark every effects canvas `aria-hidden="true"` and set `pointer-events: none`. It must not cover focus indicators or intercept input. Do not render interactive cards, controls, event logs, or score explanations into Canvas. Do not add WebGL, Three.js, PixiJS, or a skeletal-animation runtime before the vertical slice proves that CSS and Canvas 2D cannot meet an approved effect. Record bundle, frame-time, and accessibility evidence before adding one.
 
-Store editable art masters outside generated runtime assets. The asset tool must produce a manifest with dimensions, format, scene, crop, and licensing data. Load setup art first and lazy-load the selected match scene. Establish media budgets from the measured vertical slice; do not claim a budget before representative final-quality assets exist.
+Store editable masters in an ignored local `art/masters/` workspace or the approved external art archive. `npm run assets:build` uses Sharp to write variants and a manifest to `src/assets/generated/`. Commit these runtime variants and the manifest so a clean checkout and GitHub Actions do not require private masters. Never edit generated assets by hand. `npm run assets:validate` checks dimensions, formats, references, ownership, licenses, and manifest hashes; `validate` runs this check before tests or build. Load setup art first and lazy-load the selected match scene. Establish media budgets from the measured vertical slice; do not claim a budget before representative final-quality assets exist.
 
 ## Text-to-Speech Contract
 
@@ -79,9 +79,12 @@ The speech manager must:
 - Prefer the saved `voiceURI`, then a matching language voice, then the system default.
 - Expose Auto voice, voice, rate, and volume settings.
 - Start only after a user action and cancel stale utterances on round, screen, or match changes.
-- Never speak hidden hotseat content.
+- Speak only a completed insult after it becomes public.
+- Suppress speech during handover and private-hand reveal. Never speak draft fragments or hidden hotseat content.
 - Show a clear unavailable state instead of a broken control.
 - Keep generated speech separate from the Web Audio effects mixer.
+
+The settings UI must explain that voice availability and processing depend on the browser and operating system. Do not promise offline or on-device processing.
 
 Automated tests must verify selection, queue, cancellation, privacy, and fallback through an adapter. A manual release check must confirm audible output in at least one supported browser and confirm silent fallback in a browser or test profile without voices.
 
@@ -95,6 +98,8 @@ The initial package scripts must be:
 npm run dev            Vite development server
 npm run build          Type-check, validate content and assets, then build dist
 npm run preview        Serve the production build locally
+npm run assets:build   Regenerate committed runtime variants from available masters
+npm run assets:validate Validate the committed asset manifest and files
 npm run lint           Typed ESLint checks
 npm run format:check   Prettier check
 npm run typecheck      TypeScript without emit
@@ -106,7 +111,25 @@ npm run validate       Docs, content, asset, lint, and type checks
 npm run ci             Full required local and CI gate
 ```
 
-Playwright must test the built app through `vite preview`, including the `/grand-transition/` base path. The Pages workflow runs `npm ci`, `npm run ci`, uploads only `dist/`, and deploys only from the default branch after all checks pass.
+`validate` includes markdownlint, `assets:validate`, content schemas, localization key parity, ESLint, and TypeScript. `ci` runs `format:check`, `validate`, unit and browser tests, coverage, and `test:e2e` in that order. The end-to-end script performs the production build.
+
+`test:e2e` must run `npm run build` before Playwright. Playwright's `webServer` starts `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort`, waits for `http://127.0.0.1:4173/grand-transition/`, and uses that URL as `baseURL`. CI must set `reuseExistingServer: false`. This sequence prevents a stale `dist/` from passing. The Pages workflow runs `npm ci`, `npm run ci`, uploads only `dist/`, and deploys only from the default branch after all checks pass.
+
+## Persistence and Network Boundaries
+
+Keep serialization pure. `src/persistence/` defines versioned settings and save codecs plus a `StoragePort`. The browser adapter uses `localStorage`; tests and blocked-storage environments use an in-memory adapter. A storage failure must not stop a match. Show a non-blocking notice when settings cannot persist.
+
+The production app makes no runtime `fetch`, XMLHttpRequest, WebSocket, EventSource, or third-party analytics request. The project does not control response headers in this static-host contract, so add a CSP meta element to `index.html` with this initial policy:
+
+```text
+default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
+img-src 'self' data: blob:; media-src 'self'; font-src 'self';
+connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'
+```
+
+`style-src 'unsafe-inline'` is limited to Lit component styles and dynamic visual tokens. Do not allow inline scripts, `unsafe-eval`, remote fonts, remote images, or remote audio. Browser speech synthesis is outside the app's network layer and can use an operating-system or browser service; keep it opt-in and describe that limitation in settings.
+
+Before creating the Pages workflow, verify the GitHub repository slug and default branch. The current contract assumes repository `grand-transition` and branch `main`; the account owner does not change the Vite base path. If either repository slug or branch differs, update this record, Vite, Playwright, and the workflow together.
 
 ## Primary Research Sources
 
@@ -125,5 +148,7 @@ Playwright must test the built app through `vite preview`, including the `/grand
 - [Playwright browser support](https://playwright.dev/docs/browsers)
 - [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing)
 - [Web Speech synthesis](https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis)
+- [CSP for a static single-page app](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP)
+- [Web Storage exceptions](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 - [Sharp image processing](https://sharp.pixelplumbing.com/)
 - [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
