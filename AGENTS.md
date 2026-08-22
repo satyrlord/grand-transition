@@ -9,16 +9,14 @@ Treat `docs/grand-transition-web-app-spec.md` and `docs/tech-stack-decision.md` 
 The package has not been bootstrapped yet. Inspect the prototype with `py -m http.server 8000`, then open `/tmp/grand-transition-verbal-republic-poc.html`. The initial package must expose:
 
 ```text
-npm run dev          Vite development server
-npm run build        Validate and create dist/
-npm run test         Vitest unit and property tests
-npm run test:browser Real-browser Lit tests
-npm run test:e2e     Playwright production flows
-npm run validate     Docs, assets, content, lint, and types
-npm run ci           Complete required gate
+npm run dev | preview | build
+npm run lint | format:check | typecheck
+npm run assets:build | assets:validate | validate
+npm run test | test:coverage | test:browser | test:e2e
+npm run ci
 ```
 
-Do not report these checks as passing until the scripts exist and run.
+`validate` includes markdownlint, assets, content, localization, lint, and types. `ci` is the complete gate. Do not report checks as passing until the scripts exist and run.
 
 ## Coding Style & Naming Conventions
 
@@ -34,4 +32,4 @@ This checkout has no Git metadata, so no historic convention is verified. Use sh
 
 ## Assets, Security & Deployment
 
-Use original, licensed art, audio, fonts, and fictional characters. Never scrape assets or commit secrets. Generate AVIF/WebP variants and asset metadata through the approved Sharp tool. Keep controls and required text in semantic DOM, not Canvas. Deploy only `dist/` through GitHub Actions after `npm run ci`; preserve the Vite `/grand-transition/` base path. Text-to-speech is optional and must never reveal hidden hotseat content.
+Use original, licensed art, audio, fonts, and fictional characters. Never scrape assets, commit secrets, or add runtime network calls. Generate AVIF/WebP variants and metadata through the approved Sharp tool. Keep controls and required text in semantic DOM, not Canvas. Deploy only `dist/` through GitHub Actions after `npm run ci`; preserve the Vite `/grand-transition/` base path. Text-to-speech is optional and must never reveal hidden hotseat content.
