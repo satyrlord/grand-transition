@@ -20,6 +20,15 @@ The finite-state model separates grammatical number and uses
 `CLAUSE_COMPLETE`, and `ENDED`. The adapter returns legality, completion, valid
 next roles, number rendering, punctuation, capitalization, and public text.
 
+The adapter consumes ordered phrase and end steps. A valid minimum clause is
+complete in `CLAUSE_COMPLETE`. Subject nouns and verbs use the subject number.
+Object nouns use an independent object number. A phrase without number-specific
+forms uses its default English text. Public text uses sentence-case
+capitalization. An illegal role or end step returns a typed fault with the
+current state, attempted step, step index, and expected roles. The explicit end
+step that moves `CLAUSE_COMPLETE` to `ENDED` and adds a period is owned by
+Milestone 007.
+
 ## Verify and stop
 
 Tests cover every state and transition used by both minimum forms, singular and

@@ -46,6 +46,10 @@ export const sampleContent = validateContentCatalog({
       id: 'folds',
       role: 'verb',
       textKey: 'phrase.folds',
+      numberForms: {
+        singularKey: 'phrase.folds.singular',
+        pluralKey: 'phrase.folds.plural',
+      },
       baseValue: 2,
       directness: 1,
       tags: ['empty-promise', 'retreat'],
@@ -57,6 +61,10 @@ export const sampleContent = validateContentCatalog({
       id: 'outshouts',
       role: 'verb',
       textKey: 'phrase.outshouts',
+      numberForms: {
+        singularKey: 'phrase.outshouts.singular',
+        pluralKey: 'phrase.outshouts.plural',
+      },
       baseValue: 3,
       directness: 1,
       tags: ['grandstanding', 'noise'],
@@ -104,6 +112,10 @@ export const sampleContent = validateContentCatalog({
       id: 'polishes',
       role: 'verb',
       textKey: 'phrase.polishes',
+      numberForms: {
+        singularKey: 'phrase.polishes.singular',
+        pluralKey: 'phrase.polishes.plural',
+      },
       baseValue: 2,
       directness: 0,
       tags: ['grandstanding', 'paperwork'],
@@ -126,9 +138,9 @@ export const sampleContent = validateContentCatalog({
       editorialReview: approvedReview,
     },
     {
-      id: 'and-counts-again',
+      id: 'and',
       role: 'conjunction',
-      textKey: 'phrase.and-counts-again',
+      textKey: 'phrase.and',
       baseValue: 2,
       directness: 0,
       tags: ['paperwork', 'noise'],
@@ -172,12 +184,7 @@ export const sampleContent = validateContentCatalog({
       palette: { primary: '#783f2a', secondary: '#f0c36d', accent: '#2f6b59' },
       weaknessTags: ['grandstanding', 'noise'],
       phrasePools: {
-        public: [
-          'paper-promise',
-          'velvet-megaphone',
-          'folds',
-          'and-counts-again',
-        ],
+        public: ['paper-promise', 'velvet-megaphone', 'folds', 'and'],
         private: ['outshouts', 'before-lunch', 'committee-kite'],
       },
       comebackLinesByTier: {
@@ -248,7 +255,7 @@ export const sampleContent = validateContentCatalog({
         'in-an-empty-hall',
         'committee-kite',
         'past-the-deadline',
-        'and-counts-again',
+        'and',
         'with-the-receipt',
         'still-echoes',
       ],
