@@ -102,7 +102,7 @@ describe('content schemas', () => {
     wrongCharacter.characters[1]!.phrasePools.private[0] = 'committee-kite';
     expectFailure(
       wrongCharacter,
-      'characters.1.phrasePools.5',
+      'characters.1.phrasePools.8',
       /not available to character/iu,
     );
 

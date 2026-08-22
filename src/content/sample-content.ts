@@ -184,8 +184,16 @@ export const sampleContent = validateContentCatalog({
       palette: { primary: '#783f2a', secondary: '#f0c36d', accent: '#2f6b59' },
       weaknessTags: ['grandstanding', 'noise'],
       phrasePools: {
-        public: ['paper-promise', 'velvet-megaphone', 'folds', 'and'],
-        private: ['outshouts', 'before-lunch', 'committee-kite'],
+        public: [
+          'paper-promise',
+          'velvet-megaphone',
+          'folds',
+          'outshouts',
+          'before-lunch',
+          'committee-kite',
+          'and',
+        ],
+        private: ['past-the-deadline', 'with-the-receipt', 'still-echoes'],
       },
       comebackLinesByTier: {
         weak: ['comeback.civic-fox.weak'],
@@ -213,12 +221,15 @@ export const sampleContent = validateContentCatalog({
       phrasePools: {
         public: [
           'paper-promise',
+          'velvet-megaphone',
           'folds',
+          'polishes',
           'before-lunch',
+          'past-the-deadline',
           'with-the-receipt',
           'still-echoes',
         ],
-        private: ['velvet-megaphone', 'polishes', 'past-the-deadline'],
+        private: ['outshouts', 'in-an-empty-hall', 'and'],
       },
       comebackLinesByTier: {
         weak: ['comeback.brass-peacock.weak'],
@@ -254,6 +265,7 @@ export const sampleContent = validateContentCatalog({
         'before-lunch',
         'in-an-empty-hall',
         'committee-kite',
+        'polishes',
         'past-the-deadline',
         'and',
         'with-the-receipt',
