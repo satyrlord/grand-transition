@@ -1,5 +1,6 @@
 import './styles/title-screen.css';
-import './app/screens/title-screen';
+import './styles/screen-shell.css';
+import './app/app-shell';
 
 if (import.meta.env.DEV) {
   document.body.insertBefore(

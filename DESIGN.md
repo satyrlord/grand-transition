@@ -1,44 +1,44 @@
 ---
-name: "Grand Transition: A Verbal Republic"
-description: "A civic-ledger title system for a verbal republic."
+name: 'Grand Transition: A Verbal Republic'
+description: 'A civic-ledger interface system for a verbal republic.'
 colors:
-  municipal-blue: "#062840"
-  deep-municipal-blue: "#041d2e"
-  warm-ledger-paper: "#e0d6c2"
-  pale-paper: "#eee4d3"
-  registry-ink: "#202020"
-  official-oxblood: "#6d2823"
-  deep-oxblood: "#481c1a"
-  registry-rule: "rgb(23 25 22 / 38%)"
+  municipal-blue: '#062840'
+  deep-municipal-blue: '#041d2e'
+  warm-ledger-paper: '#e0d6c2'
+  pale-paper: '#eee4d3'
+  registry-ink: '#202020'
+  official-oxblood: '#6d2823'
+  deep-oxblood: '#481c1a'
+  registry-rule: 'rgb(23 25 22 / 38%)'
 typography:
   display:
     fontFamily: '"Barlow Condensed", sans-serif'
-    fontSize: "clamp(3.2rem, 8vw, 6rem)"
+    fontSize: 'clamp(3.2rem, 8vw, 6rem)'
     fontWeight: 700
     lineHeight: 0.78
-    letterSpacing: "-0.035em"
+    letterSpacing: '-0.035em'
   body:
     fontFamily: 'Georgia, "Times New Roman", serif'
   record-subtitle:
     fontFamily: 'Georgia, "Times New Roman", serif'
-    fontSize: "clamp(1.05rem, 2vw, 2rem)"
+    fontSize: 'clamp(1.05rem, 2vw, 2rem)'
     fontWeight: 700
     lineHeight: 1.15
-    letterSpacing: "0.18em"
+    letterSpacing: '0.18em'
   status:
     fontFamily: '"Barlow Condensed", sans-serif'
-    fontSize: "clamp(0.8rem, 1vw, 0.95rem)"
+    fontSize: 'clamp(0.8rem, 1vw, 0.95rem)'
     fontWeight: 700
     lineHeight: 1.2
-    letterSpacing: "0.06em"
+    letterSpacing: '0.06em'
 spacing:
-  edge: "clamp(1.25rem, 4vw, 4.5rem)"
+  edge: 'clamp(1.25rem, 4vw, 4.5rem)'
 components:
   title-record-stamp:
-    textColor: "{colors.official-oxblood}"
-    typography: "{typography.status}"
-    padding: "0.6rem 0.85rem 0.55rem"
-    width: "min(13rem, 100%)"
+    textColor: '{colors.official-oxblood}'
+    typography: '{typography.status}'
+    padding: '0.6rem 0.85rem 0.55rem'
+    width: 'min(13rem, 100%)'
 ---
 
 # Design System: Grand Transition: A Verbal Republic
@@ -52,11 +52,11 @@ record. A municipal-blue cloth field meets warm official paper at an oxblood
 binding seam. The result is formal, legible, and subtly satirical. The visual
 structure makes the title resemble a filed public record.
 
-The system gives visual priority to one large semantic message. Condensed
+The title gives visual priority to one large semantic message. Condensed
 display type makes the product name resemble an official register. Serif text
 makes the subtitle and status resemble ledger entries. Filing rules, the seam,
-and the small registration stamp provide structure. They do not add controls
-or later-milestone game behavior to the title placeholder.
+and the small registration stamp provide structure. The setup screen extends
+the record into a semantic register with square controls and ruled groups.
 
 **The Open Record Rule.** Treat the title as an entry in an open civic record:
 formal, legible, and specific to this fictional republic.
@@ -138,6 +138,11 @@ right on ordinary mobile widths and can use the available page width at 200%
 text scaling. At `1440px` and above (`min-width: 90rem`), the subtitle receives
 the source-defined upward offset.
 
+The setup register uses one paper field with a narrow municipal-blue and
+oxblood binding at the leading edge. At wide sizes, Match and Characters are
+two balanced field groups. Below `700px`, they become one reading column. The
+action row stays last in the visible and keyboard order.
+
 ## Elevation & Depth
 
 This implementation is flat by default and uses structural depth instead of
@@ -151,8 +156,9 @@ layering; do not add ornamental shadows to this title record.
 
 ## Shapes
 
-The form language is square and official. The record fields, rules, and stamp
-use sharp corners with no rounded treatment. The status stamp uses a 2px
+The form language is square and official. The record fields, rules, stamp,
+native selects, and action buttons use sharp corners with no rounded treatment.
+The status stamp uses a 2px
 oxblood border, compact internal padding, centered uppercase text, and a small
 counter-clockwise rotation to suggest a hand-registered mark. Filing lines are
 thin and low-contrast. The binding seam is narrow. It is not pill-shaped or
@@ -160,8 +166,9 @@ card-like.
 
 ## Components
 
-This milestone establishes one signature pattern only. It does not establish
-shared button, input, chip, card, or navigation primitives.
+This milestone establishes the title record, the setup register, and basic
+native select and action treatment. It does not establish tactical cards,
+match controls, chips, or navigation primitives.
 
 ### Title record / registration stamp
 
@@ -178,14 +185,29 @@ custom mark is the static status stamp at the lower right of the paper field.
 - **Accessibility:** The title uses light-DOM semantic text with one `main`, one
   `h1`, and a visible status paragraph. Forced colors remove decorative fields
   but keep the text hierarchy and border contrast.
-- **Scope:** The Milestone 001 surface has no action, navigation, game state, or
-  claim of playable behavior.
+- **Scope:** The Milestone 015 title adds the satire disclaimer and one setup
+  action. It does not claim that a match is playable.
+
+### Setup register
+
+The setup register is a flat semantic form. It does not use dashboard cards.
+
+- **Groups:** Native fieldsets group Match and Characters. Each group uses one
+  oxblood heading and one filing rule.
+- **Controls:** Native selects use pale paper, registry ink, square borders,
+  and a municipal-blue focus ring. Buttons use the condensed display face.
+- **Validation:** Errors sit directly after their control, use deep oxblood,
+  and name the problem and recovery. Color is not the only error signal.
+- **Actions:** Back is an outlined record action. Start match is the filled
+  oxblood primary action. Both keep a minimum 44-pixel target height.
+- **Accessibility:** Visible labels, native controls, fieldsets, error
+  associations, source-order focus, deterministic heading focus after screen
+  changes, forced colors, and text reflow are part of the component contract.
 
 ## Required and prohibited design
 
-The following guardrails apply to the implemented title record and its direct
-visual descendants. Future screens need their own surface briefs and may add
-patterns that this title-only milestone does not contain.
+The following guardrails apply to the title and setup records. Later game
+screens need their own surface briefs.
 
 ### Required
 
@@ -195,12 +217,14 @@ patterns that this title-only milestone does not contain.
 - Use Barlow Condensed for the display and status text. Use Georgia for ledger
   text.
 - Preserve the visible prepared status and semantic light DOM text.
+- Keep the satire disclaimer visible on the title screen.
+- Keep setup choices in native labeled controls with visible recovery text.
 
 ### Prohibited
 
-- Do not add controls, navigation, gameplay, or playability claims to the
-  Milestone 001 title placeholder. Its surface brief has no action.
+- Do not add the match surface, artificial intelligence options, persistence,
+  privacy options, or playability claims before their owning milestones.
 - Do not add raster grain, metal punches, or literal registry metadata from the
   approved composition. They are concept evidence, not production requirements.
-- Do not invent shared button, input, card, chip, or navigation components from
-  this title-only surface.
+- Do not derive tactical card, chip, or match-control patterns from the setup
+  register.

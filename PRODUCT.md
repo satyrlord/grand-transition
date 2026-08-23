@@ -47,13 +47,15 @@ Private hotseat content must remain private during handovers.
   owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 007: the static title,
+- The implemented scope includes Milestones 001 through 015: the title and
+  setup shell,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
   content schemas, an English game-locale bundle, original sample content, and
   minimum and two-clause English grammar, shared-subject forms, endings,
-  incomplete states, and strategic grammar faults. It does not include board
-  generation, drafting, scoring, or playable game behavior.
+  incomplete states, strategic grammar faults, deterministic board and hand
+  generation, drafting, scoring, match lifecycle, replay, and simulation. The
+  setup shell emits a typed match command but does not render a playable match.
 
 ## Brand Commitments
 
@@ -83,5 +85,5 @@ benchmarks exist.
 Use semantic Document Object Model (DOM) content for controls and required
 text. Support keyboard use, accessible names, readable contrast, zoomed text,
 reduced motion, and private hotseat presentation as their owning milestones
-become active. The first title placeholder must expose an accessible document
-title and heading.
+become active. The title and setup screens expose semantic headings, labeled
+controls, associated errors, deterministic focus, and text reflow.
