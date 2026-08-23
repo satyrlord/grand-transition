@@ -21,11 +21,13 @@ import {
   seededRandomSource,
   type RandomSource,
 } from '../../src/engine/random-source';
+import { englishGrammarAdapter } from '../../src/engine/grammar/english-grammar-adapter';
 import { englishGameLocale } from '../../src/localization/en-game-locale';
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: DraftEngineContext = {
   phrases: sampleContent.phrases,
+  characters: sampleContent.characters,
   locale: englishGameLocale,
 };
 
@@ -48,6 +50,7 @@ function roundRequest(
       .filter((phrase) => !phrase.characterIds && !phrase.sceneIds)
       .map((phrase) => phrase.id),
     phrases,
+    characters: sampleContent.characters,
     locale: englishGameLocale,
     players: [
       {
@@ -59,7 +62,7 @@ function roundRequest(
         weaknessTags: firstCharacter.weaknessTags,
         subjectNumber: 'singular',
         objectNumber: 'plural',
-        availableComebackTiers: ['weak'],
+        comebackCharge: 20,
       },
       {
         playerId: playerIds[1],
@@ -203,7 +206,11 @@ function abundantPrivateFixture(): {
   ]);
   return {
     request,
-    context: { phrases, locale: englishGameLocale },
+    context: {
+      phrases,
+      characters: sampleContent.characters,
+      locale: englishGameLocale,
+    },
   };
 }
 
@@ -347,6 +354,35 @@ describe('draft round preparation and commands', () => {
     const request = roundRequest();
     const first = expectPrepared(request);
     const repeated = expectPrepared(request);
+    const restoredSteps = [
+      {
+        kind: 'phrase' as const,
+        phrase: {
+          id: 'paper-promise',
+          role: 'noun' as const,
+          defaultText: 'a paper promise',
+          singularText: 'a paper promise',
+          pluralText: 'paper promises',
+        },
+      },
+      {
+        kind: 'phrase' as const,
+        phrase: {
+          id: 'before-lunch',
+          role: 'predicate' as const,
+          defaultText: 'before lunch',
+          singularText: 'before lunch',
+          pluralText: 'before lunch',
+        },
+      },
+    ];
+    const restoredAnalysis = englishGrammarAdapter.analyze({
+      steps: restoredSteps,
+      subjectNumber: 'singular',
+      objectNumber: 'plural',
+    });
+    expect(restoredAnalysis.accepted).toBe(true);
+    if (!restoredAnalysis.accepted) return;
     const secondRound = expectPrepared({
       ...request,
       round: 2,
@@ -354,28 +390,11 @@ describe('draft round preparation and commands', () => {
       players: [
         {
           ...request.players[0],
-          restoredSteps: [
-            {
-              kind: 'phrase',
-              phrase: {
-                id: 'paper-promise',
-                role: 'noun',
-                defaultText: 'a paper promise',
-                singularText: 'a paper promise',
-                pluralText: 'paper promises',
-              },
-            },
-            {
-              kind: 'phrase',
-              phrase: {
-                id: 'before-lunch',
-                role: 'predicate',
-                defaultText: 'before lunch',
-                singularText: 'before lunch',
-                pluralText: 'before lunch',
-              },
-            },
-          ],
+          restoredCarry: {
+            steps: restoredSteps,
+            analysis: restoredAnalysis.analysis,
+            publicText: restoredAnalysis.analysis.publicText,
+          },
         },
         request.players[1],
       ],
@@ -403,6 +422,12 @@ describe('draft round preparation and commands', () => {
     expect(
       secondRound.playerStates[playerIds[0]]!.construction.analysis.complete,
     ).toBe(true);
+    expect(
+      secondRound.playerStates[playerIds[0]]!.construction.analysis,
+    ).toEqual(restoredAnalysis.analysis);
+    expect(secondRound.playerStates[playerIds[0]]!.construction.steps).toEqual(
+      restoredSteps,
+    );
   });
 
   test('selects a shared phrase, empties it for both players, and passes the turn', () => {
@@ -462,6 +487,22 @@ describe('draft round preparation and commands', () => {
     expect(committed.turn.activePlayerId).toBeNull();
   });
 
+  test('selects a legal finisher and commits the construction immediately', () => {
+    const complete = completeFirstPlayer();
+    const ending = legalReferenceForRole(complete, playerIds[0], 'ending');
+    const finished = select(complete, playerIds[0], ending);
+
+    expect(finished.phase).toBe('draft-complete');
+    expect(
+      finished.playerStates[playerIds[0]]!.construction.analysis.state,
+    ).toBe('ENDED');
+    expect(
+      finished.playerStates[playerIds[0]]!.construction.analysis.resolution
+        .constructionEnded,
+    ).toBe(true);
+    expect(finished.turn.activePlayerId).toBeNull();
+  });
+
   test('consumes a continuation card and records carry intent only', () => {
     const complete = completeFirstPlayer();
     const continuationCard = {
@@ -501,8 +542,9 @@ describe('draft round preparation and commands', () => {
     ).toBe('CLAUSE_COMPLETE');
   });
 
-  test('records an affordable comeback intent without resolving its later rules', () => {
+  test('spends charge and records deterministic visible comeback facts', () => {
     const complete = completeFirstPlayer();
+    const seedBefore = complete.seed;
     const selected = run(complete, {
       type: 'select-comeback',
       source: 'user',
@@ -516,6 +558,63 @@ describe('draft round preparation and commands', () => {
     expect(selected.playerStates[playerIds[0]]!.construction.status).toBe(
       'ended',
     );
+    expect(selected.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
+    expect(selected.playerStates[playerIds[0]]!.availableComebackTiers).toEqual(
+      [],
+    );
+    expect(
+      selected.playerStates[playerIds[0]]!.construction.selectedComeback
+        ?.closingLine,
+    ).toBe('Your point has entered review.');
+    expect(selected.seed).not.toBe(seedBefore);
+  });
+
+  test('rejects duplicate comeback selection without changing state or seed', () => {
+    const complete = completeFirstPlayer();
+    const duplicateState: DraftState = {
+      ...complete,
+      playerStates: {
+        ...complete.playerStates,
+        [playerIds[0]]: {
+          ...complete.playerStates[playerIds[0]]!,
+          construction: {
+            ...complete.playerStates[playerIds[0]]!.construction,
+            selectedComebackTier: 'weak',
+            selectedComeback: {
+              tier: 'weak',
+              cost: 20,
+              damageBonus: 4,
+              closingLineKey: 'comeback.civic-fox.weak',
+              closingLine: 'Your point has entered review.',
+            },
+          },
+        },
+      },
+    };
+    const before = structuredClone(duplicateState);
+    const result = createDraftReducer(context)(
+      duplicateState,
+      {
+        type: 'select-comeback',
+        source: 'user',
+        actorId: playerIds[0],
+        payload: { tier: 'weak' },
+      },
+      seededRandomSource,
+    );
+
+    expect(result).toEqual({
+      ok: false,
+      error: {
+        kind: 'rule-error',
+        code: 'comeback-already-selected',
+        facts: {
+          commandType: 'select-comeback',
+          actorId: playerIds[0],
+        },
+      },
+    });
+    expect(duplicateState).toEqual(before);
   });
 
   test('consumes an owned illegal phrase as a deliberate fault', () => {
@@ -573,6 +672,93 @@ describe('draft round preparation and commands', () => {
 });
 
 describe('draft failures, privacy, and invariants', () => {
+  test('hides illegal finishers and returns typed failures before grammar analysis', () => {
+    const initial = expectPrepared();
+    const prematureCard = initial.playerStates[playerIds[0]]!.hand.find(
+      (card) => card.phraseId === 'with-the-receipt',
+    )!;
+    const prematureReference = {
+      source: 'private',
+      cardId: prematureCard.id,
+    } as const;
+    expect(initial.playerStates[playerIds[0]]!.legalCards).not.toContainEqual(
+      prematureReference,
+    );
+
+    const initialBefore = structuredClone(initial);
+    const premature = createDraftReducer(context)(
+      initial,
+      {
+        type: 'select-phrase',
+        source: 'user',
+        actorId: playerIds[0],
+        payload: { card: prematureReference },
+      },
+      seededRandomSource,
+    );
+    expect(premature).toEqual({
+      ok: false,
+      error: {
+        kind: 'rule-error',
+        code: 'finisher-premature',
+        facts: {
+          commandType: 'select-phrase',
+          actorId: playerIds[0],
+        },
+      },
+    });
+    expect(initial).toEqual(initialBefore);
+
+    const wrongOwnerEnding = clonePhrase(
+      'with-the-receipt',
+      'brass-only-ending',
+      { characterIds: ['brass-peacock'] },
+    );
+    const wrongOwnerCard = {
+      id: 'opaque-wrong-owner-ending',
+      phraseId: wrongOwnerEnding.id,
+    };
+    const wrongOwnerState: DraftState = {
+      ...initial,
+      playerStates: {
+        ...initial.playerStates,
+        [playerIds[0]]: {
+          ...initial.playerStates[playerIds[0]]!,
+          hand: [...initial.playerStates[playerIds[0]]!.hand, wrongOwnerCard],
+        },
+      },
+    };
+    const wrongOwnerBefore = structuredClone(wrongOwnerState);
+    const wrongOwner = createDraftReducer({
+      phrases: [...sampleContent.phrases, wrongOwnerEnding],
+      characters: sampleContent.characters,
+      locale: englishGameLocale,
+    })(
+      wrongOwnerState,
+      {
+        type: 'select-phrase',
+        source: 'user',
+        actorId: playerIds[0],
+        payload: {
+          card: { source: 'private', cardId: wrongOwnerCard.id },
+        },
+      },
+      seededRandomSource,
+    );
+    expect(wrongOwner).toEqual({
+      ok: false,
+      error: {
+        kind: 'rule-error',
+        code: 'finisher-wrong-owner',
+        facts: {
+          commandType: 'select-phrase',
+          actorId: playerIds[0],
+        },
+      },
+    });
+    expect(wrongOwnerState).toEqual(wrongOwnerBefore);
+  });
+
   test('preserves the complete input for every stable rejection code', () => {
     const initial = expectPrepared();
     const complete = completeFirstPlayer();
@@ -728,7 +914,7 @@ describe('draft failures, privacy, and invariants', () => {
           actorId: playerIds[0],
           payload: { tier: 'strong' },
         },
-        code: 'comeback-unavailable',
+        code: 'comeback-unaffordable',
       },
     ];
 

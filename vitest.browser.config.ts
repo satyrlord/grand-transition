@@ -6,7 +6,10 @@ export default defineConfig({
     include: [
       'tests/browser/**/*.browser.test.ts',
       'tests/unit/content-schemas.test.ts',
+      'tests/unit/basic-scoring.test.ts',
       'tests/unit/board-generation.test.ts',
+      'tests/unit/combo-finisher-scoring.test.ts',
+      'tests/unit/continuation-comeback-resolution.test.ts',
       'tests/unit/draft-actions.test.ts',
       'tests/unit/english-grammar-core.test.ts',
       'tests/unit/extended-grammar.test.ts',

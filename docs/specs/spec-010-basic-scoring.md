@@ -57,3 +57,9 @@ Table tests cover each term, boundary, rounding rule, and order of operations.
 Invalid and incomplete sentences deal zero outgoing damage. Each final value is
 reconstructible from the breakdown. `npm run ci` passes. Stop before combos,
 finishers, continuations, comebacks, or Pride mutation.
+
+## Objective verifiers
+
+`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-05 in Node
+and Chromium. `npm run ci` verifies the cumulative quality, coverage, build, and
+production-browser security contracts.

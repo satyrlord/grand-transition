@@ -44,6 +44,9 @@ The scoring order becomes:
 
 An ending without `finisherBonus` is legal and adds zero. An ending restricted
 to another character is unavailable before grammar analysis.
+The typed failure codes are `finisher-premature` and
+`finisher-wrong-owner`. A rejected finisher does not change the draft state or
+combo state.
 
 ## Acceptance criteria
 
@@ -65,3 +68,10 @@ to another character is unavailable before grammar analysis.
 Tests cover exact identity, non-matching nouns, combo growth and reset, legal and
 illegal finishers, and score order. The breakdown explains each modifier.
 `npm run ci` passes. Stop before continuation, comeback, or match lifecycle.
+
+## Objective verifiers
+
+`tests/unit/combo-finisher-scoring.test.ts` verifies AC-011-01 through
+AC-011-05 in Node and Chromium. `tests/unit/draft-actions.test.ts` verifies
+finisher availability and typed draft rejection. `npm run ci` verifies the
+cumulative quality, coverage, build, and production-browser security contracts.
