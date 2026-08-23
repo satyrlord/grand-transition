@@ -13,7 +13,43 @@ an ordered itemized breakdown. Keep all balance values in validated data.
 Use `base = sum(baseValue)`, `lengthBonus = max(0, phraseCount - 3)`, and
 `directnessBonus = sum(directness)`. Add them before the weakness multiplier.
 One or more matching defender weakness tags apply one `2x` multiplier. Multiple
-matches do not stack, but the breakdown lists every match. Round final damage.
+matches do not stack, but the breakdown lists every match. Apply the exact
+calculation and rounding contract below.
+
+## Exact calculation contract
+
+Only grammar phrases in a complete, valid construction enter scoring.
+Continuation cards and comeback closing text are not grammar phrases.
+`phraseCount` includes nouns, verbs, predicates, conjunctions, and an ending.
+
+A weakness match exists when any scored phrase tag equals one defender
+weakness tag. The ordered basic calculation is:
+
+1. Sum phrase base values.
+2. Add `max(0, phraseCount - 3)`.
+3. Add all directness values.
+4. Apply weakness multiplier 2 when one or more weakness matches exist;
+   otherwise apply 1.
+5. Round the non-negative result to the nearest integer with halves rounded up.
+
+All inputs are integers in this milestone, but the rounding rule remains
+normative for later validated balance data. The breakdown order is base phrase
+items in sentence order, length, directness, weakness matches in defender-tag
+order, multiplier, unrounded total, and final damage.
+
+## Acceptance criteria
+
+- **AC-010-01:** Golden tables cover zero through four phrases, directness 0
+  and 1, no weakness, one weakness, several matching phrases, and several
+  matching defender tags.
+- **AC-010-02:** Several weakness matches list every match but apply exactly one
+  2x multiplier.
+- **AC-010-03:** Values ending below half, at half, and above half round by the
+  stated rule.
+- **AC-010-04:** Invalid and incomplete constructions return final damage 0 and
+  contain no positive score term.
+- **AC-010-05:** Summing the ordered breakdown reconstructs the unrounded and
+  final values without reading game state or UI data.
 
 ## Verify and stop
 

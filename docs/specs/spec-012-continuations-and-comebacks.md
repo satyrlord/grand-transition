@@ -20,6 +20,50 @@ weak 20 and 4, medium 40 and 10, strong 60 and 18. A character closing line is
 separate from grammar and noun combos. Only strong independently breaks a
 continuation.
 
+## Continuation resolution
+
+A continuation card is a draft action, not a grammar phrase. Selecting it after
+a complete clause consumes the card, ends the player's construction, and deals
+zero outgoing damage in that resolution. It carries the visible grammar
+phrases, exact grammar state, and public text. Carry selection does not update
+combo chains.
+
+After simultaneous damage, the carry survives when opponent outgoing damage is
+0 through 15. It breaks at 16 or more. Opponent strong-comeback use also breaks
+it, independent of damage. Self-damage does not break it. A surviving carry is
+restored at the next round before new drafting; the continuation card itself is
+not restored, rendered, or scored. A broken carry clears its phrases and grammar
+state and clears that player's combo chains as an incomplete construction. A
+later valid commit of a surviving carry compares all its nouns with the
+player's last committed insult.
+
+## Comeback resolution
+
+A player selects at most one affordable tier after a complete grammar
+construction and before resolution. Charge is spent immediately when the
+command succeeds. Damage received later in that resolution cannot fund the
+selection. Charge gained from opponent outgoing damage is applied after prior
+spending and capped at 60. Self-damage does not add charge.
+
+The comeback bonus is added after finisher, weakness, combo, and rounding. It
+is never multiplied. The seeded closing line is visible explanation only and
+does not enter grammar, phrase count, noun chains, or scoring tags.
+
+## Acceptance criteria
+
+- **AC-012-01:** Continuation survives opponent damage 0 and 15, breaks at 16,
+  breaks from a strong comeback at 0 damage, and ignores self-damage.
+- **AC-012-02:** A surviving carry restores phrases, state, public text, and
+  eligible noun chains exactly once; a broken carry restores none of them.
+- **AC-012-03:** Charge boundaries 0, 19, 20, 39, 40, 59, and 60 expose the
+  exact available tiers. Spending cannot underflow and gain cannot exceed 60.
+- **AC-012-04:** Weak, medium, and strong spend 20, 40, and 60 and add exactly
+  4, 10, and 18 after all multiplied sentence damage.
+- **AC-012-05:** Same character, tier, history, and seed reproduce the closing
+  line. Closing text changes no grammar, combo, or tag result.
+- **AC-012-06:** Unaffordable, duplicate, incomplete-sentence, and wrong-phase
+  selections return typed failures without charge or seed change.
+
 ## Verify and stop
 
 Boundary tests prove survival at 15, break at 16, thresholds at 20, 40, and 60,

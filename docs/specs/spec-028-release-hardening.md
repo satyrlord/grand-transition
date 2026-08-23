@@ -11,11 +11,9 @@ Complete final accessibility, performance, browser, security, dependency,
 license, and documentation reviews. Measure the final-quality artifact with the
 environment and workload defined below. Fix confirmed release defects.
 
-Meaningful paint occurs in less than 2 seconds on a warm connection. Input
-latency is less than 100 milliseconds (ms). Normal motion stays at 60 frames per
-second (FPS), and card updates cause no layout shift. Initial compressed
-JavaScript is less than 350 kilobytes (KB), excluding media. Lazy-load selected
-match assets. Decode audio before first playback. Use AV1 Image File Format
+Largest contentful paint, input event duration, animation frame interval,
+layout shift, and compressed JavaScript must meet the exact measurement table
+below. Lazy-load selected match assets. Decode audio before first playback. Use AV1 Image File Format
 (AVIF) or WebP raster images. Use Scalable Vector Graphics (SVG) icons. Use
 Portable Network Graphics (PNG) only when AVIF, WebP, or SVG cannot represent
 the required image. Use compressed audio fallbacks.
@@ -30,15 +28,69 @@ Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit. Record oldest
 Safari evidence or mark it unverified. Do not add legacy polyfills or obsolete
 browser support without a new specification.
 
-Run axe on all screens and important overlays. Also record manual keyboard,
+Run axe on every screen and overlay introduced by Milestones 015 through 025.
+Also record manual keyboard,
 focus, screen-reader, 200% zoom, contrast, motion, flashing, and audible-speech
-checks. No severe accessibility issue can remain.
+checks. No blocker, serious, or critical accessibility issue can remain.
+
+## Performance measurement contract
+
+Measure the production preview in stable Chromium with a clean profile, four
+times central processing unit (CPU) slowdown, 9-megabit-per-second download,
+1.5-megabit-per-second upload, and 150-millisecond round-trip latency. Record
+host CPU, memory, operating system, browser, tool version, build commit, and
+selected final-art scene. Run five cold-cache and five warm-cache trials.
+
+| Metric | Required result |
+| --- | --- |
+| Cold largest contentful paint | Median at most 2.5 seconds; no run above 3 |
+| Warm largest contentful paint | Median at most 2 seconds; no run above 2.5 |
+| Input event duration | 95th percentile below 100 milliseconds across 50 scripted card and control inputs |
+| Animation frame interval | 95th percentile at most 18.2 ms; above 50 ms below 1 percent |
+| Initial page CLS | At most 0.05 |
+| Card-update CLS | Exactly 0 |
+| Initial JavaScript | At most 350 KiB total after gzip, excluding media |
+| Selected audio decode | At most 500 milliseconds before first enabled playback |
+
+Use browser performance entries and a retained trace for timing. Use generated
+gzip bytes for the JavaScript total. Do not substitute development-server
+measurements. The shared viewport matrix uses final art and longest shipped
+content.
+
+Resolve the browser matrix on the release date and record exact versions.
+Continuous integration uses installed Chromium, Firefox, WebKit, mobile
+Chromium, and mobile WebKit. Manual evidence covers the oldest supported Safari
+major, current macOS Safari, current iOS Safari, and current Android Chrome.
+
+A release deviation names the failed criterion, measured result, user impact,
+owner, rationale, compensating control, expiry milestone or date, and approval
+date. Only the product owner can approve it. A security, privacy, data-loss,
+critical accessibility, or runtime-network failure cannot be waived.
+
+## Acceptance criteria
+
+- **AC-028-01:** Five cold and five warm trials meet every performance table
+  threshold and retain machine-readable results and trace links.
+- **AC-028-02:** The exact browser matrix passes title-to-results, reload,
+  persistence fallback, privacy, speech-unavailable, reduced-motion, and
+  longest-content flows without uncaught error.
+- **AC-028-03:** Axe has no serious or critical finding. Manual keyboard,
+  focus, NVDA, VoiceOver, zoom, contrast, motion, flashing, and audible-speech
+  procedures have no blocker or major item.
+- **AC-028-04:** The production artifact contains no developer control, source
+  map, unlicensed asset, remote request, secret, or committed `dist/`.
+- **AC-028-05:** Dependencies and GitHub actions have recorded license,
+  provenance, vulnerability, and version review with no unresolved critical or
+  high issue.
+- **AC-028-06:** Every deviation has the complete record above and is within
+  the allowed class; otherwise the release is blocked.
 
 ## Minimum viable product completion contract
 
 The minimum viable product (MVP) has a coherent title-to-results flow. It has
-all 18 characters, 5 distinct scenes, and 3 meaningful artificial intelligence
-(AI) levels. It has private hotseat play, exact grammar and combat rules, and
+all 18 characters, 5 distinct scenes, and 3 artificial intelligence (AI)
+difficulty levels with the distinct policies in Milestones 021 and 022. It has
+private hotseat play, exact grammar and combat rules, and
 visible score explanations. It also has deterministic replay, validated
 data-driven content, locale-isolated English, and a responsive accessible user
 interface (UI). All art, audio, writing, and branding are original. The MVP has
