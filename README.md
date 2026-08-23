@@ -20,15 +20,17 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 007 provide the runnable project, complete quality gate,
+Milestones 001 through 015 provide the runnable project, complete quality gate,
 immutable game contracts, replaceable external ports, enforced pure-module
 boundaries, a secured production shell, and validated sample game content. The
 sample contains original phrases for each core role, two fictional characters,
 one fictional scene, an English game-locale bundle, minimum and two-clause
-English grammar, shared-subject forms, endings, incomplete states, and strategic
-grammar faults. The accessible title remains a static placeholder. The game is
-not playable yet. Later milestones add board generation, drafting, scoring,
-expanded content, and the complete interface in dependency order.
+English grammar, shared-subject forms, endings, incomplete states, strategic
+grammar faults, seeded board and hand generation, drafting, scoring, match
+lifecycle, replay, and simulation. The accessible Lit shell now provides title
+and setup screens with retained values and typed match commands. The game is
+not playable yet. Later milestones add the match surface, expanded content, and
+the complete interface in dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
