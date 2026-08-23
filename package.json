@@ -17,6 +17,7 @@
     "content:validate": "node tools/validate-scaffold.mjs --domain content && vitest run --config vitest.config.ts tests/unit/content-schemas.test.ts",
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
     "boundaries:check": "node tools/check-pure-boundaries.mjs",
+    "simulate": "tsx tools/simulate.ts",
     "lint": "oxlint --type-aware --tsconfig tsconfig.json .",
     "format:check": "prettier --check \"src/**/*.{ts,css}\" \"tests/**/*.ts\" \"e2e/**/*.ts\" \"tools/**/*.{mjs,ts}\" \"*.{html,json,mjs,ts}\" \".github/workflows/**/*.{yml,yaml}\"",
     "typecheck": "tsc --noEmit",
@@ -35,6 +36,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.2.0",
     "@vitest/browser": "^4.1.11",
@@ -45,6 +47,7 @@
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
     "prettier": "^3.9.6",
+    "tsx": "^4.23.12",
     "typescript": "~7.0.2",
     "vite": "^8.2.2",
     "vitest": "^4.1.11"

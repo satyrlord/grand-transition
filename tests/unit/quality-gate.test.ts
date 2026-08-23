@@ -37,6 +37,7 @@ const requiredScripts = [
   'test:coverage',
   'test:browser',
   'test:e2e',
+  'simulate',
   'validate',
   'ci',
 ];
