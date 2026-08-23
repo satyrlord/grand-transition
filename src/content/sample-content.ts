@@ -193,7 +193,12 @@ export const sampleContent = validateContentCatalog({
           'committee-kite',
           'and',
         ],
-        private: ['past-the-deadline', 'with-the-receipt', 'still-echoes'],
+        private: [
+          'past-the-deadline',
+          'with-the-receipt',
+          'still-echoes',
+          'in-an-empty-hall',
+        ],
       },
       comebackLinesByTier: {
         weak: ['comeback.civic-fox.weak'],
@@ -229,7 +234,7 @@ export const sampleContent = validateContentCatalog({
           'with-the-receipt',
           'still-echoes',
         ],
-        private: ['outshouts', 'in-an-empty-hall', 'and'],
+        private: ['outshouts', 'in-an-empty-hall', 'and', 'paper-promise'],
       },
       comebackLinesByTier: {
         weak: ['comeback.brass-peacock.weak'],
