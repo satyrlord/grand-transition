@@ -98,3 +98,9 @@ A scripted headless match reaches the expected result. Tests cover alternating
 openers, simultaneous damage, zero-clamped Pride, sudden death, statistics, and
 rematch reset. Fixed seed and commands reproduce state. `npm run ci` passes.
 Stop before replay storage, user interface (UI), or AI.
+
+## Objective verifiers
+
+`tests/unit/match-lifecycle.test.ts` verifies AC-013-01 through AC-013-06 in
+Node and Chromium. `npm run ci` verifies the cumulative quality, coverage,
+build, and production-browser security contracts.

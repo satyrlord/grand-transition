@@ -66,6 +66,9 @@ art/masters/
 # Temp paths
 tmp/
 .impeccable/
+tests/browser/__screenshots__/
+tests/unit/__snapshots__/
+.vitest-attachments/
 
 # codex-workflow-managed-start
 agent_docs/

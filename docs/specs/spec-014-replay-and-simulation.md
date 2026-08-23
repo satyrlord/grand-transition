@@ -20,6 +20,14 @@ phrases, show tags and artificial intelligence (AI) utility, and skip
 animation. They also run AI versus AI, import or export JavaScript Object
 Notation (JSON) replays, and validate content. Production does not include
 these controls.
+
+The development workflow uses the visible phases `Configure`, `Run`, and
+`Evidence`. `Run AI versus AI` is the primary action. Seed, Pride, and charge
+are required integers with inline errors; actions that consume setup stay
+disabled until every setup value is valid. Evidence shows whether the current
+document is a replay, public match log, unrecognized JSON, or empty. Match logs
+are export-only. Recognized evidence can be copied or downloaded as a local
+JSON file. These actions do not use storage or a remote service.
 Generated tests preserve legal failure paths, Pride, charge, ownership, command,
 and replay invariants. Never exclude difficult rule files from coverage.
 
@@ -64,6 +72,9 @@ Milestone 002 threshold remains 70 percent.
   preserves every stated match invariant.
 - **AC-014-06:** Every named pure file meets its per-file threshold, and the
   production bundle and DOM contain no developer control, label, or import.
+- **AC-014-07:** A development-browser flow proves the three workflow phases,
+  primary simulation action, inline setup errors, dependent-action disabling,
+  persistent evidence type, replay-only import, copy, and local JSON download.
 
 ## Impeccable UI validation
 
@@ -78,3 +89,13 @@ Replay reproduces exact final state. Corrupt or unsupported logs fail safely.
 Generated matches preserve all stated invariants. Normalized exports are stable
 and contain no personal data. Production has no enabled developer control.
 `npm run ci` passes. Stop before browser game screens.
+
+## Objective verifiers
+
+`tests/unit/replay-and-simulation.test.ts` verifies AC-014-01 through
+AC-014-05 in Node and verifies the pure codec and simulation owners in
+Chromium. `tests/unit/simulation-cli.test.ts` verifies the command-line
+boundaries, errors, summary, and output bytes. The per-file thresholds in
+`vitest.browser.config.ts`, the development-control browser tests, the
+production scan, the Impeccable evidence, and `npm run ci` verify AC-014-06 and
+AC-014-07.
