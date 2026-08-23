@@ -9,6 +9,14 @@ export interface ImmutableObject {
   readonly [key: string]: ImmutableValue;
 }
 
+export type DeepImmutable<Value> = Value extends ImmutableScalar
+  ? Value
+  : Value extends readonly (infer Item)[]
+    ? readonly DeepImmutable<Item>[]
+    : Value extends object
+      ? { readonly [Key in keyof Value]: DeepImmutable<Value[Key]> }
+      : Value;
+
 export type PlayerId = string;
 export type SceneId = string;
 
@@ -25,9 +33,9 @@ export interface GameCommand<
 export interface GameState<
   Phase extends string = string,
   Mode extends string = string,
-  Board extends ImmutableValue = ImmutableObject,
-  PlayerState extends ImmutableValue = ImmutableObject,
-  PendingResolution extends ImmutableValue = ImmutableObject,
+  Board = ImmutableObject,
+  PlayerState = ImmutableObject,
+  PendingResolution = ImmutableObject,
 > {
   readonly schemaVersion: number;
   readonly seed: number;
@@ -37,12 +45,14 @@ export interface GameState<
   readonly openingPlayerId: PlayerId;
   readonly activePlayerId: PlayerId;
   readonly sceneId: SceneId;
-  readonly board: Board;
-  readonly playerStates: Readonly<Record<PlayerId, PlayerState>>;
-  readonly pendingResolution?: PendingResolution;
+  readonly board: DeepImmutable<Board>;
+  readonly playerStates: Readonly<Record<PlayerId, DeepImmutable<PlayerState>>>;
+  readonly pendingResolution?: DeepImmutable<PendingResolution>;
   readonly winner?: PlayerId;
   readonly commandHistory: readonly GameCommand[];
 }
+
+export type AnyGameState = GameState<string, string, unknown, unknown, unknown>;
 
 export interface RuleError<
   Code extends string = string,
@@ -53,7 +63,7 @@ export interface RuleError<
   readonly facts: Facts;
 }
 
-export interface ReducerSuccess<State extends GameState = GameState> {
+export interface ReducerSuccess<State extends AnyGameState = GameState> {
   readonly ok: true;
   readonly state: State;
 }
@@ -64,12 +74,12 @@ export interface ReducerFailure<Error extends RuleError = RuleError> {
 }
 
 export type ReducerResult<
-  State extends GameState = GameState,
+  State extends AnyGameState = GameState,
   Error extends RuleError = RuleError,
 > = ReducerSuccess<State> | ReducerFailure<Error>;
 
 export type GameReducer<
-  State extends GameState = GameState,
+  State extends AnyGameState = GameState,
   Command extends GameCommand = GameCommand,
   Error extends RuleError = RuleError,
 > = (
