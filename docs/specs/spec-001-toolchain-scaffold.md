@@ -28,6 +28,37 @@ Create source ownership roots for `src/app`, `src/components`, `src/engine`,
 Keep screens under `src/app/screens` and pure grammar under
 `src/engine/grammar`. Record exact versions in `package-lock.json`.
 
+## Exact scaffold contract
+
+- `package.json` declares `npm@12.0.2`, Node.js `24.x`, npm `12.x`,
+  native ES modules, and a private package.
+- The lockfile is the exact dependency authority. A clean install must not
+  change it.
+- The title placeholder contains one visible `main`, one `h1` named
+  “Grand Transition,” the visible subtitle “A Verbal Republic,” and the visible
+  status “The chamber is being prepared.”
+- The title uses light DOM. It has no control, navigation, game state, remote
+  asset, or playability claim.
+- The title remains readable at 1280 by 720, 390 by 844, and the shared
+  320-pixel minimum width. It has no horizontal page scroll.
+- The title animation is 520 milliseconds and runs once. Reduced motion removes
+  it without removing the status.
+
+## Acceptance criteria
+
+- **AC-001-01:** A clean `npm ci` uses Node.js 24 and npm 12, succeeds without
+  changing `package-lock.json`, and installs the resolved versions in that
+  file. Verify with the clean-install check.
+- **AC-001-02:** `npm run typecheck` and `npm run build` exit with code 0.
+- **AC-001-03:** Development and production preview show the exact title,
+  subtitle, and status with one `main` and one `h1`, and produce no console
+  or page error. Verify in Chromium at 1280 by 720 and 390 by 844.
+- **AC-001-04:** At 320 by 568 and 200 percent zoom, all three text items remain
+  visible and the page has no horizontal scroll.
+- **AC-001-05:** With reduced motion, the status has no animation and remains
+  visible. With forced colors, the three text items and status border remain
+  visible.
+
 ## Verify and stop
 
 `npm ci`, `npm run typecheck`, and `npm run build` pass. The development and

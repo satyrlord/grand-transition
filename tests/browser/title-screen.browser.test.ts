@@ -17,6 +17,14 @@ test('renders the title screen in a real browser', async () => {
     .toBeVisible();
 });
 
+test('keeps the display-only title text unselectable', async () => {
+  document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
+
+  await expect.element(page.getByRole('main')).toHaveStyle({
+    userSelect: 'none',
+  });
+});
+
 test('preserves an existing title-screen registration', async () => {
   const registeredElement = customElements.get('grand-transition-title');
 

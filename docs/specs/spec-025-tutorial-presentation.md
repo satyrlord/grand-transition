@@ -22,6 +22,49 @@ Phrase cards remain visually plain. Controls use readable sans-serif type.
 Headings can use a licensed serif or condensed grotesque. Novelty fonts never
 carry body text.
 
+## Guided-flow contract
+
+The tutorial uses one fixed seed, matchup, scene, board sequence, and AI command
+sequence. It has ten checkpoints:
+
+1. Read the required role and select a legal shared noun.
+2. Distinguish shared denial from the two private cards.
+3. Use the one redraw without losing the turn.
+4. Complete and commit a minimum sentence.
+5. Select an illegal card through the strategic-foul confirmation.
+6. Read base, length, directness, weakness, and final damage.
+7. Trigger an exact-noun combo and then a finisher.
+8. Carry a continuation and observe survive and break boundaries.
+9. Spend one comeback tier and read charge and bonus.
+10. Resolve Pride, sudden death, results, and rematch choices.
+
+Each checkpoint presents one action objective and at most three short
+instruction paragraphs. An invalid action changes no game state and displays a
+specific recovery. After two invalid attempts at one checkpoint, a visible hint
+identifies the required control without performing it.
+
+Skip is always available, requires explicit confirmation, and records
+`dismissed`. Completion records `completed` only after checkpoint 10. Replay
+starts at checkpoint 1 without changing other settings or ladder progress.
+There is no forced tutorial deadline.
+
+## Acceptance criteria
+
+- **AC-025-01:** A deterministic Playwright flow performs all ten checkpoints
+  by pointer and by keyboard and reaches the expected final snapshot.
+- **AC-025-02:** Each checkpoint rejects at least one wrong action without state
+  mutation and shows the exact recovery. The second rejection shows one hint.
+- **AC-025-03:** Skip before and after a checkpoint, cancel skip, reload resume,
+  completion, and replay produce exact tutorial-state snapshots.
+- **AC-025-04:** At all shared viewports and 200 percent zoom, the objective,
+  target control, recovery, and skip action remain visible without overlap.
+- **AC-025-05:** Every taught tactical event has persistent visible text and
+  one concise live-region announcement. Speech, color, motion, sound, and the
+  timer are never required.
+- **AC-025-06:** A written owner comprehension procedure confirms that each
+  checkpoint states the goal, action, result, and next step without relying on
+  undocumented game knowledge.
+
 ## Impeccable UI validation
 
 1. Run `$impeccable audit` on every affected tutorial and presentation state.

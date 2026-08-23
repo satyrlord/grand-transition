@@ -30,6 +30,23 @@ operating-system service outside the application network layer.
 Use one `index.html` and in-memory screen state. Do not depend on server route
 rewrites. `dist/` is generated and never committed.
 
+## Acceptance criteria
+
+- **AC-004-01:** Chromium opens
+  `http://127.0.0.1:4173/grand-transition/`, receives status 200, and loads
+  only local script, style, and font assets. Reloading the same URL keeps the
+  title visible.
+- **AC-004-02:** Production contains one CSP meta element whose normalized
+  content exactly matches this specification. Development at port 5174 contains
+  no CSP meta element.
+- **AC-004-03:** A fetch probe to `https://network.invalid/csp-probe` is
+  rejected before a network route receives it.
+- **AC-004-04:** Production navigation and reload have no failed request,
+  external request, console error, or uncaught page error.
+- **AC-004-05:** `git ls-files dist` returns no path, and a production source
+  scan finds no runtime fetch, XMLHttpRequest, WebSocket, EventSource, remote
+  font, analytics, unsafe HTML sink, or inline script.
+
 ## Verify and stop
 
 The built shell loads from the subpath. Production has the CSP. Development

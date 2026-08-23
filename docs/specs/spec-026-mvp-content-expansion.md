@@ -72,11 +72,58 @@ Use the existing schemas, pipelines, and presentation contracts.
   sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
 Each scene has a 1920x1080 layered master, mobile-safe crops, lighting, ambience,
-motion, music treatment, and 25 to 35 owned phrases. Content targets about
-150 general nouns, 120 verbs, and 100 predicates. It also targets 6 to 10
-conjunctions and 60 finishers. Each character has 20 to 30 character phrases
-and at least 9 comeback lines. Exact totals can change only when an hour of
-play stays varied.
+motion, music treatment, and 25 to 35 owned phrases. The validated catalog has
+these inclusive general-pool ranges:
+
+| Role | Minimum | Maximum |
+| --- | ---: | ---: |
+| Noun | 150 | 165 |
+| Verb | 120 | 135 |
+| Predicate | 100 | 115 |
+| Conjunction | 8 | 10 |
+| Ending | 60 | 70 |
+| Continuation | 12 | 18 |
+
+Each character has 20 to 30 unique character phrases. Its pool contains at
+least six nouns, four verbs, four predicates, one conjunction, one ending, and
+one continuation. Each scene pool contains at least eight nouns, six verbs,
+five predicates, one conjunction, one ending, and one continuation within its
+25 to 35 unique IDs.
+
+Each character has exactly three unique comeback lines in each tier and nine
+or more total. A comeback line cannot be reused by another character or tier.
+Every character and scene meets the complete Milestone 023 state, variant,
+license, and manifest contract. Every scene has distinct music and ambience
+treatment and every named Milestone 024 effect remains reachable.
+
+## Variety contract
+
+A fixed 1,000-match simulation for every scene and difficulty must select at
+least 90 percent of eligible general and owned phrase IDs at least once. No
+eligible phrase can have more than five times the median nonzero selection count
+without a recorded restriction or role-frequency explanation. In a scripted
+60-minute manual run, the same complete rendered insult cannot occur more than
+twice.
+
+Content totals can change only through an approved revision to the ranges above,
+with new simulation evidence. Manual “feels varied” evidence cannot waive a
+failed automated range or distribution.
+
+## Acceptance criteria
+
+- **AC-026-01:** The catalog contains exactly 18 required character IDs and
+  five required scene IDs, with no duplicate localized identity.
+- **AC-026-02:** Every general, character, scene, and comeback count meets its
+  exact range and role minimum. Boundary fixtures fail one below and above.
+- **AC-026-03:** Every character and scene passes grammar reachability, board
+  generation, simulated match, asset, crop, state, audio, license, and locale
+  validation.
+- **AC-026-04:** Comeback keys are unique across character and tier and resolve
+  in every locale.
+- **AC-026-05:** The fixed simulation and 60-minute procedure meet every variety
+  threshold and record seed, workload, environment, and exceptions.
+- **AC-026-06:** All roster and scene variants pass shared viewport geometry
+  with longest names and 40-percent-expanded UI strings.
 
 ## Impeccable user interface validation
 
@@ -89,6 +136,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 ## Verify and stop
 
 All content, localization, asset, reference, license, and minimum-volume checks
-pass. Every character and scene loads at all target viewports and completes a
+pass. Every character and scene loads at all five shared viewports and completes a
 simulated match. `npm run ci` passes. Stop before balance changes, editorial
 approval, performance tuning, or deployment.

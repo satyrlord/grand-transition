@@ -53,6 +53,50 @@ does not use a real logo or a copyrighted broadcast graphic. These explicit
 records make semantic editorial decisions auditable. They do not claim that a
 schema can infer meaning from prose.
 
+## Exact schema constraints
+
+Identifiers use lower-case kebab case, start with a letter, and contain only
+lower-case letters, digits, and single hyphen-separated segments. Locale keys
+start with `title`, `phrase`, `character`, `scene`, or `comeback`.
+All schema objects are strict and reject unknown fields.
+
+| Record | Required constraints |
+| --- | --- |
+| Phrase | Unique ID and role; base 1 through 20; directness 0 or 1; unique tags; approved rarity and rating |
+| Number forms | Distinct singular and plural locale keys when present |
+| Editorial review | Approved review state; original prose; unique safety flags; non-empty note |
+| Media reference | Asset ID plus explicit logo and broadcast-graphic booleans |
+| Character | Two or three weakness tags; unique pools; at least three private phrases; three valid hex palette colors |
+| AI personality | Aggression, denial, and risk each range from 0 through 1 |
+| Voice profile | Rate 0.5 through 2; pitch 0 through 2; approved voice hint |
+| Scene | At least one layer; depth 0 through 1; at least three scene phrases |
+| Game locale | Canonical BCP 47 tag; non-empty plain text; identical key set |
+
+Phrase rarity is common, uncommon, or rare. Content rating is
+everyone-10-plus or teen. An optional finisher bonus is an integer 1 through
+20. Palette colors use lower-case six-digit hexadecimal notation.
+
+Every identifier and restriction reference must resolve. Each public or private
+pool entry must comply with its phrase restrictions. The aggregate catalog has
+at least two characters, one scene, one locale, and one phrase. It rejects
+duplicate IDs within each record class.
+
+## Acceptance criteria
+
+- **AC-005-01:** The two-character, one-scene sample catalog passes every strict
+  record and aggregate rule.
+- **AC-005-02:** One fixture for every numeric field boundary passes at both
+  endpoints and fails immediately outside either endpoint.
+- **AC-005-03:** Duplicate IDs, unknown keys, unresolved references, restriction
+  violations, duplicate array values, and missing roles fail at the precise
+  record path with a corrective message.
+- **AC-005-04:** Every locale has key parity, each referenced default and number
+  form exists, and unsafe text or a non-canonical locale tag fails.
+- **AC-005-05:** Each editorial safety flag, non-original prose, incomplete
+  review, real logo, and copyrighted broadcast graphic fails separately.
+- **AC-005-06:** Private-pool size, weakness coverage, character role
+  reachability, and scene role reachability fail independently.
+
 ## Verify and stop
 
 Valid sample content passes. One focused fixture for each invalid class fails

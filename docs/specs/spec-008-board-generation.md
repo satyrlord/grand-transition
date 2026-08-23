@@ -58,6 +58,26 @@ does not retry without a bound and does not throw for this content condition.
 This milestone has no user interface, network, persistence, hand, turn, or
 selection behavior.
 
+## Acceptance criteria
+
+- **AC-008-01:** Seed `20260822` produces the same ordered board, slot IDs,
+  phrase IDs, and next seed on repeated calls. A different seed changes at
+  least one of those values for the sample catalog.
+- **AC-008-02:** One 3,000-run fast-check property with seed `20260822`
+  proves nine slots, unique slot and phrase IDs, standard composition,
+  restrictions, both player paths, number compatibility, and bounded success
+  or typed failure. Failure output contains seed and replay path.
+- **AC-008-03:** Across 10,000 feasible boards and 20,000 wildcard slots, each
+  observed role proportion rounds to its configured weight within one decimal
+  place.
+- **AC-008-04:** A recent phrase is absent when a complete non-recent
+  role selection exists and appears only when no such selection exists.
+- **AC-008-05:** An impossible pool returns no board and reports the scene,
+  both character IDs, and required and available counts for every role. It does
+  not throw or consume an unbounded number of random steps.
+- **AC-008-06:** Shared-board generation never selects a private-only phrase and
+  never mutates the request or phrase catalog.
+
 ## Verify and stop
 
 Fixed seeds reproduce boards. Unit and fast-check tests prove invariants across

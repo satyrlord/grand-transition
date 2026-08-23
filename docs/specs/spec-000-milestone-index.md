@@ -7,8 +7,10 @@
 
 This file and its linked approved milestone specifications are the complete
 product and implementation authority. Each milestone owns one narrow capability
-and has an objective stop condition. Load this index and only the selected
-milestone plus its direct dependencies.
+and has an objective stop condition. Load this index, the selected milestone,
+and the complete transitive closure of its **Depends on** chain. A milestone
+inherits every earlier contract in that closure unless it explicitly replaces
+the contract and names the replacement.
 
 `docs/specs/` is the only source of truth for the application. General product
 and contributor information can appear in `README.md`, but no specification can
@@ -53,6 +55,94 @@ complete an approved specification.
   milestone also requires cumulative `npm run ci` from a clean checkout.
 - Temporary original assets are permitted only where stated. Do not add future
   compatibility or scaffolding.
+
+## Specification completeness contract
+
+Normative words have these meanings:
+
+- **Must** and **must not** state requirements.
+- **Default** states the value used when no valid saved or explicit value
+  exists.
+- **Range** includes both endpoints unless the text says otherwise.
+- A typed failure does not change the input state, consume randomness, or append
+  to command history unless its owning specification explicitly says that it
+  does.
+- An acceptance criterion with several assertions is one criterion only when
+  all assertions use the same setup and action.
+
+Each milestone specification must contain:
+
+1. Exact inputs, outputs, defaults, ranges, state transitions, and owned failure
+   codes for behavior that it introduces.
+2. A numbered acceptance section. Identifiers use
+   **AC-NNN-01**, **AC-NNN-02**, and so on.
+3. At least one positive path, each material boundary, each owned failure path,
+   and each security, privacy, or accessibility constraint that applies.
+4. One named verifier for each criterion. A verifier is a test file, command,
+   deterministic manual procedure, or recorded measurement.
+5. An evidence record when the criterion depends on a browser, operating
+   system, performance profile, human review, audible result, or published
+   service.
+
+The phrase “tests cover” is not sufficient unless the specification enumerates
+the states or boundaries that the tests must cover. A green general gate does
+not replace a missing focused verifier.
+
+## Shared evidence contract
+
+An evidence record contains the milestone and acceptance identifiers, commit or
+working-tree identifier, production build command, test command or manual
+procedure, operating system, browser and version when applicable, viewport,
+input seed and setup when applicable, expected result, actual result, and links
+to retained screenshots, traces, audio notes, or CI artifacts.
+
+Automated evidence must be reproducible from a clean checkout. Manual evidence
+must use a written procedure and record pass, fail, or blocked for each step.
+Do not record private hand content, personal data, machine secrets, or hidden
+speech text.
+
+## Shared browser and interface measurements
+
+Unless a milestone gives a narrower matrix, browser UI acceptance uses these
+viewports in CSS pixels:
+
+| Class | Viewport |
+| --- | --- |
+| Desktop | 1280 by 720 |
+| Tablet | 1024 by 768 |
+| Narrow landscape | 844 by 390 |
+| Portrait mobile | 390 by 844 |
+| Minimum width | 320 by 568 |
+
+At each applicable viewport:
+
+- Required text and controls must not overlap, clip, or leave the viewport.
+- The page must not scroll horizontally. A board or log can scroll inside a
+  named container when its owning specification permits it.
+- At 200 percent browser zoom, text and controls must reflow without loss of
+  content or function.
+- Pointer targets must be at least 24 by 24 CSS pixels. Primary touch actions
+  must be at least 44 by 44 CSS pixels.
+- Normal text contrast must be at least 4.5:1. Large text and non-text control
+  contrast must be at least 3:1.
+- Visible focus must not be fully hidden by sticky or fixed content.
+- Synthetic UI strings that are 40 percent longer than the longest shipped
+  English string must wrap without loss of meaning.
+- Automated axe scans must have no serious or critical finding.
+
+Essential information must remain in semantic Document Object Model (DOM)
+content. Color, motion, sound, hover, or speech must not be its only carrier.
+Reduced motion removes shake, large translation, parallax, and looping
+nonessential motion. No effect can flash more than three times in one second.
+
+## External validation tools
+
+The specifications own every minimum product and acceptance requirement.
+Impeccable and other installed skills are review tools, not additional product
+authority. Each Impeccable evidence record must include the skill version and
+detector version. A tool update does not change an approved acceptance
+criterion. If a required tool is unavailable, record the block; do not replace
+its result with a source-only opinion.
 
 ## Impeccable user interface validation
 

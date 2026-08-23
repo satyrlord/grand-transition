@@ -29,9 +29,40 @@ current state, attempted step, step index, and expected roles. The explicit end
 step that moves `CLAUSE_COMPLETE` to `ENDED` and adds a period is owned by
 Milestone 007.
 
+## Transition and rendering contract
+
+| State | Accepted role | Next state |
+| --- | --- | --- |
+| `EXPECT_SUBJECT` | noun | `EXPECT_VERB_OR_PREDICATE` |
+| `EXPECT_VERB_OR_PREDICATE` | verb | `EXPECT_OBJECT` |
+| `EXPECT_VERB_OR_PREDICATE` | predicate | `CLAUSE_COMPLETE` |
+| `EXPECT_OBJECT` | noun | `CLAUSE_COMPLETE` |
+
+All other role transitions return `unexpected-role` with the current state,
+attempted role, phrase ID, zero-based step index, and ordered expected roles.
+An end step before `CLAUSE_COMPLETE` returns `cannot-end-incomplete`.
+
+The first subject noun and every verb use subject number. An object noun uses
+object number. A phrase without number forms uses its default text for both.
+Rendering joins phrases with one space, uppercases the first English grapheme,
+does not alter later graphemes, and adds no punctuation before Milestone 007.
+
+## Acceptance criteria
+
+- **AC-006-01:** A table test exercises every row in the transition table and
+  every rejected role from each state.
+- **AC-006-02:** Both minimum forms reach `CLAUSE_COMPLETE`, report complete,
+  and expose conjunction and ending as their next roles.
+- **AC-006-03:** Singular and plural subjects render the matching verb form,
+  while the object uses its independent number.
+- **AC-006-04:** Empty input and each legal prefix are accepted as incomplete,
+  have zero outgoing damage intent, and preserve their exact next-role list.
+- **AC-006-05:** Wrong locale, missing message, illegal role, and premature end
+  each return or throw only their owned corrective failure.
+
 ## Verify and stop
 
-Tests cover every state and transition used by both minimum forms, singular and
-plural agreement, and typed illegal transitions. No English rule enters the
+Acceptance criteria cover every state and transition used by both minimum
+forms, singular and plural agreement, and typed illegal transitions. No English rule enters the
 generic engine contract. `npm run ci` passes. Stop before conjunctions, endings,
 continuations, faults, or drafting.

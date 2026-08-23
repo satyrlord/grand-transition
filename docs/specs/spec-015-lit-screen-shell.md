@@ -21,6 +21,40 @@ with explicit style and event contracts. Components use native controls before
 Accessible Rich Internet Applications (ARIA) attributes. Components never
 duplicate authoritative state.
 
+## Screen and setup contract
+
+The shell has `title` and `setup` view states. “Set up match” moves from the
+title to setup without changing game state. “Back” returns to title and restores
+setup values. A valid setup submit emits one typed `start-match` command;
+Milestone 016 owns the rendered match destination.
+
+Setup fields are mode, player-one character, player-two character, scene, and
+timer. Defaults are hotseat, the first two catalog characters, the first scene,
+and unlimited timer. Valid timers are 15, 30, and unlimited. Mirror characters
+are valid. Missing IDs, unknown IDs, an unsupported mode, or an unsupported
+timer are invalid.
+
+Validation occurs on submit and after an invalid field changes. The first
+invalid field receives focus. Each visible error names the field, problem, and
+valid recovery and is associated with its native control. Valid input is
+preserved. Submission is never disabled only to hide validation.
+
+## Acceptance criteria
+
+- **AC-015-01:** Title and setup follow the two-state graph, browser Back does
+  not create an unsupported URL route, and returning to setup restores values.
+- **AC-015-02:** Defaults and every valid timer create the exact typed setup
+  payload. A mirror match succeeds.
+- **AC-015-03:** Every invalid class produces one visible associated error,
+  focuses the first invalid control, preserves other values, and emits no
+  command.
+- **AC-015-04:** A valid submit emits one bubbling, composed
+  `start-match` event and immutable payload. Rapid double submit emits once.
+- **AC-015-05:** Pointer and keyboard flows pass at 1280 by 720 and 390 by 844.
+  Tab order follows visible order and Escape does not discard setup values.
+- **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
+  hands, or game phase. The shell is the only authoritative snapshot owner.
+
 ## Impeccable UI validation
 
 1. Run `$impeccable audit` on the built title and setup screens.

@@ -24,6 +24,46 @@ and volume. Speak only complete public insults. Cancel on round change, exit, or
 rematch. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
 
+## Audio and speech measurements
+
+Runtime music and ambience provide Ogg Vorbis plus MP3 fallback at 48 kilohertz.
+Short effects provide Ogg Vorbis plus MP3 fallback and have a true peak no
+higher than -1 decibel full scale. Music masters target -16 LUFS integrated,
+plus or minus 1 LU; ambience targets -22 LUFS, plus or minus 2 LU. No decoded
+sample exceeds 0 decibels full scale.
+
+After a selected match package is decoded, a cue starts within 100 milliseconds
+of its public event. Music and ambience changes use a 300-millisecond equal-
+power crossfade. Leaving a match fades and stops both within 300 milliseconds.
+At volume zero a bus produces no audible sample and does not restart a source.
+
+Mixer ranges and defaults come from Milestone 020. Speech voice is Auto by
+default, rate is 0.5 through 2 in 0.1 steps with default 1, and volume is 0
+through 1 in 0.05 steps with default 0.8. Pitch is character data, not a user
+setting. Any user gesture that enables audio resumes the audio context before
+playback.
+
+Speech cancellation completes within 100 milliseconds and suppresses queued
+`end` callbacks from changing the new screen. Subtitles show the exact public
+utterance and contain no speech-only information.
+
+## Acceptance criteria
+
+- **AC-024-01:** Asset validation proves both runtime formats, 48-kilohertz
+  sample rate, loudness range, true-peak limit, ownership, and license.
+- **AC-024-02:** Every named cue maps to a distinct asset and fires once within
+  100 milliseconds after decode. Mixer gain equations pass at 0, default, and
+  1.
+- **AC-024-03:** Crossfade, exit cleanup, mute, repeated enable, and unavailable
+  audio have deterministic adapter tests and no orphan source.
+- **AC-024-04:** Voice selection follows saved URI, language, system-default
+  order after immediate load and `voiceschanged`.
+- **AC-024-05:** Disabled, unavailable, private, incomplete, turn-change, exit,
+  and rematch states speak nothing. Cancellation completes within 100
+  milliseconds.
+- **AC-024-06:** Chromium, Firefox, and WebKit browser evidence records audible
+  menu, scene, effect, speech, subtitle, mute, and silent-fallback results.
+
 ## Impeccable user interface validation
 
 1. Run `$impeccable audit` on mixer, speech, subtitle, and unavailable states.
