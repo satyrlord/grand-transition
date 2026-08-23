@@ -7,6 +7,7 @@ export default defineConfig({
       'tests/browser/**/*.browser.test.ts',
       'tests/unit/content-schemas.test.ts',
       'tests/unit/board-generation.test.ts',
+      'tests/unit/draft-actions.test.ts',
       'tests/unit/english-grammar-core.test.ts',
       'tests/unit/extended-grammar.test.ts',
     ],

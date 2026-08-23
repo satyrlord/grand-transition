@@ -41,9 +41,15 @@ fewer than two eligible phrases exist, round preparation returns
 `impossible-private-hand` with player, scene, required count, and available
 count.
 
+The caller supplies the active scene and general-pool phrase IDs. These two
+sets classify the character-only bonus. A private candidate that occurs in
+neither set receives the bonus. Eligibility still requires membership in the
+active character private pool. Each different matching tag adds its bonus once.
+
 Redraw uses the same algorithm after excluding both discarded IDs. It fails
-with `redraw-unavailable` when two replacements do not exist. A failure does
-not consume the redraw or advance the seed.
+with `redraw-unavailable` when the hand does not contain two cards or when two
+replacements do not exist. A failure does not consume the redraw or advance
+the seed.
 
 ## Draft state and commands
 
@@ -53,7 +59,7 @@ player can act. The owned commands are:
 | Command | Preconditions | Result |
 | --- | --- | --- |
 | `select-phrase` | Owned available card is legal | Remove it, append it, recalculate preview, pass turn |
-| `redraw-hand` | Redraw unused and two replacements exist | Replace both private cards, mark redraw used, keep turn |
+| `redraw-hand` | Redraw unused and two replacements exist | Replace both cards, mark redraw used, keep turn |
 | `commit-sentence` | Grammar is complete | End construction, pass turn |
 | `carry-continuation` | Complete; continuation card | Consume card; mark carry; end; pass |
 | `select-comeback` | Complete; tier affordable | Record tier; end; pass |
@@ -66,6 +72,16 @@ Ended players are skipped. Drafting ends when both constructions have ended.
 The reducer does not read a clock. The UI or AI dispatches the deterministic
 `expire-turn` command.
 
+Commands identify cards with opaque slot references, not private phrase IDs.
+The reducer can keep private phrase values in authoritative game state, but a
+player snapshot exposes only that player's hand. An opponent snapshot hides
+the hand values, legal-card references, and a preview that contains a selected
+private phrase. Public log facts record the action and card source only.
+
+A continuation card is a draft action, not a grammar phrase. Only
+`carry-continuation` consumes it. It is rejected as `illegal-phrase` when
+selected as a phrase or deliberate fault.
+
 Rejected commands use stable codes:
 `wrong-phase`, `wrong-actor`, `card-unavailable`, `card-not-owned`,
 `illegal-phrase`, `sentence-incomplete`, `redraw-already-used`,
@@ -75,20 +91,26 @@ Rejected commands use stable codes:
 ## Acceptance criteria
 
 - **AC-009-01:** Fixed seed and catalog reproduce both two-card hands, their
-  order, and next seed. Boundary fixtures prove each weight term.
+  order, and next seed. Boundary fixtures prove each weight term. Verify in
+  `tests/unit/draft-actions.test.ts`.
 - **AC-009-02:** Every command row succeeds at its preconditions, performs only
-  its stated mutations, and passes or keeps the turn as stated.
+  its stated mutations, and passes or keeps the turn as stated. Verify in
+  `tests/unit/draft-actions.test.ts`.
 - **AC-009-03:** Every rejection code preserves state, seed, hand, board,
-  redraw availability, and command history.
+  redraw availability, and command history. Verify in
+  `tests/unit/draft-actions.test.ts`.
 - **AC-009-04:** A selected shared card is unavailable to both players; a
   private card value never enters the opponent snapshot, preview, error facts,
-  or generated log.
+  or generated log. Verify in `tests/unit/draft-actions.test.ts`.
 - **AC-009-05:** Redraw works once, returns neither discarded ID, and a failed
-  redraw does not consume the action.
+  redraw does not consume the action. Verify in
+  `tests/unit/draft-actions.test.ts`.
 - **AC-009-06:** Expiration commits a complete construction and ends an
   incomplete construction with zero outgoing damage and no grammar self-damage.
+  Verify in `tests/unit/draft-actions.test.ts`.
 - **AC-009-07:** A 2,000-run fast-check property with a recorded seed preserves
-  phase, ownership, turn, removal, and bounded-action invariants.
+  phase, ownership, turn, removal, and bounded-action invariants. Verify in
+  `tests/unit/draft-actions.test.ts` with seed `20260823`.
 
 ## Verify and stop
 
