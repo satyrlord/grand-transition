@@ -1,4 +1,4 @@
-import type { Phrase } from '../content/schemas';
+import type { Character, Phrase } from '../content/schemas';
 import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import {
   generateBoard,
@@ -7,6 +7,14 @@ import {
   type BoardSlot,
   type GeneratedBoard,
 } from './board-generation';
+import { validateFinisherSelection } from './finisher-rules';
+import {
+  availableComebackTiers,
+  selectComebackTier,
+  type ComebackSelection,
+  type ComebackTier,
+  type ContinuationCarry,
+} from './continuation-comeback-resolution';
 import type {
   GameCommand,
   GameReducer,
@@ -41,11 +49,14 @@ export const draftRuleErrorCodes = [
   'redraw-already-used',
   'redraw-unavailable',
   'continuation-unavailable',
-  'comeback-unavailable',
+  'comeback-already-selected',
+  'comeback-unaffordable',
+  'finisher-premature',
+  'finisher-wrong-owner',
 ] as const;
 
 export type DraftRuleErrorCode = (typeof draftRuleErrorCodes)[number];
-export type ComebackTier = 'weak' | 'medium' | 'strong';
+export type { ComebackTier };
 export type DraftCardSource = 'private' | 'shared';
 
 export type DraftCardReference = Readonly<{
@@ -92,6 +103,7 @@ export type DraftConstruction = Readonly<{
   }>[];
   carryIntent: boolean;
   selectedComebackTier: ComebackTier | null;
+  selectedComeback: ComebackSelection | null;
   deliberateFaultPhraseId: string | null;
   expired: boolean;
 }>;
@@ -106,6 +118,7 @@ export type DraftPlayerState = Readonly<{
   objectNumber: GrammaticalNumber;
   hand: readonly DraftHandCard[];
   redrawUsed: boolean;
+  comebackCharge: number;
   availableComebackTiers: readonly ComebackTier[];
   construction: DraftConstruction;
   legalCards: readonly DraftCardReference[];
@@ -154,6 +167,7 @@ export type DraftRuleError = RuleError<
 
 export type DraftEngineContext = Readonly<{
   phrases: readonly Phrase[];
+  characters: readonly Character[];
   locale: GameLocaleBundle;
 }>;
 
@@ -165,8 +179,8 @@ export type DraftPlayerSetup = Readonly<{
   weaknessTags: readonly string[];
   subjectNumber: GrammaticalNumber;
   objectNumber: GrammaticalNumber;
-  availableComebackTiers?: readonly ComebackTier[];
-  restoredSteps?: readonly EnglishGrammarStep[];
+  comebackCharge?: number;
+  restoredCarry?: ContinuationCarry;
 }>;
 
 export type DraftRoundPreparationRequest = Readonly<{
@@ -178,6 +192,7 @@ export type DraftRoundPreparationRequest = Readonly<{
   scenePhraseIds: readonly string[];
   generalPhraseIds: readonly string[];
   phrases: readonly Phrase[];
+  characters: readonly Character[];
   locale: GameLocaleBundle;
   players: readonly [DraftPlayerSetup, DraftPlayerSetup];
   previousOpeningPlayerId?: string;
@@ -200,6 +215,8 @@ export type DraftPlayerSnapshot = Readonly<{
     cards?: readonly DraftHandCard[];
   }>;
   redrawUsed: boolean;
+  comebackCharge: number;
+  availableComebackTiers: readonly ComebackTier[];
   construction: Readonly<{
     status: 'building' | 'ended';
     previewText: string | null;
@@ -207,6 +224,7 @@ export type DraftPlayerSnapshot = Readonly<{
     requiredRoles: readonly EnglishGrammarRole[];
     carryIntent: boolean;
     selectedComebackTier: ComebackTier | null;
+    comebackClosingLine: string | null;
     expired: boolean;
   }>;
   legalCards: readonly DraftCardReference[];
@@ -292,7 +310,10 @@ export function prepareDraftRound(
     seed = handResult.hand.nextSeed;
     playerStates[player.playerId] = {
       ...player,
-      availableComebackTiers: player.availableComebackTiers ?? [],
+      comebackCharge: player.comebackCharge ?? 0,
+      availableComebackTiers: availableComebackTiers(
+        player.comebackCharge ?? 0,
+      ),
       hand: handResult.hand.phraseIds.map((phraseId, cardIndex) => ({
         id: `hand-${request.round}-${player.playerId}-${cardIndex + 1}`,
         phraseId,
@@ -340,6 +361,7 @@ export function prepareDraftRound(
     ok: true,
     state: recalculatePlayers(baseState, {
       phrases: request.phrases,
+      characters: request.characters,
       locale: request.locale,
     }),
   };
@@ -372,6 +394,8 @@ export function snapshotDraftStateForPlayer(
             ? { count: player.hand.length, cards: player.hand }
             : { count: player.hand.length },
           redrawUsed: player.redrawUsed,
+          comebackCharge: player.comebackCharge,
+          availableComebackTiers: player.availableComebackTiers,
           construction: {
             status: player.construction.status,
             previewText:
@@ -382,6 +406,8 @@ export function snapshotDraftStateForPlayer(
             requiredRoles: player.construction.requiredRoles,
             carryIntent: player.construction.carryIntent,
             selectedComebackTier: player.construction.selectedComebackTier,
+            comebackClosingLine:
+              player.construction.selectedComeback?.closingLine ?? null,
             expired: player.construction.expired,
           },
           legalCards: isViewer ? player.legalCards : [],
@@ -429,7 +455,7 @@ function reduceDraftCommand(
     case 'carry-continuation':
       return carryContinuation(state, player, command, context);
     case 'select-comeback':
-      return selectComeback(state, player, command, context);
+      return selectComeback(state, player, command, context, randomSource);
     case 'deliberate-fault':
       return deliberateFault(state, player, command, context);
     case 'expire-turn':
@@ -447,6 +473,14 @@ function selectPhrase(
   if ('code' in resolved) return reject(command, resolved.code);
   if (resolved.phrase.role === 'continuation') {
     return reject(command, 'illegal-phrase');
+  }
+  if (resolved.phrase.role === 'ending') {
+    const finisher = validateFinisherSelection({
+      analysisBeforeSelection: player.construction.analysis,
+      attackerCharacterId: player.characterId,
+      finisher: resolved.phrase,
+    });
+    if (!finisher.ok) return reject(command, finisher.error.code);
   }
 
   const step: EnglishGrammarStep = {
@@ -587,18 +621,48 @@ function selectComeback(
   player: DraftPlayerState,
   command: Extract<DraftCommand, { readonly type: 'select-comeback' }>,
   context: DraftEngineContext,
+  randomSource: RandomSource,
 ): ReducerResult<DraftState, DraftRuleError> {
   if (!player.construction.analysis.complete) {
     return reject(command, 'sentence-incomplete');
   }
-  if (!player.availableComebackTiers.includes(command.payload.tier)) {
-    return reject(command, 'comeback-unavailable');
+  if (player.construction.selectedComeback) {
+    return reject(command, 'comeback-already-selected');
   }
+  const character = context.characters.find(
+    (candidate) => candidate.id === player.characterId,
+  );
+  if (!character) throw new Error(`Unknown character "${player.characterId}".`);
+  const selection = selectComebackTier({
+    playerId: player.playerId,
+    character,
+    tier: command.payload.tier,
+    phase: state.phase,
+    constructionComplete: player.construction.analysis.complete,
+    selectedComeback: player.construction.selectedComeback,
+    charge: player.comebackCharge,
+    seed: state.seed,
+    commandHistory: state.commandHistory,
+    locale: context.locale,
+    randomSource,
+  });
+  if (!selection.ok) return reject(command, selection.error.code);
   const construction = {
     ...endCompleteConstruction(player),
     selectedComebackTier: command.payload.tier,
+    selectedComeback: selection.selection,
   };
-  return acceptPlayerAction(state, player, command, construction, context);
+  return acceptPlayerAction(
+    { ...state, seed: selection.nextSeed },
+    {
+      ...player,
+      comebackCharge: selection.charge,
+      availableComebackTiers: availableComebackTiers(selection.charge),
+    },
+    command,
+    construction,
+    context,
+  );
 }
 
 function deliberateFault(
@@ -832,6 +896,14 @@ function collectLegalCards(
   return cards
     .filter(({ phrase }) => {
       if (phrase.role === 'continuation') return false;
+      if (phrase.role === 'ending') {
+        const finisher = validateFinisherSelection({
+          analysisBeforeSelection: player.construction.analysis,
+          attackerCharacterId: player.characterId,
+          finisher: phrase,
+        });
+        if (!finisher.ok) return false;
+      }
       const result = englishGrammarAdapter.analyze({
         steps: [
           ...player.construction.steps,
@@ -917,7 +989,7 @@ function constructionWithAnalysis(
 }
 
 function createConstruction(player: DraftPlayerSetup): DraftConstruction {
-  const steps = player.restoredSteps ?? [];
+  const steps = player.restoredCarry?.steps ?? [];
   const result = englishGrammarAdapter.analyze({
     steps,
     subjectNumber: player.subjectNumber,
@@ -934,12 +1006,25 @@ function createConstruction(player: DraftPlayerSetup): DraftConstruction {
   ) {
     throw new Error('A restored continuation must be complete and valid.');
   }
+  if (
+    player.restoredCarry &&
+    (JSON.stringify(player.restoredCarry.analysis) !==
+      JSON.stringify(result.analysis) ||
+      player.restoredCarry.publicText !== result.analysis.publicText)
+  ) {
+    throw new Error(
+      'A restored continuation must match its grammar steps and public text.',
+    );
+  }
+  const analysis = player.restoredCarry?.analysis ?? result.analysis;
+  const publicText =
+    player.restoredCarry?.publicText ?? result.analysis.publicText;
   return {
     status: 'building',
     steps,
-    analysis: result.analysis,
-    previewText: result.analysis.publicText,
-    requiredRoles: result.analysis.nextRoles,
+    analysis,
+    previewText: publicText,
+    requiredRoles: analysis.nextRoles,
     selectedCards: steps
       .filter((step) => step.kind === 'phrase')
       .map((step) => ({
@@ -948,6 +1033,7 @@ function createConstruction(player: DraftPlayerSetup): DraftConstruction {
       })),
     carryIntent: false,
     selectedComebackTier: null,
+    selectedComeback: null,
     deliberateFaultPhraseId: null,
     expired: false,
   };

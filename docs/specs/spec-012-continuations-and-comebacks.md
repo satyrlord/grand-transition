@@ -20,6 +20,14 @@ weak 20 and 4, medium 40 and 10, strong 60 and 18. A character closing line is
 separate from grammar and noun combos. Only strong independently breaks a
 continuation.
 
+Comeback charge is a visible integer from 0 through 60. The exact available
+tier list is derived from the current charge. Milestone 012 replaces the
+Milestone 009 `comeback-unavailable` placeholder with
+`comeback-unaffordable`. Duplicate selection returns
+`comeback-already-selected`. Incomplete and wrong-phase selection continue to
+return `sentence-incomplete` and `wrong-phase`. Each rejection preserves state,
+charge, seed, and command history.
+
 ## Continuation resolution
 
 A continuation card is a draft action, not a grammar phrase. Selecting it after
@@ -48,6 +56,9 @@ spending and capped at 60. Self-damage does not add charge.
 The comeback bonus is added after finisher, weakness, combo, and rounding. It
 is never multiplied. The seeded closing line is visible explanation only and
 does not enter grammar, phrase count, noun chains, or scoring tags.
+Closing-line selection uses the character tier pool, command history, and
+current seed. A successful selection advances the seed once. The same
+character, tier, command history, and seed reproduce the line and next seed.
 
 ## Acceptance criteria
 
@@ -69,3 +80,11 @@ does not enter grammar, phrase count, noun chains, or scoring tags.
 Boundary tests prove survival at 15, break at 16, thresholds at 20, 40, and 60,
 cap and spending rules, and deterministic line selection. Comeback text does not
 affect grammar or combos. `npm run ci` passes. Stop before Pride resolution.
+
+## Objective verifiers
+
+`tests/unit/continuation-comeback-resolution.test.ts` verifies AC-012-01 through
+AC-012-06 in Node and Chromium. `tests/unit/draft-actions.test.ts` verifies
+immediate charge spending, visible state facts, exact carry restoration, and
+typed draft-command failures. `npm run ci` verifies the cumulative quality,
+coverage, build, and production-browser security contracts.
