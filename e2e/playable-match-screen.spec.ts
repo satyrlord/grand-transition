@@ -58,12 +58,78 @@ test('the longest desktop match state fits and exposes every required fact', asy
                 box.bottom > other.top,
             ),
         ),
+      requiredTextClipping: Array.from(
+        document.querySelectorAll<HTMLElement>(
+          '.match-turn-heading h1, .card-phrase, .card-weakness',
+        ),
+      )
+        .filter(
+          (node) =>
+            node.scrollWidth > node.clientWidth + 1 ||
+            node.scrollHeight > node.clientHeight + 1,
+        )
+        .map((node) => {
+          return {
+            className: node.className,
+            text: node.textContent?.trim(),
+            clientWidth: node.clientWidth,
+            scrollWidth: node.scrollWidth,
+            clientHeight: node.clientHeight,
+            scrollHeight: node.scrollHeight,
+          };
+        }),
     };
   });
   expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewport.width);
   expect(geometry.documentHeight).toBeLessThanOrEqual(geometry.viewport.height);
   expect(geometry.requiredInside).toBe(true);
   expect(geometry.sharedOverlap).toBe(false);
+  expect(geometry.requiredTextClipping).toEqual([]);
+
+  const actionIconFacts = await page
+    .locator('.match-actions .action-icon')
+    .evaluateAll((icons) =>
+      icons.map((icon) => {
+        const box = icon.getBoundingClientRect();
+        return {
+          namespace: icon.namespaceURI,
+          pathNamespaces: Array.from(
+            icon.querySelectorAll('path'),
+            (path) => path.namespaceURI,
+          ),
+          pathCount: icon.querySelectorAll('path').length,
+          width: box.width,
+          height: box.height,
+          stroke: getComputedStyle(icon).stroke,
+        };
+      }),
+    );
+  expect(actionIconFacts).toHaveLength(3);
+  expect(
+    actionIconFacts.every(
+      (icon) =>
+        icon.namespace === 'http://www.w3.org/2000/svg' &&
+        icon.pathCount > 0 &&
+        icon.pathNamespaces.every(
+          (namespace) => namespace === 'http://www.w3.org/2000/svg',
+        ) &&
+        icon.width > 0 &&
+        icon.height > 0 &&
+        icon.stroke !== 'none',
+    ),
+  ).toBe(true);
+
+  const tacticalTextFloor = await page.evaluate(() => {
+    const text = document.querySelectorAll(
+      '.match-facts dt, .match-player dt, .match-player p, .reaction-copy p, .sentence-ledger h2, .card-topline, .card-phrase, .card-bottomline, .card-weakness, .private-hand-heading, .action-detail, .match-footer',
+    );
+    return Math.min(
+      ...Array.from(text, (element) =>
+        Number.parseFloat(getComputedStyle(element).fontSize),
+      ),
+    );
+  });
+  expect(tacticalTextFloor).toBeGreaterThanOrEqual(11);
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
@@ -83,8 +149,91 @@ test('the longest desktop match state fits and exposes every required fact', asy
   await page.keyboard.press('Escape');
 
   await page.setViewportSize({ width: 390, height: 844 });
+  const mobileTacticalTextFloor = await page.evaluate(() => {
+    const text = document.querySelectorAll(
+      '.match-facts dt, .match-player dt, .match-player p, .reaction-copy p, .sentence-ledger h2, .card-topline, .card-phrase, .card-bottomline, .card-weakness, .private-hand-heading, .action-detail, .match-footer',
+    );
+    return Math.min(
+      ...Array.from(text, (element) =>
+        Number.parseFloat(getComputedStyle(element).fontSize),
+      ),
+    );
+  });
+  expect(mobileTacticalTextFloor).toBeGreaterThanOrEqual(11);
+  const mobileReactionTextClipping = await page.evaluate(() =>
+    Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '.reaction-copy h2, .reaction-copy > p',
+      ),
+    )
+      .filter(
+        (node) =>
+          node.scrollWidth > node.clientWidth + 1 ||
+          node.scrollHeight > node.clientHeight + 1,
+      )
+      .map((node) => ({
+        className: node.className,
+        text: node.textContent?.trim(),
+        clientWidth: node.clientWidth,
+        scrollWidth: node.scrollWidth,
+        clientHeight: node.clientHeight,
+        scrollHeight: node.scrollHeight,
+      })),
+  );
+  expect(mobileReactionTextClipping).toEqual([]);
+  const mobileDraftOrder = await page.evaluate(() => {
+    const privateHand = document.querySelector<HTMLElement>('.private-hand')!;
+    const sharedBoard = document.querySelector<HTMLElement>('.shared-board')!;
+    const actions = document.querySelector<HTMLElement>('.match-actions')!;
+    return {
+      visual: [
+        privateHand.getBoundingClientRect().top,
+        sharedBoard.getBoundingClientRect().top,
+        actions.getBoundingClientRect().top,
+      ],
+      semantic:
+        privateHand.compareDocumentPosition(sharedBoard) &
+          Node.DOCUMENT_POSITION_FOLLOWING &&
+        sharedBoard.compareDocumentPosition(actions) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+    };
+  });
+  expect(mobileDraftOrder.visual).toEqual(
+    [...mobileDraftOrder.visual].sort((a, b) => a - b),
+  );
+  expect(Boolean(mobileDraftOrder.semantic)).toBe(true);
+  await page.getByRole('heading', { name: /Round 1:/u }).focus();
+  await page.keyboard.press('Tab');
+  await expect(
+    page.locator('.private-hand .phrase-card:not(:disabled)').first(),
+  ).toBeFocused();
   await page.screenshot({
     path: testInfo.outputPath('match-mobile-scope-evidence.png'),
+    fullPage: true,
+  });
+
+  await page.setViewportSize({ width: 1672, height: 941 });
+  const stageArt = page.locator('.broadcast-stage-art');
+  await expect(stageArt).toBeVisible();
+  expect(
+    await stageArt.evaluate(
+      (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+    ),
+  ).toBe(true);
+  const parityGeometry = await page.evaluate(() => ({
+    documentWidth: document.documentElement.scrollWidth,
+    documentHeight: document.documentElement.scrollHeight,
+    viewportWidth: document.documentElement.clientWidth,
+    viewportHeight: document.documentElement.clientHeight,
+  }));
+  expect(parityGeometry.documentWidth).toBeLessThanOrEqual(
+    parityGeometry.viewportWidth,
+  );
+  expect(parityGeometry.documentHeight).toBeLessThanOrEqual(
+    parityGeometry.viewportHeight,
+  );
+  await page.screenshot({
+    path: testInfo.outputPath('match-user-parity-1672x941.png'),
     fullPage: true,
   });
 });

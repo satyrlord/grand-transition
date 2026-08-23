@@ -1,6 +1,6 @@
 ---
 name: 'Grand Transition: A Verbal Republic'
-description: 'A civic-ledger interface system for a verbal republic.'
+description: 'Station paperwork becomes a late-1990s televised verbal republic.'
 colors:
   municipal-blue: '#062840'
   deep-municipal-blue: '#041d2e'
@@ -11,317 +11,403 @@ colors:
   deep-oxblood: '#481c1a'
   registry-brass: '#9a7331'
   registry-rule: 'rgb(23 25 22 / 38%)'
+  broadcast-black: '#05080b'
+  broadcast-ink: '#0b1722'
+  broadcast-panel: '#101f2f'
+  broadcast-brass: '#b48a48'
+  broadcast-brass-light: '#e4c17d'
+  broadcast-paper: '#e5d8b9'
+  broadcast-paper-light: '#f5ecd7'
+  broadcast-oxblood: '#8f2822'
+  broadcast-red: '#c63730'
+  television-blue: '#12477f'
+  television-blue-bright: '#2375c9'
+  grammar-olive: '#65703e'
+  grammar-violet: '#765284'
 typography:
-  display:
+  record-display:
     fontFamily: '"Barlow Condensed", sans-serif'
     fontSize: 'clamp(3.2rem, 8vw, 6rem)'
     fontWeight: 700
     lineHeight: 0.78
     letterSpacing: '-0.035em'
+  broadcast-display:
+    fontFamily: '"Cormorant SC", Georgia, "Times New Roman", serif'
+    fontSize: 'clamp(1.35rem, 2vw, 2rem)'
+    fontWeight: 700
+    lineHeight: 0.9
+    letterSpacing: '0.025em'
   body:
     fontFamily: 'Georgia, "Times New Roman", serif'
-  record-subtitle:
-    fontFamily: 'Georgia, "Times New Roman", serif'
-    fontSize: 'clamp(1.05rem, 2vw, 2rem)'
-    fontWeight: 700
-    lineHeight: 1.15
-    letterSpacing: '0.18em'
-  status:
-    fontFamily: '"Barlow Condensed", sans-serif'
-    fontSize: 'clamp(0.8rem, 1vw, 0.95rem)'
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: '0.06em'
   tactical-label:
     fontFamily: '"Barlow Condensed", sans-serif'
     fontSize: '0.69rem'
     fontWeight: 700
     lineHeight: 1
-    letterSpacing: '0.05em'
+    letterSpacing: '0.045em'
+  action-voice:
+    fontFamily: '"Cormorant SC", Georgia, "Times New Roman", serif'
+    fontSize: '0.95rem'
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: '0.045em'
+  data:
+    fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace'
+    fontSize: '0.69rem'
+    fontWeight: 700
+    lineHeight: 1
 rounded:
   square: '0'
 spacing:
   edge: 'clamp(1.25rem, 4vw, 4.5rem)'
   compact: '0.5rem'
+  tactical-gap: '0.35rem'
 components:
   title-record-stamp:
     textColor: '{colors.official-oxblood}'
-    typography: '{typography.status}'
+    typography: '{typography.tactical-label}'
+    rounded: '{rounded.square}'
     padding: '0.6rem 0.85rem 0.55rem'
     width: 'min(13rem, 100%)'
-  match-phrase-docket:
-    backgroundColor: '{colors.pale-paper}'
-    textColor: '{colors.registry-ink}'
+  setup-primary-action:
+    backgroundColor: '{colors.official-oxblood}'
+    textColor: '{colors.pale-paper}'
+    typography: '{typography.tactical-label}'
+    rounded: '{rounded.square}'
+    padding: '0.7rem 1rem'
+    height: '2.75rem'
+  match-sentence-record:
+    backgroundColor: '{colors.broadcast-paper-light}'
+    textColor: '{colors.broadcast-black}'
     typography: '{typography.body}'
     rounded: '{rounded.square}'
-    padding: '0.55rem'
+    padding: '0.48rem clamp(1rem, 4vw, 4rem)'
+  match-phrase-card:
+    backgroundColor: '{colors.broadcast-paper-light}'
+    textColor: '{colors.broadcast-black}'
+    typography: '{typography.body}'
+    rounded: '{rounded.square}'
+    padding: '0.32rem 0.42rem'
+  match-primary-action:
+    backgroundColor: '{colors.broadcast-oxblood}'
+    textColor: '{colors.broadcast-paper-light}'
+    typography: '{typography.action-voice}'
+    rounded: '{rounded.square}'
+    padding: '0.38rem 0.58rem'
+    height: '2.75rem'
 ---
 
 # Design System: Grand Transition: A Verbal Republic
 
 ## Overview
 
-### Design direction: "The Open Civic Ledger"
+<!-- markdownlint-disable MD036 -->
 
-Grand Transition presents each surface as part of an open civic record. A
-municipal-blue cloth field meets warm official paper at an oxblood binding
-seam. The result is formal, legible, and subtly satirical. The title resembles
-a filed public record; the playable match opens that record into a live
-parliamentary dispatch table.
+**Creative North Star: "The Televised Verbal Republic"**
 
-The title gives visual priority to one large semantic message. Condensed
-display type makes the product name resemble an official register. Serif text
-makes the subtitle and status resemble ledger entries. Filing rules, the seam,
-and the small registration stamp provide structure. The setup screen extends
-the record into a semantic register. The match screen uses the same material
-language for public status rails, sentence records, phrase dockets, and exact
-typed actions without copying the setup form composition.
+<!-- markdownlint-enable MD036 -->
 
-**The Open Record Rule.** Treat the title as an entry in an open civic record:
-formal, legible, and specific to this fictional republic.
+Grand Transition is a late-1990s fictional public-television debate world.
+Painted political theatre meets navy broadcast fascia, aged brass, oxide red,
+television blue, warm paper, and compact civic ornament. The visual system is
+formal enough to make every rule readable and theatrical enough to make each
+turn feel like a live civic event.
+
+The title and setup screens retain their implemented record-like station
+paperwork. They have not been rebuilt as television screens. The shipped match
+screen changes the tempo: original painted stage art fills the public field,
+while semantic broadcast plaques, speech records, phrase cards, and real action
+controls carry the live game state.
+
+Every character is human. Animal words in names or titles are metaphorical
+political labels only. The current stage uses two original human editorial
+caricatures, and all later character art must preserve human anatomy.
+
+### World
+
+A fictional public broadcaster stages verbal combat as civic theatre. Navy
+fascia and black control surfaces frame aged brass, oxblood and television-blue
+player identities, warm paper records, and small grammar colors. Ornament
+supports the event, but it never owns a value or control. All people shown in
+this world are human, even when a political title uses an animal metaphor.
+
+### First viewport
+
+At 1280 by 720, two human editorial caricatures fill the upper field: an older,
+stocky committee chairman holds a red folder, and a lean, bearded podium
+showman wears a deep-blue, brass-trimmed jacket. The Civic Fox and Brass Peacock
+remain metaphorical character titles. A centered round and timer plaque,
+smaller side nameplates, opposing speech records, and a public reaction strip
+sit above the warm sentence hinge. The lower head-up display (HUD) places two
+private cards on the left, a 3 by 3 shared board in the center, authored
+line-icon actions on the right, and the channel strap last.
+
+### Visitor path
+
+Read the round and active player. Compare Pride and speech state. Read the
+sentence and next grammar role. Scan private and shared phrases. Then choose a
+real action. Legality, weakness, ownership, values, disabled reasons, and focus
+remain visible in semantic text and controls.
+
+### Signature interaction
+
+Focus or selection previews the sentence without changing game truth. Pointer
+and keyboard routes are equivalent. The painted stage is atmosphere only and
+never replaces semantic names, status, values, or controls.
+
+### Cross-surface reach
+
+Title and setup can remain record-like station paperwork. Active play is the
+implemented televised event. Future results can use the same paper, oxblood,
+navy, brass, civic-serif headings, and explicit broadcast status, but this
+record does not claim that the results screen was rebuilt.
+
+### Honest risk
+
+The dense HUD can make text too small or too ornamental. Keep core tactical
+content at 11 pixels or larger. Use Cormorant SC only for display and action
+voice, Barlow Condensed for compact labels, Georgia for phrases and record
+copy, and the UI monospace stack for timer and shortcut data.
+
+### Direction seed
+
+The direction concept seed key is `e673dd8e`. The user-supplied mock at
+`tmp/Mock UI.png` pinned the canon and replaced the generated roll.
 
 **Key Characteristics:**
 
-- Open civic-ledger character with understated political-theatre satire.
-- Asymmetric blue-cloth and warm-paper fields joined by a narrow oxblood seam.
-- One oversized title, precise ruled registration, and a low-emphasis
-  prepared-status stamp.
-- Dense tactical dockets that keep grammar, ownership, legality, and weakness
-  evidence visible in one scan.
-- Semantic light Document Object Model (DOM) text and code-native material
-  structure.
+- Late-1990s fictional public-television debate theatre.
+- Two original, unmistakably human editorial caricatures with clear faces.
+- Navy and near-black broadcast framing with aged brass and opposing red and
+  blue identities.
+- Warm paper sentence and phrase records with visible tactical evidence.
+- Square, double-ruled controls with authored line icons and explicit labels.
+- Record-like title and setup screens that lead into a more theatrical match.
+
+**The Broadcast Truth Rule.** Art creates the world. Semantic Document Object
+Model (DOM) content owns game truth and interaction.
+
+**The Human Character Rule.** Every character is human. Animal terms in names
+or titles are metaphorical political labels only. Do not use animal or hybrid
+anatomy in portraits, tokens, poses, states, scene art, or future roster
+content.
 
 ## Colors
 
-The palette uses municipal blue and warm paper as structural fields, near-black
-ink for the primary title, and restrained oxblood for the binding, rules, and
-status mark.
+The record palette remains valid for title and setup. The match adds a darker
+broadcast palette that makes paper, brass, player identity, and grammar state
+read clearly against the painted stage.
 
 ### Primary
 
-- **Official Oxblood**: Use for the subtitle rules, registration stamp, and
-  selected structural emphasis.
+- **Official Oxblood:** The title and setup binding, status, validation, and
+  primary action color.
+- **Broadcast Oxblood:** The match-side red identity and primary action base.
+- **Television Blue:** The opposing player identity and secondary action base.
 
 ### Secondary
 
-- **Municipal Blue**: Use as the cloth field behind `Grand`.
-- **Deep Municipal Blue**: Use as the darker seam-adjacent blue in the binding
-  geometry.
-- **Deep Oxblood**: Use as the narrow binding seam that joins the two fields.
-- **Registry Brass**: Use for active lectern borders and chamber geometry.
+- **Municipal Blue and Deep Municipal Blue:** The title cloth field and setup
+  binding.
+- **Broadcast Brass and Broadcast Brass Light:** Status frames, double rules,
+  headings, active borders, and the channel strap.
+- **Bright Broadcast Red and Bright Television Blue:** Player speech-record
+  borders, selected state, and precise interactive emphasis.
+- **Grammar Olive and Grammar Violet:** Role accents on phrase records. Use
+  them with written role and state labels, never alone.
 
 ### Neutral
 
-- **Warm Ledger Paper**: Use as the main paper field behind `Transition` and
-  the page body.
-- **Pale Paper**: Use as the light display ink on the blue field.
-- **Registry Ink**: Use for the main title on paper and the body text baseline.
-- **Translucent Rule Ink**: Use for low-contrast filing lines and registration
-  marks.
+- **Broadcast Black, Broadcast Ink, and Broadcast Panel:** The stage surround,
+  navy fascia, HUD containers, and dark status fields.
+- **Broadcast Paper and Broadcast Paper Light:** Speech records, sentence
+  paper, phrase cards, and readable light text on navy.
+- **Warm Ledger Paper, Pale Paper, and Registry Ink:** The existing title and
+  setup record fields and body text.
+- **Registry Rule:** Low-contrast filing rules on title and setup.
 
-**The Binding Rule.** Keep oxblood as a narrow structural join and precise
-record accent. It connects the two fields; it does not become a broad wash.
+**The Brass Frame Rule.** Brass outlines and separates broadcast regions. It
+does not fill large surfaces or replace state color.
+
+**The Written State Rule.** Red, blue, olive, and violet can speed recognition,
+but every ownership, role, legality, and weakness state must also be written.
 
 ## Typography
 
-**Display Font:** Barlow Condensed (self-hosted, with sans-serif fallback)
+**Record Display Font:** Barlow Condensed (self-hosted, with sans-serif
+fallback)
+
+**Broadcast Display and Action Font:** Cormorant SC 700 (self-hosted, with
+Georgia and Times New Roman fallbacks)
+
 **Body Font:** Georgia (with Times New Roman and serif fallbacks)
 
-**Character:** The pairing combines a condensed official-register voice with a
-serif ledger style. Display text is bold and compressed. Record text is formal
-and readable.
+**Data Font:** UI monospace (with Cascadia Code, Consolas, and monospace
+fallbacks)
+
+**Character:** Barlow Condensed gives title, setup, and tactical labels the
+voice of station paperwork. Cormorant SC gives match headings and actions a
+civic broadcast voice. Georgia keeps phrases and record copy readable. The
+monospace stack makes timer and shortcut data immediate.
 
 ### Hierarchy
 
-- **Display**: Heavy condensed uppercase for the single product heading. The
-  desktop scale is fluid. The mobile scale remains bounded for reflow.
-- **Record subtitle**: Bold serif uppercase with generous tracking and ruled
-  oxblood edges. It names the fictional republic without competing with the
-  title.
-- **Status**: Condensed uppercase in a small rectangular stamp. It states the
-  prepared condition and does not imply loading or playable behavior.
-- **Tactical label**: Compact condensed uppercase for role, ownership, state,
-  timer, and action facts inside the match dispatch table.
-- **Body**: Georgia is the inherited record face for semantic page text.
+- **Record display:** Oversized condensed uppercase for the existing title and
+  setup headings.
+- **Broadcast display:** Cormorant SC 700 for the centered match heading,
+  character names, reaction heading, dialog heading, and channel strap.
+- **Action voice:** Cormorant SC 700 for authored action names with a smaller
+  Georgia detail line.
+- **Tactical label:** Barlow Condensed 700 uppercase for roles, ownership,
+  state, Pride, round, opening player, damage, and next-role facts.
+- **Body:** Georgia for phrases, current sentence, speech records, explanations,
+  and recovery text.
+- **Data:** UI monospace for the timer and keyboard shortcuts.
 
-**The One Heading Rule.** Keep the product name as one semantic `h1` even when
-the two words occupy separate color fields.
+**The Four-Voice Rule.** Use Cormorant SC for event voice, Barlow Condensed for
+tactical labels, Georgia for language content, and monospace only for compact
+machine-like data.
 
 ## Layout
 
-The title record fills the viewport with a minimum height of `100svh` and uses
-an edge spacing token that scales from `1.25rem` to `4.5rem`. On wide screens,
-the record uses a 38/62 column split. `Grand` sits on municipal blue, and
-`Transition` sits on warm paper. The title crosses the seam as one heading.
-Low-contrast pseudo-element rules stay behind the semantic content.
+The title keeps its implemented 38/62 blue-to-paper split and becomes a 37/63
+vertical stack at 700 pixels. The setup keeps one paper register with a leading
+blue and oxblood binding. Its two field groups become one reading column below
+700 pixels.
 
-At the proven `700px` boundary (`max-width: 43.75rem`), the ledger changes to a
-vertical 37/63 blue-to-paper stack. The heading remains one semantic unit, but
-the words occupy their own contrast-safe fields. The status stays at the lower
-right on ordinary mobile widths and can use the available page width at 200%
-text scaling. At `1440px` and above (`min-width: 90rem`), the subtitle receives
-the source-defined upward offset.
+The match uses four vertical regions at desktop: a stage that takes up to 55
+small-viewport-height units, a 4.25-rem sentence hinge, the flexible draft HUD,
+and a 1.65-rem channel strap. At 1280 by 720, the stage art stays in the upper
+field. The match status is centered, the player nameplates stay smaller at the
+sides, and the reaction strip anchors the stage. The draft HUD uses a
+left-center-right grid for private hand, 3 by 3 shared board, and actions.
 
-The setup register uses one paper field with a narrow municipal-blue and
-oxblood binding at the leading edge. At wide sizes, Match and Characters are
-two balanced field groups. Below `700px`, they become one reading column. The
-action row stays last in the visible and keyboard order.
+At 896 pixels and below, the match becomes a vertical document. The stage art
+keeps a 16:9 field, status and player records enter normal flow, the sentence
+hinge becomes one column, and the hand, board, and actions stack. At 512 pixels
+and below, players, private cards, shared cards, and actions use single- or
+two-column layouts as space permits. The page scrolls vertically without
+horizontal movement.
 
-The playable match uses one dense desktop record at `1280px` by `720px`.
-Status, opposing lecterns, the reaction docket, and the sentence ledger form a
-top-to-bottom public sequence. Nine equal shared dockets fill one row. The
-private register and current actions share the last row. Non-desktop match
-composition remains provisional until its owning responsive milestone.
-
-**The Dispatch Table Rule.** Keep the current sentence between public match
-state and draft choices. It is the hinge that explains what each phrase action
+**The Sentence Hinge Rule.** Keep the warm current-sentence record between the
+public stage and the phrase choices. It explains what the next phrase action
 will do.
 
 ## Elevation & Depth
 
-This implementation is flat by default and uses structural depth instead of
-shadows. Contrast between cloth blue and paper, the narrow binding seam, ruled
-registration marks, borders, and layered pseudo-elements make the record feel
-physical. The title surface has no box-shadow vocabulary and no production
-raster texture.
+Title and setup remain flat records that use fields, seams, and filing rules.
+The match uses controlled television depth: the generated painted stage forms
+the deep field; low-contrast overlays protect HUD contrast; and short dark
+shadows lift plaques, speech records, phrase cards, actions, and the comeback
+dialog. Inset brass and navy rules make the fascia feel built, not glassy.
 
-**The Structural Depth Rule.** Create depth with tonal fields, seams, rules, and
-layering; do not add ornamental shadows to this title record.
+The match uses two generated raster materials: the original civic debate stage
+and a low-contrast aged-paper texture. Both assets retain embedded prompt
+provenance. Required text and controls remain outside the raster art.
+
+**The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
+to separate live broadcast regions. Do not use translucent glass panels or
+soft floating dashboard cards.
 
 ## Shapes
 
-The form language is square and official. The record fields, rules, stamp,
-native selects, tactical dockets, overlays, and action buttons use sharp
-corners with no rounded treatment.
-The status stamp uses a 2px
-oxblood border, compact internal padding, centered uppercase text, and a small
-counter-clockwise rotation to suggest a hand-registered mark. Filing lines are
-thin and low-contrast. The binding seam is narrow. It is not pill-shaped or
-card-like.
+The system is square and architectural. Title and setup use sharp record fields
+and a narrow binding seam. Match plaques, boards, phrase cards, dialogs, and
+buttons use sharp corners, one-pixel brass rules, or three-pixel double brass
+frames. Side nameplates end in small directional points. Speech records use
+simple clipped paper tails. Value badges and shortcut keycaps are compact
+squares.
+
+**The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
+speech tails, and line icons as compact civic signals. Never let ornament hide
+text, state, focus, or target size.
 
 ## Components
 
-The implemented system includes the title record, setup register, match
-dispatch table, phrase dockets, resolution record, final match record, and
-square action treatment. It does not yet establish navigation, settings, or
-tutorial components.
+### Title record and setup register
 
-### Title record / registration stamp
+The implemented title remains a blue-and-paper public record with one semantic
+heading, a visible disclaimer, setup action, and prepared-status stamp. The
+implemented setup remains a flat semantic form with native labeled controls,
+associated recovery text, square 44-pixel actions, and source-order focus.
+These surfaces share the palette and type ancestry of the match, but they are
+not represented as finished television stages.
 
-The title record is an edge-to-edge semantic header composition. Its distinctive
-custom mark is the static status stamp at the lower right of the paper field.
+### Broadcast stage and status plaques
 
-- **Record:** A single semantic `h1` crosses the desktop seam. It becomes a
-  vertical two-field title below the mobile boundary.
-- **Stamp:** A rectangular oxblood outline contains the prepared-status text in
-  condensed uppercase. It is a status mark, not a control.
-- **Motion:** The stamp arrives once with the source-defined `register-stamp`
-  animation. `prefers-reduced-motion: reduce` removes the animation but retains
-  the text.
-- **Accessibility:** The title uses light-DOM semantic text with one `main`, one
-  `h1`, and a visible status paragraph. Forced colors remove decorative fields
-  but keep the text hierarchy and border contrast.
-- **Scope:** The Milestone 015 title adds the satire disclaimer and one setup
-  action. It does not claim that a match is playable.
+The decorative full-width image shows two original human editorial
+caricatures. The left figure is an older, stocky committee chairman with a red
+folder. The right figure is a lean, bearded podium showman in a deep-blue,
+brass-trimmed jacket. Their metaphorical titles do not change their human
+anatomy. The image has empty alternative text. A centered navy plaque owns
+round, active player, required role, opening player, and timer. Smaller
+opposing red and blue nameplates own each character name, Pride meter, comeback
+charge, lectern state, and current speech record. The reaction strip owns
+venue, public response, and damage. No separate portrait element is part of the
+match-screen composition.
 
-### Setup register
+### Sentence record
 
-The setup register is a flat semantic form. It does not use dashboard cards.
+The sentence hinge combines the current or preview sentence with a dark next
+role status panel. It uses warm textured paper, a thin brass frame, visible
+labels, and one 260-millisecond clipped reveal. Reduced motion removes the
+animation without changing content.
 
-- **Groups:** Native fieldsets group Match and Characters. Each group uses one
-  oxblood heading and one filing rule.
-- **Controls:** Native selects use pale paper, registry ink, square borders,
-  and a municipal-blue focus ring. Buttons use the condensed display face.
-- **Validation:** Errors sit directly after their control, use deep oxblood,
-  and name the problem and recovery. Color is not the only error signal.
-- **Actions:** Back is an outlined record action. Start match is the filled
-  oxblood primary action. Both keep a minimum 44-pixel target height.
-- **Accessibility:** Visible labels, native controls, fieldsets, error
-  associations, source-order focus, deterministic heading focus after screen
-  changes, forced colors, and text reflow are part of the component contract.
+### Phrase cards
 
-### Match dispatch table
+Each square paper card shows role, base value, phrase, ownership, legal state,
+and weakness or disabled reason. Blue, olive, violet, and orange top borders
+support written roles. Double red borders mark strategic-foul availability;
+dashed muted cards mark denied or disabled choices; a red inset outline marks
+pending selection. A three-pixel light-blue outline marks keyboard focus.
+Selecting a shared phrase leaves its numbered slot visibly empty.
 
-The match surface is a dense parliamentary record. Municipal blue contains the
-public chamber and private register. Warm paper contains the status rail,
-sentence record, and shared phrase dockets.
+### Match actions and channel strap
 
-- **Public facts:** Turn, required role, Pride, round, opening player, timer,
-  reaction, and damage stay in semantic text.
-- **Sentence ledger:** One ruled pale-paper field shows authoritative text or
-  focus-only preview and names the next required role.
-- **Temporary art:** Crisp geometric vector portraits and chamber geometry
-  support identity. They do not replace semantic names or state.
+Actions use authored 24-pixel line icons, a Cormorant SC action name, and a
+smaller Georgia explanation. Oxblood identifies the primary delivery action;
+television blue identifies redraw and comeback actions; ochre identifies the
+confirmed strategic foul. Disabled controls stay labeled and use a dashed
+border. Keyboard hints appear after keyboard input. The channel strap comes
+last in reading order and states the channel, venue, and broadcast motto.
 
-### Phrase dockets
+### Comeback dialog
 
-Phrase dockets are square ledger slips, not generic elevated cards.
-
-- **Information:** Each available docket shows role, value, phrase, ownership,
-  legal state, and weakness or disabled reason.
-- **State:** Solid, double, and dashed rules plus visible state text distinguish
-  legal, illegal, denied, disabled, selected, and empty states without color
-  alone.
-- **Focus:** A municipal-blue three-pixel outline identifies keyboard focus.
-  Focus changes only the visible sentence preview.
-- **Removal:** A selected shared phrase leaves its numbered docket empty.
-
-### Match actions and comeback register
-
-- **Actions:** Primary, secondary, disabled, and strategic-foul actions use
-  square two-pixel oxblood rules and condensed uppercase labels.
-- **Keyboard hints:** Small keycaps appear after keyboard input. They remain
-  hidden during pointer-only use.
-- **Comebacks:** An interrupting ruled paper register contains only affordable
-  choices and a clear Close action. Escape restores its trigger focus.
-
-### Resolution and final match records
-
-The resolution surface opens the completed exchange as one ordered public
-record. Square speech balloons and short reaction lines retain the political
-theatre character without hiding score facts. Construction status, ordered
-terms, rule activations, outgoing damage, continuation, simultaneous meters,
-and the round result remain in semantic text before motion starts.
-
-- **Calculation:** Two parallel ledgers keep each player's terms in engine
-  order. The outgoing equation separates sentence damage from the
-  unmultiplied comeback bonus.
-- **Meters:** Visible before-and-after values own the meaning. One 420
-  millisecond bar change confirms the simultaneous update. Reduced motion
-  shows the same final state without animation.
-- **Results:** A municipal-blue final record keeps every statistic label,
-  including zero and `None` values. Rematch and setup remain separate square
-  controls after the complete explanation.
-- **Responsive reading:** Player records become one reading column on narrow
-  screens. The complete ledger scrolls vertically without horizontal page
-  movement.
+The modal comeback register uses warm textured paper inside a dark overlay. It
+contains only affordable choices, explains an empty choice set, moves focus to
+its first action, closes with Escape, and restores focus to the trigger.
 
 ## Do's and Don'ts
 
-The following guardrails apply across the implemented title, setup, and match
-records. Each later game screen still needs its own surface brief.
-
 ### Do
 
-- Keep the public-record presentation formal, legible, and subtly satirical.
-- Keep `Grand` and `Transition` in one semantic heading. Place them in
-  contrast-safe fields at the responsive seam.
-- Use Barlow Condensed for the display and status text. Use Georgia for ledger
-  text.
-- Preserve the visible prepared status and semantic light DOM text.
-- Keep the satire disclaimer visible on the title screen.
-- Keep setup choices in native labeled controls with visible recovery text.
-- Keep tactical legality, ownership, disabled reasons, and weaknesses visible
-  in text or symbols as well as color.
-- Keep match truth in the reducer and use the sentence ledger for focus-only
-  previews.
+- **Do** preserve the implemented title and setup record compositions until a
+  separate approved change replaces them.
+- **Do** use the painted stage as atmosphere and keep all game truth in
+  semantic text, meters, lists, buttons, and dialogs.
+- **Do** depict every roster character as fully human, including characters
+  with animal metaphors in their names or titles.
+- **Do** keep the 1280 by 720 path dense but readable: stage first, sentence
+  hinge second, choices third, channel strap last.
+- **Do** keep core tactical content at 11 pixels or larger.
+- **Do** write every legality, weakness, ownership, value, disabled reason,
+  timer, and focus state that matters.
+- **Do** keep focus preview temporary and keep reducer-owned game truth
+  unchanged until the player invokes a real action.
+- **Do** preserve forced-colors and reduced-motion alternatives.
 
 ### Don't
 
-- Do not add artificial intelligence options, persistence, privacy handover,
-  or tutorial presentation before their owning milestones.
-- Do not add raster grain, metal punches, or literal registry metadata from the
-  approved composition. They are concept evidence, not production requirements.
-- Do not turn setup fields into tactical dockets or phrase dockets into generic
-  dashboard cards.
-- Do not use a rounded, shadowed, or color-only card language for match state.
+- **Don't** describe the match as the Open Civic Ledger or a flat parliamentary
+  dispatch table. That direction is stale.
+- **Don't** claim that title, setup, or future results already use the complete
+  televised composition.
+- **Don't** use animal or hybrid anatomy in portraits, tokens, poses, states,
+  scene art, or future roster content.
+- **Don't** place values, controls, required text, or focus indication inside
+  the painted stage or paper texture.
+- **Don't** use Cormorant SC for dense body copy or shrink core tactical text to
+  make the desktop HUD fit.
+- **Don't** replace written card state with color, icon, texture, or border
+  style alone.
+- **Don't** round the match into generic dashboard cards or use glass effects.

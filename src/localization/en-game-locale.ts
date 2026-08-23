@@ -30,10 +30,10 @@ export const englishGameLocale: GameLocaleBundle = {
     'phrase.still-echoes': 'still echoes',
     'character.civic-fox.name': 'The Civic Fox',
     'character.civic-fox.description':
-      'A patient procedural tactician with a sharp notebook.',
+      'A meticulous committee chair with a sharp procedural notebook.',
     'character.brass-peacock.name': 'The Brass Peacock',
     'character.brass-peacock.description':
-      'A radiant podium performer who treats every pause as an entrance.',
+      'A flamboyant podium showman who treats every pause as an entrance.',
     'comeback.civic-fox.weak': 'Your point has entered review.',
     'comeback.civic-fox.medium': 'The minutes do not support that flourish.',
     'comeback.civic-fox.strong': 'Even your echo requested an amendment.',

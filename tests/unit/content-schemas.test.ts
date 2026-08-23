@@ -122,6 +122,9 @@ describe('content schemas', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
     expect(result.characters).toHaveLength(2);
+    expect(
+      result.characters.every((character) => character.species === 'human'),
+    ).toBe(true);
     expect(result.scenes).toHaveLength(1);
     expect(new Set(result.phrases.map((phrase) => phrase.role))).toEqual(
       new Set([
@@ -142,6 +145,16 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     catalog.phrases[0]!.id = 'Paper Promise';
     expectFailure(catalog, 'phrases.0.id', /kebab-case/iu);
+  });
+
+  test('rejects every non-human character', () => {
+    const catalog = cloneCatalog();
+    (catalog.characters[0] as { species: string }).species = 'animal';
+    expectFailure(
+      catalog,
+      'characters.0.species',
+      /Every character must be human/iu,
+    );
   });
 
   test('rejects duplicate identifiers', () => {
