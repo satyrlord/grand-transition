@@ -5,6 +5,7 @@ import type {
 } from './combo-finisher-scoring';
 import {
   resolveContinuationComebackRound,
+  type ComebackTier,
   type ContinuationCarry,
 } from './continuation-comeback-resolution';
 import {
@@ -93,6 +94,12 @@ export type MatchStatistics = Readonly<{
 
 export type MatchResolutionPlayer = Readonly<{
   playerId: string;
+  constructionText: string;
+  constructionStatus: 'carried' | 'fault' | 'incomplete' | 'valid';
+  constructionPhrases: readonly Readonly<{
+    phraseId: string;
+    source: 'active' | 'carried';
+  }>[];
   prideBefore: number;
   selfDamage: number;
   opponentOutgoingDamage: number;
@@ -109,6 +116,8 @@ export type MatchResolutionPlayer = Readonly<{
   weaknessActivated: boolean;
   comboMultiplier: number;
   comebackActivated: boolean;
+  comebackTier: ComebackTier | null;
+  comebackClosingLine: string | null;
   deliberateFault: boolean;
   score: ComboFinisherScore | null;
   continuation: Readonly<{
@@ -543,6 +552,21 @@ function resolveRound(
       construction.analysis.sentenceStatus === 'complete';
     players[playerId] = {
       playerId,
+      constructionText: construction.previewText,
+      constructionStatus: constructionStatus(construction),
+      constructionPhrases: construction.selectedCards.flatMap((card) => {
+        const phrase = context.phrases.find(
+          (candidate) => candidate.id === card.phraseId,
+        );
+        return phrase?.role === 'continuation'
+          ? []
+          : [
+              {
+                phraseId: card.phraseId,
+                source: card.source === 'restored' ? 'carried' : 'active',
+              } as const,
+            ];
+      }),
       prideBefore: player.pride,
       selfDamage: attack.selfDamage,
       opponentOutgoingDamage: opponentAttack.outgoingDamage,
@@ -564,6 +588,8 @@ function resolveRound(
         ) ?? false,
       comboMultiplier: attack.score?.combo?.chain ?? 0,
       comebackActivated: construction.selectedComeback !== null,
+      comebackTier: construction.selectedComeback?.tier ?? null,
+      comebackClosingLine: construction.selectedComeback?.closingLine ?? null,
       deliberateFault: construction.deliberateFaultPhraseId !== null,
       score: attack.score,
       continuation: attack.continuation,
@@ -798,6 +824,18 @@ function sentenceSubtotal(score: ComboFinisherScore | null): number {
     (total, item) => (item.operation === 'add' ? total + item.amount : total),
     0,
   );
+}
+
+function constructionStatus(
+  construction: DraftState['playerStates'][string]['construction'],
+): MatchResolutionPlayer['constructionStatus'] {
+  if (construction.carryIntent) return 'carried';
+  if (construction.deliberateFaultPhraseId) return 'fault';
+  return construction.analysis.legal &&
+    construction.analysis.complete &&
+    construction.analysis.sentenceStatus === 'complete'
+    ? 'valid'
+    : 'incomplete';
 }
 
 function chooseBestInsult(

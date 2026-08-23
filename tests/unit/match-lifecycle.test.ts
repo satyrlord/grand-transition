@@ -452,7 +452,26 @@ describe('simultaneous resolution variants', () => {
       expect(result.prideAfter, label).toBe(
         Math.max(0, result.prideBefore - result.selfDamage),
       );
-      if (label === 'fault') expect(result.selfDamage).toBe(3);
+      expect(result.constructionText).toBe(construction.previewText);
+      expect(result.constructionPhrases).toEqual(
+        construction.selectedCards.map((card) => ({
+          phraseId: card.phraseId,
+          source: 'carried',
+        })),
+      );
+      expect(result.constructionStatus).toBe(
+        label === 'complete'
+          ? 'valid'
+          : label === 'continuation'
+            ? 'carried'
+            : label === 'comeback'
+              ? 'valid'
+              : label,
+      );
+      if (label === 'fault') {
+        expect(result.selfDamage).toBe(3);
+        expect(result.deliberateFault).toBe(true);
+      }
       if (label === 'continuation') {
         expect(result.outgoingDamage).toBe(0);
         expect(result.continuation.status).toBe('survived');
@@ -460,6 +479,10 @@ describe('simultaneous resolution variants', () => {
       if (label === 'comeback') {
         expect(result.comebackBonus).toBe(4);
         expect(result.outgoingDamage).toBe(result.sentenceDamage + 4);
+        expect(result.comebackTier).toBe('weak');
+        expect(result.comebackClosingLine).toBe(
+          'Your point has entered review.',
+        );
       }
     }
   });

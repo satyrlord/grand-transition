@@ -406,7 +406,7 @@ describe('draft round preparation and commands', () => {
     expect(first.seed).toBe(573_602_481);
     expect(
       first.playerStates[playerIds[0]]!.hand.map((card) => card.phraseId),
-    ).toEqual(['still-echoes', 'with-the-receipt']);
+    ).toEqual(['still-echoes', 'past-the-deadline']);
     expect(
       first.playerStates[playerIds[1]]!.hand.map((card) => card.phraseId),
     ).toEqual(['and', 'in-an-empty-hall']);
@@ -489,8 +489,24 @@ describe('draft round preparation and commands', () => {
 
   test('selects a legal finisher and commits the construction immediately', () => {
     const complete = completeFirstPlayer();
-    const ending = legalReferenceForRole(complete, playerIds[0], 'ending');
-    const finished = select(complete, playerIds[0], ending);
+    const endingCard = {
+      id: 'opaque-legal-ending',
+      phraseId: 'with-the-receipt',
+    };
+    const withEnding: DraftState = {
+      ...complete,
+      playerStates: {
+        ...complete.playerStates,
+        [playerIds[0]]: {
+          ...complete.playerStates[playerIds[0]]!,
+          hand: [...complete.playerStates[playerIds[0]]!.hand, endingCard],
+        },
+      },
+    };
+    const finished = select(withEnding, playerIds[0], {
+      source: 'private',
+      cardId: endingCard.id,
+    });
 
     expect(finished.phase).toBe('draft-complete');
     expect(
@@ -674,20 +690,31 @@ describe('draft round preparation and commands', () => {
 describe('draft failures, privacy, and invariants', () => {
   test('hides illegal finishers and returns typed failures before grammar analysis', () => {
     const initial = expectPrepared();
-    const prematureCard = initial.playerStates[playerIds[0]]!.hand.find(
-      (card) => card.phraseId === 'with-the-receipt',
-    )!;
+    const prematureCard = {
+      id: 'opaque-premature-ending',
+      phraseId: 'with-the-receipt',
+    };
+    const withPremature: DraftState = {
+      ...initial,
+      playerStates: {
+        ...initial.playerStates,
+        [playerIds[0]]: {
+          ...initial.playerStates[playerIds[0]]!,
+          hand: [...initial.playerStates[playerIds[0]]!.hand, prematureCard],
+        },
+      },
+    };
     const prematureReference = {
       source: 'private',
       cardId: prematureCard.id,
     } as const;
-    expect(initial.playerStates[playerIds[0]]!.legalCards).not.toContainEqual(
-      prematureReference,
-    );
+    expect(
+      withPremature.playerStates[playerIds[0]]!.legalCards,
+    ).not.toContainEqual(prematureReference);
 
-    const initialBefore = structuredClone(initial);
+    const initialBefore = structuredClone(withPremature);
     const premature = createDraftReducer(context)(
-      initial,
+      withPremature,
       {
         type: 'select-phrase',
         source: 'user',
@@ -707,7 +734,7 @@ describe('draft failures, privacy, and invariants', () => {
         },
       },
     });
-    expect(initial).toEqual(initialBefore);
+    expect(withPremature).toEqual(initialBefore);
 
     const wrongOwnerEnding = clonePhrase(
       'with-the-receipt',
@@ -876,7 +903,18 @@ describe('draft failures, privacy, and invariants', () => {
         code: 'redraw-already-used',
       },
       {
-        state: initial,
+        state: {
+          ...initial,
+          playerStates: {
+            ...initial.playerStates,
+            [playerIds[0]]: {
+              ...initial.playerStates[playerIds[0]]!,
+              privatePhraseIds: initial.playerStates[playerIds[0]]!.hand.map(
+                (card) => card.phraseId,
+              ),
+            },
+          },
+        },
         command: emptyCommand('redraw-hand', playerIds[0]),
         code: 'redraw-unavailable',
       },

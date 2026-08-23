@@ -1,0 +1,1138 @@
+import { msg } from '@lit/localize';
+import {
+  LitElement,
+  html,
+  nothing,
+  type PropertyValues,
+  type TemplateResult,
+} from 'lit';
+import { sampleContent } from '../../content/sample-content';
+import type { Phrase } from '../../content/schemas';
+import {
+  snapshotDraftStateForPlayer,
+  type ComebackTier,
+  type DraftCardReference,
+} from '../../engine/draft-actions';
+import {
+  englishGrammarAdapter,
+  prepareEnglishGrammarPhrase,
+  type EnglishGrammarRole,
+} from '../../engine/grammar/english-grammar-adapter';
+import type { MatchCommand, MatchState } from '../../engine/match-lifecycle';
+
+const elementName = 'grand-transition-match';
+export const matchCommandEventName = 'match-command';
+
+const civicFoxPortrait = new URL(
+  '../../assets/civic-fox-temp.svg',
+  import.meta.url,
+).href;
+const brassPeacockPortrait = new URL(
+  '../../assets/brass-peacock-temp.svg',
+  import.meta.url,
+).href;
+const echoChamberScene = new URL(
+  '../../assets/echo-chamber-temp.svg',
+  import.meta.url,
+).href;
+
+type MatchCardState = 'denied' | 'disabled' | 'illegal' | 'legal' | 'selected';
+type MatchCardAction = 'carry' | 'fault' | 'select' | null;
+
+export type MatchCardView = Readonly<{
+  slotIndex: number;
+  reference: DraftCardReference | null;
+  phraseId: string | null;
+  text: string;
+  role: Phrase['role'] | null;
+  baseValue: number | null;
+  ownership: 'Private' | 'Shared';
+  shortcut: string;
+  state: MatchCardState;
+  stateLabel: string;
+  knownWeaknesses: readonly string[];
+  disabledReason: string | null;
+  accessibleName: string;
+  action: MatchCardAction;
+  previewText: string;
+}>;
+
+export type MatchPlayerView = Readonly<{
+  playerId: string;
+  characterId: string;
+  characterName: string;
+  portraitUrl: string;
+  pride: number;
+  comebackCharge: number;
+  isActive: boolean;
+  sentence: string | null;
+  status: 'building' | 'ended';
+}>;
+
+export type MatchScreenSnapshot = Readonly<{
+  revision: number;
+  phase: MatchState['phase'];
+  round: number;
+  sceneName: string;
+  sceneUrl: string;
+  openingPlayerId: string;
+  activePlayerId: string;
+  activePlayerName: string;
+  requiredRoles: readonly EnglishGrammarRole[];
+  sentenceText: string;
+  sentenceComplete: boolean;
+  sharedCards: readonly MatchCardView[];
+  privateCards: readonly MatchCardView[];
+  players: readonly [MatchPlayerView, MatchPlayerView];
+  timer: Readonly<{
+    sequence: number;
+    durationSeconds: 15 | 30 | null;
+  }>;
+  actions: Readonly<{
+    canCommit: boolean;
+    canRedraw: boolean;
+    redrawUsed: boolean;
+    comebackTiers: readonly ComebackTier[];
+  }>;
+  reaction: Readonly<{
+    label: string;
+    playerDamage: Readonly<Record<string, number>>;
+  }>;
+}>;
+
+export type MatchCommandEvent = CustomEvent<MatchCommand>;
+
+export function createMatchScreenSnapshot(
+  state: MatchState,
+): MatchScreenSnapshot {
+  if (!state.draft) {
+    throw new Error('The match screen needs an active draft snapshot.');
+  }
+
+  const activePlayerId = state.activePlayerId;
+  const activePlayer = state.draft.playerStates[activePlayerId];
+  if (!activePlayer) {
+    throw new Error(`The active player "${activePlayerId}" is missing.`);
+  }
+  const opponentId = state.playerOrder.find(
+    (playerId) => playerId !== activePlayerId,
+  )!;
+  const opponent = state.draft.playerStates[opponentId]!;
+  const viewerSnapshot = snapshotDraftStateForPlayer(
+    state.draft,
+    activePlayerId,
+  );
+  const phraseById = new Map(
+    sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
+  );
+  const legalReferences = new Set(activePlayer.legalCards.map(referenceKey));
+  const selectedPhraseIds = new Set(
+    Object.values(state.draft.playerStates).flatMap((player) =>
+      player.construction.selectedCards.map((card) => card.phraseId),
+    ),
+  );
+
+  const sharedCards = state.draft.board.slots.map((slot, slotIndex) => {
+    const phrase = phraseById.get(slot.phraseId)!;
+    const reference: DraftCardReference = {
+      source: 'shared',
+      cardId: slot.id,
+    };
+    if (!slot.available) {
+      return emptyCard(
+        slotIndex,
+        'Shared',
+        String(slotIndex + 1),
+        selectedPhraseIds.has(phrase.id) ? 'selected' : 'denied',
+        phrase,
+      );
+    }
+    if (!activePlayer.publicPhraseIds.includes(phrase.id)) {
+      return createCardView({
+        slotIndex,
+        reference,
+        phrase,
+        ownership: 'Shared',
+        shortcut: String(slotIndex + 1),
+        state: 'denied',
+        action: null,
+        previewText: activePlayer.construction.previewText,
+        knownWeaknesses: weaknessMatches(phrase, opponent.weaknessTags),
+        disabledReason: `${characterName(activePlayer.characterId)} cannot use this public phrase.`,
+      });
+    }
+    return availableCard(
+      state,
+      activePlayerId,
+      phrase,
+      reference,
+      slotIndex,
+      'Shared',
+      String(slotIndex + 1),
+      legalReferences,
+      opponent.weaknessTags,
+    );
+  });
+
+  const privateSlots = Array.from<MatchCardView | undefined>({ length: 2 });
+  for (const card of activePlayer.hand) {
+    const parsedIndex = Number(card.id.match(/(\d+)$/u)?.[1] ?? 1) - 1;
+    const slotIndex = parsedIndex === 1 ? 1 : 0;
+    const phrase = phraseById.get(card.phraseId)!;
+    const reference: DraftCardReference = {
+      source: 'private',
+      cardId: card.id,
+    };
+    privateSlots[slotIndex] = availableCard(
+      state,
+      activePlayerId,
+      phrase,
+      reference,
+      slotIndex,
+      'Private',
+      slotIndex === 0 ? 'Q' : 'W',
+      legalReferences,
+      opponent.weaknessTags,
+    );
+  }
+  const privateCards = privateSlots.map(
+    (card, slotIndex) =>
+      card ??
+      emptyCard(slotIndex, 'Private', slotIndex === 0 ? 'Q' : 'W', 'selected'),
+  );
+
+  const players = state.playerOrder.map((playerId) => {
+    const player = state.playerStates[playerId]!;
+    const draftPlayer = viewerSnapshot.players[playerId]!;
+    return {
+      playerId,
+      characterId: player.characterId,
+      characterName: characterName(player.characterId),
+      portraitUrl: portraitFor(player.characterId),
+      pride: player.pride,
+      comebackCharge: player.comebackCharge,
+      isActive: playerId === activePlayerId,
+      sentence: draftPlayer.construction.previewText,
+      status: draftPlayer.construction.status,
+    } satisfies MatchPlayerView;
+  }) as [MatchPlayerView, MatchPlayerView];
+
+  const latestResolution = state.resolutionHistory.at(-1);
+  const playerDamage = Object.fromEntries(
+    state.playerOrder.map((playerId) => [
+      playerId,
+      latestResolution?.players[playerId]?.outgoingDamage ?? 0,
+    ]),
+  );
+  const activeName = characterName(activePlayer.characterId);
+
+  return deepFreeze({
+    revision: state.commandHistory.length,
+    phase: state.phase,
+    round: state.round,
+    sceneName: gameMessage(
+      sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
+    ),
+    sceneUrl: echoChamberScene,
+    openingPlayerId: state.openingPlayerId,
+    activePlayerId,
+    activePlayerName: activeName,
+    requiredRoles: activePlayer.construction.requiredRoles,
+    sentenceText:
+      activePlayer.construction.previewText || msg('Select a noun to begin.'),
+    sentenceComplete: activePlayer.construction.analysis.complete,
+    sharedCards,
+    privateCards,
+    players,
+    timer: {
+      sequence: state.draft.turn.sequence,
+      durationSeconds: state.draft.turn.durationSeconds,
+    },
+    actions: {
+      canCommit:
+        activePlayer.construction.status === 'building' &&
+        activePlayer.construction.analysis.complete,
+      canRedraw:
+        activePlayer.construction.status === 'building' &&
+        !activePlayer.redrawUsed &&
+        activePlayer.hand.length === 2,
+      redrawUsed: activePlayer.redrawUsed,
+      comebackTiers: activePlayer.availableComebackTiers,
+    },
+    reaction: {
+      label: latestResolution
+        ? msg('The last exchange entered the public record.')
+        : msg('The chamber is waiting for its first exchange.'),
+      playerDamage,
+    },
+  });
+}
+
+export class GrandTransitionMatch extends LitElement {
+  static properties = {
+    snapshot: { attribute: false },
+    previewText: { state: true },
+    keyboardMode: { state: true },
+    pendingFault: { state: true },
+    comebackOpen: { state: true },
+    remainingSeconds: { state: true },
+    politeAnnouncement: { state: true },
+    assertiveAnnouncement: { state: true },
+    commandPending: { state: true },
+  };
+
+  declare snapshot: MatchScreenSnapshot | undefined;
+  declare private previewText: string | null;
+  declare private keyboardMode: boolean;
+  declare private pendingFault: MatchCardView | null;
+  declare private comebackOpen: boolean;
+  declare private remainingSeconds: number | null;
+  declare private politeAnnouncement: string;
+  declare private assertiveAnnouncement: string;
+  declare private commandPending: boolean;
+
+  private timerId: number | undefined;
+  private timerSequence = -1;
+  private pendingFocus: Readonly<{
+    reference: DraftCardReference;
+    slotIndex: number;
+  }> | null = null;
+  private comebackTrigger: HTMLElement | null = null;
+
+  constructor() {
+    super();
+    this.previewText = null;
+    this.keyboardMode = false;
+    this.pendingFault = null;
+    this.comebackOpen = false;
+    this.remainingSeconds = null;
+    this.politeAnnouncement = '';
+    this.assertiveAnnouncement = '';
+    this.commandPending = false;
+  }
+
+  protected override createRenderRoot(): HTMLElement {
+    return this;
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.handleKeydown);
+  }
+
+  override disconnectedCallback(): void {
+    window.removeEventListener('keydown', this.handleKeydown);
+    this.stopTimer();
+    super.disconnectedCallback();
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('snapshot')) {
+      this.commandPending = false;
+      this.pendingFault = null;
+      this.syncTimer();
+    }
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('snapshot')) {
+      if (this.pendingFocus) {
+        const removed = this.pendingFocus;
+        this.pendingFocus = null;
+        void this.focusAfterRemoval(removed);
+      }
+    }
+  }
+
+  protected override render() {
+    if (!this.snapshot) return nothing;
+    const first = this.snapshot.players[0];
+    const second = this.snapshot.players[1];
+    const timerLabel =
+      this.remainingSeconds === null
+        ? msg('Unlimited')
+        : msg(`${this.remainingSeconds} seconds`);
+
+    return html`
+      <main
+        class="match-screen"
+        aria-labelledby="match-title"
+        @pointerdown=${this.usePointerMode}
+      >
+        <header class="match-status-rail">
+          <div class="match-turn-heading">
+            <h1 id="match-title" tabindex="-1">
+              ${msg(`Round ${this.snapshot.round}: ${this.snapshot.activePlayerName} has the floor`)}
+            </h1>
+            <p>
+              ${msg('Required')}:
+              <strong>${roleList(this.snapshot.requiredRoles)}</strong>
+            </p>
+          </div>
+          <dl class="match-facts">
+            <div>
+              <dt>${msg('Round')}</dt>
+              <dd>${this.snapshot.round}</dd>
+            </div>
+            <div>
+              <dt>${msg('Opening')}</dt>
+              <dd>
+                ${playerName(
+                  this.snapshot.players,
+                  this.snapshot.openingPlayerId,
+                )}
+              </dd>
+            </div>
+            <div
+              class="timer-fact"
+              data-timer=${this.remainingSeconds ?? 'unlimited'}
+            >
+              <dt>${msg('Timer')}</dt>
+              <dd>${timerLabel}</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section class="match-stage" aria-label=${msg('Public chamber')}>
+          ${this.renderPlayer(first)}
+          <div class="reaction-docket">
+            <img src=${this.snapshot.sceneUrl} alt="" />
+            <div class="reaction-copy">
+              <h2>${this.snapshot.sceneName}</h2>
+              <p>${this.snapshot.reaction.label}</p>
+              <dl>
+                <div>
+                  <dt>${first.characterName}</dt>
+                  <dd>
+                    ${this.snapshot.reaction.playerDamage[first.playerId] ?? 0}
+                    ${msg('damage')}
+                  </dd>
+                </div>
+                <div>
+                  <dt>${second.characterName}</dt>
+                  <dd>
+                    ${this.snapshot.reaction.playerDamage[second.playerId] ?? 0}
+                    ${msg('damage')}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          ${this.renderPlayer(second)}
+        </section>
+
+        <section class="sentence-ledger" aria-labelledby="sentence-title">
+          <div>
+            <h2 id="sentence-title">${msg('Current sentence')}</h2>
+            <p class="sentence-preview" aria-live="polite">
+              ${this.previewText ?? this.snapshot.sentenceText}
+            </p>
+          </div>
+          <p class="sentence-state">
+            ${
+              this.snapshot.sentenceComplete
+                ? msg('Complete — ready to enter the record')
+                : msg(`Next role: ${roleList(this.snapshot.requiredRoles)}`)
+            }
+          </p>
+        </section>
+
+        <section class="draft-table" aria-label=${msg('Phrase draft')}>
+          <ol
+            class="shared-board"
+            aria-label=${msg('Nine shared phrase slots')}
+          >
+            ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
+          </ol>
+
+          <div class="lower-draft">
+            <section class="private-hand" aria-labelledby="private-hand-title">
+              <div class="private-hand-heading">
+                <h2 id="private-hand-title">${msg('Private hand')}</h2>
+                <p>${this.snapshot.activePlayerName}</p>
+              </div>
+              <ol>
+                ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
+              </ol>
+            </section>
+
+            <nav class="match-actions" aria-label=${msg('Turn actions')}>
+              <button
+                type="button"
+                class="action-secondary"
+                ?disabled=${
+                  !this.snapshot.actions.canRedraw || this.commandPending
+                }
+                @click=${this.redraw}
+              >
+                ${msg(this.snapshot.actions.redrawUsed ? 'Redraw used' : 'Redraw hand')}
+                ${this.hint('R')}
+              </button>
+              <button
+                type="button"
+                class="action-secondary"
+                @click=${this.openComebacks}
+                ?disabled=${this.commandPending}
+              >
+                ${msg('Comebacks')} ${this.hint('C')}
+              </button>
+              ${
+                this.pendingFault
+                  ? html`<button
+                      type="button"
+                      class="action-fault"
+                      @click=${this.confirmFault}
+                      ?disabled=${this.commandPending}
+                    >
+                      ${msg('Commit strategic foul')}
+                    </button>`
+                  : nothing
+              }
+              <button
+                type="button"
+                class="action-primary"
+                ?disabled=${
+                  !this.snapshot.actions.canCommit || this.commandPending
+                }
+                @click=${this.commit}
+              >
+                ${msg('End sentence')} ${this.hint('Enter')}
+              </button>
+            </nav>
+          </div>
+        </section>
+
+        <p class="sr-only" aria-live="polite">${this.politeAnnouncement}</p>
+        <p class="sr-only" aria-live="assertive">
+          ${this.assertiveAnnouncement}
+        </p>
+        ${this.comebackOpen ? this.renderComebackOverlay() : nothing}
+      </main>
+    `;
+  }
+
+  private renderPlayer(player: MatchPlayerView): TemplateResult {
+    return html`
+      <article
+        class="match-player ${player.isActive ? 'match-player--active' : ''}"
+        aria-label=${`${player.characterName}, ${player.pride} Pride`}
+      >
+        <img src=${player.portraitUrl} alt="" />
+        <div>
+          <h2>${player.characterName}</h2>
+          <dl>
+            <div>
+              <dt>${msg('Pride')}</dt>
+              <dd>${player.pride}</dd>
+            </div>
+            <div>
+              <dt>${msg('Comeback')}</dt>
+              <dd>${player.comebackCharge}/60</dd>
+            </div>
+          </dl>
+          <p>
+            ${player.isActive ? msg('At the lectern') : msg('In opposition')}
+          </p>
+        </div>
+      </article>
+    `;
+  }
+
+  private renderCard(card: MatchCardView): TemplateResult {
+    const empty = !card.reference;
+    return html`
+      <li
+        class="phrase-slot phrase-slot--${card.state}"
+        data-slot=${card.slotIndex + 1}
+      >
+        ${
+          empty
+            ? html`<div
+                class="phrase-card phrase-card--empty"
+                aria-label=${card.accessibleName}
+              >
+                <span class="card-shortcut" ?hidden=${!this.keyboardMode}
+                  >${card.shortcut}</span
+                >
+                <strong>${card.stateLabel}</strong>
+                <span>${msg('Empty docket')}</span>
+              </div>`
+            : html`<button
+                type="button"
+                class="phrase-card"
+                data-card-id=${card.reference!.cardId}
+                data-card-source=${card.reference!.source}
+                data-card-state=${card.state}
+                aria-label=${card.accessibleName}
+                aria-pressed=${
+                  this.pendingFault?.reference?.cardId ===
+                  card.reference!.cardId
+                    ? 'true'
+                    : 'false'
+                }
+                ?disabled=${card.action === null || this.commandPending}
+                @focus=${() => this.preview(card)}
+                @blur=${this.clearPreview}
+                @click=${() => this.activateCard(card)}
+              >
+                <span class="card-topline">
+                  <span class="card-role">${card.role}</span>
+                  <span class="card-value">${card.baseValue}</span>
+                </span>
+                <strong class="card-phrase">${card.text}</strong>
+                <span class="card-bottomline">
+                  <span>${card.ownership}</span>
+                  <span class="card-state">${card.stateLabel}</span>
+                </span>
+                <span class="card-weakness">
+                  ${
+                    card.disabledReason ??
+                    (card.knownWeaknesses.length > 0
+                      ? msg(`Weakness: ${card.knownWeaknesses.join(', ')}`)
+                      : msg('No known weakness'))
+                  }
+                </span>
+                <span class="card-shortcut" ?hidden=${!this.keyboardMode}
+                  >${card.shortcut}</span
+                >
+              </button>`
+        }
+      </li>
+    `;
+  }
+
+  private renderComebackOverlay(): TemplateResult {
+    const tiers = this.snapshot?.actions.comebackTiers ?? [];
+    return html`
+      <div class="match-overlay" role="presentation">
+        <section
+          class="comeback-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="comeback-title"
+        >
+          <div>
+            <h2 id="comeback-title">${msg('Comeback register')}</h2>
+            <p>
+              ${
+                tiers.length > 0
+                  ? msg(
+                      'Choose one affordable response. The charge is spent now.',
+                    )
+                  : msg(
+                      'No comeback is affordable. Continue the sentence or close this register.',
+                    )
+              }
+            </p>
+          </div>
+          <div class="comeback-choices">
+            ${tiers.map(
+              (tier) =>
+                html`<button
+                  type="button"
+                  @click=${() => this.chooseComeback(tier)}
+                >
+                  ${tierLabel(tier)}
+                </button>`,
+            )}
+            <button
+              type="button"
+              class="action-secondary"
+              @click=${this.closeComebacks}
+            >
+              ${msg('Close')} ${this.hint('Escape')}
+            </button>
+          </div>
+        </section>
+      </div>
+    `;
+  }
+
+  private hint(key: string): TemplateResult | typeof nothing {
+    return this.keyboardMode
+      ? html`<span class="action-hint" aria-hidden="true">${key}</span>`
+      : nothing;
+  }
+
+  private readonly usePointerMode = (): void => {
+    this.keyboardMode = false;
+  };
+
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (!this.snapshot || event.altKey || event.ctrlKey || event.metaKey)
+      return;
+    this.keyboardMode = true;
+
+    if (event.key === 'Escape' && this.comebackOpen) {
+      event.preventDefault();
+      this.closeComebacks();
+      return;
+    }
+    if (this.comebackOpen || isEditingKeystroke(event.target, event.key))
+      return;
+
+    const sharedIndex = Number(event.key) - 1;
+    if (sharedIndex >= 0 && sharedIndex < 9) {
+      const card = this.snapshot.sharedCards[sharedIndex];
+      if (card?.action) {
+        event.preventDefault();
+        this.activateCard(card);
+      }
+      return;
+    }
+    const privateIndex =
+      event.key.toLowerCase() === 'q'
+        ? 0
+        : event.key.toLowerCase() === 'w'
+          ? 1
+          : -1;
+    if (privateIndex >= 0) {
+      const card = this.snapshot.privateCards[privateIndex];
+      if (card?.action) {
+        event.preventDefault();
+        this.activateCard(card);
+      }
+      return;
+    }
+    if (event.key === 'Enter' && this.snapshot.actions.canCommit) {
+      event.preventDefault();
+      this.commit();
+    } else if (
+      event.key.toLowerCase() === 'r' &&
+      this.snapshot.actions.canRedraw
+    ) {
+      event.preventDefault();
+      this.redraw();
+    } else if (event.key.toLowerCase() === 'c') {
+      event.preventDefault();
+      this.openComebacks();
+    }
+  };
+
+  private preview(card: MatchCardView): void {
+    this.previewText = card.previewText;
+  }
+
+  private readonly clearPreview = (): void => {
+    queueMicrotask(() => {
+      if (
+        !(document.activeElement instanceof HTMLButtonElement) ||
+        !document.activeElement.matches('.phrase-card')
+      ) {
+        this.previewText = null;
+      }
+    });
+  };
+
+  private activateCard(card: MatchCardView): void {
+    if (!this.snapshot || this.commandPending || !card.reference) return;
+    if (card.action === 'fault') {
+      this.pendingFault = card;
+      void this.updateComplete.then(() =>
+        this.querySelector<HTMLElement>('.action-fault')?.focus(),
+      );
+      return;
+    }
+    this.pendingFocus = {
+      reference: card.reference,
+      slotIndex: card.slotIndex,
+    };
+    if (card.action === 'carry') {
+      this.dispatchMatchCommand('carry-continuation', {
+        card: card.reference,
+      });
+    } else if (card.action === 'select') {
+      this.dispatchMatchCommand('select-phrase', { card: card.reference });
+    }
+  }
+
+  private readonly confirmFault = (): void => {
+    if (!this.pendingFault?.reference) return;
+    const card = this.pendingFault;
+    const reference = card.reference;
+    if (!reference) return;
+    this.pendingFocus = {
+      reference,
+      slotIndex: card.slotIndex,
+    };
+    this.dispatchMatchCommand('deliberate-fault', {
+      card: reference,
+    });
+  };
+
+  private readonly redraw = (): void => {
+    if (this.snapshot?.actions.canRedraw) {
+      this.dispatchMatchCommand('redraw-hand', {});
+    }
+  };
+
+  private readonly commit = (): void => {
+    if (this.snapshot?.actions.canCommit) {
+      this.dispatchMatchCommand('commit-sentence', {});
+    }
+  };
+
+  private readonly openComebacks = (event?: Event): void => {
+    this.comebackTrigger =
+      event?.currentTarget instanceof HTMLElement
+        ? event.currentTarget
+        : (document.activeElement as HTMLElement | null);
+    this.comebackOpen = true;
+    void this.updateComplete.then(() =>
+      this.querySelector<HTMLElement>('.comeback-dialog button')?.focus(),
+    );
+  };
+
+  private readonly closeComebacks = (): void => {
+    this.comebackOpen = false;
+    const trigger = this.comebackTrigger;
+    void this.updateComplete.then(() => trigger?.focus());
+  };
+
+  private chooseComeback(tier: ComebackTier): void {
+    this.comebackOpen = false;
+    this.dispatchMatchCommand('select-comeback', { tier });
+  }
+
+  private dispatchMatchCommand(
+    type: MatchCommand['type'],
+    payload: MatchCommand['payload'],
+  ): void {
+    if (!this.snapshot || this.commandPending) return;
+    this.commandPending = true;
+    const command = deepFreeze({
+      type,
+      source: 'user' as const,
+      actorId: this.snapshot.activePlayerId,
+      payload,
+    }) as MatchCommand;
+    this.dispatchEvent(
+      new CustomEvent(matchCommandEventName, {
+        bubbles: true,
+        composed: true,
+        detail: command,
+      }),
+    );
+  }
+
+  private syncTimer(): void {
+    if (!this.snapshot) return;
+    const { sequence, durationSeconds } = this.snapshot.timer;
+    if (sequence === this.timerSequence) return;
+    this.stopTimer();
+    this.timerSequence = sequence;
+    this.remainingSeconds = durationSeconds;
+    this.politeAnnouncement = '';
+    this.assertiveAnnouncement = '';
+    if (durationSeconds === null) return;
+    this.timerId = window.setInterval(() => this.tickTimer(), 1_000);
+  }
+
+  private tickTimer(): void {
+    if (this.remainingSeconds === null || this.remainingSeconds <= 0) return;
+    this.remainingSeconds -= 1;
+    if (this.remainingSeconds === 10) {
+      this.politeAnnouncement = msg('Ten seconds remain.');
+    }
+    if (this.remainingSeconds === 5) {
+      this.assertiveAnnouncement = msg('Five seconds remain.');
+    }
+    if (this.remainingSeconds === 0) {
+      this.stopTimer();
+      this.assertiveAnnouncement = msg('Time expired. The turn is ending.');
+      this.dispatchMatchCommand('expire-turn', {});
+    }
+  }
+
+  private stopTimer(): void {
+    if (this.timerId !== undefined) {
+      window.clearInterval(this.timerId);
+      this.timerId = undefined;
+    }
+  }
+
+  private async focusAfterRemoval(
+    removed: Readonly<{
+      reference: DraftCardReference;
+      slotIndex: number;
+    }>,
+  ): Promise<void> {
+    await this.updateComplete;
+    if (!this.snapshot) return;
+    const cards = this.snapshot.sharedCards;
+    if (removed.reference.source === 'shared') {
+      const next = cards
+        .slice(removed.slotIndex + 1)
+        .find((card) => card.action);
+      const previous = cards
+        .slice(0, removed.slotIndex)
+        .toReversed()
+        .find((card) => card.action);
+      const target = next ?? previous;
+      if (target?.reference) {
+        this.focusCard(target.reference);
+        return;
+      }
+    }
+    const firstPrivate = this.snapshot.privateCards.find((card) => card.action);
+    if (firstPrivate?.reference) {
+      this.focusCard(firstPrivate.reference);
+      return;
+    }
+    this.querySelector<HTMLElement>(
+      '.action-primary:not(:disabled), .action-secondary:not(:disabled)',
+    )?.focus();
+  }
+
+  private focusCard(reference: DraftCardReference): void {
+    this.querySelector<HTMLElement>(
+      `[data-card-source="${reference.source}"][data-card-id="${reference.cardId}"]`,
+    )?.focus();
+  }
+}
+
+function availableCard(
+  state: MatchState,
+  activePlayerId: string,
+  phrase: Phrase,
+  reference: DraftCardReference,
+  slotIndex: number,
+  ownership: MatchCardView['ownership'],
+  shortcut: string,
+  legalReferences: ReadonlySet<string>,
+  opponentWeaknessTags: readonly string[],
+): MatchCardView {
+  const construction = state.draft!.playerStates[activePlayerId]!.construction;
+  const knownWeaknesses = weaknessMatches(phrase, opponentWeaknessTags);
+  if (phrase.role === 'continuation') {
+    const canCarry = construction.analysis.complete;
+    return createCardView({
+      slotIndex,
+      reference,
+      phrase,
+      ownership,
+      shortcut,
+      state: canCarry ? 'legal' : 'disabled',
+      action: canCarry ? 'carry' : null,
+      previewText: canCarry
+        ? msg(`${construction.previewText} — carry into the next round.`)
+        : construction.previewText,
+      knownWeaknesses,
+      disabledReason: canCarry
+        ? null
+        : msg('Complete a sentence before you carry it.'),
+    });
+  }
+  const isLegal = legalReferences.has(referenceKey(reference));
+  return createCardView({
+    slotIndex,
+    reference,
+    phrase,
+    ownership,
+    shortcut,
+    state: isLegal ? 'legal' : 'illegal',
+    action: isLegal ? 'select' : 'fault',
+    previewText: isLegal
+      ? legalPreview(state, activePlayerId, phrase)
+      : msg(
+          `${construction.previewText || 'Empty sentence'} — strategic foul with ${gameMessage(phrase.textKey)}.`,
+        ),
+    knownWeaknesses,
+    disabledReason: null,
+  });
+}
+
+function createCardView(
+  config: Readonly<{
+    slotIndex: number;
+    reference: DraftCardReference;
+    phrase: Phrase;
+    ownership: MatchCardView['ownership'];
+    shortcut: string;
+    state: MatchCardState;
+    action: MatchCardAction;
+    previewText: string;
+    knownWeaknesses: readonly string[];
+    disabledReason: string | null;
+  }>,
+): MatchCardView {
+  const text = gameMessage(config.phrase.textKey);
+  const stateLabel = cardStateLabel(config.state);
+  const weaknessLabel =
+    config.knownWeaknesses.length > 0
+      ? `Known weakness ${config.knownWeaknesses.join(', ')}.`
+      : 'No known weakness.';
+  const disabledLabel = config.disabledReason
+    ? ` ${config.disabledReason}`
+    : '';
+  return {
+    slotIndex: config.slotIndex,
+    reference: config.reference,
+    phraseId: config.phrase.id,
+    text,
+    role: config.phrase.role,
+    baseValue: config.phrase.baseValue,
+    ownership: config.ownership,
+    shortcut: config.shortcut,
+    state: config.state,
+    stateLabel,
+    knownWeaknesses: config.knownWeaknesses,
+    disabledReason: config.disabledReason,
+    accessibleName: `${text}. Role ${config.phrase.role}. Value ${config.phrase.baseValue}. ${config.ownership} card. ${stateLabel}. ${weaknessLabel}${disabledLabel}`,
+    action: config.action,
+    previewText: config.previewText,
+  };
+}
+
+function emptyCard(
+  slotIndex: number,
+  ownership: MatchCardView['ownership'],
+  shortcut: string,
+  state: Extract<MatchCardState, 'denied' | 'selected'>,
+  phrase?: Phrase,
+): MatchCardView {
+  const phraseName = phrase ? gameMessage(phrase.textKey) : msg('Removed card');
+  const stateLabel = state === 'selected' ? msg('Selected') : msg('Denied');
+  return {
+    slotIndex,
+    reference: null,
+    phraseId: phrase?.id ?? null,
+    text: '',
+    role: phrase?.role ?? null,
+    baseValue: phrase?.baseValue ?? null,
+    ownership,
+    shortcut,
+    state,
+    stateLabel,
+    knownWeaknesses: [],
+    disabledReason: msg('This slot is empty.'),
+    accessibleName: `${ownership} slot ${slotIndex + 1}. ${stateLabel}. ${phraseName}. This slot is empty.`,
+    action: null,
+    previewText: '',
+  };
+}
+
+function legalPreview(
+  state: MatchState,
+  activePlayerId: string,
+  phrase: Phrase,
+): string {
+  const player = state.draft!.playerStates[activePlayerId]!;
+  const result = englishGrammarAdapter.analyze({
+    steps: [
+      ...player.construction.steps,
+      {
+        kind: 'phrase',
+        phrase: prepareEnglishGrammarPhrase(phrase, sampleContent.locales[0]!),
+      },
+    ],
+    subjectNumber: player.subjectNumber,
+    objectNumber: player.objectNumber,
+  });
+  return result.accepted
+    ? result.analysis.publicText
+    : player.construction.previewText;
+}
+
+function weaknessMatches(
+  phrase: Phrase,
+  weaknessTags: readonly string[],
+): readonly string[] {
+  return weaknessTags.filter((tag) => phrase.tags.includes(tag));
+}
+
+function referenceKey(reference: DraftCardReference): string {
+  return `${reference.source}:${reference.cardId}`;
+}
+
+function cardStateLabel(state: MatchCardState): string {
+  switch (state) {
+    case 'legal':
+      return msg('Legal');
+    case 'illegal':
+      return msg('Illegal — strategic foul available');
+    case 'selected':
+      return msg('Selected');
+    case 'denied':
+      return msg('Denied');
+    case 'disabled':
+      return msg('Disabled');
+  }
+}
+
+function characterName(characterId: string): string {
+  return gameMessage(
+    sampleContent.characters.find((character) => character.id === characterId)
+      ?.nameKey,
+  );
+}
+
+function portraitFor(characterId: string): string {
+  return characterId === 'civic-fox' ? civicFoxPortrait : brassPeacockPortrait;
+}
+
+function playerName(
+  players: readonly MatchPlayerView[],
+  playerId: string,
+): string {
+  return (
+    players.find((player) => player.playerId === playerId)?.characterName ??
+    playerId
+  );
+}
+
+function gameMessage(key: string | undefined): string {
+  return key ? (sampleContent.locales[0]?.messages[key] ?? key) : '';
+}
+
+function roleList(roles: readonly EnglishGrammarRole[]): string {
+  return roles.length > 0
+    ? roles.map((role) => role.replaceAll('-', ' ')).join(' / ')
+    : msg('sentence complete');
+}
+
+function tierLabel(tier: ComebackTier): string {
+  const values = {
+    weak: msg('Weak comeback — 20 charge, +4 damage'),
+    medium: msg('Medium comeback — 40 charge, +10 damage'),
+    strong: msg('Strong comeback — 60 charge, +18 damage'),
+  } as const;
+  return values[tier];
+}
+
+function isEditingKeystroke(target: EventTarget | null, key: string): boolean {
+  if (
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLSelectElement ||
+    target instanceof HTMLTextAreaElement
+  ) {
+    return true;
+  }
+  return (
+    target instanceof HTMLButtonElement && (key === 'Enter' || key === ' ')
+  );
+}
+
+function deepFreeze<Value>(value: Value): Value {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    for (const nested of Object.values(value as Record<string, unknown>)) {
+      deepFreeze(nested);
+    }
+    Object.freeze(value);
+  }
+  return value;
+}
+
+export function registerGrandTransitionMatch(): void {
+  if (!customElements.get(elementName)) {
+    customElements.define(elementName, GrandTransitionMatch);
+  }
+}
+
+registerGrandTransitionMatch();
+
+declare global {
+  interface HTMLElementEventMap {
+    [matchCommandEventName]: MatchCommandEvent;
+  }
+}

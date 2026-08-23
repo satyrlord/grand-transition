@@ -70,3 +70,20 @@ double knockout, results, and rematch. Every final damage value is explainable
 from visible text. `npm run ci` passes. Stop before final motion, audio,
 artificial intelligence (AI),
 mobile hardening, or local persistence.
+
+## Objective verifiers
+
+`tests/unit/match-lifecycle.test.ts` verifies that resolved constructions retain
+their public text, status, comeback tier, and closing line without changing the
+seven-step simultaneous resolution order. \
+`tests/browser/resolution-results-screen.browser.test.ts` verifies AC-017-01
+through AC-017-05 with immutable golden states, ordered semantic sections,
+reconstructible damage, one live announcement, zero-value statistics, and the
+explicit continue boundary. \
+`e2e/resolution-results-ui.spec.ts` verifies AC-017-03 through AC-017-06 in the
+production build. Its fixed-seed hotseat flow reaches two surviving
+continuations, a comeback, double knockout, sudden death, results, setup, and
+rematch. It also compares normal and reduced-motion snapshots and checks the
+shared viewports, 200 percent text, forced colors, axe, and target size. \
+The Impeccable audit and critique records plus `npm run ci` verify the remaining
+interface-quality and cumulative contracts.

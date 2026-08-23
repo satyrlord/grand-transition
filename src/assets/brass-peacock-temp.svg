@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 420" role="img" aria-labelledby="title desc">
+  <title id="title">Temporary Brass Peacock portrait</title>
+  <desc id="desc">A crisp geometric peacock at a brass podium.</desc>
+  <rect width="360" height="420" fill="#041d2e"/>
+  <path fill="#d28c2c" d="M180 42 205 92l54-31-18 59 62 4-49 39 45 41-63 1 15 60-52-34-27 53-25-54-54 32 18-59-63-4 47-40-43-43 63 2-14-61 51 35z"/>
+  <path fill="#244b66" d="m180 92 62 74-24 118h-76l-24-118z"/>
+  <path fill="#eee4d3" d="m180 130 32 54-20 50h-24l-20-50z"/>
+  <path fill="#202020" d="M141 151h27v12h-27zm51 0h27v12h-27zm-19 65h14v29h-14z"/>
+  <circle cx="154" cy="157" r="5" fill="#eee4d3"/>
+  <circle cx="206" cy="157" r="5" fill="#eee4d3"/>
+  <path fill="#b33f62" d="M82 304h196v65H82z"/>
+  <path fill="#eee4d3" d="M102 320h156v8H102zm0 20h108v8H102z"/>
+  <path fill="#9a7331" d="M164 274h32v95h-32zM48 369h264v28H48z"/>
+</svg>

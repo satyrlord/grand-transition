@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Temporary Echo Chamber scene</title>
+  <desc id="desc">A geometric civic chamber with opposing lecterns and a public balcony.</desc>
+  <rect width="900" height="360" fill="#062840"/>
+  <path fill="#041d2e" d="M0 0h900v74H0zM0 280h900v80H0z"/>
+  <path fill="#e0d6c2" d="M70 82h760v174H70z"/>
+  <path fill="#481c1a" d="M90 104h720v16H90zm0 114h720v16H90z"/>
+  <path fill="#9a7331" d="M112 136h150v62H112zm526 0h150v62H638z"/>
+  <path fill="#202020" d="M132 152h110v10H132zm0 20h74v10h-74zm526-20h110v10H658zm0 20h74v10h-74z"/>
+  <path fill="#6d2823" d="m450 94 50 52-50 52-50-52z"/>
+  <path fill="#eee4d3" d="M438 118h24v56h-24zM422 134h56v24h-56z"/>
+  <path fill="#e0d6c2" d="M54 270h792v12H54z"/>
+  <circle cx="150" cy="44" r="15" fill="#9a7331"/>
+  <circle cx="225" cy="44" r="15" fill="#9a7331"/>
+  <circle cx="675" cy="44" r="15" fill="#9a7331"/>
+  <circle cx="750" cy="44" r="15" fill="#9a7331"/>
+</svg>

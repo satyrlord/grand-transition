@@ -52,7 +52,8 @@
 
   grand-transition-app,
   grand-transition-title,
-  grand-transition-setup {
+  grand-transition-setup,
+  grand-transition-match {
     display: block;
     min-height: 100svh;
   }
