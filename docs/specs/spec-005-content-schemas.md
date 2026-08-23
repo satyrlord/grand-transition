@@ -11,14 +11,16 @@ Implement Zod 4 phrase, character, scene, and localization schemas. Add original
 sample data for two characters, one scene, and all core phrase roles. Validate
 identifiers (IDs), references, forms, tags, role reachability, key parity, and
 unsafe Hypertext Markup Language (HTML).
+Every character is human. Animal names or titles are metaphorical and cannot
+define non-human anatomy.
 
 A phrase owns ID, role, text key, optional number forms, base value, directness,
 tags, optional character and scene restrictions, rarity, optional finisher
-bonus, content rating, and editorial notes. A character owns localized identity,
-assets, palette, two or three weakness tags, phrase pools, comeback lines by
-tier, artificial intelligence (AI) personality, voice profile, and animation
-set. A scene owns localized identity, layered backgrounds, animation, music,
-ambience, phrase pools, and effects.
+bonus, content rating, and editorial notes. A character owns the literal species
+value `human`, localized identity, assets, palette, two or three weakness tags,
+phrase pools, comeback lines by tier, artificial intelligence (AI) personality,
+voice profile, and animation set. A scene owns localized identity, layered
+backgrounds, animation, music, ambience, phrase pools, and effects.
 
 For this milestone, the complete phrase-role vocabulary is `noun`, `verb`,
 `predicate`, `conjunction`, `ending`, and `continuation`. This milestone defines
@@ -66,7 +68,7 @@ All schema objects are strict and reject unknown fields.
 | Number forms | Distinct singular and plural locale keys when present |
 | Editorial review | Approved review state; original prose; unique safety flags; non-empty note |
 | Media reference | Asset ID plus explicit logo and broadcast-graphic booleans |
-| Character | Two or three weakness tags; unique pools; at least three private phrases; three valid hex palette colors |
+| Character | Human species; two or three weakness tags; unique pools; three private phrases minimum |
 | AI personality | Aggression, denial, and risk each range from 0 through 1 |
 | Voice profile | Rate 0.5 through 2; pitch 0 through 2; approved voice hint |
 | Scene | At least one layer; depth 0 through 1; at least three scene phrases |
@@ -96,6 +98,8 @@ duplicate IDs within each record class.
   review, real logo, and copyrighted broadcast graphic fails separately.
 - **AC-005-06:** Private-pool size, weakness coverage, character role
   reachability, and scene role reachability fail independently.
+- **AC-005-07:** The sample roster contains only human characters. A missing or
+  non-human species fails at the precise character path.
 
 ## Verify and stop
 

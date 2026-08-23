@@ -8,13 +8,28 @@ interface (UI)
 
 ## Deliver
 
-Build the match surface with temporary original vector art. Show the board,
-private hand, sentence, required role, legal state, turn, timer, Pride, comeback,
-redraw, end, carry, and fault actions. Support pointer and basic keyboard use.
+Build the match surface as an original televised civic debate. Use one painted,
+text-free stage raster with embedded generation provenance. Keep all names,
+values, phrases, states, and controls in semantic HTML. Show the board, private
+hand, sentence, required role, legal state, turn, timer, Pride, comeback, redraw,
+end, carry, and fault actions. Support pointer and basic keyboard use.
 
-On desktop, place Pride, the round, and the timer above the opposing characters
-and the scene. Put public reactions and damage in the center. Put the sentence,
-nine-card board, private hand, and actions in the lower half.
+On desktop, place Pride, the round, and the timer over the opposing characters
+and painted stage. Keep both character faces clear. Put opposing speech records,
+public reactions, and damage in the upper field. Use the sentence as the warm
+paper hinge. Put the private hand at the lower left, the nine-card board in a
+three-by-three center grid, and the action stack at the lower right.
+
+The visual north star is the approved static parity mock under `tmp/`. Preserve
+its late-1990s public-television hierarchy, navy and brass broadcast fascia,
+oxide-red and television-blue player identity, aged paper, compact civic
+ornament, and fixed-artboard rhythm. Use original characters, exact product
+content, and implemented actions. Every depicted character is human; animal
+terms in a character title are metaphorical only. Do not copy the mock's names,
+unsupported actions, logos, or rasterized interface text. Milestone 023 owns
+final asset variants and manifest delivery; this milestone can use the
+provenance-bearing interim Portable Network Graphics (PNG) stage and paper
+material.
 
 Each card shows phrase text, role, base score, known weakness, private ownership,
 and legal, illegal, selected, denied, or disabled state. Focus previews the
@@ -29,6 +44,10 @@ This milestone proves the 1280 by 720 desktop surface. Milestone 018 owns the
 other shared viewport classes. At 1280 by 720, all nine shared slots, both
 private slots, current sentence, required role, Pride, round, timer, and
 available actions are visible without page scrolling.
+
+The mock-native 1672 by 941 viewport is additional visual-parity evidence. It
+must keep the complete desktop hierarchy, both character faces, and the full
+sentence and draft controls visible without page scrolling.
 
 Shared shortcuts are 1 through 9 in visual slot order. Private shortcuts are Q
 and W. Enter commits, R redraws, C opens comeback choices, and Escape closes the
@@ -62,6 +81,9 @@ the new snapshot arrives.
   expiration command, and unlimited mode renders no countdown.
 - **AC-016-06:** Playwright completes both hotseat sides, redraw, strategic
   fault, complete commit, and continuation carry with deterministic state.
+- **AC-016-07:** Production-browser screenshots at 1280 by 720 and 1672 by 941
+  show the approved televised-debate hierarchy. The painted raster contains no
+  interface truth, and every visible game value remains semantic and testable.
 
 ## Impeccable UI validation
 
@@ -73,7 +95,8 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 ## Verify and stop
 
 Playwright completes both sides of a hotseat draft, redraw, fault, and commit at
-1280x720. Browser tests prove command mapping and immutable rerendering. No rule
-is duplicated in a component. `npm run ci` passes. Stop before animated
-resolution, results, mobile polish, privacy handover, or artificial
-intelligence (AI).
+1280x720. Browser tests prove command mapping, immutable rerendering, loaded
+stage art, and semantic broadcast regions. Production screenshots include 390
+by 844 and the mock-native 1672 by 941 viewport. No rule is duplicated in a
+component. `npm run ci` passes. Stop before final asset-pipeline variants,
+privacy handover, or artificial intelligence (AI).

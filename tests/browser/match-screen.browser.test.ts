@@ -22,6 +22,20 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.privateCards).toHaveLength(2);
   expect(match.querySelectorAll('.shared-board > li')).toHaveLength(9);
   expect(match.querySelectorAll('.private-hand ol > li')).toHaveLength(2);
+  expect(match.querySelector('.broadcast-stage-art')).not.toBeNull();
+  expect(match.querySelector('.match-footer')).not.toBeNull();
+  expect(match.querySelectorAll('.player-sentence')).toHaveLength(2);
+  const actionIcons = match.querySelectorAll('svg.action-icon');
+  expect(actionIcons).toHaveLength(3);
+  for (const icon of actionIcons) {
+    expect(icon.namespaceURI).toBe('http://www.w3.org/2000/svg');
+    expect(icon.querySelectorAll('path').length).toBeGreaterThan(0);
+    expect(
+      Array.from(icon.querySelectorAll('path')).every(
+        (path) => path.namespaceURI === 'http://www.w3.org/2000/svg',
+      ),
+    ).toBe(true);
+  }
 
   const actionable = match.querySelector<HTMLButtonElement>(
     '.shared-board .phrase-card:not(:disabled)',
@@ -70,6 +84,12 @@ test('maps pointer and keyboard actions once and restores overlay focus', async 
   expect(dialog).not.toBeNull();
   const focusedInDialog = document.activeElement;
   expect(dialog.contains(focusedInDialog)).toBe(true);
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab' }));
+  expect(document.activeElement).toBe(focusedInDialog);
+  window.dispatchEvent(
+    new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true }),
+  );
+  expect(document.activeElement).toBe(focusedInDialog);
   window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
   await match.updateComplete;
   expect(match.querySelector('[role="dialog"]')).toBeNull();
@@ -130,6 +150,26 @@ test('maps pointer and keyboard actions once and restores overlay focus', async 
     );
   }
   expect(match.querySelector('.card-shortcut:not([hidden])')).not.toBeNull();
+});
+
+test('blocks the comeback shortcut while a command is pending', async () => {
+  const match = await startMatch();
+  match.addEventListener(
+    matchCommandEventName,
+    (event) => event.stopPropagation(),
+    { once: true },
+  );
+  const redraw = match.querySelector<HTMLButtonElement>(
+    '.match-actions button:first-child',
+  )!;
+
+  redraw.click();
+  await match.updateComplete;
+  expect(redraw.disabled).toBe(true);
+
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'c' }));
+  await match.updateComplete;
+  expect(match.querySelector('[role="dialog"]')).toBeNull();
 });
 
 test('requires a separate confirmation before an illegal card becomes a fault', async () => {

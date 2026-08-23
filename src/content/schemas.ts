@@ -126,6 +126,9 @@ const phrasePoolSchema = z
 export const characterSchema = z
   .object({
     id: identifierSchema,
+    species: z.literal('human', {
+      error: 'Every character must be human.',
+    }),
     nameKey: localeKeySchema,
     descriptionKey: localeKeySchema,
     assets: z

@@ -175,6 +175,7 @@ export const sampleContent = validateContentCatalog({
   characters: [
     {
       id: 'civic-fox',
+      species: 'human',
       nameKey: 'character.civic-fox.name',
       descriptionKey: 'character.civic-fox.description',
       assets: {
@@ -215,6 +216,7 @@ export const sampleContent = validateContentCatalog({
     },
     {
       id: 'brass-peacock',
+      species: 'human',
       nameKey: 'character.brass-peacock.name',
       descriptionKey: 'character.brass-peacock.description',
       assets: {

@@ -12,6 +12,9 @@ Complete all 18 fictional archetypes, 5 scenes, English phrase pools, final art,
 scene audio treatment, and three unique comeback lines per character and tier.
 Use the existing schemas, pipelines, and presentation contracts.
 
+All 18 archetypes are human. Animal terms in a name or title are metaphorical
+political labels only and never define anatomy, species, or hybrid traits.
+
 ## Required roster
 
 1. **Red-Folder Chairman:** procedural; weak to legacy, modernity, bureaucracy;

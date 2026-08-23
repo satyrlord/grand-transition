@@ -11,13 +11,29 @@ Build the Sharp pipeline, manifest validation, visual tokens, and responsive
 asset loading. Produce original final-quality art for two characters and one
 scene. Add core reactions, ambience, transitions, and reduced-motion variants.
 
-The art combines editorial caricature, painted theatre, post-socialist broadcast
-graphics, collage type, bureaucracy, decayed luxury, and modern overlays. Avoid
-generic dashboard cards, stock fantasy frames, and copied reference-game
-composition. Use a dark institutional palette with navy, charcoal, paper,
-oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
+The art combines editorial caricature, painted theatre, late-1990s
+post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
+modern overlays. The approved static match mock is the hierarchy and material
+north star. Keep the painted stage as authored art and rebuild every game value,
+phrase, and control as semantic components. Use original characters and product
+truth. Do not copy another game's brands, names, unsupported actions, or
+rasterized interface text. Avoid generic dashboard cards and stock fantasy
+frames. Use a dark institutional palette with navy, charcoal, paper, oxide red,
+brass, television blue, and cream. Tricolor is a sparse accent.
 
-Characters use three-quarter opponent-facing silhouettes, layered parts, at
+Every character is human. Animal words in names, titles, insults, or metaphors
+must not produce animal anatomy. Character masters and runtime variants reject
+animal heads, ears, muzzles, beaks, feathers, tails, wings, paws, fur, scales,
+and human-animal hybrids.
+
+Use a condensed civic-serif display voice for broadcast headings and major
+actions, a compact condensed sans face for tactical labels, a readable record
+serif for phrase text, and monospace only for timer and shortcut data. Phrase
+cards use low-contrast aged-paper material. Action plates use coherent authored
+icons and brass framing. No content-bearing text is smaller than 11 pixels at
+the shared desktop viewport.
+
+Human characters use three-quarter opponent-facing silhouettes, layered parts, at
 least five expressions and six poses, plus idle, selection, thinking, delivery,
 light and heavy hit, weakness, comeback, fault, victory, and defeat states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
