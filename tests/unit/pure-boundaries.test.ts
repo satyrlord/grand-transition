@@ -15,6 +15,20 @@ const packagePath = path.resolve(process.cwd(), 'package.json');
 
 type CommandError = Error & { stderr?: string; stdout?: string };
 
+const ownedBrowserApiNames = [
+  'window',
+  'document',
+  'customElements',
+  'localStorage',
+  'sessionStorage',
+  'speechSynthesis',
+  'OffscreenCanvas',
+  'fetch',
+  'XMLHttpRequest',
+  'WebSocket',
+  'EventSource',
+] as const;
+
 describe('pure-module boundaries', () => {
   test('runs the boundary check during validation', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
@@ -33,7 +47,7 @@ describe('pure-module boundaries', () => {
     expect(result.stdout).toMatch(/passed: checked [1-9]\d* file/u);
   });
 
-  test('rejects Lit and DOM use in a pure module', async () => {
+  test('rejects Lit and every owned browser API class in a pure module', async () => {
     const fixtureRoot = await mkdtemp(
       path.join(os.tmpdir(), 'grand-transition-boundaries-'),
     );
@@ -44,8 +58,7 @@ describe('pure-module boundaries', () => {
         path.join(engineRoot, 'invalid.ts'),
         [
           "import { html } from 'lit';",
-          'export const invalid = [html, document];',
-          'export const probe = `${window.name}`;',
+          `export const invalid = [html, ${ownedBrowserApiNames.join(', ')}];`,
         ].join('\n') + '\n',
         'utf8',
       );
@@ -65,12 +78,10 @@ describe('pure-module boundaries', () => {
       expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toMatch(
         /forbidden Lit import[\s\S]*forbidden DOM name/u,
       );
-      expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toMatch(
-        /invalid\.ts:2: forbidden DOM name "document"/u,
-      );
-      expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toMatch(
-        /invalid\.ts:3: forbidden DOM name "window"/u,
-      );
+      const output = `${failure?.stdout ?? ''}${failure?.stderr ?? ''}`;
+      for (const name of ownedBrowserApiNames) {
+        expect(output).toContain(`invalid.ts:2: forbidden DOM name "${name}"`);
+      }
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }

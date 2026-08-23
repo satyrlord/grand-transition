@@ -9,6 +9,8 @@ import {
 import { seededRandomSource } from '../../src/engine/random-source';
 import { sampleContent } from '../../src/content/sample-content';
 import type { Phrase } from '../../src/content/schemas';
+import { prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter';
+import { englishGameLocale } from '../../src/localization/en-game-locale';
 
 const playerCharacterIds = ['civic-fox', 'brass-peacock'] as const;
 
@@ -68,6 +70,97 @@ function expectPlayerPaths(
   expect(verbs.length).toBeGreaterThanOrEqual(1);
   expect(predicates.length).toBeGreaterThanOrEqual(1);
   expect(nouns[0]?.id).not.toBe(nouns[1]?.id);
+}
+
+function expectStandardComposition(board: GeneratedBoard): void {
+  const standardRoles = board.slots
+    .filter((slot) => slot.source === 'standard')
+    .map((slot) => slot.role);
+
+  expect(standardRoles.filter((role) => role === 'noun')).toHaveLength(3);
+  expect(standardRoles.filter((role) => role === 'verb')).toHaveLength(3);
+  expect(standardRoles.filter((role) => role === 'predicate')).toHaveLength(1);
+  expect(board.slots.filter((slot) => slot.source === 'wildcard')).toHaveLength(
+    2,
+  );
+}
+
+function expectRestrictionCompliance(
+  board: GeneratedBoard,
+  request: BoardGenerationRequest,
+): void {
+  const phrases = phraseById(request);
+  for (const slot of board.slots) {
+    const phrase = phrases.get(slot.phraseId)!;
+    expect(slot.role).toBe(phrase.role);
+    expect(request.scenePhraseIds).toContain(phrase.id);
+    expect(phrase.sceneIds ?? [request.sceneId]).toContain(request.sceneId);
+    expect(
+      request.playerCharacterIds.some(
+        (characterId, playerIndex) =>
+          request.playerPublicPhraseIds[playerIndex].includes(phrase.id) &&
+          (!phrase.characterIds || phrase.characterIds.includes(characterId)),
+      ),
+    ).toBe(true);
+  }
+}
+
+function expectNumberCompatibility(
+  board: GeneratedBoard,
+  request: BoardGenerationRequest,
+): void {
+  const phrases = phraseById(request);
+  for (const slot of board.slots) {
+    const phrase = phrases.get(slot.phraseId)!;
+    if (phrase.role !== 'noun' && phrase.role !== 'verb') continue;
+
+    const prepared = prepareEnglishGrammarPhrase(phrase, englishGameLocale);
+    expect(prepared.singularText).not.toBe('');
+    expect(prepared.pluralText).not.toBe('');
+    if (!phrase.numberForms) {
+      expect(prepared.singularText).toBe(prepared.defaultText);
+      expect(prepared.pluralText).toBe(prepared.defaultText);
+    }
+  }
+}
+
+function expectBoardInvariants(
+  board: GeneratedBoard,
+  request: BoardGenerationRequest,
+): void {
+  expect(board.slots).toHaveLength(boardSlotCount);
+  expect(new Set(board.slots.map((slot) => slot.id))).toHaveLength(
+    boardSlotCount,
+  );
+  expect(new Set(board.slots.map((slot) => slot.phraseId))).toHaveLength(
+    boardSlotCount,
+  );
+  expectStandardComposition(board);
+  expectRestrictionCompliance(board, request);
+  expectNumberCompatibility(board, request);
+  for (const characterId of request.playerCharacterIds) {
+    expectPlayerPaths(board, request, characterId);
+  }
+}
+
+function deepFreeze<T>(value: T): T {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    for (const nested of Object.values(value)) deepFreeze(nested);
+    Object.freeze(value);
+  }
+  return value;
+}
+
+function makeImpossibleRequest(
+  request: BoardGenerationRequest,
+): BoardGenerationRequest {
+  const nounId = request.phrases
+    .filter((phrase) => phrase.role === 'noun')
+    .at(-1)!.id;
+  return {
+    ...request,
+    scenePhraseIds: request.scenePhraseIds.filter((id) => id !== nounId),
+  };
 }
 
 function makePhrase(id: string, role: Phrase['role']): Phrase {
@@ -141,64 +234,51 @@ describe('seeded board generation', () => {
   test('enforces composition, unique identifiers, restrictions, and player paths', () => {
     const request = sampleRequest(1729);
     const board = expectBoard(request);
-    const phrases = phraseById(request);
-    const standardRoles = board.slots
-      .filter((slot) => slot.source === 'standard')
-      .map((slot) => slot.role);
-
-    expect(board.slots).toHaveLength(boardSlotCount);
-    expect(standardRoles.filter((role) => role === 'noun')).toHaveLength(3);
-    expect(standardRoles.filter((role) => role === 'verb')).toHaveLength(3);
-    expect(standardRoles.filter((role) => role === 'predicate')).toHaveLength(
-      1,
-    );
-    expect(
-      board.slots.filter((slot) => slot.source === 'wildcard'),
-    ).toHaveLength(2);
-    expect(new Set(board.slots.map((slot) => slot.id))).toHaveLength(
-      boardSlotCount,
-    );
-    expect(new Set(board.slots.map((slot) => slot.phraseId))).toHaveLength(
-      boardSlotCount,
-    );
-
-    for (const slot of board.slots) {
-      const phrase = phrases.get(slot.phraseId)!;
-      expect(request.scenePhraseIds).toContain(phrase.id);
-      expect(phrase.sceneIds ?? [request.sceneId]).toContain(request.sceneId);
-      expect(
-        !phrase.characterIds ||
-          request.playerCharacterIds.some((id) =>
-            phrase.characterIds?.includes(id),
-          ),
-      ).toBe(true);
-    }
-    for (const characterId of request.playerCharacterIds) {
-      expectPlayerPaths(board, request, characterId);
-    }
+    expectBoardInvariants(board, request);
   });
 
   test('proves all invariants across thousands of generated boards', () => {
     fc.assert(
-      fc.property(fc.integer(), (seed) => {
-        const request = sampleRequest(seed);
+      fc.property(fc.integer(), fc.boolean(), (seed, forceFailure) => {
+        const feasibleRequest = sampleRequest(seed);
+        const request = forceFailure
+          ? makeImpossibleRequest(feasibleRequest)
+          : feasibleRequest;
         const result = generateBoard(request);
+
+        if (forceFailure) {
+          expect(result.ok).toBe(false);
+          if (result.ok) return;
+          expect(result.error).toEqual({
+            kind: 'board-generation-error',
+            code: 'impossible-content-pool',
+            facts: expect.objectContaining({
+              sceneId: request.sceneId,
+              playerCharacterIds: request.playerCharacterIds,
+              requiredSlots: boardSlotCount,
+              availableByRole: expect.any(Array),
+            }),
+          });
+          return;
+        }
+
         expect(result.ok).toBe(true);
         if (!result.ok) return;
-
-        expect(result.board.slots).toHaveLength(boardSlotCount);
-        expect(new Set(result.board.slots.map((slot) => slot.id))).toHaveLength(
-          boardSlotCount,
-        );
-        expect(
-          new Set(result.board.slots.map((slot) => slot.phraseId)),
-        ).toHaveLength(boardSlotCount);
-        for (const characterId of request.playerCharacterIds) {
-          expectPlayerPaths(result.board, request, characterId);
-        }
+        expectBoardInvariants(result.board, request);
       }),
       { numRuns: 3_000, seed: 20_260_822 },
     );
+  });
+
+  test('does not mutate a frozen request or phrase catalog', () => {
+    const request = deepFreeze(sampleRequest(307));
+    const snapshot = structuredClone(request);
+
+    const result = generateBoard(request);
+
+    expect(result.ok).toBe(true);
+    expect(request).toEqual(snapshot);
+    expect(request.phrases).toEqual(snapshot.phrases);
   });
 
   test('uses the approved wildcard weights when all roles are feasible', () => {
@@ -253,15 +333,13 @@ describe('seeded board generation', () => {
   });
 
   test('returns a bounded typed failure for an impossible content pool', () => {
-    const request = sampleRequest(7);
-    const nounIds = request.phrases
-      .filter((phrase) => phrase.role === 'noun')
-      .map((phrase) => phrase.id);
-    const result = generateBoard({
-      ...request,
-      scenePhraseIds: request.scenePhraseIds.filter(
-        (id) => id !== nounIds.at(-1),
-      ),
+    const request = makeImpossibleRequest(sampleRequest(7));
+    let randomStepCount = 0;
+    const result = generateBoard(request, {
+      next(seed) {
+        randomStepCount += 1;
+        return seededRandomSource.next(seed);
+      },
     });
 
     expect(result).toEqual({
@@ -273,10 +351,18 @@ describe('seeded board generation', () => {
           sceneId: 'echo-chamber',
           playerCharacterIds,
           requiredSlots: 9,
-          availableByRole: expect.arrayContaining([{ role: 'noun', count: 2 }]),
+          availableByRole: [
+            { role: 'noun', count: 2 },
+            { role: 'verb', count: 3 },
+            { role: 'predicate', count: 2 },
+            { role: 'conjunction', count: 1 },
+            { role: 'ending', count: 1 },
+            { role: 'continuation', count: 1 },
+          ],
         },
       },
     });
+    expect(randomStepCount).toBe(0);
   });
 
   test('rejects a pool that cannot give both players legal branches', () => {

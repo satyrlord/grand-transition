@@ -29,6 +29,15 @@ const add = (id: string): EnglishGrammarStep => ({
 });
 const end: EnglishGrammarStep = { kind: 'end' };
 
+const phraseIdByRole = {
+  noun: 'paper-promise',
+  verb: 'folds',
+  predicate: 'before-lunch',
+  conjunction: 'and',
+  ending: 'with-the-receipt',
+  continuation: 'still-echoes',
+} as const;
+
 function analyze(
   steps: readonly EnglishGrammarStep[],
   subjectNumber: GrammaticalNumber = 'singular',
@@ -131,48 +140,54 @@ describe('English grammar core', () => {
     });
   });
 
-  test('reports a typed fault for every illegal state exit', () => {
+  test('rejects every role outside each core transition-table row', () => {
     const cases = [
-      [[add('before-lunch')], 'EXPECT_SUBJECT', 'predicate', ['noun']],
-      [
-        [add('paper-promise'), add('paper-promise')],
-        'EXPECT_VERB_OR_PREDICATE',
-        'noun',
-        ['verb', 'predicate'],
-      ],
-      [
-        [add('paper-promise'), add('folds'), add('before-lunch')],
-        'EXPECT_OBJECT',
-        'predicate',
-        ['noun'],
-      ],
-      [
-        [add('paper-promise'), add('before-lunch'), add('folds')],
-        'CLAUSE_COMPLETE',
-        'verb',
-        ['conjunction', 'ending'],
-      ],
-      [
-        [add('paper-promise'), add('before-lunch'), end, add('folds')],
-        'ENDED',
-        'verb',
-        [],
-      ],
+      {
+        steps: [],
+        state: 'EXPECT_SUBJECT',
+        acceptedRoles: ['noun'],
+        expectedRoles: ['noun'],
+      },
+      {
+        steps: [add('paper-promise')],
+        state: 'EXPECT_VERB_OR_PREDICATE',
+        acceptedRoles: ['verb', 'predicate'],
+        expectedRoles: ['verb', 'predicate'],
+      },
+      {
+        steps: [add('paper-promise'), add('folds')],
+        state: 'EXPECT_OBJECT',
+        acceptedRoles: ['noun'],
+        expectedRoles: ['noun'],
+      },
+      {
+        steps: [add('paper-promise'), add('before-lunch')],
+        state: 'CLAUSE_COMPLETE',
+        acceptedRoles: ['conjunction', 'ending'],
+        expectedRoles: ['conjunction', 'ending'],
+      },
     ] as const;
 
-    for (const [steps, state, attempted, expectedRoles] of cases) {
-      expect(analyze(steps)).toEqual({
-        accepted: false,
-        faults: [
-          expect.objectContaining({
-            kind: 'illegal-transition',
-            code: 'unexpected-role',
-            state,
-            attempted,
-            expectedRoles,
-          }),
-        ],
-      });
+    for (const testCase of cases) {
+      for (const [role, phraseId] of Object.entries(phraseIdByRole)) {
+        if ((testCase.acceptedRoles as readonly string[]).includes(role)) {
+          continue;
+        }
+        expect(analyze([...testCase.steps, add(phraseId)])).toEqual({
+          accepted: false,
+          faults: [
+            {
+              kind: 'illegal-transition',
+              code: 'unexpected-role',
+              state: testCase.state,
+              attempted: role,
+              phraseId,
+              stepIndex: testCase.steps.length,
+              expectedRoles: testCase.expectedRoles,
+            },
+          ],
+        });
+      }
     }
   });
 
@@ -187,31 +202,18 @@ describe('English grammar core', () => {
         {
           accepted: false,
           faults: [
-            expect.objectContaining({
+            {
               kind: 'illegal-transition',
               code: 'cannot-end-incomplete',
               state,
               attempted: 'end',
+              phraseId: null,
+              stepIndex: steps.length,
               expectedRoles: roles,
-            }),
+            },
           ],
         },
       );
-    },
-  );
-
-  test.each([['still-echoes', 'continuation']])(
-    'rejects the later %s grammar role',
-    (phraseId, attempted) => {
-      expect(analyze([add('paper-promise'), add(phraseId)])).toEqual({
-        accepted: false,
-        faults: [
-          expect.objectContaining({
-            code: 'unexpected-role',
-            attempted,
-          }),
-        ],
-      });
     },
   );
 

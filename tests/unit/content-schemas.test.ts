@@ -9,6 +9,98 @@ function cloneCatalog() {
   return structuredClone(sampleContent);
 }
 
+interface NumericBoundaryCase {
+  readonly name: string;
+  readonly pathPart: string;
+  readonly minimum: number;
+  readonly maximum: number;
+  readonly immediatelyBelow: number;
+  readonly immediatelyAbove: number;
+  readonly setValue: (catalog: MutableCatalog, value: number) => void;
+}
+
+const numericBoundaryCases: readonly NumericBoundaryCase[] = [
+  {
+    name: 'phrase base value',
+    pathPart: 'phrases.0.baseValue',
+    minimum: 1,
+    maximum: 20,
+    immediatelyBelow: 0,
+    immediatelyAbove: 21,
+    setValue: (catalog, value) => {
+      catalog.phrases[0]!.baseValue = value;
+    },
+  },
+  {
+    name: 'phrase directness',
+    pathPart: 'phrases.0.directness',
+    minimum: 0,
+    maximum: 1,
+    immediatelyBelow: -1,
+    immediatelyAbove: 2,
+    setValue: (catalog, value) => {
+      catalog.phrases[0]!.directness = value as 0 | 1;
+    },
+  },
+  {
+    name: 'phrase finisher bonus',
+    pathPart: 'phrases.0.finisherBonus',
+    minimum: 1,
+    maximum: 20,
+    immediatelyBelow: 0,
+    immediatelyAbove: 21,
+    setValue: (catalog, value) => {
+      catalog.phrases[0]!.finisherBonus = value;
+    },
+  },
+  ...(['aggression', 'denial', 'risk'] as const).map(
+    (field): NumericBoundaryCase => ({
+      name: `AI personality ${field}`,
+      pathPart: `characters.0.aiPersonality.${field}`,
+      minimum: 0,
+      maximum: 1,
+      immediatelyBelow: -0.01,
+      immediatelyAbove: 1.01,
+      setValue: (catalog, value) => {
+        catalog.characters[0]!.aiPersonality[field] = value;
+      },
+    }),
+  ),
+  {
+    name: 'voice rate',
+    pathPart: 'characters.0.voiceProfile.rate',
+    minimum: 0.5,
+    maximum: 2,
+    immediatelyBelow: 0.49,
+    immediatelyAbove: 2.01,
+    setValue: (catalog, value) => {
+      catalog.characters[0]!.voiceProfile.rate = value;
+    },
+  },
+  {
+    name: 'voice pitch',
+    pathPart: 'characters.0.voiceProfile.pitch',
+    minimum: 0,
+    maximum: 2,
+    immediatelyBelow: -0.01,
+    immediatelyAbove: 2.01,
+    setValue: (catalog, value) => {
+      catalog.characters[0]!.voiceProfile.pitch = value;
+    },
+  },
+  {
+    name: 'scene layer depth',
+    pathPart: 'scenes.0.backgroundLayers.0.depth',
+    minimum: 0,
+    maximum: 1,
+    immediatelyBelow: -0.01,
+    immediatelyAbove: 1.01,
+    setValue: (catalog, value) => {
+      catalog.scenes[0]!.backgroundLayers[0]!.depth = value;
+    },
+  },
+];
+
 function expectFailure(
   catalog: MutableCatalog,
   pathPart: string,
@@ -65,11 +157,29 @@ describe('content schemas', () => {
     expectFailure(catalog, 'phrases.0.numberForms', /different locale keys/iu);
   });
 
-  test('rejects a directness value that cannot be summed safely', () => {
-    const catalog = cloneCatalog();
-    catalog.phrases[0]!.directness = 2 as 0;
-    expectFailure(catalog, 'phrases.0.directness', /Invalid input/iu);
-  });
+  test.each(numericBoundaryCases)(
+    '$name accepts both endpoints and rejects values immediately outside them',
+    ({
+      pathPart,
+      minimum,
+      maximum,
+      immediatelyBelow,
+      immediatelyAbove,
+      setValue,
+    }) => {
+      for (const value of [minimum, maximum]) {
+        const catalog = cloneCatalog();
+        setValue(catalog, value);
+        expect(contentCatalogSchema.safeParse(catalog).success).toBe(true);
+      }
+
+      for (const value of [immediatelyBelow, immediatelyAbove]) {
+        const catalog = cloneCatalog();
+        setValue(catalog, value);
+        expectFailure(catalog, pathPart, /number|Invalid input/iu);
+      }
+    },
+  );
 
   test('rejects duplicate tags at the phrase location', () => {
     const catalog = cloneCatalog();
