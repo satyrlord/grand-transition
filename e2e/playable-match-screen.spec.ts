@@ -16,10 +16,33 @@ test('the longest desktop match state fits and exposes every required fact', asy
   await expect(page.locator('.private-hand ol > li')).toHaveCount(2);
   await expect(page.getByText('Current sentence')).toBeVisible();
   await expect(page.getByText('Pride', { exact: true })).toHaveCount(2);
-  await expect(page.getByText('Unlimited', { exact: true })).toBeVisible();
+  await expect(page.getByText('10 seconds', { exact: true })).toBeVisible();
   await expect(
     page.getByRole('navigation', { name: 'Turn actions' }),
   ).toBeVisible();
+  await expect(page.locator('[data-turn-state="active"]')).toHaveCount(1);
+  await expect(
+    page.locator('[data-turn-state="active"] .player-turn-status'),
+  ).toHaveText('Has the floor');
+  await expect(page.locator('.private-hand-heading strong')).toHaveText(
+    'Has the floor',
+  );
+  await expect(page.locator('.private-hand-heading p')).toHaveText(
+    'The Civic Fox',
+  );
+  const activePlaque = page.locator('[data-turn-state="active"] > div');
+  expect(
+    await activePlaque.evaluate((element) =>
+      getComputedStyle(element).animationName.toLowerCase(),
+    ),
+  ).toContain('floor-transfer');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  expect(
+    await activePlaque.evaluate((element) =>
+      getComputedStyle(element).animationName.toLowerCase(),
+    ),
+  ).toBe('none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
 
   const geometry = await page.evaluate(() => {
     const viewport = {
@@ -138,15 +161,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
     fullPage: true,
   });
 
-  await page.keyboard.press('c');
-  await expect(
-    page.getByRole('dialog', { name: 'Comeback register' }),
-  ).toBeVisible();
-  await page.screenshot({
-    path: testInfo.outputPath('match-comeback-overlay.png'),
-    fullPage: true,
-  });
-  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button', { name: 'Comeback' })).toBeDisabled();
 
   await page.setViewportSize({ width: 390, height: 844 });
   const mobileTacticalTextFloor = await page.evaluate(() => {
@@ -238,7 +253,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   });
 });
 
-test('pointer play completes redraw, strategic fault, and the other hotseat side', async ({
+test('pointer play completes redraw, an immediate grammar mistake, and the other hotseat side', async ({
   page,
 }, testInfo) => {
   await startMatch(page);
@@ -249,22 +264,21 @@ test('pointer play completes redraw, strategic fault, and the other hotseat side
     page.getByRole('button', { name: 'Redraw used' }),
   ).toBeDisabled();
 
-  const illegalConjunction = page.locator(
-    '.shared-board button[data-card-state="illegal"][aria-label*="Role conjunction"]',
+  const wrongPredicate = page.locator(
+    '.shared-board button[data-card-state="legal"][aria-label*="Role predicate"]',
   );
-  await expect(illegalConjunction).toBeVisible();
-  await illegalConjunction.click();
-  await expect(
-    page.getByRole('button', { name: 'Commit strategic foul' }),
-  ).toBeFocused();
+  await expect(wrongPredicate).toBeVisible();
+  await wrongPredicate.click();
   await page.screenshot({
-    path: testInfo.outputPath('match-fault-confirmation.png'),
+    path: testInfo.outputPath('match-grammar-mistake.png'),
     fullPage: true,
   });
-  await page.getByRole('button', { name: 'Commit strategic foul' }).click();
   await expect(
     page.getByRole('heading', { name: /Brass Peacock has the floor/u }),
   ).toBeVisible();
+  await expect(
+    page.locator('[data-turn-state="active"] .player-turn-status'),
+  ).toHaveText('Has the floor');
 
   for (let turn = 0; turn < 8; turn += 1) {
     if (
@@ -295,43 +309,43 @@ test('pointer play completes redraw, strategic fault, and the other hotseat side
   await expect(page.getByRole('heading', { name: /Round 2:/u })).toBeVisible();
 });
 
-test('keyboard play commits one side and carries the other continuation', async ({
+test('keyboard play selects a continuation and ends the other sentence', async ({
   page,
 }) => {
   await startMatch(page);
-
-  await page.keyboard.press('3');
-  await expect(
-    page.getByRole('heading', { name: /Brass Peacock has the floor/u }),
-  ).toBeVisible();
-  await page.keyboard.press('6');
-  await expect(
-    page.getByRole('heading', { name: /Civic Fox has the floor/u }),
-  ).toBeVisible();
-  await page.keyboard.press('5');
-  await expect(
-    page.getByRole('heading', { name: /Brass Peacock has the floor/u }),
-  ).toBeVisible();
-  await page.keyboard.press('2');
-  await expect(
-    page.getByRole('heading', { name: /Civic Fox has the floor/u }),
-  ).toBeVisible();
-  await page.keyboard.press('1');
-  await expect(
-    page.getByRole('heading', { name: /Brass Peacock has the floor/u }),
-  ).toBeVisible();
-
-  await page
-    .getByRole('heading', { name: /Brass Peacock has the floor/u })
-    .focus();
+  const continuation = page
+    .locator('button.phrase-card[aria-label*="Role continuation"]')
+    .first();
+  await expect(continuation).toBeEnabled();
+  const shortcut = await continuation.evaluate((button) => {
+    const match = document.querySelector('grand-transition-match') as
+      | (HTMLElement & {
+          snapshot?: {
+            sharedCards: readonly {
+              reference: { cardId: string } | null;
+              shortcut: string;
+            }[];
+            privateCards: readonly {
+              reference: { cardId: string } | null;
+              shortcut: string;
+            }[];
+          };
+        })
+      | null;
+    const cardId = button.getAttribute('data-card-id');
+    return [
+      ...(match?.snapshot?.sharedCards ?? []),
+      ...(match?.snapshot?.privateCards ?? []),
+    ].find((card) => card.reference?.cardId === cardId)?.shortcut;
+  });
+  expect(shortcut).toBeTruthy();
+  await page.keyboard.press(shortcut!);
+  const opponentHeading = page.getByRole('heading', {
+    name: /Brass Peacock has the floor/u,
+  });
+  await expect(opponentHeading).toBeVisible();
+  await opponentHeading.focus();
   await page.keyboard.press('Enter');
-  await expect(
-    page.getByRole('heading', { name: /Civic Fox has the floor/u }),
-  ).toBeVisible();
-  await expect(
-    page.locator('.private-hand button[aria-label*="Role continuation"]'),
-  ).toBeEnabled();
-  await page.keyboard.press('q');
 
   await expect(
     page.getByRole('heading', { name: 'Round 1 resolution' }),
@@ -339,23 +353,6 @@ test('keyboard play commits one side and carries the other continuation', async 
   await expect(page.getByText(/Continuation survived/u).first()).toBeVisible();
   await page.getByRole('button', { name: 'Continue to round 2' }).click();
   await expect(page.getByRole('heading', { name: /Round 2:/u })).toBeVisible();
-  const restored = await page.evaluate(() => {
-    const match = document.querySelector('grand-transition-match') as
-      | (HTMLElement & {
-          snapshot?: {
-            round: number;
-            players: readonly {
-              characterId: string;
-              sentence: string | null;
-            }[];
-          };
-        })
-      | null;
-    return match?.snapshot?.players.find(
-      (player) => player.characterId === 'civic-fox',
-    )?.sentence;
-  });
-  expect(restored).toContain('committee kite folds a velvet megaphone');
   await page.keyboard.press('Tab');
   await expect(
     page.locator('.card-shortcut:not([hidden])').first(),

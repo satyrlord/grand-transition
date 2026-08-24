@@ -11,14 +11,21 @@ interface (UI)
 Build the match surface as an original televised civic debate. Use one painted,
 text-free stage raster with embedded generation provenance. Keep all names,
 values, phrases, states, and controls in semantic HTML. Show the board, private
-hand, sentence, required role, legal state, turn, timer, Pride, comeback, redraw,
-end, carry, and fault actions. Support pointer and basic keyboard use.
+hand, sentence, turn, ten-second timer, Pride, comeback, hand refresh, sentence
+end, grammar-mistake feedback, and continuation selection. Support pointer and
+basic keyboard use.
 
 On desktop, place Pride, the round, and the timer over the opposing characters
 and painted stage. Keep both character faces clear. Put opposing speech records,
 public reactions, and damage in the upper field. Use the sentence as the warm
 paper hinge. Put the private hand at the lower left, the nine-card board in a
 three-by-three center grid, and the action stack at the lower right.
+
+The active player must be clear in both the public stage and the draft area.
+The active player plaque and private-hand heading show “Has the floor.” The
+other player plaque shows “Waiting.” A turn change uses one 360-millisecond
+directional floor-transfer animation on the newly active plaque. Reduced motion
+removes the translation and keeps the same written and framed active state.
 
 The visual north star is the approved static parity mock under `tmp/`. Preserve
 its late-1990s public-television hierarchy, navy and brass broadcast fascia,
@@ -31,18 +38,21 @@ final asset variants and manifest delivery; this milestone can use the
 provenance-bearing interim Portable Network Graphics (PNG) stage and paper
 material.
 
-Each card shows phrase text, role, base score, known weakness, private ownership,
-and legal, illegal, selected, denied, or disabled state. Focus previews the
-sentence. Shared selection leaves an empty slot. Number keys select shared
+Each card shows phrase text, role, known weakness, private ownership, and
+available, selected, empty, or disabled state. Every available common card can
+be selected by either player. Focus previews a valid result and leaves the
+current sentence unchanged for a wrong phrase. Shared selection leaves an empty
+slot. Number keys select shared
 cards; separate keys select private cards; Enter commits; R redraws; C opens
 comebacks; Escape closes overlays. Hints appear only for keyboard use or by
-setting. Illegal cards remain selectable only for deliberate faults.
+setting. A wrong selection applies its grammar mistake immediately without a
+confirmation action.
 
 ## Desktop interaction contract
 
 This milestone proves the 1280 by 720 desktop surface. Milestone 018 owns the
 other shared viewport classes. At 1280 by 720, all nine shared slots, both
-private slots, current sentence, required role, Pride, round, timer, and
+private slots, current sentence, Pride, round, timer, and
 available actions are visible without page scrolling.
 
 The mock-native 1672 by 941 viewport is additional visual-parity evidence. It
@@ -57,9 +67,8 @@ input, select, or button owns an editing keystroke.
 After shared-card removal, focus moves to the next available shared slot,
 previous slot when no next slot exists, then the first private card, then the
 primary available action. Preview focus never changes authoritative state.
-Disabled cards remain readable and name why they are disabled. An illegal card
-uses a separate “Commit strategic foul” confirmation action; focus alone cannot
-trigger it.
+Disabled cards remain readable and name why they are disabled. All available
+cards use the same selection action.
 
 For timed turns, the visible value updates once per second. A polite
 announcement occurs at 10 seconds and an assertive announcement at 5 seconds.
@@ -75,15 +84,19 @@ the new snapshot arrives.
 - **AC-016-03:** Focus preview changes only visible preview text. Escape and
   post-removal focus follow the exact rules above.
 - **AC-016-04:** Every card state has visible text or symbol in addition to
-  color, and its accessible name includes phrase, role, value, ownership, legal
+  color, and its accessible name includes phrase, role, ownership, available
   state, and relevant weakness.
-- **AC-016-05:** Timer announcements occur once at 10 and 5, zero emits one
-  expiration command, and unlimited mode renders no countdown.
-- **AC-016-06:** Playwright completes both hotseat sides, redraw, strategic
-  fault, complete commit, and continuation carry with deterministic state.
+- **AC-016-05:** The fixed timer announces 5 once and zero emits one expiration
+  command.
+- **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
+  immediate grammar mistake, complete and incomplete endings, and continuation
+  selection with deterministic state.
 - **AC-016-07:** Production-browser screenshots at 1280 by 720 and 1672 by 941
   show the approved televised-debate hierarchy. The painted raster contains no
   interface truth, and every visible game value remains semantic and testable.
+- **AC-016-08:** Exactly one player plaque and the private-hand heading show
+  “Has the floor.” The active plaque changes after one pick, and reduced motion
+  preserves the same turn text without directional movement.
 
 ## Impeccable UI validation
 
@@ -94,7 +107,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Playwright completes both sides of a hotseat draft, redraw, fault, and commit at
+Playwright completes both sides of a hotseat draft, refresh, mistake, and end at
 1280x720. Browser tests prove command mapping, immutable rerendering, loaded
 stage art, and semantic broadcast regions. Production screenshots include 390
 by 844 and the mock-native 1672 by 941 viewport. No rule is duplicated in a

@@ -1,14 +1,11 @@
 import type { BasicScoringBalance } from '../content/basic-scoring-balance';
 import type { Phrase } from '../content/schemas';
 import {
-  roundNonNegativeDamage,
-  scoreBasicConstruction,
+  ceilDamage,
+  extractScoreClauses,
+  scoreClause,
   type BasicScoreBreakdownItem,
 } from './basic-scoring';
-import {
-  validateFinisherOwner,
-  type FinisherRuleError,
-} from './finisher-rules';
 import type { EnglishGrammarAnalysis } from './grammar/english-grammar-adapter';
 
 export type PlayerComboChains = Readonly<{
@@ -41,9 +38,8 @@ export type ComboFinisherBreakdownItem =
     }>
   | Readonly<{
       kind: 'combo-multiplier';
-      operation: 'multiply';
-      nounPhraseId: string;
-      phraseIndex: number;
+      operation: 'note';
+      nounPhraseIds: readonly string[];
       factor: number;
     }>;
 
@@ -64,17 +60,11 @@ export type ComboFinisherScoringRequest = Readonly<{
   balance: BasicScoringBalance;
 }>;
 
-export type ComboFinisherScoringResult =
-  | Readonly<{
-      ok: true;
-      score: ComboFinisherScore;
-      comboState: ComboChainState;
-    }>
-  | Readonly<{
-      ok: false;
-      error: FinisherRuleError;
-      comboState: ComboChainState;
-    }>;
+export type ComboFinisherScoringResult = Readonly<{
+  ok: true;
+  score: ComboFinisherScore;
+  comboState: ComboChainState;
+}>;
 
 export function scoreComboFinisherConstruction(
   request: ComboFinisherScoringRequest,
@@ -82,36 +72,8 @@ export function scoreComboFinisherConstruction(
   const phraseById = new Map(
     request.phrases.map((phrase) => [phrase.id, phrase]),
   );
-  const renderedPhrases = request.analysis.renderedPhrases.map(
-    (renderedPhrase) => {
-      const phrase = phraseById.get(renderedPhrase.phraseId);
-      if (!phrase) {
-        throw new Error(
-          `Scoring data is missing phrase "${renderedPhrase.phraseId}".`,
-        );
-      }
-      return phrase;
-    },
-  );
-  const finisher = renderedPhrases.find((phrase) => phrase.role === 'ending');
-  if (finisher) {
-    const owner = validateFinisherOwner({
-      finisher,
-      attackerCharacterId: request.attackerCharacterId,
-    });
-    if (!owner.ok) {
-      return {
-        ok: false,
-        error: owner.error,
-        comboState: request.comboState,
-      };
-    }
-  }
-
   const scoreable =
-    request.analysis.legal &&
-    request.analysis.complete &&
-    request.analysis.sentenceStatus === 'complete';
+    request.analysis.complete && request.analysis.sentenceStatus === 'complete';
   const nounOccurrences = scoreable
     ? request.analysis.renderedPhrases.flatMap((phrase, phraseIndex) =>
         phrase.role === 'noun'
@@ -135,70 +97,139 @@ export function scoreComboFinisherConstruction(
         uniqueNouns.map((noun) => noun.nounPhraseId),
       )
     : { previousNounIds: [], chainByNounId: {} };
-  const combo = chooseCombo(uniqueNouns, nextPlayerChains.chainByNounId);
   const comboState: ComboChainState = {
     ...request.comboState,
     [request.attackerPlayerId]: nextPlayerChains,
   };
+  const combo = chooseCombo(uniqueNouns, nextPlayerChains.chainByNounId);
+  const breakdown: ComboFinisherBreakdownItem[] = [];
 
-  const basic = scoreBasicConstruction({
-    analysis: request.analysis,
-    phrases: request.phrases,
-    defenderWeaknessTags: request.defenderWeaknessTags,
-    balance: request.balance,
-  });
-  const additiveItems = basic.breakdown.filter(
-    (item) =>
-      item.kind === 'base-phrase' ||
-      item.kind === 'length-bonus' ||
-      item.kind === 'directness-bonus',
-  );
-  const weaknessNotes = basic.breakdown.filter(
-    (item) => item.kind === 'weakness-match',
-  );
-  const weaknessMultiplier = basic.breakdown.find(
-    (item) => item.kind === 'weakness-multiplier',
-  );
-  if (!weaknessMultiplier) {
-    throw new Error('Basic scoring must provide a weakness multiplier.');
-  }
+  if (scoreable) {
+    for (const clause of extractScoreClauses(request.analysis)) {
+      const scored = scoreClause(
+        clause,
+        phraseById,
+        request.defenderWeaknessTags,
+        request.balance,
+      );
+      breakdown.push({
+        kind: 'clause-base',
+        operation: 'note',
+        phraseIds: clause.phraseIds,
+        amount: scored.base,
+      });
+      if (scored.restrictionFactor !== 1) {
+        breakdown.push({
+          kind: 'restriction-multiplier',
+          operation: 'note',
+          phraseIds: clause.phraseIds,
+          factor: scored.restrictionFactor,
+        });
+      }
+      breakdown.push(
+        ...scored.weaknessMatches.map((match) => ({
+          kind: 'weakness-match' as const,
+          operation: 'note' as const,
+          ...match,
+        })),
+      );
+      if (scored.weaknessFactor !== 1) {
+        breakdown.push({
+          kind: 'weakness-multiplier',
+          operation: 'note',
+          factor: scored.weaknessFactor,
+        });
+      }
+      const comboFactor = clause.nounPhraseIds.reduce(
+        (factor, nounId) =>
+          factor * (nextPlayerChains.chainByNounId[nounId] ?? 1),
+        1,
+      );
+      if (comboFactor > 1) {
+        breakdown.push({
+          kind: 'combo-multiplier',
+          operation: 'note',
+          nounPhraseIds: clause.nounPhraseIds,
+          factor: comboFactor,
+        });
+      }
+      breakdown.push({
+        kind: 'clause-score',
+        operation: 'add',
+        phraseIds: clause.phraseIds,
+        amount: scored.scoreBeforeCombo * comboFactor,
+      });
+    }
 
-  const breakdown: ComboFinisherBreakdownItem[] = [...additiveItems];
-  if (finisher && scoreable) {
-    breakdown.push({
-      kind: 'finisher-bonus',
-      operation: 'add',
-      phraseId: finisher.id,
-      amount: finisher.finisherBonus ?? 0,
-    });
-  }
-  breakdown.push(...weaknessNotes, weaknessMultiplier);
-  if (combo) {
-    breakdown.push({
-      kind: 'combo-chain',
-      operation: 'note',
-      ...combo,
-    });
-    breakdown.push({
-      kind: 'combo-multiplier',
-      operation: 'multiply',
-      nounPhraseId: combo.nounPhraseId,
-      phraseIndex: combo.phraseIndex,
-      factor: combo.chain,
-    });
+    if (combo && combo.chain > 1) {
+      breakdown.push({ kind: 'combo-chain', operation: 'note', ...combo });
+    }
+    const finisherIndex = request.analysis.renderedPhrases.findIndex(
+      (rendered) => phraseById.get(rendered.phraseId)?.role === 'ending',
+    );
+    const finisher =
+      finisherIndex >= 0
+        ? phraseById.get(
+            request.analysis.renderedPhrases[finisherIndex]!.phraseId,
+          )
+        : undefined;
+    if (finisher) {
+      const restrictionFactor =
+        finisher.sceneIds || finisher.characterIds
+          ? request.balance.restrictedPhraseMultiplier
+          : 1;
+      const weaknessTags = request.defenderWeaknessTags.filter((tag) =>
+        finisher.tags.includes(tag),
+      );
+      if (restrictionFactor !== 1) {
+        breakdown.push({
+          kind: 'restriction-multiplier',
+          operation: 'note',
+          phraseIds: [finisher.id],
+          factor: restrictionFactor,
+        });
+      }
+      breakdown.push(
+        ...weaknessTags.map((defenderTag) => ({
+          kind: 'weakness-match' as const,
+          operation: 'note' as const,
+          defenderTag,
+          phraseId: finisher.id,
+          phraseIndex: finisherIndex,
+        })),
+      );
+      if (weaknessTags.length > 0) {
+        breakdown.push({
+          kind: 'weakness-multiplier',
+          operation: 'note',
+          factor: request.balance.weaknessMultiplier,
+        });
+      }
+      const amount =
+        Math.ceil((finisher.finisherBonus ?? 0) * restrictionFactor) *
+        (weaknessTags.length > 0 ? request.balance.weaknessMultiplier : 1);
+      breakdown.push({
+        kind: 'finisher-bonus',
+        operation: 'add',
+        phraseId: finisher.id,
+        amount,
+      });
+    }
   }
 
   const calculated = replayComboFinisherBreakdown(breakdown);
-  breakdown.push({
-    kind: 'unrounded-total',
-    operation: 'total',
-    amount: calculated.unroundedTotal,
-  });
-  breakdown.push({
-    kind: 'final-damage',
-    operation: 'round-half-up',
-    amount: calculated.finalDamage,
-  });
+  breakdown.push(
+    {
+      kind: 'unrounded-total',
+      operation: 'total',
+      amount: calculated.unroundedTotal,
+    },
+    {
+      kind: 'final-damage',
+      operation: 'ceil',
+      amount: calculated.finalDamage,
+    },
+  );
   return {
     ok: true,
     score: { ...calculated, combo, breakdown },
@@ -209,14 +240,15 @@ export function scoreComboFinisherConstruction(
 export function replayComboFinisherBreakdown(
   breakdown: readonly ComboFinisherBreakdownItem[],
 ): Readonly<{ unroundedTotal: number; finalDamage: number }> {
-  let runningTotal = 0;
-  for (const item of breakdown) {
-    if (item.operation === 'add') runningTotal += item.amount;
-    if (item.operation === 'multiply') runningTotal *= item.factor;
-  }
+  const runningTotal = breakdown.reduce((total, item) => {
+    if (item.kind === 'clause-score' || item.kind === 'finisher-bonus') {
+      return total + item.amount;
+    }
+    return total;
+  }, 0);
   return {
     unroundedTotal: runningTotal,
-    finalDamage: roundNonNegativeDamage(runningTotal),
+    finalDamage: ceilDamage(runningTotal),
   };
 }
 
@@ -225,11 +257,7 @@ function advanceComboChains(
   nounPhraseIds: readonly string[],
 ): PlayerComboChains {
   const priorNouns = new Set(previous.previousNounIds);
-  const currentNouns = new Set(nounPhraseIds);
   const chainByNounId: Record<string, number> = {};
-  for (const nounPhraseId of Object.keys(previous.chainByNounId)) {
-    if (!currentNouns.has(nounPhraseId)) chainByNounId[nounPhraseId] = 1;
-  }
   for (const nounPhraseId of nounPhraseIds) {
     chainByNounId[nounPhraseId] = priorNouns.has(nounPhraseId)
       ? (previous.chainByNounId[nounPhraseId] ?? 1) + 1

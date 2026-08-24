@@ -1,3 +1,4 @@
+import { phraseCardCatalog } from '../content/phrase-card-catalog';
 import type { GameLocaleBundle } from './game-locale-schema';
 
 export const englishGameLocale: GameLocaleBundle = {
@@ -8,26 +9,7 @@ export const englishGameLocale: GameLocaleBundle = {
       'All characters and events are fictional composites created for satire.',
   },
   messages: {
-    'phrase.paper-promise': 'a paper promise',
-    'phrase.paper-promise.singular': 'a paper promise',
-    'phrase.paper-promise.plural': 'paper promises',
-    'phrase.velvet-megaphone': 'a velvet megaphone',
-    'phrase.folds': 'folds',
-    'phrase.folds.singular': 'folds',
-    'phrase.folds.plural': 'fold',
-    'phrase.outshouts': 'outshouts',
-    'phrase.outshouts.singular': 'outshouts',
-    'phrase.outshouts.plural': 'outshout',
-    'phrase.before-lunch': 'before lunch',
-    'phrase.in-an-empty-hall': 'in an empty hall',
-    'phrase.committee-kite': 'a committee kite',
-    'phrase.polishes': 'polishes',
-    'phrase.polishes.singular': 'polishes',
-    'phrase.polishes.plural': 'polish',
-    'phrase.past-the-deadline': 'past the deadline',
-    'phrase.and': 'and',
-    'phrase.with-the-receipt': 'with the receipt',
-    'phrase.still-echoes': 'still echoes',
+    ...phraseCardCatalog.englishMessages,
     'character.civic-fox.name': 'The Civic Fox',
     'character.civic-fox.description':
       'A meticulous committee chair with a sharp procedural notebook.',

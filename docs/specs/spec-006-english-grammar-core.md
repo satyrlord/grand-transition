@@ -1,68 +1,87 @@
-# Milestone 006: English Grammar Core
+# Milestone 006: Hollywood Roast Grammar Core
 
 **Status:** Approved  
 **Depends on:** 005  
-**Owns:** Minimum English grammar forms and locale adapter behavior  
+**Owns:** English phrase roles, grammar transitions, agreement, and rendering
 **Production-file budget:** 7
 
-## Deliver
+## Rule authority
 
-Implement the English finite-state grammar adapter for `NOUN + PREDICATE` and
-`NOUN + VERB + NOUN`. Return legality, completion, next roles, number agreement,
-capitalization, punctuation, and rendered text.
+The final match rules follow _Oh...Sir! The Hollywood Roast_. The implementation
+uses original Grand Transition phrases, characters, scenes, and media. It does
+not copy reference-game prose, source, art, audio, or branding.
 
-Core roles are `noun`, `verb`, `predicate`, `conjunction`, `ending`, and
-`continuation`. A sentence starts with a noun. Minimum forms are
-`NOUN + PREDICATE` and `NOUN + VERB + NOUN`.
+The reference role mapping is:
 
-The finite-state model separates grammatical number and uses
-`EXPECT_SUBJECT`, `EXPECT_VERB_OR_PREDICATE`, `EXPECT_OBJECT`,
-`CLAUSE_COMPLETE`, and `ENDED`. The adapter returns legality, completion, valid
-next roles, number rendering, punctuation, capitalization, and public text.
+| Grand Transition role | Hollywood atom behavior                                          |
+| --------------------- | ---------------------------------------------------------------- |
+| `noun`                | Object that can be a grammatical subject or object               |
+| `predicate`           | Verb phrase that completes a clause after its subject            |
+| `verb`                | Relation that requires a following noun object                   |
+| `conjunction`         | `and`, `but`, or `because`, each with distinct transitions       |
+| `ending`              | Finisher that can follow a complete clause and ends the sentence |
+| `continuation`        | Draft action; not a grammar phrase                               |
 
-The adapter consumes ordered phrase and end steps. A valid minimum clause is
-complete in `CLAUSE_COMPLETE`. Subject nouns and verbs use the subject number.
-Object nouns use an independent object number. A phrase without number-specific
-forms uses its default English text. Public text uses sentence-case
-capitalization. An illegal role or end step returns a typed fault with the
-current state, attempted step, step index, and expected roles. The explicit end
-step that moves `CLAUSE_COMPLETE` to `ENDED` and adds a period is owned by
-Milestone 007.
+## Core forms
 
-## Transition and rendering contract
+The two minimum complete clauses are:
 
-| State | Accepted role | Next state |
-| --- | --- | --- |
-| `EXPECT_SUBJECT` | noun | `EXPECT_VERB_OR_PREDICATE` |
-| `EXPECT_VERB_OR_PREDICATE` | verb | `EXPECT_OBJECT` |
-| `EXPECT_VERB_OR_PREDICATE` | predicate | `CLAUSE_COMPLETE` |
-| `EXPECT_OBJECT` | noun | `CLAUSE_COMPLETE` |
+- `NOUN + PREDICATE`;
+- `NOUN + VERB + NOUN`.
 
-All other role transitions return `unexpected-role` with the current state,
-attempted role, phrase ID, zero-based step index, and ordered expected roles.
-An end step before `CLAUSE_COMPLETE` returns `cannot-end-incomplete`.
+A sentence starts with a noun or front `because`. A continuation is always a
+selectable draft action and does not enter the grammar adapter.
 
-The first subject noun and every verb use subject number. An object noun uses
-object number. A phrase without number forms uses its default text for both.
-Rendering joins phrases with one space, uppercases the first English grapheme,
-does not alter later graphemes, and adds no punctuation before Milestone 007.
+`NOUN + AND + NOUN` is one compound subject. It remains incomplete and accepts
+another `and`, a predicate, or a verb followed by an object. Compound subjects
+use plural verb and predicate forms. A single noun uses its declared number.
+
+After `NOUN + VERB + NOUN`, `and` can add another noun object. The sentence
+remains complete after the added object. That noun can also become the subject
+of a later predicate or verb.
+
+## Connectors
+
+After a complete clause, `and` accepts a new noun subject, a shared-subject
+predicate, or a shared-subject verb followed by a noun. `but` accepts the same
+complete-clause branches. `and` also joins nouns before the first predicate or
+verb. `but` does not join an incomplete opening subject.
+
+Front `because` requires a noun, then accepts a complete subordinate clause
+followed by a main noun clause. Explanatory `because` can follow a complete
+clause and also requires a new noun clause. Another connector cannot replace
+the noun immediately required by `because` or by an incomplete compound
+subject. After a subordinate clause is complete, `and`, `but`, or `because` can
+extend it before the required main noun clause. A completed clause followed by
+`and` or `but` can also accept `because`. A finisher cannot end the front
+subordinate clause. The sentence is incomplete while either required clause is
+unfinished.
+
+An ending is legal only after a complete clause. It ends the sentence
+immediately. A later phrase is a grammar mistake.
+
+## Rendering
+
+English rendering uses sentence case, phrase-defined singular and plural forms,
+and one terminal full stop for a normally ended complete sentence. It does not
+change a selected noun phrase into another number form. A phrase without number
+forms uses its default text.
 
 ## Acceptance criteria
 
-- **AC-006-01:** A table test exercises every row in the transition table and
-  every rejected role from each state.
-- **AC-006-02:** Both minimum forms reach `CLAUSE_COMPLETE`, report complete,
-  and expose conjunction and ending as their next roles.
-- **AC-006-03:** Singular and plural subjects render the matching verb form,
-  while the object uses its independent number.
-- **AC-006-04:** Empty input and each legal prefix are accepted as incomplete,
-  have zero outgoing damage intent, and preserve their exact next-role list.
-- **AC-006-05:** Wrong locale, missing message, illegal role, and premature end
-  each return or throw only their owned corrective failure.
+- **AC-006-01:** Tests prove both minimum forms and every incomplete prefix.
+- **AC-006-02:** Tests prove `NOUN + AND + NOUN` before both completion forms
+  and plural agreement for the compound subject. Tests also prove a compound
+  object after `NOUN + VERB + NOUN + AND`.
+- **AC-006-03:** Tests prove new-subject and shared-subject `and` and `but`
+  branches, plus front and explanatory `because` branches and their required
+  noun transitions.
+- **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
+  agreement, and rejection after an ending.
+- **AC-006-05:** Wrong locale, missing message, and wrong role return stable
+  typed evidence without changing game state.
 
-## Verify and stop
+## Objective verifiers
 
-Acceptance criteria cover every state and transition used by both minimum
-forms, singular and plural agreement, and typed illegal transitions. No English rule enters the
-generic engine contract. `npm run ci` passes. Stop before conjunctions, endings,
-continuations, faults, or drafting.
+`tests/unit/english-grammar-core.test.ts` and
+`tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-05.

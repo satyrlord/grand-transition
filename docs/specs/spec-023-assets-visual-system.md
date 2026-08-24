@@ -35,7 +35,8 @@ the shared desktop viewport.
 
 Human characters use three-quarter opponent-facing silhouettes, layered parts, at
 least five expressions and six poses, plus idle, selection, thinking, delivery,
-light and heavy hit, weakness, comeback, fault, victory, and defeat states.
+light and heavy hit, weakness, comeback, grammar-mistake, victory, and defeat
+states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, accessibility, and alternative proof.

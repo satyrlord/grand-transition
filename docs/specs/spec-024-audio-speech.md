@@ -13,7 +13,8 @@ subtitles, unavailable state, and hotseat suppression.
 
 Minimum viable product (MVP) audio includes original menu music and distinct
 scene treatment. It includes role-select, commit, light and heavy hit, weakness,
-combo, continuation break, comeback, fault, victory, and defeat cues. Mixer
+combo, continuation break, comeback, grammar-mistake, victory, and defeat cues.
+Mixer
 controls are Master, Music, Effects, and Speech.
 
 Speech defaults off and stays silent until enabled after user action. Detect

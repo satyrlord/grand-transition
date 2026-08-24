@@ -117,7 +117,7 @@ export function createSimulationSetup(
     players: [players[0]!, players[1]!],
     sceneId,
     aiDifficulty: 'simulation-policy',
-    timerSeconds: null,
+    timerSeconds: 10,
     speechEnabled: false,
     privacyEnabled: true,
   };
@@ -152,19 +152,32 @@ export function listSimulationOptions(
       },
       utility: phrase ? phraseUtility(phrase, state, player.playerId) : 0,
       reason: phrase
-        ? `Base ${phrase.baseValue}; directness ${phrase.directness}; ${phrase.tags.length} tag(s).`
+        ? `${phrase.tags.length} scoring or weakness tag(s).`
         : 'The card has no matching content record.',
       phrase,
     };
   });
-  if (player.construction.analysis.complete) {
+  if (player.hand.length === 0 && !player.redrawUsed) {
     options.push({
-      command: actorCommand('commit-sentence', player.playerId),
-      utility: 500,
-      reason: 'Commit a complete legal construction.',
+      command: {
+        type: 'redraw-hand',
+        source: 'ai',
+        actorId: player.playerId,
+        payload: {},
+      },
+      utility: 2_000,
+      reason: 'Refresh an empty private hand.',
       phrase: null,
     });
   }
+  options.push({
+    command: actorCommand('commit-sentence', player.playerId),
+    utility: player.construction.analysis.complete ? 500 : -100,
+    reason: player.construction.analysis.complete
+      ? 'End a complete sentence.'
+      : 'End an incomplete sentence for zero damage.',
+    phrase: null,
+  });
   if (options.length === 0) {
     options.push({
       command: actorCommand('expire-turn', player.playerId),
@@ -359,10 +372,7 @@ function phraseUtility(
     weaknessTags.includes(tag),
   ).length;
   return (
-    phrase.baseValue * 10 +
-    phrase.directness * 4 +
-    weaknessMatches * 12 +
-    (phrase.finisherBonus ?? 0)
+    weaknessMatches * 12 + (phrase.finisherBonus ?? 0) + phrase.tags.length
   );
 }
 
@@ -381,6 +391,24 @@ function assertStateInvariants(
     }
     if (player.comebackCharge < 0 || player.comebackCharge > 60) {
       throw simulationFailure(seed, `Charge is invalid for ${playerId}.`);
+    }
+  }
+  if (state.draft) {
+    const reserved = state.draft.reservedPhraseIds;
+    if (new Set(reserved).size !== reserved.length) {
+      throw simulationFailure(seed, 'A round reserved one phrase twice.');
+    }
+    const visiblePhraseIds = [
+      ...state.draft.board.slots.map((slot) => slot.phraseId),
+      ...state.playerOrder.flatMap((playerId) =>
+        state.draft!.playerStates[playerId]!.hand.map((card) => card.phraseId),
+      ),
+    ];
+    if (
+      new Set(visiblePhraseIds).size !== visiblePhraseIds.length ||
+      visiblePhraseIds.some((phraseId) => !reserved.includes(phraseId))
+    ) {
+      throw simulationFailure(seed, 'A visible round phrase is not unique.');
     }
   }
 }

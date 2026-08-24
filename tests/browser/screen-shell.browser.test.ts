@@ -45,10 +45,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByLabelText('Scene'))
     .toHaveValue('echo-chamber');
-  await expect.element(page.getByLabelText('Timer')).toHaveValue('unlimited');
-
   await page.getByLabelText('Player two character').selectOptions('civic-fox');
-  await page.getByLabelText('Timer').selectOptions('30');
   await page.getByRole('button', { name: 'Back' }).click();
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
@@ -62,7 +59,6 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByLabelText('Player two character'))
     .toHaveValue('civic-fox');
-  await expect.element(page.getByLabelText('Timer')).toHaveValue('30');
 
   window.history.back();
   await expect
@@ -73,28 +69,16 @@ test('moves through the two-state graph on one URL and restores setup values', a
 
 test.each([
   {
-    timerSeconds: null,
-    renderedTimer: 'unlimited default',
+    name: 'default match',
     playerTwoCharacterId: 'brass-peacock',
   },
   {
-    timerSeconds: 15,
-    renderedTimer: '15',
-    playerTwoCharacterId: 'brass-peacock',
-  },
-  {
-    timerSeconds: 30,
-    renderedTimer: '30',
-    playerTwoCharacterId: 'brass-peacock',
-  },
-  {
-    timerSeconds: null,
-    renderedTimer: 'unlimited mirror',
+    name: 'mirror match',
     playerTwoCharacterId: 'civic-fox',
   },
 ] as const)(
-  'emits one exact immutable payload for $renderedTimer',
-  async ({ timerSeconds, playerTwoCharacterId }) => {
+  'emits one exact immutable payload for $name',
+  async ({ playerTwoCharacterId }) => {
     const host = document.createElement('section');
     const setup = document.createElement(
       'grand-transition-setup',
@@ -102,7 +86,6 @@ test.each([
     setup.snapshot = Object.freeze({
       ...createDefaultSetupSnapshot(),
       playerTwoCharacterId,
-      timerSeconds,
     });
     const listener = vi.fn<(event: StartMatchEvent) => void>();
     host.addEventListener(startMatchEventName, listener);
@@ -128,7 +111,6 @@ test.each([
       playerOneCharacterId: 'civic-fox',
       playerTwoCharacterId,
       sceneId: 'echo-chamber',
-      timerSeconds,
     });
   },
 );
@@ -140,7 +122,6 @@ test('shows every missing-field error, focuses the first field, and emits no com
       playerOneCharacterId: '',
       playerTwoCharacterId: '',
       sceneId: '',
-      timerSeconds: 45,
     }),
   );
   const listener = vi.fn();
@@ -155,7 +136,7 @@ test('shows every missing-field error, focuses the first field, and emits no com
 
   expect(listener).not.toHaveBeenCalled();
   expect(document.activeElement).toBe(setup.querySelector('#mode'));
-  expect(setup.querySelectorAll('.field-error')).toHaveLength(5);
+  expect(setup.querySelectorAll('.field-error')).toHaveLength(4);
   expect(setup.textContent).toContain('Mode is missing. Choose Hotseat.');
   expect(setup.textContent).toContain(
     'Player one character is missing. Choose a listed character.',
@@ -166,9 +147,6 @@ test('shows every missing-field error, focuses the first field, and emits no com
   expect(setup.textContent).toContain(
     'Scene is missing. Choose a listed scene.',
   );
-  expect(setup.textContent).toContain(
-    'Timer is not supported. Choose 15 seconds, 30 seconds, or Unlimited.',
-  );
 });
 
 test('associates unknown-value errors and revalidates an invalid field after change', async () => {
@@ -178,7 +156,6 @@ test('associates unknown-value errors and revalidates an invalid field after cha
       playerOneCharacterId: 'missing-one',
       playerTwoCharacterId: 'missing-two',
       sceneId: 'missing-scene',
-      timerSeconds: 60,
     }),
   );
   setup.addEventListener(setupChangeEventName, (event: SetupChangeEvent) => {
@@ -265,13 +242,6 @@ test.each([
     value: 'missing-scene',
     message: 'Scene is unknown. Choose a listed scene.',
   },
-  {
-    name: 'unsupported timer',
-    field: 'timerSeconds',
-    value: 45,
-    message:
-      'Timer is not supported. Choose 15 seconds, 30 seconds, or Unlimited.',
-  },
 ] as const)(
   'shows one associated $name error, preserves valid values, and emits no command',
   async ({ field, value, message }) => {
@@ -329,7 +299,6 @@ test('keeps one frozen shell snapshot and does not own match-state fields', asyn
   expect(tabOrder).toEqual([
     'mode',
     'sceneId',
-    'timerSeconds',
     'playerOneCharacterId',
     'playerTwoCharacterId',
     'Back',

@@ -1,86 +1,75 @@
-# Milestone 008: Seeded Board Generation
+# Milestone 008: Hollywood Roast Board Generation
 
 **Status:** Approved  
 **Depends on:** 007  
-**Owns:** Seeded shared-board composition and invariants  
+**Owns:** Seeded common-board and private-hand composition
 **Production-file budget:** 6
 
-## Deliver
+## Common board
 
-Implement seeded randomness and nine-slot board generation. Enforce standard
-composition, wildcard weights, unique IDs, legal paths, number compatibility,
-restrictions, diversity, and recent-use preference.
+Each round creates one shuffled nine-card common board. Every available common
+card can be selected by either player. Characters have no common-board
+reservation list.
 
-Each board has three nouns, three verbs, one predicate, and two weighted
-wildcards. Initial wildcard weights are 40% conjunction, 25% continuation, 20%
-verb, 10% noun, and 5% predicate or ending.
+Before the two variable slots, the board contains:
 
-Every board has a valid path for each player and unique identifiers (IDs). It
-has compatible number options, denial diversity, restriction compliance, and
-recent-use exclusion when a valid alternative exists.
+- three nouns;
+- three verbs that require an object;
+- one predicate that completes a clause.
 
-## Generation contract
+The connector-count roll is 10 percent for zero connectors, 65 percent for one,
+and 25 percent for two. A forced connector is `and` or `but`; `but` replaces
+`and` on 25 percent of forced-connector selections. When fewer than two forced
+connectors were added, one continuation fills the next variable slot. Any last
+open slot draws from the eligible scene pool.
 
-The generator receives a seed, the phrase records, the active scene ID and
-phrase pool, the two active character IDs and public phrase pools, and an
-optional set of recently used phrase IDs. It returns the generated board and
-the next seed. It does not read global state.
+Each phrase identifier appears at most once on the board. Rarity changes draw
+probability only; it never creates duplicate cards. Board-slot identifiers also
+stay unique.
 
-A phrase is eligible only when it is in the active scene pool and in at least
-one active character's public pool. Its optional scene and character
-restrictions must also match. Private-pool phrases do not enter the shared
-board unless the other active character explicitly owns the same phrase in its
-public pool.
+One round deal contains 13 distinct phrase identifiers across the two starting
+hands and the nine-card board. A phrase in either hand cannot also appear in
+the other hand or on the board.
 
-The seven standard slots contain exactly three nouns, three verbs, and one
-predicate. The two wildcard slots contain phrase records. Their initial role
-weights are 40% conjunction, 25% continuation, 20% verb, 10% noun, 2.5%
-predicate, and 2.5% ending. The generator conditions these weights on feasible
-role pairs. Thus, an unavailable role cannot cause a false failure when another
-weighted role pair can make a valid board.
+Character-restricted phrases do not enter the common board. Scene-restricted
+phrases can enter only their scene. General and active-scene phrases form the
+common draw pool.
 
-Each active character must have at least two usable nouns, one usable verb, and
-one usable predicate on the board. This supplies both minimum grammar paths:
-`noun + predicate` and `noun + verb + noun`. The two nouns in the second path
-must have different phrase IDs. A number form is compatible when a phrase has
-an explicit singular or plural form, or when its default text is invariant for
-that number. These two branches provide denial diversity before Milestone 009
-adds selections and turns.
+## Private hands
 
-Board-slot IDs and phrase IDs are unique within a board. For each required
-role, the generator first searches the non-recent candidates for a selection
-that meets both players' access requirements. It uses a recent phrase only
-when that role has no valid non-recent selection.
+Each player receives two private cards before the common board is dealt. A hand
+draw uses the common round pool plus phrases restricted to that character. A
+25 percent hand roll forces one `and` or `but` when a connector is available.
+Rarity data supplies the remaining draw weight without repeating a phrase
+identifier within one hand.
 
-An impossible pool returns `impossible-content-pool` with the scene, active
-characters, required slot count, and available count for each role. Generation
-does not retry without a bound and does not throw for this content condition.
-This milestone has no user interface, network, persistence, hand, turn, or
-selection behavior.
+If the hand-first draw leaves no valid board for its connector roll, repeat the
+complete hand-first deal with the next seed. Stop after 32 attempts and return
+the typed board failure. The same input seed reproduces the same accepted deal
+and next seed.
+
+The player can replace both private cards once per round. Both replacements
+differ from each other and from every phrase already dealt in that round. This
+includes both discarded cards, both hands, and every board slot, including a
+slot that was already selected. This refresh does not consume the pick. Both
+hands are dealt again at the next round.
 
 ## Acceptance criteria
 
-- **AC-008-01:** Seed `20260822` produces the same ordered board, slot IDs,
-  phrase IDs, and next seed on repeated calls. A different seed changes at
-  least one of those values for the sample catalog.
-- **AC-008-02:** One 3,000-run fast-check property with seed `20260822`
-  proves nine slots, unique slot and phrase IDs, standard composition,
-  restrictions, both player paths, number compatibility, and bounded success
-  or typed failure. Failure output contains seed and replay path.
-- **AC-008-03:** Across 10,000 feasible boards and 20,000 wildcard slots, each
-  observed role proportion rounds to its configured weight within one decimal
-  place.
-- **AC-008-04:** A recent phrase is absent when a complete non-recent
-  role selection exists and appears only when no such selection exists.
-- **AC-008-05:** An impossible pool returns no board and reports the scene,
-  both character IDs, and required and available counts for every role. It does
-  not throw or consume an unbounded number of random steps.
-- **AC-008-06:** Shared-board generation never selects a private-only phrase and
-  never mutates the request or phrase catalog.
+- **AC-008-01:** A fixed seed reproduces both hands, all nine board slots, and
+  the next seed.
+- **AC-008-02:** Every board has nine distinct phrase identifiers, the exact
+  base composition, and the connector-count bands above. The board and both
+  private hands contain 13 distinct phrase identifiers in total.
+- **AC-008-03:** Either player can select every available common slot.
+- **AC-008-04:** Character-restricted phrases appear only in that character's
+  hand; scene restrictions remain valid.
+- **AC-008-05:** An impossible pool returns stable per-role counts without an
+  unbounded retry.
+- **AC-008-06:** A hand refresh uses two phrase identifiers that did not occur
+  earlier in the same round deal.
 
-## Verify and stop
+## Objective verifiers
 
-Fixed seeds reproduce boards. Unit and fast-check tests prove invariants across
-thousands of boards and print seed and replay path on failure. A bounded typed
-failure handles impossible content pools. `npm run ci` passes. Stop before hands,
-turns, or selection.
+`tests/unit/board-generation.test.ts` and
+`tests/unit/draft-actions.test.ts` verify AC-008-01 through AC-008-06.

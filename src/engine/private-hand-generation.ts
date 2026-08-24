@@ -9,11 +9,9 @@ export interface PrivateHandGenerationRequest {
   readonly characterId: string;
   readonly sceneId: string;
   readonly phrases: readonly Phrase[];
-  readonly privatePhraseIds: readonly string[];
+  readonly characterPhraseIds: readonly string[];
   readonly scenePhraseIds: readonly string[];
   readonly generalPhraseIds: readonly string[];
-  readonly legalRoles: readonly Phrase['role'][];
-  readonly opponentWeaknessTags: readonly string[];
   readonly excludedPhraseIds?: readonly string[];
 }
 
@@ -38,11 +36,9 @@ export type PrivateHandGenerationResult =
   | Readonly<{ ok: true; hand: GeneratedPrivateHand }>
   | Readonly<{ ok: false; error: PrivateHandGenerationFailure }>;
 
-export interface PrivateHandWeightContext {
-  readonly legalRoles: ReadonlySet<Phrase['role']>;
-  readonly opponentWeaknessTags: ReadonlySet<string>;
-  readonly scenePhraseIds: ReadonlySet<string>;
-  readonly generalPhraseIds: ReadonlySet<string>;
+interface WeightedPhrase {
+  readonly phrase: Phrase;
+  readonly weight: number;
 }
 
 const rarityWeights = {
@@ -51,27 +47,8 @@ const rarityWeights = {
   rare: 1,
 } as const satisfies Readonly<Record<Phrase['rarity'], number>>;
 
-export function privateHandCandidateWeight(
-  phrase: Phrase,
-  context: PrivateHandWeightContext,
-): number {
-  const legalRoleBonus = context.legalRoles.has(phrase.role) ? 4 : 0;
-  const weaknessBonus =
-    [...new Set(phrase.tags)].filter((tag) =>
-      context.opponentWeaknessTags.has(tag),
-    ).length * 3;
-  const characterOnlyBonus =
-    !context.scenePhraseIds.has(phrase.id) &&
-    !context.generalPhraseIds.has(phrase.id)
-      ? 1
-      : 0;
-
-  return (
-    rarityWeights[phrase.rarity] +
-    legalRoleBonus +
-    weaknessBonus +
-    characterOnlyBonus
-  );
+export function privateHandCandidateWeight(phrase: Phrase): number {
+  return rarityWeights[phrase.rarity];
 }
 
 export function generatePrivateHand(
@@ -80,53 +57,43 @@ export function generatePrivateHand(
 ): PrivateHandGenerationResult {
   const initialSeed = Math.trunc(request.seed) >>> 0;
   const candidates = collectCandidates(request);
-
-  if (candidates.length < privateHandSize) {
-    return {
-      ok: false,
-      error: {
-        kind: 'private-hand-generation-error',
-        code: 'impossible-private-hand',
-        facts: {
-          playerId: request.playerId,
-          sceneId: request.sceneId,
-          requiredCount: privateHandSize,
-          availableCount: candidates.length,
-        },
-      },
-    };
+  const availableCount = candidates.length;
+  if (availableCount < privateHandSize) {
+    return impossibleHand(request, availableCount);
   }
 
-  const context: PrivateHandWeightContext = {
-    legalRoles: new Set(request.legalRoles),
-    opponentWeaknessTags: new Set(request.opponentWeaknessTags),
-    scenePhraseIds: new Set(request.scenePhraseIds),
-    generalPhraseIds: new Set(request.generalPhraseIds),
-  };
-  const remaining = [...candidates];
   const selected: Phrase[] = [];
+  const remaining = [...candidates];
   let seed = initialSeed;
+  let step = randomSource.next(seed);
+  seed = step.nextSeed;
+
+  const connectors = remaining.filter(
+    (candidate) =>
+      candidate.phrase.role === 'conjunction' &&
+      candidate.phrase.connectorKind !== 'because',
+  );
+  if (step.value < 0.25 && connectors.length > 0) {
+    step = randomSource.next(seed);
+    seed = step.nextSeed;
+    const preferredKind = step.value < 0.25 ? 'but' : 'and';
+    const preferred = connectors.filter(
+      (candidate) => candidate.phrase.connectorKind === preferredKind,
+    );
+    const pool = preferred.length > 0 ? preferred : connectors;
+    step = randomSource.next(seed);
+    seed = step.nextSeed;
+    const connector = weightedCandidate(pool, step.value).phrase;
+    selected.push(connector);
+    removePhrase(remaining, connector.id);
+  }
 
   while (selected.length < privateHandSize) {
-    const weights = remaining.map((phrase) =>
-      privateHandCandidateWeight(phrase, context),
-    );
-    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    const step = randomSource.next(seed);
+    step = randomSource.next(seed);
     seed = step.nextSeed;
-    let target = Math.floor(step.value * totalWeight);
-    let selectedIndex = weights.length - 1;
-
-    for (const [index, weight] of weights.entries()) {
-      if (target < weight) {
-        selectedIndex = index;
-        break;
-      }
-      target -= weight;
-    }
-
-    selected.push(remaining[selectedIndex]!);
-    remaining.splice(selectedIndex, 1);
+    const phrase = weightedCandidate(remaining, step.value).phrase;
+    selected.push(phrase);
+    removePhrase(remaining, phrase.id);
   }
 
   return {
@@ -147,32 +114,72 @@ export function privateHandAvailableCount(
 
 function collectCandidates(
   request: PrivateHandGenerationRequest,
-): readonly Phrase[] {
-  const privatePhraseIds = new Set(request.privatePhraseIds);
+): readonly WeightedPhrase[] {
+  const characterPhraseIds = new Set(request.characterPhraseIds);
+  const sharedPhraseIds = new Set([
+    ...request.generalPhraseIds,
+    ...request.scenePhraseIds,
+  ]);
   const excludedPhraseIds = new Set(request.excludedPhraseIds ?? []);
-  const uniquePhrases = new Map<string, Phrase>();
+  return request.phrases
+    .flatMap((phrase) => {
+      if (
+        excludedPhraseIds.has(phrase.id) ||
+        (phrase.sceneIds && !phrase.sceneIds.includes(request.sceneId))
+      ) {
+        return [];
+      }
+      let eligible: boolean;
+      if (phrase.characterIds) {
+        eligible =
+          phrase.characterIds.includes(request.characterId) &&
+          characterPhraseIds.has(phrase.id);
+      } else {
+        eligible = sharedPhraseIds.has(phrase.id);
+      }
+      if (!eligible) return [];
+      return [{ phrase, weight: privateHandCandidateWeight(phrase) }];
+    })
+    .sort((left, right) => left.phrase.id.localeCompare(right.phrase.id, 'en'));
+}
 
-  for (const phrase of request.phrases) {
-    if (
-      uniquePhrases.has(phrase.id) ||
-      !privatePhraseIds.has(phrase.id) ||
-      excludedPhraseIds.has(phrase.id)
-    ) {
-      continue;
-    }
-    if (
-      phrase.characterIds &&
-      !phrase.characterIds.includes(request.characterId)
-    ) {
-      continue;
-    }
-    if (phrase.sceneIds && !phrase.sceneIds.includes(request.sceneId)) {
-      continue;
-    }
-    uniquePhrases.set(phrase.id, phrase);
+function removePhrase(phrases: WeightedPhrase[], phraseId: string): void {
+  for (let index = phrases.length - 1; index >= 0; index -= 1) {
+    if (phrases[index]!.phrase.id === phraseId) phrases.splice(index, 1);
   }
+}
 
-  return [...uniquePhrases.values()].sort((left, right) =>
-    left.id < right.id ? -1 : left.id > right.id ? 1 : 0,
+function weightedCandidate(
+  candidates: readonly WeightedPhrase[],
+  value: number,
+): WeightedPhrase {
+  const totalWeight = candidates.reduce(
+    (total, candidate) => total + candidate.weight,
+    0,
   );
+  let threshold = value * totalWeight;
+  for (const candidate of candidates) {
+    threshold -= candidate.weight;
+    if (threshold < 0) return candidate;
+  }
+  return candidates.at(-1)!;
+}
+
+function impossibleHand(
+  request: PrivateHandGenerationRequest,
+  availableCount: number,
+): PrivateHandGenerationResult {
+  return {
+    ok: false,
+    error: {
+      kind: 'private-hand-generation-error',
+      code: 'impossible-private-hand',
+      facts: {
+        playerId: request.playerId,
+        sceneId: request.sceneId,
+        requiredCount: privateHandSize,
+        availableCount,
+      },
+    },
+  };
 }

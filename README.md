@@ -20,17 +20,19 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 015 provide the runnable project, complete quality gate,
+Milestones 001 through 017 provide the runnable project, complete quality gate,
 immutable game contracts, replaceable external ports, enforced pure-module
 boundaries, a secured production shell, and validated sample game content. The
 sample contains original phrases for each core role, two fictional characters,
 one fictional scene, an English game-locale bundle, minimum and two-clause
-English grammar, shared-subject forms, endings, incomplete states, strategic
-grammar faults, seeded board and hand generation, drafting, scoring, match
-lifecycle, replay, and simulation. The accessible Lit shell now provides title
-and setup screens with retained values and typed match commands. The game is
-not playable yet. Later milestones add the match surface, expanded content, and
-the complete interface in dependency order.
+Hollywood Roast grammar, compound subjects, endings, incomplete states,
+immediate grammar mistakes, seeded common-board and private-hand generation,
+clause scoring, noun combos, continuations, comebacks, cliffhangers, match
+lifecycle, replay, and simulation. The accessible Lit interface provides title,
+setup, playable hotseat match, resolution, results, rematch, and return-to-setup
+screens. Later milestones add privacy handovers, settings, artificial
+intelligence, final assets, audio, expanded content, and release hardening in
+dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
@@ -47,6 +49,18 @@ TypeScript 7, Vite 8, Lit 3, `@lit/localize`, and Zod 4. It also uses plain
 Cascading Style Sheets (CSS), a pure deterministic game engine, and validated
 data files. The result is a static GitHub Pages build. The exact contracts and
 active milestones are in `docs/specs/`.
+
+## Add phrase cards
+
+Add shared cards to `src/content/common-phrase-cards.json`. Add character-only
+cards to that character's file under `src/content/characters/`. Each JSON card
+contains its English text, grammar role, scoring metadata, rarity, and review
+note. Run `npm run content:validate` after an edit. The loader creates
+locale keys and rejects malformed or duplicate cards before the game starts.
+
+Normal CI runs 500 generated matches. Use the repository `$simulate-matches`
+skill for any explicit larger or smaller workload. The skill requires the
+number of matches as an input.
 
 ## Local references
 

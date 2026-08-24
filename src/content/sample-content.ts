@@ -1,12 +1,6 @@
-import { validateContentCatalog } from './content-catalog';
 import { englishGameLocale } from '../localization/en-game-locale';
-
-const approvedReview = {
-  state: 'approved' as const,
-  originality: 'original' as const,
-  safetyFlags: [],
-  notes: 'Original fictional wordplay. Editorial safety checklist complete.',
-};
+import { validateContentCatalog } from './content-catalog';
+import { phraseCardCatalog } from './phrase-card-catalog';
 
 const media = (assetId: string) => ({
   assetId,
@@ -14,164 +8,16 @@ const media = (assetId: string) => ({
   copyrightedBroadcastGraphic: false,
 });
 
+const characterPhraseIds = (characterId: string): readonly string[] =>
+  phraseCardCatalog.characterPhraseIds[characterId] ?? [];
+
+const scenePhraseIds = (sceneId: string): readonly string[] =>
+  phraseCardCatalog.phrases
+    .filter((phrase) => !phrase.sceneIds || phrase.sceneIds.includes(sceneId))
+    .map((phrase) => phrase.id);
+
 export const sampleContent = validateContentCatalog({
-  phrases: [
-    {
-      id: 'paper-promise',
-      role: 'noun',
-      textKey: 'phrase.paper-promise',
-      numberForms: {
-        singularKey: 'phrase.paper-promise.singular',
-        pluralKey: 'phrase.paper-promise.plural',
-      },
-      baseValue: 2,
-      directness: 0,
-      tags: ['empty-promise', 'paperwork'],
-      rarity: 'common',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'velvet-megaphone',
-      role: 'noun',
-      textKey: 'phrase.velvet-megaphone',
-      baseValue: 3,
-      directness: 0,
-      tags: ['grandstanding', 'noise'],
-      rarity: 'uncommon',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'folds',
-      role: 'verb',
-      textKey: 'phrase.folds',
-      numberForms: {
-        singularKey: 'phrase.folds.singular',
-        pluralKey: 'phrase.folds.plural',
-      },
-      baseValue: 2,
-      directness: 1,
-      tags: ['empty-promise', 'retreat'],
-      rarity: 'common',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'outshouts',
-      role: 'verb',
-      textKey: 'phrase.outshouts',
-      numberForms: {
-        singularKey: 'phrase.outshouts.singular',
-        pluralKey: 'phrase.outshouts.plural',
-      },
-      baseValue: 3,
-      directness: 1,
-      tags: ['grandstanding', 'noise'],
-      rarity: 'common',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'before-lunch',
-      role: 'predicate',
-      textKey: 'phrase.before-lunch',
-      baseValue: 2,
-      directness: 0,
-      tags: ['empty-promise', 'retreat'],
-      rarity: 'common',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'in-an-empty-hall',
-      role: 'predicate',
-      textKey: 'phrase.in-an-empty-hall',
-      baseValue: 3,
-      directness: 0,
-      tags: ['grandstanding', 'noise'],
-      rarity: 'uncommon',
-      finisherBonus: 2,
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'committee-kite',
-      role: 'noun',
-      textKey: 'phrase.committee-kite',
-      baseValue: 3,
-      directness: 0,
-      tags: ['paperwork', 'empty-promise'],
-      characterIds: ['civic-fox'],
-      sceneIds: ['echo-chamber'],
-      rarity: 'rare',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'polishes',
-      role: 'verb',
-      textKey: 'phrase.polishes',
-      numberForms: {
-        singularKey: 'phrase.polishes.singular',
-        pluralKey: 'phrase.polishes.plural',
-      },
-      baseValue: 2,
-      directness: 0,
-      tags: ['grandstanding', 'paperwork'],
-      characterIds: ['brass-peacock'],
-      rarity: 'uncommon',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'past-the-deadline',
-      role: 'predicate',
-      textKey: 'phrase.past-the-deadline',
-      baseValue: 4,
-      directness: 1,
-      tags: ['retreat', 'noise'],
-      sceneIds: ['echo-chamber'],
-      rarity: 'rare',
-      finisherBonus: 3,
-      contentRating: 'teen',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'and',
-      role: 'conjunction',
-      textKey: 'phrase.and',
-      baseValue: 2,
-      directness: 0,
-      tags: ['paperwork', 'noise'],
-      rarity: 'uncommon',
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'with-the-receipt',
-      role: 'ending',
-      textKey: 'phrase.with-the-receipt',
-      baseValue: 3,
-      directness: 1,
-      tags: ['empty-promise', 'paperwork'],
-      rarity: 'uncommon',
-      finisherBonus: 2,
-      contentRating: 'everyone-10-plus',
-      editorialReview: approvedReview,
-    },
-    {
-      id: 'still-echoes',
-      role: 'continuation',
-      textKey: 'phrase.still-echoes',
-      baseValue: 3,
-      directness: 1,
-      tags: ['grandstanding', 'retreat'],
-      rarity: 'rare',
-      contentRating: 'teen',
-      editorialReview: approvedReview,
-    },
-  ],
+  phrases: [...phraseCardCatalog.phrases],
   characters: [
     {
       id: 'civic-fox',
@@ -184,23 +30,7 @@ export const sampleContent = validateContentCatalog({
       },
       palette: { primary: '#783f2a', secondary: '#f0c36d', accent: '#2f6b59' },
       weaknessTags: ['grandstanding', 'noise'],
-      phrasePools: {
-        public: [
-          'paper-promise',
-          'velvet-megaphone',
-          'folds',
-          'outshouts',
-          'before-lunch',
-          'committee-kite',
-          'and',
-        ],
-        private: [
-          'past-the-deadline',
-          'with-the-receipt',
-          'still-echoes',
-          'in-an-empty-hall',
-        ],
-      },
+      characterPhraseIds: [...characterPhraseIds('civic-fox')],
       comebackLinesByTier: {
         weak: ['comeback.civic-fox.weak'],
         medium: ['comeback.civic-fox.medium'],
@@ -225,19 +55,7 @@ export const sampleContent = validateContentCatalog({
       },
       palette: { primary: '#244b66', secondary: '#d28c2c', accent: '#b33f62' },
       weaknessTags: ['empty-promise', 'retreat', 'paperwork'],
-      phrasePools: {
-        public: [
-          'paper-promise',
-          'velvet-megaphone',
-          'folds',
-          'polishes',
-          'before-lunch',
-          'past-the-deadline',
-          'with-the-receipt',
-          'still-echoes',
-        ],
-        private: ['outshouts', 'in-an-empty-hall', 'and', 'paper-promise'],
-      },
+      characterPhraseIds: [...characterPhraseIds('brass-peacock')],
       comebackLinesByTier: {
         weak: ['comeback.brass-peacock.weak'],
         medium: ['comeback.brass-peacock.medium'],
@@ -255,6 +73,7 @@ export const sampleContent = validateContentCatalog({
   scenes: [
     {
       id: 'echo-chamber',
+      openingPlayerIndex: 0,
       nameKey: 'scene.echo-chamber.name',
       descriptionKey: 'scene.echo-chamber.description',
       backgroundLayers: [
@@ -264,20 +83,7 @@ export const sampleContent = validateContentCatalog({
       animationId: 'echo-chamber-dust',
       music: media('echo-chamber-theme'),
       ambience: media('echo-chamber-room-tone'),
-      phrasePool: [
-        'paper-promise',
-        'velvet-megaphone',
-        'folds',
-        'outshouts',
-        'before-lunch',
-        'in-an-empty-hall',
-        'committee-kite',
-        'polishes',
-        'past-the-deadline',
-        'and',
-        'with-the-receipt',
-        'still-echoes',
-      ],
+      phrasePool: [...scenePhraseIds('echo-chamber')],
       effectIds: ['paper-flutter', 'balcony-flicker'],
     },
   ],

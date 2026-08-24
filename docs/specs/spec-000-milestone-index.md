@@ -19,19 +19,25 @@ complete an approved specification.
 
 ## Product-wide contracts
 
-- Build an original browser-based competitive sentence-dueling game based on
-  tactical grammar, phrase denial, weakness targeting, combos, continuations,
-  comebacks, and Pride damage.
+- Build an original browser-based competitive sentence-dueling game whose
+  match mechanics follow _Oh...Sir! The Hollywood Roast_: one common phrase
+  board, two private hand cards, tactical phrase removal, its grammar,
+  clause scoring, weaknesses, noun combos, finishers, continuations, comebacks,
+  Pride damage, ten-second picks, and cliffhangers.
+- Use only original Grand Transition phrases, characters, scenes, prose, art,
+  audio, branding, and source. Reference-game mechanics are authority for
+  behavior, not permission to copy protected expression.
 - Use fictional composite archetypes. Do not present unsupported allegations
   about real people or copy protected writing, art, audio, branding, layout, or
   source code.
+- The game is political satire for adults aged 18 and older. Phrase cards do
+  not carry individual age-rating metadata.
 - The minimum viable product (MVP) is English-first and localization-ready.
   English grammar and prose must not enter locale-neutral rules.
 - The pure deterministic reducer owns game truth. Lit is view-only. Content is
   data-driven and validated. Runtime network calls are prohibited.
 - Readability has priority over spectacle. The player must understand the turn,
-  legal actions, required grammar role, information ownership, and every damage
-  modifier.
+  available actions, information ownership, and every damage modifier.
 - Accessibility, privacy, security, performance, original-asset, and static
   GitHub Pages requirements apply from the first milestone that can exercise
   them. Later work must not regress them.
@@ -106,13 +112,13 @@ speech text.
 Unless a milestone gives a narrower matrix, browser UI acceptance uses these
 viewports in CSS pixels:
 
-| Class | Viewport |
-| --- | --- |
-| Desktop | 1280 by 720 |
-| Tablet | 1024 by 768 |
-| Narrow landscape | 844 by 390 |
-| Portrait mobile | 390 by 844 |
-| Minimum width | 320 by 568 |
+| Class            | Viewport    |
+| ---------------- | ----------- |
+| Desktop          | 1280 by 720 |
+| Tablet           | 1024 by 768 |
+| Narrow landscape | 844 by 390  |
+| Portrait mobile  | 390 by 844  |
+| Minimum width    | 320 by 568  |
 
 At each applicable viewport:
 
@@ -181,16 +187,17 @@ source-only review does not satisfy them.
    is typed and validated.
 6. [English grammar core](spec-006-english-grammar-core.md). Budget: 7. Minimum
    sentences are legal and rendered.
-7. [Extended grammar and faults](spec-007-extended-grammar.md). Budget: 6.
-   Branches, endings, and deliberate faults work.
-8. [Seeded board generation](spec-008-board-generation.md). Budget: 6. Fixed
-   seeds create valid nine-slot boards.
+7. [Grammar mistakes and sentence endings](spec-007-extended-grammar.md).
+   Budget: 6. Wrong cards, incomplete endings, finishers, and continuations
+   follow the final reference rules.
+8. [Hollywood Roast board generation](spec-008-board-generation.md). Budget: 6.
+   Fixed seeds create the common nine-slot board and private hands.
 9. [Draft actions](spec-009-draft-actions.md). Budget: 7. Shared and private
    phrase drafting is complete.
-10. [Basic scoring](spec-010-basic-scoring.md). Budget: 5. Basic scores explain
-    their damage.
-11. [Combos and finishers](spec-011-combos-and-finishers.md). Budget: 5.
-    Exact-noun combos and finishers resolve.
+10. [Hollywood Roast clause scoring](spec-010-basic-scoring.md). Budget: 5.
+    Clause compatibility, restrictions, and weaknesses explain damage.
+11. [Hollywood Roast combos and finishers](spec-011-combos-and-finishers.md).
+    Budget: 5. Per-clause noun combos and finishers resolve.
 12. [Continuations and comebacks](spec-012-continuations-and-comebacks.md).
     Budget: 6. Carry and comeback thresholds resolve.
 13. [Match lifecycle](spec-013-match-lifecycle.md). Budget: 7. Headless matches
@@ -210,11 +217,11 @@ source-only review does not satisfy them.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
     Local options persist or fail safely.
 21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 7. A
-  deterministic valid-action AI completes custom matches.
+    deterministic valid-action AI completes custom matches.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-  Budget: 10. One scene and two characters use validated final art.
+    Budget: 10. One scene and two characters use validated final art.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
 25. [Tutorial and presentation](spec-025-tutorial-presentation.md). Budget: 8.

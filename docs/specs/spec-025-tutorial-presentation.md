@@ -8,11 +8,12 @@
 ## Deliver
 
 Add the guided first match or tutorial overlay. Complete score, damage, combo,
-weakness, continuation, comeback, grammar-fault, and result presentation for the
+weakness, continuation, comeback, grammar-mistake, and result presentation for the
 two-character, one-scene vertical slice.
 
 The tutorial teaches legal roles, denial, private hands, redraw, completion,
-faults, weakness, exact-noun combo, finisher, continuation, comeback, resolution,
+grammar mistakes, weakness, exact-noun combo, finisher, continuation, comeback,
+resolution,
 Pride, and sudden death. The user can skip and replay it. It never relies on
 speech, color, animation, or a time limit alone.
 
@@ -27,12 +28,14 @@ carry body text.
 The tutorial uses one fixed seed, matchup, scene, board sequence, and AI command
 sequence. It has ten checkpoints:
 
-1. Read the required role and select a legal shared noun.
+1. Read the empty sentence and select an available common noun.
 2. Distinguish shared denial from the two private cards.
 3. Use the one redraw without losing the turn.
 4. Complete and commit a minimum sentence.
-5. Select an illegal card through the strategic-foul confirmation.
-6. Read base, length, directness, weakness, and final damage.
+5. Select a wrong card and observe immediate removal, 3 self-damage, and one
+   passed pick.
+6. Read clause compatibility, restrictions, weakness, combo, finisher, and
+   final damage.
 7. Trigger an exact-noun combo and then a finisher.
 8. Carry a continuation and observe survive and break boundaries.
 9. Spend one comeback tier and read charge and bonus.

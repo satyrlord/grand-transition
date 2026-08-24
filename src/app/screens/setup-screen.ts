@@ -1,7 +1,6 @@
 import { msg } from '@lit/localize';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
 import { sampleContent } from '../../content/sample-content';
-import type { MatchTimerSeconds } from '../../engine/match-lifecycle';
 
 const elementName = 'grand-transition-setup';
 export const setupChangeEventName = 'setup-change';
@@ -9,18 +8,13 @@ export const showTitleEventName = 'show-title';
 export const startMatchEventName = 'start-match';
 
 export type SetupField =
-  | 'mode'
-  | 'playerOneCharacterId'
-  | 'playerTwoCharacterId'
-  | 'sceneId'
-  | 'timerSeconds';
+  'mode' | 'playerOneCharacterId' | 'playerTwoCharacterId' | 'sceneId';
 
 export type SetupSnapshot = Readonly<{
   mode: string;
   playerOneCharacterId: string;
   playerTwoCharacterId: string;
   sceneId: string;
-  timerSeconds: number | null;
 }>;
 
 export type StartMatchPayload = Readonly<{
@@ -28,7 +22,6 @@ export type StartMatchPayload = Readonly<{
   playerOneCharacterId: string;
   playerTwoCharacterId: string;
   sceneId: string;
-  timerSeconds: MatchTimerSeconds;
 }>;
 
 export type SetupChangeEvent = CustomEvent<
@@ -66,6 +59,9 @@ export class GrandTransitionSetup extends LitElement {
     if (!this.snapshot) return nothing;
 
     const errors = this.validationAttempted ? validateSetup(this.snapshot) : {};
+    const firstError = setupFieldOrder
+      .map((field) => errors[field])
+      .find((error): error is string => Boolean(error));
 
     return html`
       <main class="setup-screen" aria-labelledby="setup-title">
@@ -77,6 +73,9 @@ export class GrandTransitionSetup extends LitElement {
         </header>
 
         <form class="setup-form" novalidate @submit=${this.submit}>
+          <p class="sr-only" role="alert" aria-atomic="true">
+            ${firstError ?? ''}
+          </p>
           <fieldset>
             <legend>${msg('Match')}</legend>
             ${this.selectField({
@@ -95,20 +94,6 @@ export class GrandTransitionSetup extends LitElement {
                 value: scene.id,
                 label: gameMessage(scene.nameKey),
               })),
-            })}
-            ${this.selectField({
-              field: 'timerSeconds',
-              label: msg('Timer'),
-              value:
-                this.snapshot.timerSeconds === null
-                  ? 'unlimited'
-                  : String(this.snapshot.timerSeconds),
-              error: errors.timerSeconds,
-              options: [
-                { value: 'unlimited', label: msg('Unlimited') },
-                { value: '15', label: msg('15 seconds') },
-                { value: '30', label: msg('30 seconds') },
-              ],
             })}
           </fieldset>
 
@@ -187,12 +172,7 @@ export class GrandTransitionSetup extends LitElement {
   private readonly changeField = (event: Event): void => {
     const control = event.currentTarget as HTMLSelectElement;
     const field = control.name as SetupField;
-    const value =
-      field === 'timerSeconds'
-        ? control.value === 'unlimited'
-          ? null
-          : Number(control.value)
-        : control.value;
+    const value = control.value;
 
     this.submissionLocked = false;
     this.dispatchEvent(
@@ -248,7 +228,6 @@ const setupFieldOrder: readonly SetupField[] = [
   'playerOneCharacterId',
   'playerTwoCharacterId',
   'sceneId',
-  'timerSeconds',
 ];
 
 export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
@@ -283,12 +262,6 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
     msg('Scene is unknown. Choose a listed scene.'),
   );
 
-  if (![null, 15, 30].includes(snapshot.timerSeconds)) {
-    errors.timerSeconds = msg(
-      'Timer is not supported. Choose 15 seconds, 30 seconds, or Unlimited.',
-    );
-  }
-
   return Object.fromEntries(
     Object.entries(errors).filter(([, message]) => message !== undefined),
   );
@@ -313,7 +286,6 @@ function immutableStartMatchPayload(
     playerOneCharacterId: snapshot.playerOneCharacterId,
     playerTwoCharacterId: snapshot.playerTwoCharacterId,
     sceneId: snapshot.sceneId,
-    timerSeconds: snapshot.timerSeconds as MatchTimerSeconds,
   });
 }
 

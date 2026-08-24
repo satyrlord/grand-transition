@@ -9,7 +9,6 @@ import {
 } from './schemas';
 import { gameLocaleBundleSchema } from '../localization/game-locale-schema';
 
-const minimumPrivatePhrases = 3;
 const minimumWeaknessTagCoverage = 2;
 
 export const contentCatalogSchema = z
@@ -49,6 +48,23 @@ export const contentCatalogSchema = z
 
     catalog.phrases.forEach((phrase, phraseIndex) => {
       requireApprovedEditorialReview(phrase, phraseIndex, context);
+      for (const [scoreIndex, customScore] of (
+        phrase.customScores ?? []
+      ).entries()) {
+        for (const [field, nounId] of [
+          ['leftNounId', customScore.leftNounId],
+          ['rightNounId', customScore.rightNounId],
+        ] as const) {
+          if (!nounId) continue;
+          if (phraseById.get(nounId)?.role !== 'noun') {
+            issue(
+              context,
+              ['phrases', phraseIndex, 'customScores', scoreIndex, field],
+              'Reference an existing noun phrase.',
+            );
+          }
+        }
+      }
       for (const [restrictionIndex, characterId] of (
         phrase.characterIds ?? []
       ).entries()) {
@@ -57,6 +73,17 @@ export const contentCatalogSchema = z
             context,
             ['phrases', phraseIndex, 'characterIds', restrictionIndex],
             `Reference an existing character. "${characterId}" is not defined.`,
+          );
+          continue;
+        }
+        const owner = catalog.characters.find(
+          (character) => character.id === characterId,
+        )!;
+        if (!owner.characterPhraseIds.includes(phrase.id)) {
+          issue(
+            context,
+            ['phrases', phraseIndex, 'characterIds', restrictionIndex],
+            `Add phrase "${phrase.id}" to character "${characterId}" or remove the restriction.`,
           );
         }
       }
@@ -69,46 +96,39 @@ export const contentCatalogSchema = z
             ['phrases', phraseIndex, 'sceneIds', restrictionIndex],
             `Reference an existing scene. "${sceneId}" is not defined.`,
           );
+          continue;
+        }
+        const scene = catalog.scenes.find(
+          (candidate) => candidate.id === sceneId,
+        )!;
+        if (!scene.phrasePool.includes(phrase.id)) {
+          issue(
+            context,
+            ['phrases', phraseIndex, 'sceneIds', restrictionIndex],
+            `Add phrase "${phrase.id}" to scene "${sceneId}" or remove the restriction.`,
+          );
         }
       }
     });
 
     catalog.characters.forEach((character, characterIndex) => {
-      const pool = [
-        ...character.phrasePools.public,
-        ...character.phrasePools.private,
-      ];
+      const pool = character.characterPhraseIds;
       validatePhraseReferences(
         pool,
         phraseById,
-        ['characters', characterIndex, 'phrasePools'],
+        ['characters', characterIndex, 'characterPhraseIds'],
         context,
       );
       pool.forEach((phraseId, poolIndex) => {
         const restrictions = phraseById.get(phraseId)?.characterIds;
-        if (restrictions && !restrictions.includes(character.id)) {
+        if (!restrictions?.includes(character.id)) {
           issue(
             context,
-            ['characters', characterIndex, 'phrasePools', poolIndex],
+            ['characters', characterIndex, 'characterPhraseIds', poolIndex],
             `Phrase "${phraseId}" is not available to character "${character.id}".`,
           );
         }
       });
-      if (character.phrasePools.private.length < minimumPrivatePhrases) {
-        issue(
-          context,
-          ['characters', characterIndex, 'phrasePools', 'private'],
-          `Add at least ${minimumPrivatePhrases} private phrases for safe private-hand variety.`,
-        );
-      }
-      requireRoles(
-        pool,
-        phraseById,
-        ['characters', characterIndex, 'phrasePools'],
-        context,
-        sentencePoolRoles,
-        'Make noun, verb, and predicate roles reachable for this character.',
-      );
       for (const [tagIndex, tag] of character.weaknessTags.entries()) {
         const coverage = catalog.phrases.filter((phrase) =>
           phrase.tags.includes(tag),
@@ -158,6 +178,32 @@ export const contentCatalogSchema = z
         sentencePoolRoles,
         'Add noun, verb, and predicate phrases to this scene pool.',
       );
+      const unrestricted = scene.phrasePool
+        .map((phraseId) => phraseById.get(phraseId))
+        .filter(
+          (phrase): phrase is Phrase =>
+            phrase !== undefined && phrase.characterIds === undefined,
+        );
+      const roleCount = (role: Phrase['role']) =>
+        unrestricted.filter((phrase) => phrase.role === role).length;
+      const forcedConnectorCount = unrestricted.filter(
+        (phrase) =>
+          phrase.role === 'conjunction' &&
+          (phrase.connectorKind === 'and' || phrase.connectorKind === 'but'),
+      ).length;
+      if (
+        roleCount('noun') < 3 ||
+        roleCount('verb') < 3 ||
+        roleCount('predicate') < 1 ||
+        roleCount('continuation') < 1 ||
+        forcedConnectorCount < 2
+      ) {
+        issue(
+          context,
+          ['scenes', sceneIndex, 'phrasePool'],
+          'Supply three unrestricted nouns, three unrestricted verbs, one predicate, one continuation, and two distinct and-or-but connectors.',
+        );
+      }
       scene.backgroundLayers.forEach((layer, layerIndex) =>
         validateMedia(
           layer.media,

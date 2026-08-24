@@ -10,9 +10,10 @@ test.beforeEach(async ({ page }) => {
   await page.goto('');
 });
 
-test('a fixed hotseat flow reaches continuation, comeback, double knockout, results, setup, and rematch', async ({
+test('a fixed hotseat flow reaches continuation, comeback, double knockout, sudden death, results, setup, and rematch', async ({
   page,
 }, testInfo) => {
+  test.setTimeout(240_000);
   const plan = planResolutionBrowserFlow();
   await startMatch(page);
   const firstRun = await executePlan(
@@ -26,12 +27,15 @@ test('a fixed hotseat flow reaches continuation, comeback, double knockout, resu
   expect(firstRun.doubleKnockout).toBe(true);
   expect(firstRun.suddenDeath).toBe(true);
   await expect(page.getByRole('heading', { name: /Winner:/u })).toBeVisible();
+  await expect(page.locator('.outcome-record > p')).toContainText(
+    'Cliffhanger scores:',
+  );
+  await expect(page.locator('.outcome-record > p')).toContainText(
+    'Pride damage:',
+  );
   await expect(page.getByText('Final score — The Civic Fox')).toBeVisible();
   await expect(page.getByText('Final score — The Brass Peacock')).toBeVisible();
   await expect(page.getByText('Best insult', { exact: true })).toBeVisible();
-  await expect(
-    page.getByText('Sudden-death tie-break', { exact: true }),
-  ).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.screenshot({
     path: testInfo.outputPath('results-desktop.png'),
@@ -183,7 +187,7 @@ async function executePlan(
     continuation ||= text.includes('Continuation survived');
     comeback ||= text.includes('comeback activated');
     doubleKnockout ||= text.includes('Double knockout recorded');
-    suddenDeath ||= text.includes('Sudden-death resolution');
+    suddenDeath ||= text.includes('Sudden-death exchange complete');
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     if (resolutionIndex === 0 || text.includes('Double knockout recorded')) {
       await page.screenshot({
@@ -201,7 +205,7 @@ async function executePlan(
   const resultText = await page
     .locator('grand-transition-resolution-results')
     .innerText();
-  suddenDeath ||= resultText.includes('Sudden death decided the match');
+  suddenDeath ||= resultText.includes('Sudden-death exchange complete');
   return { continuation, comeback, doubleKnockout, suddenDeath };
 }
 
@@ -226,8 +230,7 @@ async function executeDraftAction(
 ): Promise<void> {
   const command = action.command;
   switch (command.type) {
-    case 'select-phrase':
-    case 'carry-continuation': {
+    case 'select-phrase': {
       const card = command.payload.card;
       await page
         .locator(
@@ -239,13 +242,11 @@ async function executeDraftAction(
     case 'commit-sentence':
       await page.getByRole('button', { name: 'End sentence' }).click();
       return;
+    case 'redraw-hand':
+      await page.getByRole('button', { name: 'Redraw hand' }).click();
+      return;
     case 'select-comeback':
-      await page.getByRole('button', { name: 'Comebacks' }).click();
-      await page
-        .getByRole('button', {
-          name: new RegExp(`^${command.payload.tier}`, 'iu'),
-        })
-        .click();
+      await page.getByRole('button', { name: 'Comeback' }).click();
       return;
     default:
       throw new Error(`Unsupported browser draft action: ${command.type}`);

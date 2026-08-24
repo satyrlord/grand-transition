@@ -1,297 +1,197 @@
 import { describe, expect, test } from 'vitest';
-import {
-  basicScoringBalance,
-  basicScoringBalanceSchema,
-} from '../../src/content/basic-scoring-balance';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import { sampleContent } from '../../src/content/sample-content';
 import {
+  ceilDamage,
   replayBasicScoreBreakdown,
-  roundNonNegativeDamage,
   scoreBasicConstruction,
 } from '../../src/engine/basic-scoring';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarAnalysis,
   type EnglishGrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 import { englishGameLocale } from '../../src/localization/en-game-locale';
 
-const phraseById = new Map(
-  sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
-);
-
-function step(phraseId: string): EnglishGrammarStep {
-  return {
-    kind: 'phrase',
-    phrase: preparedPhrase(phraseId),
-  };
-}
-
-function preparedPhrase(phraseId: string) {
-  const phrase = phraseById.get(phraseId);
-  if (!phrase) throw new Error(`Missing test phrase "${phraseId}".`);
-  return prepareEnglishGrammarPhrase(phrase, englishGameLocale);
-}
-
-function analyze(steps: readonly EnglishGrammarStep[]): EnglishGrammarAnalysis {
+const add = (id: string): EnglishGrammarStep => ({
+  kind: 'phrase',
+  phrase: prepareEnglishGrammarPhrase(
+    sampleContent.phrases.find((phrase) => phrase.id === id)!,
+    englishGameLocale,
+  ),
+});
+const analysis = (ids: readonly string[], end = true) => {
   const result = englishGrammarAdapter.analyze({
-    steps,
+    steps: [...ids.map(add), ...(end ? ([{ kind: 'end' }] as const) : [])],
     subjectNumber: 'singular',
     objectNumber: 'singular',
   });
-  if (!result.accepted) throw new Error('The test construction was rejected.');
+  if (!result.accepted) throw new Error(result.faults[0]!.code);
   return result.analysis;
-}
-
-function score(
-  phraseIds: readonly string[],
-  defenderWeaknessTags: readonly string[] = [],
-) {
-  return scoreBasicConstruction({
-    analysis: analyze(phraseIds.map(step)),
+};
+const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
+  scoreBasicConstruction({
+    analysis: analysis(ids),
     phrases: sampleContent.phrases,
-    defenderWeaknessTags,
+    defenderWeaknessTags: weaknesses,
     balance: basicScoringBalance,
   });
-}
 
-describe('basic scoring balance data', () => {
-  test('accepts only the approved length, weakness, and rounding values', () => {
-    expect(basicScoringBalanceSchema.parse(basicScoringBalance)).toEqual(
-      basicScoringBalance,
+describe('Hollywood Roast clause scoring', () => {
+  test('scores semantic compatibility instead of summing card values', () => {
+    const result = score(['paper-promise', 'before-lunch']);
+    expect(result.finalDamage).toBe(5);
+    expect(result.breakdown).toContainEqual({
+      kind: 'clause-base',
+      operation: 'note',
+      phraseIds: ['paper-promise', 'before-lunch'],
+      amount: 5,
+    });
+  });
+
+  test('supports flavour matches and exact noun-specific score overrides', () => {
+    const baseAnalysis = analysis(['paper-promise', 'before-lunch']);
+    const flavourPhrases = sampleContent.phrases.map((phrase) =>
+      phrase.id === 'before-lunch'
+        ? {
+            ...phrase,
+            scorePreferences: {
+              substance: [],
+              flavour: [{ left: ['empty-promise'] }],
+            },
+          }
+        : phrase,
     );
     expect(
-      basicScoringBalanceSchema.safeParse({
-        ...basicScoringBalance,
-        weaknessMultiplier: 3,
-      }).success,
-    ).toBe(false);
-    expect(
-      basicScoringBalanceSchema.safeParse({
-        ...basicScoringBalance,
-        lengthBonus: { freePhraseCount: 4, perAdditionalPhrase: 1 },
-      }).success,
-    ).toBe(false);
-  });
-});
+      scoreBasicConstruction({
+        analysis: baseAnalysis,
+        phrases: flavourPhrases,
+        defenderWeaknessTags: [],
+        balance: basicScoringBalance,
+      }).finalDamage,
+    ).toBe(3);
 
-describe('basic scoring calculation', () => {
-  test.each([
-    {
-      name: 'zero phrases',
-      phrases: [],
-      base: [],
-      length: 0,
-      directness: 0,
-      unrounded: 0,
-      final: 0,
-    },
-    {
-      name: 'one incomplete phrase',
-      phrases: ['paper-promise'],
-      base: [],
-      length: 0,
-      directness: 0,
-      unrounded: 0,
-      final: 0,
-    },
-    {
-      name: 'two complete phrases with directness zero',
-      phrases: ['paper-promise', 'before-lunch'],
-      base: [2, 2],
-      length: 0,
-      directness: 0,
-      unrounded: 4,
-      final: 4,
-    },
-    {
-      name: 'three complete phrases with directness one',
-      phrases: ['paper-promise', 'folds', 'velvet-megaphone'],
-      base: [2, 2, 3],
-      length: 0,
-      directness: 1,
-      unrounded: 8,
-      final: 8,
-    },
-    {
-      name: 'four complete phrases with a length bonus',
-      phrases: [
+    const customPhrases = flavourPhrases.map((phrase) =>
+      phrase.id === 'before-lunch'
+        ? {
+            ...phrase,
+            customScores: [{ leftNounId: 'paper-promise', score: 9 }],
+          }
+        : phrase,
+    );
+    expect(
+      scoreBasicConstruction({
+        analysis: baseAnalysis,
+        phrases: customPhrases,
+        defenderWeaknessTags: [],
+        balance: basicScoringBalance,
+      }).finalDamage,
+    ).toBe(9);
+  });
+
+  test('applies a weakness multiplier to the matching clause only', () => {
+    expect(
+      score(['paper-promise', 'before-lunch'], ['empty-promise']).finalDamage,
+    ).toBe(10);
+  });
+
+  test('applies 1.5 for each scene- or character-restricted phrase before weakness', () => {
+    const result = score(['velvet-megaphone', 'folds', 'committee-kite']);
+    expect(result.finalDamage).toBe(8);
+    expect(result.breakdown).toContainEqual(
+      expect.objectContaining({
+        kind: 'restriction-multiplier',
+        factor: 1.5,
+      }),
+    );
+  });
+
+  test('adds the scores of compound-subject clauses', () => {
+    expect(
+      score(['paper-promise', 'and', 'velvet-megaphone', 'before-lunch'])
+        .finalDamage,
+    ).toBe(6);
+  });
+
+  test('adds the scores of compound-object clauses', () => {
+    expect(
+      score([
+        'paper-promise',
+        'outshouts',
+        'velvet-megaphone',
+        'and',
+        'committee-kite',
+      ]).finalDamage,
+    ).toBe(7);
+  });
+
+  test('scores front-because subordinate and main clauses separately', () => {
+    expect(
+      score([
+        'because',
+        'paper-promise',
+        'before-lunch',
+        'velvet-megaphone',
+        'in-an-empty-hall',
+      ]).finalDamage,
+    ).toBe(10);
+  });
+
+  test('scores each extended front-because clause once before the main clause', () => {
+    expect(
+      score([
+        'because',
+        'paper-promise',
+        'before-lunch',
+        'and',
+        'velvet-megaphone',
+        'in-an-empty-hall',
+        'borrowed-mandate',
+        'before-lunch',
+      ]).finalDamage,
+    ).toBe(15);
+  });
+
+  test('does not reuse an object relation after a shared-subject subordinate extension', () => {
+    expect(
+      score([
+        'because',
         'paper-promise',
         'folds',
         'velvet-megaphone',
-        'with-the-receipt',
-      ],
-      base: [2, 2, 3, 3],
-      length: 1,
-      directness: 2,
-      unrounded: 13,
-      final: 13,
-    },
-  ])(
-    'scores $name',
-    ({ phrases, base, length, directness, unrounded, final }) => {
-      const result = score(phrases);
-      expect(
-        result.breakdown
-          .filter((item) => item.kind === 'base-phrase')
-          .map((item) => item.amount),
-      ).toEqual(base);
-      expect(
-        result.breakdown.find((item) => item.kind === 'length-bonus'),
-      ).toEqual(expect.objectContaining({ amount: length, operation: 'add' }));
-      expect(
-        result.breakdown.find((item) => item.kind === 'directness-bonus'),
-      ).toEqual(
-        expect.objectContaining({ amount: directness, operation: 'add' }),
-      );
-      expect(
-        result.breakdown.find((item) => item.kind === 'weakness-multiplier'),
-      ).toEqual(expect.objectContaining({ factor: 1, operation: 'multiply' }));
-      expect(result.unroundedTotal).toBe(unrounded);
-      expect(result.finalDamage).toBe(final);
-    },
-  );
-
-  test('lists every weakness match in defender-tag order and multiplies once', () => {
-    const result = score(
-      ['paper-promise', 'folds', 'velvet-megaphone'],
-      ['noise', 'empty-promise', 'retreat'],
-    );
-
-    expect(
-      result.breakdown.filter((item) => item.kind === 'weakness-match'),
-    ).toEqual([
-      {
-        kind: 'weakness-match',
-        operation: 'note',
-        defenderTag: 'noise',
-        phraseId: 'velvet-megaphone',
-        phraseIndex: 2,
-      },
-      {
-        kind: 'weakness-match',
-        operation: 'note',
-        defenderTag: 'empty-promise',
-        phraseId: 'paper-promise',
-        phraseIndex: 0,
-      },
-      {
-        kind: 'weakness-match',
-        operation: 'note',
-        defenderTag: 'empty-promise',
-        phraseId: 'folds',
-        phraseIndex: 1,
-      },
-      {
-        kind: 'weakness-match',
-        operation: 'note',
-        defenderTag: 'retreat',
-        phraseId: 'folds',
-        phraseIndex: 1,
-      },
-    ]);
-    expect(
-      result.breakdown.find((item) => item.kind === 'weakness-multiplier'),
-    ).toEqual({
-      kind: 'weakness-multiplier',
-      operation: 'multiply',
-      factor: 2,
-    });
-    expect(result.unroundedTotal).toBe(16);
-    expect(result.finalDamage).toBe(16);
+        'and',
+        'before-lunch',
+        'borrowed-mandate',
+        'before-lunch',
+      ]).finalDamage,
+    ).toBe(11);
   });
 
-  test.each([
-    { name: 'one match', tags: ['retreat'] },
-    { name: 'several matching phrases', tags: ['empty-promise'] },
-    {
-      name: 'several matching defender tags',
-      tags: ['noise', 'empty-promise', 'retreat'],
-    },
-  ])('applies one multiplier for $name', ({ tags }) => {
-    expect(
-      score(['paper-promise', 'folds', 'velvet-megaphone'], tags).finalDamage,
-    ).toBe(16);
-  });
-
-  test.each([
-    { value: 4.49, expected: 4 },
-    { value: 4.5, expected: 5 },
-    { value: 4.51, expected: 5 },
-  ])('rounds $value to $expected', ({ value, expected }) => {
-    expect(roundNonNegativeDamage(value)).toBe(expected);
-  });
-
-  test('returns a zero-only calculation for incomplete and invalid grammar', () => {
-    const incomplete = scoreBasicConstruction({
-      analysis: analyze([step('paper-promise')]),
+  test('an incomplete sentence deals zero damage and has no clause score', () => {
+    const result = scoreBasicConstruction({
+      analysis: analysis(['paper-promise']),
       phrases: sampleContent.phrases,
       defenderWeaknessTags: ['empty-promise'],
       balance: basicScoringBalance,
     });
-    const invalid = scoreBasicConstruction({
-      analysis: analyze([
-        step('paper-promise'),
+    expect(result.finalDamage).toBe(0);
+    expect(result.breakdown.some((item) => item.kind === 'clause-score')).toBe(
+      false,
+    );
+  });
+
+  test('replays clause totals and always rounds damage up', () => {
+    expect(
+      replayBasicScoreBreakdown([
         {
-          kind: 'deliberate-fault',
-          sourcePhrase: preparedPhrase('velvet-megaphone'),
+          kind: 'clause-score',
+          operation: 'add',
+          phraseIds: ['a'],
+          amount: 2.1,
         },
       ]),
-      phrases: sampleContent.phrases,
-      defenderWeaknessTags: ['empty-promise'],
-      balance: basicScoringBalance,
-    });
-
-    for (const result of [incomplete, invalid]) {
-      expect(result.unroundedTotal).toBe(0);
-      expect(result.finalDamage).toBe(0);
-      expect(
-        result.breakdown
-          .filter((item) => item.operation === 'add')
-          .every((item) => item.amount === 0),
-      ).toBe(true);
-      expect(result.breakdown.some((item) => item.kind === 'base-phrase')).toBe(
-        false,
-      );
-    }
-  });
-
-  test('replays the ordered breakdown without game or UI state', () => {
-    const result = score(
-      ['paper-promise', 'folds', 'velvet-megaphone', 'with-the-receipt'],
-      ['empty-promise', 'paperwork'],
-    );
-
-    expect(result.breakdown.map((item) => item.kind)).toEqual([
-      'base-phrase',
-      'base-phrase',
-      'base-phrase',
-      'base-phrase',
-      'length-bonus',
-      'directness-bonus',
-      'weakness-match',
-      'weakness-match',
-      'weakness-match',
-      'weakness-match',
-      'weakness-match',
-      'weakness-multiplier',
-      'unrounded-total',
-      'final-damage',
-    ]);
-    expect(replayBasicScoreBreakdown(result.breakdown)).toEqual({
-      unroundedTotal: result.unroundedTotal,
-      finalDamage: result.finalDamage,
-    });
-    expect(result.breakdown.at(-2)).toEqual({
-      kind: 'unrounded-total',
-      operation: 'total',
-      amount: result.unroundedTotal,
-    });
-    expect(result.breakdown.at(-1)).toEqual({
-      kind: 'final-damage',
-      operation: 'round-half-up',
-      amount: result.finalDamage,
-    });
+    ).toEqual({ unroundedTotal: 2.1, finalDamage: 3 });
+    expect(ceilDamage(0)).toBe(0);
+    expect(() => ceilDamage(-1)).toThrow(/non-negative/iu);
   });
 });

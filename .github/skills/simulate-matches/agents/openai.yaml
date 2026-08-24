@@ -1,0 +1,6 @@
+interface:
+  display_name: 'Simulate Matches'
+  short_description: 'Run an exact-size deterministic match workload'
+  default_prompt: 'Use $simulate-matches with a required positive integer match_count to run Grand Transition headless matches.'
+policy:
+  allow_implicit_invocation: true

@@ -14,18 +14,19 @@ rematch actions. Use functional temporary motion only.
 
 Resolution uses speech balloons, reactions, and a complete text breakdown before
 simultaneous meter changes. It distinguishes active and carried phrases,
-continuation threshold and result, weakness tags, combo chain, finisher, comeback,
-and grammar fault. Animation reinforces state and cannot hide the explanation.
+continuation threshold and result, weakness tags, combo chain, finisher,
+comeback, and grammar mistakes. Animation reinforces state and cannot hide the
+explanation.
 
 Results display winner, final score, best insult, highest damage, longest valid
-sentence, weaknesses, highest combo, faults, comebacks, rematch, and setup.
+sentence, weaknesses, highest combo, grammar mistakes, comebacks, rematch, and
+setup.
 
 ## Presentation sequence
 
 Resolution renders all required text in this order:
 
-1. Both public constructions and their valid, incomplete, carried, or fault
-   status.
+1. Both public constructions and their valid, incomplete, or carried status.
 2. Ordered score terms and rule activations.
 3. Outgoing damage and continuation result.
 4. Simultaneous before-and-after Pride and charge values.
@@ -44,7 +45,7 @@ separate controls with distinct accessible names.
 
 - **AC-017-01:** Golden browser states cover every sequence step and each rule
   event: weakness, combo, finisher, continuation survive and break, each
-  comeback tier, incomplete construction, and strategic fault.
+  comeback tier, incomplete construction, and immediate grammar mistake.
 - **AC-017-02:** Every displayed final damage value can be reconstructed from
   visible ordered terms, including unmultiplied comeback bonus.
 - **AC-017-03:** Simultaneous meter updates expose both before and after values
@@ -52,7 +53,7 @@ separate controls with distinct accessible names.
 - **AC-017-04:** Normal and reduced-motion runs reach the same final DOM and
   game snapshot. No explanation depends on animation completion.
 - **AC-017-05:** Results reproduce every Milestone 013 statistic, including
-  zero-event values and sudden-death tie-break explanation.
+  zero-event values and cliffhanger score explanation.
 - **AC-017-06:** One Playwright flow reaches continuation, comeback, double
   knockout, sudden death, results, rematch, and setup with fixed seed.
 

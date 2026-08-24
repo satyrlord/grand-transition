@@ -28,7 +28,6 @@ adapter and show a non-blocking notice that changes will not persist.
 | Speech voice URI | String or null | null |
 | Speech rate | 0.5 through 2, step 0.1 | 1 |
 | Animation mode | system, full, or reduced | system |
-| Timer | 15, 30, or unlimited | unlimited |
 | Contrast mode | system, standard, or high | system |
 | Keyboard hints | auto, always, or never | auto |
 | Subtitles | Boolean | true |

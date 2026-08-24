@@ -1,386 +1,175 @@
 import { describe, expect, test } from 'vitest';
 import { sampleContent } from '../../src/content/sample-content';
+import { englishGameLocale } from '../../src/localization/en-game-locale';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarInput,
-  type EnglishGrammarPhrase,
   type EnglishGrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
 
-const phraseById = new Map(
-  sampleContent.phrases.map((source) => [
-    source.id,
-    prepareEnglishGrammarPhrase(source, englishGameLocale),
-  ]),
-);
-
-function phrase(id: string): EnglishGrammarPhrase {
-  const result = phraseById.get(id);
-  if (!result) throw new Error(`Missing test phrase "${id}".`);
-  return result;
-}
-
-const add = (
-  id: string,
-  conjunctionMode?: 'new-subject' | 'shared-subject',
-): EnglishGrammarStep => ({
+const add = (id: string): EnglishGrammarStep => ({
   kind: 'phrase',
-  phrase: phrase(id),
-  ...(conjunctionMode ? { conjunctionMode } : {}),
+  phrase: prepareEnglishGrammarPhrase(
+    sampleContent.phrases.find((candidate) => candidate.id === id)!,
+    englishGameLocale,
+  ),
 });
-const end: EnglishGrammarStep = { kind: 'end' };
-const fault = (id: string): EnglishGrammarStep => ({
-  kind: 'deliberate-fault',
-  sourcePhrase: phrase(id),
-});
-
-const phraseIdByRole = {
-  noun: 'paper-promise',
-  verb: 'folds',
-  predicate: 'before-lunch',
-  conjunction: 'and',
-  ending: 'with-the-receipt',
-  continuation: 'still-echoes',
-} as const;
-
-const completeFormCases = [
-  [
-    'minimum predicate clause',
-    [add('paper-promise'), add('before-lunch')],
-    'A paper promise before lunch',
-  ],
-  [
-    'minimum verb clause',
-    [add('paper-promise'), add('outshouts'), add('velvet-megaphone')],
-    'A paper promise outshouts a velvet megaphone',
-  ],
-  [
-    'predicate then predicate',
-    [
-      add('paper-promise'),
-      add('before-lunch'),
-      add('and'),
-      add('velvet-megaphone'),
-      add('in-an-empty-hall'),
-    ],
-    'A paper promise before lunch and a velvet megaphone in an empty hall',
-  ],
-  [
-    'predicate then verb',
-    [
-      add('paper-promise'),
-      add('before-lunch'),
-      add('and'),
-      add('velvet-megaphone'),
-      add('outshouts'),
-      add('committee-kite'),
-    ],
-    'A paper promise before lunch and a velvet megaphone outshouts a committee kite',
-  ],
-  [
-    'verb then predicate',
-    [
-      add('paper-promise'),
-      add('outshouts'),
-      add('velvet-megaphone'),
-      add('and'),
-      add('committee-kite'),
-      add('past-the-deadline'),
-    ],
-    'A paper promise outshouts a velvet megaphone and a committee kite past the deadline',
-  ],
-  [
-    'verb then verb',
-    [
-      add('paper-promise'),
-      add('outshouts'),
-      add('velvet-megaphone'),
-      add('and'),
-      add('committee-kite'),
-      add('polishes'),
-      add('paper-promise'),
-    ],
-    'A paper promise outshouts a velvet megaphone and a committee kite polishes a paper promise',
-  ],
-  [
-    'predicate then shared-subject verb',
-    [
-      add('paper-promise'),
-      add('before-lunch'),
-      add('and', 'shared-subject'),
-      add('outshouts'),
-      add('velvet-megaphone'),
-    ],
-    'A paper promise before lunch and outshouts a velvet megaphone',
-  ],
-  [
-    'verb then shared-subject verb',
-    [
-      add('paper-promise'),
-      add('outshouts'),
-      add('velvet-megaphone'),
-      add('and', 'shared-subject'),
-      add('polishes'),
-      add('committee-kite'),
-    ],
-    'A paper promise outshouts a velvet megaphone and polishes a committee kite',
-  ],
-] as const;
-
-function analyze(steps: readonly EnglishGrammarStep[]) {
-  const input: EnglishGrammarInput = {
+const analyze = (steps: readonly EnglishGrammarStep[]) =>
+  englishGrammarAdapter.analyze({
     steps,
     subjectNumber: 'singular',
     objectNumber: 'singular',
-  };
-  return englishGrammarAdapter.analyze(input);
-}
-
-describe('extended English grammar', () => {
-  test.each(completeFormCases)(
-    'accepts the %s form',
-    (_name, steps, publicText) => {
-      expect(analyze(steps as readonly EnglishGrammarStep[])).toEqual({
-        accepted: true,
-        analysis: expect.objectContaining({
-          legal: true,
-          complete: true,
-          sentenceStatus: 'complete',
-          state: 'CLAUSE_COMPLETE',
-          publicText,
-        }),
-      });
-    },
-  );
-
-  test.each(completeFormCases)(
-    'accepts an ending after the %s form',
-    (_name, steps, publicText) => {
-      expect(
-        analyze([
-          ...(steps as readonly EnglishGrammarStep[]),
-          add('with-the-receipt'),
-        ]),
-      ).toEqual({
-        accepted: true,
-        analysis: expect.objectContaining({
-          complete: true,
-          state: 'ENDED',
-          nextRoles: [],
-          punctuation: '.',
-          publicText: `${publicText} with the receipt.`,
-          resolution: expect.objectContaining({ constructionEnded: true }),
-        }),
-      });
-    },
-  );
-
-  test('a legal ending rejects every later step', () => {
-    const endedSteps = [
-      add('paper-promise'),
-      add('before-lunch'),
-      add('with-the-receipt'),
-    ];
-    const laterSteps = [
-      ...Object.entries(phraseIdByRole).map(([attempted, phraseId]) => ({
-        step: add(phraseId),
-        code: 'unexpected-role',
-        attempted,
-        phraseId,
-      })),
-      {
-        step: end,
-        code: 'cannot-end-incomplete',
-        attempted: 'end',
-        phraseId: null,
-      },
-      {
-        step: fault('folds'),
-        code: 'cannot-fault-ended-construction',
-        attempted: 'verb',
-        phraseId: 'folds',
-      },
-    ] as const;
-
-    for (const later of laterSteps) {
-      expect(analyze([...endedSteps, later.step])).toEqual({
-        accepted: false,
-        faults: [
-          {
-            kind: 'illegal-transition',
-            code: later.code,
-            state: 'ENDED',
-            attempted: later.attempted,
-            phraseId: later.phraseId,
-            stepIndex: endedSteps.length,
-            expectedRoles: [],
-          },
-        ],
-      });
-    }
   });
 
-  test('reports both conjunction branch states and their next roles', () => {
-    expect(
-      analyze([add('paper-promise'), add('before-lunch'), add('and')]),
-    ).toEqual({
+describe('Hollywood Roast extended grammar', () => {
+  test('and is legal immediately after the opening noun', () => {
+    expect(analyze([add('velvet-megaphone'), add('and')])).toMatchObject({
       accepted: true,
-      analysis: expect.objectContaining({
-        state: 'EXPECT_SUBJECT_AFTER_CONJUNCTION',
+      analysis: {
+        complete: false,
+        state: 'EXPECT_SUBJECT',
         nextRoles: ['noun'],
-      }),
+      },
+    });
+  });
+
+  test('a continuation remains a draft action instead of a grammar atom', () => {
+    expect(analyze([add('still-echoes')])).toMatchObject({
+      accepted: false,
+      faults: [{ code: 'unexpected-role', attempted: 'continuation' }],
+    });
+  });
+
+  test('accepts a front because clause followed by the main clause', () => {
+    expect(
+      analyze([add('because'), add('paper-promise'), add('before-lunch')]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: false,
+        state: 'CLAUSE_COMPLETE',
+        nextRoles: ['noun', 'conjunction'],
+      },
+    });
+
+    expect(
+      analyze([
+        add('because'),
+        add('paper-promise'),
+        add('before-lunch'),
+        add('velvet-megaphone'),
+        add('before-lunch'),
+      ]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+  });
+
+  test('because requires a noun before another connector or finisher', () => {
+    expect(analyze([add('because')])).toMatchObject({
+      accepted: true,
+      analysis: { state: 'EXPECT_SUBJECT', nextRoles: ['noun'] },
+    });
+    expect(analyze([add('because'), add('because')])).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
+    });
+    expect(
+      analyze([add('paper-promise'), add('and'), add('because')]),
+    ).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
+    });
+    expect(
+      analyze([
+        add('because'),
+        add('paper-promise'),
+        add('before-lunch'),
+        add('with-the-receipt'),
+      ]),
+    ).toMatchObject({
+      accepted: false,
+      faults: [
+        {
+          state: 'CLAUSE_COMPLETE',
+          expectedRoles: ['noun', 'conjunction'],
+        },
+      ],
+    });
+  });
+
+  test('accepts explanatory because only with its following noun clause', () => {
+    expect(
+      analyze([add('paper-promise'), add('before-lunch'), add('because')]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { complete: false, nextRoles: ['noun'] },
     });
     expect(
       analyze([
         add('paper-promise'),
         add('before-lunch'),
-        add('and', 'shared-subject'),
+        add('because'),
+        add('because'),
       ]),
-    ).toEqual({
-      accepted: true,
-      analysis: expect.objectContaining({
-        state: 'EXPECT_VERB_AFTER_SHARED_SUBJECT',
-        nextRoles: ['verb'],
-      }),
+    ).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
     });
+    expect(
+      analyze([
+        add('paper-promise'),
+        add('before-lunch'),
+        add('because'),
+        add('velvet-megaphone'),
+        add('before-lunch'),
+      ]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each([
-    [[], 'EXPECT_SUBJECT', ['noun']],
-    [[add('paper-promise')], 'EXPECT_VERB_OR_PREDICATE', ['verb', 'predicate']],
-    [[add('paper-promise'), add('folds')], 'EXPECT_OBJECT', ['noun']],
-    [
-      [add('paper-promise'), add('before-lunch'), add('and')],
-      'EXPECT_SUBJECT_AFTER_CONJUNCTION',
-      ['noun'],
-    ],
-    [
-      [add('paper-promise'), add('before-lunch'), add('and', 'shared-subject')],
-      'EXPECT_VERB_AFTER_SHARED_SUBJECT',
-      ['verb'],
-    ],
-  ])(
-    'keeps incomplete input as valid zero-damage state %s',
-    (steps, state, nextRoles) => {
-      expect(analyze(steps as readonly EnglishGrammarStep[])).toEqual({
-        accepted: true,
-        analysis: expect.objectContaining({
-          legal: true,
-          complete: false,
-          sentenceStatus: 'incomplete',
-          state,
-          nextRoles,
-          resolution: {
-            outgoingDamageIntent: 0,
-            selfDamageIntent: 0,
-            removedPhraseId: null,
-            constructionEnded: false,
-            feedback: null,
-          },
-        }),
-      });
+  test.each(['and', 'but', 'because'])(
+    'accepts %s after a complete front-because subordinate clause',
+    (connector) => {
+      expect(
+        analyze([
+          add('because'),
+          add('paper-promise'),
+          add('before-lunch'),
+          add(connector),
+          add('velvet-megaphone'),
+          add('before-lunch'),
+          add('committee-kite'),
+          add('before-lunch'),
+        ]),
+      ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
   );
 
-  test('resolves an illegal source phrase as a deliberate strategic foul', () => {
-    expect(analyze([fault('folds')])).toEqual({
-      accepted: true,
-      analysis: expect.objectContaining({
-        legal: false,
-        complete: false,
-        sentenceStatus: 'invalid',
-        state: 'INVALID',
-        nextRoles: [],
-        resolution: {
-          outgoingDamageIntent: 0,
-          selfDamageIntent: 3,
-          removedPhraseId: 'folds',
-          constructionEnded: true,
-          feedback: 'strategic-foul',
-        },
-      }),
-    });
-  });
+  test.each(['and', 'but'])(
+    'accepts because after a completed clause plus %s',
+    (connector) => {
+      expect(
+        analyze([
+          add('paper-promise'),
+          add('before-lunch'),
+          add(connector),
+          add('because'),
+          add('velvet-megaphone'),
+          add('before-lunch'),
+        ]),
+      ).toMatchObject({ accepted: true, analysis: { complete: true } });
+    },
+  );
 
-  test.each([
-    [
-      'legal source',
-      [fault('paper-promise')],
-      'cannot-fault-legal-phrase',
-      'EXPECT_SUBJECT',
-      'noun',
-      'paper-promise',
-      0,
-      ['noun'],
-    ],
-    [
-      'ended construction',
-      [
+  test('a later phrase cannot be appended after an ending', () => {
+    expect(
+      analyze([
         add('paper-promise'),
         add('before-lunch'),
         add('with-the-receipt'),
-        fault('folds'),
-      ],
-      'cannot-fault-ended-construction',
-      'ENDED',
-      'verb',
-      'folds',
-      3,
-      [],
-    ],
-    [
-      'continuation role',
-      [add('paper-promise'), add('still-echoes')],
-      'unexpected-role',
-      'EXPECT_VERB_OR_PREDICATE',
-      'continuation',
-      'still-echoes',
-      1,
-      ['verb', 'predicate'],
-    ],
-    [
-      'unexpected role',
-      [
         add('paper-promise'),
-        add('before-lunch'),
-        add('and'),
-        add('before-lunch'),
-      ],
-      'unexpected-role',
-      'EXPECT_SUBJECT_AFTER_CONJUNCTION',
-      'predicate',
-      'before-lunch',
-      3,
-      ['noun'],
-    ],
-  ])(
-    'returns the exact typed failure for %s',
-    (
-      _name,
-      steps,
-      code,
-      state,
-      attempted,
-      phraseId,
-      stepIndex,
-      expectedRoles,
-    ) => {
-      expect(analyze(steps as readonly EnglishGrammarStep[])).toEqual({
-        accepted: false,
-        faults: [
-          {
-            kind: 'illegal-transition',
-            code,
-            state,
-            attempted,
-            phraseId,
-            stepIndex,
-            expectedRoles,
-          },
-        ],
-      });
-    },
-  );
+      ]),
+    ).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'ENDED', code: 'unexpected-role' }],
+    });
+  });
 });

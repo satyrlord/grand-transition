@@ -1,0 +1,353 @@
+[
+  {
+    "id": "paper-promise",
+    "role": "noun",
+    "text": "a paper promise",
+    "singularText": "a paper promise",
+    "pluralText": "paper promises",
+    "tags": ["empty-promise", "paperwork"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["empty-promise"]
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "velvet-megaphone",
+    "role": "noun",
+    "text": "a velvet megaphone",
+    "tags": ["grandstanding", "noise"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["grandstanding"]
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "borrowed-mandate",
+    "role": "noun",
+    "text": "a borrowed mandate",
+    "tags": ["empty-promise", "paperwork"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["empty-promise"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional political-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "folds",
+    "role": "verb",
+    "text": "folds",
+    "singularText": "folds",
+    "pluralText": "fold",
+    "tags": ["empty-promise", "retreat"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "outshouts",
+    "role": "verb",
+    "text": "outshouts",
+    "singularText": "outshouts",
+    "pluralText": "outshout",
+    "tags": ["grandstanding", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "interrupts",
+    "role": "verb",
+    "text": "interrupts",
+    "singularText": "interrupts",
+    "pluralText": "interrupt",
+    "tags": ["grandstanding", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional debate phrase. Editorial review complete."
+  },
+  {
+    "id": "before-lunch",
+    "role": "predicate",
+    "text": "before lunch",
+    "tags": ["empty-promise", "retreat"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "in-an-empty-hall",
+    "role": "predicate",
+    "text": "in an empty hall",
+    "tags": ["grandstanding", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "past-the-deadline",
+    "role": "predicate",
+    "text": "past the deadline",
+    "tags": ["retreat", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "sceneIds": ["echo-chamber"],
+    "rarity": "rare",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "and",
+    "role": "conjunction",
+    "text": "and",
+    "connectorKind": "and",
+    "tags": ["paperwork", "noise"],
+    "rarity": "uncommon",
+    "reviewNotes": "Standard English connector. Editorial review complete."
+  },
+  {
+    "id": "but",
+    "role": "conjunction",
+    "text": "but",
+    "connectorKind": "but",
+    "tags": ["retreat", "noise"],
+    "rarity": "uncommon",
+    "reviewNotes": "Standard English connector. Editorial review complete."
+  },
+  {
+    "id": "because",
+    "role": "conjunction",
+    "text": "because",
+    "connectorKind": "because",
+    "tags": ["paperwork", "grandstanding"],
+    "rarity": "rare",
+    "reviewNotes": "Standard English connector. Editorial review complete."
+  },
+  {
+    "id": "with-the-receipt",
+    "role": "ending",
+    "text": "with the receipt",
+    "tags": ["empty-promise", "paperwork"],
+    "rarity": "uncommon",
+    "finisherBonus": 2,
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "still-echoes",
+    "role": "continuation",
+    "text": "still echoes",
+    "tags": ["grandstanding", "retreat"],
+    "rarity": "rare",
+    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+  },
+  {
+    "id": "revolving-podium",
+    "role": "noun",
+    "text": "a revolving podium",
+    "tags": ["grandstanding", "noise"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["grandstanding"]
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional media-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "emergency-ribbon",
+    "role": "noun",
+    "text": "an emergency ribbon",
+    "tags": ["paperwork", "grandstanding"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["whimsy"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional bureaucracy-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "televised-handshake",
+    "role": "noun",
+    "text": "a televised handshake",
+    "tags": ["empty-promise", "grandstanding"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["empty-promise"]
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional political-media phrase. Editorial review complete."
+  },
+  {
+    "id": "committee-umbrella",
+    "role": "noun",
+    "text": "a committee umbrella",
+    "tags": ["paperwork", "retreat"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["whimsy"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional committee-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "ceremonial-spreadsheet",
+    "role": "noun",
+    "text": "a ceremonial spreadsheet",
+    "tags": ["paperwork", "empty-promise"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["empty-promise"]
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original fictional administrative-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "borrowed-applause",
+    "role": "noun",
+    "text": "borrowed applause",
+    "tags": ["noise", "grandstanding"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["grandstanding"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional performance-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "postpones",
+    "role": "verb",
+    "text": "postpones",
+    "singularText": "postpones",
+    "pluralText": "postpone",
+    "tags": ["retreat", "paperwork"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional procedural-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "applauds",
+    "role": "verb",
+    "text": "applauds",
+    "singularText": "applauds",
+    "pluralText": "applaud",
+    "tags": ["grandstanding", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional performance-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "misplaces",
+    "role": "verb",
+    "text": "misplaces",
+    "singularText": "misplaces",
+    "pluralText": "misplace",
+    "tags": ["paperwork", "retreat"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"], "right": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional administrative-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "rehearses",
+    "role": "verb",
+    "text": "rehearses",
+    "singularText": "rehearses",
+    "pluralText": "rehearse",
+    "tags": ["grandstanding", "empty-promise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"], "right": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "during-commercial-break",
+    "role": "predicate",
+    "text": "during the commercial break",
+    "tags": ["media", "retreat"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "without-reading-it",
+    "role": "predicate",
+    "text": "without reading it",
+    "tags": ["paperwork", "empty-promise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional procedural-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "under-the-chandelier",
+    "role": "predicate",
+    "text": "under the chandelier",
+    "tags": ["grandstanding", "noise"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original fictional civic-pageantry phrase. Editorial review complete."
+  },
+  {
+    "id": "according-to-the-minutes",
+    "role": "ending",
+    "text": "according to the minutes",
+    "tags": ["paperwork", "empty-promise"],
+    "rarity": "uncommon",
+    "finisherBonus": 2,
+    "reviewNotes": "Original fictional committee-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "on-live-television",
+    "role": "ending",
+    "text": "on live television",
+    "tags": ["grandstanding", "noise"],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+  },
+  {
+    "id": "has-more-to-say",
+    "role": "continuation",
+    "text": "has more to say",
+    "tags": ["grandstanding", "retreat"],
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional debate phrase. Editorial review complete."
+  }
+]

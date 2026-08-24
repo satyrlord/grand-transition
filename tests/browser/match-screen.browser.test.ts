@@ -25,6 +25,15 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(match.querySelector('.broadcast-stage-art')).not.toBeNull();
   expect(match.querySelector('.match-footer')).not.toBeNull();
   expect(match.querySelectorAll('.player-sentence')).toHaveLength(2);
+  expect(match.querySelectorAll('[data-turn-state="active"]')).toHaveLength(1);
+  expect(match.querySelectorAll('[data-turn-state="waiting"]')).toHaveLength(1);
+  expect(
+    match.querySelector('[data-turn-state="active"] .player-turn-status')
+      ?.textContent,
+  ).toContain('Has the floor');
+  expect(match.querySelector('.private-hand-heading')?.textContent).toContain(
+    'Has the floor',
+  );
   const actionIcons = match.querySelectorAll('svg.action-icon');
   expect(actionIcons).toHaveLength(3);
   for (const icon of actionIcons) {
@@ -42,9 +51,8 @@ test('renders an immutable complete match snapshot and previews without changing
   )!;
   const accessibleName = actionable.getAttribute('aria-label')!;
   expect(accessibleName).toMatch(/Role (noun|verb|predicate)/u);
-  expect(accessibleName).toMatch(/Value \d+/u);
   expect(accessibleName).toContain('Shared card');
-  expect(accessibleName).toMatch(/Legal|Illegal/u);
+  expect(accessibleName).toMatch(/Available/u);
   expect(accessibleName).toMatch(/weakness/u);
 
   const sentenceBefore = snapshot.sentenceText;
@@ -57,7 +65,61 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
-test('maps pointer and keyboard actions once and restores overlay focus', async () => {
+test('clears a focus preview when an authoritative snapshot arrives', async () => {
+  const match = await startMatch();
+  const card = match.querySelector<HTMLButtonElement>(
+    '.phrase-card:not(:disabled)',
+  )!;
+  card.focus();
+  await match.updateComplete;
+  const preview = match.querySelector('.sentence-preview')?.textContent?.trim();
+  expect(preview).not.toBe(match.snapshot!.sentenceText);
+
+  match.snapshot = {
+    ...match.snapshot!,
+    revision: match.snapshot!.revision + 1,
+    sentenceText: 'Authoritative next-turn sentence',
+  };
+  await match.updateComplete;
+
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
+    'Authoritative next-turn sentence',
+  );
+});
+
+test('does not refresh an empty private hand without a player command', async () => {
+  const match = await startMatch();
+  const commands: MatchCommandEvent[] = [];
+  match.addEventListener(matchCommandEventName, (event) =>
+    commands.push(event),
+  );
+  match.snapshot = {
+    ...match.snapshot!,
+    revision: match.snapshot!.revision + 1,
+    privateCards: match.snapshot!.privateCards.map((card) => ({
+      ...card,
+      reference: null,
+      phraseId: null,
+      text: '',
+      role: null,
+      state: 'empty' as const,
+      stateLabel: 'Empty',
+      disabledReason: 'This slot is empty.',
+      accessibleName: 'Empty private slot.',
+      action: null,
+      previewText: '',
+    })),
+  };
+  await match.updateComplete;
+  await new Promise<void>((resolve) => queueMicrotask(resolve));
+
+  expect(commands).toEqual([]);
+  expect(
+    match.querySelector<HTMLButtonElement>('.action-secondary')?.disabled,
+  ).toBe(false);
+});
+
+test('maps pointer and keyboard actions once', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
   match.addEventListener(matchCommandEventName, (event) =>
@@ -73,27 +135,6 @@ test('maps pointer and keyboard actions once and restores overlay focus', async 
   expect(
     commands.filter((event) => event.detail.type === 'redraw-hand'),
   ).toHaveLength(1);
-
-  const comebackTrigger = match.querySelectorAll<HTMLButtonElement>(
-    '.match-actions button',
-  )[1]!;
-  comebackTrigger.focus();
-  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'c' }));
-  await match.updateComplete;
-  const dialog = match.querySelector<HTMLElement>('[role="dialog"]')!;
-  expect(dialog).not.toBeNull();
-  const focusedInDialog = document.activeElement;
-  expect(dialog.contains(focusedInDialog)).toBe(true);
-  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab' }));
-  expect(document.activeElement).toBe(focusedInDialog);
-  window.dispatchEvent(
-    new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true }),
-  );
-  expect(document.activeElement).toBe(focusedInDialog);
-  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-  await match.updateComplete;
-  expect(match.querySelector('[role="dialog"]')).toBeNull();
-  expect(document.activeElement).toBe(comebackTrigger);
 
   const current = match.snapshot!;
   const keyboardCard = current.sharedCards.find(
@@ -172,44 +213,40 @@ test('blocks the comeback shortcut while a command is pending', async () => {
   expect(match.querySelector('[role="dialog"]')).toBeNull();
 });
 
-test('requires a separate confirmation before an illegal card becomes a fault', async () => {
+test('a wrong card is chosen immediately as a grammar mistake', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
   match.addEventListener(matchCommandEventName, (event) =>
     commands.push(event),
   );
-  const illegal = match.querySelector<HTMLButtonElement>(
-    '[data-card-state="illegal"]',
+  const wrong = match.querySelector<HTMLButtonElement>(
+    '[data-card-state="legal"][aria-label*="Role predicate"]',
   )!;
 
-  expect(illegal).not.toBeNull();
-  illegal.click();
-  await match.updateComplete;
-  expect(commands).toHaveLength(0);
-  const confirmation = match.querySelector<HTMLButtonElement>('.action-fault')!;
-  expect(confirmation.textContent).toContain('Commit strategic foul');
-  expect(document.activeElement).toBe(confirmation);
-
-  confirmation.click();
-  confirmation.click();
-  await match.updateComplete;
+  expect(wrong).not.toBeNull();
+  const activeBefore = match.snapshot!.activePlayerId;
+  const activePanelBefore = match.querySelector('[data-turn-state="active"]');
+  wrong.click();
+  wrong.click();
+  await vi.waitFor(() =>
+    expect(match.snapshot?.activePlayerId).not.toBe(activeBefore),
+  );
+  expect(match.querySelector('[data-turn-state="active"]')).not.toBe(
+    activePanelBefore,
+  );
   expect(
-    commands.filter((event) => event.detail.type === 'deliberate-fault'),
+    commands.filter((event) => event.detail.type === 'select-phrase'),
   ).toHaveLength(1);
+  expect(match.querySelector('.action-fault')).toBeNull();
 });
 
-test('announces 10 and 5 seconds and expires one timed turn', async () => {
+test('announces 5 seconds and expires one ten-second turn', async () => {
   vi.useFakeTimers();
-  const match = await startMatch(15);
+  const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
   match.addEventListener(matchCommandEventName, (event) =>
     commands.push(event),
   );
-
-  await vi.advanceTimersByTimeAsync(5_000);
-  await match.updateComplete;
-  expect(match.textContent).toContain('Ten seconds remain.');
-  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
@@ -223,25 +260,7 @@ test('announces 10 and 5 seconds and expires one timed turn', async () => {
   ).toHaveLength(1);
 });
 
-test('unlimited mode renders no countdown interval', async () => {
-  vi.useFakeTimers();
-  const match = await startMatch();
-  const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
-
-  expect(match.querySelector('[data-timer="unlimited"]')).not.toBeNull();
-  expect(match.textContent).toContain('Unlimited');
-  await vi.advanceTimersByTimeAsync(60_000);
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(0);
-});
-
-async function startMatch(
-  timerSeconds: 15 | 30 | null = null,
-): Promise<GrandTransitionMatch> {
+async function startMatch(): Promise<GrandTransitionMatch> {
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
     'grand-transition-app',
@@ -249,9 +268,6 @@ async function startMatch(
   await app.updateComplete;
 
   await page.getByRole('button', { name: 'Set up match' }).click();
-  await page
-    .getByLabelText('Timer')
-    .selectOptions(timerSeconds === null ? 'unlimited' : String(timerSeconds));
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;
 

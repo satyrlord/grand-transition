@@ -41,7 +41,8 @@ aggregate count. A result outside a band blocks completion unless the product
 owner records a release deviation under Milestone 028; no deviation can permit
 an aggregate rate outside 42 through 58 or a matchup outside 30 through 70.
 
-The report records combo, weakness, finisher, continuation, comeback, fault,
+The report records combo, weakness, finisher, continuation, comeback, grammar
+mistake,
 sudden-death, and incomplete rates. Zero occurrences of a reachable owned rule
 across the workload is a defect. It also applies the Milestone 026 selection
 distribution and exact-insult repetition thresholds.

@@ -10,6 +10,7 @@ import {
 } from './continuation-comeback-resolution';
 import {
   createDraftReducer,
+  grammarMistakeSelfDamage,
   prepareDraftRound,
   type DraftBoard,
   type DraftCommand,
@@ -30,7 +31,7 @@ import { seededRandomSource, type RandomSource } from './random-source';
 export const initialPride = 100;
 
 export type MatchMode = 'ai' | 'hotseat';
-export type MatchTimerSeconds = 15 | 30 | null;
+export type MatchTimerSeconds = 10;
 export type MatchPhase =
   | 'setup'
   | 'round-preparation'
@@ -77,7 +78,7 @@ export type MatchPlayerStatistics = Readonly<{
   longestValidSentence: number;
   weaknesses: number;
   highestCombo: number;
-  faults: number;
+  grammarMistakes: number;
   comebacks: number;
 }>;
 
@@ -88,14 +89,14 @@ export type MatchStatistics = Readonly<{
   longestValidSentence: number;
   weaknesses: number;
   highestCombo: number;
-  faults: number;
+  grammarMistakes: number;
   comebacks: number;
 }>;
 
 export type MatchResolutionPlayer = Readonly<{
   playerId: string;
   constructionText: string;
-  constructionStatus: 'carried' | 'fault' | 'incomplete' | 'valid';
+  constructionStatus: 'carried' | 'incomplete' | 'valid';
   constructionPhrases: readonly Readonly<{
     phraseId: string;
     source: 'active' | 'carried';
@@ -118,25 +119,12 @@ export type MatchResolutionPlayer = Readonly<{
   comebackActivated: boolean;
   comebackTier: ComebackTier | null;
   comebackClosingLine: string | null;
-  deliberateFault: boolean;
+  grammarMistakes: number;
   score: ComboFinisherScore | null;
   continuation: Readonly<{
     status: 'broken' | 'none' | 'survived';
     restoredCarry: ContinuationCarry | null;
   }>;
-}>;
-
-export type SuddenDeathTieBreakCriterion =
-  | 'outgoing-damage'
-  | 'sentence-subtotal'
-  | 'valid-phrase-count'
-  | 'lifetime-fault-count'
-  | 'non-opening-player';
-
-export type SuddenDeathTieBreak = Readonly<{
-  criterion: SuddenDeathTieBreakCriterion;
-  winnerId: string;
-  values: Readonly<Record<string, number>>;
 }>;
 
 export type MatchResolution = Readonly<{
@@ -145,7 +133,6 @@ export type MatchResolution = Readonly<{
   suddenDeath: boolean;
   order: typeof matchResolutionOrder;
   players: Readonly<Record<string, MatchResolutionPlayer>>;
-  tieBreak: SuddenDeathTieBreak | null;
 }>;
 
 export const matchResolutionOrder = [
@@ -167,8 +154,7 @@ export type MatchLifecycleCommand =
 
 export type MatchCommand = DraftCommand | MatchLifecycleCommand;
 
-export type MatchRuleErrorCode =
-  'continuation-unavailable' | 'round-preparation-failed' | 'wrong-phase';
+export type MatchRuleErrorCode = 'round-preparation-failed' | 'wrong-phase';
 
 export type MatchRuleError = RuleError<
   MatchRuleErrorCode,
@@ -213,9 +199,9 @@ export type MatchSetupRequest = Readonly<{
   generalPhraseIds: readonly string[];
   mode?: MatchMode;
   aiDifficulty?: string | null;
-  timerSeconds?: MatchTimerSeconds;
   speechEnabled?: boolean;
   privacyEnabled?: boolean;
+  openingPlayerIndex?: 0 | 1;
 }>;
 
 export function createMatchSetupState(request: MatchSetupRequest): MatchState {
@@ -233,7 +219,7 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     scenePhraseIds: request.scenePhraseIds,
     generalPhraseIds: request.generalPhraseIds,
     aiDifficulty: request.aiDifficulty ?? null,
-    timerSeconds: request.timerSeconds ?? null,
+    timerSeconds: 10,
     speechEnabled: request.speechEnabled ?? false,
     privacyEnabled: request.privacyEnabled ?? true,
   };
@@ -247,15 +233,15 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     phase: 'setup',
     mode: setup.mode,
     round: 1,
-    openingPlayerId: playerOrder[0],
-    activePlayerId: playerOrder[0],
+    openingPlayerId: playerOrder[request.openingPlayerIndex ?? 0],
+    activePlayerId: playerOrder[request.openingPlayerIndex ?? 0],
     sceneId: setup.sceneId,
     board: null,
     playerStates,
     commandHistory: [],
     playerOrder,
     setup,
-    firstOpeningPlayerId: playerOrder[0],
+    firstOpeningPlayerId: playerOrder[request.openingPlayerIndex ?? 0],
     draft: null,
     comboState: {},
     resolutionHistory: [],
@@ -281,7 +267,7 @@ export function createMatchReducer(
       case 'return-to-setup':
         return returnToSetup(state, command);
       default:
-        return reduceDraft(state, command, draftReducer, randomSource);
+        return reduceDraft(state, command, draftReducer, randomSource, context);
     }
   };
 }
@@ -324,6 +310,7 @@ export function reconstructMatchStatistics(
         ),
         weaknesses: current.weaknesses + Number(result.weaknessActivated),
         highestCombo: Math.max(current.highestCombo, result.comboMultiplier),
+        grammarMistakes: current.grammarMistakes + result.grammarMistakes,
       };
     }
   }
@@ -331,12 +318,6 @@ export function reconstructMatchStatistics(
   for (const command of commandHistory) {
     const actorId = command.actorId;
     if (!actorId || !playerStatistics[actorId]) continue;
-    if (command.type === 'deliberate-fault') {
-      playerStatistics[actorId] = {
-        ...playerStatistics[actorId],
-        faults: playerStatistics[actorId].faults + 1,
-      };
-    }
     if (command.type === 'select-comeback') {
       playerStatistics[actorId] = {
         ...playerStatistics[actorId],
@@ -363,7 +344,7 @@ export function reconstructMatchStatistics(
         (statistics) => statistics.highestCombo,
       ),
     ),
-    faults: sumStatistic(playerStatistics, 'faults'),
+    grammarMistakes: sumStatistic(playerStatistics, 'grammarMistakes'),
     comebacks: sumStatistic(playerStatistics, 'comebacks'),
   };
 }
@@ -393,8 +374,7 @@ function prepareRound(
     return {
       playerId: player.playerId,
       characterId: player.characterId,
-      publicPhraseIds: player.publicPhraseIds,
-      privatePhraseIds: player.privatePhraseIds,
+      characterPhraseIds: player.characterPhraseIds,
       weaknessTags: player.weaknessTags,
       subjectNumber: player.subjectNumber,
       objectNumber: player.objectNumber,
@@ -404,6 +384,9 @@ function prepareRound(
         : {}),
     } satisfies DraftPlayerSetup;
   }) as [DraftPlayerSetup, DraftPlayerSetup];
+  const draftPhrases = state.suddenDeathActive
+    ? context.phrases.filter((phrase) => phrase.role !== 'continuation')
+    : context.phrases;
   const prepared = prepareDraftRound(
     {
       schemaVersion: state.schemaVersion,
@@ -413,7 +396,7 @@ function prepareRound(
       sceneId: state.sceneId,
       scenePhraseIds: state.setup.scenePhraseIds,
       generalPhraseIds: state.setup.generalPhraseIds,
-      phrases: context.phrases,
+      phrases: draftPhrases,
       characters: context.characters,
       locale: context.locale,
       players,
@@ -459,6 +442,7 @@ function reduceDraft(
   command: DraftCommand,
   draftReducer: GameReducer<DraftState, DraftCommand, DraftRuleError>,
   randomSource: RandomSource,
+  context: MatchEngineContext,
 ): ReducerResult<MatchState, MatchLifecycleError> {
   if (
     (state.phase !== 'drafting' && state.phase !== 'sudden-death') ||
@@ -466,21 +450,85 @@ function reduceDraft(
   ) {
     return reject(state, command, 'wrong-phase');
   }
-  if (state.suddenDeathActive && command.type === 'carry-continuation') {
-    return reject(state, command, 'continuation-unavailable');
-  }
   const reduced = draftReducer(state.draft, command, randomSource);
   if (!reduced.ok) return reduced;
   const draft = reduced.state;
+  const mistakeActorId = command.actorId;
+  const mistakeCountBefore = mistakeActorId
+    ? (state.draft.playerStates[mistakeActorId]?.construction.grammarMistakes ??
+      0)
+    : 0;
+  const mistakeCountAfter = mistakeActorId
+    ? (draft.playerStates[mistakeActorId]?.construction.grammarMistakes ?? 0)
+    : 0;
+  const grammarMistakeDamage =
+    Math.max(0, mistakeCountAfter - mistakeCountBefore) *
+    grammarMistakeSelfDamage;
+  const timeoutDamageBefore = mistakeActorId
+    ? (state.draft.playerStates[mistakeActorId]?.timeoutDamage ?? 0)
+    : 0;
+  const timeoutDamageAfter = mistakeActorId
+    ? (draft.playerStates[mistakeActorId]?.timeoutDamage ?? 0)
+    : 0;
+  const immediateSelfDamage =
+    grammarMistakeDamage +
+    Math.max(0, timeoutDamageAfter - timeoutDamageBefore);
   const playerStates = Object.fromEntries(
     state.playerOrder.map((playerId) => [
       playerId,
       {
         ...state.playerStates[playerId]!,
+        pride:
+          playerId === mistakeActorId
+            ? Math.max(
+                0,
+                state.playerStates[playerId]!.pride - immediateSelfDamage,
+              )
+            : state.playerStates[playerId]!.pride,
         comebackCharge: draft.playerStates[playerId]!.comebackCharge,
       },
     ]),
   );
+  if (
+    mistakeActorId &&
+    immediateSelfDamage > 0 &&
+    playerStates[mistakeActorId]!.pride === 0
+  ) {
+    const winner = state.playerOrder.find(
+      (playerId) => playerId !== mistakeActorId,
+    )!;
+    const resolution = immediateSelfKnockoutResolution(
+      state,
+      draft,
+      playerStates,
+      mistakeActorId,
+      immediateSelfDamage,
+      context,
+    );
+    const commandHistory = draft.commandHistory;
+    const resolutionHistory = [...state.resolutionHistory, resolution];
+    return {
+      ok: true,
+      state: {
+        ...state,
+        seed: draft.seed,
+        phase: 'results',
+        activePlayerId: winner,
+        board: null,
+        playerStates,
+        pendingResolution: resolution,
+        winner,
+        draft: null,
+        commandHistory,
+        resolutionHistory,
+        statistics: reconstructMatchStatistics(
+          state.playerOrder,
+          commandHistory,
+          resolutionHistory,
+        ),
+      },
+    };
+  }
   return {
     ok: true,
     state: {
@@ -493,6 +541,66 @@ function reduceDraft(
       draft,
       commandHistory: draft.commandHistory,
     },
+  };
+}
+
+function immediateSelfKnockoutResolution(
+  state: MatchState,
+  draft: DraftState,
+  playerStates: Readonly<Record<string, MatchPlayerState>>,
+  actorId: string,
+  selfDamage: number,
+  context: MatchEngineContext,
+): MatchResolution {
+  const players = Object.fromEntries(
+    state.playerOrder.map((playerId) => {
+      const construction = draft.playerStates[playerId]!.construction;
+      const player = state.playerStates[playerId]!;
+      return [
+        playerId,
+        {
+          playerId,
+          constructionText: construction.previewText,
+          constructionStatus: constructionStatus(construction),
+          constructionPhrases: construction.selectedCards.flatMap((card) => {
+            const phrase = context.phrases.find(
+              (candidate) => candidate.id === card.phraseId,
+            );
+            return phrase?.role === 'continuation'
+              ? []
+              : [{ phraseId: card.phraseId, source: 'active' as const }];
+          }),
+          prideBefore: player.pride,
+          selfDamage: playerId === actorId ? selfDamage : 0,
+          opponentOutgoingDamage: 0,
+          prideAfter: playerStates[playerId]!.pride,
+          chargeBefore: player.comebackCharge,
+          chargeAfter: player.comebackCharge,
+          sentenceDamage: 0,
+          comebackBonus: 0,
+          outgoingDamage: 0,
+          sentenceSubtotal: 0,
+          phraseCount: 0,
+          completeValidInsult: false,
+          insultText: null,
+          weaknessActivated: false,
+          comboMultiplier: 0,
+          comebackActivated: false,
+          comebackTier: null,
+          comebackClosingLine: null,
+          grammarMistakes: construction.grammarMistakes,
+          score: null,
+          continuation: { status: 'none' as const, restoredCarry: null },
+        },
+      ];
+    }),
+  );
+  return {
+    round: state.round,
+    openingPlayerId: state.openingPlayerId,
+    suddenDeath: state.suddenDeathActive,
+    order: matchResolutionOrder,
+    players,
   };
 }
 
@@ -590,7 +698,7 @@ function resolveRound(
       comebackActivated: construction.selectedComeback !== null,
       comebackTier: construction.selectedComeback?.tier ?? null,
       comebackClosingLine: construction.selectedComeback?.closingLine ?? null,
-      deliberateFault: construction.deliberateFaultPhraseId !== null,
+      grammarMistakes: construction.grammarMistakes,
       score: attack.score,
       continuation: attack.continuation,
     };
@@ -602,6 +710,46 @@ function resolveRound(
     };
   }
 
+  if (before.suddenDeathActive) {
+    const [firstId, secondId] = before.playerOrder;
+    const firstScore = players[firstId]!.outgoingDamage;
+    const secondScore = players[secondId]!.outgoingDamage;
+    let damageToFirst = 0;
+    let damageToSecond = 0;
+    if (firstScore === 0 && secondScore > 0) {
+      damageToFirst = initialPride;
+    } else if (secondScore === 0 && firstScore > 0) {
+      damageToSecond = initialPride;
+    } else if (firstScore > secondScore) {
+      damageToSecond = initialPride;
+      damageToFirst = Math.floor(initialPride * (secondScore / firstScore));
+    } else if (secondScore > firstScore) {
+      damageToFirst = initialPride;
+      damageToSecond = Math.floor(initialPride * (firstScore / secondScore));
+    } else if (firstScore > 0) {
+      damageToFirst = initialPride;
+      damageToSecond = initialPride;
+    }
+    players[firstId] = {
+      ...players[firstId]!,
+      opponentOutgoingDamage: damageToFirst,
+      prideAfter: Math.max(0, initialPride - damageToFirst),
+    };
+    players[secondId] = {
+      ...players[secondId]!,
+      opponentOutgoingDamage: damageToSecond,
+      prideAfter: Math.max(0, initialPride - damageToSecond),
+    };
+    nextPlayerStates[firstId] = {
+      ...nextPlayerStates[firstId]!,
+      pride: players[firstId]!.prideAfter,
+    };
+    nextPlayerStates[secondId] = {
+      ...nextPlayerStates[secondId]!,
+      pride: players[secondId]!.prideAfter,
+    };
+  }
+
   const commandHistory = [...before.commandHistory, command];
   let resolution: MatchResolution = {
     round: before.round,
@@ -609,7 +757,6 @@ function resolveRound(
     suddenDeath: before.suddenDeathActive,
     order: matchResolutionOrder,
     players,
-    tieBreak: null,
   };
   const knockedOut = before.playerOrder.filter(
     (playerId) => players[playerId]!.prideAfter === 0,
@@ -622,17 +769,19 @@ function resolveRound(
   if (before.suddenDeathActive) {
     if (knockedOut.length === 1) {
       winner = before.playerOrder.find((id) => id !== knockedOut[0])!;
+      phase = 'results';
     } else {
-      const tieBreak = resolveSuddenDeathTieBreak(
-        before.playerOrder,
-        players,
-        commandHistory,
-        before.openingPlayerId,
-      );
-      winner = tieBreak.winnerId;
-      resolution = { ...resolution, tieBreak };
+      phase = 'sudden-death';
+      round += 1;
+      for (const playerId of before.playerOrder) {
+        nextPlayerStates[playerId] = {
+          ...nextPlayerStates[playerId]!,
+          pride: initialPride,
+          comebackCharge: 0,
+          continuation: null,
+        };
+      }
     }
-    phase = 'results';
   } else if (knockedOut.length === 2) {
     phase = 'sudden-death';
     round += 1;
@@ -640,7 +789,7 @@ function resolveRound(
     for (const playerId of before.playerOrder) {
       nextPlayerStates[playerId] = {
         ...nextPlayerStates[playerId]!,
-        pride: 1,
+        pride: initialPride,
         comebackCharge: 0,
         continuation: null,
       };
@@ -672,7 +821,7 @@ function resolveRound(
       ...(winner ? { winner } : {}),
       commandHistory,
       draft: null,
-      comboState: roundResolution.comboState,
+      comboState: suddenDeathActive ? {} : roundResolution.comboState,
       resolutionHistory,
       statistics,
       suddenDeathActive,
@@ -737,87 +886,6 @@ function resetMatch(
   };
 }
 
-function resolveSuddenDeathTieBreak(
-  playerOrder: readonly [string, string],
-  players: Readonly<Record<string, MatchResolutionPlayer>>,
-  commandHistory: readonly GameCommand[],
-  openingPlayerId: string,
-): SuddenDeathTieBreak {
-  const criteria: readonly Readonly<{
-    criterion: Exclude<SuddenDeathTieBreakCriterion, 'non-opening-player'>;
-    values: Readonly<Record<string, number>>;
-    lowerWins?: boolean;
-  }>[] = [
-    {
-      criterion: 'outgoing-damage',
-      values: valuesFor(
-        playerOrder,
-        players,
-        (player) => player.outgoingDamage,
-      ),
-    },
-    {
-      criterion: 'sentence-subtotal',
-      values: valuesFor(
-        playerOrder,
-        players,
-        (player) => player.sentenceSubtotal,
-      ),
-    },
-    {
-      criterion: 'valid-phrase-count',
-      values: valuesFor(playerOrder, players, (player) => player.phraseCount),
-    },
-    {
-      criterion: 'lifetime-fault-count',
-      values: Object.fromEntries(
-        playerOrder.map((playerId) => [
-          playerId,
-          commandHistory.filter(
-            (command) =>
-              command.type === 'deliberate-fault' &&
-              command.actorId === playerId,
-          ).length,
-        ]),
-      ),
-      lowerWins: true,
-    },
-  ];
-  for (const item of criteria) {
-    const [first, second] = playerOrder.map((id) => item.values[id]!);
-    if (first === second) continue;
-    const winnerId = item.lowerWins
-      ? first < second
-        ? playerOrder[0]
-        : playerOrder[1]
-      : first > second
-        ? playerOrder[0]
-        : playerOrder[1];
-    return { criterion: item.criterion, winnerId, values: item.values };
-  }
-  const winnerId = otherPlayerId(playerOrder, openingPlayerId);
-  return {
-    criterion: 'non-opening-player',
-    winnerId,
-    values: Object.fromEntries(
-      playerOrder.map((playerId) => [
-        playerId,
-        Number(playerId !== openingPlayerId),
-      ]),
-    ),
-  };
-}
-
-function valuesFor(
-  playerOrder: readonly [string, string],
-  players: Readonly<Record<string, MatchResolutionPlayer>>,
-  select: (player: MatchResolutionPlayer) => number,
-): Readonly<Record<string, number>> {
-  return Object.fromEntries(
-    playerOrder.map((playerId) => [playerId, select(players[playerId]!)]),
-  );
-}
-
 function sentenceSubtotal(score: ComboFinisherScore | null): number {
   if (!score) return 0;
   return score.breakdown.reduce(
@@ -830,7 +898,6 @@ function constructionStatus(
   construction: DraftState['playerStates'][string]['construction'],
 ): MatchResolutionPlayer['constructionStatus'] {
   if (construction.carryIntent) return 'carried';
-  if (construction.deliberateFaultPhraseId) return 'fault';
   return construction.analysis.legal &&
     construction.analysis.complete &&
     construction.analysis.sentenceStatus === 'complete'
@@ -869,7 +936,7 @@ function emptyStatistics(
     longestValidSentence: 0,
     weaknesses: 0,
     highestCombo: 0,
-    faults: 0,
+    grammarMistakes: 0,
     comebacks: 0,
   };
 }
@@ -882,14 +949,14 @@ function emptyPlayerStatistics(): MatchPlayerStatistics {
     longestValidSentence: 0,
     weaknesses: 0,
     highestCombo: 0,
-    faults: 0,
+    grammarMistakes: 0,
     comebacks: 0,
   };
 }
 
 function sumStatistic(
   statistics: Readonly<Record<string, MatchPlayerStatistics>>,
-  key: 'comebacks' | 'faults' | 'weaknesses',
+  key: 'comebacks' | 'grammarMistakes' | 'weaknesses',
 ): number {
   return Object.values(statistics).reduce(
     (total, player) => total + player[key],

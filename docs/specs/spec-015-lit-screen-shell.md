@@ -28,11 +28,11 @@ title to setup without changing game state. “Back” returns to title and rest
 setup values. A valid setup submit emits one typed `start-match` command;
 Milestone 016 owns the rendered match destination.
 
-Setup fields are mode, player-one character, player-two character, scene, and
-timer. Defaults are hotseat, the first two catalog characters, the first scene,
-and unlimited timer. Valid timers are 15, 30, and unlimited. Mirror characters
-are valid. Missing IDs, unknown IDs, an unsupported mode, or an unsupported
-timer are invalid.
+Setup fields are mode, player-one character, player-two character, and scene.
+Defaults are hotseat, the first two catalog characters, and the first scene.
+Every pick uses the fixed ten-second timer owned by Milestone 009. Mirror
+characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
+invalid.
 
 Validation occurs on submit and after an invalid field changes. The first
 invalid field receives focus. Each visible error names the field, problem, and
@@ -43,7 +43,7 @@ preserved. Submission is never disabled only to hide validation.
 
 - **AC-015-01:** Title and setup follow the two-state graph, browser Back does
   not create an unsupported URL route, and returning to setup restores values.
-- **AC-015-02:** Defaults and every valid timer create the exact typed setup
+- **AC-015-02:** Defaults create the exact typed setup
   payload. A mirror match succeeds.
 - **AC-015-03:** Every invalid class produces one visible associated error,
   focuses the first invalid control, preserves other values, and emits no

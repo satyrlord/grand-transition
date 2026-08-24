@@ -78,11 +78,10 @@ export function addComebackCharge(
 export function resolveContinuationStatus(request: {
   readonly carryIntent: boolean;
   readonly opponentOutgoingDamage: number;
-  readonly opponentComebackTier: ComebackTier | null;
 }): 'broken' | 'none' | 'survived' {
   if (!request.carryIntent) return 'none';
   return normalizeDamage(request.opponentOutgoingDamage) >=
-    continuationBreakDamage || request.opponentComebackTier === 'strong'
+    continuationBreakDamage
     ? 'broken'
     : 'survived';
 }
@@ -221,11 +220,6 @@ export function resolveContinuationComebackRound(request: {
       defenderWeaknessTags: player.defenderWeaknessTags,
       balance: player.balance,
     });
-    if (!scored.ok) {
-      throw new Error(
-        `Resolution received invalid finisher "${scored.error.facts.finisherPhraseId}".`,
-      );
-    }
     comboState = scored.comboState;
     const comebackBonus =
       player.construction.selectedComeback?.damageBonus ?? 0;
@@ -248,8 +242,6 @@ export function resolveContinuationComebackRound(request: {
     const continuationStatus = resolveContinuationStatus({
       carryIntent: attack.player.construction.carryIntent,
       opponentOutgoingDamage: opponentAttack.outgoingDamage,
-      opponentComebackTier:
-        opponentAttack.player.construction.selectedComeback?.tier ?? null,
     });
     const carryBreaks = continuationStatus === 'broken';
     const carrySurvives = continuationStatus === 'survived';

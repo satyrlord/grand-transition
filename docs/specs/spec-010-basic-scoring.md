@@ -1,65 +1,53 @@
-# Milestone 010: Basic Scoring
+# Milestone 010: Hollywood Roast Clause Scoring
 
 **Status:** Approved  
 **Depends on:** 009  
-**Owns:** Base, directness, length, and weakness scoring  
+**Owns:** Clause compatibility, restrictions, weaknesses, rounding, and score
+breakdown
 **Production-file budget:** 5
 
-## Deliver
+## Clause scoring
 
-Implement base phrase score, directness, length bonus, weakness multiplier, and
-an ordered itemized breakdown. Keep all balance values in validated data.
+Only complete grammar clauses score. A clause is `NOUN + PREDICATE` or
+`NOUN + VERB + NOUN`. Compound subjects produce one scored clause for each
+subject noun. Several complete clauses add their scores.
 
-Use `base = sum(baseValue)`, `lengthBonus = max(0, phraseCount - 3)`, and
-`directnessBonus = sum(directness)`. Add them before the weakness multiplier.
-One or more matching defender weakness tags apply one `2x` multiplier. Multiple
-matches do not stack, but the breakdown lists every match. Apply the exact
-calculation and rounding contract below.
+Each relation defines substance and flavour compatibility with its noun input.
+An explicit custom score overrides the compatibility calculation. Otherwise:
 
-## Exact calculation contract
+```text
+base = ((substance matches * 2) + (flavour matches * 1)) * 2 + 1
+```
 
-Only grammar phrases in a complete, valid construction enter scoring.
-Continuation cards and comeback closing text are not grammar phrases.
-`phraseCount` includes nouns, verbs, predicates, conjunctions, and an ending.
+Apply these steps to each clause in order:
 
-A weakness match exists when any scored phrase tag equals one defender
-weakness tag. The ordered basic calculation is:
+1. Calculate the clause base or use its custom matrix value.
+2. Multiply by 1.5 for each character- or scene-restricted phrase in that
+   clause.
+3. Round the restricted clause up.
+4. If any phrase in that clause matches a defender weakness, multiply the
+   clause by 2 once.
+5. Apply noun-combo multipliers as specified in Milestone 011.
 
-1. Sum phrase base values.
-2. Add `max(0, phraseCount - 3)`.
-3. Add all directness values.
-4. Apply weakness multiplier 2 when one or more weakness matches exist;
-   otherwise apply 1.
-5. Round the non-negative result to the nearest integer with halves rounded up.
+Add the final clause values. Always round final non-negative damage up. There is
+no card-value sum, directness bonus, length bonus, whole-sentence weakness
+multiplier, or nearest-half rounding.
 
-All inputs are integers in this milestone, but the rounding rule remains
-normative for later validated balance data. The breakdown order is base phrase
-items in sentence order, length, directness, weakness matches in defender-tag
-order, multiplier, unrounded total, and final damage.
+An incomplete sentence and a continued fragment deal zero outgoing damage.
 
 ## Acceptance criteria
 
-- **AC-010-01:** Golden tables cover zero through four phrases, directness 0
-  and 1, no weakness, one weakness, several matching phrases, and several
-  matching defender tags.
-- **AC-010-02:** Several weakness matches list every match but apply exactly one
-  2x multiplier.
-- **AC-010-03:** Values ending below half, at half, and above half round by the
-  stated rule.
-- **AC-010-04:** Invalid and incomplete constructions return final damage 0 and
-  contain no positive score term.
-- **AC-010-05:** Summing the ordered breakdown reconstructs the unrounded and
-  final values without reading game state or UI data.
-
-## Verify and stop
-
-Table tests cover each term, boundary, rounding rule, and order of operations.
-Invalid and incomplete sentences deal zero outgoing damage. Each final value is
-reconstructible from the breakdown. `npm run ci` passes. Stop before combos,
-finishers, continuations, comebacks, or Pride mutation.
+- **AC-010-01:** Golden clauses cover no match, substance, flavour, both,
+  custom override, and both grammar forms.
+- **AC-010-02:** Restrictions multiply per restricted phrase and round before
+  weakness.
+- **AC-010-03:** Weakness multiplies each matching clause once and does not
+  multiply unrelated clauses.
+- **AC-010-04:** Compound and multi-clause sentences add each clause value
+  once, including every front-`because` subordinate extension and its required
+  main clause.
+- **AC-010-05:** Incomplete and continued constructions score zero.
 
 ## Objective verifiers
 
-`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-05 in Node
-and Chromium. `npm run ci` verifies the cumulative quality, coverage, build, and
-production-browser security contracts.
+`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-05.
