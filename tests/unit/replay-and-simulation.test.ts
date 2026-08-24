@@ -387,7 +387,7 @@ describe('headless simulation and generated invariants', () => {
     expect(advance().command.type).toBe('prepare-round');
     const options = listSimulationOptions(state, engineContext);
     expect(options[0]!.phrase?.tags.length).toBeGreaterThan(0);
-    expect(options[0]!.reason).toMatch(/Base/);
+    expect(options[0]!.reason).toMatch(/scoring or weakness tag/iu);
     expect(options[0]!.utility).toBeGreaterThan(0);
 
     const completed = simulateMatch(40, setup, context);
@@ -435,8 +435,17 @@ describe('headless simulation and generated invariants', () => {
     expect(state).toEqual(before);
   });
 
-  test('runs 5,000 generated full matches with seed and replay-path evidence', () => {
-    const runs = typeof window === 'undefined' ? 5_000 : 50;
+  test('replays the unique-card pool regression seed', () => {
+    const result = simulateMatch(2_135_977_951, setup, context);
+    expect(result.finalState.phase).toBe('results');
+    expect(result.finalState.winner).toBeTruthy();
+    expect(replayMatch(result.replayBytes, context)).toEqual(
+      expect.objectContaining({ ok: true, state: result.finalState }),
+    );
+  });
+
+  test('runs the CI generated-match workload with seed and replay-path evidence', () => {
+    const runs = typeof window === 'undefined' ? 500 : 50;
     fc.assert(
       fc.property(fc.integer({ min: 0, max: 0xffff_ffff }), (seed) => {
         try {

@@ -4,13 +4,11 @@ import type { GrammarAdapter, GrammarResult } from './grammar-adapter';
 
 export const englishGrammarStates = [
   'EXPECT_SUBJECT',
-  'EXPECT_VERB_OR_PREDICATE',
+  'SUBJECT_READY',
   'EXPECT_OBJECT',
-  'EXPECT_SUBJECT_AFTER_CONJUNCTION',
-  'EXPECT_VERB_AFTER_SHARED_SUBJECT',
+  'EXPECT_AFTER_CONJUNCTION',
   'CLAUSE_COMPLETE',
   'ENDED',
-  'INVALID',
 ] as const;
 
 export type EnglishGrammarState = (typeof englishGrammarStates)[number];
@@ -23,22 +21,16 @@ export type EnglishGrammarRole = Extract<
 export type EnglishGrammarPhrase = Readonly<{
   id: string;
   role: Phrase['role'];
+  connectorKind?: 'and' | 'because' | 'but' | null;
+  grammaticalNumber?: GrammaticalNumber | null;
   defaultText: string;
   singularText: string;
   pluralText: string;
 }>;
 
 export type EnglishGrammarStep =
-  | Readonly<{
-      kind: 'phrase';
-      phrase: EnglishGrammarPhrase;
-      conjunctionMode?: 'new-subject' | 'shared-subject';
-    }>
-  | Readonly<{ kind: 'end' }>
-  | Readonly<{
-      kind: 'deliberate-fault';
-      sourcePhrase: EnglishGrammarPhrase;
-    }>;
+  | Readonly<{ kind: 'phrase'; phrase: EnglishGrammarPhrase }>
+  | Readonly<{ kind: 'end' }>;
 
 export type EnglishGrammarInput = Readonly<{
   steps: readonly EnglishGrammarStep[];
@@ -49,14 +41,15 @@ export type EnglishGrammarInput = Readonly<{
 export type EnglishRenderedPhrase = Readonly<{
   phraseId: string;
   role: Phrase['role'];
+  connectorKind: 'and' | 'because' | 'but' | null;
   grammaticalNumber: GrammaticalNumber | null;
   text: string;
 }>;
 
 export type EnglishGrammarAnalysis = Readonly<{
-  legal: boolean;
+  legal: true;
   complete: boolean;
-  sentenceStatus: 'incomplete' | 'complete' | 'invalid';
+  sentenceStatus: 'incomplete' | 'complete';
   state: EnglishGrammarState;
   nextRoles: readonly EnglishGrammarRole[];
   agreement: Readonly<{
@@ -70,38 +63,49 @@ export type EnglishGrammarAnalysis = Readonly<{
   resolution: Readonly<{
     outgoingDamageIntent: number | null;
     selfDamageIntent: number;
-    removedPhraseId: string | null;
+    removedPhraseId: null;
     constructionEnded: boolean;
-    feedback: 'strategic-foul' | null;
+    feedback: null;
   }>;
 }>;
 
 export type EnglishGrammarFault = Readonly<{
   kind: 'illegal-transition';
-  code:
-    | 'cannot-end-incomplete'
-    | 'cannot-fault-ended-construction'
-    | 'cannot-fault-legal-phrase'
-    | 'unexpected-role';
+  code: 'unexpected-role';
   state: EnglishGrammarState;
-  attempted: Phrase['role'] | 'end';
-  phraseId: string | null;
+  attempted: Phrase['role'];
+  phraseId: string;
   stepIndex: number;
   expectedRoles: readonly EnglishGrammarRole[];
 }>;
 
+type ParseContext = {
+  state: Exclude<EnglishGrammarState, 'ENDED'>;
+  subjectNumber: GrammaticalNumber;
+  subjectNounCount: number;
+  hasCompleteClause: boolean;
+  conjunctionFromSubject: boolean;
+  becauseAwaitingSubject: boolean;
+  frontBecausePending: boolean;
+  completedWithObjectVerb: boolean;
+  conjunctionAfterObjectVerb: boolean;
+  compoundObjectComplete: boolean;
+};
+
 const nextRolesByState: Readonly<
   Record<EnglishGrammarState, readonly EnglishGrammarRole[]>
 > = {
-  EXPECT_SUBJECT: ['noun'],
-  EXPECT_VERB_OR_PREDICATE: ['verb', 'predicate'],
+  EXPECT_SUBJECT: ['noun', 'conjunction'],
+  SUBJECT_READY: ['verb', 'predicate', 'conjunction'],
   EXPECT_OBJECT: ['noun'],
-  EXPECT_SUBJECT_AFTER_CONJUNCTION: ['noun'],
-  EXPECT_VERB_AFTER_SHARED_SUBJECT: ['verb'],
+  EXPECT_AFTER_CONJUNCTION: ['noun', 'verb', 'predicate'],
   CLAUSE_COMPLETE: ['conjunction', 'ending'],
   ENDED: [],
-  INVALID: [],
 };
+
+const englishGraphemeSegmenter = new Intl.Segmenter('en', {
+  granularity: 'grapheme',
+});
 
 export function prepareEnglishGrammarPhrase(
   phrase: Phrase,
@@ -115,6 +119,12 @@ export function prepareEnglishGrammarPhrase(
   return {
     id: phrase.id,
     role: phrase.role,
+    connectorKind:
+      phrase.role === 'conjunction'
+        ? (phrase.connectorKind ?? inferConnectorKind(defaultText))
+        : null,
+    grammaticalNumber:
+      phrase.role === 'noun' ? (phrase.grammaticalNumber ?? 'singular') : null,
     defaultText,
     singularText: phrase.numberForms
       ? requireMessage(locale, phrase.numberForms.singularKey)
@@ -131,220 +141,363 @@ export const englishGrammarAdapter: GrammarAdapter<
   EnglishGrammarFault
 > = {
   analyze(input) {
-    let state: EnglishGrammarState = 'EXPECT_SUBJECT';
+    let context: ParseContext = {
+      state: 'EXPECT_SUBJECT',
+      subjectNumber: input.subjectNumber,
+      subjectNounCount: 0,
+      hasCompleteClause: false,
+      conjunctionFromSubject: false,
+      becauseAwaitingSubject: false,
+      frontBecausePending: false,
+      completedWithObjectVerb: false,
+      conjunctionAfterObjectVerb: false,
+      compoundObjectComplete: false,
+    };
+    let ended = false;
     const renderedPhrases: EnglishRenderedPhrase[] = [];
 
     for (const [stepIndex, step] of input.steps.entries()) {
-      if (step.kind === 'deliberate-fault') {
-        if (state === 'ENDED' || state === 'INVALID') {
-          return reject(
-            'cannot-fault-ended-construction',
-            state,
-            step.sourcePhrase.role,
-            step.sourcePhrase.id,
-            stepIndex,
-          );
-        }
-        if (transitionFor(state, step.sourcePhrase.role, 'new-subject')) {
-          return reject(
-            'cannot-fault-legal-phrase',
-            state,
-            step.sourcePhrase.role,
-            step.sourcePhrase.id,
-            stepIndex,
-          );
-        }
-        state = 'INVALID';
-        return accept(input, state, renderedPhrases, step.sourcePhrase.id);
-      }
-
       if (step.kind === 'end') {
-        if (state !== 'CLAUSE_COMPLETE') {
-          return reject('cannot-end-incomplete', state, 'end', null, stepIndex);
-        }
-        state = 'ENDED';
+        ended = true;
         continue;
       }
-
-      const transition = transitionFor(
-        state,
-        step.phrase.role,
-        step.conjunctionMode ?? 'new-subject',
-      );
-      if (!transition) {
-        return reject(
-          'unexpected-role',
-          state,
-          step.phrase.role,
-          step.phrase.id,
-          stepIndex,
-        );
+      if (ended) {
+        return reject('ENDED', step.phrase, stepIndex);
       }
 
-      renderedPhrases.push(
-        renderPhrase(
-          step.phrase,
-          state,
-          input.subjectNumber,
-          input.objectNumber,
-        ),
-      );
-      state = transition;
+      const next = transition(context, step.phrase);
+      if (!next) {
+        return reject(context, step.phrase, stepIndex);
+      }
+      renderedPhrases.push(renderPhrase(step.phrase, context));
+      context = next;
+      if (step.phrase.role === 'ending') ended = true;
     }
 
-    return accept(input, state, renderedPhrases, null);
+    const complete = context.hasCompleteClause && isFinishable(context.state);
+    const state: EnglishGrammarState = ended ? 'ENDED' : context.state;
+    const publicText = renderPublicText(renderedPhrases, ended && complete);
+    return {
+      accepted: true,
+      analysis: {
+        legal: true,
+        complete,
+        sentenceStatus: complete ? 'complete' : 'incomplete',
+        state,
+        nextRoles: ended ? [] : nextRolesFor(context),
+        agreement: {
+          subject: context.subjectNumber,
+          object: input.objectNumber,
+        },
+        capitalization: 'sentence-case',
+        punctuation: ended && complete ? '.' : '',
+        renderedPhrases,
+        publicText,
+        resolution: {
+          outgoingDamageIntent: complete ? null : 0,
+          selfDamageIntent: 0,
+          removedPhraseId: null,
+          constructionEnded: ended,
+          feedback: null,
+        },
+      },
+    };
   },
 };
 
-function accept(
-  input: EnglishGrammarInput,
-  state: EnglishGrammarState,
-  renderedPhrases: readonly EnglishRenderedPhrase[],
-  removedPhraseId: string | null,
-): GrammarResult<EnglishGrammarAnalysis, EnglishGrammarFault> {
-  const complete = state === 'CLAUSE_COMPLETE' || state === 'ENDED';
-  const invalid = state === 'INVALID';
-  const punctuation = state === 'ENDED' ? '.' : '';
-  const phraseText = renderedPhrases.map((phrase) => phrase.text).join(' ');
-  const publicText = phraseText
-    ? `${capitalizeEnglish(phraseText)}${punctuation}`
-    : '';
+function transition(
+  context: ParseContext,
+  phrase: EnglishGrammarPhrase,
+): ParseContext | null {
+  const role = phrase.role;
 
-  return {
-    accepted: true,
-    analysis: {
-      legal: !invalid,
-      complete,
-      sentenceStatus: invalid
-        ? 'invalid'
-        : complete
-          ? 'complete'
-          : 'incomplete',
-      state,
-      nextRoles: nextRolesByState[state],
-      agreement: {
-        subject: input.subjectNumber,
-        object: input.objectNumber,
-      },
-      capitalization: 'sentence-case',
-      punctuation,
-      renderedPhrases,
-      publicText,
-      resolution: {
-        outgoingDamageIntent: complete ? null : 0,
-        selfDamageIntent: invalid ? 3 : 0,
-        removedPhraseId,
-        constructionEnded: state === 'ENDED' || invalid,
-        feedback: invalid ? 'strategic-foul' : null,
-      },
-    },
-  };
-}
+  if (
+    context.state === 'CLAUSE_COMPLETE' &&
+    context.frontBecausePending &&
+    role === 'noun'
+  ) {
+    return {
+      ...context,
+      state: 'SUBJECT_READY',
+      subjectNumber: phrase.grammaticalNumber ?? 'singular',
+      subjectNounCount: 1,
+      becauseAwaitingSubject: false,
+      frontBecausePending: false,
+      completedWithObjectVerb: false,
+      conjunctionAfterObjectVerb: false,
+      compoundObjectComplete: false,
+    };
+  }
 
-function transitionFor(
-  state: EnglishGrammarState,
-  role: Phrase['role'],
-  conjunctionMode: 'new-subject' | 'shared-subject',
-): EnglishGrammarState | undefined {
-  if (state === 'EXPECT_SUBJECT' && role === 'noun') {
-    return 'EXPECT_VERB_OR_PREDICATE';
+  if (role === 'ending') {
+    return context.state === 'CLAUSE_COMPLETE' && !context.frontBecausePending
+      ? context
+      : null;
   }
-  if (state === 'EXPECT_VERB_OR_PREDICATE') {
-    if (role === 'verb') return 'EXPECT_OBJECT';
-    if (role === 'predicate') return 'CLAUSE_COMPLETE';
+  if (role === 'continuation') return null;
+
+  if (role === 'conjunction') {
+    const kind = phrase.connectorKind;
+    if (kind === 'because') {
+      if (
+        (context.state === 'EXPECT_SUBJECT' &&
+          !context.becauseAwaitingSubject &&
+          !context.conjunctionFromSubject) ||
+        context.state === 'EXPECT_AFTER_CONJUNCTION' ||
+        context.state === 'CLAUSE_COMPLETE'
+      ) {
+        return {
+          ...context,
+          state: 'EXPECT_SUBJECT',
+          subjectNounCount: 0,
+          conjunctionFromSubject: false,
+          becauseAwaitingSubject: true,
+          completedWithObjectVerb: false,
+          conjunctionAfterObjectVerb: false,
+          compoundObjectComplete: false,
+          frontBecausePending:
+            context.frontBecausePending ||
+            (context.state === 'EXPECT_SUBJECT' && !context.hasCompleteClause),
+        };
+      }
+      return null;
+    }
+    if (kind === 'and' && context.state === 'SUBJECT_READY') {
+      return {
+        ...context,
+        state: 'EXPECT_SUBJECT',
+        conjunctionFromSubject: true,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    if (
+      context.state === 'CLAUSE_COMPLETE' &&
+      (kind === 'and' || kind === 'but')
+    ) {
+      return {
+        ...context,
+        state: 'EXPECT_AFTER_CONJUNCTION',
+        conjunctionFromSubject: false,
+        conjunctionAfterObjectVerb:
+          kind === 'and' && context.completedWithObjectVerb,
+        compoundObjectComplete: false,
+      };
+    }
+    return null;
   }
-  if (state === 'EXPECT_OBJECT' && role === 'noun') {
-    return 'CLAUSE_COMPLETE';
+
+  if (context.state === 'EXPECT_SUBJECT') {
+    if (role !== 'noun') return null;
+    const nounNumber = phrase.grammaticalNumber ?? 'singular';
+    const subjectNounCount = context.conjunctionFromSubject
+      ? context.subjectNounCount + 1
+      : 1;
+    return {
+      ...context,
+      state: 'SUBJECT_READY',
+      subjectNumber: subjectNounCount > 1 ? 'plural' : nounNumber,
+      subjectNounCount,
+      conjunctionFromSubject: false,
+      becauseAwaitingSubject: false,
+      completedWithObjectVerb: false,
+      conjunctionAfterObjectVerb: false,
+      compoundObjectComplete: false,
+    };
   }
-  if (state === 'EXPECT_SUBJECT_AFTER_CONJUNCTION' && role === 'noun') {
-    return 'EXPECT_VERB_OR_PREDICATE';
+
+  if (context.state === 'SUBJECT_READY') {
+    if (role === 'verb') {
+      return {
+        ...context,
+        state: 'EXPECT_OBJECT',
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    if (role === 'predicate') {
+      return {
+        ...context,
+        state: 'CLAUSE_COMPLETE',
+        hasCompleteClause:
+          context.hasCompleteClause || !context.frontBecausePending,
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    return null;
   }
-  if (state === 'EXPECT_VERB_AFTER_SHARED_SUBJECT' && role === 'verb') {
-    return 'EXPECT_OBJECT';
+
+  if (context.state === 'EXPECT_OBJECT') {
+    if (role !== 'noun') return null;
+    return {
+      ...context,
+      state: 'CLAUSE_COMPLETE',
+      hasCompleteClause:
+        context.hasCompleteClause || !context.frontBecausePending,
+      completedWithObjectVerb: true,
+      compoundObjectComplete: false,
+    };
   }
-  if (state === 'CLAUSE_COMPLETE') {
-    if (role === 'ending') return 'ENDED';
-    if (role === 'conjunction') {
-      return conjunctionMode === 'shared-subject'
-        ? 'EXPECT_VERB_AFTER_SHARED_SUBJECT'
-        : 'EXPECT_SUBJECT_AFTER_CONJUNCTION';
+
+  if (context.state === 'CLAUSE_COMPLETE' && context.compoundObjectComplete) {
+    if (role === 'verb') {
+      return {
+        ...context,
+        state: 'EXPECT_OBJECT',
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    if (role === 'predicate') {
+      return {
+        ...context,
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+      };
     }
   }
-  return undefined;
+
+  if (context.state === 'EXPECT_AFTER_CONJUNCTION') {
+    if (role === 'noun') {
+      if (context.conjunctionAfterObjectVerb) {
+        return {
+          ...context,
+          state: 'CLAUSE_COMPLETE',
+          subjectNumber: phrase.grammaticalNumber ?? 'singular',
+          subjectNounCount: 1,
+          conjunctionAfterObjectVerb: false,
+          compoundObjectComplete: true,
+        };
+      }
+      return {
+        ...context,
+        state: 'SUBJECT_READY',
+        subjectNumber: phrase.grammaticalNumber ?? 'singular',
+        subjectNounCount: 1,
+        completedWithObjectVerb: false,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    if (role === 'verb') {
+      return {
+        ...context,
+        state: 'EXPECT_OBJECT',
+        completedWithObjectVerb: false,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+    if (role === 'predicate') {
+      return {
+        ...context,
+        state: 'CLAUSE_COMPLETE',
+        completedWithObjectVerb: false,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+      };
+    }
+  }
+
+  return null;
+}
+
+function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
+  if (context.state === 'CLAUSE_COMPLETE' && context.frontBecausePending) {
+    return ['noun', 'conjunction'];
+  }
+  if (context.state === 'CLAUSE_COMPLETE' && context.compoundObjectComplete) {
+    return ['verb', 'predicate', 'conjunction', 'ending'];
+  }
+  if (context.state === 'EXPECT_SUBJECT') {
+    return context.conjunctionFromSubject || context.becauseAwaitingSubject
+      ? ['noun']
+      : nextRolesByState.EXPECT_SUBJECT;
+  }
+  return nextRolesByState[context.state];
+}
+
+function isFinishable(state: ParseContext['state']): boolean {
+  return state === 'CLAUSE_COMPLETE';
 }
 
 function renderPhrase(
   phrase: EnglishGrammarPhrase,
-  state: EnglishGrammarState,
-  subjectNumber: GrammaticalNumber,
-  objectNumber: GrammaticalNumber,
+  context: ParseContext,
 ): EnglishRenderedPhrase {
-  const grammaticalNumber = numberForRole(
-    state,
-    phrase.role,
-    subjectNumber,
-    objectNumber,
-  );
-  const text = grammaticalNumber
-    ? phrase[`${grammaticalNumber}Text`]
-    : phrase.defaultText;
-
+  // Nouns render their declared number form; the input object number feeds
+  // the analysis agreement only.
+  const grammaticalNumber =
+    phrase.role === 'verb' || phrase.role === 'predicate'
+      ? context.subjectNumber
+      : phrase.role === 'noun'
+        ? (phrase.grammaticalNumber ?? null)
+        : null;
+  const text =
+    grammaticalNumber === 'plural'
+      ? phrase.pluralText
+      : grammaticalNumber === 'singular'
+        ? phrase.singularText
+        : phrase.defaultText;
   return {
     phraseId: phrase.id,
     role: phrase.role,
+    connectorKind: phrase.connectorKind ?? null,
     grammaticalNumber,
     text,
   };
 }
 
-function numberForRole(
-  state: EnglishGrammarState,
-  role: Phrase['role'],
-  subjectNumber: GrammaticalNumber,
-  objectNumber: GrammaticalNumber,
-): GrammaticalNumber | null {
-  if (role === 'verb') return subjectNumber;
-  if (role !== 'noun') return null;
-  return state === 'EXPECT_OBJECT' ? objectNumber : subjectNumber;
+function renderPublicText(
+  phrases: readonly EnglishRenderedPhrase[],
+  punctuate: boolean,
+): string {
+  if (phrases.length === 0) return '';
+  const text = phrases.map((phrase) => phrase.text).join(' ');
+  const first =
+    englishGraphemeSegmenter.segment(text)[Symbol.iterator]().next().value
+      ?.segment ?? '';
+  const sentenceCase = first.toLocaleUpperCase('en') + text.slice(first.length);
+  return `${sentenceCase}${punctuate ? '.' : ''}`;
 }
 
 function reject(
-  code: EnglishGrammarFault['code'],
-  state: EnglishGrammarState,
-  attempted: EnglishGrammarFault['attempted'],
-  phraseId: string | null,
+  stateOrContext: EnglishGrammarState | ParseContext,
+  phrase: EnglishGrammarPhrase,
   stepIndex: number,
 ): GrammarResult<EnglishGrammarAnalysis, EnglishGrammarFault> {
+  const state =
+    typeof stateOrContext === 'string' ? stateOrContext : stateOrContext.state;
+  const expectedRoles =
+    typeof stateOrContext === 'string'
+      ? nextRolesByState[stateOrContext]
+      : nextRolesFor(stateOrContext);
   return {
     accepted: false,
     faults: [
       {
         kind: 'illegal-transition',
-        code,
+        code: 'unexpected-role',
         state,
-        attempted,
-        phraseId,
+        attempted: phrase.role,
+        phraseId: phrase.id,
         stepIndex,
-        expectedRoles: nextRolesByState[state],
+        expectedRoles,
       },
     ],
   };
 }
 
 function requireMessage(locale: GameLocaleBundle, key: string): string {
-  const message = locale.messages[key];
-  if (!message) {
-    throw new Error(`The English game-locale bundle is missing "${key}".`);
-  }
-  return message;
+  const value = locale.messages[key];
+  if (!value) throw new Error(`Missing English game message "${key}".`);
+  return value;
 }
 
-function capitalizeEnglish(text: string): string {
-  const segments = new Intl.Segmenter('en', {
-    granularity: 'grapheme',
-  }).segment(text);
-  for (const first of segments) {
-    return `${first.segment.toLocaleUpperCase('en')}${text.slice(first.segment.length)}`;
-  }
-  return '';
+function inferConnectorKind(text: string): 'and' | 'because' | 'but' {
+  const normalized = text.trim().toLocaleLowerCase('en');
+  if (normalized === 'but') return 'but';
+  if (normalized === 'because') return 'because';
+  return 'and';
 }

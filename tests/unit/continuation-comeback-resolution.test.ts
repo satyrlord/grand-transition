@@ -54,10 +54,14 @@ function completeConstruction(): Readonly<{
 function phrasesForDamage(damage: number): readonly Phrase[] {
   return sampleContent.phrases.map((phrase) => {
     if (phrase.id === 'paper-promise') {
-      return { ...phrase, baseValue: damage, directness: 0, tags: ['neutral'] };
+      return { ...phrase, tags: ['neutral'] };
     }
     if (phrase.id === 'before-lunch') {
-      return { ...phrase, baseValue: 0, directness: 0, tags: ['neutral'] };
+      return {
+        ...phrase,
+        customScores: [{ leftNounId: 'paper-promise', score: damage }],
+        tags: ['neutral'],
+      };
     }
     return phrase;
   });
@@ -179,14 +183,13 @@ describe('continuation resolution', () => {
     ]);
   });
 
-  test('strong comeback breaks a carry independently at zero damage', () => {
+  test('strong comeback breaks a carry through its 18 damage bonus', () => {
     expect(
       resolveContinuationStatus({
         carryIntent: true,
         opponentOutgoingDamage: 0,
-        opponentComebackTier: 'strong',
       }),
-    ).toBe('broken');
+    ).toBe('survived');
     const result = resolve(
       playerInput(0, { carry: true }),
       playerInput(1, { damage: 0, comeback: 'strong' }),

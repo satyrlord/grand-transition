@@ -1,13 +1,17 @@
 import { page } from 'vitest/browser';
 import { afterEach, expect, test } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell';
-import { GrandTransitionMatch } from '../../src/app/screens/match-screen';
 import {
+  createResolutionResultsSnapshot,
   GrandTransitionResolutionResults,
   resolutionCommandEventName,
   type ResolutionCommandEvent,
   type ResolutionResultsSnapshot,
 } from '../../src/app/screens/resolution-results-screen';
+import type {
+  MatchResolutionPlayer,
+  MatchState,
+} from '../../src/engine/match-lifecycle';
 
 afterEach(() => {
   document.body.innerHTML = '';
@@ -26,6 +30,9 @@ test('renders every ordered sequence step and rule event in DOM text', async () 
   expect(screen.textContent).toContain('Combo activated at 2×');
   expect(screen.textContent).toContain('Finisher activated');
   expect(screen.textContent).toContain('Strong comeback activated');
+  expect(screen.textContent).toContain(
+    'Grammar mistake: 1 card removed and 3 Pride lost immediately.',
+  );
   expect(
     screen.querySelectorAll('.construction-entry blockquote'),
   ).toHaveLength(2);
@@ -40,7 +47,6 @@ test('renders every ordered sequence step and rule event in DOM text', async () 
   expect(screen.textContent).toContain('Continuation survived');
   expect(screen.textContent).toContain('Continuation broke');
   expect(screen.textContent).toContain('Incomplete construction');
-  expect(screen.textContent).toContain('Strategic fault');
   expect(screen.textContent).toContain('Weak comeback activated');
   expect(screen.textContent).toContain('Medium comeback activated');
   expect(screen.textContent).toContain('Strong comeback activated');
@@ -57,21 +63,9 @@ test('renders every ordered sequence step and rule event in DOM text', async () 
   )) {
     const value = term.querySelector('strong')?.textContent?.trim() ?? '';
     if (
-      [
-        'base-phrase',
-        'length-bonus',
-        'directness-bonus',
-        'finisher-bonus',
-      ].includes(term.dataset.termKind ?? '')
+      ['clause-score', 'finisher-bonus'].includes(term.dataset.termKind ?? '')
     ) {
       reconstructed += Number(value);
-    }
-    if (
-      ['weakness-multiplier', 'combo-multiplier'].includes(
-        term.dataset.termKind ?? '',
-      )
-    ) {
-      reconstructed *= Number(value.replace('×', ''));
     }
   }
   expect(reconstructed).toBe(28);
@@ -97,12 +91,11 @@ test('shows simultaneous before and after values without waiting for motion', as
   expect(screen.snapshot).toBe(snapshot);
 });
 
-test('renders valid, incomplete, carried, and fault constructions as distinct golden states', async () => {
+test('renders valid, incomplete, and carried constructions as distinct golden states', async () => {
   const cases = [
     ['valid', 'Valid complete construction'],
     ['incomplete', 'Incomplete construction — zero sentence damage'],
     ['carried', 'Carried construction — zero outgoing damage this round'],
-    ['fault', 'Strategic fault — 3 self-damage'],
   ] as const;
 
   for (const [status, label] of cases) {
@@ -166,28 +159,13 @@ test('keeps every result label when optional event counts are zero', async () =>
     'Longest valid sentence',
     'Weaknesses',
     'Highest combo',
-    'Faults',
+    'Grammar mistakes',
     'Comebacks',
-    'Sudden-death tie-break',
   ]);
   const values = [...screen.querySelectorAll('.results-statistics dd')].map(
     (item) => item.textContent?.trim(),
   );
-  expect(values).toEqual([
-    '42',
-    '0',
-    'None',
-    '42',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    'Higher outgoing damage selected Civic Fox. Values: Civic Fox 42; Brass Peacock 0.',
-  ]);
-  expect(screen.textContent).toContain(
-    'Higher outgoing damage selected Civic Fox',
-  );
+  expect(values).toEqual(['42', '0', 'None', '42', '0', '0', '0', '0', '0']);
   expect(
     screen.querySelector<HTMLButtonElement>(
       '[aria-label="Start rematch with same setup"]',
@@ -195,6 +173,15 @@ test('keeps every result label when optional event counts are zero', async () =>
   ).toBeNull();
   expect(screen.textContent).toContain('Start rematch with same setup');
   expect(screen.textContent).toContain('Return to match setup');
+});
+
+test('describes an equal-zero cliffhanger without inventing a knockout', () => {
+  const snapshot = createResolutionResultsSnapshot(
+    cliffhangerState([0, 0], [100, 100]),
+  );
+  expect(snapshot.outcome).toBe(
+    'Cliffhanger tied at zero. Another cliffhanger starts with restored Pride, zero charge, no combo, and no continuation.',
+  );
 });
 
 test('pauses the real match on resolution until the user continues', async () => {
@@ -219,16 +206,6 @@ test('pauses the real match on resolution until the user continues', async () =>
       );
       if (legal) {
         legal.click();
-      } else {
-        document
-          .querySelector<HTMLButtonElement>(
-            '.shared-board button[data-card-state="illegal"], .private-hand button[data-card-state="illegal"]',
-          )
-          ?.click();
-        await document.querySelector<GrandTransitionMatch>(
-          'grand-transition-match',
-        )?.updateComplete;
-        document.querySelector<HTMLButtonElement>('.action-fault')?.click();
       }
     }
     await app.updateComplete;
@@ -290,9 +267,7 @@ function resolutionFixture(): ResolutionResultsSnapshot {
           { text: 'a velvet megaphone', source: 'Active' },
         ],
         terms: [
-          { kind: 'base-phrase', label: 'Phrase “paper promise”', value: '+2' },
-          { kind: 'length-bonus', label: 'Length bonus', value: '+1' },
-          { kind: 'directness-bonus', label: 'Directness bonus', value: '+1' },
+          { kind: 'clause-base', label: 'Clause base', value: '5' },
           { kind: 'finisher-bonus', label: 'Finisher activated', value: '+3' },
           {
             kind: 'weakness-match',
@@ -306,6 +281,7 @@ function resolutionFixture(): ResolutionResultsSnapshot {
           },
           { kind: 'combo-chain', label: 'Combo chain', value: '×2' },
           { kind: 'combo-multiplier', label: 'Combo multiplier', value: '×2' },
+          { kind: 'clause-score', label: 'Clause score', value: '+25' },
           { kind: 'unrounded-total', label: 'Unrounded subtotal', value: '28' },
           {
             kind: 'final-damage',
@@ -317,14 +293,16 @@ function resolutionFixture(): ResolutionResultsSnapshot {
           'Weakness activated: credibility.',
           'Combo activated at 2×.',
           'Finisher activated: with the receipt.',
-          'Strong comeback activated for +18 after multiplication.',
+          'Strong comeback activated for +18 after sentence scoring.',
+          'Grammar mistake: 1 card removed and 3 Pride lost immediately.',
           'Continuation survived: received 15 damage, below the 16-damage break threshold.',
-          'Weak comeback activated for +4 after multiplication.',
-          'Medium comeback activated for +10 after multiplication.',
+          'Weak comeback activated for +4 after sentence scoring.',
+          'Medium comeback activated for +10 after sentence scoring.',
         ],
         sentenceDamage: 28,
         comebackBonus: 18,
         outgoingDamage: 46,
+        grammarMistakes: 1,
         continuationLabel:
           'Continuation survived: received 15 damage, below the 16-damage break threshold.',
         prideBefore: 74,
@@ -344,15 +322,15 @@ function resolutionFixture(): ResolutionResultsSnapshot {
         phrases: [{ text: 'before lunch', source: 'Active' }],
         terms: [{ kind: 'no-score', label: 'No score terms', value: '0' }],
         activations: [
-          'Continuation broke: received 42 damage or a strong comeback crossed the break rule.',
+          'Continuation broke: received 42 damage, at or above the 16-damage threshold.',
           'Incomplete construction — zero sentence damage.',
-          'Strategic fault activated: 3 self-damage.',
         ],
         sentenceDamage: 0,
         comebackBonus: 0,
         outgoingDamage: 0,
+        grammarMistakes: 0,
         continuationLabel:
-          'Continuation broke: received 42 damage or a strong comeback crossed the break rule.',
+          'Continuation broke: received 42 damage, at or above the 16-damage threshold.',
         prideBefore: 52,
         prideAfter: 28,
         chargeBefore: 40,
@@ -360,7 +338,7 @@ function resolutionFixture(): ResolutionResultsSnapshot {
       },
     ],
     outcome:
-      'Double knockout recorded. Sudden death starts with both players at 1 Pride.',
+      'Double knockout recorded. The cliffhanger starts with restored Pride.',
     announcement:
       'Civic Fox: Pride 74 to 32, charge 60 to 42. Brass Peacock: Pride 52 to 28, charge 40 to 60.',
     continueLabel: 'Continue to sudden death',
@@ -375,8 +353,7 @@ function resultsFixture(): ResolutionResultsSnapshot {
     revision: 30,
     phase: 'results',
     suddenDeath: true,
-    outcome:
-      'Sudden death decided the match. Higher outgoing damage selected Civic Fox.',
+    outcome: 'The higher cliffhanger score decided the match.',
     continueLabel: null,
     results: {
       winnerName: 'Civic Fox',
@@ -389,10 +366,78 @@ function resultsFixture(): ResolutionResultsSnapshot {
       longestSentence: 0,
       weaknesses: 0,
       highestCombo: 0,
-      faults: 0,
+      grammarMistakes: 0,
       comebacks: 0,
-      tieBreak:
-        'Higher outgoing damage selected Civic Fox. Values: Civic Fox 42; Brass Peacock 0.',
     },
   } satisfies ResolutionResultsSnapshot);
+}
+
+function cliffhangerState(
+  scores: readonly [number, number],
+  prideAfter: readonly [number, number],
+): MatchState {
+  const playerIds = ['player-one', 'player-two'] as const;
+  const characters = ['civic-fox', 'brass-peacock'] as const;
+  const players = Object.fromEntries(
+    playerIds.map((playerId, index) => [
+      playerId,
+      {
+        playerId,
+        constructionText: '',
+        constructionStatus: 'incomplete',
+        constructionPhrases: [],
+        prideBefore: 100,
+        selfDamage: 0,
+        opponentOutgoingDamage: 0,
+        prideAfter: prideAfter[index]!,
+        chargeBefore: 0,
+        chargeAfter: 0,
+        sentenceDamage: scores[index]!,
+        comebackBonus: 0,
+        outgoingDamage: scores[index]!,
+        sentenceSubtotal: scores[index]!,
+        phraseCount: 0,
+        completeValidInsult: false,
+        insultText: null,
+        weaknessActivated: false,
+        comboMultiplier: 0,
+        comebackActivated: false,
+        comebackTier: null,
+        comebackClosingLine: null,
+        grammarMistakes: 0,
+        score: null,
+        continuation: { status: 'none', restoredCarry: null },
+      } satisfies MatchResolutionPlayer,
+    ]),
+  );
+  return {
+    phase: 'sudden-death',
+    draft: null,
+    round: 3,
+    playerOrder: playerIds,
+    playerStates: Object.fromEntries(
+      playerIds.map((playerId, index) => [
+        playerId,
+        { characterId: characters[index] },
+      ]),
+    ),
+    commandHistory: [],
+    resolutionHistory: [
+      {
+        round: 2,
+        openingPlayerId: playerIds[0],
+        suddenDeath: true,
+        order: [
+          'lock-constructions',
+          'calculate-breakdowns',
+          'apply-simultaneous-damage',
+          'clamp-pride',
+          'gain-charge-after-spending',
+          'resolve-continuations',
+          'check-knockout',
+        ],
+        players,
+      },
+    ],
+  } as unknown as MatchState;
 }

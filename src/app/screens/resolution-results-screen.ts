@@ -14,12 +14,11 @@ import {
 } from '../../engine/continuation-comeback-resolution';
 import type {
   MatchCommand,
-  MatchResolution,
   MatchResolutionPlayer,
   MatchState,
   MatchStatistics,
-  SuddenDeathTieBreak,
 } from '../../engine/match-lifecycle';
+import { grammarMistakeSelfDamage } from '../../engine/draft-actions';
 
 const elementName = 'grand-transition-resolution-results';
 export const resolutionCommandEventName = 'match-command';
@@ -48,6 +47,7 @@ export type ResolutionPlayerView = Readonly<{
   sentenceDamage: number;
   comebackBonus: number;
   outgoingDamage: number;
+  grammarMistakes: number;
   continuationLabel: string;
   prideBefore: number;
   prideAfter: number;
@@ -67,9 +67,8 @@ export type ResultsView = Readonly<{
   longestSentence: number;
   weaknesses: number;
   highestCombo: number;
-  faults: number;
+  grammarMistakes: number;
   comebacks: number;
-  tieBreak: string;
 }>;
 
 export type ResolutionResultsSnapshot = Readonly<{
@@ -99,8 +98,8 @@ export function createResolutionResultsSnapshot(
       state.playerStates[playerId]!.characterId,
     ),
   ) as [ResolutionPlayerView, ResolutionPlayerView];
-  const outcome = resolutionOutcome(state, resolution);
-  const announcement = `${players[0].characterName}: Pride ${players[0].prideBefore} to ${players[0].prideAfter}, charge ${players[0].chargeBefore} to ${players[0].chargeAfter}. ${players[1].characterName}: Pride ${players[1].prideBefore} to ${players[1].prideAfter}, charge ${players[1].chargeBefore} to ${players[1].chargeAfter}.`;
+  const outcome = resolutionOutcome(state);
+  const announcement = `${resolution.suddenDeath ? 'Sudden-death' : `Round ${resolution.round}`} exchange complete. ${players[0].characterName} dealt ${players[0].outgoingDamage} damage; Pride ${players[0].prideBefore} to ${players[0].prideAfter}, charge ${players[0].chargeBefore} to ${players[0].chargeAfter}. ${players[1].characterName} dealt ${players[1].outgoingDamage} damage; Pride ${players[1].prideBefore} to ${players[1].prideAfter}, charge ${players[1].chargeBefore} to ${players[1].chargeAfter}. ${outcome}`;
 
   return deepFreeze({
     revision: state.commandHistory.length,
@@ -118,7 +117,7 @@ export function createResolutionResultsSnapshot(
           : null,
     results:
       state.phase === 'results'
-        ? createResultsView(state, resolution, state.statistics)
+        ? createResultsView(state, state.statistics)
         : null,
   });
 }
@@ -420,16 +419,12 @@ export class GrandTransitionResolutionResults extends LitElement {
             <dd>${results.highestCombo}</dd>
           </div>
           <div>
-            <dt>${msg('Faults')}</dt>
-            <dd>${results.faults}</dd>
+            <dt>${msg('Grammar mistakes')}</dt>
+            <dd>${results.grammarMistakes}</dd>
           </div>
           <div>
             <dt>${msg('Comebacks')}</dt>
             <dd>${results.comebacks}</dd>
-          </div>
-          <div class="tie-break-stat">
-            <dt>${msg('Sudden-death tie-break')}</dt>
-            <dd>${results.tieBreak}</dd>
           </div>
         </dl>
       </section>
@@ -474,6 +469,7 @@ function createPlayerView(
     sentenceDamage: player.sentenceDamage,
     comebackBonus: player.comebackBonus,
     outgoingDamage: player.outgoingDamage,
+    grammarMistakes: player.grammarMistakes,
     continuationLabel: continuationLabel(player),
     prideBefore: player.prideBefore,
     prideAfter: player.prideAfter,
@@ -490,24 +486,26 @@ function scoreTerms(
   }
   return breakdown.map((item) => {
     switch (item.kind) {
-      case 'base-phrase':
-        return {
-          kind: item.kind,
-          label: msg(`Phrase “${phraseText(item.phraseId)}”`),
-          value: signed(item.amount),
-        };
-      case 'length-bonus':
+      case 'clause-base':
         return {
           kind: item.kind,
           label: msg(
-            `Length bonus — ${item.phraseCount} phrases, ${item.freePhraseCount} included`,
+            `Clause base — ${item.phraseIds.map(phraseText).join(' / ')}`,
           ),
-          value: signed(item.amount),
+          value: String(item.amount),
         };
-      case 'directness-bonus':
+      case 'restriction-multiplier':
         return {
           kind: item.kind,
-          label: msg('Directness bonus'),
+          label: msg('Character or scene phrase multiplier'),
+          value: `×${item.factor}`,
+        };
+      case 'clause-score':
+        return {
+          kind: item.kind,
+          label: msg(
+            `Clause score — ${item.phraseIds.map(phraseText).join(' / ')}`,
+          ),
           value: signed(item.amount),
         };
       case 'weakness-match':
@@ -551,7 +549,7 @@ function scoreTerms(
       case 'final-damage':
         return {
           kind: item.kind,
-          label: msg('Rounded sentence damage'),
+          label: msg('Sentence damage'),
           value: String(item.amount),
         };
     }
@@ -579,16 +577,21 @@ function ruleActivations(player: MatchResolutionPlayer): readonly string[] {
   if (player.comebackTier) {
     activations.push(
       msg(
-        `${tierName(player.comebackTier)} comeback activated for +${player.comebackBonus} after multiplication.`,
+        `${tierName(player.comebackTier)} comeback activated for +${player.comebackBonus} after sentence scoring.`,
       ),
     );
     if (player.comebackClosingLine) {
       activations.push(msg(`Closing line: “${player.comebackClosingLine}”`));
     }
   }
-  if (player.deliberateFault) {
+  if (player.grammarMistakes > 0) {
+    const count = player.grammarMistakes;
     activations.push(
-      msg(`Strategic fault activated: ${player.selfDamage} self-damage.`),
+      msg(
+        count === 1
+          ? `Grammar mistake: 1 card removed and ${grammarMistakeSelfDamage} Pride lost immediately.`
+          : `Grammar mistakes: ${count} cards removed and ${count * grammarMistakeSelfDamage} Pride lost immediately.`,
+      ),
     );
   }
   if (player.continuation.status !== 'none') {
@@ -607,15 +610,10 @@ function constructionStatusLabel(player: MatchResolutionPlayer): string {
       return msg('Incomplete construction — zero sentence damage');
     case 'carried':
       return msg('Carried construction — zero outgoing damage this round');
-    case 'fault':
-      return msg(`Strategic fault — ${player.selfDamage} self-damage`);
   }
 }
 
 function reactionLabel(player: MatchResolutionPlayer): string {
-  if (player.deliberateFault) {
-    return msg('Reaction: The chamber records a procedural recoil.');
-  }
   if (player.constructionStatus === 'carried') {
     return msg('Reaction: The chamber holds its breath for the continuation.');
   }
@@ -635,29 +633,47 @@ function continuationLabel(player: MatchResolutionPlayer): string {
   }
   if (player.continuation.status === 'broken') {
     return msg(
-      `Continuation broke: received ${player.opponentOutgoingDamage} damage or a strong comeback crossed the break rule.`,
+      `Continuation broke: received ${player.opponentOutgoingDamage} damage, at or above the ${continuationBreakDamage}-damage threshold.`,
     );
   }
   return msg('Continuation: None.');
 }
 
-function resolutionOutcome(
-  state: MatchState,
-  resolution: MatchResolution,
-): string {
+function resolutionOutcome(state: MatchState): string {
+  const resolution = state.resolutionHistory.at(-1)!;
   if (state.phase === 'results') {
     const winner = state.winner
       ? characterName(state.playerStates[state.winner]!.characterId)
       : msg('None');
-    return resolution.tieBreak
-      ? msg(
-          `Sudden death decided the match. ${tieBreakText(state, resolution.tieBreak)} ${winner} wins.`,
-        )
-      : msg(`Knockout recorded. ${winner} wins.`);
+    if (resolution.suddenDeath && state.winner) {
+      const loserId = state.playerOrder.find(
+        (playerId) => playerId !== state.winner,
+      )!;
+      const loser = characterName(state.playerStates[loserId]!.characterId);
+      const winnerResult = resolution.players[state.winner]!;
+      const loserResult = resolution.players[loserId]!;
+      return msg(
+        `Cliffhanger scores: ${winner} ${winnerResult.outgoingDamage}; ${loser} ${loserResult.outgoingDamage}. The higher score wins, so ${winner} wins. Pride damage: ${winner} received ${winnerResult.opponentOutgoingDamage}; ${loser} received ${loserResult.opponentOutgoingDamage}.`,
+      );
+    }
+    return msg(`Knockout recorded. ${winner} wins.`);
   }
   if (state.phase === 'sudden-death' && state.draft === null) {
+    if (resolution.suddenDeath) {
+      const scores = state.playerOrder.map(
+        (playerId) => resolution.players[playerId]!.outgoingDamage,
+      );
+      if (scores.every((score) => score === 0)) {
+        return msg(
+          'Cliffhanger tied at zero. Another cliffhanger starts with restored Pride, zero charge, no combo, and no continuation.',
+        );
+      }
+      return msg(
+        `Cliffhanger scores tied at ${scores[0]}. Both players were knocked out. Another cliffhanger starts with restored Pride, zero charge, no combo, and no continuation.`,
+      );
+    }
     return msg(
-      'Double knockout recorded. Sudden death starts with both players at 1 Pride, zero charge, and no continuation.',
+      'Double knockout recorded. The cliffhanger starts with restored Pride, zero charge, no combo, and no continuation.',
     );
   }
   return msg(`No knockout. Round ${state.round} is next.`);
@@ -665,7 +681,6 @@ function resolutionOutcome(
 
 function createResultsView(
   state: MatchState,
-  resolution: MatchResolution,
   statistics: MatchStatistics,
 ): ResultsView {
   const winnerName = state.winner
@@ -688,39 +703,9 @@ function createResultsView(
     longestSentence: statistics.longestValidSentence,
     weaknesses: statistics.weaknesses,
     highestCombo: statistics.highestCombo,
-    faults: statistics.faults,
+    grammarMistakes: statistics.grammarMistakes,
     comebacks: statistics.comebacks,
-    tieBreak: resolution.tieBreak
-      ? tieBreakText(state, resolution.tieBreak)
-      : msg('None'),
   };
-}
-
-function tieBreakText(
-  state: MatchState,
-  tieBreak: SuddenDeathTieBreak,
-): string {
-  const values = Object.entries(tieBreak.values)
-    .map(
-      ([playerId, value]) =>
-        `${characterName(state.playerStates[playerId]!.characterId)} ${value}`,
-    )
-    .join('; ');
-  return msg(
-    `${tieBreakCriterion(tieBreak.criterion)} selected ${characterName(state.playerStates[tieBreak.winnerId]!.characterId)}. Values: ${values}.`,
-  );
-}
-
-function tieBreakCriterion(
-  criterion: SuddenDeathTieBreak['criterion'],
-): string {
-  return {
-    'outgoing-damage': msg('Higher outgoing damage'),
-    'sentence-subtotal': msg('Higher sentence subtotal'),
-    'valid-phrase-count': msg('Higher valid phrase count'),
-    'lifetime-fault-count': msg('Fewer lifetime faults'),
-    'non-opening-player': msg('Non-opening player'),
-  }[criterion];
 }
 
 function characterName(characterId: string): string {

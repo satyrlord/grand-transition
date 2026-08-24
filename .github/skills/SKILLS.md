@@ -24,6 +24,8 @@ Do not invent missing scripts.
 - [`refactor`](refactor/SKILL.md): Improve structure without behavior changes.
 - [`run-quality-gate`](run-quality-gate/SKILL.md): Run or repair configured
   repository checks.
+- [`simulate-matches`](simulate-matches/SKILL.md): Run a required-size
+  deterministic headless match workload.
 - [`update-game-content`](update-game-content/SKILL.md): Change phrases,
   characters, scenes, localization, or editorial data.
 - [`verify-game`](verify-game/SKILL.md): Collect production-build browser and

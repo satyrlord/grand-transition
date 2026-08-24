@@ -2,14 +2,12 @@ import { z } from 'zod';
 
 export const basicScoringBalanceSchema = z
   .object({
-    lengthBonus: z
-      .object({
-        freePhraseCount: z.literal(3),
-        perAdditionalPhrase: z.literal(1),
-      })
-      .strict(),
+    basePointsMultiplier: z.literal(2),
+    substanceGroupPoints: z.literal(2),
+    flavourGroupPoints: z.literal(1),
     weaknessMultiplier: z.literal(2),
-    rounding: z.literal('nearest-half-up'),
+    restrictedPhraseMultiplier: z.literal(1.5),
+    rounding: z.literal('ceil'),
   })
   .strict();
 
@@ -17,10 +15,10 @@ export type BasicScoringBalance = z.infer<typeof basicScoringBalanceSchema>;
 
 export const basicScoringBalance: BasicScoringBalance =
   basicScoringBalanceSchema.parse({
-    lengthBonus: {
-      freePhraseCount: 3,
-      perAdditionalPhrase: 1,
-    },
+    basePointsMultiplier: 2,
+    substanceGroupPoints: 2,
+    flavourGroupPoints: 1,
     weaknessMultiplier: 2,
-    rounding: 'nearest-half-up',
+    restrictedPhraseMultiplier: 1.5,
+    rounding: 'ceil',
   });

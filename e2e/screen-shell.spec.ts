@@ -35,7 +35,6 @@ for (const viewport of viewports) {
     ).toBeVisible();
     expect(page.url()).toBe(url);
     await page.getByLabel('Player two character').selectOption('civic-fox');
-    await page.getByLabel('Timer').selectOption('30');
 
     const geometry = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -70,12 +69,11 @@ for (const viewport of viewports) {
     await expect(page.getByLabel('Player two character')).toHaveValue(
       'civic-fox',
     );
-    await expect(page.getByLabel('Timer')).toHaveValue('30');
   });
 }
 
 for (const viewport of viewports) {
-  test(`${viewport.name} keyboard order, browser Back, Escape, and duplicate submit are deterministic`, async ({
+  test(`${viewport.name} keyboard order, Escape, and duplicate submit are deterministic`, async ({
     page,
   }) => {
     await page.setViewportSize(viewport);
@@ -94,7 +92,6 @@ for (const viewport of viewports) {
     await expect(page.getByLabel('Mode')).toBeFocused();
     for (const name of [
       'Scene',
-      'Timer',
       'Player one character',
       'Player two character',
     ]) {
@@ -103,12 +100,10 @@ for (const viewport of viewports) {
     }
 
     await page.getByLabel('Player two character').selectOption('civic-fox');
-    await page.getByLabel('Timer').selectOption('15');
     await page.keyboard.press('Escape');
     await expect(page.getByLabel('Player two character')).toHaveValue(
       'civic-fox',
     );
-    await expect(page.getByLabel('Timer')).toHaveValue('15');
 
     const eventFacts = await page.evaluate(() => {
       const app = document.querySelector('grand-transition-app')!;
@@ -134,13 +129,6 @@ for (const viewport of viewports) {
     });
     expect(eventFacts).toEqual({ count: 1, frozen: true, composed: true });
 
-    await page.evaluate(() => window.history.back());
-    await expect(
-      page.getByRole('heading', { name: 'Grand Transition' }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: 'Grand Transition' }),
-    ).toBeFocused();
     expect(page.url()).toBe(url);
   });
 }

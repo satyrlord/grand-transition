@@ -17,7 +17,8 @@ completion, uses finishers and comebacks, and recognizes immediate denial. It
 thinks for 700 to 1500 milliseconds (ms).
 
 Palace Operator uses two-ply beam search, tracks combos, steals lethal phrases,
-evaluates deliberate faults, predicts continuation breaks, manages charge, and
+evaluates the normal three-damage cost of a wrong selection, predicts
+continuation breaks, manages charge, and
 applies personality inside the protected ordering below. It thinks for 900 to
 1800 ms.
 Reduced-delay accessibility shortens the presentation delay. It does not
@@ -29,14 +30,14 @@ Fixed seed, difficulty, and history reproduce choices.
 Party Strategist evaluates every legal action and the resulting one-ply state.
 It uses the Local Radio weights except weakness 1.2, combo 1, finisher 1,
 denial 1, continuation 0.8, comeback 0.9, lethal 10000, lethal block 8000,
-grammar risk -4, and dead end -10000.
+grammar-mistake risk -4, and dead end -10000.
 
 Palace Operator sorts first-ply actions by deterministic utility, keeps a beam
 of 12, evaluates up to the opponent's best 8 legal replies for each, and stops
 at 256 evaluated nodes. It subtracts 0.85 times opponent reply utility. It uses
 the Party weights and adds continuation-break 1.2, charge preservation 0.8, and
-deliberate-fault utility equal to avoided lethal damage minus its exact
-self-damage. It cannot choose a fault that causes its own knockout when a
+wrong-selection utility equal to the removed phrase value minus its exact
+self-damage. It cannot choose a wrong phrase that causes its own knockout when a
 non-knockout legal action exists.
 
 Character aggression, denial, and risk adjust only their matching nonlethal

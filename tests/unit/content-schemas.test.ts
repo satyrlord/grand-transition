@@ -1,5 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import { contentCatalogSchema } from '../../src/content/content-catalog';
+import {
+  combinePhraseCardCorpora,
+  parsePhraseCardCorpus,
+  phraseCardCatalog,
+} from '../../src/content/phrase-card-catalog';
 import { sampleContent } from '../../src/content/sample-content';
 import type { EditorialSafetyFlag } from '../../src/content/schemas';
 
@@ -21,36 +26,29 @@ interface NumericBoundaryCase {
 
 const numericBoundaryCases: readonly NumericBoundaryCase[] = [
   {
-    name: 'phrase base value',
-    pathPart: 'phrases.0.baseValue',
-    minimum: 1,
-    maximum: 20,
-    immediatelyBelow: 0,
-    immediatelyAbove: 21,
-    setValue: (catalog, value) => {
-      catalog.phrases[0]!.baseValue = value;
-    },
-  },
-  {
-    name: 'phrase directness',
-    pathPart: 'phrases.0.directness',
+    name: 'phrase custom score',
+    pathPart: 'phrases.4.customScores.0.score',
     minimum: 0,
-    maximum: 1,
+    maximum: 100,
     immediatelyBelow: -1,
-    immediatelyAbove: 2,
+    immediatelyAbove: 101,
     setValue: (catalog, value) => {
-      catalog.phrases[0]!.directness = value as 0 | 1;
+      catalog.phrases[4]!.customScores = [
+        { leftNounId: 'paper-promise', score: value },
+      ];
     },
   },
   {
     name: 'phrase finisher bonus',
-    pathPart: 'phrases.0.finisherBonus',
+    pathPart: 'phrases.12.finisherBonus',
     minimum: 1,
     maximum: 20,
     immediatelyBelow: 0,
     immediatelyAbove: 21,
     setValue: (catalog, value) => {
-      catalog.phrases[0]!.finisherBonus = value;
+      catalog.phrases.find(
+        (phrase) => phrase.id === 'with-the-receipt',
+      )!.finisherBonus = value;
     },
   },
   ...(['aggression', 'denial', 'risk'] as const).map(
@@ -118,6 +116,54 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
+  test('loads 32 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(32);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(30);
+    expect(phraseCardCatalog.characterPhraseIds).toEqual({
+      'civic-fox': ['committee-kite'],
+      'brass-peacock': ['polishes'],
+    });
+    expect(
+      new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
+    ).toHaveLength(32);
+    expect(
+      phraseCardCatalog.phrases.find((phrase) => phrase.id === 'committee-kite')
+        ?.characterIds,
+    ).toEqual(['civic-fox']);
+  });
+
+  test('validates a manually authored JSON phrase before catalog loading', () => {
+    const source = {
+      id: 'manual-card',
+      role: 'noun',
+      text: 'a manual card',
+      tags: ['paperwork'],
+      scoreGroups: { substance: ['bureaucracy'], flavour: ['whimsy'] },
+      rarity: 'uncommon',
+      reviewNotes: 'Original test fixture. Review complete.',
+    } as const;
+    const loaded = parsePhraseCardCorpus([source]);
+    expect(loaded.phrases[0]).toMatchObject({
+      id: 'manual-card',
+      textKey: 'phrase.manual-card',
+    });
+    expect(loaded.englishMessages).toEqual({
+      'phrase.manual-card': 'a manual card',
+    });
+    expect(() => parsePhraseCardCorpus([source, source])).toThrow(
+      /duplicated/iu,
+    );
+    expect(() =>
+      parsePhraseCardCorpus([{ ...source, singularText: 'a manual card' }]),
+    ).toThrow(/both singularText and pluralText/iu);
+    expect(() =>
+      combinePhraseCardCorpora({
+        common: loaded,
+        byCharacter: { 'test-character': loaded },
+      }),
+    ).toThrow(/more than one corpus/iu);
+  });
+
   test('accepts original sample content for two characters and one scene', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
@@ -170,6 +216,55 @@ describe('content schemas', () => {
     expectFailure(catalog, 'phrases.0.numberForms', /different locale keys/iu);
   });
 
+  test('rejects grammar and scoring fields on the wrong phrase role', () => {
+    const predicateFinisher = cloneCatalog();
+    predicateFinisher.phrases.find(
+      (phrase) => phrase.id === 'before-lunch',
+    )!.finisherBonus = 2;
+    expectFailure(predicateFinisher, 'finisherBonus', /Only an ending/iu);
+
+    const endingWithoutScore = cloneCatalog();
+    endingWithoutScore.phrases.find(
+      (phrase) => phrase.id === 'with-the-receipt',
+    )!.finisherBonus = undefined;
+    expectFailure(endingWithoutScore, 'finisherBonus', /each ending/iu);
+
+    const nounConnector = cloneCatalog();
+    nounConnector.phrases[0]!.connectorKind = 'and';
+    expectFailure(nounConnector, 'connectorKind', /Only a conjunction/iu);
+  });
+
+  test('rejects empty restrictions, empty custom scores, and duplicate custom relations', () => {
+    const emptyRestriction = cloneCatalog();
+    emptyRestriction.phrases[0]!.characterIds = [];
+    expectFailure(
+      emptyRestriction,
+      'phrases.0.characterIds',
+      /too small|at least 1/iu,
+    );
+
+    const emptyScores = cloneCatalog();
+    const relation = emptyScores.phrases.find(
+      (phrase) => phrase.id === 'before-lunch',
+    )!;
+    relation.scorePreferences = undefined;
+    relation.customScores = [];
+    expectFailure(emptyScores, 'customScores', /too small|at least 1/iu);
+
+    const duplicateScores = cloneCatalog();
+    duplicateScores.phrases.find(
+      (phrase) => phrase.id === 'before-lunch',
+    )!.customScores = [
+      { leftNounId: 'paper-promise', score: 4 },
+      { leftNounId: 'paper-promise', score: 9 },
+    ];
+    expectFailure(
+      duplicateScores,
+      'customScores.1',
+      /custom score only once/iu,
+    );
+  });
+
   test.each(numericBoundaryCases)(
     '$name accepts both endpoints and rejects values immediately outside them',
     ({
@@ -202,8 +297,12 @@ describe('content schemas', () => {
 
   test('rejects a missing cross-record reference', () => {
     const catalog = cloneCatalog();
-    catalog.characters[0]!.phrasePools.public[0] = 'missing-phrase';
-    expectFailure(catalog, 'characters.0.phrasePools.0', /existing phrase/iu);
+    catalog.characters[0]!.characterPhraseIds.push('missing-phrase');
+    expectFailure(
+      catalog,
+      'characters.0.characterPhraseIds.1',
+      /existing phrase/iu,
+    );
   });
 
   test('rejects missing character and scene restriction references', () => {
@@ -222,10 +321,13 @@ describe('content schemas', () => {
 
   test('rejects a phrase outside its character or scene restriction', () => {
     const wrongCharacter = cloneCatalog();
-    wrongCharacter.characters[1]!.phrasePools.private[0] = 'committee-kite';
+    wrongCharacter.phrases.find(
+      (phrase) => phrase.id === 'committee-kite',
+    )!.characterIds = ['civic-fox'];
+    wrongCharacter.characters[1]!.characterPhraseIds.push('committee-kite');
     expectFailure(
       wrongCharacter,
-      'characters.1.phrasePools.8',
+      'characters.1.characterPhraseIds.1',
       /not available to character/iu,
     );
 
@@ -242,23 +344,48 @@ describe('content schemas', () => {
     );
   });
 
-  test('rejects a character pool that cannot reach every core role', () => {
-    const catalog = cloneCatalog();
-    catalog.characters[0]!.phrasePools = {
-      public: ['paper-promise', 'velvet-megaphone'],
-      private: ['committee-kite', 'paper-promise', 'velvet-megaphone'],
-    };
+  test('requires character and scene restriction membership in both directions', () => {
+    const unrestrictedCharacterPhrase = cloneCatalog();
+    unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.push(
+      'paper-promise',
+    );
     expectFailure(
-      catalog,
-      'characters.0.phrasePools',
-      /Missing: verb, predicate/iu,
+      unrestrictedCharacterPhrase,
+      'characters.0.characterPhraseIds.1',
+      /not available to character/iu,
+    );
+
+    const missingCharacterMembership = cloneCatalog();
+    missingCharacterMembership.characters[0]!.characterPhraseIds = [];
+    expectFailure(
+      missingCharacterMembership,
+      'phrases.30.characterIds.0',
+      /Add phrase "committee-kite" to character/iu,
+    );
+
+    const missingSceneMembership = cloneCatalog();
+    const restrictedIndex = missingSceneMembership.phrases.findIndex(
+      (phrase) => phrase.id === 'past-the-deadline',
+    );
+    missingSceneMembership.scenes[0]!.phrasePool =
+      missingSceneMembership.scenes[0]!.phrasePool.filter(
+        (phraseId) => phraseId !== 'past-the-deadline',
+      );
+    expectFailure(
+      missingSceneMembership,
+      `phrases.${restrictedIndex}.sceneIds.0`,
+      /Add phrase "past-the-deadline" to scene/iu,
     );
   });
 
   test('rejects sample content that cannot reach a declared phrase role', () => {
     const catalog = cloneCatalog();
-    catalog.phrases.find((phrase) => phrase.role === 'continuation')!.role =
-      'ending';
+    for (const phrase of catalog.phrases) {
+      if (phrase.role === 'continuation') {
+        phrase.role = 'ending';
+        phrase.finisherBonus = 1;
+      }
+    }
     expectFailure(catalog, 'phrases', /Missing: continuation/iu);
   });
 
@@ -361,16 +488,6 @@ describe('content schemas', () => {
       catalog,
       'scenes.0.backgroundLayers.0.media.copyrightedBroadcastGraphic',
       /original media/iu,
-    );
-  });
-
-  test('rejects an insufficient private phrase pool', () => {
-    const catalog = cloneCatalog();
-    catalog.characters[0]!.phrasePools.private = ['outshouts', 'before-lunch'];
-    expectFailure(
-      catalog,
-      'characters.0.phrasePools.private',
-      /at least 3 private phrases/iu,
     );
   });
 

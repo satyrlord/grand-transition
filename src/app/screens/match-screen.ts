@@ -17,7 +17,6 @@ import {
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarRole,
 } from '../../engine/grammar/english-grammar-adapter';
 import type { MatchCommand, MatchState } from '../../engine/match-lifecycle';
 
@@ -29,8 +28,8 @@ const civicDebateStage = new URL(
   import.meta.url,
 ).href;
 
-type MatchCardState = 'denied' | 'disabled' | 'illegal' | 'legal' | 'selected';
-type MatchCardAction = 'carry' | 'fault' | 'select' | null;
+type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
+type MatchCardAction = 'select' | null;
 
 export type MatchCardView = Readonly<{
   slotIndex: number;
@@ -38,7 +37,6 @@ export type MatchCardView = Readonly<{
   phraseId: string | null;
   text: string;
   role: Phrase['role'] | null;
-  baseValue: number | null;
   ownership: 'Private' | 'Shared';
   shortcut: string;
   state: MatchCardState;
@@ -70,7 +68,6 @@ export type MatchScreenSnapshot = Readonly<{
   openingPlayerId: string;
   activePlayerId: string;
   activePlayerName: string;
-  requiredRoles: readonly EnglishGrammarRole[];
   sentenceText: string;
   sentenceComplete: boolean;
   sharedCards: readonly MatchCardView[];
@@ -78,7 +75,7 @@ export type MatchScreenSnapshot = Readonly<{
   players: readonly [MatchPlayerView, MatchPlayerView];
   timer: Readonly<{
     sequence: number;
-    durationSeconds: 15 | 30 | null;
+    durationSeconds: 10;
   }>;
   actions: Readonly<{
     canCommit: boolean;
@@ -117,7 +114,6 @@ export function createMatchScreenSnapshot(
   const phraseById = new Map(
     sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
   );
-  const legalReferences = new Set(activePlayer.legalCards.map(referenceKey));
   const selectedPhraseIds = new Set(
     Object.values(state.draft.playerStates).flatMap((player) =>
       player.construction.selectedCards.map((card) => card.phraseId),
@@ -135,23 +131,9 @@ export function createMatchScreenSnapshot(
         slotIndex,
         'Shared',
         String(slotIndex + 1),
-        selectedPhraseIds.has(phrase.id) ? 'selected' : 'denied',
+        selectedPhraseIds.has(phrase.id) ? 'selected' : 'empty',
         phrase,
       );
-    }
-    if (!activePlayer.publicPhraseIds.includes(phrase.id)) {
-      return createCardView({
-        slotIndex,
-        reference,
-        phrase,
-        ownership: 'Shared',
-        shortcut: String(slotIndex + 1),
-        state: 'denied',
-        action: null,
-        previewText: activePlayer.construction.previewText,
-        knownWeaknesses: weaknessMatches(phrase, opponent.weaknessTags),
-        disabledReason: `${characterName(activePlayer.characterId)} cannot use this public phrase.`,
-      });
     }
     return availableCard(
       state,
@@ -161,7 +143,6 @@ export function createMatchScreenSnapshot(
       slotIndex,
       'Shared',
       String(slotIndex + 1),
-      legalReferences,
       opponent.weaknessTags,
     );
   });
@@ -183,14 +164,13 @@ export function createMatchScreenSnapshot(
       slotIndex,
       'Private',
       slotIndex === 0 ? 'Q' : 'W',
-      legalReferences,
       opponent.weaknessTags,
     );
   }
   const privateCards = privateSlots.map(
     (card, slotIndex) =>
       card ??
-      emptyCard(slotIndex, 'Private', slotIndex === 0 ? 'Q' : 'W', 'selected'),
+      emptyCard(slotIndex, 'Private', slotIndex === 0 ? 'Q' : 'W', 'empty'),
   );
 
   const players = state.playerOrder.map((playerId) => {
@@ -228,7 +208,6 @@ export function createMatchScreenSnapshot(
     openingPlayerId: state.openingPlayerId,
     activePlayerId,
     activePlayerName: activeName,
-    requiredRoles: activePlayer.construction.requiredRoles,
     sentenceText:
       activePlayer.construction.previewText || msg('Select a noun to begin.'),
     sentenceComplete: activePlayer.construction.analysis.complete,
@@ -240,13 +219,10 @@ export function createMatchScreenSnapshot(
       durationSeconds: state.draft.turn.durationSeconds,
     },
     actions: {
-      canCommit:
-        activePlayer.construction.status === 'building' &&
-        activePlayer.construction.analysis.complete,
+      canCommit: activePlayer.construction.status === 'building',
       canRedraw:
         activePlayer.construction.status === 'building' &&
-        !activePlayer.redrawUsed &&
-        activePlayer.hand.length === 2,
+        !activePlayer.redrawUsed,
       redrawUsed: activePlayer.redrawUsed,
       comebackTiers: activePlayer.availableComebackTiers,
     },
@@ -264,22 +240,20 @@ export class GrandTransitionMatch extends LitElement {
     snapshot: { attribute: false },
     previewText: { state: true },
     keyboardMode: { state: true },
-    pendingFault: { state: true },
-    comebackOpen: { state: true },
     remainingSeconds: { state: true },
     politeAnnouncement: { state: true },
     assertiveAnnouncement: { state: true },
+    statusAnnouncement: { state: true },
     commandPending: { state: true },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
   declare private previewText: string | null;
   declare private keyboardMode: boolean;
-  declare private pendingFault: MatchCardView | null;
-  declare private comebackOpen: boolean;
   declare private remainingSeconds: number | null;
   declare private politeAnnouncement: string;
   declare private assertiveAnnouncement: string;
+  declare private statusAnnouncement: string;
   declare private commandPending: boolean;
 
   private timerId: number | undefined;
@@ -288,17 +262,15 @@ export class GrandTransitionMatch extends LitElement {
     reference: DraftCardReference;
     slotIndex: number;
   }> | null = null;
-  private comebackTrigger: HTMLElement | null = null;
 
   constructor() {
     super();
     this.previewText = null;
     this.keyboardMode = false;
-    this.pendingFault = null;
-    this.comebackOpen = false;
     this.remainingSeconds = null;
     this.politeAnnouncement = '';
     this.assertiveAnnouncement = '';
+    this.statusAnnouncement = '';
     this.commandPending = false;
   }
 
@@ -319,8 +291,11 @@ export class GrandTransitionMatch extends LitElement {
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('snapshot')) {
+      this.previewText = null;
+      this.syncStatusAnnouncement(
+        changed.get('snapshot') as MatchScreenSnapshot | undefined,
+      );
       this.commandPending = false;
-      this.pendingFault = null;
       this.syncTimer();
     }
   }
@@ -339,10 +314,7 @@ export class GrandTransitionMatch extends LitElement {
     if (!this.snapshot) return nothing;
     const first = this.snapshot.players[0];
     const second = this.snapshot.players[1];
-    const timerLabel =
-      this.remainingSeconds === null
-        ? msg('Unlimited')
-        : msg(`${this.remainingSeconds} seconds`);
+    const timerLabel = msg(`${this.remainingSeconds ?? 10} seconds`);
 
     return html`
       <main
@@ -364,10 +336,6 @@ export class GrandTransitionMatch extends LitElement {
               <h1 id="match-title" tabindex="-1">
                 ${msg(`Round ${this.snapshot.round}: ${this.snapshot.activePlayerName} has the floor`)}
               </h1>
-              <p>
-                ${msg('Required')}:
-                <strong>${roleList(this.snapshot.requiredRoles)}</strong>
-              </p>
             </div>
             <dl class="match-facts">
               <div>
@@ -383,10 +351,7 @@ export class GrandTransitionMatch extends LitElement {
                   )}
                 </dd>
               </div>
-              <div
-                class="timer-fact"
-                data-timer=${this.remainingSeconds ?? 'unlimited'}
-              >
+              <div class="timer-fact" data-timer=${this.remainingSeconds ?? 10}>
                 <dt>${msg('Timer')}</dt>
                 <dd>${timerLabel}</dd>
               </div>
@@ -424,15 +389,15 @@ export class GrandTransitionMatch extends LitElement {
         <section class="sentence-ledger" aria-labelledby="sentence-title">
           <div>
             <h2 id="sentence-title">${msg('Current sentence')}</h2>
-            <p class="sentence-preview" aria-live="polite">
+            <p class="sentence-preview">
               ${this.previewText ?? this.snapshot.sentenceText}
             </p>
           </div>
           <p class="sentence-state">
             ${
               this.snapshot.sentenceComplete
-                ? msg('Complete — ready to enter the record')
-                : msg(`Next role: ${roleList(this.snapshot.requiredRoles)}`)
+                ? msg('Sentence ready — end it or keep building')
+                : msg('Choose a phrase or end the sentence')
             }
           </p>
         </section>
@@ -442,6 +407,7 @@ export class GrandTransitionMatch extends LitElement {
             <section class="private-hand" aria-labelledby="private-hand-title">
               <div class="private-hand-heading">
                 <h2 id="private-hand-title">${msg('Private hand')}</h2>
+                <strong>${msg('Has the floor')}</strong>
                 <p>${this.snapshot.activePlayerName}</p>
               </div>
               <ol>
@@ -452,9 +418,14 @@ export class GrandTransitionMatch extends LitElement {
             <ol
               class="shared-board"
               aria-label=${msg('Nine shared phrase slots')}
+              aria-describedby="shared-board-guidance"
+              tabindex="0"
             >
               ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
             </ol>
+            <p id="shared-board-guidance" class="sr-only">
+              ${msg('On narrow screens, scroll within this board to review all nine shared phrase slots.')}
+            </p>
 
             <nav class="match-actions" aria-label=${msg('Turn actions')}>
               <button
@@ -479,39 +450,23 @@ export class GrandTransitionMatch extends LitElement {
               <button
                 type="button"
                 class="action-secondary"
-                @click=${this.openComebacks}
-                ?disabled=${this.commandPending}
+                @click=${this.useComeback}
+                ?disabled=${
+                  this.commandPending ||
+                  !this.snapshot.sentenceComplete ||
+                  this.snapshot.actions.comebackTiers.length === 0
+                }
               >
                 ${this.actionIcon('comeback')}
                 <span class="action-copy">
                   <span class="action-title">
-                    ${msg('Comebacks')} ${this.hint('C')}
+                    ${msg('Comeback')} ${this.hint('C')}
                   </span>
                   <span class="action-detail"
-                    >${msg('Spend comeback charge')}</span
+                    >${msg('Use the strongest filled tier')}</span
                   >
                 </span>
               </button>
-              ${
-                this.pendingFault
-                  ? html`<button
-                      type="button"
-                      class="action-fault"
-                      @click=${this.confirmFault}
-                      ?disabled=${this.commandPending}
-                    >
-                      ${this.actionIcon('fault')}
-                      <span class="action-copy">
-                        <span class="action-title">
-                          ${msg('Commit strategic foul')}
-                        </span>
-                        <span class="action-detail">
-                          ${msg('Accept the grammar penalty')}
-                        </span>
-                      </span>
-                    </button>`
-                  : nothing
-              }
               <button
                 type="button"
                 class="action-primary"
@@ -541,10 +496,12 @@ export class GrandTransitionMatch extends LitElement {
         </footer>
 
         <p class="sr-only" aria-live="polite">${this.politeAnnouncement}</p>
+        <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          ${this.statusAnnouncement}
+        </p>
         <p class="sr-only" aria-live="assertive">
           ${this.assertiveAnnouncement}
         </p>
-        ${this.comebackOpen ? this.renderComebackOverlay() : nothing}
       </main>
     `;
   }
@@ -557,7 +514,8 @@ export class GrandTransitionMatch extends LitElement {
       <article
         class="match-player ${player.isActive ? 'match-player--active' : ''}"
         data-side=${side}
-        aria-label=${`${player.characterName}, ${player.pride} Pride`}
+        data-turn-state=${player.isActive ? 'active' : 'waiting'}
+        aria-label=${`${player.characterName}, ${player.pride} Pride, ${player.isActive ? 'has the floor' : 'waiting'}`}
       >
         <div>
           <h2>${player.characterName}</h2>
@@ -579,8 +537,9 @@ export class GrandTransitionMatch extends LitElement {
               <dd>${player.comebackCharge}/60</dd>
             </div>
           </dl>
-          <p>
-            ${player.isActive ? msg('At the lectern') : msg('In opposition')}
+          <p class="player-turn-status">
+            <span class="turn-live-mark" aria-hidden="true"></span>
+            ${player.isActive ? msg('Has the floor') : msg('Waiting')}
           </p>
           <blockquote class="player-sentence">
             ${
@@ -622,12 +581,6 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-source=${card.reference!.source}
                 data-card-state=${card.state}
                 aria-label=${card.accessibleName}
-                aria-pressed=${
-                  this.pendingFault?.reference?.cardId ===
-                  card.reference!.cardId
-                    ? 'true'
-                    : 'false'
-                }
                 ?disabled=${card.action === null || this.commandPending}
                 @focus=${() => this.preview(card)}
                 @blur=${this.clearPreview}
@@ -635,7 +588,6 @@ export class GrandTransitionMatch extends LitElement {
               >
                 <span class="card-topline">
                   <span class="card-role">${card.role}</span>
-                  <span class="card-value">${card.baseValue}</span>
                 </span>
                 <strong class="card-phrase">${card.text}</strong>
                 <span class="card-bottomline">
@@ -659,55 +611,8 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
-  private renderComebackOverlay(): TemplateResult {
-    const tiers = this.snapshot?.actions.comebackTiers ?? [];
-    return html`
-      <div class="match-overlay" role="presentation">
-        <section
-          class="comeback-dialog"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="comeback-title"
-        >
-          <div>
-            <h2 id="comeback-title">${msg('Comeback register')}</h2>
-            <p>
-              ${
-                tiers.length > 0
-                  ? msg(
-                      'Choose one affordable response. The charge is spent now.',
-                    )
-                  : msg(
-                      'No comeback is affordable. Continue the sentence or close this register.',
-                    )
-              }
-            </p>
-          </div>
-          <div class="comeback-choices">
-            ${tiers.map(
-              (tier) =>
-                html`<button
-                  type="button"
-                  @click=${() => this.chooseComeback(tier)}
-                >
-                  ${tierLabel(tier)}
-                </button>`,
-            )}
-            <button
-              type="button"
-              class="action-secondary"
-              @click=${this.closeComebacks}
-            >
-              ${msg('Close')} ${this.hint('Escape')}
-            </button>
-          </div>
-        </section>
-      </div>
-    `;
-  }
-
   private actionIcon(
-    action: 'comeback' | 'deliver' | 'fault' | 'redraw',
+    action: 'comeback' | 'deliver' | 'redraw',
   ): TemplateResult {
     const paths = {
       redraw: svg`
@@ -719,11 +624,6 @@ export class GrandTransitionMatch extends LitElement {
       comeback: svg`
         <path d="M12 3l7 3v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z" />
         <path d="M13 7l-4 6h3l-1 4 4-6h-3z" />
-      `,
-      fault: svg`
-        <path d="M12 3l9 17H3z" />
-        <path d="M12 8v6" />
-        <path d="M12 17h.01" />
       `,
       deliver: svg`
         <path d="M4 10v4l11 4V6z" />
@@ -758,15 +658,6 @@ export class GrandTransitionMatch extends LitElement {
       return;
     this.keyboardMode = true;
 
-    if (event.key === 'Escape' && this.comebackOpen) {
-      event.preventDefault();
-      this.closeComebacks();
-      return;
-    }
-    if (this.comebackOpen) {
-      if (event.key === 'Tab') this.containComebackFocus(event);
-      return;
-    }
     if (this.commandPending || isEditingKeystroke(event.target, event.key))
       return;
 
@@ -804,7 +695,7 @@ export class GrandTransitionMatch extends LitElement {
       this.redraw();
     } else if (event.key.toLowerCase() === 'c') {
       event.preventDefault();
-      this.openComebacks();
+      this.useComeback();
     }
   };
 
@@ -825,39 +716,14 @@ export class GrandTransitionMatch extends LitElement {
 
   private activateCard(card: MatchCardView): void {
     if (!this.snapshot || this.commandPending || !card.reference) return;
-    if (card.action === 'fault') {
-      this.pendingFault = card;
-      void this.updateComplete.then(() =>
-        this.querySelector<HTMLElement>('.action-fault')?.focus(),
-      );
-      return;
-    }
     this.pendingFocus = {
       reference: card.reference,
       slotIndex: card.slotIndex,
     };
-    if (card.action === 'carry') {
-      this.dispatchMatchCommand('carry-continuation', {
-        card: card.reference,
-      });
-    } else if (card.action === 'select') {
+    if (card.action === 'select') {
       this.dispatchMatchCommand('select-phrase', { card: card.reference });
     }
   }
-
-  private readonly confirmFault = (): void => {
-    if (!this.pendingFault?.reference) return;
-    const card = this.pendingFault;
-    const reference = card.reference;
-    if (!reference) return;
-    this.pendingFocus = {
-      reference,
-      slotIndex: card.slotIndex,
-    };
-    this.dispatchMatchCommand('deliberate-fault', {
-      card: reference,
-    });
-  };
 
   private readonly redraw = (): void => {
     if (this.snapshot?.actions.canRedraw) {
@@ -871,48 +737,16 @@ export class GrandTransitionMatch extends LitElement {
     }
   };
 
-  private readonly openComebacks = (event?: Event): void => {
-    if (!this.snapshot || this.commandPending) return;
-    this.comebackTrigger =
-      event?.currentTarget instanceof HTMLElement
-        ? event.currentTarget
-        : (document.activeElement as HTMLElement | null);
-    this.comebackOpen = true;
-    void this.updateComplete.then(() =>
-      this.querySelector<HTMLElement>('.comeback-dialog button')?.focus(),
-    );
-  };
-
-  private containComebackFocus(event: KeyboardEvent): void {
-    const dialog = this.querySelector<HTMLElement>('.comeback-dialog');
-    const focusable = Array.from(
-      dialog?.querySelectorAll<HTMLElement>('button:not(:disabled)') ?? [],
-    );
-    if (focusable.length === 0) return;
-    const first = focusable[0]!;
-    const last = focusable.at(-1)!;
-    const active = document.activeElement;
+  private readonly useComeback = (): void => {
     if (
-      !dialog?.contains(active) ||
-      (event.shiftKey && active === first) ||
-      (!event.shiftKey && active === last)
+      this.commandPending ||
+      !this.snapshot?.sentenceComplete ||
+      this.snapshot.actions.comebackTiers.length === 0
     ) {
-      event.preventDefault();
-      (event.shiftKey ? last : first).focus();
+      return;
     }
-  }
-
-  private readonly closeComebacks = (): void => {
-    this.comebackOpen = false;
-    const trigger = this.comebackTrigger;
-    void this.updateComplete.then(() => trigger?.focus());
+    this.dispatchMatchCommand('select-comeback', {});
   };
-
-  private chooseComeback(tier: ComebackTier): void {
-    if (this.commandPending) return;
-    this.comebackOpen = false;
-    this.dispatchMatchCommand('select-comeback', { tier });
-  }
 
   private dispatchMatchCommand(
     type: MatchCommand['type'],
@@ -946,6 +780,54 @@ export class GrandTransitionMatch extends LitElement {
     this.assertiveAnnouncement = '';
     if (durationSeconds === null) return;
     this.timerId = window.setInterval(() => this.tickTimer(), 1_000);
+  }
+
+  private syncStatusAnnouncement(
+    previous: MatchScreenSnapshot | undefined,
+  ): void {
+    const current = this.snapshot;
+    if (!current) {
+      this.statusAnnouncement = '';
+      return;
+    }
+
+    if (
+      !previous ||
+      current.round !== previous.round ||
+      current.activePlayerId !== previous.activePlayerId
+    ) {
+      const damage = current.players
+        .map(
+          (player) =>
+            `${player.characterName} ${current.reaction.playerDamage[player.playerId] ?? 0}`,
+        )
+        .join('; ');
+      const damageMessage = Object.values(current.reaction.playerDamage).some(
+        (value) => value > 0,
+      )
+        ? ` Last exchange damage: ${damage}.`
+        : '';
+      this.statusAnnouncement = msg(
+        `Round ${current.round}. ${current.activePlayerName} has the floor. Ten seconds to choose.${damageMessage}`,
+      );
+      return;
+    }
+
+    if (!previous.sentenceComplete && current.sentenceComplete) {
+      this.statusAnnouncement = msg(
+        'Sentence complete. End sentence is available.',
+      );
+      return;
+    }
+
+    if (previous.sentenceText !== current.sentenceText) {
+      this.statusAnnouncement = msg(
+        `Sentence updated: ${current.sentenceText}`,
+      );
+      return;
+    }
+
+    this.statusAnnouncement = '';
   }
 
   private tickTimer(): void {
@@ -1019,44 +901,36 @@ function availableCard(
   slotIndex: number,
   ownership: MatchCardView['ownership'],
   shortcut: string,
-  legalReferences: ReadonlySet<string>,
   opponentWeaknessTags: readonly string[],
 ): MatchCardView {
   const construction = state.draft!.playerStates[activePlayerId]!.construction;
   const knownWeaknesses = weaknessMatches(phrase, opponentWeaknessTags);
   if (phrase.role === 'continuation') {
-    const canCarry = construction.analysis.complete;
     return createCardView({
       slotIndex,
       reference,
       phrase,
       ownership,
       shortcut,
-      state: canCarry ? 'legal' : 'disabled',
-      action: canCarry ? 'carry' : null,
-      previewText: canCarry
-        ? msg(`${construction.previewText} — carry into the next round.`)
-        : construction.previewText,
+      state: 'legal',
+      action: 'select',
+      previewText: msg(
+        `${construction.previewText || 'Empty sentence'} — continue in the next round.`,
+      ),
       knownWeaknesses,
-      disabledReason: canCarry
-        ? null
-        : msg('Complete a sentence before you carry it.'),
+      disabledReason: null,
     });
   }
-  const isLegal = legalReferences.has(referenceKey(reference));
   return createCardView({
     slotIndex,
     reference,
     phrase,
     ownership,
     shortcut,
-    state: isLegal ? 'legal' : 'illegal',
-    action: isLegal ? 'select' : 'fault',
-    previewText: isLegal
-      ? legalPreview(state, activePlayerId, phrase)
-      : msg(
-          `${construction.previewText || 'Empty sentence'} — strategic foul with ${gameMessage(phrase.textKey)}.`,
-        ),
+    state: 'legal',
+    action: 'select',
+    previewText:
+      legalPreview(state, activePlayerId, phrase) || construction.previewText,
     knownWeaknesses,
     disabledReason: null,
   });
@@ -1091,14 +965,13 @@ function createCardView(
     phraseId: config.phrase.id,
     text,
     role: config.phrase.role,
-    baseValue: config.phrase.baseValue,
     ownership: config.ownership,
     shortcut: config.shortcut,
     state: config.state,
     stateLabel,
     knownWeaknesses: config.knownWeaknesses,
     disabledReason: config.disabledReason,
-    accessibleName: `${text}. Role ${config.phrase.role}. Value ${config.phrase.baseValue}. ${config.ownership} card. ${stateLabel}. ${weaknessLabel}${disabledLabel}`,
+    accessibleName: `${text}. Role ${config.phrase.role}. ${config.ownership} card. ${stateLabel}. ${weaknessLabel}${disabledLabel}`,
     action: config.action,
     previewText: config.previewText,
   };
@@ -1108,18 +981,17 @@ function emptyCard(
   slotIndex: number,
   ownership: MatchCardView['ownership'],
   shortcut: string,
-  state: Extract<MatchCardState, 'denied' | 'selected'>,
+  state: Extract<MatchCardState, 'empty' | 'selected'>,
   phrase?: Phrase,
 ): MatchCardView {
   const phraseName = phrase ? gameMessage(phrase.textKey) : msg('Removed card');
-  const stateLabel = state === 'selected' ? msg('Selected') : msg('Denied');
+  const stateLabel = state === 'selected' ? msg('Selected') : msg('Empty');
   return {
     slotIndex,
     reference: null,
     phraseId: phrase?.id ?? null,
     text: '',
     role: phrase?.role ?? null,
-    baseValue: phrase?.baseValue ?? null,
     ownership,
     shortcut,
     state,
@@ -1161,20 +1033,14 @@ function weaknessMatches(
   return weaknessTags.filter((tag) => phrase.tags.includes(tag));
 }
 
-function referenceKey(reference: DraftCardReference): string {
-  return `${reference.source}:${reference.cardId}`;
-}
-
 function cardStateLabel(state: MatchCardState): string {
   switch (state) {
     case 'legal':
-      return msg('Legal');
-    case 'illegal':
-      return msg('Illegal — strategic foul available');
+      return msg('Available');
     case 'selected':
       return msg('Selected');
-    case 'denied':
-      return msg('Denied');
+    case 'empty':
+      return msg('Empty');
     case 'disabled':
       return msg('Disabled');
   }
@@ -1199,21 +1065,6 @@ function playerName(
 
 function gameMessage(key: string | undefined): string {
   return key ? (sampleContent.locales[0]?.messages[key] ?? key) : '';
-}
-
-function roleList(roles: readonly EnglishGrammarRole[]): string {
-  return roles.length > 0
-    ? roles.map((role) => role.replaceAll('-', ' ')).join(' / ')
-    : msg('sentence complete');
-}
-
-function tierLabel(tier: ComebackTier): string {
-  const values = {
-    weak: msg('Weak comeback — 20 charge, +4 damage'),
-    medium: msg('Medium comeback — 40 charge, +10 damage'),
-    strong: msg('Strong comeback — 60 charge, +18 damage'),
-  } as const;
-  return values[tier];
 }
 
 function isEditingKeystroke(target: EventTarget | null, key: string): boolean {

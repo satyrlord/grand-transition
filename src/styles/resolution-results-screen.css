@@ -174,10 +174,6 @@
     border-block-start-style: dotted;
   }
 
-  .construction-entry p[data-construction-status='fault'] {
-    border-block-start: 3px double var(--registry-red-deep);
-  }
-
   .score-terms,
   .rule-activations {
     margin: 0;

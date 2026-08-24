@@ -1,0 +1,15 @@
+[
+  {
+    "id": "committee-kite",
+    "role": "noun",
+    "text": "a committee kite",
+    "tags": ["paperwork", "empty-promise"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["whimsy"]
+    },
+    "sceneIds": ["echo-chamber"],
+    "rarity": "rare",
+    "reviewNotes": "Original Civic Fox phrase. Editorial review complete."
+  }
+]

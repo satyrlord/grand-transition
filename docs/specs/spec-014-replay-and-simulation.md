@@ -68,8 +68,12 @@ Milestone 002 threshold remains 70 percent.
   in normalized replay or log output.
 - **AC-014-04:** The simulation command accepts boundary seeds 0 and 4294967295,
   rejects invalid counts and seeds, and reproduces summary and output bytes.
-- **AC-014-05:** A 5,000-match property run records seed and replay path and
-  preserves every stated match invariant.
+- **AC-014-05:** Normal CI runs 500 generated Node matches and 50 Chromium
+  matches with seed and replay-path evidence. A permanent fixture covers every
+  previously failing seed, including `2135977951`. The repository
+  `$simulate-matches` skill runs an explicitly requested workload outside
+  normal CI and requires the number of matches as input. Every workload
+  preserves the stated match invariants.
 - **AC-014-06:** Every named pure file meets its per-file threshold, and the
   production bundle and DOM contain no developer control, label, or import.
 - **AC-014-07:** A development-browser flow proves the three workflow phases,
@@ -89,6 +93,11 @@ Replay reproduces exact final state. Corrupt or unsupported logs fail safely.
 Generated matches preserve all stated invariants. Normalized exports are stable
 and contain no personal data. Production has no enabled developer control.
 `npm run ci` passes. Stop before browser game screens.
+
+Use the `$simulate-matches` repository skill for an explicit simulation
+workload. The caller must give a positive integer match count. This workflow is
+not part of normal CI and does not replace targeted seed fixtures or the
+500-match CI property run.
 
 ## Objective verifiers
 

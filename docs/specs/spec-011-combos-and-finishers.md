@@ -1,77 +1,41 @@
-# Milestone 011: Combos and Finishers
+# Milestone 011: Hollywood Roast Combos and Finishers
 
 **Status:** Approved  
 **Depends on:** 010  
-**Owns:** Exact-noun combos and finisher rules  
+**Owns:** Consecutive noun combos and finisher scoring
 **Production-file budget:** 5
 
-## Deliver
+## Noun combos
 
-Add exact-noun combo tracking, multiplier application, finisher legality, and
-finisher effects to the pure scoring result and breakdown.
+Combos use exact noun phrase identifiers. If a noun appears in consecutive
+complete scored insults by the same player, its chain advances from 1 to 2, 3,
+and onward. Position does not matter. A noun absent from the next complete
+insult leaves the active combo set. An incomplete insult clears all of that
+player's combos. A continuation neither scores nor advances or clears combos.
 
-Combos use exact noun IDs. Reuse from the immediately previous complete insult
-starts at `2x`; uninterrupted reuse advances to `3x`, `4x`, and onward. Missing
-the noun resets its chain. Invalid or incomplete sentences reset all chains.
+For each scored clause, multiply by every participating noun chain. A
+`NOUN + VERB + NOUN` clause therefore multiplies the subject and object chain
+values. If the same noun is both subject and object, its chain factor applies
+twice. Clause combo factors do not multiply unrelated clauses.
 
-An ending is legal only after a complete clause, commits immediately, adds a
-visible configured bonus before multipliers, can be general or character-owned,
-and is never required for sentence completion.
+## Finishers
 
-## Combo and finisher ordering
-
-Combo chains belong to one attacking player and one exact noun phrase ID.
-After each complete valid insult:
-
-- a noun used in the immediately preceding complete valid insult advances its
-  chain from 1 to 2, or from its current value to the next integer;
-- a noun not used in that preceding insult starts or resets to 1;
-- a tracked noun absent from the new insult resets to 1;
-- an invalid or incomplete insult clears all chains for that player.
-
-Repeated occurrences of one noun in the same insult count once. When several
-nouns have active chains, the highest chain is the one combo multiplier for the
-insult. Tied chains use the earliest noun in sentence order for explanation.
-Combo multipliers do not stack.
-
-The scoring order becomes:
-
-1. base, length, and directness;
-2. finisher bonus;
-3. weakness multiplier;
-4. one combo multiplier;
-5. final rounding.
-
-An ending without `finisherBonus` is legal and adds zero. An ending restricted
-to another character is unavailable before grammar analysis.
-The typed failure codes are `finisher-premature` and
-`finisher-wrong-owner`. A rejected finisher does not change the draft state or
-combo state.
+A finisher can be selected only after a complete clause and ends the sentence
+immediately. Its configured score is added after clause scoring. A restricted
+finisher receives its 1.5 restriction multiplier and rounds up. A finisher that
+matches a defender weakness receives one 2x weakness multiplier. Noun combos do
+not multiply a finisher.
 
 ## Acceptance criteria
 
-- **AC-011-01:** Golden sequences prove chain start at 1, reuse at 2x, growth to
-  3x and 4x, absence reset, invalid reset, incomplete reset, and per-player
-  isolation.
-- **AC-011-02:** Different noun IDs with identical text never share a chain,
-  while the same noun ID with a different number form does.
-- **AC-011-03:** Repeated and multiple nouns apply one highest multiplier and
-  produce the stated deterministic explanation.
-- **AC-011-04:** A legal owned finisher commits immediately and enters before
-  both multipliers. Missing bonus adds zero. Wrong-owner and premature finishers
-  return typed failures.
-- **AC-011-05:** Worked score examples reconstruct every intermediate value and
-  the final rounded damage.
-
-## Verify and stop
-
-Tests cover exact identity, non-matching nouns, combo growth and reset, legal and
-illegal finishers, and score order. The breakdown explains each modifier.
-`npm run ci` passes. Stop before continuation, comeback, or match lifecycle.
+- **AC-011-01:** Tests prove combo start, consecutive growth, absence reset,
+  incomplete clear, continuation preservation, and per-player isolation.
+- **AC-011-02:** Tests prove per-clause subject and object combo products,
+  including the same noun in both positions.
+- **AC-011-03:** Tests prove finisher placement, restriction, weakness, score
+  order, and immediate sentence end.
 
 ## Objective verifiers
 
-`tests/unit/combo-finisher-scoring.test.ts` verifies AC-011-01 through
-AC-011-05 in Node and Chromium. `tests/unit/draft-actions.test.ts` verifies
-finisher availability and typed draft rejection. `npm run ci` verifies the
-cumulative quality, coverage, build, and production-browser security contracts.
+`tests/unit/combo-finisher-scoring.test.ts` and
+`tests/unit/draft-actions.test.ts` verify AC-011-01 through AC-011-03.

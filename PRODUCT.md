@@ -15,7 +15,8 @@ production result is a static browser build.
 ## Users
 
 Inferred from the approved specifications: the primary users are people who
-want a local tactical word game. They play alone against artificial
+are at least 18 years old and want a local tactical political word game. They
+play alone against artificial
 intelligence (AI) or with another
 person in a hotseat session.
 
@@ -47,15 +48,15 @@ Private hotseat content must remain private during handovers.
   owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 015: the title and
-  setup shell,
+- The implemented scope includes Milestones 001 through 017: the title, setup,
+  playable match, resolution, and results screens,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
   content schemas, an English game-locale bundle, original sample content, and
-  minimum and two-clause English grammar, shared-subject forms, endings,
-  incomplete states, strategic grammar faults, deterministic board and hand
-  generation, drafting, scoring, match lifecycle, replay, and simulation. The
-  setup shell emits a typed match command but does not render a playable match.
+  Hollywood Roast grammar, compound subjects, endings, incomplete states,
+  immediate grammar mistakes, one common board, private hands, clause scoring,
+  noun combos, continuations, comebacks, cliffhangers, replay, and simulation.
+  The current local hotseat flow reaches results, rematch, and setup return.
 
 ## Brand Commitments
 

@@ -63,11 +63,77 @@ export const mediaReferenceSchema = z
   })
   .strict();
 
-export const phraseSchema = z
+const scoreGroupsSchema = z
+  .object({
+    substance: uniqueArray(
+      identifierSchema,
+      'List each substance group only once.',
+    ),
+    flavour: uniqueArray(
+      identifierSchema,
+      'List each flavour group only once.',
+    ),
+  })
+  .strict();
+
+const scorePreferenceSchema = z
+  .object({
+    left: uniqueArray(
+      identifierSchema,
+      'List each left score group only once.',
+    ).min(1),
+    right: uniqueArray(
+      identifierSchema,
+      'List each right score group only once.',
+    )
+      .min(1)
+      .optional(),
+  })
+  .strict();
+
+const scorePreferencesSchema = z
+  .object({
+    substance: z.array(scorePreferenceSchema),
+    flavour: z.array(scorePreferenceSchema),
+  })
+  .strict();
+
+const customScoresSchema = z
+  .array(
+    z
+      .object({
+        leftNounId: identifierSchema,
+        rightNounId: identifierSchema.optional(),
+        score: z.number().int().min(0).max(100),
+      })
+      .strict(),
+  )
+  .min(1)
+  .superRefine((scores, context) => {
+    const seen = new Set<string>();
+    scores.forEach((score, index) => {
+      const key = `${score.leftNounId}\u0000${score.rightNounId ?? ''}`;
+      if (seen.has(key)) {
+        context.addIssue({
+          code: 'custom',
+          path: [index],
+          message: 'Define each left-and-right noun custom score only once.',
+        });
+      }
+      seen.add(key);
+    });
+  });
+
+export const phraseDefinitionSchema = z
   .object({
     id: identifierSchema,
     role: phraseRoleSchema,
     textKey: localeKeySchema,
+    connectorKind: z.enum(['and', 'because', 'but']).optional(),
+    grammaticalNumber: z.enum(['singular', 'plural']).optional(),
+    customScores: customScoresSchema.optional(),
+    scoreGroups: scoreGroupsSchema.optional(),
+    scorePreferences: scorePreferencesSchema.optional(),
     numberForms: z
       .object({
         singularKey: localeKeySchema,
@@ -78,8 +144,6 @@ export const phraseSchema = z
         message: 'Use different locale keys for singular and plural forms.',
       })
       .optional(),
-    baseValue: z.number().int().min(1).max(20),
-    directness: z.union([z.literal(0), z.literal(1)]),
     tags: uniqueArray(identifierSchema, 'List each phrase tag only once.').min(
       1,
       'Add at least one phrase tag.',
@@ -87,17 +151,71 @@ export const phraseSchema = z
     characterIds: uniqueArray(
       identifierSchema,
       'List each character restriction only once.',
-    ).optional(),
+    )
+      .min(1)
+      .optional(),
     sceneIds: uniqueArray(
       identifierSchema,
       'List each scene restriction only once.',
-    ).optional(),
+    )
+      .min(1)
+      .optional(),
     rarity: z.enum(['common', 'uncommon', 'rare']),
     finisherBonus: z.number().int().min(1).max(20).optional(),
-    contentRating: z.enum(['everyone-10-plus', 'teen']),
     editorialReview: editorialReviewSchema,
   })
   .strict();
+
+export const phraseSchema = phraseDefinitionSchema.superRefine(
+  (phrase, context) => {
+    const issue = (field: string, message: string) =>
+      context.addIssue({ code: 'custom', path: [field], message });
+    const relation = phrase.role === 'verb' || phrase.role === 'predicate';
+
+    if (phrase.role === 'noun' && !phrase.scoreGroups) {
+      issue(
+        'scoreGroups',
+        'Give each noun substance and flavour score groups.',
+      );
+    } else if (phrase.role !== 'noun' && phrase.scoreGroups) {
+      issue('scoreGroups', 'Only a noun can declare noun score groups.');
+    }
+
+    if (relation && !phrase.scorePreferences && !phrase.customScores) {
+      issue(
+        'scorePreferences',
+        'Give each relation score preferences or a custom score.',
+      );
+    } else if (!relation && (phrase.scorePreferences || phrase.customScores)) {
+      issue(
+        phrase.scorePreferences ? 'scorePreferences' : 'customScores',
+        'Only a verb or predicate can declare relation scoring data.',
+      );
+    }
+
+    if (phrase.role === 'conjunction' && !phrase.connectorKind) {
+      issue(
+        'connectorKind',
+        'Declare and, but, or because for each conjunction.',
+      );
+    } else if (phrase.role !== 'conjunction' && phrase.connectorKind) {
+      issue(
+        'connectorKind',
+        'Only a conjunction can declare a connector kind.',
+      );
+    }
+
+    if (phrase.role === 'ending' && phrase.finisherBonus === undefined) {
+      issue('finisherBonus', 'Give each ending its configured finisher score.');
+    } else if (phrase.role !== 'ending' && phrase.finisherBonus !== undefined) {
+      issue('finisherBonus', 'Only an ending can declare a finisher score.');
+    }
+
+    if (phrase.role !== 'noun' && phrase.grammaticalNumber) {
+      issue('grammaticalNumber', 'Only a noun can declare grammatical number.');
+    }
+  },
+);
 
 const paletteSchema = z
   .object({
@@ -110,16 +228,6 @@ const paletteSchema = z
     accent: z
       .string()
       .regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
-  })
-  .strict();
-
-const phrasePoolSchema = z
-  .object({
-    public: uniqueArray(identifierSchema, 'List each public phrase only once.'),
-    private: uniqueArray(
-      identifierSchema,
-      'List each private phrase only once.',
-    ),
   })
   .strict();
 
@@ -144,7 +252,10 @@ export const characterSchema = z
     )
       .min(2)
       .max(3),
-    phrasePools: phrasePoolSchema,
+    characterPhraseIds: uniqueArray(
+      identifierSchema,
+      'List each character phrase only once.',
+    ),
     comebackLinesByTier: z
       .object({
         weak: uniqueArray(
@@ -188,6 +299,7 @@ export const characterSchema = z
 export const sceneSchema = z
   .object({
     id: identifierSchema,
+    openingPlayerIndex: z.union([z.literal(0), z.literal(1)]),
     nameKey: localeKeySchema,
     descriptionKey: localeKeySchema,
     backgroundLayers: z

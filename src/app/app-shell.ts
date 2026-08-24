@@ -224,7 +224,7 @@ export class GrandTransitionApp extends LitElement {
       scenePhraseIds: scene.phrasePool,
       generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
       mode: payload.mode,
-      timerSeconds: payload.timerSeconds,
+      openingPlayerIndex: scene.openingPlayerIndex,
     });
     state = reduceLifecycle(state, 'start-match');
     state = reduceLifecycle(state, 'prepare-round');
@@ -293,8 +293,7 @@ function configuredPlayer(
   return {
     playerId,
     characterId,
-    publicPhraseIds: character.phrasePools.public,
-    privatePhraseIds: character.phrasePools.private,
+    characterPhraseIds: character.characterPhraseIds,
     weaknessTags: character.weaknessTags,
     subjectNumber: 'singular',
     objectNumber: 'singular',
@@ -330,7 +329,6 @@ export function createDefaultSetupSnapshot(): SetupSnapshot {
     playerOneCharacterId: playerOne.id,
     playerTwoCharacterId: playerTwo.id,
     sceneId: scene.id,
-    timerSeconds: null,
   });
 }
 

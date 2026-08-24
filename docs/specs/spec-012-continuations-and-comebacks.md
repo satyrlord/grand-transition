@@ -1,90 +1,54 @@
-# Milestone 012: Continuations and Comebacks
+# Milestone 012: Hollywood Roast Continuations and Comebacks
 
 **Status:** Approved  
 **Depends on:** 011  
-**Owns:** Continuation carry and the three-tier comeback system  
+**Owns:** Continuation survival, comeback charge, tier use, and closing damage
 **Production-file budget:** 6
 
-## Deliver
+## Continuations
 
-Implement continuation carry, survival, interruption, and visible state facts.
-Implement three comeback thresholds, charge cap, tier choice, spending, closing
-line selection, damage bonus, and strong-tier interruption.
+A continuation can be selected at any sentence point. It ends that player's
+participation in the round and deals zero outgoing damage. Remove the
+continuation card before the next round. If the opponent deals 0 through 15
+damage, restore the exact carried fragment. Opponent damage of 16 or more breaks
+it. A strong comeback adds 18 damage, so it crosses the same threshold without
+a separate break rule.
 
-A continuation carries its visible phrases and grammar state. It survives 15 or
-less received damage and is discarded at 16 or more. It grants flexibility, not
-automatic damage.
+A surviving continuation preserves the player's prior noun-combo state. A
+broken continuation clears that player's combos. Sudden-death cliffhangers do
+not deal continuation cards.
 
-Received damage charges a meter capped at 60. Selectable tiers cost and add:
-weak 20 and 4, medium 40 and 10, strong 60 and 18. A character closing line is
-separate from grammar and noun combos. Only strong independently breaks a
-continuation.
+## Comebacks
 
-Comeback charge is a visible integer from 0 through 60. The exact available
-tier list is derived from the current charge. Milestone 012 replaces the
-Milestone 009 `comeback-unavailable` placeholder with
-`comeback-unaffordable`. Duplicate selection returns
-`comeback-already-selected`. Incomplete and wrong-phase selection continue to
-return `sentence-incomplete` and `wrong-phase`. Each rejection preserves state,
-charge, seed, and command history.
+Opponent outgoing damage charges a three-part meter. Self-damage from grammar
+mistakes or timeouts does not charge it. Each 20 received damage fills one tier,
+up to 60.
 
-## Continuation resolution
+When the sentence is complete and at least one tier is full, one comeback action
+uses the strongest filled tier:
 
-A continuation card is a draft action, not a grammar phrase. Selecting it after
-a complete clause consumes the card, ends the player's construction, and deals
-zero outgoing damage in that resolution. It carries the visible grammar
-phrases, exact grammar state, and public text. Carry selection does not update
-combo chains.
+| Filled charge | Tier   | Charge spent | Added damage |
+| ------------- | ------ | ------------ | ------------ |
+| 20-39         | Weak   | 20           | 4            |
+| 40-59         | Medium | 40           | 10           |
+| 60            | Strong | 60           | 18           |
 
-After simultaneous damage, the carry survives when opponent outgoing damage is
-0 through 15. It breaks at 16 or more. Opponent strong-comeback use also breaks
-it, independent of damage. Self-damage does not break it. A surviving carry is
-restored at the next round before new drafting; the continuation card itself is
-not restored, rendered, or scored. A broken carry clears its phrases and grammar
-state and clears that player's combo chains as an incomplete construction. A
-later valid commit of a surviving carry compares all its nouns with the
-player's last committed insult.
-
-## Comeback resolution
-
-A player selects at most one affordable tier after a complete grammar
-construction and before resolution. Charge is spent immediately when the
-command succeeds. Damage received later in that resolution cannot fund the
-selection. Charge gained from opponent outgoing damage is applied after prior
-spending and capped at 60. Self-damage does not add charge.
-
-The comeback bonus is added after finisher, weakness, combo, and rounding. It
-is never multiplied. The seeded closing line is visible explanation only and
-does not enter grammar, phrase count, noun chains, or scoring tags.
-Closing-line selection uses the character tier pool, command history, and
-current seed. A successful selection advances the seed once. The same
-character, tier, command history, and seed reproduce the line and next seed.
+The comeback selects a character closing line, ends the sentence, and adds its
+damage after scored clauses and finishers. The line does not enter grammar or
+combos. Spend the tier before adding damage received during the same exchange.
 
 ## Acceptance criteria
 
-- **AC-012-01:** Continuation survives opponent damage 0 and 15, breaks at 16,
-  breaks from a strong comeback at 0 damage, and ignores self-damage.
-- **AC-012-02:** A surviving carry restores phrases, state, public text, and
-  eligible noun chains exactly once; a broken carry restores none of them.
-- **AC-012-03:** Charge boundaries 0, 19, 20, 39, 40, 59, and 60 expose the
-  exact available tiers. Spending cannot underflow and gain cannot exceed 60.
-- **AC-012-04:** Weak, medium, and strong spend 20, 40, and 60 and add exactly
-  4, 10, and 18 after all multiplied sentence damage.
-- **AC-012-05:** Same character, tier, history, and seed reproduce the closing
-  line. Closing text changes no grammar, combo, or tag result.
-- **AC-012-06:** Unaffordable, duplicate, incomplete-sentence, and wrong-phase
-  selections return typed failures without charge or seed change.
-
-## Verify and stop
-
-Boundary tests prove survival at 15, break at 16, thresholds at 20, 40, and 60,
-cap and spending rules, and deterministic line selection. Comeback text does not
-affect grammar or combos. `npm run ci` passes. Stop before Pride resolution.
+- **AC-012-01:** Damage 0 and 15 preserve a carry; 16 breaks it.
+- **AC-012-02:** A strong comeback breaks a carry because its 18 damage bonus
+  crosses the 16-damage threshold.
+- **AC-012-03:** Charge thresholds, cap, strongest-tier use, spending, and
+  same-exchange refill use the exact table.
+- **AC-012-04:** Self-damage does not charge a comeback.
+- **AC-012-05:** Closing-line selection is deterministic and stays outside
+  grammar and combos.
 
 ## Objective verifiers
 
 `tests/unit/continuation-comeback-resolution.test.ts` verifies AC-012-01 through
-AC-012-06 in Node and Chromium. `tests/unit/draft-actions.test.ts` verifies
-immediate charge spending, visible state facts, exact carry restoration, and
-typed draft-command failures. `npm run ci` verifies the cumulative quality,
-coverage, build, and production-browser security contracts.
+AC-012-05.

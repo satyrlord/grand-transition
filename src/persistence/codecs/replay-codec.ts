@@ -53,7 +53,6 @@ const selectPhraseCommand = z
     payload: z
       .object({
         card: cardReference,
-        conjunctionMode: z.enum(['new-subject', 'shared-subject']).optional(),
       })
       .strict(),
   })
@@ -71,22 +70,12 @@ const simpleActorCommand = (
     })
     .strict();
 
-const cardActorCommand = (type: 'carry-continuation' | 'deliberate-fault') =>
-  z
-    .object({
-      type: z.literal(type),
-      source,
-      actorId: identifier,
-      payload: z.object({ card: cardReference }).strict(),
-    })
-    .strict();
-
 const selectComebackCommand = z
   .object({
     type: z.literal('select-comeback'),
     source,
     actorId: identifier,
-    payload: z.object({ tier: z.enum(['weak', 'medium', 'strong']) }).strict(),
+    payload: emptyPayload,
   })
   .strict();
 
@@ -95,9 +84,7 @@ const replayCommandSchema = z.union([
   selectPhraseCommand,
   simpleActorCommand('redraw-hand'),
   simpleActorCommand('commit-sentence'),
-  cardActorCommand('carry-continuation'),
   selectComebackCommand,
-  cardActorCommand('deliberate-fault'),
   simpleActorCommand('expire-turn'),
 ]);
 
@@ -118,7 +105,7 @@ export const replaySetupSchema = z
     players: z.tuple([replayPlayerSchema, replayPlayerSchema]),
     sceneId: identifier,
     aiDifficulty: z.string().min(1).nullable(),
-    timerSeconds: z.union([z.literal(15), z.literal(30), z.null()]),
+    timerSeconds: z.literal(10),
     speechEnabled: z.boolean(),
     privacyEnabled: z.boolean(),
   })
@@ -156,9 +143,7 @@ const publicSelectionSchema = z.union([
   selectPhraseCommand,
   simpleActorCommand('redraw-hand'),
   simpleActorCommand('commit-sentence'),
-  cardActorCommand('carry-continuation'),
   selectComebackCommand,
-  cardActorCommand('deliberate-fault'),
   simpleActorCommand('expire-turn'),
 ]);
 
@@ -195,7 +180,7 @@ const publicRuleEventSchema = z.union([
   z
     .object({
       ...eventBase,
-      type: z.enum(['weakness', 'comeback', 'deliberate-fault']),
+      type: z.enum(['weakness', 'comeback']),
       detail: z.literal('activated'),
     })
     .strict(),
@@ -473,14 +458,6 @@ export function createMatchLog(
           detail: 'activated',
         });
       }
-      if (player.deliberateFault) {
-        result.push({
-          round: resolution.round,
-          playerId,
-          type: 'deliberate-fault',
-          detail: 'activated',
-        });
-      }
       if (player.continuation.status !== 'none') {
         result.push({
           round: resolution.round,
@@ -552,8 +529,7 @@ function createSetupRequest(
       ? {
           playerId: player.playerId,
           characterId: character.id,
-          publicPhraseIds: character.phrasePools.public,
-          privatePhraseIds: character.phrasePools.private,
+          characterPhraseIds: character.characterPhraseIds,
           weaknessTags: character.weaknessTags,
           subjectNumber: player.subjectNumber,
           objectNumber: player.objectNumber,
@@ -570,9 +546,9 @@ function createSetupRequest(
     generalPhraseIds: catalog.phrases.map((phrase) => phrase.id),
     mode: replay.setup.mode,
     aiDifficulty: replay.setup.aiDifficulty,
-    timerSeconds: replay.setup.timerSeconds,
     speechEnabled: replay.setup.speechEnabled,
     privacyEnabled: replay.setup.privacyEnabled,
+    openingPlayerIndex: scene.openingPlayerIndex,
   };
 }
 

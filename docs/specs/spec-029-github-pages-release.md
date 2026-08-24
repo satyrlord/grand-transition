@@ -45,7 +45,8 @@ published state and exits nonzero on a failed response, asset, refresh, CSP,
 runtime-network, speech-state, or complete-match assertion.
 
 Published complete-match smoke uses seed `20260823`, the first two roster
-characters, the Transition-Era Television Studio, unlimited timer, speech off,
+characters, the Transition-Era Television Studio, fixed ten-second timer,
+speech off,
 and privacy on. It reaches results, starts a rematch, and returns to setup.
 
 Release documentation records commit SHA, workflow URL, deployed URL, artifact

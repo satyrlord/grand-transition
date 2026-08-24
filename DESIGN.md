@@ -145,8 +145,8 @@ line-icon actions on the right, and the channel strap last.
 ### Visitor path
 
 Read the round and active player. Compare Pride and speech state. Read the
-sentence and next grammar role. Scan private and shared phrases. Then choose a
-real action. Legality, weakness, ownership, values, disabled reasons, and focus
+sentence. Scan private and shared phrases. Then choose a
+real action. Availability, weakness, ownership, disabled reasons, and focus
 remain visible in semantic text and controls.
 
 ### Signature interaction
@@ -230,7 +230,8 @@ read clearly against the painted stage.
 does not fill large surfaces or replace state color.
 
 **The Written State Rule.** Red, blue, olive, and violet can speed recognition,
-but every ownership, role, legality, and weakness state must also be written.
+but every ownership, role, availability, and weakness state must also be
+written.
 
 ## Typography
 
@@ -315,8 +316,7 @@ The system is square and architectural. Title and setup use sharp record fields
 and a narrow binding seam. Match plaques, boards, phrase cards, dialogs, and
 buttons use sharp corners, one-pixel brass rules, or three-pixel double brass
 frames. Side nameplates end in small directional points. Speech records use
-simple clipped paper tails. Value badges and shortcut keycaps are compact
-squares.
+simple clipped paper tails. Shortcut keycaps are compact squares.
 
 **The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
 speech tails, and line icons as compact civic signals. Never let ornament hide
@@ -340,9 +340,12 @@ caricatures. The left figure is an older, stocky committee chairman with a red
 folder. The right figure is a lean, bearded podium showman in a deep-blue,
 brass-trimmed jacket. Their metaphorical titles do not change their human
 anatomy. The image has empty alternative text. A centered navy plaque owns
-round, active player, required role, opening player, and timer. Smaller
+round, active player, opening player, and timer. Smaller
 opposing red and blue nameplates own each character name, Pride meter, comeback
-charge, lectern state, and current speech record. The reaction strip owns
+charge, written turn state, and current speech record. The active nameplate and
+private-hand heading both state “Has the floor”; the inactive nameplate states
+“Waiting.” One short directional brass transfer marks a turn change. Reduced
+motion keeps the written and framed state without translation. The reaction strip owns
 venue, public response, and damage. No separate portrait element is part of the
 match-screen composition.
 
@@ -355,27 +358,26 @@ animation without changing content.
 
 ### Phrase cards
 
-Each square paper card shows role, base value, phrase, ownership, legal state,
-and weakness or disabled reason. Blue, olive, violet, and orange top borders
-support written roles. Double red borders mark strategic-foul availability;
-dashed muted cards mark denied or disabled choices; a red inset outline marks
-pending selection. A three-pixel light-blue outline marks keyboard focus.
-Selecting a shared phrase leaves its numbered slot visibly empty.
+Each square paper card shows its role, phrase, ownership, and weakness or
+disabled reason. Blue, olive, violet, and orange top borders support written
+roles. Every available common card can be selected by either player. A red
+inset outline marks a selected card. A three-pixel light-blue outline marks
+keyboard focus. Selecting a shared phrase leaves its numbered slot visibly
+empty.
 
 ### Match actions and channel strap
 
 Actions use authored 24-pixel line icons, a Cormorant SC action name, and a
 smaller Georgia explanation. Oxblood identifies the primary delivery action;
-television blue identifies redraw and comeback actions; ochre identifies the
-confirmed strategic foul. Disabled controls stay labeled and use a dashed
+television blue identifies hand refresh and comeback actions. Disabled controls
+stay labeled and use a dashed
 border. Keyboard hints appear after keyboard input. The channel strap comes
 last in reading order and states the channel, venue, and broadcast motto.
 
-### Comeback dialog
+### Comeback action
 
-The modal comeback register uses warm textured paper inside a dark overlay. It
-contains only affordable choices, explains an empty choice set, moves focus to
-its first action, closes with Escape, and restores focus to the trigger.
+The comeback action becomes available after a complete sentence and one filled
+tier. It uses the strongest filled tier immediately.
 
 ## Do's and Don'ts
 
@@ -390,7 +392,7 @@ its first action, closes with Escape, and restores focus to the trigger.
 - **Do** keep the 1280 by 720 path dense but readable: stage first, sentence
   hinge second, choices third, channel strap last.
 - **Do** keep core tactical content at 11 pixels or larger.
-- **Do** write every legality, weakness, ownership, value, disabled reason,
+- **Do** write every availability, weakness, ownership, disabled reason,
   timer, and focus state that matters.
 - **Do** keep focus preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.

@@ -10,15 +10,15 @@ behavior
 
 Implement valid-action enumeration, basic utility evaluation, seeded
 tie-breaking, the Local Radio Caller policy, visible thinking state, and custom
-single-player setup. The AI can draft, redraw, fault, use a comeback, and
-commit.
+single-player setup. The AI can draft, refresh its hand, make a normal grammar
+mistake, use a comeback, and end its sentence.
 
 Candidate utility considers immediate damage, weakness and combo opportunity,
 finisher, grammar flexibility, denial, continuation, lethal value, personality,
 grammar risk, opponent comeback risk, and dead-end risk.
 
-Local Radio Caller uses the exact weights below and never commits a deliberate
-fault. Its presentation delay is 500 through 1100 milliseconds (ms) unless the
+Local Radio Caller uses the exact weights below. Its presentation delay is 500
+through 1100 milliseconds (ms) unless the
 user enables reduced delay.
 
 ## Utility and timing contract
@@ -50,7 +50,7 @@ times denial, and risk trait times the mean of finisher and continuation.
 
 The AI enumerates all legal commands. It chooses the highest utility. Equal
 utility uses one seeded draw over candidates sorted by command type and stable
-target ID. It never selects `deliberate-fault`. It can redraw only when both
+target ID. It can refresh only when both
 replacement-hand expected utilities exceed the current hand by at least 0.15.
 For redraw comparison, normalize over the union of current and possible
 replacement candidates so both utility values use the same scale.
@@ -66,7 +66,7 @@ decision is calculated before the delay and does not read wall-clock time.
 - **AC-021-02:** One fixture isolates each utility term and proves its exact
   contribution and sign.
 - **AC-021-03:** Lethal wins over every nonlethal candidate, dead ends lose when
-  any non-dead-end action exists, and deliberate fault is never selected.
+  any non-dead-end action exists.
 - **AC-021-04:** Equal-utility choices, redraw choices, and delay repeat for
   fixed state and seed.
 - **AC-021-05:** Delay endpoints 500 and 1100 are reachable, values remain
