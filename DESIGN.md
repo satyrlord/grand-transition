@@ -117,10 +117,10 @@ confrontation. Characters, sentence construction, speech, status, and actions
 share the same stage instead of dividing into a decorative scene and a separate
 dashboard.
 
-The match screen establishes the replacement visual system. Title, setup,
-resolution, and results can adopt its type, materials, and broadcast language
-when their redesign is approved. Their present compositions are implementation
-evidence, not authority for the replacement match world.
+The match screen establishes the replacement visual system. Title and setup can
+adopt its type, materials, and broadcast language when their redesign is
+approved. Their present compositions are implementation evidence, not authority
+for the replacement match world.
 
 Every character is human. Animal words in names or titles are metaphorical
 political labels only. The current slice uses three original human editorial
@@ -167,16 +167,15 @@ text only.
 Pointer preview stages the candidate phrase in the central construction and
 speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
-that side persistently brighter. Character reactions answer the completed line;
-they do not replace the written resolution.
+that side persistently brighter. Updated Pride and charge appear in the active
+match without a separate resolution step.
 
 ### Cross-surface reach
 
 Active play proves the arena system first. Title and setup can introduce the
 broadcaster and contestants through the same display voice, framed meters,
-paper, oxblood, navy, brass, and direct stage language. Resolution stays inside
-the confrontation. Results can turn the arena signage into a final public
-record. This record does not claim that those surfaces have been rebuilt.
+paper, oxblood, navy, brass, and direct stage language. The match remains the
+only visible surface during play. Completion returns directly to setup.
 
 ### Honest risk
 
@@ -277,9 +276,9 @@ redesign by default.
    Fredoka Bold is rejected. Do not restore it without new explicit approval.
 3. **Interface family:** Rubik is selected with regular 400, semibold 600, and
    bold 700 weights. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, results,
-   statistics, tutorial instructions, privacy handovers, and compatibility
-   text. Its tabular figures own Pride, damage, scores, rounds, and statistics.
+   labels, validation, disabled reasons, score explanations, tutorial
+   instructions, privacy handovers, and compatibility text. Its tabular figures
+   own Pride, damage, scores, and rounds.
 4. **Timer family:** Share Tech Mono is selected for the timer only. Do not use
    it for Pride, damage, scores, rounds, statistics, or body text.
 
@@ -302,12 +301,12 @@ information visible before and after font load.
 
 ### Hierarchy
 
-- **Feature display:** Title, main menu, character names, Pause, End, Comeback,
-  and decisive result headings.
+- **Feature display:** Title, main menu, character names, Pause, End, and
+  Comeback.
 - **Speech:** Delivered lines, current construction, and sentence previews in
   visual uppercase.
 - **Interface:** Phrases, controls, labels, explanations, errors, tutorial text,
-  results, and all non-timer values.
+  and all non-timer values.
 - **Timer:** The timer value only.
 
 **The Four-Family Rule.** Each family has one exclusive information role. Do not
@@ -460,7 +459,7 @@ tier. It uses the strongest filled tier immediately.
 
 - **Don't** describe the match as the Open Civic Ledger or a flat parliamentary
   dispatch table. That direction is stale.
-- **Don't** claim that title, setup, or results already use the complete arena
+- **Don't** claim that title or setup already use the complete arena
   composition.
 - **Don't** use animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.

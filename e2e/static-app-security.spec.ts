@@ -117,18 +117,62 @@ test('development omits the production policy', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: 'Simulation Registry' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: /Open click audit/u }),
+  ).toBeVisible();
+});
+
+test('development starts the click audit before the first title action', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const observer = new MutationObserver(() => {
+      const setupButton = [...document.querySelectorAll('button')].find(
+        (button) => button.textContent?.trim() === 'Set up match',
+      );
+      if (setupButton) {
+        setupButton.click();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document, { childList: true, subtree: true });
+  });
+
+  await page.goto(developmentUrl);
+  await expect(
+    page.getByRole('heading', { name: 'Set up match' }),
+  ).toBeVisible();
+  const entries = await page.locator('grand-transition-click-audit').evaluate(
+    (audit) =>
+      (
+        audit as HTMLElement & {
+          exportDocument(): {
+            entries: readonly { kind: string; event: string }[];
+          };
+        }
+      ).exportDocument().entries,
+  );
+  expect(entries).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ kind: 'game-action', event: 'show-setup' }),
+    ]),
+  );
 });
 
 test('production omits developer controls from the DOM and bundle', async ({
   page,
 }) => {
-  await page.goto('./');
+  await page.goto('./?click-audit=1');
   await expect(
     page.getByRole('heading', { name: 'Simulation Registry' }),
   ).toHaveCount(0);
   await expect(page.locator('grand-transition-developer-controls')).toHaveCount(
     0,
   );
+  await expect(page.locator('grand-transition-click-audit')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: /Open click audit/u }),
+  ).toHaveCount(0);
 
   const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
   const assetFiles = await readdir(assetsDirectory);
@@ -140,8 +184,28 @@ test('production omits developer controls from the DOM and bundle', async ({
     )
   ).join('\n');
   expect(productionText).not.toMatch(
-    /grand-transition-developer-controls|Simulation Registry|Inspect legal phrases|Prepare match log|Development only/u,
+    /grand-transition-(?:developer-controls|click-audit)|grandTransitionTemporaryClickAudit|game-action-result|Simulation Registry|Inspect legal phrases|Prepare match log|Development only|Open click audit|Temporary Click Audit/u,
   );
+});
+
+test('development click audit correlates one shared phrase selection', async ({
+  page,
+}) => {
+  await page.goto(developmentUrl);
+  await expect(
+    page.getByRole('button', { name: /Open click audit/u }),
+  ).toBeVisible();
+
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await page.locator('.shared-board [data-role="noun"] button').first().click();
+  await page.getByRole('button', { name: /Open click audit/u }).click();
+
+  await expect(
+    page.getByRole('heading', { name: 'Temporary Click Audit' }),
+  ).toBeVisible();
+  await expect(page.getByText('Action: select-phrase')).toBeVisible();
+  await expect(page.getByText('Result: select-phrase accepted')).toBeVisible();
 });
 
 test('development evidence can be copied and downloaded by document type', async ({

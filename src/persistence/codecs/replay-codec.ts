@@ -33,13 +33,7 @@ const cardReference = z
 
 const lifecycleCommand = z
   .object({
-    type: z.enum([
-      'start-match',
-      'prepare-round',
-      'resolve-round',
-      'rematch',
-      'return-to-setup',
-    ]),
+    type: z.enum(['start-match', 'prepare-round', 'resolve-round']),
     source,
     payload: emptyPayload,
   })

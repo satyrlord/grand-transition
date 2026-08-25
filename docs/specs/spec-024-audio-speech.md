@@ -13,7 +13,7 @@ unavailable state, and hotseat suppression.
 
 Minimum viable product (MVP) audio includes original menu music and distinct
 scene treatment. It includes role-select, commit, light and heavy hit, weakness,
-combo, continuation break, comeback, grammar-mistake, victory, and defeat cues.
+combo, continuation break, comeback, and grammar-mistake cues.
 Mixer
 controls are Master, Music, Effects, and Speech.
 
@@ -22,7 +22,7 @@ support safely; load voices immediately and after `voiceschanged`; prefer saved
 voice Uniform Resource Identifier (`voiceURI`), then language match, then
 system default. Expose Auto, voice, rate,
 and volume. Speak only complete public insults. Cancel on round change, exit, or
-rematch. Never speak draft fragments or hidden content. Explain that voices and
+match completion. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
 
 ## Audio and speech measurements
@@ -52,14 +52,13 @@ Speech cancellation completes within 100 milliseconds and suppresses queued
 - **AC-024-01:** Asset validation proves both runtime formats, 48-kilohertz
   sample rate, loudness range, true-peak limit, ownership, and license.
 - **AC-024-02:** Every named cue maps to a distinct asset and fires once within
-  100 milliseconds after decode. Mixer gain equations pass at 0, default, and
-  1.
+  100 milliseconds after decode. Mixer gain equations pass at 0, default, and 1.
 - **AC-024-03:** Crossfade, exit cleanup, mute, repeated enable, and unavailable
   audio have deterministic adapter tests and no orphan source.
 - **AC-024-04:** Voice selection follows saved URI, language, system-default
   order after immediate load and `voiceschanged`.
 - **AC-024-05:** Disabled, unavailable, private, incomplete, turn-change, exit,
-  and rematch states speak nothing. Cancellation completes within 100
+  and match-complete states speak nothing. Cancellation completes within 100
   milliseconds.
 - **AC-024-06:** Chromium, Firefox, and WebKit browser evidence records audible
   menu, scene, effect, speech, mute, and silent-fallback results.

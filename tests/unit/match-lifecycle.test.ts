@@ -57,7 +57,7 @@ function run(state: MatchState, command: MatchCommand): MatchState {
 
 function lifecycle(
   state: MatchState,
-  type: 'prepare-round' | 'rematch' | 'resolve-round' | 'start-match',
+  type: 'prepare-round' | 'resolve-round' | 'start-match',
 ): MatchState {
   return run(state, { type, source: 'user', payload: {} });
 }
@@ -345,23 +345,6 @@ describe('Hollywood Roast match lifecycle', () => {
     state = finishDraft(state);
     state = lifecycle(state, 'resolve-round');
     expect(state.statistics.grammarMistakes).toBe(1);
-  });
-
-  test('rematch swaps the first opener and resets match resources', () => {
-    let state = finishDraft(started());
-    state = {
-      ...state,
-      playerStates: {
-        ...state.playerStates,
-        [playerIds[1]]: { ...state.playerStates[playerIds[1]]!, pride: 1 },
-      },
-    };
-    state = lifecycle(state, 'resolve-round');
-    expect(state.phase).toBe('results');
-    state = lifecycle(state, 'rematch');
-    expect(state.phase).toBe('round-preparation');
-    expect(state.firstOpeningPlayerId).toBe(playerIds[1]);
-    expect(state.statistics.grammarMistakes).toBe(0);
   });
 
   test('rejects lifecycle commands in the wrong phase without changing state', () => {

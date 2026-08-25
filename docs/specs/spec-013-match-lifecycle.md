@@ -2,8 +2,8 @@
 
 **Status:** Approved  
 **Depends on:** 012  
-**Owns:** Match health, round resolution, knockout, cliffhanger, statistics, and
-rematch
+**Owns:** Match health, automatic round scoring, knockout, cliffhanger, and
+development evidence
 **Production-file budget:** 7
 
 ## Match flow
@@ -35,12 +35,16 @@ Equal nonzero scores knock out both players and start another cliffhanger.
 Equal zero scores start another cliffhanger round. There is no added statistic,
 fault-count, phrase-count, opener, or other tie-break.
 
-## Statistics and reset
+## Development evidence
 
-Results record total score, best insult, highest damage, longest complete
-sentence, weakness activations, highest noun combo, grammar mistakes, and
-comebacks. A rematch preserves setup, swaps the first opener, and resets Pride,
-charge, hands, board, continuations, combos, statistics, and command history.
+The pure terminal state records the winner. Development-only evidence records
+total score, best insult, highest damage, longest complete sentence, weakness
+activations, highest noun combo, grammar mistakes, and comebacks. These records
+support tests, simulation, and balance work. They are not a player-facing
+result, statistics, replay, or post-match feature.
+
+The lifecycle has no rematch command and no post-match command. A new match is
+created only from setup.
 
 ## Acceptance criteria
 
@@ -50,7 +54,9 @@ charge, hands, board, continuations, combos, statistics, and command history.
 - **AC-013-04:** Double knockout restores the exact cliffhanger state.
 - **AC-013-05:** Higher, lower, zero, equal-nonzero, and equal-zero cliffhanger
   score pairs follow the formula without another tie-break.
-- **AC-013-06:** Statistics and rematch reset use the exact fields above.
+- **AC-013-06:** The terminal state records the winner and the exact
+  development evidence fields above. The public command type has no rematch or
+  post-match command.
 
 ## Objective verifiers
 

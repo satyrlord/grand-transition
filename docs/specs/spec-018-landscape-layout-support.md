@@ -31,9 +31,9 @@ operating-system classes use the same rule.
 
 An unsupported viewport replaces the current application DOM with a blocking
 compatibility screen. It states the minimum, requires landscape orientation,
-recommends 1920 by 1080 and PC, and provides no bypass. At title, setup,
-resolution, or results, returning to a supported viewport restores the same
-application view and authoritative state.
+recommends 1920 by 1080 and PC, and provides no bypass. At title or setup,
+returning to a supported viewport restores the same application view and
+authoritative state.
 
 During drafting or sudden death, the match component remains alive but renders
 only the compatibility screen. The timer stops at its exact displayed value,
@@ -50,8 +50,8 @@ Pause is also active.
 - **AC-018-02:** 1023 by 720, 1024 by 719, 720 by 1024, 1200 by 1600, and 1024
   by 1024 render only the compatibility screen and no functional application
   screen.
-- **AC-018-03:** Resizing title, setup, resolution, and results from supported
-  to unsupported and back restores the same view and authoritative state.
+- **AC-018-03:** Resizing title and setup from supported to unsupported and back
+  restores the same view and authoritative state.
 - **AC-018-04:** Resizing an active match to unsupported freezes the exact
   timer value, removes all match facts and controls from the rendered DOM,
   dispatches no command while blocked, and resumes the unchanged match without

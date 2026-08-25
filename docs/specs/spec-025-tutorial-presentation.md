@@ -8,13 +8,12 @@
 ## Deliver
 
 Add the guided first match or tutorial overlay. Complete score, damage, combo,
-weakness, continuation, comeback, grammar-mistake, and result presentation for the
+weakness, continuation, comeback, grammar-mistake, and Pride teaching for the
 two-character, one-scene vertical slice.
 
 The tutorial teaches legal roles, denial, private hands, redraw, completion,
 grammar mistakes, weakness, exact-noun combo, finisher, continuation, comeback,
-resolution,
-Pride, and sudden death. The user can skip and replay it. It never relies on
+automatic Pride changes, and sudden death. The user can skip and replay it. It never relies on
 another explanation source or a time limit alone.
 
 Presentation uses civic-debate motifs such as folders, lower thirds, stamps,
@@ -39,7 +38,7 @@ sequence. It has ten checkpoints:
 7. Trigger an exact-noun combo and then a finisher.
 8. Carry a continuation and observe survive and break boundaries.
 9. Spend one comeback tier and read charge and bonus.
-10. Resolve Pride, sudden death, results, and rematch choices.
+10. Observe automatic Pride, sudden death, and the direct return to setup.
 
 Each checkpoint presents one action objective and at most three short
 instruction paragraphs. An invalid action changes no game state and displays a

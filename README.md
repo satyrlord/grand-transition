@@ -30,8 +30,9 @@ Hollywood Roast grammar, compound subjects, endings, incomplete states,
 immediate grammar mistakes, seeded common-board and private-hand generation,
 clause scoring, noun combos, continuations, comebacks, cliffhangers, match
 lifecycle, replay, and simulation. The landscape-only Lit interface provides
-title, setup, playable hotseat match, Pause, resolution, results, rematch, and
-return-to-setup screens. It requires a browser content viewport of at least
+title, setup, a playable hotseat match, and Pause. Rounds advance automatically,
+and match completion returns directly to setup with no post-match features. The
+interface requires a browser content viewport of at least
 1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add
 privacy handovers, settings, artificial
 intelligence, final assets, audio, expanded content, and release hardening in

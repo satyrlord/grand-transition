@@ -44,7 +44,7 @@ title, browser history, URL, clipboard, and console contain no private value.
 - **AC-019-03:** Ten rapid ready or action activations reveal no wrong hand and
   dispatch no duplicate command.
 - **AC-019-04:** Speech cancellation occurs before private removal and no queued
-  utterance survives a turn, exit, rematch, or privacy transition.
+  utterance survives a turn, match exit, completion, or privacy transition.
 - **AC-019-05:** Privacy-off mode skips handover but still renders only the
   active hand. Switching the setup option never changes an active match.
 - **AC-019-06:** Pointer Playwright flows pass at 1024 by 720, 1280 by 720, and
