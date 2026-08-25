@@ -32,8 +32,9 @@ test('renders an immutable complete match snapshot and previews without changing
       expect.stringContaining('thunder-tribune'),
     ]),
   );
-  expect(match.querySelector('.match-footer')).not.toBeNull();
-  expect(match.querySelectorAll('.player-sentence')).toHaveLength(2);
+  expect(match.querySelector('.match-footer')).toBeNull();
+  expect(match.querySelectorAll('.player-sentence--waiting')).toHaveLength(1);
+  expect(match.querySelector('.sentence-ledger')).not.toBeNull();
   expect(match.querySelectorAll('[data-turn-state="active"]')).toHaveLength(1);
   expect(match.querySelectorAll('[data-turn-state="waiting"]')).toHaveLength(1);
   expect(
@@ -43,11 +44,18 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(
     match.querySelectorAll('.player-turn-status:not([hidden])'),
   ).toHaveLength(1);
-  expect(
-    match.querySelector('.private-hand-heading')?.textContent,
-  ).not.toContain('Has the floor');
+  const headerControls = match.querySelector('.match-header-controls');
+  expect(headerControls).not.toBeNull();
+  expect(headerControls?.querySelector('.match-pause')).not.toBeNull();
+  expect(headerControls?.querySelector('.timer-fact')).not.toBeNull();
+  expect(match.querySelector('.match-turn-heading')?.textContent).toContain(
+    'Round 1',
+  );
+  expect(match.querySelector('.private-hand')?.getAttribute('data-side')).toBe(
+    'red',
+  );
   const actionIcons = match.querySelectorAll('svg.action-icon');
-  expect(actionIcons).toHaveLength(3);
+  expect(actionIcons).toHaveLength(1);
   for (const icon of actionIcons) {
     expect(icon.namespaceURI).toBe('http://www.w3.org/2000/svg');
     expect(icon.querySelectorAll('path').length).toBeGreaterThan(0);
@@ -57,6 +65,23 @@ test('renders an immutable complete match snapshot and previews without changing
       ),
     ).toBe(true);
   }
+  expect(match.querySelector('.card-role')).toBeNull();
+  expect(match.querySelector('.card-bottomline')).toBeNull();
+  expect(match.querySelector('.card-weakness')).toBeNull();
+  const visiblePhrases = [
+    ...match.querySelectorAll<HTMLButtonElement>('.shared-board .phrase-card'),
+  ];
+  expect(visiblePhrases.length).toBeGreaterThan(0);
+  expect(
+    visiblePhrases.every(
+      (button) =>
+        button.textContent?.trim() ===
+        button.querySelector('.card-phrase')?.textContent?.trim(),
+    ),
+  ).toBe(true);
+  expect(
+    visiblePhrases.some((button) => button.ariaLabel?.includes('Shared')),
+  ).toBe(true);
 
   const previewCard = snapshot.sharedCards.find(
     (card) => card.action === 'select' && card.previewText.trim() !== '',
@@ -146,8 +171,17 @@ test('does not refresh an empty private hand without a player command', async ()
   await new Promise<void>((resolve) => queueMicrotask(resolve));
 
   expect(commands).toEqual([]);
+  const emptyStateLabels = [
+    ...match.querySelectorAll(
+      '.private-hand .phrase-card--empty .visually-hidden',
+    ),
+  ];
+  expect(emptyStateLabels).toHaveLength(2);
   expect(
-    match.querySelector<HTMLButtonElement>('.action-secondary')?.disabled,
+    emptyStateLabels.every((label) => label.textContent?.includes('Empty')),
+  ).toBe(true);
+  expect(
+    match.querySelector<HTMLButtonElement>('.action-reshuffle')?.disabled,
   ).toBe(false);
 });
 
@@ -158,9 +192,7 @@ test('maps rapid pointer actions once', async () => {
     commands.push(event),
   );
 
-  const redraw = match.querySelector<HTMLButtonElement>(
-    '.match-actions button:first-child',
-  )!;
+  const redraw = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
   redraw.click();
   redraw.click();
   await vi.waitFor(() => expect(match.snapshot?.actions.redrawUsed).toBe(true));

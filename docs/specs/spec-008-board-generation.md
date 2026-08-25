@@ -18,10 +18,11 @@ Before the two variable slots, the board contains:
 - one predicate that completes a clause.
 
 The connector-count roll is 10 percent for zero connectors, 65 percent for one,
-and 25 percent for two. A forced connector is `and` or `but`; `but` replaces
-`and` on 25 percent of forced-connector selections. When fewer than two forced
-connectors were added, one continuation fills the next variable slot. Any last
-open slot draws from the eligible scene pool.
+and 25 percent for two. A forced connector is additive or contrasting. An
+additive selection uses `and`. A contrast selection uses `but` or `yet` and
+replaces the additive selection on 25 percent of forced-connector selections.
+When fewer than two forced connectors were added, one continuation fills the
+next variable slot. Any last open slot draws from the eligible scene pool.
 
 Each phrase identifier appears at most once on the board. Rarity changes draw
 probability only; it never creates duplicate cards. Board-slot identifiers also
@@ -39,9 +40,9 @@ common draw pool.
 
 Each player receives two private cards before the common board is dealt. A hand
 draw uses the common round pool plus phrases restricted to that character. A
-25 percent hand roll forces one `and` or `but` when a connector is available.
-Rarity data supplies the remaining draw weight without repeating a phrase
-identifier within one hand.
+25 percent hand roll forces one additive or contrast connector when one is
+available. Rarity data supplies the remaining draw weight without repeating a
+phrase identifier within one hand.
 
 If the hand-first draw leaves no valid board for its connector roll, repeat the
 complete hand-first deal with the next seed. Stop after 32 attempts and return

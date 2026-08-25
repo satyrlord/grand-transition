@@ -27,8 +27,9 @@ Randomness enters only through the seeded source. Persistence uses pure,
 versioned codecs behind `StoragePort`; engine and codecs do not call browser
 storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
 replay do not import Lit or Document Object Model (DOM) application programming
-interfaces (APIs). Game prose stays in user interface (UI) messages or
-locale-specific bundles. Balance constants stay in validated data.
+interfaces (APIs). English interface prose stays in user interface (UI)
+messages. Grammar, phrase semantics, constructed sentences, and speech content
+stay in locale-specific bundles. Balance constants stay in validated data.
 
 ## Exact contract shapes
 

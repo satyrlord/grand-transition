@@ -110,7 +110,9 @@ export function generateBoard(
   const connectorRoll = nextRandom(cursor, randomSource);
   const forcedConnectors = byRole
     .get('conjunction')!
-    .filter((candidate) => candidate.phrase.connectorKind !== 'because');
+    .filter((candidate) =>
+      ['and', 'but', 'yet'].includes(candidate.phrase.connectorKind ?? ''),
+    );
   const connectorCount =
     forcedConnectors.length === 0
       ? 0
@@ -121,13 +123,14 @@ export function generateBoard(
           : 2;
   for (let index = 0; index < connectorCount; index += 1) {
     const connectorRoll = nextRandom(cursor, randomSource);
-    const preferredKind = connectorRoll < 0.25 ? 'but' : 'and';
+    const preferredKinds =
+      connectorRoll < 0.25 ? new Set(['but', 'yet']) : new Set(['and']);
     const selectedPhraseIds = new Set(pending.map((slot) => slot.phraseId));
     const availableConnectors = forcedConnectors.filter(
       (candidate) => !selectedPhraseIds.has(candidate.phrase.id),
     );
-    const preferred = availableConnectors.filter(
-      (candidate) => candidate.phrase.connectorKind === preferredKind,
+    const preferred = availableConnectors.filter((candidate) =>
+      preferredKinds.has(candidate.phrase.connectorKind ?? ''),
     );
     const pool = preferred.length > 0 ? preferred : availableConnectors;
     if (pool.length === 0) return impossiblePool(request, byRole);

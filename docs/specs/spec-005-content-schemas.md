@@ -19,10 +19,10 @@ optional character and scene restrictions, draw rarity, optional noun-specific
 custom clause scores, optional finisher score, and editorial review.
 
 Roles are `noun`, `verb`, `predicate`, `conjunction`, `ending`, and
-`continuation`. Conjunctions declare `and`, `but`, or `because`. Nouns can
-declare singular or plural. A relation can declare an exact left-noun and
-optional right-noun custom clause score from 0 through 100; otherwise
-Milestone 010 calculates group compatibility.
+`continuation`. Conjunctions declare `and`, `but`, `because`, `yet`, `so`, or
+`for`. Nouns can declare singular or plural. A relation can declare an exact
+left-noun and optional right-noun custom clause score from 0 through 100;
+otherwise Milestone 010 calculates group compatibility.
 
 A character owns identity, original media, palette, two or three weakness
 tags, character-restricted hand phrase identifiers, comeback lines for all
@@ -33,14 +33,17 @@ A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects.
 The scene pool supplies at least three distinct unrestricted nouns, three
 distinct unrestricted verbs, one unrestricted predicate, two distinct `and`
-or `but` connectors, and one continuation so Milestone 008 can deal a valid
-common board without repeating a phrase identifier.
+or contrast connectors, and one continuation so Milestone 008 can deal a valid
+common board without repeating a phrase identifier. Contrast connectors are
+`but` and `yet`.
 
-Locale bundles use canonical BCP 47 tags and identical plain-text message-key
-sets. Every referenced text and number-form key exists. Reject HTML, script
-URLs, inline handlers, unsafe editorial states, copied prose, protected-trait
-insults, unsupported allegations, private targets, harassment, sexual
-humiliation, threats, real logos, and copyrighted broadcast graphics.
+Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
+phrase, constructed-sentence, and speech message-key sets. Interface labels and
+controls are always English and do not enter locale bundles. Every referenced
+text and number-form key exists. Reject HTML, script URLs, inline handlers,
+unsafe editorial states, copied prose, protected-trait insults, unsupported
+allegations, private targets, harassment, sexual humiliation, threats, real
+logos, and copyrighted broadcast graphics.
 
 ## Exact constraints
 
@@ -97,10 +100,18 @@ localization validation must pass before the phrase can ship.
 - **AC-005-06:** The common and per-character JSON corpora load all phrase
   definitions and English phrase messages without hardcoded TypeScript phrase
   data. Manual-source validation rejects malformed and duplicate cards.
-- **AC-005-07:** The 30-card common corpus contains Romanian political themes
-  in original English adaptations. Every entry records its research rationale,
-  and no entry copies a slogan or makes an allegation about a named person.
+- **AC-005-07:** The 100-card common corpus contains exactly 30 nouns, 24 verbs,
+  20 predicates, 10 conjunctions, 11 endings, and 5 continuations. It contains
+  Romanian political themes in original English adaptations. The approved
+  `under-the-national-banner` ending renders the sourced English form of the
+  [public 2017 civic-protest slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
+  `Noaptea, ca hoții`. It retains its stable identifier for deterministic
+  replay compatibility. Every entry records its research rationale. No other
+  entry copies a slogan, and no entry makes an allegation about a named person.
+- **AC-005-08:** The common conjunction pool contains `and`, `but`, `because`,
+  `yet`, `so`, and `for`. It contains two cards each for `and`, `but`,
+  `because`, and `yet`, plus one card each for `so` and `for`.
 
 ## Objective verifier
 
-`tests/unit/content-schemas.test.ts` verifies AC-005-01 through AC-005-07.
+`tests/unit/content-schemas.test.ts` verifies AC-005-01 through AC-005-08.

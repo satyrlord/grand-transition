@@ -1,6 +1,6 @@
 ---
 name: 'Grand Transition: A Verbal Republic'
-description: 'Station paperwork becomes a late-1990s televised verbal republic.'
+description: 'A political word duel staged as one late-1990s civic broadcast arena.'
 colors:
   municipal-blue: '#062840'
   deep-municipal-blue: '#041d2e'
@@ -25,37 +25,39 @@ colors:
   grammar-olive: '#65703e'
   grammar-violet: '#765284'
 typography:
-  record-display:
-    fontFamily: '"Barlow Condensed", sans-serif'
+  feature-display:
+    fontFamily: 'var(--font-feature-display, "Poiret One"), Arial, sans-serif'
     fontSize: 'clamp(3.2rem, 8vw, 6rem)'
-    fontWeight: 700
+    fontWeight: 400
     lineHeight: 0.78
-    letterSpacing: '-0.035em'
-  broadcast-display:
-    fontFamily: '"Cormorant SC", Georgia, "Times New Roman", serif'
-    fontSize: 'clamp(1.35rem, 2vw, 2rem)'
-    fontWeight: 700
-    lineHeight: 0.9
-    letterSpacing: '0.025em'
-  body:
-    fontFamily: 'Georgia, "Times New Roman", serif'
+    letterSpacing: '0.06em'
+    textStroke: 'clamp(0.9px, 0.13cqw, 1.4px)'
+  feature-action:
+    fontFamily: 'var(--font-feature-display, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(1.1rem, 1.4vw, 1.35rem)'
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: '0.06em'
+    textStroke: 'clamp(0.65px, 0.09cqw, 0.95px)'
+  speech-display:
+    fontFamily: 'var(--font-speech-display, Nunito), Arial, sans-serif'
+    fontSize: 'clamp(1.1rem, 2vw, 1.8rem)'
+    fontWeight: 900
+    lineHeight: 1.05
+    letterSpacing: '0.015em'
+  ui-copy:
+    fontFamily: 'var(--font-ui-copy, Rubik), Arial, sans-serif'
     fontSize: 'clamp(1rem, 1.5vw, 1.25rem)'
   tactical-label:
-    fontFamily: '"Barlow Condensed", sans-serif'
+    fontFamily: 'var(--font-ui-copy, Rubik), Arial, sans-serif'
     fontSize: '0.69rem'
     fontWeight: 700
     lineHeight: 1
     letterSpacing: '0.045em'
-  action-voice:
-    fontFamily: '"Cormorant SC", Georgia, "Times New Roman", serif'
-    fontSize: '0.95rem'
-    fontWeight: 700
-    lineHeight: 1
-    letterSpacing: '0.045em'
-  data:
-    fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace'
-    fontSize: '0.69rem'
-    fontWeight: 700
+  timer-display:
+    fontFamily: 'var(--font-timer-display, "Share Tech Mono"), Arial, sans-serif'
+    fontSize: 'clamp(1.1rem, 1.8vw, 1.6rem)'
+    fontWeight: 400
     lineHeight: 1
 rounded:
   square: '0'
@@ -73,26 +75,26 @@ components:
   setup-primary-action:
     backgroundColor: '{colors.official-oxblood}'
     textColor: '{colors.pale-paper}'
-    typography: '{typography.tactical-label}'
+    typography: '{typography.feature-action}'
     rounded: '{rounded.square}'
     padding: '0.7rem 1rem'
     height: '2.75rem'
   match-sentence-record:
     backgroundColor: '{colors.broadcast-paper-light}'
     textColor: '{colors.broadcast-black}'
-    typography: '{typography.body}'
+    typography: '{typography.speech-display}'
     rounded: '{rounded.square}'
     padding: '0.48rem clamp(1rem, 4vw, 4rem)'
   match-phrase-card:
-    backgroundColor: '{colors.broadcast-paper-light}'
-    textColor: '{colors.broadcast-black}'
-    typography: '{typography.body}'
+    backgroundColor: '{colors.broadcast-black}'
+    textColor: '{colors.broadcast-paper-light}'
+    typography: '{typography.ui-copy}'
     rounded: '{rounded.square}'
-    padding: '0.32rem 0.42rem'
+    padding: '0.18rem 0.5rem'
   match-primary-action:
     backgroundColor: '{colors.broadcast-oxblood}'
     textColor: '{colors.broadcast-paper-light}'
-    typography: '{typography.action-voice}'
+    typography: '{typography.feature-action}'
     rounded: '{rounded.square}'
     padding: '0.38rem 0.58rem'
     height: '2.75rem'
@@ -104,22 +106,21 @@ components:
 
 <!-- markdownlint-disable MD036 -->
 
-**Creative North Star: "The Televised Verbal Republic"**
+**Creative North Star: "The Civic Roast Arena"**
 
 <!-- markdownlint-enable MD036 -->
 
-Grand Transition is a late-1990s fictional public-television debate world.
-Painted political theatre meets navy broadcast fascia, aged brass, oxide red,
-television blue, warm paper, and compact civic ornament. The visual system is
-formal enough to make every rule readable and theatrical enough to make each
-turn feel like a live civic event.
+Grand Transition is a late-1990s fictional civic broadcast arena. Painted
+political theatre meets navy fascia, aged brass, oxide red, television blue,
+warm paper, and compact control-room signals. The complete match reads as one
+confrontation. Characters, sentence construction, speech, status, and actions
+share the same stage instead of dividing into a decorative scene and a separate
+dashboard.
 
-The title and setup screens retain their implemented record-like station
-paperwork. They have not been rebuilt as television screens. The shipped match
-screen changes the tempo: a character-free painted studio fills the public
-field, while separate transparent character portraits, broadcast
-plaques, speech records, phrase cards, and real action controls carry the live
-game state.
+The match screen establishes the replacement visual system. Title, setup,
+resolution, and results can adopt its type, materials, and broadcast language
+when their redesign is approved. Their present compositions are implementation
+evidence, not authority for the replacement match world.
 
 Every character is human. Animal words in names or titles are metaphorical
 political labels only. The current slice uses three original human editorial
@@ -128,69 +129,82 @@ must preserve human anatomy.
 
 ### World
 
-A fictional public broadcaster stages verbal combat as civic theatre. Navy
-fascia and black control surfaces frame aged brass, oxblood and television-blue
-player identities, warm paper records, and small grammar colors. Ornament
-supports the event, but it never owns a value or control. All people shown in
-this world are human, even when a political title uses an animal metaphor.
+A fictional public broadcaster turns a public chamber into a verbal arena.
+Navy fascia and black stage signage frame aged brass, oxblood and
+television-blue player identities, warm speech records, and small grammar
+colors. The scene, characters, and controls form one strong silhouette.
+Ornament supports the event, but it never owns a value or control. All people
+shown in this world are human, even when a political title uses an animal
+metaphor.
 
 ### First viewport
 
-At the recommended 1920 by 1080 viewport, the selected pair of transparent human editorial caricatures
-fills the upper field over a character-free public-television studio. The
-default pair is the composed Red-Folded Chairman with his red folder and the
-emphatic Thunder Tribune with his speech papers. The lean Black Sea Captain can
-replace either one and keeps his ship-wheel prop. Compact single-line name,
-visible Pride label, and Pride-bar strips sit above the portrait bounds and
-never cover a face or body. The strips omit a leading “The” from localized
-archetype names. Only the active
-strip says “Your turn,” and its portrait keeps a persistent brass stage light.
-The warm sentence hinge separates the stage from a lower head-up display (HUD)
-with two private cards on the left, nine common phrases in one vertical center
-list, authored line-icon actions on the right, and the channel strap last.
+At the recommended 1920 by 1080 viewport, a character-free public chamber fills
+the canvas. Two transparent human editorial caricatures face each other from
+the left and right thirds. The default pair is the composed Red-Folded Chairman
+with his red folder and the emphatic Thunder Tribune with his speech papers.
+The lean Black Sea Captain can replace either one and keeps his ship-wheel prop.
+
+Opposing names and Pride meters frame the top corners. Round, timer, and Pause
+state sit at the top center. A wide speech record crosses the middle without
+covering either face. The live sentence and nine shared phrases form one
+central vertical construction tower. The two private choices sit low in the
+active player's reach. Secondary actions use the side and bottom perimeter.
+Only the active player states “Your turn,” and that portrait keeps a persistent
+brass stage light.
 
 ### Visitor path
 
-Read the round and active player. Compare Pride and speech state. Read the
-sentence. Scan private and shared phrases. Then choose a
-real action. Availability, weakness, ownership, and disabled reasons remain
-visible in text and controls.
+Compare Pride at the top edge. Read the speech and current sentence across the
+confrontation. Scan the center phrase path, then the active private choices.
+Use a perimeter action only when the sentence state makes it relevant.
+Availability, weakness, ownership, and disabled reasons remain available in
+semantic attributes and accessible names. The compact phrase rows show phrase
+text only.
 
 ### Signature interaction
 
-Pointer preview does not change game truth. A turn change moves one
+Pointer preview stages the candidate phrase in the central construction and
+speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
-that side persistently brighter. The painted stage is atmosphere only and never
-replaces visible names, status, values, or controls.
+that side persistently brighter. Character reactions answer the completed line;
+they do not replace the written resolution.
 
 ### Cross-surface reach
 
-Title and setup can remain record-like station paperwork. Active play is the
-implemented televised event. Future results can use the same paper, oxblood,
-navy, brass, civic-serif headings, and explicit broadcast status, but this
-record does not claim that the results screen was rebuilt.
+Active play proves the arena system first. Title and setup can introduce the
+broadcaster and contestants through the same display voice, framed meters,
+paper, oxblood, navy, brass, and direct stage language. Resolution stays inside
+the confrontation. Results can turn the arena signage into a final public
+record. This record does not claim that those surfaces have been rebuilt.
 
 ### Honest risk
 
-The dense HUD can make text too small or too ornamental. Keep core tactical
-content at 11 pixels or larger. Use Cormorant SC only for display and action
-voice, Barlow Condensed for compact labels, Georgia for phrases and record
-copy, and the UI monospace stack for timer data.
+The integrated arena can become crowded or too similar to its references. Keep
+both characters, the full sentence path, and all required controls readable at
+1024 by 720 and at four-to-three landscape viewports. Keep core tactical content
+at 11 pixels or larger. Use original proportions, ornament, iconography, art,
+and type. Do not solve density by reducing the stage to a header or rebuilding
+the lower half as a dashboard.
 
 ### Direction seed
 
-The direction concept seed key is `e673dd8e`. The user-supplied mock at
-`tmp/Mock UI.png` pinned the canon and replaced the generated roll.
+The user pinned this direction on 2026-08-25 after removing the earlier mock.
+`tmp/hollywood-01.jpg` and `tmp/hollywood-02.jpg` supplied reference evidence
+for spatial hierarchy only: opponent framing, top-edge status, wide speech,
+central sentence construction, and perimeter actions. The durable description
+in this record remains valid if those temporary files are removed.
 
 **Key Characteristics:**
 
-- Late-1990s fictional public-television debate theatre.
+- One late-1990s fictional civic broadcast arena, not a stage over a dashboard.
 - Three original, unmistakably human editorial caricatures with clear faces.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
-- Warm paper sentence and phrase records with visible tactical evidence.
-- Square, double-ruled controls with authored line icons and explicit labels.
-- Record-like title and setup screens that lead into a more theatrical match.
+- Wide speech, central sentence construction, top-edge meters, and perimeter
+  actions.
+- One compact near-black phrase path with phrase-only rows and semantic state.
+- Original framed controls with authored icons and explicit labels.
 
 **The Broadcast Truth Rule.** Art creates the world. Visible Hypertext Markup
 Language (HTML) content owns game truth and interaction.
@@ -237,75 +251,100 @@ read clearly against the painted stage.
 **The Brass Frame Rule.** Brass outlines and separates broadcast regions. It
 does not fill large surfaces or replace state color.
 
-**The Written State Rule.** Red, blue, olive, and violet can speed recognition,
-but every ownership, role, availability, and weakness state must also be
-written.
+**The Semantic State Rule.** Red, blue, olive, and violet can speed recognition.
+Phrase ownership, role, availability, weakness, and disabled state must remain
+in semantic attributes and accessible names even when the compact visible row
+shows phrase text only.
 
 ## Typography
 
-**Record Display Font:** Barlow Condensed (self-hosted, with sans-serif
-fallback)
+The replacement type system requires exactly four self-hosted sans-serif font
+families. Barlow Condensed, Cormorant SC, Georgia, and the system monospace
+stack describe the present implementation only. They must not guide the
+redesign by default.
 
-**Broadcast Display and Action Font:** Cormorant SC 700 (self-hosted, with
-Georgia and Times New Roman fallbacks)
+1. **Feature display family:** Poiret One Regular 400 is selected for the game
+   title, main menu actions, character names, Pause, End, Comeback, and other
+   decisive features. Use `0.06em` tracking. Apply a responsive 0.9 through
+   1.4-pixel synthetic stroke to large feature text and a 0.65 through
+   0.95-pixel stroke to major actions. This synthetic emboldening is an approved
+   exception because Poiret One has no bold master. Use the family at medium and
+   large sizes only. Fascinate and Fascinate Inline are permanently
+   disqualified. Do not propose, test, install, or use either family.
+2. **Speech family:** Nunito Black 900 is selected for delivered speech, the
+   current construction, and sentence previews. Render it in visual uppercase.
+   Preserve authored case in source text, accessible names, and speech output.
+   Fredoka Bold is rejected. Do not restore it without new explicit approval.
+3. **Interface family:** Rubik is selected with regular 400, semibold 600, and
+   bold 700 weights. It owns phrase lists, private phrases, setup fields,
+   labels, validation, disabled reasons, score explanations, results,
+   statistics, tutorial instructions, privacy handovers, and compatibility
+   text. Its tabular figures own Pride, damage, scores, rounds, and statistics.
+4. **Timer family:** Share Tech Mono is selected for the timer only. Do not use
+   it for Pride, damage, scores, rounds, statistics, or body text.
 
-**Body Font:** Georgia (with Times New Roman and serif fallbacks)
+All four font families are selected. Verify them together in the built arena.
+The four roles must stay visibly distinct. Do not use outlines or fake weights
+outside the approved Poiret One feature-display treatment.
 
-**Data Font:** UI monospace (with Cascadia Code, Consolas, and monospace
-fallbacks)
+Use the Fontsource packages for Poiret One, variable Nunito, variable Rubik,
+and Share Tech Mono. All four use the SIL Open Font License 1.1. Load the Poiret
+One Basic Latin subset. Load Basic Latin and Latin Extended subsets for Nunito
+and Rubik so Romanian phrase and speech glyphs do not fall back per character.
 
-**Character:** Barlow Condensed gives title, setup, and tactical labels the
-voice of station paperwork. Cormorant SC gives match headings and actions a
-civic broadcast voice. Georgia keeps phrases and record copy readable. The
-monospace stack makes timer data immediate.
+The feature-display family needs English UI coverage only. The timer family
+needs digits and timer punctuation only. The speech and interface families must
+include the glyphs required by localized grammar and phrase content, including
+Romanian diacritics. All selected Web Open Font Format 2 (WOFF2) files must
+render their owned content without synthetic weights, except for the approved
+Poiret One feature-display treatment. Metric fallbacks must keep the same
+information visible before and after font load.
 
 ### Hierarchy
 
-- **Record display:** Oversized condensed uppercase for the existing title and
-  setup headings.
-- **Broadcast display:** Cormorant SC 700 for the centered match heading,
-  character names, reaction heading, dialog heading, and channel strap.
-- **Action voice:** Cormorant SC 700 for authored action names with a smaller
-  Georgia detail line.
-- **Tactical label:** Barlow Condensed 700 uppercase for roles, ownership,
-  state, Pride, round, damage, and next-role facts.
-- **Body:** Georgia for phrases, current sentence, speech records, explanations,
-  and recovery text.
-- **Data:** UI monospace for the timer.
+- **Feature display:** Title, main menu, character names, Pause, End, Comeback,
+  and decisive result headings.
+- **Speech:** Delivered lines, current construction, and sentence previews in
+  visual uppercase.
+- **Interface:** Phrases, controls, labels, explanations, errors, tutorial text,
+  results, and all non-timer values.
+- **Timer:** The timer value only.
 
-**The Four-Voice Rule.** Use Cormorant SC for event voice, Barlow Condensed for
-tactical labels, Georgia for language content, and monospace only for compact
-machine-like data.
+**The Four-Family Rule.** Each family has one exclusive information role. Do not
+use the display face for dense copy, the speech face for controls, the interface
+face for the timer, or the timer face for other numbers.
 
 ## Layout
 
-The title keeps its implemented 38/62 blue-to-paper split. The setup keeps one
-paper register with a leading blue and oxblood binding.
+The match is one full-viewport arena. The scene does not end where the controls
+begin. Opponents occupy the side thirds. Name and Pride frames use the top
+corners. Round, timer, and Pause use the top center. Speech spans the middle.
+The sentence and shared phrases occupy the center axis. Private choices and
+secondary actions use the lower and side perimeter.
 
-The match uses four vertical regions at desktop: a stage that takes up to 55
-small-viewport-height units, a 4.25-rem sentence hinge, the flexible draft HUD,
-and a 1.65-rem channel strap. At 1280 by 720, the stage art stays in the upper
-field. The match status is centered, compact name-and-Pride strips stay outside
-the portraits, and the reaction strip anchors the stage. The draft HUD uses a
-left-center-right grid for private hand, one vertical common-phrase list, and
-actions.
+At 1280 by 720 and 1400 by 1050, scale and reposition within the same hierarchy.
+Do not introduce a separate lower dashboard, page scroll, or a compact mobile
+mode. Decorative scene detail yields before required text, faces, phrase slots,
+or controls.
 
-The functional layout requires a horizontal content viewport of at least 1024
-by 720 CSS pixels. Smaller, portrait, and square viewports show the full-screen
-transmission-unavailable slate. The recommended viewport is 1920 by 1080 on PC.
+The supported landscape evidence matrix is 1024 by 720, 1024 by 768, 1280 by
+720, 1400 by 1050, and 1920 by 1080 CSS pixels. Smaller, portrait, and square
+viewports show the full-screen transmission-unavailable slate. The recommended
+viewport is 1920 by 1080 on PC.
 
-**The Sentence Hinge Rule.** Keep the warm current-sentence record between the
-public stage and the phrase choices. It explains what the next phrase action
-will do.
+**The Center Axis Rule.** Speech, the current construction, preview, and phrase
+path share one strong center axis. This is the tactical focus and must remain
+readable between the two opponents.
 
 ## Elevation & Depth
 
-Title and setup remain flat records that use fields, seams, and filing rules.
-The match uses controlled television depth: the generated character-free studio
-forms the deep field; transparent portraits occupy the player planes;
-low-contrast overlays protect HUD contrast; and short dark
-shadows lift plaques, speech records, phrase cards, actions, and the comeback
-dialog. Inset brass and navy rules make the fascia feel built, not glassy.
+The match uses controlled stage depth. The generated character-free chamber
+forms the deep field. Transparent portraits occupy the opponent planes. Speech
+and the sentence tower occupy the tactical plane. Top and perimeter controls
+sit on the broadcast frame. Low-contrast masks protect text without turning the
+scene into stacked panels. Short dark shadows lift signs, phrase records,
+actions, and the comeback dialog. Inset brass and navy rules make the arena
+feel built, not glassy.
 
 The match uses five generated raster sources: one character-free television
 studio, three transparent character portraits, and one low-contrast aged-paper
@@ -318,10 +357,11 @@ soft floating dashboard cards.
 
 ## Shapes
 
-The system is square and architectural. Title and setup use sharp record fields
-and a narrow binding seam. Match plaques, phrase lists, private cards, dialogs,
-and buttons use sharp corners, one-pixel brass rules, or three-pixel double
-brass frames. Speech records use simple clipped paper tails.
+The system is framed, angular, and architectural. Top meters can use tapered or
+stepped ends. Stage signs, phrase lists, private choices, dialogs, and buttons
+use sharp corners, one-pixel rules, or restrained double frames. Speech records
+use simple clipped paper tails. Do not copy the reference game's fist-shaped
+meters or its exact black-and-red frames.
 
 **The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
 speech tails, and line icons as compact civic signals. Never let ornament hide
@@ -331,53 +371,59 @@ text or state.
 
 ### Title record and setup register
 
-The implemented title remains a blue-and-paper public record with one heading,
-a visible disclaimer, setup action, and prepared-status stamp. The implemented
-setup remains a flat form with native labeled controls,
-associated recovery text and square actions.
-These surfaces share the palette and type ancestry of the match, but they are
-not represented as finished television stages.
+The current title remains a blue-and-paper public record with one heading, a
+visible disclaimer, setup action, and prepared-status stamp. The current setup
+remains a flat form with native labeled controls and associated recovery text.
+These surfaces are valid implementation states, but a later approved redesign
+can bring them into the arena world. Do not treat their present split layouts or
+fonts as permanent brand rules.
 
 ### Broadcast stage and status plaques
 
-The decorative full-width image is a character-free late-1990s television
-studio. Separate transparent portraits render the two selected characters over
-it and can exchange sides or mirror without changing the scene. The three
-implemented portraits are the Red-Folded Chairman, Thunder Tribune, and Black
-Sea Captain. A centered navy
-plaque owns round, active player, and timer. Compact red and blue strips own a
-single-line character name, visible Pride label, and Pride meter and remain
+The decorative full-viewport image is a character-free late-1990s civic arena.
+Separate transparent portraits render the two selected characters over it and
+can exchange sides or mirror without changing the scene. The three implemented
+portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
+A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
+a single-line character name, visible Pride label, and Pride meter and remain
 outside the portrait bounds.
 Only the active strip states “Your turn.” Its portrait stays bright under a
 persistent brass stage light while the waiting portrait stays subdued. One
 360-millisecond directional light-and-position transfer marks a turn change.
-The reaction strip owns venue, public response, and damage.
+Speech and reaction records cross the middle play field. They own delivered
+text, public response, and damage without covering a face.
 
-### Sentence record
+### Sentence construction tower
 
-The sentence hinge combines the current or preview sentence with a dark next
-role status panel. It uses warm textured paper, a thin brass frame, visible
-labels, and one 260-millisecond clipped reveal.
+The center axis combines the wide current or preview sentence and nine shared
+phrase slots. It uses one light speech record over a near-black phrase stack
+with thin oxblood row rules. It stays visually above the scene without becoming
+a separate dashboard.
 
 ### Phrase cards
 
-The two private paper cards show role, phrase, ownership, and relevant weakness
-or disabled reason. The common board is one vertical list of nine compact paper
-rows. Each row shows role, phrase, and a relevant weakness or disabled reason.
-The list heading owns the repeated common
-ownership fact. Blue, olive, violet, and orange rules support written roles.
-Every available common phrase can be selected by either player. A red inset
-outline marks selection. Selecting a common phrase leaves its numbered row
-visibly empty.
+The two private phrase controls show phrase text only and sit at the active
+player's lower perimeter. An icon-only inline SVG Reshuffle control follows
+them. The common board is one central near-black vertical list of nine compact
+rows. Each
+row shows phrase text only, separated by a thin oxblood rule. Do not show role,
+ownership, weakness, disabled-reason, hint, or card-state copy in either phrase
+list. Keep that state in semantic attributes and accessible names. Every
+available phrase uses the same selection action. Unavailable rows use subdued
+text, and selecting a common phrase leaves its fixed row visibly empty.
 
-### Match actions and channel strap
+### Speech, perimeter actions, and stage status
 
-Actions use authored 24-pixel line icons, a Cormorant SC action name, and a
-smaller Georgia explanation. Oxblood identifies the primary delivery action;
-television blue identifies hand refresh and comeback actions. Disabled controls
-stay labeled and use a dashed
-border. A dedicated Pause action sits with the match status. The channel strap comes
-last in reading order and states the channel, venue, and broadcast motto.
+The active player owns one wide white current-sentence bubble that points to
+that side. The waiting character owns one compact gray ellipsis bubble. Do not
+show two equal speech records. End and Comeback use compact Poiret One
+perimeter plates that stay clear of faces, hands, and required props. Reshuffle
+is an icon-only compact inline-SVG control next to the private phrases and has
+an accessible name without visible explanation copy. Oxblood identifies
+delivery; television blue identifies Reshuffle and Comeback. Disabled controls
+stay labeled or keep an accessible label and use a dashed border. Pause sits at
+the top-center match status. The venue and broadcast identity are part of the
+scene or frame, not a separate dashboard strap.
 
 ### Pause and compatibility slates
 
@@ -395,18 +441,18 @@ tier. It uses the strongest filled tier immediately.
 
 ### Do
 
-- **Do** preserve the implemented title and setup record compositions until a
-  separate approved change replaces them.
-- **Do** use the painted stage as atmosphere and keep all game truth in text,
+- **Do** make the scene, opponents, center construction, speech, and perimeter
+  controls read as one confrontation.
+- **Do** use the painted arena as atmosphere and keep all game truth in text,
   meters, lists, buttons, and dialogs.
 - **Do** depict every roster character as fully human, including characters
   with animal metaphors in their names or titles.
-- **Do** keep the 1024 by 720 path dense but readable: stage first, sentence
-  hinge second, choices third, channel strap last.
+- **Do** keep the 1024 by 720 path dense but readable: top status, speech,
+  center construction, active choices, then perimeter actions.
 - **Do** keep core tactical content at 11 pixels or larger.
-- **Do** write every material weakness, disabled reason, and timer state.
-  Let a section heading own a repeated common/private fact instead of printing
-  it on every row.
+- **Do** preserve every material weakness, disabled reason, and phrase state in
+  semantic attributes and accessible names. Keep the visible phrase rows free
+  of metadata.
 - **Do** keep pointer preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.
 
@@ -414,14 +460,17 @@ tier. It uses the strongest filled tier immediately.
 
 - **Don't** describe the match as the Open Civic Ledger or a flat parliamentary
   dispatch table. That direction is stale.
-- **Don't** claim that title, setup, or future results already use the complete
-  televised composition.
+- **Don't** claim that title, setup, or results already use the complete arena
+  composition.
 - **Don't** use animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.
-- **Don't** place values, controls, or required text inside
-  the painted stage or paper texture.
-- **Don't** use Cormorant SC for dense body copy or shrink core tactical text to
-  make the desktop HUD fit.
+- **Don't** rasterize values, controls, or required text into the painted arena
+  or paper texture.
+- **Don't** copy the reference game's art, meter shapes, exact type, ornaments,
+  proportions, or control frames.
+- **Don't** keep the present font families by inertia or shrink core tactical
+  text to make the arena fit.
 - **Don't** replace written card state with color, icon, texture, or border
   style alone.
 - **Don't** round the match into generic dashboard cards or use glass effects.
+- **Don't** divide the match into a stage header and a separate lower dashboard.

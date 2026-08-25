@@ -189,7 +189,9 @@ export const contentCatalogSchema = z
       const forcedConnectorCount = unrestricted.filter(
         (phrase) =>
           phrase.role === 'conjunction' &&
-          (phrase.connectorKind === 'and' || phrase.connectorKind === 'but'),
+          (phrase.connectorKind === 'and' ||
+            phrase.connectorKind === 'but' ||
+            phrase.connectorKind === 'yet'),
       ).length;
       if (
         roleCount('noun') < 3 ||
@@ -201,7 +203,7 @@ export const contentCatalogSchema = z
         issue(
           context,
           ['scenes', sceneIndex, 'phrasePool'],
-          'Supply three unrestricted nouns, three unrestricted verbs, one predicate, one continuation, and two distinct and-or-but connectors.',
+          'Supply three unrestricted nouns, three unrestricted verbs, one predicate, one continuation, and two distinct and-or-contrast connectors.',
         );
       }
       scene.backgroundLayers.forEach((layer, layerIndex) =>

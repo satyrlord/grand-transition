@@ -82,11 +82,11 @@ describe('Hollywood Roast shared board generation', () => {
   );
 
   test.each([
-    [0.249, 'but'],
-    [0.25, 'and'],
+    [0.249, ['but', 'yet']],
+    [0.25, ['and']],
   ] as const)(
-    'uses the half-open 25 percent but band at roll %s',
-    (kindRoll, expectedKind) => {
+    'uses the half-open 25 percent contrast band at roll %s',
+    (kindRoll, expectedKinds) => {
       let calls = 0;
       const random: RandomSource = {
         next(seed) {
@@ -103,12 +103,36 @@ describe('Hollywood Roast shared board generation', () => {
       const connector = result.board.slots.find(
         (slot) => slot.role === 'conjunction',
       )!;
-      expect(
+      expect(expectedKinds).toContain(
         sampleContent.phrases.find((phrase) => phrase.id === connector.phraseId)
           ?.connectorKind,
-      ).toBe(expectedKind);
+      );
     },
   );
+
+  test('deals without a forced connector when only clause connectors remain', () => {
+    const scenePhraseIds = scene.phrasePool.filter((phraseId) => {
+      const phrase = sampleContent.phrases.find(
+        (candidate) => candidate.id === phraseId,
+      );
+      return (
+        phrase?.role !== 'conjunction' ||
+        ['because', 'for', 'so'].includes(phrase.connectorKind ?? '')
+      );
+    });
+    const result = generateBoard({ ...request(1), scenePhraseIds });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    for (const slot of result.board.slots.filter(
+      (candidate) => candidate.role === 'conjunction',
+    )) {
+      expect(['because', 'for', 'so']).toContain(
+        sampleContent.phrases.find((phrase) => phrase.id === slot.phraseId)
+          ?.connectorKind,
+      );
+    }
+  });
 
   test('never puts a character-restricted phrase on the common board', () => {
     const restricted = {

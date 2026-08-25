@@ -31,6 +31,14 @@ export const phraseRoles = [
 ] as const;
 export const sentencePoolRoles = ['noun', 'verb', 'predicate'] as const;
 export const phraseRoleSchema = z.enum(phraseRoles);
+export const connectorKindSchema = z.enum([
+  'and',
+  'because',
+  'but',
+  'for',
+  'so',
+  'yet',
+]);
 
 export const editorialSafetyFlagSchema = z.enum([
   'copied-line',
@@ -129,7 +137,7 @@ export const phraseDefinitionSchema = z
     id: identifierSchema,
     role: phraseRoleSchema,
     textKey: localeKeySchema,
-    connectorKind: z.enum(['and', 'because', 'but']).optional(),
+    connectorKind: connectorKindSchema.optional(),
     grammaticalNumber: z.enum(['singular', 'plural']).optional(),
     customScores: customScoresSchema.optional(),
     scoreGroups: scoreGroupsSchema.optional(),
@@ -196,7 +204,7 @@ export const phraseSchema = phraseDefinitionSchema.superRefine(
     if (phrase.role === 'conjunction' && !phrase.connectorKind) {
       issue(
         'connectorKind',
-        'Declare and, but, or because for each conjunction.',
+        'Declare and, because, but, for, so, or yet for each conjunction.',
       );
     } else if (phrase.role !== 'conjunction' && phrase.connectorKind) {
       issue(

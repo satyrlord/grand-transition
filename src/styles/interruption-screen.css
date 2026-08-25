@@ -10,6 +10,8 @@
     --interruption-paper: #eee4d3;
     --interruption-brass: #b48a48;
     --interruption-red: #8f2822;
+    --font-interruption-feature: 'Poiret One', Arial, sans-serif;
+    --font-interruption-interface: 'Rubik Variable', Arial, sans-serif;
     display: grid;
     grid-template-rows: auto 1fr auto;
     place-items: center;
@@ -21,12 +23,13 @@
       linear-gradient(180deg, rgb(5 8 11 / 22%), rgb(5 8 11 / 78%)),
       var(--interruption-ink);
     color: var(--interruption-paper);
+    font-family: var(--font-interruption-interface);
   }
 
   .interruption-broadcast-mark,
   .interruption-screen footer {
     color: var(--interruption-brass);
-    font: 700 0.82rem/1 var(--font-display);
+    font: 700 0.82rem/1 var(--font-interruption-interface);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
@@ -51,7 +54,7 @@
   .interruption-status {
     margin: 0 0 1.2rem;
     color: var(--interruption-brass);
-    font: 700 0.82rem/1 var(--font-display);
+    font: 700 0.82rem/1 var(--font-interruption-interface);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
@@ -59,12 +62,9 @@
   .interruption-notice h1 {
     margin: 0;
     color: var(--interruption-paper);
-    font:
-      700 clamp(3.4rem, 7vw, 6rem) / 0.88 'Cormorant SC',
-      Georgia,
-      'Times New Roman',
-      serif;
-    letter-spacing: -0.025em;
+    font: 400 clamp(3.4rem, 7vw, 6rem) / 0.88 var(--font-interruption-feature);
+    letter-spacing: 0.06em;
+    -webkit-text-stroke: clamp(0.9px, 0.13vw, 1.4px) currentcolor;
     text-wrap: balance;
   }
 
@@ -92,18 +92,14 @@
 
   .interruption-notice dt {
     color: var(--interruption-brass);
-    font: 700 0.72rem/1 var(--font-display);
+    font: 700 0.72rem/1 var(--font-interruption-interface);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .interruption-notice dd {
     margin: 0.45rem 0 0;
-    font:
-      700 1.2rem/1 ui-monospace,
-      'Cascadia Code',
-      Consolas,
-      monospace;
+    font: 700 1.2rem/1 var(--font-interruption-interface);
   }
 
   .interruption-notice button {
@@ -114,13 +110,10 @@
     border: 3px double var(--interruption-brass);
     background: var(--interruption-red);
     color: var(--interruption-paper);
-    font:
-      700 1.1rem/1 'Cormorant SC',
-      Georgia,
-      'Times New Roman',
-      serif;
-    letter-spacing: 0.04em;
+    font: 400 1.1rem/1 var(--font-interruption-feature);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+    -webkit-text-stroke: 0.75px currentcolor;
     cursor: pointer;
   }
 

@@ -118,7 +118,7 @@ failed automated range or distribution.
 ## Acceptance criteria
 
 - **AC-026-01:** The catalog contains exactly 18 required character IDs and
-  five required scene IDs, with no duplicate localized identity.
+  five required scene IDs, with no duplicate English identity.
 - **AC-026-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
 - **AC-026-03:** Every character and scene passes grammar reachability, board

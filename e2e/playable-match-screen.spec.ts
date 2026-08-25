@@ -15,12 +15,17 @@ test('the longest desktop match state fits and exposes every required fact', asy
   ).toBeVisible();
   await expect(page.locator('.shared-board > li')).toHaveCount(9);
   await expect(page.locator('.private-hand ol > li')).toHaveCount(2);
-  await expect(page.getByText('Current sentence')).toBeVisible();
+  await expect(page.locator('#sentence-title')).toHaveCount(1);
+  await expect(page.locator('.sentence-preview')).toBeVisible();
   await expect(page.getByText('Pride', { exact: true })).toHaveCount(2);
   await expect(page.locator('.player-health-label')).toHaveCount(2);
   await expect(page.locator('.player-health-label').first()).toBeVisible();
   await expect(page.locator('.player-health-label').last()).toBeVisible();
-  await expect(page.locator('.timer-fact dd')).toHaveText(/^\d+ seconds$/u);
+  await expect(page.locator('.timer-fact dd')).toHaveText(/^\d+$/u);
+  await expect(page.locator('.timer-fact dd')).toHaveAttribute(
+    'aria-label',
+    /^\d+ seconds$/u,
+  );
   expect(
     await page.locator('grand-transition-match').evaluate(
       (
@@ -40,12 +45,16 @@ test('the longest desktop match state fits and exposes every required fact', asy
   await expect(page.locator('.player-turn-status:not([hidden])')).toHaveCount(
     1,
   );
-  await expect(page.locator('.private-hand-heading')).not.toContainText(
-    'Has the floor',
+  await expect(page.locator('.private-hand')).toHaveAttribute(
+    'data-side',
+    'red',
   );
-  await expect(page.locator('.private-hand-heading p')).toHaveText(
-    'The Red-Folded Chairman',
+  await expect(page.locator('.sentence-ledger')).toHaveAttribute(
+    'data-speaker-side',
+    'red',
   );
+  await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
+  await expect(page.locator('.player-sentence--waiting')).toContainText('…');
   const activePortrait = page.locator(
     '[data-turn-state="active"] .character-portrait',
   );
@@ -82,11 +91,37 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(
     playerSeparation.find(({ state }) => state === 'active')?.filter,
   ).not.toBe(playerSeparation.find(({ state }) => state === 'waiting')?.filter);
+  expect(
+    await page
+      .locator('[data-turn-state="waiting"] .character-portrait')
+      .evaluate((portrait) => getComputedStyle(portrait).opacity),
+  ).toBe('1');
+  expect(await centeredHeaderControls(page)).toBe(true);
   expect(await topStatusRegionsDoNotOverlap(page)).toBe(true);
 
   await expect(
     page.getByRole('heading', { name: 'Common phrases' }),
-  ).toBeVisible();
+  ).toHaveCount(1);
+  await expect(page.locator('.card-role')).toHaveCount(0);
+  await expect(page.locator('.card-bottomline')).toHaveCount(0);
+  await expect(page.locator('.card-weakness')).toHaveCount(0);
+  const visibleCardText = await page
+    .locator('.shared-board button.phrase-card')
+    .evaluateAll((buttons) =>
+      buttons.every(
+        (button) =>
+          button.textContent?.trim() ===
+          button.querySelector('.card-phrase')?.textContent?.trim(),
+      ),
+    );
+  expect(visibleCardText).toBe(true);
+  expect(
+    await page
+      .locator('.shared-board button.phrase-card')
+      .evaluateAll((buttons) =>
+        buttons.some((button) => button.ariaLabel?.includes('Shared')),
+      ),
+  ).toBe(true);
   const commonPhraseGeometry = await page
     .locator('.shared-board > li')
     .evaluateAll((slots) =>
@@ -141,7 +176,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
         ),
       requiredTextClipping: Array.from(
         document.querySelectorAll<HTMLElement>(
-          '.match-turn-heading h1, .match-player h2, .reaction-copy h2, .reaction-copy > p, .card-phrase, .card-weakness',
+          '.match-turn-heading h1, .match-player h2, .reaction-docket > p, .card-phrase, .sentence-preview',
         ),
       )
         .filter(
@@ -168,7 +203,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(geometry.requiredTextClipping).toEqual([]);
 
   const actionIconFacts = await page
-    .locator('.match-actions .action-icon')
+    .locator('.action-reshuffle .action-icon')
     .evaluateAll((icons) =>
       icons.map((icon) => {
         const box = icon.getBoundingClientRect();
@@ -185,7 +220,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
         };
       }),
     );
-  expect(actionIconFacts).toHaveLength(3);
+  expect(actionIconFacts).toHaveLength(1);
   expect(
     actionIconFacts.every(
       (icon) =>
@@ -202,7 +237,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
 
   const tacticalTextFloor = await page.evaluate(() => {
     const text = document.querySelectorAll(
-      '.match-facts dt, .player-hud, .player-turn-status, .player-health strong, .reaction-copy p, .sentence-ledger h2, .card-topline, .card-phrase, .card-bottomline, .card-weakness, .private-hand-heading, .common-phrases h2, .action-detail, .match-footer',
+      '.match-turn-heading h1, .player-health-label, .player-turn-status, .player-health strong, .sentence-preview, .card-phrase, .action-title',
     );
     return Math.min(
       ...Array.from(text, (element) =>
@@ -333,10 +368,53 @@ test('the match fits the supported landscape matrix', async ({
   await startMatch(page);
   await page.evaluate(async () => document.fonts.ready);
 
+  const fontEvidence = await page.evaluate(async () => {
+    await Promise.all([
+      document.fonts.load('400 24px "Poiret One"', 'THUNDER'),
+      document.fonts.load(
+        '900 24px "Nunito Variable"',
+        'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
+      ),
+      document.fonts.load(
+        '700 16px "Rubik Variable"',
+        'o ordonanță de urgență',
+      ),
+      document.fonts.load('400 24px "Share Tech Mono"', '00:15'),
+    ]);
+    return {
+      feature: getComputedStyle(document.querySelector('.match-player h2')!)
+        .fontFamily,
+      speech: getComputedStyle(document.querySelector('.sentence-preview')!)
+        .fontFamily,
+      phrase: getComputedStyle(document.querySelector('.card-phrase')!)
+        .fontFamily,
+      timer: getComputedStyle(document.querySelector('.timer-fact dd')!)
+        .fontFamily,
+      loaded: {
+        feature: document.fonts.check('400 24px "Poiret One"', 'THUNDER'),
+        speech: document.fonts.check(
+          '900 24px "Nunito Variable"',
+          'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
+        ),
+        phrase: document.fonts.check(
+          '700 16px "Rubik Variable"',
+          'o ordonanță de urgență',
+        ),
+        timer: document.fonts.check('400 24px "Share Tech Mono"', '00:15'),
+      },
+    };
+  });
+  expect(fontEvidence.feature).toContain('Poiret One');
+  expect(fontEvidence.speech).toContain('Nunito Variable');
+  expect(fontEvidence.phrase).toContain('Rubik Variable');
+  expect(fontEvidence.timer).toContain('Share Tech Mono');
+  expect(Object.values(fontEvidence.loaded).every(Boolean)).toBe(true);
+
   for (const viewport of [
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
+    { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
@@ -348,7 +426,7 @@ test('the match fits the supported landscape matrix', async ({
       ];
       const text = [
         ...document.querySelectorAll<HTMLElement>(
-          '.match-turn-heading h1, .match-player h2, .shared-board .card-phrase, .shared-board .card-weakness',
+          '.match-turn-heading h1, .match-player h2, .shared-board .card-phrase, .sentence-preview',
         ),
       ];
       return {
@@ -369,7 +447,13 @@ test('the match fits the supported landscape matrix', async ({
               node.scrollWidth > node.clientWidth + 1 ||
               node.scrollHeight > node.clientHeight + 1,
           )
-          .map((node) => node.textContent?.trim()),
+          .map((node) => ({
+            text: node.textContent?.trim(),
+            clientWidth: node.clientWidth,
+            scrollWidth: node.scrollWidth,
+            clientHeight: node.clientHeight,
+            scrollHeight: node.scrollHeight,
+          })),
       };
     });
     expect(facts.documentWidth).toBeLessThanOrEqual(viewport.width);
@@ -377,13 +461,22 @@ test('the match fits the supported landscape matrix', async ({
     expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(
       true,
     );
-    expect(facts.textClipping).toEqual([]);
+    expect(facts.textClipping, `${viewport.width}x${viewport.height}`).toEqual(
+      [],
+    );
+    expect(await centeredHeaderControls(page)).toBe(true);
+    expect(
+      await page
+        .locator('[data-turn-state="waiting"] .character-portrait')
+        .evaluate((portrait) => getComputedStyle(portrait).opacity),
+    ).toBe('1');
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `match-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
   }
-
-  await page.screenshot({
-    path: testInfo.outputPath('match-recommended-1920x1080.png'),
-    fullPage: true,
-  });
 });
 
 test('pointer play completes redraw, an immediate grammar mistake, and the other hotseat side', async ({
@@ -391,10 +484,12 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
 }, testInfo) => {
   await startMatch(page);
 
-  const redraw = page.getByRole('button', { name: 'Redraw hand' });
+  const redraw = page.getByRole('button', {
+    name: 'Reshuffle private phrases',
+  });
   await redraw.click();
   await expect(
-    page.getByRole('button', { name: 'Redraw used' }),
+    page.getByRole('button', { name: 'Reshuffle used' }),
   ).toBeDisabled();
 
   const wrongPredicate = page.locator(
@@ -425,6 +520,15 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
       (portrait) => getComputedStyle(portrait).animationDuration,
     ),
   ).toBe('0.36s');
+  await expect(page.locator('.private-hand')).toHaveAttribute(
+    'data-side',
+    'blue',
+  );
+  await expect(page.locator('.sentence-ledger')).toHaveAttribute(
+    'data-speaker-side',
+    'blue',
+  );
+  await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
 
   for (let turn = 0; turn < 8; turn += 1) {
     if (
@@ -433,7 +537,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
         .isVisible()
     )
       break;
-    const end = page.getByRole('button', { name: 'End sentence' });
+    const end = page.getByRole('button', { name: 'End', exact: true });
     if (await end.isEnabled()) {
       await end.click();
       continue;
@@ -573,5 +677,29 @@ async function topStatusRegionsDoNotOverlap(page: Page): Promise<boolean> {
       const box = hud.getBoundingClientRect();
       return box.right <= center.left || box.left >= center.right;
     });
+  });
+}
+
+async function centeredHeaderControls(page: Page): Promise<boolean> {
+  return page.evaluate(() => {
+    const stage = document.querySelector('.broadcast-stage')!;
+    const rail = document.querySelector('.match-status-rail')!;
+    const controls = document.querySelector('.match-header-controls')!;
+    const pause = controls.querySelector('.match-pause')!;
+    const timer = controls.querySelector('.timer-fact')!;
+    const stageBox = stage.getBoundingClientRect();
+    const railBox = rail.getBoundingClientRect();
+    const controlsBox = controls.getBoundingClientRect();
+    const pauseBox = pause.getBoundingClientRect();
+    const timerBox = timer.getBoundingClientRect();
+    const stageCenter = stageBox.left + stageBox.width / 2;
+
+    return (
+      Math.abs(railBox.left + railBox.width / 2 - stageCenter) <= 1 &&
+      Math.abs(controlsBox.left + controlsBox.width / 2 - stageCenter) <= 1 &&
+      Math.abs(pauseBox.left + pauseBox.width / 2 - stageCenter) <= 1 &&
+      Math.abs(timerBox.left + timerBox.width / 2 - stageCenter) <= 1 &&
+      pauseBox.bottom <= timerBox.top + 1
+    );
   });
 }
