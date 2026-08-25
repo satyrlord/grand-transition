@@ -27,9 +27,9 @@ A finisher or comeback ends the sentence immediately. A continuation ends that
 player's participation and carries the fragment. Finished and continued players
 are skipped. The round ends when both have finished or continued.
 
-## Ten-second timer
+## Fifteen-second timer
 
-Every pick has a fixed 10-second timer. When both players are still active, a
+Every pick has a fixed 15-second timer. When both players are still active, a
 timeout passes the pick without ending the sentence or dealing damage. When the
 other player has finished or continued, the timed-out player takes 3 damage on
 the first consecutive timeout. Each later consecutive timeout doubles the

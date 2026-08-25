@@ -105,7 +105,7 @@ export const replaySetupSchema = z
     players: z.tuple([replayPlayerSchema, replayPlayerSchema]),
     sceneId: identifier,
     aiDifficulty: z.string().min(1).nullable(),
-    timerSeconds: z.literal(10),
+    timerSeconds: z.literal(15),
     speechEnabled: z.boolean(),
     privacyEnabled: z.boolean(),
   })

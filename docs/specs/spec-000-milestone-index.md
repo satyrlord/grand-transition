@@ -23,13 +23,15 @@ complete an approved specification.
   match mechanics follow _Oh...Sir! The Hollywood Roast_: one common phrase
   board, two private hand cards, tactical phrase removal, its grammar,
   clause scoring, weaknesses, noun combos, finishers, continuations, comebacks,
-  Pride damage, ten-second picks, and cliffhangers.
+  Pride damage, 15-second picks, and cliffhangers.
 - Use only original Grand Transition phrases, characters, scenes, prose, art,
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression.
-- Use fictional composite archetypes. Do not present unsupported allegations
-  about real people or copy protected writing, art, audio, branding, layout, or
-  source code.
+- Use fictional composite archetypes. A specification can name a public figure
+  as visual or rhetorical inspiration when the result remains an original
+  fictional character, uses verified public facts, and does not copy a slogan,
+  portrait, protected writing, art, audio, branding, layout, or source code.
+  Do not present unsupported allegations about a real person.
 - The game is political satire for adults aged 18 and older. Phrase cards do
   not carry individual age-rating metadata.
 - The minimum viable product (MVP) is English-first and localization-ready.
@@ -221,7 +223,7 @@ source-only review does not satisfy them.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-    Budget: 10. One scene and two characters use validated final art.
+    Budget: 10. One scene and three characters use validated final art.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
 25. [Tutorial and presentation](spec-025-tutorial-presentation.md). Budget: 8.

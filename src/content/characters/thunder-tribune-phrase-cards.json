@@ -1,0 +1,57 @@
+[
+  {
+    "id": "tribunes-indictment",
+    "role": "noun",
+    "text": "a tribune's indictment",
+    "tags": ["evidence", "credibility"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["oratory"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional adaptation informed by Corneliu Vadim Tudor's public identity as the Tribune, writer, and political orator. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "condemns",
+    "role": "verb",
+    "text": "condemns",
+    "singularText": "condemns",
+    "pluralText": "condemn",
+    "tags": ["restraint", "decorum"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional adaptation informed by Corneliu Vadim Tudor's forceful denunciatory rhetoric. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "from-the-marble-rostrum",
+    "role": "predicate",
+    "text": "from the marble rostrum",
+    "tags": ["decorum", "credibility"],
+    "scorePreferences": {
+      "substance": [{ "left": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional parliamentary-oratory image informed by Corneliu Vadim Tudor's public Senate and European Parliament roles. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "before-the-nation-loses-patience",
+    "role": "ending",
+    "text": "before the nation loses patience",
+    "tags": ["restraint", "credibility"],
+    "rarity": "rare",
+    "finisherBonus": 4,
+    "reviewNotes": "Original fictional high-volume oratory satire informed by Corneliu Vadim Tudor's public rhetoric. Not a quotation or threat. Editorial review complete."
+  },
+  {
+    "id": "raises-the-volume-again",
+    "role": "continuation",
+    "text": "raises the volume again",
+    "tags": ["decorum", "restraint"],
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional continuation informed by Corneliu Vadim Tudor's televised oratorical intensity. Not a quotation. Editorial review complete."
+  }
+]

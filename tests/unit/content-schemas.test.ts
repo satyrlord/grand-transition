@@ -34,7 +34,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
     immediatelyAbove: 101,
     setValue: (catalog, value) => {
       catalog.phrases[4]!.customScores = [
-        { leftNounId: 'paper-promise', score: value },
+        { leftNounId: 'national-consensus', score: value },
       ];
     },
   },
@@ -47,7 +47,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
     immediatelyAbove: 21,
     setValue: (catalog, value) => {
       catalog.phrases.find(
-        (phrase) => phrase.id === 'with-the-receipt',
+        (phrase) => phrase.id === 'by-emergency-ordinance',
       )!.finisherBonus = value;
     },
   },
@@ -116,20 +116,76 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 32 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(32);
+  test('loads 45 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(45);
     expect(phraseCardCatalog.commonPhraseIds).toHaveLength(30);
     expect(phraseCardCatalog.characterPhraseIds).toEqual({
-      'civic-fox': ['committee-kite'],
-      'brass-peacock': ['polishes'],
+      'red-folded-chairman': [
+        'national-salvation-committee',
+        'mediates',
+        'through-a-gradual-transition',
+        'for-stabilitys-sake',
+        'asks-for-patience-again',
+      ],
+      'thunder-tribune': [
+        'tribunes-indictment',
+        'condemns',
+        'from-the-marble-rostrum',
+        'before-the-nation-loses-patience',
+        'raises-the-volume-again',
+      ],
+      'black-sea-captain': [
+        'hands-on-presidency',
+        'steers',
+        'through-troubled-waters',
+        'from-the-bridge',
+        'returns-to-the-wheel',
+      ],
     });
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(32);
+    ).toHaveLength(45);
     expect(
-      phraseCardCatalog.phrases.find((phrase) => phrase.id === 'committee-kite')
-        ?.characterIds,
-    ).toEqual(['civic-fox']);
+      phraseCardCatalog.phrases.find(
+        (phrase) => phrase.id === 'national-salvation-committee',
+      )?.characterIds,
+    ).toEqual(['red-folded-chairman']);
+  });
+
+  test('records a Romanian research rationale for every shipped phrase card', () => {
+    const phraseById = new Map(
+      phraseCardCatalog.phrases.map((phrase) => [phrase.id, phrase]),
+    );
+    for (const phraseId of phraseCardCatalog.commonPhraseIds) {
+      const review = phraseById.get(phraseId)!.editorialReview;
+      expect(review.state, phraseId).toBe('approved');
+      expect(review.originality, phraseId).toBe('original');
+      expect(review.safetyFlags, phraseId).toEqual([]);
+      expect(review.notes, phraseId).toMatch(/Romania|Romanian/iu);
+      expect(review.notes, phraseId).toMatch(
+        /Not a quotation|Standard English connector/iu,
+      );
+    }
+
+    const inspirationByCharacter = {
+      'red-folded-chairman': /Ion Iliescu/iu,
+      'thunder-tribune': /Corneliu Vadim Tudor/iu,
+      'black-sea-captain': /Traian Basescu/iu,
+    } as const;
+    for (const [characterId, inspiration] of Object.entries(
+      inspirationByCharacter,
+    )) {
+      for (const phraseId of phraseCardCatalog.characterPhraseIds[
+        characterId
+      ]!) {
+        const review = phraseById.get(phraseId)!.editorialReview;
+        expect(review.state, phraseId).toBe('approved');
+        expect(review.originality, phraseId).toBe('original');
+        expect(review.safetyFlags, phraseId).toEqual([]);
+        expect(review.notes, phraseId).toMatch(inspiration);
+        expect(review.notes, phraseId).toMatch(/Not a quotation/iu);
+      }
+    }
   });
 
   test('validates a manually authored JSON phrase before catalog loading', () => {
@@ -164,10 +220,10 @@ describe('content schemas', () => {
     ).toThrow(/more than one corpus/iu);
   });
 
-  test('accepts original sample content for two characters and one scene', () => {
+  test('accepts original sample content for three characters and one scene', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
-    expect(result.characters).toHaveLength(2);
+    expect(result.characters).toHaveLength(3);
     expect(
       result.characters.every((character) => character.species === 'human'),
     ).toBe(true);
@@ -219,13 +275,13 @@ describe('content schemas', () => {
   test('rejects grammar and scoring fields on the wrong phrase role', () => {
     const predicateFinisher = cloneCatalog();
     predicateFinisher.phrases.find(
-      (phrase) => phrase.id === 'before-lunch',
+      (phrase) => phrase.id === 'before-the-next-election',
     )!.finisherBonus = 2;
     expectFailure(predicateFinisher, 'finisherBonus', /Only an ending/iu);
 
     const endingWithoutScore = cloneCatalog();
     endingWithoutScore.phrases.find(
-      (phrase) => phrase.id === 'with-the-receipt',
+      (phrase) => phrase.id === 'by-emergency-ordinance',
     )!.finisherBonus = undefined;
     expectFailure(endingWithoutScore, 'finisherBonus', /each ending/iu);
 
@@ -245,7 +301,7 @@ describe('content schemas', () => {
 
     const emptyScores = cloneCatalog();
     const relation = emptyScores.phrases.find(
-      (phrase) => phrase.id === 'before-lunch',
+      (phrase) => phrase.id === 'before-the-next-election',
     )!;
     relation.scorePreferences = undefined;
     relation.customScores = [];
@@ -253,10 +309,10 @@ describe('content schemas', () => {
 
     const duplicateScores = cloneCatalog();
     duplicateScores.phrases.find(
-      (phrase) => phrase.id === 'before-lunch',
+      (phrase) => phrase.id === 'before-the-next-election',
     )!.customScores = [
-      { leftNounId: 'paper-promise', score: 4 },
-      { leftNounId: 'paper-promise', score: 9 },
+      { leftNounId: 'national-consensus', score: 4 },
+      { leftNounId: 'national-consensus', score: 9 },
     ];
     expectFailure(
       duplicateScores,
@@ -300,7 +356,7 @@ describe('content schemas', () => {
     catalog.characters[0]!.characterPhraseIds.push('missing-phrase');
     expectFailure(
       catalog,
-      'characters.0.characterPhraseIds.1',
+      'characters.0.characterPhraseIds.5',
       /existing phrase/iu,
     );
   });
@@ -322,12 +378,14 @@ describe('content schemas', () => {
   test('rejects a phrase outside its character or scene restriction', () => {
     const wrongCharacter = cloneCatalog();
     wrongCharacter.phrases.find(
-      (phrase) => phrase.id === 'committee-kite',
-    )!.characterIds = ['civic-fox'];
-    wrongCharacter.characters[1]!.characterPhraseIds.push('committee-kite');
+      (phrase) => phrase.id === 'national-salvation-committee',
+    )!.characterIds = ['red-folded-chairman'];
+    wrongCharacter.characters[1]!.characterPhraseIds.push(
+      'national-salvation-committee',
+    );
     expectFailure(
       wrongCharacter,
-      'characters.1.characterPhraseIds.1',
+      'characters.1.characterPhraseIds.5',
       /not available to character/iu,
     );
 
@@ -347,11 +405,11 @@ describe('content schemas', () => {
   test('requires character and scene restriction membership in both directions', () => {
     const unrestrictedCharacterPhrase = cloneCatalog();
     unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.push(
-      'paper-promise',
+      'national-consensus',
     );
     expectFailure(
       unrestrictedCharacterPhrase,
-      'characters.0.characterPhraseIds.1',
+      'characters.0.characterPhraseIds.5',
       /not available to character/iu,
     );
 
@@ -360,21 +418,21 @@ describe('content schemas', () => {
     expectFailure(
       missingCharacterMembership,
       'phrases.30.characterIds.0',
-      /Add phrase "committee-kite" to character/iu,
+      /Add phrase "national-salvation-committee" to character/iu,
     );
 
     const missingSceneMembership = cloneCatalog();
     const restrictedIndex = missingSceneMembership.phrases.findIndex(
-      (phrase) => phrase.id === 'past-the-deadline',
+      (phrase) => phrase.id === 'during-a-coalition-crisis',
     );
     missingSceneMembership.scenes[0]!.phrasePool =
       missingSceneMembership.scenes[0]!.phrasePool.filter(
-        (phraseId) => phraseId !== 'past-the-deadline',
+        (phraseId) => phraseId !== 'during-a-coalition-crisis',
       );
     expectFailure(
       missingSceneMembership,
       `phrases.${restrictedIndex}.sceneIds.0`,
-      /Add phrase "past-the-deadline" to scene/iu,
+      /Add phrase "during-a-coalition-crisis" to scene/iu,
     );
   });
 
@@ -393,9 +451,9 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     const secondLocale = structuredClone(catalog.locales[0]!);
     secondLocale.locale = 'en-GB';
-    delete secondLocale.messages['phrase.polishes'];
+    delete secondLocale.messages['phrase.condemns'];
     catalog.locales.push(secondLocale);
-    expectFailure(catalog, 'locales.1.messages', /phrase\.polishes/iu);
+    expectFailure(catalog, 'locales.1.messages', /phrase\.condemns/iu);
   });
 
   test('rejects a non-canonical BCP 47 locale tag', () => {
@@ -406,19 +464,23 @@ describe('content schemas', () => {
 
   test('rejects missing locale keys for number forms', () => {
     const catalog = cloneCatalog();
-    delete catalog.locales[0]!.messages['phrase.paper-promise.plural'];
+    delete catalog.locales[0]!.messages['phrase.national-consensus.plural'];
     expectFailure(
       catalog,
-      'locales.0.messages.phrase.paper-promise.plural',
+      'locales.0.messages.phrase.national-consensus.plural',
       /required locale message/iu,
     );
   });
 
   test('rejects unsafe HTML in game-locale text', () => {
     const catalog = cloneCatalog();
-    catalog.locales[0]!.messages['phrase.folds'] =
-      '<img src=x onerror=alert(1)>folds';
-    expectFailure(catalog, 'locales.0.messages.phrase.folds', /Remove HTML/iu);
+    catalog.locales[0]!.messages['phrase.repackages'] =
+      '<img src=x onerror=alert(1)>repackages';
+    expectFailure(
+      catalog,
+      'locales.0.messages.phrase.repackages',
+      /Remove HTML/iu,
+    );
   });
 
   test('rejects a missing fictional-composite satire disclaimer', () => {
@@ -504,9 +566,9 @@ describe('content schemas', () => {
   test('rejects a scene pool without nouns, verbs, and predicates', () => {
     const catalog = cloneCatalog();
     catalog.scenes[0]!.phrasePool = [
-      'paper-promise',
-      'velvet-megaphone',
-      'committee-kite',
+      'national-consensus',
+      'televised-revolution',
+      'national-salvation-committee',
     ];
     expectFailure(catalog, 'scenes.0.phrasePool', /Missing: verb, predicate/iu);
   });

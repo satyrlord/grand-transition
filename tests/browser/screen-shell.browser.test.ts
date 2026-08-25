@@ -38,14 +38,16 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect.element(page.getByLabelText('Mode')).toHaveValue('hotseat');
   await expect
     .element(page.getByLabelText('Player one character'))
-    .toHaveValue('civic-fox');
+    .toHaveValue('red-folded-chairman');
   await expect
     .element(page.getByLabelText('Player two character'))
-    .toHaveValue('brass-peacock');
+    .toHaveValue('thunder-tribune');
   await expect
     .element(page.getByLabelText('Scene'))
-    .toHaveValue('echo-chamber');
-  await page.getByLabelText('Player two character').selectOptions('civic-fox');
+    .toHaveValue('transition-era-television-studio');
+  await page
+    .getByLabelText('Player two character')
+    .selectOptions('red-folded-chairman');
   await page.getByRole('button', { name: 'Back' }).click();
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
@@ -58,7 +60,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await page.getByRole('button', { name: 'Set up match' }).click();
   await expect
     .element(page.getByLabelText('Player two character'))
-    .toHaveValue('civic-fox');
+    .toHaveValue('red-folded-chairman');
 
   window.history.back();
   await expect
@@ -70,11 +72,11 @@ test('moves through the two-state graph on one URL and restores setup values', a
 test.each([
   {
     name: 'default match',
-    playerTwoCharacterId: 'brass-peacock',
+    playerTwoCharacterId: 'thunder-tribune',
   },
   {
     name: 'mirror match',
-    playerTwoCharacterId: 'civic-fox',
+    playerTwoCharacterId: 'red-folded-chairman',
   },
 ] as const)(
   'emits one exact immutable payload for $name',
@@ -108,9 +110,9 @@ test.each([
     expect(Object.isFrozen(event.detail)).toBe(true);
     expect(event.detail).toEqual({
       mode: 'hotseat',
-      playerOneCharacterId: 'civic-fox',
+      playerOneCharacterId: 'red-folded-chairman',
       playerTwoCharacterId,
-      sceneId: 'echo-chamber',
+      sceneId: 'transition-era-television-studio',
     });
   },
 );
@@ -184,7 +186,7 @@ test('associates unknown-value errors and revalidates an invalid field after cha
   );
   expect(playerOne.getAttribute('aria-invalid')).toBe('true');
 
-  playerOne.value = 'civic-fox';
+  playerOne.value = 'red-folded-chairman';
   playerOne.dispatchEvent(
     new Event('change', { bubbles: true, composed: true }),
   );

@@ -17,16 +17,19 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
-1. **Red-Folder Chairman:** procedural; weak to legacy, modernity, bureaucracy;
-   patient denial and safe continuations.
-2. **Thunder Tribune:** furious orator; weak to evidence, credibility, restraint;
+1. **Red-Folded Chairman:** measured transition-era mediator, visually and
+   rhetorically inspired by Ion Iliescu; weak to legacy, modernity, and
+   bureaucracy; patient denial and safe continuations.
+2. **Thunder Tribune:** furious poet-orator, visually and rhetorically inspired
+   by Corneliu Vadim Tudor; weak to evidence, credibility, and restraint;
    aggressive finishers and risky long sentences.
 3. **Midnight Sensationalist:** breathless tabloid host; weak to ratings,
    evidence, credibility; combos and dramatic comebacks.
 4. **Velvet Mogul:** polished media broker; weak to wealth, influence,
    credibility; denial and weakness targeting.
-5. **Black Sea Captain:** salty practical statesman; weak to decorum,
-   consistency, legacy; adaptive comeback play.
+5. **Black Sea Captain:** salty practical statesman and former ship captain,
+   visually and rhetorically inspired by Traian Basescu; weak to decorum,
+   consistency, and legacy; adaptive comeback play.
 6. **Retiring Cassandra:** weary reformist; weak to competence, hope, results;
    defensive continuations and conservative scoring.
 7. **Oat-Milk Reformist:** earnest jargon; weak to relevance, authenticity,
@@ -127,6 +130,24 @@ failed automated range or distribution.
   threshold and record seed, workload, environment, and exceptions.
 - **AC-026-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
+
+## Initial-character research basis
+
+The first three implemented characters remain fictional composites. Use these
+sources only for public biography, visual cues, and broad rhetorical themes.
+Do not copy photographs, slogans, accusations, or protected prose.
+
+- Ion Iliescu: [encyclopedia biography](https://en.wikipedia.org/wiki/Ion_Iliescu)
+  and [AGERPRES official biography](https://agerpres.ro/english/2025/08/05/former-president-ion-iliescu---official-bio--1473843).
+- Corneliu Vadim Tudor:
+  [encyclopedia biography](https://en.wikipedia.org/wiki/Corneliu_Vadim_Tudor)
+  and [European Parliament record](https://www.europarl.europa.eu/meps/ro/96845/CORNELIU_VADIM%2BTUDOR/history/7).
+- Traian Basescu:
+  [encyclopedia biography](https://en.wikipedia.org/wiki/Traian_B%C4%83sescu),
+  [AGERPRES biography](https://agerpres.ro/documentare/2019/06/03/traian-basescu-europarlamentar-ales-pe-lista-pmp-fisa-biografica--319944),
+  and [Council of Europe introduction](https://assembly.coe.int/President/Cavusoglu/Discours/2011/270111_SpeechBasescu.htm).
+- Shared themes: [Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
+  and the [European Commission 2022 Rule of Law report summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statul-de-drept-2022-comisia-adopta-recomandari-specifice-pentru-romania-si-2022-07-13_ro).
 
 ## Impeccable user interface validation
 

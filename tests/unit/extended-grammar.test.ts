@@ -23,7 +23,9 @@ const analyze = (steps: readonly EnglishGrammarStep[]) =>
 
 describe('Hollywood Roast extended grammar', () => {
   test('and is legal immediately after the opening noun', () => {
-    expect(analyze([add('velvet-megaphone'), add('and')])).toMatchObject({
+    expect(
+      analyze([add('televised-revolution'), add('coalition-and')]),
+    ).toMatchObject({
       accepted: true,
       analysis: {
         complete: false,
@@ -34,7 +36,7 @@ describe('Hollywood Roast extended grammar', () => {
   });
 
   test('a continuation remains a draft action instead of a grammar atom', () => {
-    expect(analyze([add('still-echoes')])).toMatchObject({
+    expect(analyze([add('the-transition-continues')])).toMatchObject({
       accepted: false,
       faults: [{ code: 'unexpected-role', attempted: 'continuation' }],
     });
@@ -42,7 +44,11 @@ describe('Hollywood Roast extended grammar', () => {
 
   test('accepts a front because clause followed by the main clause', () => {
     expect(
-      analyze([add('because'), add('paper-promise'), add('before-lunch')]),
+      analyze([
+        add('archive-because'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+      ]),
     ).toMatchObject({
       accepted: true,
       analysis: {
@@ -54,36 +60,42 @@ describe('Hollywood Roast extended grammar', () => {
 
     expect(
       analyze([
-        add('because'),
-        add('paper-promise'),
-        add('before-lunch'),
-        add('velvet-megaphone'),
-        add('before-lunch'),
+        add('archive-because'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('televised-revolution'),
+        add('before-the-next-election'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('because requires a noun before another connector or finisher', () => {
-    expect(analyze([add('because')])).toMatchObject({
+    expect(analyze([add('archive-because')])).toMatchObject({
       accepted: true,
       analysis: { state: 'EXPECT_SUBJECT', nextRoles: ['noun'] },
     });
-    expect(analyze([add('because'), add('because')])).toMatchObject({
-      accepted: false,
-      faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
-    });
     expect(
-      analyze([add('paper-promise'), add('and'), add('because')]),
+      analyze([add('archive-because'), add('archive-because')]),
     ).toMatchObject({
       accepted: false,
       faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
     });
     expect(
       analyze([
-        add('because'),
-        add('paper-promise'),
-        add('before-lunch'),
-        add('with-the-receipt'),
+        add('national-consensus'),
+        add('coalition-and'),
+        add('archive-because'),
+      ]),
+    ).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
+    });
+    expect(
+      analyze([
+        add('archive-because'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('by-emergency-ordinance'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -98,17 +110,21 @@ describe('Hollywood Roast extended grammar', () => {
 
   test('accepts explanatory because only with its following noun clause', () => {
     expect(
-      analyze([add('paper-promise'), add('before-lunch'), add('because')]),
+      analyze([
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('archive-because'),
+      ]),
     ).toMatchObject({
       accepted: true,
       analysis: { complete: false, nextRoles: ['noun'] },
     });
     expect(
       analyze([
-        add('paper-promise'),
-        add('before-lunch'),
-        add('because'),
-        add('because'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('archive-because'),
+        add('archive-because'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -116,44 +132,44 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('paper-promise'),
-        add('before-lunch'),
-        add('because'),
-        add('velvet-megaphone'),
-        add('before-lunch'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('archive-because'),
+        add('televised-revolution'),
+        add('before-the-next-election'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each(['and', 'but', 'because'])(
+  test.each(['coalition-and', 'televised-but', 'archive-because'])(
     'accepts %s after a complete front-because subordinate clause',
     (connector) => {
       expect(
         analyze([
-          add('because'),
-          add('paper-promise'),
-          add('before-lunch'),
+          add('archive-because'),
+          add('national-consensus'),
+          add('before-the-next-election'),
           add(connector),
-          add('velvet-megaphone'),
-          add('before-lunch'),
-          add('committee-kite'),
-          add('before-lunch'),
+          add('televised-revolution'),
+          add('before-the-next-election'),
+          add('national-salvation-committee'),
+          add('before-the-next-election'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
   );
 
-  test.each(['and', 'but'])(
+  test.each(['coalition-and', 'televised-but'])(
     'accepts because after a completed clause plus %s',
     (connector) => {
       expect(
         analyze([
-          add('paper-promise'),
-          add('before-lunch'),
+          add('national-consensus'),
+          add('before-the-next-election'),
           add(connector),
-          add('because'),
-          add('velvet-megaphone'),
-          add('before-lunch'),
+          add('archive-because'),
+          add('televised-revolution'),
+          add('before-the-next-election'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
@@ -162,10 +178,10 @@ describe('Hollywood Roast extended grammar', () => {
   test('a later phrase cannot be appended after an ending', () => {
     expect(
       analyze([
-        add('paper-promise'),
-        add('before-lunch'),
-        add('with-the-receipt'),
-        add('paper-promise'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('by-emergency-ordinance'),
+        add('national-consensus'),
       ]),
     ).toMatchObject({
       accepted: false,

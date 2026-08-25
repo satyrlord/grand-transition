@@ -30,10 +30,10 @@ test('exposes every development inspection control with semantic labels', async 
   await expect.element(page.getByLabelText('Seed')).toHaveValue(20_260_823);
   await expect
     .element(page.getByLabelText('Scene'))
-    .toHaveValue('echo-chamber');
+    .toHaveValue('transition-era-television-studio');
   await expect
     .element(page.getByLabelText('Player 2 matchup character'))
-    .toHaveValue('brass-peacock');
+    .toHaveValue('thunder-tribune');
   await expect.element(page.getByLabelText('Player 1 Pride')).toHaveValue(100);
   await expect.element(page.getByLabelText('Player 2 Charge')).toHaveValue(0);
   await expect

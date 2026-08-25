@@ -1,0 +1,57 @@
+[
+  {
+    "id": "hands-on-presidency",
+    "role": "noun",
+    "text": "a hands-on presidency",
+    "tags": ["consistency", "decorum"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["command"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional adaptation informed by Traian Basescu's public hands-on political style. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "steers",
+    "role": "verb",
+    "text": "steers",
+    "singularText": "steers",
+    "pluralText": "steer",
+    "tags": ["consistency", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original maritime-political adaptation informed by Traian Basescu's documented merchant-marine captain career. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "through-troubled-waters",
+    "role": "predicate",
+    "text": "through troubled waters",
+    "tags": ["consistency", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original maritime-political metaphor informed by a Council of Europe introduction to Traian Basescu. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "from-the-bridge",
+    "role": "ending",
+    "text": "from the bridge",
+    "tags": ["decorum", "legacy"],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "reviewNotes": "Original fictional maritime-political ending informed by Traian Basescu's documented captain career. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "returns-to-the-wheel",
+    "role": "continuation",
+    "text": "returns to the wheel",
+    "tags": ["consistency", "decorum"],
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional continuation informed by Traian Basescu's public hands-on style and captain background. Not a quotation. Editorial review complete."
+  }
+]

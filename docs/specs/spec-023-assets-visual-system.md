@@ -8,7 +8,7 @@
 ## Deliver
 
 Build the Sharp pipeline, manifest validation, visual tokens, and responsive
-asset loading. Produce original final-quality art for two characters and one
+asset loading. Produce original final-quality art for three characters and one
 scene. Add core reactions, ambience, transitions, and reduced-motion variants.
 
 The art combines editorial caricature, painted theatre, late-1990s
@@ -25,6 +25,13 @@ Every character is human. Animal words in names, titles, insults, or metaphors
 must not produce animal anatomy. Character masters and runtime variants reject
 animal heads, ears, muzzles, beaks, feathers, tails, wings, paws, fur, scales,
 and human-animal hybrids.
+
+The pre-pipeline match slice uses a separate character-free rendered scene and
+transparent interim portraits for the Red-Folded Chairman, Thunder Tribune, and
+Black Sea Captain. It must not use a baked raster that fixes two characters
+into one scene. Milestone 023 replaces or promotes these interim files through
+the approved manifest and variant pipeline without changing the
+selected-character contract.
 
 Use a condensed civic-serif display voice for broadcast headings and major
 actions, a compact condensed sans face for tactical labels, a readable record
@@ -86,7 +93,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   from unchanged masters, and every file meets its per-file and package budget.
 - **AC-023-03:** Browser tests select AVIF when supported, fall back to WebP,
   reserve dimensions before decode, and load no unselected match package.
-- **AC-023-04:** Two characters expose all 11 states with at least five
+- **AC-023-04:** Three characters expose all 11 states with at least five
   expressions and six poses. Missing mappings fail validation.
 - **AC-023-05:** Desktop, narrow-landscape, and portrait crops keep declared
   focal regions visible and meet CLS limits.

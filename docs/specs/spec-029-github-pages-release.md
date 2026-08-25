@@ -45,7 +45,7 @@ published state and exits nonzero on a failed response, asset, refresh, CSP,
 runtime-network, speech-state, or complete-match assertion.
 
 Published complete-match smoke uses seed `20260823`, the first two roster
-characters, the Transition-Era Television Studio, fixed ten-second timer,
+characters, the Transition-Era Television Studio, fixed 15-second timer,
 speech off,
 and privacy on. It reaches results, starts a rematch, and returns to setup.
 

@@ -52,7 +52,9 @@ Private hotseat content must remain private during handovers.
   playable match, resolution, and results screens,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
-  content schemas, an English game-locale bundle, original sample content, and
+  content schemas, an English game-locale bundle, three original
+  public-figure-inspired fictional characters, Romanian-politics phrase
+  content, separate transparent portraits and a character-free studio, and
   Hollywood Roast grammar, compound subjects, endings, incomplete states,
   immediate grammar mistakes, one common board, private hands, clause scoring,
   noun combos, continuations, comebacks, cliffhangers, replay, and simulation.

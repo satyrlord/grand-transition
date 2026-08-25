@@ -23,7 +23,8 @@ and purchases are not planned for the MVP.
 Milestones 001 through 017 provide the runnable project, complete quality gate,
 immutable game contracts, replaceable external ports, enforced pure-module
 boundaries, a secured production shell, and validated sample game content. The
-sample contains original phrases for each core role, two fictional characters,
+sample contains 30 Romanian-politics common phrases, five phrases for each of
+three fictional characters,
 one fictional scene, an English game-locale bundle, minimum and two-clause
 Hollywood Roast grammar, compound subjects, endings, incomplete states,
 immediate grammar mistakes, seeded common-board and private-hand generation,

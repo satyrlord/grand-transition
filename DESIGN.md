@@ -115,13 +115,15 @@ turn feel like a live civic event.
 
 The title and setup screens retain their implemented record-like station
 paperwork. They have not been rebuilt as television screens. The shipped match
-screen changes the tempo: original painted stage art fills the public field,
-while semantic broadcast plaques, speech records, phrase cards, and real action
-controls carry the live game state.
+screen changes the tempo: a character-free painted studio fills the public
+field, while separate transparent character portraits, semantic broadcast
+plaques, speech records, phrase cards, and real action controls carry the live
+game state.
 
 Every character is human. Animal words in names or titles are metaphorical
-political labels only. The current stage uses two original human editorial
-caricatures, and all later character art must preserve human anatomy.
+political labels only. The current slice uses three original human editorial
+caricatures that can occupy either player position. All later character art
+must preserve human anatomy.
 
 ### World
 
@@ -133,14 +135,18 @@ this world are human, even when a political title uses an animal metaphor.
 
 ### First viewport
 
-At 1280 by 720, two human editorial caricatures fill the upper field: an older,
-stocky committee chairman holds a red folder, and a lean, bearded podium
-showman wears a deep-blue, brass-trimmed jacket. The Civic Fox and Brass Peacock
-remain metaphorical character titles. A centered round and timer plaque,
-smaller side nameplates, opposing speech records, and a public reaction strip
-sit above the warm sentence hinge. The lower head-up display (HUD) places two
-private cards on the left, a 3 by 3 shared board in the center, authored
-line-icon actions on the right, and the channel strap last.
+At 1280 by 720, the selected pair of transparent human editorial caricatures
+fills the upper field over a character-free public-television studio. The
+default pair is the composed Red-Folded Chairman with his red folder and the
+emphatic Thunder Tribune with his speech papers. The lean Black Sea Captain can
+replace either one and keeps his ship-wheel prop. Compact single-line name,
+visible Pride label, and Pride-bar strips sit above the portrait bounds and
+never cover a face or body. The strips omit a leading “The” from localized
+archetype names. Only the active
+strip says “Your turn,” and its portrait keeps a persistent brass stage light.
+The warm sentence hinge separates the stage from a lower head-up display (HUD)
+with two private cards on the left, nine common phrases in one vertical center
+list, authored line-icon actions on the right, and the channel strap last.
 
 ### Visitor path
 
@@ -152,8 +158,11 @@ remain visible in semantic text and controls.
 ### Signature interaction
 
 Focus or selection previews the sentence without changing game truth. Pointer
-and keyboard routes are equivalent. The painted stage is atmosphere only and
-never replaces semantic names, status, values, or controls.
+and keyboard routes are equivalent. A turn change moves one 360-millisecond
+light-and-position claim to the incoming portrait, then leaves that side
+persistently brighter. Reduced motion keeps the light, border, and written turn
+state without translation. The painted stage is atmosphere only and never
+replaces semantic names, status, values, or controls.
 
 ### Cross-surface reach
 
@@ -177,7 +186,7 @@ The direction concept seed key is `e673dd8e`. The user-supplied mock at
 **Key Characteristics:**
 
 - Late-1990s fictional public-television debate theatre.
-- Two original, unmistakably human editorial caricatures with clear faces.
+- Three original, unmistakably human editorial caricatures with clear faces.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
 - Warm paper sentence and phrase records with visible tactical evidence.
@@ -260,7 +269,7 @@ monospace stack makes timer and shortcut data immediate.
 - **Action voice:** Cormorant SC 700 for authored action names with a smaller
   Georgia detail line.
 - **Tactical label:** Barlow Condensed 700 uppercase for roles, ownership,
-  state, Pride, round, opening player, damage, and next-role facts.
+  state, Pride, round, damage, and next-role facts.
 - **Body:** Georgia for phrases, current sentence, speech records, explanations,
   and recovery text.
 - **Data:** UI monospace for the timer and keyboard shortcuts.
@@ -279,16 +288,17 @@ blue and oxblood binding. Its two field groups become one reading column below
 The match uses four vertical regions at desktop: a stage that takes up to 55
 small-viewport-height units, a 4.25-rem sentence hinge, the flexible draft HUD,
 and a 1.65-rem channel strap. At 1280 by 720, the stage art stays in the upper
-field. The match status is centered, the player nameplates stay smaller at the
-sides, and the reaction strip anchors the stage. The draft HUD uses a
-left-center-right grid for private hand, 3 by 3 shared board, and actions.
+field. The match status is centered, compact name-and-Pride strips stay outside
+the portraits, and the reaction strip anchors the stage. The draft HUD uses a
+left-center-right grid for private hand, one vertical common-phrase list, and
+actions.
 
 At 896 pixels and below, the match becomes a vertical document. The stage art
 keeps a 16:9 field, status and player records enter normal flow, the sentence
-hinge becomes one column, and the hand, board, and actions stack. At 512 pixels
-and below, players, private cards, shared cards, and actions use single- or
-two-column layouts as space permits. The page scrolls vertically without
-horizontal movement.
+hinge becomes one column, and the hand, common list, and actions stack. At 512
+pixels and below, players and common phrases use one column, while the two
+private cards can share a row. The page scrolls vertically without horizontal
+movement.
 
 **The Sentence Hinge Rule.** Keep the warm current-sentence record between the
 public stage and the phrase choices. It explains what the next phrase action
@@ -297,14 +307,16 @@ will do.
 ## Elevation & Depth
 
 Title and setup remain flat records that use fields, seams, and filing rules.
-The match uses controlled television depth: the generated painted stage forms
-the deep field; low-contrast overlays protect HUD contrast; and short dark
+The match uses controlled television depth: the generated character-free studio
+forms the deep field; transparent portraits occupy the player planes;
+low-contrast overlays protect HUD contrast; and short dark
 shadows lift plaques, speech records, phrase cards, actions, and the comeback
 dialog. Inset brass and navy rules make the fascia feel built, not glassy.
 
-The match uses two generated raster materials: the original civic debate stage
-and a low-contrast aged-paper texture. Both assets retain embedded prompt
-provenance. Required text and controls remain outside the raster art.
+The match uses five generated raster sources: one character-free television
+studio, three transparent character portraits, and one low-contrast aged-paper
+texture. All assets retain embedded prompt provenance. Required text and
+controls remain outside the raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
 to separate live broadcast regions. Do not use translucent glass panels or
@@ -313,10 +325,10 @@ soft floating dashboard cards.
 ## Shapes
 
 The system is square and architectural. Title and setup use sharp record fields
-and a narrow binding seam. Match plaques, boards, phrase cards, dialogs, and
-buttons use sharp corners, one-pixel brass rules, or three-pixel double brass
-frames. Side nameplates end in small directional points. Speech records use
-simple clipped paper tails. Shortcut keycaps are compact squares.
+and a narrow binding seam. Match plaques, phrase lists, private cards, dialogs,
+and buttons use sharp corners, one-pixel brass rules, or three-pixel double
+brass frames. Speech records use simple clipped paper tails. Shortcut keycaps
+are compact squares.
 
 **The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
 speech tails, and line icons as compact civic signals. Never let ornament hide
@@ -335,19 +347,19 @@ not represented as finished television stages.
 
 ### Broadcast stage and status plaques
 
-The decorative full-width image shows two original human editorial
-caricatures. The left figure is an older, stocky committee chairman with a red
-folder. The right figure is a lean, bearded podium showman in a deep-blue,
-brass-trimmed jacket. Their metaphorical titles do not change their human
-anatomy. The image has empty alternative text. A centered navy plaque owns
-round, active player, opening player, and timer. Smaller
-opposing red and blue nameplates own each character name, Pride meter, comeback
-charge, written turn state, and current speech record. The active nameplate and
-private-hand heading both state “Has the floor”; the inactive nameplate states
-“Waiting.” One short directional brass transfer marks a turn change. Reduced
-motion keeps the written and framed state without translation. The reaction strip owns
-venue, public response, and damage. No separate portrait element is part of the
-match-screen composition.
+The decorative full-width image is a character-free late-1990s television
+studio. Separate transparent portraits render the two selected characters over
+it and can exchange sides or mirror without changing the scene. The three
+implemented portraits are the Red-Folded Chairman, Thunder Tribune, and Black
+Sea Captain. All decorative images have empty alternative text. A centered navy
+plaque owns round, active player, and timer. Compact red and blue strips own a
+single-line character name, visible Pride label, and Pride meter and remain
+outside the portrait bounds.
+Only the active strip states “Your turn.” Its portrait stays bright under a
+persistent brass stage light while the waiting portrait stays subdued. One
+360-millisecond directional light-and-position transfer marks a turn change.
+Reduced motion removes translation but keeps the light, border, and written
+state. The reaction strip owns venue, public response, and damage.
 
 ### Sentence record
 
@@ -358,12 +370,14 @@ animation without changing content.
 
 ### Phrase cards
 
-Each square paper card shows its role, phrase, ownership, and weakness or
-disabled reason. Blue, olive, violet, and orange top borders support written
-roles. Every available common card can be selected by either player. A red
-inset outline marks a selected card. A three-pixel light-blue outline marks
-keyboard focus. Selecting a shared phrase leaves its numbered slot visibly
-empty.
+The two private paper cards show role, phrase, ownership, and relevant weakness
+or disabled reason. The common board is one vertical list of nine compact paper
+rows. Each row shows role, phrase, relevant weakness or disabled reason, and its
+keyboard shortcut when enabled. The list heading owns the repeated common
+ownership fact. Blue, olive, violet, and orange rules support written roles.
+Every available common phrase can be selected by either player. A red inset
+outline marks selection. A three-pixel light-blue outline marks keyboard focus.
+Selecting a common phrase leaves its numbered row visibly empty.
 
 ### Match actions and channel strap
 
@@ -392,8 +406,9 @@ tier. It uses the strongest filled tier immediately.
 - **Do** keep the 1280 by 720 path dense but readable: stage first, sentence
   hinge second, choices third, channel strap last.
 - **Do** keep core tactical content at 11 pixels or larger.
-- **Do** write every availability, weakness, ownership, disabled reason,
-  timer, and focus state that matters.
+- **Do** write every material weakness, disabled reason, timer, and focus state.
+  Let a section heading own a repeated common/private fact instead of printing
+  it on every row.
 - **Do** keep focus preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.
 - **Do** preserve forced-colors and reduced-motion alternatives.
