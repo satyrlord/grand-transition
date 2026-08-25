@@ -7,15 +7,15 @@
 
 ## Deliver
 
-Build the Sharp pipeline, manifest validation, visual tokens, and responsive
+Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Produce original final-quality art for three characters and one
-scene. Add core reactions, ambience, transitions, and reduced-motion variants.
+scene. Add core reactions, ambience, and transitions.
 
 The art combines editorial caricature, painted theatre, late-1990s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
 modern overlays. The approved static match mock is the hierarchy and material
 north star. Keep the painted stage as authored art and rebuild every game value,
-phrase, and control as semantic components. Use original characters and product
+phrase, and control as HTML components. Use original characters and product
 truth. Do not copy another game's brands, names, unsupported actions, or
 rasterized interface text. Avoid generic dashboard cards and stock fantasy
 frames. Use a dark institutional palette with navy, charcoal, paper, oxide red,
@@ -35,7 +35,7 @@ selected-character contract.
 
 Use a condensed civic-serif display voice for broadcast headings and major
 actions, a compact condensed sans face for tactical labels, a readable record
-serif for phrase text, and monospace only for timer and shortcut data. Phrase
+serif for phrase text, and monospace only for timer data. Phrase
 cards use low-contrast aged-paper material. Action plates use coherent authored
 icons and brass framing. No content-bearing text is smaller than 11 pixels at
 the shared desktop viewport.
@@ -46,7 +46,7 @@ light and heavy hit, weakness, comeback, grammar-mistake, victory, and defeat
 states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
-new specification with bundle, frame-time, accessibility, and alternative proof.
+new specification with bundle, frame-time, and fallback proof.
 
 Keep lossless masters ignored or external. Sharp generates committed AV1 Image
 File Format (AVIF) and WebP runtime variants. The manifest records dimensions,
@@ -57,10 +57,9 @@ Open Font Format 2 (WOFF2) fonts with metric fallbacks.
 ## Asset and motion contract
 
 Scene masters are layered 1920 by 1080 files. Runtime wide scene variants are
-640 by 360, 1280 by 720, and 1920 by 1080. Each scene also has a 720 by 1280
-portrait crop with focal coordinates. Character masters are transparent,
+640 by 360, 1280 by 720, and 1920 by 1080. Character masters are transparent,
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
-960. Portrait or token variants are 128 and 256 square pixels.
+960. Character portrait or token variants are 128 and 256 square pixels.
 
 Every raster runtime size has AVIF and WebP output. The manifest contains ID,
 owner type and ID, source description, license identifier, SHA-256 source hash,
@@ -77,9 +76,7 @@ Each named character state maps to one pose and one expression. The set uses at
 least five distinct expressions and six distinct poses; the 11 named states do
 not each require a unique image when the manifest declares the combination.
 Normal reactions last 150 through 600 milliseconds, transitions at most 700
-milliseconds, and idle loops 2 through 8 seconds. Reduced motion removes loops,
-shake, parallax, and large translation; an optional opacity change is at most
-150 milliseconds.
+milliseconds, and idle loops 2 through 8 seconds.
 
 Initial page cumulative layout shift (CLS) is at most 0.05. Replacing or
 updating a card, reaction, or character state produces exactly 0 layout shift.
@@ -95,10 +92,9 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   reserve dimensions before decode, and load no unselected match package.
 - **AC-023-04:** Three characters expose all 11 states with at least five
   expressions and six poses. Missing mappings fail validation.
-- **AC-023-05:** Desktop, narrow-landscape, and portrait crops keep declared
-  focal regions visible and meet CLS limits.
-- **AC-023-06:** Normal and reduced-motion procedures meet all timing,
-  flashing, pointer, and semantic-DOM requirements.
+- **AC-023-05:** All supported landscape variants keep declared focal regions
+  visible and meet CLS limits.
+- **AC-023-06:** Motion procedures meet all timing and pointer requirements.
 
 ## Impeccable UI validation
 

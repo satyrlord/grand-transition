@@ -19,7 +19,6 @@
   html,
   body {
     margin: 0;
-    min-width: 320px;
     min-height: 100%;
   }
 }
@@ -265,126 +264,6 @@
   @media (min-width: 90rem) {
     .subtitle {
       transform: translateY(-3rem);
-    }
-  }
-
-  @media (max-width: 43.75rem) {
-    .title-screen {
-      background:
-        linear-gradient(
-          180deg,
-          transparent calc(37% - 0.55rem),
-          var(--registry-red-deep) calc(37% - 0.55rem) 37%,
-          transparent 37%
-        ),
-        linear-gradient(
-          180deg,
-          var(--registry-blue) 0 37%,
-          var(--registry-paper) 37% 100%
-        );
-    }
-
-    .title-screen::before {
-      inset: 39% 1rem 1rem;
-      background:
-        linear-gradient(90deg, var(--registry-red) 1px, transparent 1px) 100%
-          0 / 18% 100%,
-        linear-gradient(var(--registry-rule) 1px, transparent 1px) 100% 0 / 30%
-          4rem;
-    }
-
-    .title-screen::after {
-      inset: 1rem 1rem auto;
-      width: auto;
-      height: calc(37% - 2rem);
-      border: 1px solid rgb(238 230 212 / 44%);
-      border-block-end: 0;
-    }
-
-    .title-record {
-      display: flex;
-      flex-direction: column;
-      min-height: 100svh;
-      padding: clamp(1rem, 5vw, 1.75rem);
-    }
-
-    .title-record h1 {
-      display: block;
-      min-height: 0;
-      margin-block-start: clamp(4.5rem, 17vh, 8rem);
-      font-size: min(13vw, 4.25rem);
-      line-height: 0.83;
-    }
-
-    .title-word--grand .title-glyph,
-    .title-word--transition .title-glyph {
-      transform: none;
-    }
-
-    .title-word--grand,
-    .title-word--transition {
-      padding: 0;
-      text-align: start;
-    }
-
-    .title-word--grand {
-      color: var(--registry-paper-light);
-    }
-
-    .title-word--transition {
-      margin-block-start: clamp(6.5rem, 20vh, 9.5rem);
-      color: var(--registry-ink);
-    }
-
-    .subtitle {
-      margin: 1.25rem 0 0;
-      font-size: clamp(0.95rem, 5vw, 1.35rem);
-      letter-spacing: 0.13em;
-    }
-
-    .title-disclaimer {
-      margin: 1rem 0 0;
-      font-size: 0.95rem;
-    }
-
-    .title-actions {
-      margin: 1.25rem 0 0;
-    }
-
-    .title-actions button {
-      width: 100%;
-    }
-
-    .status {
-      align-self: flex-end;
-      margin: 2rem 0 0 auto;
-      width: min(13rem, 100%);
-      font-size: 0.78rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .status {
-      animation: none;
-    }
-  }
-
-  @media (forced-colors: active) {
-    .title-screen {
-      background: Canvas;
-    }
-
-    .title-screen::before,
-    .title-screen::after {
-      display: none;
-    }
-
-    .title-word--grand,
-    .title-word--transition,
-    .subtitle,
-    .status {
-      color: CanvasText;
-      border-color: CanvasText;
     }
   }
 }

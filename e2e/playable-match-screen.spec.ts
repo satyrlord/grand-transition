@@ -1,4 +1,3 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -55,14 +54,6 @@ test('the longest desktop match state fits and exposes every required fact', asy
       getComputedStyle(element).animationName.toLowerCase(),
     ),
   ).toContain('claim-floor');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  expect(
-    await activePortrait.evaluate((element) =>
-      getComputedStyle(element).animationName.toLowerCase(),
-    ),
-  ).toBe('none');
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-
   const playerSeparation = await page.evaluate(() =>
     [...document.querySelectorAll('.match-player')].map((player) => {
       const hud = player.querySelector('.player-hud')!.getBoundingClientRect();
@@ -221,87 +212,12 @@ test('the longest desktop match state fits and exposes every required fact', asy
   });
   expect(tacticalTextFloor).toBeGreaterThanOrEqual(11);
 
-  const accessibility = await new AxeBuilder({ page }).analyze();
-  expect(accessibility.violations).toEqual([]);
   await page.screenshot({
     path: testInfo.outputPath('match-desktop-1280x720.png'),
     fullPage: true,
   });
 
   await expect(page.getByRole('button', { name: 'Comeback' })).toBeDisabled();
-
-  await page.setViewportSize({ width: 390, height: 844 });
-  const mobileTacticalTextFloor = await page.evaluate(() => {
-    const text = document.querySelectorAll(
-      '.match-facts dt, .player-hud, .player-turn-status, .player-health strong, .reaction-copy p, .sentence-ledger h2, .card-topline, .card-phrase, .card-bottomline, .card-weakness, .private-hand-heading, .common-phrases h2, .action-detail, .match-footer',
-    );
-    return Math.min(
-      ...Array.from(text, (element) =>
-        Number.parseFloat(getComputedStyle(element).fontSize),
-      ),
-    );
-  });
-  expect(mobileTacticalTextFloor).toBeGreaterThanOrEqual(11);
-  await expect(page.locator('.sentence-preview')).toBeVisible();
-  await expect(page.locator('.sentence-preview')).not.toHaveText('');
-  const mobileReactionTextClipping = await page.evaluate(() =>
-    Array.from(
-      document.querySelectorAll<HTMLElement>(
-        '.reaction-copy h2, .reaction-copy > p, .shared-board .card-phrase, .shared-board .card-weakness',
-      ),
-    )
-      .filter((node) => {
-        const style = getComputedStyle(node);
-        const clipsInline = ['clip', 'hidden'].includes(style.overflowX);
-        const clipsBlock = ['clip', 'hidden'].includes(style.overflowY);
-        return (
-          (clipsInline && node.scrollWidth > node.clientWidth + 1) ||
-          (clipsBlock && node.scrollHeight > node.clientHeight + 1)
-        );
-      })
-      .map((node) => ({
-        className: node.className,
-        text: node.textContent?.trim(),
-        clientWidth: node.clientWidth,
-        scrollWidth: node.scrollWidth,
-        clientHeight: node.clientHeight,
-        scrollHeight: node.scrollHeight,
-      })),
-  );
-  expect(mobileReactionTextClipping).toEqual([]);
-  const mobileDraftOrder = await page.evaluate(() => {
-    const privateHand = document.querySelector<HTMLElement>('.private-hand')!;
-    const sharedBoard = document.querySelector<HTMLElement>('.shared-board')!;
-    const actions = document.querySelector<HTMLElement>('.match-actions')!;
-    return {
-      visual: [
-        privateHand.getBoundingClientRect().top,
-        sharedBoard.getBoundingClientRect().top,
-        actions.getBoundingClientRect().top,
-      ],
-      semantic:
-        privateHand.compareDocumentPosition(sharedBoard) &
-          Node.DOCUMENT_POSITION_FOLLOWING &&
-        sharedBoard.compareDocumentPosition(actions) &
-          Node.DOCUMENT_POSITION_FOLLOWING,
-    };
-  });
-  expect(mobileDraftOrder.visual).toEqual(
-    [...mobileDraftOrder.visual].sort((a, b) => a - b),
-  );
-  expect(Boolean(mobileDraftOrder.semantic)).toBe(true);
-  await page.getByRole('heading', { name: /Round 1.*turn/u }).focus();
-  await page.keyboard.press('Tab');
-  await expect(
-    page.locator('.private-hand .phrase-card:not(:disabled)').first(),
-  ).toBeFocused();
-  await page.locator('.sentence-ledger').screenshot({
-    path: testInfo.outputPath('match-mobile-sentence.png'),
-  });
-  await page.screenshot({
-    path: testInfo.outputPath('match-mobile-scope-evidence.png'),
-    fullPage: true,
-  });
 
   await page.setViewportSize({ width: 1672, height: 941 });
   const portraits = page.locator('.character-portrait');
@@ -411,60 +327,42 @@ test('the selected roster characters load their local portrait assets', async ({
   ).toBe(true);
 });
 
-test('the match reflows across the remaining viewports and 200 percent text', async ({
+test('the match fits the supported landscape matrix', async ({
   page,
 }, testInfo) => {
   await startMatch(page);
   await page.evaluate(async () => document.fonts.ready);
+
   for (const viewport of [
+    { width: 1024, height: 720 },
     { width: 1024, height: 768 },
-    { width: 844, height: 390 },
-    { width: 320, height: 568 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
     const facts = await page.evaluate(() => {
-      const players = [
-        ...document.querySelectorAll<HTMLElement>('.match-player'),
-      ];
-      const names = [
-        ...document.querySelectorAll<HTMLElement>('.match-player h2'),
-      ];
-      const commonSlots = [
-        ...document.querySelectorAll<HTMLElement>('.shared-board > li'),
+      const required = [
+        ...document.querySelectorAll<HTMLElement>(
+          '.match-status-rail, .match-player, .sentence-ledger, .shared-board > li, .private-hand ol > li, .match-actions button, .match-pause',
+        ),
       ];
       const text = [
         ...document.querySelectorAll<HTMLElement>(
-          '.match-turn-heading h1, .shared-board .card-phrase, .shared-board .card-weakness',
+          '.match-turn-heading h1, .match-player h2, .shared-board .card-phrase, .shared-board .card-weakness',
         ),
       ];
       return {
         documentWidth: document.documentElement.scrollWidth,
-        viewportWidth: document.documentElement.clientWidth,
-        namesFit: names.every(
-          (name) => name.scrollWidth <= name.clientWidth + 1,
-        ),
-        noHudPortraitOverlap: players.every((player) => {
-          const hud = player.querySelector<HTMLElement>('.player-hud')!;
-          const portrait = player.querySelector<HTMLElement>(
-            '.character-portrait',
-          )!;
+        documentHeight: document.documentElement.scrollHeight,
+        requiredInside: required.every((element) => {
+          const box = element.getBoundingClientRect();
           return (
-            hud.getBoundingClientRect().bottom <=
-            portrait.getBoundingClientRect().top + 1
+            box.left >= 0 &&
+            box.top >= 0 &&
+            box.right <= window.innerWidth &&
+            box.bottom <= window.innerHeight
           );
         }),
-        commonListIsVertical:
-          new Set(
-            commonSlots.map((slot) =>
-              Math.round(slot.getBoundingClientRect().left),
-            ),
-          ).size === 1 &&
-          commonSlots.every(
-            (slot, index) =>
-              index === 0 ||
-              slot.getBoundingClientRect().top >=
-                commonSlots[index - 1]!.getBoundingClientRect().bottom,
-          ),
         textClipping: text
           .filter(
             (node) =>
@@ -474,72 +372,18 @@ test('the match reflows across the remaining viewports and 200 percent text', as
           .map((node) => node.textContent?.trim()),
       };
     });
-    expect(facts.documentWidth).toBeLessThanOrEqual(facts.viewportWidth);
-    expect(facts.namesFit, `${viewport.width}x${viewport.height}`).toBe(true);
-    expect(facts.noHudPortraitOverlap).toBe(true);
-    expect(facts.commonListIsVertical).toBe(true);
+    expect(facts.documentWidth).toBeLessThanOrEqual(viewport.width);
+    expect(facts.documentHeight).toBeLessThanOrEqual(viewport.height);
+    expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
     expect(facts.textClipping).toEqual([]);
-    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   }
 
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.evaluate(() => {
-    document.documentElement.style.fontSize = '200%';
-  });
-  const zoomFacts = await page.evaluate(() => ({
-    documentWidth: document.documentElement.scrollWidth,
-    viewportWidth: document.documentElement.clientWidth,
-    offenders: [...document.querySelectorAll<HTMLElement>('body *')]
-      .filter((element) => {
-        const box = element.getBoundingClientRect();
-        return box.right > document.documentElement.clientWidth + 1;
-      })
-      .slice(0, 12)
-      .map((element) => ({
-        className: element.className,
-        right: element.getBoundingClientRect().right,
-        text: element.textContent?.trim().slice(0, 80),
-      })),
-    turnVisible: Boolean(
-      document
-        .querySelector('.player-turn-status:not([hidden])')
-        ?.getBoundingClientRect().height,
-    ),
-    commonPhraseCount: document.querySelectorAll('.shared-board > li').length,
-    actionCount: document.querySelectorAll('.match-actions button').length,
-    textClipping: [
-      ...document.querySelectorAll<HTMLElement>(
-        '.match-turn-heading h1, .match-player h2, .player-health-label, .player-turn-status, .sentence-preview, .shared-board .card-phrase, .shared-board .card-weakness, .action-title, .action-detail',
-      ),
-    ]
-      .filter((node) => node.scrollWidth > node.clientWidth + 1)
-      .map((node) => {
-        const style = getComputedStyle(node);
-        return {
-          className: node.className,
-          text: node.textContent?.trim(),
-          overflowX: style.overflowX,
-          overflowY: style.overflowY,
-          clientWidth: node.clientWidth,
-          scrollWidth: node.scrollWidth,
-          clientHeight: node.clientHeight,
-          scrollHeight: node.scrollHeight,
-        };
-      }),
-  }));
   await page.screenshot({
-    path: testInfo.outputPath('match-mobile-200-percent.png'),
+    path: testInfo.outputPath('match-recommended-1920x1080.png'),
     fullPage: true,
   });
-  expect(
-    zoomFacts.documentWidth,
-    JSON.stringify(zoomFacts.offenders),
-  ).toBeLessThanOrEqual(zoomFacts.viewportWidth);
-  expect(zoomFacts.turnVisible).toBe(true);
-  expect(zoomFacts.commonPhraseCount).toBe(9);
-  expect(zoomFacts.actionCount).toBe(3);
-  expect(zoomFacts.textClipping).toEqual([]);
-  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
 
 test('pointer play completes redraw, an immediate grammar mistake, and the other hotseat side', async ({
@@ -554,7 +398,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   ).toBeDisabled();
 
   const wrongPredicate = page.locator(
-    '.shared-board button[data-card-state="legal"][aria-label*="Role predicate"]',
+    '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
   );
   await expect(wrongPredicate).toBeVisible();
   await wrongPredicate.click();
@@ -613,56 +457,61 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   ).toBeVisible();
 });
 
-test('keyboard play selects a continuation and ends the other sentence', async ({
+test('manual and viewport pauses conceal the match and preserve the timer', async ({
   page,
-}) => {
+}, testInfo) => {
   await startMatch(page);
-  const continuation = page
-    .locator('button.phrase-card[aria-label*="Role continuation"]')
-    .first();
-  await expect(continuation).toBeEnabled();
-  const shortcut = await continuation.evaluate((button) => {
-    const match = document.querySelector('grand-transition-match') as
-      | (HTMLElement & {
-          snapshot?: {
-            sharedCards: readonly {
-              reference: { cardId: string } | null;
-              shortcut: string;
-            }[];
-            privateCards: readonly {
-              reference: { cardId: string } | null;
-              shortcut: string;
-            }[];
-          };
-        })
-      | null;
-    const cardId = button.getAttribute('data-card-id');
-    return [
-      ...(match?.snapshot?.sharedCards ?? []),
-      ...(match?.snapshot?.privateCards ?? []),
-    ].find((card) => card.reference?.cardId === cardId)?.shortcut;
-  });
-  expect(shortcut).toBeTruthy();
-  await page.keyboard.press(shortcut!);
-  const opponentHeading = page.getByRole('heading', {
-    name: /Thunder Tribune's turn/u,
-  });
-  await expect(opponentHeading).toBeVisible();
-  await opponentHeading.focus();
-  await page.keyboard.press('Enter');
+  await page.waitForTimeout(1_100);
+  const timerBeforePause = Number(
+    await page.locator('.timer-fact').getAttribute('data-timer'),
+  );
 
+  await page.getByRole('button', { name: 'Pause' }).click();
+  await expect(page.locator('[data-interruption="paused"]')).toBeVisible();
+  await expect(page.locator('.match-screen')).toHaveCount(0);
+  await expect(page.locator('.phrase-card')).toHaveCount(0);
+  await expect(page.locator('[data-timer]')).toHaveCount(0);
+  await page.screenshot({
+    path: testInfo.outputPath('manual-pause-1280x720.png'),
+    fullPage: true,
+  });
+
+  await page.waitForTimeout(1_100);
+  await page.setViewportSize({ width: 1023, height: 720 });
   await expect(
-    page.getByRole('heading', { name: 'Round 1 resolution' }),
+    page.locator('[data-interruption="unsupported-viewport"]'),
   ).toBeVisible();
-  await expect(page.getByText(/Continuation survived/u).first()).toBeVisible();
-  await page.getByRole('button', { name: 'Continue to round 2' }).click();
+  await expect(page.getByRole('button', { name: 'Resume' })).toHaveCount(0);
+  await page.screenshot({
+    path: testInfo.outputPath('unsupported-viewport-1023x720.png'),
+    fullPage: true,
+  });
+
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await expect(page.locator('[data-interruption="paused"]')).toBeVisible();
+  await page.getByRole('button', { name: 'Resume' }).click();
+  await expect(page.locator('.match-screen')).toBeVisible();
+  const timerAfterManualPause = Number(
+    await page.locator('.timer-fact').getAttribute('data-timer'),
+  );
+  expect(timerAfterManualPause).toBeLessThanOrEqual(timerBeforePause);
+  expect(timerAfterManualPause).toBeGreaterThanOrEqual(timerBeforePause - 1);
+
+  const timerBeforeViewportPause = timerAfterManualPause;
+  await page.setViewportSize({ width: 1023, height: 720 });
   await expect(
-    page.getByRole('heading', { name: /Round 2.*turn/u }),
+    page.locator('[data-interruption="unsupported-viewport"]'),
   ).toBeVisible();
-  await page.keyboard.press('Tab');
-  await expect(
-    page.locator('.card-shortcut:not([hidden])').first(),
-  ).toBeVisible();
+  await page.waitForTimeout(1_100);
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await expect(page.locator('.match-screen')).toBeVisible();
+  const timerAfterViewportPause = Number(
+    await page.locator('.timer-fact').getAttribute('data-timer'),
+  );
+  expect(timerAfterViewportPause).toBeLessThanOrEqual(timerBeforeViewportPause);
+  expect(timerAfterViewportPause).toBeGreaterThanOrEqual(
+    timerBeforeViewportPause - 1,
+  );
 });
 
 async function startMatch(page: Page): Promise<void> {
@@ -670,7 +519,7 @@ async function startMatch(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
-  ).toBeFocused();
+  ).toBeVisible();
 }
 
 async function portraitAlphaFacts(portraits: Locator): Promise<

@@ -104,11 +104,6 @@
     outline-offset: 3px;
   }
 
-  .setup-field select[aria-invalid='true'] {
-    border-width: 2px;
-    border-color: var(--registry-red);
-  }
-
   .field-error {
     margin: 0.5rem 0 0;
     color: var(--registry-red-deep);
@@ -160,66 +155,5 @@
 
   .setup-actions .secondary-action:hover {
     background: var(--registry-paper-light);
-  }
-
-  @media (max-width: 43.75rem) {
-    .setup-screen {
-      padding-inline: clamp(1rem, 5vw, 1.5rem);
-      background:
-        linear-gradient(
-          90deg,
-          var(--registry-blue) 0 0.5rem,
-          var(--registry-red-deep) 0.5rem 0.75rem,
-          transparent 0.75rem
-        ),
-        var(--registry-paper);
-    }
-
-    .setup-heading,
-    .setup-form {
-      width: calc(100% - 0.75rem);
-      margin-inline-start: 0.75rem;
-    }
-
-    .setup-form {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .setup-actions {
-      grid-column: 1;
-    }
-  }
-
-  @media (max-width: 24rem) {
-    .setup-actions {
-      flex-direction: column;
-    }
-
-    .setup-actions button {
-      width: 100%;
-    }
-  }
-
-  @media (forced-colors: active) {
-    .setup-screen,
-    .setup-field select,
-    .setup-actions .primary-action,
-    .setup-actions .secondary-action {
-      background: Canvas;
-      color: CanvasText;
-    }
-
-    .setup-field select,
-    .setup-actions button,
-    .setup-heading,
-    .setup-form legend,
-    .setup-note {
-      border-color: CanvasText;
-    }
-
-    .field-error {
-      color: CanvasText;
-    }
   }
 }

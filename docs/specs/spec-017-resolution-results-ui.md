@@ -33,13 +33,12 @@ Resolution renders all required text in this order:
 5. Knockout, sudden-death, or next-round result.
 
 The complete text is present before meter animation starts and remains
-available after it ends. Normal meter or reaction motion lasts 150 through 600
-milliseconds. Reduced motion applies the final visual state without movement.
-The user can pause on the explanation and continue with one semantic control.
+available after it ends. Meter or reaction motion lasts 150 through 600
+milliseconds. The explanation remains until the user selects Continue.
 
 Results use the formulas in Milestone 013. Missing optional events display zero
 or “None”; they do not remove the statistic label. Rematch and setup are
-separate controls with distinct accessible names.
+separate controls.
 
 ## Acceptance criteria
 
@@ -48,10 +47,8 @@ separate controls with distinct accessible names.
   comeback tier, incomplete construction, and immediate grammar mistake.
 - **AC-017-02:** Every displayed final damage value can be reconstructed from
   visible ordered terms, including unmultiplied comeback bonus.
-- **AC-017-03:** Simultaneous meter updates expose both before and after values
-  in DOM text and one concise live announcement.
-- **AC-017-04:** Normal and reduced-motion runs reach the same final DOM and
-  game snapshot. No explanation depends on animation completion.
+- **AC-017-03:** Simultaneous meter updates show both before and after values.
+- **AC-017-04:** No explanation or control depends on animation completion.
 - **AC-017-05:** Results reproduce every Milestone 013 statistic, including
   zero-event values and cliffhanger score explanation.
 - **AC-017-06:** One Playwright flow reaches continuation, comeback, double
@@ -70,7 +67,7 @@ Playwright completes a full hotseat match including continuation, comeback,
 double knockout, results, and rematch. Every final damage value is explainable
 from visible text. `npm run ci` passes. Stop before final motion, audio,
 artificial intelligence (AI),
-mobile hardening, or local persistence.
+landscape viewport gating, or local persistence.
 
 ## Objective verifiers
 
@@ -84,7 +81,6 @@ explicit continue boundary. \
 `e2e/resolution-results-ui.spec.ts` verifies AC-017-03 through AC-017-06 in the
 production build. Its fixed-seed hotseat flow reaches two surviving
 continuations, a comeback, double knockout, sudden death, results, setup, and
-rematch. It also compares normal and reduced-motion snapshots and checks the
-shared viewports, 200 percent text, forced colors, axe, and target size. \
+rematch. It also checks the supported landscape viewport matrix. \
 The Impeccable audit and critique records plus `npm run ci` verify the remaining
 interface-quality and cumulative contracts.

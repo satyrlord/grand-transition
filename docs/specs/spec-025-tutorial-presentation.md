@@ -15,7 +15,7 @@ The tutorial teaches legal roles, denial, private hands, redraw, completion,
 grammar mistakes, weakness, exact-noun combo, finisher, continuation, comeback,
 resolution,
 Pride, and sudden death. The user can skip and replay it. It never relies on
-speech, color, animation, or a time limit alone.
+another explanation source or a time limit alone.
 
 Presentation uses civic-debate motifs such as folders, lower thirds, stamps,
 microphone plaques, voting panels, tickers, switchboards, and archive labels.
@@ -53,17 +53,15 @@ There is no forced tutorial deadline.
 
 ## Acceptance criteria
 
-- **AC-025-01:** A deterministic Playwright flow performs all ten checkpoints
-  by pointer and by keyboard and reaches the expected final snapshot.
+- **AC-025-01:** A deterministic Playwright pointer flow performs all ten
+  checkpoints and reaches the expected final snapshot.
 - **AC-025-02:** Each checkpoint rejects at least one wrong action without state
   mutation and shows the exact recovery. The second rejection shows one hint.
 - **AC-025-03:** Skip before and after a checkpoint, cancel skip, reload resume,
   completion, and replay produce exact tutorial-state snapshots.
-- **AC-025-04:** At all shared viewports and 200 percent zoom, the objective,
-  target control, recovery, and skip action remain visible without overlap.
-- **AC-025-05:** Every taught tactical event has persistent visible text and
-  one concise live-region announcement. Speech, color, motion, sound, and the
-  timer are never required.
+- **AC-025-04:** At all supported landscape viewports, the objective, target
+  control, recovery, and skip action remain visible without overlap.
+- **AC-025-05:** Every taught tactical event has persistent visible text.
 - **AC-025-06:** A written owner comprehension procedure confirms that each
   checkpoint states the goal, action, result, and next step without relying on
   undocumented game knowledge.
@@ -77,8 +75,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-A new player can finish the guided flow by pointer and keyboard. Every tactical
-and scoring event has visible text and a live-region announcement that names
-the event. Manual review
-covers comprehension, focus, motion, sound, and speech. `npm run ci` passes.
-Stop before broad content production.
+A new player can finish the guided flow by pointer. Every tactical and scoring
+event has visible text. Manual review covers comprehension, motion, sound, and
+speech. `npm run ci` passes. Stop before broad content production.

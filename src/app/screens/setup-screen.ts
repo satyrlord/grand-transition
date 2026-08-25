@@ -59,23 +59,17 @@ export class GrandTransitionSetup extends LitElement {
     if (!this.snapshot) return nothing;
 
     const errors = this.validationAttempted ? validateSetup(this.snapshot) : {};
-    const firstError = setupFieldOrder
-      .map((field) => errors[field])
-      .find((error): error is string => Boolean(error));
 
     return html`
       <main class="setup-screen" aria-labelledby="setup-title">
         <header class="setup-heading">
-          <h1 id="setup-title" tabindex="-1">${msg('Set up match')}</h1>
+          <h1 id="setup-title">${msg('Set up match')}</h1>
           <p>
             ${msg('Enter the players and match terms in the chamber register.')}
           </p>
         </header>
 
         <form class="setup-form" novalidate @submit=${this.submit}>
-          <p class="sr-only" role="alert" aria-atomic="true">
-            ${firstError ?? ''}
-          </p>
           <fieldset>
             <legend>${msg('Match')}</legend>
             ${this.selectField({
@@ -146,8 +140,6 @@ export class GrandTransitionSetup extends LitElement {
           id=${config.field}
           name=${config.field}
           .value=${config.value}
-          aria-invalid=${config.error ? 'true' : 'false'}
-          aria-describedby=${config.error ? errorId : nothing}
           @change=${this.changeField}
         >
           ${config.options.map(
@@ -188,7 +180,7 @@ export class GrandTransitionSetup extends LitElement {
     );
   };
 
-  private readonly submit = async (event: SubmitEvent): Promise<void> => {
+  private readonly submit = (event: SubmitEvent): void => {
     event.preventDefault();
     if (!this.snapshot || this.submissionLocked) return;
 
@@ -197,8 +189,6 @@ export class GrandTransitionSetup extends LitElement {
     const firstInvalidField = setupFieldOrder.find((field) => errors[field]);
     if (firstInvalidField) {
       this.requestUpdate();
-      await this.updateComplete;
-      this.querySelector<HTMLElement>(`#${firstInvalidField}`)?.focus();
       return;
     }
 

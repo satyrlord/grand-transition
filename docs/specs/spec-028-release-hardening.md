@@ -7,7 +7,7 @@
 
 ## Deliver
 
-Complete final accessibility, performance, browser, security, dependency,
+Complete final performance, browser, security, dependency,
 license, and documentation reviews. Measure the final-quality artifact with the
 environment and workload defined below. Fix confirmed release defects.
 
@@ -27,11 +27,6 @@ Safari and Chrome releases on the release date. Continuous integration (CI) runs
 Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit. Record oldest
 Safari evidence or mark it unverified. Do not add legacy polyfills or obsolete
 browser support without a new specification.
-
-Run axe on every screen and overlay introduced by Milestones 015 through 025.
-Also record manual keyboard,
-focus, screen-reader, 200% zoom, contrast, motion, flashing, and audible-speech
-checks. No blocker, serious, or critical accessibility issue can remain.
 
 ## Performance measurement contract
 
@@ -64,19 +59,18 @@ major, current macOS Safari, current iOS Safari, and current Android Chrome.
 
 A release deviation names the failed criterion, measured result, user impact,
 owner, rationale, compensating control, expiry milestone or date, and approval
-date. Only the product owner can approve it. A security, privacy, data-loss,
-critical accessibility, or runtime-network failure cannot be waived.
+date. Only the product owner can approve it. A security, privacy, data-loss, or
+runtime-network failure cannot be waived.
 
 ## Acceptance criteria
 
 - **AC-028-01:** Five cold and five warm trials meet every performance table
   threshold and retain machine-readable results and trace links.
 - **AC-028-02:** The exact browser matrix passes title-to-results, reload,
-  persistence fallback, privacy, speech-unavailable, reduced-motion, and
+  persistence fallback, privacy, speech-unavailable, and
   longest-content flows without uncaught error.
-- **AC-028-03:** Axe has no serious or critical finding. Manual keyboard,
-  focus, NVDA, VoiceOver, zoom, contrast, motion, flashing, and audible-speech
-  procedures have no blocker or major item.
+- **AC-028-03:** The supported landscape viewport matrix and blocking boundary
+  cases pass with final art and longest content.
 - **AC-028-04:** The production artifact contains no developer control, source
   map, unlicensed asset, remote request, secret, or committed `dist/`.
 - **AC-028-05:** Dependencies and GitHub actions have recorded license,
@@ -92,7 +86,7 @@ all 18 characters, 5 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
 private hotseat play, exact grammar and combat rules, and
 visible score explanations. It also has deterministic replay, validated
-data-driven content, locale-isolated English, and a responsive accessible user
+data-driven content, locale-isolated English, and a supported landscape user
 interface (UI). All art, audio, writing, and branding are original. The MVP has
 no online behavior.
 Only the artifact that passes the complete gate can proceed to publication.
@@ -107,7 +101,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 ## Verify and stop
 
 `npm ci` and `npm run ci` pass cleanly. The browser projects that this
-specification names have no uncaught
-error or severe access issue. Performance targets pass or approved deviations
+specification names have no uncaught error. Performance targets pass or approved deviations
 record evidence. The bundle has no developer tool, unlicensed asset, remote
 request, or committed `dist/`. Stop before enabling deployment.

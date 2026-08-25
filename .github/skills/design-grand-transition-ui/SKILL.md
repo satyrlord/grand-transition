@@ -1,6 +1,6 @@
 ---
 name: design-grand-transition-ui
-description: Design, audit, implement, repair, or verify the Grand Transition Lit interface through the Impeccable design flow. Use for screens, components, visual hierarchy, interaction, responsive behavior, motion, accessibility, or speech presentation.
+description: Design, audit, implement, repair, or verify the Grand Transition Lit interface through the Impeccable design flow. Use for screens, components, visual hierarchy, interaction, supported landscape behavior, motion, or speech presentation.
 ---
 
 # Design the Grand Transition interface
@@ -53,21 +53,18 @@ assets. Do not use visual effects that hide state changes.
 
 Use Lit only for views. Screens use light DOM. Components receive immutable
 snapshots and emit typed commands. Keep controls, phrases, logs, and score
-explanations in semantic DOM. Canvas effects are decorative, pointer-inert, and
-hidden from accessibility APIs.
+explanations outside Canvas. Canvas effects are decorative and pointer-inert.
 
 ## Test the complete interaction
 
-For implementation and verification, test pointer input, keyboard input, focus,
-and accessible names. Test 200 percent text and high contrast. Test reduced
-motion, unavailable speech, speech cancellation, and hotseat privacy. Test the
-required desktop, tablet, narrow-landscape, and portrait-mobile states. Include
-1280 by 720 and 390 by 844. Check overlap, scrolling, touch targets, sentence
-visibility, all nine
+For implementation and verification, test pointer input, unavailable speech,
+speech cancellation, and hotseat privacy. Test 1024 by 720, 1024 by 768, 1280
+by 720, and 1920 by 1080. Test the blocking viewport boundaries. Check overlap,
+scrolling, sentence visibility, all nine
 shared cards, private-hand handling, and score explanation.
 
 Use deterministic game state for geometry and screenshots. A screenshot alone
-does not prove interaction, privacy, or accessibility. Route production
+does not prove interaction or privacy. Route production
 evidence to [verify-game](../verify-game/SKILL.md).
 
 The work is complete when every changed UI contract has direct evidence or an

@@ -27,7 +27,7 @@ export class GrandTransitionTitle extends LitElement {
     return html`
       <main class="title-screen" aria-labelledby="game-title">
         <header class="title-record">
-          <h1 id="game-title" tabindex="-1">
+          <h1 id="game-title">
             <span class="title-word title-word--grand">
               <span class="title-glyph">${msg('Grand')}</span>
             </span>

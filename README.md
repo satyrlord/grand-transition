@@ -29,16 +29,18 @@ one fictional scene, an English game-locale bundle, minimum and two-clause
 Hollywood Roast grammar, compound subjects, endings, incomplete states,
 immediate grammar mistakes, seeded common-board and private-hand generation,
 clause scoring, noun combos, continuations, comebacks, cliffhangers, match
-lifecycle, replay, and simulation. The accessible Lit interface provides title,
-setup, playable hotseat match, resolution, results, rematch, and return-to-setup
-screens. Later milestones add privacy handovers, settings, artificial
+lifecycle, replay, and simulation. The landscape-only Lit interface provides
+title, setup, playable hotseat match, Pause, resolution, results, rematch, and
+return-to-setup screens. It requires a browser content viewport of at least
+1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add
+privacy handovers, settings, artificial
 intelligence, final assets, audio, expanded content, and release hardening in
 dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
 `docs/specs/` directory is the only source of truth for application behavior,
-architecture, testing, content, accessibility, security, and delivery.
+architecture, testing, content, security, and delivery.
 
 This README is descriptive user-facing documentation. If it disagrees with an
 approved specification, the specification governs.

@@ -191,8 +191,8 @@ phrase packs.
 Name tests after behavior, for example `continuation-break.test.ts`. Add a
 regression test for every rule defect. Preserve fast-check seeds and replay
 paths. Test Lit in Vitest Browser Mode, full builds with Playwright, and main UI
-states with axe. Manually check keyboard use, screen readers, reduced motion,
-visual quality, and audible speech.
+states at the supported landscape viewport matrix. Manually check visual
+quality and audible speech.
 
 ## Commit & Pull Request Guidelines
 
@@ -207,7 +207,7 @@ architecture or behavior changes.
 Use original, licensed art, audio, fonts, and fictional characters. Never scrape
 assets, commit secrets, or add runtime network calls. Generate AVIF/WebP
 variants and metadata through the approved Sharp tool. Keep controls and
-required text in semantic DOM, not Canvas. Deploy only `dist/` through GitHub
+required text outside Canvas. Deploy only `dist/` through GitHub
 Actions after `npm run ci`; preserve the Vite `/grand-transition/` base path.
 Text-to-speech is optional and must never reveal hidden hotseat content.
 <!-- codex-workflow-project-local-instructions-end -->

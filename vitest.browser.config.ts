@@ -26,6 +26,7 @@ export default defineConfig({
       'tests/unit/extended-grammar.test.ts',
       'tests/unit/match-lifecycle.test.ts',
       'tests/unit/replay-and-simulation.test.ts',
+      'tests/unit/viewport-support.test.ts',
     ],
     browser: {
       enabled: true,

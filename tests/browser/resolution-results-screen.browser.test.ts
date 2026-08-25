@@ -1,5 +1,5 @@
 import { page } from 'vitest/browser';
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, beforeEach, expect, test } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell';
 import {
   createResolutionResultsSnapshot,
@@ -12,6 +12,10 @@ import type {
   MatchResolutionPlayer,
   MatchState,
 } from '../../src/engine/match-lifecycle';
+
+beforeEach(async () => {
+  await page.viewport(1280, 720);
+});
 
 afterEach(() => {
   document.body.innerHTML = '';
@@ -69,7 +73,6 @@ test('renders every ordered sequence step and rule event in DOM text', async () 
     }
   }
   expect(reconstructed).toBe(28);
-  expect(screen.querySelectorAll('[role="status"]')).toHaveLength(1);
 });
 
 test('shows simultaneous before and after values without waiting for motion', async () => {
@@ -339,8 +342,6 @@ function resolutionFixture(): ResolutionResultsSnapshot {
     ],
     outcome:
       'Double knockout recorded. The cliffhanger starts with restored Pride.',
-    announcement:
-      'Red-Folded Chairman: Pride 74 to 32, charge 60 to 42. Thunder Tribune: Pride 52 to 28, charge 40 to 60.',
     continueLabel: 'Continue to sudden death',
     results: null,
   } satisfies ResolutionResultsSnapshot);

@@ -19,7 +19,7 @@ List only genuine choices.
 Order choices from parent to child.
 Put the choice that is hardest to reverse or has the most dependencies first.
 Check applicable game rules, balance, AI, grammar, content safety, originality,
-localization, accessibility, privacy, browser support, assets, performance,
+localization, privacy, browser support, assets, performance,
 delivery, and verification effects.
 
 ## Resolve one branch

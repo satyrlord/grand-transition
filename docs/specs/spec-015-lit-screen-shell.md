@@ -15,11 +15,10 @@ milestones add artificial intelligence (AI), speech, privacy, and saved options
 when their behavior exists.
 
 The title screen shows the fictional-composite satire disclaimer. Setup uses
-semantic controls and prevents only invalid combinations; mirror characters are
+native controls and prevents only invalid combinations; mirror characters are
 valid. Screens use light DOM. Shadow DOM is limited to isolated leaf controls
-with explicit style and event contracts. Components use native controls before
-Accessible Rich Internet Applications (ARIA) attributes. Components never
-duplicate authoritative state.
+with explicit style and event contracts. Components never duplicate
+authoritative state.
 
 ## Screen and setup contract
 
@@ -34,10 +33,9 @@ Every pick uses the fixed 15-second timer owned by Milestone 009. Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 
-Validation occurs on submit and after an invalid field changes. The first
-invalid field receives focus. Each visible error names the field, problem, and
-valid recovery and is associated with its native control. Valid input is
-preserved. Submission is never disabled only to hide validation.
+Validation occurs on submit and after an invalid field changes. Each visible
+error names the field, problem, and valid recovery. Valid input is preserved.
+Submission is never disabled only to hide validation.
 
 ## Acceptance criteria
 
@@ -45,13 +43,12 @@ preserved. Submission is never disabled only to hide validation.
   not create an unsupported URL route, and returning to setup restores values.
 - **AC-015-02:** Defaults create the exact typed setup
   payload. A mirror match succeeds.
-- **AC-015-03:** Every invalid class produces one visible associated error,
-  focuses the first invalid control, preserves other values, and emits no
-  command.
+- **AC-015-03:** Every invalid class produces one visible error, preserves
+  other values, and emits no command.
 - **AC-015-04:** A valid submit emits one bubbling, composed
   `start-match` event and immutable payload. Rapid double submit emits once.
-- **AC-015-05:** Pointer and keyboard flows pass at 1280 by 720 and 390 by 844.
-  Tab order follows visible order and Escape does not discard setup values.
+- **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by
+  1080. Back does not discard setup values.
 - **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
   hands, or game phase. The shell is the only authoritative snapshot owner.
 
@@ -65,6 +62,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 ## Verify and stop
 
 Browser component tests prove immutable properties, bubbling and composed typed
-events, focus order, labels, validation, and setup command creation. The app
+events, validation, and setup command creation. The app
 shell alone owns authoritative state. `npm run ci` passes. Stop before the match
 surface, AI behavior, persistence, or final styling.

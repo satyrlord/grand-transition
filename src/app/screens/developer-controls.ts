@@ -249,7 +249,6 @@ export class GrandTransitionDeveloperControls extends LitElement {
             <p
               class="developer-controls__evidence-kind"
               data-kind=${this.evidenceKind}
-              aria-live="polite"
             >
               <span>Document type</span>
               <strong>${evidenceKindLabel(this.evidenceKind)}</strong>
@@ -313,11 +312,7 @@ export class GrandTransitionDeveloperControls extends LitElement {
         </section>
 
         <footer class="developer-controls__result">
-          <p
-            class="developer-controls__status"
-            data-kind=${this.statusKind}
-            role="status"
-          >
+          <p class="developer-controls__status" data-kind=${this.statusKind}>
             ${this.statusMessage}
           </p>
           ${

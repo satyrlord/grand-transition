@@ -88,7 +88,7 @@
     top: 0.7rem;
     left: 50%;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 0.4rem;
     width: min(44rem, 48vw);
     padding: 0.38rem;
@@ -186,6 +186,23 @@
   .timer-fact[data-timer='1'] dd,
   .timer-fact[data-timer='0'] dd {
     color: white;
+  }
+
+  .match-pause {
+    align-self: stretch;
+    min-width: 5.4rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--broadcast-gold-light);
+    background: var(--broadcast-red);
+    color: var(--broadcast-paper-light);
+    font: 700 0.82rem/1 var(--font-broadcast);
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .match-pause:hover {
+    background: var(--broadcast-red-bright);
   }
 
   .match-stage {
@@ -732,7 +749,7 @@
     text-transform: uppercase;
   }
 
-  .phrase-card--empty > span:not(.card-shortcut) {
+  .phrase-card--empty > span {
     font-size: 0.69rem;
   }
 
@@ -786,26 +803,6 @@
     line-height: 1.05;
     overflow-wrap: anywhere;
     white-space: normal;
-  }
-
-  .card-shortcut {
-    position: absolute;
-    inset: 0.22rem 0.22rem auto auto;
-    min-width: 1.15rem;
-    padding: 0.1rem 0.2rem;
-    border: 1px solid currentcolor;
-    background: var(--broadcast-ink);
-    color: var(--broadcast-paper-light);
-    font:
-      700 0.69rem/1 ui-monospace,
-      'Cascadia Code',
-      Consolas,
-      monospace;
-    text-align: center;
-  }
-
-  .card-shortcut[hidden] {
-    display: none;
   }
 
   .shared-board .phrase-card {
@@ -993,15 +990,6 @@
     filter: saturate(0.35);
   }
 
-  .action-hint {
-    display: inline-block;
-    margin-inline-start: 0.25rem;
-    padding: 0.08rem 0.2rem;
-    border: 1px solid currentcolor;
-    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
-    font-size: 0.69rem;
-  }
-
   .match-footer {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -1029,17 +1017,6 @@
     text-align: end;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   @media (min-width: 90rem) {
     .match-screen {
       grid-template-rows: minmax(0, 55svh) 4.25rem minmax(0, 1fr) 1.65rem;
@@ -1059,372 +1036,6 @@
 
     .match-player[data-side='blue'] .player-sentence {
       right: 26rem;
-    }
-  }
-
-  @media (max-width: 56rem) {
-    .match-screen {
-      display: block;
-      height: auto;
-      min-height: 100svh;
-      overflow: visible;
-    }
-
-    .broadcast-stage {
-      display: grid;
-      gap: 0.7rem;
-      padding: min(56.25vw, 25rem) 0.75rem 0.8rem;
-      overflow: visible;
-    }
-
-    .broadcast-stage-art {
-      width: 100%;
-      height: min(56.25vw, 25rem);
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .match-status-rail {
-      position: relative;
-      top: auto;
-      left: auto;
-      grid-template-columns: 1fr;
-      width: 100%;
-      transform: none;
-    }
-
-    .match-turn-heading h1 {
-      white-space: normal;
-    }
-
-    .match-facts {
-      border-block-start: 1px solid rgb(228 193 125 / 48%);
-      border-inline-start: 0;
-    }
-
-    .timer-fact {
-      min-width: 0 !important;
-    }
-
-    .match-stage {
-      position: relative;
-      inset: auto;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-      pointer-events: auto;
-    }
-
-    .match-player {
-      position: relative;
-      inset: auto;
-      display: grid;
-      grid-template-rows: auto minmax(10rem, 28vw) auto;
-      width: auto;
-      min-height: 0;
-    }
-
-    .player-hud,
-    .match-player[data-side='red'] .player-hud,
-    .match-player[data-side='blue'] .player-hud {
-      position: relative;
-      inset: auto;
-      grid-row: 1;
-      width: 100%;
-      text-align: start;
-    }
-
-    .match-player[data-side='blue'] .player-name-line {
-      flex-direction: row;
-    }
-
-    .character-frame {
-      position: relative;
-      inset: auto;
-      grid-row: 2;
-      width: 100%;
-      height: min(15rem, 42vw);
-    }
-
-    .character-portrait,
-    .match-player[data-side='red'] .character-portrait,
-    .match-player[data-side='blue'] .character-portrait {
-      inset: auto 0 -3%;
-      width: 100%;
-      height: 100%;
-    }
-
-    .player-sentence,
-    .match-player[data-side='red'] .player-sentence,
-    .match-player[data-side='blue'] .player-sentence {
-      position: relative;
-      inset: auto;
-      grid-row: 3;
-      width: 100%;
-      min-height: 4.5rem;
-      margin-block-start: 0.75rem;
-      clip-path: none;
-    }
-
-    .reaction-docket {
-      position: relative;
-      inset: auto;
-      grid-column: 1 / -1;
-      grid-row: 1;
-      min-height: 6rem;
-    }
-
-    .reaction-copy {
-      position: relative;
-      bottom: auto;
-      left: auto;
-      width: 100%;
-      transform: none;
-    }
-
-    .reaction-copy h2,
-    .reaction-copy > p {
-      overflow: visible;
-      text-overflow: clip;
-      white-space: normal;
-    }
-
-    .reaction-copy h2 {
-      line-height: 1.15;
-    }
-
-    .sentence-ledger {
-      grid-template-columns: 1fr;
-      gap: 0.45rem;
-      padding: 0.75rem;
-    }
-
-    .sentence-preview {
-      min-height: 1.2em;
-      color: #171717;
-      font-size: 1rem;
-      white-space: normal;
-    }
-
-    .draft-table {
-      grid-template-columns: minmax(0, 1fr);
-      padding: 0.7rem;
-    }
-
-    .private-hand {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .private-hand ol {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: none;
-    }
-
-    .common-phrases {
-      grid-column: 1;
-      grid-row: 2;
-    }
-
-    .shared-board {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: repeat(9, minmax(3.25rem, auto));
-    }
-
-    .shared-board .phrase-card {
-      grid-template-columns: auto minmax(0, 1fr);
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: 0.12rem 0.45rem;
-      padding-block: 0.24rem;
-    }
-
-    .shared-board .card-topline {
-      grid-column: 1;
-      grid-row: 1 / 3;
-      align-self: center;
-    }
-
-    .shared-board .card-phrase {
-      grid-column: 2;
-      grid-row: 1;
-      align-self: end;
-      margin-inline-end: 1.35rem;
-      text-overflow: clip;
-      text-wrap: balance;
-      white-space: normal;
-    }
-
-    .shared-board .card-weakness {
-      grid-column: 2;
-      grid-row: 2;
-      align-self: start;
-      margin-inline-end: 1.35rem;
-      white-space: normal;
-    }
-
-    .private-hand .phrase-card {
-      min-height: 8.5rem;
-      padding: 0.5rem;
-    }
-
-    .card-phrase {
-      font-size: 0.82rem;
-    }
-
-    .card-topline,
-    .card-bottomline {
-      font-size: 0.69rem;
-    }
-
-    .card-weakness {
-      font-size: 0.69rem;
-      white-space: normal;
-    }
-
-    .match-actions {
-      grid-column: 1;
-      grid-row: 3;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-auto-rows: minmax(4.2rem, auto);
-    }
-
-    .match-footer {
-      min-height: 2.5rem;
-    }
-  }
-
-  @media (max-width: 32rem) {
-    .match-facts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .match-facts > div {
-      padding-inline: 0.25rem;
-    }
-
-    .match-stage {
-      grid-template-columns: 1fr;
-    }
-
-    .match-player h2 {
-      text-wrap: balance;
-      white-space: normal;
-    }
-
-    .reaction-docket,
-    .match-player {
-      grid-column: 1;
-    }
-
-    .reaction-docket {
-      grid-row: auto;
-    }
-
-    .reaction-copy {
-      grid-template-columns: 1fr;
-    }
-
-    .reaction-copy dl {
-      grid-column: 1;
-      grid-row: auto;
-      justify-content: space-between;
-      text-align: start;
-    }
-
-    .private-hand ol {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .shared-board {
-      grid-template-rows: repeat(9, minmax(4rem, auto));
-    }
-
-    .shared-board .phrase-card {
-      grid-template-rows: auto auto;
-    }
-
-    .shared-board .card-phrase {
-      overflow: visible;
-      line-height: 1.12;
-      overflow-wrap: anywhere;
-    }
-
-    .match-actions {
-      grid-template-columns: 1fr;
-    }
-
-    .match-footer {
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
-      padding-inline: 0.75rem;
-    }
-
-    .match-footer span:nth-child(2) {
-      display: none;
-    }
-  }
-
-  @media (max-width: 25rem) {
-    .private-hand ol {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sentence-ledger,
-    .match-player--active .character-portrait {
-      animation: none;
-    }
-  }
-
-  @media (forced-colors: active) {
-    .character-portrait,
-    .broadcast-stage-art,
-    .broadcast-stage::after {
-      display: none;
-    }
-
-    .match-screen,
-    .broadcast-stage,
-    .match-status-rail,
-    .player-hud,
-    .reaction-copy,
-    .sentence-ledger,
-    .draft-table,
-    .private-hand,
-    .player-turn-status,
-    .common-phrases,
-    .shared-board,
-    .phrase-card,
-    .match-actions,
-    .match-actions button,
-    .match-footer {
-      background: Canvas;
-      box-shadow: none;
-      color: CanvasText;
-    }
-
-    .match-status-rail,
-    .player-hud,
-    .reaction-copy,
-    .sentence-ledger,
-    .private-hand,
-    .player-turn-status,
-    .common-phrases,
-    .shared-board,
-    .phrase-card,
-    .match-actions,
-    .match-actions button,
-    .match-footer {
-      border-color: CanvasText;
-    }
-
-    .player-sentence {
-      clip-path: none;
-    }
-
-    .player-health meter {
-      forced-color-adjust: auto;
     }
   }
 }

@@ -30,9 +30,6 @@ test('moves through the two-state graph on one URL and restores setup values', a
     )
     .toBeVisible();
   await page.getByRole('button', { name: 'Set up match' }).click();
-  await expect
-    .element(page.getByRole('heading', { name: 'Set up match' }))
-    .toHaveFocus();
   expect(window.location.href).toBe(originalUrl);
 
   await expect.element(page.getByLabelText('Mode')).toHaveValue('hotseat');
@@ -52,9 +49,6 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
     .toBeVisible();
-  await expect
-    .element(page.getByRole('heading', { name: 'Grand Transition' }))
-    .toHaveFocus();
   expect(window.location.href).toBe(originalUrl);
 
   await page.getByRole('button', { name: 'Set up match' }).click();
@@ -117,7 +111,7 @@ test.each([
   },
 );
 
-test('shows every missing-field error, focuses the first field, and emits no command', async () => {
+test('shows every missing-field error and emits no command', async () => {
   const setup = await mountSetup(
     Object.freeze({
       mode: '',
@@ -137,7 +131,6 @@ test('shows every missing-field error, focuses the first field, and emits no com
   await setup.updateComplete;
 
   expect(listener).not.toHaveBeenCalled();
-  expect(document.activeElement).toBe(setup.querySelector('#mode'));
   expect(setup.querySelectorAll('.field-error')).toHaveLength(4);
   expect(setup.textContent).toContain('Mode is missing. Choose Hotseat.');
   expect(setup.textContent).toContain(
@@ -151,7 +144,7 @@ test('shows every missing-field error, focuses the first field, and emits no com
   );
 });
 
-test('associates unknown-value errors and revalidates an invalid field after change', async () => {
+test('shows unknown-value errors and revalidates after change', async () => {
   const setup = await mountSetup(
     Object.freeze({
       mode: 'network',
@@ -181,18 +174,12 @@ test('associates unknown-value errors and revalidates an invalid field after cha
   const playerOne = setup.querySelector<HTMLSelectElement>(
     '#playerOneCharacterId',
   )!;
-  expect(playerOne.getAttribute('aria-describedby')).toBe(
-    'playerOneCharacterId-error',
-  );
-  expect(playerOne.getAttribute('aria-invalid')).toBe('true');
-
   playerOne.value = 'red-folded-chairman';
   playerOne.dispatchEvent(
     new Event('change', { bubbles: true, composed: true }),
   );
   await setup.updateComplete;
   expect(setup.querySelector('#playerOneCharacterId-error')).toBeNull();
-  expect(playerOne.getAttribute('aria-invalid')).toBe('false');
 });
 
 test.each([
@@ -260,13 +247,9 @@ test.each([
       );
     await setup.updateComplete;
 
-    const control = setup.querySelector<HTMLElement>(`#${field}`)!;
     expect(listener).not.toHaveBeenCalled();
     expect(setup.querySelectorAll('.field-error')).toHaveLength(1);
     expect(setup.textContent).toContain(message);
-    expect(document.activeElement).toBe(control);
-    expect(control.getAttribute('aria-describedby')).toBe(`${field}-error`);
-    expect(control.getAttribute('aria-invalid')).toBe('true');
     for (const defaultField of Object.keys(
       defaults,
     ) as (keyof SetupSnapshot)[]) {
@@ -290,28 +273,56 @@ test('keeps one frozen shell snapshot and does not own match-state fields', asyn
     expect(field in setup).toBe(false);
     expect(field in app).toBe(false);
   }
+});
 
-  const tabOrder = Array.from(
-    setup.querySelectorAll<HTMLElement>('select, button'),
-    (element) =>
-      element instanceof HTMLSelectElement
-        ? element.name
-        : element.textContent?.trim(),
+test.each([
+  { width: 1023, height: 720 },
+  { width: 1024, height: 719 },
+  { width: 720, height: 1024 },
+  { width: 1200, height: 1600 },
+  { width: 1024, height: 1024 },
+])('blocks an unsupported $width by $height viewport', async (viewport) => {
+  await page.viewport(viewport.width, viewport.height);
+  document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  await app.updateComplete;
+
+  expect(
+    app.querySelector('[data-interruption="unsupported-viewport"]'),
+  ).not.toBeNull();
+  expect(app.querySelector('grand-transition-title')).toBeNull();
+  expect(app.textContent).toContain('1024 × 720');
+  expect(app.textContent).toContain('1920 × 1080 on PC');
+});
+
+test('restores setup state after the viewport becomes supported again', async () => {
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page
+    .getByLabelText('Player two character')
+    .selectOptions('red-folded-chairman');
+
+  await page.viewport(1023, 720);
+  await vi.waitFor(() =>
+    expect(
+      app.querySelector('[data-interruption="unsupported-viewport"]'),
+    ).not.toBeNull(),
   );
-  expect(tabOrder).toEqual([
-    'mode',
-    'sceneId',
-    'playerOneCharacterId',
-    'playerTwoCharacterId',
-    'Back',
-    'Start match',
-  ]);
+  expect(app.querySelector('grand-transition-setup')).toBeNull();
 
-  setup.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-  expect(setup.snapshot).toEqual(createDefaultSetupSnapshot());
+  await page.viewport(1024, 720);
+  await vi.waitFor(() =>
+    expect(app.querySelector('grand-transition-setup')).not.toBeNull(),
+  );
+  await expect
+    .element(page.getByLabelText('Player two character'))
+    .toHaveValue('red-folded-chairman');
 });
 
 async function mountApp(): Promise<GrandTransitionApp> {
+  await page.viewport(1280, 720);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
     'grand-transition-app',
@@ -323,6 +334,7 @@ async function mountApp(): Promise<GrandTransitionApp> {
 async function mountSetup(
   snapshot: SetupSnapshot,
 ): Promise<GrandTransitionSetup> {
+  await page.viewport(1280, 720);
   const setup = document.createElement(
     'grand-transition-setup',
   ) as GrandTransitionSetup;

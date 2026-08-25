@@ -29,7 +29,7 @@ Preserve immutable state and commands.
 Preserve seeded randomness and replay determinism.
 Preserve grammar-adapter boundaries and locale and content identifiers.
 Preserve hotseat privacy and persistence codecs.
-Preserve Lit event contracts, semantic DOM, focus, and reduced motion.
+Preserve Lit event contracts and supported landscape behavior.
 Preserve asset manifests, Vite base paths, CSP, fixtures, and workflow pins.
 
 ## Refactor in coherent steps

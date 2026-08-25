@@ -78,7 +78,6 @@ export type ResolutionResultsSnapshot = Readonly<{
   suddenDeath: boolean;
   players: readonly [ResolutionPlayerView, ResolutionPlayerView];
   outcome: string;
-  announcement: string;
   continueLabel: string | null;
   results: ResultsView | null;
 }>;
@@ -99,7 +98,6 @@ export function createResolutionResultsSnapshot(
     ),
   ) as [ResolutionPlayerView, ResolutionPlayerView];
   const outcome = resolutionOutcome(state);
-  const announcement = `${resolution.suddenDeath ? 'Sudden-death' : `Round ${resolution.round}`} exchange complete. ${players[0].characterName} dealt ${players[0].outgoingDamage} damage; Pride ${players[0].prideBefore} to ${players[0].prideAfter}, charge ${players[0].chargeBefore} to ${players[0].chargeAfter}. ${players[1].characterName} dealt ${players[1].outgoingDamage} damage; Pride ${players[1].prideBefore} to ${players[1].prideAfter}, charge ${players[1].chargeBefore} to ${players[1].chargeAfter}. ${outcome}`;
 
   return deepFreeze({
     revision: state.commandHistory.length,
@@ -108,7 +106,6 @@ export function createResolutionResultsSnapshot(
     suddenDeath: resolution.suddenDeath,
     players,
     outcome,
-    announcement,
     continueLabel:
       state.phase === 'round-preparation'
         ? msg(`Continue to round ${state.round}`)
@@ -153,7 +150,7 @@ export class GrandTransitionResolutionResults extends LitElement {
         aria-labelledby="resolution-title"
       >
         <header class="resolution-heading">
-          <h1 id="resolution-title" tabindex="-1">
+          <h1 id="resolution-title">
             ${
               this.snapshot.results
                 ? msg(`Winner: ${this.snapshot.results.winnerName}`)
@@ -263,10 +260,6 @@ export class GrandTransitionResolutionResults extends LitElement {
               : nothing
           }
         </div>
-
-        <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
-          ${this.snapshot.announcement}
-        </p>
       </main>
     `;
   }

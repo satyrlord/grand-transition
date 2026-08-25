@@ -77,7 +77,7 @@ political labels only and never define anatomy, species, or hybrid traits.
   alerts, wellness props, merchandise, and floating reactions; algorithms,
   sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
-Each scene has a 1920x1080 layered master, mobile-safe crops, lighting, ambience,
+Each scene has a 1920x1080 layered master, landscape crops, lighting, ambience,
 motion, music treatment, and 25 to 35 owned phrases. The validated catalog has
 these inclusive general-pool ranges:
 
@@ -160,6 +160,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 ## Verify and stop
 
 All content, localization, asset, reference, license, and minimum-volume checks
-pass. Every character and scene loads at all five shared viewports and completes a
-simulated match. `npm run ci` passes. Stop before balance changes, editorial
+pass. Every character and scene loads at all supported landscape viewports and
+completes a simulated match. `npm run ci` passes. Stop before balance changes, editorial
 approval, performance tuning, or deployment.

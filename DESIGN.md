@@ -39,6 +39,7 @@ typography:
     letterSpacing: '0.025em'
   body:
     fontFamily: 'Georgia, "Times New Roman", serif'
+    fontSize: 'clamp(1rem, 1.5vw, 1.25rem)'
   tactical-label:
     fontFamily: '"Barlow Condensed", sans-serif'
     fontSize: '0.69rem'
@@ -116,7 +117,7 @@ turn feel like a live civic event.
 The title and setup screens retain their implemented record-like station
 paperwork. They have not been rebuilt as television screens. The shipped match
 screen changes the tempo: a character-free painted studio fills the public
-field, while separate transparent character portraits, semantic broadcast
+field, while separate transparent character portraits, broadcast
 plaques, speech records, phrase cards, and real action controls carry the live
 game state.
 
@@ -135,7 +136,7 @@ this world are human, even when a political title uses an animal metaphor.
 
 ### First viewport
 
-At 1280 by 720, the selected pair of transparent human editorial caricatures
+At the recommended 1920 by 1080 viewport, the selected pair of transparent human editorial caricatures
 fills the upper field over a character-free public-television studio. The
 default pair is the composed Red-Folded Chairman with his red folder and the
 emphatic Thunder Tribune with his speech papers. The lean Black Sea Captain can
@@ -152,17 +153,15 @@ list, authored line-icon actions on the right, and the channel strap last.
 
 Read the round and active player. Compare Pride and speech state. Read the
 sentence. Scan private and shared phrases. Then choose a
-real action. Availability, weakness, ownership, disabled reasons, and focus
-remain visible in semantic text and controls.
+real action. Availability, weakness, ownership, and disabled reasons remain
+visible in text and controls.
 
 ### Signature interaction
 
-Focus or selection previews the sentence without changing game truth. Pointer
-and keyboard routes are equivalent. A turn change moves one 360-millisecond
-light-and-position claim to the incoming portrait, then leaves that side
-persistently brighter. Reduced motion keeps the light, border, and written turn
-state without translation. The painted stage is atmosphere only and never
-replaces semantic names, status, values, or controls.
+Pointer preview does not change game truth. A turn change moves one
+360-millisecond light-and-position claim to the incoming portrait, then leaves
+that side persistently brighter. The painted stage is atmosphere only and never
+replaces visible names, status, values, or controls.
 
 ### Cross-surface reach
 
@@ -176,7 +175,7 @@ record does not claim that the results screen was rebuilt.
 The dense HUD can make text too small or too ornamental. Keep core tactical
 content at 11 pixels or larger. Use Cormorant SC only for display and action
 voice, Barlow Condensed for compact labels, Georgia for phrases and record
-copy, and the UI monospace stack for timer and shortcut data.
+copy, and the UI monospace stack for timer data.
 
 ### Direction seed
 
@@ -193,8 +192,8 @@ The direction concept seed key is `e673dd8e`. The user-supplied mock at
 - Square, double-ruled controls with authored line icons and explicit labels.
 - Record-like title and setup screens that lead into a more theatrical match.
 
-**The Broadcast Truth Rule.** Art creates the world. Semantic Document Object
-Model (DOM) content owns game truth and interaction.
+**The Broadcast Truth Rule.** Art creates the world. Visible Hypertext Markup
+Language (HTML) content owns game truth and interaction.
 
 **The Human Character Rule.** Every character is human. Animal terms in names
 or titles are metaphorical political labels only. Do not use animal or hybrid
@@ -258,7 +257,7 @@ fallbacks)
 **Character:** Barlow Condensed gives title, setup, and tactical labels the
 voice of station paperwork. Cormorant SC gives match headings and actions a
 civic broadcast voice. Georgia keeps phrases and record copy readable. The
-monospace stack makes timer and shortcut data immediate.
+monospace stack makes timer data immediate.
 
 ### Hierarchy
 
@@ -272,7 +271,7 @@ monospace stack makes timer and shortcut data immediate.
   state, Pride, round, damage, and next-role facts.
 - **Body:** Georgia for phrases, current sentence, speech records, explanations,
   and recovery text.
-- **Data:** UI monospace for the timer and keyboard shortcuts.
+- **Data:** UI monospace for the timer.
 
 **The Four-Voice Rule.** Use Cormorant SC for event voice, Barlow Condensed for
 tactical labels, Georgia for language content, and monospace only for compact
@@ -280,10 +279,8 @@ machine-like data.
 
 ## Layout
 
-The title keeps its implemented 38/62 blue-to-paper split and becomes a 37/63
-vertical stack at 700 pixels. The setup keeps one paper register with a leading
-blue and oxblood binding. Its two field groups become one reading column below
-700 pixels.
+The title keeps its implemented 38/62 blue-to-paper split. The setup keeps one
+paper register with a leading blue and oxblood binding.
 
 The match uses four vertical regions at desktop: a stage that takes up to 55
 small-viewport-height units, a 4.25-rem sentence hinge, the flexible draft HUD,
@@ -293,12 +290,9 @@ the portraits, and the reaction strip anchors the stage. The draft HUD uses a
 left-center-right grid for private hand, one vertical common-phrase list, and
 actions.
 
-At 896 pixels and below, the match becomes a vertical document. The stage art
-keeps a 16:9 field, status and player records enter normal flow, the sentence
-hinge becomes one column, and the hand, common list, and actions stack. At 512
-pixels and below, players and common phrases use one column, while the two
-private cards can share a row. The page scrolls vertically without horizontal
-movement.
+The functional layout requires a horizontal content viewport of at least 1024
+by 720 CSS pixels. Smaller, portrait, and square viewports show the full-screen
+transmission-unavailable slate. The recommended viewport is 1920 by 1080 on PC.
 
 **The Sentence Hinge Rule.** Keep the warm current-sentence record between the
 public stage and the phrase choices. It explains what the next phrase action
@@ -327,21 +321,20 @@ soft floating dashboard cards.
 The system is square and architectural. Title and setup use sharp record fields
 and a narrow binding seam. Match plaques, phrase lists, private cards, dialogs,
 and buttons use sharp corners, one-pixel brass rules, or three-pixel double
-brass frames. Speech records use simple clipped paper tails. Shortcut keycaps
-are compact squares.
+brass frames. Speech records use simple clipped paper tails.
 
 **The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
 speech tails, and line icons as compact civic signals. Never let ornament hide
-text, state, focus, or target size.
+text or state.
 
 ## Components
 
 ### Title record and setup register
 
-The implemented title remains a blue-and-paper public record with one semantic
-heading, a visible disclaimer, setup action, and prepared-status stamp. The
-implemented setup remains a flat semantic form with native labeled controls,
-associated recovery text, square 44-pixel actions, and source-order focus.
+The implemented title remains a blue-and-paper public record with one heading,
+a visible disclaimer, setup action, and prepared-status stamp. The implemented
+setup remains a flat form with native labeled controls,
+associated recovery text and square actions.
 These surfaces share the palette and type ancestry of the match, but they are
 not represented as finished television stages.
 
@@ -351,33 +344,31 @@ The decorative full-width image is a character-free late-1990s television
 studio. Separate transparent portraits render the two selected characters over
 it and can exchange sides or mirror without changing the scene. The three
 implemented portraits are the Red-Folded Chairman, Thunder Tribune, and Black
-Sea Captain. All decorative images have empty alternative text. A centered navy
+Sea Captain. A centered navy
 plaque owns round, active player, and timer. Compact red and blue strips own a
 single-line character name, visible Pride label, and Pride meter and remain
 outside the portrait bounds.
 Only the active strip states “Your turn.” Its portrait stays bright under a
 persistent brass stage light while the waiting portrait stays subdued. One
 360-millisecond directional light-and-position transfer marks a turn change.
-Reduced motion removes translation but keeps the light, border, and written
-state. The reaction strip owns venue, public response, and damage.
+The reaction strip owns venue, public response, and damage.
 
 ### Sentence record
 
 The sentence hinge combines the current or preview sentence with a dark next
 role status panel. It uses warm textured paper, a thin brass frame, visible
-labels, and one 260-millisecond clipped reveal. Reduced motion removes the
-animation without changing content.
+labels, and one 260-millisecond clipped reveal.
 
 ### Phrase cards
 
 The two private paper cards show role, phrase, ownership, and relevant weakness
 or disabled reason. The common board is one vertical list of nine compact paper
-rows. Each row shows role, phrase, relevant weakness or disabled reason, and its
-keyboard shortcut when enabled. The list heading owns the repeated common
+rows. Each row shows role, phrase, and a relevant weakness or disabled reason.
+The list heading owns the repeated common
 ownership fact. Blue, olive, violet, and orange rules support written roles.
 Every available common phrase can be selected by either player. A red inset
-outline marks selection. A three-pixel light-blue outline marks keyboard focus.
-Selecting a common phrase leaves its numbered row visibly empty.
+outline marks selection. Selecting a common phrase leaves its numbered row
+visibly empty.
 
 ### Match actions and channel strap
 
@@ -385,8 +376,15 @@ Actions use authored 24-pixel line icons, a Cormorant SC action name, and a
 smaller Georgia explanation. Oxblood identifies the primary delivery action;
 television blue identifies hand refresh and comeback actions. Disabled controls
 stay labeled and use a dashed
-border. Keyboard hints appear after keyboard input. The channel strap comes
+border. A dedicated Pause action sits with the match status. The channel strap comes
 last in reading order and states the channel, venue, and broadcast motto.
+
+### Pause and compatibility slates
+
+Manual Pause replaces the complete match with a navy transmission-held slate,
+one brass-framed Resume action, and no game facts. Unsupported viewports use
+the same broadcast language without a Resume action. The compatibility slate
+states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
 
 ### Comeback action
 
@@ -399,19 +397,18 @@ tier. It uses the strongest filled tier immediately.
 
 - **Do** preserve the implemented title and setup record compositions until a
   separate approved change replaces them.
-- **Do** use the painted stage as atmosphere and keep all game truth in
-  semantic text, meters, lists, buttons, and dialogs.
+- **Do** use the painted stage as atmosphere and keep all game truth in text,
+  meters, lists, buttons, and dialogs.
 - **Do** depict every roster character as fully human, including characters
   with animal metaphors in their names or titles.
-- **Do** keep the 1280 by 720 path dense but readable: stage first, sentence
+- **Do** keep the 1024 by 720 path dense but readable: stage first, sentence
   hinge second, choices third, channel strap last.
 - **Do** keep core tactical content at 11 pixels or larger.
-- **Do** write every material weakness, disabled reason, timer, and focus state.
+- **Do** write every material weakness, disabled reason, and timer state.
   Let a section heading own a repeated common/private fact instead of printing
   it on every row.
-- **Do** keep focus preview temporary and keep reducer-owned game truth
+- **Do** keep pointer preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.
-- **Do** preserve forced-colors and reduced-motion alternatives.
 
 ### Don't
 
@@ -421,7 +418,7 @@ tier. It uses the strongest filled tier immediately.
   televised composition.
 - **Don't** use animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.
-- **Don't** place values, controls, required text, or focus indication inside
+- **Don't** place values, controls, or required text inside
   the painted stage or paper texture.
 - **Don't** use Cormorant SC for dense body copy or shrink core tactical text to
   make the desktop HUD fit.

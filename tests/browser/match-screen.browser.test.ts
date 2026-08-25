@@ -64,16 +64,8 @@ test('renders an immutable complete match snapshot and previews without changing
   const actionable = match.querySelector<HTMLButtonElement>(
     `[data-card-id="${previewCard.reference!.cardId}"]`,
   )!;
-  const accessibleName = actionable.getAttribute('aria-label')!;
-  expect(accessibleName).toMatch(
-    /Role (noun|verb|predicate|conjunction|ending|continuation)/u,
-  );
-  expect(accessibleName).toContain('Shared card');
-  expect(accessibleName).toMatch(/Available/u);
-  expect(accessibleName).toMatch(/weakness/u);
-
   const sentenceBefore = snapshot.sentenceText;
-  actionable.focus();
+  actionable.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
   expect(
     match.querySelector('.sentence-preview')?.textContent?.trim(),
@@ -82,7 +74,7 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
-test('clears a focus preview when an authoritative snapshot arrives', async () => {
+test('clears a pointer preview when an authoritative snapshot arrives', async () => {
   const match = await startMatch();
   const previewCard = match.snapshot!.sharedCards.find(
     (card) => card.action === 'select' && card.previewText.trim() !== '',
@@ -90,7 +82,7 @@ test('clears a focus preview when an authoritative snapshot arrives', async () =
   const card = match.querySelector<HTMLButtonElement>(
     `[data-card-id="${previewCard.reference!.cardId}"]`,
   )!;
-  card.focus();
+  card.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
   const preview = match.querySelector('.sentence-preview')?.textContent?.trim();
   expect(preview).not.toBe(match.snapshot!.sentenceText);
@@ -120,7 +112,7 @@ test('keeps the current sentence visible for an empty legal preview', async () =
     .querySelector<HTMLButtonElement>(
       `[data-card-id="${card!.reference!.cardId}"]`,
     )!
-    .focus();
+    .dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
 
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
@@ -146,7 +138,6 @@ test('does not refresh an empty private hand without a player command', async ()
       state: 'empty' as const,
       stateLabel: 'Empty',
       disabledReason: 'This slot is empty.',
-      accessibleName: 'Empty private slot.',
       action: null,
       previewText: '',
     })),
@@ -160,7 +151,7 @@ test('does not refresh an empty private hand without a player command', async ()
   ).toBe(false);
 });
 
-test('maps pointer and keyboard actions once', async () => {
+test('maps rapid pointer actions once', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
   match.addEventListener(matchCommandEventName, (event) =>
@@ -178,30 +169,15 @@ test('maps pointer and keyboard actions once', async () => {
   ).toHaveLength(1);
 
   const current = match.snapshot!;
-  const keyboardCard = current.sharedCards.find(
+  const pointerCard = current.sharedCards.find(
     (card) => card.action === 'select',
   );
-  expect(keyboardCard).toBeDefined();
-  const editingInput = document.createElement('input');
-  document.body.append(editingInput);
-  editingInput.focus();
-  editingInput.dispatchEvent(
-    new KeyboardEvent('keydown', {
-      key: keyboardCard!.shortcut,
-      bubbles: true,
-    }),
-  );
-  expect(
-    commands.filter((event) => event.detail.type === 'select-phrase'),
-  ).toHaveLength(0);
-  editingInput.remove();
-
-  window.dispatchEvent(
-    new KeyboardEvent('keydown', { key: keyboardCard!.shortcut }),
-  );
-  window.dispatchEvent(
-    new KeyboardEvent('keydown', { key: keyboardCard!.shortcut }),
-  );
+  expect(pointerCard).toBeDefined();
+  const button = match.querySelector<HTMLButtonElement>(
+    `[data-card-id="${pointerCard!.reference!.cardId}"]`,
+  )!;
+  button.click();
+  button.click();
   await match.updateComplete;
 
   const selections = commands.filter(
@@ -209,49 +185,11 @@ test('maps pointer and keyboard actions once', async () => {
   );
   expect(selections).toHaveLength(1);
   expect(selections[0]!.detail.payload).toEqual({
-    card: keyboardCard!.reference,
+    card: pointerCard!.reference,
   });
   await vi.waitFor(() =>
     expect(match.snapshot?.revision).toBeGreaterThan(current.revision),
   );
-  const nextSnapshot = match.snapshot!;
-  const nextCard =
-    nextSnapshot.sharedCards
-      .slice(keyboardCard!.slotIndex + 1)
-      .find((card) => card.action) ??
-    nextSnapshot.sharedCards
-      .slice(0, keyboardCard!.slotIndex)
-      .toReversed()
-      .find((card) => card.action) ??
-    nextSnapshot.privateCards.find((card) => card.action);
-  if (nextCard?.reference) {
-    await vi.waitFor(() =>
-      expect(document.activeElement?.getAttribute('data-card-id')).toBe(
-        nextCard.reference!.cardId,
-      ),
-    );
-  }
-  expect(match.querySelector('.card-shortcut:not([hidden])')).not.toBeNull();
-});
-
-test('blocks the comeback shortcut while a command is pending', async () => {
-  const match = await startMatch();
-  match.addEventListener(
-    matchCommandEventName,
-    (event) => event.stopPropagation(),
-    { once: true },
-  );
-  const redraw = match.querySelector<HTMLButtonElement>(
-    '.match-actions button:first-child',
-  )!;
-
-  redraw.click();
-  await match.updateComplete;
-  expect(redraw.disabled).toBe(true);
-
-  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'c' }));
-  await match.updateComplete;
-  expect(match.querySelector('[role="dialog"]')).toBeNull();
 });
 
 test('a wrong card is chosen immediately as a grammar mistake', async () => {
@@ -261,7 +199,7 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
     commands.push(event),
   );
   const wrong = match.querySelector<HTMLButtonElement>(
-    '[data-card-state="legal"][aria-label*="Role predicate"]',
+    '[data-role="predicate"] [data-card-state="legal"]',
   )!;
 
   expect(wrong).not.toBeNull();
@@ -281,7 +219,7 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   expect(match.querySelector('.action-fault')).toBeNull();
 });
 
-test('announces 10 and 5 seconds and expires one 15-second turn', async () => {
+test('updates and expires one 15-second turn', async () => {
   vi.useFakeTimers();
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
@@ -291,12 +229,10 @@ test('announces 10 and 5 seconds and expires one 15-second turn', async () => {
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
-  expect(match.textContent).toContain('Ten seconds remain.');
   expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
-  expect(match.textContent).toContain('Five seconds remain.');
   expect(match.querySelector('[data-timer="5"]')).not.toBeNull();
 
   await vi.advanceTimersByTimeAsync(5_000);
@@ -306,7 +242,43 @@ test('announces 10 and 5 seconds and expires one 15-second turn', async () => {
   ).toHaveLength(1);
 });
 
+test('conceals a paused match and resumes from the exact timer value', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  const revision = match.snapshot!.revision;
+
+  await vi.advanceTimersByTimeAsync(5_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+
+  expect(match.querySelector('[data-interruption="paused"]')).not.toBeNull();
+  expect(match.querySelector('.match-screen')).toBeNull();
+  expect(match.querySelector('.phrase-card')).toBeNull();
+  expect(match.querySelector('[data-timer]')).toBeNull();
+  expect(match.textContent).not.toContain(match.snapshot!.activePlayerName);
+
+  await vi.advanceTimersByTimeAsync(5_000);
+  match.querySelector<HTMLButtonElement>('button')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+
+  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+  expect(match.snapshot!.revision).toBe(revision);
+
+  await vi.advanceTimersByTimeAsync(1_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="9"]')).not.toBeNull();
+});
+
 async function startMatch(): Promise<GrandTransitionMatch> {
+  await page.viewport(1280, 720);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
     'grand-transition-app',
@@ -322,8 +294,5 @@ async function startMatch(): Promise<GrandTransitionMatch> {
   ) as GrandTransitionMatch;
   await match.updateComplete;
   expect(match.snapshot?.round).toBe(1);
-  await vi.waitFor(() =>
-    expect(document.activeElement).toBe(match.querySelector('h1')),
-  );
   return match;
 }
