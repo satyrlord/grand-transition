@@ -34,8 +34,9 @@ complete an approved specification.
   Do not present unsupported allegations about a real person.
 - The game is political satire for adults aged 18 and older. Phrase cards do
   not carry individual age-rating metadata.
-- The minimum viable product (MVP) is English-first and localization-ready.
-  English grammar and prose must not enter locale-neutral rules.
+- The interface is always English. Localization applies only to grammar,
+  phrase semantics, constructed sentences, and speech content. Localized
+  grammar and phrase prose must not enter locale-neutral rules.
 - The pure deterministic reducer owns game truth. Lit is view-only. Content is
   data-driven and validated. Runtime network calls are prohibited.
 - Readability has priority over spectacle. The player must understand the turn,
@@ -46,9 +47,10 @@ complete an approved specification.
 - Online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards,
   chat, servers, live-service systems, public content sharing, blockchain,
   tokens, and real-money purchases are out of scope.
-- Post-MVP candidates include additional content, Romanian localization,
-  controller support, local content packs, recorded voice, replays, and local
-  simulation tools. Do not implement them without a new approved specification.
+- Post-MVP candidates include additional content, Romanian grammar and phrase
+  localization, controller support, local content packs, recorded voice,
+  replays, and local simulation tools. Do not implement them without a new
+  approved specification.
 
 ## Delivery rules
 

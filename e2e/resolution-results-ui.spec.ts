@@ -204,10 +204,12 @@ async function executeDraftAction(
       return;
     }
     case 'commit-sentence':
-      await page.getByRole('button', { name: 'End sentence' }).click();
+      await page.getByRole('button', { name: 'End', exact: true }).click();
       return;
     case 'redraw-hand':
-      await page.getByRole('button', { name: 'Redraw hand' }).click();
+      await page
+        .getByRole('button', { name: 'Reshuffle private phrases' })
+        .click();
       return;
     case 'select-comeback':
       await page.getByRole('button', { name: 'Comeback' }).click();

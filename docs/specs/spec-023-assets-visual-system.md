@@ -13,13 +13,20 @@ scene. Add core reactions, ambience, and transitions.
 
 The art combines editorial caricature, painted theatre, late-1990s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
-modern overlays. The approved static match mock is the hierarchy and material
-north star. Keep the painted stage as authored art and rebuild every game value,
-phrase, and control as HTML components. Use original characters and product
-truth. Do not copy another game's brands, names, unsupported actions, or
-rasterized interface text. Avoid generic dashboard cards and stock fantasy
-frames. Use a dark institutional palette with navy, charcoal, paper, oxide red,
-brass, television blue, and cream. Tricolor is a sparse accent.
+modern overlays. Use an integrated arena composition. One authored scene fills
+the play field, opponents face each other at the sides, status frames the top,
+speech spans the confrontation, sentence construction owns the center, and
+secondary actions use the perimeter. Do not put the scene above a separate
+three-column dashboard.
+
+This structure is adapted from user-supplied original-game references. It is a
+composition and interaction precedent, not a parity target. Keep the painted
+stage as authored art and rebuild every game value, phrase, and control as HTML
+components. Use original characters and product truth. Do not copy another
+game's art, brands, names, exact ornament, fonts, proportions, unsupported
+actions, or rasterized interface text. Avoid generic dashboard cards and stock
+fantasy frames. Use a dark institutional palette with navy, charcoal, paper,
+oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
 Every character is human. Animal words in names, titles, insults, or metaphors
 must not produce animal anatomy. Character masters and runtime variants reject
@@ -33,12 +40,53 @@ into one scene. Milestone 023 replaces or promotes these interim files through
 the approved manifest and variant pipeline without changing the
 selected-character contract.
 
-Use a condensed civic-serif display voice for broadcast headings and major
-actions, a compact condensed sans face for tactical labels, a readable record
-serif for phrase text, and monospace only for timer data. Phrase
-cards use low-contrast aged-paper material. Action plates use coherent authored
-icons and brass framing. No content-bearing text is smaller than 11 pixels at
-the shared desktop viewport.
+The redesign must select exactly four self-hosted sans-serif font families. The
+present Barlow Condensed, Cormorant SC, Georgia, and system-monospace
+combination is implementation evidence, not visual authority.
+
+1. Poiret One Regular 400 is the selected Art Deco feature-display family. It
+   owns the game title, main menu, character names, Pause, End, Comeback, and
+   other decisive features. Use `0.06em` tracking. Apply a responsive 0.9
+   through 1.4-pixel synthetic stroke to large feature text and a 0.65 through
+   0.95-pixel stroke to major actions. This synthetic emboldening is an approved
+   exception because Poiret One has no bold master. Use it only at medium and
+   large sizes. Fascinate and Fascinate Inline are permanently disqualified. Do
+   not propose, test, install, or use either family.
+2. Nunito Black 900 is the selected rounded speech family. It owns delivered
+   speech, the current construction, and sentence previews. Render it in visual
+   uppercase while preserving the authored case for source text, accessibility,
+   and speech output. Fredoka Bold is rejected. Do not restore it without new
+   explicit approval.
+3. Rubik is the selected rounded interface family. Use regular 400, semibold
+   600, and bold 700. It owns phrase lists, private phrases, setup fields,
+   labels, validation, disabled reasons, score explanations, results,
+   statistics, tutorial text, privacy handovers, and compatibility text. Its
+   tabular figures own Pride, damage, scores, rounds, and statistics.
+4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
+   the timer only. Do not use it for any other number or text.
+
+The implementation uses `@fontsource/poiret-one`,
+`@fontsource-variable/nunito`, `@fontsource-variable/rubik`, and
+`@fontsource/share-tech-mono`. Each package includes the SIL Open Font License
+1.1. Poiret One uses its Basic Latin subset. Nunito and Rubik load Basic Latin
+and Latin Extended coverage through Fontsource subset declarations. The feature,
+speech, and interface metric fallback is Arial and then sans-serif. The timer
+fallback is Cascadia Mono, Consolas, and then monospace.
+
+Verify all four selected families together in the built arena. The
+Art Deco feature family needs English UI coverage only. The timer family needs
+digits and timer punctuation only. The speech and interface families must cover
+localized grammar and phrase content, including Romanian diacritics. Test
+uppercase and mixed-case English names, the longest localized speech and
+phrase, digits, punctuation, disabled text, and the 1024 by 720 viewport. Except
+for the approved Poiret One treatment, reject a family if it needs condensed
+spacing, outline effects, synthetic weights, or text smaller than 11 pixels to
+fit. Record the selected families, weights, licenses, metric fallbacks, and use
+rules in this specification and the design record before implementation is
+complete. The wide speech bubble uses light paper. The compact phrase path uses
+a near-black broadcast plate, thin oxblood row rules, and Rubik phrase text
+without visible role, ownership, weakness, disabled-reason, or hint metadata.
+Action plates use coherent authored icons and framing.
 
 Human characters use three-quarter opponent-facing silhouettes, layered parts, at
 least five expressions and six poses, plus idle, selection, thinking, delivery,
@@ -95,6 +143,11 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 - **AC-023-05:** All supported landscape variants keep declared focal regions
   visible and meet CLS limits.
 - **AC-023-06:** Motion procedures meet all timing and pointer requirements.
+- **AC-023-07:** The approved font comparison covers all four exclusive roles,
+  specified content, and viewports. The selected local WOFF2 files, licenses,
+  weights, metric fallbacks, and use rules are recorded, and fallback rendering
+  causes no hidden or clipped text. Visual uppercase does not change source,
+  accessible, or spoken sentence text.
 
 ## Impeccable UI validation
 

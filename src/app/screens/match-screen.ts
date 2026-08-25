@@ -306,7 +306,8 @@ export class GrandTransitionMatch extends LitElement {
     }
     const first = this.snapshot.players[0];
     const second = this.snapshot.players[1];
-    const timerLabel = msg(`${this.remainingSeconds ?? 15} seconds`);
+    const timerValue = this.remainingSeconds ?? 15;
+    const timerLabel = msg(`${timerValue} seconds`);
     const hasRecentDamage = Object.values(
       this.snapshot.reaction.playerDamage,
     ).some((damage) => damage > 0);
@@ -327,99 +328,91 @@ export class GrandTransitionMatch extends LitElement {
             draggable="false"
           />
           <header class="match-status-rail">
-            <div class="match-turn-heading">
-              <h1 id="match-title" tabindex="-1">
-                ${msg(`Round ${this.snapshot.round} — ${this.snapshot.activePlayerName}'s turn`)}
-              </h1>
+            <div class="match-header-controls">
+              <button type="button" class="match-pause" @click=${this.pause}>
+                ${msg('Pause')}
+              </button>
+              <dl class="match-facts">
+                <div class="timer-fact" data-timer=${timerValue}>
+                  <dt class="visually-hidden">${msg('Timer')}</dt>
+                  <dd aria-label=${timerLabel}>${timerValue}</dd>
+                </div>
+              </dl>
+              <div class="match-turn-heading">
+                <h1 id="match-title" tabindex="-1">
+                  <span>${msg(`Round ${this.snapshot.round}`)}</span>
+                  <span class="visually-hidden">
+                    ${msg(`${this.snapshot.activePlayerName}'s turn`)}
+                  </span>
+                </h1>
+              </div>
             </div>
-            <dl class="match-facts">
-              <div>
-                <dt>${msg('Round')}</dt>
-                <dd>${this.snapshot.round}</dd>
-              </div>
-              <div class="timer-fact" data-timer=${this.remainingSeconds ?? 15}>
-                <dt>${msg('Timer')}</dt>
-                <dd>${timerLabel}</dd>
-              </div>
-            </dl>
-            <button type="button" class="match-pause" @click=${this.pause}>
-              ${msg('Pause')}
-            </button>
           </header>
 
           <section class="match-stage" aria-label=${msg('Public chamber')}>
             ${this.renderPlayer(first, 'red')}
-            <div class="reaction-docket">
-              <div class="reaction-copy">
-                <h2>${this.snapshot.sceneName}</h2>
-                <p>${this.snapshot.reaction.label}</p>
-                ${
-                  hasRecentDamage
-                    ? html`<dl>
-                        <div>
-                          <dt>${first.characterName}</dt>
-                          <dd>
-                            ${
-                              this.snapshot.reaction.playerDamage[
-                                first.playerId
-                              ] ?? 0
-                            }
-                            ${msg('damage')}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt>${second.characterName}</dt>
-                          <dd>
-                            ${
-                              this.snapshot.reaction.playerDamage[
-                                second.playerId
-                              ] ?? 0
-                            }
-                            ${msg('damage')}
-                          </dd>
-                        </div>
-                      </dl>`
-                    : nothing
-                }
-              </div>
-            </div>
             ${this.renderPlayer(second, 'blue')}
           </section>
-        </div>
 
-        <section class="sentence-ledger" aria-labelledby="sentence-title">
-          <div>
-            <h2 id="sentence-title">${msg('Current sentence')}</h2>
-            <p class="sentence-preview">
+          <section
+            class="sentence-ledger"
+            data-speaker-side=${first.isActive ? 'red' : 'blue'}
+            aria-labelledby="sentence-title"
+          >
+            <h2 id="sentence-title" class="visually-hidden">
+              ${msg('Current sentence')}
+            </h2>
+            <p class="sentence-preview" aria-live="polite">
               ${this.previewText ?? this.snapshot.sentenceText}
             </p>
-          </div>
-          <p class="sentence-state">
-            ${
-              this.snapshot.sentenceComplete
-                ? msg('Sentence ready — end it or keep building')
-                : msg('Choose a phrase or end the sentence')
-            }
-          </p>
-        </section>
+            <p class="sentence-state visually-hidden">
+              ${
+                this.snapshot.sentenceComplete
+                  ? msg('Sentence ready — end it or keep building')
+                  : msg('Choose a phrase or end the sentence')
+              }
+            </p>
+          </section>
 
-        <section class="draft-table" aria-label=${msg('Phrase draft')}>
-          <div class="lower-draft">
-            <section class="private-hand" aria-labelledby="private-hand-title">
-              <div class="private-hand-heading">
-                <h2 id="private-hand-title">${msg('Private hand')}</h2>
-                <p>${this.snapshot.activePlayerName}</p>
-              </div>
-              <ol>
-                ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
-              </ol>
-            </section>
+          ${
+            hasRecentDamage
+              ? html`<aside class="reaction-docket" aria-live="polite">
+                  <p>${this.snapshot.reaction.label}</p>
+                  <dl>
+                    <div>
+                      <dt>${first.characterName}</dt>
+                      <dd>
+                        ${
+                          this.snapshot.reaction.playerDamage[first.playerId] ??
+                          0
+                        }
+                        ${msg('damage')}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>${second.characterName}</dt>
+                      <dd>
+                        ${
+                          this.snapshot.reaction.playerDamage[
+                            second.playerId
+                          ] ?? 0
+                        }
+                        ${msg('damage')}
+                      </dd>
+                    </div>
+                  </dl>
+                </aside>`
+              : nothing
+          }
 
+          <section class="draft-table" aria-label=${msg('Phrase draft')}>
             <section
               class="common-phrases"
               aria-labelledby="common-phrases-title"
             >
-              <h2 id="common-phrases-title">${msg('Common phrases')}</h2>
+              <h2 id="common-phrases-title" class="visually-hidden">
+                ${msg('Common phrases')}
+              </h2>
               <ol
                 class="shared-board"
                 aria-label=${msg('Nine common phrase slots')}
@@ -428,24 +421,50 @@ export class GrandTransitionMatch extends LitElement {
               </ol>
             </section>
 
-            <nav class="match-actions" aria-label=${msg('Turn actions')}>
+            <section
+              class="private-hand"
+              data-side=${first.isActive ? 'red' : 'blue'}
+              aria-labelledby="private-hand-title"
+            >
+              <h2 id="private-hand-title" class="visually-hidden">
+                ${msg(`${this.snapshot.activePlayerName}'s private phrases`)}
+              </h2>
+              <div class="private-hand-controls">
+                <ol>
+                  ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
+                </ol>
+                <button
+                  type="button"
+                  class="action-reshuffle"
+                  aria-label=${msg(
+                    this.snapshot.actions.redrawUsed
+                      ? 'Reshuffle used'
+                      : 'Reshuffle private phrases',
+                  )}
+                  ?disabled=${
+                    !this.snapshot.actions.canRedraw || this.commandPending
+                  }
+                  @click=${this.redraw}
+                >
+                  ${this.actionIcon()}
+                </button>
+              </div>
+            </section>
+
+            <nav
+              class="match-actions"
+              data-side=${first.isActive ? 'red' : 'blue'}
+              aria-label=${msg('Turn actions')}
+            >
               <button
                 type="button"
-                class="action-secondary"
+                class="action-primary"
                 ?disabled=${
-                  !this.snapshot.actions.canRedraw || this.commandPending
+                  !this.snapshot.actions.canCommit || this.commandPending
                 }
-                @click=${this.redraw}
+                @click=${this.commit}
               >
-                ${this.actionIcon('redraw')}
-                <span class="action-copy">
-                  <span class="action-title">
-                    ${msg(this.snapshot.actions.redrawUsed ? 'Redraw used' : 'Redraw hand')}
-                  </span>
-                  <span class="action-detail"
-                    >${msg('Draw two new cards')}</span
-                  >
-                </span>
+                <span class="action-title">${msg('End')}</span>
               </button>
               <button
                 type="button"
@@ -457,39 +476,11 @@ export class GrandTransitionMatch extends LitElement {
                   this.snapshot.actions.comebackTiers.length === 0
                 }
               >
-                ${this.actionIcon('comeback')}
-                <span class="action-copy">
-                  <span class="action-title"> ${msg('Comeback')} </span>
-                  <span class="action-detail"
-                    >${msg('Use the strongest filled tier')}</span
-                  >
-                </span>
-              </button>
-              <button
-                type="button"
-                class="action-primary"
-                ?disabled=${
-                  !this.snapshot.actions.canCommit || this.commandPending
-                }
-                @click=${this.commit}
-              >
-                ${this.actionIcon('deliver')}
-                <span class="action-copy">
-                  <span class="action-title"> ${msg('End sentence')} </span>
-                  <span class="action-detail"
-                    >${msg('Deliver the exchange')}</span
-                  >
-                </span>
+                <span class="action-title">${msg('Comeback')}</span>
               </button>
             </nav>
-          </div>
-        </section>
-
-        <footer class="match-footer" aria-label=${msg('Broadcast status')}>
-          <span>${msg('Channel 3')}</span>
-          <span>${this.snapshot.sceneName}</span>
-          <span>${msg('Truth, edited for time')}</span>
-        </footer>
+          </section>
+        </div>
       </main>
     `;
   }
@@ -507,12 +498,6 @@ export class GrandTransitionMatch extends LitElement {
         aria-label=${`${player.characterName}, ${player.pride} Pride, ${player.isActive ? 'active turn' : 'waiting'}`}
       >
         <header class="player-hud">
-          <div class="player-name-line">
-            <h2>${compactCharacterName(player.characterName)}</h2>
-            <span class="player-turn-status" ?hidden=${!player.isActive}
-              >${msg('Your turn')}</span
-            >
-          </div>
           <div class="player-health">
             <span class="player-health-label">${msg('Pride')}</span>
             <meter
@@ -522,6 +507,12 @@ export class GrandTransitionMatch extends LitElement {
               aria-label=${`${player.characterName}: ${player.pride} Pride`}
             ></meter>
             <strong aria-hidden="true">${player.pride}</strong>
+          </div>
+          <div class="player-name-line">
+            <h2>${compactCharacterName(player.characterName)}</h2>
+            <span class="player-turn-status" ?hidden=${!player.isActive}
+              >${msg('Your turn')}</span
+            >
           </div>
         </header>
         <div class="character-frame" aria-hidden="true">
@@ -534,36 +525,47 @@ export class GrandTransitionMatch extends LitElement {
             draggable="false"
           />
         </div>
-        <blockquote class="player-sentence">
-          ${
-            player.sentence ||
-            (player.isActive
-              ? msg('Preparing the next clause.')
-              : msg('No sentence on record.'))
-          }
-        </blockquote>
+        ${
+          player.isActive
+            ? nothing
+            : html`<blockquote
+                class="player-sentence player-sentence--waiting"
+                aria-label=${msg(`${player.characterName} is waiting`)}
+              >
+                <span aria-hidden="true">…</span>
+              </blockquote>`
+        }
       </article>
     `;
   }
 
   private renderCard(card: MatchCardView): TemplateResult {
     const empty = !card.reference;
-    const visibleDetail =
-      card.disabledReason ??
-      (card.knownWeaknesses.length > 0
-        ? msg(`Weakness: ${card.knownWeaknesses.join(', ')}`)
-        : null);
+    const details = [
+      card.role,
+      card.ownership,
+      card.stateLabel,
+      card.disabledReason,
+      card.knownWeaknesses.length > 0
+        ? `Weakness: ${card.knownWeaknesses.join(', ')}`
+        : null,
+    ].filter((detail): detail is string => Boolean(detail));
+    const accessibleLabel = empty
+      ? msg(`Phrase slot ${card.slotIndex + 1}: ${card.stateLabel}`)
+      : `${card.text}. ${details.join('. ')}`;
+
     return html`
       <li
         class="phrase-slot phrase-slot--${card.state}"
         data-slot=${card.slotIndex + 1}
         data-role=${card.role ?? 'empty'}
+        data-card-state=${card.state}
       >
         ${
           empty
             ? html`<div class="phrase-card phrase-card--empty">
-                <strong>${card.stateLabel}</strong>
-                <span>${msg('Empty docket')}</span>
+                <span class="visually-hidden">${accessibleLabel}</span>
+                <span aria-hidden="true">&nbsp;</span>
               </div>`
             : html`<button
                 type="button"
@@ -571,50 +573,28 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-id=${card.reference!.cardId}
                 data-card-source=${card.reference!.source}
                 data-card-state=${card.state}
+                aria-label=${accessibleLabel}
                 ?disabled=${card.action === null || this.commandPending}
                 @pointerenter=${() => this.preview(card)}
                 @pointerleave=${this.clearPreview}
+                @focus=${() => this.preview(card)}
+                @blur=${this.clearPreview}
                 @click=${() => this.activateCard(card)}
               >
-                <span class="card-topline">
-                  <span class="card-role">${card.role}</span>
-                </span>
                 <strong class="card-phrase">${card.text}</strong>
-                <span class="card-bottomline">
-                  <span>${card.ownership}</span>
-                  <span class="card-state">${card.stateLabel}</span>
-                </span>
-                ${
-                  visibleDetail
-                    ? html`<span class="card-weakness">${visibleDetail}</span>`
-                    : nothing
-                }
               </button>`
         }
       </li>
     `;
   }
 
-  private actionIcon(
-    action: 'comeback' | 'deliver' | 'redraw',
-  ): TemplateResult {
-    const paths = {
-      redraw: svg`
-        <path d="M5 8a7 7 0 0 1 12-2l2 2" />
-        <path d="M19 4v4h-4" />
-        <path d="M19 16a7 7 0 0 1-12 2l-2-2" />
-        <path d="M5 20v-4h4" />
-      `,
-      comeback: svg`
-        <path d="M12 3l7 3v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z" />
-        <path d="M13 7l-4 6h3l-1 4 4-6h-3z" />
-      `,
-      deliver: svg`
-        <path d="M4 10v4l11 4V6z" />
-        <path d="M15 9l4-2v10l-4-2" />
-        <path d="M7 15l1.5 5h3L10 16" />
-      `,
-    } as const;
+  private actionIcon(): TemplateResult {
+    const paths = svg`
+      <path d="M5 8a7 7 0 0 1 12-2l2 2" />
+      <path d="M19 4v4h-4" />
+      <path d="M19 16a7 7 0 0 1-12 2l-2-2" />
+      <path d="M5 20v-4h4" />
+    `;
     return svg`
       <svg
         class="action-icon"
@@ -622,7 +602,7 @@ export class GrandTransitionMatch extends LitElement {
         aria-hidden="true"
         focusable="false"
       >
-        ${paths[action]}
+        ${paths}
       </svg>
     `;
   }

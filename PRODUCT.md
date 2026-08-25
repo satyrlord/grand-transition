@@ -42,10 +42,11 @@ Private hotseat content must remain private during handovers.
 
 ## Capabilities and Constraints
 
-- The game is English-first and localization-ready.
+- The interface is always English. Localization applies only to grammar,
+  phrase semantics, constructed sentences, and speech content.
 - A pure deterministic reducer owns game truth. Lit is view-only.
-- Content is data-driven. Interface prose and grammar phrases have separate
-  owners.
+- Content is data-driven. English interface prose and localizable grammar and
+  phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
 - The implemented scope includes Milestones 001 through 017: the title, setup,
@@ -69,9 +70,10 @@ works, or unsupported claims about real people.
 ## Evidence on Hand
 
 The approved specifications under `docs/specs/` are the only product and
-implementation authority. The untracked `tmp/` prototype and concept image are
-tone evidence only. No final production art, testimonials, customer claims, or
-benchmarks exist.
+implementation authority. Two untracked original-game screenshots under
+`tmp/` are composition and interaction references only. They are not product
+assets or layout specifications. No final production art, testimonials,
+customer claims, or benchmarks exist.
 
 ## Product Principles
 

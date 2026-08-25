@@ -116,9 +116,9 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 45 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(45);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(30);
+  test('loads 115 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(115);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(100);
     expect(phraseCardCatalog.characterPhraseIds).toEqual({
       'red-folded-chairman': [
         'national-salvation-committee',
@@ -144,12 +144,86 @@ describe('content schemas', () => {
     });
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(45);
+    ).toHaveLength(115);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
       )?.characterIds,
     ).toEqual(['red-folded-chairman']);
+  });
+
+  test('keeps the 100-card common corpus at its approved role totals', () => {
+    const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
+      phraseCardCatalog.commonPhraseIds.includes(phrase.id),
+    );
+    const roleCounts = Object.fromEntries(
+      [
+        'noun',
+        'verb',
+        'predicate',
+        'conjunction',
+        'ending',
+        'continuation',
+      ].map((role) => [
+        role,
+        commonPhrases.filter((phrase) => phrase.role === role).length,
+      ]),
+    );
+
+    expect(roleCounts).toEqual({
+      noun: 30,
+      verb: 24,
+      predicate: 20,
+      conjunction: 10,
+      ending: 11,
+      continuation: 5,
+    });
+  });
+
+  test('includes the sourced during-the-night ending without changing the corpus total', () => {
+    const phrase = phraseCardCatalog.phrases.find(
+      (candidate) => candidate.id === 'under-the-national-banner',
+    );
+
+    expect(phrase).toMatchObject({
+      role: 'ending',
+      tags: ['evidence', 'credibility'],
+      rarity: 'rare',
+      finisherBonus: 4,
+    });
+    expect(phraseCardCatalog.englishMessages[phrase!.textKey]).toBe(
+      'during the night, as thieves',
+    );
+    expect(phrase?.editorialReview.notes).toMatch(
+      /2017 Romanian civic-protest slogan/iu,
+    );
+    expect(phraseCardCatalog.commonPhraseIds).toContain(
+      'under-the-national-banner',
+    );
+  });
+
+  test('ships each game-appropriate conjunction selected for the corpus', () => {
+    const commonConjunctions = phraseCardCatalog.phrases.filter(
+      (phrase) =>
+        phrase.role === 'conjunction' &&
+        phraseCardCatalog.commonPhraseIds.includes(phrase.id),
+    );
+    const connectorCounts = Object.fromEntries(
+      ['and', 'but', 'because', 'yet', 'so', 'for'].map((kind) => [
+        kind,
+        commonConjunctions.filter((phrase) => phrase.connectorKind === kind)
+          .length,
+      ]),
+    );
+
+    expect(connectorCounts).toEqual({
+      and: 2,
+      but: 2,
+      because: 2,
+      yet: 2,
+      so: 1,
+      for: 1,
+    });
   });
 
   test('records a Romanian research rationale for every shipped phrase card', () => {
@@ -415,9 +489,12 @@ describe('content schemas', () => {
 
     const missingCharacterMembership = cloneCatalog();
     missingCharacterMembership.characters[0]!.characterPhraseIds = [];
+    const characterPhraseIndex = missingCharacterMembership.phrases.findIndex(
+      (phrase) => phrase.id === 'national-salvation-committee',
+    );
     expectFailure(
       missingCharacterMembership,
-      'phrases.30.characterIds.0',
+      `phrases.${characterPhraseIndex}.characterIds.0`,
       /Add phrase "national-salvation-committee" to character/iu,
     );
 

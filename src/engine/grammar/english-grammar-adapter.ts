@@ -21,7 +21,7 @@ export type EnglishGrammarRole = Extract<
 export type EnglishGrammarPhrase = Readonly<{
   id: string;
   role: Phrase['role'];
-  connectorKind?: 'and' | 'because' | 'but' | null;
+  connectorKind?: 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | null;
   grammaticalNumber?: GrammaticalNumber | null;
   defaultText: string;
   singularText: string;
@@ -41,7 +41,7 @@ export type EnglishGrammarInput = Readonly<{
 export type EnglishRenderedPhrase = Readonly<{
   phraseId: string;
   role: Phrase['role'];
-  connectorKind: 'and' | 'because' | 'but' | null;
+  connectorKind: 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | null;
   grammaticalNumber: GrammaticalNumber | null;
   text: string;
 }>;
@@ -85,7 +85,7 @@ type ParseContext = {
   subjectNounCount: number;
   hasCompleteClause: boolean;
   conjunctionFromSubject: boolean;
-  becauseAwaitingSubject: boolean;
+  connectorAwaitingSubject: boolean;
   frontBecausePending: boolean;
   completedWithObjectVerb: boolean;
   conjunctionAfterObjectVerb: boolean;
@@ -147,7 +147,7 @@ export const englishGrammarAdapter: GrammarAdapter<
       subjectNounCount: 0,
       hasCompleteClause: false,
       conjunctionFromSubject: false,
-      becauseAwaitingSubject: false,
+      connectorAwaitingSubject: false,
       frontBecausePending: false,
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
@@ -221,7 +221,7 @@ function transition(
       state: 'SUBJECT_READY',
       subjectNumber: phrase.grammaticalNumber ?? 'singular',
       subjectNounCount: 1,
-      becauseAwaitingSubject: false,
+      connectorAwaitingSubject: false,
       frontBecausePending: false,
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
@@ -241,7 +241,7 @@ function transition(
     if (kind === 'because') {
       if (
         (context.state === 'EXPECT_SUBJECT' &&
-          !context.becauseAwaitingSubject &&
+          !context.connectorAwaitingSubject &&
           !context.conjunctionFromSubject) ||
         context.state === 'EXPECT_AFTER_CONJUNCTION' ||
         context.state === 'CLAUSE_COMPLETE'
@@ -251,7 +251,7 @@ function transition(
           state: 'EXPECT_SUBJECT',
           subjectNounCount: 0,
           conjunctionFromSubject: false,
-          becauseAwaitingSubject: true,
+          connectorAwaitingSubject: true,
           completedWithObjectVerb: false,
           conjunctionAfterObjectVerb: false,
           compoundObjectComplete: false,
@@ -273,7 +273,7 @@ function transition(
     }
     if (
       context.state === 'CLAUSE_COMPLETE' &&
-      (kind === 'and' || kind === 'but')
+      (kind === 'and' || kind === 'but' || kind === 'yet')
     ) {
       return {
         ...context,
@@ -281,6 +281,22 @@ function transition(
         conjunctionFromSubject: false,
         conjunctionAfterObjectVerb:
           kind === 'and' && context.completedWithObjectVerb,
+        compoundObjectComplete: false,
+      };
+    }
+    if (
+      (kind === 'for' || kind === 'so') &&
+      context.state === 'CLAUSE_COMPLETE' &&
+      !context.frontBecausePending
+    ) {
+      return {
+        ...context,
+        state: 'EXPECT_SUBJECT',
+        subjectNounCount: 0,
+        conjunctionFromSubject: false,
+        connectorAwaitingSubject: true,
+        completedWithObjectVerb: false,
+        conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
       };
     }
@@ -299,7 +315,7 @@ function transition(
       subjectNumber: subjectNounCount > 1 ? 'plural' : nounNumber,
       subjectNounCount,
       conjunctionFromSubject: false,
-      becauseAwaitingSubject: false,
+      connectorAwaitingSubject: false,
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
       compoundObjectComplete: false,
@@ -411,7 +427,7 @@ function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
     return ['verb', 'predicate', 'conjunction', 'ending'];
   }
   if (context.state === 'EXPECT_SUBJECT') {
-    return context.conjunctionFromSubject || context.becauseAwaitingSubject
+    return context.conjunctionFromSubject || context.connectorAwaitingSubject
       ? ['noun']
       : nextRolesByState.EXPECT_SUBJECT;
   }
@@ -495,9 +511,16 @@ function requireMessage(locale: GameLocaleBundle, key: string): string {
   return value;
 }
 
-function inferConnectorKind(text: string): 'and' | 'because' | 'but' {
+function inferConnectorKind(
+  text: string,
+): 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' {
+  const connectors = {
+    because: 'because',
+    but: 'but',
+    for: 'for',
+    so: 'so',
+    yet: 'yet',
+  } as const;
   const normalized = text.trim().toLocaleLowerCase('en');
-  if (normalized === 'but') return 'but';
-  if (normalized === 'because') return 'because';
-  return 'and';
+  return connectors[normalized as keyof typeof connectors] ?? 'and';
 }

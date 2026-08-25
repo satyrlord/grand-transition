@@ -175,6 +175,60 @@ describe('Hollywood Roast extended grammar', () => {
     },
   );
 
+  test('uses yet as a strong-contrast connector after a complete clause', () => {
+    expect(
+      analyze([
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('chamber-yet'),
+        add('televised-revolution'),
+        add('on-public-television'),
+      ]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+  });
+
+  test.each(['consequence-so', 'explanation-for'])(
+    '%s joins complete clauses and requires a new noun subject',
+    (connector) => {
+      expect(analyze([add(connector)])).toMatchObject({
+        accepted: false,
+        faults: [{ state: 'EXPECT_SUBJECT' }],
+      });
+      expect(
+        analyze([
+          add('national-consensus'),
+          add('before-the-next-election'),
+          add(connector),
+        ]),
+      ).toMatchObject({
+        accepted: true,
+        analysis: { complete: false, nextRoles: ['noun'] },
+      });
+      expect(
+        analyze([
+          add('national-consensus'),
+          add('before-the-next-election'),
+          add(connector),
+          add('televised-revolution'),
+          add('on-public-television'),
+        ]),
+      ).toMatchObject({ accepted: true, analysis: { complete: true } });
+    },
+  );
+
+  test('reaches the during-the-night ending from a complete clause', () => {
+    expect(
+      analyze([
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('under-the-national-banner'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { complete: true, state: 'ENDED', punctuation: '.' },
+    });
+  });
+
   test('a later phrase cannot be appended after an ending', () => {
     expect(
       analyze([

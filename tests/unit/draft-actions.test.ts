@@ -18,6 +18,7 @@ import {
   generatePrivateHand,
   privateHandAvailableCount,
   privateHandCandidateWeight,
+  type PrivateHandGenerationResult,
   type PrivateHandGenerationRequest,
 } from '../../src/engine/private-hand-generation';
 import { englishGameLocale } from '../../src/localization/en-game-locale';
@@ -231,7 +232,7 @@ describe('Hollywood Roast draft actions', () => {
     }
   });
 
-  test('uses the forced connector roll and the 25 percent but replacement', () => {
+  test('uses the forced connector roll and the 25 percent contrast replacement', () => {
     const base = request();
     const handRequest: PrivateHandGenerationRequest = {
       seed: 1,
@@ -265,18 +266,18 @@ describe('Hollywood Roast draft actions', () => {
       handRequest,
       scripted([0.1, 0.25, 0, 0]),
     );
-    expect(butHand).toMatchObject({
-      ok: true,
-      hand: { phraseIds: expect.arrayContaining(['televised-but']) },
-    });
-    expect(andHand).toMatchObject({
-      ok: true,
-      hand: { phraseIds: expect.arrayContaining(['coalition-and']) },
-    });
-    expect(boundaryHand).toMatchObject({
-      ok: true,
-      hand: { phraseIds: expect.arrayContaining(['coalition-and']) },
-    });
+    const connectorKindIn = (result: PrivateHandGenerationResult) => {
+      expect(result.ok).toBe(true);
+      if (!result.ok) return undefined;
+      return sampleContent.phrases.find(
+        (phrase) =>
+          result.hand.phraseIds.includes(phrase.id) &&
+          phrase.role === 'conjunction',
+      )?.connectorKind;
+    };
+    expect(['but', 'yet']).toContain(connectorKindIn(butHand));
+    expect(connectorKindIn(andHand)).toBe('and');
+    expect(connectorKindIn(boundaryHand)).toBe('and');
 
     const restrictedPhrase = {
       ...sampleContent.phrases.find(
@@ -467,12 +468,13 @@ describe('Hollywood Roast draft actions', () => {
   test('redraw replaces both hand cards once without passing the pick', () => {
     const initial = prepared();
     const reservedPhraseIds = new Set(initial.reservedPhraseIds);
-    const redrawn = run(initial, {
+    const redrawCommand = {
       type: 'redraw-hand',
       source: 'user',
       actorId: playerIds[0],
       payload: {},
-    });
+    } as const;
+    const redrawn = run(initial, redrawCommand);
     expect(redrawn.activePlayerId).toBe(playerIds[0]);
     expect(redrawn.playerStates[playerIds[0]]!.redrawUsed).toBe(true);
     expect(redrawn.playerStates[playerIds[0]]!.hand).toHaveLength(2);
@@ -484,6 +486,12 @@ describe('Hollywood Roast draft actions', () => {
     expect(redrawn.reservedPhraseIds).toHaveLength(
       initial.reservedPhraseIds.length + 2,
     );
+    expect(
+      createDraftReducer(context)(redrawn, redrawCommand, seededRandomSource),
+    ).toMatchObject({
+      ok: false,
+      error: { code: 'redraw-already-used' },
+    });
   });
 
   test('a timeout passes the pick while both players are building', () => {

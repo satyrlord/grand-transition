@@ -71,14 +71,15 @@ export function generatePrivateHand(
   const connectors = remaining.filter(
     (candidate) =>
       candidate.phrase.role === 'conjunction' &&
-      candidate.phrase.connectorKind !== 'because',
+      ['and', 'but', 'yet'].includes(candidate.phrase.connectorKind ?? ''),
   );
   if (step.value < 0.25 && connectors.length > 0) {
     step = randomSource.next(seed);
     seed = step.nextSeed;
-    const preferredKind = step.value < 0.25 ? 'but' : 'and';
-    const preferred = connectors.filter(
-      (candidate) => candidate.phrase.connectorKind === preferredKind,
+    const preferredKinds =
+      step.value < 0.25 ? new Set(['but', 'yet']) : new Set(['and']);
+    const preferred = connectors.filter((candidate) =>
+      preferredKinds.has(candidate.phrase.connectorKind ?? ''),
     );
     const pool = preferred.length > 0 ? preferred : connectors;
     step = randomSource.next(seed);

@@ -349,5 +349,799 @@
     "tags": ["restraint", "consistency"],
     "rarity": "uncommon",
     "reviewNotes": "Original Romanian coalition-politics satire. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "public-consultation",
+    "role": "noun",
+    "text": "a public consultation",
+    "tags": ["decorum", "bureaucracy"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["consultation"]
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian public-administration satire about formal consultation. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "reform-calendar",
+    "role": "noun",
+    "text": "a reform calendar",
+    "tags": ["modernity", "consistency"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["reform"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian transition-policy satire about recurring reform schedules. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "televised-debate",
+    "role": "noun",
+    "text": "a televised debate",
+    "tags": ["evidence", "decorum"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["broadcast"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-broadcast satire about studio debate culture. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "party-switch",
+    "role": "noun",
+    "text": "a party switch",
+    "tags": ["consistency", "credibility"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["coalition"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian coalition-politics satire about changes of party alignment. Not a quotation or a claim about a named person. Editorial review complete."
+  },
+  {
+    "id": "municipal-ribbon",
+    "role": "noun",
+    "text": "a municipal ribbon",
+    "tags": ["credibility", "decorum"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["ceremony"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian local-government satire about public opening ceremonies. Not a quotation or a claim about a named project. Editorial review complete."
+  },
+  {
+    "id": "budget-amendment",
+    "role": "noun",
+    "text": "a budget amendment",
+    "tags": ["bureaucracy", "evidence"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["budget"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian parliamentary satire about routine budget procedure. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "transition-archive",
+    "role": "noun",
+    "text": "a transition archive",
+    "tags": ["legacy", "evidence"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["archive"] },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian post-1989 media satire about preserved transition records. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "parliamentary-microphone",
+    "role": "noun",
+    "text": "a parliamentary microphone",
+    "tags": ["decorum", "restraint"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["oratory"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian parliamentary-broadcast satire about televised oratory. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "opinion-poll",
+    "role": "noun",
+    "text": "an opinion poll",
+    "tags": ["evidence", "credibility"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["polling"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian election-media satire about public polling. Not a quotation or a claim about a named poll. Editorial review complete."
+  },
+  {
+    "id": "ministerial-memo",
+    "role": "noun",
+    "text": "a ministerial memo",
+    "tags": ["bureaucracy", "consistency"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["paperwork"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian public-administration satire about internal paperwork. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "coalition-majority",
+    "role": "noun",
+    "text": "a coalition majority",
+    "tags": ["consistency", "legacy"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["coalition"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian coalition-government satire about parliamentary arithmetic. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "campaign-promise",
+    "role": "noun",
+    "text": "a campaign promise",
+    "tags": ["credibility", "consistency"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["campaign"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian election-cycle satire about general campaign language. Not a quotation or a claim about a named person. Editorial review complete."
+  },
+  {
+    "id": "public-procurement-file",
+    "role": "noun",
+    "text": "a public-procurement file",
+    "tags": ["evidence", "bureaucracy"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["procurement"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian public-administration satire about procurement paperwork. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "constitutional-footnote",
+    "role": "noun",
+    "text": "a constitutional footnote",
+    "tags": ["legacy", "evidence"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["procedure"] },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian constitutional-procedure satire. Not a quotation or legal claim. Editorial review complete."
+  },
+  {
+    "id": "regional-development-plan",
+    "role": "noun",
+    "text": "a regional development plan",
+    "tags": ["modernity", "bureaucracy"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["development"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian regional-policy satire about development planning. Not a quotation or a claim about a named plan. Editorial review complete."
+  },
+  {
+    "id": "press-conference-podium",
+    "role": "noun",
+    "text": "a press-conference podium",
+    "tags": ["decorum", "credibility"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["press"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-media satire about formal press events. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "cabinet-reshuffle",
+    "role": "noun",
+    "text": "a cabinet reshuffle",
+    "tags": ["consistency", "modernity"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["cabinet"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian government-cycle satire about cabinet changes. Not a quotation or a claim about a named cabinet. Editorial review complete."
+  },
+  {
+    "id": "televised-apology",
+    "role": "noun",
+    "text": "a televised apology",
+    "tags": ["credibility", "restraint"],
+    "scoreGroups": { "substance": ["media"], "flavour": ["broadcast"] },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian political-broadcast satire about public apologies. Not a quotation or a claim about a named person. Editorial review complete."
+  },
+  {
+    "id": "infrastructure-feasibility-study",
+    "role": "noun",
+    "text": "an infrastructure feasibility study",
+    "tags": ["evidence", "modernity"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["infrastructure"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian infrastructure-delivery satire about planning documents. Not a quotation or a claim about a named project. Editorial review complete."
+  },
+  {
+    "id": "national-strategy",
+    "role": "noun",
+    "text": "a national strategy",
+    "tags": ["legacy", "bureaucracy"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["strategy"] },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian policy-language satire about recurring national strategies. Not a quotation or a claim about a named strategy. Editorial review complete."
+  },
+  {
+    "id": "local-party-office",
+    "role": "noun",
+    "text": "a local party office",
+    "tags": ["legacy", "consistency"],
+    "scoreGroups": { "substance": ["bureaucracy"], "flavour": ["local-power"] },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian local-politics satire about party organization. Not a quotation or a claim about a named party. Editorial review complete."
+  },
+  {
+    "id": "explains",
+    "role": "verb",
+    "text": "explains",
+    "singularText": "explains",
+    "pluralText": "explain",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-debate verb about repeated public explanation. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "revises",
+    "role": "verb",
+    "text": "revises",
+    "singularText": "revises",
+    "pluralText": "revise",
+    "tags": ["consistency", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian policy satire about recurring revisions. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "announces",
+    "role": "verb",
+    "text": "announces",
+    "singularText": "announces",
+    "pluralText": "announce",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-media verb about formal announcements. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "archives",
+    "role": "verb",
+    "text": "archives",
+    "singularText": "archives",
+    "pluralText": "archive",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian transition-record satire about consigning issues to the archive. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "negotiates",
+    "role": "verb",
+    "text": "negotiates",
+    "singularText": "negotiates",
+    "pluralText": "negotiate",
+    "tags": ["restraint", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian coalition-politics verb about routine negotiation. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "commemorates",
+    "role": "verb",
+    "text": "commemorates",
+    "singularText": "commemorates",
+    "pluralText": "commemorate",
+    "tags": ["legacy", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian civic-ceremony verb about public commemoration. Not a quotation or a claim about a named event. Editorial review complete."
+  },
+  {
+    "id": "rebrands",
+    "role": "verb",
+    "text": "rebrands",
+    "singularText": "rebrands",
+    "pluralText": "rebrand",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian transition satire about recurring political rebranding. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "consults",
+    "role": "verb",
+    "text": "consults",
+    "singularText": "consults",
+    "pluralText": "consult",
+    "tags": ["decorum", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian public-administration verb about formal consultation. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "allocates",
+    "role": "verb",
+    "text": "allocates",
+    "singularText": "allocates",
+    "pluralText": "allocate",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian budget-procedure verb about general resource allocation. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "contests",
+    "role": "verb",
+    "text": "contests",
+    "singularText": "contests",
+    "pluralText": "contest",
+    "tags": ["evidence", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian political-debate verb about disputing a public claim or procedure. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "amends",
+    "role": "verb",
+    "text": "amends",
+    "singularText": "amends",
+    "pluralText": "amend",
+    "tags": ["bureaucracy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian parliamentary-procedure verb about amendments. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "promises",
+    "role": "verb",
+    "text": "promises",
+    "singularText": "promises",
+    "pluralText": "promise",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian election-cycle verb about general campaign promises. Not a quotation or a claim about a named person. Editorial review complete."
+  },
+  {
+    "id": "unveils",
+    "role": "verb",
+    "text": "unveils",
+    "singularText": "unveils",
+    "pluralText": "unveil",
+    "tags": ["modernity", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian public-ceremony verb about presenting new plans. Not a quotation or a claim about a named project. Editorial review complete."
+  },
+  {
+    "id": "coordinates",
+    "role": "verb",
+    "text": "coordinates",
+    "singularText": "coordinates",
+    "pluralText": "coordinate",
+    "tags": ["bureaucracy", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian administrative-language verb about institutional coordination. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "audits",
+    "role": "verb",
+    "text": "audits",
+    "singularText": "audits",
+    "pluralText": "audit",
+    "tags": ["evidence", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian public-administration verb about routine audit work. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "redirects",
+    "role": "verb",
+    "text": "redirects",
+    "singularText": "redirects",
+    "pluralText": "redirect",
+    "tags": ["consistency", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian policy satire about changing an administrative course. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "televises",
+    "role": "verb",
+    "text": "televises",
+    "singularText": "televises",
+    "pluralText": "televise",
+    "tags": ["media", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        { "left": ["bureaucracy", "media"], "right": ["bureaucracy", "media"] }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian political-broadcast verb about turning public procedure into television. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "after-the-midnight-news",
+    "role": "predicate",
+    "text": "after the midnight news",
+    "tags": ["media", "credibility"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian television-schedule satire. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "behind-closed-doors",
+    "role": "predicate",
+    "text": "behind closed doors",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian coalition-procedure satire using a general political setting. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "during-budget-season",
+    "role": "predicate",
+    "text": "during budget season",
+    "tags": ["bureaucracy", "consistency"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian parliamentary-calendar satire about budget procedure. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "from-the-government-podium",
+    "role": "predicate",
+    "text": "from the government podium",
+    "tags": ["decorum", "credibility"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-media satire about formal government statements. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "in-the-transition-archive",
+    "role": "predicate",
+    "text": "in the transition archive",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian post-1989 archive satire. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "on-the-campaign-trail",
+    "role": "predicate",
+    "text": "on the campaign trail",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian election-cycle satire about campaigning. Not a quotation or a claim about a named campaign. Editorial review complete."
+  },
+  {
+    "id": "under-the-studio-lights",
+    "role": "predicate",
+    "text": "under the studio lights",
+    "tags": ["media", "decorum"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian political-television satire about studio presentation. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "with-coalition-partners",
+    "role": "predicate",
+    "text": "with coalition partners",
+    "tags": ["consistency", "restraint"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian coalition-government satire about shared procedure. Not a quotation or a claim about named parties. Editorial review complete."
+  },
+  {
+    "id": "without-public-consultation",
+    "role": "predicate",
+    "text": "without public consultation",
+    "tags": ["decorum", "evidence"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian public-administration satire about procedural consultation. Not a quotation or an allegation. Editorial review complete."
+  },
+  {
+    "id": "before-a-confidence-vote",
+    "role": "predicate",
+    "text": "before a confidence vote",
+    "tags": ["consistency", "credibility"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian parliamentary satire about coalition confidence procedure. Not a quotation or a claim about a named vote. Editorial review complete."
+  },
+  {
+    "id": "during-a-press-conference",
+    "role": "predicate",
+    "text": "during a press conference",
+    "tags": ["media", "decorum"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original Romanian political-media satire about press events. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "through-another-reform-cycle",
+    "role": "predicate",
+    "text": "through another reform cycle",
+    "tags": ["modernity", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian transition-policy satire about repeated reform cycles. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "across-county-capitals",
+    "role": "predicate",
+    "text": "across county capitals",
+    "tags": ["bureaucracy", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian local-government satire about nationwide administrative reach. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "beneath-the-national-banner",
+    "role": "predicate",
+    "text": "beneath the national banner",
+    "tags": ["legacy", "decorum"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy", "media"] }],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian civic-ceremony satire using a general national setting. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "mandate-and",
+    "role": "conjunction",
+    "text": "and",
+    "connectorKind": "and",
+    "tags": ["bureaucracy", "legacy"],
+    "rarity": "common",
+    "reviewNotes": "Standard English connector selected for additive Romanian mandate satire. Editorial review complete."
+  },
+  {
+    "id": "studio-but",
+    "role": "conjunction",
+    "text": "but",
+    "connectorKind": "but",
+    "tags": ["media", "decorum"],
+    "rarity": "common",
+    "reviewNotes": "Standard English connector selected for contrast in Romanian studio satire. Editorial review complete."
+  },
+  {
+    "id": "reform-because",
+    "role": "conjunction",
+    "text": "because",
+    "connectorKind": "because",
+    "tags": ["modernity", "evidence"],
+    "rarity": "uncommon",
+    "reviewNotes": "Standard English connector selected for reasons in Romanian reform satire. Editorial review complete."
+  },
+  {
+    "id": "chamber-yet",
+    "role": "conjunction",
+    "text": "yet",
+    "connectorKind": "yet",
+    "tags": ["consistency", "restraint"],
+    "rarity": "uncommon",
+    "reviewNotes": "Standard English connector selected for strong contrast in Romanian parliamentary satire. Editorial review complete."
+  },
+  {
+    "id": "ballot-yet",
+    "role": "conjunction",
+    "text": "yet",
+    "connectorKind": "yet",
+    "tags": ["credibility", "consistency"],
+    "rarity": "rare",
+    "reviewNotes": "Standard English connector selected for strong contrast in Romanian election satire. Editorial review complete."
+  },
+  {
+    "id": "consequence-so",
+    "role": "conjunction",
+    "text": "so",
+    "connectorKind": "so",
+    "tags": ["evidence", "modernity"],
+    "rarity": "uncommon",
+    "reviewNotes": "Standard English connector selected for consequences in Romanian policy satire. Editorial review complete."
+  },
+  {
+    "id": "explanation-for",
+    "role": "conjunction",
+    "text": "for",
+    "connectorKind": "for",
+    "tags": ["evidence", "credibility"],
+    "rarity": "rare",
+    "reviewNotes": "Standard English connector selected for rationale in Romanian debate satire. Editorial review complete."
+  },
+  {
+    "id": "before-the-cameras-return",
+    "role": "ending",
+    "text": "before the cameras return",
+    "tags": ["media", "credibility"],
+    "rarity": "uncommon",
+    "finisherBonus": 2,
+    "reviewNotes": "Original Romanian political-television ending about the broadcast cycle. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "according-to-protocol",
+    "role": "ending",
+    "text": "according to protocol",
+    "tags": ["bureaucracy", "decorum"],
+    "rarity": "common",
+    "finisherBonus": 2,
+    "reviewNotes": "Original Romanian administrative satire about formal protocol. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "with-one-final-amendment",
+    "role": "ending",
+    "text": "with one final amendment",
+    "tags": ["bureaucracy", "consistency"],
+    "rarity": "uncommon",
+    "finisherBonus": 3,
+    "reviewNotes": "Original Romanian parliamentary-procedure ending about amendments. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "until-the-next-reshuffle",
+    "role": "ending",
+    "text": "until the next reshuffle",
+    "tags": ["consistency", "modernity"],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "reviewNotes": "Original Romanian government-cycle ending about cabinet changes. Not a quotation or a claim about a named cabinet. Editorial review complete."
+  },
+  {
+    "id": "for-stability-and-progress",
+    "role": "ending",
+    "text": "for stability and progress",
+    "tags": ["legacy", "restraint"],
+    "rarity": "uncommon",
+    "finisherBonus": 2,
+    "reviewNotes": "Original Romanian transition-discourse ending about broad political themes. Not a quotation or slogan. Editorial review complete."
+  },
+  {
+    "id": "under-the-national-banner",
+    "role": "ending",
+    "text": "during the night, as thieves",
+    "tags": ["evidence", "credibility"],
+    "rarity": "rare",
+    "finisherBonus": 4,
+    "reviewNotes": "Original user-requested English rendering of the documented 2017 Romanian civic-protest slogan \"Noaptea, ca hoții\". Not a quotation from a named person and does not assert a crime by one. Editorial review complete."
+  },
+  {
+    "id": "before-the-microphones-cool",
+    "role": "ending",
+    "text": "before the microphones cool",
+    "tags": ["media", "restraint"],
+    "rarity": "uncommon",
+    "finisherBonus": 3,
+    "reviewNotes": "Original Romanian political-broadcast ending about studio debate. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "pending-further-consultation",
+    "role": "ending",
+    "text": "pending further consultation",
+    "tags": ["bureaucracy", "credibility"],
+    "rarity": "common",
+    "finisherBonus": 2,
+    "reviewNotes": "Original Romanian public-administration ending about procedural delay. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "the-debate-moves-to-commercial",
+    "role": "continuation",
+    "text": "the debate moves to commercial",
+    "tags": ["media", "decorum"],
+    "rarity": "common",
+    "reviewNotes": "Original Romanian television satire about a debate break. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "the-committee-requests-another-session",
+    "role": "continuation",
+    "text": "the committee requests another session",
+    "tags": ["bureaucracy", "restraint"],
+    "rarity": "uncommon",
+    "reviewNotes": "Original Romanian parliamentary-procedure continuation about another meeting. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "the-microphones-stay-live",
+    "role": "continuation",
+    "text": "the microphones stay live",
+    "tags": ["media", "credibility"],
+    "rarity": "rare",
+    "reviewNotes": "Original Romanian political-broadcast continuation about an open studio feed. Not a quotation. Editorial review complete."
   }
 ]
