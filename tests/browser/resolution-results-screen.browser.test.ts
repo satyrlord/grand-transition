@@ -43,7 +43,7 @@ test('renders every ordered sequence step and rule event in DOM text', async () 
     ...screen.querySelectorAll('.construction-phrases li'),
   ].map((item) => item.textContent?.replaceAll(/\s+/gu, ' ').trim());
   expect(phraseSources).toContain('Carried a paper promise');
-  expect(phraseSources).toContain('Active folds');
+  expect(phraseSources).toContain('Active repackages');
   expect(screen.textContent).toContain('Continuation survived');
   expect(screen.textContent).toContain('Continuation broke');
   expect(screen.textContent).toContain('Incomplete construction');
@@ -152,8 +152,8 @@ test('keeps every result label when optional event counts are zero', async () =>
   );
 
   expect(labels).toEqual([
-    'Final score — Civic Fox',
-    'Final score — Brass Peacock',
+    'Final score — Red-Folded Chairman',
+    'Final score — Thunder Tribune',
     'Best insult',
     'Highest damage',
     'Longest valid sentence',
@@ -256,14 +256,14 @@ function resolutionFixture(): ResolutionResultsSnapshot {
     players: [
       {
         playerId: 'player-one',
-        characterName: 'Civic Fox',
-        constructionText: 'Paper promise folds a velvet megaphone.',
+        characterName: 'Red-Folded Chairman',
+        constructionText: 'Paper promise repackages a velvet megaphone.',
         constructionStatus: 'valid',
         constructionStatusLabel: 'Valid complete construction',
         reactionLabel: 'Reaction: The opposition reels under a heavy exchange.',
         phrases: [
           { text: 'a paper promise', source: 'Carried' },
-          { text: 'folds', source: 'Active' },
+          { text: 'repackages', source: 'Active' },
           { text: 'a velvet megaphone', source: 'Active' },
         ],
         terms: [
@@ -312,7 +312,7 @@ function resolutionFixture(): ResolutionResultsSnapshot {
       },
       {
         playerId: 'player-two',
-        characterName: 'Brass Peacock',
+        characterName: 'Thunder Tribune',
         constructionText: 'Before lunch.',
         constructionStatus: 'carried',
         constructionStatusLabel:
@@ -340,7 +340,7 @@ function resolutionFixture(): ResolutionResultsSnapshot {
     outcome:
       'Double knockout recorded. The cliffhanger starts with restored Pride.',
     announcement:
-      'Civic Fox: Pride 74 to 32, charge 60 to 42. Brass Peacock: Pride 52 to 28, charge 40 to 60.',
+      'Red-Folded Chairman: Pride 74 to 32, charge 60 to 42. Thunder Tribune: Pride 52 to 28, charge 40 to 60.',
     continueLabel: 'Continue to sudden death',
     results: null,
   } satisfies ResolutionResultsSnapshot);
@@ -356,10 +356,14 @@ function resultsFixture(): ResolutionResultsSnapshot {
     outcome: 'The higher cliffhanger score decided the match.',
     continueLabel: null,
     results: {
-      winnerName: 'Civic Fox',
+      winnerName: 'Red-Folded Chairman',
       finalScores: [
-        { playerId: 'player-one', characterName: 'Civic Fox', score: 42 },
-        { playerId: 'player-two', characterName: 'Brass Peacock', score: 0 },
+        {
+          playerId: 'player-one',
+          characterName: 'Red-Folded Chairman',
+          score: 42,
+        },
+        { playerId: 'player-two', characterName: 'Thunder Tribune', score: 0 },
       ],
       bestInsult: 'None',
       highestDamage: 42,
@@ -377,7 +381,7 @@ function cliffhangerState(
   prideAfter: readonly [number, number],
 ): MatchState {
   const playerIds = ['player-one', 'player-two'] as const;
-  const characters = ['civic-fox', 'brass-peacock'] as const;
+  const characters = ['red-folded-chairman', 'thunder-tribune'] as const;
   const players = Object.fromEntries(
     playerIds.map((playerId, index) => [
       playerId,

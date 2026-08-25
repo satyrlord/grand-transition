@@ -1,353 +1,353 @@
 [
   {
-    "id": "paper-promise",
+    "id": "national-consensus",
     "role": "noun",
-    "text": "a paper promise",
-    "singularText": "a paper promise",
-    "pluralText": "paper promises",
-    "tags": ["empty-promise", "paperwork"],
+    "text": "a national consensus",
+    "singularText": "a national consensus",
+    "pluralText": "national consensuses",
+    "tags": ["restraint", "legacy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
-      "flavour": ["empty-promise"]
+      "flavour": ["consensus"]
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original English political-satire adaptation informed by Romania's post-1989 transition discourse. Not a quotation. Editorial review complete."
   },
   {
-    "id": "velvet-megaphone",
+    "id": "televised-revolution",
     "role": "noun",
-    "text": "a velvet megaphone",
-    "tags": ["grandstanding", "noise"],
+    "text": "a televised revolution",
+    "tags": ["credibility", "legacy"],
     "scoreGroups": {
       "substance": ["media"],
-      "flavour": ["grandstanding"]
+      "flavour": ["broadcast"]
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original English political-satire adaptation informed by the central role of television in Romania's 1989 transition. Not a quotation. Editorial review complete."
   },
   {
-    "id": "borrowed-mandate",
+    "id": "coalition-protocol",
     "role": "noun",
-    "text": "a borrowed mandate",
-    "tags": ["empty-promise", "paperwork"],
+    "text": "a coalition protocol",
+    "tags": ["consistency", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
-      "flavour": ["empty-promise"]
+      "flavour": ["coalition"]
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional political-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation of Romanian coalition-government language. Not a quotation. Editorial review complete."
   },
   {
-    "id": "folds",
+    "id": "repackages",
     "role": "verb",
-    "text": "folds",
-    "singularText": "folds",
-    "pluralText": "fold",
-    "tags": ["empty-promise", "retreat"],
+    "text": "repackages",
+    "singularText": "repackages",
+    "pluralText": "repackage",
+    "tags": ["modernity", "credibility"],
     "scorePreferences": {
       "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original Romanian political-satire verb about recurring transition-era rebranding. Not a quotation. Editorial review complete."
   },
   {
-    "id": "outshouts",
+    "id": "denounces",
     "role": "verb",
-    "text": "outshouts",
-    "singularText": "outshouts",
-    "pluralText": "outshout",
-    "tags": ["grandstanding", "noise"],
+    "text": "denounces",
+    "singularText": "denounces",
+    "pluralText": "denounce",
+    "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original political-debate verb informed by Romanian parliamentary and televised rhetoric. Not a quotation. Editorial review complete."
   },
   {
-    "id": "interrupts",
+    "id": "interrupts-the-broadcast",
     "role": "verb",
     "text": "interrupts",
     "singularText": "interrupts",
     "pluralText": "interrupt",
-    "tags": ["grandstanding", "noise"],
+    "tags": ["restraint", "decorum"],
     "scorePreferences": {
       "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional debate phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "before-lunch",
+    "id": "before-the-next-election",
     "role": "predicate",
-    "text": "before lunch",
-    "tags": ["empty-promise", "retreat"],
+    "text": "before the next election",
+    "tags": ["credibility", "consistency"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original Romanian election-cycle satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "in-an-empty-hall",
+    "id": "on-public-television",
     "role": "predicate",
-    "text": "in an empty hall",
-    "tags": ["grandstanding", "noise"],
+    "text": "on public television",
+    "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [{ "left": ["media"] }],
       "flavour": []
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original English adaptation informed by Romanian public-television political history. Not a quotation. Editorial review complete."
   },
   {
-    "id": "past-the-deadline",
+    "id": "during-a-coalition-crisis",
     "role": "predicate",
-    "text": "past the deadline",
-    "tags": ["retreat", "noise"],
+    "text": "during a coalition crisis",
+    "tags": ["consistency", "restraint"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"] }],
       "flavour": []
     },
-    "sceneIds": ["echo-chamber"],
+    "sceneIds": ["transition-era-television-studio"],
     "rarity": "rare",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original Romanian coalition-politics satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "and",
+    "id": "coalition-and",
     "role": "conjunction",
     "text": "and",
     "connectorKind": "and",
-    "tags": ["paperwork", "noise"],
+    "tags": ["bureaucracy", "consistency"],
     "rarity": "uncommon",
-    "reviewNotes": "Standard English connector. Editorial review complete."
+    "reviewNotes": "Standard English connector re-authored for the Romanian coalition corpus. Editorial review complete."
   },
   {
-    "id": "but",
+    "id": "televised-but",
     "role": "conjunction",
     "text": "but",
     "connectorKind": "but",
-    "tags": ["retreat", "noise"],
+    "tags": ["restraint", "decorum"],
     "rarity": "uncommon",
-    "reviewNotes": "Standard English connector. Editorial review complete."
+    "reviewNotes": "Standard English connector re-authored for the Romanian broadcast corpus. Editorial review complete."
   },
   {
-    "id": "because",
+    "id": "archive-because",
     "role": "conjunction",
     "text": "because",
     "connectorKind": "because",
-    "tags": ["paperwork", "grandstanding"],
+    "tags": ["evidence", "credibility"],
     "rarity": "rare",
-    "reviewNotes": "Standard English connector. Editorial review complete."
+    "reviewNotes": "Standard English connector re-authored for the Romanian archive corpus. Editorial review complete."
   },
   {
-    "id": "with-the-receipt",
+    "id": "by-emergency-ordinance",
     "role": "ending",
-    "text": "with the receipt",
-    "tags": ["empty-promise", "paperwork"],
+    "text": "by emergency ordinance",
+    "tags": ["bureaucracy", "modernity"],
     "rarity": "uncommon",
     "finisherBonus": 2,
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original English adaptation informed by Article 115 of the Romanian Constitution and public debate about emergency legislation. Not a quotation. Editorial review complete."
   },
   {
-    "id": "still-echoes",
+    "id": "the-transition-continues",
     "role": "continuation",
-    "text": "still echoes",
-    "tags": ["grandstanding", "retreat"],
+    "text": "the transition continues",
+    "tags": ["legacy", "modernity"],
     "rarity": "rare",
-    "reviewNotes": "Original fictional wordplay. Editorial review complete."
+    "reviewNotes": "Original Romanian post-1989 transition satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "revolving-podium",
+    "id": "emergency-ordinance",
     "role": "noun",
-    "text": "a revolving podium",
-    "tags": ["grandstanding", "noise"],
+    "text": "an emergency ordinance",
+    "tags": ["bureaucracy", "restraint"],
     "scoreGroups": {
-      "substance": ["media"],
-      "flavour": ["grandstanding"]
+      "substance": ["bureaucracy"],
+      "flavour": ["emergency"]
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional media-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation informed by the Romanian constitutional emergency-ordinance mechanism. Not a quotation. Editorial review complete."
   },
   {
-    "id": "emergency-ribbon",
+    "id": "european-funds-ribbon",
     "role": "noun",
-    "text": "an emergency ribbon",
-    "tags": ["paperwork", "grandstanding"],
+    "text": "an EU-funds ribbon",
+    "tags": ["modernity", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
-      "flavour": ["whimsy"]
+      "flavour": ["ceremony"]
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional bureaucracy-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian public-investment satire informed by European Union funding and procurement reports. Not a quotation. Editorial review complete."
   },
   {
-    "id": "televised-handshake",
+    "id": "televised-coalition",
     "role": "noun",
-    "text": "a televised handshake",
-    "tags": ["empty-promise", "grandstanding"],
+    "text": "a televised coalition",
+    "tags": ["consistency", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
-      "flavour": ["empty-promise"]
+      "flavour": ["coalition"]
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional political-media phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "committee-umbrella",
+    "id": "county-council-majority",
     "role": "noun",
-    "text": "a committee umbrella",
-    "tags": ["paperwork", "retreat"],
+    "text": "a county-council majority",
+    "tags": ["bureaucracy", "legacy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
-      "flavour": ["whimsy"]
+      "flavour": ["local-power"]
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional committee-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation of Romanian local-government politics. Not a quotation. Editorial review complete."
   },
   {
-    "id": "ceremonial-spreadsheet",
+    "id": "pension-recalculation",
     "role": "noun",
-    "text": "a ceremonial spreadsheet",
-    "tags": ["paperwork", "empty-promise"],
+    "text": "a pension recalculation",
+    "tags": ["modernity", "consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
-      "flavour": ["empty-promise"]
+      "flavour": ["arithmetic"]
     },
     "rarity": "rare",
-    "reviewNotes": "Original fictional administrative-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation of a recurring Romanian administrative-policy theme. Not a quotation or a claim about one administration. Editorial review complete."
   },
   {
-    "id": "borrowed-applause",
+    "id": "unfinished-motorway",
     "role": "noun",
-    "text": "borrowed applause",
-    "tags": ["noise", "grandstanding"],
+    "text": "an unfinished motorway",
+    "tags": ["evidence", "credibility"],
     "scoreGroups": {
-      "substance": ["media"],
-      "flavour": ["grandstanding"]
+      "substance": ["bureaucracy"],
+      "flavour": ["infrastructure"]
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional performance-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian infrastructure-delivery satire. Not a quotation or a claim about a named person or project. Editorial review complete."
   },
   {
-    "id": "postpones",
+    "id": "postpones-reform",
     "role": "verb",
     "text": "postpones",
     "singularText": "postpones",
     "pluralText": "postpone",
-    "tags": ["retreat", "paperwork"],
+    "tags": ["modernity", "consistency"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional procedural-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "applauds",
+    "id": "inaugurates",
     "role": "verb",
-    "text": "applauds",
-    "singularText": "applauds",
-    "pluralText": "applaud",
-    "tags": ["grandstanding", "noise"],
+    "text": "inaugurates",
+    "singularText": "inaugurates",
+    "pluralText": "inaugurate",
+    "tags": ["credibility", "decorum"],
     "scorePreferences": {
       "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional performance-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian ribbon-cutting satire. Not a quotation or a claim about a named person or project. Editorial review complete."
   },
   {
-    "id": "misplaces",
+    "id": "privatizes",
     "role": "verb",
-    "text": "misplaces",
-    "singularText": "misplaces",
-    "pluralText": "misplace",
-    "tags": ["paperwork", "retreat"],
+    "text": "privatizes",
+    "singularText": "privatizes",
+    "pluralText": "privatize",
+    "tags": ["legacy", "evidence"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"], "right": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional administrative-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation informed by Romania's post-1989 privatization period. Not a quotation or a claim about a named transaction. Editorial review complete."
   },
   {
-    "id": "rehearses",
+    "id": "broadcasts",
     "role": "verb",
-    "text": "rehearses",
-    "singularText": "rehearses",
-    "pluralText": "rehearse",
-    "tags": ["grandstanding", "empty-promise"],
+    "text": "broadcasts",
+    "singularText": "broadcasts",
+    "pluralText": "broadcast",
+    "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [{ "left": ["media"], "right": ["media"] }],
       "flavour": []
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian political-television satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "during-commercial-break",
+    "id": "at-victoria-palace",
     "role": "predicate",
-    "text": "during the commercial break",
-    "tags": ["media", "retreat"],
+    "text": "at Victoria Palace",
+    "tags": ["bureaucracy", "consistency"],
     "scorePreferences": {
       "substance": [{ "left": ["media"] }],
       "flavour": []
     },
     "rarity": "common",
-    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English political-satire phrase using the public name of Romania's government headquarters. Not a quotation. Editorial review complete."
   },
   {
-    "id": "without-reading-it",
+    "id": "under-an-emergency-ordinance",
     "role": "predicate",
-    "text": "without reading it",
-    "tags": ["paperwork", "empty-promise"],
+    "text": "under an emergency ordinance",
+    "tags": ["bureaucracy", "restraint"],
     "scorePreferences": {
       "substance": [{ "left": ["bureaucracy"] }],
       "flavour": []
     },
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional procedural-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation informed by Romanian constitutional practice. Not a quotation. Editorial review complete."
   },
   {
-    "id": "under-the-chandelier",
+    "id": "beside-an-unfinished-motorway",
     "role": "predicate",
-    "text": "under the chandelier",
-    "tags": ["grandstanding", "noise"],
+    "text": "beside an unfinished motorway",
+    "tags": ["evidence", "credibility"],
     "scorePreferences": {
       "substance": [{ "left": ["media"] }],
       "flavour": []
     },
     "rarity": "rare",
-    "reviewNotes": "Original fictional civic-pageantry phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian infrastructure satire. Not a quotation or a claim about a named person or project. Editorial review complete."
   },
   {
-    "id": "according-to-the-minutes",
+    "id": "for-the-national-interest",
     "role": "ending",
-    "text": "according to the minutes",
-    "tags": ["paperwork", "empty-promise"],
+    "text": "for the national interest",
+    "tags": ["legacy", "decorum"],
     "rarity": "uncommon",
     "finisherBonus": 2,
-    "reviewNotes": "Original fictional committee-satire phrase. Editorial review complete."
+    "reviewNotes": "Original English adaptation of a broad Romanian political-discourse theme. Not a quotation. Editorial review complete."
   },
   {
-    "id": "on-live-television",
+    "id": "until-the-next-election",
     "role": "ending",
-    "text": "on live television",
-    "tags": ["grandstanding", "noise"],
+    "text": "until the next election",
+    "tags": ["consistency", "credibility"],
     "rarity": "rare",
     "finisherBonus": 3,
-    "reviewNotes": "Original fictional broadcast-satire phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian election-cycle satire. Not a quotation. Editorial review complete."
   },
   {
-    "id": "has-more-to-say",
+    "id": "the-coalition-survives",
     "role": "continuation",
-    "text": "has more to say",
-    "tags": ["grandstanding", "retreat"],
+    "text": "the coalition survives",
+    "tags": ["restraint", "consistency"],
     "rarity": "uncommon",
-    "reviewNotes": "Original fictional debate phrase. Editorial review complete."
+    "reviewNotes": "Original Romanian coalition-politics satire. Not a quotation. Editorial review complete."
   }
 ]

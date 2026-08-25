@@ -51,8 +51,8 @@ export function planResolutionBrowserFlow(): ResolutionFlowPlan {
     schemaVersion: 1,
     seed: 20_260_823,
     players: [
-      configuredPlayer('player-one', 'civic-fox'),
-      configuredPlayer('player-two', 'brass-peacock'),
+      configuredPlayer('player-one', 'red-folded-chairman'),
+      configuredPlayer('player-two', 'thunder-tribune'),
     ],
     sceneId: sampleContent.scenes[0]!.id,
     scenePhraseIds: sampleContent.scenes[0]!.phrasePool,

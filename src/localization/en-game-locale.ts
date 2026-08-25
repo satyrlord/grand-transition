@@ -10,22 +10,33 @@ export const englishGameLocale: GameLocaleBundle = {
   },
   messages: {
     ...phraseCardCatalog.englishMessages,
-    'character.civic-fox.name': 'The Civic Fox',
-    'character.civic-fox.description':
-      'A meticulous committee chair with a sharp procedural notebook.',
-    'character.brass-peacock.name': 'The Brass Peacock',
-    'character.brass-peacock.description':
-      'A flamboyant podium showman who treats every pause as an entrance.',
-    'comeback.civic-fox.weak': 'Your point has entered review.',
-    'comeback.civic-fox.medium': 'The minutes do not support that flourish.',
-    'comeback.civic-fox.strong': 'Even your echo requested an amendment.',
-    'comeback.brass-peacock.weak': 'A modest opening for my encore.',
-    'comeback.brass-peacock.medium':
-      'Please hold the silence while I improve it.',
-    'comeback.brass-peacock.strong':
-      'The balcony has voted for a louder rebuttal.',
-    'scene.echo-chamber.name': 'The Echo Chamber',
-    'scene.echo-chamber.description':
-      'A fictional civic hall where every promise returns with extra reverb.',
+    'character.red-folded-chairman.name': 'The Red-Folded Chairman',
+    'character.red-folded-chairman.description':
+      'A calm transition-era mediator who can fold any crisis into one more procedure.',
+    'character.thunder-tribune.name': 'The Thunder Tribune',
+    'character.thunder-tribune.description':
+      'A poet-orator whose accusations arrive one volume above the studio limit.',
+    'character.black-sea-captain.name': 'The Black Sea Captain',
+    'character.black-sea-captain.description':
+      'A hands-on former ship captain who treats every coalition like rough water.',
+    'comeback.red-folded-chairman.weak': 'Let us keep the transition orderly.',
+    'comeback.red-folded-chairman.medium':
+      'Consensus requires patience, especially with your argument.',
+    'comeback.red-folded-chairman.strong':
+      'Your crisis has been folded into a stable procedure.',
+    'comeback.thunder-tribune.weak': 'The tribune has only cleared his throat.',
+    'comeback.thunder-tribune.medium':
+      'Bring evidence, or make room for the thunder.',
+    'comeback.thunder-tribune.strong':
+      'Even the rostrum demands a louder reckoning.',
+    'comeback.black-sea-captain.weak': 'That wave barely reached the bridge.',
+    'comeback.black-sea-captain.medium':
+      'I have steered through rougher coalitions.',
+    'comeback.black-sea-captain.strong':
+      'The wheel is mine, and your course is finished.',
+    'scene.transition-era-television-studio.name':
+      'Transition-Era Television Studio',
+    'scene.transition-era-television-studio.description':
+      'A late-1990s public-television studio of dark curtains, brass, empty podiums, and silent CRT screens.',
   },
 };

@@ -113,9 +113,9 @@ describe('Hollywood Roast shared board generation', () => {
   test('never puts a character-restricted phrase on the common board', () => {
     const restricted = {
       ...sampleContent.phrases.find(
-        (phrase) => phrase.id === 'committee-kite',
+        (phrase) => phrase.id === 'national-salvation-committee',
       )!,
-      characterIds: ['civic-fox'],
+      characterIds: ['red-folded-chairman'],
     };
     const phrases = sampleContent.phrases.map((phrase) =>
       phrase.id === restricted.id ? restricted : phrase,
@@ -124,13 +124,18 @@ describe('Hollywood Roast shared board generation', () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(
-        result.board.slots.some((slot) => slot.phraseId === 'committee-kite'),
+        result.board.slots.some(
+          (slot) => slot.phraseId === 'national-salvation-committee',
+        ),
       ).toBe(false);
     }
   });
 
   test('reports the available role counts for an impossible scene pool', () => {
-    const result = generateBoard({ ...request(), scenePhraseIds: ['and'] });
+    const result = generateBoard({
+      ...request(),
+      scenePhraseIds: ['coalition-and'],
+    });
     expect(result).toMatchObject({
       ok: false,
       error: {

@@ -63,7 +63,7 @@ function request(charge = 0): DraftRoundPreparationRequest {
         comebackCharge: 0,
       },
     ],
-    timerSeconds: 10,
+    timerSeconds: 15,
   };
 }
 
@@ -156,9 +156,14 @@ function passWithValidCard(state: DraftState, playerId: string): DraftState {
 }
 
 function completeFirst(state = prepared()): DraftState {
-  state = selectPrivate(state, playerIds[0], 'paper-promise', 'subject');
+  state = selectPrivate(state, playerIds[0], 'national-consensus', 'subject');
   state = passWithValidCard(state, playerIds[1]);
-  state = selectPrivate(state, playerIds[0], 'before-lunch', 'predicate');
+  state = selectPrivate(
+    state,
+    playerIds[0],
+    'before-the-next-election',
+    'predicate',
+  );
   return state;
 }
 
@@ -262,22 +267,22 @@ describe('Hollywood Roast draft actions', () => {
     );
     expect(butHand).toMatchObject({
       ok: true,
-      hand: { phraseIds: expect.arrayContaining(['but']) },
+      hand: { phraseIds: expect.arrayContaining(['televised-but']) },
     });
     expect(andHand).toMatchObject({
       ok: true,
-      hand: { phraseIds: expect.arrayContaining(['and']) },
+      hand: { phraseIds: expect.arrayContaining(['coalition-and']) },
     });
     expect(boundaryHand).toMatchObject({
       ok: true,
-      hand: { phraseIds: expect.arrayContaining(['and']) },
+      hand: { phraseIds: expect.arrayContaining(['coalition-and']) },
     });
 
     const restrictedPhrase = {
       ...sampleContent.phrases.find(
-        (phrase) => phrase.id === 'committee-kite',
+        (phrase) => phrase.id === 'national-salvation-committee',
       )!,
-      characterIds: ['civic-fox'],
+      characterIds: ['red-folded-chairman'],
     };
     const restrictedRequest = {
       ...handRequest,
@@ -288,7 +293,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(privateHandAvailableCount(restrictedRequest)).toBeLessThan(
       privateHandAvailableCount({
         ...restrictedRequest,
-        characterPhraseIds: ['committee-kite'],
+        characterPhraseIds: ['national-salvation-committee'],
       }),
     );
   });
@@ -320,7 +325,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(state.reservedPhraseIds).toEqual(roundPhraseIds);
     expect(repeated.reservedPhraseIds).toEqual(state.reservedPhraseIds);
     expect(repeated.seed).toBe(state.seed);
-    expect(state.turn.durationSeconds).toBe(10);
+    expect(state.turn.durationSeconds).toBe(15);
 
     const next = prepareDraftRound({
       ...request(),
@@ -356,11 +361,26 @@ describe('Hollywood Roast draft actions', () => {
 
   test('accepts noun and noun as an early conjunction-denial sequence', () => {
     let state = prepared();
-    state = selectPrivate(state, playerIds[0], 'velvet-megaphone', 'noun-one');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'televised-revolution',
+      'noun-one',
+    );
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(state, playerIds[0], 'and', 'and');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'coalition-and',
+      'coalition-and',
+    );
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(state, playerIds[0], 'committee-kite', 'noun-two');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'national-salvation-committee',
+      'noun-two',
+    );
 
     expect(state.playerStates[playerIds[0]]!.construction).toMatchObject({
       grammarMistakes: 0,
@@ -377,13 +397,15 @@ describe('Hollywood Roast draft actions', () => {
     const selected = selectPrivate(
       initial,
       playerIds[0],
-      'before-lunch',
+      'before-the-next-election',
       'wrong-predicate',
     );
     const construction = selected.playerStates[playerIds[0]]!.construction;
     expect(construction.steps).toEqual([]);
     expect(construction.grammarMistakes).toBe(1);
-    expect(construction.lastGrammarMistakePhraseId).toBe('before-lunch');
+    expect(construction.lastGrammarMistakePhraseId).toBe(
+      'before-the-next-election',
+    );
     expect(selected.activePlayerId).toBe(playerIds[1]);
   });
 
@@ -391,7 +413,7 @@ describe('Hollywood Roast draft actions', () => {
     const selected = selectPrivate(
       prepared(),
       playerIds[0],
-      'still-echoes',
+      'the-transition-continues',
       'continuation',
     );
     expect(selected.playerStates[playerIds[0]]!.construction).toMatchObject({
@@ -417,7 +439,12 @@ describe('Hollywood Roast draft actions', () => {
   test('a finisher ends a complete sentence as soon as it is selected', () => {
     let state = completeFirst();
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(state, playerIds[0], 'with-the-receipt', 'finisher');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'by-emergency-ordinance',
+      'finisher',
+    );
     expect(state.playerStates[playerIds[0]]!.construction.status).toBe('ended');
   });
 
@@ -475,7 +502,12 @@ describe('Hollywood Roast draft actions', () => {
 
   test('timeouts after the opponent ends deal 3, 6, 12, and 24', () => {
     let state = prepared();
-    state = selectPrivate(state, playerIds[0], 'still-echoes', 'first-carry');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'the-transition-continues',
+      'first-carry',
+    );
     const expectations = [3, 9, 21, 45];
     for (const expected of expectations) {
       state = run(state, {
@@ -531,7 +563,7 @@ describe('Hollywood Roast draft actions', () => {
     const illegalStep = {
       kind: 'phrase' as const,
       phrase: prepareEnglishGrammarPhrase(
-        sampleContent.phrases.find((phrase) => phrase.id === 'folds')!,
+        sampleContent.phrases.find((phrase) => phrase.id === 'repackages')!,
         englishGameLocale,
       ),
     };

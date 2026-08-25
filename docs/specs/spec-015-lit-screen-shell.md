@@ -30,7 +30,7 @@ Milestone 016 owns the rendered match destination.
 
 Setup fields are mode, player-one character, player-two character, and scene.
 Defaults are hotseat, the first two catalog characters, and the first scene.
-Every pick uses the fixed ten-second timer owned by Milestone 009. Mirror
+Every pick uses the fixed 15-second timer owned by Milestone 009. Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 

@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import commonSource from './common-phrase-cards.json' with { type: 'json' };
-import brassPeacockSource from './characters/brass-peacock-phrase-cards.json' with { type: 'json' };
-import civicFoxSource from './characters/civic-fox-phrase-cards.json' with { type: 'json' };
+import blackSeaCaptainSource from './characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
+import redFoldedChairmanSource from './characters/red-folded-chairman-phrase-cards.json' with { type: 'json' };
+import thunderTribuneSource from './characters/thunder-tribune-phrase-cards.json' with { type: 'json' };
 import {
   identifierSchema,
   phraseDefinitionSchema,
@@ -94,14 +95,25 @@ export function parsePhraseCardCorpus(
 }
 
 const common = parsePhraseCardCorpus(commonSource);
-const civicFox = parsePhraseCardCorpus(civicFoxSource, 'civic-fox');
-const brassPeacock = parsePhraseCardCorpus(brassPeacockSource, 'brass-peacock');
+const redFoldedChairman = parsePhraseCardCorpus(
+  redFoldedChairmanSource,
+  'red-folded-chairman',
+);
+const thunderTribune = parsePhraseCardCorpus(
+  thunderTribuneSource,
+  'thunder-tribune',
+);
+const blackSeaCaptain = parsePhraseCardCorpus(
+  blackSeaCaptainSource,
+  'black-sea-captain',
+);
 
 export const phraseCardCatalog = combinePhraseCardCorpora({
   common,
   byCharacter: {
-    'civic-fox': civicFox,
-    'brass-peacock': brassPeacock,
+    'red-folded-chairman': redFoldedChairman,
+    'thunder-tribune': thunderTribune,
+    'black-sea-captain': blackSeaCaptain,
   },
 });
 

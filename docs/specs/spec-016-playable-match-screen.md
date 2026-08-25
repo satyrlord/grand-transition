@@ -8,41 +8,49 @@ interface (UI)
 
 ## Deliver
 
-Build the match surface as an original televised civic debate. Use one painted,
-text-free stage raster with embedded generation provenance. Keep all names,
-values, phrases, states, and controls in semantic HTML. Show the board, private
-hand, sentence, turn, ten-second timer, Pride, comeback, hand refresh, sentence
-end, grammar-mistake feedback, and continuation selection. Support pointer and
-basic keyboard use.
+Build the match surface as an original televised civic debate. Use one
+character-free, text-free rendered broadcast scene and one generated transparent
+portrait for each selected character. Each raster has embedded generation
+provenance.
+Keep all names, values, phrases, states, and controls in semantic HTML. Show the
+board, private hand, sentence, turn, 15-second timer, Pride, comeback, hand
+refresh, sentence end, grammar-mistake feedback, and continuation selection.
+Support pointer and basic keyboard use.
 
-On desktop, place Pride, the round, and the timer over the opposing characters
-and painted stage. Keep both character faces clear. Put opposing speech records,
-public reactions, and damage in the upper field. Use the sentence as the warm
-paper hinge. Put the private hand at the lower left, the nine-card board in a
-three-by-three center grid, and the action stack at the lower right.
+On desktop, put one compact single-line archetype name, a visible Pride label,
+and a Pride bar above each portrait. The compact strip can omit the leading
+article from the full localized name. The strips and all other interface text
+must not intersect a character image.
+Put opposing speech records, public reactions, and damage in the upper field.
+Use the sentence as the warm paper hinge. Put the private hand at the lower
+left, all nine common phrases in one vertical center list, and the action stack
+at the lower right.
 
 The active player must be clear in both the public stage and the draft area.
-The active player plaque and private-hand heading show “Has the floor.” The
-other player plaque shows “Waiting.” A turn change uses one 360-millisecond
-directional floor-transfer animation on the newly active plaque. Reduced motion
-removes the translation and keeps the same written and framed active state.
+Only the active name strip shows “Your turn.” Its portrait and Pride strip stay
+bright with a persistent brass stage light while the inactive side stays
+subdued. A turn change uses one 360-millisecond directional light-and-position
+transfer on the incoming portrait. Reduced motion removes the translation and
+keeps the brightness, border, and written turn state.
 
 The visual north star is the approved static parity mock under `tmp/`. Preserve
 its late-1990s public-television hierarchy, navy and brass broadcast fascia,
 oxide-red and television-blue player identity, aged paper, compact civic
-ornament, and fixed-artboard rhythm. Use original characters, exact product
-content, and implemented actions. Every depicted character is human; animal
-terms in a character title are metaphorical only. Do not copy the mock's names,
-unsupported actions, logos, or rasterized interface text. Milestone 023 owns
-final asset variants and manifest delivery; this milestone can use the
-provenance-bearing interim Portable Network Graphics (PNG) stage and paper
+ornament, and fixed-artboard rhythm. Use the approved roster names, original
+characters, exact product content, and implemented actions. Every depicted
+character is human. Do not copy unsupported actions, logos, slogans, or
+rasterized interface text. Milestone 023 owns final asset variants and manifest
+delivery; this milestone can use the provenance-bearing rendered scene, three
+transparent interim Portable Network Graphics (PNG) portraits, and paper
 material.
 
-Each card shows phrase text, role, known weakness, private ownership, and
-available, selected, empty, or disabled state. Every available common card can
-be selected by either player. Focus previews a valid result and leaves the
-current sentence unchanged for a wrong phrase. Shared selection leaves an empty
-slot. Number keys select shared
+Each private card shows phrase text, role, ownership, relevant weakness, and
+state. Each compact common-phrase row shows its phrase, role, relevant weakness
+or disabled reason, shortcut when enabled, and selected or empty state. The
+common-list heading owns the repeated shared ownership label. Every available
+common card can be selected by either player. Focus previews a valid result and
+leaves the current sentence unchanged for a wrong phrase. Shared selection
+leaves an empty slot. Number keys select shared
 cards; separate keys select private cards; Enter commits; R redraws; C opens
 comebacks; Escape closes overlays. Hints appear only for keyboard use or by
 setting. A wrong selection applies its grammar mistake immediately without a
@@ -78,25 +86,33 @@ the new snapshot arrives.
 ## Acceptance criteria
 
 - **AC-016-01:** The representative longest-content state fits at 1280 by 720
-  without page scroll, overlap, clipping, or hidden required action.
+  without page scroll, overlap, clipping, wrapped desktop archetype names, or a
+  hidden required action.
 - **AC-016-02:** Pointer controls and every shortcut dispatch the same typed
   command once. Rapid activation cannot double-select a card.
 - **AC-016-03:** Focus preview changes only visible preview text. Escape and
   post-removal focus follow the exact rules above.
-- **AC-016-04:** Every card state has visible text or symbol in addition to
-  color, and its accessible name includes phrase, role, ownership, available
-  state, and relevant weakness.
-- **AC-016-05:** The fixed timer announces 5 once and zero emits one expiration
-  command.
+- **AC-016-04:** Every unavailable, selected, or empty card state has visible
+  text or a symbol in addition to color. Every accessible name includes phrase,
+  role, ownership, available state, and relevant weakness.
+- **AC-016-05:** The fixed timer announces 10 and 5 once each, and zero emits
+  one expiration command.
 - **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.
 - **AC-016-07:** Production-browser screenshots at 1280 by 720 and 1672 by 941
   show the approved televised-debate hierarchy. The painted raster contains no
   interface truth, and every visible game value remains semantic and testable.
-- **AC-016-08:** Exactly one player plaque and the private-hand heading show
-  “Has the floor.” The active plaque changes after one pick, and reduced motion
-  preserves the same turn text without directional movement.
+- **AC-016-08:** Exactly one player strip shows “Your turn.” Its portrait and
+  Pride bar remain brighter than the waiting side. The 360-millisecond transfer
+  moves to the next player after one pick, and reduced motion preserves the
+  brightness, border, and turn text without directional movement.
+- **AC-016-09:** The selected Red-Folded Chairman, Thunder Tribune, and Black
+  Sea Captain portraits load from local assets in either player position.
+  Unapproved sample characters and a baked two-character stage are absent.
+- **AC-016-10:** The character-free Transition-Era Television Studio renders
+  behind the separate portraits. Pixel inspection proves that each portrait has
+  an alpha channel with transparent outer corners.
 
 ## Impeccable UI validation
 

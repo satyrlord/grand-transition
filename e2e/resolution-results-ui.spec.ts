@@ -33,8 +33,12 @@ test('a fixed hotseat flow reaches continuation, comeback, double knockout, sudd
   await expect(page.locator('.outcome-record > p')).toContainText(
     'Pride damage:',
   );
-  await expect(page.getByText('Final score — The Civic Fox')).toBeVisible();
-  await expect(page.getByText('Final score — The Brass Peacock')).toBeVisible();
+  await expect(
+    page.getByText('Final score — The Red-Folded Chairman'),
+  ).toBeVisible();
+  await expect(
+    page.getByText('Final score — The Thunder Tribune'),
+  ).toBeVisible();
   await expect(page.getByText('Best insult', { exact: true })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.screenshot({
@@ -57,7 +61,7 @@ test('a fixed hotseat flow reaches continuation, comeback, double knockout, sudd
     .click();
   await expect(
     page.getByRole('heading', {
-      name: /Round 1: The Brass Peacock has the floor/u,
+      name: /Round 1.*Thunder Tribune's turn/u,
     }),
   ).toBeFocused();
 });
@@ -281,5 +285,7 @@ async function startMatch(page: Page): Promise<void> {
 
 async function startFromSetup(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Start match' }).click();
-  await expect(page.getByRole('heading', { name: /Round 1:/u })).toBeFocused();
+  await expect(
+    page.getByRole('heading', { name: /Round 1.*turn/u }),
+  ).toBeFocused();
 }

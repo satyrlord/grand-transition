@@ -22,6 +22,11 @@ crimes, private health or addiction claims, private people, reusable harassment,
 sexual humiliation, threats, copied text, real logos, and copyrighted broadcast
 art. Every record has review evidence.
 
+For a character with a named public-figure inspiration, the review separates
+verified public biography and broad discourse themes from invented satire. It
+rejects copied slogans, copied portrait treatment, unsupported allegations, and
+language that presents the fictional archetype as the real person.
+
 Simulation reports seed, workload, matchups, difficulties, win rates,
 rule-event rates, failures, and environment. Local logs are opt-in, contain no
 personal data, and never leave the device automatically.

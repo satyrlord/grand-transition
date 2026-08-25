@@ -1,0 +1,57 @@
+[
+  {
+    "id": "national-salvation-committee",
+    "role": "noun",
+    "text": "a national-salvation committee",
+    "tags": ["legacy", "bureaucracy"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["transition"]
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public biography and transition-era institutional language. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "mediates",
+    "role": "verb",
+    "text": "mediates",
+    "singularText": "mediates",
+    "pluralText": "mediate",
+    "tags": ["restraint", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
+      "flavour": []
+    },
+    "rarity": "common",
+    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public emphasis on dialogue and consensus. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "through-a-gradual-transition",
+    "role": "predicate",
+    "text": "through a gradual transition",
+    "tags": ["modernity", "legacy"],
+    "scorePreferences": {
+      "substance": [{ "left": ["bureaucracy"] }],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public post-1989 gradual-transition discourse. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "for-stabilitys-sake",
+    "role": "ending",
+    "text": "for stability's sake",
+    "tags": ["restraint", "bureaucracy"],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "reviewNotes": "Original fictional line informed by Ion Iliescu's measured stability discourse. Not a quotation. Editorial review complete."
+  },
+  {
+    "id": "asks-for-patience-again",
+    "role": "continuation",
+    "text": "asks for patience again",
+    "tags": ["modernity", "restraint"],
+    "rarity": "uncommon",
+    "reviewNotes": "Original fictional continuation informed by Ion Iliescu's public gradual-change discourse. Not a quotation. Editorial review complete."
+  }
+]

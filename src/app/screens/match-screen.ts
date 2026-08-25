@@ -23,10 +23,27 @@ import type { MatchCommand, MatchState } from '../../engine/match-lifecycle';
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
 
-const civicDebateStage = new URL(
-  '../../assets/civic-debate-stage.png',
-  import.meta.url,
-).href;
+const characterPortraitUrls: Readonly<Record<string, string>> = {
+  'red-folded-chairman': new URL(
+    '../../assets/characters/red-folded-chairman.png',
+    import.meta.url,
+  ).href,
+  'thunder-tribune': new URL(
+    '../../assets/characters/thunder-tribune.png',
+    import.meta.url,
+  ).href,
+  'black-sea-captain': new URL(
+    '../../assets/characters/black-sea-captain.png',
+    import.meta.url,
+  ).href,
+};
+
+const sceneImageUrls: Readonly<Record<string, string>> = {
+  'transition-era-television-studio': new URL(
+    '../../assets/scenes/transition-era-television-studio.png',
+    import.meta.url,
+  ).href,
+};
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
 type MatchCardAction = 'select' | null;
@@ -52,8 +69,8 @@ export type MatchPlayerView = Readonly<{
   playerId: string;
   characterId: string;
   characterName: string;
+  portraitUrl: string;
   pride: number;
-  comebackCharge: number;
   isActive: boolean;
   sentence: string | null;
   status: 'building' | 'ended';
@@ -65,7 +82,6 @@ export type MatchScreenSnapshot = Readonly<{
   round: number;
   sceneName: string;
   sceneUrl: string;
-  openingPlayerId: string;
   activePlayerId: string;
   activePlayerName: string;
   sentenceText: string;
@@ -75,7 +91,7 @@ export type MatchScreenSnapshot = Readonly<{
   players: readonly [MatchPlayerView, MatchPlayerView];
   timer: Readonly<{
     sequence: number;
-    durationSeconds: 10;
+    durationSeconds: 15;
   }>;
   actions: Readonly<{
     canCommit: boolean;
@@ -180,8 +196,8 @@ export function createMatchScreenSnapshot(
       playerId,
       characterId: player.characterId,
       characterName: characterName(player.characterId),
+      portraitUrl: characterPortraitUrl(player.characterId),
       pride: player.pride,
-      comebackCharge: player.comebackCharge,
       isActive: playerId === activePlayerId,
       sentence: draftPlayer.construction.previewText,
       status: draftPlayer.construction.status,
@@ -204,8 +220,7 @@ export function createMatchScreenSnapshot(
     sceneName: gameMessage(
       sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
     ),
-    sceneUrl: civicDebateStage,
-    openingPlayerId: state.openingPlayerId,
+    sceneUrl: sceneImageUrl(state.sceneId),
     activePlayerId,
     activePlayerName: activeName,
     sentenceText:
@@ -314,12 +329,16 @@ export class GrandTransitionMatch extends LitElement {
     if (!this.snapshot) return nothing;
     const first = this.snapshot.players[0];
     const second = this.snapshot.players[1];
-    const timerLabel = msg(`${this.remainingSeconds ?? 10} seconds`);
+    const timerLabel = msg(`${this.remainingSeconds ?? 15} seconds`);
+    const hasRecentDamage = Object.values(
+      this.snapshot.reaction.playerDamage,
+    ).some((damage) => damage > 0);
 
     return html`
       <main
         class="match-screen"
         aria-labelledby="match-title"
+        data-active-side=${first.isActive ? 'red' : 'blue'}
         @pointerdown=${this.usePointerMode}
       >
         <div class="broadcast-stage">
@@ -329,12 +348,12 @@ export class GrandTransitionMatch extends LitElement {
             alt=""
             width="1672"
             height="941"
+            draggable="false"
           />
-
           <header class="match-status-rail">
             <div class="match-turn-heading">
               <h1 id="match-title" tabindex="-1">
-                ${msg(`Round ${this.snapshot.round}: ${this.snapshot.activePlayerName} has the floor`)}
+                ${msg(`Round ${this.snapshot.round} — ${this.snapshot.activePlayerName}'s turn`)}
               </h1>
             </div>
             <dl class="match-facts">
@@ -342,16 +361,7 @@ export class GrandTransitionMatch extends LitElement {
                 <dt>${msg('Round')}</dt>
                 <dd>${this.snapshot.round}</dd>
               </div>
-              <div>
-                <dt>${msg('Opening')}</dt>
-                <dd>
-                  ${playerName(
-                    this.snapshot.players,
-                    this.snapshot.openingPlayerId,
-                  )}
-                </dd>
-              </div>
-              <div class="timer-fact" data-timer=${this.remainingSeconds ?? 10}>
+              <div class="timer-fact" data-timer=${this.remainingSeconds ?? 15}>
                 <dt>${msg('Timer')}</dt>
                 <dd>${timerLabel}</dd>
               </div>
@@ -364,22 +374,34 @@ export class GrandTransitionMatch extends LitElement {
               <div class="reaction-copy">
                 <h2>${this.snapshot.sceneName}</h2>
                 <p>${this.snapshot.reaction.label}</p>
-                <dl>
-                  <div>
-                    <dt>${first.characterName}</dt>
-                    <dd>
-                      ${this.snapshot.reaction.playerDamage[first.playerId] ?? 0}
-                      ${msg('damage')}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>${second.characterName}</dt>
-                    <dd>
-                      ${this.snapshot.reaction.playerDamage[second.playerId] ?? 0}
-                      ${msg('damage')}
-                    </dd>
-                  </div>
-                </dl>
+                ${
+                  hasRecentDamage
+                    ? html`<dl>
+                        <div>
+                          <dt>${first.characterName}</dt>
+                          <dd>
+                            ${
+                              this.snapshot.reaction.playerDamage[
+                                first.playerId
+                              ] ?? 0
+                            }
+                            ${msg('damage')}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>${second.characterName}</dt>
+                          <dd>
+                            ${
+                              this.snapshot.reaction.playerDamage[
+                                second.playerId
+                              ] ?? 0
+                            }
+                            ${msg('damage')}
+                          </dd>
+                        </div>
+                      </dl>`
+                    : nothing
+                }
               </div>
             </div>
             ${this.renderPlayer(second, 'blue')}
@@ -407,7 +429,6 @@ export class GrandTransitionMatch extends LitElement {
             <section class="private-hand" aria-labelledby="private-hand-title">
               <div class="private-hand-heading">
                 <h2 id="private-hand-title">${msg('Private hand')}</h2>
-                <strong>${msg('Has the floor')}</strong>
                 <p>${this.snapshot.activePlayerName}</p>
               </div>
               <ol>
@@ -415,17 +436,23 @@ export class GrandTransitionMatch extends LitElement {
               </ol>
             </section>
 
-            <ol
-              class="shared-board"
-              aria-label=${msg('Nine shared phrase slots')}
-              aria-describedby="shared-board-guidance"
-              tabindex="0"
+            <section
+              class="common-phrases"
+              aria-labelledby="common-phrases-title"
             >
-              ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
-            </ol>
-            <p id="shared-board-guidance" class="sr-only">
-              ${msg('On narrow screens, scroll within this board to review all nine shared phrase slots.')}
-            </p>
+              <h2 id="common-phrases-title">${msg('Common phrases')}</h2>
+              <ol
+                class="shared-board"
+                aria-label=${msg('Nine common phrase slots')}
+                aria-describedby="shared-board-guidance"
+                tabindex="0"
+              >
+                ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
+              </ol>
+              <p id="shared-board-guidance" class="sr-only">
+                ${msg('Review the nine common phrases from top to bottom.')}
+              </p>
+            </section>
 
             <nav class="match-actions" aria-label=${msg('Turn actions')}>
               <button
@@ -515,47 +542,56 @@ export class GrandTransitionMatch extends LitElement {
         class="match-player ${player.isActive ? 'match-player--active' : ''}"
         data-side=${side}
         data-turn-state=${player.isActive ? 'active' : 'waiting'}
-        aria-label=${`${player.characterName}, ${player.pride} Pride, ${player.isActive ? 'has the floor' : 'waiting'}`}
+        aria-current=${player.isActive ? 'true' : nothing}
+        aria-label=${`${player.characterName}, ${player.pride} Pride, ${player.isActive ? 'active turn' : 'waiting'}`}
       >
-        <div>
-          <h2>${player.characterName}</h2>
-          <dl>
-            <div>
-              <dt>${msg('Pride')}</dt>
-              <dd>
-                <span>${player.pride}</span>
-                <meter
-                  min="0"
-                  max="100"
-                  value=${player.pride}
-                  aria-label=${`${player.characterName}: ${player.pride} Pride`}
-                ></meter>
-              </dd>
-            </div>
-            <div>
-              <dt>${msg('Comeback')}</dt>
-              <dd>${player.comebackCharge}/60</dd>
-            </div>
-          </dl>
-          <p class="player-turn-status">
-            <span class="turn-live-mark" aria-hidden="true"></span>
-            ${player.isActive ? msg('Has the floor') : msg('Waiting')}
-          </p>
-          <blockquote class="player-sentence">
-            ${
-              player.sentence ||
-              (player.isActive
-                ? msg('Preparing the next clause.')
-                : msg('No sentence on record.'))
-            }
-          </blockquote>
+        <header class="player-hud">
+          <div class="player-name-line">
+            <h2>${compactCharacterName(player.characterName)}</h2>
+            <span class="player-turn-status" ?hidden=${!player.isActive}
+              >${msg('Your turn')}</span
+            >
+          </div>
+          <div class="player-health">
+            <span class="player-health-label">${msg('Pride')}</span>
+            <meter
+              min="0"
+              max="100"
+              value=${player.pride}
+              aria-label=${`${player.characterName}: ${player.pride} Pride`}
+            ></meter>
+            <strong aria-hidden="true">${player.pride}</strong>
+          </div>
+        </header>
+        <div class="character-frame" aria-hidden="true">
+          <img
+            class="character-portrait"
+            src=${player.portraitUrl}
+            alt=""
+            width="1254"
+            height="1254"
+            draggable="false"
+          />
         </div>
+        <blockquote class="player-sentence">
+          ${
+            player.sentence ||
+            (player.isActive
+              ? msg('Preparing the next clause.')
+              : msg('No sentence on record.'))
+          }
+        </blockquote>
       </article>
     `;
   }
 
   private renderCard(card: MatchCardView): TemplateResult {
     const empty = !card.reference;
+    const visibleDetail =
+      card.disabledReason ??
+      (card.knownWeaknesses.length > 0
+        ? msg(`Weakness: ${card.knownWeaknesses.join(', ')}`)
+        : null);
     return html`
       <li
         class="phrase-slot phrase-slot--${card.state}"
@@ -576,7 +612,7 @@ export class GrandTransitionMatch extends LitElement {
               </div>`
             : html`<button
                 type="button"
-                class="phrase-card"
+                class="phrase-card phrase-card--${card.ownership.toLowerCase()}"
                 data-card-id=${card.reference!.cardId}
                 data-card-source=${card.reference!.source}
                 data-card-state=${card.state}
@@ -594,14 +630,11 @@ export class GrandTransitionMatch extends LitElement {
                   <span>${card.ownership}</span>
                   <span class="card-state">${card.stateLabel}</span>
                 </span>
-                <span class="card-weakness">
-                  ${
-                    card.disabledReason ??
-                    (card.knownWeaknesses.length > 0
-                      ? msg(`Weakness: ${card.knownWeaknesses.join(', ')}`)
-                      : msg('No known weakness'))
-                  }
-                </span>
+                ${
+                  visibleDetail
+                    ? html`<span class="card-weakness">${visibleDetail}</span>`
+                    : nothing
+                }
                 <span class="card-shortcut" ?hidden=${!this.keyboardMode}
                   >${card.shortcut}</span
                 >
@@ -700,7 +733,8 @@ export class GrandTransitionMatch extends LitElement {
   };
 
   private preview(card: MatchCardView): void {
-    this.previewText = card.previewText;
+    this.previewText =
+      card.previewText.trim() || this.snapshot?.sentenceText || null;
   }
 
   private readonly clearPreview = (): void => {
@@ -808,7 +842,7 @@ export class GrandTransitionMatch extends LitElement {
         ? ` Last exchange damage: ${damage}.`
         : '';
       this.statusAnnouncement = msg(
-        `Round ${current.round}. ${current.activePlayerName} has the floor. Ten seconds to choose.${damageMessage}`,
+        `Round ${current.round}. ${current.activePlayerName}'s turn. Fifteen seconds to choose.${damageMessage}`,
       );
       return;
     }
@@ -1053,14 +1087,24 @@ function characterName(characterId: string): string {
   );
 }
 
-function playerName(
-  players: readonly MatchPlayerView[],
-  playerId: string,
-): string {
-  return (
-    players.find((player) => player.playerId === playerId)?.characterName ??
-    playerId
-  );
+function compactCharacterName(characterName: string): string {
+  return characterName.replace(/^The\s+/u, '');
+}
+
+function characterPortraitUrl(characterId: string): string {
+  const portraitUrl = characterPortraitUrls[characterId];
+  if (!portraitUrl) {
+    throw new Error(`Character "${characterId}" has no match portrait.`);
+  }
+  return portraitUrl;
+}
+
+function sceneImageUrl(sceneId: string): string {
+  const sceneUrl = sceneImageUrls[sceneId];
+  if (!sceneUrl) {
+    throw new Error(`Scene "${sceneId}" has no match background.`);
+  }
+  return sceneUrl;
 }
 
 function gameMessage(key: string | undefined): string {

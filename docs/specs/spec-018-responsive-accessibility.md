@@ -10,7 +10,7 @@ Level AA behavior
 
 Complete desktop, narrow landscape, and portrait layouts. Add full keyboard
 operation, visible focus, live announcements, high contrast, 200% text scaling,
-the shared target minima, fixed ten-second timer, reduced motion, and flashing
+the shared target minima, fixed 15-second timer, reduced motion, and flashing
 suppression.
 
 Narrow landscape reduces character scale, permits a two-row board, keeps all

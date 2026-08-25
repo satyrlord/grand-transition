@@ -109,12 +109,12 @@ function started(): MatchState {
 function finishDraft(
   state: MatchState,
   predicateByPlayer: Readonly<Record<string, string>> = {
-    [playerIds[0]]: 'before-lunch',
-    [playerIds[1]]: 'before-lunch',
+    [playerIds[0]]: 'before-the-next-election',
+    [playerIds[1]]: 'before-the-next-election',
   },
   nounByPlayer: Readonly<Record<string, string>> = {
-    [playerIds[0]]: 'paper-promise',
-    [playerIds[1]]: 'velvet-megaphone',
+    [playerIds[0]]: 'national-consensus',
+    [playerIds[1]]: 'televised-revolution',
   },
 ): MatchState {
   let index = 0;
@@ -146,18 +146,18 @@ function finishDraft(
 }
 
 describe('Hollywood Roast match lifecycle', () => {
-  test('starts both players at 100 Pride and uses fixed ten-second turns', () => {
+  test('starts both players at 100 Pride and uses fixed 15-second turns', () => {
     const state = started();
     expect(state.playerStates[playerIds[0]]!.pride).toBe(initialPride);
     expect(state.playerStates[playerIds[1]]!.pride).toBe(initialPride);
-    expect(state.draft!.turn.durationSeconds).toBe(10);
+    expect(state.draft!.turn.durationSeconds).toBe(15);
   });
 
   test('a grammar mistake immediately costs 3 Pride without charging a comeback', () => {
     const state = selectPrivate(
       started(),
       playerIds[0],
-      'before-lunch',
+      'before-the-next-election',
       'wrong',
     );
     expect(state.playerStates[playerIds[0]]!.pride).toBe(97);
@@ -176,7 +176,12 @@ describe('Hollywood Roast match lifecycle', () => {
         [playerIds[0]]: { ...state.playerStates[playerIds[0]]!, pride: 3 },
       },
     };
-    state = selectPrivate(state, playerIds[0], 'before-lunch', 'lethal-wrong');
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'before-the-next-election',
+      'lethal-wrong',
+    );
     expect(state.phase).toBe('results');
     expect(state.winner).toBe(playerIds[1]);
     expect(state.pendingResolution?.players[playerIds[0]]!.selfDamage).toBe(3);
@@ -287,12 +292,12 @@ describe('Hollywood Roast match lifecycle', () => {
     state = finishDraft(
       state,
       {
-        [playerIds[0]]: 'before-lunch',
-        [playerIds[1]]: 'before-lunch',
+        [playerIds[0]]: 'before-the-next-election',
+        [playerIds[1]]: 'before-the-next-election',
       },
       {
-        [playerIds[0]]: 'paper-promise',
-        [playerIds[1]]: 'paper-promise',
+        [playerIds[0]]: 'national-consensus',
+        [playerIds[1]]: 'national-consensus',
       },
     );
     state = lifecycle(state, 'resolve-round');
@@ -334,7 +339,7 @@ describe('Hollywood Roast match lifecycle', () => {
     let state = selectPrivate(
       started(),
       playerIds[0],
-      'before-lunch',
+      'before-the-next-election',
       'mistake-stat',
     );
     state = finishDraft(state);

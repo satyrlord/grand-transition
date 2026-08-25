@@ -25,11 +25,14 @@ const analyze = (steps: readonly EnglishGrammarStep[]) =>
 
 describe('Hollywood Roast English grammar', () => {
   test('accepts the two minimum sentence forms', () => {
-    const predicate = analyze([add('paper-promise'), add('before-lunch')]);
+    const predicate = analyze([
+      add('national-consensus'),
+      add('before-the-next-election'),
+    ]);
     const object = analyze([
-      add('paper-promise'),
-      add('folds'),
-      add('committee-kite'),
+      add('national-consensus'),
+      add('repackages'),
+      add('national-salvation-committee'),
     ]);
 
     expect(predicate).toMatchObject({
@@ -44,9 +47,9 @@ describe('Hollywood Roast English grammar', () => {
 
   test('accepts noun and noun as a compound subject before either completion form', () => {
     const prefix = analyze([
-      add('velvet-megaphone'),
-      add('and'),
-      add('committee-kite'),
+      add('televised-revolution'),
+      add('coalition-and'),
+      add('national-salvation-committee'),
     ]);
     expect(prefix).toMatchObject({
       accepted: true,
@@ -59,49 +62,49 @@ describe('Hollywood Roast English grammar', () => {
     });
 
     const complete = analyze([
-      add('velvet-megaphone'),
-      add('and'),
-      add('committee-kite'),
-      add('folds'),
-      add('paper-promise'),
+      add('televised-revolution'),
+      add('coalition-and'),
+      add('national-salvation-committee'),
+      add('repackages'),
+      add('national-consensus'),
     ]);
     expect(complete).toMatchObject({
       accepted: true,
       analysis: { complete: true },
     });
     if (complete.accepted) {
-      expect(complete.analysis.renderedPhrases[3]?.text).toBe('fold');
+      expect(complete.analysis.renderedPhrases[3]?.text).toBe('repackage');
     }
   });
 
   test('accepts and after a complete clause with a new or shared subject', () => {
     expect(
       analyze([
-        add('paper-promise'),
-        add('before-lunch'),
-        add('and'),
-        add('velvet-megaphone'),
-        add('before-lunch'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('coalition-and'),
+        add('televised-revolution'),
+        add('before-the-next-election'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
     expect(
       analyze([
-        add('paper-promise'),
-        add('before-lunch'),
-        add('and'),
-        add('folds'),
-        add('velvet-megaphone'),
+        add('national-consensus'),
+        add('before-the-next-election'),
+        add('coalition-and'),
+        add('repackages'),
+        add('televised-revolution'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('keeps a transitive clause complete when and adds another object', () => {
     const compoundObject = analyze([
-      add('paper-promise'),
-      add('outshouts'),
-      add('velvet-megaphone'),
-      add('and'),
-      add('committee-kite'),
+      add('national-consensus'),
+      add('denounces'),
+      add('televised-revolution'),
+      add('coalition-and'),
+      add('national-salvation-committee'),
     ]);
     expect(compoundObject).toMatchObject({
       accepted: true,
@@ -114,12 +117,12 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('paper-promise'),
-        add('outshouts'),
-        add('velvet-megaphone'),
-        add('and'),
-        add('committee-kite'),
-        add('with-the-receipt'),
+        add('national-consensus'),
+        add('denounces'),
+        add('televised-revolution'),
+        add('coalition-and'),
+        add('national-salvation-committee'),
+        add('by-emergency-ordinance'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -128,13 +131,13 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('paper-promise'),
-        add('outshouts'),
-        add('velvet-megaphone'),
-        add('and'),
-        add('committee-kite'),
-        add('folds'),
-        add('paper-promise'),
+        add('national-consensus'),
+        add('denounces'),
+        add('televised-revolution'),
+        add('coalition-and'),
+        add('national-salvation-committee'),
+        add('repackages'),
+        add('national-consensus'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -143,12 +146,12 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('paper-promise'),
-        add('outshouts'),
-        add('velvet-megaphone'),
-        add('and'),
-        add('committee-kite'),
-        add('before-lunch'),
+        add('national-consensus'),
+        add('denounces'),
+        add('televised-revolution'),
+        add('coalition-and'),
+        add('national-salvation-committee'),
+        add('before-the-next-election'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -157,7 +160,7 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('allows a player to end an incomplete sentence for zero damage', () => {
-    const result = analyze([add('paper-promise'), { kind: 'end' }]);
+    const result = analyze([add('national-consensus'), { kind: 'end' }]);
     expect(result).toMatchObject({
       accepted: true,
       analysis: {
@@ -174,7 +177,7 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('returns a typed grammar mistake for a role that does not fit', () => {
-    expect(analyze([add('folds')])).toEqual({
+    expect(analyze([add('repackages')])).toEqual({
       accepted: false,
       faults: [
         {
@@ -182,7 +185,7 @@ describe('Hollywood Roast English grammar', () => {
           code: 'unexpected-role',
           state: 'EXPECT_SUBJECT',
           attempted: 'verb',
-          phraseId: 'folds',
+          phraseId: 'repackages',
           stepIndex: 0,
           expectedRoles: ['noun', 'conjunction'],
         },
@@ -192,9 +195,9 @@ describe('Hollywood Roast English grammar', () => {
 
   test('a finisher ends a complete sentence immediately', () => {
     const result = analyze([
-      add('paper-promise'),
-      add('before-lunch'),
-      add('with-the-receipt'),
+      add('national-consensus'),
+      add('before-the-next-election'),
+      add('by-emergency-ordinance'),
     ]);
     expect(result).toMatchObject({
       accepted: true,

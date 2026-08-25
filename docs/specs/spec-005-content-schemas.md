@@ -8,9 +8,10 @@
 ## Deliver
 
 Implement strict Zod 4 schemas for original Grand Transition content. The
-catalog contains phrases, at least two human characters, at least one scene,
-and a canonical English locale. Animal terms in character titles are
-metaphorical.
+initial catalog contains the Red-Folded Chairman, Thunder Tribune, and Black Sea
+Captain, at least one scene, and a canonical English locale. Each character has
+exactly five original English phrase cards. Animal terms in character titles
+are metaphorical.
 
 A phrase owns an identifier, role, text key, optional number forms, optional
 connector kind, optional grammatical number, scoring and weakness tags,
@@ -82,8 +83,9 @@ localization validation must pass before the phrase can ship.
 
 ## Acceptance criteria
 
-- **AC-005-01:** The shipped two-character scene catalog passes all strict
-  record and aggregate checks.
+- **AC-005-01:** The shipped three-character scene catalog passes all strict
+  record and aggregate checks. It contains only the Red-Folded Chairman,
+  Thunder Tribune, and Black Sea Captain, with five character cards each.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
 - **AC-005-03:** Duplicate IDs, unresolved references, restriction violations,
@@ -95,7 +97,10 @@ localization validation must pass before the phrase can ship.
 - **AC-005-06:** The common and per-character JSON corpora load all phrase
   definitions and English phrase messages without hardcoded TypeScript phrase
   data. Manual-source validation rejects malformed and duplicate cards.
+- **AC-005-07:** The 30-card common corpus contains Romanian political themes
+  in original English adaptations. Every entry records its research rationale,
+  and no entry copies a slogan or makes an allegation about a named person.
 
 ## Objective verifier
 
-`tests/unit/content-schemas.test.ts` verifies AC-005-01 through AC-005-06.
+`tests/unit/content-schemas.test.ts` verifies AC-005-01 through AC-005-07.

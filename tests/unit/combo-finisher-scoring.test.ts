@@ -35,7 +35,7 @@ const score = (
 ) =>
   scoreComboFinisherConstruction({
     attackerPlayerId: 'player',
-    attackerCharacterId: 'civic-fox',
+    attackerCharacterId: 'red-folded-chairman',
     comboState,
     analysis: analysis(ids),
     phrases: sampleContent.phrases,
@@ -45,12 +45,15 @@ const score = (
 
 describe('Hollywood Roast combos and finishers', () => {
   test('repeating the same noun in consecutive complete insults raises its combo', () => {
-    const first = score(['paper-promise', 'before-lunch']);
-    const second = score(['paper-promise', 'before-lunch'], first.comboState);
+    const first = score(['national-consensus', 'before-the-next-election']);
+    const second = score(
+      ['national-consensus', 'before-the-next-election'],
+      first.comboState,
+    );
     expect(first.score.finalDamage).toBe(5);
     expect(second.score.finalDamage).toBe(10);
     expect(second.score.combo).toMatchObject({
-      nounPhraseId: 'paper-promise',
+      nounPhraseId: 'national-consensus',
       chain: 2,
     });
   });
@@ -58,11 +61,14 @@ describe('Hollywood Roast combos and finishers', () => {
   test('multiplies a transitive clause by both noun combo chains', () => {
     const prior: ComboChainState = {
       player: {
-        previousNounIds: ['paper-promise'],
-        chainByNounId: { 'paper-promise': 1 },
+        previousNounIds: ['national-consensus'],
+        chainByNounId: { 'national-consensus': 1 },
       },
     };
-    const result = score(['paper-promise', 'folds', 'paper-promise'], prior);
+    const result = score(
+      ['national-consensus', 'repackages', 'national-consensus'],
+      prior,
+    );
     expect(result.score.breakdown).toContainEqual(
       expect.objectContaining({ kind: 'combo-multiplier', factor: 4 }),
     );
@@ -70,39 +76,43 @@ describe('Hollywood Roast combos and finishers', () => {
 
   test('adds a finisher after clause scoring and applies its weakness separately', () => {
     const result = score(
-      ['paper-promise', 'before-lunch', 'with-the-receipt'],
+      [
+        'national-consensus',
+        'before-the-next-election',
+        'by-emergency-ordinance',
+      ],
       {},
-      ['paperwork'],
+      ['bureaucracy'],
     );
     expect(result.score.breakdown).toContainEqual({
       kind: 'finisher-bonus',
       operation: 'add',
-      phraseId: 'with-the-receipt',
+      phraseId: 'by-emergency-ordinance',
       amount: 4,
     });
     expect(result.score.breakdown).toContainEqual(
       expect.objectContaining({
         kind: 'weakness-match',
-        defenderTag: 'paperwork',
-        phraseId: 'with-the-receipt',
+        defenderTag: 'bureaucracy',
+        phraseId: 'by-emergency-ordinance',
       }),
     );
   });
 
   test('an incomplete insult clears that player combo chain', () => {
     const incomplete = englishGrammarAdapter.analyze({
-      steps: [add('paper-promise'), { kind: 'end' }],
+      steps: [add('national-consensus'), { kind: 'end' }],
       subjectNumber: 'singular',
       objectNumber: 'singular',
     });
     if (!incomplete.accepted) throw new Error('expected accepted end');
     const result = scoreComboFinisherConstruction({
       attackerPlayerId: 'player',
-      attackerCharacterId: 'civic-fox',
+      attackerCharacterId: 'red-folded-chairman',
       comboState: {
         player: {
-          previousNounIds: ['paper-promise'],
-          chainByNounId: { 'paper-promise': 3 },
+          previousNounIds: ['national-consensus'],
+          chainByNounId: { 'national-consensus': 3 },
         },
       },
       analysis: incomplete.analysis,

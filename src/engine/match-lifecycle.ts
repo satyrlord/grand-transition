@@ -31,7 +31,7 @@ import { seededRandomSource, type RandomSource } from './random-source';
 export const initialPride = 100;
 
 export type MatchMode = 'ai' | 'hotseat';
-export type MatchTimerSeconds = 10;
+export type MatchTimerSeconds = 15;
 export type MatchPhase =
   | 'setup'
   | 'round-preparation'
@@ -219,7 +219,7 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     scenePhraseIds: request.scenePhraseIds,
     generalPhraseIds: request.generalPhraseIds,
     aiDifficulty: request.aiDifficulty ?? null,
-    timerSeconds: 10,
+    timerSeconds: 15,
     speechEnabled: request.speechEnabled ?? false,
     privacyEnabled: request.privacyEnabled ?? true,
   };

@@ -34,7 +34,9 @@ for (const viewport of viewports) {
       page.getByRole('heading', { name: 'Set up match' }),
     ).toBeVisible();
     expect(page.url()).toBe(url);
-    await page.getByLabel('Player two character').selectOption('civic-fox');
+    await page
+      .getByLabel('Player two character')
+      .selectOption('red-folded-chairman');
 
     const geometry = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -67,7 +69,7 @@ for (const viewport of viewports) {
     ).toBeVisible();
     await page.getByRole('button', { name: 'Set up match' }).click();
     await expect(page.getByLabel('Player two character')).toHaveValue(
-      'civic-fox',
+      'red-folded-chairman',
     );
   });
 }
@@ -99,10 +101,12 @@ for (const viewport of viewports) {
       await expect(page.getByLabel(name)).toBeFocused();
     }
 
-    await page.getByLabel('Player two character').selectOption('civic-fox');
+    await page
+      .getByLabel('Player two character')
+      .selectOption('red-folded-chairman');
     await page.keyboard.press('Escape');
     await expect(page.getByLabel('Player two character')).toHaveValue(
-      'civic-fox',
+      'red-folded-chairman',
     );
 
     const eventFacts = await page.evaluate(() => {

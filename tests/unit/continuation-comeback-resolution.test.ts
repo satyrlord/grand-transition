@@ -30,7 +30,7 @@ function completeConstruction(): Readonly<{
   analysis: EnglishGrammarAnalysis;
   publicText: string;
 }> {
-  const phraseIds = ['paper-promise', 'before-lunch'] as const;
+  const phraseIds = ['national-consensus', 'before-the-next-election'] as const;
   const steps: readonly EnglishGrammarStep[] = phraseIds.map((phraseId) => ({
     kind: 'phrase',
     phrase: prepareEnglishGrammarPhrase(
@@ -53,13 +53,13 @@ function completeConstruction(): Readonly<{
 
 function phrasesForDamage(damage: number): readonly Phrase[] {
   return sampleContent.phrases.map((phrase) => {
-    if (phrase.id === 'paper-promise') {
+    if (phrase.id === 'national-consensus') {
       return { ...phrase, tags: ['neutral'] };
     }
-    if (phrase.id === 'before-lunch') {
+    if (phrase.id === 'before-the-next-election') {
       return {
         ...phrase,
-        customScores: [{ leftNounId: 'paper-promise', score: damage }],
+        customScores: [{ leftNounId: 'national-consensus', score: damage }],
         tags: ['neutral'],
       };
     }
@@ -72,8 +72,9 @@ function selection(tier: ComebackTier): ComebackSelection {
   return {
     tier,
     ...rule,
-    closingLineKey: `comeback.civic-fox.${tier}`,
-    closingLine: englishGameLocale.messages[`comeback.civic-fox.${tier}`]!,
+    closingLineKey: `comeback.red-folded-chairman.${tier}`,
+    closingLine:
+      englishGameLocale.messages[`comeback.red-folded-chairman.${tier}`]!,
   };
 }
 
@@ -156,12 +157,12 @@ describe('continuation resolution', () => {
   test('breaks at 16 damage and clears only the carrier combo chains', () => {
     const comboState: ComboChainState = {
       [players[0]]: {
-        previousNounIds: ['paper-promise'],
-        chainByNounId: { 'paper-promise': 3 },
+        previousNounIds: ['national-consensus'],
+        chainByNounId: { 'national-consensus': 3 },
       },
       [players[1]]: {
-        previousNounIds: ['velvet-megaphone'],
-        chainByNounId: { 'velvet-megaphone': 2 },
+        previousNounIds: ['televised-revolution'],
+        chainByNounId: { 'televised-revolution': 2 },
       },
     };
     const result = resolve(
@@ -179,7 +180,7 @@ describe('continuation resolution', () => {
       chainByNounId: {},
     });
     expect(result.comboState[players[1]]!.previousNounIds).toEqual([
-      'paper-promise',
+      'national-consensus',
     ]);
   });
 
@@ -203,8 +204,8 @@ describe('continuation resolution', () => {
   test('a later commit compares every restored noun with the last commit', () => {
     const comboState: ComboChainState = {
       [players[0]]: {
-        previousNounIds: ['paper-promise'],
-        chainByNounId: { 'paper-promise': 2 },
+        previousNounIds: ['national-consensus'],
+        chainByNounId: { 'national-consensus': 2 },
       },
     };
     const carried = resolve(
@@ -220,7 +221,7 @@ describe('continuation resolution', () => {
       carried.comboState,
     );
     expect(committed.players[players[0]]!.score?.combo).toEqual({
-      nounPhraseId: 'paper-promise',
+      nounPhraseId: 'national-consensus',
       phraseIndex: 0,
       chain: 3,
     });
@@ -361,7 +362,7 @@ describe('comeback charge, selection, and scoring', () => {
       playerInput(0, { damage: 5 }).construction.analysis,
     );
     expect(withLine.players[players[0]]!.closingLine).toBe(
-      'The minutes do not support that flourish.',
+      'Consensus requires patience, especially with your argument.',
     );
   });
 

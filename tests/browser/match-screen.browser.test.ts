@@ -22,7 +22,16 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.privateCards).toHaveLength(2);
   expect(match.querySelectorAll('.shared-board > li')).toHaveLength(9);
   expect(match.querySelectorAll('.private-hand ol > li')).toHaveLength(2);
-  expect(match.querySelector('.broadcast-stage-art')).not.toBeNull();
+  const portraits = [
+    ...match.querySelectorAll<HTMLImageElement>('.character-portrait'),
+  ];
+  expect(portraits).toHaveLength(2);
+  expect(portraits.map((portrait) => portrait.src)).toEqual(
+    expect.arrayContaining([
+      expect.stringContaining('red-folded-chairman'),
+      expect.stringContaining('thunder-tribune'),
+    ]),
+  );
   expect(match.querySelector('.match-footer')).not.toBeNull();
   expect(match.querySelectorAll('.player-sentence')).toHaveLength(2);
   expect(match.querySelectorAll('[data-turn-state="active"]')).toHaveLength(1);
@@ -30,10 +39,13 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(
     match.querySelector('[data-turn-state="active"] .player-turn-status')
       ?.textContent,
-  ).toContain('Has the floor');
-  expect(match.querySelector('.private-hand-heading')?.textContent).toContain(
-    'Has the floor',
-  );
+  ).toContain('Your turn');
+  expect(
+    match.querySelectorAll('.player-turn-status:not([hidden])'),
+  ).toHaveLength(1);
+  expect(
+    match.querySelector('.private-hand-heading')?.textContent,
+  ).not.toContain('Has the floor');
   const actionIcons = match.querySelectorAll('svg.action-icon');
   expect(actionIcons).toHaveLength(3);
   for (const icon of actionIcons) {
@@ -46,11 +58,16 @@ test('renders an immutable complete match snapshot and previews without changing
     ).toBe(true);
   }
 
+  const previewCard = snapshot.sharedCards.find(
+    (card) => card.action === 'select' && card.previewText.trim() !== '',
+  )!;
   const actionable = match.querySelector<HTMLButtonElement>(
-    '.shared-board .phrase-card:not(:disabled)',
+    `[data-card-id="${previewCard.reference!.cardId}"]`,
   )!;
   const accessibleName = actionable.getAttribute('aria-label')!;
-  expect(accessibleName).toMatch(/Role (noun|verb|predicate)/u);
+  expect(accessibleName).toMatch(
+    /Role (noun|verb|predicate|conjunction|ending|continuation)/u,
+  );
   expect(accessibleName).toContain('Shared card');
   expect(accessibleName).toMatch(/Available/u);
   expect(accessibleName).toMatch(/weakness/u);
@@ -67,8 +84,11 @@ test('renders an immutable complete match snapshot and previews without changing
 
 test('clears a focus preview when an authoritative snapshot arrives', async () => {
   const match = await startMatch();
+  const previewCard = match.snapshot!.sharedCards.find(
+    (card) => card.action === 'select' && card.previewText.trim() !== '',
+  )!;
   const card = match.querySelector<HTMLButtonElement>(
-    '.phrase-card:not(:disabled)',
+    `[data-card-id="${previewCard.reference!.cardId}"]`,
   )!;
   card.focus();
   await match.updateComplete;
@@ -84,6 +104,27 @@ test('clears a focus preview when an authoritative snapshot arrives', async () =
 
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
     'Authoritative next-turn sentence',
+  );
+});
+
+test('keeps the current sentence visible for an empty legal preview', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const card = [...snapshot.privateCards, ...snapshot.sharedCards].find(
+    (candidate) =>
+      candidate.action === 'select' && candidate.previewText.trim() === '',
+  );
+  expect(card?.reference).toBeDefined();
+
+  match
+    .querySelector<HTMLButtonElement>(
+      `[data-card-id="${card!.reference!.cardId}"]`,
+    )!
+    .focus();
+  await match.updateComplete;
+
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
+    snapshot.sentenceText,
   );
 });
 
@@ -240,13 +281,18 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   expect(match.querySelector('.action-fault')).toBeNull();
 });
 
-test('announces 5 seconds and expires one ten-second turn', async () => {
+test('announces 10 and 5 seconds and expires one 15-second turn', async () => {
   vi.useFakeTimers();
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
   match.addEventListener(matchCommandEventName, (event) =>
     commands.push(event),
   );
+
+  await vi.advanceTimersByTimeAsync(5_000);
+  await match.updateComplete;
+  expect(match.textContent).toContain('Ten seconds remain.');
+  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
