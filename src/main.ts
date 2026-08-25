@@ -2,6 +2,7 @@ import './styles/title-screen.css';
 import './styles/screen-shell.css';
 import './styles/match-screen.css';
 import './styles/resolution-results-screen.css';
+import './styles/interruption-screen.css';
 import './app/app-shell';
 
 if (import.meta.env.DEV) {

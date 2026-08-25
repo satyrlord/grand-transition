@@ -77,16 +77,13 @@ benchmarks exist.
 
 - Make every tactical state and modifier understandable.
 - Keep grammar, content, and locale-neutral rules in their owning layers.
-- Preserve privacy and accessibility from the first surface that exercises
-  them.
+- Preserve privacy from the first surface that exercises it.
 - Prefer original, legible political-theatre character over generic game or
   dashboard presentation.
 - Deliver the product in small, dependency-ordered milestones.
 
-## Accessibility & Inclusion
+## Supported Layout
 
-Use semantic Document Object Model (DOM) content for controls and required
-text. Support keyboard use, accessible names, readable contrast, zoomed text,
-reduced motion, and private hotseat presentation as their owning milestones
-become active. The title and setup screens expose semantic headings, labeled
-controls, associated errors, deterministic focus, and text reflow.
+Support horizontal browser content viewports of at least 1024 by 720 CSS
+pixels. Recommend 1920 by 1080 and PC. Use the same viewport rule for every
+device and operating system. Block unsupported viewports without a bypass.

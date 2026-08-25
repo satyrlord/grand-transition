@@ -19,15 +19,15 @@ do not stop after a document change.
 Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, each applicable
 approved milestone specification, repository status, owning source, callers,
 tests, and tool configuration. Identify affected engine, grammar, AI, content,
-localization, UI, accessibility, persistence, asset, security, performance, and
+localization, UI, persistence, asset, security, performance, and
 deployment contracts.
 
 Each changed behavior must have one owner and one objective verifier.
 
 ## Define and implement
 
-Record user value, exact behavior, exclusions, failure behavior, privacy and
-accessibility effects, acceptance criteria, and any manual evidence. Update the
+Record user value, exact behavior, exclusions, failure behavior, privacy
+effects, acceptance criteria, and any manual evidence. Update the
 smallest owning specification when behavior changes.
 Implement the complete authorized slice in the owning layer.
 Keep rules out of Lit components.

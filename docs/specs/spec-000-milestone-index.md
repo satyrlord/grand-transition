@@ -40,9 +40,9 @@ complete an approved specification.
   data-driven and validated. Runtime network calls are prohibited.
 - Readability has priority over spectacle. The player must understand the turn,
   available actions, information ownership, and every damage modifier.
-- Accessibility, privacy, security, performance, original-asset, and static
-  GitHub Pages requirements apply from the first milestone that can exercise
-  them. Later work must not regress them.
+- Privacy, security, performance, original-asset, and static GitHub Pages
+  requirements apply from the first milestone that can exercise them. Later
+  work must not regress them.
 - Online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards,
   chat, servers, live-service systems, public content sharing, blockchain,
   tokens, and real-money purchases are out of scope.
@@ -85,7 +85,7 @@ Each milestone specification must contain:
 2. A numbered acceptance section. Identifiers use
    **AC-NNN-01**, **AC-NNN-02**, and so on.
 3. At least one positive path, each material boundary, each owned failure path,
-   and each security, privacy, or accessibility constraint that applies.
+   and each security or privacy constraint that applies.
 4. One named verifier for each criterion. A verifier is a test file, command,
    deterministic manual procedure, or recorded measurement.
 5. An evidence record when the criterion depends on a browser, operating
@@ -111,37 +111,36 @@ speech text.
 
 ## Shared browser and interface measurements
 
-Unless a milestone gives a narrower matrix, browser UI acceptance uses these
-viewports in CSS pixels:
+Browser UI support uses the content viewport in CSS pixels. A supported
+viewport has a width of at least 1024 pixels, a height of at least 720 pixels,
+and a width greater than its height. PC is the recommended platform, but the
+application does not inspect or block an operating system or device class.
 
-| Class            | Viewport    |
-| ---------------- | ----------- |
-| Desktop          | 1280 by 720 |
-| Tablet           | 1024 by 768 |
-| Narrow landscape | 844 by 390  |
-| Portrait mobile  | 390 by 844  |
-| Minimum width    | 320 by 568  |
+The acceptance matrix is:
 
-At each applicable viewport:
+| Class                 | Viewport     |
+| --------------------- | ------------ |
+| Minimum landscape     | 1024 by 720  |
+| Four-by-three         | 1024 by 768  |
+| Common landscape      | 1280 by 720  |
+| Recommended PC        | 1920 by 1080 |
+
+All landscape viewports at or above both minimum dimensions are supported.
+Portrait and square viewports are unsupported even when both dimensions meet
+their minima. At each supported viewport:
 
 - Required text and controls must not overlap, clip, or leave the viewport.
 - The page must not scroll horizontally. A board or log can scroll inside a
   named container when its owning specification permits it.
-- At 200 percent browser zoom, text and controls must reflow without loss of
-  content or function.
-- Pointer targets must be at least 24 by 24 CSS pixels. Primary touch actions
-  must be at least 44 by 44 CSS pixels.
-- Normal text contrast must be at least 4.5:1. Large text and non-text control
-  contrast must be at least 3:1.
-- Visible focus must not be fully hidden by sticky or fixed content.
 - Synthetic UI strings that are 40 percent longer than the longest shipped
   English string must wrap without loss of meaning.
-- Automated axe scans must have no serious or critical finding.
 
-Essential information must remain in semantic Document Object Model (DOM)
-content. Color, motion, sound, hover, or speech must not be its only carrier.
-Reduced motion removes shake, large translation, parallax, and looping
-nonessential motion. No effect can flash more than three times in one second.
+An unsupported viewport replaces the application with a blocking compatibility
+screen. It names the 1024 by 720 CSS-pixel minimum, requires landscape
+orientation, recommends 1920 by 1080 and PC, and provides no bypass. If a match
+is active, the screen preserves the match and exact remaining turn time. The
+match resumes automatically only after the viewport becomes supported, unless
+the player also selected manual Pause.
 
 ## External validation tools
 
@@ -158,8 +157,8 @@ Milestones 001 and 014 through 029 affect the user-visible user interface (UI).
 Each must complete these two separate validations against the implemented slice
 in its production browser build:
 
-1. Run `$impeccable audit` for technical accessibility, performance, theming,
-   responsive behavior, and implementation integrity. Run and verify the
+1. Run `$impeccable audit` for performance, theming, supported landscape
+   layout, and implementation integrity. Run and verify the
    bundled detector. Record the score and positive findings. Record each
    priority 0 through priority 3 (P0-P3) issue and its disposition.
 2. After audit repairs, run `$impeccable critique` on the same stable target.
@@ -169,8 +168,8 @@ in its production browser build:
    scores, cognitive-load and persona findings, design strengths, priorities,
    the persisted snapshot, and every issue disposition.
 
-For both validations, inspect affected desktop and mobile states together in a
-bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
+For both validations, inspect the affected supported landscape states together
+in a bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
 Record accepted or deferred P2 and P3 findings with rationale and an owning
 future milestone. An unavailable built surface blocks these validations; a
 source-only review does not satisfy them.
@@ -212,8 +211,8 @@ source-only review does not satisfy them.
     hotseat draft is playable with temporary art.
 17. [Resolution and results UI](spec-017-resolution-results-ui.md). Budget: 8. A
     full browser match explains results and supports rematch.
-18. [Responsive accessibility](spec-018-responsive-accessibility.md). Budget: 8.
-    Core access and viewport contracts pass.
+18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
+    The viewport gate and supported landscape contracts pass.
 19. [Hotseat privacy](spec-019-hotseat-privacy.md). Budget: 6. Private
     information survives safe handovers.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
@@ -252,7 +251,7 @@ context and files needed for each implementation session.
 | Scoring and advanced match rules    | 010-013            |
 | Replay, simulation, developer tools | 014                |
 | State ownership and browser screens | 015-017            |
-| Responsive accessibility            | 018, 025, 028      |
+| Landscape viewport support          | 018, 025, 028      |
 | Hotseat privacy and local state     | 019-020            |
 | AI and ladder                       | 021-022            |
 | Visual assets and presentation      | 023, 025-026       |

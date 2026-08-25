@@ -1,6 +1,6 @@
 ---
 name: verify-game
-description: Verify Grand Transition in its production browser build. Use for gameplay, layout, accessibility, persistence, speech, assets, security, performance, or GitHub Pages subpath evidence.
+description: Verify Grand Transition in its production browser build. Use for gameplay, landscape layout, persistence, speech, assets, security, performance, or GitHub Pages subpath evidence.
 ---
 
 # Verify the production game
@@ -25,14 +25,15 @@ If build or serve commands do not exist, report the affected proof as
 
 Exercise applicable AI and hotseat matches through visible controls and valid
 gestures.
-Verify pointer input, keyboard input, focus, sentence legality, redraw, grammar
+Verify pointer input, sentence legality, redraw, grammar
 fault, continuation, comeback, and simultaneous damage.
 Verify sudden death, rematch, settings persistence, speech support, and speech
 cancellation.
-Verify hidden-hand privacy, reduced motion, mobile layout, and Pages asset paths.
+Verify hidden-hand privacy, the supported landscape matrix, the blocking
+viewport gate, and Pages asset paths.
 
-Use direct assertions for state, persisted values, roles, names, and focus.
-Use direct assertions for announcements, geometry, overlap, scrolling, and
+Use direct assertions for state, persisted values, roles, and names.
+Use direct assertions for geometry, overlap, scrolling, and
 computed styles.
 Use direct assertions for network requests, console errors, CSP, asset loading,
 and deterministic screenshots.

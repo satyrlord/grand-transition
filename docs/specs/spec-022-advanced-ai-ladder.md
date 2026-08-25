@@ -21,8 +21,6 @@ evaluates the normal three-damage cost of a wrong selection, predicts
 continuation breaks, manages charge, and
 applies personality inside the protected ordering below. It thinks for 900 to
 1800 ms.
-Reduced-delay accessibility shortens the presentation delay. It does not
-change the search budget.
 Fixed seed, difficulty, and history reproduce choices.
 
 ## Search contract
@@ -46,8 +44,7 @@ weights by `1 + (trait - 0.5) * 0.4`, producing a multiplier from 0.8 through
 ordering.
 
 Party presentation delay is a seeded integer 700 through 1500 milliseconds.
-Palace delay is 900 through 1800. Reduced delay is 100 milliseconds. Search
-node limits do not change.
+Palace delay is 900 through 1800. Search node limits do not change.
 
 ## Ladder contract
 
@@ -72,8 +69,8 @@ fallback and never invents advancement.
   reproduces choice, evaluated-node count, and principal reply for fixed input.
 - **AC-022-03:** Personality endpoint traits produce only 0.8 and 1.2
   nonlethal multipliers and never reverse a protected priority.
-- **AC-022-04:** All delay endpoints and reduced delay match their exact ranges
-  without changing the selected command or node count.
+- **AC-022-04:** All delay endpoints match their exact ranges without changing
+  the selected command or node count.
 - **AC-022-05:** Fixed character and seed reproduce nine unique opponents and
   scene order. Win, loss, abandon, resume, completion, corruption, and reset
   each have a golden progress snapshot.

@@ -1,6 +1,6 @@
 ---
 name: experience-reviewer
-description: Review Grand Transition user interface, accessibility, responsive behavior, motion, audio feedback, and hotseat speech privacy without editing files.
+description: Review Grand Transition user interface, landscape behavior, motion, audio feedback, and hotseat speech privacy without editing files.
 tools:
   - read
   - search
@@ -25,12 +25,11 @@ Review an available production build when it exists. Do not edit files. If a
 required build or test has not run, give the coordinator the exact command and
 report that evidence as blocked.
 
-Check tactical clarity and semantic Document Object Model (DOM) content. Check
-Lit snapshot and command boundaries. Check keyboard paths, pointer paths,
-focus, accessible names, zoom, and contrast. Check reduced motion, responsive
-layouts, phrase-card states, and score explanations. Check text-to-speech
+Check tactical clarity and visible interface content. Check Lit snapshot and
+command boundaries. Check pointer paths, the supported landscape matrix, the
+blocking viewport gate, phrase-card states, and score explanations. Check text-to-speech
 fallback and hotseat privacy. A screenshot can support a visual claim,
-but it cannot prove interaction, state, or accessibility by itself.
+but it cannot prove interaction or state by itself.
 
 Report confirmed findings with severity, exact location, direct evidence,
 impact, smallest remedy, and a verifier. Separate automated, visual, audible,

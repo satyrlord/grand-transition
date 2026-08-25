@@ -7,8 +7,8 @@
 
 ## Deliver
 
-Add sound, music, speech, animation, timer, contrast, and accessibility settings
-plus tutorial state. Implement the initial versioned codec, browser storage,
+Add sound, music, speech, timer, and privacy settings plus tutorial state.
+Implement the initial versioned codec, browser storage,
 corrupt-data recovery, an in-memory fallback, and a non-blocking failure notice.
 
 Use `localStorage` for settings and tutorial state. IndexedDB needs a later
@@ -27,11 +27,6 @@ adapter and show a non-blocking notice that changes will not persist.
 | Speech enabled | Boolean | false |
 | Speech voice URI | String or null | null |
 | Speech rate | 0.5 through 2, step 0.1 | 1 |
-| Animation mode | system, full, or reduced | system |
-| Contrast mode | system, standard, or high | system |
-| Keyboard hints | auto, always, or never | auto |
-| Subtitles | Boolean | true |
-| Reduced delay | Boolean | false |
 | Privacy | Boolean | true |
 
 Tutorial state contains `completed`, `dismissed`, and nullable
@@ -44,8 +39,8 @@ and stepwise migration. Malformed data returns `invalid-data`; an unknown
 version returns `unsupported-version`. Storage failures are
 `storage-unavailable`, `storage-quota`, or `storage-security`.
 
-The fallback notice uses `role=status`, stays until dismissed, names that
-changes will not persist, and does not cover or disable setup or play. The
+The fallback notice stays until dismissed, names that changes will not persist,
+and does not cover or disable setup or play. The
 in-memory adapter remains active for the browser session.
 
 ## Acceptance criteria

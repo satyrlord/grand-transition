@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import './screens/match-screen';
+import './screens/interruption-screen';
 import './screens/resolution-results-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
@@ -27,6 +28,7 @@ import {
   type SetupSnapshot,
 } from './screens/setup-screen';
 import { type ShowSetupEvent } from './screens/title-screen';
+import { currentViewport, isSupportedViewport } from './viewport-support';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
@@ -114,11 +116,15 @@ export class GrandTransitionApp extends LitElement {
     view: { state: true },
     setupSnapshot: { state: true },
     matchState: { state: true },
+    viewportSupported: { state: true },
+    manuallyPaused: { state: true },
   };
 
   declare private view: ScreenView;
   declare private setupSnapshot: SetupSnapshot;
   declare private matchState: MatchState | null;
+  declare private viewportSupported: boolean;
+  declare private manuallyPaused: boolean;
   private readonly screenController = new ScreenController();
 
   constructor() {
@@ -126,6 +132,8 @@ export class GrandTransitionApp extends LitElement {
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
     this.matchState = null;
+    this.viewportSupported = isSupportedViewport(currentViewport());
+    this.manuallyPaused = false;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -140,16 +148,50 @@ export class GrandTransitionApp extends LitElement {
         (!this.matchState || this.matchState.phase === 'setup')
           ? 'setup'
           : view;
-      void this.focusViewHeading();
     });
+    window.addEventListener('resize', this.syncViewportSupport);
+    window.visualViewport?.addEventListener('resize', this.syncViewportSupport);
+    this.syncViewportSupport();
   }
 
   override disconnectedCallback(): void {
     this.screenController.disconnect();
+    window.removeEventListener('resize', this.syncViewportSupport);
+    window.visualViewport?.removeEventListener(
+      'resize',
+      this.syncViewportSupport,
+    );
     super.disconnectedCallback();
   }
 
   protected override render() {
+    if (
+      this.view === 'match' &&
+      this.matchState?.draft &&
+      (this.matchState.phase === 'drafting' ||
+        this.matchState.phase === 'sudden-death')
+    ) {
+      return html`<grand-transition-match
+        .snapshot=${createMatchScreenSnapshot(this.matchState)}
+        .pauseMode=${
+          !this.viewportSupported
+            ? 'viewport'
+            : this.manuallyPaused
+              ? 'manual'
+              : 'running'
+        }
+        @match-command=${this.reduceMatchCommand}
+        @pause-match=${this.pauseMatch}
+        @resume-match=${this.resumeMatch}
+      ></grand-transition-match>`;
+    }
+
+    if (!this.viewportSupported) {
+      return html`<grand-transition-interruption
+        kind="unsupported-viewport"
+      ></grand-transition-interruption>`;
+    }
+
     switch (this.view) {
       case 'title':
         return html`<grand-transition-title
@@ -163,16 +205,6 @@ export class GrandTransitionApp extends LitElement {
           @start-match=${this.startMatch}
         ></grand-transition-setup>`;
       case 'match':
-        if (
-          this.matchState?.draft &&
-          (this.matchState.phase === 'drafting' ||
-            this.matchState.phase === 'sudden-death')
-        ) {
-          return html`<grand-transition-match
-            .snapshot=${createMatchScreenSnapshot(this.matchState)}
-            @match-command=${this.reduceMatchCommand}
-          ></grand-transition-match>`;
-        }
         if (this.matchState?.pendingResolution) {
           return html`<grand-transition-resolution-results
             .snapshot=${createResolutionResultsSnapshot(this.matchState)}
@@ -189,7 +221,6 @@ export class GrandTransitionApp extends LitElement {
     event.stopPropagation();
     this.screenController.showSetup();
     this.view = 'setup';
-    void this.focusViewHeading();
   };
 
   private readonly showTitle = (): void => {
@@ -229,9 +260,9 @@ export class GrandTransitionApp extends LitElement {
     state = reduceLifecycle(state, 'start-match');
     state = reduceLifecycle(state, 'prepare-round');
     this.matchState = state;
+    this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
-    void this.focusViewHeading();
   };
 
   private readonly reduceMatchCommand = (event: MatchCommandEvent): void => {
@@ -257,27 +288,27 @@ export class GrandTransitionApp extends LitElement {
     }
     this.matchState = state;
     if (event.detail.type === 'return-to-setup') {
+      this.manuallyPaused = false;
       this.screenController.returnToSetup();
       this.view = 'setup';
     }
-    if (
-      state.pendingResolution ||
-      event.detail.type === 'prepare-round' ||
-      event.detail.type === 'rematch' ||
-      event.detail.type === 'return-to-setup'
-    ) {
-      void this.focusViewHeading();
+  };
+
+  private readonly pauseMatch = (event: Event): void => {
+    event.stopPropagation();
+    this.manuallyPaused = true;
+  };
+
+  private readonly resumeMatch = (event: Event): void => {
+    event.stopPropagation();
+    if (this.viewportSupported) {
+      this.manuallyPaused = false;
     }
   };
 
-  private async focusViewHeading(): Promise<void> {
-    await this.updateComplete;
-    const screen = this.querySelector<LitElement>(
-      'grand-transition-title, grand-transition-setup, grand-transition-match, grand-transition-resolution-results',
-    );
-    await screen?.updateComplete;
-    screen?.querySelector<HTMLElement>('h1')?.focus();
-  }
+  private readonly syncViewportSupport = (): void => {
+    this.viewportSupported = isSupportedViewport(currentViewport());
+  };
 }
 
 function configuredPlayer(

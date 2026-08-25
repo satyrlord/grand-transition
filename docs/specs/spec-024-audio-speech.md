@@ -9,7 +9,7 @@
 
 Implement replaceable sound, music, and speech adapters plus mixer controls.
 Add original slice audio and optional speech voice, rate, volume, cancellation,
-subtitles, unavailable state, and hotseat suppression.
+unavailable state, and hotseat suppression.
 
 Minimum viable product (MVP) audio includes original menu music and distinct
 scene treatment. It includes role-select, commit, light and heavy hit, weakness,
@@ -45,8 +45,7 @@ setting. Any user gesture that enables audio resumes the audio context before
 playback.
 
 Speech cancellation completes within 100 milliseconds and suppresses queued
-`end` callbacks from changing the new screen. Subtitles show the exact public
-utterance and contain no speech-only information.
+`end` callbacks from changing the new screen.
 
 ## Acceptance criteria
 
@@ -63,11 +62,11 @@ utterance and contain no speech-only information.
   and rematch states speak nothing. Cancellation completes within 100
   milliseconds.
 - **AC-024-06:** Chromium, Firefox, and WebKit browser evidence records audible
-  menu, scene, effect, speech, subtitle, mute, and silent-fallback results.
+  menu, scene, effect, speech, mute, and silent-fallback results.
 
 ## Impeccable user interface validation
 
-1. Run `$impeccable audit` on mixer, speech, subtitle, and unavailable states.
+1. Run `$impeccable audit` on mixer, speech, and unavailable states.
 2. After audit repairs, run `$impeccable critique` on the same audio user
    interface (UI) slice.
 

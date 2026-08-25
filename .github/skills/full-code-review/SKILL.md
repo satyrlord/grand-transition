@@ -1,6 +1,6 @@
 ---
 name: full-code-review
-description: Review a Grand Transition diff, branch, milestone, or checkout for correctness, safety, architecture, tests, accessibility, and maintainability. Repair confirmed findings only when the user requests it.
+description: Review a Grand Transition diff, branch, milestone, or checkout for correctness, safety, architecture, tests, and maintainability. Repair confirmed findings only when the user requests it.
 ---
 
 # Review Grand Transition code
@@ -29,8 +29,8 @@ Check each applicable area:
   speech, logs, and exports.
 - Check content for valid schemas, localization, reachability, fictional
   characters, editorial safety, and provenance.
-- Preserve semantic controls, keyboard use, focus, reduced motion, zoom,
-  responsive layouts, and visible explanations in UI changes.
+- Preserve pointer controls, the supported landscape matrix, the blocking
+  viewport gate, and visible explanations in UI changes.
 - Preserve safe persistence failure behavior.
   Check asset and deployment paths, the Pages base path, production network
   rules, and CSP rules.

@@ -1,0 +1,134 @@
+@layer screen {
+  grand-transition-interruption {
+    display: block;
+    min-height: 100svh;
+  }
+
+  .interruption-screen {
+    --interruption-ink: #071522;
+    --interruption-panel: #0d2235;
+    --interruption-paper: #eee4d3;
+    --interruption-brass: #b48a48;
+    --interruption-red: #8f2822;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    place-items: center;
+    min-width: 100%;
+    min-height: 100svh;
+    padding: clamp(2rem, 5vw, 5rem);
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgb(5 8 11 / 22%), rgb(5 8 11 / 78%)),
+      var(--interruption-ink);
+    color: var(--interruption-paper);
+  }
+
+  .interruption-broadcast-mark,
+  .interruption-screen footer {
+    color: var(--interruption-brass);
+    font: 700 0.82rem/1 var(--font-display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .interruption-broadcast-mark {
+    justify-self: start;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--interruption-brass);
+  }
+
+  .interruption-notice {
+    width: min(54rem, 78vw);
+    padding: clamp(2.5rem, 6vw, 5.5rem);
+    border: 3px double var(--interruption-brass);
+    background: var(--interruption-panel);
+    box-shadow:
+      0 1.5rem 3.2rem rgb(0 0 0 / 45%),
+      inset 0 0 0 0.3rem var(--interruption-ink);
+    text-align: center;
+  }
+
+  .interruption-status {
+    margin: 0 0 1.2rem;
+    color: var(--interruption-brass);
+    font: 700 0.82rem/1 var(--font-display);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .interruption-notice h1 {
+    margin: 0;
+    color: var(--interruption-paper);
+    font:
+      700 clamp(3.4rem, 7vw, 6rem) / 0.88 'Cormorant SC',
+      Georgia,
+      'Times New Roman',
+      serif;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .interruption-notice > p:not(.interruption-status) {
+    max-width: 56ch;
+    margin: 1.5rem auto 0;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+  }
+
+  .interruption-notice dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    max-width: 38rem;
+    margin: 2rem auto 0;
+    border: 1px solid var(--interruption-brass);
+    background: var(--interruption-brass);
+  }
+
+  .interruption-notice dl > div {
+    padding: 1rem;
+    background: var(--interruption-ink);
+  }
+
+  .interruption-notice dt {
+    color: var(--interruption-brass);
+    font: 700 0.72rem/1 var(--font-display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .interruption-notice dd {
+    margin: 0.45rem 0 0;
+    font:
+      700 1.2rem/1 ui-monospace,
+      'Cascadia Code',
+      Consolas,
+      monospace;
+  }
+
+  .interruption-notice button {
+    min-width: 13rem;
+    min-height: 3rem;
+    margin-block-start: 2rem;
+    padding: 0.7rem 1.4rem;
+    border: 3px double var(--interruption-brass);
+    background: var(--interruption-red);
+    color: var(--interruption-paper);
+    font:
+      700 1.1rem/1 'Cormorant SC',
+      Georgia,
+      'Times New Roman',
+      serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .interruption-notice button:hover {
+    background: #a83831;
+  }
+
+  .interruption-screen footer {
+    justify-self: end;
+  }
+}

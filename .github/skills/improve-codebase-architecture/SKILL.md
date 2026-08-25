@@ -29,7 +29,7 @@ testability. Include file evidence.
   rendering implementations.
 - Determinism: state, replay, AI, grammar, and content validation must remain
   seeded and reproducible.
-- Privacy and accessibility: keep hotseat secrecy and semantic UI explicit.
+- Privacy: keep hotseat secrecy explicit.
 
 Do not add a repository, service, manager, wrapper, port, or adapter for one
 operation.
