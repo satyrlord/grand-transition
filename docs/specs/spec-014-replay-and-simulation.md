@@ -21,6 +21,31 @@ animation. They also run AI versus AI, import or export JavaScript Object
 Notation (JSON) replays, and validate content. Production does not include
 these controls.
 
+Replay, match-log, simulation, and developer-control behavior is development
+and test infrastructure. It is not a player-facing post-match feature. The
+production application must not expose it at match completion.
+
+### Temporary click audit
+
+Until the reported valid-phrase removal defect is manually confirmed as fixed,
+`npm run dev` always enables one local, in-memory click audit. `npm run prod`
+builds and starts the production preview with the audit always disabled. The
+audit records every activated control, dispatched UI or game action, and
+authoritative match reducer result. One click identifier correlates the UI
+click, command, reducer result, and settled rendered state. Each game result
+contains sanitized before, immediate reducer, and final lifecycle summaries.
+These summaries include turn sequence, board availability, construction counts,
+grammar state, and selected shared phrase identifiers.
+
+The audit persists only in the current browser tab. It can be copied,
+downloaded, or cleared. It makes no network or storage request. It never records
+a private phrase identifier, private phrase text, private card identifier,
+browser identifier, or machine data. A private selection records only its source
+and one-based hand slot. Production must omit the audit component, labels,
+styles, and event publishing. Remove this temporary contract, implementation,
+and its focused tests after the user confirms that the defect cannot be
+reproduced manually.
+
 The development workflow uses the visible phases `Configure`, `Run`, and
 `Evidence`. `Run AI versus AI` is the primary action. Seed, Pride, and charge
 are required integers with inline errors; actions that consume setup stay
@@ -79,6 +104,17 @@ Milestone 002 threshold remains 70 percent.
 - **AC-014-07:** A development-browser flow proves the three workflow phases,
   primary simulation action, inline setup errors, dependent-action disabling,
   persistent evidence type, replay-only import, copy, and local JSON download.
+- **AC-014-08:** The normal development command always enables the click audit.
+  Recording starts before the first application control can activate, and the
+  closed audit control does not cover an enabled match control for either side.
+  One shared-card click produces correlated click, command, reducer-result, and
+  settled-state entries. The result proves the exact before and after board and
+  construction counts. Match start records its immediate reducer state before
+  round preparation. A private-card scan finds only its source and valid
+  one-based hand slot, with no private phrase text, phrase identifier, or card
+  identifier. An unknown private card has no fabricated slot. The `prod`
+  command builds and starts a production preview that contains no click-audit
+  component or label.
 
 ## Impeccable UI validation
 
@@ -107,4 +143,6 @@ Chromium. `tests/unit/simulation-cli.test.ts` verifies the command-line
 boundaries, errors, summary, and output bytes. The per-file thresholds in
 `vitest.browser.config.ts`, the development-control browser tests, the
 production scan, the Impeccable evidence, and `npm run ci` verify AC-014-06 and
-AC-014-07.
+AC-014-07. `tests/browser/click-audit.browser.test.ts` and the development and
+production browser flows in `e2e/static-app-security.spec.ts` verify the
+temporary AC-014-08.

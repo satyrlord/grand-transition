@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import './screens/match-screen';
 import './screens/interruption-screen';
-import './screens/resolution-results-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
 import { basicScoringBalance } from '../content/basic-scoring-balance';
@@ -21,7 +20,6 @@ import {
   createMatchScreenSnapshot,
   type MatchCommandEvent,
 } from './screens/match-screen';
-import { createResolutionResultsSnapshot } from './screens/resolution-results-screen';
 import {
   type StartMatchEvent,
   type SetupChangeEvent,
@@ -205,12 +203,6 @@ export class GrandTransitionApp extends LitElement {
           @start-match=${this.startMatch}
         ></grand-transition-setup>`;
       case 'match':
-        if (this.matchState?.pendingResolution) {
-          return html`<grand-transition-resolution-results
-            .snapshot=${createResolutionResultsSnapshot(this.matchState)}
-            @match-command=${this.reduceMatchCommand}
-          ></grand-transition-resolution-results>`;
-        }
         return html`<grand-transition-setup
           .snapshot=${this.setupSnapshot}
         ></grand-transition-setup>`;
@@ -236,6 +228,7 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private readonly startMatch = (event: StartMatchEvent): void => {
+    const before = this.matchState;
     const payload = event.detail;
     const scene = sampleContent.scenes.find(
       (candidate) => candidate.id === payload.sceneId,
@@ -258,8 +251,18 @@ export class GrandTransitionApp extends LitElement {
       openingPlayerIndex: scene.openingPlayerIndex,
     });
     state = reduceLifecycle(state, 'start-match');
+    const reduced = state;
     state = reduceLifecycle(state, 'prepare-round');
     this.matchState = state;
+    publishTemporaryClickAudit({
+      kind: 'game-action-result',
+      action: 'start-match',
+      outcome: 'accepted',
+      command: createLifecycleCommand('start-match'),
+      before,
+      reduced,
+      after: state,
+    });
     this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
@@ -268,27 +271,41 @@ export class GrandTransitionApp extends LitElement {
   private readonly reduceMatchCommand = (event: MatchCommandEvent): void => {
     event.stopPropagation();
     if (!this.matchState) return;
-    const result = matchReducer(
-      this.matchState,
-      event.detail,
-      defaultMatchRandomSource,
-    );
+    const before = this.matchState;
+    const result = matchReducer(before, event.detail, defaultMatchRandomSource);
     if (!result.ok) {
+      publishTemporaryClickAudit({
+        kind: 'game-action-result',
+        action: event.detail.type,
+        actorId: event.detail.actorId ?? null,
+        outcome: 'rejected',
+        errorCode: result.error.code,
+        command: event.detail,
+        before,
+        reduced: null,
+        after: before,
+      });
       throw new Error(
         `Match command ${event.detail.type} failed: ${result.error.code}.`,
       );
     }
 
-    let state = result.state;
-    if (state.phase === 'resolution') {
-      state = reduceLifecycle(state, 'resolve-round');
-    }
-    if (event.detail.type === 'rematch') {
-      state = reduceLifecycle(state, 'prepare-round');
-    }
+    const reduced = result.state;
+    const state = advanceAutomaticMatchFlow(reduced);
     this.matchState = state;
-    if (event.detail.type === 'return-to-setup') {
+    publishTemporaryClickAudit({
+      kind: 'game-action-result',
+      action: event.detail.type,
+      actorId: event.detail.actorId ?? null,
+      outcome: 'accepted',
+      command: event.detail,
+      before,
+      reduced,
+      after: state,
+    });
+    if (state.phase === 'results') {
       this.manuallyPaused = false;
+      this.matchState = null;
       this.screenController.returnToSetup();
       this.view = 'setup';
     }
@@ -335,16 +352,53 @@ function reduceLifecycle(
   state: MatchState,
   type: MatchLifecycleCommand['type'],
 ): MatchState {
-  const command = {
-    type,
-    source: 'user',
-    payload: {},
-  } as MatchCommand;
+  const command = createLifecycleCommand(type);
   const result = matchReducer(state, command, defaultMatchRandomSource);
   if (!result.ok) {
     throw new Error(`Match lifecycle ${type} failed: ${result.error.code}.`);
   }
   return result.state;
+}
+
+function advanceAutomaticMatchFlow(state: MatchState): MatchState {
+  let advanced = state;
+  if (advanced.phase === 'resolution') {
+    advanced = reduceLifecycle(advanced, 'resolve-round');
+  }
+  if (
+    advanced.phase === 'round-preparation' ||
+    (advanced.phase === 'sudden-death' && advanced.draft === null)
+  ) {
+    advanced = reduceLifecycle(advanced, 'prepare-round');
+  }
+  return advanced;
+}
+
+function createLifecycleCommand(
+  type: MatchLifecycleCommand['type'],
+): MatchCommand {
+  return {
+    type,
+    source: 'user',
+    payload: {},
+  } as MatchCommand;
+}
+
+function publishTemporaryClickAudit(
+  detail: Readonly<{
+    kind: 'game-action-result';
+    action: string;
+    actorId?: string | null;
+    outcome: 'accepted' | 'rejected';
+    errorCode?: string;
+    command: MatchCommand | null;
+    before: MatchState | null;
+    reduced: MatchState | null;
+    after: MatchState;
+  }>,
+): void {
+  if (!import.meta.env.DEV) return;
+  window.grandTransitionTemporaryClickAudit?.(detail);
 }
 
 export function createDefaultSetupSnapshot(): SetupSnapshot {

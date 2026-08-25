@@ -59,9 +59,9 @@ combination is implementation evidence, not visual authority.
    explicit approval.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
    600, and bold 700. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, results,
-   statistics, tutorial text, privacy handovers, and compatibility text. Its
-   tabular figures own Pride, damage, scores, rounds, and statistics.
+   labels, validation, disabled reasons, score explanations, tutorial text,
+   privacy handovers, and compatibility text. Its tabular figures own Pride,
+   damage, scores, and rounds.
 4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
    the timer only. Do not use it for any other number or text.
 
@@ -90,8 +90,7 @@ Action plates use coherent authored icons and framing.
 
 Human characters use three-quarter opponent-facing silhouettes, layered parts, at
 least five expressions and six poses, plus idle, selection, thinking, delivery,
-light and heavy hit, weakness, comeback, grammar-mistake, victory, and defeat
-states.
+light and heavy hit, weakness, comeback, and grammar-mistake states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, and fallback proof.

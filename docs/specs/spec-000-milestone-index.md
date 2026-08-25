@@ -40,7 +40,7 @@ complete an approved specification.
 - The pure deterministic reducer owns game truth. Lit is view-only. Content is
   data-driven and validated. Runtime network calls are prohibited.
 - Readability has priority over spectacle. The player must understand the turn,
-  available actions, information ownership, and every damage modifier.
+  available actions, information ownership, and current Pride.
 - Privacy, security, performance, original-asset, and static GitHub Pages
   requirements apply from the first milestone that can exercise them. Later
   work must not regress them.
@@ -120,12 +120,12 @@ application does not inspect or block an operating system or device class.
 
 The acceptance matrix is:
 
-| Class                 | Viewport     |
-| --------------------- | ------------ |
-| Minimum landscape     | 1024 by 720  |
-| Four-by-three         | 1024 by 768  |
-| Common landscape      | 1280 by 720  |
-| Recommended PC        | 1920 by 1080 |
+| Class             | Viewport     |
+| ----------------- | ------------ |
+| Minimum landscape | 1024 by 720  |
+| Four-by-three     | 1024 by 768  |
+| Common landscape  | 1280 by 720  |
+| Recommended PC    | 1920 by 1080 |
 
 All landscape viewports at or above both minimum dimensions are supported.
 Portrait and square viewports are unsupported even when both dimensions meet
@@ -204,15 +204,15 @@ source-only review does not satisfy them.
 12. [Continuations and comebacks](spec-012-continuations-and-comebacks.md).
     Budget: 6. Carry and comeback thresholds resolve.
 13. [Match lifecycle](spec-013-match-lifecycle.md). Budget: 7. Headless matches
-    reach a deterministic result.
+    reach a deterministic terminal state.
 14. [Replay and simulation](spec-014-replay-and-simulation.md). Budget: 7.
     Replays are exact and generated matches preserve invariants.
 15. [Lit screen shell](spec-015-lit-screen-shell.md). Budget: 8. Title and setup
     screens dispatch typed commands.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
     hotseat draft is playable with temporary art.
-17. [Resolution and results UI](spec-017-resolution-results-ui.md). Budget: 8. A
-    full browser match explains results and supports rematch.
+17. [Seamless match flow](spec-017-seamless-match-flow.md). Budget: 4. Browser
+    matches advance without a resolution step or post-match features.
 18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported landscape contracts pass.
 19. [Hotseat privacy](spec-019-hotseat-privacy.md). Budget: 6. Private

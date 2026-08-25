@@ -36,16 +36,16 @@ times central processing unit (CPU) slowdown, 9-megabit-per-second download,
 host CPU, memory, operating system, browser, tool version, build commit, and
 selected final-art scene. Run five cold-cache and five warm-cache trials.
 
-| Metric | Required result |
-| --- | --- |
-| Cold largest contentful paint | Median at most 2.5 seconds; no run above 3 |
-| Warm largest contentful paint | Median at most 2 seconds; no run above 2.5 |
-| Input event duration | 95th percentile below 100 milliseconds across 50 scripted card and control inputs |
-| Animation frame interval | 95th percentile at most 18.2 ms; above 50 ms below 1 percent |
-| Initial page CLS | At most 0.05 |
-| Card-update CLS | Exactly 0 |
-| Initial JavaScript | At most 350 KiB total after gzip, excluding media |
-| Selected audio decode | At most 500 milliseconds before first enabled playback |
+| Metric                        | Required result                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| Cold largest contentful paint | Median at most 2.5 seconds; no run above 3                                        |
+| Warm largest contentful paint | Median at most 2 seconds; no run above 2.5                                        |
+| Input event duration          | 95th percentile below 100 milliseconds across 50 scripted card and control inputs |
+| Animation frame interval      | 95th percentile at most 18.2 ms; above 50 ms below 1 percent                      |
+| Initial page CLS              | At most 0.05                                                                      |
+| Card-update CLS               | Exactly 0                                                                         |
+| Initial JavaScript            | At most 350 KiB total after gzip, excluding media                                 |
+| Selected audio decode         | At most 500 milliseconds before first enabled playback                            |
 
 Use browser performance entries and a retained trace for timing. Use generated
 gzip bytes for the JavaScript total. Do not substitute development-server
@@ -66,7 +66,7 @@ runtime-network failure cannot be waived.
 
 - **AC-028-01:** Five cold and five warm trials meet every performance table
   threshold and retain machine-readable results and trace links.
-- **AC-028-02:** The exact browser matrix passes title-to-results, reload,
+- **AC-028-02:** The exact browser matrix passes title-to-match-completion, reload,
   persistence fallback, privacy, speech-unavailable, and
   longest-content flows without uncaught error.
 - **AC-028-03:** The supported landscape viewport matrix and blocking boundary
@@ -81,11 +81,11 @@ runtime-network failure cannot be waived.
 
 ## Minimum viable product completion contract
 
-The minimum viable product (MVP) has a coherent title-to-results flow. It has
+The minimum viable product (MVP) has a coherent title-to-match-completion flow. It has
 all 18 characters, 5 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
-private hotseat play, exact grammar and combat rules, and
-visible score explanations. It also has deterministic replay, validated
+private hotseat play and exact grammar and combat rules. It has no round
+resolution or post-match surface. It also has development-only deterministic replay, validated
 data-driven content, locale-isolated English, and a supported landscape user
 interface (UI). All art, audio, writing, and branding are original. The MVP has
 no online behavior.

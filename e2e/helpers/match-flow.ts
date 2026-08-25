@@ -20,12 +20,13 @@ import {
 import { listSimulationOptions } from '../../src/engine/simulation';
 import { englishGameLocale } from '../../src/localization/en-game-locale';
 
-export type ResolutionBrowserAction =
-  | Readonly<{ kind: 'continue' }>
-  | Readonly<{ kind: 'draft'; command: DraftCommand }>;
+export type MatchBrowserAction = Readonly<{
+  kind: 'draft';
+  command: DraftCommand;
+}>;
 
-export type ResolutionFlowPlan = Readonly<{
-  actions: readonly ResolutionBrowserAction[];
+export type MatchFlowPlan = Readonly<{
+  actions: readonly MatchBrowserAction[];
   finalState: MatchState;
 }>;
 
@@ -37,16 +38,16 @@ const context: MatchEngineContext = {
 };
 
 /**
- * Plans one deterministic fixed-seed hotseat match that reaches two surviving
- * continuations, a comeback, a double knockout, the cliffhanger, and results.
+ * Plan one deterministic fixed-seed hotseat match that reaches two surviving
+ * continuations, a comeback, a double knockout, the cliffhanger, and a winner.
  * The carry phase ends when both players have carried and survived. A damage
  * phase, a gentle waiting phase, and a lethal phase whose strong comebacks
  * force a double knockout follow. The cliffhanger exchange ends with
  * player-one winning by the Milestone 013 score formula.
  */
-export function planResolutionBrowserFlow(): ResolutionFlowPlan {
+export function planMatchBrowserFlow(): MatchFlowPlan {
   const reducer = createMatchReducer(context);
-  const actions: ResolutionBrowserAction[] = [];
+  const actions: MatchBrowserAction[] = [];
   let state = createMatchSetupState({
     schemaVersion: 1,
     seed: 20_260_823,
@@ -99,7 +100,6 @@ export function planResolutionBrowserFlow(): ResolutionFlowPlan {
       continue;
     }
     if (state.pendingResolution) {
-      actions.push({ kind: 'continue' });
       lifecycle('prepare-round');
       roundCarryCount = 0;
       continue;

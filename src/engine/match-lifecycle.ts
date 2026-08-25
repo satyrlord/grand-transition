@@ -148,9 +148,7 @@ export const matchResolutionOrder = [
 export type MatchLifecycleCommand =
   | GameCommand<'start-match', Record<never, never>>
   | GameCommand<'prepare-round', Record<never, never>>
-  | GameCommand<'resolve-round', Record<never, never>>
-  | GameCommand<'rematch', Record<never, never>>
-  | GameCommand<'return-to-setup', Record<never, never>>;
+  | GameCommand<'resolve-round', Record<never, never>>;
 
 export type MatchCommand = DraftCommand | MatchLifecycleCommand;
 
@@ -262,10 +260,6 @@ export function createMatchReducer(
         return prepareRound(state, command, context, randomSource);
       case 'resolve-round':
         return resolveRound(state, command, context);
-      case 'rematch':
-        return rematch(state, command);
-      case 'return-to-setup':
-        return returnToSetup(state, command);
       default:
         return reduceDraft(state, command, draftReducer, randomSource, context);
     }
@@ -826,63 +820,6 @@ function resolveRound(
       statistics,
       suddenDeathActive,
     },
-  };
-}
-
-function rematch(
-  state: MatchState,
-  command: MatchLifecycleCommand,
-): ReducerResult<MatchState, MatchLifecycleError> {
-  if (state.phase !== 'results') return reject(state, command, 'wrong-phase');
-  const firstOpeningPlayerId = otherPlayerId(
-    state.playerOrder,
-    state.firstOpeningPlayerId,
-  );
-  return {
-    ok: true,
-    state: resetMatch(state, 'round-preparation', firstOpeningPlayerId),
-  };
-}
-
-function returnToSetup(
-  state: MatchState,
-  command: MatchLifecycleCommand,
-): ReducerResult<MatchState, MatchLifecycleError> {
-  if (state.phase !== 'results') return reject(state, command, 'wrong-phase');
-  return {
-    ok: true,
-    state: resetMatch(state, 'setup', state.playerOrder[0]),
-  };
-}
-
-function resetMatch(
-  state: MatchState,
-  phase: 'round-preparation' | 'setup',
-  firstOpeningPlayerId: string,
-): MatchState {
-  const playerStates = Object.fromEntries(
-    state.setup.players.map((player) => [player.playerId, resetPlayer(player)]),
-  );
-  return {
-    schemaVersion: state.schemaVersion,
-    seed: state.seed,
-    phase,
-    mode: state.setup.mode,
-    round: 1,
-    openingPlayerId: firstOpeningPlayerId,
-    activePlayerId: firstOpeningPlayerId,
-    sceneId: state.setup.sceneId,
-    board: null,
-    playerStates,
-    commandHistory: [],
-    playerOrder: state.playerOrder,
-    setup: state.setup,
-    firstOpeningPlayerId,
-    draft: null,
-    comboState: {},
-    resolutionHistory: [],
-    statistics: emptyStatistics(state.playerOrder),
-    suddenDeathActive: false,
   };
 }
 

@@ -26,6 +26,7 @@ type CommandError = Error & { stderr?: string; stdout?: string };
 
 const requiredScripts = [
   'dev',
+  'prod',
   'preview',
   'build',
   'assets:build',
@@ -51,6 +52,16 @@ describe('quality-gate scaffold', () => {
     for (const script of requiredScripts) {
       expect(packageJson.scripts[script], script).toBeTruthy();
     }
+  });
+
+  test('starts a fresh production build and strict local preview through prod', async () => {
+    const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
+      scripts: Record<string, string>;
+    };
+
+    expect(packageJson.scripts.prod).toBe(
+      'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
+    );
   });
 
   test('keeps the CI phases in the approved order', async () => {

@@ -50,7 +50,7 @@ Private hotseat content must remain private during handovers.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
 - The implemented scope includes Milestones 001 through 017: the title, setup,
-  playable match, resolution, and results screens,
+  playable match, and seamless match flow,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
   content schemas, an English game-locale bundle, three original
@@ -59,7 +59,8 @@ Private hotseat content must remain private during handovers.
   Hollywood Roast grammar, compound subjects, endings, incomplete states,
   immediate grammar mistakes, one common board, private hands, clause scoring,
   noun combos, continuations, comebacks, cliffhangers, replay, and simulation.
-  The current local hotseat flow reaches results, rematch, and setup return.
+  Rounds advance automatically. A completed local hotseat match returns directly
+  to setup and exposes no post-match features.
 
 ## Brand Commitments
 

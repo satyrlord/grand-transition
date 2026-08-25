@@ -531,11 +531,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
 
   for (let turn = 0; turn < 8; turn += 1) {
-    if (
-      await page
-        .getByRole('heading', { name: 'Round 1 resolution' })
-        .isVisible()
-    )
+    if (await page.getByRole('heading', { name: /Round 2.*turn/u }).isVisible())
       break;
     const end = page.getByRole('button', { name: 'End', exact: true });
     if (await end.isEnabled()) {
@@ -551,11 +547,9 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
     await legal.click();
   }
 
-  await expect(
-    page.getByRole('heading', { name: 'Round 1 resolution' }),
-  ).toBeVisible();
-  await expect(page.getByText('Score terms and rule record')).toBeVisible();
-  await page.getByRole('button', { name: 'Continue to round 2' }).click();
+  await expect(page.locator('grand-transition-resolution-results')).toHaveCount(
+    0,
+  );
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
   ).toBeVisible();

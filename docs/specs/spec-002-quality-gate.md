@@ -12,7 +12,7 @@ Vitest, coverage, Vitest Browser Mode, Playwright, and the required package
 scripts. Add minimal smoke tests and a non-deploying pull-request workflow.
 `validate` and `ci` use the order below.
 
-Expose `dev`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`,
+Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`,
 `format:check`, `typecheck`, `test`, `test:coverage`, `test:browser`,
 `test:e2e`, `markdown:lint`, `content:validate`,
 `localization:validate`, `boundaries:check`, `validate`, and `ci`.
