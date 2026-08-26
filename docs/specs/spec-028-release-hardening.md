@@ -84,11 +84,11 @@ runtime-network failure cannot be waived.
 The minimum viable product (MVP) has a coherent title-to-match-completion flow. It has
 all 18 characters, 5 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
-private hotseat play and exact grammar and combat rules. It has no round
-resolution or post-match surface. It also has development-only deterministic replay, validated
-data-driven content, locale-isolated English, and a supported landscape user
-interface (UI). All art, audio, writing, and branding are original. The MVP has
-no online behavior.
+private hotseat play and exact grammar and combat rules. It reviews each exchange
+in the in-arena results modal and has no post-match surface. It also has
+development-only deterministic replay, validated data-driven content,
+locale-isolated English, and a supported landscape user interface (UI). All art,
+audio, writing, and branding are original. The MVP has no online behavior.
 Only the artifact that passes the complete gate can proceed to publication.
 
 ## Impeccable UI validation

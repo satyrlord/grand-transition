@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/content/sample-content';
+import { sampleContent } from '../../src/game-content';
 import {
   boardSlotCount,
   generateBoard,
@@ -54,8 +54,8 @@ describe('Hollywood Roast shared board generation', () => {
     [0.05, 0],
     [0.1, 1],
     [0.5, 1],
-    [0.75, 2],
-    [0.9, 2],
+    [0.75, 1],
+    [0.9, 1],
   ] as const)(
     'uses the shipped connector-count bands at roll %s',
     (connectorRoll, expectedConnectors) => {
@@ -64,7 +64,7 @@ describe('Hollywood Roast shared board generation', () => {
         next(seed) {
           calls += 1;
           return {
-            value: calls === 8 ? connectorRoll : 0.01,
+            value: calls === 9 ? connectorRoll : 0.01,
             nextSeed: seed + 1,
           };
         },
@@ -77,9 +77,28 @@ describe('Hollywood Roast shared board generation', () => {
       ).toHaveLength(expectedConnectors);
       expect(
         result.board.slots.filter((slot) => slot.role === 'continuation'),
-      ).toHaveLength(expectedConnectors < 2 ? 1 : 0);
+      ).toHaveLength(1);
     },
   );
+
+  test('rejects a board pool without the one universal continuation', () => {
+    const scenePhraseIds = scene.phrasePool.filter(
+      (phraseId) => phraseId !== 'ellipsis',
+    );
+    const result = generateBoard({ ...request(1), scenePhraseIds });
+
+    expect(result).toMatchObject({
+      ok: false,
+      error: {
+        code: 'impossible-content-pool',
+        facts: {
+          availableByRole: expect.arrayContaining([
+            { role: 'continuation', count: 0 },
+          ]),
+        },
+      },
+    });
+  });
 
   test.each([
     [0.249, ['but', 'yet']],
@@ -92,7 +111,7 @@ describe('Hollywood Roast shared board generation', () => {
         next(seed) {
           calls += 1;
           return {
-            value: calls === 8 ? 0.5 : calls === 9 ? kindRoll : 0.01,
+            value: calls === 9 ? 0.5 : calls === 10 ? kindRoll : 0.01,
             nextSeed: seed + 1,
           };
         },

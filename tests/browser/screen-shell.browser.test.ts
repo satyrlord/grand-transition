@@ -42,9 +42,48 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByLabelText('Scene'))
     .toHaveValue('transition-era-television-studio');
+  const weaknesses = document.querySelectorAll('.character-weakness');
+  expect(weaknesses).toHaveLength(2);
+  expect(weaknesses[0]!.textContent).toMatch(
+    /Weaknesses.*Legacy.*Modernity.*Bureaucracy.*Miners/su,
+  );
+  expect(weaknesses[1]!.textContent).toMatch(
+    /Weaknesses.*Evidence.*Credibility.*Restraint/su,
+  );
+  const weaknessFixture = document.createElement('p');
+  weaknessFixture.className = 'character-weakness';
+  weaknessFixture.style.width = '12rem';
+  const weaknessLabel = document.createElement('span');
+  weaknessLabel.className = 'character-weakness__label';
+  weaknessLabel.textContent = 'Weaknesses';
+  const completeWeaknessList = document.createElement('strong');
+  completeWeaknessList.textContent = Array.from(
+    { length: 8 },
+    () => 'Long public weakness name',
+  ).join(' · ');
+  weaknessFixture.append(weaknessLabel, completeWeaknessList);
+  document.body.append(weaknessFixture);
+  expect(getComputedStyle(completeWeaknessList).whiteSpace).not.toBe('nowrap');
+  expect(completeWeaknessList.scrollWidth).toBeLessThanOrEqual(
+    completeWeaknessList.clientWidth + 1,
+  );
+  expect(completeWeaknessList.scrollHeight).toBeLessThanOrEqual(
+    completeWeaknessList.clientHeight + 1,
+  );
+  weaknessFixture.remove();
   await page
     .getByLabelText('Player two character')
     .selectOptions('red-folded-chairman');
+  await expect
+    .poll(
+      () =>
+        [...document.querySelectorAll('.character-weakness strong')].filter(
+          (record) =>
+            record.textContent?.trim() ===
+            'Legacy · Modernity · Bureaucracy · Miners',
+        ).length,
+    )
+    .toBe(2);
   await page.getByRole('button', { name: 'Back' }).click();
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
@@ -132,6 +171,10 @@ test('shows every missing-field error and emits no command', async () => {
 
   expect(listener).not.toHaveBeenCalled();
   expect(setup.querySelectorAll('.field-error')).toHaveLength(4);
+  const mode = setup.querySelector<HTMLSelectElement>('#mode')!;
+  expect(mode.getAttribute('aria-invalid')).toBe('true');
+  expect(mode.getAttribute('aria-describedby')).toBe('mode-error');
+  expect(document.activeElement).toBe(mode);
   expect(setup.textContent).toContain('Mode is missing. Choose Hotseat.');
   expect(setup.textContent).toContain(
     'Player one character is missing. Choose a listed character.',

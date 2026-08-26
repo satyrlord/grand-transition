@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/content/sample-content';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
@@ -201,7 +200,13 @@ describe('Hollywood Roast English grammar', () => {
     ]);
     expect(result).toMatchObject({
       accepted: true,
-      analysis: { complete: true, state: 'ENDED', punctuation: '.' },
+      analysis: {
+        complete: true,
+        state: 'ENDED',
+        punctuation: '.',
+        publicText:
+          'A national consensus before the next election by emergency ordinance.',
+      },
     });
   });
 });

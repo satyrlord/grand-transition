@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/content/sample-content';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
@@ -36,7 +35,7 @@ describe('Hollywood Roast extended grammar', () => {
   });
 
   test('a continuation remains a draft action instead of a grammar atom', () => {
-    expect(analyze([add('the-transition-continues')])).toMatchObject({
+    expect(analyze([add('ellipsis')])).toMatchObject({
       accepted: false,
       faults: [{ code: 'unexpected-role', attempted: 'continuation' }],
     });

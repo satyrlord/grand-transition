@@ -7,7 +7,8 @@ rounds, use comebacks, and reduce the opponent's Pride.
 
 The game is set in an invented republic influenced by Romanian public life
 after 1989. Its characters are fictional composites. It does not reproduce
-real people, protected game content, or third-party art and audio.
+real people, real political party names, party acronyms, party logos, protected
+game content, or third-party art and audio.
 
 ## Planned play modes
 
@@ -23,16 +24,17 @@ and purchases are not planned for the MVP.
 Milestones 001 through 017 provide the runnable project, complete quality gate,
 immutable game contracts, replaceable external ports, enforced pure-module
 boundaries, a secured production shell, and validated sample game content. The
-sample contains 30 Romanian-politics common phrases, five phrases for each of
-three fictional characters,
-one fictional scene, an English game-locale bundle, minimum and two-clause
+sample contains 126 Romanian-politics common phrases, 12 phrases for each of
+three fictional characters, one fictional scene, an English game-locale bundle,
+minimum and two-clause
 Hollywood Roast grammar, compound subjects, endings, incomplete states,
 immediate grammar mistakes, seeded common-board and private-hand generation,
 clause scoring, noun combos, continuations, comebacks, cliffhangers, match
 lifecycle, replay, and simulation. The landscape-only Lit interface provides
-title, setup, a playable hotseat match, and Pause. Rounds advance automatically,
-and match completion returns directly to setup with no post-match features. The
-interface requires a browser content viewport of at least
+title, setup, a playable hotseat match, and Pause. Every exchange pauses on an
+in-arena review modal. Continue advances the next round or returns a completed
+match to setup without post-match features. The interface requires a browser
+content viewport of at least
 1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add
 privacy handovers, settings, artificial
 intelligence, final assets, audio, expanded content, and release hardening in
@@ -59,8 +61,27 @@ active milestones are in `docs/specs/`.
 Add shared cards to `src/content/common-phrase-cards.json`. Add character-only
 cards to that character's file under `src/content/characters/`. Each JSON card
 contains its English text, grammar role, scoring metadata, rarity, and review
-note. Run `npm run content:validate` after an edit. The loader creates
+state, originality, safety flags, and notes. Run `npm run content:validate`
+after an edit. The loader creates
 locale keys and rejects malformed or duplicate cards before the game starts.
+
+## Add a character
+
+Copy one existing file under `src/content/characters/`. Rename it to
+`<character-id>-phrase-cards.json`, then change its ID, roster order, identity,
+English prose, media metadata, palette, weaknesses, comebacks, AI personality,
+voice, animation IDs, and phrase array. Add the approved portrait as
+`src/assets/characters/<character-id>.png`.
+
+Do not edit a TypeScript import, registry, locale table, setup option, or
+renderer map. Browser builds and Node tools discover the file automatically and
+use the same validator. Run these commands after the files are complete:
+
+```text
+npm run content:validate
+npm run simulate -- --seed 1 --matches 1
+npm run ci
+```
 
 Normal CI runs 500 generated matches. Use the repository `$simulate-matches`
 skill for any explicit larger or smaller workload. The skill requires the

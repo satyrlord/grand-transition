@@ -74,9 +74,10 @@ immediately. A later phrase is a grammar mistake.
 ## Rendering
 
 English rendering uses sentence case, phrase-defined singular and plural forms,
-and one terminal full stop for a normally ended complete sentence. It does not
-change a selected noun phrase into another number form. A phrase without number
-forms uses its default text.
+and exactly one terminal full stop for a normally ended complete sentence.
+Ending text already includes its terminal full stop, so rendering does not add a
+second one. It does not change a selected noun phrase into another number form.
+A phrase without number forms uses its default text.
 
 ## Acceptance criteria
 

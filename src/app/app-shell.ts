@@ -4,7 +4,7 @@ import './screens/interruption-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
 import { basicScoringBalance } from '../content/basic-scoring-balance';
-import { sampleContent } from '../content/sample-content';
+import { englishGameLocale, sampleContent } from '../game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -15,9 +15,10 @@ import {
   type MatchLifecycleCommand,
   type MatchState,
 } from '../engine/match-lifecycle';
-import { englishGameLocale } from '../localization/en-game-locale';
 import {
+  type ContinueRoundEvent,
   createMatchScreenSnapshot,
+  type MatchArenaReaction,
   type MatchCommandEvent,
 } from './screens/match-screen';
 import {
@@ -114,6 +115,8 @@ export class GrandTransitionApp extends LitElement {
     view: { state: true },
     setupSnapshot: { state: true },
     matchState: { state: true },
+    matchArenaReaction: { state: true },
+    roundReviewSnapshot: { state: true },
     viewportSupported: { state: true },
     manuallyPaused: { state: true },
   };
@@ -121,6 +124,10 @@ export class GrandTransitionApp extends LitElement {
   declare private view: ScreenView;
   declare private setupSnapshot: SetupSnapshot;
   declare private matchState: MatchState | null;
+  declare private matchArenaReaction: MatchArenaReaction | null;
+  declare private roundReviewSnapshot: ReturnType<
+    typeof createMatchScreenSnapshot
+  > | null;
   declare private viewportSupported: boolean;
   declare private manuallyPaused: boolean;
   private readonly screenController = new ScreenController();
@@ -130,6 +137,8 @@ export class GrandTransitionApp extends LitElement {
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
     this.matchState = null;
+    this.matchArenaReaction = null;
+    this.roundReviewSnapshot = null;
     this.viewportSupported = isSupportedViewport(currentViewport());
     this.manuallyPaused = false;
   }
@@ -163,14 +172,20 @@ export class GrandTransitionApp extends LitElement {
   }
 
   protected override render() {
-    if (
-      this.view === 'match' &&
+    const liveMatchState =
       this.matchState?.draft &&
       (this.matchState.phase === 'drafting' ||
         this.matchState.phase === 'sudden-death')
-    ) {
+        ? this.matchState
+        : null;
+    const matchSnapshot =
+      this.roundReviewSnapshot ??
+      (liveMatchState
+        ? createMatchScreenSnapshot(liveMatchState, this.matchArenaReaction)
+        : null);
+    if (this.view === 'match' && matchSnapshot) {
       return html`<grand-transition-match
-        .snapshot=${createMatchScreenSnapshot(this.matchState)}
+        .snapshot=${matchSnapshot}
         .pauseMode=${
           !this.viewportSupported
             ? 'viewport'
@@ -179,6 +194,7 @@ export class GrandTransitionApp extends LitElement {
               : 'running'
         }
         @match-command=${this.reduceMatchCommand}
+        @continue-round=${this.continueRound}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
       ></grand-transition-match>`;
@@ -254,6 +270,8 @@ export class GrandTransitionApp extends LitElement {
     const reduced = state;
     state = reduceLifecycle(state, 'prepare-round');
     this.matchState = state;
+    this.matchArenaReaction = null;
+    this.roundReviewSnapshot = null;
     publishTemporaryClickAudit({
       kind: 'game-action-result',
       action: 'start-match',
@@ -291,7 +309,17 @@ export class GrandTransitionApp extends LitElement {
     }
 
     const reduced = result.state;
+    this.matchArenaReaction = grammarMistakeReaction(
+      before,
+      reduced,
+      event.detail,
+    );
     const state = advanceAutomaticMatchFlow(reduced);
+    const reviewResolution = state.resolutionHistory.at(-1) ?? null;
+    this.roundReviewSnapshot =
+      reduced.phase === 'resolution' && reduced.draft && reviewResolution
+        ? createMatchScreenSnapshot(reduced, null, reviewResolution)
+        : null;
     this.matchState = state;
     publishTemporaryClickAudit({
       kind: 'game-action-result',
@@ -303,12 +331,29 @@ export class GrandTransitionApp extends LitElement {
       reduced,
       after: state,
     });
+    if (state.phase === 'results' && !this.roundReviewSnapshot) {
+      this.manuallyPaused = false;
+      this.matchArenaReaction = null;
+      this.matchState = null;
+      this.screenController.returnToSetup();
+      this.view = 'setup';
+    }
+  };
+
+  private readonly continueRound = (event: ContinueRoundEvent): void => {
+    event.stopPropagation();
+    if (!this.matchState || !this.roundReviewSnapshot) return;
+    const state = this.matchState;
+    this.roundReviewSnapshot = null;
+    this.matchArenaReaction = null;
     if (state.phase === 'results') {
       this.manuallyPaused = false;
       this.matchState = null;
       this.screenController.returnToSetup();
       this.view = 'setup';
+      return;
     }
+    this.matchState = reduceLifecycle(state, 'prepare-round');
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -326,6 +371,33 @@ export class GrandTransitionApp extends LitElement {
   private readonly syncViewportSupport = (): void => {
     this.viewportSupported = isSupportedViewport(currentViewport());
   };
+}
+
+function grammarMistakeReaction(
+  before: MatchState,
+  after: MatchState,
+  command: MatchCommand,
+): MatchArenaReaction | null {
+  if (command.type !== 'select-phrase' || !command.actorId) return null;
+  const beforePlayer = before.draft?.playerStates[command.actorId];
+  const afterPlayer = after.draft?.playerStates[command.actorId];
+  if (!beforePlayer || !afterPlayer) return null;
+  if (
+    afterPlayer.construction.grammarMistakes <=
+    beforePlayer.construction.grammarMistakes
+  ) {
+    return null;
+  }
+  return Object.freeze({
+    kind: 'grammar-mistake',
+    playerId: command.actorId,
+    damage: Math.max(
+      0,
+      before.playerStates[command.actorId]!.pride -
+        after.playerStates[command.actorId]!.pride,
+    ),
+    sequence: after.commandHistory.length,
+  });
 }
 
 function configuredPlayer(
@@ -364,12 +436,6 @@ function advanceAutomaticMatchFlow(state: MatchState): MatchState {
   let advanced = state;
   if (advanced.phase === 'resolution') {
     advanced = reduceLifecycle(advanced, 'resolve-round');
-  }
-  if (
-    advanced.phase === 'round-preparation' ||
-    (advanced.phase === 'sudden-death' && advanced.draft === null)
-  ) {
-    advanced = reduceLifecycle(advanced, 'prepare-round');
   }
   return advanced;
 }

@@ -1,22 +1,29 @@
-# Milestone 017: Seamless Match Flow
+# Milestone 017: Between-Round Review Flow
 
 **Status:** Approved  
 **Depends on:** 016  
-**Owns:** Automatic browser lifecycle and the absence of resolution and
-post-match surfaces  
+**Owns:** Browser lifecycle, between-round review, and the absence of post-match
+surfaces
 **Production-file budget:** 4
 
 ## Deliver
 
-Keep the playable match as the only visible surface between setup and match
+Keep the playable arena as the visible surface between setup and match
 completion. When both constructions lock, the application applies the pure
-round-scoring command in the same interaction. If the match continues, it
-prepares the next normal or cliffhanger round immediately. The player does not
-select Continue and the application does not render a round-resolution screen.
+round-scoring command in the same interaction, then pauses on a between-round
+review. Keep the completed arena and last full sentence visible. Show the
+Milestone 016 exchange record in one semitransparent modal. Disable draft input,
+stop the timer, and provide one Continue control.
 
-When the pure engine records a winner, the application ends the active match
-and returns directly to the existing setup screen. Preserve the selected mode,
-characters, and scene. Starting another match is a new setup action.
+Continue prepares the next normal or cliffhanger round. It clears the modal and
+the completed draft only after the player has reviewed them. Do not place prior
+exchange results inline in the next live round. After a nonterminal Continue,
+move focus to the new round heading.
+
+When the pure engine records a winner, keep the terminal exchange in the same
+review modal. Continue then ends the active match and returns to the existing
+setup screen. Preserve the selected mode, characters, and scene. Starting
+another match is a new setup action.
 
 The product has zero post-match features. It must not render a winner page,
 result record, statistics, score summary, replay action, export action, rematch
@@ -30,19 +37,20 @@ during, or after a match.
 
 ## Acceptance criteria
 
-- **AC-017-01:** The last action of a nonterminal exchange changes the visible
-  match directly to the next round. No resolution element, Continue control, or
-  user action occurs between the two rounds.
-- **AC-017-02:** A double knockout changes the visible match directly to a
-  playable cliffhanger. No resolution element or Continue control appears.
-- **AC-017-03:** A terminal exchange returns directly to setup with the selected
-  mode, characters, and scene unchanged.
+- **AC-017-01:** The last action of every exchange shows one modal over the
+  completed arena. The last full sentence remains visible, draft input is
+  blocked, and the timer does not advance.
+- **AC-017-02:** Continue advances a nonterminal exchange to the next normal or
+  cliffhanger round, removes the review modal, and moves focus to the new round
+  heading.
+- **AC-017-03:** A terminal exchange remains visible in review. Continue returns
+  to setup with the selected mode, characters, and scene unchanged.
 - **AC-017-04:** The production Document Object Model (DOM), source imports,
   registered elements, styles, lifecycle commands, and visible controls contain
-  no resolution-results surface, rematch, or post-match feature.
-- **AC-017-05:** One fixed-seed browser match reaches a later round,
-  cliffhanger, winner, and setup return without exposing an intermediate or
-  post-match surface.
+  no post-match surface, rematch, or post-match feature. The between-round modal
+  remains part of the match component.
+- **AC-017-05:** One fixed-seed browser match reviews each exchange and reaches
+  a later round, cliffhanger, winner, and setup return through Continue.
 
 ## Impeccable user interface validation
 
@@ -56,9 +64,9 @@ composition.
 
 ## Objective verifiers
 
-`tests/browser/seamless-match-flow.browser.test.ts` verifies AC-017-01 and the
-absence part of AC-017-04. `tests/unit/match-lifecycle.test.ts` verifies the
-pure scoring, cliffhanger, terminal-state, and command contracts for AC-017-02
-through AC-017-04. `e2e/seamless-match-flow.spec.ts` verifies AC-017-01 through
+`tests/browser/seamless-match-flow.browser.test.ts` verifies AC-017-01 through
+AC-017-03. `tests/unit/match-lifecycle.test.ts` verifies the pure scoring,
+cliffhanger, terminal-state, and command contracts behind AC-017-02 through
+AC-017-04. `e2e/seamless-match-flow.spec.ts` verifies AC-017-01 through
 AC-017-05 in the production build. The Impeccable evidence and `npm run ci`
 complete the milestone evidence.

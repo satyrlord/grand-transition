@@ -26,12 +26,16 @@ complete an approved specification.
   Pride damage, 15-second picks, and cliffhangers.
 - Use only original Grand Transition phrases, characters, scenes, prose, art,
   audio, branding, and source. Reference-game mechanics are authority for
-  behavior, not permission to copy protected expression.
-- Use fictional composite archetypes. A specification can name a public figure
-  as visual or rhetorical inspiration when the result remains an original
-  fictional character, uses verified public facts, and does not copy a slogan,
-  portrait, protected writing, art, audio, branding, layout, or source code.
-  Do not present unsupported allegations about a real person.
+  behavior, not permission to copy protected expression. The sourced English
+  slogan form that AC-005-07 names is the only phrase exception.
+- Use fictional composite archetypes. Do not name or identify a real person in
+  shipped content, specifications, editorial rationale, source notes, or asset
+  metadata. Do not use a real person as a declared visual or rhetorical model.
+  Public institutions and documented historical events can inform original
+  satire when the result does not identify a real person.
+- Do not use a real political party's name, acronym, or logo. Use only generic
+  ideological or social-family labels, such as Conservative, Peasant,
+  Democratic, Liberal, Communist, Socialist, or Ethnic Party.
 - The game is political satire for adults aged 18 and older. Phrase cards do
   not carry individual age-rating metadata.
 - The interface is always English. Localization applies only to grammar,
@@ -211,8 +215,9 @@ source-only review does not satisfy them.
     screens dispatch typed commands.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
     hotseat draft is playable with temporary art.
-17. [Seamless match flow](spec-017-seamless-match-flow.md). Budget: 4. Browser
-    matches advance without a resolution step or post-match features.
+17. [Between-round review flow](spec-017-seamless-match-flow.md). Budget: 4.
+    Browser matches review each exchange before Continue and have no post-match
+    features.
 18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported landscape contracts pass.
 19. [Hotseat privacy](spec-019-hotseat-privacy.md). Budget: 6. Private
@@ -227,8 +232,9 @@ source-only review does not satisfy them.
     Budget: 10. One scene and three characters use validated final art.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
-25. [Tutorial and presentation](spec-025-tutorial-presentation.md). Budget: 8.
-    The vertical slice teaches and explains play.
+25. [Match presentation reactions](spec-025-match-presentation-reactions.md).
+    Budget: 8. The vertical slice reports strong public outcomes without teaching
+    tactics.
 26. [MVP content expansion](spec-026-mvp-content-expansion.md). Budget: 12. All
     roster, scene, phrase, and comeback content is present.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.

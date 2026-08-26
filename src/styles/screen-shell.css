@@ -1,7 +1,7 @@
 @layer screen {
   .setup-screen {
     min-height: 100svh;
-    padding: clamp(1.25rem, 4vw, 4rem) var(--space-edge);
+    padding: clamp(0.75rem, 2vh, 1.25rem) var(--space-edge);
     overflow-x: clip;
     background:
       linear-gradient(
@@ -21,7 +21,7 @@
   }
 
   .setup-heading {
-    padding-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    padding-block-end: clamp(0.75rem, 1.5vh, 1.25rem);
     border-block-end: 2px solid var(--registry-red);
   }
 
@@ -50,8 +50,9 @@
   .setup-form {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(2rem, 5vw, 5rem);
-    padding-block-start: clamp(2rem, 4vw, 3.5rem);
+    column-gap: clamp(2rem, 5vw, 5rem);
+    row-gap: clamp(0.75rem, 2vh, 1.25rem);
+    padding-block-start: clamp(0.75rem, 2vh, 1.5rem);
   }
 
   .setup-form fieldset {
@@ -63,7 +64,7 @@
 
   .setup-form legend {
     width: 100%;
-    margin-block-end: 1.5rem;
+    margin-block-end: 0.8rem;
     padding-block-end: 0.55rem;
     border-block-end: 1px solid var(--registry-rule);
     color: var(--registry-red);
@@ -73,7 +74,7 @@
   }
 
   .setup-field + .setup-field {
-    margin-block-start: 1.35rem;
+    margin-block-start: 1rem;
   }
 
   .setup-field label {
@@ -104,6 +105,69 @@
     outline-offset: 3px;
   }
 
+  .character-weakness {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2rem;
+    margin: 0.42rem 0 0;
+    border: 1px solid var(--registry-red-deep);
+    border-block-end: 3px double var(--registry-red-deep);
+    background: var(--registry-red);
+    color: var(--registry-paper-light);
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+
+  .character-weakness__label {
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch;
+    gap: 0.36rem;
+    padding: 0.38rem 0.48rem;
+    background: var(--registry-paper-light);
+    color: var(--registry-red-deep);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .weakness-mark {
+    position: relative;
+    width: 0.78rem;
+    height: 0.78rem;
+  }
+
+  .weakness-mark::before,
+  .weakness-mark::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentcolor;
+    content: '';
+  }
+
+  .weakness-mark::before {
+    transform: rotate(45deg);
+  }
+
+  .weakness-mark::after {
+    transform: rotate(-45deg);
+  }
+
+  .character-weakness strong {
+    min-width: 0;
+    padding: 0.3rem 0.48rem 0.3rem 0;
+    font-size: clamp(0.78rem, 1.2vw, 0.94rem);
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
   .field-error {
     margin: 0.5rem 0 0;
     color: var(--registry-red-deep);
@@ -113,8 +177,8 @@
 
   .setup-note {
     max-width: 52ch;
-    margin: 1.5rem 0 0;
-    padding-block: 0.8rem;
+    margin: 0.75rem 0 0;
+    padding-block: 0.5rem;
     border-block: 1px solid var(--registry-rule);
     line-height: 1.45;
   }

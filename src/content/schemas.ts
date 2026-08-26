@@ -4,7 +4,7 @@ export const identifierSchema = z
   .string()
   .regex(
     /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/u,
-    'Use a lower-case kebab-case identifier, for example "thunder-tribune".',
+    'Use a lower-case kebab-case identifier, for example "test-character".',
   );
 
 export const localeKeySchema = z
@@ -41,12 +41,9 @@ export const connectorKindSchema = z.enum([
 ]);
 
 export const editorialSafetyFlagSchema = z.enum([
-  'copied-line',
+  'real-person-reference',
+  'real-party-reference',
   'protected-trait-insult',
-  'unsupported-crime-claim',
-  'unsupported-private-health-claim',
-  'private-target',
-  'reusable-harassment',
   'sexual-humiliation',
   'threat',
 ]);
@@ -259,7 +256,7 @@ export const characterSchema = z
       'List each weakness tag only once.',
     )
       .min(2)
-      .max(3),
+      .max(4),
     characterPhraseIds: uniqueArray(
       identifierSchema,
       'List each character phrase only once.',
@@ -269,15 +266,15 @@ export const characterSchema = z
         weak: uniqueArray(
           localeKeySchema,
           'List each weak-tier comeback only once.',
-        ).min(1),
+        ).length(1, 'Give the character exactly one weak-tier comeback.'),
         medium: uniqueArray(
           localeKeySchema,
           'List each medium-tier comeback only once.',
-        ).min(1),
+        ).length(1, 'Give the character exactly one medium-tier comeback.'),
         strong: uniqueArray(
           localeKeySchema,
           'List each strong-tier comeback only once.',
-        ).min(1),
+        ).length(1, 'Give the character exactly one strong-tier comeback.'),
       })
       .strict(),
     aiPersonality: z

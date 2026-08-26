@@ -1,9 +1,8 @@
 import { LitElement, html, nothing } from 'lit';
 import '../../styles/developer-controls.css';
 import { basicScoringBalance } from '../../content/basic-scoring-balance';
-import { sampleContent } from '../../content/sample-content';
+import { englishGameLocale, sampleContent } from '../../game-content';
 import { validateContentCatalog } from '../../content/content-catalog';
-import { englishGameLocale } from '../../localization/en-game-locale';
 import {
   createMatchReducer,
   type MatchEngineContext,

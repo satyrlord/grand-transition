@@ -1,5 +1,4 @@
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { sampleContent } from '../../src/content/sample-content';
 import { scoreComboFinisherConstruction } from '../../src/engine/combo-finisher-scoring';
 import type { DraftCommand, DraftState } from '../../src/engine/draft-actions';
 import {
@@ -18,7 +17,9 @@ import {
   type MatchState,
 } from '../../src/engine/match-lifecycle';
 import { listSimulationOptions } from '../../src/engine/simulation';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
+import { loadGameContent } from '../../tools/load-game-content';
+
+const { englishGameLocale, sampleContent } = loadGameContent();
 
 export type MatchBrowserAction = Readonly<{
   kind: 'draft';
@@ -46,6 +47,7 @@ const context: MatchEngineContext = {
  * player-one winning by the Milestone 013 score formula.
  */
 export function planMatchBrowserFlow(): MatchFlowPlan {
+  const lethalHoldThreshold = 16;
   const reducer = createMatchReducer(context);
   const actions: MatchBrowserAction[] = [];
   let state = createMatchSetupState({
@@ -173,8 +175,10 @@ export function planMatchBrowserFlow(): MatchFlowPlan {
       continue;
     }
 
-    const bothLow = ownPride <= 19 && opponentPride <= 19;
-    const waiting = opponentPride <= 19 && ownPride > 19;
+    const bothLow =
+      ownPride <= lethalHoldThreshold && opponentPride <= lethalHoldThreshold;
+    const waiting =
+      opponentPride <= lethalHoldThreshold && ownPride > lethalHoldThreshold;
 
     if (bothLow) {
       const comebackReady = (playerId: string): boolean =>

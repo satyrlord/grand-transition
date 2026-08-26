@@ -191,6 +191,14 @@ test('production omits developer controls from the DOM and bundle', async ({
 test('development click audit correlates one shared phrase selection', async ({
   page,
 }) => {
+  const followUpUpdateWarnings: string[] = [];
+  page.on('console', (message) => {
+    if (
+      message.text().includes('scheduled an update after an update completed')
+    ) {
+      followUpUpdateWarnings.push(message.text());
+    }
+  });
   await page.goto(developmentUrl);
   await expect(
     page.getByRole('button', { name: /Open click audit/u }),
@@ -206,6 +214,8 @@ test('development click audit correlates one shared phrase selection', async ({
   ).toBeVisible();
   await expect(page.getByText('Action: select-phrase')).toBeVisible();
   await expect(page.getByText('Result: select-phrase accepted')).toBeVisible();
+  await page.waitForTimeout(0);
+  expect(followUpUpdateWarnings).toEqual([]);
 });
 
 test('development evidence can be copied and downloaded by document type', async ({

@@ -27,9 +27,9 @@ Exercise applicable AI and hotseat matches through visible controls and valid
 gestures.
 Verify pointer input, sentence legality, redraw, grammar
 fault, continuation, comeback, and simultaneous damage.
-Verify automatic round progression, sudden death, direct setup return, settings
-persistence, speech support, and speech cancellation. Verify that no resolution
-or post-match surface appears.
+Verify the between-round review modal, Continue progression, sudden death,
+terminal setup return, settings persistence, speech support, and speech
+cancellation. Verify that no post-match surface appears.
 Verify hidden-hand privacy, the supported landscape matrix, the blocking
 viewport gate, and Pages asset paths.
 

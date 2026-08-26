@@ -17,12 +17,13 @@ Before the two variable slots, the board contains:
 - three verbs that require an object;
 - one predicate that completes a clause.
 
-The connector-count roll is 10 percent for zero connectors, 65 percent for one,
-and 25 percent for two. A forced connector is additive or contrasting. An
+The connector-count roll is 10 percent for zero connectors and 90 percent for
+one. A forced connector is additive or contrasting. An
 additive selection uses `and`. A contrast selection uses `but` or `yet` and
 replaces the additive selection on 25 percent of forced-connector selections.
-When fewer than two forced connectors were added, one continuation fills the
-next variable slot. Any last open slot draws from the eligible scene pool.
+The one unrestricted `[...]` continuation always fills one variable slot. When
+the roll adds no connector, the last open slot draws from the eligible scene
+pool.
 
 Each phrase identifier appears at most once on the board. Rarity changes draw
 probability only; it never creates duplicate cards. Board-slot identifiers also
@@ -60,8 +61,8 @@ hands are dealt again at the next round.
 - **AC-008-01:** A fixed seed reproduces both hands, all nine board slots, and
   the next seed.
 - **AC-008-02:** Every board has nine distinct phrase identifiers, the exact
-  base composition, and the connector-count bands above. The board and both
-  private hands contain 13 distinct phrase identifiers in total.
+  base composition, one continuation, and the connector-count bands above. The
+  board and both private hands contain 13 distinct phrase identifiers in total.
 - **AC-008-03:** Either player can select every available common slot.
 - **AC-008-04:** Character-restricted phrases appear only in that character's
   hand; scene restrictions remain valid.

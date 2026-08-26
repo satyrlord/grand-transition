@@ -59,8 +59,8 @@ combination is implementation evidence, not visual authority.
    explicit approval.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
    600, and bold 700. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, tutorial text,
-   privacy handovers, and compatibility text. Its tabular figures own Pride,
+   labels, validation, disabled reasons, score explanations, privacy handovers,
+   and compatibility text. Its tabular figures own Pride,
    damage, scores, and rounds.
 4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
    the timer only. Do not use it for any other number or text.
@@ -160,7 +160,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 Validation proves formats, sizes, crops, ownership, and licenses. Browser tests
 show correct variants without layout shift at target viewports. Manual evidence
 reviews the approved visual direction and motion modes. `npm run ci` passes.
-Stop before the remaining roster, audio, speech, or tutorial.
+Stop before the remaining roster, audio, speech, or presentation reactions.
 
 ## Reference
 

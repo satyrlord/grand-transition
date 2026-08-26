@@ -167,15 +167,17 @@ text only.
 Pointer preview stages the candidate phrase in the central construction and
 speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
-that side persistently brighter. Updated Pride and charge appear in the active
-match without a separate resolution step.
+that side persistently brighter. A completed exchange holds the last full
+sentence in the arena and places a semitransparent broadcast-results modal over
+the lower stage. Continue releases the hold and starts the next round.
 
 ### Cross-surface reach
 
 Active play proves the arena system first. Title and setup can introduce the
 broadcaster and contestants through the same display voice, framed meters,
 paper, oxblood, navy, brass, and direct stage language. The match remains the
-only visible surface during play. Completion returns directly to setup.
+only visible surface during play. A terminal review returns to setup only after
+Continue.
 
 ### Honest risk
 
@@ -276,8 +278,8 @@ redesign by default.
    Fredoka Bold is rejected. Do not restore it without new explicit approval.
 3. **Interface family:** Rubik is selected with regular 400, semibold 600, and
    bold 700 weights. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, tutorial
-   instructions, privacy handovers, and compatibility text. Its tabular figures
+   labels, validation, disabled reasons, score explanations, privacy handovers,
+   and compatibility text. Its tabular figures
    own Pride, damage, scores, and rounds.
 4. **Timer family:** Share Tech Mono is selected for the timer only. Do not use
    it for Pride, damage, scores, rounds, statistics, or body text.
@@ -305,8 +307,8 @@ information visible before and after font load.
   Comeback.
 - **Speech:** Delivered lines, current construction, and sentence previews in
   visual uppercase.
-- **Interface:** Phrases, controls, labels, explanations, errors, tutorial text,
-  and all non-timer values.
+- **Interface:** Phrases, controls, labels, explanations, errors, and all
+  non-timer values.
 - **Timer:** The timer value only.
 
 **The Four-Family Rule.** Each family has one exclusive information role. Do not
@@ -356,11 +358,11 @@ soft floating dashboard cards.
 
 ## Shapes
 
-The system is framed, angular, and architectural. Top meters can use tapered or
-stepped ends. Stage signs, phrase lists, private choices, dialogs, and buttons
-use sharp corners, one-pixel rules, or restrained double frames. Speech records
-use simple clipped paper tails. Do not copy the reference game's fist-shaped
-meters or its exact black-and-red frames.
+The system is framed, angular, and architectural. Top Pride frames use plain
+rectangles with square corners and parallel vertical ends. Stage signs, phrase
+lists, private choices, dialogs, and buttons use sharp corners, one-pixel rules,
+or restrained double frames. Speech records use simple clipped paper tails. Do
+not copy the reference game's shaped meters or its exact black-and-red frames.
 
 **The Civic Ornament Rule.** Use wreath-like double rules, plaque framing,
 speech tails, and line icons as compact civic signals. Never let ornament hide
@@ -410,6 +412,12 @@ ownership, weakness, disabled-reason, hint, or card-state copy in either phrase
 list. Keep that state in semantic attributes and accessible names. Every
 available phrase uses the same selection action. Unavailable rows use subdued
 text, and selecting a common phrase leaves its fixed row visibly empty.
+
+**The Get Good Rule.** The arena reports public outcomes with exact values. It
+reveals each selected character's weakness names before play and calls out an
+applied weakness during scoring. It does not teach rules, identify the next
+legal role, explain how weaknesses work, recommend cards, expose disabled-action
+reasons, or add tutorial progress.
 
 ### Speech, perimeter actions, and stage status
 

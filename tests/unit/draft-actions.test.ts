@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/content/sample-content';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   createDraftReducer,
   prepareDraftRound,
@@ -21,7 +21,6 @@ import {
   type PrivateHandGenerationResult,
   type PrivateHandGenerationRequest,
 } from '../../src/engine/private-hand-generation';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
 import { prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter';
 
 const playerIds = ['first-player', 'second-player'] as const;
@@ -414,7 +413,7 @@ describe('Hollywood Roast draft actions', () => {
     const selected = selectPrivate(
       prepared(),
       playerIds[0],
-      'the-transition-continues',
+      'ellipsis',
       'continuation',
     );
     expect(selected.playerStates[playerIds[0]]!.construction).toMatchObject({
@@ -462,6 +461,12 @@ describe('Hollywood Roast draft actions', () => {
       status: 'ended',
       selectedComebackTier: 'strong',
     });
+    expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
+      /\. History has filed your entire career under administrative error\.$/u,
+    );
+    expect(
+      state.playerStates[playerIds[0]]!.construction.analysis.publicText,
+    ).not.toContain('History has filed your entire career');
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
   });
 
@@ -510,12 +515,7 @@ describe('Hollywood Roast draft actions', () => {
 
   test('timeouts after the opponent ends deal 3, 6, 12, and 24', () => {
     let state = prepared();
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'the-transition-continues',
-      'first-carry',
-    );
+    state = selectPrivate(state, playerIds[0], 'ellipsis', 'first-carry');
     const expectations = [3, 9, 21, 45];
     for (const expected of expectations) {
       state = run(state, {

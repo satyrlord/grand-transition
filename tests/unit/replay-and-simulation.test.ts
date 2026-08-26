@@ -1,8 +1,7 @@
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { sampleContent } from '../../src/content/sample-content';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
 import {
   createMatchReducer,

@@ -475,7 +475,8 @@ function renderPublicText(
     englishGraphemeSegmenter.segment(text)[Symbol.iterator]().next().value
       ?.segment ?? '';
   const sentenceCase = first.toLocaleUpperCase('en') + text.slice(first.length);
-  return `${sentenceCase}${punctuate ? '.' : ''}`;
+  const needsFullStop = punctuate && !text.trimEnd().endsWith('.');
+  return `${sentenceCase}${needsFullStop ? '.' : ''}`;
 }
 
 function reject(
