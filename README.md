@@ -21,24 +21,23 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 017 provide the runnable project, complete quality gate,
-immutable game contracts, replaceable external ports, enforced pure-module
-boundaries, a secured production shell, and validated sample game content. The
-sample contains 126 Romanian-politics common phrases, 12 phrases for each of
-three fictional characters, one fictional scene, an English game-locale bundle,
-minimum and two-clause
-Hollywood Roast grammar, compound subjects, endings, incomplete states,
-immediate grammar mistakes, seeded common-board and private-hand generation,
-clause scoring, noun combos, continuations, comebacks, cliffhangers, match
-lifecycle, replay, and simulation. The landscape-only Lit interface provides
-title, setup, a playable hotseat match, and Pause. Every exchange pauses on an
-in-arena review modal. Continue advances the next round or returns a completed
-match to setup without post-match features. The interface requires a browser
-content viewport of at least
-1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add
-privacy handovers, settings, artificial
-intelligence, final assets, audio, expanded content, and release hardening in
-dependency order.
+Milestones 001 through 017 provide the runnable project and complete quality
+gate. They also provide immutable game contracts, replaceable external ports,
+enforced pure-module boundaries, a secured production shell, and validated
+sample game content. The sample contains 126 Romanian-politics common phrases
+and 12 phrases for each of three fictional characters. It also contains one
+fictional scene and an English game-locale bundle. The implemented rules include
+minimum and two-clause Hollywood Roast grammar, compound subjects, endings,
+incomplete states, and immediate grammar mistakes. They also include seeded
+common-board and private-hand generation, clause scoring, noun combos,
+continuations, comebacks, cliffhangers, match lifecycle, replay, and simulation.
+The landscape-only Lit interface provides title, setup, a playable hotseat
+match, and Pause. Every exchange pauses on an in-arena review modal. Continue
+advances the next round or returns a completed match to setup without post-match
+features. The interface requires a browser content viewport of at least 1024 by
+720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add privacy
+handovers, settings, artificial intelligence, final assets, audio, expanded
+content, and release hardening in dependency order.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

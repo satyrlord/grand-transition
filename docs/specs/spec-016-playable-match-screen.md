@@ -93,7 +93,7 @@ After every exchange, keep the completed arena visible and pause before the next
 round or match exit. Keep the last speaker's complete text in the wide bubble,
 including a selected comeback line. Place the exchange record in a
 semitransparent modal over the arena. It states the completed round number and
-its winner. The player with the higher outgoing damage wins the round; equal
+its winner. The player with the higher outgoing damage wins the round. Equal
 outgoing damage is a tie. For both players, show final outgoing damage. When a
 combo applies, also show the largest applied combo factor and the exact damage
 that its clause multipliers added. One Continue control advances the lifecycle.
@@ -101,7 +101,7 @@ that its clause multipliers added. One Continue control advances the lifecycle.
 If scoring activates one or more defender weaknesses, the modal also shows
 `Weakness hit` and each exact public weakness name. Show each
 activated weakness once. Do not show this message for a phrase that merely has
-a matching tag; show it only after the scoring breakdown applies the weakness.
+a matching tag. Show it only after the scoring breakdown applies the weakness.
 The private choices sit at the active player's lower perimeter. A compact
 Reshuffle control follows them. The control uses an authored inline SVG icon,
 has an accessible name, and has no visible explanatory copy. The underlying
@@ -130,7 +130,7 @@ one Resume control. It reveals no board, hand, sentence, player, score, or timer
 value. It stops all match input and freezes the exact remaining turn time.
 Resume restores the unchanged match and restarts the timer from that value.
 Repeated pauses never add time. Pause has no quota because local players own
-the interruption; concealment and exact timer preservation prevent state
+the interruption. Concealment and exact timer preservation prevent state
 inspection or timer-refill abuse.
 
 ## Acceptance criteria

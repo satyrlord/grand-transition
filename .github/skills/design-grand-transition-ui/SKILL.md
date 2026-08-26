@@ -42,7 +42,7 @@ images only as evidence of tone or behavior.
 ## Preserve the target contract
 
 The following requirements come from the approved specification. They constrain
-the Impeccable brief; they are not a complete design system.
+the Impeccable brief. They are not a complete design system.
 
 Create an original illustrated political-theatre interface that combines
 editorial caricature, stage scenery, post-socialist broadcast graphics,

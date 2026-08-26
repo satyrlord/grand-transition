@@ -15,7 +15,7 @@ milestones add artificial intelligence (AI), speech, privacy, and saved options
 when their behavior exists.
 
 The title screen shows the fictional-composite satire disclaimer. Setup uses
-native controls and prevents only invalid combinations; mirror characters are
+native controls and prevents only invalid combinations. Mirror characters are
 valid. Screens use light DOM. Shadow DOM is limited to isolated leaf controls
 with explicit style and event contracts. Components never duplicate
 authoritative state.
@@ -24,7 +24,7 @@ authoritative state.
 
 The shell has `title` and `setup` view states. “Set up match” moves from the
 title to setup without changing game state. “Back” returns to title and restores
-setup values. A valid setup submit emits one typed `start-match` command;
+setup values. A valid setup submit emits one typed `start-match` command.
 Milestone 016 owns the rendered match destination.
 
 Setup fields are mode, player-one character, player-two character, and scene.

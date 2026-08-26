@@ -13,9 +13,9 @@ reservation list.
 
 Before the two variable slots, the board contains:
 
-- three nouns;
-- three verbs that require an object;
-- one predicate that completes a clause.
+- three nouns
+- three verbs that require an object
+- one predicate that completes a clause
 
 The connector-count roll is 10 percent for zero connectors and 90 percent for
 one. A forced connector is additive or contrasting. An
@@ -26,7 +26,7 @@ the roll adds no connector, the last open slot draws from the eligible scene
 pool.
 
 Each phrase identifier appears at most once on the board. Rarity changes draw
-probability only; it never creates duplicate cards. Board-slot identifiers also
+probability only. It never creates duplicate cards. Board-slot identifiers also
 stay unique.
 
 One round deal contains 13 distinct phrase identifiers across the two starting
@@ -65,7 +65,7 @@ hands are dealt again at the next round.
   board and both private hands contain 13 distinct phrase identifiers in total.
 - **AC-008-03:** Either player can select every available common slot.
 - **AC-008-04:** Character-restricted phrases appear only in that character's
-  hand; scene restrictions remain valid.
+  hand. Scene restrictions remain valid.
 - **AC-008-05:** An impossible pool returns stable per-role counts without an
   unbounded retry.
 - **AC-008-06:** A hand refresh uses two phrase identifiers that did not occur

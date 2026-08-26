@@ -20,13 +20,13 @@ The reference role mapping is:
 | `verb`                | Relation that requires a following noun object                   |
 | `conjunction`         | Approved additive, contrast, reason, and result connectors       |
 | `ending`              | Finisher that can follow a complete clause and ends the sentence |
-| `continuation`        | Draft action; not a grammar phrase                               |
+| `continuation`        | Draft action, not a grammar phrase                               |
 
 ## Core forms
 
 The two minimum complete clauses are:
 
-- `NOUN + PREDICATE`;
+- `NOUN + PREDICATE`.
 - `NOUN + VERB + NOUN`.
 
 A sentence starts with a noun or front `because`. A continuation is always a

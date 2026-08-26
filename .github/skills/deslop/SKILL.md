@@ -11,7 +11,7 @@ description: Remove unsupported Grand Transition repository content without chan
 - Use cleanup mode only when the user explicitly authorizes edits.
 
 In this skill, "slop" means content that conflicts with its assigned owner,
-behavior, repository rule, or valid sibling. A warning starts an inspection; it
+behavior, repository rule, or valid sibling. A warning starts an inspection. It
 does not prove a defect.
 
 ## Establish evidence

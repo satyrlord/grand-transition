@@ -22,8 +22,8 @@ Ending text includes a terminal full stop.
 Roles are `noun`, `verb`, `predicate`, `conjunction`, `ending`, and
 `continuation`. Conjunctions declare `and`, `but`, `because`, `yet`, `so`, or
 `for`. Nouns can declare singular or plural. A relation can declare an exact
-left-noun and optional right-noun custom clause score from 0 through 100;
-otherwise Milestone 010 calculates group compatibility.
+left-noun and optional right-noun custom clause score from 0 through 100.
+Otherwise, Milestone 010 calculates group compatibility.
 
 A character owns identity, original media, palette, two through four weakness
 tags, character-restricted hand phrase identifiers, exactly one exclusive
@@ -86,7 +86,7 @@ one complete authoring file under
 order, identity, English name and description, media references, palette,
 weaknesses, comeback text, artificial-intelligence personality, voice,
 animation IDs, and its phrase array. Its identifier must match its file name.
-The loader derives `characterIds`; authors must not repeat that ownership field
+The loader derives `characterIds`. Authors must not repeat that ownership field
 inside each phrase card.
 
 To add a common phrase, copy one same-role object in the common JSON array and

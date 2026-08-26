@@ -48,7 +48,7 @@ reproduced manually.
 
 The development workflow uses the visible phases `Configure`, `Run`, and
 `Evidence`. `Run AI versus AI` is the primary action. Seed, Pride, and charge
-are required integers with inline errors; actions that consume setup stay
+are required integers with inline errors. Actions that consume setup stay
 disabled until every setup value is valid. Evidence shows whether the current
 document is a replay, public match log, unrecognized JSON, or empty. Match logs
 are export-only. Recognized evidence can be copied or downloaded as a local
@@ -61,7 +61,7 @@ and replay invariants. Never exclude difficult rule files from coverage.
 Replay version 1 is normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
-inputs; dealt private cards and derived state are regenerated from the seed.
+inputs. Dealt private cards and derived state are regenerated from the seed.
 Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, schema version 1,
@@ -69,13 +69,13 @@ setup, seed, round summaries, public selections, public breakdowns, public rule
 events, and winner. It omits unselected private cards, player-entered text,
 browser identifiers, timestamps finer than the calendar date, and machine data.
 
-Malformed JSON returns `invalid-json`; wrong kind returns `wrong-document`;
-missing or invalid fields return `invalid-replay`; and an unknown version
-returns `unsupported-version`. Version 1 is the initial format and has no
+Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
+Missing or invalid fields return `invalid-replay`. An unknown version returns
+`unsupported-version`. Version 1 is the initial format and has no
 fabricated predecessor migration.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
-Optional `--output <path>` writes normalized JSON; without it, the command
+Optional `--output <path>` writes normalized JSON. Without it, the command
 writes a concise summary to standard output. Invalid arguments exit nonzero and
 name the invalid option.
 

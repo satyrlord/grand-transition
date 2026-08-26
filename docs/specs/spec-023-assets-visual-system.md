@@ -120,7 +120,7 @@ character image packages total at most 3 mebibytes (MiB) in their preferred
 formats. Setup does not preload unselected match packages.
 
 Each named character state maps to one pose and one expression. The set uses at
-least five distinct expressions and six distinct poses; the 11 named states do
+least five distinct expressions and six distinct poses. The 11 named states do
 not each require a unique image when the manifest declares the combination.
 Normal reactions last 150 through 600 milliseconds, transitions at most 700
 milliseconds, and idle loops 2 through 8 seconds.

@@ -24,7 +24,7 @@ own focus, tooltip, or animation view state. Components must not own Pride,
 turn, board, hand, score, replay, or rules.
 
 Randomness enters only through the seeded source. Persistence uses pure,
-versioned codecs behind `StoragePort`; engine and codecs do not call browser
+versioned codecs behind `StoragePort`. Engine and codecs do not call browser
 storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
 replay do not import Lit or Document Object Model (DOM) application programming
 interfaces (APIs). English interface prose stays in user interface (UI)

@@ -34,7 +34,7 @@ tutorial, onboarding, hint, or guided-progress state.
 
 Version 1 is the first stored schema. Do not invent a migration from an
 unshipped format. Future schema changes must add a documented source fixture
-and stepwise migration. Malformed data returns `invalid-data`; an unknown
+and stepwise migration. Malformed data returns `invalid-data`. An unknown
 version returns `unsupported-version`. Storage failures are
 `storage-unavailable`, `storage-quota`, or `storage-security`.
 
@@ -55,7 +55,7 @@ in-memory adapter remains active for the browser session.
   complete match.
 - **AC-020-04:** Dismissing the notice hides it for the session but does not
   claim persistence is restored.
-- **AC-020-05:** Only the storage adapter imports `localStorage`; codecs are
+- **AC-020-05:** Only the storage adapter imports `localStorage`. Codecs are
   deterministic pure modules and log no stored value.
 
 ## Impeccable UI validation

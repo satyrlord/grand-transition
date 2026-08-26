@@ -21,7 +21,7 @@ The player can perform these actions:
 | Refresh hand | Replace both private cards once, keep pick |
 | End sentence | End complete or incomplete sentence, pass participation |
 | Use comeback | Use the strongest filled tier, end sentence |
-| Let timer expire | Pass pick; apply timeout rule when opponent already ended |
+| Let timer expire | Pass pick. Apply timeout rule when opponent already ended |
 
 A finisher or comeback ends the sentence immediately. A continuation ends that
 player's participation and carries the fragment. Finished and continued players
