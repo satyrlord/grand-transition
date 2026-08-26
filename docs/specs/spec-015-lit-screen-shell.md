@@ -33,9 +33,16 @@ Every pick uses the fixed 15-second timer owned by Milestone 009. Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 
+Each character selector shows the selected character's complete public
+weakness list directly below the control. The list updates in the same render
+as the selection and remains visible before match start. Mirror selections show
+the same list for both players.
+
 Validation occurs on submit and after an invalid field changes. Each visible
 error names the field, problem, and valid recovery. Valid input is preserved.
-Submission is never disabled only to hide validation.
+Each error is programmatically associated with its control. An invalid submit
+moves focus to the first invalid control. Submission is never disabled only to
+hide validation.
 
 ## Acceptance criteria
 
@@ -44,13 +51,17 @@ Submission is never disabled only to hide validation.
 - **AC-015-02:** Defaults create the exact typed setup
   payload. A mirror match succeeds.
 - **AC-015-03:** Every invalid class produces one visible error, preserves
-  other values, and emits no command.
+  other values, moves focus to the first invalid control, associates each error
+  with its control, and emits no command.
 - **AC-015-04:** A valid submit emits one bubbling, composed
   `start-match` event and immutable payload. Rapid double submit emits once.
 - **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by
   1080. Back does not discard setup values.
 - **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
   hands, or game phase. The shell is the only authoritative snapshot owner.
+- **AC-015-07:** Defaults, each changed character, and a mirror selection show
+  the exact catalog weakness tags for both players at every supported setup
+  viewport without clipping or page scroll.
 
 ## Impeccable UI validation
 

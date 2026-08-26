@@ -7,40 +7,38 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from 'lit';
-import { sampleContent } from '../../content/sample-content';
+import { characterPortraitUrls, sampleContent } from '../../game-content';
 import type { Phrase } from '../../content/schemas';
 import {
   snapshotDraftStateForPlayer,
   type ComebackTier,
   type DraftCardReference,
 } from '../../engine/draft-actions';
+import type { ComboFinisherScore } from '../../engine/combo-finisher-scoring';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
 } from '../../engine/grammar/english-grammar-adapter';
-import type { MatchCommand, MatchState } from '../../engine/match-lifecycle';
+import type {
+  MatchCommand,
+  MatchResolution,
+  MatchState,
+} from '../../engine/match-lifecycle';
 import './interruption-screen';
 
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
+export const continueRoundEventName = 'continue-round';
 
 export type MatchPauseMode = 'manual' | 'running' | 'viewport';
 
-const characterPortraitUrls: Readonly<Record<string, string>> = {
-  'red-folded-chairman': new URL(
-    '../../assets/characters/red-folded-chairman.png',
-    import.meta.url,
-  ).href,
-  'thunder-tribune': new URL(
-    '../../assets/characters/thunder-tribune.png',
-    import.meta.url,
-  ).href,
-  'black-sea-captain': new URL(
-    '../../assets/characters/black-sea-captain.png',
-    import.meta.url,
-  ).href,
-};
+export type MatchArenaReaction = Readonly<{
+  kind: 'grammar-mistake';
+  playerId: string;
+  damage: number;
+  sequence: number;
+}>;
 
 const sceneImageUrls: Readonly<Record<string, string>> = {
   'transition-era-television-studio': new URL(
@@ -75,12 +73,14 @@ export type MatchPlayerView = Readonly<{
   pride: number;
   isActive: boolean;
   sentence: string | null;
+  comebackLine: string | null;
   status: 'building' | 'ended';
 }>;
 
 export type MatchScreenSnapshot = Readonly<{
   revision: number;
   phase: MatchState['phase'];
+  roundReview: boolean;
   round: number;
   sceneName: string;
   sceneUrl: string;
@@ -101,22 +101,54 @@ export type MatchScreenSnapshot = Readonly<{
     redrawUsed: boolean;
     comebackTiers: readonly ComebackTier[];
   }>;
+  arenaReaction: Readonly<{
+    kind: MatchArenaReaction['kind'];
+    playerId: string;
+    playerName: string;
+    damage: number;
+    sequence: number;
+  }> | null;
   reaction: Readonly<{
-    label: string;
-    playerDamage: Readonly<Record<string, number>>;
+    round: number | null;
+    outcomeLabel: string;
+    players: Readonly<
+      Record<
+        string,
+        Readonly<{
+          damage: number;
+          comboFactor: number;
+          comboBonusDamage: number;
+          weaknesses: readonly string[];
+        }>
+      >
+    >;
   }>;
 }>;
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
+export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
 
 export function createMatchScreenSnapshot(
   state: MatchState,
+  arenaReaction: MatchArenaReaction | null = null,
+  reviewResolution: MatchResolution | null = null,
 ): MatchScreenSnapshot {
   if (!state.draft) {
     throw new Error('The match screen needs an active draft snapshot.');
   }
 
-  const activePlayerId = state.activePlayerId;
+  const activePlayerId =
+    reviewResolution === null
+      ? state.activePlayerId
+      : ([
+          ...state.playerOrder.filter(
+            (playerId) => reviewResolution.players[playerId]?.comebackActivated,
+          ),
+          state.activePlayerId,
+          ...state.playerOrder,
+        ].find(
+          (playerId) => reviewResolution.players[playerId]?.completeValidInsult,
+        ) ?? state.activePlayerId);
   const activePlayer = state.draft.playerStates[activePlayerId];
   if (!activePlayer) {
     throw new Error(`The active player "${activePlayerId}" is missing.`);
@@ -194,25 +226,40 @@ export function createMatchScreenSnapshot(
       characterId: player.characterId,
       characterName: characterName(player.characterId),
       portraitUrl: characterPortraitUrl(player.characterId),
-      pride: player.pride,
+      pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,
       sentence: draftPlayer.construction.previewText,
+      comebackLine: draftPlayer.construction.comebackClosingLine,
       status: draftPlayer.construction.status,
     } satisfies MatchPlayerView;
   }) as [MatchPlayerView, MatchPlayerView];
 
-  const latestResolution = state.resolutionHistory.at(-1);
-  const playerDamage = Object.fromEntries(
-    state.playerOrder.map((playerId) => [
-      playerId,
-      latestResolution?.players[playerId]?.outgoingDamage ?? 0,
-    ]),
+  const latestResolution = reviewResolution;
+  const reactionPlayers = Object.fromEntries(
+    state.playerOrder.map((playerId) => {
+      const result = latestResolution?.players[playerId];
+      const combo = comboDamageDetails(result?.score ?? null);
+      const weaknesses = weaknessDamageDetails(result?.score ?? null);
+      return [
+        playerId,
+        {
+          damage: result?.outgoingDamage ?? 0,
+          comboFactor: combo.factor,
+          comboBonusDamage: combo.bonusDamage,
+          weaknesses,
+        },
+      ];
+    }),
   );
   const activeName = characterName(activePlayer.characterId);
+  const arenaReactionPlayer = arenaReaction
+    ? state.playerStates[arenaReaction.playerId]
+    : undefined;
 
   return deepFreeze({
     revision: state.commandHistory.length,
     phase: state.phase,
+    roundReview: reviewResolution !== null,
     round: state.round,
     sceneName: gameMessage(
       sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
@@ -231,18 +278,30 @@ export function createMatchScreenSnapshot(
       durationSeconds: state.draft.turn.durationSeconds,
     },
     actions: {
-      canCommit: activePlayer.construction.status === 'building',
+      canCommit:
+        reviewResolution === null &&
+        activePlayer.construction.status === 'building',
       canRedraw:
+        reviewResolution === null &&
         activePlayer.construction.status === 'building' &&
         !activePlayer.redrawUsed,
       redrawUsed: activePlayer.redrawUsed,
-      comebackTiers: activePlayer.availableComebackTiers,
+      comebackTiers:
+        reviewResolution === null ? activePlayer.availableComebackTiers : [],
     },
+    arenaReaction:
+      reviewResolution === null && arenaReaction && arenaReactionPlayer
+        ? {
+            ...arenaReaction,
+            playerName: characterName(arenaReactionPlayer.characterId),
+          }
+        : null,
     reaction: {
-      label: latestResolution
-        ? msg('The last exchange entered the public record.')
+      round: latestResolution?.round ?? null,
+      outcomeLabel: latestResolution
+        ? roundOutcomeLabel(state, latestResolution)
         : msg('The chamber is waiting for its first exchange.'),
-      playerDamage,
+      players: reactionPlayers,
     },
   });
 }
@@ -251,16 +310,13 @@ export class GrandTransitionMatch extends LitElement {
   static properties = {
     snapshot: { attribute: false },
     pauseMode: { attribute: false },
-    previewText: { state: true },
-    remainingSeconds: { state: true },
-    commandPending: { state: true },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
   declare pauseMode: MatchPauseMode;
-  declare private previewText: string | null;
-  declare private remainingSeconds: number | null;
-  declare private commandPending: boolean;
+  private previewText: string | null;
+  private remainingSeconds: number | null;
+  private commandPending: boolean;
 
   private timerId: number | undefined;
   private timerSequence = -1;
@@ -292,6 +348,18 @@ export class GrandTransitionMatch extends LitElement {
     }
   }
 
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('snapshot') && this.snapshot?.roundReview) {
+      this.querySelector<HTMLButtonElement>('.round-review-continue')?.focus();
+      return;
+    }
+    const previousSnapshot = changed.get('snapshot') as
+      MatchScreenSnapshot | undefined;
+    if (previousSnapshot?.roundReview && this.snapshot) {
+      this.querySelector<HTMLElement>('#match-title')?.focus();
+    }
+  }
+
   protected override render() {
     if (!this.snapshot) return nothing;
     if (this.pauseMode === 'viewport') {
@@ -308,17 +376,27 @@ export class GrandTransitionMatch extends LitElement {
     const second = this.snapshot.players[1];
     const timerValue = this.remainingSeconds ?? 15;
     const timerLabel = msg(`${timerValue} seconds`);
-    const hasRecentDamage = Object.values(
-      this.snapshot.reaction.playerDamage,
-    ).some((damage) => damage > 0);
+    const displayedSentence = this.previewText ?? this.snapshot.sentenceText;
+    const arenaReaction = this.snapshot.arenaReaction;
+    const roundReview = this.snapshot.roundReview;
+    const reactionSide = arenaReaction
+      ? first.playerId === arenaReaction.playerId
+        ? 'red'
+        : 'blue'
+      : null;
 
     return html`
       <main
         class="match-screen"
         aria-labelledby="match-title"
         data-active-side=${first.isActive ? 'red' : 'blue'}
+        data-round-review=${roundReview ? 'true' : nothing}
       >
-        <div class="broadcast-stage">
+        <div
+          class="broadcast-stage"
+          data-arena-reaction=${arenaReaction?.kind ?? nothing}
+          data-reaction-side=${reactionSide ?? nothing}
+        >
           <img
             class="broadcast-stage-art"
             src=${this.snapshot.sceneUrl}
@@ -329,8 +407,13 @@ export class GrandTransitionMatch extends LitElement {
           />
           <header class="match-status-rail">
             <div class="match-header-controls">
-              <button type="button" class="match-pause" @click=${this.pause}>
-                ${msg('Pause')}
+              <button
+                type="button"
+                class="match-pause"
+                ?disabled=${roundReview}
+                @click=${this.pause}
+              >
+                ${roundReview ? msg('Paused') : msg('Pause')}
               </button>
               <dl class="match-facts">
                 <div class="timer-fact" data-timer=${timerValue}>
@@ -350,8 +433,16 @@ export class GrandTransitionMatch extends LitElement {
           </header>
 
           <section class="match-stage" aria-label=${msg('Public chamber')}>
-            ${this.renderPlayer(first, 'red')}
-            ${this.renderPlayer(second, 'blue')}
+            ${this.renderPlayer(
+              first,
+              'red',
+              arenaReaction?.playerId === first.playerId,
+            )}
+            ${this.renderPlayer(
+              second,
+              'blue',
+              arenaReaction?.playerId === second.playerId,
+            )}
           </section>
 
           <section
@@ -362,124 +453,114 @@ export class GrandTransitionMatch extends LitElement {
             <h2 id="sentence-title" class="visually-hidden">
               ${msg('Current sentence')}
             </h2>
-            <p class="sentence-preview" aria-live="polite">
-              ${this.previewText ?? this.snapshot.sentenceText}
+            <p
+              class="sentence-preview"
+              data-density=${sentenceDensity(displayedSentence)}
+              aria-live="polite"
+            >
+              ${displayedSentence}
             </p>
             <p class="sentence-state visually-hidden">
               ${
-                this.snapshot.sentenceComplete
-                  ? msg('Sentence ready — end it or keep building')
-                  : msg('Choose a phrase or end the sentence')
+                roundReview
+                  ? msg('Exchange complete')
+                  : this.snapshot.sentenceComplete
+                    ? msg('Sentence ready — end it or keep building')
+                    : msg('Choose a phrase or end the sentence')
               }
             </p>
           </section>
 
           ${
-            hasRecentDamage
-              ? html`<aside class="reaction-docket" aria-live="polite">
-                  <p>${this.snapshot.reaction.label}</p>
-                  <dl>
-                    <div>
-                      <dt>${first.characterName}</dt>
-                      <dd>
-                        ${
-                          this.snapshot.reaction.playerDamage[first.playerId] ??
-                          0
-                        }
-                        ${msg('damage')}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>${second.characterName}</dt>
-                      <dd>
-                        ${
-                          this.snapshot.reaction.playerDamage[
-                            second.playerId
-                          ] ?? 0
-                        }
-                        ${msg('damage')}
-                      </dd>
-                    </div>
-                  </dl>
-                </aside>`
-              : nothing
+            roundReview
+              ? this.renderRoundReview(first, second)
+              : arenaReaction
+                ? this.renderArenaReaction(arenaReaction)
+                : nothing
           }
-
-          <section class="draft-table" aria-label=${msg('Phrase draft')}>
-            <section
-              class="common-phrases"
-              aria-labelledby="common-phrases-title"
-            >
-              <h2 id="common-phrases-title" class="visually-hidden">
-                ${msg('Common phrases')}
-              </h2>
-              <ol
-                class="shared-board"
-                aria-label=${msg('Nine common phrase slots')}
-              >
-                ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
-              </ol>
-            </section>
-
-            <section
-              class="private-hand"
-              data-side=${first.isActive ? 'red' : 'blue'}
-              aria-labelledby="private-hand-title"
-            >
-              <h2 id="private-hand-title" class="visually-hidden">
-                ${msg(`${this.snapshot.activePlayerName}'s private phrases`)}
-              </h2>
-              <div class="private-hand-controls">
-                <ol>
-                  ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
-                </ol>
-                <button
-                  type="button"
-                  class="action-reshuffle"
-                  aria-label=${msg(
-                    this.snapshot.actions.redrawUsed
-                      ? 'Reshuffle used'
-                      : 'Reshuffle private phrases',
-                  )}
-                  ?disabled=${
-                    !this.snapshot.actions.canRedraw || this.commandPending
-                  }
-                  @click=${this.redraw}
+          ${
+            roundReview
+              ? nothing
+              : html`<section
+                  class="draft-table"
+                  aria-label=${msg('Phrase draft')}
                 >
-                  ${this.actionIcon()}
-                </button>
-              </div>
-            </section>
+                  <section
+                    class="common-phrases"
+                    aria-labelledby="common-phrases-title"
+                  >
+                    <h2 id="common-phrases-title" class="visually-hidden">
+                      ${msg('Common phrases')}
+                    </h2>
+                    <ol
+                      class="shared-board"
+                      aria-label=${msg('Nine common phrase slots')}
+                    >
+                      ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
+                    </ol>
+                  </section>
 
-            <nav
-              class="match-actions"
-              data-side=${first.isActive ? 'red' : 'blue'}
-              aria-label=${msg('Turn actions')}
-            >
-              <button
-                type="button"
-                class="action-primary"
-                ?disabled=${
-                  !this.snapshot.actions.canCommit || this.commandPending
-                }
-                @click=${this.commit}
-              >
-                <span class="action-title">${msg('End')}</span>
-              </button>
-              <button
-                type="button"
-                class="action-secondary"
-                @click=${this.useComeback}
-                ?disabled=${
-                  this.commandPending ||
-                  !this.snapshot.sentenceComplete ||
-                  this.snapshot.actions.comebackTiers.length === 0
-                }
-              >
-                <span class="action-title">${msg('Comeback')}</span>
-              </button>
-            </nav>
-          </section>
+                  <section
+                    class="private-hand"
+                    data-side=${first.isActive ? 'red' : 'blue'}
+                    aria-labelledby="private-hand-title"
+                  >
+                    <h2 id="private-hand-title" class="visually-hidden">
+                      ${msg(`${this.snapshot.activePlayerName}'s private phrases`)}
+                    </h2>
+                    <div class="private-hand-controls">
+                      <ol>
+                        ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
+                      </ol>
+                      <button
+                        type="button"
+                        class="action-reshuffle"
+                        aria-label=${msg(
+                          this.snapshot.actions.redrawUsed
+                            ? 'Reshuffle used'
+                            : 'Reshuffle private phrases',
+                        )}
+                        ?disabled=${
+                          !this.snapshot.actions.canRedraw ||
+                          this.commandPending
+                        }
+                        @click=${this.redraw}
+                      >
+                        ${this.actionIcon()}
+                      </button>
+                    </div>
+                  </section>
+
+                  <nav
+                    class="match-actions"
+                    data-side=${first.isActive ? 'red' : 'blue'}
+                    aria-label=${msg('Turn actions')}
+                  >
+                    <button
+                      type="button"
+                      class="action-primary"
+                      ?disabled=${
+                        !this.snapshot.actions.canCommit || this.commandPending
+                      }
+                      @click=${this.commit}
+                    >
+                      <span class="action-title">${msg('End')}</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="action-secondary"
+                      @click=${this.useComeback}
+                      ?disabled=${
+                        this.commandPending ||
+                        !this.snapshot.sentenceComplete ||
+                        this.snapshot.actions.comebackTiers.length === 0
+                      }
+                    >
+                      <span class="action-title">${msg('Comeback')}</span>
+                    </button>
+                  </nav>
+                </section>`
+          }
         </div>
       </main>
     `;
@@ -488,14 +569,19 @@ export class GrandTransitionMatch extends LitElement {
   private renderPlayer(
     player: MatchPlayerView,
     side: 'blue' | 'red',
+    hasGrammarReaction: boolean,
   ): TemplateResult {
+    const activeTurn = player.isActive && !this.snapshot?.roundReview;
     return html`
       <article
-        class="match-player ${player.isActive ? 'match-player--active' : ''}"
+        class="match-player ${
+          player.isActive ? 'match-player--active' : ''
+        } ${hasGrammarReaction ? 'match-player--grammar-hit' : ''}"
         data-side=${side}
         data-turn-state=${player.isActive ? 'active' : 'waiting'}
-        aria-current=${player.isActive ? 'true' : nothing}
-        aria-label=${`${player.characterName}, ${player.pride} Pride, ${player.isActive ? 'active turn' : 'waiting'}`}
+        data-reaction-state=${hasGrammarReaction ? 'grammar-mistake' : nothing}
+        aria-current=${activeTurn ? 'true' : nothing}
+        aria-label=${`${player.characterName}, ${player.pride} Pride, ${this.snapshot?.roundReview ? (player.isActive ? 'last speaker' : 'round complete') : player.isActive ? 'active turn' : 'waiting'}`}
       >
         <header class="player-hud">
           <div class="player-health">
@@ -510,7 +596,7 @@ export class GrandTransitionMatch extends LitElement {
           </div>
           <div class="player-name-line">
             <h2>${compactCharacterName(player.characterName)}</h2>
-            <span class="player-turn-status" ?hidden=${!player.isActive}
+            <span class="player-turn-status" ?hidden=${!activeTurn}
               >${msg('Your turn')}</span
             >
           </div>
@@ -528,14 +614,114 @@ export class GrandTransitionMatch extends LitElement {
         ${
           player.isActive
             ? nothing
-            : html`<blockquote
-                class="player-sentence player-sentence--waiting"
-                aria-label=${msg(`${player.characterName} is waiting`)}
-              >
-                <span aria-hidden="true">…</span>
-              </blockquote>`
+            : player.comebackLine
+              ? html`<blockquote
+                  class="player-sentence player-sentence--waiting player-sentence--comeback"
+                  aria-label=${msg(`${player.characterName} comeback`)}
+                >
+                  <span>${player.sentence}</span>
+                </blockquote>`
+              : html`<blockquote
+                  class="player-sentence player-sentence--waiting"
+                  aria-label=${msg(`${player.characterName} is waiting`)}
+                >
+                  <span aria-hidden="true">…</span>
+                </blockquote>`
         }
       </article>
+    `;
+  }
+
+  private renderRoundReview(
+    first: MatchPlayerView,
+    second: MatchPlayerView,
+  ): TemplateResult {
+    const round = this.snapshot!.reaction.round!;
+    return html`
+      <div class="round-review-backdrop">
+        <section
+          class="round-review-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="round-review-title"
+          aria-describedby="round-review-outcome"
+          data-round-result=${round}
+        >
+          <header class="round-review-heading">
+            <span>${msg('Exchange record')}</span>
+            <h2 id="round-review-title">${msg(`Round ${round} results`)}</h2>
+          </header>
+          <p id="round-review-outcome" class="reaction-outcome">
+            <strong>${this.snapshot!.reaction.outcomeLabel}</strong>
+          </p>
+          <dl class="reaction-scores">
+            ${this.renderReactionScore(first)}
+            ${this.renderReactionScore(second)}
+          </dl>
+          <button
+            type="button"
+            class="round-review-continue"
+            @click=${this.continueRound}
+          >
+            ${msg('Continue')}
+          </button>
+        </section>
+      </div>
+    `;
+  }
+
+  private renderArenaReaction(
+    reaction: NonNullable<MatchScreenSnapshot['arenaReaction']>,
+  ): TemplateResult {
+    return html`
+      <aside
+        class="grammar-strike"
+        data-reaction-sequence=${reaction.sequence}
+        role="status"
+        aria-live="assertive"
+      >
+        <span class="grammar-strike__signal">${msg('Off script')}</span>
+        <strong>${msg('Grammar mistake')}</strong>
+        <span class="grammar-strike__player">${reaction.playerName}</span>
+        <span class="grammar-strike__damage"
+          >−${reaction.damage} ${msg('Pride')}</span
+        >
+      </aside>
+    `;
+  }
+
+  private renderReactionScore(player: MatchPlayerView): TemplateResult {
+    const reaction = this.snapshot!.reaction.players[player.playerId]!;
+    return html`
+      <div data-round-player=${player.playerId}>
+        <dt>${compactCharacterName(player.characterName)}</dt>
+        <dd>
+          <strong>${reaction.damage} ${msg('damage')}</strong>
+          ${
+            reaction.comboFactor > 1
+              ? html`<span class="combo-bonus">
+                  ${msg(`Combo ×${reaction.comboFactor}`)}
+                  <small
+                    >${msg(`+${reaction.comboBonusDamage} combo damage`)}</small
+                  >
+                </span>`
+              : html`<span class="combo-bonus combo-bonus--none"
+                  >${msg('No combo bonus')}</span
+                >`
+          }
+          ${
+            reaction.weaknesses.length > 0
+              ? html`<span class="weakness-hit">
+                  <span class="weakness-mark" aria-hidden="true"></span>
+                  ${msg('Weakness hit')}
+                  <small
+                    >${reaction.weaknesses.map(titleCase).join(' · ')}</small
+                  >
+                </span>`
+              : nothing
+          }
+        </dd>
+      </div>
     `;
   }
 
@@ -608,12 +794,17 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private preview(card: MatchCardView): void {
-    this.previewText =
+    const previewText =
       card.previewText.trim() || this.snapshot?.sentenceText || null;
+    if (previewText === this.previewText) return;
+    this.previewText = previewText;
+    this.requestUpdate();
   }
 
   private readonly clearPreview = (): void => {
+    if (this.previewText === null) return;
     this.previewText = null;
+    this.requestUpdate();
   };
 
   private activateCard(card: MatchCardView): void {
@@ -650,7 +841,12 @@ export class GrandTransitionMatch extends LitElement {
     type: MatchCommand['type'],
     payload: MatchCommand['payload'],
   ): void {
-    if (this.pauseMode !== 'running' || !this.snapshot || this.commandPending)
+    if (
+      this.pauseMode !== 'running' ||
+      !this.snapshot ||
+      this.snapshot.roundReview ||
+      this.commandPending
+    )
       return;
     this.commandPending = true;
     const command = deepFreeze({
@@ -670,6 +866,10 @@ export class GrandTransitionMatch extends LitElement {
 
   private syncTimer(): void {
     if (!this.snapshot) return;
+    if (this.snapshot.roundReview) {
+      this.stopTimer();
+      return;
+    }
     const { sequence, durationSeconds } = this.snapshot.timer;
     if (sequence === this.timerSequence) return;
     this.stopTimer();
@@ -685,6 +885,7 @@ export class GrandTransitionMatch extends LitElement {
       this.previewText = null;
       return;
     }
+    if (this.snapshot?.roundReview) return;
     if (
       this.remainingSeconds !== null &&
       this.remainingSeconds > 0 &&
@@ -704,7 +905,9 @@ export class GrandTransitionMatch extends LitElement {
     if (this.remainingSeconds === 0) {
       this.stopTimer();
       this.dispatchMatchCommand('expire-turn', {});
+      return;
     }
+    this.requestUpdate();
   }
 
   private stopTimer(): void {
@@ -715,7 +918,7 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private readonly pause = (): void => {
-    if (this.pauseMode !== 'running') return;
+    if (this.pauseMode !== 'running' || this.snapshot?.roundReview) return;
     this.dispatchEvent(
       new CustomEvent(pauseMatchEventName, {
         bubbles: true,
@@ -723,6 +926,76 @@ export class GrandTransitionMatch extends LitElement {
       }),
     );
   };
+
+  private readonly continueRound = (): void => {
+    if (!this.snapshot?.roundReview) return;
+    this.dispatchEvent(
+      new CustomEvent(continueRoundEventName, {
+        bubbles: true,
+        composed: true,
+        detail: {},
+      }),
+    );
+  };
+}
+
+function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
+  if (text.length > 160) return 'dense';
+  if (text.length > 90) return 'compact';
+  return 'regular';
+}
+
+function comboDamageDetails(
+  score: ComboFinisherScore | null,
+): Readonly<{ factor: number; bonusDamage: number }> {
+  if (!score) return { factor: 1, bonusDamage: 0 };
+  let clauseFactor = 1;
+  let factor = 1;
+  let bonusDamage = 0;
+  for (const item of score.breakdown) {
+    if (item.kind === 'clause-base') clauseFactor = 1;
+    if (item.kind === 'combo-multiplier') {
+      clauseFactor = item.factor;
+      factor = Math.max(factor, item.factor);
+    }
+    if (item.kind === 'clause-score' && clauseFactor > 1) {
+      bonusDamage += item.amount - item.amount / clauseFactor;
+      clauseFactor = 1;
+    }
+  }
+  return { factor, bonusDamage: Math.max(0, Math.round(bonusDamage)) };
+}
+
+function weaknessDamageDetails(
+  score: ComboFinisherScore | null,
+): readonly string[] {
+  if (!score) return [];
+  return [
+    ...new Set(
+      score.breakdown.flatMap((item) =>
+        item.kind === 'weakness-match' ? [item.defenderTag] : [],
+      ),
+    ),
+  ];
+}
+
+function titleCase(value: string): string {
+  return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
+}
+
+function roundOutcomeLabel(
+  state: MatchState,
+  resolution: MatchResolution,
+): string {
+  const [firstId, secondId] = state.playerOrder;
+  const firstDamage = resolution.players[firstId]!.outgoingDamage;
+  const secondDamage = resolution.players[secondId]!.outgoingDamage;
+  if (firstDamage === secondDamage)
+    return msg(`Round ${resolution.round} result: tie`);
+  const winnerId = firstDamage > secondDamage ? firstId : secondId;
+  return msg(
+    `Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
+  );
 }
 
 function availableCard(

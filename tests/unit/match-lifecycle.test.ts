@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { sampleContent } from '../../src/content/sample-content';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -11,7 +11,6 @@ import {
   type MatchState,
 } from '../../src/engine/match-lifecycle';
 import { seededRandomSource } from '../../src/engine/random-source';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: MatchEngineContext = {

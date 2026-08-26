@@ -7,8 +7,12 @@ description: Add or revise Grand Transition phrases, characters, scenes, localiz
 
 ## Establish the content contract
 
-Read `AGENTS.md` and specification sections 2.3, 2.4, 7 through 13, 20, 21,
-and 26.4.
+Read `AGENTS.md` and the applicable approved specifications. Start with
+`docs/specs/spec-005-content-schemas.md`,
+`docs/specs/spec-026-mvp-content-expansion.md`, and
+`docs/specs/spec-027-balance-editorial.md`. Read Milestones 006 through 013 and
+021 when the change affects grammar, draws, scoring, match flow, or artificial
+intelligence (AI).
 Inspect the Zod schemas, locale bundle, grammar adapter, validators,
 pool loaders, tests, asset manifest, and affected siblings.
 If these owners do not exist, update only the approved specification or
@@ -24,15 +28,19 @@ schema requires.
 Romanian content needs its own forms and grammar adapter. Do not translate
 arbitrary English fragments directly.
 
-For characters and scenes, keep names, visuals, lines, and institutions
-fictional and original.
+Add a common phrase only in `src/content/common-phrase-cards.json`. Add or edit
+a character phrase, identity, comeback, or behavior metadata only in that
+character's `src/content/characters/<character-id>-phrase-cards.json` file. Add
+a character through one correctly named JSON file plus its approved convention-
+named assets. Do not add TypeScript imports, registries, locale entries, setup
+options, or renderer maps for authored characters.
+
+For characters and scenes, keep names and visuals fictional and original.
 Reject copied game lines and attacks on protected characteristics.
-Reject unsupported crime claims and private health or addiction claims.
-Reject sexual humiliation, threats, private targets, real logos, and unsafe HTML.
-Reject harassment designed for real-world reuse.
-Do not invent public-record claims.
-Verify material historical facts with primary sources that are valid on the
-review date.
+Reject sexual humiliation, threats, real-person references, real-party names or
+acronyms, real logos, and unsafe HTML. Public institutions and historical events
+can inform original satire, but content and rationale must not name or identify
+a real person. Use generic ideological or social-family party labels.
 
 ## Validate gameplay and provenance
 

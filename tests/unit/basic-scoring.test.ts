@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { sampleContent } from '../../src/content/sample-content';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   ceilDamage,
   replayBasicScoreBreakdown,
@@ -11,7 +11,6 @@ import {
   prepareEnglishGrammarPhrase,
   type EnglishGrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
 
 const add = (id: string): EnglishGrammarStep => ({
   kind: 'phrase',

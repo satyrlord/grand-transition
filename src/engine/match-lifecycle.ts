@@ -402,6 +402,7 @@ function prepareRound(
           : state.openingPlayerId,
       timerSeconds: state.setup.timerSeconds,
       commandHistory: state.commandHistory,
+      includeContinuation: !state.suddenDeathActive,
     },
     randomSource,
   );

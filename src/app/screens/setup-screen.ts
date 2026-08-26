@@ -1,6 +1,6 @@
 import { msg } from '@lit/localize';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
-import { sampleContent } from '../../content/sample-content';
+import { sampleContent } from '../../game-content';
 
 const elementName = 'grand-transition-setup';
 export const setupChangeEventName = 'setup-change';
@@ -99,6 +99,9 @@ export class GrandTransitionSetup extends LitElement {
               value: this.snapshot.playerOneCharacterId,
               error: errors.playerOneCharacterId,
               options: characterOptions(),
+              weaknessTags: characterWeaknesses(
+                this.snapshot.playerOneCharacterId,
+              ),
             })}
             ${this.selectField({
               field: 'playerTwoCharacterId',
@@ -106,6 +109,9 @@ export class GrandTransitionSetup extends LitElement {
               value: this.snapshot.playerTwoCharacterId,
               error: errors.playerTwoCharacterId,
               options: characterOptions(),
+              weaknessTags: characterWeaknesses(
+                this.snapshot.playerTwoCharacterId,
+              ),
             })}
             <p class="setup-note">
               ${msg('Both players can choose the same character.')}
@@ -131,6 +137,7 @@ export class GrandTransitionSetup extends LitElement {
     value: string;
     error: string | undefined;
     options: readonly Readonly<{ value: string; label: string }>[];
+    weaknessTags?: readonly string[];
   }): TemplateResult {
     const errorId = `${config.field}-error`;
     return html`
@@ -140,6 +147,8 @@ export class GrandTransitionSetup extends LitElement {
           id=${config.field}
           name=${config.field}
           .value=${config.value}
+          aria-invalid=${config.error ? 'true' : nothing}
+          aria-describedby=${config.error ? errorId : nothing}
           @change=${this.changeField}
         >
           ${config.options.map(
@@ -152,6 +161,19 @@ export class GrandTransitionSetup extends LitElement {
               </option>`,
           )}
         </select>
+        ${
+          config.weaknessTags && config.weaknessTags.length > 0
+            ? html`<p class="character-weakness" aria-live="polite">
+                <span class="character-weakness__label">
+                  <span class="weakness-mark" aria-hidden="true"></span>
+                  ${msg('Weaknesses')}
+                </span>
+                <strong
+                  >${config.weaknessTags.map(titleCase).join(' · ')}</strong
+                >
+              </p>`
+            : nothing
+        }
         ${
           config.error
             ? html`<p class="field-error" id=${errorId}>${config.error}</p>`
@@ -189,6 +211,9 @@ export class GrandTransitionSetup extends LitElement {
     const firstInvalidField = setupFieldOrder.find((field) => errors[field]);
     if (firstInvalidField) {
       this.requestUpdate();
+      void this.updateComplete.then(() => {
+        this.querySelector<HTMLSelectElement>(`#${firstInvalidField}`)?.focus();
+      });
       return;
     }
 
@@ -287,6 +312,17 @@ function characterOptions(): readonly Readonly<{
     value: character.id,
     label: gameMessage(character.nameKey),
   }));
+}
+
+function characterWeaknesses(characterId: string): readonly string[] {
+  return (
+    sampleContent.characters.find((character) => character.id === characterId)
+      ?.weaknessTags ?? []
+  );
+}
+
+function titleCase(value: string): string {
+  return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
 function gameMessage(key: string): string {

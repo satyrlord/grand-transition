@@ -2,14 +2,13 @@ import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { basicScoringBalance } from '../src/content/basic-scoring-balance';
-import { sampleContent } from '../src/content/sample-content';
-import { englishGameLocale } from '../src/localization/en-game-locale';
 import {
   createSimulationSetup,
   encodeSimulationReport,
   simulateMatches,
   summarizeSimulation,
 } from '../src/engine/simulation';
+import { loadGameContent } from './load-game-content';
 
 export type SimulationArguments = Readonly<{
   seed: number;
@@ -74,6 +73,7 @@ export async function runSimulationCommand(
     output(`Invalid ${parsed.option}: ${parsed.message}`);
     return 1;
   }
+  const { sampleContent, englishGameLocale } = loadGameContent();
   const context = {
     catalog: sampleContent,
     locale: englishGameLocale,

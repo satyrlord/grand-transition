@@ -12,7 +12,8 @@ participation in the round and deals zero outgoing damage. Remove the
 continuation card before the next round. If the opponent deals 0 through 15
 damage, restore the exact carried fragment. Opponent damage of 16 or more breaks
 it. A strong comeback adds 18 damage, so it crosses the same threshold without
-a separate break rule.
+a separate break rule. The catalog contains one unrestricted continuation card,
+and its visible cue is `[...]`.
 
 A surviving continuation preserves the player's prior noun-combo state. A
 broken continuation clears that player's combos. Sudden-death cliffhangers do
@@ -33,9 +34,17 @@ uses the strongest filled tier:
 | 40-59         | Medium | 40           | 10           |
 | 60            | Strong | 60           | 18           |
 
-The comeback selects a character closing line, ends the sentence, and adds its
-damage after scored clauses and finishers. The line does not enter grammar or
-combos. Spend the tier before adding damage received during the same exchange.
+Each tier selects exactly one insult owned only by that character. The weak
+4-damage line is a light insult, the medium 10-damage line is a medium insult,
+and the strong 18-damage line is a devastating insult. There are no shared or
+common comeback lines.
+
+The comeback appends that insult to the visible public sentence as a separate
+phrase, ends the sentence, and adds its damage after scored clauses and
+finishers. Show the complete sentence and closing line in the speaker's text
+bubble after selection. The line does not enter grammar, clause scoring, noun
+combos, finishers, or continuation state. Spend the tier before adding damage
+received during the same exchange.
 
 ## Acceptance criteria
 
@@ -46,9 +55,13 @@ combos. Spend the tier before adding damage received during the same exchange.
   same-exchange refill use the exact table.
 - **AC-012-04:** Self-damage does not charge a comeback.
 - **AC-012-05:** Closing-line selection is deterministic and stays outside
-  grammar and combos.
+  grammar and combos. The selected line is appended to the visible public
+  sentence and appears in the speaker's text bubble.
+- **AC-012-06:** Every character has one exclusive insult per tier. The light,
+  medium, and devastating lines add exactly 4, 10, and 18 damage. No comeback
+  key is common, shared, or reused.
 
 ## Objective verifiers
 
 `tests/unit/continuation-comeback-resolution.test.ts` verifies AC-012-01 through
-AC-012-05.
+AC-012-06.

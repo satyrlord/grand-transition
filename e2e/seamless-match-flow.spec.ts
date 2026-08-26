@@ -6,7 +6,9 @@ import {
 
 const plan = planMatchBrowserFlow();
 
-test('a hotseat match advances automatically and exposes no post-match surface', async ({
+test.setTimeout(90_000);
+
+test('a hotseat match reviews every exchange and exposes no post-match surface', async ({
   page,
 }, testInfo) => {
   await page.goto('/grand-transition/');
@@ -15,6 +17,7 @@ test('a hotseat match advances automatically and exposes no post-match surface',
 
   let reachedLaterRound = false;
   let reachedSuddenDeath = false;
+  let reviewedExchange = false;
   for (const action of plan.actions) {
     const match = page.locator('grand-transition-match');
     const snapshot = await match.evaluate(
@@ -29,6 +32,16 @@ test('a hotseat match advances automatically and exposes no post-match surface',
     reachedSuddenDeath ||= snapshot?.phase === 'sudden-death';
 
     await executeDraftAction(page, action);
+    const continueButton = page.getByRole('button', {
+      name: 'Continue',
+      exact: true,
+    });
+    if (await continueButton.isVisible().catch(() => false)) {
+      reviewedExchange = true;
+      await expect(page.locator('.round-review-dialog')).toBeVisible();
+      await expect(page.locator('.sentence-preview')).not.toBeEmpty();
+      await continueButton.click();
+    }
     await expect(
       page.locator('grand-transition-resolution-results'),
     ).toHaveCount(0);
@@ -38,6 +51,7 @@ test('a hotseat match advances automatically and exposes no post-match surface',
   expect(plan.finalState.winner).toBeTruthy();
   expect(reachedLaterRound).toBe(true);
   expect(reachedSuddenDeath).toBe(true);
+  expect(reviewedExchange).toBe(true);
   await expect(
     page.getByRole('heading', { name: 'Set up match' }),
   ).toBeVisible();

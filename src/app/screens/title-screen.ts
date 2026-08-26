@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { msg } from '@lit/localize';
-import { englishGameLocale } from '../../localization/en-game-locale';
+import { englishGameLocale } from '../../game-content';
 
 const elementName = 'grand-transition-title';
 export const showSetupEventName = 'show-setup';

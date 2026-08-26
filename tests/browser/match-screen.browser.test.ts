@@ -37,6 +37,11 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(match.querySelector('.sentence-ledger')).not.toBeNull();
   expect(match.querySelectorAll('[data-turn-state="active"]')).toHaveLength(1);
   expect(match.querySelectorAll('[data-turn-state="waiting"]')).toHaveLength(1);
+  const playerHuds = [...match.querySelectorAll<HTMLElement>('.player-hud')];
+  expect(playerHuds).toHaveLength(2);
+  expect(
+    playerHuds.every((hud) => getComputedStyle(hud).clipPath === 'none'),
+  ).toBe(true);
   expect(
     match.querySelector('[data-turn-state="active"] .player-turn-status')
       ?.textContent,
@@ -122,6 +127,31 @@ test('clears a pointer preview when an authoritative snapshot arrives', async ()
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
     'Authoritative next-turn sentence',
   );
+});
+
+test('shows an appended comeback line in the speaker bubble', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const waitingIndex = snapshot.players.findIndex((player) => !player.isActive);
+  const waiting = snapshot.players[waitingIndex]!;
+  const sentence =
+    'Your party belongs in a party museum. Your paper crown collapses before the first fact.';
+  const players = [...snapshot.players] as [
+    (typeof snapshot.players)[number],
+    (typeof snapshot.players)[number],
+  ];
+  players[waitingIndex] = {
+    ...waiting,
+    sentence,
+    comebackLine: 'Your paper crown collapses before the first fact.',
+    status: 'ended',
+  };
+  match.snapshot = { ...snapshot, revision: snapshot.revision + 1, players };
+  await match.updateComplete;
+
+  const bubble = match.querySelector('.player-sentence--comeback');
+  expect(bubble?.textContent?.trim()).toBe(sentence);
+  expect(bubble?.getAttribute('aria-label')).toContain('comeback');
 });
 
 test('keeps the current sentence visible for an empty legal preview', async () => {
@@ -242,6 +272,18 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   await vi.waitFor(() =>
     expect(match.snapshot?.activePlayerId).not.toBe(activeBefore),
   );
+  expect(match.snapshot?.arenaReaction).toMatchObject({
+    kind: 'grammar-mistake',
+    playerId: activeBefore,
+    damage: 3,
+  });
+  expect(match.querySelector('.grammar-strike')?.textContent).toMatch(
+    /Off script.*Grammar mistake.*Red-Folded Chairman.*−3 Pride/su,
+  );
+  const struckPlayer = match.querySelector<HTMLElement>(
+    '[data-reaction-state="grammar-mistake"]',
+  )!;
+  expect(struckPlayer.getAttribute('data-turn-state')).toBe('waiting');
   expect(match.querySelector('[data-turn-state="active"]')).not.toBe(
     activePanelBefore,
   );
@@ -249,6 +291,14 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
     commands.filter((event) => event.detail.type === 'select-phrase'),
   ).toHaveLength(1);
   expect(match.querySelector('.action-fault')).toBeNull();
+
+  match
+    .querySelector<HTMLButtonElement>(
+      '.shared-board [data-role="noun"] button[data-card-state="legal"], .private-hand [data-role="noun"] button[data-card-state="legal"]',
+    )!
+    .click();
+  await vi.waitFor(() => expect(match.snapshot?.arenaReaction).toBeNull());
+  expect(match.querySelector('.grammar-strike')).toBeNull();
 });
 
 test('updates and expires one 15-second turn', async () => {

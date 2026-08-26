@@ -31,10 +31,17 @@ for (const viewport of supportedViewports) {
     await page
       .getByLabel('Player two character')
       .selectOption('red-folded-chairman');
+    await expect(page.locator('.character-weakness')).toHaveCount(2);
+    await expect(page.locator('.character-weakness strong')).toHaveText([
+      'Legacy · Modernity · Bureaucracy · Miners',
+      'Legacy · Modernity · Bureaucracy · Miners',
+    ]);
 
     const geometry = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
+      documentHeight: document.documentElement.scrollHeight,
       viewportWidth: document.documentElement.clientWidth,
+      viewportHeight: document.documentElement.clientHeight,
       controlsInside: [...document.querySelectorAll('select, button')].every(
         (control) => {
           const box = control.getBoundingClientRect();
@@ -43,9 +50,21 @@ for (const viewport of supportedViewports) {
           );
         },
       ),
+      weaknessRecordsInside: [
+        ...document.querySelectorAll('.character-weakness'),
+      ].every((record) => {
+        const box = record.getBoundingClientRect();
+        return (
+          box.top >= 0 && box.bottom <= document.documentElement.clientHeight
+        );
+      }),
     }));
     expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewportWidth);
     expect(geometry.controlsInside).toBe(true);
+    expect(geometry.documentHeight).toBeLessThanOrEqual(
+      geometry.viewportHeight,
+    );
+    expect(geometry.weaknessRecordsInside).toBe(true);
     await page.screenshot({
       path: testInfo.outputPath(`${viewport.name}-setup.png`),
       fullPage: true,

@@ -18,6 +18,7 @@ export interface BoardGenerationRequest {
   readonly sceneId: string;
   readonly scenePhraseIds: readonly string[];
   readonly excludedPhraseIds?: readonly string[];
+  readonly includeContinuation?: boolean;
 }
 
 export interface BoardSlot {
@@ -65,6 +66,7 @@ export function generateBoard(
 ): BoardGenerationResult {
   const initialSeed = Math.trunc(request.seed) >>> 0;
   const cursor: RandomCursor = { seed: initialSeed };
+  const includeContinuation = request.includeContinuation ?? true;
   const candidates = collectCandidates(request);
   const byRole = new Map(
     phraseRoles.map((role) => [
@@ -76,7 +78,8 @@ export function generateBoard(
   if (
     (byRole.get('noun')?.length ?? 0) < 3 ||
     (byRole.get('verb')?.length ?? 0) < 3 ||
-    (byRole.get('predicate')?.length ?? 0) < 1
+    (byRole.get('predicate')?.length ?? 0) < 1 ||
+    (includeContinuation && (byRole.get('continuation')?.length ?? 0) !== 1)
   ) {
     return impossiblePool(request, byRole);
   }
@@ -107,6 +110,19 @@ export function generateBoard(
     randomSource,
   );
 
+  if (includeContinuation) {
+    const continuation = takeWeighted(
+      byRole.get('continuation')!,
+      cursor,
+      randomSource,
+    ).phrase;
+    pending.push({
+      phraseId: continuation.id,
+      role: continuation.role,
+      source: 'wildcard',
+    });
+  }
+
   const connectorRoll = nextRandom(cursor, randomSource);
   const forcedConnectors = byRole
     .get('conjunction')!
@@ -114,13 +130,7 @@ export function generateBoard(
       ['and', 'but', 'yet'].includes(candidate.phrase.connectorKind ?? ''),
     );
   const connectorCount =
-    forcedConnectors.length === 0
-      ? 0
-      : connectorRoll < 0.1
-        ? 0
-        : connectorRoll < 0.75
-          ? 1
-          : 2;
+    forcedConnectors.length === 0 ? 0 : connectorRoll < 0.1 ? 0 : 1;
   for (let index = 0; index < connectorCount; index += 1) {
     const connectorRoll = nextRandom(cursor, randomSource);
     const preferredKinds =
@@ -140,22 +150,6 @@ export function generateBoard(
       role: connector.role,
       source: 'wildcard',
     });
-  }
-
-  if (pending.length < boardSlotCount) {
-    const continuations = byRole.get('continuation')!;
-    if (continuations.length > 0) {
-      const continuation = takeWeighted(
-        continuations,
-        cursor,
-        randomSource,
-      ).phrase;
-      pending.push({
-        phraseId: continuation.id,
-        role: continuation.role,
-        source: 'wildcard',
-      });
-    }
   }
 
   while (pending.length < boardSlotCount) {

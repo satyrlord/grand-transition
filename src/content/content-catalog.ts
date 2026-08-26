@@ -45,6 +45,16 @@ export const contentCatalogSchema = z
       phraseRoles,
       'Add sample content for every core phrase role.',
     );
+    const continuations = catalog.phrases.filter(
+      (phrase) => phrase.role === 'continuation',
+    );
+    if (continuations.length !== 1) {
+      issue(
+        context,
+        ['phrases'],
+        `Supply exactly one universal continuation; found ${continuations.length}.`,
+      );
+    }
 
     catalog.phrases.forEach((phrase, phraseIndex) => {
       requireApprovedEditorialReview(phrase, phraseIndex, context);
@@ -111,6 +121,7 @@ export const contentCatalogSchema = z
       }
     });
 
+    const comebackOwnerByKey = new Map<string, string>();
     catalog.characters.forEach((character, characterIndex) => {
       const pool = character.characterPhraseIds;
       validatePhraseReferences(
@@ -129,6 +140,37 @@ export const contentCatalogSchema = z
           );
         }
       });
+      for (const [tier, keys] of Object.entries(
+        character.comebackLinesByTier,
+      )) {
+        for (const [keyIndex, key] of keys.entries()) {
+          const path = [
+            'characters',
+            characterIndex,
+            'comebackLinesByTier',
+            tier,
+            keyIndex,
+          ];
+          const expectedKey = `comeback.${character.id}.${tier}`;
+          if (key !== expectedKey) {
+            issue(
+              context,
+              path,
+              `Use the exclusive character comeback key "${expectedKey}".`,
+            );
+          }
+          const previousOwner = comebackOwnerByKey.get(key);
+          if (previousOwner) {
+            issue(
+              context,
+              path,
+              `Comeback line "${key}" is already owned by ${previousOwner}.`,
+            );
+          } else {
+            comebackOwnerByKey.set(key, `${character.id}.${tier}`);
+          }
+        }
+      }
       for (const [tagIndex, tag] of character.weaknessTags.entries()) {
         const coverage = catalog.phrases.filter((phrase) =>
           phrase.tags.includes(tag),
@@ -222,6 +264,9 @@ export const contentCatalogSchema = z
     });
 
     validateLocaleKeys(catalog, context);
+    if (continuations.length === 1) {
+      validateContinuationCue(catalog.locales, continuations[0]!, context);
+    }
   });
 
 type CatalogInput = z.input<typeof contentCatalogSchema>;
@@ -384,6 +429,22 @@ function validateLocaleKeys(
           ['locales', localeIndex, 'messages', key],
           `Match locale key parity. Remove extra key "${key}" or add it to every locale.`,
         );
+    }
+  });
+}
+
+function validateContinuationCue(
+  locales: readonly z.output<typeof gameLocaleBundleSchema>[],
+  continuation: Phrase,
+  context: z.RefinementCtx,
+): void {
+  locales.forEach((locale, localeIndex) => {
+    if (locale.messages[continuation.textKey] !== '[...]') {
+      issue(
+        context,
+        ['locales', localeIndex, 'messages', continuation.textKey],
+        'Use "[...]" as the visible continuation cue.',
+      );
     }
   });
 }

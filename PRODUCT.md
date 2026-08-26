@@ -53,14 +53,16 @@ Private hotseat content must remain private during handovers.
   playable match, and seamless match flow,
   toolchain, quality gate, immutable architecture contracts, replaceable ports,
   pure-module boundary enforcement, the secured static production shell, Zod 4
-  content schemas, an English game-locale bundle, three original
-  public-figure-inspired fictional characters, Romanian-politics phrase
-  content, separate transparent portraits and a character-free studio, and
+  content schemas, an English game-locale bundle, three original fictional
+  characters, Romanian-politics phrase content, separate transparent portraits
+  and a character-free studio, and
   Hollywood Roast grammar, compound subjects, endings, incomplete states,
   immediate grammar mistakes, one common board, private hands, clause scoring,
   noun combos, continuations, comebacks, cliffhangers, replay, and simulation.
-  Rounds advance automatically. A completed local hotseat match returns directly
-  to setup and exposes no post-match features.
+  Every completed exchange pauses on an in-arena results modal while the last
+  sentence remains visible. Continue starts the next round or returns a
+  completed local hotseat match to setup. The product exposes no post-match
+  features.
 
 ## Brand Commitments
 

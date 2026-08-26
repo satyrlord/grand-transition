@@ -1,12 +1,19 @@
 ---
-applyTo: "src/content/**,src/localization/**,src/assets/**,art/**,tests/unit/content/**,tools/optimize-assets.ts,tools/validate-content.ts"
+applyTo: 'src/game-content.ts,src/content/**,src/localization/**,src/assets/**,art/**,tests/unit/content-schemas.test.ts,tests/unit/node-content-discovery.test.ts,e2e/content-lifecycle.spec.ts,tools/load-game-content.ts,tools/validate-scaffold.mjs'
 ---
 
 # Content and asset instructions
 
-Read specification sections 2.3, 2.4, 7 through 13, 20, 21, and 26.4 before
-editing. Keep English phrase text out of rule logic. Use stable IDs, locale-
-specific phrase forms, and a separate grammar adapter. Preserve fictional-
-composite satire and editorial safety. Use only original or licensed media.
+Read the applicable approved specifications. Start with
+`docs/specs/spec-005-content-schemas.md`,
+`docs/specs/spec-026-mvp-content-expansion.md`, and
+`docs/specs/spec-027-balance-editorial.md`. Read Milestones 006 through 013 and
+021 when the content affects grammar, draws, scoring, match flow, or artificial
+intelligence (AI). Keep English phrase text out of rule logic. Use stable IDs
+and locale-specific phrase forms. Use a separate grammar adapter. Preserve
+fictional-composite satire and editorial safety. Do not name or identify a real person in
+content or its rationale. Use generic ideological or social-family party labels;
+do not use real party names, acronyms, or logos. Use only original or licensed
+media.
 Generate runtime image variants and metadata through the approved asset tool;
 do not hand-edit generated assets.

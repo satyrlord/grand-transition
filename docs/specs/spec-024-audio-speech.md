@@ -76,7 +76,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 Adapter tests cover enabled, disabled, unavailable, cancellation, and privacy
 states. Browser tests cover controls and lifecycle cleanup. Manual evidence
 records audible playback and silent fallback. `npm run ci` passes. Stop before
-full-scene audio, tutorial, or remaining content.
+full-scene audio, presentation reactions, or remaining content.
 
 ## Reference
 

@@ -46,8 +46,8 @@ runtime-network, speech-state, or complete-match assertion.
 
 Published complete-match smoke uses seed `20260823`, the first two roster
 characters, the Transition-Era Television Studio, fixed 15-second timer,
-speech off, and privacy on. It completes a match and returns directly to setup
-without a resolution or post-match surface.
+speech off, and privacy on. It reviews each exchange through Continue, completes
+the match, and returns to setup without a post-match surface.
 
 Release documentation records commit SHA, workflow URL, deployed URL, artifact
 digest, action SHAs, Node and npm versions, browser versions, every smoke result,

@@ -9,7 +9,7 @@ art, and audio content
 ## Deliver
 
 Complete all 18 fictional archetypes, 5 scenes, English phrase pools, final art,
-scene audio treatment, and three unique comeback lines per character and tier.
+scene audio treatment, and one exclusive comeback line per character and tier.
 Use the existing schemas, pipelines, and presentation contracts.
 
 All 18 archetypes are human. Animal terms in a name or title are metaphorical
@@ -17,19 +17,18 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
-1. **Red-Folded Chairman:** measured transition-era mediator, visually and
-   rhetorically inspired by Ion Iliescu; weak to legacy, modernity, and
-   bureaucracy; patient denial and safe continuations.
-2. **Thunder Tribune:** furious poet-orator, visually and rhetorically inspired
-   by Corneliu Vadim Tudor; weak to evidence, credibility, and restraint;
-   aggressive finishers and risky long sentences.
+1. **Red-Folded Chairman:** measured transition-era mediator; weak to legacy,
+   modernity, bureaucracy, and miners; patient denial and safe continuations.
+2. **Thunder Tribune:** furious poet-orator; weak to evidence, credibility, and
+   restraint; aggressive finishers, risky long sentences, private șomâldoacă
+   insults, and imperious studio-phone endings.
 3. **Midnight Sensationalist:** breathless tabloid host; weak to ratings,
    evidence, credibility; combos and dramatic comebacks.
 4. **Velvet Mogul:** polished media broker; weak to wealth, influence,
    credibility; denial and weakness targeting.
-5. **Black Sea Captain:** salty practical statesman and former ship captain,
-   visually and rhetorically inspired by Traian Basescu; weak to decorum,
-   consistency, and legacy; adaptive comeback play.
+5. **Black Sea Captain:** salty practical statesman and former ship captain;
+   weak to decorum, consistency, and Securitate references; adaptive comeback
+   play.
 6. **Retiring Cassandra:** weary reformist; weak to competence, hope, results;
    defensive continuations and conservative scoring.
 7. **Oat-Milk Reformist:** earnest jargon; weak to relevance, authenticity,
@@ -88,16 +87,17 @@ these inclusive general-pool ranges:
 | Predicate | 100 | 115 |
 | Conjunction | 8 | 10 |
 | Ending | 60 | 70 |
-| Continuation | 12 | 18 |
+| Continuation | 1 | 1 |
 
 Each character has 20 to 30 unique character phrases. Its pool contains at
-least six nouns, four verbs, four predicates, one conjunction, one ending, and
-one continuation. Each scene pool contains at least eight nouns, six verbs,
-five predicates, one conjunction, one ending, and one continuation within its
-25 to 35 unique IDs.
+least six nouns, four verbs, four predicates, one conjunction, and one ending.
+Each scene pool contains at least eight nouns, six verbs, five predicates, one
+conjunction, one ending, and the universal `[...]` continuation within its 25
+to 35 unique IDs. No character or scene owns another continuation.
 
-Each character has exactly three unique comeback lines in each tier and nine
-or more total. A comeback line cannot be reused by another character or tier.
+Each character has exactly one unique comeback line in each tier and three total.
+A comeback line cannot be reused by another character or tier. There is no
+common or shared comeback pool.
 Every character and scene meets the complete Milestone 023 state, variant,
 license, and manifest contract. Every scene has distinct music and ambience
 treatment and every named Milestone 024 effect remains reachable.
@@ -131,23 +131,20 @@ failed automated range or distribution.
 - **AC-026-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
 
-## Initial-character research basis
+## Content research boundary
 
-The first three implemented characters remain fictional composites. Use these
-sources only for public biography, visual cues, and broad rhetorical themes.
-Do not copy photographs, slogans, accusations, or protected prose.
+All characters remain original fictional composites. Research can use public
+institutions, documented historical events, constitutional mechanisms, and
+broad media forms. Do not use a real person as a named or identifiable source,
+model, comparison, or target. Do not copy photographs, accusations, protected
+prose, or slogans other than the one sourced English form that AC-005-07
+approves. Do not use real political party names, acronyms, or logos. Use only
+generic ideological or social-family party labels.
 
-- Ion Iliescu: [encyclopedia biography](https://en.wikipedia.org/wiki/Ion_Iliescu)
-  and [AGERPRES official biography](https://agerpres.ro/english/2025/08/05/former-president-ion-iliescu---official-bio--1473843).
-- Corneliu Vadim Tudor:
-  [encyclopedia biography](https://en.wikipedia.org/wiki/Corneliu_Vadim_Tudor)
-  and [European Parliament record](https://www.europarl.europa.eu/meps/ro/96845/CORNELIU_VADIM%2BTUDOR/history/7).
-- Traian Basescu:
-  [encyclopedia biography](https://en.wikipedia.org/wiki/Traian_B%C4%83sescu),
-  [AGERPRES biography](https://agerpres.ro/documentare/2019/06/03/traian-basescu-europarlamentar-ales-pe-lista-pmp-fisa-biografica--319944),
-  and [Council of Europe introduction](https://assembly.coe.int/President/Cavusoglu/Discours/2011/270111_SpeechBasescu.htm).
-- Shared themes: [Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
-  and the [European Commission 2022 Rule of Law report summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statul-de-drept-2022-comisia-adopta-recomandari-specifice-pentru-romania-si-2022-07-13_ro).
+Shared institutional themes can use
+[Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
+and the
+[European Commission 2022 Rule of Law report summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statul-de-drept-2022-comisia-adopta-recomandari-specifice-pentru-romania-si-2022-07-13_ro).
 
 ## Impeccable user interface validation
 

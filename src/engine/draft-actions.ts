@@ -192,6 +192,7 @@ export type DraftRoundPreparationRequest = Readonly<{
   previousOpeningPlayerId?: string;
   timerSeconds: 15;
   commandHistory?: readonly GameCommand[];
+  includeContinuation?: boolean;
 }>;
 
 export type DraftPreparationFailure =
@@ -628,8 +629,10 @@ function selectComeback(
     randomSource,
   });
   if (!selection.ok) return reject(command, selection.error.code);
+  const endedConstruction = endCompleteConstruction(player);
   const construction = {
-    ...endCompleteConstruction(player),
+    ...endedConstruction,
+    previewText: `${endedConstruction.previewText} ${selection.selection.closingLine}`,
     selectedComebackTier: tier,
     selectedComeback: selection.selection,
   };
@@ -1006,6 +1009,9 @@ function boardRequest(
     sceneId: request.sceneId,
     scenePhraseIds: request.scenePhraseIds,
     excludedPhraseIds,
+    ...(request.includeContinuation === undefined
+      ? {}
+      : { includeContinuation: request.includeContinuation }),
   };
 }
 

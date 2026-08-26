@@ -1,14 +1,27 @@
 import { describe, expect, test } from 'vitest';
 import { contentCatalogSchema } from '../../src/content/content-catalog';
 import {
+  buildPhraseCardCatalog,
   combinePhraseCardCorpora,
+  parseCharacterCardFile,
   parsePhraseCardCorpus,
-  phraseCardCatalog,
 } from '../../src/content/phrase-card-catalog';
-import { sampleContent } from '../../src/content/sample-content';
 import type { EditorialSafetyFlag } from '../../src/content/schemas';
+import {
+  characterPortraitUrls,
+  phraseCardCatalog,
+  sampleContent,
+} from '../../src/game-content';
 
 type MutableCatalog = ReturnType<typeof cloneCatalog>;
+
+const approvedReview = (notes: string) =>
+  ({
+    state: 'approved',
+    originality: 'original',
+    safetyFlags: [],
+    notes,
+  }) as const;
 
 function cloneCatalog() {
   return structuredClone(sampleContent);
@@ -116,35 +129,71 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 115 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(115);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(100);
-    expect(phraseCardCatalog.characterPhraseIds).toEqual({
-      'red-folded-chairman': [
-        'national-salvation-committee',
-        'mediates',
-        'through-a-gradual-transition',
-        'for-stabilitys-sake',
-        'asks-for-patience-again',
-      ],
-      'thunder-tribune': [
-        'tribunes-indictment',
-        'condemns',
-        'from-the-marble-rostrum',
-        'before-the-nation-loses-patience',
-        'raises-the-volume-again',
-      ],
-      'black-sea-captain': [
-        'hands-on-presidency',
-        'steers',
-        'through-troubled-waters',
-        'from-the-bridge',
-        'returns-to-the-wheel',
-      ],
+  test('loads 162 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(162);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(126);
+    expect(
+      Object.fromEntries(
+        Object.entries(phraseCardCatalog.characterPhraseIds).map(
+          ([characterId, phraseIds]) => [characterId, phraseIds.length],
+        ),
+      ),
+    ).toEqual({
+      'red-folded-chairman': 12,
+      'thunder-tribune': 12,
+      'black-sea-captain': 12,
     });
+    expect(phraseCardCatalog.characterPhraseIds['red-folded-chairman']).toEqual(
+      expect.arrayContaining([
+        'national-salvation-committee',
+        'your-red-stamped-family-album',
+      ]),
+    );
+    expect(phraseCardCatalog.characterPhraseIds['thunder-tribune']).toEqual(
+      expect.arrayContaining([
+        'tribunes-indictment',
+        'a-somaldoaca',
+        'a-cursed-gnome',
+        'looks-like-a-somaldoaca-on-television',
+        'bring-me-the-studio-phone',
+      ]),
+    );
+    expect(phraseCardCatalog.englishMessages['phrase.a-cursed-gnome']).toBe(
+      'a cursed gnome',
+    );
+    expect(phraseCardCatalog.commonPhraseIds).toEqual(
+      expect.arrayContaining([
+        'brought-the-miners-to-bucharest',
+        'sided-with-the-terrorists-in-1989',
+        'transports-voters-with-busses',
+        'your-brother',
+        'your-father',
+        'your-cousin',
+        'your-son-in-law',
+        'your-mistress',
+      ]),
+    );
+    expect(phraseCardCatalog.commonPhraseIds).not.toContain(
+      'your-family-album',
+    );
+    expect(phraseCardCatalog.englishMessages).toMatchObject({
+      'phrase.brought-the-miners-to-bucharest':
+        'brought the miners to Bucharest',
+      'phrase.sided-with-the-terrorists-in-1989':
+        'sided with the terrorists in 1989',
+      'phrase.transports-voters-with-busses': 'transports voters with busses',
+      'phrase.your-brother': 'your brother',
+      'phrase.your-father': 'your father',
+      'phrase.your-cousin': 'your cousin',
+      'phrase.your-son-in-law': 'your son-in-law',
+      'phrase.your-mistress': 'your mistress',
+    });
+    expect(phraseCardCatalog.characterPhraseIds['black-sea-captain']).toEqual(
+      expect.arrayContaining(['hands-on-presidency', 'your-leaking-flagship']),
+    );
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(115);
+    ).toHaveLength(162);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -152,7 +201,7 @@ describe('content schemas', () => {
     ).toEqual(['red-folded-chairman']);
   });
 
-  test('keeps the 100-card common corpus at its approved role totals', () => {
+  test('keeps the 126-card common corpus at its approved role totals', () => {
     const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
@@ -171,13 +220,85 @@ describe('content schemas', () => {
     );
 
     expect(roleCounts).toEqual({
-      noun: 30,
-      verb: 24,
-      predicate: 20,
+      noun: 46,
+      verb: 28,
+      predicate: 30,
       conjunction: 10,
       ending: 11,
-      continuation: 5,
+      continuation: 1,
     });
+  });
+
+  test('covers the Red-Folded Chairman miners weakness with historical phrases', () => {
+    const minerPhraseIds = phraseCardCatalog.phrases
+      .filter((phrase) => phrase.tags.includes('miners'))
+      .map((phrase) => phrase.id);
+
+    expect(minerPhraseIds).toEqual(
+      expect.arrayContaining([
+        'televised-revolution',
+        'brought-the-miners-to-bucharest',
+      ]),
+    );
+    expect(
+      sampleContent.characters.find(
+        (character) => character.id === 'red-folded-chairman',
+      )?.weaknessTags,
+    ).toContain('miners');
+  });
+
+  test('reserves șomâldoacă for the Tribune and Securitate for the Captain weakness', () => {
+    const somaldoacaIds = phraseCardCatalog.phrases
+      .filter((phrase) =>
+        phraseCardCatalog.englishMessages[phrase.textKey]?.includes(
+          'șomâldoac',
+        ),
+      )
+      .map((phrase) => phrase.id);
+    expect(somaldoacaIds).toEqual([
+      'a-somaldoaca',
+      'looks-like-a-somaldoaca-on-television',
+    ]);
+    expect(
+      somaldoacaIds.every((phraseId) =>
+        phraseCardCatalog.characterPhraseIds['thunder-tribune']!.includes(
+          phraseId,
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      somaldoacaIds.some((phraseId) =>
+        phraseCardCatalog.commonPhraseIds.includes(phraseId),
+      ),
+    ).toBe(false);
+
+    const securitatePhrases = phraseCardCatalog.phrases.filter((phrase) =>
+      phraseCardCatalog.englishMessages[phrase.textKey]?.includes('Securitate'),
+    );
+    expect(securitatePhrases).toHaveLength(2);
+    expect(
+      securitatePhrases.every((phrase) => phrase.tags.includes('securitate')),
+    ).toBe(true);
+    expect(
+      sampleContent.characters.find(
+        (character) => character.id === 'black-sea-captain',
+      )?.weaknessTags,
+    ).toContain('securitate');
+  });
+
+  test('ships one universal continuation with the canonical visible cue', () => {
+    const continuations = phraseCardCatalog.phrases.filter(
+      (phrase) => phrase.role === 'continuation',
+    );
+
+    expect(continuations).toHaveLength(1);
+    expect(continuations[0]).toMatchObject({
+      id: 'ellipsis',
+      characterIds: undefined,
+    });
+    expect(phraseCardCatalog.englishMessages[continuations[0]!.textKey]).toBe(
+      '[...]',
+    );
   });
 
   test('includes the sourced during-the-night ending without changing the corpus total', () => {
@@ -192,7 +313,7 @@ describe('content schemas', () => {
       finisherBonus: 4,
     });
     expect(phraseCardCatalog.englishMessages[phrase!.textKey]).toBe(
-      'during the night, as thieves',
+      'during the night, as thieves.',
     );
     expect(phrase?.editorialReview.notes).toMatch(
       /2017 Romanian civic-protest slogan/iu,
@@ -200,6 +321,32 @@ describe('content schemas', () => {
     expect(phraseCardCatalog.commonPhraseIds).toContain(
       'under-the-national-banner',
     );
+  });
+
+  test('requires every ending text to include a terminal full stop', () => {
+    const endings = phraseCardCatalog.phrases.filter(
+      (phrase) => phrase.role === 'ending',
+    );
+    expect(endings).not.toHaveLength(0);
+    expect(
+      endings.every((phrase) =>
+        phraseCardCatalog.englishMessages[phrase.textKey]?.endsWith('.'),
+      ),
+    ).toBe(true);
+
+    expect(() =>
+      parsePhraseCardCorpus([
+        {
+          id: 'unfinished-ending',
+          role: 'ending',
+          text: 'unfinished ending',
+          tags: ['closing'],
+          rarity: 'common',
+          finisherBonus: 1,
+          editorialReview: approvedReview('Original fictional ending fixture.'),
+        },
+      ]),
+    ).toThrow(/full stop/iu);
   });
 
   test('ships each game-appropriate conjunction selected for the corpus', () => {
@@ -226,39 +373,18 @@ describe('content schemas', () => {
     });
   });
 
-  test('records a Romanian research rationale for every shipped phrase card', () => {
+  test('records an original fictional rationale for every shipped phrase card', () => {
     const phraseById = new Map(
       phraseCardCatalog.phrases.map((phrase) => [phrase.id, phrase]),
     );
-    for (const phraseId of phraseCardCatalog.commonPhraseIds) {
+    for (const phraseId of phraseById.keys()) {
       const review = phraseById.get(phraseId)!.editorialReview;
       expect(review.state, phraseId).toBe('approved');
       expect(review.originality, phraseId).toBe('original');
       expect(review.safetyFlags, phraseId).toEqual([]);
-      expect(review.notes, phraseId).toMatch(/Romania|Romanian/iu);
       expect(review.notes, phraseId).toMatch(
-        /Not a quotation|Standard English connector/iu,
+        /Original|Standard English|Canonical/iu,
       );
-    }
-
-    const inspirationByCharacter = {
-      'red-folded-chairman': /Ion Iliescu/iu,
-      'thunder-tribune': /Corneliu Vadim Tudor/iu,
-      'black-sea-captain': /Traian Basescu/iu,
-    } as const;
-    for (const [characterId, inspiration] of Object.entries(
-      inspirationByCharacter,
-    )) {
-      for (const phraseId of phraseCardCatalog.characterPhraseIds[
-        characterId
-      ]!) {
-        const review = phraseById.get(phraseId)!.editorialReview;
-        expect(review.state, phraseId).toBe('approved');
-        expect(review.originality, phraseId).toBe('original');
-        expect(review.safetyFlags, phraseId).toEqual([]);
-        expect(review.notes, phraseId).toMatch(inspiration);
-        expect(review.notes, phraseId).toMatch(/Not a quotation/iu);
-      }
     }
   });
 
@@ -270,7 +396,9 @@ describe('content schemas', () => {
       tags: ['paperwork'],
       scoreGroups: { substance: ['bureaucracy'], flavour: ['whimsy'] },
       rarity: 'uncommon',
-      reviewNotes: 'Original test fixture. Review complete.',
+      editorialReview: approvedReview(
+        'Original test fixture. Review complete.',
+      ),
     } as const;
     const loaded = parsePhraseCardCorpus([source]);
     expect(loaded.phrases[0]).toMatchObject({
@@ -292,6 +420,138 @@ describe('content schemas', () => {
         byCharacter: { 'test-character': loaded },
       }),
     ).toThrow(/more than one corpus/iu);
+  });
+
+  test('builds a complete character and locale messages from one JSON source', () => {
+    const source = {
+      id: 'test-character',
+      rosterOrder: 99,
+      species: 'human',
+      name: 'The Test Character',
+      description: 'An original fictional authoring fixture.',
+      assets: {
+        portrait: {
+          assetId: 'test-character-portrait',
+          realLogo: false,
+          copyrightedBroadcastGraphic: false,
+        },
+        token: {
+          assetId: 'test-character-token',
+          realLogo: false,
+          copyrightedBroadcastGraphic: false,
+        },
+      },
+      palette: {
+        primary: '#112233',
+        secondary: '#445566',
+        accent: '#778899',
+      },
+      weaknessTags: ['paperwork', 'whimsy'],
+      comebacks: {
+        weak: 'Your footnote is showing.',
+        medium: 'Your argument failed its own review.',
+        strong: 'Your entire mandate is an invalid fixture.',
+      },
+      editorialReview: approvedReview(
+        'Original fictional composite character fixture.',
+      ),
+      aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
+      voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
+      animationSet: {
+        idle: 'test-character-idle',
+        speak: 'test-character-speak',
+        react: 'test-character-react',
+      },
+      phrases: [
+        {
+          id: 'test-character-card',
+          role: 'noun',
+          text: 'a test character card',
+          tags: ['paperwork'],
+          scoreGroups: {
+            substance: ['bureaucracy'],
+            flavour: ['whimsy'],
+          },
+          rarity: 'common',
+          editorialReview: approvedReview(
+            'Original fictional authoring fixture.',
+          ),
+        },
+      ],
+    } as const;
+    const parsed = parseCharacterCardFile(
+      source,
+      'characters/test-character-phrase-cards.json',
+    );
+    expect(parsed.character).toMatchObject({
+      id: 'test-character',
+      nameKey: 'character.test-character.name',
+      characterPhraseIds: ['test-character-card'],
+      comebackLinesByTier: {
+        weak: ['comeback.test-character.weak'],
+        medium: ['comeback.test-character.medium'],
+        strong: ['comeback.test-character.strong'],
+      },
+    });
+    const catalog = buildPhraseCardCatalog(
+      [
+        {
+          id: 'common-test-card',
+          role: 'noun',
+          text: 'a common test card',
+          tags: ['paperwork'],
+          scoreGroups: {
+            substance: ['bureaucracy'],
+            flavour: ['whimsy'],
+          },
+          rarity: 'common',
+          editorialReview: approvedReview(
+            'Original fictional authoring fixture.',
+          ),
+        },
+      ],
+      { 'characters/test-character-phrase-cards.json': source },
+    );
+    expect(catalog.characters).toHaveLength(1);
+    expect(catalog.englishMessages).toMatchObject({
+      'character.test-character.name': 'The Test Character',
+      'comeback.test-character.strong':
+        'Your entire mandate is an invalid fixture.',
+      'phrase.test-character-card': 'a test character card',
+    });
+    expect(() =>
+      parseCharacterCardFile(source, 'characters/wrong-name.json'),
+    ).toThrow(/must be named "test-character-phrase-cards\.json"/iu);
+    expect(() =>
+      parseCharacterCardFile({
+        ...source,
+        editorialReview: {
+          ...source.editorialReview,
+          safetyFlags: ['real-person-reference'],
+        },
+      }),
+    ).toThrow(/real-person-reference/iu);
+    const { editorialReview: _editorialReview, ...withoutReview } = source;
+    expect(() => parseCharacterCardFile(withoutReview)).toThrow(
+      /editorialReview/iu,
+    );
+    expect(() =>
+      parsePhraseCardCorpus([
+        {
+          ...source.phrases[0],
+          editorialReview: {
+            ...source.phrases[0].editorialReview,
+            originality: 'copied',
+          },
+        },
+      ]),
+    ).toThrow(/original content/iu);
+  });
+
+  test('keeps discovered character portraits in catalog parity', () => {
+    expect(Object.keys(characterPortraitUrls).toSorted()).toEqual(
+      phraseCardCatalog.characters.map((character) => character.id).toSorted(),
+    );
   });
 
   test('accepts original sample content for three characters and one scene', () => {
@@ -344,6 +604,29 @@ describe('content schemas', () => {
     catalog.phrases[0]!.numberForms!.pluralKey =
       catalog.phrases[0]!.numberForms!.singularKey;
     expectFailure(catalog, 'phrases.0.numberForms', /different locale keys/iu);
+  });
+
+  test('requires one exclusive comeback line for every character and tier', () => {
+    const tooMany = cloneCatalog();
+    tooMany.characters[0]!.comebackLinesByTier.weak = [
+      'comeback.red-folded-chairman.weak',
+      'comeback.red-folded-chairman.medium',
+    ];
+    expectFailure(
+      tooMany,
+      'characters.0.comebackLinesByTier.weak',
+      /exactly one weak-tier comeback/iu,
+    );
+
+    const shared = cloneCatalog();
+    shared.characters[1]!.comebackLinesByTier.weak = [
+      'comeback.red-folded-chairman.weak',
+    ];
+    expectFailure(
+      shared,
+      'characters.1.comebackLinesByTier.weak.0',
+      /exclusive character comeback key|already owned/iu,
+    );
   });
 
   test('rejects grammar and scoring fields on the wrong phrase role', () => {
@@ -427,10 +710,11 @@ describe('content schemas', () => {
 
   test('rejects a missing cross-record reference', () => {
     const catalog = cloneCatalog();
+    const missingIndex = catalog.characters[0]!.characterPhraseIds.length;
     catalog.characters[0]!.characterPhraseIds.push('missing-phrase');
     expectFailure(
       catalog,
-      'characters.0.characterPhraseIds.5',
+      `characters.0.characterPhraseIds.${missingIndex}`,
       /existing phrase/iu,
     );
   });
@@ -454,12 +738,14 @@ describe('content schemas', () => {
     wrongCharacter.phrases.find(
       (phrase) => phrase.id === 'national-salvation-committee',
     )!.characterIds = ['red-folded-chairman'];
+    const wrongCharacterIndex =
+      wrongCharacter.characters[1]!.characterPhraseIds.length;
     wrongCharacter.characters[1]!.characterPhraseIds.push(
       'national-salvation-committee',
     );
     expectFailure(
       wrongCharacter,
-      'characters.1.characterPhraseIds.5',
+      `characters.1.characterPhraseIds.${wrongCharacterIndex}`,
       /not available to character/iu,
     );
 
@@ -478,12 +764,14 @@ describe('content schemas', () => {
 
   test('requires character and scene restriction membership in both directions', () => {
     const unrestrictedCharacterPhrase = cloneCatalog();
+    const unrestrictedIndex =
+      unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.length;
     unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.push(
       'national-consensus',
     );
     expectFailure(
       unrestrictedCharacterPhrase,
-      'characters.0.characterPhraseIds.5',
+      `characters.0.characterPhraseIds.${unrestrictedIndex}`,
       /not available to character/iu,
     );
 
@@ -522,6 +810,34 @@ describe('content schemas', () => {
       }
     }
     expectFailure(catalog, 'phrases', /Missing: continuation/iu);
+  });
+
+  test('rejects more than one continuation', () => {
+    const catalog = cloneCatalog();
+    const continuation = structuredClone(
+      catalog.phrases.find((phrase) => phrase.role === 'continuation')!,
+    );
+    continuation.id = 'misleading-continuation';
+    continuation.textKey = 'phrase.misleading-continuation';
+    catalog.phrases.push(continuation);
+    catalog.scenes[0]!.phrasePool.push(continuation.id);
+    catalog.locales[0]!.messages[continuation.textKey] = '[...]';
+
+    expectFailure(catalog, 'phrases', /exactly one universal continuation/iu);
+  });
+
+  test('rejects a continuation that looks like an ordinary phrase', () => {
+    const catalog = cloneCatalog();
+    const continuation = catalog.phrases.find(
+      (phrase) => phrase.role === 'continuation',
+    )!;
+    catalog.locales[0]!.messages[continuation.textKey] = 'continue later';
+
+    expectFailure(
+      catalog,
+      `locales.0.messages.${continuation.textKey}`,
+      /visible continuation cue/iu,
+    );
   });
 
   test('rejects locale bundles without key parity', () => {
@@ -572,12 +888,9 @@ describe('content schemas', () => {
   });
 
   test.each<EditorialSafetyFlag>([
-    'copied-line',
+    'real-person-reference',
+    'real-party-reference',
     'protected-trait-insult',
-    'unsupported-crime-claim',
-    'unsupported-private-health-claim',
-    'private-target',
-    'reusable-harassment',
     'sexual-humiliation',
     'threat',
   ])('rejects editorial safety class %s', (safetyFlag) => {

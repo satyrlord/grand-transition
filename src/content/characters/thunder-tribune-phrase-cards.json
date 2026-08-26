@@ -1,57 +1,272 @@
-[
-  {
-    "id": "tribunes-indictment",
-    "role": "noun",
-    "text": "that prime-time scarecrow",
-    "tags": ["evidence", "credibility"],
-    "scoreGroups": {
-      "substance": ["media"],
-      "flavour": ["oratory"]
+{
+  "id": "thunder-tribune",
+  "rosterOrder": 2,
+  "species": "human",
+  "name": "The Thunder Tribune",
+  "description": "A poet-orator whose accusations arrive one volume above the studio limit.",
+  "assets": {
+    "portrait": {
+      "assetId": "thunder-tribune-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation of a Romanian political-media corpus image, informed by Corneliu Vadim Tudor's public identity as the Tribune and television orator. The target is a fictional studio persona. Not a quotation. Editorial review complete."
+    "token": {
+      "assetId": "thunder-tribune-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
   },
-  {
-    "id": "condemns",
-    "role": "verb",
-    "text": "outshouts",
-    "singularText": "outshouts",
-    "pluralText": "outshout",
-    "tags": ["restraint", "decorum"],
-    "scorePreferences": {
-      "substance": [{ "left": ["media"], "right": ["bureaucracy"] }],
-      "flavour": []
+  "palette": {
+    "primary": "#9d1f1f",
+    "secondary": "#f0d2a0",
+    "accent": "#111826"
+  },
+  "weaknessTags": ["evidence", "credibility", "restraint"],
+  "comebacks": {
+    "weak": "And I have the dossiers to prove it!",
+    "medium": "Your paper crown collapses before the first fact.",
+    "strong": "You are the silence left after a nation stops believing you."
+  },
+  "aiPersonality": {
+    "aggression": 0.95,
+    "denial": 0.45,
+    "risk": 0.9
+  },
+  "voiceProfile": {
+    "voiceHint": "sharp",
+    "rate": 1.1,
+    "pitch": 0.95
+  },
+  "animationSet": {
+    "idle": "thunder-tribune-idle",
+    "speak": "thunder-tribune-speak",
+    "react": "thunder-tribune-react"
+  },
+  "phrases": [
+    {
+      "id": "tribunes-indictment",
+      "role": "noun",
+      "text": "that prime-time scarecrow",
+      "tags": ["evidence", "credibility"],
+      "scoreGroups": {
+        "substance": ["media"],
+        "flavour": ["oratory"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of Romanian thunderous television-orator imagery. The target is a fictional studio persona. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "common",
-    "reviewNotes": "Original fictional adaptation of the competitive interruption and raised-volume themes in a Romanian political-media corpus, informed by Corneliu Vadim Tudor's public oratorical style. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "from-the-marble-rostrum",
-    "role": "predicate",
-    "text": "could lose an election to an empty ballot",
-    "tags": ["decorum", "credibility"],
-    "scorePreferences": {
-      "substance": [{ "left": ["media"] }],
-      "flavour": []
+    {
+      "id": "condemns",
+      "role": "verb",
+      "text": "outshouts",
+      "singularText": "outshouts",
+      "pluralText": "outshout",
+      "tags": ["restraint", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"],
+            "right": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation of a Romanian political-media corpus joke about a candidate's weak vote, informed by Corneliu Vadim Tudor's public political-orator persona. It makes no claim about a real election result. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "before-the-nation-loses-patience",
-    "role": "ending",
-    "text": "before the whole broadcast dies",
-    "tags": ["restraint", "credibility"],
-    "rarity": "rare",
-    "finisherBonus": 4,
-    "reviewNotes": "Original fictional adaptation of a Romanian political-media corpus joke about a program that depends on conflict, informed by Corneliu Vadim Tudor's public rhetoric. Not a quotation or threat. Editorial review complete."
-  },
-  {
-    "id": "raises-the-volume-again",
-    "role": "continuation",
-    "text": "seizes the studio phone again",
-    "tags": ["decorum", "restraint"],
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation of repeated studio-phone interruptions in a Romanian political-media corpus, informed by Corneliu Vadim Tudor's televised oratorical intensity. Not a quotation. Editorial review complete."
+    {
+      "id": "from-the-marble-rostrum",
+      "role": "predicate",
+      "text": "could lose an election to an empty ballot",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "before-the-nation-loses-patience",
+      "role": "ending",
+      "text": "before the whole broadcast dies.",
+      "tags": ["restraint", "credibility"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of a Romanian political-media joke about a program that depends on conflict. Not a quotation or threat. Editorial review complete."
+      }
+    },
+    {
+      "id": "raises-the-volume-again",
+      "role": "predicate",
+      "text": "seizes the studio phone again",
+      "tags": ["decorum", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "that-powdered-scarecrow",
+      "role": "noun",
+      "text": "that powdered scarecrow",
+      "tags": ["decorum", "authenticity"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["appearance-metaphor"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original costume-and-prop metaphor for a fictional television persona. It targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-paper-crown",
+      "role": "noun",
+      "text": "your paper crown",
+      "tags": ["credibility", "legacy"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["status"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original status metaphor in the Thunder Tribune's fictional political voice. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-squealing-party-trumpet",
+      "role": "noun",
+      "text": "a squealing party trumpet",
+      "tags": ["restraint", "credibility"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["oratory"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original noisy-instrument metaphor for a fictional party spokesperson. It is not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-cursed-gnome",
+      "role": "noun",
+      "text": "a cursed gnome",
+      "tags": ["decorum", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["fantasy-metaphor"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fantasy-metaphor insult for a fictional studio rival. It targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-somaldoaca",
+      "role": "noun",
+      "text": "a șomâldoacă",
+      "tags": ["decorum", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["romanianism"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original Romanian comic insult reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and does not target a protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "looks-like-a-somaldoaca-on-television",
+      "role": "predicate",
+      "text": "looks like a șomâldoacă on television",
+      "singularText": "looks like a șomâldoacă on television",
+      "pluralText": "look like șomâldoace on television",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "bring-me-the-studio-phone",
+      "role": "ending",
+      "text": "and now bring me the studio phone, you imbecile.",
+      "tags": ["decorum", "restraint"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional studio-phone ending adapted for the Thunder Tribune's imperious broadcast voice. It is not a quotation and names no real person. Editorial review complete."
+      }
+    }
+  ],
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional composite character file. Editorial review complete."
   }
-]
+}

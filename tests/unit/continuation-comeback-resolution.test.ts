@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { sampleContent } from '../../src/content/sample-content';
+import { englishGameLocale, sampleContent } from '../../src/game-content';
 import type { Phrase } from '../../src/content/schemas';
 import {
   addComebackCharge,
@@ -20,7 +20,6 @@ import {
   type EnglishGrammarAnalysis,
   type EnglishGrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
-import { englishGameLocale } from '../../src/localization/en-game-locale';
 
 const players = ['first-player', 'second-player'] as const;
 const characters = sampleContent.characters;
@@ -362,7 +361,7 @@ describe('comeback charge, selection, and scoring', () => {
       playerInput(0, { damage: 5 }).construction.analysis,
     );
     expect(withLine.players[players[0]]!.closingLine).toBe(
-      'Consensus requires patience, especially with your argument.',
+      'Your mandate has been postponed for lack of substance.',
     );
   });
 

@@ -17,15 +17,15 @@ players. Romanian proper nouns require enough English context to carry the joke.
 
 Permit political parody, public-record criticism, fictional institutions,
 composite scandals, bureaucracy, media satire, contradiction, and vanity satire
-aimed at fictional personas. Reject protected traits as insults, unsupported
-crimes, private health or addiction claims, private people, reusable harassment,
-sexual humiliation, threats, copied text, real logos, and copyrighted broadcast
-art. Every record has review evidence.
+aimed at fictional personas. Hard-edged allegations can target fictional
+personas. Reject real-person references, real-party names and acronyms,
+protected traits as insults, sexual humiliation, threats, copied text, real
+logos, and copyrighted broadcast art. Every record has review evidence.
 
-For a character with a named public-figure inspiration, the review separates
-verified public biography and broad discourse themes from invented satire. It
-rejects copied slogans, copied portrait treatment, unsupported allegations, and
-language that presents the fictional archetype as the real person.
+The review confirms that each character is an original fictional composite. It
+rejects named or identifiable real-person models, comparisons, targets, source
+notes, and asset references. It also rejects real political party names,
+acronyms, and logos while allowing generic ideological or social-family labels.
 
 Simulation reports seed, workload, matchups, difficulties, win rates,
 rule-event rates, failures, and environment. Local logs are opt-in, contain no
@@ -54,10 +54,11 @@ distribution and exact-insult repetition thresholds.
 
 Editorial review severity is:
 
-- blocker: prohibited target, claim, trait, threat, copied work, logo, or
-  broadcast graphic;
-- major: unclear fictional framing, reusable harassment, or context that makes
-  an allowed line unsafe;
+- blocker: real-person reference, real-party reference, protected-trait insult,
+  sexual humiliation, threat, copied work, real logo, or copyrighted broadcast
+  graphic;
+- major: unclear fictional framing or context that makes an allowed line
+  unsafe;
 - minor: tone, clarity, distinctness, or international-English weakness.
 
 Completion permits no blocker or major item. Each record stores reviewer,

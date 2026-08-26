@@ -1,57 +1,282 @@
-[
-  {
-    "id": "national-salvation-committee",
-    "role": "noun",
-    "text": "a national-salvation committee",
-    "tags": ["legacy", "bureaucracy"],
-    "scoreGroups": {
-      "substance": ["bureaucracy"],
-      "flavour": ["transition"]
+{
+  "id": "red-folded-chairman",
+  "rosterOrder": 1,
+  "species": "human",
+  "name": "The Red-Folded Chairman",
+  "description": "A calm transition-era mediator who can fold any crisis into one more procedure.",
+  "assets": {
+    "portrait": {
+      "assetId": "red-folded-chairman-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public biography and transition-era institutional language. Not a quotation. Editorial review complete."
+    "token": {
+      "assetId": "red-folded-chairman-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
   },
-  {
-    "id": "mediates",
-    "role": "verb",
-    "text": "mediates",
-    "singularText": "mediates",
-    "pluralText": "mediate",
-    "tags": ["restraint", "legacy"],
-    "scorePreferences": {
-      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
-      "flavour": []
+  "palette": {
+    "primary": "#792a25",
+    "secondary": "#d7b56f",
+    "accent": "#273d56"
+  },
+  "weaknessTags": ["legacy", "modernity", "bureaucracy", "miners"],
+  "comebacks": {
+    "weak": "Even your excuse requires another committee.",
+    "medium": "Your mandate has been postponed for lack of substance.",
+    "strong": "History has filed your entire career under administrative error."
+  },
+  "aiPersonality": {
+    "aggression": 0.35,
+    "denial": 0.8,
+    "risk": 0.25
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.9,
+    "pitch": 0.9
+  },
+  "animationSet": {
+    "idle": "red-folded-chairman-idle",
+    "speak": "red-folded-chairman-speak",
+    "react": "red-folded-chairman-react"
+  },
+  "phrases": [
+    {
+      "id": "national-salvation-committee",
+      "role": "noun",
+      "text": "a national-salvation committee",
+      "tags": ["legacy", "bureaucracy"],
+      "scoreGroups": {
+        "substance": ["bureaucracy"],
+        "flavour": ["transition"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian transition-era institutional language. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "common",
-    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public emphasis on dialogue and consensus. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "through-a-gradual-transition",
-    "role": "predicate",
-    "text": "through a gradual transition",
-    "tags": ["modernity", "legacy"],
-    "scorePreferences": {
-      "substance": [{ "left": ["bureaucracy"] }],
-      "flavour": []
+    {
+      "id": "mediates",
+      "role": "verb",
+      "text": "mediates",
+      "singularText": "mediates",
+      "pluralText": "mediate",
+      "tags": ["restraint", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation informed by Ion Iliescu's public post-1989 gradual-transition discourse. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "for-stabilitys-sake",
-    "role": "ending",
-    "text": "for stability's sake",
-    "tags": ["restraint", "bureaucracy"],
-    "rarity": "rare",
-    "finisherBonus": 3,
-    "reviewNotes": "Original fictional line informed by Ion Iliescu's measured stability discourse. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "asks-for-patience-again",
-    "role": "continuation",
-    "text": "asks for patience again",
-    "tags": ["modernity", "restraint"],
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional continuation informed by Ion Iliescu's public gradual-change discourse. Not a quotation. Editorial review complete."
+    {
+      "id": "through-a-gradual-transition",
+      "role": "predicate",
+      "text": "through a gradual transition",
+      "tags": ["modernity", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian post-1989 gradual-transition discourse. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "for-stabilitys-sake",
+      "role": "ending",
+      "text": "for stability's sake.",
+      "tags": ["restraint", "bureaucracy"],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional line informed by Romanian transition-era stability discourse. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "asks-for-patience-again",
+      "role": "predicate",
+      "text": "asks for patience again",
+      "tags": ["modernity", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-red-stamped-family-album",
+      "role": "noun",
+      "text": "your red-stamped family album",
+      "tags": ["legacy", "evidence"],
+      "scoreGroups": {
+        "substance": ["family"],
+        "flavour": ["archive"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional family-and-party image in the Chairman's transition-era voice. It identifies no private person. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-committee-room-fossil",
+      "role": "noun",
+      "text": "a committee-room fossil",
+      "tags": ["modernity", "bureaucracy"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["procedure"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original political-obsolescence metaphor for a fictional persona. It does not target age or another protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-transition-godfather",
+      "role": "noun",
+      "text": "your transition godfather",
+      "tags": ["legacy", "credibility"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["transition"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional political-patron metaphor. It names no real person and alleges no crime. Editorial review complete."
+      }
+    },
+    {
+      "id": "that-velvet-apparatchik",
+      "role": "noun",
+      "text": "that velvet apparatchik",
+      "tags": ["legacy", "authenticity"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["status"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional transition-era party caricature in the Chairman's measured voice. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-funeral-wreath-with-party-card",
+      "role": "noun",
+      "text": "a funeral wreath with a party card",
+      "tags": ["legacy", "decorum"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["ceremony"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original absurd ceremonial metaphor for a fictional political persona. It is not a threat or a claim about a death. Editorial review complete."
+      }
+    },
+    {
+      "id": "chairman-buries",
+      "role": "verb",
+      "text": "buries",
+      "singularText": "buries",
+      "pluralText": "bury",
+      "tags": ["legacy", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy"],
+            "right": ["personal", "electoral"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original metaphorical debate verb in the Chairman's fictional procedural voice. It does not describe physical harm. Editorial review complete."
+      }
+    },
+    {
+      "id": "calls-every-delay-a-transition",
+      "role": "predicate",
+      "text": "calls every delay a transition",
+      "singularText": "calls every delay a transition",
+      "pluralText": "call every delay a transition",
+      "tags": ["modernity", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
+      }
+    }
+  ],
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional composite character file. Editorial review complete."
   }
-]
+}

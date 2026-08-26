@@ -144,7 +144,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
     };
     const required = [
       ...document.querySelectorAll(
-        '.match-status-rail, .match-player, .reaction-docket, .sentence-ledger, .shared-board > li, .private-hand ol > li, .match-actions button',
+        '.match-status-rail, .match-player, .round-review-dialog, .sentence-ledger, .shared-board > li, .private-hand ol > li, .match-actions button',
       ),
     ];
     const boxes = required.map((element) => element.getBoundingClientRect());
@@ -176,7 +176,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
         ),
       requiredTextClipping: Array.from(
         document.querySelectorAll<HTMLElement>(
-          '.match-turn-heading h1, .match-player h2, .reaction-docket > p, .card-phrase, .sentence-preview',
+          '.match-turn-heading h1, .match-player h2, .round-review-dialog h2, .card-phrase, .sentence-preview',
         ),
       )
         .filter(
@@ -410,6 +410,28 @@ test('the match fits the supported landscape matrix', async ({
   expect(fontEvidence.timer).toContain('Share Tech Mono');
   expect(Object.values(fontEvidence.loaded).every(Boolean)).toBe(true);
 
+  const longSentence = [
+    'A NATIONAL-SALVATION COMMITTEE REPACKAGES AN INFRASTRUCTURE FEASIBILITY STUDY',
+    'DURING THE NIGHT, AS THIEVES, BEFORE THE MICROPHONES COOL',
+    'AND A COUNTY-COUNCIL MAJORITY COORDINATES A PUBLIC-PROCUREMENT FILE',
+    'THROUGH ANOTHER REFORM CYCLE, PENDING FURTHER CONSULTATION',
+  ].join(', ');
+  await page.mouse.move(0, 0);
+  await page
+    .locator('grand-transition-match')
+    .evaluate(async (element, sentence) => {
+      const match = element as HTMLElement & {
+        snapshot: Readonly<Record<string, unknown>> & { revision: number };
+        updateComplete: Promise<boolean>;
+      };
+      match.snapshot = {
+        ...match.snapshot,
+        revision: match.snapshot.revision + 1,
+        sentenceText: sentence,
+      };
+      await match.updateComplete;
+    }, longSentence);
+
   for (const viewport of [
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
@@ -418,6 +440,7 @@ test('the match fits the supported landscape matrix', async ({
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
+    await page.mouse.move(0, 0);
     const facts = await page.evaluate(() => {
       const required = [
         ...document.querySelectorAll<HTMLElement>(
@@ -454,6 +477,15 @@ test('the match fits the supported landscape matrix', async ({
             clientHeight: node.clientHeight,
             scrollHeight: node.scrollHeight,
           })),
+        sentence: (() => {
+          const node =
+            document.querySelector<HTMLElement>('.sentence-preview')!;
+          return {
+            text: node.textContent?.trim(),
+            density: node.dataset.density,
+            textOverflow: getComputedStyle(node).textOverflow,
+          };
+        })(),
       };
     });
     expect(facts.documentWidth).toBeLessThanOrEqual(viewport.width);
@@ -464,6 +496,9 @@ test('the match fits the supported landscape matrix', async ({
     expect(facts.textClipping, `${viewport.width}x${viewport.height}`).toEqual(
       [],
     );
+    expect(facts.sentence.text).toBe(longSentence);
+    expect(facts.sentence.density).toBe('dense');
+    expect(facts.sentence.textOverflow).not.toBe('ellipsis');
     expect(await centeredHeaderControls(page)).toBe(true);
     expect(
       await page
@@ -497,6 +532,31 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   );
   await expect(wrongPredicate).toBeVisible();
   await wrongPredicate.click();
+  const grammarStrike = page.locator('.grammar-strike');
+  await expect(grammarStrike).toBeVisible();
+  await expect(grammarStrike).toContainText('Off script');
+  await expect(grammarStrike).toContainText('Grammar mistake');
+  await expect(grammarStrike).toContainText('Red-Folded Chairman');
+  await expect(grammarStrike).toContainText('−3 Pride');
+  await expect(
+    page.locator('[data-reaction-state="grammar-mistake"]'),
+  ).toHaveAttribute('data-side', 'red');
+  expect(
+    await page
+      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .evaluate((portrait) => getComputedStyle(portrait).animationName),
+  ).toBe('grammar-hit-red');
+  expect(
+    await grammarStrike.evaluate(
+      (element) => getComputedStyle(element).animationDuration,
+    ),
+  ).toBe('0.52s');
+  expect(
+    await page
+      .locator('.broadcast-stage')
+      .evaluate((stage) => getComputedStyle(stage, '::before').animationName),
+  ).toBe('grammar-arena-flash');
+  await page.waitForTimeout(550);
   await page.screenshot({
     path: testInfo.outputPath('match-grammar-mistake.png'),
     fullPage: true,
@@ -531,7 +591,12 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
 
   for (let turn = 0; turn < 8; turn += 1) {
-    if (await page.getByRole('heading', { name: /Round 2.*turn/u }).isVisible())
+    if (
+      await page
+        .getByRole('button', { name: 'Continue', exact: true })
+        .isVisible()
+        .catch(() => false)
+    )
       break;
     const end = page.getByRole('button', { name: 'End', exact: true });
     if (await end.isEnabled()) {
@@ -550,9 +615,200 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(page.locator('grand-transition-resolution-results')).toHaveCount(
     0,
   );
+  await expect(page.locator('.round-review-dialog')).toBeVisible();
+  await page.locator('grand-transition-match').evaluate(async (element) => {
+    const match = element as HTMLElement & {
+      snapshot: {
+        revision: number;
+        sentenceText: string;
+        sentenceComplete: boolean;
+        players: readonly { playerId: string }[];
+        reaction: {
+          round: number | null;
+          outcomeLabel: string;
+          players: Record<
+            string,
+            {
+              damage: number;
+              comboFactor: number;
+              comboBonusDamage: number;
+              weaknesses: readonly string[];
+            }
+          >;
+        };
+      };
+      updateComplete: Promise<boolean>;
+    };
+    const firstId = match.snapshot.players[0]!.playerId;
+    match.snapshot = {
+      ...match.snapshot,
+      revision: match.snapshot.revision + 1,
+      sentenceText:
+        'Your party belongs in a party museum, and your voters change the channel.',
+      sentenceComplete: true,
+      reaction: {
+        ...match.snapshot.reaction,
+        players: {
+          ...match.snapshot.reaction.players,
+          [firstId]: {
+            ...match.snapshot.reaction.players[firstId]!,
+            weaknesses: ['evidence', 'credibility', 'restraint'],
+          },
+        },
+      },
+    };
+    await match.updateComplete;
+  });
+  await expect(page.locator('[data-round-result="1"]')).toBeVisible();
+  await expect(page.locator('.reaction-outcome')).toContainText(
+    /Round 1 (winner:|result: tie)/u,
+  );
+  await expect(page.locator('.reaction-scores > div')).toHaveCount(2);
+  await expect(page.locator('.reaction-scores dd > strong')).toHaveCount(2);
+  await expect(page.locator('.weakness-hit')).toContainText('Weakness hit');
+  await expect(page.locator('.weakness-hit')).toContainText('Evidence');
+  await expect(page.locator('.weakness-hit')).toContainText('Credibility');
+  await expect(page.locator('.weakness-hit')).toContainText('Restraint');
+  const weaknessGeometry = await page
+    .locator('.round-review-dialog')
+    .evaluate((record) => {
+      const box = record.getBoundingClientRect();
+      const viewport = {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+      };
+      return {
+        horizontalFit: record.scrollWidth <= record.clientWidth + 1,
+        verticalFit: record.scrollHeight <= record.clientHeight + 1,
+        insideViewport:
+          box.left >= 0 &&
+          box.top >= 0 &&
+          box.right <= viewport.width &&
+          box.bottom <= viewport.height,
+      };
+    });
+  expect(weaknessGeometry.horizontalFit).toBe(true);
+  expect(weaknessGeometry.verticalFit).toBe(true);
+  expect(
+    weaknessGeometry.insideViewport,
+    JSON.stringify(weaknessGeometry),
+  ).toBe(true);
+  expect(
+    await page.evaluate(() => {
+      const reaction = document
+        .querySelector('.round-review-dialog')!
+        .getBoundingClientRect();
+      const waiting = document
+        .querySelector('.player-sentence--waiting')!
+        .getBoundingClientRect();
+      return !(
+        reaction.left < waiting.right &&
+        reaction.right > waiting.left &&
+        reaction.top < waiting.bottom &&
+        reaction.bottom > waiting.top
+      );
+    }),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath('round-result-feedback.png'),
+    fullPage: true,
+  });
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
   ).toBeVisible();
+});
+
+test('the grammar strike fits the minimum landscape', async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await startMatch(page);
+
+  await page
+    .locator(
+      '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
+    )
+    .click();
+  const strike = page.locator('.grammar-strike');
+  await expect(strike).toBeVisible();
+  await expect(strike).toContainText('−3 Pride');
+  expect(
+    await strike.evaluate((element) => getComputedStyle(element).animationName),
+  ).toBe('grammar-strike-in');
+  expect(
+    await page
+      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .evaluate((portrait) => getComputedStyle(portrait).animationName),
+  ).toBe('grammar-hit-red');
+  expect(
+    await page
+      .locator('.broadcast-stage')
+      .evaluate((stage) => getComputedStyle(stage, '::before').animationName),
+  ).toBe('grammar-arena-flash');
+  const geometry = await strike.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    const sentence = document
+      .querySelector('.sentence-ledger')!
+      .getBoundingClientRect();
+    const board = document
+      .querySelector('.common-phrases')!
+      .getBoundingClientRect();
+    return {
+      inside:
+        box.left >= 0 &&
+        box.top >= 0 &&
+        box.right <= window.innerWidth &&
+        box.bottom <= window.innerHeight,
+      textFits:
+        element.scrollWidth <= element.clientWidth + 1 &&
+        element.scrollHeight <= element.clientHeight + 1,
+      clearsSentence: sentence.bottom <= box.top,
+      clearsBoard: box.bottom <= board.top,
+    };
+  });
+  expect(Object.values(geometry).every(Boolean)).toBe(true);
+  await expect(
+    page.locator(
+      '.tutorial, .tactical-help, .card-hint, [data-tutorial], [data-guided-turn]',
+    ),
+  ).toHaveCount(0);
+  await page.waitForTimeout(550);
+  await page.screenshot({
+    path: testInfo.outputPath('grammar-strike-1024x720.png'),
+    fullPage: true,
+  });
+});
+
+test('reduced motion keeps grammar feedback without movement or flashing', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await startMatch(page);
+
+  await page
+    .locator(
+      '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
+    )
+    .click();
+  const strike = page.locator('.grammar-strike');
+  await expect(strike).toBeVisible();
+  await expect(strike).toContainText('−3 Pride');
+  expect(
+    await strike.evaluate((element) => getComputedStyle(element).animationName),
+  ).toBe('none');
+  expect(
+    await page
+      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .evaluate((portrait) => getComputedStyle(portrait).animationName),
+  ).toBe('none');
+  expect(
+    await page.locator('.broadcast-stage').evaluate((stage) => {
+      const style = getComputedStyle(stage, '::before');
+      return { animationName: style.animationName, display: style.display };
+    }),
+  ).toEqual({ animationName: 'none', display: 'none' });
 });
 
 test('manual and viewport pauses conceal the match and preserve the timer', async ({

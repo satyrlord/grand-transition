@@ -1,57 +1,282 @@
-[
-  {
-    "id": "hands-on-presidency",
-    "role": "noun",
-    "text": "a hands-on presidency",
-    "tags": ["consistency", "decorum"],
-    "scoreGroups": {
-      "substance": ["bureaucracy"],
-      "flavour": ["command"]
+{
+  "id": "black-sea-captain",
+  "rosterOrder": 3,
+  "species": "human",
+  "name": "The Black Sea Captain",
+  "description": "A hands-on former ship captain who treats every coalition like rough water.",
+  "assets": {
+    "portrait": {
+      "assetId": "black-sea-captain-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional adaptation informed by Traian Basescu's public hands-on political style. Not a quotation. Editorial review complete."
+    "token": {
+      "assetId": "black-sea-captain-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
   },
-  {
-    "id": "steers",
-    "role": "verb",
-    "text": "steers",
-    "singularText": "steers",
-    "pluralText": "steer",
-    "tags": ["consistency", "legacy"],
-    "scorePreferences": {
-      "substance": [{ "left": ["bureaucracy"], "right": ["media"] }],
-      "flavour": []
+  "palette": {
+    "primary": "#123f68",
+    "secondary": "#d7a34b",
+    "accent": "#6d2823"
+  },
+  "weaknessTags": ["decorum", "consistency", "securitate"],
+  "comebacks": {
+    "weak": "Your little wave could not wet the deck.",
+    "medium": "You could not steer your own party out of a puddle.",
+    "strong": "Your flagship is sinking, and even the rats formed a better cabinet."
+  },
+  "aiPersonality": {
+    "aggression": 0.7,
+    "denial": 0.55,
+    "risk": 0.65
+  },
+  "voiceProfile": {
+    "voiceHint": "grounded",
+    "rate": 0.98,
+    "pitch": 0.92
+  },
+  "animationSet": {
+    "idle": "black-sea-captain-idle",
+    "speak": "black-sea-captain-speak",
+    "react": "black-sea-captain-react"
+  },
+  "phrases": [
+    {
+      "id": "hands-on-presidency",
+      "role": "noun",
+      "text": "a hands-on presidency",
+      "tags": ["consistency", "decorum"],
+      "scoreGroups": {
+        "substance": ["bureaucracy"],
+        "flavour": ["command"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian hands-on executive rhetoric. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "common",
-    "reviewNotes": "Original maritime-political adaptation informed by Traian Basescu's documented merchant-marine captain career. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "through-troubled-waters",
-    "role": "predicate",
-    "text": "through troubled waters",
-    "tags": ["consistency", "legacy"],
-    "scorePreferences": {
-      "substance": [{ "left": ["bureaucracy"] }],
-      "flavour": []
+    {
+      "id": "steers",
+      "role": "verb",
+      "text": "steers",
+      "singularText": "steers",
+      "pluralText": "steer",
+      "tags": ["consistency", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+      }
     },
-    "rarity": "uncommon",
-    "reviewNotes": "Original maritime-political metaphor informed by a Council of Europe introduction to Traian Basescu. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "from-the-bridge",
-    "role": "ending",
-    "text": "from the bridge",
-    "tags": ["decorum", "legacy"],
-    "rarity": "rare",
-    "finisherBonus": 3,
-    "reviewNotes": "Original fictional maritime-political ending informed by Traian Basescu's documented captain career. Not a quotation. Editorial review complete."
-  },
-  {
-    "id": "returns-to-the-wheel",
-    "role": "continuation",
-    "text": "returns to the wheel",
-    "tags": ["consistency", "decorum"],
-    "rarity": "uncommon",
-    "reviewNotes": "Original fictional continuation informed by Traian Basescu's public hands-on style and captain background. Not a quotation. Editorial review complete."
+    {
+      "id": "through-troubled-waters",
+      "role": "predicate",
+      "text": "through troubled waters",
+      "tags": ["consistency", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political metaphor informed by Romanian public leadership language. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "from-the-bridge",
+      "role": "ending",
+      "text": "from the bridge.",
+      "tags": ["decorum", "legacy"],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional maritime-political ending informed by merchant-marine command language. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "returns-to-the-wheel",
+      "role": "predicate",
+      "text": "returns to the wheel",
+      "tags": ["consistency", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-leaking-flagship",
+      "role": "noun",
+      "text": "your leaking flagship",
+      "tags": ["competence", "consistency"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["maritime"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime failure metaphor in the Captain's fictional political voice. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-dockside-peacock",
+      "role": "noun",
+      "text": "a dockside peacock",
+      "tags": ["decorum", "authenticity"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["animal-metaphor"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original animal metaphor for a fictional showy rival. It targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "that-barroom-admiral",
+      "role": "noun",
+      "text": "that barroom admiral",
+      "tags": ["decorum", "competence"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["maritime"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original rank-and-setting caricature in the Captain's fictional studio voice. It makes no private health or addiction claim. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-mutinous-coalition",
+      "role": "noun",
+      "text": "your mutinous coalition",
+      "tags": ["consistency", "legacy"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["maritime"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime coalition metaphor for fictional party politics. Not a quotation or a claim about a real coalition. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-captain-without-compass",
+      "role": "noun",
+      "text": "a captain without a compass",
+      "tags": ["competence", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["maritime"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original competence insult in the Captain's fictional maritime voice. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "captain-grounds",
+      "role": "verb",
+      "text": "grounds",
+      "singularText": "grounds",
+      "pluralText": "ground",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics"],
+            "right": ["personal", "politics"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+      }
+    },
+    {
+      "id": "cannot-steer-own-party-from-puddle",
+      "role": "predicate",
+      "text": "cannot steer its own party out of a puddle",
+      "singularText": "cannot steer its own party out of a puddle",
+      "pluralText": "cannot steer their own party out of a puddle",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
+      }
+    }
+  ],
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional composite character file. Editorial review complete."
   }
-]
+}
