@@ -38,10 +38,10 @@ selected final-art scene. Run five cold-cache and five warm-cache trials.
 
 | Metric                        | Required result                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------- |
-| Cold largest contentful paint | Median at most 2.5 seconds; no run above 3                                        |
-| Warm largest contentful paint | Median at most 2 seconds; no run above 2.5                                        |
+| Cold largest contentful paint | Median at most 2.5 seconds. No run above 3                                        |
+| Warm largest contentful paint | Median at most 2 seconds. No run above 2.5                                        |
 | Input event duration          | 95th percentile below 100 milliseconds across 50 scripted card and control inputs |
-| Animation frame interval      | 95th percentile at most 18.2 ms; above 50 ms below 1 percent                      |
+| Animation frame interval      | 95th percentile at most 18.2 ms. Intervals above 50 ms stay below 1 percent       |
 | Initial page CLS              | At most 0.05                                                                      |
 | Card-update CLS               | Exactly 0                                                                         |
 | Initial JavaScript            | At most 350 KiB total after gzip, excluding media                                 |
@@ -77,7 +77,7 @@ runtime-network failure cannot be waived.
   provenance, vulnerability, and version review with no unresolved critical or
   high issue.
 - **AC-028-06:** Every deviation has the complete record above and is within
-  the allowed class; otherwise the release is blocked.
+  the allowed class. Otherwise, the release is blocked.
 
 ## Minimum viable product completion contract
 

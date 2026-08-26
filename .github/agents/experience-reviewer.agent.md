@@ -27,9 +27,9 @@ report that evidence as blocked.
 
 Check tactical clarity and visible interface content. Check Lit snapshot and
 command boundaries. Check pointer paths, the supported landscape matrix, the
-blocking viewport gate, phrase-card states, and score explanations. Check text-to-speech
-fallback and hotseat privacy. A screenshot can support a visual claim,
-but it cannot prove interaction or state by itself.
+blocking viewport gate, phrase-card states, and score explanations. Check
+text-to-speech fallback and hotseat privacy. A screenshot can support a visual
+claim, but it cannot prove interaction or state by itself.
 
 Report confirmed findings with severity, exact location, direct evidence,
 impact, smallest remedy, and a verifier. Separate automated, visual, audible,

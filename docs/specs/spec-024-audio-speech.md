@@ -18,9 +18,9 @@ Mixer
 controls are Master, Music, Effects, and Speech.
 
 Speech defaults off and stays silent until enabled after user action. Detect
-support safely; load voices immediately and after `voiceschanged`; prefer saved
-voice Uniform Resource Identifier (`voiceURI`), then language match, then
-system default. Expose Auto, voice, rate,
+support safely. Load voices immediately and after `voiceschanged`. Prefer the
+saved voice Uniform Resource Identifier (`voiceURI`), then a language match,
+then the system default. Expose Auto, voice, rate,
 and volume. Speak only complete public insults. Cancel on round change, exit, or
 match completion. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
@@ -30,7 +30,7 @@ processing vary and do not promise offline behavior. Show unavailable state.
 Runtime music and ambience provide Ogg Vorbis plus MP3 fallback at 48 kilohertz.
 Short effects provide Ogg Vorbis plus MP3 fallback and have a true peak no
 higher than -1 decibel full scale. Music masters target -16 LUFS integrated,
-plus or minus 1 LU; ambience targets -22 LUFS, plus or minus 2 LU. No decoded
+plus or minus 1 LU. Ambience targets -22 LUFS, plus or minus 2 LU. No decoded
 sample exceeds 0 decibels full scale.
 
 After a selected match package is decoded, a cue starts within 100 milliseconds

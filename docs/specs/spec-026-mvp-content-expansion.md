@@ -17,64 +17,82 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
-1. **Red-Folded Chairman:** measured transition-era mediator; weak to legacy,
-   modernity, bureaucracy, and miners; patient denial and safe continuations.
-2. **Thunder Tribune:** furious poet-orator; weak to evidence, credibility, and
-   restraint; aggressive finishers, risky long sentences, private șomâldoacă
-   insults, and imperious studio-phone endings.
-3. **Midnight Sensationalist:** breathless tabloid host; weak to ratings,
-   evidence, credibility; combos and dramatic comebacks.
-4. **Velvet Mogul:** polished media broker; weak to wealth, influence,
-   credibility; denial and weakness targeting.
-5. **Black Sea Captain:** salty practical statesman and former ship captain;
-   weak to decorum, consistency, and Securitate references; adaptive comeback
-   play.
-6. **Retiring Cassandra:** weary reformist; weak to competence, hope, results;
-   defensive continuations and conservative scoring.
-7. **Oat-Milk Reformist:** earnest jargon; weak to relevance, authenticity,
-   class; long clauses and semantic targeting.
-8. **Marble Diplomat:** decorative elitist; weak to luxury, elitism, corruption;
-   high values, finishers, and status attacks.
-9. **County Baron:** folksy patron; weak to procurement, infrastructure,
-   nepotism; denial and low-risk continuations.
-10. **Coalition Acrobat:** elastic shapeshifter; weak to consistency, memory,
-    commitment; conjunctions, continuations, and reversals.
-11. **Presidential Sphinx:** remote leader; weak to absence, silence, leisure;
-    defensive pool, sparse pacing, strong finishers.
-12. **Algorithmic Prophet:** viral mystic; weak to evidence, specificity, and
-    follow-up questions; volatile livestream finishers.
-13. **Spreadsheet Technocrat:** metric-heavy manager; weak to delivery,
-    accountability, human scale; clause stacks and dashboard denial.
-14. **Football-Pulpit Tycoon:** devotional showman; weak to commercialism,
-    accountability, sincerity; emotional chains and finishers.
-15. **Luxury Minister:** camera-ready patron; weak to austerity, service,
-    authenticity; status attacks and conspicuous finishers.
-16. **Diaspora Oracle:** distant voice-note expert; weak to distance, context,
-    firsthand knowledge; long generalizations and continuations.
-17. **Apartment-Block Geopolitician:** suspicious everyday expert; weak to
-    sources, specificity, nuance; broad, fast, brittle combo play.
-18. **EU-Funds Alchemist:** grant conjurer; weak to transparency, outcomes,
-    maintenance; procurement denial and high-value finishers.
+1. **Red-Folded Chairman:** A measured transition-era mediator. Weaknesses are
+   legacy, modernity, bureaucracy, and miners. The play style uses patient denial
+   and safe continuations.
+2. **Thunder Tribune:** A furious poet-orator. Weaknesses are evidence,
+   credibility, and restraint. The play style uses aggressive finishers, risky
+   long sentences, private șomâldoacă insults, and imperious studio-phone
+   endings.
+3. **Midnight Sensationalist:** A breathless tabloid host. Weaknesses are
+   ratings, evidence, and credibility. The play style uses combos and dramatic
+   comebacks.
+4. **Velvet Mogul:** A polished media broker. Weaknesses are wealth, influence,
+   and credibility. The play style uses denial and weakness targeting.
+5. **Black Sea Captain:** A salty practical statesman and former ship captain.
+   Weaknesses are decorum, consistency, and Securitate references. The play
+   style uses adaptive comebacks.
+6. **Retiring Cassandra:** A weary reformist. Weaknesses are competence, hope,
+   and results. The play style uses defensive continuations and conservative
+   scoring.
+7. **Oat-Milk Reformist:** The character uses earnest jargon. Weaknesses are
+   relevance, authenticity, and class. The play style uses long clauses and
+   semantic targeting.
+8. **Marble Diplomat:** A decorative elitist. Weaknesses are luxury, elitism,
+   and corruption. The play style uses high values, finishers, and status
+   attacks.
+9. **County Baron:** A folksy patron. Weaknesses are procurement,
+   infrastructure, and nepotism. The play style uses denial and low-risk
+   continuations.
+10. **Coalition Acrobat:** An elastic shapeshifter. Weaknesses are consistency,
+    memory, and commitment. The play style uses conjunctions, continuations,
+    and reversals.
+11. **Presidential Sphinx:** A remote leader. Weaknesses are absence, silence,
+    and leisure. The play style uses a defensive pool, sparse pacing, and strong
+    finishers.
+12. **Algorithmic Prophet:** A viral mystic. Weaknesses are evidence,
+    specificity, and follow-up questions. The play style uses volatile
+    livestream finishers.
+13. **Spreadsheet Technocrat:** A metric-heavy manager. Weaknesses are delivery,
+    accountability, and human scale. The play style uses clause stacks and
+    dashboard denial.
+14. **Football-Pulpit Tycoon:** A devotional showman. Weaknesses are
+    commercialism, accountability, and sincerity. The play style uses emotional
+    chains and finishers.
+15. **Luxury Minister:** A camera-ready patron. Weaknesses are austerity,
+    service, and authenticity. The play style uses status attacks and
+    conspicuous finishers.
+16. **Diaspora Oracle:** A distant voice-note expert. Weaknesses are distance,
+    context, and firsthand knowledge. The play style uses long generalizations
+    and continuations.
+17. **Apartment-Block Geopolitician:** A suspicious everyday expert. Weaknesses
+    are sources, specificity, and nuance. The play style uses broad, fast, and
+    brittle combo play.
+18. **EU-Funds Alchemist:** A grant conjurer. Weaknesses are transparency,
+    outcomes, and maintenance. The play style uses procurement denial and
+    high-value finishers.
 
 ## Required scenes
 
-- **Transition-Era Television Studio:** heavy curtains, cathode-ray tube (CRT)
-   monitors, geometric carpet, desk microphones, harsh lamps, and analog
-   instability; transition,
-  public television, revolution, archive, emergency broadcast, and national
-  salvation phrases.
-- **County Council Ballroom:** municipal ornament, plastic flowers, fake marble,
-  ribbon banners, catering, and suspiciously new equipment; procurement,
-  relatives, contracts, infrastructure, and development-fund phrases.
-- **Midnight Call-In Studio:** neon ticker, chroma-key skyline, telephones,
-   breaking-news banners, Short Message Service (SMS) crawl, and ad clock;
-   ratings, sources, callers, footage, commercials, and hidden tapes.
-- **Palace Press Hall:** vast room, tall doors, sparse podiums, polished floor,
-  photographers, and empty space; statements, silence, coalition, protocol,
-  mandate, and national-interest phrases.
-- **Influencer Campaign Livestream:** ring lights, vertical screens, donation
-  alerts, wellness props, merchandise, and floating reactions; algorithms,
-  sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
+- **Transition-Era Television Studio:** The scene contains heavy curtains,
+  cathode-ray tube (CRT) monitors, geometric carpet, desk microphones, harsh
+  lamps, and analog instability. Its phrase themes are transition, public
+  television, revolution, archive, emergency broadcast, and national salvation.
+- **County Council Ballroom:** The scene contains municipal ornament, plastic
+  flowers, fake marble, ribbon banners, catering, and suspiciously new equipment.
+  Its phrase themes are procurement, relatives, contracts, infrastructure, and
+  development funds.
+- **Midnight Call-In Studio:** The scene contains a neon ticker, chroma-key
+  skyline, telephones, breaking-news banners, a Short Message Service (SMS)
+  crawl, and an ad clock. Its phrase themes are ratings, sources, callers,
+  footage, commercials, and hidden tapes.
+- **Palace Press Hall:** The scene contains a vast room, tall doors, sparse
+  podiums, a polished floor, photographers, and empty space. Its phrase themes
+  are statements, silence, coalition, protocol, mandate, and national interest.
+- **Influencer Campaign Livestream:** The scene contains ring lights, vertical
+  screens, donation alerts, wellness props, merchandise, and floating reactions.
+  Its phrase themes are algorithms, sovereignty, podcast evidence, ancient
+  energy, clips, and shadow bans.
 
 Each scene has a 1920x1080 layered master, landscape crops, lighting, ambience,
 motion, music treatment, and 25 to 35 owned phrases. The validated catalog has

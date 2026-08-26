@@ -24,11 +24,11 @@ scope without edits.
 
 Trace commands from entry point through the immutable reducer, grammar adapter,
 board generation, scoring, continuation, comeback, artificial intelligence
-(AI), replay, and persistence
-ports. Check determinism, simultaneous resolution, typed rule errors, seeded
+(AI), replay, and persistence ports. Check determinism, simultaneous resolution,
+typed rule errors, seeded
 randomness, hotseat isolation, and the prohibition on Lit or Document Object
-Model (DOM) imports in
-pure rules. Inspect direct tests and fast-check replay evidence.
+Model (DOM) imports in pure rules. Inspect direct tests and fast-check replay
+evidence.
 
 Report only confirmed findings. For each finding, give severity, exact path and
 location, broken contract, evidence, user impact, smallest remedy, and one

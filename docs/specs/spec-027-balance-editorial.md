@@ -43,7 +43,7 @@ Aggregated character win rate must be 45 through 55 percent. Every ordered
 non-mirror matchup must be 35 through 65 percent. Opening-position advantage
 must be at most 5 percentage points. A fixed-seed repeat must reproduce every
 aggregate count. A result outside a band blocks completion unless the product
-owner records a release deviation under Milestone 028; no deviation can permit
+owner records a release deviation under Milestone 028. No deviation can permit
 an aggregate rate outside 42 through 58 or a matchup outside 30 through 70.
 
 The report records combo, weakness, finisher, continuation, comeback, grammar
@@ -56,21 +56,21 @@ Editorial review severity is:
 
 - blocker: real-person reference, real-party reference, protected-trait insult,
   sexual humiliation, threat, copied work, real logo, or copyrighted broadcast
-  graphic;
+  graphic.
 - major: unclear fictional framing or context that makes an allowed line
-  unsafe;
+  unsafe.
 - minor: tone, clarity, distinctness, or international-English weakness.
 
 Completion permits no blocker or major item. Each record stores reviewer,
 calendar date, severity, decision, rationale, and source or originality note.
 
-Each shipped line also passes three yes-or-no editorial checks: it targets a
-fictional institution or persona behavior rather than empty abuse; its tone
-matches at least one recorded character or scene trait; and an international
-English reader can understand the phrase fragment without external knowledge.
-A Romanian proper noun passes only when adjacent English context identifies why
-it matters. For each character, the owner blind-labels a seeded 12-line sample;
-at least 10 lines must be attributable to the intended character.
+Each shipped line also passes three yes-or-no editorial checks. It targets a
+fictional institution or persona behavior rather than empty abuse. Its tone
+matches at least one recorded character or scene trait. An international English
+reader can understand the phrase fragment without external knowledge. A
+Romanian proper noun passes only when adjacent English context identifies why
+it matters. For each character, the owner blind-labels a seeded 12-line sample.
+At least 10 lines must be attributable to the intended character.
 
 ## Acceptance criteria
 

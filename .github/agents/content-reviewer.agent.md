@@ -34,9 +34,9 @@ produces locale keys, and browser and Node discovery agree. Check that no
 character requires a TypeScript import, registry, setup option, or renderer map.
 Check that content, specifications, rationale, source notes, and asset metadata
 do not name or identify a real person. Check that party references use generic
-ideological or social-family labels instead of real names, acronyms, or logos. Check
-protected characteristics, threats, copied lines, and unsafe Hypertext Markup
-Language (HTML). Check asset ownership, source, and license metadata.
+ideological or social-family labels instead of real names, acronyms, or logos.
+Check protected characteristics, threats, copied lines, and unsafe Hypertext
+Markup Language (HTML). Check asset ownership, source, and license metadata.
 
 Report only evidence-backed findings. Give severity, exact record or path,
 broken contract, evidence, impact, smallest remedy, and the validator or review

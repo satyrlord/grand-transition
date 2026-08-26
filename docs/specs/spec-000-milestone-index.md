@@ -154,7 +154,7 @@ The specifications own every minimum product and acceptance requirement.
 Impeccable and other installed skills are review tools, not additional product
 authority. Each Impeccable evidence record must include the skill version and
 detector version. A tool update does not change an approved acceptance
-criterion. If a required tool is unavailable, record the block; do not replace
+criterion. If a required tool is unavailable, record the block. Do not replace
 its result with a source-only opinion.
 
 ## Impeccable user interface validation
@@ -177,7 +177,7 @@ in its production browser build:
 For both validations, inspect the affected supported landscape states together
 in a bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
 Record accepted or deferred P2 and P3 findings with rationale and an owning
-future milestone. An unavailable built surface blocks these validations; a
+future milestone. An unavailable built surface blocks these validations. A
 source-only review does not satisfy them.
 
 ## Dependency sequence

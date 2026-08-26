@@ -49,17 +49,19 @@ Private hotseat content must remain private during handovers.
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 017: the title, setup,
-  playable match, and seamless match flow,
-  toolchain, quality gate, immutable architecture contracts, replaceable ports,
-  pure-module boundary enforcement, the secured static production shell, Zod 4
-  content schemas, an English game-locale bundle, three original fictional
-  characters, Romanian-politics phrase content, separate transparent portraits
-  and a character-free studio, and
-  Hollywood Roast grammar, compound subjects, endings, incomplete states,
-  immediate grammar mistakes, one common board, private hands, clause scoring,
-  noun combos, continuations, comebacks, cliffhangers, replay, and simulation.
-  Every completed exchange pauses on an in-arena results modal while the last
+- The implemented scope includes Milestones 001 through 017. It includes the
+  title, setup, playable match, and between-round review flow.
+- The implemented platform includes the toolchain, quality gate, immutable
+  architecture contracts, replaceable ports, pure-module boundary enforcement,
+  and the secured static production shell.
+- The implemented content includes Zod 4 schemas, an English game-locale bundle,
+  three original fictional characters, Romanian-politics phrase content,
+  separate transparent portraits, and a character-free studio.
+- The implemented rules include Hollywood Roast grammar, compound subjects,
+  endings, incomplete states, immediate grammar mistakes, one common board,
+  private hands, clause scoring, noun combos, continuations, comebacks,
+  cliffhangers, replay, and simulation.
+- Every completed exchange pauses on an in-arena results modal while the last
   sentence remains visible. Continue starts the next round or returns a
   completed local hotseat match to setup. The product exposes no post-match
   features.

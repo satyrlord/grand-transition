@@ -48,7 +48,7 @@ received during the same exchange.
 
 ## Acceptance criteria
 
-- **AC-012-01:** Damage 0 and 15 preserve a carry; 16 breaks it.
+- **AC-012-01:** Damage 0 and 15 preserve a carry. Damage 16 breaks it.
 - **AC-012-02:** A strong comeback breaks a carry because its 18 damage bonus
   crosses the 16-damage threshold.
 - **AC-012-03:** Charge thresholds, cap, strongest-tier use, spending, and

@@ -427,7 +427,7 @@ show two equal speech records. End and Comeback use compact Poiret One
 perimeter plates that stay clear of faces, hands, and required props. Reshuffle
 is an icon-only compact inline-SVG control next to the private phrases and has
 an accessible name without visible explanation copy. Oxblood identifies
-delivery; television blue identifies Reshuffle and Comeback. Disabled controls
+delivery. Television blue identifies Reshuffle and Comeback. Disabled controls
 stay labeled or keep an accessible label and use a dashed border. Pause sits at
 the top-center match status. The venue and broadcast identity are part of the
 scene or frame, not a separate dashboard strap.
@@ -444,7 +444,7 @@ states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
 The comeback action becomes available after a complete sentence and one filled
 tier. It uses the strongest filled tier immediately.
 
-## Do's and Don'ts
+## Preferred and prohibited patterns
 
 ### Do
 
@@ -463,21 +463,23 @@ tier. It uses the strongest filled tier immediately.
 - **Do** keep pointer preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.
 
-### Don't
+### Avoid
 
-- **Don't** describe the match as the Open Civic Ledger or a flat parliamentary
-  dispatch table. That direction is stale.
-- **Don't** claim that title or setup already use the complete arena
+- **Avoid** describing the match as the Open Civic Ledger or a flat
+  parliamentary dispatch table. That direction is stale.
+- **Avoid** claiming that title or setup already use the complete arena
   composition.
-- **Don't** use animal or hybrid anatomy in portraits, tokens, poses, states,
+- **Avoid** animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.
-- **Don't** rasterize values, controls, or required text into the painted arena
-  or paper texture.
-- **Don't** copy the reference game's art, meter shapes, exact type, ornaments,
-  proportions, or control frames.
-- **Don't** keep the present font families by inertia or shrink core tactical
-  text to make the arena fit.
-- **Don't** replace written card state with color, icon, texture, or border
+- **Avoid** rasterizing values, controls, or required text into the painted
+  arena or paper texture.
+- **Avoid** copying the reference game's art, meter shapes, exact type,
+  ornaments, proportions, or control frames.
+- **Avoid** keeping the present font families by inertia or shrinking core
+  tactical text to make the arena fit.
+- **Avoid** replacing written card state with color, icon, texture, or border
   style alone.
-- **Don't** round the match into generic dashboard cards or use glass effects.
-- **Don't** divide the match into a stage header and a separate lower dashboard.
+- **Avoid** rounding the match into generic dashboard cards or using glass
+  effects.
+- **Avoid** dividing the match into a stage header and a separate lower
+  dashboard.
