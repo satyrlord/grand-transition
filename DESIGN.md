@@ -1,6 +1,6 @@
 ---
 name: 'Grand Transition: A Verbal Republic'
-description: 'A political word duel staged as one late-2000s municipal broadcast arena.'
+description: 'A political word duel staged in contrasting fictional broadcast arenas.'
 colors:
   municipal-blue: '#062840'
   deep-municipal-blue: '#041d2e'
@@ -110,12 +110,12 @@ components:
 
 <!-- markdownlint-enable MD036 -->
 
-Grand Transition is a late-2000s fictional municipal broadcast arena. Painted
-political theatre meets navy fascia, aged brass, oxide red, television blue,
-warm paper, and compact control-room signals. The complete match reads as one
-confrontation. Characters, sentence construction, speech, status, and actions
-share the same stage instead of dividing into a decorative scene and a separate
-dashboard.
+Grand Transition is a fictional broadcast arena that can move between distinct
+political television eras. Painted political theatre meets navy fascia, aged
+brass, oxide red, television blue, warm paper, and compact control-room signals.
+The complete match reads as one confrontation. Characters, sentence
+construction, speech, status, and actions share the same stage instead of
+dividing into a decorative scene and a separate dashboard.
 
 The match screen establishes the replacement visual system. Title and setup can
 adopt its type, materials, and broadcast language when their redesign is
@@ -209,10 +209,13 @@ in this record remains valid if those temporary files are removed.
 
 **Key Characteristics:**
 
-- One late-2000s fictional municipal broadcast arena, not a stage over a
-  dashboard.
-- Three swappable human player caricatures and one fixed fictional human
-  moderator, all with clear faces.
+- Contrasting fictional municipal and modern broadcast arenas, not a stage over
+  a dashboard.
+- One hand-painted editorial-caricature language across playable portraits,
+  fixed moderators, studio architecture, furniture, and props. Do not combine
+  illustrated characters with photographic or hyper-realistic scene layers.
+- Three swappable human player caricatures and two fixed fictional human
+  moderators, one per implemented studio, all with clear faces.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
 - Wide speech, central sentence construction, top-edge meters, and perimeter
@@ -356,8 +359,8 @@ readable between the two opponents.
 
 ## Elevation & Depth
 
-The match uses controlled stage depth. The generated municipal studio and its
-fixed fictional moderator form the deep field. Transparent portraits occupy
+The match uses controlled stage depth. The selected studio and its fixed
+fictional moderator form the deep field. Transparent portraits occupy
 the opponent planes. A transparent plate puts the two tall standing desks in
 front of those portraits. Speech and the sentence tower occupy the tactical
 plane. Top and perimeter controls sit on the broadcast frame. Low-contrast
@@ -365,11 +368,11 @@ masks protect text without turning the scene into stacked panels. Short dark
 shadows lift signs, phrase records, actions, and the comeback dialog. Inset
 brass and navy rules make the arena feel built, not glassy.
 
-The match uses six generated raster sources: one television-studio background
-with a fixed fictional moderator, one transparent foreground desk plate, three
-transparent character portraits, and one low-contrast aged-paper texture. All
-assets retain embedded prompt provenance. Required text and controls remain
-outside the raster art.
+The implemented match uses eight generated raster sources: two studio
+backgrounds with fixed fictional moderators, two transparent foreground desk
+plates, three transparent character portraits, and one low-contrast aged-paper
+texture. All assets retain embedded prompt provenance. Required text and
+controls remain outside the raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
 to separate live broadcast regions. Do not use translucent glass panels or
@@ -400,16 +403,29 @@ fonts as permanent brand rules.
 
 ### Broadcast stage and status plaques
 
-A decorative full-viewport back image shows a late-2000s municipal studio and
-one fixed blonde fictional moderator at a physical desk on a raised inner-left
-platform. Exactly four full-height faux-marble columns frame the studio. The
-back image contains no playable character.
+A decorative full-viewport back image shows the selected debate studio and one
+fixed fictional moderator. The Transition-Era Television Studio uses a blonde
+moderator at a physical desk on a raised inner-left platform. Exactly four
+full-height faux-marble columns frame that studio. The Modern Debate Studio uses
+broad blue video panels, red and blue vertical accents, visible softboxes, a
+practical truss, and a reflective stage floor. Its bespectacled male moderator
+sits with crossed legs in a beige studio chair at the mirrored inner-right
+position and faces the camera. His normal human head has a slightly tall
+forehead and comically small facial features. No back image contains a playable
+character.
+Every back scene and foreground plate uses the same visible painterly brushwork,
+simplified material detail, expressive contour, and restrained comic
+exaggeration as the playable portraits. Preserve distinct historical materials
+and scene identities, but do not use photographic people, furniture, bottles,
+lamps, floors, or architecture.
 Separate transparent portraits render the two selected characters over it and
 can exchange sides or mirror without changing the scene. A transparent desk
 plate renders over the portraits and clips their lower bodies behind two tall
 standing desks. The desk fronts continue below the lower stage frame. Do not
 show their extracted bottom contours or any portrait's lower raster contour.
-Each standing desk has one microphone and one plain unbranded water bottle.
+Each transition-era standing desk has one microphone and one plain unbranded
+water bottle. Each modern standing desk has no microphone and holds one plain
+tap-water bottle plus one distinct sparkling-water bottle.
 The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage. The three implemented
 portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
@@ -451,10 +467,14 @@ reasons, or add tutorial progress.
 
 The active player owns one wide white current-sentence bubble that points to
 that side. The waiting character owns one compact gray ellipsis bubble. Pointer
-hover and keyboard focus expand that same gray bubble to reveal the waiting
-character's complete public sentence for that interaction. Click or tap keeps
-it open until the user activates the bubble again, activates elsewhere, or the
-match state changes. Do not show two equal speech records. End and Comeback use
+hover, keyboard focus, click, and tap always expand that same gray bubble and
+reveal the waiting character's current public sentence or most recent completed
+public sentence. Before either sentence exists, it reveals `No sentence yet.`
+Hover and focus keep it open for that interaction. Click or tap pins it open
+until the user activates
+elsewhere or the match state changes. Repeated activation of the bubble keeps it
+open. The bubble body grows to contain the complete text, and its tail does not
+clip the text. Do not show two equal speech records. End and Comeback use
 compact Poiret One perimeter plates anchored to the active side's board margin:
 left for red and right for blue. They stay clear of faces, hands, and required
 props. Reshuffle is an icon-only compact inline-SVG control next to the private
@@ -463,13 +483,17 @@ identifies delivery. Television blue identifies Reshuffle and Comeback.
 Disabled controls stay labeled or keep an accessible label and use a dashed
 border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
+The match surface does not permit browser text selection. Pointer dragging,
+repeated activation, and keyboard shortcuts must not leave interface text
+highlighted.
 
 ### Pause and compatibility slates
 
 Manual Pause replaces the complete match with a navy transmission-held slate,
-one brass-framed Resume action, and no game facts. Unsupported viewports use
-the same broadcast language without a Resume action. The compatibility slate
-states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
+compact Turn timer and Auto-complete controls, one brass-framed Resume action,
+and no game facts. Unsupported viewports use the same broadcast language
+without settings or a Resume action. The compatibility slate states the 1024
+by 720 minimum and the 1920 by 1080 PC recommendation.
 
 ### Comeback action
 

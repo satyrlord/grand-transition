@@ -8,7 +8,7 @@ art, and audio content
 
 ## Deliver
 
-Complete all 18 fictional archetypes, 5 scenes, English phrase pools, final art,
+Complete all 18 fictional archetypes, 6 scenes, English phrase pools, final art,
 scene audio treatment, and one exclusive comeback line per character and tier.
 Use the existing schemas, pipelines, and presentation contracts.
 
@@ -75,6 +75,12 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 ## Required scenes
 
+Every scene package uses the same hand-painted editorial-caricature language as
+the playable portraits. This rule applies to fixed moderators, architecture,
+furniture, lights, bottles, microphones, and all other props. Each scene keeps
+its distinct era and materials. No scene layer uses photographic or hyper-
+realistic rendering.
+
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
   heavy blue and burgundy curtains, faux-marble columns, patterned carpet,
   lighting trusses, two tall standing desks, one desk microphone and one plain
@@ -84,6 +90,18 @@ political labels only and never define anatomy, species, or hybrid traits.
   The playable characters remain separate portrait layers. Its phrase themes
   are transition, public television, revolution, archive, emergency broadcast,
   and national salvation.
+- **Modern Debate Studio:** A contemporary presidential-style television set
+  uses broad blue video panels, red and blue vertical accents, overhead
+  softboxes, a practical broadcast truss, a reflective stage floor, and two
+  angular standing desks. Each desk has one plain tap-water bottle and one
+  distinct sparkling-water bottle. The scene has no microphones. One fixed
+  fictional male moderator sits with crossed legs in a beige studio chair at
+  the inner-right position that mirrors the transition-era moderator. He wears
+  rectangular glasses, faces the camera, and has a normal human head with a
+  slightly tall forehead and comically small facial features. The playable
+  characters remain separate portrait layers. Its phrase themes are polling,
+  fact checks, campaign strategy, swing voters, media training, and closing
+  statements.
 - **County Council Ballroom:** The scene contains municipal ornament, plastic
   flowers, fake marble, ribbon banners, catering, and suspiciously new equipment.
   Its phrase themes are procurement, relatives, contracts, infrastructure, and
@@ -144,7 +162,7 @@ failed automated range or distribution.
 ## Acceptance criteria
 
 - **AC-026-01:** The catalog contains exactly 18 required character IDs and
-  five required scene IDs, with no duplicate English identity.
+  six required scene IDs, with no duplicate English identity.
 - **AC-026-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
 - **AC-026-03:** Every character and scene passes grammar reachability, board

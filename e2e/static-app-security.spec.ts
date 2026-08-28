@@ -1,9 +1,14 @@
-import { expect, test } from '@playwright/test';
-import { readFile, readdir } from 'node:fs/promises';
+import { expect, test, type Page } from '@playwright/test';
+import { readFile, readdir, rm } from 'node:fs/promises';
 import path from 'node:path';
+import {
+  planMatchBrowserFlow,
+  type MatchBrowserAction,
+} from './helpers/match-flow';
 
 const productionOrigin = 'http://127.0.0.1:4173';
 const developmentUrl = 'http://127.0.0.1:5174/grand-transition/';
+const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 const productionContentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self'",
@@ -17,6 +22,8 @@ const productionContentSecurityPolicy = [
   "form-action 'none'",
 ].join('; ');
 
+test.setTimeout(90_000);
+
 test('production preview loads the subpath shell and local assets after refresh', async ({
   page,
 }) => {
@@ -27,9 +34,7 @@ test('production preview loads the subpath shell and local assets after refresh'
   const pageErrors: string[] = [];
 
   page.on('console', (message) => {
-    if (message.type() === 'error') {
-      consoleErrors.push(message.text());
-    }
+    if (message.type() === 'error') consoleErrors.push(message.text());
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
   page.on('request', (request) => {
@@ -55,7 +60,6 @@ test('production preview loads the subpath shell and local assets after refresh'
   });
 
   const response = await page.goto('./');
-
   expect(response?.status()).toBe(200);
   await expect(page).toHaveURL(`${productionOrigin}/grand-transition/`);
   await expect(
@@ -64,7 +68,6 @@ test('production preview loads the subpath shell and local assets after refresh'
   await expect(
     page.getByText('A Verbal Republic', { exact: true }),
   ).toBeVisible();
-  await expect(page.getByText('The chamber is')).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   expect(loadedAssetTypes).toEqual(new Set(['font', 'script', 'stylesheet']));
 
@@ -87,11 +90,10 @@ test('production injects the exact policy and blocks a remote connection', async
     await route.abort();
   });
   await page.goto('./');
-
   await expect(
     page.locator('meta[http-equiv="Content-Security-Policy"]'),
   ).toHaveAttribute('content', productionContentSecurityPolicy);
-  const remoteConnectionResult = await page.evaluate(async () => {
+  const result = await page.evaluate(async () => {
     try {
       await fetch('https://network.invalid/csp-probe');
       return 'allowed';
@@ -99,81 +101,46 @@ test('production injects the exact policy and blocks a remote connection', async
       return 'blocked';
     }
   });
-
-  expect(remoteConnectionResult).toBe('blocked');
+  expect(result).toBe('blocked');
   expect(remoteConnectionReachedNetwork).toBe(false);
 });
 
-test('development omits the production policy', async ({ page }) => {
-  const response = await page.goto(developmentUrl);
-
-  expect(response?.status()).toBe(200);
+test('development and production render the same game UI with no tool surface', async ({
+  page,
+}) => {
+  await page.goto('./');
   await expect(
     page.getByRole('heading', { name: 'Grand Transition' }),
   ).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const productionUi = await uiSignature(page);
+
+  await page.goto(developmentUrl);
+  await expect(
+    page.getByRole('heading', { name: 'Grand Transition' }),
+  ).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const developmentUi = await uiSignature(page);
+  expect(developmentUi).toEqual(productionUi);
   await expect(
     page.locator('meta[http-equiv="Content-Security-Policy"]'),
   ).toHaveCount(0);
   await expect(
-    page.getByRole('heading', { name: 'Simulation Registry' }),
-  ).toBeVisible();
+    page.locator(
+      'grand-transition-click-audit, grand-transition-game-audit, grand-transition-developer-controls',
+    ),
+  ).toHaveCount(0);
   await expect(
-    page.getByRole('button', { name: /Open click audit/u }),
-  ).toBeVisible();
+    page.getByText(
+      /Completed Game Audit|Simulation Registry|Debug|Configure Match Facts|Run AI versus AI|Inspect legal phrases|Validate content|Prepare replay|Prepare match log/iu,
+    ),
+  ).toHaveCount(0);
 });
 
-test('development starts the click audit before the first title action', async ({
+test('production omits development logger and tool code from the bundle', async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    const observer = new MutationObserver(() => {
-      const setupButton = [...document.querySelectorAll('button')].find(
-        (button) => button.textContent?.trim() === 'Set up match',
-      );
-      if (setupButton) {
-        setupButton.click();
-        observer.disconnect();
-      }
-    });
-    observer.observe(document, { childList: true, subtree: true });
-  });
-
-  await page.goto(developmentUrl);
-  await expect(
-    page.getByRole('heading', { name: 'Set up match' }),
-  ).toBeVisible();
-  const entries = await page.locator('grand-transition-click-audit').evaluate(
-    (audit) =>
-      (
-        audit as HTMLElement & {
-          exportDocument(): {
-            entries: readonly { kind: string; event: string }[];
-          };
-        }
-      ).exportDocument().entries,
-  );
-  expect(entries).toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({ kind: 'game-action', event: 'show-setup' }),
-    ]),
-  );
-});
-
-test('production omits developer controls from the DOM and bundle', async ({
-  page,
-}) => {
-  await page.goto('./?click-audit=1');
-  await expect(
-    page.getByRole('heading', { name: 'Simulation Registry' }),
-  ).toHaveCount(0);
-  await expect(page.locator('grand-transition-developer-controls')).toHaveCount(
-    0,
-  );
-  await expect(page.locator('grand-transition-click-audit')).toHaveCount(0);
-  await expect(
-    page.getByRole('button', { name: /Open click audit/u }),
-  ).toHaveCount(0);
-
+  await page.goto('./');
   const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
   const assetFiles = await readdir(assetsDirectory);
   const productionText = (
@@ -184,8 +151,73 @@ test('production omits developer controls from the DOM and bundle', async ({
     )
   ).join('\n');
   expect(productionText).not.toMatch(
-    /grand-transition-(?:developer-controls|click-audit)|grandTransitionTemporaryClickAudit|game-action-result|Simulation Registry|Inspect legal phrases|Prepare match log|Development only|Open click audit|Temporary Click Audit/u,
+    /grand-transition-(?:developer-controls|click-audit|game-audit)|grandTransitionDevelopmentGameLog|__game-log|Simulation Registry|Completed Game Audit|Run AI versus AI|Inspect legal phrases|Prepare match log/iu,
   );
+});
+
+test('development automatically writes one completed match text log', async ({
+  page,
+}) => {
+  await rm(developmentGameLogDirectory, { force: true, recursive: true });
+  try {
+    await page.goto(developmentUrl);
+    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Start match' }).click();
+
+    const plan = planMatchBrowserFlow();
+    for (const action of plan.actions) {
+      await executeDraftAction(page, action);
+      const continueButton = page.getByRole('button', {
+        name: 'Continue',
+        exact: true,
+      });
+      if (await continueButton.isVisible().catch(() => false)) {
+        await continueButton.click();
+      }
+    }
+
+    await expect.poll(async () => logFiles()).toHaveLength(1);
+    const [filename] = await logFiles();
+    expect(filename).toMatch(/^match-\d{4}-\d{2}-\d{2}-seed-20260823\.log$/u);
+    const text = await readFile(
+      path.join(developmentGameLogDirectory, filename!),
+      'utf8',
+    );
+    const records = text
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line) as Record<string, any>);
+    expect(records[0]).toEqual(
+      expect.objectContaining({
+        type: 'match-log',
+        formatVersion: 1,
+        seed: 20_260_823,
+      }),
+    );
+    expect(records.at(-1)).toEqual(
+      expect.objectContaining({
+        type: 'match-complete',
+        winner: plan.finalState.winner,
+      }),
+    );
+    expect(
+      records.some(
+        (record) =>
+          record.type === 'action' &&
+          record.move?.type === 'select-phrase' &&
+          typeof record.move.text === 'string' &&
+          typeof record.state?.players?.['player-one']?.bubble === 'string',
+      ),
+    ).toBe(true);
+    expect(
+      records
+        .filter((record) => record.type === 'action')
+        .map((record) => record.command),
+    ).toEqual(plan.finalState.commandHistory);
+    expect(text).not.toMatch(/"hand"|userAgent|machine/iu);
+  } finally {
+    await rm(developmentGameLogDirectory, { force: true, recursive: true });
+  }
 });
 
 test('production bundles only English and Romanian font subsets', async () => {
@@ -194,7 +226,6 @@ test('production bundles only English and Romanian font subsets', async () => {
   const variableFontFiles = assetFiles.filter((file) =>
     /^(?:nunito|rubik)-.*\.woff2$/u.test(file),
   );
-
   expect(variableFontFiles).toHaveLength(4);
   for (const font of ['nunito', 'rubik']) {
     expect(
@@ -213,118 +244,60 @@ test('production bundles only English and Romanian font subsets', async () => {
   );
 });
 
-test('development click audit correlates one shared phrase selection', async ({
-  page,
-}) => {
-  const followUpUpdateWarnings: string[] = [];
-  page.on('console', (message) => {
-    if (
-      message.text().includes('scheduled an update after an update completed')
-    ) {
-      followUpUpdateWarnings.push(message.text());
-    }
+async function uiSignature(page: Page) {
+  return page.evaluate(() => {
+    const app = document.querySelector('grand-transition-app');
+    const heading = document.querySelector('h1');
+    const action = document.querySelector('button');
+    return {
+      html: app?.innerHTML.replace(/\?lit\$\d+\$/gu, '?lit$') ?? '',
+      text: app?.textContent?.replace(/\s+/gu, ' ').trim() ?? '',
+      heading: heading
+        ? {
+            color: getComputedStyle(heading).color,
+            font: getComputedStyle(heading).font,
+          }
+        : null,
+      action: action
+        ? {
+            background: getComputedStyle(action).backgroundColor,
+            color: getComputedStyle(action).color,
+            font: getComputedStyle(action).font,
+          }
+        : null,
+    };
   });
-  await page.goto(developmentUrl);
-  await expect(
-    page.getByRole('button', { name: /Open click audit/u }),
-  ).toBeVisible();
+}
 
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByRole('button', { name: 'Start match' }).click();
-  await page.locator('.shared-board [data-role="noun"] button').first().click();
-  await page.getByRole('button', { name: /Open click audit/u }).click();
+async function logFiles(): Promise<string[]> {
+  return readdir(developmentGameLogDirectory).catch(() => []);
+}
 
-  await expect(
-    page.getByRole('heading', { name: 'Temporary Click Audit' }),
-  ).toBeVisible();
-  await expect(page.getByText('Action: select-phrase')).toBeVisible();
-  await expect(page.getByText('Result: select-phrase accepted')).toBeVisible();
-  await page.waitForTimeout(0);
-  expect(followUpUpdateWarnings).toEqual([]);
-});
-
-test('development evidence can be copied and downloaded by document type', async ({
-  page,
-}) => {
-  await page.context().grantPermissions(['clipboard-read', 'clipboard-write'], {
-    origin: 'http://127.0.0.1:5174',
-  });
-  await page.goto(developmentUrl);
-
-  await page.getByRole('button', { name: 'Run AI versus AI' }).click();
-  await expect(page.getByText('Replay', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Copy JSON' }).click();
-  await expect(page.locator('.developer-controls__status')).toContainText(
-    'Copied replay JSON',
-  );
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(
-    'grand-transition-replay',
-  );
-
-  const replayDownload = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download JSON' }).click();
-  const replayFile = await replayDownload;
-  expect(replayFile.suggestedFilename()).toMatch(
-    /^grand-transition-replay-\d+\.json$/u,
-  );
-  const replayPath = await replayFile.path();
-  expect(replayPath).not.toBeNull();
-  expect(await readFile(replayPath!, 'utf8')).toContain(
-    'grand-transition-replay',
-  );
-
-  await page.getByRole('button', { name: 'Prepare match log' }).click();
-  await expect(
-    page.getByText('Public match log', { exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Import replay' }),
-  ).toBeDisabled();
-  const logDownload = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download JSON' }).click();
-  const logFile = await logDownload;
-  expect(logFile.suggestedFilename()).toMatch(
-    /^grand-transition-match-log-\d+\.json$/u,
-  );
-  const logPath = await logFile.path();
-  expect(logPath).not.toBeNull();
-  expect(await readFile(logPath!, 'utf8')).toContain(
-    'grand-transition-match-log',
-  );
-});
-
-test('development controls fit the supported landscape matrix', async ({
-  page,
-}) => {
-  const viewports = [
-    { width: 1024, height: 720 },
-    { width: 1024, height: 768 },
-    { width: 1280, height: 720 },
-    { width: 1920, height: 1080 },
-  ];
-  for (const viewport of viewports) {
-    await page.setViewportSize(viewport);
-    await page.goto(developmentUrl);
-    await expect(
-      page.locator('grand-transition-developer-controls'),
-    ).toBeVisible();
-    const geometry = await page.evaluate(() => ({
-      viewportWidth: window.innerWidth,
-      documentWidth: document.documentElement.scrollWidth,
-      controls: [...document.querySelectorAll('button, input, select')].map(
-        (element) => {
-          const box = element.getBoundingClientRect();
-          return {
-            left: box.left,
-            right: box.right,
-          };
-        },
-      ),
-    }));
-    expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewportWidth);
-    for (const control of geometry.controls) {
-      expect(control.left).toBeGreaterThanOrEqual(0);
-      expect(control.right).toBeLessThanOrEqual(geometry.viewportWidth);
-    }
+async function executeDraftAction(
+  page: Page,
+  action: MatchBrowserAction,
+): Promise<void> {
+  const command = action.command;
+  switch (command.type) {
+    case 'select-phrase':
+      await page
+        .locator(
+          `[data-card-source="${command.payload.card.source}"][data-card-id="${command.payload.card.cardId}"]`,
+        )
+        .click();
+      return;
+    case 'commit-sentence':
+      await page.getByRole('button', { name: 'End', exact: true }).click();
+      return;
+    case 'redraw-hand':
+      await page
+        .getByRole('button', { name: 'Reshuffle private phrases' })
+        .click();
+      return;
+    case 'select-comeback':
+      await page.getByRole('button', { name: 'Comeback' }).click();
+      return;
+    default:
+      throw new Error(`Unsupported browser draft action: ${command.type}`);
   }
-});
+}

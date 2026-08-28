@@ -754,14 +754,17 @@ describe('content schemas', () => {
     );
   });
 
-  test('accepts original sample content for three characters and one scene', () => {
+  test('accepts original sample content for three characters and two scenes', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
     expect(result.characters).toHaveLength(3);
     expect(
       result.characters.every((character) => character.species === 'human'),
     ).toBe(true);
-    expect(result.scenes).toHaveLength(1);
+    expect(result.scenes.map((scene) => scene.id)).toEqual([
+      'transition-era-television-studio',
+      'modern-debate-studio',
+    ]);
     expect(new Set(result.phrases.map((phrase) => phrase.role))).toEqual(
       new Set([
         'noun',

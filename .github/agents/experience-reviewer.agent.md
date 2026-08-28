@@ -20,7 +20,9 @@ mcp-servers:
 
 # Experience reviewer
 
-Read `AGENTS.md` and specification sections 2, 14 through 19, 24, and 26.
+Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, and each applicable
+UI owner. The primary UI owners are Milestones 015 through 019 and 023 through
+026. Follow their dependency closure.
 Review an available production build when it exists. Do not edit files. If a
 required build or test has not run, give the coordinator the exact command and
 report that evidence as blocked.

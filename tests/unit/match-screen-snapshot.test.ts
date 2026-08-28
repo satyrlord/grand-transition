@@ -59,7 +59,172 @@ describe('match-screen snapshot', () => {
     expect(Object.isFrozen(snapshot.sceneLayers)).toBe(true);
     expect(Object.isFrozen(snapshot.sceneLayers[0])).toBe(true);
   });
+
+  test('projects the modern debate studio asset layers', () => {
+    const scene = sampleContent.scenes.find(
+      (candidate) => candidate.id === 'modern-debate-studio',
+    )!;
+    const players = [configuredPlayer(0), configuredPlayer(1)] as const;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_828,
+      players,
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+
+    const snapshot = createMatchScreenSnapshot(state);
+
+    expect(snapshot.sceneName).toBe('Modern Debate Studio');
+    expect(snapshot.sceneLayers).toEqual([
+      expect.objectContaining({
+        assetId: 'modern-debate-studio',
+        depth: 0,
+      }),
+      expect.objectContaining({
+        assetId: 'modern-debate-studio-desks',
+        depth: 1,
+      }),
+    ]);
+    expect(snapshot.sceneLayers.every(({ url }) => url.endsWith('.png'))).toBe(
+      true,
+    );
+  });
+
+  test('retains the most recent public sentence for the next round bubble', () => {
+    const scene = sampleContent.scenes[0]!;
+    const players = [configuredPlayer(0), configuredPlayer(1)] as const;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_829,
+      players,
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    const firstSpeakerId = state.activePlayerId;
+    const nounSlot = state.draft!.board.slots.find((slot) => {
+      const phrase = sampleContent.phrases.find(
+        (candidate) => candidate.id === slot.phraseId,
+      );
+      return slot.available && phrase?.role === 'noun';
+    })!;
+    state = accept(state, {
+      type: 'select-phrase',
+      source: 'user',
+      actorId: firstSpeakerId,
+      payload: { card: { source: 'shared', cardId: nounSlot.id } },
+    });
+    const previousPublicSentence =
+      state.draft!.playerStates[firstSpeakerId]!.construction.previewText;
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: state.activePlayerId,
+      payload: {},
+    });
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: state.activePlayerId,
+      payload: {},
+    });
+    state = accept(state, lifecycleCommand('resolve-round'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+
+    const snapshot = createMatchScreenSnapshot(state);
+    const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
+    expect(waitingPlayer.playerId).toBe(firstSpeakerId);
+    expect(waitingPlayer.sentence).toBe(previousPublicSentence);
+  });
+
+  test('keeps a private-card sentence public after its speaker ends the turn', () => {
+    const scene = sampleContent.scenes[0]!;
+    const players = [configuredPlayer(0), configuredPlayer(1)] as const;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_830,
+      players,
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    const firstSpeakerId = state.activePlayerId;
+    state = withPrivateCard(state, firstSpeakerId, 'your-father');
+    state = selectPrivateCard(state, firstSpeakerId);
+
+    const secondSpeakerId = state.activePlayerId;
+    state = withPrivateCard(state, secondSpeakerId, 'national-consensus');
+    state = selectPrivateCard(state, secondSpeakerId);
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: firstSpeakerId,
+      payload: {},
+    });
+
+    const publicSentence =
+      state.draft!.playerStates[firstSpeakerId]!.construction.previewText;
+    const snapshot = createMatchScreenSnapshot(state);
+    const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
+    expect(waitingPlayer.playerId).toBe(firstSpeakerId);
+    expect(waitingPlayer.sentence).toBe(publicSentence);
+  });
 });
+
+function withPrivateCard(
+  state: MatchState,
+  playerId: string,
+  phraseId: string,
+): MatchState {
+  const draft = state.draft!;
+  const player = draft.playerStates[playerId]!;
+  const card = { id: `regression-${playerId}`, phraseId };
+  return {
+    ...state,
+    draft: {
+      ...draft,
+      playerStates: {
+        ...draft.playerStates,
+        [playerId]: {
+          ...player,
+          hand: [...player.hand, card],
+          legalCards: [
+            ...player.legalCards,
+            { source: 'private', cardId: card.id },
+          ],
+        },
+      },
+    },
+  };
+}
+
+function selectPrivateCard(state: MatchState, actorId: string): MatchState {
+  const card = state.draft!.playerStates[actorId]!.legalCards.find(
+    (reference) =>
+      reference.source === 'private' &&
+      reference.cardId === `regression-${actorId}`,
+  )!;
+  return accept(state, {
+    type: 'select-phrase',
+    source: 'user',
+    actorId,
+    payload: { card },
+  });
+}
 
 function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
   const character = sampleContent.characters[index]!;
@@ -73,7 +238,9 @@ function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
   };
 }
 
-function lifecycleCommand(type: 'prepare-round' | 'start-match'): MatchCommand {
+function lifecycleCommand(
+  type: 'prepare-round' | 'resolve-round' | 'start-match',
+): MatchCommand {
   return { type, source: 'user', payload: {} } as MatchCommand;
 }
 

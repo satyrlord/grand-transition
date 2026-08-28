@@ -10,7 +10,7 @@ view-state boundary
 
 Build light Document Object Model (DOM) title and setup screens, a screen
 controller, an application shell, and typed command events. Support hotseat
-mode, characters, scene, and timer choices with mirror matches allowed. Later
+mode, character choices, and scene choices with mirror matches allowed. Later
 milestones add artificial intelligence (AI), speech, privacy, and saved options
 when their behavior exists.
 
@@ -31,7 +31,10 @@ title. It preserves the setup values for a later setup visit.
 
 Setup fields are mode, player-one character, player-two character, and scene.
 Defaults are hotseat, the first two catalog characters, and the first scene.
-Every pick uses the fixed 30-second timer owned by Milestone 009. Mirror
+The application session starts with the 30-second browser default. Timer
+changes occur only on the paused match surface owned by Milestone 016. They
+remain in the application shell for later matches in the same page session and
+do not enter the setup snapshot or start-match payload. Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 

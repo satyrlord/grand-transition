@@ -116,6 +116,16 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
+test('gives an empty waiting bubble revealable honest content', async () => {
+  const match = await startMatch();
+  const bubble = match.querySelector<HTMLElement>('.player-sentence--waiting')!;
+  expect(bubble.tagName).toBe('BUTTON');
+  expect(bubble.dataset.hasContent).toBe('true');
+  expect(
+    bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
+  ).toBe('No sentence yet.');
+});
+
 test('clears a pointer preview when an authoritative snapshot arrives', async () => {
   const match = await startMatch();
   const previewCard = match.snapshot!.sharedCards.find(
@@ -166,13 +176,13 @@ test('shows an appended comeback line in the speaker bubble', async () => {
   expect(bubble?.getAttribute('aria-label')).toContain('comeback');
 });
 
-test('exposes the waiting sentence to pointer and keyboard presentation', async () => {
+test('always exposes the complete waiting sentence for every interaction', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
   const waitingIndex = snapshot.players.findIndex((player) => !player.isActive);
   const waiting = snapshot.players[waitingIndex]!;
   const sentence =
-    'Your party belongs in a party museum, and your voters change the channel.';
+    'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
   const players = [...snapshot.players] as [
     (typeof snapshot.players)[number],
     (typeof snapshot.players)[number],
@@ -195,6 +205,29 @@ test('exposes the waiting sentence to pointer and keyboard presentation', async 
   expect(
     bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
   ).toBe(sentence);
+
+  bubble.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('true');
+  expect(bubble.dataset.revealed).toBe('true');
+
+  match.snapshot = {
+    ...match.snapshot!,
+    revision: match.snapshot!.revision + 1,
+  };
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('true');
+  expect(bubble.dataset.revealed).toBe('true');
+
+  bubble.dispatchEvent(new PointerEvent('pointerleave', { bubbles: true }));
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('false');
+  expect(bubble.dataset.revealed).toBe('false');
+
+  bubble.click();
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('true');
+  expect(bubble.dataset.revealed).toBe('true');
 
   bubble.click();
   await match.updateComplete;
@@ -398,18 +431,102 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   expect(match.querySelector('.phrase-card')).toBeNull();
   expect(match.querySelector('[data-timer]')).toBeNull();
   expect(match.textContent).not.toContain(match.snapshot!.activePlayerName);
+  await vi.waitFor(() =>
+    expect(document.activeElement?.textContent?.trim()).toBe('Resume'),
+  );
 
   await vi.advanceTimersByTimeAsync(5_000);
-  match.querySelector<HTMLButtonElement>('button')!.click();
+  match.querySelector<HTMLButtonElement>('.interruption-primary')!.click();
   await app.updateComplete;
   await match.updateComplete;
 
   expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
   expect(match.snapshot!.revision).toBe(revision);
+  expect(document.activeElement?.textContent?.trim()).toBe('Pause');
 
   await vi.advanceTimersByTimeAsync(1_000);
   await match.updateComplete;
   expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
+});
+
+test('applies Pause settings when the match resumes', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  const commands: MatchCommandEvent[] = [];
+  match.addEventListener(matchCommandEventName, (event) =>
+    commands.push(event),
+  );
+
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+
+  const pauseButton = (label: string): HTMLButtonElement =>
+    [...match.querySelectorAll<HTMLButtonElement>('button')].find(
+      (button) => button.textContent?.trim() === label,
+    )!;
+  expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
+  expect(pauseButton('On').getAttribute('aria-pressed')).toBe('true');
+
+  pauseButton('15 seconds').click();
+  pauseButton('30 seconds').click();
+  pauseButton('Off').click();
+  pauseButton('On').click();
+  await app.updateComplete;
+  await match.updateComplete;
+  expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
+  expect(pauseButton('On').getAttribute('aria-pressed')).toBe('true');
+
+  pauseButton('15 seconds').click();
+  pauseButton('Off').click();
+  await app.updateComplete;
+  await match.updateComplete;
+  expect(pauseButton('15 seconds').getAttribute('aria-pressed')).toBe('true');
+  expect(pauseButton('Off').getAttribute('aria-pressed')).toBe('true');
+
+  pauseButton('Resume').click();
+  await app.updateComplete;
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="15"]')).not.toBeNull();
+
+  const sentenceBefore = match
+    .querySelector('.sentence-preview')
+    ?.textContent?.trim();
+  const previewCard = match.snapshot!.sharedCards.find(
+    (card) => card.action === 'select' && card.previewText.trim() !== '',
+  )!;
+  match
+    .querySelector<HTMLButtonElement>(
+      `[data-card-id="${previewCard.reference!.cardId}"]`,
+    )!
+    .dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
+  await match.updateComplete;
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
+    sentenceBefore,
+  );
+
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+  pauseButton('Unlimited').click();
+  await app.updateComplete;
+  await match.updateComplete;
+  pauseButton('Resume').click();
+  await app.updateComplete;
+  await match.updateComplete;
+
+  expect(match.querySelector('[data-timer="unlimited"]')).not.toBeNull();
+  expect(match.querySelector('.timer-fact dd')?.textContent?.trim()).toBe(
+    'Unlimited',
+  );
+  await vi.advanceTimersByTimeAsync(60_000);
+  await match.updateComplete;
+  expect(
+    commands.filter((event) => event.detail.type === 'expire-turn'),
+  ).toHaveLength(0);
 });
 
 test('confirms a paused exit before it discards the match', async () => {

@@ -23,7 +23,8 @@ complete an approved specification.
   match mechanics follow _Oh...Sir! The Hollywood Roast_: one common phrase
   board, two private hand cards, tactical phrase removal, its grammar,
   clause scoring, weaknesses, noun combos, finishers, continuations, comebacks,
-  Pride damage, 30-second picks, and cliffhangers.
+  Pride damage, 30-second default picks, approved 15-second and Unlimited local
+  timer choices, and cliffhangers.
 - Use only original Grand Transition phrases, characters, scenes, prose, art,
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression. The sourced English
@@ -159,7 +160,7 @@ its result with a source-only opinion.
 
 ## Impeccable user interface validation
 
-Milestones 001 and 014 through 029 affect the user-visible user interface (UI).
+Milestones 001 and 015 through 029 affect the user-visible user interface (UI).
 Each must complete these two separate validations against the implemented slice
 in its production browser build:
 
@@ -249,20 +250,20 @@ context and files needed for each implementation session.
 
 ## Contract ownership
 
-| Contract                            | Owner              |
-| ----------------------------------- | ------------------ |
-| Toolchain, commands, module layout  | 001-003            |
-| Quality gate, testing, coverage     | 002, 014, 018, 028 |
-| Static security and Pages subpath   | 004, 029           |
-| Content, localization, grammar      | 005-007, 026-027   |
-| Boards, drafting, phrase cards      | 008-009, 016       |
-| Scoring and advanced match rules    | 010-013            |
-| Replay, simulation, developer tools | 014                |
-| State ownership and browser screens | 015-017            |
-| Landscape viewport support          | 018, 025, 028      |
-| Hotseat privacy and local state     | 019-020            |
-| AI and ladder                       | 021-022            |
-| Visual assets and presentation      | 023, 025-026       |
-| Audio and speech                    | 024                |
-| Full content, safety, and balance   | 026-027            |
-| Release quality and deployment      | 028-029            |
+| Contract                             | Owner              |
+| ------------------------------------ | ------------------ |
+| Toolchain, commands, module layout   | 001-003            |
+| Quality gate, testing, coverage      | 002, 014, 018, 028 |
+| Static security and Pages subpath    | 004, 029           |
+| Content, localization, grammar       | 005-007, 026-027   |
+| Boards, drafting, phrase cards       | 008-009, 016       |
+| Scoring and advanced match rules     | 010-013            |
+| Replay, simulation, development logs | 014                |
+| State ownership and browser screens  | 015-017            |
+| Landscape viewport support           | 018, 025, 028      |
+| Hotseat privacy and local state      | 019-020            |
+| AI and ladder                        | 021-022            |
+| Visual assets and presentation       | 023, 025-026       |
+| Audio and speech                     | 024                |
+| Full content, safety, and balance    | 026-027            |
+| Release quality and deployment       | 028-029            |

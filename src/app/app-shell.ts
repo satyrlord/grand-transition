@@ -1,6 +1,10 @@
 import { LitElement, html } from 'lit';
 import './screens/match-screen';
-import './screens/interruption-screen';
+import {
+  type AutoCompleteChangeEvent,
+  type TurnTimerChangeEvent,
+  type TurnTimerSeconds,
+} from './screens/interruption-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
 import { basicScoringBalance } from '../content/basic-scoring-balance';
@@ -122,6 +126,8 @@ export class GrandTransitionApp extends LitElement {
     roundReviewSnapshot: { state: true },
     viewportSupported: { state: true },
     manuallyPaused: { state: true },
+    turnTimerSeconds: { state: true },
+    autoComplete: { state: true },
   };
 
   declare private view: ScreenView;
@@ -131,6 +137,8 @@ export class GrandTransitionApp extends LitElement {
   declare private roundReviewSnapshot: MatchScreenSnapshot | null;
   declare private viewportSupported: boolean;
   declare private manuallyPaused: boolean;
+  declare private turnTimerSeconds: TurnTimerSeconds;
+  declare private autoComplete: boolean;
   private readonly screenController = new ScreenController();
 
   constructor() {
@@ -142,6 +150,8 @@ export class GrandTransitionApp extends LitElement {
     this.roundReviewSnapshot = null;
     this.viewportSupported = isSupportedViewport(currentViewport());
     this.manuallyPaused = false;
+    this.turnTimerSeconds = 30;
+    this.autoComplete = true;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -194,11 +204,15 @@ export class GrandTransitionApp extends LitElement {
               ? 'manual'
               : 'running'
         }
+        .turnTimerSeconds=${this.turnTimerSeconds}
+        .autoComplete=${this.autoComplete}
         @match-command=${this.reduceMatchCommand}
         @continue-round=${this.continueRound}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
         @return-to-menu=${this.returnToMenu}
+        @turn-timer-change=${this.changeTurnTimer}
+        @auto-complete-change=${this.changeAutoComplete}
       ></grand-transition-match>`;
     }
 
@@ -246,7 +260,6 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private readonly startMatch = (event: StartMatchEvent): void => {
-    const before = this.matchState;
     const payload = event.detail;
     const scene = sampleContent.scenes.find(
       (candidate) => candidate.id === payload.sceneId,
@@ -268,21 +281,23 @@ export class GrandTransitionApp extends LitElement {
       mode: payload.mode,
       openingPlayerIndex: scene.openingPlayerIndex,
     });
+    const beforeStart = state;
     state = reduceLifecycle(state, 'start-match');
-    const reduced = state;
+    publishAcceptedDevelopmentCommand(
+      createLifecycleCommand('start-match'),
+      beforeStart,
+      state,
+    );
+    const beforePreparation = state;
     state = reduceLifecycle(state, 'prepare-round');
+    publishAcceptedDevelopmentCommand(
+      createLifecycleCommand('prepare-round'),
+      beforePreparation,
+      state,
+    );
     this.matchState = state;
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
-    publishTemporaryClickAudit({
-      kind: 'game-action-result',
-      action: 'start-match',
-      outcome: 'accepted',
-      command: createLifecycleCommand('start-match'),
-      before,
-      reduced,
-      after: state,
-    });
     this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
@@ -294,15 +309,14 @@ export class GrandTransitionApp extends LitElement {
     const before = this.matchState;
     const result = matchReducer(before, event.detail, defaultMatchRandomSource);
     if (!result.ok) {
-      publishTemporaryClickAudit({
-        kind: 'game-action-result',
+      publishDevelopmentGameLog({
+        initialSeed: matchScreenSeed,
         action: event.detail.type,
         actorId: event.detail.actorId ?? null,
         outcome: 'rejected',
         errorCode: result.error.code,
         command: event.detail,
         before,
-        reduced: null,
         after: before,
       });
       throw new Error(
@@ -316,23 +330,20 @@ export class GrandTransitionApp extends LitElement {
       reduced,
       event.detail,
     );
-    const state = advanceAutomaticMatchFlow(reduced);
+    publishAcceptedDevelopmentCommand(event.detail, before, reduced);
+    let state = reduced;
+    if (state.phase === 'resolution') {
+      const beforeResolution = state;
+      const command = createLifecycleCommand('resolve-round');
+      state = reduceLifecycle(state, 'resolve-round');
+      publishAcceptedDevelopmentCommand(command, beforeResolution, state);
+    }
     const reviewResolution = state.resolutionHistory.at(-1) ?? null;
     this.roundReviewSnapshot =
       reduced.phase === 'resolution' && reduced.draft && reviewResolution
         ? createMatchScreenSnapshot(reduced, null, reviewResolution)
         : null;
     this.matchState = state;
-    publishTemporaryClickAudit({
-      kind: 'game-action-result',
-      action: event.detail.type,
-      actorId: event.detail.actorId ?? null,
-      outcome: 'accepted',
-      command: event.detail,
-      before,
-      reduced,
-      after: state,
-    });
     if (state.phase === 'results' && !this.roundReviewSnapshot) {
       this.manuallyPaused = false;
       this.matchArenaReaction = null;
@@ -355,7 +366,9 @@ export class GrandTransitionApp extends LitElement {
       this.view = 'setup';
       return;
     }
+    const command = createLifecycleCommand('prepare-round');
     this.matchState = reduceLifecycle(state, 'prepare-round');
+    publishAcceptedDevelopmentCommand(command, state, this.matchState);
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -379,6 +392,18 @@ export class GrandTransitionApp extends LitElement {
     this.matchState = null;
     this.screenController.showTitle();
     this.view = 'title';
+  };
+
+  private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
+    event.stopPropagation();
+    this.turnTimerSeconds = event.detail;
+  };
+
+  private readonly changeAutoComplete = (
+    event: AutoCompleteChangeEvent,
+  ): void => {
+    event.stopPropagation();
+    this.autoComplete = event.detail;
   };
 
   private readonly syncViewportSupport = (): void => {
@@ -445,14 +470,6 @@ function reduceLifecycle(
   return result.state;
 }
 
-function advanceAutomaticMatchFlow(state: MatchState): MatchState {
-  let advanced = state;
-  if (advanced.phase === 'resolution') {
-    advanced = reduceLifecycle(advanced, 'resolve-round');
-  }
-  return advanced;
-}
-
 function createLifecycleCommand(
   type: MatchLifecycleCommand['type'],
 ): MatchCommand {
@@ -463,21 +480,36 @@ function createLifecycleCommand(
   } as MatchCommand;
 }
 
-function publishTemporaryClickAudit(
+function publishAcceptedDevelopmentCommand(
+  command: MatchCommand,
+  before: MatchState,
+  after: MatchState,
+): void {
+  publishDevelopmentGameLog({
+    initialSeed: matchScreenSeed,
+    action: command.type,
+    actorId: command.actorId ?? null,
+    outcome: 'accepted',
+    command,
+    before,
+    after,
+  });
+}
+
+function publishDevelopmentGameLog(
   detail: Readonly<{
-    kind: 'game-action-result';
+    initialSeed: number;
     action: string;
     actorId?: string | null;
     outcome: 'accepted' | 'rejected';
     errorCode?: string;
     command: MatchCommand | null;
     before: MatchState | null;
-    reduced: MatchState | null;
     after: MatchState;
   }>,
 ): void {
   if (!import.meta.env.DEV) return;
-  window.grandTransitionTemporaryClickAudit?.(detail);
+  window.grandTransitionDevelopmentGameLog?.(detail);
 }
 
 export function createDefaultSetupSnapshot(): SetupSnapshot {

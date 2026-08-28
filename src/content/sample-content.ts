@@ -36,6 +36,21 @@ export function createSampleContent(
         phrasePool: [...scenePhraseIds('transition-era-television-studio')],
         effectIds: ['studio-light-flicker', 'crt-roll'],
       },
+      {
+        id: 'modern-debate-studio',
+        openingPlayerIndex: 0,
+        nameKey: 'scene.modern-debate-studio.name',
+        descriptionKey: 'scene.modern-debate-studio.description',
+        backgroundLayers: [
+          { media: media('modern-debate-studio'), depth: 0 },
+          { media: media('modern-debate-studio-desks'), depth: 1 },
+        ],
+        animationId: 'modern-debate-light-lines',
+        music: media('modern-debate-studio-theme'),
+        ambience: media('modern-debate-studio-room-tone'),
+        phrasePool: [...scenePhraseIds('modern-debate-studio')],
+        effectIds: ['led-light-sweep', 'floor-reflection-pulse'],
+      },
     ],
     locales: [englishGameLocale],
   });

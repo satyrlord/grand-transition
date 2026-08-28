@@ -383,9 +383,6 @@ export function snapshotDraftStateForPlayer(
     state.playerOrder.map((playerId) => {
       const player = state.playerStates[playerId]!;
       const isViewer = playerId === viewerId;
-      const hasPrivateSelection = player.construction.selectedCards.some(
-        (card) => card.source === 'private',
-      );
       return [
         playerId,
         {
@@ -399,10 +396,7 @@ export function snapshotDraftStateForPlayer(
           availableComebackTiers: player.availableComebackTiers,
           construction: {
             status: player.construction.status,
-            previewText:
-              isViewer || !hasPrivateSelection
-                ? player.construction.previewText
-                : null,
+            previewText: player.construction.previewText,
             complete: player.construction.analysis.complete,
             requiredRoles: player.construction.requiredRoles,
             carryIntent: player.construction.carryIntent,

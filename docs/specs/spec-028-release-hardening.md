@@ -82,7 +82,7 @@ runtime-network failure cannot be waived.
 ## Minimum viable product completion contract
 
 The minimum viable product (MVP) has a coherent title-to-match-completion flow. It has
-all 18 characters, 5 distinct scenes, and 3 artificial intelligence (AI)
+all 18 characters, 6 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
 private hotseat play and exact grammar and combat rules. It reviews each exchange
 in the in-arena results modal and has no post-match surface. It also has

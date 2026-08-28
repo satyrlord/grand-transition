@@ -1,4 +1,7 @@
 import { defineConfig } from '@playwright/test';
+import path from 'node:path';
+
+const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 
 export default defineConfig({
   testDir: './e2e',
@@ -24,6 +27,9 @@ export default defineConfig({
     {
       command: 'npm run dev -- --host 127.0.0.1 --port 5174 --strictPort',
       url: 'http://127.0.0.1:5174/grand-transition/',
+      env: {
+        GRAND_TRANSITION_LOG_DIR: developmentGameLogDirectory,
+      },
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },

@@ -27,7 +27,11 @@ adapter and show a non-blocking notice that changes will not persist.
 | Speech enabled   | Boolean                 | false   |
 | Speech voice URI | String or null          | null    |
 | Speech rate      | 0.5 through 2, step 0.1 | 1       |
+| Turn timer       | 15, 30, or null         | 30      |
+| Auto-complete    | Boolean                 | true    |
 | Privacy          | Boolean                 | true    |
+
+`null` is the stored Turn timer value for Unlimited.
 
 Settings are one strict document with `schemaVersion: 1`. The product stores no
 tutorial, onboarding, hint, or guided-progress state.

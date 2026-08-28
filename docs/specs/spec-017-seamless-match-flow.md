@@ -31,9 +31,11 @@ action, return action, sharing action, leaderboard action, or post-match cue.
 Do not register or ship a resolution-results custom element or its style sheet.
 Do not add a rematch or post-match lifecycle command.
 
-Development-only replay, match-log, and simulation tools from Milestone 014 are
-test and balance infrastructure. Production must not expose them before,
-during, or after a match.
+Development-only replay, match-log, simulation, and automatic text-log tools
+from Milestone 014 are test and balance infrastructure. Production must not
+expose them before, during, or after a match. The development text logger can
+record the terminal state before Continue returns to setup. It adds no DOM node,
+post-match surface, or control.
 
 ## Acceptance criteria
 
