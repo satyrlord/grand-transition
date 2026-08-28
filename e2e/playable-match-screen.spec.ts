@@ -367,6 +367,108 @@ test('the longest desktop match state fits and exposes every required fact', asy
   });
 });
 
+test('the gray waiting bubble reveals its sentence on hover, click, and focus', async ({
+  page,
+}) => {
+  await startMatch(page);
+  const sentence =
+    'Your party belongs in a party museum, and your voters change the channel.';
+  await setWaitingSentence(page, sentence);
+
+  const bubble = page.locator('.player-sentence--waiting');
+  const content = bubble.locator('.waiting-sentence-content');
+  const ellipsis = bubble.locator('.waiting-sentence-ellipsis');
+
+  await expect(bubble).toHaveAttribute('data-has-content', 'true');
+  await expect(content).toBeHidden();
+  await expect(ellipsis).toBeVisible();
+
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.locator('.sentence-preview').hover();
+    const compactBox = await bubble.boundingBox();
+
+    await bubble.hover();
+    await expect(content).toBeVisible();
+    await expect(content).toHaveText(sentence);
+    await expect(ellipsis).toBeHidden();
+    const expandedBox = await bubble.boundingBox();
+    expect(expandedBox!.width).toBeGreaterThan(compactBox!.width);
+    const geometry = await bubble.evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      const sentenceContent = element.querySelector<HTMLElement>(
+        '.waiting-sentence-content',
+      )!;
+      return {
+        bottom: box.bottom,
+        contentHeight: sentenceContent.clientHeight,
+        contentScrollHeight: sentenceContent.scrollHeight,
+        contentScrollWidth: sentenceContent.scrollWidth,
+        contentWidth: sentenceContent.clientWidth,
+        left: box.left,
+        right: box.right,
+        top: box.top,
+      };
+    });
+    expect(geometry.left).toBeGreaterThanOrEqual(0);
+    expect(geometry.top).toBeGreaterThanOrEqual(0);
+    expect(geometry.right).toBeLessThanOrEqual(viewport.width);
+    expect(geometry.bottom).toBeLessThanOrEqual(viewport.height);
+    expect(geometry.contentScrollWidth).toBeLessThanOrEqual(
+      geometry.contentWidth + 1,
+    );
+    expect(geometry.contentScrollHeight).toBeLessThanOrEqual(
+      geometry.contentHeight + 1,
+    );
+
+    await page.locator('.sentence-preview').hover();
+    await expect(content).toBeHidden();
+    await expect(ellipsis).toBeVisible();
+  }
+
+  await bubble.click();
+  await expect(bubble).toHaveAttribute('data-revealed', 'true');
+  await expect(bubble).toHaveAttribute('aria-expanded', 'true');
+  await expect(content).toBeVisible();
+  await page.locator('.sentence-preview').click();
+  await expect(bubble).toHaveAttribute('data-revealed', 'false');
+  await expect(bubble).toHaveAttribute('aria-expanded', 'false');
+  await expect(content).toBeHidden();
+
+  await page.locator('.match-pause').focus();
+  await page.keyboard.press('Tab');
+  await expect(bubble).toBeFocused();
+  await expect(content).toBeVisible();
+  await expect(ellipsis).toBeHidden();
+});
+
+test.describe('touch waiting-bubble disclosure', () => {
+  test.use({ hasTouch: true });
+
+  test('a tap temporarily reveals the waiting sentence', async ({ page }) => {
+    await startMatch(page);
+    const sentence =
+      'Your party belongs in a party museum, and your voters change the channel.';
+    await setWaitingSentence(page, sentence);
+
+    const bubble = page.locator('.player-sentence--waiting');
+    const content = bubble.locator('.waiting-sentence-content');
+    await bubble.tap();
+    await expect(bubble).toHaveAttribute('data-revealed', 'true');
+    await expect(content).toBeVisible();
+    await expect(content).toHaveText(sentence);
+
+    await page.locator('.sentence-preview').tap();
+    await expect(bubble).toHaveAttribute('data-revealed', 'false');
+    await expect(content).toBeHidden();
+  });
+});
+
 test('the selected roster characters load their local portrait assets', async ({
   page,
 }) => {
@@ -1238,6 +1340,32 @@ async function startMatch(page: Page): Promise<void> {
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
   ).toBeVisible();
+}
+
+async function setWaitingSentence(page: Page, sentence: string): Promise<void> {
+  await page
+    .locator('grand-transition-match')
+    .evaluate(async (element, waitingSentence) => {
+      const match = element as HTMLElement & {
+        snapshot: {
+          revision: number;
+          players: readonly {
+            isActive: boolean;
+            sentence: string | null;
+          }[];
+        };
+        updateComplete: Promise<boolean>;
+      };
+      const players = match.snapshot.players.map((player) =>
+        player.isActive ? player : { ...player, sentence: waitingSentence },
+      );
+      match.snapshot = {
+        ...match.snapshot,
+        revision: match.snapshot.revision + 1,
+        players,
+      };
+      await match.updateComplete;
+    }, sentence);
 }
 
 async function portraitAlphaFacts(portraits: Locator): Promise<

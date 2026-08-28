@@ -77,8 +77,9 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
   heavy blue and burgundy curtains, faux-marble columns, patterned carpet,
-  lighting trusses, two tall standing desks, desk microphones, harsh lamps, and
-  one fixed blonde fictional moderator at a physical wood-and-brass desk on a
+  lighting trusses, two tall standing desks, one desk microphone and one plain
+  unbranded water bottle on each desk, harsh lamps, and one fixed blonde
+  fictional moderator at a physical wood-and-brass desk on a
   raised inner-left platform. Exactly four full-height columns frame the studio.
   The playable characters remain separate portrait layers. Its phrase themes
   are transition, public television, revolution, archive, emergency broadcast,

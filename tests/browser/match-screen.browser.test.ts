@@ -166,6 +166,47 @@ test('shows an appended comeback line in the speaker bubble', async () => {
   expect(bubble?.getAttribute('aria-label')).toContain('comeback');
 });
 
+test('exposes the waiting sentence to pointer and keyboard presentation', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const waitingIndex = snapshot.players.findIndex((player) => !player.isActive);
+  const waiting = snapshot.players[waitingIndex]!;
+  const sentence =
+    'Your party belongs in a party museum, and your voters change the channel.';
+  const players = [...snapshot.players] as [
+    (typeof snapshot.players)[number],
+    (typeof snapshot.players)[number],
+  ];
+  players[waitingIndex] = {
+    ...waiting,
+    sentence,
+  };
+  match.snapshot = { ...snapshot, revision: snapshot.revision + 1, players };
+  await match.updateComplete;
+
+  const bubble = match.querySelector<HTMLElement>('.player-sentence--waiting')!;
+  expect(bubble.tagName).toBe('BUTTON');
+  expect(bubble.tabIndex).toBe(0);
+  expect(bubble.getAttribute('aria-expanded')).toBe('false');
+  expect(bubble.ariaLabel).toContain(sentence);
+  expect(
+    bubble.querySelector('.waiting-sentence-ellipsis')?.textContent?.trim(),
+  ).toBe('…');
+  expect(
+    bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
+  ).toBe(sentence);
+
+  bubble.click();
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('true');
+  expect(bubble.dataset.revealed).toBe('true');
+
+  match.querySelector<HTMLElement>('.sentence-preview')!.click();
+  await match.updateComplete;
+  expect(bubble.getAttribute('aria-expanded')).toBe('false');
+  expect(bubble.dataset.revealed).toBe('false');
+});
+
 test('keeps the current sentence visible for an empty legal preview', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
