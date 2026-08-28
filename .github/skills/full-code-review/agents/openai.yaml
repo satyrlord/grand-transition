@@ -1,6 +1,6 @@
 interface:
-  display_name: "Full Code Review"
-  short_description: "Review code against product contracts"
-  default_prompt: "Use $full-code-review to review this Grand Transition change set without edits."
+  display_name: 'Full Code Review'
+  short_description: 'Review code against product contracts'
+  default_prompt: 'Use $full-code-review to review this Grand Transition change set without edits.'
 policy:
   allow_implicit_invocation: true

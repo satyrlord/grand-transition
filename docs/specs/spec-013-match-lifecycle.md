@@ -48,7 +48,7 @@ created only from setup.
 
 ## Acceptance criteria
 
-- **AC-013-01:** Setup produces 100 Pride, zero charge, and a 15-second pick.
+- **AC-013-01:** Setup produces 100 Pride, zero charge, and a 30-second pick.
 - **AC-013-02:** Grammar self-damage is immediate and does not charge comeback.
 - **AC-013-03:** Both locked insults resolve before knockout selection.
 - **AC-013-04:** Double knockout restores the exact cliffhanger state.

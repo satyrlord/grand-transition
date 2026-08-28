@@ -1,6 +1,6 @@
 ---
 name: 'Grand Transition: A Verbal Republic'
-description: 'A political word duel staged as one late-1990s civic broadcast arena.'
+description: 'A political word duel staged as one late-2000s municipal broadcast arena.'
 colors:
   municipal-blue: '#062840'
   deep-municipal-blue: '#041d2e'
@@ -110,7 +110,7 @@ components:
 
 <!-- markdownlint-enable MD036 -->
 
-Grand Transition is a late-1990s fictional civic broadcast arena. Painted
+Grand Transition is a late-2000s fictional municipal broadcast arena. Painted
 political theatre meets navy fascia, aged brass, oxide red, television blue,
 warm paper, and compact control-room signals. The complete match reads as one
 confrontation. Characters, sentence construction, speech, status, and actions
@@ -139,11 +139,22 @@ metaphor.
 
 ### First viewport
 
-At the recommended 1920 by 1080 viewport, a character-free public chamber fills
-the canvas. Two transparent human editorial caricatures face each other from
-the left and right thirds. The default pair is the composed Red-Folded Chairman
-with his red folder and the emphatic Thunder Tribune with his speech papers.
-The lean Black Sea Captain can replace either one and keeps his ship-wheel prop.
+At the recommended 1920 by 1080 viewport, a municipal television studio and one
+fixed blonde fictional moderator fill the deep field. Two transparent human
+editorial caricatures face each other from the left and right thirds. The
+default pair is the composed Red-Folded Chairman with his red folder and the
+emphatic Thunder Tribune with his speech papers. The lean Black Sea Captain can
+replace either one in a warm-cream naval officer uniform and cap while holding
+one unbranded cigar. One transparent foreground plate puts tall standing desks
+in front of both selected portraits.
+
+The implemented Thunder Tribune portrait keeps its full-body pose, raised hand,
+papers, and expression. Its head-and-hair silhouette is 90 percent of the
+initial extended portrait size.
+
+The fixed blonde fictional moderator stands at a physical wood-and-brass desk
+on a raised inner-left platform. The four-column composition keeps her face
+clear of the drafting speech record and phrase tower.
 
 Opposing names and Pride meters frame the top corners. Round, timer, and Pause
 state sit at the top center. A wide speech record crosses the middle without
@@ -198,8 +209,10 @@ in this record remains valid if those temporary files are removed.
 
 **Key Characteristics:**
 
-- One late-1990s fictional civic broadcast arena, not a stage over a dashboard.
-- Three original, unmistakably human editorial caricatures with clear faces.
+- One late-2000s fictional municipal broadcast arena, not a stage over a
+  dashboard.
+- Three swappable human player caricatures and one fixed fictional human
+  moderator, all with clear faces.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
 - Wide speech, central sentence construction, top-edge meters, and perimeter
@@ -214,6 +227,10 @@ Language (HTML) content owns game truth and interaction.
 or titles are metaphorical political labels only. Do not use animal or hybrid
 anatomy in portraits, tokens, poses, states, scene art, or future roster
 content.
+
+**The Adult Scale Rule.** Default characters and scene figures use normal adult
+height and body proportions. Use reduced stature only when an approved
+character contract explicitly requires it.
 
 ## Colors
 
@@ -339,18 +356,20 @@ readable between the two opponents.
 
 ## Elevation & Depth
 
-The match uses controlled stage depth. The generated character-free chamber
-forms the deep field. Transparent portraits occupy the opponent planes. Speech
-and the sentence tower occupy the tactical plane. Top and perimeter controls
-sit on the broadcast frame. Low-contrast masks protect text without turning the
-scene into stacked panels. Short dark shadows lift signs, phrase records,
-actions, and the comeback dialog. Inset brass and navy rules make the arena
-feel built, not glassy.
+The match uses controlled stage depth. The generated municipal studio and its
+fixed fictional moderator form the deep field. Transparent portraits occupy
+the opponent planes. A transparent plate puts the two tall standing desks in
+front of those portraits. Speech and the sentence tower occupy the tactical
+plane. Top and perimeter controls sit on the broadcast frame. Low-contrast
+masks protect text without turning the scene into stacked panels. Short dark
+shadows lift signs, phrase records, actions, and the comeback dialog. Inset
+brass and navy rules make the arena feel built, not glassy.
 
-The match uses five generated raster sources: one character-free television
-studio, three transparent character portraits, and one low-contrast aged-paper
-texture. All assets retain embedded prompt provenance. Required text and
-controls remain outside the raster art.
+The match uses six generated raster sources: one television-studio background
+with a fixed fictional moderator, one transparent foreground desk plate, three
+transparent character portraits, and one low-contrast aged-paper texture. All
+assets retain embedded prompt provenance. Required text and controls remain
+outside the raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
 to separate live broadcast regions. Do not use translucent glass panels or
@@ -381,9 +400,17 @@ fonts as permanent brand rules.
 
 ### Broadcast stage and status plaques
 
-The decorative full-viewport image is a character-free late-1990s civic arena.
+A decorative full-viewport back image shows a late-2000s municipal studio and
+one fixed blonde fictional moderator at a physical desk on a raised inner-left
+platform. Exactly four full-height faux-marble columns frame the studio. The
+back image contains no playable character.
 Separate transparent portraits render the two selected characters over it and
-can exchange sides or mirror without changing the scene. The three implemented
+can exchange sides or mirror without changing the scene. A transparent desk
+plate renders over the portraits and clips their lower bodies behind two tall
+standing desks. The desk fronts continue below the lower stage frame. Do not
+show their extracted bottom contours or any portrait's lower raster contour.
+The portrait art continues below the desk occlusion to the lower stage edge.
+Do not let desk mass exceed the lower third of the stage. The three implemented
 portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
 a single-line character name, visible Pride label, and Pride meter and remain
@@ -424,7 +451,8 @@ reasons, or add tutorial progress.
 The active player owns one wide white current-sentence bubble that points to
 that side. The waiting character owns one compact gray ellipsis bubble. Do not
 show two equal speech records. End and Comeback use compact Poiret One
-perimeter plates that stay clear of faces, hands, and required props. Reshuffle
+perimeter plates anchored to the active side's board margin: left for red and
+right for blue. They stay clear of faces, hands, and required props. Reshuffle
 is an icon-only compact inline-SVG control next to the private phrases and has
 an accessible name without visible explanation copy. Oxblood identifies
 delivery. Television blue identifies Reshuffle and Comeback. Disabled controls

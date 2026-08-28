@@ -1,6 +1,6 @@
 interface:
-  display_name: "Add Feature"
-  short_description: "Implement an approved product change"
-  default_prompt: "Use $add-feature to implement the approved Grand Transition behavior and its evidence."
+  display_name: 'Add Feature'
+  short_description: 'Implement an approved product change'
+  default_prompt: 'Use $add-feature to implement the approved Grand Transition behavior and its evidence.'
 policy:
   allow_implicit_invocation: true

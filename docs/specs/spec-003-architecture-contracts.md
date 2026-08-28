@@ -57,6 +57,19 @@ The pure-boundary checker scans `src/engine`, `src/ai`, `src/content`, and
 APIs in those roots. Test fixtures can contain those names only when they prove
 that the checker rejects them.
 
+The checker also enforces these dependency directions:
+
+- Engine can import engine, content, and localization modules. The
+  development-only `src/engine/simulation.ts` integration owner can also import
+  persistence codecs to produce replay and match-log evidence.
+- AI can import AI, engine, content, and localization modules.
+- Content can import content and localization modules.
+- Persistence codecs can import codecs, `StoragePort`, engine, content, and
+  localization modules.
+
+No pure module can import application, component, audio-adapter, browser
+storage-adapter, asset, style, main-entry, tool, or test code.
+
 ## Acceptance criteria
 
 - **AC-003-01:** Compile-time tests reject mutation of every top-level state
@@ -66,13 +79,16 @@ that the checker rejects them.
   source, and appends the accepted command once.
 - **AC-003-03:** A rejected command returns its stable code and facts and leaves
   state, seed, and history unchanged.
-- **AC-003-04:** Boundary fixtures prove one rejection for a Lit import and one
-  rejection for each owned browser API class. The normal pure roots pass.
+- **AC-003-04:** Boundary fixtures prove one rejection for a Lit import, one
+  rejection for each owned browser API class, and one rejected dependency from
+  a pure module to application code. Fixtures prove each allowed dependency
+  direction. The normal pure roots pass.
 - **AC-003-05:** Storage and speech fake ports can replace browser adapters
   without importing Lit or DOM types into pure modules.
 
 ## Verify and stop
 
 Contract tests prove immutable input and typed success or failure. Boundary
-tests reject Lit and DOM imports from pure modules. `npm run ci` passes. Stop
-before concrete rules, adapters, content, or components.
+tests reject Lit, DOM, and forbidden dependency directions from pure modules.
+`npm run ci` passes. Stop before concrete rules, adapters, content, or
+components.

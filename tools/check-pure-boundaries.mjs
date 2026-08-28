@@ -1,13 +1,60 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createScanner, SyntaxKind } from 'typescript/unstable/ast';
 
-const pureRoots = [
-  path.join('src', 'engine'),
-  path.join('src', 'ai'),
-  path.join('src', 'content'),
-  path.join('src', 'persistence', 'codecs'),
+const pureRootPolicies = [
+  {
+    root: path.join('src', 'engine'),
+    allowedDependencies: [
+      directoryDependency('src', 'engine'),
+      directoryDependency('src', 'content'),
+      directoryDependency('src', 'localization'),
+    ],
+    moduleOverrides: [
+      {
+        source: path.join('src', 'engine', 'simulation.ts'),
+        allowedDependencies: [
+          directoryDependency('src', 'persistence', 'codecs'),
+        ],
+      },
+    ],
+  },
+  {
+    root: path.join('src', 'ai'),
+    allowedDependencies: [
+      directoryDependency('src', 'ai'),
+      directoryDependency('src', 'engine'),
+      directoryDependency('src', 'content'),
+      directoryDependency('src', 'localization'),
+    ],
+  },
+  {
+    root: path.join('src', 'content'),
+    allowedDependencies: [
+      directoryDependency('src', 'content'),
+      directoryDependency('src', 'localization'),
+    ],
+  },
+  {
+    root: path.join('src', 'persistence', 'codecs'),
+    allowedDependencies: [
+      directoryDependency('src', 'persistence', 'codecs'),
+      moduleDependency('src', 'persistence', 'storage-port'),
+      directoryDependency('src', 'engine'),
+      directoryDependency('src', 'content'),
+      directoryDependency('src', 'localization'),
+    ],
+  },
 ];
+
+function directoryDependency(...segments) {
+  return { kind: 'directory', path: path.join(...segments) };
+}
+
+function moduleDependency(...segments) {
+  return { kind: 'module', path: path.join(...segments) };
+}
 
 const domNames = new Set([
   'CanvasGradient',
@@ -71,51 +118,6 @@ function isLitSpecifier(specifier) {
     specifier.startsWith('lit/') ||
     specifier.startsWith('@lit/')
   );
-}
-
-function stripComments(sourceText) {
-  let result = '';
-  let state = 'code';
-  let quote = '';
-  for (let index = 0; index < sourceText.length; index += 1) {
-    const character = sourceText[index];
-    const nextCharacter = sourceText[index + 1];
-
-    if (state === 'code' && character === '/' && nextCharacter === '/') {
-      state = 'line-comment';
-      result += '  ';
-      index += 1;
-    } else if (state === 'code' && character === '/' && nextCharacter === '*') {
-      state = 'block-comment';
-      result += '  ';
-      index += 1;
-    } else if (state === 'code' && ['"', "'", '`'].includes(character)) {
-      state = 'string';
-      quote = character;
-      result += character;
-    } else if (state === 'line-comment' && character === '\n') {
-      state = 'code';
-      result += '\n';
-    } else if (
-      state === 'block-comment' &&
-      character === '*' &&
-      nextCharacter === '/'
-    ) {
-      state = 'code';
-      result += '  ';
-      index += 1;
-    } else if (state === 'string' && character === '\\') {
-      result += character + nextCharacter;
-      index += 1;
-    } else if (state === 'string' && character === quote) {
-      state = 'code';
-      result += character;
-    } else {
-      result +=
-        state === 'line-comment' || state === 'block-comment' ? ' ' : character;
-    }
-  }
-  return result;
 }
 
 function maskCommentsAndStrings(sourceText) {
@@ -205,18 +207,101 @@ function maskCommentsAndStrings(sourceText) {
   return result;
 }
 
-function inspectSource(sourceText, relativePath) {
+function staticModuleSpecifiers(sourceText) {
+  const scanner = createScanner(true, undefined, sourceText);
+  const tokens = [];
+  for (
+    let kind = scanner.scan();
+    kind !== SyntaxKind.EndOfFile;
+    kind = scanner.scan()
+  ) {
+    tokens.push({
+      kind,
+      text: scanner.getTokenText(),
+      value: scanner.getTokenValue(),
+    });
+  }
+  const specifiers = [];
+  const addStringToken = (token) => {
+    if (
+      token?.kind === SyntaxKind.StringLiteral ||
+      token?.kind === SyntaxKind.NoSubstitutionTemplateLiteral
+    ) {
+      specifiers.push(token.value);
+      return true;
+    }
+    return false;
+  };
+
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    const next = tokens[index + 1];
+    if (token.kind === SyntaxKind.ImportKeyword) {
+      if (addStringToken(next)) continue;
+      if (next?.kind === SyntaxKind.OpenParenToken) {
+        addStringToken(tokens[index + 2]);
+        continue;
+      }
+      for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
+        const candidate = tokens[cursor];
+        if (
+          candidate.kind === SyntaxKind.EqualsToken ||
+          candidate.kind === SyntaxKind.SemicolonToken
+        ) {
+          break;
+        }
+        if (candidate.kind === SyntaxKind.FromKeyword) {
+          addStringToken(tokens[cursor + 1]);
+          break;
+        }
+      }
+    } else if (token.kind === SyntaxKind.ExportKeyword) {
+      for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
+        const candidate = tokens[cursor];
+        if (
+          candidate.kind === SyntaxKind.EqualsToken ||
+          candidate.kind === SyntaxKind.SemicolonToken
+        ) {
+          break;
+        }
+        if (candidate.kind === SyntaxKind.FromKeyword) {
+          addStringToken(tokens[cursor + 1]);
+          break;
+        }
+      }
+    } else if (
+      token.text === 'require' &&
+      next?.kind === SyntaxKind.OpenParenToken
+    ) {
+      addStringToken(tokens[index + 2]);
+    }
+  }
+  return specifiers;
+}
+
+function inspectSource(
+  sourceText,
+  relativePath,
+  filePath,
+  rootDirectory,
+  policy,
+) {
   const failures = [];
   if (/^\s*\/\/\/\s*<reference\s+lib=["']dom["']/mu.test(sourceText)) {
     failures.push(`${relativePath}: DOM library reference`);
   }
 
-  const modulePattern =
-    /\b(?:from\s*|import\s*(?:\(\s*)?|require\s*\(\s*)["']([^"']+)["']/gu;
-  for (const match of stripComments(sourceText).matchAll(modulePattern)) {
-    const specifier = match[1];
+  for (const specifier of staticModuleSpecifiers(sourceText)) {
     if (isLitSpecifier(specifier)) {
       failures.push(`${relativePath}: forbidden Lit import "${specifier}"`);
+    }
+    if (
+      specifier.startsWith('.') &&
+      !dependencyIsAllowed(specifier, filePath, rootDirectory, policy)
+    ) {
+      failures.push(
+        `${relativePath}: forbidden dependency "${specifier}" from "${policy.root}"`,
+      );
     }
   }
 
@@ -232,12 +317,37 @@ function inspectSource(sourceText, relativePath) {
   return failures;
 }
 
+function dependencyIsAllowed(specifier, filePath, rootDirectory, policy) {
+  const dependencyPath = path.resolve(path.dirname(filePath), specifier);
+  const relativeFilePath = path.relative(rootDirectory, filePath);
+  const moduleOverride = policy.moduleOverrides?.find(
+    (override) => override.source === relativeFilePath,
+  );
+  const allowedDependencies = [
+    ...policy.allowedDependencies,
+    ...(moduleOverride?.allowedDependencies ?? []),
+  ];
+  return allowedDependencies.some((allowed) => {
+    const allowedPath = path.resolve(rootDirectory, allowed.path);
+    if (allowed.kind === 'module') return dependencyPath === allowedPath;
+    return pathIsInside(dependencyPath, allowedPath);
+  });
+}
+
+function pathIsInside(candidatePath, directoryPath) {
+  const relativePath = path.relative(directoryPath, candidatePath);
+  return (
+    relativePath === '' ||
+    (!relativePath.startsWith('..') && !path.isAbsolute(relativePath))
+  );
+}
+
 export async function checkPureBoundaries(rootDirectory = process.cwd()) {
   const failures = [];
   let checkedFiles = 0;
 
-  for (const relativeRoot of pureRoots) {
-    const absoluteRoot = path.resolve(rootDirectory, relativeRoot);
+  for (const policy of pureRootPolicies) {
+    const absoluteRoot = path.resolve(rootDirectory, policy.root);
     if (!(await pathIsDirectory(absoluteRoot))) {
       continue;
     }
@@ -245,7 +355,15 @@ export async function checkPureBoundaries(rootDirectory = process.cwd()) {
       checkedFiles += 1;
       const sourceText = await readFile(filePath, 'utf8');
       const relativePath = path.relative(rootDirectory, filePath);
-      failures.push(...inspectSource(sourceText, relativePath));
+      failures.push(
+        ...inspectSource(
+          sourceText,
+          relativePath,
+          filePath,
+          rootDirectory,
+          policy,
+        ),
+      );
     }
   }
 

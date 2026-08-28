@@ -1,0 +1,6 @@
+interface:
+  display_name: 'Repair Scene Composition'
+  short_description: 'Repair scene scale, layers, and proportions'
+  default_prompt: 'Use $repair-scene-composition to diagnose and repair this Grand Transition scene, including full asset regeneration when necessary.'
+policy:
+  allow_implicit_invocation: true

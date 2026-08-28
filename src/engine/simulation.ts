@@ -117,7 +117,7 @@ export function createSimulationSetup(
     players: [players[0]!, players[1]!],
     sceneId,
     aiDifficulty: 'simulation-policy',
-    timerSeconds: 15,
+    timerSeconds: 30,
     speechEnabled: false,
     privacyEnabled: true,
   };

@@ -98,6 +98,7 @@ describe('pure-module boundaries', () => {
         path.join(engineRoot, 'valid.ts'),
         [
           "export const note = 'window document fetch stay inside strings';",
+          'export const moduleNote = \'from "../app/view-state"\';',
           '// localStorage and navigator in comments are fine too',
           'export const value = 1;',
         ].join('\n') + '\n',
@@ -116,6 +117,123 @@ describe('pure-module boundaries', () => {
       }
 
       expect(failure).toBeUndefined();
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  });
+
+  test('rejects dependencies from pure modules into application code', async () => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
+    );
+    try {
+      const engineRoot = path.join(fixtureRoot, 'src', 'engine');
+      await mkdir(engineRoot, { recursive: true });
+      await writeFile(
+        path.join(engineRoot, 'invalid.ts'),
+        "import type { ViewState } from '../app/view-state';\nexport type Invalid = ViewState;\n",
+        'utf8',
+      );
+
+      let failure: CommandError | undefined;
+      try {
+        await execFileAsync(process.execPath, [
+          checkerPath,
+          '--root',
+          fixtureRoot,
+        ]);
+      } catch (error) {
+        failure = error as CommandError;
+      }
+
+      expect(failure).toBeDefined();
+      expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toContain(
+        'forbidden dependency "../app/view-state"',
+      );
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  });
+
+  test('rejects a template-literal dependency into application code', async () => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
+    );
+    try {
+      const engineRoot = path.join(fixtureRoot, 'src', 'engine');
+      await mkdir(engineRoot, { recursive: true });
+      await writeFile(
+        path.join(engineRoot, 'invalid.ts'),
+        'export const loadView = () => import(`../app/view-state`);\n',
+        'utf8',
+      );
+
+      let failure: CommandError | undefined;
+      try {
+        await execFileAsync(process.execPath, [
+          checkerPath,
+          '--root',
+          fixtureRoot,
+        ]);
+      } catch (error) {
+        failure = error as CommandError;
+      }
+
+      expect(failure).toBeDefined();
+      expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toContain(
+        'forbidden dependency "../app/view-state"',
+      );
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  });
+
+  test('accepts the approved pure dependency directions', async () => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
+    );
+    try {
+      const files = new Map([
+        [
+          path.join('src', 'engine', 'valid.ts'),
+          "import type { Content } from '../content/valid';\nexport type EngineValue = Content;\n",
+        ],
+        [
+          path.join('src', 'ai', 'valid.ts'),
+          "import type { EngineValue } from '../engine/valid';\nexport type AiValue = EngineValue;\n",
+        ],
+        [
+          path.join('src', 'content', 'valid.ts'),
+          "import type { LocaleValue } from '../localization/valid';\nexport type Content = LocaleValue;\n",
+        ],
+        [
+          path.join('src', 'localization', 'valid.ts'),
+          'export type LocaleValue = string;\n',
+        ],
+        [
+          path.join('src', 'persistence', 'storage-port.ts'),
+          'export interface StoragePort {}\n',
+        ],
+        [
+          path.join('src', 'persistence', 'codecs', 'valid.ts'),
+          "import type { StoragePort } from '../storage-port';\nexport type CodecPort = StoragePort;\n",
+        ],
+      ]);
+      for (const [relativePath, source] of files) {
+        const filePath = path.join(fixtureRoot, relativePath);
+        await mkdir(path.dirname(filePath), { recursive: true });
+        await writeFile(filePath, source, 'utf8');
+      }
+
+      const result = await execFileAsync(process.execPath, [
+        checkerPath,
+        '--root',
+        fixtureRoot,
+      ]);
+
+      expect(result.stdout).toContain(
+        'Pure-module boundary check passed: checked 4 file(s).',
+      );
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }

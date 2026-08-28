@@ -16,9 +16,12 @@ import {
   type MatchState,
 } from '../engine/match-lifecycle';
 import {
-  type ContinueRoundEvent,
   createMatchScreenSnapshot,
   type MatchArenaReaction,
+  type MatchScreenSnapshot,
+} from './match-screen-snapshot';
+import {
+  type ContinueRoundEvent,
   type MatchCommandEvent,
 } from './screens/match-screen';
 import {
@@ -125,9 +128,7 @@ export class GrandTransitionApp extends LitElement {
   declare private setupSnapshot: SetupSnapshot;
   declare private matchState: MatchState | null;
   declare private matchArenaReaction: MatchArenaReaction | null;
-  declare private roundReviewSnapshot: ReturnType<
-    typeof createMatchScreenSnapshot
-  > | null;
+  declare private roundReviewSnapshot: MatchScreenSnapshot | null;
   declare private viewportSupported: boolean;
   declare private manuallyPaused: boolean;
   private readonly screenController = new ScreenController();
@@ -197,6 +198,7 @@ export class GrandTransitionApp extends LitElement {
         @continue-round=${this.continueRound}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
+        @return-to-menu=${this.returnToMenu}
       ></grand-transition-match>`;
     }
 
@@ -366,6 +368,17 @@ export class GrandTransitionApp extends LitElement {
     if (this.viewportSupported) {
       this.manuallyPaused = false;
     }
+  };
+
+  private readonly returnToMenu = (event: Event): void => {
+    event.stopPropagation();
+    if (this.view !== 'match' || !this.manuallyPaused) return;
+    this.manuallyPaused = false;
+    this.matchArenaReaction = null;
+    this.roundReviewSnapshot = null;
+    this.matchState = null;
+    this.screenController.showTitle();
+    this.view = 'title';
   };
 
   private readonly syncViewportSupport = (): void => {

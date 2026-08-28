@@ -63,7 +63,7 @@ function request(charge = 0): DraftRoundPreparationRequest {
         comebackCharge: 0,
       },
     ],
-    timerSeconds: 15,
+    timerSeconds: 30,
   };
 }
 
@@ -325,7 +325,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(state.reservedPhraseIds).toEqual(roundPhraseIds);
     expect(repeated.reservedPhraseIds).toEqual(state.reservedPhraseIds);
     expect(repeated.seed).toBe(state.seed);
-    expect(state.turn.durationSeconds).toBe(15);
+    expect(state.turn.durationSeconds).toBe(30);
 
     const next = prepareDraftRound({
       ...request(),

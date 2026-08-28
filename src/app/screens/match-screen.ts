@@ -7,23 +7,13 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from 'lit';
-import { characterPortraitUrls, sampleContent } from '../../game-content';
-import type { Phrase } from '../../content/schemas';
-import {
-  snapshotDraftStateForPlayer,
-  type ComebackTier,
-  type DraftCardReference,
-} from '../../engine/draft-actions';
-import type { ComboFinisherScore } from '../../engine/combo-finisher-scoring';
-import {
-  englishGrammarAdapter,
-  prepareEnglishGrammarPhrase,
-} from '../../engine/grammar/english-grammar-adapter';
+import type { MatchCommand } from '../../engine/match-lifecycle';
+import { deepFreeze } from '../deep-freeze';
 import type {
-  MatchCommand,
-  MatchResolution,
-  MatchState,
-} from '../../engine/match-lifecycle';
+  MatchCardView,
+  MatchPlayerView,
+  MatchScreenSnapshot,
+} from '../match-screen-snapshot';
 import './interruption-screen';
 
 const elementName = 'grand-transition-match';
@@ -33,278 +23,8 @@ export const continueRoundEventName = 'continue-round';
 
 export type MatchPauseMode = 'manual' | 'running' | 'viewport';
 
-export type MatchArenaReaction = Readonly<{
-  kind: 'grammar-mistake';
-  playerId: string;
-  damage: number;
-  sequence: number;
-}>;
-
-const sceneImageUrls: Readonly<Record<string, string>> = {
-  'transition-era-television-studio': new URL(
-    '../../assets/scenes/transition-era-television-studio.png',
-    import.meta.url,
-  ).href,
-};
-
-type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
-type MatchCardAction = 'select' | null;
-
-export type MatchCardView = Readonly<{
-  slotIndex: number;
-  reference: DraftCardReference | null;
-  phraseId: string | null;
-  text: string;
-  role: Phrase['role'] | null;
-  ownership: 'Private' | 'Shared';
-  state: MatchCardState;
-  stateLabel: string;
-  knownWeaknesses: readonly string[];
-  disabledReason: string | null;
-  action: MatchCardAction;
-  previewText: string;
-}>;
-
-export type MatchPlayerView = Readonly<{
-  playerId: string;
-  characterId: string;
-  characterName: string;
-  portraitUrl: string;
-  pride: number;
-  isActive: boolean;
-  sentence: string | null;
-  comebackLine: string | null;
-  status: 'building' | 'ended';
-}>;
-
-export type MatchScreenSnapshot = Readonly<{
-  revision: number;
-  phase: MatchState['phase'];
-  roundReview: boolean;
-  round: number;
-  sceneName: string;
-  sceneUrl: string;
-  activePlayerId: string;
-  activePlayerName: string;
-  sentenceText: string;
-  sentenceComplete: boolean;
-  sharedCards: readonly MatchCardView[];
-  privateCards: readonly MatchCardView[];
-  players: readonly [MatchPlayerView, MatchPlayerView];
-  timer: Readonly<{
-    sequence: number;
-    durationSeconds: 15;
-  }>;
-  actions: Readonly<{
-    canCommit: boolean;
-    canRedraw: boolean;
-    redrawUsed: boolean;
-    comebackTiers: readonly ComebackTier[];
-  }>;
-  arenaReaction: Readonly<{
-    kind: MatchArenaReaction['kind'];
-    playerId: string;
-    playerName: string;
-    damage: number;
-    sequence: number;
-  }> | null;
-  reaction: Readonly<{
-    round: number | null;
-    outcomeLabel: string;
-    players: Readonly<
-      Record<
-        string,
-        Readonly<{
-          damage: number;
-          comboFactor: number;
-          comboBonusDamage: number;
-          weaknesses: readonly string[];
-        }>
-      >
-    >;
-  }>;
-}>;
-
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
-
-export function createMatchScreenSnapshot(
-  state: MatchState,
-  arenaReaction: MatchArenaReaction | null = null,
-  reviewResolution: MatchResolution | null = null,
-): MatchScreenSnapshot {
-  if (!state.draft) {
-    throw new Error('The match screen needs an active draft snapshot.');
-  }
-
-  const activePlayerId =
-    reviewResolution === null
-      ? state.activePlayerId
-      : ([
-          ...state.playerOrder.filter(
-            (playerId) => reviewResolution.players[playerId]?.comebackActivated,
-          ),
-          state.activePlayerId,
-          ...state.playerOrder,
-        ].find(
-          (playerId) => reviewResolution.players[playerId]?.completeValidInsult,
-        ) ?? state.activePlayerId);
-  const activePlayer = state.draft.playerStates[activePlayerId];
-  if (!activePlayer) {
-    throw new Error(`The active player "${activePlayerId}" is missing.`);
-  }
-  const opponentId = state.playerOrder.find(
-    (playerId) => playerId !== activePlayerId,
-  )!;
-  const opponent = state.draft.playerStates[opponentId]!;
-  const viewerSnapshot = snapshotDraftStateForPlayer(
-    state.draft,
-    activePlayerId,
-  );
-  const phraseById = new Map(
-    sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
-  );
-  const selectedPhraseIds = new Set(
-    Object.values(state.draft.playerStates).flatMap((player) =>
-      player.construction.selectedCards.map((card) => card.phraseId),
-    ),
-  );
-
-  const sharedCards = state.draft.board.slots.map((slot, slotIndex) => {
-    const phrase = phraseById.get(slot.phraseId)!;
-    const reference: DraftCardReference = {
-      source: 'shared',
-      cardId: slot.id,
-    };
-    if (!slot.available) {
-      return emptyCard(
-        slotIndex,
-        'Shared',
-        selectedPhraseIds.has(phrase.id) ? 'selected' : 'empty',
-        phrase,
-      );
-    }
-    return availableCard(
-      state,
-      activePlayerId,
-      phrase,
-      reference,
-      slotIndex,
-      'Shared',
-      opponent.weaknessTags,
-    );
-  });
-
-  const privateSlots = Array.from<MatchCardView | undefined>({ length: 2 });
-  for (const card of activePlayer.hand) {
-    const parsedIndex = Number(card.id.match(/(\d+)$/u)?.[1] ?? 1) - 1;
-    const slotIndex = parsedIndex === 1 ? 1 : 0;
-    const phrase = phraseById.get(card.phraseId)!;
-    const reference: DraftCardReference = {
-      source: 'private',
-      cardId: card.id,
-    };
-    privateSlots[slotIndex] = availableCard(
-      state,
-      activePlayerId,
-      phrase,
-      reference,
-      slotIndex,
-      'Private',
-      opponent.weaknessTags,
-    );
-  }
-  const privateCards = privateSlots.map(
-    (card, slotIndex) => card ?? emptyCard(slotIndex, 'Private', 'empty'),
-  );
-
-  const players = state.playerOrder.map((playerId) => {
-    const player = state.playerStates[playerId]!;
-    const draftPlayer = viewerSnapshot.players[playerId]!;
-    return {
-      playerId,
-      characterId: player.characterId,
-      characterName: characterName(player.characterId),
-      portraitUrl: characterPortraitUrl(player.characterId),
-      pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
-      isActive: playerId === activePlayerId,
-      sentence: draftPlayer.construction.previewText,
-      comebackLine: draftPlayer.construction.comebackClosingLine,
-      status: draftPlayer.construction.status,
-    } satisfies MatchPlayerView;
-  }) as [MatchPlayerView, MatchPlayerView];
-
-  const latestResolution = reviewResolution;
-  const reactionPlayers = Object.fromEntries(
-    state.playerOrder.map((playerId) => {
-      const result = latestResolution?.players[playerId];
-      const combo = comboDamageDetails(result?.score ?? null);
-      const weaknesses = weaknessDamageDetails(result?.score ?? null);
-      return [
-        playerId,
-        {
-          damage: result?.outgoingDamage ?? 0,
-          comboFactor: combo.factor,
-          comboBonusDamage: combo.bonusDamage,
-          weaknesses,
-        },
-      ];
-    }),
-  );
-  const activeName = characterName(activePlayer.characterId);
-  const arenaReactionPlayer = arenaReaction
-    ? state.playerStates[arenaReaction.playerId]
-    : undefined;
-
-  return deepFreeze({
-    revision: state.commandHistory.length,
-    phase: state.phase,
-    roundReview: reviewResolution !== null,
-    round: state.round,
-    sceneName: gameMessage(
-      sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
-    ),
-    sceneUrl: sceneImageUrl(state.sceneId),
-    activePlayerId,
-    activePlayerName: activeName,
-    sentenceText:
-      activePlayer.construction.previewText || msg('Select a noun to begin.'),
-    sentenceComplete: activePlayer.construction.analysis.complete,
-    sharedCards,
-    privateCards,
-    players,
-    timer: {
-      sequence: state.draft.turn.sequence,
-      durationSeconds: state.draft.turn.durationSeconds,
-    },
-    actions: {
-      canCommit:
-        reviewResolution === null &&
-        activePlayer.construction.status === 'building',
-      canRedraw:
-        reviewResolution === null &&
-        activePlayer.construction.status === 'building' &&
-        !activePlayer.redrawUsed,
-      redrawUsed: activePlayer.redrawUsed,
-      comebackTiers:
-        reviewResolution === null ? activePlayer.availableComebackTiers : [],
-    },
-    arenaReaction:
-      reviewResolution === null && arenaReaction && arenaReactionPlayer
-        ? {
-            ...arenaReaction,
-            playerName: characterName(arenaReactionPlayer.characterId),
-          }
-        : null,
-    reaction: {
-      round: latestResolution?.round ?? null,
-      outcomeLabel: latestResolution
-        ? roundOutcomeLabel(state, latestResolution)
-        : msg('The chamber is waiting for its first exchange.'),
-      players: reactionPlayers,
-    },
-  });
-}
 
 export class GrandTransitionMatch extends LitElement {
   static properties = {
@@ -374,11 +94,17 @@ export class GrandTransitionMatch extends LitElement {
     }
     const first = this.snapshot.players[0];
     const second = this.snapshot.players[1];
-    const timerValue = this.remainingSeconds ?? 15;
+    const timerValue = this.remainingSeconds ?? 30;
     const timerLabel = msg(`${timerValue} seconds`);
     const displayedSentence = this.previewText ?? this.snapshot.sentenceText;
     const arenaReaction = this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
+    const backgroundLayers = this.snapshot.sceneLayers.filter(
+      ({ depth }) => depth < 0.5,
+    );
+    const foregroundLayers = this.snapshot.sceneLayers.filter(
+      ({ depth }) => depth >= 0.5,
+    );
     const reactionSide = arenaReaction
       ? first.playerId === arenaReaction.playerId
         ? 'red'
@@ -397,14 +123,20 @@ export class GrandTransitionMatch extends LitElement {
           data-arena-reaction=${arenaReaction?.kind ?? nothing}
           data-reaction-side=${reactionSide ?? nothing}
         >
-          <img
-            class="broadcast-stage-art"
-            src=${this.snapshot.sceneUrl}
-            alt=""
-            width="1672"
-            height="941"
-            draggable="false"
-          />
+          ${backgroundLayers.map(
+            (layer) => html`
+              <img
+                class="broadcast-stage-art"
+                data-scene-asset=${layer.assetId}
+                data-scene-depth=${layer.depth}
+                src=${layer.url}
+                alt=""
+                width="1672"
+                height="941"
+                draggable="false"
+              />
+            `,
+          )}
           <header class="match-status-rail">
             <div class="match-header-controls">
               <button
@@ -442,6 +174,20 @@ export class GrandTransitionMatch extends LitElement {
               second,
               'blue',
               arenaReaction?.playerId === second.playerId,
+            )}
+            ${foregroundLayers.map(
+              (layer) => html`
+                <img
+                  class="broadcast-stage-foreground"
+                  data-scene-asset=${layer.assetId}
+                  data-scene-depth=${layer.depth}
+                  src=${layer.url}
+                  alt=""
+                  width="1672"
+                  height="941"
+                  draggable="false"
+                />
+              `,
             )}
           </section>
 
@@ -606,8 +352,8 @@ export class GrandTransitionMatch extends LitElement {
             class="character-portrait"
             src=${player.portraitUrl}
             alt=""
-            width="1254"
-            height="1254"
+            width="1024"
+            height="1536"
             draggable="false"
           />
         </div>
@@ -945,234 +691,12 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
   return 'regular';
 }
 
-function comboDamageDetails(
-  score: ComboFinisherScore | null,
-): Readonly<{ factor: number; bonusDamage: number }> {
-  if (!score) return { factor: 1, bonusDamage: 0 };
-  let clauseFactor = 1;
-  let factor = 1;
-  let bonusDamage = 0;
-  for (const item of score.breakdown) {
-    if (item.kind === 'clause-base') clauseFactor = 1;
-    if (item.kind === 'combo-multiplier') {
-      clauseFactor = item.factor;
-      factor = Math.max(factor, item.factor);
-    }
-    if (item.kind === 'clause-score' && clauseFactor > 1) {
-      bonusDamage += item.amount - item.amount / clauseFactor;
-      clauseFactor = 1;
-    }
-  }
-  return { factor, bonusDamage: Math.max(0, Math.round(bonusDamage)) };
-}
-
-function weaknessDamageDetails(
-  score: ComboFinisherScore | null,
-): readonly string[] {
-  if (!score) return [];
-  return [
-    ...new Set(
-      score.breakdown.flatMap((item) =>
-        item.kind === 'weakness-match' ? [item.defenderTag] : [],
-      ),
-    ),
-  ];
-}
-
 function titleCase(value: string): string {
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
-function roundOutcomeLabel(
-  state: MatchState,
-  resolution: MatchResolution,
-): string {
-  const [firstId, secondId] = state.playerOrder;
-  const firstDamage = resolution.players[firstId]!.outgoingDamage;
-  const secondDamage = resolution.players[secondId]!.outgoingDamage;
-  if (firstDamage === secondDamage)
-    return msg(`Round ${resolution.round} result: tie`);
-  const winnerId = firstDamage > secondDamage ? firstId : secondId;
-  return msg(
-    `Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
-  );
-}
-
-function availableCard(
-  state: MatchState,
-  activePlayerId: string,
-  phrase: Phrase,
-  reference: DraftCardReference,
-  slotIndex: number,
-  ownership: MatchCardView['ownership'],
-  opponentWeaknessTags: readonly string[],
-): MatchCardView {
-  const construction = state.draft!.playerStates[activePlayerId]!.construction;
-  const knownWeaknesses = weaknessMatches(phrase, opponentWeaknessTags);
-  if (phrase.role === 'continuation') {
-    return createCardView({
-      slotIndex,
-      reference,
-      phrase,
-      ownership,
-      state: 'legal',
-      action: 'select',
-      previewText: msg(
-        `${construction.previewText || 'Empty sentence'} — continue in the next round.`,
-      ),
-      knownWeaknesses,
-      disabledReason: null,
-    });
-  }
-  return createCardView({
-    slotIndex,
-    reference,
-    phrase,
-    ownership,
-    state: 'legal',
-    action: 'select',
-    previewText:
-      legalPreview(state, activePlayerId, phrase) || construction.previewText,
-    knownWeaknesses,
-    disabledReason: null,
-  });
-}
-
-function createCardView(
-  config: Readonly<{
-    slotIndex: number;
-    reference: DraftCardReference;
-    phrase: Phrase;
-    ownership: MatchCardView['ownership'];
-    state: MatchCardState;
-    action: MatchCardAction;
-    previewText: string;
-    knownWeaknesses: readonly string[];
-    disabledReason: string | null;
-  }>,
-): MatchCardView {
-  const text = gameMessage(config.phrase.textKey);
-  const stateLabel = cardStateLabel(config.state);
-  return {
-    slotIndex: config.slotIndex,
-    reference: config.reference,
-    phraseId: config.phrase.id,
-    text,
-    role: config.phrase.role,
-    ownership: config.ownership,
-    state: config.state,
-    stateLabel,
-    knownWeaknesses: config.knownWeaknesses,
-    disabledReason: config.disabledReason,
-    action: config.action,
-    previewText: config.previewText,
-  };
-}
-
-function emptyCard(
-  slotIndex: number,
-  ownership: MatchCardView['ownership'],
-  state: Extract<MatchCardState, 'empty' | 'selected'>,
-  phrase?: Phrase,
-): MatchCardView {
-  const stateLabel = state === 'selected' ? msg('Selected') : msg('Empty');
-  return {
-    slotIndex,
-    reference: null,
-    phraseId: phrase?.id ?? null,
-    text: '',
-    role: phrase?.role ?? null,
-    ownership,
-    state,
-    stateLabel,
-    knownWeaknesses: [],
-    disabledReason: msg('This slot is empty.'),
-    action: null,
-    previewText: '',
-  };
-}
-
-function legalPreview(
-  state: MatchState,
-  activePlayerId: string,
-  phrase: Phrase,
-): string {
-  const player = state.draft!.playerStates[activePlayerId]!;
-  const result = englishGrammarAdapter.analyze({
-    steps: [
-      ...player.construction.steps,
-      {
-        kind: 'phrase',
-        phrase: prepareEnglishGrammarPhrase(phrase, sampleContent.locales[0]!),
-      },
-    ],
-    subjectNumber: player.subjectNumber,
-    objectNumber: player.objectNumber,
-  });
-  return result.accepted
-    ? result.analysis.publicText
-    : player.construction.previewText;
-}
-
-function weaknessMatches(
-  phrase: Phrase,
-  weaknessTags: readonly string[],
-): readonly string[] {
-  return weaknessTags.filter((tag) => phrase.tags.includes(tag));
-}
-
-function cardStateLabel(state: MatchCardState): string {
-  switch (state) {
-    case 'legal':
-      return msg('Available');
-    case 'selected':
-      return msg('Selected');
-    case 'empty':
-      return msg('Empty');
-    case 'disabled':
-      return msg('Disabled');
-  }
-}
-
-function characterName(characterId: string): string {
-  return gameMessage(
-    sampleContent.characters.find((character) => character.id === characterId)
-      ?.nameKey,
-  );
-}
-
 function compactCharacterName(characterName: string): string {
   return characterName.replace(/^The\s+/u, '');
-}
-
-function characterPortraitUrl(characterId: string): string {
-  const portraitUrl = characterPortraitUrls[characterId];
-  if (!portraitUrl) {
-    throw new Error(`Character "${characterId}" has no match portrait.`);
-  }
-  return portraitUrl;
-}
-
-function sceneImageUrl(sceneId: string): string {
-  const sceneUrl = sceneImageUrls[sceneId];
-  if (!sceneUrl) {
-    throw new Error(`Scene "${sceneId}" has no match background.`);
-  }
-  return sceneUrl;
-}
-
-function gameMessage(key: string | undefined): string {
-  return key ? (sampleContent.locales[0]?.messages[key] ?? key) : '';
-}
-
-function deepFreeze<Value>(value: Value): Value {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    for (const nested of Object.values(value as Record<string, unknown>)) {
-      deepFreeze(nested);
-    }
-    Object.freeze(value);
-  }
-  return value;
 }
 
 export function registerGrandTransitionMatch(): void {

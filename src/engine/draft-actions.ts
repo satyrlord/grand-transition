@@ -126,7 +126,7 @@ export type DraftBannerFact = Readonly<{
 
 export type DraftTurnFacts = Readonly<{
   sequence: number;
-  durationSeconds: 15;
+  durationSeconds: 30;
   activePlayerId: string | null;
 }>;
 
@@ -190,7 +190,7 @@ export type DraftRoundPreparationRequest = Readonly<{
   locale: GameLocaleBundle;
   players: readonly [DraftPlayerSetup, DraftPlayerSetup];
   previousOpeningPlayerId?: string;
-  timerSeconds: 15;
+  timerSeconds: 30;
   commandHistory?: readonly GameCommand[];
   includeContinuation?: boolean;
 }>;

@@ -145,11 +145,11 @@ function finishDraft(
 }
 
 describe('Hollywood Roast match lifecycle', () => {
-  test('starts both players at 100 Pride and uses fixed 15-second turns', () => {
+  test('starts both players at 100 Pride and uses fixed 30-second turns', () => {
     const state = started();
     expect(state.playerStates[playerIds[0]]!.pride).toBe(initialPride);
     expect(state.playerStates[playerIds[1]]!.pride).toBe(initialPride);
-    expect(state.draft!.turn.durationSeconds).toBe(15);
+    expect(state.draft!.turn.durationSeconds).toBe(30);
   });
 
   test('a grammar mistake immediately costs 3 Pride without charging a comeback', () => {

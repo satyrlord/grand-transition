@@ -1,6 +1,6 @@
 interface:
-  display_name: "Refactor"
-  short_description: "Simplify structure without behavior change"
-  default_prompt: "Use $refactor to simplify this Grand Transition scope without changing behavior."
+  display_name: 'Refactor'
+  short_description: 'Simplify structure without behavior change'
+  default_prompt: 'Use $refactor to simplify this Grand Transition scope without changing behavior.'
 policy:
   allow_implicit_invocation: true

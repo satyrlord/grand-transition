@@ -11,7 +11,7 @@ Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Produce original final-quality art for three characters and one
 scene. Add core reactions, ambience, and transitions.
 
-The art combines editorial caricature, painted theatre, late-1990s
+The art combines editorial caricature, painted theatre, late-2000s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
 modern overlays. Use an integrated arena composition. One authored scene fills
 the play field, opponents face each other at the sides, status frames the top,
@@ -33,12 +33,23 @@ must not produce animal anatomy. Character masters and runtime variants reject
 animal heads, ears, muzzles, beaks, feathers, tails, wings, paws, fur, scales,
 and human-animal hybrids.
 
-The pre-pipeline match slice uses a separate character-free rendered scene and
-transparent interim portraits for the Red-Folded Chairman, Thunder Tribune, and
-Black Sea Captain. It must not use a baked raster that fixes two characters
-into one scene. Milestone 023 replaces or promotes these interim files through
-the approved manifest and variant pipeline without changing the
-selected-character contract.
+The pre-pipeline match slice uses a rendered municipal studio with one fixed
+fictional moderator, transparent interim portraits for the Red-Folded Chairman,
+Thunder Tribune, and Black Sea Captain, and one transparent foreground plate
+with two tall standing desks. The back scene must not contain a playable
+character. The desk plate clips the lower portrait bodies without fixing either
+selected character into the scene. Milestone 023 replaces or promotes these
+interim files through the approved manifest and variant pipeline without
+changing the selected-character contract.
+
+Interim portrait planes use a tall two-to-three canvas and continue below the
+foreground desks. Their lower raster edges must not appear in the composite.
+The Black Sea Captain wears a warm-cream naval officer uniform and cap and holds
+one unbranded cigar. He has no wheel or helm prop.
+The Thunder Tribune keeps his full-body pose, raised hand, papers, and
+expression. His head-and-hair silhouette is 90 percent of the initial extended
+portrait size. On the 1024-pixel-wide interim plane, its fixed upper-head region
+has a 207-pixel opaque span.
 
 The redesign must select exactly four self-hosted sans-serif font families. The
 present Barlow Condensed, Cormorant SC, Georgia, and system-monospace
@@ -101,12 +112,46 @@ crop, owner, source, and license. Import through the manifest. Load setup art
 first and only the selected match package next. Use self-hosted licensed Web
 Open Font Format 2 (WOFF2) fonts with metric fallbacks.
 
+Every transparent scene and character asset uses the
+`green-chroma-key-v1` workflow. Its generation intermediate uses a flat
+`#00FF00` matte. Transparent art does not use that key color intentionally.
+The deterministic converter replaces the matte with genuine alpha and embeds
+the workflow identifier and key color in the shipping Portable Network Graphics
+(PNG) file. It samples the matte from border-connected green pixels, classifies
+the matte, foreground, and uncertain contour from green-channel dominance and
+distance from that sample, and uses the sample in the known-matte compositing
+equation. It estimates uncertain coverage from nearby foreground samples and
+reconstructs foreground red, green, and blue values. If the source has a binary
+contour, one three-by-three binomial pass creates a bounded partial-alpha edge
+and copies the nearest foreground color into new edge pixels. The converter records
+`Alpha Source=soft-green-key-v1`,
+`Alpha Matte=green-dominance-neighbor-matte-v1`, and
+`Foreground Reconstruction=known-green-unmix-v1`.
+
+An existing genuine-alpha asset can use the `adopt` path. It records
+`Alpha Source=adopted-alpha-v1` and does not claim soft-key conversion.
+An existing opaque raster can use `provenance <png> --source <origin>` when its
+verified source origin exists and its generation prompt does not. Do not invent
+a source or prompt. Asset validation rejects every PNG that lacks an embedded
+generation prompt or source. Shipping assets contain no chroma-key residue.
+Validation also rejects every alpha-bearing PNG that lacks the workflow, key,
+or alpha-source metadata, has nonzero outer corners, or retains an opaque
+chroma-green pixel. A soft-key conversion also fails when it has no
+partial-alpha pixels or lacks its matte and foreground reconstruction metadata.
+
+`npm run assets:convert-green -- <green-root> <output-root>` converts a complete
+green-master tree. It preserves each Portable Network Graphics file's relative
+path. Each master requires a sibling `<asset-name>.prompt.txt` source record.
+The input and output roots must be different.
+
 ## Asset and motion contract
 
 Scene masters are layered 1920 by 1080 files. Runtime wide scene variants are
 640 by 360, 1280 by 720, and 1920 by 1080. Character masters are transparent,
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 960. Character portrait or token variants are 128 and 256 square pixels.
+Foreground scene plates use the same wide dimensions as their matching back
+scene and preserve transparent outer corners.
 
 Every raster runtime size has AVIF and WebP output. The manifest contains ID,
 owner type and ID, source description, license identifier, SHA-256 source hash,
@@ -147,6 +192,12 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   weights, metric fallbacks, and use rules are recorded, and fallback rendering
   causes no hidden or clipped text. Visual uppercase does not change source,
   accessible, or spoken sentence text.
+- **AC-023-08:** A synthetic near-green matte fixture with known foreground colors
+  converts to transparent background, opaque interior, partial-alpha contour,
+  and reconstructed contour color within the alpha-aware eight-bit Canvas
+  round-trip tolerance. A
+  binary green-matte fixture gains a partial-alpha edge. Asset validation
+  rejects a soft-key output with missing method metadata or no partial alpha.
 
 ## Impeccable UI validation
 

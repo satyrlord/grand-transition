@@ -25,11 +25,13 @@ authoritative state.
 The shell has `title` and `setup` view states. “Set up match” moves from the
 title to setup without changing game state. “Back” returns to title and restores
 setup values. A valid setup submit emits one typed `start-match` command.
-Milestone 016 owns the rendered match destination.
+Milestone 016 owns the rendered match destination. A confirmed “Back to menu”
+action from the concealed Pause screen discards the active match and returns to
+title. It preserves the setup values for a later setup visit.
 
 Setup fields are mode, player-one character, player-two character, and scene.
 Defaults are hotseat, the first two catalog characters, and the first scene.
-Every pick uses the fixed 15-second timer owned by Milestone 009. Mirror
+Every pick uses the fixed 30-second timer owned by Milestone 009. Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 
@@ -47,7 +49,8 @@ hide validation.
 ## Acceptance criteria
 
 - **AC-015-01:** Title and setup follow the two-state graph, browser Back does
-  not create an unsupported URL route, and returning to setup restores values.
+  not create an unsupported URL route, a confirmed paused-match exit returns to
+  title, and returning to setup restores values.
 - **AC-015-02:** Defaults create the exact typed setup
   payload. A mirror match succeeds.
 - **AC-015-03:** Every invalid class produces one visible error, preserves
