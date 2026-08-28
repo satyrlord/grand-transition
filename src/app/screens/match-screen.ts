@@ -15,6 +15,7 @@ import type {
   MatchScreenSnapshot,
 } from '../match-screen-snapshot';
 import './interruption-screen';
+import type { TurnTimerSeconds } from './interruption-screen';
 
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
@@ -30,24 +31,34 @@ export class GrandTransitionMatch extends LitElement {
   static properties = {
     snapshot: { attribute: false },
     pauseMode: { attribute: false },
+    turnTimerSeconds: { attribute: false },
+    autoComplete: { attribute: false },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
   declare pauseMode: MatchPauseMode;
+  declare turnTimerSeconds: TurnTimerSeconds;
+  declare autoComplete: boolean;
   private previewText: string | null;
   private remainingSeconds: number | null;
   private commandPending: boolean;
   private revealedWaitingPlayerId: string | null;
+  private hoveredWaitingPlayerId: string | null;
+  private focusedWaitingPlayerId: string | null;
 
   private timerId: number | undefined;
   private timerSequence = -1;
   constructor() {
     super();
     this.pauseMode = 'running';
+    this.turnTimerSeconds = 30;
+    this.autoComplete = true;
     this.previewText = null;
     this.remainingSeconds = null;
     this.commandPending = false;
     this.revealedWaitingPlayerId = null;
+    this.hoveredWaitingPlayerId = null;
+    this.focusedWaitingPlayerId = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -61,18 +72,46 @@ export class GrandTransitionMatch extends LitElement {
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('snapshot')) {
+      const previousSnapshot = changed.get('snapshot') as
+        MatchScreenSnapshot | undefined;
+      const previousWaitingPlayer = previousSnapshot?.players.find(
+        (player) => !player.isActive,
+      );
+      const currentWaitingPlayer = this.snapshot?.players.find(
+        (player) => !player.isActive,
+      );
       this.previewText = null;
       this.commandPending = false;
       this.revealedWaitingPlayerId = null;
+      if (
+        !currentWaitingPlayer?.sentence?.trim() ||
+        currentWaitingPlayer.playerId !== previousWaitingPlayer?.playerId
+      ) {
+        this.hoveredWaitingPlayerId = null;
+        this.focusedWaitingPlayerId = null;
+      }
       this.syncTimer();
     }
     if (changed.has('pauseMode')) {
       this.revealedWaitingPlayerId = null;
+      this.hoveredWaitingPlayerId = null;
+      this.focusedWaitingPlayerId = null;
       this.syncPauseMode();
+    }
+    if (changed.has('turnTimerSeconds')) {
+      this.syncTurnTimerSetting();
+    }
+    if (changed.has('autoComplete') && !this.autoComplete) {
+      this.previewText = null;
     }
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    const previousPauseMode = changed.get('pauseMode') as
+      MatchPauseMode | undefined;
+    if (previousPauseMode === 'manual' && this.pauseMode === 'running') {
+      this.querySelector<HTMLButtonElement>('.match-pause')?.focus();
+    }
     if (changed.has('snapshot') && this.snapshot?.roundReview) {
       this.querySelector<HTMLButtonElement>('.round-review-continue')?.focus();
       return;
@@ -94,12 +133,18 @@ export class GrandTransitionMatch extends LitElement {
     if (this.pauseMode === 'manual') {
       return html`<grand-transition-interruption
         kind="paused"
+        .turnTimerSeconds=${this.turnTimerSeconds}
+        .autoComplete=${this.autoComplete}
       ></grand-transition-interruption>`;
     }
     const first = this.snapshot.players[0];
     const second = this.snapshot.players[1];
-    const timerValue = this.remainingSeconds ?? 30;
-    const timerLabel = msg(`${timerValue} seconds`);
+    const timerValue = this.remainingSeconds;
+    const timerLabel =
+      timerValue === null
+        ? msg('Unlimited turn timer')
+        : msg(`${timerValue} seconds`);
+    const timerText = timerValue === null ? msg('Unlimited') : timerValue;
     const displayedSentence = this.previewText ?? this.snapshot.sentenceText;
     const arenaReaction = this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
@@ -152,10 +197,17 @@ export class GrandTransitionMatch extends LitElement {
               >
                 ${roundReview ? msg('Paused') : msg('Pause')}
               </button>
-              <dl class="match-facts">
-                <div class="timer-fact" data-timer=${timerValue}>
+              <dl
+                class="match-facts ${
+                  timerValue === null ? 'match-facts--unlimited' : ''
+                }"
+              >
+                <div
+                  class="timer-fact"
+                  data-timer=${timerValue === null ? 'unlimited' : timerValue}
+                >
                   <dt class="visually-hidden">${msg('Timer')}</dt>
-                  <dd aria-label=${timerLabel}>${timerValue}</dd>
+                  <dd aria-label=${timerLabel}>${timerText}</dd>
                 </div>
               </dl>
               <div class="match-turn-heading">
@@ -323,7 +375,11 @@ export class GrandTransitionMatch extends LitElement {
     hasGrammarReaction: boolean,
   ): TemplateResult {
     const activeTurn = player.isActive && !this.snapshot?.roundReview;
-    const waitingSentence = player.sentence?.trim() ?? '';
+    const hasWaitingSentence = Boolean(player.sentence?.trim());
+    const waitingSentence = player.sentence?.trim() || msg('No sentence yet.');
+    const waitingSentenceRevealed = this.isWaitingSentenceRevealed(
+      player.playerId,
+    );
     return html`
       <article
         class="match-player ${
@@ -373,41 +429,33 @@ export class GrandTransitionMatch extends LitElement {
                 >
                   <span>${player.sentence}</span>
                 </blockquote>`
-              : waitingSentence
-                ? html`<button
-                    type="button"
-                    class="player-sentence player-sentence--waiting"
-                    data-has-content="true"
-                    data-revealed=${
-                      this.revealedWaitingPlayerId === player.playerId
-                        ? 'true'
-                        : 'false'
-                    }
-                    aria-expanded=${
-                      this.revealedWaitingPlayerId === player.playerId
-                    }
-                    aria-label=${msg(
-                      `${player.characterName} said: ${waitingSentence}`,
-                    )}
-                    @click=${(event: MouseEvent) =>
-                      this.toggleWaitingSentence(event, player.playerId)}
+              : html`<button
+                  type="button"
+                  class="player-sentence player-sentence--waiting"
+                  data-has-content="true"
+                  data-revealed=${waitingSentenceRevealed ? 'true' : 'false'}
+                  aria-expanded=${waitingSentenceRevealed}
+                  aria-label=${msg(
+                    hasWaitingSentence
+                      ? `${player.characterName} said: ${waitingSentence}`
+                      : `${player.characterName}: ${waitingSentence}`,
+                  )}
+                  @pointerenter=${() =>
+                    this.setHoveredWaitingSentence(player.playerId)}
+                  @pointerleave=${() => this.setHoveredWaitingSentence(null)}
+                  @focus=${() =>
+                    this.setFocusedWaitingSentence(player.playerId)}
+                  @blur=${() => this.setFocusedWaitingSentence(null)}
+                  @click=${(event: MouseEvent) =>
+                    this.revealWaitingSentence(event, player.playerId)}
+                >
+                  <span class="waiting-sentence-ellipsis" aria-hidden="true"
+                    >…</span
                   >
-                    <span class="waiting-sentence-ellipsis" aria-hidden="true"
-                      >…</span
-                    >
-                    <span class="waiting-sentence-content"
-                      >${waitingSentence}</span
-                    >
-                  </button>`
-                : html`<blockquote
-                    class="player-sentence player-sentence--waiting"
-                    data-has-content="false"
-                    aria-label=${msg(`${player.characterName} is waiting`)}
+                  <span class="waiting-sentence-content"
+                    >${waitingSentence}</span
                   >
-                    <span class="waiting-sentence-ellipsis" aria-hidden="true"
-                      >…</span
-                    >
-                  </blockquote>`
+                </button>`
         }
       </article>
     `;
@@ -575,6 +623,7 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private preview(card: MatchCardView): void {
+    if (!this.autoComplete) return;
     const previewText =
       card.previewText.trim() || this.snapshot?.sentenceText || null;
     if (previewText === this.previewText) return;
@@ -588,10 +637,30 @@ export class GrandTransitionMatch extends LitElement {
     this.requestUpdate();
   };
 
-  private toggleWaitingSentence(event: MouseEvent, playerId: string): void {
+  private isWaitingSentenceRevealed(playerId: string): boolean {
+    return (
+      this.revealedWaitingPlayerId === playerId ||
+      this.hoveredWaitingPlayerId === playerId ||
+      this.focusedWaitingPlayerId === playerId
+    );
+  }
+
+  private setHoveredWaitingSentence(playerId: string | null): void {
+    if (this.hoveredWaitingPlayerId === playerId) return;
+    this.hoveredWaitingPlayerId = playerId;
+    this.requestUpdate();
+  }
+
+  private setFocusedWaitingSentence(playerId: string | null): void {
+    if (this.focusedWaitingPlayerId === playerId) return;
+    this.focusedWaitingPlayerId = playerId;
+    this.requestUpdate();
+  }
+
+  private revealWaitingSentence(event: MouseEvent, playerId: string): void {
     event.stopPropagation();
-    this.revealedWaitingPlayerId =
-      this.revealedWaitingPlayerId === playerId ? null : playerId;
+    if (this.revealedWaitingPlayerId === playerId) return;
+    this.revealedWaitingPlayerId = playerId;
     this.requestUpdate();
   }
 
@@ -668,9 +737,25 @@ export class GrandTransitionMatch extends LitElement {
     if (sequence === this.timerSequence) return;
     this.stopTimer();
     this.timerSequence = sequence;
-    this.remainingSeconds = durationSeconds;
-    if (durationSeconds === null || this.pauseMode !== 'running') return;
+    this.remainingSeconds =
+      durationSeconds === null ? null : this.turnTimerSeconds;
+    if (this.remainingSeconds === null || this.pauseMode !== 'running') return;
     this.startTimer();
+  }
+
+  private syncTurnTimerSetting(): void {
+    if (
+      !this.snapshot ||
+      this.snapshot.roundReview ||
+      this.snapshot.timer.durationSeconds === null
+    ) {
+      return;
+    }
+    this.stopTimer();
+    this.remainingSeconds = this.turnTimerSeconds;
+    if (this.remainingSeconds !== null && this.pauseMode === 'running') {
+      this.startTimer();
+    }
   }
 
   private syncPauseMode(): void {

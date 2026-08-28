@@ -367,12 +367,57 @@ test('the longest desktop match state fits and exposes every required fact', asy
   });
 });
 
-test('the gray waiting bubble reveals its sentence on hover, click, and focus', async ({
+test('the match prevents accidental browser text selection', async ({
+  page,
+}) => {
+  await startMatch(page);
+  await expect(page.locator('body')).toHaveCSS('user-select', 'none');
+  await expect(page.locator('.match-screen')).toHaveCSS('user-select', 'none');
+  await page.keyboard.press('Control+A');
+  expect(
+    await page.evaluate(() => window.getSelection()?.toString() ?? ''),
+  ).toBe('');
+});
+
+test('the next round waiting bubble reveals the prior public sentence', async ({
+  page,
+}) => {
+  await startMatch(page);
+  await page
+    .locator('[data-role="noun"] button[data-card-state="legal"]')
+    .first()
+    .click();
+  const bubble = page.locator('.player-sentence--waiting');
+  await bubble.hover();
+  const priorPublicSentence = (
+    await bubble.locator('.waiting-sentence-content').textContent()
+  )?.trim();
+  expect(priorPublicSentence).toBeTruthy();
+
+  await page.getByRole('button', { name: 'End', exact: true }).click();
+  await page.getByRole('button', { name: 'End', exact: true }).click();
+  await expect(
+    page.getByRole('button', { name: 'Continue', exact: true }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: /Round 2.*turn/u }),
+  ).toBeVisible();
+
+  const nextRoundBubble = page.locator('.player-sentence--waiting');
+  await nextRoundBubble.hover();
+  await expect(nextRoundBubble).toHaveAttribute('data-revealed', 'true');
+  await expect(nextRoundBubble.locator('.waiting-sentence-content')).toHaveText(
+    priorPublicSentence!,
+  );
+});
+
+test('the gray waiting bubble always reveals and fits its complete sentence', async ({
   page,
 }) => {
   await startMatch(page);
   const sentence =
-    'Your party belongs in a party museum, and your voters change the channel.';
+    'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
   await setWaitingSentence(page, sentence);
 
   const bubble = page.locator('.player-sentence--waiting');
@@ -387,6 +432,7 @@ test('the gray waiting bubble reveals its sentence on hover, click, and focus', 
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
+    { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
@@ -394,6 +440,8 @@ test('the gray waiting bubble reveals its sentence on hover, click, and focus', 
     const compactBox = await bubble.boundingBox();
 
     await bubble.hover();
+    await expect(bubble).toHaveAttribute('data-revealed', 'true');
+    await expect(bubble).toHaveAttribute('aria-expanded', 'true');
     await expect(content).toBeVisible();
     await expect(content).toHaveText(sentence);
     await expect(ellipsis).toBeHidden();
@@ -410,6 +458,7 @@ test('the gray waiting bubble reveals its sentence on hover, click, and focus', 
         contentScrollHeight: sentenceContent.scrollHeight,
         contentScrollWidth: sentenceContent.scrollWidth,
         contentWidth: sentenceContent.clientWidth,
+        clipPath: getComputedStyle(element).clipPath,
         left: box.left,
         right: box.right,
         top: box.top,
@@ -425,12 +474,17 @@ test('the gray waiting bubble reveals its sentence on hover, click, and focus', 
     expect(geometry.contentScrollHeight).toBeLessThanOrEqual(
       geometry.contentHeight + 1,
     );
+    expect(geometry.clipPath).toBe('none');
 
     await page.locator('.sentence-preview').hover();
     await expect(content).toBeHidden();
     await expect(ellipsis).toBeVisible();
   }
 
+  await bubble.click();
+  await expect(bubble).toHaveAttribute('data-revealed', 'true');
+  await expect(bubble).toHaveAttribute('aria-expanded', 'true');
+  await expect(content).toBeVisible();
   await bubble.click();
   await expect(bubble).toHaveAttribute('data-revealed', 'true');
   await expect(bubble).toHaveAttribute('aria-expanded', 'true');
@@ -447,17 +501,106 @@ test('the gray waiting bubble reveals its sentence on hover, click, and focus', 
   await expect(ellipsis).toBeHidden();
 });
 
+test('the reported long bubble works on both sides at the reported viewport', async ({
+  page,
+}, testInfo) => {
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page
+    .getByLabel('Player one character')
+    .selectOption('black-sea-captain');
+  await page.getByLabel('Player two character').selectOption('thunder-tribune');
+  await page.getByLabel('Scene').selectOption('modern-debate-studio');
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await expect(
+    page.getByRole('heading', { name: /Round 1.*turn/u }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 2014, height: 921 });
+  const sentence =
+    'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
+
+  for (const waitingSide of ['red', 'blue'] as const) {
+    await setWaitingSentence(page, sentence, waitingSide);
+    const bubble = page.locator('.player-sentence--waiting');
+    const content = bubble.locator('.waiting-sentence-content');
+    await page.mouse.move(1007, 460);
+    const compactBox = await bubble.boundingBox();
+
+    await bubble.hover();
+    await expect(bubble).toHaveAttribute('data-revealed', 'true');
+    await expect(content).toBeVisible();
+    await expect(content).toHaveText(sentence);
+    if (waitingSide === 'red') {
+      await page.waitForTimeout(1_100);
+      await expect(bubble).toHaveAttribute('data-revealed', 'true');
+      await expect(content).toBeVisible();
+      await expect(content).toHaveText(sentence);
+      await page.locator('grand-transition-match').evaluate(async (element) => {
+        const match = element as HTMLElement & {
+          snapshot: { revision: number };
+          updateComplete: Promise<boolean>;
+        };
+        match.snapshot = {
+          ...match.snapshot,
+          revision: match.snapshot.revision + 1,
+        };
+        await match.updateComplete;
+      });
+      await expect(bubble).toHaveAttribute('data-revealed', 'true');
+      await expect(content).toBeVisible();
+      await expect(content).toHaveText(sentence);
+    }
+    const geometry = await bubble.evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      const contentBox = element
+        .querySelector<HTMLElement>('.waiting-sentence-content')!
+        .getBoundingClientRect();
+      return {
+        bubble: {
+          bottom: box.bottom,
+          left: box.left,
+          right: box.right,
+          top: box.top,
+        },
+        clipPath: getComputedStyle(element).clipPath,
+        content: {
+          bottom: contentBox.bottom,
+          left: contentBox.left,
+          right: contentBox.right,
+          top: contentBox.top,
+        },
+      };
+    });
+    const expandedBox = await bubble.boundingBox();
+    expect(expandedBox!.width).toBeGreaterThan(compactBox!.width);
+    expect(expandedBox!.height).toBeGreaterThan(compactBox!.height);
+    expect(geometry.clipPath).toBe('none');
+    expect(geometry.content.left).toBeGreaterThanOrEqual(geometry.bubble.left);
+    expect(geometry.content.top).toBeGreaterThanOrEqual(geometry.bubble.top);
+    expect(geometry.content.right).toBeLessThanOrEqual(geometry.bubble.right);
+    expect(geometry.content.bottom).toBeLessThanOrEqual(geometry.bubble.bottom);
+    await page.screenshot({
+      path: testInfo.outputPath(`waiting-bubble-${waitingSide}-2014x921.png`),
+      fullPage: true,
+    });
+  }
+});
+
 test.describe('touch waiting-bubble disclosure', () => {
   test.use({ hasTouch: true });
 
-  test('a tap temporarily reveals the waiting sentence', async ({ page }) => {
+  test('every tap reveals the complete waiting sentence', async ({ page }) => {
     await startMatch(page);
     const sentence =
-      'Your party belongs in a party museum, and your voters change the channel.';
+      'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
     await setWaitingSentence(page, sentence);
 
     const bubble = page.locator('.player-sentence--waiting');
     const content = bubble.locator('.waiting-sentence-content');
+    await bubble.tap();
+    await expect(bubble).toHaveAttribute('data-revealed', 'true');
+    await expect(content).toBeVisible();
+    await expect(content).toHaveText(sentence);
+
     await bubble.tap();
     await expect(bubble).toHaveAttribute('data-revealed', 'true');
     await expect(content).toBeVisible();
@@ -526,6 +669,92 @@ test('the selected roster characters load their local portrait assets', async ({
         opaqueRatio > 0.2,
     ),
   ).toBe(true);
+});
+
+test('the selected modern debate studio loads both local scene layers', async ({
+  page,
+}, testInfo) => {
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByLabel('Scene').selectOption('modern-debate-studio');
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await expect(
+    page.getByRole('heading', { name: /Round 1.*turn/u }),
+  ).toBeVisible();
+
+  const background = page.locator(
+    '.broadcast-stage-art[data-scene-asset="modern-debate-studio"]',
+  );
+  const foreground = page.locator(
+    '.broadcast-stage-foreground[data-scene-asset="modern-debate-studio-desks"]',
+  );
+  await expect(background).toBeVisible();
+  await expect(foreground).toBeVisible();
+  await expect
+    .poll(() =>
+      background.evaluate(
+        (image: HTMLImageElement) =>
+          image.complete &&
+          image.naturalWidth === 1672 &&
+          image.naturalHeight === 941,
+      ),
+    )
+    .toBe(true);
+  await expect
+    .poll(() =>
+      foreground.evaluate(
+        (image: HTMLImageElement) =>
+          image.complete &&
+          image.naturalWidth === 1672 &&
+          image.naturalHeight === 941,
+      ),
+    )
+    .toBe(true);
+
+  const [foregroundAlpha] = await portraitAlphaFacts(foreground);
+  expect(foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0)).toBe(true);
+  expect(foregroundAlpha?.chromaKeyGreenRatio).toBe(0);
+  expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
+  expect(foregroundAlpha?.opaqueRatio).toBeGreaterThan(0.05);
+
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1400, height: 1050 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const geometry = await page.evaluate(() => {
+      const backgroundBox = document
+        .querySelector('.broadcast-stage-art')!
+        .getBoundingClientRect();
+      const foregroundBox = document
+        .querySelector('.broadcast-stage-foreground')!
+        .getBoundingClientRect();
+      return {
+        documentFits:
+          document.documentElement.scrollWidth <= innerWidth &&
+          document.documentElement.scrollHeight <= innerHeight,
+        backgroundCovers:
+          backgroundBox.left <= 0 &&
+          backgroundBox.top <= 0 &&
+          backgroundBox.right >= innerWidth &&
+          backgroundBox.bottom >= innerHeight,
+        foregroundExtendsBelowStage: foregroundBox.bottom > innerHeight,
+      };
+    });
+    expect(geometry, `${viewport.width}x${viewport.height}`).toEqual({
+      documentFits: true,
+      backgroundCovers: true,
+      foregroundExtendsBelowStage: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `modern-debate-studio-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
+  }
 });
 
 test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
@@ -1256,6 +1485,130 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
   );
 });
 
+test('Pause settings apply to the resumed match', async ({
+  page,
+}, testInfo) => {
+  await startMatch(page);
+  await page.getByRole('button', { name: 'Pause' }).click();
+  await expect(page.getByRole('button', { name: 'Resume' })).toBeFocused();
+
+  const thirtySeconds = page.getByRole('button', { name: '30 seconds' });
+  const autoCompleteOn = page.getByRole('button', {
+    name: 'On',
+    exact: true,
+  });
+  await expect(thirtySeconds).toHaveAttribute('aria-pressed', 'true');
+  await expect(autoCompleteOn).toHaveAttribute('aria-pressed', 'true');
+
+  await page.getByRole('button', { name: '15 seconds' }).click();
+  await page.getByRole('button', { name: 'Off', exact: true }).click();
+  await expect(
+    page.getByRole('button', { name: '15 seconds' }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    page.getByRole('button', { name: 'Off', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const layout = await page.evaluate(() => {
+      const required = [
+        ...document.querySelectorAll<HTMLElement>(
+          '.interruption-setting, .interruption-actions button',
+        ),
+      ];
+      return {
+        documentFits:
+          document.documentElement.scrollWidth <= innerWidth &&
+          document.documentElement.scrollHeight <= innerHeight,
+        requiredFits: required.every((element) => {
+          const box = element.getBoundingClientRect();
+          return (
+            box.left >= 0 &&
+            box.top >= 0 &&
+            box.right <= innerWidth &&
+            box.bottom <= innerHeight
+          );
+        }),
+      };
+    });
+    expect(layout, `${viewport.width}x${viewport.height}`).toEqual({
+      documentFits: true,
+      requiredFits: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `pause-settings-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
+  }
+  await page.setViewportSize({ width: 1280, height: 720 });
+
+  await page.getByRole('button', { name: 'Resume' }).click();
+  await expect(page.getByRole('button', { name: 'Pause' })).toBeFocused();
+  await expect(page.locator('.timer-fact')).toHaveAttribute(
+    'data-timer',
+    /^(?:14|15)$/u,
+  );
+  const sentenceBefore = await page.locator('.sentence-preview').textContent();
+  await page
+    .locator('[data-role="noun"] button[data-card-state="legal"]')
+    .first()
+    .hover();
+  await expect(page.locator('.sentence-preview')).toHaveText(
+    sentenceBefore?.trim() ?? '',
+  );
+
+  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Unlimited' }).click();
+  await page.getByRole('button', { name: 'Resume' }).click();
+  await expect(page.locator('.timer-fact')).toHaveAttribute(
+    'data-timer',
+    'unlimited',
+  );
+  await expect(page.locator('.timer-fact dd')).toHaveText('Unlimited');
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const timerGeometry = await page
+      .locator('.timer-fact')
+      .evaluate((frame) => {
+        const frameBox = frame.getBoundingClientRect();
+        const text = frame.querySelector<HTMLElement>('dd')!;
+        const textBox = text.getBoundingClientRect();
+        return {
+          textFitsItsBox: text.scrollWidth <= text.clientWidth,
+          textFitsFrame:
+            textBox.left >= frameBox.left && textBox.right <= frameBox.right,
+        };
+      });
+    expect(timerGeometry, `${viewport.width}x${viewport.height}`).toEqual({
+      textFitsItsBox: true,
+      textFitsFrame: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `unlimited-timer-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
+  }
+  await page.waitForTimeout(1_100);
+  await expect(page.locator('.timer-fact')).toHaveAttribute(
+    'data-timer',
+    'unlimited',
+  );
+});
+
 test('paused match returns to the menu only after confirmation', async ({
   page,
 }, testInfo) => {
@@ -1342,30 +1695,50 @@ async function startMatch(page: Page): Promise<void> {
   ).toBeVisible();
 }
 
-async function setWaitingSentence(page: Page, sentence: string): Promise<void> {
-  await page
-    .locator('grand-transition-match')
-    .evaluate(async (element, waitingSentence) => {
+async function setWaitingSentence(
+  page: Page,
+  sentence: string,
+  waitingSide?: 'blue' | 'red',
+): Promise<void> {
+  await page.locator('grand-transition-match').evaluate(
+    async (element, request) => {
       const match = element as HTMLElement & {
         snapshot: {
+          activePlayerId: string;
+          activePlayerName: string;
           revision: number;
           players: readonly {
+            playerId: string;
+            characterName: string;
             isActive: boolean;
             sentence: string | null;
           }[];
         };
         updateComplete: Promise<boolean>;
       };
-      const players = match.snapshot.players.map((player) =>
-        player.isActive ? player : { ...player, sentence: waitingSentence },
-      );
+      const waitingIndex =
+        request.waitingSide === undefined
+          ? match.snapshot.players.findIndex((player) => !player.isActive)
+          : request.waitingSide === 'red'
+            ? 0
+            : 1;
+      const players = match.snapshot.players.map((player, index) => ({
+        ...player,
+        isActive: index !== waitingIndex,
+        sentence: index === waitingIndex ? request.sentence : player.sentence,
+      }));
+      const activePlayer = players[waitingIndex === 0 ? 1 : 0]!;
       match.snapshot = {
         ...match.snapshot,
+        activePlayerId: activePlayer.playerId,
+        activePlayerName: activePlayer.characterName,
         revision: match.snapshot.revision + 1,
         players,
       };
       await match.updateComplete;
-    }, sentence);
+    },
+    { sentence, waitingSide },
+  );
 }
 
 async function portraitAlphaFacts(portraits: Locator): Promise<

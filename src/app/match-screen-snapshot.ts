@@ -23,6 +23,14 @@ const sceneMediaUrls: Readonly<Record<string, string>> = {
     '../assets/scenes/transition-era-television-studio-desks.png',
     import.meta.url,
   ).href,
+  'modern-debate-studio': new URL(
+    '../assets/scenes/modern-debate-studio.png',
+    import.meta.url,
+  ).href,
+  'modern-debate-studio-desks': new URL(
+    '../assets/scenes/modern-debate-studio-desks.png',
+    import.meta.url,
+  ).href,
 };
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
@@ -209,6 +217,8 @@ export function createMatchScreenSnapshot(
   const players = state.playerOrder.map((playerId) => {
     const player = state.playerStates[playerId]!;
     const draftPlayer = viewerSnapshot.players[playerId]!;
+    const currentPublicSentence =
+      draftPlayer.construction.previewText?.trim() ?? '';
     return {
       playerId,
       characterId: player.characterId,
@@ -216,7 +226,8 @@ export function createMatchScreenSnapshot(
       portraitUrl: characterPortraitUrl(player.characterId),
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,
-      sentence: draftPlayer.construction.previewText,
+      sentence:
+        currentPublicSentence || latestPublicSentence(state, playerId) || null,
       comebackLine: draftPlayer.construction.comebackClosingLine,
       status: draftPlayer.construction.status,
     } satisfies MatchPlayerView;
@@ -456,6 +467,20 @@ function legalPreview(
   return result.accepted
     ? result.analysis.publicText
     : player.construction.previewText;
+}
+
+function latestPublicSentence(
+  state: MatchState,
+  playerId: string,
+): string | null {
+  for (let index = state.resolutionHistory.length - 1; index >= 0; index -= 1) {
+    const sentence =
+      state.resolutionHistory[index]?.players[
+        playerId
+      ]?.constructionText.trim();
+    if (sentence) return sentence;
+  }
+  return null;
 }
 
 function weaknessMatches(

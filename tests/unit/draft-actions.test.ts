@@ -556,11 +556,19 @@ describe('Hollywood Roast draft actions', () => {
     }
   });
 
-  test('opponent snapshots hide private cards and legal references', () => {
-    const state = prepared();
-    const snapshot = snapshotDraftStateForPlayer(state, playerIds[0]);
-    expect(snapshot.players[playerIds[1]]!.hand).toEqual({ count: 2 });
-    expect(snapshot.players[playerIds[1]]!.legalCards).toEqual([]);
+  test('opponent snapshots hide the hand but expose its accepted public text', () => {
+    const state = selectPrivate(
+      prepared(),
+      playerIds[0],
+      'national-consensus',
+      'public-subject',
+    );
+    const snapshot = snapshotDraftStateForPlayer(state, playerIds[1]);
+    expect(snapshot.players[playerIds[0]]!.hand).toEqual({ count: 2 });
+    expect(snapshot.players[playerIds[0]]!.legalCards).toEqual([]);
+    expect(snapshot.players[playerIds[0]]!.construction.previewText).toBe(
+      'A national consensus',
+    );
   });
 
   test('restores an exact continuation and rejects tampered or illegal carry data', () => {

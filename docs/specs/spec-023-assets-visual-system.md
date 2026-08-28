@@ -19,6 +19,14 @@ speech spans the confrontation, sentence construction owns the center, and
 secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.
 
+Use one hand-painted editorial-caricature language for playable portraits,
+fixed moderators, studio architecture, furniture, lighting fixtures, and props.
+Use visible painterly brushwork, simplified material detail, expressive edges,
+and restrained comic exaggeration. Do not combine these illustrated portraits
+with photographic, stock-photo, or hyper-realistic scene layers. A scene can
+keep its own era, materials, palette, and lighting while it remains visibly part
+of the same illustrated world.
+
 This structure is adapted from user-supplied original-game references. It is a
 composition and interaction precedent, not a parity target. Keep the painted
 stage as authored art and rebuild every game value, phrase, and control as HTML

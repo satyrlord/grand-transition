@@ -49,15 +49,17 @@ Private hotseat content must remain private during handovers.
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 017. It includes the
-  title, setup, playable match, and between-round review flow.
+- The implemented scope includes Milestones 001 through 018. It includes the
+  title, setup, playable match, between-round review flow, and blocking
+  landscape viewport contract.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas, an English game-locale bundle,
   three original fictional characters, Romanian-politics phrase content,
-  separate transparent portraits, and a layered late-2000s municipal studio
-  with one fixed fictional moderator and a foreground desk plate.
+  separate transparent portraits, and two layered debate studios. The
+  transition-era studio and the modern studio each use one fixed fictional
+  moderator and a separate foreground desk plate.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, one common board,
   private hands, clause scoring, noun combos, continuations, comebacks,

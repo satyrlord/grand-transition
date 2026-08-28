@@ -13,8 +13,11 @@ text-free rendered broadcast back scene with one fixed fictional moderator, one
 generated transparent portrait for each selected character, and one transparent
 foreground plate with two tall standing desks. The back scene contains no
 playable character. Each raster has embedded generation provenance.
+The moderator, studio, desks, and props use the same hand-painted editorial-
+caricature language as the playable portraits. Do not combine illustrated
+portraits with photographic or hyper-realistic scene layers.
 Keep all names, values, phrases, states, and controls in HTML. Show the
-board, private hand, sentence, turn, 30-second timer, Pride, comeback, hand
+board, private hand, sentence, turn timer, Pride, comeback, hand
 refresh, sentence end, grammar-mistake feedback, and continuation selection.
 Support pointer use. Center the timer and dedicated Pause button together in
 the top-center stage frame during drafting and sudden death.
@@ -79,8 +82,10 @@ assistive-technology state.
 Unavailable common phrases stay in their fixed rows with subdued text. A
 selected common phrase leaves one visibly empty row with an accessible state
 label. Every available common or private phrase uses the same selection action.
-Pointer preview updates the wide speech bubble with a valid result and leaves
-the current sentence unchanged for a wrong phrase. A wrong selection applies
+When Auto-complete is on, pointer hover and keyboard focus preview a valid
+result in the wide speech bubble and leave the current sentence unchanged for
+a wrong phrase. Auto-complete is on by default. When it is off, phrase hover
+and focus do not change the bubble. A wrong selection applies
 its grammar mistake immediately without a confirmation action.
 It also triggers one strong arena reaction. The offending portrait recoils,
 the Pride strip flashes, and a broadcast strike states the player name and
@@ -98,11 +103,17 @@ separate help layer.
 The active player owns the wide white speech bubble. It shows the current or
 preview sentence and points toward that player. The waiting character owns one
 compact gray bubble that normally shows an ellipsis. If the waiting character
-has a public sentence, pointer hover or keyboard focus expands the same gray
-bubble and reveals the complete text for that interaction. A click or tap keeps
-the text open until the user activates the bubble again, activates elsewhere,
-or the match state changes. The ellipsis then returns. This preview does not
-change game truth. After a comeback ends a turn, that character's gray bubble
+has a public sentence, pointer hover, keyboard focus, click, and tap always
+expand the same gray bubble and reveal the complete text. Use the current public
+sentence first and the most recent completed public sentence after a new round
+resets the construction. Accepted construction text stays public after a turn
+change, including text that came from a private card. Before either sentence
+exists, reveal `No sentence yet.` Hover and focus keep the text open for that
+interaction. Click or tap pins it open until the user
+activates elsewhere or the match state changes. Repeated activation of the
+bubble keeps it open. Its body grows to contain the complete text, and its tail
+does not clip the text. The ellipsis then returns. This preview does not change
+game truth. After a comeback ends a turn, that character's gray bubble
 shows the complete sentence with the selected closing line until the exchange
 resolves. Do not show two equal speech cards.
 The wide bubble must show the complete current or preview sentence. It can use
@@ -146,14 +157,29 @@ For timed turns, the visible value updates once per second. Zero dispatches one
 arrives.
 
 Pause replaces the complete match DOM with a full-screen “Paused” surface. It
-provides Resume and a secondary “Back to menu” action. “Back to menu” replaces
+provides Turn timer and Auto-complete settings, Resume, and a secondary “Back
+to menu” action. Turn timer offers 15 seconds, 30 seconds, and Unlimited. Its
+default is 30 seconds. Auto-complete offers On and Off. Its default is On.
+The browser setting controls when the UI dispatches the pure `expire-turn`
+command. It does not change the reducer's deterministic 30-second baseline or
+the timeout-damage rules. Unlimited does not schedule that command.
+Changing a timer value while paused starts the current turn at the selected
+value after Resume and applies that value to later turns. Unlimited shows no
+countdown and does not dispatch `expire-turn`. Changing Auto-complete applies
+after Resume and does not change the authoritative sentence or phrase action.
+Both choices remain in the application shell for later matches in the same page
+session. They return to their defaults after a reload until Milestone 020 adds
+storage.
+“Back to menu” replaces
 the Pause notice with a concealed confirmation that defaults to “Stay paused.”
 “End match” discards the active match and returns to the title menu. No exit
 action sends a match command or records a result. The Pause and confirmation
 states reveal no board, hand, sentence, player, score, or timer value. They stop
-all match input and freeze the exact remaining turn time. Resume restores the
-unchanged match and restarts the timer from that value. Repeated pauses never
-add time. Pause has no quota because local players own the interruption.
+all match input and freeze the exact remaining turn time. If the timer setting
+does not change, Resume restores the unchanged match and restarts the timer
+from that value. Repeated pauses do not add time unless the player selects a
+different timer value. Pause has no quota because local players own the
+interruption.
 Concealment and exact timer preservation prevent state inspection or
 timer-refill abuse.
 
@@ -165,15 +191,22 @@ timer-refill abuse.
   hidden required action.
 - **AC-016-02:** Pointer controls dispatch each typed command once. Rapid
   activation cannot double-select a card.
-- **AC-016-03:** Pointer preview changes only visible preview text.
+- **AC-016-03:** With Auto-complete On, phrase hover or focus changes only the
+  visible preview text. With Auto-complete Off, hover and focus do not change
+  it. Phrase selection remains available in both states.
 - **AC-016-04:** The common and private phrase lists show phrase text only.
   Unavailable and empty rows remain visually distinct, every state has an
   accessible label, and available phrases use one selection action.
-- **AC-016-05:** The fixed timer updates once per second and zero emits one
+- **AC-016-05:** A timed turn updates once per second and zero emits one
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
+  The Pause settings default to 30 seconds and Auto-complete On. Selecting 15,
+  30, or Unlimited takes effect on Resume. Unlimited does not expire the turn,
+  and its complete label stays inside the top-center timer frame at every
+  supported viewport.
   Its exit confirmation remains concealed, defaults to staying paused, and
-  returns to the title only after “End match.”
+  returns to the title only after “End match.” Pause moves keyboard focus to
+  Resume. Resume returns focus to Pause in the unchanged match.
 - **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.
@@ -197,12 +230,15 @@ timer-refill abuse.
   chroma-key matte pixels. Production screenshots prove that the moderator face
   remains clear during drafting.
 - **AC-016-11:** The active side owns one wide white current-sentence bubble.
-  The waiting side owns one compact gray ellipsis bubble. Pointer hover and
-  keyboard focus reveal that waiting character's complete public sentence in
-  the same bubble. Click and touch activation keep it open temporarily. All
-  paths leave game truth unchanged. The private choices and compact SVG
-  Reshuffle control move to the active side without changing the `redraw-hand`
-  command contract.
+  The waiting side owns one compact gray ellipsis bubble. Every pointer hover,
+  keyboard focus, click, and touch activation reveals that waiting character's
+  current or most recent completed public sentence in the same auto-sizing
+  bubble. Before either exists, it reveals `No sentence yet.` Repeated click or
+  touch activation keeps it open. No text is clipped by the bubble body or
+  tail. The match permits no browser text selection. All
+  paths leave game truth unchanged. The private choices and compact
+  SVG Reshuffle control move to the active side without changing the
+  `redraw-hand` command contract.
 - **AC-016-12:** The shipped longest sentence and a synthetic sentence that is
   40 percent longer remain fully visible in the wide bubble at every supported
   landscape evidence viewport. The browser finds no horizontal or vertical

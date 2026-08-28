@@ -4,15 +4,7 @@ import './styles/match-screen.css';
 import './styles/interruption-screen.css';
 
 if (import.meta.env.DEV) {
-  await import('./app/screens/click-audit');
-  document.body.append(document.createElement('grand-transition-click-audit'));
+  await import('./app/development-game-logger');
 }
 
 await import('./app/app-shell');
-
-if (import.meta.env.DEV) {
-  await import('./app/screens/developer-controls');
-  document.body.append(
-    document.createElement('grand-transition-developer-controls'),
-  );
-}

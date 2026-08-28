@@ -35,9 +35,11 @@ repair it unless the Impeccable flow permits repair.
 These modes set the edit boundary. Impeccable selects the design command and
 playbook. Do not create a parallel design process in this skill.
 
-Read `AGENTS.md` and specification sections 2.2, 14 through 19, 24, and 26.
-Use approved specifications as the composition target. Use `tmp/` prototypes and
-images only as evidence of tone or behavior.
+Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, and each applicable
+UI owner. The primary UI owners are Milestones 015 through 019 and 023 through
+026. Follow their dependency closure. Use approved specifications as the
+composition target. Use `tmp/` prototypes and images only as evidence of tone
+or behavior.
 
 ## Preserve the target contract
 
