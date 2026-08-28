@@ -129,9 +129,9 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 162 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(162);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(126);
+  test('loads 184 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(184);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(137);
     expect(
       Object.fromEntries(
         Object.entries(phraseCardCatalog.characterPhraseIds).map(
@@ -139,14 +139,30 @@ describe('content schemas', () => {
         ),
       ),
     ).toEqual({
-      'red-folded-chairman': 12,
+      'red-folded-chairman': 24,
       'thunder-tribune': 12,
-      'black-sea-captain': 12,
+      'black-sea-captain': 11,
     });
     expect(phraseCardCatalog.characterPhraseIds['red-folded-chairman']).toEqual(
       expect.arrayContaining([
         'national-salvation-committee',
-        'your-red-stamped-family-album',
+        'the-nordic-model',
+        'socialism-with-a-human-face',
+        'a-free-thinker',
+        'a-dictatorship',
+        'the-working-class',
+        'some-hooligans',
+        'scientific-socialism',
+        'a-screwdriver-between-the-ribs',
+        'a-dumbass',
+        'an-animal',
+        'a-historical-blunder',
+        'rich-and-dishonest',
+        'a-rooster',
+        'a-monkey',
+        'a-naughty-boy',
+        'the-dacs-that-come-from-the-tracs',
+        'and-thats-the-synergy-of-facts',
       ]),
     );
     expect(phraseCardCatalog.characterPhraseIds['thunder-tribune']).toEqual(
@@ -193,7 +209,7 @@ describe('content schemas', () => {
     );
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(162);
+    ).toHaveLength(184);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -201,7 +217,96 @@ describe('content schemas', () => {
     ).toEqual(['red-folded-chairman']);
   });
 
-  test('keeps the 126-card common corpus at its approved role totals', () => {
+  test('loads the Chairman phrase expansion and comeback tiers', () => {
+    const expectedPhrases = [
+      ['the-nordic-model', 'the Nordic model'],
+      ['socialism-with-a-human-face', 'socialism with a human face'],
+      ['a-free-thinker', 'a free-thinker'],
+      ['a-dictatorship', 'a dictatorship'],
+      ['the-working-class', 'the working class'],
+      ['some-hooligans', 'some hooligans'],
+      ['scientific-socialism', 'scientific socialism'],
+      ['a-screwdriver-between-the-ribs', 'a screwdriver between the ribs'],
+      ['a-dumbass', 'a dumbass'],
+      ['an-animal', 'an animal'],
+      ['a-historical-blunder', 'a historical blunder'],
+      ['rich-and-dishonest', 'rich and dishonest'],
+      ['a-rooster', 'a rooster'],
+      ['a-monkey', 'a monkey'],
+      ['a-naughty-boy', 'a naughty boy'],
+      [
+        'the-dacs-that-come-from-the-tracs',
+        'and the Dacs that come from the Tracs.',
+      ],
+      ['and-thats-the-synergy-of-facts', "and that's the synergy of facts."],
+    ] as const;
+
+    for (const [id, text] of expectedPhrases) {
+      expect(
+        phraseCardCatalog.characterPhraseIds['red-folded-chairman'],
+      ).toContain(id);
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}`]).toBe(text);
+    }
+    expect(
+      phraseCardCatalog.englishMessages['comeback.red-folded-chairman.weak'],
+    ).toBe('My dear.');
+    expect(
+      phraseCardCatalog.englishMessages['comeback.red-folded-chairman.medium'],
+    ).toBe('You animal.');
+    expect(
+      phraseCardCatalog.englishMessages['comeback.red-folded-chairman.strong'],
+    ).toBe('And you have a servile mentality.');
+    const dacsEnding = phraseCardCatalog.phrases.find(
+      (phrase) => phrase.id === 'the-dacs-that-come-from-the-tracs',
+    );
+    expect(dacsEnding).toMatchObject({
+      role: 'ending',
+      finisherBonus: 3,
+    });
+    expect(dacsEnding?.scoreGroups).toBeUndefined();
+  });
+
+  test('includes agreement-aware copulas and basic ideological noun cards', () => {
+    const copulas = [
+      ['is', 'is', 'are'],
+      ['was', 'was', 'were'],
+      ['will-be', 'will be', 'will be'],
+      ['should-have-been', 'should have been', 'should have been'],
+    ] as const;
+    for (const [id, singularText, pluralText] of copulas) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === id,
+      );
+      expect(phrase).toMatchObject({ id, role: 'verb' });
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}`]).toBe(
+        singularText,
+      );
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}.singular`]).toBe(
+        singularText,
+      );
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}.plural`]).toBe(
+        pluralText,
+      );
+    }
+
+    for (const [id, text] of [
+      ['a-communist', 'a communist'],
+      ['a-liberal', 'a liberal'],
+      ['a-globalist', 'a globalist'],
+      ['a-sovereignist', 'a sovereignist'],
+      ['a-fascist', 'a fascist'],
+      ['a-pig', 'a pig'],
+      ['a-nazi', 'a Nazi'],
+    ] as const) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === id,
+      );
+      expect(phrase).toMatchObject({ id, role: 'noun' });
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}`]).toBe(text);
+    }
+  });
+
+  test('keeps the 137-card common corpus at its approved role totals', () => {
     const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
@@ -210,6 +315,7 @@ describe('content schemas', () => {
         'noun',
         'verb',
         'predicate',
+        'modifier',
         'conjunction',
         'ending',
         'continuation',
@@ -220,13 +326,107 @@ describe('content schemas', () => {
     );
 
     expect(roleCounts).toEqual({
-      noun: 46,
-      verb: 28,
-      predicate: 30,
+      noun: 53,
+      verb: 32,
+      predicate: 10,
+      modifier: 20,
       conjunction: 10,
       ending: 11,
       continuation: 1,
     });
+  });
+
+  test('classifies clause modifiers separately from predicates', () => {
+    const commonModifierIds = phraseCardCatalog.phrases
+      .filter(
+        (phrase) =>
+          phrase.role === 'modifier' &&
+          phraseCardCatalog.commonPhraseIds.includes(phrase.id),
+      )
+      .map((phrase) => phrase.id)
+      .toSorted();
+    expect(commonModifierIds).toEqual(
+      [
+        'across-county-capitals',
+        'after-the-midnight-news',
+        'at-victoria-palace',
+        'before-a-confidence-vote',
+        'before-the-next-election',
+        'behind-closed-doors',
+        'beneath-the-national-banner',
+        'beside-an-unfinished-motorway',
+        'during-a-coalition-crisis',
+        'during-a-press-conference',
+        'during-budget-season',
+        'from-the-government-podium',
+        'in-the-transition-archive',
+        'on-public-television',
+        'on-the-campaign-trail',
+        'through-another-reform-cycle',
+        'under-an-emergency-ordinance',
+        'under-the-studio-lights',
+        'with-coalition-partners',
+        'without-public-consultation',
+      ].toSorted(),
+    );
+    expect(
+      phraseCardCatalog.phrases
+        .filter(
+          (phrase) =>
+            phrase.role === 'modifier' && phrase.characterIds !== undefined,
+        )
+        .map((phrase) => phrase.id)
+        .toSorted(),
+    ).toEqual(
+      [
+        'rich-and-dishonest',
+        'through-a-gradual-transition',
+        'through-troubled-waters',
+      ].toSorted(),
+    );
+    expect(
+      phraseCardCatalog.phrases
+        .filter((phrase) => phrase.role === 'modifier')
+        .every(
+          (phrase) =>
+            phrase.scorePreferences === undefined &&
+            phrase.customScores === undefined,
+        ),
+    ).toBe(true);
+  });
+
+  test('keeps every character predicate as a clause-completing verb phrase', () => {
+    expect(
+      phraseCardCatalog.phrases
+        .filter(
+          (phrase) =>
+            phrase.role === 'predicate' && phrase.characterIds !== undefined,
+        )
+        .map((phrase) => phrase.id)
+        .toSorted(),
+    ).toEqual(
+      [
+        'asks-for-patience-again',
+        'calls-every-delay-a-transition',
+        'cannot-steer-own-party-from-puddle',
+        'from-the-marble-rostrum',
+        'looks-like-a-somaldoaca-on-television',
+        'raises-the-volume-again',
+        'returns-to-the-wheel',
+      ].toSorted(),
+    );
+    expect(
+      phraseCardCatalog.phrases
+        .filter(
+          (phrase) =>
+            phrase.role === 'predicate' && phrase.characterIds !== undefined,
+        )
+        .every(
+          (phrase) =>
+            phrase.scorePreferences !== undefined ||
+            phrase.customScores !== undefined,
+        ),
+    ).toBe(true);
   });
 
   test('covers the Red-Folded Chairman miners weakness with historical phrases', () => {
@@ -301,7 +501,7 @@ describe('content schemas', () => {
     );
   });
 
-  test('includes the sourced during-the-night ending without changing the corpus total', () => {
+  test('includes the sourced during-the-night ending with its approved definition', () => {
     const phrase = phraseCardCatalog.phrases.find(
       (candidate) => candidate.id === 'under-the-national-banner',
     );
@@ -567,6 +767,7 @@ describe('content schemas', () => {
         'noun',
         'verb',
         'predicate',
+        'modifier',
         'conjunction',
         'ending',
         'continuation',
@@ -630,11 +831,24 @@ describe('content schemas', () => {
   });
 
   test('rejects grammar and scoring fields on the wrong phrase role', () => {
-    const predicateFinisher = cloneCatalog();
-    predicateFinisher.phrases.find(
+    const modifierFinisher = cloneCatalog();
+    modifierFinisher.phrases.find(
       (phrase) => phrase.id === 'before-the-next-election',
     )!.finisherBonus = 2;
-    expectFailure(predicateFinisher, 'finisherBonus', /Only an ending/iu);
+    expectFailure(modifierFinisher, 'finisherBonus', /Only an ending/iu);
+
+    const modifierRelation = cloneCatalog();
+    modifierRelation.phrases.find(
+      (phrase) => phrase.id === 'before-the-next-election',
+    )!.scorePreferences = {
+      substance: [{ left: ['bureaucracy'] }],
+      flavour: [],
+    };
+    expectFailure(
+      modifierRelation,
+      'scorePreferences',
+      /Only a verb or predicate/iu,
+    );
 
     const endingWithoutScore = cloneCatalog();
     endingWithoutScore.phrases.find(
@@ -658,7 +872,7 @@ describe('content schemas', () => {
 
     const emptyScores = cloneCatalog();
     const relation = emptyScores.phrases.find(
-      (phrase) => phrase.id === 'before-the-next-election',
+      (phrase) => phrase.id === 'belongs-in-a-party-museum',
     )!;
     relation.scorePreferences = undefined;
     relation.customScores = [];
@@ -666,7 +880,7 @@ describe('content schemas', () => {
 
     const duplicateScores = cloneCatalog();
     duplicateScores.phrases.find(
-      (phrase) => phrase.id === 'before-the-next-election',
+      (phrase) => phrase.id === 'belongs-in-a-party-museum',
     )!.customScores = [
       { leftNounId: 'national-consensus', score: 4 },
       { leftNounId: 'national-consensus', score: 9 },

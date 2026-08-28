@@ -18,6 +18,7 @@ The reference role mapping is:
 | `noun`                | Object that can be a grammatical subject or object               |
 | `predicate`           | Verb phrase that completes a clause after its subject            |
 | `verb`                | Relation that requires a following noun object                   |
+| `modifier`            | Adverbial or descriptive phrase after a complete clause          |
 | `conjunction`         | Approved additive, contrast, reason, and result connectors       |
 | `ending`              | Finisher that can follow a complete clause and ends the sentence |
 | `continuation`        | Draft action, not a grammar phrase                               |
@@ -71,6 +72,12 @@ time-clause forms, or clause shapes that the grammar does not model.
 An ending is legal only after a complete clause. It ends the sentence
 immediately. A later phrase is a grammar mistake.
 
+A modifier is legal only after a complete clause. It keeps that clause complete
+and does not end the sentence. One or more modifiers can precede a conjunction,
+an ending, or a manual sentence end. A modifier can also follow a complete
+front-`because` subordinate clause, but it does not remove the required main
+noun clause.
+
 ## Rendering
 
 English rendering uses sentence case, phrase-defined singular and plural forms,
@@ -92,8 +99,11 @@ A phrase without number forms uses its default text.
   agreement, and rejection after an ending.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable
   typed evidence without changing game state.
+- **AC-006-06:** Tests prove one and several modifiers after complete predicate
+  and object clauses, rejection before clause completion, and preservation of
+  the required main clause after front `because`.
 
 ## Objective verifiers
 
 `tests/unit/english-grammar-core.test.ts` and
-`tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-05.
+`tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-06.

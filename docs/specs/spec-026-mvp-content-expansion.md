@@ -103,20 +103,22 @@ Each scene has a 1920x1080 layered master, landscape crops, lighting, ambience,
 motion, music treatment, and 25 to 35 owned phrases. The validated catalog has
 these inclusive general-pool ranges:
 
-| Role | Minimum | Maximum |
-| --- | ---: | ---: |
-| Noun | 150 | 165 |
-| Verb | 120 | 135 |
-| Predicate | 100 | 115 |
-| Conjunction | 8 | 10 |
-| Ending | 60 | 70 |
-| Continuation | 1 | 1 |
+| Role                             | Minimum | Maximum |
+| -------------------------------- | ------: | ------: |
+| Noun                             |     150 |     165 |
+| Verb                             |     120 |     135 |
+| Predicate and modifier, combined |     100 |     115 |
+| Conjunction                      |       8 |      10 |
+| Ending                           |      60 |      70 |
+| Continuation                     |       1 |       1 |
 
 Each character has 20 to 30 unique character phrases. Its pool contains at
-least six nouns, four verbs, four predicates, one conjunction, and one ending.
-Each scene pool contains at least eight nouns, six verbs, five predicates, one
-conjunction, one ending, and the universal `[...]` continuation within its 25
-to 35 unique IDs. No character or scene owns another continuation.
+least six nouns, four verbs, four predicates or modifiers with at least one of
+each role, one conjunction, and one ending. Each scene pool contains at least
+eight nouns, six verbs, five predicates or modifiers with at least one of each
+role, one conjunction, one ending, and the universal `[...]` continuation
+within its 25 to 35 unique IDs. No character or scene owns another
+continuation.
 
 Each character has exactly one unique comeback line in each tier and three total.
 A comeback line cannot be reused by another character or tier. There is no

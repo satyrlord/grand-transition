@@ -26,7 +26,7 @@ describe('Hollywood Roast English grammar', () => {
   test('accepts the two minimum sentence forms', () => {
     const predicate = analyze([
       add('national-consensus'),
-      add('before-the-next-election'),
+      add('belongs-in-a-party-museum'),
     ]);
     const object = analyze([
       add('national-consensus'),
@@ -80,16 +80,16 @@ describe('Hollywood Roast English grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('coalition-and'),
         add('televised-revolution'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('coalition-and'),
         add('repackages'),
         add('televised-revolution'),
@@ -110,7 +110,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: {
         complete: true,
         state: 'CLAUSE_COMPLETE',
-        nextRoles: ['verb', 'predicate', 'conjunction', 'ending'],
+        nextRoles: ['verb', 'predicate', 'modifier', 'conjunction', 'ending'],
       },
     });
 
@@ -175,6 +175,38 @@ describe('Hollywood Roast English grammar', () => {
     });
   });
 
+  test('accepts modifiers only after a complete clause and keeps construction open', () => {
+    const result = analyze([
+      add('national-consensus'),
+      add('repackages'),
+      add('televised-revolution'),
+      add('before-the-next-election'),
+      add('behind-closed-doors'),
+    ]);
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        state: 'CLAUSE_COMPLETE',
+        nextRoles: ['modifier', 'conjunction', 'ending'],
+        publicText:
+          'A national consensus repackages a televised revolution before the next election behind closed doors',
+      },
+    });
+    expect(
+      analyze([add('national-consensus'), add('before-the-next-election')]),
+    ).toMatchObject({
+      accepted: false,
+      faults: [
+        {
+          state: 'SUBJECT_READY',
+          attempted: 'modifier',
+          expectedRoles: ['verb', 'predicate', 'conjunction'],
+        },
+      ],
+    });
+  });
+
   test('returns a typed grammar mistake for a role that does not fit', () => {
     expect(analyze([add('repackages')])).toEqual({
       accepted: false,
@@ -195,7 +227,7 @@ describe('Hollywood Roast English grammar', () => {
   test('a finisher ends a complete sentence immediately', () => {
     const result = analyze([
       add('national-consensus'),
-      add('before-the-next-election'),
+      add('belongs-in-a-party-museum'),
       add('by-emergency-ordinance'),
     ]);
     expect(result).toMatchObject({
@@ -205,7 +237,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'ENDED',
         punctuation: '.',
         publicText:
-          'A national consensus before the next election by emergency ordinance.',
+          'A national consensus belongs in a history museum by emergency ordinance.',
       },
     });
   });

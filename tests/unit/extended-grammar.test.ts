@@ -46,14 +46,14 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('archive-because'),
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
       ]),
     ).toMatchObject({
       accepted: true,
       analysis: {
         complete: false,
         state: 'CLAUSE_COMPLETE',
-        nextRoles: ['noun', 'conjunction'],
+        nextRoles: ['noun', 'modifier', 'conjunction'],
       },
     });
 
@@ -61,9 +61,9 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('archive-because'),
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('televised-revolution'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
@@ -93,7 +93,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('archive-because'),
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('by-emergency-ordinance'),
       ]),
     ).toMatchObject({
@@ -101,7 +101,7 @@ describe('Hollywood Roast extended grammar', () => {
       faults: [
         {
           state: 'CLAUSE_COMPLETE',
-          expectedRoles: ['noun', 'conjunction'],
+          expectedRoles: ['noun', 'modifier', 'conjunction'],
         },
       ],
     });
@@ -111,7 +111,7 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('archive-because'),
       ]),
     ).toMatchObject({
@@ -121,7 +121,7 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('archive-because'),
         add('archive-because'),
       ]),
@@ -132,10 +132,38 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('archive-because'),
         add('televised-revolution'),
+        add('belongs-in-a-party-museum'),
+      ]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+  });
+
+  test('keeps the required main clause after a subordinate-clause modifier', () => {
+    expect(
+      analyze([
+        add('archive-because'),
+        add('national-consensus'),
+        add('belongs-in-a-party-museum'),
         add('before-the-next-election'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: false,
+        state: 'CLAUSE_COMPLETE',
+        nextRoles: ['noun', 'modifier', 'conjunction'],
+      },
+    });
+    expect(
+      analyze([
+        add('archive-because'),
+        add('national-consensus'),
+        add('belongs-in-a-party-museum'),
+        add('before-the-next-election'),
+        add('televised-revolution'),
+        add('makes-own-voters-change-the-channel'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
@@ -147,12 +175,12 @@ describe('Hollywood Roast extended grammar', () => {
         analyze([
           add('archive-because'),
           add('national-consensus'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
           add(connector),
           add('televised-revolution'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
           add('national-salvation-committee'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
@@ -164,11 +192,11 @@ describe('Hollywood Roast extended grammar', () => {
       expect(
         analyze([
           add('national-consensus'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
           add(connector),
           add('archive-because'),
           add('televised-revolution'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
@@ -178,10 +206,10 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('chamber-yet'),
         add('televised-revolution'),
-        add('on-public-television'),
+        add('makes-own-voters-change-the-channel'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
@@ -196,7 +224,7 @@ describe('Hollywood Roast extended grammar', () => {
       expect(
         analyze([
           add('national-consensus'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
           add(connector),
         ]),
       ).toMatchObject({
@@ -206,10 +234,10 @@ describe('Hollywood Roast extended grammar', () => {
       expect(
         analyze([
           add('national-consensus'),
-          add('before-the-next-election'),
+          add('belongs-in-a-party-museum'),
           add(connector),
           add('televised-revolution'),
-          add('on-public-television'),
+          add('makes-own-voters-change-the-channel'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
@@ -219,7 +247,7 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('under-the-national-banner'),
       ]),
     ).toMatchObject({
@@ -232,7 +260,7 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('before-the-next-election'),
+        add('belongs-in-a-party-museum'),
         add('by-emergency-ordinance'),
         add('national-consensus'),
       ]),

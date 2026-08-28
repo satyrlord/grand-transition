@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["legacy", "modernity", "bureaucracy", "miners"],
   "comebacks": {
-    "weak": "Even your excuse requires another committee.",
-    "medium": "Your mandate has been postponed for lack of substance.",
-    "strong": "History has filed your entire career under administrative error."
+    "weak": "My dear.",
+    "medium": "You animal.",
+    "strong": "And you have a servile mentality."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -86,17 +86,9 @@
     },
     {
       "id": "through-a-gradual-transition",
-      "role": "predicate",
+      "role": "modifier",
       "text": "through a gradual transition",
       "tags": ["modernity", "legacy"],
-      "scorePreferences": {
-        "substance": [
-          {
-            "left": ["bureaucracy"]
-          }
-        ],
-        "flavour": []
-      },
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -141,23 +133,6 @@
       }
     },
     {
-      "id": "your-red-stamped-family-album",
-      "role": "noun",
-      "text": "your red-stamped family album",
-      "tags": ["legacy", "evidence"],
-      "scoreGroups": {
-        "substance": ["family"],
-        "flavour": ["archive"]
-      },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional family-and-party image in the Chairman's transition-era voice. It identifies no private person. Editorial review complete."
-      }
-    },
-    {
       "id": "a-committee-room-fossil",
       "role": "noun",
       "text": "a committee-room fossil",
@@ -172,81 +147,6 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original political-obsolescence metaphor for a fictional persona. It does not target age or another protected trait. Editorial review complete."
-      }
-    },
-    {
-      "id": "your-transition-godfather",
-      "role": "noun",
-      "text": "your transition godfather",
-      "tags": ["legacy", "credibility"],
-      "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["transition"]
-      },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional political-patron metaphor. It names no real person and alleges no crime. Editorial review complete."
-      }
-    },
-    {
-      "id": "that-velvet-apparatchik",
-      "role": "noun",
-      "text": "that velvet apparatchik",
-      "tags": ["legacy", "authenticity"],
-      "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["status"]
-      },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional transition-era party caricature in the Chairman's measured voice. Not a quotation. Editorial review complete."
-      }
-    },
-    {
-      "id": "a-funeral-wreath-with-party-card",
-      "role": "noun",
-      "text": "a funeral wreath with a party card",
-      "tags": ["legacy", "decorum"],
-      "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["ceremony"]
-      },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original absurd ceremonial metaphor for a fictional political persona. It is not a threat or a claim about a death. Editorial review complete."
-      }
-    },
-    {
-      "id": "chairman-buries",
-      "role": "verb",
-      "text": "buries",
-      "singularText": "buries",
-      "pluralText": "bury",
-      "tags": ["legacy", "bureaucracy"],
-      "scorePreferences": {
-        "substance": [
-          {
-            "left": ["politics", "bureaucracy"],
-            "right": ["personal", "electoral"]
-          }
-        ],
-        "flavour": []
-      },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original metaphorical debate verb in the Chairman's fictional procedural voice. It does not describe physical harm. Editorial review complete."
       }
     },
     {
@@ -270,6 +170,286 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "the-nordic-model",
+      "role": "noun",
+      "text": "the Nordic model",
+      "tags": ["modernity", "credibility"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["social-policy"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original policy noun in the Red-Folded Chairman's fictional transition voice. It names no real person or party and is not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "socialism-with-a-human-face",
+      "role": "noun",
+      "text": "socialism with a human face",
+      "tags": ["legacy", "restraint"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["ideology"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ideological noun in the Red-Folded Chairman's transition voice. It names no real person or party and is not presented as a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-free-thinker",
+      "role": "noun",
+      "text": "a free-thinker",
+      "tags": ["modernity", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["independence"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original character contrast for fictional political satire. It targets no protected trait and names no real person. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-dictatorship",
+      "role": "noun",
+      "text": "a dictatorship",
+      "tags": ["legacy", "bureaucracy"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["institution"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original institutional noun for fictional political satire. It names no real regime, person, or party. Editorial review complete."
+      }
+    },
+    {
+      "id": "the-working-class",
+      "role": "noun",
+      "text": "the working class",
+      "tags": ["legacy", "credibility"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["class"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original social-policy noun for fictional political satire. It targets no protected trait and names no real person or party. Editorial review complete."
+      }
+    },
+    {
+      "id": "some-hooligans",
+      "role": "noun",
+      "text": "some hooligans",
+      "grammaticalNumber": "plural",
+      "tags": ["decorum", "restraint"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["crowd"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original crowd noun for fictional political satire. It names no real group or person and targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "scientific-socialism",
+      "role": "noun",
+      "text": "scientific socialism",
+      "tags": ["legacy", "bureaucracy"],
+      "scoreGroups": {
+        "substance": ["politics"],
+        "flavour": ["ideology"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original ideological noun in the Red-Folded Chairman's fictional transition voice. It names no real person or party and is not a quotation. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-screwdriver-between-the-ribs",
+      "role": "noun",
+      "text": "a screwdriver between the ribs",
+      "tags": ["decorum", "restraint"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["physical-metaphor"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original absurd physical-image noun for fictional political satire. It is not an instruction, threat, or claim about a real act. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-dumbass",
+      "role": "noun",
+      "text": "a dumbass",
+      "tags": ["decorum", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["insult"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original direct insult for a fictional political persona. It targets no protected trait and names no real person. Editorial review complete."
+      }
+    },
+    {
+      "id": "an-animal",
+      "role": "noun",
+      "text": "an animal",
+      "tags": ["decorum", "restraint"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["animal-metaphor"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-historical-blunder",
+      "role": "noun",
+      "text": "a historical blunder",
+      "tags": ["legacy", "credibility"],
+      "scoreGroups": {
+        "substance": ["history"],
+        "flavour": ["failure"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original historical-failure noun for fictional political satire. It makes no claim about a real person or event. Editorial review complete."
+      }
+    },
+    {
+      "id": "rich-and-dishonest",
+      "role": "modifier",
+      "text": "rich and dishonest",
+      "tags": ["credibility", "evidence"],
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional modifier about hypocrisy and wealth. It targets fictional persona behavior, not a protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-rooster",
+      "role": "noun",
+      "text": "a rooster",
+      "tags": ["decorum", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["animal-metaphor"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-monkey",
+      "role": "noun",
+      "text": "a monkey",
+      "tags": ["decorum", "restraint"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["animal-metaphor"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-naughty-boy",
+      "role": "noun",
+      "text": "a naughty boy",
+      "tags": ["restraint", "credibility"],
+      "scoreGroups": {
+        "substance": ["personal"],
+        "flavour": ["behavior"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original patronizing noun for fictional political satire. It contains no sexual framing and targets no protected trait. Editorial review complete."
+      }
+    },
+    {
+      "id": "the-dacs-that-come-from-the-tracs",
+      "role": "ending",
+      "text": "and the Dacs that come from the Tracs.",
+      "tags": ["legacy", "credibility"],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original Romanian-flavored historical pun for fictional transition satire. It names no real person or party and uses English context for clarity. Editorial review complete."
+      }
+    },
+    {
+      "id": "and-thats-the-synergy-of-facts",
+      "role": "ending",
+      "text": "and that's the synergy of facts.",
+      "tags": ["evidence", "bureaucracy"],
+      "rarity": "uncommon",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original procedural-media ending in the Red-Folded Chairman's fictional transition voice. It targets no real person or party. Editorial review complete."
       }
     }
   ],

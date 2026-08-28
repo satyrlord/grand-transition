@@ -108,8 +108,8 @@ function started(): MatchState {
 function finishDraft(
   state: MatchState,
   predicateByPlayer: Readonly<Record<string, string>> = {
-    [playerIds[0]]: 'before-the-next-election',
-    [playerIds[1]]: 'before-the-next-election',
+    [playerIds[0]]: 'belongs-in-a-party-museum',
+    [playerIds[1]]: 'belongs-in-a-party-museum',
   },
   nounByPlayer: Readonly<Record<string, string>> = {
     [playerIds[0]]: 'national-consensus',
@@ -258,7 +258,17 @@ describe('Hollywood Roast match lifecycle', () => {
       ),
     };
     state = lifecycle(state, 'prepare-round');
-    state = finishDraft(state);
+    state = finishDraft(
+      state,
+      {
+        [playerIds[0]]: 'makes-own-voters-change-the-channel',
+        [playerIds[1]]: 'belongs-in-a-party-museum',
+      },
+      {
+        [playerIds[0]]: 'televised-revolution',
+        [playerIds[1]]: 'national-consensus',
+      },
+    );
     state = lifecycle(state, 'resolve-round');
     expect(state.phase).toBe('results');
     expect(state.winner).toBe(playerIds[0]);
@@ -291,8 +301,8 @@ describe('Hollywood Roast match lifecycle', () => {
     state = finishDraft(
       state,
       {
-        [playerIds[0]]: 'before-the-next-election',
-        [playerIds[1]]: 'before-the-next-election',
+        [playerIds[0]]: 'belongs-in-a-party-museum',
+        [playerIds[1]]: 'belongs-in-a-party-museum',
       },
       {
         [playerIds[0]]: 'national-consensus',

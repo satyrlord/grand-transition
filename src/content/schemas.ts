@@ -25,6 +25,7 @@ export const phraseRoles = [
   'noun',
   'verb',
   'predicate',
+  'modifier',
   'conjunction',
   'ending',
   'continuation',

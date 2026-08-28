@@ -161,7 +161,7 @@ function completeFirst(state = prepared()): DraftState {
   state = selectPrivate(
     state,
     playerIds[0],
-    'before-the-next-election',
+    'belongs-in-a-party-museum',
     'predicate',
   );
   return state;
@@ -409,6 +409,34 @@ describe('Hollywood Roast draft actions', () => {
     expect(selected.activePlayerId).toBe(playerIds[1]);
   });
 
+  test('accepts a modifier after a complete clause without ending construction', () => {
+    let state = completeFirst();
+    state = selectPrivate(
+      state,
+      playerIds[1],
+      'televised-revolution',
+      'other-subject',
+    );
+    state = selectPrivate(
+      state,
+      playerIds[0],
+      'before-the-next-election',
+      'modifier',
+    );
+
+    expect(state.playerStates[playerIds[0]]!.construction).toMatchObject({
+      status: 'building',
+      grammarMistakes: 0,
+      lastGrammarMistakePhraseId: null,
+      analysis: {
+        complete: true,
+        publicText:
+          'A national consensus belongs in a history museum before the next election',
+        nextRoles: ['modifier', 'conjunction', 'ending'],
+      },
+    });
+  });
+
   test('selecting a continuation at any point carries the current fragment and ends that player for the round', () => {
     const selected = selectPrivate(
       prepared(),
@@ -462,11 +490,11 @@ describe('Hollywood Roast draft actions', () => {
       selectedComebackTier: 'strong',
     });
     expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
-      /\. History has filed your entire career under administrative error\.$/u,
+      /\. And you have a servile mentality\.$/u,
     );
     expect(
       state.playerStates[playerIds[0]]!.construction.analysis.publicText,
-    ).not.toContain('History has filed your entire career');
+    ).not.toContain('And you have a servile mentality');
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
   });
 

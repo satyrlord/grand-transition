@@ -251,7 +251,7 @@
     {
       "id": "bring-me-the-studio-phone",
       "role": "ending",
-      "text": "and now bring me the studio phone, you imbecile.",
+      "text": "and now fetch my phone, you imbecile.",
       "tags": ["decorum", "restraint"],
       "rarity": "rare",
       "finisherBonus": 4,

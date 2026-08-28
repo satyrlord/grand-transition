@@ -15,7 +15,7 @@ export type EnglishGrammarState = (typeof englishGrammarStates)[number];
 export type GrammaticalNumber = 'singular' | 'plural';
 export type EnglishGrammarRole = Extract<
   Phrase['role'],
-  'noun' | 'verb' | 'predicate' | 'conjunction' | 'ending'
+  'noun' | 'verb' | 'predicate' | 'modifier' | 'conjunction' | 'ending'
 >;
 
 export type EnglishGrammarPhrase = Readonly<{
@@ -99,7 +99,7 @@ const nextRolesByState: Readonly<
   SUBJECT_READY: ['verb', 'predicate', 'conjunction'],
   EXPECT_OBJECT: ['noun'],
   EXPECT_AFTER_CONJUNCTION: ['noun', 'verb', 'predicate'],
-  CLAUSE_COMPLETE: ['conjunction', 'ending'],
+  CLAUSE_COMPLETE: ['modifier', 'conjunction', 'ending'],
   ENDED: [],
 };
 
@@ -235,6 +235,9 @@ function transition(
       : null;
   }
   if (role === 'continuation') return null;
+  if (role === 'modifier') {
+    return context.state === 'CLAUSE_COMPLETE' ? context : null;
+  }
 
   if (role === 'conjunction') {
     const kind = phrase.connectorKind;
@@ -421,10 +424,10 @@ function transition(
 
 function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
   if (context.state === 'CLAUSE_COMPLETE' && context.frontBecausePending) {
-    return ['noun', 'conjunction'];
+    return ['noun', 'modifier', 'conjunction'];
   }
   if (context.state === 'CLAUSE_COMPLETE' && context.compoundObjectComplete) {
-    return ['verb', 'predicate', 'conjunction', 'ending'];
+    return ['verb', 'predicate', 'modifier', 'conjunction', 'ending'];
   }
   if (context.state === 'EXPECT_SUBJECT') {
     return context.conjunctionFromSubject || context.connectorAwaitingSubject

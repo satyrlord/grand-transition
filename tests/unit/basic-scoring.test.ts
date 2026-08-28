@@ -38,23 +38,23 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
 
 describe('Hollywood Roast clause scoring', () => {
   test('scores semantic compatibility instead of summing card values', () => {
-    const result = score(['national-consensus', 'before-the-next-election']);
-    expect(result.finalDamage).toBe(5);
+    const result = score(['national-consensus', 'belongs-in-a-party-museum']);
+    expect(result.finalDamage).toBe(1);
     expect(result.breakdown).toContainEqual({
       kind: 'clause-base',
       operation: 'note',
-      phraseIds: ['national-consensus', 'before-the-next-election'],
-      amount: 5,
+      phraseIds: ['national-consensus', 'belongs-in-a-party-museum'],
+      amount: 1,
     });
   });
 
   test('supports flavour matches and exact noun-specific score overrides', () => {
     const baseAnalysis = analysis([
       'national-consensus',
-      'before-the-next-election',
+      'belongs-in-a-party-museum',
     ]);
     const flavourPhrases = sampleContent.phrases.map((phrase) =>
-      phrase.id === 'before-the-next-election'
+      phrase.id === 'belongs-in-a-party-museum'
         ? {
             ...phrase,
             scorePreferences: {
@@ -74,7 +74,7 @@ describe('Hollywood Roast clause scoring', () => {
     ).toBe(3);
 
     const customPhrases = flavourPhrases.map((phrase) =>
-      phrase.id === 'before-the-next-election'
+      phrase.id === 'belongs-in-a-party-museum'
         ? {
             ...phrase,
             customScores: [{ leftNounId: 'national-consensus', score: 9 }],
@@ -93,9 +93,9 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('applies a weakness multiplier to the matching clause only', () => {
     expect(
-      score(['national-consensus', 'before-the-next-election'], ['restraint'])
+      score(['national-consensus', 'belongs-in-a-party-museum'], ['restraint'])
         .finalDamage,
-    ).toBe(10);
+    ).toBe(2);
   });
 
   test('applies 1.5 for each scene- or character-restricted phrase before weakness', () => {
@@ -113,15 +113,62 @@ describe('Hollywood Roast clause scoring', () => {
     );
   });
 
+  test('keeps a modifier in the preceding clause for restriction and weakness scoring', () => {
+    const ids = [
+      'national-consensus',
+      'belongs-in-a-party-museum',
+      'before-the-next-election',
+    ] as const;
+    const phrases = sampleContent.phrases.map((phrase) =>
+      phrase.id === 'before-the-next-election'
+        ? {
+            ...phrase,
+            sceneIds: ['transition-era-television-studio'],
+          }
+        : phrase,
+    );
+    const result = scoreBasicConstruction({
+      analysis: analysis(ids),
+      phrases,
+      defenderWeaknessTags: ['consistency'],
+      balance: basicScoringBalance,
+    });
+
+    expect(result.finalDamage).toBe(4);
+    expect(
+      result.breakdown.filter((item) => item.kind === 'clause-base'),
+    ).toHaveLength(1);
+    expect(result.breakdown).toContainEqual({
+      kind: 'clause-base',
+      operation: 'note',
+      phraseIds: ids,
+      amount: 1,
+    });
+    expect(result.breakdown).toContainEqual(
+      expect.objectContaining({
+        kind: 'restriction-multiplier',
+        phraseIds: ids,
+        factor: 1.5,
+      }),
+    );
+    expect(result.breakdown).toContainEqual(
+      expect.objectContaining({
+        kind: 'weakness-match',
+        defenderTag: 'consistency',
+        phraseId: 'before-the-next-election',
+      }),
+    );
+  });
+
   test('adds the scores of compound-subject clauses', () => {
     expect(
       score([
         'national-consensus',
         'coalition-and',
         'televised-revolution',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(6);
+    ).toBe(2);
   });
 
   test('adds the scores of compound-object clauses', () => {
@@ -141,11 +188,11 @@ describe('Hollywood Roast clause scoring', () => {
       score([
         'archive-because',
         'national-consensus',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
         'televised-revolution',
-        'on-public-television',
+        'makes-own-voters-change-the-channel',
       ]).finalDamage,
-    ).toBe(10);
+    ).toBe(6);
   });
 
   test('scores each extended front-because clause once before the main clause', () => {
@@ -153,14 +200,14 @@ describe('Hollywood Roast clause scoring', () => {
       score([
         'archive-because',
         'national-consensus',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
         'coalition-and',
         'televised-revolution',
-        'on-public-television',
+        'makes-own-voters-change-the-channel',
         'coalition-protocol',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(15);
+    ).toBe(7);
   });
 
   test('does not reuse an object relation after a shared-subject subordinate extension', () => {
@@ -171,11 +218,11 @@ describe('Hollywood Roast clause scoring', () => {
         'repackages',
         'televised-revolution',
         'coalition-and',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
         'coalition-protocol',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(11);
+    ).toBe(3);
   });
 
   test('an incomplete sentence deals zero damage and has no clause score', () => {
