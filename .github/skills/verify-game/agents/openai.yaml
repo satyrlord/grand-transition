@@ -1,6 +1,6 @@
 interface:
-  display_name: "Verify Game"
-  short_description: "Verify the production browser game"
-  default_prompt: "Use $verify-game to collect production-build evidence for this Grand Transition behavior."
+  display_name: 'Verify Game'
+  short_description: 'Verify the production browser game'
+  default_prompt: 'Use $verify-game to collect production-build evidence for this Grand Transition behavior.'
 policy:
   allow_implicit_invocation: true

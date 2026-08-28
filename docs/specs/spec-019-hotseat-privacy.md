@@ -20,6 +20,15 @@ sentence fragments stay visible.
 Hidden values must not exist in tooltips, labels, logs, stale Document Object
 Model (DOM) content, queued speech, previews, or private history.
 
+## Application-session architecture note
+
+Before implementation, evaluate whether command reduction, automatic lifecycle
+advancement, retained round-review state, and privacy handover need one non-Lit
+application-session owner. Add this boundary only if it concentrates those
+responsibilities and reduces what the application shell must know. The shell
+must remain the only owner of the active immutable snapshot. Do not add a
+wrapper that only forwards commands or duplicates shell state.
+
 ## Handover state contract
 
 With privacy on, each active-player change synchronously cancels speech, removes

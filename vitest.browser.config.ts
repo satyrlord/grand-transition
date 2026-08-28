@@ -1,5 +1,6 @@
 import { playwright } from '@vitest/browser-playwright';
 import { existsSync, readdirSync } from 'node:fs';
+import { createServer } from 'node:net';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 
@@ -11,6 +12,7 @@ const pureFileThresholds = Object.fromEntries(
       { statements: 90, branches: 85, functions: 90, lines: 90 },
     ]),
 );
+const browserApiPort = await findAvailableLoopbackPort();
 
 export default defineConfig({
   test: {
@@ -25,12 +27,17 @@ export default defineConfig({
       'tests/unit/english-grammar-core.test.ts',
       'tests/unit/extended-grammar.test.ts',
       'tests/unit/match-lifecycle.test.ts',
+      'tests/unit/match-screen-snapshot.test.ts',
       'tests/unit/replay-and-simulation.test.ts',
       'tests/unit/viewport-support.test.ts',
     ],
     browser: {
       enabled: true,
       headless: true,
+      api: {
+        host: '127.0.0.1',
+        port: browserApiPort,
+      },
       provider: playwright({
         launchOptions: {
           headless: true,
@@ -63,5 +70,25 @@ function listTypeScriptFiles(root: string): string[] {
       : entry.isFile() && entry.name.endsWith('.ts')
         ? [file]
         : [];
+  });
+}
+
+function findAvailableLoopbackPort(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.unref();
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address();
+      if (!address || typeof address === 'string') {
+        server.close();
+        reject(new Error('Vitest could not reserve a local browser API port.'));
+        return;
+      }
+      server.close((error) => {
+        if (error) reject(error);
+        else resolve(address.port);
+      });
+    });
   });
 }

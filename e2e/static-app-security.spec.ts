@@ -188,6 +188,31 @@ test('production omits developer controls from the DOM and bundle', async ({
   );
 });
 
+test('production bundles only English and Romanian font subsets', async () => {
+  const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
+  const assetFiles = await readdir(assetsDirectory);
+  const variableFontFiles = assetFiles.filter((file) =>
+    /^(?:nunito|rubik)-.*\.woff2$/u.test(file),
+  );
+
+  expect(variableFontFiles).toHaveLength(4);
+  for (const font of ['nunito', 'rubik']) {
+    expect(
+      variableFontFiles.some((file) =>
+        file.startsWith(`${font}-latin-wght-normal-`),
+      ),
+    ).toBe(true);
+    expect(
+      variableFontFiles.some((file) =>
+        file.startsWith(`${font}-latin-ext-wght-normal-`),
+      ),
+    ).toBe(true);
+  }
+  expect(assetFiles.join('\n')).not.toMatch(
+    /arabic|cyrillic|hebrew|vietnamese/u,
+  );
+});
+
 test('development click audit correlates one shared phrase selection', async ({
   page,
 }) => {

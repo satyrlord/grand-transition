@@ -28,6 +28,7 @@ export function createSampleContent(
         descriptionKey: 'scene.transition-era-television-studio.description',
         backgroundLayers: [
           { media: media('transition-era-television-studio'), depth: 0 },
+          { media: media('transition-era-television-studio-desks'), depth: 1 },
         ],
         animationId: 'transition-era-studio-lights',
         music: media('transition-era-television-studio-theme'),

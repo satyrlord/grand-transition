@@ -1,6 +1,6 @@
 interface:
-  display_name: "Dead Code Audit"
-  short_description: "Prove reachability before removal"
-  default_prompt: "Use $dead-code-audit to audit this Grand Transition scope for proven dead items."
+  display_name: 'Dead Code Audit'
+  short_description: 'Prove reachability before removal'
+  default_prompt: 'Use $dead-code-audit to audit this Grand Transition scope for proven dead items.'
 policy:
   allow_implicit_invocation: true

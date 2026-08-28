@@ -56,7 +56,8 @@ Private hotseat content must remain private during handovers.
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas, an English game-locale bundle,
   three original fictional characters, Romanian-politics phrase content,
-  separate transparent portraits, and a character-free studio.
+  separate transparent portraits, and a layered late-2000s municipal studio
+  with one fixed fictional moderator and a foreground desk plate.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, one common board,
   private hands, clause scoring, noun combos, continuations, comebacks,

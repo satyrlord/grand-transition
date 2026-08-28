@@ -31,7 +31,8 @@ political labels only and never define anatomy, species, or hybrid traits.
    and credibility. The play style uses denial and weakness targeting.
 5. **Black Sea Captain:** A salty practical statesman and former ship captain.
    Weaknesses are decorum, consistency, and Securitate references. The play
-   style uses adaptive comebacks.
+   style uses adaptive comebacks. His portrait uses a warm-cream naval officer
+   uniform and cap with one unbranded cigar. It uses no wheel or helm prop.
 6. **Retiring Cassandra:** A weary reformist. Weaknesses are competence, hope,
    and results. The play style uses defensive continuations and conservative
    scoring.
@@ -74,10 +75,14 @@ political labels only and never define anatomy, species, or hybrid traits.
 
 ## Required scenes
 
-- **Transition-Era Television Studio:** The scene contains heavy curtains,
-  cathode-ray tube (CRT) monitors, geometric carpet, desk microphones, harsh
-  lamps, and analog instability. Its phrase themes are transition, public
-  television, revolution, archive, emergency broadcast, and national salvation.
+- **Transition-Era Television Studio:** The late-2000s municipal studio contains
+  heavy blue and burgundy curtains, faux-marble columns, patterned carpet,
+  lighting trusses, two tall standing desks, desk microphones, harsh lamps, and
+  one fixed blonde fictional moderator at a physical wood-and-brass desk on a
+  raised inner-left platform. Exactly four full-height columns frame the studio.
+  The playable characters remain separate portrait layers. Its phrase themes
+  are transition, public television, revolution, archive, emergency broadcast,
+  and national salvation.
 - **County Council Ballroom:** The scene contains municipal ornament, plastic
   flowers, fake marble, ribbon banners, catering, and suspiciously new equipment.
   Its phrase themes are procurement, relatives, contracts, infrastructure, and

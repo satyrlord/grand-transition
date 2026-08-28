@@ -98,6 +98,29 @@ describe('quality-gate scaffold', () => {
     expect(contentValidation).toContain('tests/unit/content-schemas.test.ts');
   });
 
+  test('validates raster provenance and the green chroma workflow', async () => {
+    const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
+      scripts: Record<string, string>;
+    };
+
+    expect(packageJson.scripts['assets:validate']).toContain(
+      '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets',
+    );
+    expect(packageJson.scripts['assets:convert-green']).toContain(
+      '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree',
+    );
+  });
+
+  test('formats repository skill scripts and metadata', async () => {
+    const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
+      scripts: Record<string, string>;
+    };
+
+    expect(packageJson.scripts['format:check']).toContain(
+      '.github/skills/**/*.{mjs,yml,yaml}',
+    );
+  });
+
   test('uses the TypeScript 7 type-aware linter', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;

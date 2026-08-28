@@ -34,7 +34,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
         },
       ) => match.snapshot?.timer.durationSeconds,
     ),
-  ).toBe(15);
+  ).toBe(30);
   await expect(
     page.getByRole('navigation', { name: 'Turn actions' }),
   ).toBeVisible();
@@ -280,8 +280,18 @@ test('the longest desktop match state fits and exposes every required fact', asy
   const alphaFacts = await portraitAlphaFacts(portraits);
   expect(
     alphaFacts.every(
-      ({ cornerAlpha, opaqueRatio, transparentRatio }) =>
+      ({
+        bottomRowOpaqueRatio,
+        chromaKeyGreenRatio,
+        cornerAlpha,
+        lowerThirdOpaqueRatio,
+        opaqueRatio,
+        transparentRatio,
+      }) =>
         cornerAlpha.every((alpha) => alpha === 0) &&
+        bottomRowOpaqueRatio < 0.02 &&
+        chromaKeyGreenRatio === 0 &&
+        lowerThirdOpaqueRatio > 0.02 &&
         transparentRatio > 0.2 &&
         opaqueRatio > 0.2,
     ),
@@ -295,6 +305,50 @@ test('the longest desktop match state fits and exposes every required fact', asy
       ),
     )
     .toBe(true);
+  const [backgroundPixels] = await portraitAlphaFacts(backgroundScene);
+  expect(backgroundPixels?.chromaKeyGreenRatio).toBe(0);
+  const foregroundScene = page.locator('.broadcast-stage-foreground');
+  await expect(foregroundScene).toBeVisible();
+  await expect(foregroundScene).toHaveAttribute(
+    'data-scene-asset',
+    'transition-era-television-studio-desks',
+  );
+  await expect
+    .poll(() =>
+      foregroundScene.evaluate(
+        (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  const [foregroundAlpha] = await portraitAlphaFacts(foregroundScene);
+  expect(
+    foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0) &&
+      foregroundAlpha.transparentRatio > 0.7 &&
+      foregroundAlpha.opaqueRatio > 0.15,
+  ).toBe(true);
+  const sceneStack = await page.evaluate(() => ({
+    background: Number(
+      getComputedStyle(document.querySelector('.broadcast-stage-art')!).zIndex,
+    ),
+    portrait: Number(
+      getComputedStyle(document.querySelector('.character-portrait')!).zIndex,
+    ),
+    foreground: Number(
+      getComputedStyle(document.querySelector('.broadcast-stage-foreground')!)
+        .zIndex,
+    ),
+    playerHud: Number(
+      getComputedStyle(document.querySelector('.player-hud')!).zIndex,
+    ),
+  }));
+  expect(sceneStack.background).toBeLessThan(sceneStack.portrait);
+  expect(sceneStack.portrait).toBeLessThan(sceneStack.foreground);
+  expect(sceneStack.foreground).toBeLessThan(sceneStack.playerHud);
+  expect(
+    await foregroundScene.evaluate(
+      (image) => image.getBoundingClientRect().bottom > window.innerHeight,
+    ),
+  ).toBe(true);
   const parityGeometry = await page.evaluate(() => ({
     documentWidth: document.documentElement.scrollWidth,
     documentHeight: document.documentElement.scrollHeight,
@@ -354,12 +408,243 @@ test('the selected roster characters load their local portrait assets', async ({
   ).toBe(true);
   expect(
     (await portraitAlphaFacts(portraits)).every(
-      ({ cornerAlpha, opaqueRatio, transparentRatio }) =>
+      ({
+        bottomRowOpaqueRatio,
+        chromaKeyGreenRatio,
+        cornerAlpha,
+        lowerThirdOpaqueRatio,
+        opaqueRatio,
+        transparentRatio,
+      }) =>
         cornerAlpha.every((alpha) => alpha === 0) &&
+        bottomRowOpaqueRatio < 0.02 &&
+        chromaKeyGreenRatio === 0 &&
+        lowerThirdOpaqueRatio > 0.02 &&
         transparentRatio > 0.2 &&
         opaqueRatio > 0.2,
     ),
   ).toBe(true);
+});
+
+test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
+  await startMatch(page);
+  const portraits = page.locator('.character-portrait');
+  await expect(portraits).toHaveCount(2);
+  await expect
+    .poll(() =>
+      portraits.evaluateAll((images: HTMLImageElement[]) =>
+        images.every(
+          (image) =>
+            image.complete &&
+            image.naturalWidth === 1024 &&
+            image.naturalHeight === 1536,
+        ),
+      ),
+    )
+    .toBe(true);
+  const portraitPixelFacts = await portraitAlphaFacts(portraits);
+
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1400, height: 1050 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const composition = await page.evaluate(() => {
+      const stage = document
+        .querySelector('.broadcast-stage')!
+        .getBoundingClientRect();
+      const sentence = document
+        .querySelector('.sentence-ledger')!
+        .getBoundingClientRect();
+      const sentenceTail = getComputedStyle(
+        document.querySelector('.sentence-ledger')!,
+        '::after',
+      );
+      const sentenceBubbleBottom =
+        sentence.bottom - Number.parseFloat(sentenceTail.bottom);
+      return [...document.querySelectorAll('.match-player')].map((player) => {
+        const frame = player
+          .querySelector('.character-frame')!
+          .getBoundingClientRect();
+        const portraitImage = player.querySelector<HTMLImageElement>(
+          '.character-portrait',
+        )!;
+        const portrait = portraitImage.getBoundingClientRect();
+        const hud = player
+          .querySelector('.player-hud')!
+          .getBoundingClientRect();
+        return {
+          portraitTopRatio: (portrait.top - frame.top) / frame.height,
+          portraitHeightRatio: portrait.height / frame.height,
+          portraitTop: portrait.top,
+          portraitHeight: portrait.height,
+          renderedWidthRatio:
+            (portrait.height *
+              (portraitImage.naturalWidth / portraitImage.naturalHeight)) /
+            frame.height,
+          portraitBottomRatio: portrait.bottom / stage.height,
+          naturalWidth: portraitImage.naturalWidth,
+          naturalHeight: portraitImage.naturalHeight,
+          sentenceBubbleBottom,
+          clearsHud: portrait.top > hud.bottom,
+        };
+      });
+    });
+
+    expect(
+      composition.every(
+        (
+          {
+            portraitTopRatio,
+            portraitHeightRatio,
+            portraitTop,
+            portraitHeight,
+            renderedWidthRatio,
+            portraitBottomRatio,
+            naturalWidth,
+            naturalHeight,
+            sentenceBubbleBottom,
+            clearsHud,
+          },
+          index,
+        ) =>
+          Math.abs(portraitTopRatio - 0.3) < 0.01 &&
+          Math.abs(portraitHeightRatio - 0.84) < 0.01 &&
+          Math.abs(renderedWidthRatio - 0.56) < 0.01 &&
+          portraitBottomRatio > 1.1 &&
+          portraitBottomRatio < 1.15 &&
+          naturalWidth === 1024 &&
+          naturalHeight === 1536 &&
+          portraitTop +
+            portraitHeight * portraitPixelFacts[index]!.topOpaqueRatio >=
+            sentenceBubbleBottom &&
+          clearsHud,
+      ),
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
+  }
+});
+
+test('uses the revised Thunder Tribune head proportion', async ({ page }) => {
+  await startMatch(page);
+  const portrait = page.locator(
+    'img.character-portrait[src*="thunder-tribune"]',
+  );
+  await expect
+    .poll(() =>
+      portrait.evaluate(
+        (image: HTMLImageElement) =>
+          image.complete &&
+          image.naturalWidth === 1024 &&
+          image.naturalHeight === 1536,
+      ),
+    )
+    .toBe(true);
+
+  const headRegion = await portrait.evaluate((image: HTMLImageElement) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d', { willReadFrequently: true })!;
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, canvas.width, 250).data;
+    let minimumX = canvas.width;
+    let maximumX = -1;
+    let minimumY = 250;
+    for (let y = 0; y < 250; y += 1) {
+      for (let x = 400; x < 700; x += 1) {
+        if (pixels[(y * canvas.width + x) * 4 + 3] === 0) continue;
+        minimumX = Math.min(minimumX, x);
+        maximumX = Math.max(maximumX, x);
+        minimumY = Math.min(minimumY, y);
+      }
+    }
+    return {
+      minimumX,
+      minimumY,
+      width: maximumX - minimumX + 1,
+    };
+  });
+
+  expect(headRegion).toEqual({ minimumX: 421, minimumY: 49, width: 207 });
+});
+
+test('keeps the physical moderator face clear of drafting UI', async ({
+  page,
+}) => {
+  await startMatch(page);
+  const background = page.locator('.broadcast-stage-art');
+  await expect
+    .poll(() =>
+      background.evaluate(
+        (image: HTMLImageElement) =>
+          image.complete &&
+          image.naturalWidth === 1672 &&
+          image.naturalHeight === 941,
+      ),
+    )
+    .toBe(true);
+
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1400, height: 1050 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const faceClear = await page.evaluate(() => {
+      const background = document.querySelector<HTMLImageElement>(
+        '.broadcast-stage-art',
+      )!;
+      const backgroundBox = background.getBoundingClientRect();
+      const scale = Math.max(
+        backgroundBox.width / background.naturalWidth,
+        backgroundBox.height / background.naturalHeight,
+      );
+      const drawnWidth = background.naturalWidth * scale;
+      const drawnHeight = background.naturalHeight * scale;
+      const drawnLeft =
+        backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
+      const drawnTop =
+        backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
+      const moderatorFace = {
+        left: drawnLeft + drawnWidth * 0.342,
+        right: drawnLeft + drawnWidth * 0.365,
+        top: drawnTop + drawnHeight * 0.39,
+        bottom: drawnTop + drawnHeight * 0.45,
+      };
+      type RectEdges = Readonly<{
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+      }>;
+      const overlaps = (first: RectEdges, second: RectEdges) =>
+        first.left! < second.right &&
+        first.right! > second.left &&
+        first.top! < second.bottom &&
+        first.bottom! > second.top;
+      const draftingRegions = [
+        ...document.querySelectorAll(
+          '.match-status-rail, .player-hud, .sentence-ledger, .common-phrases, .player-sentence--waiting',
+        ),
+      ].map((element) => element.getBoundingClientRect());
+      return {
+        backgroundDimensions:
+          background.naturalWidth === 1672 && background.naturalHeight === 941,
+        clear: !draftingRegions.some((region) =>
+          overlaps(moderatorFace, region),
+        ),
+      };
+    });
+
+    expect(faceClear.backgroundDimensions).toBe(true);
+    expect(faceClear.clear, `${viewport.width}x${viewport.height}`).toBe(true);
+  }
 });
 
 test('the match fits the supported landscape matrix', async ({
@@ -379,7 +664,7 @@ test('the match fits the supported landscape matrix', async ({
         '700 16px "Rubik Variable"',
         'o ordonanță de urgență',
       ),
-      document.fonts.load('400 24px "Share Tech Mono"', '00:15'),
+      document.fonts.load('400 24px "Share Tech Mono"', '00:30'),
     ]);
     return {
       feature: getComputedStyle(document.querySelector('.match-player h2')!)
@@ -400,7 +685,7 @@ test('the match fits the supported landscape matrix', async ({
           '700 16px "Rubik Variable"',
           'o ordonanță de urgență',
         ),
-        timer: document.fonts.check('400 24px "Share Tech Mono"', '00:15'),
+        timer: document.fonts.check('400 24px "Share Tech Mono"', '00:30'),
       },
     };
   });
@@ -499,6 +784,7 @@ test('the match fits the supported landscape matrix', async ({
     expect(facts.sentence.text).toBe(longSentence);
     expect(facts.sentence.density).toBe('dense');
     expect(facts.sentence.textOverflow).not.toBe('ellipsis');
+    expect(await actionRailsUseBoardMargins(page)).toBe(true);
     expect(await centeredHeaderControls(page)).toBe(true);
     expect(
       await page
@@ -868,6 +1154,84 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
   );
 });
 
+test('paused match returns to the menu only after confirmation', async ({
+  page,
+}, testInfo) => {
+  await startMatch(page);
+  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Back to menu' }).click();
+
+  await expect(
+    page.getByRole('heading', { name: 'End this match?' }),
+  ).toBeVisible();
+  await expect(
+    page.getByText('Current match progress will be lost.'),
+  ).toBeVisible();
+  await expect(page.locator('.match-screen')).toHaveCount(0);
+  await expect(page.locator('.phrase-card')).toHaveCount(0);
+  await expect(page.locator('[data-timer]')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Stay paused' })).toBeFocused();
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const geometry = await page
+      .locator('.interruption-notice')
+      .evaluate((notice) => {
+        const viewportWidth = document.documentElement.clientWidth;
+        const viewportHeight = document.documentElement.clientHeight;
+        const noticeBox = notice.getBoundingClientRect();
+        const buttons = [...notice.querySelectorAll('button')].map((button) =>
+          button.getBoundingClientRect(),
+        );
+        return {
+          documentFits:
+            document.documentElement.scrollWidth <= viewportWidth &&
+            document.documentElement.scrollHeight <= viewportHeight,
+          noticeFits:
+            noticeBox.left >= 0 &&
+            noticeBox.top >= 0 &&
+            noticeBox.right <= viewportWidth &&
+            noticeBox.bottom <= viewportHeight,
+          controlsFit: buttons.every(
+            (button) =>
+              button.left >= noticeBox.left &&
+              button.top >= noticeBox.top &&
+              button.right <= noticeBox.right &&
+              button.bottom <= noticeBox.bottom,
+          ),
+        };
+      });
+    expect(geometry, `${viewport.width}x${viewport.height}`).toEqual({
+      controlsFit: true,
+      documentFits: true,
+      noticeFits: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `pause-exit-confirmation-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
+  }
+
+  await page.getByRole('button', { name: 'Stay paused' }).click();
+  await expect(page.getByRole('heading', { name: 'Paused' })).toBeVisible();
+  await page.getByRole('button', { name: 'Back to menu' }).click();
+  await page.getByRole('button', { name: 'End match' }).click();
+
+  await expect(
+    page.getByRole('heading', { name: 'Grand Transition' }),
+  ).toBeVisible();
+  await expect(page.locator('grand-transition-match')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Set up match' }),
+  ).toBeVisible();
+});
+
 async function startMatch(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
@@ -878,8 +1242,12 @@ async function startMatch(page: Page): Promise<void> {
 
 async function portraitAlphaFacts(portraits: Locator): Promise<
   readonly Readonly<{
+    bottomRowOpaqueRatio: number;
+    chromaKeyGreenRatio: number;
     cornerAlpha: readonly number[];
+    lowerThirdOpaqueRatio: number;
     opaqueRatio: number;
+    topOpaqueRatio: number;
     transparentRatio: number;
   }>[]
 > {
@@ -898,12 +1266,40 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
       ).data;
       let opaquePixels = 0;
       let transparentPixels = 0;
-      for (let alphaIndex = 3; alphaIndex < pixels.length; alphaIndex += 4) {
-        if (pixels[alphaIndex] === 0) transparentPixels += 1;
-        if (pixels[alphaIndex] === 255) opaquePixels += 1;
+      let bottomRowOpaquePixels = 0;
+      let chromaKeyGreenPixels = 0;
+      let lowerThirdOpaquePixels = 0;
+      let topOpaqueRow = canvas.height;
+      for (
+        let pixelIndex = 0;
+        pixelIndex < canvas.width * canvas.height;
+        pixelIndex += 1
+      ) {
+        const pixelOffset = pixelIndex * 4;
+        const alpha = pixels[pixelOffset + 3];
+        const row = Math.floor(pixelIndex / canvas.width);
+        if (alpha === 0) transparentPixels += 1;
+        if (alpha === 255) opaquePixels += 1;
+        if (alpha > 0 && row === canvas.height - 1) {
+          bottomRowOpaquePixels += 1;
+        }
+        if (alpha > 0 && row >= Math.floor((canvas.height * 2) / 3)) {
+          lowerThirdOpaquePixels += 1;
+        }
+        if (alpha > 0 && row < topOpaqueRow) topOpaqueRow = row;
+        if (
+          alpha > 0 &&
+          pixels[pixelOffset + 1] >= 180 &&
+          pixels[pixelOffset] <= 80 &&
+          pixels[pixelOffset + 2] <= 80
+        ) {
+          chromaKeyGreenPixels += 1;
+        }
       }
       const pixelCount = canvas.width * canvas.height;
       return {
+        bottomRowOpaqueRatio: bottomRowOpaquePixels / canvas.width,
+        chromaKeyGreenRatio: chromaKeyGreenPixels / pixelCount,
         cornerAlpha: [
           context.getImageData(0, 0, 1, 1).data[3],
           context.getImageData(canvas.width - 1, 0, 1, 1).data[3],
@@ -911,7 +1307,9 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
           context.getImageData(canvas.width - 1, canvas.height - 1, 1, 1)
             .data[3],
         ],
+        lowerThirdOpaqueRatio: lowerThirdOpaquePixels / pixelCount,
         opaqueRatio: opaquePixels / pixelCount,
+        topOpaqueRatio: topOpaqueRow / canvas.height,
         transparentRatio: transparentPixels / pixelCount,
       };
     }),
@@ -927,6 +1325,42 @@ async function topStatusRegionsDoNotOverlap(page: Page): Promise<boolean> {
       const box = hud.getBoundingClientRect();
       return box.right <= center.left || box.left >= center.right;
     });
+  });
+}
+
+async function actionRailsUseBoardMargins(page: Page): Promise<boolean> {
+  return page.evaluate(() => {
+    const board = document.querySelector<HTMLElement>('.draft-table');
+    const rail = document.querySelector<HTMLElement>('.match-actions');
+    if (!board || !rail) return false;
+
+    const boardBox = board.getBoundingClientRect();
+    const boardMargin =
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize) *
+      0.8;
+    const margins = (['red', 'blue'] as const).map((side) => {
+      const probe = rail.cloneNode(true) as HTMLElement;
+      probe.dataset.side = side;
+      probe.style.animation = 'none';
+      probe.style.visibility = 'hidden';
+      board.append(probe);
+      const railBox = probe.getBoundingClientRect();
+      probe.remove();
+      return {
+        side,
+        left: railBox.left - boardBox.left,
+        right: boardBox.right - railBox.right,
+      };
+    });
+
+    const red = margins.find(({ side }) => side === 'red')!;
+    const blue = margins.find(({ side }) => side === 'blue')!;
+    return (
+      Math.abs(red.left - blue.right) <= 1 &&
+      Math.abs(red.right - blue.left) <= 1 &&
+      Math.abs(red.left - boardMargin) <= 1 &&
+      Math.abs(blue.right - boardMargin) <= 1
+    );
   });
 }
 

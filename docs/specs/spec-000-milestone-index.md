@@ -23,7 +23,7 @@ complete an approved specification.
   match mechanics follow _Oh...Sir! The Hollywood Roast_: one common phrase
   board, two private hand cards, tactical phrase removal, its grammar,
   clause scoring, weaknesses, noun combos, finishers, continuations, comebacks,
-  Pride damage, 15-second picks, and cliffhangers.
+  Pride damage, 30-second picks, and cliffhangers.
 - Use only original Grand Transition phrases, characters, scenes, prose, art,
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression. The sourced English

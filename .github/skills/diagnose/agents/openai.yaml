@@ -1,6 +1,6 @@
 interface:
-  display_name: "Diagnose"
-  short_description: "Reproduce and isolate difficult failures"
-  default_prompt: "Use $diagnose to find the proven cause of this Grand Transition failure."
+  display_name: 'Diagnose'
+  short_description: 'Reproduce and isolate difficult failures'
+  default_prompt: 'Use $diagnose to find the proven cause of this Grand Transition failure.'
 policy:
   allow_implicit_invocation: true

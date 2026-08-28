@@ -9,11 +9,12 @@ interface (UI)
 ## Deliver
 
 Build the match surface as an original televised civic debate. Use one
-character-free, text-free rendered broadcast scene and one generated transparent
-portrait for each selected character. Each raster has embedded generation
-provenance.
+text-free rendered broadcast back scene with one fixed fictional moderator, one
+generated transparent portrait for each selected character, and one transparent
+foreground plate with two tall standing desks. The back scene contains no
+playable character. Each raster has embedded generation provenance.
 Keep all names, values, phrases, states, and controls in HTML. Show the
-board, private hand, sentence, turn, 15-second timer, Pride, comeback, hand
+board, private hand, sentence, turn, 30-second timer, Pride, comeback, hand
 refresh, sentence end, grammar-mistake feedback, and continuation selection.
 Support pointer use. Center the timer and dedicated Pause button together in
 the top-center stage frame during drafting and sudden death.
@@ -25,6 +26,20 @@ names and Pride meters at the top edges, and round, timer, and Pause state at
 the top center. A wide speech record crosses the stage without covering either
 face. Keep the two private choices and all nine common phrases in the central
 and lower play field. Put infrequent actions at the side or bottom edges.
+The End and Comeback rail follows the active side's board margin: the red rail
+is anchored to the left margin and the blue rail is anchored to the right
+margin.
+
+Render the scene in this order: studio and moderator, selected portraits,
+foreground standing desks, then Hypertext Markup Language (HTML) game content.
+The desks clip the lower bodies without fixing either selected character into
+the scene. Their fronts continue below the lower stage frame so the extracted
+bottom contours are not visible. Each portrait plane continues below the desk
+occlusion and near the lower stage edge. A hard lower portrait contour must not
+be visible beside either desk. Keep desk mass inside the lower third of the
+stage so the candidates remain dominant. Default characters and scene figures
+use normal adult height and body proportions. Use reduced stature only when an
+approved character contract explicitly requires it.
 
 Use one compact single-line archetype name, a visible Pride label, and a Pride
 bar for each portrait. Both top Pride frames are rectangular, with square
@@ -44,13 +59,14 @@ The visual direction uses the proven spatial logic in the user-supplied
 original-game references: opposing characters share one full-stage play field,
 status frames the top edge, speech spans the confrontation, sentence choices
 occupy the center, and secondary actions remain at the perimeter. Translate
-that logic into an original late-1990s post-socialist civic broadcast. Do not
-copy the reference art, exact ornament, fonts, labels, proportions, or
+that logic into an original late-2000s post-socialist municipal broadcast. Do
+not copy the reference art, exact ornament, fonts, labels, proportions, or
 interface assets. Use the approved roster names, original human characters,
 exact product content, and implemented actions. Milestone 023 owns final asset
 variants, font selection, and manifest delivery. This milestone can use the
-provenance-bearing rendered scene, three transparent interim Portable Network
-Graphics (PNG) portraits, and paper material.
+provenance-bearing rendered back scene, transparent foreground desk plate,
+three transparent interim Portable Network Graphics (PNG) portraits, and paper
+material.
 
 The phrase path follows the compact original-game interaction precedent. The
 nine common rows show phrase text only. The two private choices also show phrase
@@ -125,13 +141,17 @@ For timed turns, the visible value updates once per second. Zero dispatches one
 `expire-turn` command and disables further actions until the new snapshot
 arrives.
 
-Pause replaces the complete match DOM with a full-screen “Paused” surface and
-one Resume control. It reveals no board, hand, sentence, player, score, or timer
-value. It stops all match input and freezes the exact remaining turn time.
-Resume restores the unchanged match and restarts the timer from that value.
-Repeated pauses never add time. Pause has no quota because local players own
-the interruption. Concealment and exact timer preservation prevent state
-inspection or timer-refill abuse.
+Pause replaces the complete match DOM with a full-screen “Paused” surface. It
+provides Resume and a secondary “Back to menu” action. “Back to menu” replaces
+the Pause notice with a concealed confirmation that defaults to “Stay paused.”
+“End match” discards the active match and returns to the title menu. No exit
+action sends a match command or records a result. The Pause and confirmation
+states reveal no board, hand, sentence, player, score, or timer value. They stop
+all match input and freeze the exact remaining turn time. Resume restores the
+unchanged match and restarts the timer from that value. Repeated pauses never
+add time. Pause has no quota because local players own the interruption.
+Concealment and exact timer preservation prevent state inspection or
+timer-refill abuse.
 
 ## Acceptance criteria
 
@@ -148,6 +168,8 @@ inspection or timer-refill abuse.
 - **AC-016-05:** The fixed timer updates once per second and zero emits one
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
+  Its exit confirmation remains concealed, defaults to staying paused, and
+  returns to the title only after “End match.”
 - **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.
@@ -162,9 +184,14 @@ inspection or timer-refill abuse.
 - **AC-016-09:** The selected Red-Folded Chairman, Thunder Tribune, and Black
   Sea Captain portraits load from local assets in either player position.
   Unapproved sample characters and a baked two-character stage are absent.
-- **AC-016-10:** The character-free Transition-Era Television Studio renders
-  behind the separate portraits. Pixel inspection proves that each portrait has
-  an alpha channel with transparent outer corners.
+- **AC-016-10:** The Transition-Era Television Studio back layer contains one
+  fixed fictional moderator and no playable character. It renders behind both
+  separate portraits. One transparent desk plate renders in front of both
+  portraits and below all game content. Pixel inspection proves that the desk
+  plate and each portrait have transparent outer corners. Each portrait has
+  opaque anatomy below the desk top, no broad opaque bottom row, and no
+  chroma-key matte pixels. Production screenshots prove that the moderator face
+  remains clear during drafting.
 - **AC-016-11:** The active side owns one wide white current-sentence bubble.
   The waiting side owns one compact gray ellipsis bubble. The private choices
   and compact SVG Reshuffle control move to the active side without changing

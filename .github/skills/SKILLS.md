@@ -22,6 +22,8 @@ Do not invent missing scripts.
 - [`improve-codebase-architecture`](improve-codebase-architecture/SKILL.md):
   Review or improve ownership and module boundaries.
 - [`refactor`](refactor/SKILL.md): Improve structure without behavior changes.
+- [`repair-scene-composition`](repair-scene-composition/SKILL.md): Diagnose and
+  repair scene scale, proportions, layers, crops, and visual integration.
 - [`run-quality-gate`](run-quality-gate/SKILL.md): Run or repair configured
   repository checks.
 - [`simulate-matches`](simulate-matches/SKILL.md): Run a required-size

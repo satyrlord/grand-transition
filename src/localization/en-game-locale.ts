@@ -15,7 +15,7 @@ export function createEnglishGameLocale(
       'scene.transition-era-television-studio.name':
         'Transition-Era Television Studio',
       'scene.transition-era-television-studio.description':
-        'A late-1990s public-television studio of dark curtains, brass, empty podiums, and silent CRT screens.',
+        'A late-2000s municipal television forum with tall debate desks, heavy curtains, faux marble, and a severe fictional moderator.',
     },
   };
 }

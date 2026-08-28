@@ -32,6 +32,18 @@ test('renders an immutable complete match snapshot and previews without changing
       expect.stringContaining('thunder-tribune'),
     ]),
   );
+  const backgroundLayer = match.querySelector<HTMLImageElement>(
+    '.broadcast-stage-art[data-scene-depth="0"]',
+  );
+  const foregroundLayer = match.querySelector<HTMLImageElement>(
+    '.broadcast-stage-foreground[data-scene-depth="1"]',
+  );
+  expect(backgroundLayer?.src).toContain('transition-era-television-studio');
+  expect(foregroundLayer?.src).toContain(
+    'transition-era-television-studio-desks',
+  );
+  expect(foregroundLayer?.draggable).toBe(false);
+  expect(foregroundLayer?.alt).toBe('');
   expect(match.querySelector('.match-footer')).toBeNull();
   expect(match.querySelectorAll('.player-sentence--waiting')).toHaveLength(1);
   expect(match.querySelector('.sentence-ledger')).not.toBeNull();
@@ -301,7 +313,7 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   expect(match.querySelector('.grammar-strike')).toBeNull();
 });
 
-test('updates and expires one 15-second turn', async () => {
+test('updates and expires one 30-second turn', async () => {
   vi.useFakeTimers();
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
@@ -311,13 +323,13 @@ test('updates and expires one 15-second turn', async () => {
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
-  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+  expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
-  expect(match.querySelector('[data-timer="5"]')).not.toBeNull();
+  expect(match.querySelector('[data-timer="20"]')).not.toBeNull();
 
-  await vi.advanceTimersByTimeAsync(5_000);
+  await vi.advanceTimersByTimeAsync(20_000);
   await match.updateComplete;
   expect(
     commands.filter((event) => event.detail.type === 'expire-turn'),
@@ -334,7 +346,7 @@ test('conceals a paused match and resumes from the exact timer value', async () 
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
-  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+  expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
 
   match.querySelector<HTMLButtonElement>('.match-pause')!.click();
   await app.updateComplete;
@@ -351,12 +363,64 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   await app.updateComplete;
   await match.updateComplete;
 
-  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+  expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
   expect(match.snapshot!.revision).toBe(revision);
 
   await vi.advanceTimersByTimeAsync(1_000);
   await match.updateComplete;
-  expect(match.querySelector('[data-timer="9"]')).not.toBeNull();
+  expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
+});
+
+test('confirms a paused exit before it discards the match', async () => {
+  const match = await startMatch();
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  const activePlayerName = match.snapshot!.activePlayerName;
+
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+
+  expect(match.textContent).toContain('Back to menu');
+  match.querySelector<HTMLButtonElement>('.interruption-exit')!.click();
+  await match.updateComplete;
+
+  expect(match.querySelector('[role="alertdialog"]')).not.toBeNull();
+  expect(match.textContent).toContain('End this match?');
+  expect(match.textContent).toContain('Current match progress will be lost.');
+  expect(match.querySelector('.match-screen')).toBeNull();
+  expect(match.querySelector('[data-timer]')).toBeNull();
+  expect(match.textContent).not.toContain(activePlayerName);
+  await vi.waitFor(() =>
+    expect(document.activeElement?.textContent?.trim()).toBe('Stay paused'),
+  );
+
+  document.activeElement?.dispatchEvent(
+    new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }),
+  );
+  await match.updateComplete;
+  expect(match.textContent).toContain('Resume');
+  expect(match.querySelector('[role="alertdialog"]')).toBeNull();
+
+  match.querySelector<HTMLButtonElement>('.interruption-exit')!.click();
+  await match.updateComplete;
+  match.querySelector<HTMLButtonElement>('.interruption-cancel')!.click();
+  await match.updateComplete;
+  expect(match.querySelector('[data-interruption="paused"]')).not.toBeNull();
+  expect(match.textContent).toContain('Resume');
+  expect(match.textContent).toContain('Back to menu');
+
+  match.querySelector<HTMLButtonElement>('.interruption-exit')!.click();
+  await match.updateComplete;
+  match.querySelector<HTMLButtonElement>('.interruption-danger')!.click();
+  await app.updateComplete;
+
+  expect(document.querySelector('grand-transition-match')).toBeNull();
+  expect(document.querySelector('grand-transition-title')).not.toBeNull();
+  expect(
+    document.querySelector('grand-transition-title h1')?.textContent,
+  ).toMatch(/Grand\s+Transition/u);
 });
 
 async function startMatch(): Promise<GrandTransitionMatch> {

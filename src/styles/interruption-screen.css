@@ -102,13 +102,22 @@
     font: 700 1.2rem/1 var(--font-interruption-interface);
   }
 
+  .interruption-actions {
+    display: grid;
+    gap: 0.7rem;
+    justify-content: center;
+    margin-block-start: 2rem;
+  }
+
+  .interruption-actions--confirmation {
+    grid-template-columns: repeat(2, minmax(13rem, 1fr));
+  }
+
   .interruption-notice button {
     min-width: 13rem;
     min-height: 3rem;
-    margin-block-start: 2rem;
     padding: 0.7rem 1.4rem;
     border: 3px double var(--interruption-brass);
-    background: var(--interruption-red);
     color: var(--interruption-paper);
     font: 400 1.1rem/1 var(--font-interruption-feature);
     letter-spacing: 0.06em;
@@ -117,8 +126,35 @@
     cursor: pointer;
   }
 
-  .interruption-notice button:hover {
+  .interruption-primary,
+  .interruption-danger {
+    background: var(--interruption-red);
+  }
+
+  .interruption-secondary {
+    background: var(--interruption-ink);
+  }
+
+  .interruption-notice button:hover,
+  .interruption-notice button:focus-visible {
+    border-color: var(--interruption-paper);
+  }
+
+  .interruption-primary:hover,
+  .interruption-primary:focus-visible,
+  .interruption-danger:hover,
+  .interruption-danger:focus-visible {
     background: #a83831;
+  }
+
+  .interruption-secondary:hover,
+  .interruption-secondary:focus-visible {
+    background: #17334d;
+  }
+
+  .interruption-notice button:focus-visible {
+    outline: 3px solid #77c8ff;
+    outline-offset: 3px;
   }
 
   .interruption-screen footer {
