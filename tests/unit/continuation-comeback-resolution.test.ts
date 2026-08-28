@@ -29,7 +29,10 @@ function completeConstruction(): Readonly<{
   analysis: EnglishGrammarAnalysis;
   publicText: string;
 }> {
-  const phraseIds = ['national-consensus', 'before-the-next-election'] as const;
+  const phraseIds = [
+    'national-consensus',
+    'belongs-in-a-party-museum',
+  ] as const;
   const steps: readonly EnglishGrammarStep[] = phraseIds.map((phraseId) => ({
     kind: 'phrase',
     phrase: prepareEnglishGrammarPhrase(
@@ -55,7 +58,7 @@ function phrasesForDamage(damage: number): readonly Phrase[] {
     if (phrase.id === 'national-consensus') {
       return { ...phrase, tags: ['neutral'] };
     }
-    if (phrase.id === 'before-the-next-election') {
+    if (phrase.id === 'belongs-in-a-party-museum') {
       return {
         ...phrase,
         customScores: [{ leftNounId: 'national-consensus', score: damage }],
@@ -360,9 +363,7 @@ describe('comeback charge, selection, and scoring', () => {
     expect(withLineInput.construction.analysis).toEqual(
       playerInput(0, { damage: 5 }).construction.analysis,
     );
-    expect(withLine.players[players[0]]!.closingLine).toBe(
-      'Your mandate has been postponed for lack of substance.',
-    );
+    expect(withLine.players[players[0]]!.closingLine).toBe('You animal.');
   });
 
   test.each([

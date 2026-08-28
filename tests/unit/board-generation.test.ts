@@ -50,6 +50,20 @@ describe('Hollywood Roast shared board generation', () => {
     expect(count('predicate')).toBeGreaterThanOrEqual(1);
   });
 
+  test('can draw a modifier only through a variable board slot', () => {
+    const board = Array.from({ length: 500 }, (_, seed) =>
+      expectBoard(seed),
+    ).find((candidate) =>
+      candidate.slots.some((slot) => slot.role === 'modifier'),
+    );
+    expect(board).toBeDefined();
+    expect(
+      board!.slots.filter((slot) =>
+        ['noun', 'verb', 'predicate'].includes(slot.role),
+      ),
+    ).toHaveLength(7);
+  });
+
   test.each([
     [0.05, 0],
     [0.1, 1],
@@ -64,7 +78,12 @@ describe('Hollywood Roast shared board generation', () => {
         next(seed) {
           calls += 1;
           return {
-            value: calls === 9 ? connectorRoll : 0.01,
+            value:
+              calls === 9
+                ? connectorRoll
+                : calls === 10 && connectorRoll < 0.1
+                  ? 0
+                  : 0.01,
             nextSeed: seed + 1,
           };
         },

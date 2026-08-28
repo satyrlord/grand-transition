@@ -44,13 +44,13 @@ const score = (
 
 describe('Hollywood Roast combos and finishers', () => {
   test('repeating the same noun in consecutive complete insults raises its combo', () => {
-    const first = score(['national-consensus', 'before-the-next-election']);
+    const first = score(['national-consensus', 'belongs-in-a-party-museum']);
     const second = score(
-      ['national-consensus', 'before-the-next-election'],
+      ['national-consensus', 'belongs-in-a-party-museum'],
       first.comboState,
     );
-    expect(first.score.finalDamage).toBe(5);
-    expect(second.score.finalDamage).toBe(10);
+    expect(first.score.finalDamage).toBe(1);
+    expect(second.score.finalDamage).toBe(2);
     expect(second.score.combo).toMatchObject({
       nounPhraseId: 'national-consensus',
       chain: 2,
@@ -77,7 +77,7 @@ describe('Hollywood Roast combos and finishers', () => {
     const result = score(
       [
         'national-consensus',
-        'before-the-next-election',
+        'belongs-in-a-party-museum',
         'by-emergency-ordinance',
       ],
       {},

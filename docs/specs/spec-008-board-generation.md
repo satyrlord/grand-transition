@@ -23,7 +23,8 @@ additive selection uses `and`. A contrast selection uses `but` or `yet` and
 replaces the additive selection on 25 percent of forced-connector selections.
 The one unrestricted `[...]` continuation always fills one variable slot. When
 the roll adds no connector, the last open slot draws from the eligible scene
-pool.
+pool. A modifier can fill a variable slot. It does not replace the guaranteed
+predicate that completes a clause.
 
 Each phrase identifier appears at most once on the board. Rarity changes draw
 probability only. It never creates duplicate cards. Board-slot identifiers also

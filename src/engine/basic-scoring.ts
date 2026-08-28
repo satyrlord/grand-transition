@@ -161,19 +161,25 @@ export function extractScoreClauses(
   let conjunctionAfterObjectVerb = false;
   let lastCompletedVerb: string | null = null;
   let lastVerbSubjects: string[] = [];
+  let activeClauseIndexes: number[] = [];
+
+  const addClause = (clause: ScoreClause): number => {
+    clauses.push(clause);
+    return clauses.length - 1;
+  };
 
   for (const phrase of phrases) {
     switch (phrase.role) {
       case 'noun':
         if (pendingVerb) {
           const completedVerb = pendingVerb;
-          for (const subject of subjects) {
-            clauses.push({
-              phraseIds: [subject, pendingVerb, phrase.phraseId],
+          activeClauseIndexes = subjects.map((subject) =>
+            addClause({
+              phraseIds: [subject, completedVerb, phrase.phraseId],
               nounPhraseIds: [subject, phrase.phraseId],
-              relationPhraseId: pendingVerb,
-            });
-          }
+              relationPhraseId: completedVerb,
+            }),
+          );
           pendingVerb = null;
           complete = true;
           completedWithObjectVerb = true;
@@ -186,13 +192,16 @@ export function extractScoreClauses(
             frontBecauseAwaitingMain = true;
           }
         } else if (conjunctionAfterObjectVerb && lastCompletedVerb) {
-          for (const subject of lastVerbSubjects) {
-            clauses.push({
-              phraseIds: [subject, lastCompletedVerb, phrase.phraseId],
-              nounPhraseIds: [subject, phrase.phraseId],
-              relationPhraseId: lastCompletedVerb,
-            });
-          }
+          const completedVerb = lastCompletedVerb;
+          activeClauseIndexes.push(
+            ...lastVerbSubjects.map((subject) =>
+              addClause({
+                phraseIds: [subject, completedVerb, phrase.phraseId],
+                nounPhraseIds: [subject, phrase.phraseId],
+                relationPhraseId: completedVerb,
+              }),
+            ),
+          );
           subjects = [phrase.phraseId];
           complete = true;
           conjunctionAfterObjectVerb = false;
@@ -205,8 +214,10 @@ export function extractScoreClauses(
           connectorAfterComplete = false;
           frontBecause = extendsFrontBecause;
           frontBecauseAwaitingMain = false;
+          activeClauseIndexes = [];
         } else {
           subjects.push(phrase.phraseId);
+          activeClauseIndexes = [];
         }
         break;
       case 'verb':
@@ -215,15 +226,16 @@ export function extractScoreClauses(
         completedWithObjectVerb = false;
         connectorAfterComplete = false;
         conjunctionAfterObjectVerb = false;
+        activeClauseIndexes = [];
         break;
       case 'predicate':
-        for (const subject of subjects) {
-          clauses.push({
+        activeClauseIndexes = subjects.map((subject) =>
+          addClause({
             phraseIds: [subject, phrase.phraseId],
             nounPhraseIds: [subject],
             relationPhraseId: phrase.phraseId,
-          });
-        }
+          }),
+        );
         complete = true;
         completedWithObjectVerb = false;
         connectorAfterComplete = false;
@@ -231,6 +243,15 @@ export function extractScoreClauses(
         if (frontBecause) {
           frontBecause = false;
           frontBecauseAwaitingMain = true;
+        }
+        break;
+      case 'modifier':
+        for (const clauseIndex of activeClauseIndexes) {
+          const clause = clauses[clauseIndex]!;
+          clauses[clauseIndex] = {
+            ...clause,
+            phraseIds: [...clause.phraseIds, phrase.phraseId],
+          };
         }
         break;
       case 'conjunction':
@@ -246,6 +267,7 @@ export function extractScoreClauses(
         } else {
           connectorAfterComplete = complete;
           conjunctionAfterObjectVerb = false;
+          activeClauseIndexes = [];
         }
         break;
       case 'continuation':

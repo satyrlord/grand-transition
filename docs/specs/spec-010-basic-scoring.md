@@ -12,6 +12,10 @@ Only complete grammar clauses score. A clause is `NOUN + PREDICATE` or
 `NOUN + VERB + NOUN`. Compound subjects produce one scored clause for each
 subject noun. Several complete clauses add their scores.
 
+A modifier belongs to the preceding complete clause. It does not create a new
+clause and does not replace the clause relation. Its tags and character or scene
+restriction can affect that clause. Noun combos do not treat it as a noun.
+
 Each relation defines substance and flavour compatibility with its noun input.
 An explicit custom score overrides the compatibility calculation. Otherwise:
 
@@ -47,7 +51,10 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
   once, including every front-`because` subordinate extension and its required
   main clause.
 - **AC-010-05:** Incomplete and continued constructions score zero.
+- **AC-010-06:** A modifier stays in the preceding clause breakdown, does not
+  add another clause base, and applies its restriction and weakness effects to
+  that clause.
 
 ## Objective verifiers
 
-`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-05.
+`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-06.

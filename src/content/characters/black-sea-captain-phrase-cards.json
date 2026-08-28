@@ -86,17 +86,9 @@
     },
     {
       "id": "through-troubled-waters",
-      "role": "predicate",
+      "role": "modifier",
       "text": "through troubled waters",
       "tags": ["consistency", "legacy"],
-      "scorePreferences": {
-        "substance": [
-          {
-            "left": ["bureaucracy"]
-          }
-        ],
-        "flavour": []
-      },
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -172,23 +164,6 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original animal metaphor for a fictional showy rival. It targets no protected trait. Editorial review complete."
-      }
-    },
-    {
-      "id": "that-barroom-admiral",
-      "role": "noun",
-      "text": "that barroom admiral",
-      "tags": ["decorum", "competence"],
-      "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["maritime"]
-      },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original rank-and-setting caricature in the Captain's fictional studio voice. It makes no private health or addiction claim. Editorial review complete."
       }
     },
     {

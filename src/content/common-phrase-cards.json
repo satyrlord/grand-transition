@@ -38,7 +38,7 @@
   {
     "id": "coalition-protocol",
     "role": "noun",
-    "text": "a coalition protocol",
+    "text": "your coalition protocol",
     "tags": ["consistency", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -126,17 +126,9 @@
   },
   {
     "id": "before-the-next-election",
-    "role": "predicate",
+    "role": "modifier",
     "text": "before the next election",
     "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -147,17 +139,9 @@
   },
   {
     "id": "on-public-television",
-    "role": "predicate",
+    "role": "modifier",
     "text": "on public television",
     "tags": ["evidence", "decorum"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -168,17 +152,9 @@
   },
   {
     "id": "during-a-coalition-crisis",
-    "role": "predicate",
+    "role": "modifier",
     "text": "during a coalition crisis",
     "tags": ["consistency", "restraint"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy"]
-        }
-      ],
-      "flavour": []
-    },
     "sceneIds": ["transition-era-television-studio"],
     "rarity": "rare",
     "editorialReview": {
@@ -260,7 +236,7 @@
   {
     "id": "emergency-ordinance",
     "role": "noun",
-    "text": "an emergency ordinance",
+    "text": "your emergency ordinance",
     "tags": ["bureaucracy", "restraint"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -294,7 +270,7 @@
   {
     "id": "televised-coalition",
     "role": "noun",
-    "text": "a televised coalition",
+    "text": "your televised coalition",
     "tags": ["consistency", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
@@ -311,7 +287,7 @@
   {
     "id": "county-council-majority",
     "role": "noun",
-    "text": "a county-council majority",
+    "text": "your county-council majority",
     "tags": ["bureaucracy", "legacy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -457,17 +433,9 @@
   },
   {
     "id": "at-victoria-palace",
-    "role": "predicate",
+    "role": "modifier",
     "text": "at Victoria Palace",
     "tags": ["bureaucracy", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -478,17 +446,9 @@
   },
   {
     "id": "under-an-emergency-ordinance",
-    "role": "predicate",
+    "role": "modifier",
     "text": "under an emergency ordinance",
     "tags": ["bureaucracy", "restraint"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -499,17 +459,9 @@
   },
   {
     "id": "beside-an-unfinished-motorway",
-    "role": "predicate",
+    "role": "modifier",
     "text": "beside an unfinished motorway",
     "tags": ["evidence", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -549,7 +501,7 @@
   {
     "id": "public-consultation",
     "role": "noun",
-    "text": "a public consultation",
+    "text": "your public consultation",
     "tags": ["decorum", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -566,7 +518,7 @@
   {
     "id": "reform-calendar",
     "role": "noun",
-    "text": "a reform calendar",
+    "text": "your reform calendar",
     "tags": ["modernity", "consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -583,7 +535,7 @@
   {
     "id": "televised-debate",
     "role": "noun",
-    "text": "a televised debate",
+    "text": "this televised debate",
     "tags": ["evidence", "decorum"],
     "scoreGroups": {
       "substance": ["media"],
@@ -600,7 +552,7 @@
   {
     "id": "party-switch",
     "role": "noun",
-    "text": "a party switch",
+    "text": "your party switch",
     "tags": ["consistency", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -634,7 +586,7 @@
   {
     "id": "budget-amendment",
     "role": "noun",
-    "text": "a budget amendment",
+    "text": "your budget amendment",
     "tags": ["bureaucracy", "evidence"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -702,7 +654,7 @@
   {
     "id": "ministerial-memo",
     "role": "noun",
-    "text": "a ministerial memo",
+    "text": "your ministerial memo",
     "tags": ["bureaucracy", "consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -719,7 +671,7 @@
   {
     "id": "coalition-majority",
     "role": "noun",
-    "text": "a coalition majority",
+    "text": "your coalition majority",
     "tags": ["consistency", "legacy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -736,7 +688,7 @@
   {
     "id": "campaign-promise",
     "role": "noun",
-    "text": "a campaign promise",
+    "text": "your campaign promise",
     "tags": ["credibility", "consistency"],
     "scoreGroups": {
       "substance": ["media"],
@@ -787,7 +739,7 @@
   {
     "id": "regional-development-plan",
     "role": "noun",
-    "text": "a regional development plan",
+    "text": "your regional development plan",
     "tags": ["modernity", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -821,7 +773,7 @@
   {
     "id": "cabinet-reshuffle",
     "role": "noun",
-    "text": "a cabinet reshuffle",
+    "text": "your cabinet reshuffle",
     "tags": ["consistency", "modernity"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -872,7 +824,7 @@
   {
     "id": "national-strategy",
     "role": "noun",
-    "text": "a national strategy",
+    "text": "your national strategy",
     "tags": ["legacy", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -889,7 +841,7 @@
   {
     "id": "local-party-office",
     "role": "noun",
-    "text": "a local party office",
+    "text": "your local party office",
     "tags": ["legacy", "consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -1313,17 +1265,9 @@
   },
   {
     "id": "after-the-midnight-news",
-    "role": "predicate",
+    "role": "modifier",
     "text": "after the midnight news",
     "tags": ["media", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -1334,17 +1278,9 @@
   },
   {
     "id": "behind-closed-doors",
-    "role": "predicate",
+    "role": "modifier",
     "text": "behind closed doors",
     "tags": ["evidence", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1355,17 +1291,9 @@
   },
   {
     "id": "during-budget-season",
-    "role": "predicate",
+    "role": "modifier",
     "text": "during budget season",
     "tags": ["bureaucracy", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1376,17 +1304,9 @@
   },
   {
     "id": "from-the-government-podium",
-    "role": "predicate",
+    "role": "modifier",
     "text": "from the government podium",
     "tags": ["decorum", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1397,17 +1317,9 @@
   },
   {
     "id": "in-the-transition-archive",
-    "role": "predicate",
+    "role": "modifier",
     "text": "in the transition archive",
     "tags": ["legacy", "evidence"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -1418,17 +1330,9 @@
   },
   {
     "id": "on-the-campaign-trail",
-    "role": "predicate",
+    "role": "modifier",
     "text": "on the campaign trail",
     "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1439,17 +1343,9 @@
   },
   {
     "id": "under-the-studio-lights",
-    "role": "predicate",
+    "role": "modifier",
     "text": "under the studio lights",
     "tags": ["media", "decorum"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -1460,17 +1356,9 @@
   },
   {
     "id": "with-coalition-partners",
-    "role": "predicate",
+    "role": "modifier",
     "text": "with coalition partners",
     "tags": ["consistency", "restraint"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1481,17 +1369,9 @@
   },
   {
     "id": "without-public-consultation",
-    "role": "predicate",
+    "role": "modifier",
     "text": "without public consultation",
     "tags": ["decorum", "evidence"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -1502,17 +1382,9 @@
   },
   {
     "id": "before-a-confidence-vote",
-    "role": "predicate",
+    "role": "modifier",
     "text": "before a confidence vote",
     "tags": ["consistency", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -1523,17 +1395,9 @@
   },
   {
     "id": "during-a-press-conference",
-    "role": "predicate",
+    "role": "modifier",
     "text": "during a press conference",
     "tags": ["media", "decorum"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -1544,17 +1408,9 @@
   },
   {
     "id": "through-another-reform-cycle",
-    "role": "predicate",
+    "role": "modifier",
     "text": "through another reform cycle",
     "tags": ["modernity", "legacy"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -1565,17 +1421,9 @@
   },
   {
     "id": "across-county-capitals",
-    "role": "predicate",
+    "role": "modifier",
     "text": "across county capitals",
     "tags": ["bureaucracy", "legacy"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -1586,17 +1434,9 @@
   },
   {
     "id": "beneath-the-national-banner",
-    "role": "predicate",
+    "role": "modifier",
     "text": "beneath the national banner",
     "tags": ["legacy", "decorum"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -2074,9 +1914,9 @@
     }
   },
   {
-    "id": "your-neighborhood-apparatchik",
+    "id": "a-neighborhood-apparatchik",
     "role": "noun",
-    "text": "your neighborhood apparatchik",
+    "text": "a neighborhood apparatchik",
     "tags": ["legacy", "bureaucracy"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -2304,7 +2144,7 @@
   {
     "id": "belongs-in-a-party-museum",
     "role": "predicate",
-    "text": "belongs in a party museum",
+    "text": "belongs in a history museum",
     "tags": ["legacy", "modernity"],
     "scorePreferences": {
       "substance": [
@@ -2406,6 +2246,221 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional election satire about political transport. It makes no claim about a real person, campaign, or election. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-communist",
+    "role": "noun",
+    "text": "a communist",
+    "tags": ["legacy", "credibility"],
+    "scoreGroups": {
+      "substance": ["politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original generic ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-liberal",
+    "role": "noun",
+    "text": "a liberal",
+    "tags": ["modernity", "credibility"],
+    "scoreGroups": {
+      "substance": ["politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original generic ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-globalist",
+    "role": "noun",
+    "text": "a globalist",
+    "tags": ["modernity", "consistency"],
+    "scoreGroups": {
+      "substance": ["politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original generic ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-sovereignist",
+    "role": "noun",
+    "text": "a sovereignist",
+    "tags": ["legacy", "consistency"],
+    "scoreGroups": {
+      "substance": ["politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original generic ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-fascist",
+    "role": "noun",
+    "text": "a fascist",
+    "tags": ["legacy", "credibility"],
+    "scoreGroups": {
+      "substance": ["politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original generic ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-pig",
+    "role": "noun",
+    "text": "a pig",
+    "tags": ["decorum", "restraint"],
+    "scoreGroups": {
+      "substance": ["personal"],
+      "flavour": ["animal-metaphor"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original animal-metaphor insult for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-nazi",
+    "role": "noun",
+    "text": "a Nazi",
+    "tags": ["legacy", "evidence"],
+    "scoreGroups": {
+      "substance": ["history", "politics"],
+      "flavour": ["ideology"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original historical ideological noun for fictional political satire. It names no real person or party and targets no protected trait. Editorial review complete."
+    }
+  },
+  {
+    "id": "is",
+    "role": "verb",
+    "text": "is",
+    "singularText": "is",
+    "pluralText": "are",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    }
+  },
+  {
+    "id": "was",
+    "role": "verb",
+    "text": "was",
+    "singularText": "was",
+    "pluralText": "were",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    }
+  },
+  {
+    "id": "will-be",
+    "role": "verb",
+    "text": "will be",
+    "singularText": "will be",
+    "pluralText": "will be",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    }
+  },
+  {
+    "id": "should-have-been",
+    "role": "verb",
+    "text": "should have been",
+    "singularText": "should have been",
+    "pluralText": "should have been",
+    "tags": ["legacy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
     }
   }
 ]

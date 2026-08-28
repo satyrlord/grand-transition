@@ -10,8 +10,9 @@
 Implement strict Zod 4 schemas for original Grand Transition content. The
 initial catalog contains the Red-Folded Chairman, Thunder Tribune, and Black Sea
 Captain, at least one scene, and a canonical English locale. The Red-Folded
-Chairman and Black Sea Captain have 12 original English phrase cards each. The
-Thunder Tribune has 12. Animal terms in character titles are metaphorical.
+Chairman has 24 character-owned English phrase cards, the Black Sea Captain
+has 11, and the Thunder Tribune has 12. Animal terms in character titles are
+metaphorical.
 
 A phrase owns an identifier, role, text key, optional number forms, optional
 connector kind, optional grammatical number, scoring and weakness tags,
@@ -19,11 +20,13 @@ optional character and scene restrictions, draw rarity, optional noun-specific
 custom clause scores, optional finisher score, and editorial review.
 Ending text includes a terminal full stop.
 
-Roles are `noun`, `verb`, `predicate`, `conjunction`, `ending`, and
-`continuation`. Conjunctions declare `and`, `but`, `because`, `yet`, `so`, or
-`for`. Nouns can declare singular or plural. A relation can declare an exact
-left-noun and optional right-noun custom clause score from 0 through 100.
-Otherwise, Milestone 010 calculates group compatibility.
+Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
+`continuation`. A modifier is an adverbial or descriptive phrase that can
+follow a complete clause without ending it. Conjunctions declare `and`, `but`,
+`because`, `yet`, `so`, or `for`. Nouns can declare singular or plural. A verb
+or predicate can declare an exact left-noun and optional right-noun custom
+clause score from 0 through 100. Otherwise, Milestone 010 calculates group
+compatibility.
 
 A character owns identity, original media, palette, two through four weakness
 tags, character-restricted hand phrase identifiers, exactly one exclusive
@@ -60,8 +63,9 @@ copyrighted broadcast graphics.
 - A finisher score is an integer from 1 through 20.
 - A custom clause score is an integer from 0 through 100.
 - Nouns alone own noun score groups and grammatical number. Verbs and
-  predicates alone own relation preferences or custom scores. Conjunctions
-  alone own connector kinds, and endings alone own required finisher scores.
+  predicates alone own relation preferences or custom scores. Modifiers use
+  their tags and restrictions in the preceding clause. Conjunctions alone own
+  connector kinds, and endings alone own required finisher scores.
 - Each weakness tag occurs on at least two phrases.
 - Every shipped phrase has approved original editorial review with no flags.
 - Each character owns exactly one weak, one medium, and one strong comeback
@@ -113,8 +117,8 @@ simulation, and browser validation must pass before it can ship.
 
 - **AC-005-01:** The shipped three-character scene catalog passes all strict
   record and aggregate checks. It contains only the Red-Folded Chairman,
-  Thunder Tribune, and Black Sea Captain. Their character-card counts are 12,
-  12, and 12, respectively.
+  Thunder Tribune, and Black Sea Captain. Their character-card counts are 24,
+  12, and 11, respectively.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
 - **AC-005-03:** Duplicate IDs, unresolved references, restriction violations,
@@ -127,8 +131,13 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 126-card common corpus contains exactly 46 nouns, 28 verbs,
-  30 predicates, 10 conjunctions, 11 endings, and 1 continuation. The only
+- **AC-005-07:** The 137-card common corpus contains exactly 53 nouns, 32 verbs,
+  10 predicates, 20 modifiers, 10 conjunctions, 11 endings, and 1
+  continuation. It includes
+  agreement-aware copular forms for `is`, `was`, `will be`, and `should have
+been`, plus generic ideological and animal-metaphor noun fragments such as
+  `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
+  `a pig`, and `a Nazi`. The only
   continuation is the unrestricted `[...]` card. It contains
   Romanian political themes in original English adaptations. The approved
   `under-the-national-banner` ending renders the sourced English form of the

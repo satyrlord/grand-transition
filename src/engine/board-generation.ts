@@ -7,6 +7,7 @@ const phraseRoles: readonly Phrase['role'][] = [
   'noun',
   'verb',
   'predicate',
+  'modifier',
   'conjunction',
   'ending',
   'continuation',

@@ -127,12 +127,12 @@ function prepareComebackExchange(app: GrandTransitionApp): void {
   };
   const first = completeConstruction(
     'player-one',
-    ['national-consensus', 'before-the-next-election'],
+    ['national-consensus', 'belongs-in-a-party-museum'],
     true,
   );
   const second = completeConstruction(
     'player-two',
-    ['televised-revolution', 'on-public-television'],
+    ['televised-revolution', 'makes-own-voters-change-the-channel'],
     false,
   );
   owner.matchState = {
