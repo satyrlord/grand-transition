@@ -409,6 +409,7 @@ can exchange sides or mirror without changing the scene. A transparent desk
 plate renders over the portraits and clips their lower bodies behind two tall
 standing desks. The desk fronts continue below the lower stage frame. Do not
 show their extracted bottom contours or any portrait's lower raster contour.
+Each standing desk has one microphone and one plain unbranded water bottle.
 The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage. The three implemented
 portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
@@ -449,16 +450,19 @@ reasons, or add tutorial progress.
 ### Speech, perimeter actions, and stage status
 
 The active player owns one wide white current-sentence bubble that points to
-that side. The waiting character owns one compact gray ellipsis bubble. Do not
-show two equal speech records. End and Comeback use compact Poiret One
-perimeter plates anchored to the active side's board margin: left for red and
-right for blue. They stay clear of faces, hands, and required props. Reshuffle
-is an icon-only compact inline-SVG control next to the private phrases and has
-an accessible name without visible explanation copy. Oxblood identifies
-delivery. Television blue identifies Reshuffle and Comeback. Disabled controls
-stay labeled or keep an accessible label and use a dashed border. Pause sits at
-the top-center match status. The venue and broadcast identity are part of the
-scene or frame, not a separate dashboard strap.
+that side. The waiting character owns one compact gray ellipsis bubble. Pointer
+hover and keyboard focus expand that same gray bubble to reveal the waiting
+character's complete public sentence for that interaction. Click or tap keeps
+it open until the user activates the bubble again, activates elsewhere, or the
+match state changes. Do not show two equal speech records. End and Comeback use
+compact Poiret One perimeter plates anchored to the active side's board margin:
+left for red and right for blue. They stay clear of faces, hands, and required
+props. Reshuffle is an icon-only compact inline-SVG control next to the private
+phrases and has an accessible name without visible explanation copy. Oxblood
+identifies delivery. Television blue identifies Reshuffle and Comeback.
+Disabled controls stay labeled or keep an accessible label and use a dashed
+border. Pause sits at the top-center match status. The venue and broadcast
+identity are part of the scene or frame, not a separate dashboard strap.
 
 ### Pause and compatibility slates
 

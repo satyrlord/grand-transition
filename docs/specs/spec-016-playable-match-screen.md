@@ -97,10 +97,14 @@ separate help layer.
 
 The active player owns the wide white speech bubble. It shows the current or
 preview sentence and points toward that player. The waiting character owns one
-compact gray bubble that normally shows an ellipsis. After a comeback ends a
-turn, that character's gray bubble shows the complete sentence with the selected
-closing line until the exchange resolves. Do not show two equal speech
-cards.
+compact gray bubble that normally shows an ellipsis. If the waiting character
+has a public sentence, pointer hover or keyboard focus expands the same gray
+bubble and reveals the complete text for that interaction. A click or tap keeps
+the text open until the user activates the bubble again, activates elsewhere,
+or the match state changes. The ellipsis then returns. This preview does not
+change game truth. After a comeback ends a turn, that character's gray bubble
+shows the complete sentence with the selected closing line until the exchange
+resolves. Do not show two equal speech cards.
 The wide bubble must show the complete current or preview sentence. It can use
 up to three responsive speech sizes and a taller fixed record, but it must not
 clip, truncate, or replace sentence text with an ellipsis.
@@ -193,9 +197,12 @@ timer-refill abuse.
   chroma-key matte pixels. Production screenshots prove that the moderator face
   remains clear during drafting.
 - **AC-016-11:** The active side owns one wide white current-sentence bubble.
-  The waiting side owns one compact gray ellipsis bubble. The private choices
-  and compact SVG Reshuffle control move to the active side without changing
-  the `redraw-hand` command contract.
+  The waiting side owns one compact gray ellipsis bubble. Pointer hover and
+  keyboard focus reveal that waiting character's complete public sentence in
+  the same bubble. Click and touch activation keep it open temporarily. All
+  paths leave game truth unchanged. The private choices and compact SVG
+  Reshuffle control move to the active side without changing the `redraw-hand`
+  command contract.
 - **AC-016-12:** The shipped longest sentence and a synthetic sentence that is
   40 percent longer remain fully visible in the wide bubble at every supported
   landscape evidence viewport. The browser finds no horizontal or vertical

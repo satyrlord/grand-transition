@@ -37,6 +37,7 @@ export class GrandTransitionMatch extends LitElement {
   private previewText: string | null;
   private remainingSeconds: number | null;
   private commandPending: boolean;
+  private revealedWaitingPlayerId: string | null;
 
   private timerId: number | undefined;
   private timerSequence = -1;
@@ -46,6 +47,7 @@ export class GrandTransitionMatch extends LitElement {
     this.previewText = null;
     this.remainingSeconds = null;
     this.commandPending = false;
+    this.revealedWaitingPlayerId = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -61,9 +63,11 @@ export class GrandTransitionMatch extends LitElement {
     if (changed.has('snapshot')) {
       this.previewText = null;
       this.commandPending = false;
+      this.revealedWaitingPlayerId = null;
       this.syncTimer();
     }
     if (changed.has('pauseMode')) {
+      this.revealedWaitingPlayerId = null;
       this.syncPauseMode();
     }
   }
@@ -117,6 +121,7 @@ export class GrandTransitionMatch extends LitElement {
         aria-labelledby="match-title"
         data-active-side=${first.isActive ? 'red' : 'blue'}
         data-round-review=${roundReview ? 'true' : nothing}
+        @click=${this.closeWaitingSentence}
       >
         <div
           class="broadcast-stage"
@@ -318,6 +323,7 @@ export class GrandTransitionMatch extends LitElement {
     hasGrammarReaction: boolean,
   ): TemplateResult {
     const activeTurn = player.isActive && !this.snapshot?.roundReview;
+    const waitingSentence = player.sentence?.trim() ?? '';
     return html`
       <article
         class="match-player ${
@@ -367,12 +373,41 @@ export class GrandTransitionMatch extends LitElement {
                 >
                   <span>${player.sentence}</span>
                 </blockquote>`
-              : html`<blockquote
-                  class="player-sentence player-sentence--waiting"
-                  aria-label=${msg(`${player.characterName} is waiting`)}
-                >
-                  <span aria-hidden="true">…</span>
-                </blockquote>`
+              : waitingSentence
+                ? html`<button
+                    type="button"
+                    class="player-sentence player-sentence--waiting"
+                    data-has-content="true"
+                    data-revealed=${
+                      this.revealedWaitingPlayerId === player.playerId
+                        ? 'true'
+                        : 'false'
+                    }
+                    aria-expanded=${
+                      this.revealedWaitingPlayerId === player.playerId
+                    }
+                    aria-label=${msg(
+                      `${player.characterName} said: ${waitingSentence}`,
+                    )}
+                    @click=${(event: MouseEvent) =>
+                      this.toggleWaitingSentence(event, player.playerId)}
+                  >
+                    <span class="waiting-sentence-ellipsis" aria-hidden="true"
+                      >…</span
+                    >
+                    <span class="waiting-sentence-content"
+                      >${waitingSentence}</span
+                    >
+                  </button>`
+                : html`<blockquote
+                    class="player-sentence player-sentence--waiting"
+                    data-has-content="false"
+                    aria-label=${msg(`${player.characterName} is waiting`)}
+                  >
+                    <span class="waiting-sentence-ellipsis" aria-hidden="true"
+                      >…</span
+                    >
+                  </blockquote>`
         }
       </article>
     `;
@@ -550,6 +585,19 @@ export class GrandTransitionMatch extends LitElement {
   private readonly clearPreview = (): void => {
     if (this.previewText === null) return;
     this.previewText = null;
+    this.requestUpdate();
+  };
+
+  private toggleWaitingSentence(event: MouseEvent, playerId: string): void {
+    event.stopPropagation();
+    this.revealedWaitingPlayerId =
+      this.revealedWaitingPlayerId === playerId ? null : playerId;
+    this.requestUpdate();
+  }
+
+  private readonly closeWaitingSentence = (): void => {
+    if (this.revealedWaitingPlayerId === null) return;
+    this.revealedWaitingPlayerId = null;
     this.requestUpdate();
   };
 
