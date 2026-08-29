@@ -81,6 +81,11 @@ export type MatchScreenSnapshot = Readonly<{
   revision: number;
   phase: MatchState['phase'];
   roundReview: boolean;
+  victory: Readonly<{
+    winnerId: string;
+    winnerName: string;
+    completedRounds: number;
+  }> | null;
   round: number;
   sceneName: string;
   sceneLayers: readonly MatchSceneLayerView[];
@@ -116,6 +121,7 @@ export type MatchScreenSnapshot = Readonly<{
         string,
         Readonly<{
           damage: number;
+          selfDamage: number;
           comboFactor: number;
           comboBonusDamage: number;
           weaknesses: readonly string[];
@@ -129,6 +135,7 @@ export function createMatchScreenSnapshot(
   state: MatchState,
   arenaReaction: MatchArenaReaction | null = null,
   reviewResolution: MatchResolution | null = null,
+  victory: Readonly<{ winnerId: string; completedRounds: number }> | null = null,
 ): MatchScreenSnapshot {
   if (!state.draft) {
     throw new Error('The match screen needs an active draft snapshot.');
@@ -228,7 +235,10 @@ export function createMatchScreenSnapshot(
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,
       sentence:
-        currentPublicSentence || latestPublicSentence(state, playerId) || null,
+        reviewResolution?.players[playerId]?.constructionText ||
+        currentPublicSentence ||
+        latestPublicSentence(state, playerId) ||
+        null,
       comebackLine: draftPlayer.construction.comebackClosingLine,
       status: draftPlayer.construction.status,
     } satisfies MatchPlayerView;
@@ -243,6 +253,7 @@ export function createMatchScreenSnapshot(
         playerId,
         {
           damage: result?.outgoingDamage ?? 0,
+          selfDamage: result?.selfDamage ?? 0,
           comboFactor: combo.factor,
           comboBonusDamage: combo.bonusDamage,
           weaknesses,
@@ -254,11 +265,23 @@ export function createMatchScreenSnapshot(
   const arenaReactionPlayer = arenaReaction
     ? state.playerStates[arenaReaction.playerId]
     : undefined;
+  const reviewSentence =
+    reviewResolution?.players[activePlayerId]?.constructionText?.trim() ||
+    latestPublicSentence(state, activePlayerId);
 
   return deepFreeze({
     revision: state.commandHistory.length,
-    phase: state.phase,
+    phase: victory ? 'results' : state.phase,
     roundReview: reviewResolution !== null,
+    victory: victory
+      ? {
+          winnerId: victory.winnerId,
+          winnerName: characterName(
+            state.playerStates[victory.winnerId]!.characterId,
+          ),
+          completedRounds: victory.completedRounds,
+        }
+      : null,
     round: state.round,
     sceneName: gameMessage(
       sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
@@ -267,7 +290,11 @@ export function createMatchScreenSnapshot(
     activePlayerId,
     activePlayerName: activeName,
     sentenceText:
-      activePlayer.construction.previewText || msg('Select a noun to begin.'),
+      reviewSentence ||
+      activePlayer.construction.previewText ||
+      (reviewResolution
+        ? msg('No public sentence was completed.')
+        : msg('Select a noun to begin.')),
     sentenceComplete: activePlayer.construction.analysis.complete,
     sharedCards,
     privateCards,

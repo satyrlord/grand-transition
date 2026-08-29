@@ -49,9 +49,9 @@ Private hotseat content must remain private during handovers.
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes Milestones 001 through 018. It includes the
-  title, setup, playable match, between-round review flow, and blocking
-  landscape viewport contract.
+- The implemented scope includes the title, setup, playable match,
+  between-round review flow, persistent terminal victory, title-only local
+  match history, and blocking landscape viewport contract.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
@@ -65,9 +65,9 @@ Private hotseat content must remain private during handovers.
   private hands, clause scoring, noun combos, continuations, comebacks,
   cliffhangers, replay, and simulation.
 - Every completed exchange pauses on an in-arena results modal while the last
-  sentence remains visible. Continue starts the next round or returns a
-  completed local hotseat match to setup. The product exposes no post-match
-  features.
+  sentence remains visible. Continue starts the next round. A terminal exchange
+  becomes a persistent victory record until the player returns to the title.
+  The title alone opens public match history stored on this browser.
 
 ## Brand Commitments
 

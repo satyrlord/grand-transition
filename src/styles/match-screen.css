@@ -731,6 +731,35 @@
     text-align: center;
   }
 
+  .match-screen[data-match-result='victory'] .round-review-backdrop {
+    background: rgb(2 7 11 / 68%);
+  }
+
+  .round-review-dialog[data-victory='true'] {
+    width: min(52rem, 100%);
+    border-color: var(--broadcast-gold-light);
+    background: rgb(5 8 11 / 98%);
+    box-shadow:
+      0 1.15rem 2.6rem rgb(0 0 0 / 72%),
+      0 0 2rem rgb(180 138 72 / 18%),
+      inset 0 0 0 1px rgb(228 193 125 / 26%);
+  }
+
+  .round-review-dialog[data-victory='true'] .round-review-heading h2 {
+    font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  }
+
+  .round-review-dialog[data-victory='true'] .reaction-outcome strong {
+    font: 400 clamp(1.25rem, 2.2vw, 1.8rem) / 1.1 var(--font-feature);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.7px currentcolor;
+  }
+
+  .round-review-dialog[data-victory='true'] .round-review-continue {
+    min-width: 16rem;
+  }
+
   .round-review-heading {
     grid-area: heading;
     display: grid;
@@ -859,7 +888,7 @@
     grid-area: continue;
     justify-self: center;
     min-width: 9rem;
-    min-height: 2.65rem;
+    min-height: 2.75rem;
     padding: 0.45rem 1rem;
     border: 3px double var(--broadcast-gold-light);
     border-radius: 0;
@@ -949,6 +978,14 @@
     font-size: 0.82rem;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+  }
+
+  .reaction-scores .self-damage {
+    color: #ffb07a;
+    font-size: 0.69rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
   }
 
   .combo-bonus {
