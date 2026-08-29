@@ -252,6 +252,28 @@ describe('Hollywood Roast extended grammar', () => {
     });
   });
 
+  test('accepts the passive camera predicate after a contrasted object clause', () => {
+    const result = analyze([
+      add('your-voters'),
+      add('was-a-securitate-informer'),
+      add('chamber-yet'),
+      add('audits'),
+      add('your-brother'),
+      add('coalition-and'),
+      add('will-drag-before-the-cameras'),
+    ]);
+
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        state: 'CLAUSE_COMPLETE',
+        publicText:
+          'Your voters were Securitate informers yet audit your brother and will be dragged before the cameras',
+      },
+    });
+  });
+
   test.each([
     ['stole', 'EU funds'],
     ['appropriated', 'EU funds'],

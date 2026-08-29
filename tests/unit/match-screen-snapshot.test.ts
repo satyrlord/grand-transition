@@ -96,7 +96,7 @@ describe('match-screen snapshot', () => {
     );
   });
 
-  test('retains the most recent public sentence for the next round bubble', () => {
+  test('clears an incomplete sentence from the next round bubble', () => {
     const scene = sampleContent.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
@@ -144,7 +144,82 @@ describe('match-screen snapshot', () => {
     const snapshot = createMatchScreenSnapshot(state);
     const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
     expect(waitingPlayer.playerId).toBe(firstSpeakerId);
-    expect(waitingPlayer.sentence).toBe(previousPublicSentence);
+    expect(waitingPlayer.sentence).toBeNull();
+    expect(snapshot.sentenceText).not.toBe(previousPublicSentence);
+  });
+
+  test('shows the new construction instead of a sentence from the previous round', () => {
+    const scene = sampleContent.scenes[0]!;
+    const players = [configuredPlayer(0), configuredPlayer(1)] as const;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_831,
+      players,
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    const firstSpeakerId = state.activePlayerId;
+    state = withPrivateCard(state, firstSpeakerId, 'your-father');
+    state = selectPrivateCard(state, firstSpeakerId, 'your-father');
+
+    const secondSpeakerId = state.activePlayerId;
+    state = withPrivateCard(state, secondSpeakerId, 'national-consensus');
+    state = selectPrivateCard(state, secondSpeakerId, 'national-consensus');
+    state = withPrivateCard(state, firstSpeakerId, 'is-rejected-by-own-voters');
+    state = selectPrivateCard(
+      state,
+      firstSpeakerId,
+      'is-rejected-by-own-voters',
+    );
+    state = withPrivateCard(
+      state,
+      secondSpeakerId,
+      'is-rejected-by-own-voters',
+    );
+    state = selectPrivateCard(
+      state,
+      secondSpeakerId,
+      'is-rejected-by-own-voters',
+    );
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: firstSpeakerId,
+      payload: {},
+    });
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: secondSpeakerId,
+      payload: {},
+    });
+    state = accept(state, lifecycleCommand('resolve-round'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+
+    expect(state.activePlayerId).toBe(secondSpeakerId);
+    expect(createMatchScreenSnapshot(state).sentenceText).toBe(
+      'Select a noun to begin.',
+    );
+
+    state = withPrivateCard(state, secondSpeakerId, 'your-concubine');
+    state = selectPrivateCard(state, secondSpeakerId, 'your-concubine');
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: firstSpeakerId,
+      payload: {},
+    });
+    const currentSentence =
+      state.draft!.playerStates[secondSpeakerId]!.construction.previewText;
+    const snapshot = createMatchScreenSnapshot(state);
+
+    expect(snapshot.sentenceText).toBe(currentSentence);
+    expect(snapshot.sentenceText).toBe('Your concubine');
   });
 
   test('keeps a private-card sentence public after its speaker ends the turn', () => {
@@ -164,11 +239,11 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('prepare-round'));
     const firstSpeakerId = state.activePlayerId;
     state = withPrivateCard(state, firstSpeakerId, 'your-father');
-    state = selectPrivateCard(state, firstSpeakerId);
+    state = selectPrivateCard(state, firstSpeakerId, 'your-father');
 
     const secondSpeakerId = state.activePlayerId;
     state = withPrivateCard(state, secondSpeakerId, 'national-consensus');
-    state = selectPrivateCard(state, secondSpeakerId);
+    state = selectPrivateCard(state, secondSpeakerId, 'national-consensus');
     state = accept(state, {
       type: 'commit-sentence',
       source: 'user',
@@ -192,7 +267,7 @@ function withPrivateCard(
 ): MatchState {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
-  const card = { id: `regression-${playerId}`, phraseId };
+  const card = { id: `regression-${playerId}-${phraseId}`, phraseId };
   return {
     ...state,
     draft: {
@@ -212,11 +287,15 @@ function withPrivateCard(
   };
 }
 
-function selectPrivateCard(state: MatchState, actorId: string): MatchState {
+function selectPrivateCard(
+  state: MatchState,
+  actorId: string,
+  phraseId: string,
+): MatchState {
   const card = state.draft!.playerStates[actorId]!.legalCards.find(
     (reference) =>
       reference.source === 'private' &&
-      reference.cardId === `regression-${actorId}`,
+      reference.cardId === `regression-${actorId}-${phraseId}`,
   )!;
   return accept(state, {
     type: 'select-phrase',
