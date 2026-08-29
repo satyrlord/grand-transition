@@ -333,6 +333,53 @@ describe('content schemas', () => {
     }
   });
 
+  test('loads person-aware nouns and subject agreement forms', () => {
+    expect(
+      phraseCardCatalog.phrases.find((phrase) => phrase.id === 'you'),
+    ).toMatchObject({
+      grammaticalNumber: 'singular',
+      grammaticalPerson: 'second',
+      referentKind: 'personal',
+    });
+    expect(
+      phraseCardCatalog.phrases.find((phrase) => phrase.id === 'my-opponent'),
+    ).toMatchObject({ referentKind: 'personal' });
+    expect(
+      phraseCardCatalog.phrases.find((phrase) => phrase.id === 'eu-funds'),
+    ).toMatchObject({ grammaticalNumber: 'plural' });
+
+    for (const id of [
+      'could-not-win-own-stairwell',
+      'cannot-win-own-stairwell',
+      'will-not-win-own-stairwell',
+      'was-rejected-by-own-voters',
+      'is-rejected-by-own-voters',
+      'will-be-rejected-by-own-voters',
+      'makes-own-voters-change-the-channel',
+      'made-own-voters-change-the-channel',
+      'will-make-own-voters-change-the-channel',
+      'cannot-steer-own-party-from-puddle',
+      'could-not-steer-own-party-from-puddle',
+      'will-not-steer-own-party-from-puddle',
+    ]) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === id,
+      );
+      expect(phrase?.numberForms, id).toMatchObject({
+        personalSingularKey: `phrase.${id}.personal-singular`,
+        secondPersonKey: `phrase.${id}.second-person`,
+      });
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${id}.personal-singular`],
+        id,
+      ).toMatch(/\btheir own\b/iu);
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${id}.second-person`],
+        id,
+      ).toMatch(/\byour own\b/iu);
+    }
+  });
+
   test('loads requested tense variants with valid number agreement', () => {
     const expected = [
       ['denounced', 'denounced', 'denounced'],
@@ -717,6 +764,39 @@ describe('content schemas', () => {
     ).toThrow(/more than one corpus/iu);
   });
 
+  test('derives complete person-specific agreement messages', () => {
+    const source = {
+      id: 'manual-person-agreement',
+      role: 'predicate',
+      text: 'guards its own notes',
+      singularText: 'guards its own notes',
+      pluralText: 'guard their own notes',
+      personalSingularText: 'guards their own notes',
+      secondPersonText: 'guard your own notes',
+      tense: 'present',
+      tenseFamily: 'manual-person-agreement',
+      tags: ['paperwork'],
+      scorePreferences: {
+        substance: [{ left: ['bureaucracy'] }],
+        flavour: [],
+      },
+      rarity: 'uncommon',
+      editorialReview: approvedReview(
+        'Original person-agreement test fixture.',
+      ),
+    } as const;
+    const loaded = parsePhraseCardCorpus([source]);
+
+    expect(loaded.englishMessages).toMatchObject({
+      'phrase.manual-person-agreement.personal-singular':
+        'guards their own notes',
+      'phrase.manual-person-agreement.second-person': 'guard your own notes',
+    });
+    expect(() =>
+      parsePhraseCardCorpus([{ ...source, secondPersonText: undefined }]),
+    ).toThrow(/both personalSingularText and secondPersonText/iu);
+  });
+
   test('builds a complete character and locale messages from one JSON source', () => {
     const source = {
       id: 'test-character',
@@ -902,7 +982,31 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     catalog.phrases[0]!.numberForms!.pluralKey =
       catalog.phrases[0]!.numberForms!.singularKey;
-    expectFailure(catalog, 'phrases.0.numberForms', /different locale keys/iu);
+    expectFailure(catalog, 'phrases.0.numberForms', /different locale key/iu);
+  });
+
+  test('rejects incomplete or invalid person agreement metadata', () => {
+    const incompleteForms = cloneCatalog();
+    const relation = incompleteForms.phrases.find(
+      (phrase) => phrase.id === 'made-own-voters-change-the-channel',
+    )!;
+    relation.numberForms!.secondPersonKey = undefined;
+    expectFailure(
+      incompleteForms,
+      'numberForms',
+      /both personal-singular and second-person keys/iu,
+    );
+
+    const invalidSecondPerson = cloneCatalog();
+    const you = invalidSecondPerson.phrases.find(
+      (phrase) => phrase.id === 'you',
+    )!;
+    you.referentKind = 'nonpersonal';
+    expectFailure(
+      invalidSecondPerson,
+      'referentKind',
+      /second-person noun.*personal referent/iu,
+    );
   });
 
   test('requires one exclusive comeback line for every character and tier', () => {
@@ -1173,6 +1277,18 @@ describe('content schemas', () => {
     expectFailure(
       catalog,
       'locales.0.messages.phrase.national-consensus.plural',
+      /required locale message/iu,
+    );
+  });
+
+  test('rejects a missing locale key for person agreement', () => {
+    const catalog = cloneCatalog();
+    delete catalog.locales[0]!.messages[
+      'phrase.made-own-voters-change-the-channel.second-person'
+    ];
+    expectFailure(
+      catalog,
+      'locales.0.messages.phrase.made-own-voters-change-the-channel.second-person',
       /required locale message/iu,
     );
   });

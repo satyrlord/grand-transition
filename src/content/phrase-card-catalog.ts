@@ -20,6 +20,8 @@ const manualPhraseCardSchema = phraseDefinitionSchema
     text: z.string().trim().min(1),
     singularText: z.string().trim().min(1).optional(),
     pluralText: z.string().trim().min(1).optional(),
+    personalSingularText: z.string().trim().min(1).optional(),
+    secondPersonText: z.string().trim().min(1).optional(),
     editorialReview: editorialReviewSchema,
   })
   .strict()
@@ -28,6 +30,23 @@ const manualPhraseCardSchema = phraseDefinitionSchema
       context.addIssue({
         code: 'custom',
         message: 'Add both singularText and pluralText, or omit both.',
+      });
+    }
+    if (Boolean(card.personalSingularText) !== Boolean(card.secondPersonText)) {
+      context.addIssue({
+        code: 'custom',
+        message:
+          'Add both personalSingularText and secondPersonText, or omit both.',
+      });
+    }
+    if (
+      (card.personalSingularText || card.secondPersonText) &&
+      (!card.singularText || !card.pluralText)
+    ) {
+      context.addIssue({
+        code: 'custom',
+        message:
+          'Add singularText and pluralText before person-specific agreement forms.',
       });
     }
     if (card.role === 'ending' && !card.text.endsWith('.')) {
@@ -109,18 +128,40 @@ export function parsePhraseCardCorpus(
   const englishMessages: Record<string, string> = {};
 
   for (const card of cards) {
-    const { text, singularText, pluralText, editorialReview, ...definition } =
-      card;
+    const {
+      text,
+      singularText,
+      pluralText,
+      personalSingularText,
+      secondPersonText,
+      editorialReview,
+      ...definition
+    } = card;
     const textKey = `phrase.${card.id}`;
     const singularKey = `${textKey}.singular`;
     const pluralKey = `${textKey}.plural`;
+    const personalSingularKey = `${textKey}.personal-singular`;
+    const secondPersonKey = `${textKey}.second-person`;
     phrases.push(
       phraseSchema.parse({
         ...definition,
         characterIds: owner ? [owner] : undefined,
         textKey,
         numberForms:
-          singularText && pluralText ? { singularKey, pluralKey } : undefined,
+          singularText && pluralText
+            ? {
+                singularKey,
+                pluralKey,
+                personalSingularKey:
+                  personalSingularText && secondPersonText
+                    ? personalSingularKey
+                    : undefined,
+                secondPersonKey:
+                  personalSingularText && secondPersonText
+                    ? secondPersonKey
+                    : undefined,
+              }
+            : undefined,
         editorialReview: requireApprovedEditorialReview(
           editorialReview,
           `phrase "${card.id}"`,
@@ -131,6 +172,10 @@ export function parsePhraseCardCorpus(
     if (singularText && pluralText) {
       englishMessages[singularKey] = singularText;
       englishMessages[pluralKey] = pluralText;
+    }
+    if (personalSingularText && secondPersonText) {
+      englishMessages[personalSingularKey] = personalSingularText;
+      englishMessages[secondPersonKey] = secondPersonText;
     }
   }
 

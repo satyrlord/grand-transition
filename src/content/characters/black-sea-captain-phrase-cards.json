@@ -261,6 +261,7 @@
       "id": "a-dockside-peacock",
       "role": "noun",
       "text": "a dockside peacock",
+      "referentKind": "personal",
       "tags": ["decorum", "authenticity"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -295,6 +296,7 @@
       "id": "a-captain-without-compass",
       "role": "noun",
       "text": "a captain without a compass",
+      "referentKind": "personal",
       "tags": ["competence", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -392,6 +394,8 @@
       "text": "cannot steer its own party out of a puddle",
       "singularText": "cannot steer its own party out of a puddle",
       "pluralText": "cannot steer their own party out of a puddle",
+      "personalSingularText": "cannot steer their own party out of a puddle",
+      "secondPersonText": "cannot steer your own party out of a puddle",
       "tags": ["competence", "consistency"],
       "scorePreferences": {
         "substance": [
@@ -417,6 +421,8 @@
       "text": "could not steer its own party out of a puddle",
       "singularText": "could not steer its own party out of a puddle",
       "pluralText": "could not steer their own party out of a puddle",
+      "personalSingularText": "could not steer their own party out of a puddle",
+      "secondPersonText": "could not steer your own party out of a puddle",
       "tags": ["competence", "consistency"],
       "scorePreferences": {
         "substance": [
@@ -442,6 +448,8 @@
       "text": "will not steer its own party out of a puddle",
       "singularText": "will not steer its own party out of a puddle",
       "pluralText": "will not steer their own party out of a puddle",
+      "personalSingularText": "will not steer their own party out of a puddle",
+      "secondPersonText": "will not steer your own party out of a puddle",
       "tags": ["competence", "consistency"],
       "scorePreferences": {
         "substance": [
