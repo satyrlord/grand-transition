@@ -56,6 +56,21 @@ Milestone 028 evidence links, deviations, and release date. Recovery is a revert
 on `main` followed by the same complete build, gate, deploy, and smoke process.
 Do not deploy an untested historic artifact directly.
 
+## Tester and early-adopter deployment
+
+The repository also has a separate pre-release workflow at
+`.github/workflows/deploy-github-pages.yml`. It publishes the current `main`
+build for testers and early adopters. It runs for a push to `main` or a manual
+dispatch selected on `main`. It runs `npm ci` and `npm run build`, then uploads
+only `dist/` and deploys that artifact through the `github-pages` environment.
+
+This path does not run `npm run ci`, `npm run test:published`, the complete
+browser matrix, the complete-match smoke, release evidence, or recovery
+rehearsal. It does not deploy pull requests or other branches. A successful
+tester deployment is not a Milestone 029 release and does not mark the minimum
+viable product complete. The full release path remains responsible for
+AC-029-01 through AC-029-06.
+
 ## Acceptance criteria
 
 - **AC-029-01:** A pull request runs the build gate and the deploy job is
@@ -72,6 +87,12 @@ Do not deploy an untested historic artifact directly.
   artifact digest matches the deployed build.
 - **AC-029-06:** A recovery rehearsal on a non-production Pages artifact proves
   revert, rebuild, gate, deploy, and smoke order without bypass.
+- **AC-029-07:** The tester workflow runs for `main` pushes and manual dispatch
+  from `main`, and its deploy job requires the successful build job. Pull
+  requests and non-`main` workflow dispatches do not deploy.
+- **AC-029-08:** The tester workflow installs the lockfile dependencies, runs
+  the current production build, and uploads only `dist/`. It does not run the
+  full release gate or published smoke command.
 
 ## Impeccable UI validation
 
@@ -87,6 +108,10 @@ The published `/grand-transition/` URL passes asset, refresh, CSP, speech-state,
 Milestone 028 browser-matrix, and complete-match smoke tests. Record oldest
 Safari evidence or mark it unverified. The minimum viable product (MVP) is
 complete. Stop before post-MVP scope.
+
+The tester path is complete when its workflow contract test passes and a
+successful `main` run publishes the current build. This evidence does not
+satisfy the full release acceptance criteria above.
 
 ## Reference
 
