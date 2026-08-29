@@ -32,6 +32,8 @@ export const phraseRoles = [
 ] as const;
 export const sentencePoolRoles = ['noun', 'verb', 'predicate'] as const;
 export const phraseRoleSchema = z.enum(phraseRoles);
+export const phraseTenses = ['past', 'present', 'future'] as const;
+export const phraseTenseSchema = z.enum(phraseTenses);
 export const connectorKindSchema = z.enum([
   'and',
   'because',
@@ -136,6 +138,8 @@ export const phraseDefinitionSchema = z
     id: identifierSchema,
     role: phraseRoleSchema,
     textKey: localeKeySchema,
+    tense: phraseTenseSchema.optional(),
+    tenseFamily: identifierSchema.optional(),
     connectorKind: connectorKindSchema.optional(),
     grammaticalNumber: z.enum(['singular', 'plural']).optional(),
     customScores: customScoresSchema.optional(),
@@ -178,6 +182,18 @@ export const phraseSchema = phraseDefinitionSchema.superRefine(
     const issue = (field: string, message: string) =>
       context.addIssue({ code: 'custom', path: [field], message });
     const relation = phrase.role === 'verb' || phrase.role === 'predicate';
+
+    if (relation && (!phrase.tense || !phrase.tenseFamily)) {
+      issue(
+        'tense',
+        'Give each verb and predicate its tense and tense family.',
+      );
+    } else if (!relation && (phrase.tense || phrase.tenseFamily)) {
+      issue(
+        phrase.tense ? 'tense' : 'tenseFamily',
+        'Only a verb or predicate can declare tense data.',
+      );
+    }
 
     if (phrase.role === 'noun' && !phrase.scoreGroups) {
       issue(

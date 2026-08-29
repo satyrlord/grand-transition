@@ -76,13 +76,67 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "mediates"
+    },
+    {
+      "id": "mediated",
+      "role": "verb",
+      "text": "mediated",
+      "singularText": "mediated",
+      "pluralText": "mediated",
+      "tags": ["restraint", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
-      }
+      },
+      "tense": "past",
+      "tenseFamily": "mediates"
+    },
+    {
+      "id": "will-mediate",
+      "role": "verb",
+      "text": "will mediate",
+      "singularText": "will mediate",
+      "pluralText": "will mediate",
+      "tags": ["restraint", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "mediates"
     },
     {
       "id": "through-a-gradual-transition",
@@ -130,7 +184,61 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
-      }
+      },
+      "singularText": "asks for patience again",
+      "pluralText": "ask for patience again",
+      "tense": "present",
+      "tenseFamily": "asks-for-patience-again"
+    },
+    {
+      "id": "asked-for-patience-again",
+      "role": "predicate",
+      "text": "asked for patience again",
+      "tags": ["modernity", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+      },
+      "singularText": "asked for patience again",
+      "pluralText": "asked for patience again",
+      "tense": "past",
+      "tenseFamily": "asks-for-patience-again"
+    },
+    {
+      "id": "will-ask-for-patience-again",
+      "role": "predicate",
+      "text": "will ask for patience again",
+      "tags": ["modernity", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+      },
+      "singularText": "will ask for patience again",
+      "pluralText": "will ask for patience again",
+      "tense": "future",
+      "tenseFamily": "asks-for-patience-again"
     },
     {
       "id": "a-committee-room-fossil",
@@ -164,13 +272,65 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "calls-every-delay-a-transition"
+    },
+    {
+      "id": "called-every-delay-a-transition",
+      "role": "predicate",
+      "text": "called every delay a transition",
+      "singularText": "called every delay a transition",
+      "pluralText": "called every delay a transition",
+      "tags": ["modernity", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
-      }
+      },
+      "tense": "past",
+      "tenseFamily": "calls-every-delay-a-transition"
+    },
+    {
+      "id": "will-call-every-delay-a-transition",
+      "role": "predicate",
+      "text": "will call every delay a transition",
+      "singularText": "will call every delay a transition",
+      "pluralText": "will call every delay a transition",
+      "tags": ["modernity", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "calls-every-delay-a-transition"
     },
     {
       "id": "the-nordic-model",

@@ -76,18 +76,97 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "condemns"
+    },
+    {
+      "id": "outshouted",
+      "role": "verb",
+      "text": "outshouted",
+      "singularText": "outshouted",
+      "pluralText": "outshouted",
+      "tags": ["restraint", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"],
+            "right": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
-      }
+      },
+      "tense": "past",
+      "tenseFamily": "condemns"
+    },
+    {
+      "id": "will-outshout",
+      "role": "verb",
+      "text": "will outshout",
+      "singularText": "will outshout",
+      "pluralText": "will outshout",
+      "tags": ["restraint", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"],
+            "right": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "condemns"
     },
     {
       "id": "from-the-marble-rostrum",
       "role": "predicate",
       "text": "could lose an election to an empty ballot",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
+      },
+      "tenseFamily": "from-the-marble-rostrum",
+      "rarity": "common",
+      "singularText": "could lose an election to an empty ballot",
+      "pluralText": "could lose an election to an empty ballot",
+      "tense": "past"
+    },
+    {
+      "id": "can-lose-to-an-empty-ballot",
+      "role": "predicate",
+      "text": "can lose an election to an empty ballot",
       "tags": ["decorum", "credibility"],
       "scorePreferences": {
         "substance": [
@@ -103,7 +182,36 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
-      }
+      },
+      "singularText": "can lose an election to an empty ballot",
+      "pluralText": "can lose an election to an empty ballot",
+      "tense": "present",
+      "tenseFamily": "from-the-marble-rostrum"
+    },
+    {
+      "id": "will-lose-to-an-empty-ballot",
+      "role": "predicate",
+      "text": "will lose an election to an empty ballot",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
+      },
+      "singularText": "will lose an election to an empty ballot",
+      "pluralText": "will lose an election to an empty ballot",
+      "tense": "future",
+      "tenseFamily": "from-the-marble-rostrum"
     },
     {
       "id": "before-the-nation-loses-patience",
@@ -138,7 +246,61 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
-      }
+      },
+      "singularText": "seizes the studio phone again",
+      "pluralText": "seize the studio phone again",
+      "tense": "present",
+      "tenseFamily": "raises-the-volume-again"
+    },
+    {
+      "id": "seized-the-studio-phone-again",
+      "role": "predicate",
+      "text": "seized the studio phone again",
+      "tags": ["decorum", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
+      },
+      "singularText": "seized the studio phone again",
+      "pluralText": "seized the studio phone again",
+      "tense": "past",
+      "tenseFamily": "raises-the-volume-again"
+    },
+    {
+      "id": "will-seize-the-studio-phone-again",
+      "role": "predicate",
+      "text": "will seize the studio phone again",
+      "tags": ["decorum", "restraint"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
+      },
+      "singularText": "will seize the studio phone again",
+      "pluralText": "will seize the studio phone again",
+      "tense": "future",
+      "tenseFamily": "raises-the-volume-again"
     },
     {
       "id": "that-powdered-scarecrow",
@@ -240,13 +402,65 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "looks-like-a-somaldoaca-on-television"
+    },
+    {
+      "id": "looked-like-a-somaldoaca-on-television",
+      "role": "predicate",
+      "text": "looked like a șomâldoacă on television",
+      "singularText": "looked like a șomâldoacă on television",
+      "pluralText": "looked like șomâldoace on television",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+      },
+      "tense": "past",
+      "tenseFamily": "looks-like-a-somaldoaca-on-television"
+    },
+    {
+      "id": "will-look-like-a-somaldoaca-on-television",
+      "role": "predicate",
+      "text": "will look like a șomâldoacă on television",
+      "singularText": "will look like a șomâldoacă on television",
+      "pluralText": "will look like șomâldoace on television",
+      "tags": ["decorum", "credibility"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "media"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "rare",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
-      }
+      },
+      "tense": "future",
+      "tenseFamily": "looks-like-a-somaldoaca-on-television"
     },
     {
       "id": "bring-me-the-studio-phone",

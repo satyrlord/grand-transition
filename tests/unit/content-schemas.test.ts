@@ -53,7 +53,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
   },
   {
     name: 'phrase finisher bonus',
-    pathPart: 'phrases.11.finisherBonus',
+    pathPart: 'finisherBonus',
     minimum: 1,
     maximum: 20,
     immediatelyBelow: 0,
@@ -129,9 +129,9 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 191 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(191);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(144);
+  test('loads 303 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(303);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(234);
     expect(
       Object.fromEntries(
         Object.entries(phraseCardCatalog.characterPhraseIds).map(
@@ -139,9 +139,9 @@ describe('content schemas', () => {
         ),
       ),
     ).toEqual({
-      'red-folded-chairman': 24,
-      'thunder-tribune': 12,
-      'black-sea-captain': 11,
+      'red-folded-chairman': 30,
+      'thunder-tribune': 20,
+      'black-sea-captain': 19,
     });
     expect(phraseCardCatalog.characterPhraseIds['red-folded-chairman']).toEqual(
       expect.arrayContaining([
@@ -237,7 +237,7 @@ describe('content schemas', () => {
     );
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(191);
+    ).toHaveLength(303);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -369,7 +369,7 @@ describe('content schemas', () => {
     }
   });
 
-  test('keeps the 144-card common corpus at its approved role totals', () => {
+  test('keeps the 234-card common corpus at its approved role totals', () => {
     const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
@@ -390,13 +390,51 @@ describe('content schemas', () => {
 
     expect(roleCounts).toEqual({
       noun: 55,
-      verb: 33,
-      predicate: 12,
+      verb: 99,
+      predicate: 36,
       modifier: 21,
       conjunction: 11,
       ending: 11,
       continuation: 1,
     });
+  });
+
+  test('groups every shipped verb and predicate as a complete tense triplet', () => {
+    const expectedRarity = {
+      past: 'common',
+      present: 'uncommon',
+      future: 'rare',
+    } as const;
+    const families = new Map<string, typeof phraseCardCatalog.phrases>();
+
+    for (const phrase of phraseCardCatalog.phrases) {
+      if (phrase.role !== 'verb' && phrase.role !== 'predicate') continue;
+      expect(phrase.tenseFamily, phrase.id).toBeTruthy();
+      expect(phrase.tense, phrase.id).toBeTruthy();
+      const owner = phrase.characterIds?.[0] ?? 'common';
+      const key = owner + ':' + phrase.tenseFamily;
+      families.set(key, [...(families.get(key) ?? []), phrase]);
+    }
+
+    expect(families).toHaveLength(56);
+    for (const [family, members] of families) {
+      expect(members, family).toHaveLength(3);
+      expect(members.map((member) => member.role)).toEqual([
+        members[0]!.role,
+        members[0]!.role,
+        members[0]!.role,
+      ]);
+      expect(members.map((member) => member.tense).toSorted()).toEqual([
+        'future',
+        'past',
+        'present',
+      ]);
+      for (const member of members) {
+        expect(member.rarity, family + ' ' + member.id).toBe(
+          expectedRarity[member.tense!],
+        );
+      }
+    }
   });
 
   test('classifies clause modifiers separately from predicates', () => {
@@ -460,16 +498,12 @@ describe('content schemas', () => {
   });
 
   test('keeps every character predicate as a clause-completing verb phrase', () => {
-    expect(
-      phraseCardCatalog.phrases
-        .filter(
-          (phrase) =>
-            phrase.role === 'predicate' && phrase.characterIds !== undefined,
-        )
-        .map((phrase) => phrase.id)
-        .toSorted(),
-    ).toEqual(
-      [
+    const predicates = phraseCardCatalog.phrases.filter(
+      (phrase) =>
+        phrase.role === 'predicate' && phrase.characterIds !== undefined,
+    );
+    expect(new Set(predicates.map((phrase) => phrase.tenseFamily))).toEqual(
+      new Set([
         'asks-for-patience-again',
         'calls-every-delay-a-transition',
         'cannot-steer-own-party-from-puddle',
@@ -477,19 +511,14 @@ describe('content schemas', () => {
         'looks-like-a-somaldoaca-on-television',
         'raises-the-volume-again',
         'returns-to-the-wheel',
-      ].toSorted(),
+      ]),
     );
     expect(
-      phraseCardCatalog.phrases
-        .filter(
-          (phrase) =>
-            phrase.role === 'predicate' && phrase.characterIds !== undefined,
-        )
-        .every(
-          (phrase) =>
-            phrase.scorePreferences !== undefined ||
-            phrase.customScores !== undefined,
-        ),
+      predicates.every(
+        (phrase) =>
+          phrase.scorePreferences !== undefined ||
+          phrase.customScores !== undefined,
+      ),
     ).toBe(true);
   });
 
@@ -522,6 +551,8 @@ describe('content schemas', () => {
     expect(somaldoacaIds).toEqual([
       'a-somaldoaca',
       'looks-like-a-somaldoaca-on-television',
+      'looked-like-a-somaldoaca-on-television',
+      'will-look-like-a-somaldoaca-on-television',
     ]);
     expect(
       somaldoacaIds.every((phraseId) =>
@@ -539,7 +570,7 @@ describe('content schemas', () => {
     const securitatePhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.englishMessages[phrase.textKey]?.includes('Securitate'),
     );
-    expect(securitatePhrases).toHaveLength(4);
+    expect(securitatePhrases).toHaveLength(8);
     expect(
       securitatePhrases.every((phrase) => phrase.tags.includes('securitate')),
     ).toBe(true);

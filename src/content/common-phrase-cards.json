@@ -74,7 +74,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original political-debate verb informed by Romanian parliamentary and televised rhetoric. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "denounced"
+  },
+  {
+    "id": "denounces",
+    "role": "verb",
+    "text": "denounces",
+    "singularText": "denounces",
+    "pluralText": "denounce",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original political-debate verb informed by Romanian parliamentary and televised rhetoric. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "denounced"
+  },
+  {
+    "id": "will-denounce",
+    "role": "verb",
+    "text": "will denounce",
+    "singularText": "will denounce",
+    "pluralText": "will denounce",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original political-debate verb informed by Romanian parliamentary and televised rhetoric. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "denounced"
   },
   {
     "id": "interrupts-the-debate",
@@ -98,7 +152,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "interrupts-the-debate"
+  },
+  {
+    "id": "interrupted-the-debate",
+    "role": "predicate",
+    "text": "interrupted this debate",
+    "singularText": "interrupted this debate",
+    "pluralText": "interrupted this debate",
+    "tags": ["restraint", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "interrupts-the-debate"
+  },
+  {
+    "id": "will-interrupt-the-debate",
+    "role": "predicate",
+    "text": "will interrupt this debate",
+    "singularText": "will interrupt this debate",
+    "pluralText": "will interrupt this debate",
+    "tags": ["restraint", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "interrupts-the-debate"
   },
   {
     "id": "before-the-next-election",
@@ -310,13 +418,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "postpones-reform"
+  },
+  {
+    "id": "postponed-reform",
+    "role": "verb",
+    "text": "postponed",
+    "singularText": "postponed",
+    "pluralText": "postponed",
+    "tags": ["modernity", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "postpones-reform"
+  },
+  {
+    "id": "will-postpone-reform",
+    "role": "verb",
+    "text": "will postpone",
+    "singularText": "will postpone",
+    "pluralText": "will postpone",
+    "tags": ["modernity", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "postpones-reform"
   },
   {
     "id": "inaugurates",
@@ -334,13 +496,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian ribbon-cutting satire. Not a quotation or a claim about a named person or project. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "inaugurates"
+  },
+  {
+    "id": "inaugurated",
+    "role": "verb",
+    "text": "inaugurated",
+    "singularText": "inaugurated",
+    "pluralText": "inaugurated",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian ribbon-cutting satire. Not a quotation or a claim about a named person or project. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "inaugurates"
+  },
+  {
+    "id": "will-inaugurate",
+    "role": "verb",
+    "text": "will inaugurate",
+    "singularText": "will inaugurate",
+    "pluralText": "will inaugurate",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian ribbon-cutting satire. Not a quotation or a claim about a named person or project. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "inaugurates"
   },
   {
     "id": "privatizes",
@@ -364,7 +580,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original English adaptation informed by Romania's post-1989 privatization period. Not a quotation or a claim about a named transaction. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "privatizes"
+  },
+  {
+    "id": "privatized",
+    "role": "verb",
+    "text": "privatized",
+    "singularText": "privatized",
+    "pluralText": "privatized",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original English adaptation informed by Romania's post-1989 privatization period. Not a quotation or a claim about a named transaction. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "privatizes"
+  },
+  {
+    "id": "will-privatize",
+    "role": "verb",
+    "text": "will privatize",
+    "singularText": "will privatize",
+    "pluralText": "will privatize",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy"],
+          "right": ["bureaucracy"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original English adaptation informed by Romania's post-1989 privatization period. Not a quotation or a claim about a named transaction. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "privatizes"
   },
   {
     "id": "broadcasts",
@@ -388,7 +658,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-television satire. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "broadcasts"
+  },
+  {
+    "id": "broadcast",
+    "role": "verb",
+    "text": "broadcast",
+    "singularText": "broadcast",
+    "pluralText": "broadcast",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-television satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "broadcasts"
+  },
+  {
+    "id": "will-broadcast",
+    "role": "verb",
+    "text": "will broadcast",
+    "singularText": "will broadcast",
+    "pluralText": "will broadcast",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media"],
+          "right": ["media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-television satire. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "broadcasts"
   },
   {
     "id": "at-victoria-palace",
@@ -796,13 +1120,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-debate verb about repeated public explanation. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "explains"
+  },
+  {
+    "id": "explained",
+    "role": "verb",
+    "text": "explained",
+    "singularText": "explained",
+    "pluralText": "explained",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-debate verb about repeated public explanation. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "explains"
+  },
+  {
+    "id": "will-explain",
+    "role": "verb",
+    "text": "will explain",
+    "singularText": "will explain",
+    "pluralText": "will explain",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-debate verb about repeated public explanation. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "explains"
   },
   {
     "id": "announces",
@@ -820,13 +1198,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-media verb about formal announcements. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "announces"
+  },
+  {
+    "id": "announced",
+    "role": "verb",
+    "text": "announced",
+    "singularText": "announced",
+    "pluralText": "announced",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-media verb about formal announcements. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "announces"
+  },
+  {
+    "id": "will-announce",
+    "role": "verb",
+    "text": "will announce",
+    "singularText": "will announce",
+    "pluralText": "will announce",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-media verb about formal announcements. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "announces"
   },
   {
     "id": "archives",
@@ -850,7 +1282,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian transition-record satire about consigning issues to the archive. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "archives"
+  },
+  {
+    "id": "archived",
+    "role": "verb",
+    "text": "archived",
+    "singularText": "archived",
+    "pluralText": "archived",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition-record satire about consigning issues to the archive. Not a quotation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "archives"
+  },
+  {
+    "id": "will-archive",
+    "role": "verb",
+    "text": "will archive",
+    "singularText": "will archive",
+    "pluralText": "will archive",
+    "tags": ["legacy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition-record satire about consigning issues to the archive. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "archives"
   },
   {
     "id": "negotiated",
@@ -874,7 +1360,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian coalition-politics verb about routine negotiation. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "negotiated"
+  },
+  {
+    "id": "negotiates",
+    "role": "verb",
+    "text": "negotiates",
+    "singularText": "negotiates",
+    "pluralText": "negotiate",
+    "tags": ["restraint", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian coalition-politics verb about routine negotiation. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "negotiated"
+  },
+  {
+    "id": "will-negotiate",
+    "role": "verb",
+    "text": "will negotiate",
+    "singularText": "will negotiate",
+    "pluralText": "will negotiate",
+    "tags": ["restraint", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian coalition-politics verb about routine negotiation. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "negotiated"
   },
   {
     "id": "rebrands",
@@ -892,13 +1432,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition satire about recurring political rebranding. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "rebrands"
+  },
+  {
+    "id": "rebranded",
+    "role": "verb",
+    "text": "rebranded",
+    "singularText": "rebranded",
+    "pluralText": "rebranded",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian transition satire about recurring political rebranding. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "rebrands"
+  },
+  {
+    "id": "will-rebrand",
+    "role": "verb",
+    "text": "will rebrand",
+    "singularText": "will rebrand",
+    "pluralText": "will rebrand",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian transition satire about recurring political rebranding. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "rebrands"
   },
   {
     "id": "consulted",
@@ -922,7 +1516,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian public-administration verb about formal consultation. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "consulted"
+  },
+  {
+    "id": "consults",
+    "role": "verb",
+    "text": "consults",
+    "singularText": "consults",
+    "pluralText": "consult",
+    "tags": ["decorum", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-administration verb about formal consultation. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "consulted"
+  },
+  {
+    "id": "will-consult",
+    "role": "verb",
+    "text": "will consult",
+    "singularText": "will consult",
+    "pluralText": "will consult",
+    "tags": ["decorum", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-administration verb about formal consultation. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "consulted"
   },
   {
     "id": "allocated",
@@ -940,13 +1588,67 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian budget-procedure verb about general resource allocation. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "allocated"
+  },
+  {
+    "id": "allocates",
+    "role": "verb",
+    "text": "allocates",
+    "singularText": "allocates",
+    "pluralText": "allocate",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian budget-procedure verb about general resource allocation. Not a quotation or an allegation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "allocated"
+  },
+  {
+    "id": "will-allocate",
+    "role": "verb",
+    "text": "will allocate",
+    "singularText": "will allocate",
+    "pluralText": "will allocate",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian budget-procedure verb about general resource allocation. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "allocated"
   },
   {
     "id": "contested",
@@ -964,13 +1666,67 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-debate verb about disputing a public claim or procedure. Not a quotation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "contested"
+  },
+  {
+    "id": "contests",
+    "role": "verb",
+    "text": "contests",
+    "singularText": "contests",
+    "pluralText": "contest",
+    "tags": ["evidence", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-debate verb about disputing a public claim or procedure. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "contested"
+  },
+  {
+    "id": "will-contest",
+    "role": "verb",
+    "text": "will contest",
+    "singularText": "will contest",
+    "pluralText": "will contest",
+    "tags": ["evidence", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-debate verb about disputing a public claim or procedure. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "contested"
   },
   {
     "id": "promised",
@@ -994,7 +1750,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian election-cycle verb about general campaign promises. Not a quotation or a claim about a named person. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "promised"
+  },
+  {
+    "id": "promises",
+    "role": "verb",
+    "text": "promises",
+    "singularText": "promises",
+    "pluralText": "promise",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian election-cycle verb about general campaign promises. Not a quotation or a claim about a named person. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "promised"
+  },
+  {
+    "id": "will-promise",
+    "role": "verb",
+    "text": "will promise",
+    "singularText": "will promise",
+    "pluralText": "will promise",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian election-cycle verb about general campaign promises. Not a quotation or a claim about a named person. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "promised"
   },
   {
     "id": "unveiled",
@@ -1012,13 +1822,67 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-ceremony verb about presenting new plans. Not a quotation or a claim about a named project. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "unveiled"
+  },
+  {
+    "id": "unveils",
+    "role": "verb",
+    "text": "unveils",
+    "singularText": "unveils",
+    "pluralText": "unveil",
+    "tags": ["modernity", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian public-ceremony verb about presenting new plans. Not a quotation or a claim about a named project. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "unveiled"
+  },
+  {
+    "id": "will-unveil",
+    "role": "verb",
+    "text": "will unveil",
+    "singularText": "will unveil",
+    "pluralText": "will unveil",
+    "tags": ["modernity", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-ceremony verb about presenting new plans. Not a quotation or a claim about a named project. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "unveiled"
   },
   {
     "id": "coordinated",
@@ -1042,7 +1906,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian administrative-language verb about institutional coordination. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "coordinated"
+  },
+  {
+    "id": "coordinates",
+    "role": "verb",
+    "text": "coordinates",
+    "singularText": "coordinates",
+    "pluralText": "coordinate",
+    "tags": ["bureaucracy", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian administrative-language verb about institutional coordination. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "coordinated"
+  },
+  {
+    "id": "will-coordinate",
+    "role": "verb",
+    "text": "will coordinate",
+    "singularText": "will coordinate",
+    "pluralText": "will coordinate",
+    "tags": ["bureaucracy", "restraint"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian administrative-language verb about institutional coordination. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "coordinated"
   },
   {
     "id": "audits",
@@ -1060,13 +1978,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-administration verb about routine audit work. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "audits"
+  },
+  {
+    "id": "audited",
+    "role": "verb",
+    "text": "audited",
+    "singularText": "audited",
+    "pluralText": "audited",
+    "tags": ["evidence", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian public-administration verb about routine audit work. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "audits"
+  },
+  {
+    "id": "will-audit",
+    "role": "verb",
+    "text": "will audit",
+    "singularText": "will audit",
+    "pluralText": "will audit",
+    "tags": ["evidence", "bureaucracy"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian public-administration verb about routine audit work. Not a quotation or an allegation. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "audits"
   },
   {
     "id": "redirects",
@@ -1090,7 +2062,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian policy satire about changing an administrative course. Not a quotation or an allegation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "redirects"
+  },
+  {
+    "id": "redirected",
+    "role": "verb",
+    "text": "redirected",
+    "singularText": "redirected",
+    "pluralText": "redirected",
+    "tags": ["consistency", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian policy satire about changing an administrative course. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "redirects"
+  },
+  {
+    "id": "will-redirect",
+    "role": "verb",
+    "text": "will redirect",
+    "singularText": "will redirect",
+    "pluralText": "will redirect",
+    "tags": ["consistency", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian policy satire about changing an administrative course. Not a quotation or an allegation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "redirects"
   },
   {
     "id": "televises",
@@ -1114,7 +2140,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian political-broadcast verb about turning public procedure into television. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "televises"
+  },
+  {
+    "id": "televised",
+    "role": "verb",
+    "text": "televised",
+    "singularText": "televised",
+    "pluralText": "televised",
+    "tags": ["media", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-broadcast verb about turning public procedure into television. Not a quotation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "televises"
+  },
+  {
+    "id": "will-televise",
+    "role": "verb",
+    "text": "will televise",
+    "singularText": "will televise",
+    "pluralText": "will televise",
+    "tags": ["media", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["bureaucracy", "media"],
+          "right": ["bureaucracy", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian political-broadcast verb about turning public procedure into television. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "televises"
   },
   {
     "id": "after-the-midnight-news",
@@ -1799,13 +2879,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original direct political-roast verb for fictional studio debate. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "embarrasses"
+  },
+  {
+    "id": "embarrassed",
+    "role": "verb",
+    "text": "embarrassed",
+    "singularText": "embarrassed",
+    "pluralText": "embarrassed",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "family"],
+          "right": ["politics", "electoral"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original direct political-roast verb for fictional studio debate. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "embarrasses"
+  },
+  {
+    "id": "will-embarrass",
+    "role": "verb",
+    "text": "will embarrass",
+    "singularText": "will embarrass",
+    "pluralText": "will embarrass",
+    "tags": ["credibility", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "family"],
+          "right": ["politics", "electoral"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original direct political-roast verb for fictional studio debate. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "embarrasses"
   },
   {
     "id": "disowns",
@@ -1829,7 +2963,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original hyperbolic political-roast verb for fictional personas and institutions. It records no real family dispute. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "disowns"
+  },
+  {
+    "id": "disowned",
+    "role": "verb",
+    "text": "disowned",
+    "singularText": "disowned",
+    "pluralText": "disowned",
+    "tags": ["legacy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original hyperbolic political-roast verb for fictional personas and institutions. It records no real family dispute. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "disowns"
+  },
+  {
+    "id": "will-disown",
+    "role": "verb",
+    "text": "will disown",
+    "singularText": "will disown",
+    "pluralText": "will disown",
+    "tags": ["legacy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original hyperbolic political-roast verb for fictional personas and institutions. It records no real family dispute. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "disowns"
   },
   {
     "id": "heckles",
@@ -1847,13 +3035,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original studio-confrontation verb informed by broad Romanian televised-debate rhythm. Not a quotation. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "heckles"
+  },
+  {
+    "id": "heckled",
+    "role": "verb",
+    "text": "heckled",
+    "singularText": "heckled",
+    "pluralText": "heckled",
+    "tags": ["restraint", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "media"],
+          "right": ["personal", "electoral"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original studio-confrontation verb informed by broad Romanian televised-debate rhythm. Not a quotation. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "heckles"
+  },
+  {
+    "id": "will-heckle",
+    "role": "verb",
+    "text": "will heckle",
+    "singularText": "will heckle",
+    "pluralText": "will heckle",
+    "tags": ["restraint", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "media"],
+          "right": ["personal", "electoral"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original studio-confrontation verb informed by broad Romanian televised-debate rhythm. Not a quotation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "heckles"
   },
   {
     "id": "drags-before-the-cameras",
@@ -1871,13 +3113,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "drags-before-the-cameras"
+  },
+  {
+    "id": "dragged-before-the-cameras",
+    "role": "verb",
+    "text": "dragged before the cameras",
+    "singularText": "dragged before the cameras",
+    "pluralText": "dragged before the cameras",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media", "personal"],
+          "right": ["history", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "drags-before-the-cameras"
+  },
+  {
+    "id": "will-drag-before-the-cameras",
+    "role": "verb",
+    "text": "will drag before the cameras",
+    "singularText": "will drag before the cameras",
+    "pluralText": "will drag before the cameras",
+    "tags": ["evidence", "decorum"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["media", "personal"],
+          "right": ["history", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "drags-before-the-cameras"
   },
   {
     "id": "were-communist-party-members",
@@ -1894,13 +3190,65 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional transition-era allegation designed for fictional composite characters only. It names no real or private person and is not a public-record claim. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "were-communist-party-members"
+  },
+  {
+    "id": "are-communist-party-members",
+    "role": "predicate",
+    "text": "is a Communist Party member",
+    "singularText": "is a Communist Party member",
+    "pluralText": "are Communist Party members",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional transition-era allegation designed for fictional composite characters only. It names no real or private person and is not a public-record claim. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "were-communist-party-members"
+  },
+  {
+    "id": "will-be-communist-party-members",
+    "role": "predicate",
+    "text": "will be a Communist Party member",
+    "singularText": "will be a Communist Party member",
+    "pluralText": "will be Communist Party members",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional transition-era allegation designed for fictional composite characters only. It names no real or private person and is not a public-record claim. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "were-communist-party-members"
   },
   {
     "id": "keeps-the-securitate-on-speed-dial",
@@ -1917,13 +3265,65 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original absurd anachronism for fictional transition satire. It is not a claim about a real person and does not allege a specific crime. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "keeps-the-securitate-on-speed-dial"
+  },
+  {
+    "id": "kept-the-securitate-on-speed-dial",
+    "role": "predicate",
+    "text": "kept the Securitate on speed dial",
+    "singularText": "kept the Securitate on speed dial",
+    "pluralText": "kept the Securitate on speed dial",
+    "tags": ["legacy", "evidence", "securitate"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "history"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original absurd anachronism for fictional transition satire. It is not a claim about a real person and does not allege a specific crime. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "keeps-the-securitate-on-speed-dial"
+  },
+  {
+    "id": "will-keep-the-securitate-on-speed-dial",
+    "role": "predicate",
+    "text": "will keep the Securitate on speed dial",
+    "singularText": "will keep the Securitate on speed dial",
+    "pluralText": "will keep the Securitate on speed dial",
+    "tags": ["legacy", "evidence", "securitate"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "history"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original absurd anachronism for fictional transition satire. It is not a claim about a real person and does not allege a specific crime. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "keeps-the-securitate-on-speed-dial"
   },
   {
     "id": "could-not-win-own-stairwell",
@@ -1940,13 +3340,65 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian apartment-block election joke about fictional personas. It makes no claim about a real result. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "could-not-win-own-stairwell"
+  },
+  {
+    "id": "cannot-win-own-stairwell",
+    "role": "predicate",
+    "text": "cannot win an election in its own stairwell",
+    "singularText": "cannot win an election in its own stairwell",
+    "pluralText": "cannot win an election in their own stairwell",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "electoral", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian apartment-block election joke about fictional personas. It makes no claim about a real result. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "could-not-win-own-stairwell"
+  },
+  {
+    "id": "will-not-win-own-stairwell",
+    "role": "predicate",
+    "text": "will not win an election in its own stairwell",
+    "singularText": "will not win an election in its own stairwell",
+    "pluralText": "will not win an election in their own stairwell",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "electoral", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original Romanian apartment-block election joke about fictional personas. It makes no claim about a real result. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "could-not-win-own-stairwell"
   },
   {
     "id": "uses-party-card-as-family-crest",
@@ -1969,7 +3421,59 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original family-and-party metaphor for fictional transition satire. It names no private person and alleges no real affiliation. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "uses-party-card-as-family-crest"
+  },
+  {
+    "id": "used-party-card-as-family-crest",
+    "role": "predicate",
+    "text": "used a party card as a family crest",
+    "singularText": "used a party card as a family crest",
+    "pluralText": "used a party card as a family crest",
+    "tags": ["legacy", "authenticity"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original family-and-party metaphor for fictional transition satire. It names no private person and alleges no real affiliation. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "uses-party-card-as-family-crest"
+  },
+  {
+    "id": "will-use-party-card-as-family-crest",
+    "role": "predicate",
+    "text": "will use a party card as a family crest",
+    "singularText": "will use a party card as a family crest",
+    "pluralText": "will use a party card as a family crest",
+    "tags": ["legacy", "authenticity"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["family", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original family-and-party metaphor for fictional transition satire. It names no private person and alleges no real affiliation. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "uses-party-card-as-family-crest"
   },
   {
     "id": "was-rejected-by-own-voters",
@@ -1992,7 +3496,59 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original election-loss hyperbole for fictional game personas. It is not a claim about a real election. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "was-rejected-by-own-voters"
+  },
+  {
+    "id": "is-rejected-by-own-voters",
+    "role": "predicate",
+    "text": "is rejected by its own voters",
+    "singularText": "is rejected by its own voters",
+    "pluralText": "are rejected by their own voters",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["electoral", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original election-loss hyperbole for fictional game personas. It is not a claim about a real election. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "was-rejected-by-own-voters"
+  },
+  {
+    "id": "will-be-rejected-by-own-voters",
+    "role": "predicate",
+    "text": "will be rejected by its own voters",
+    "singularText": "will be rejected by its own voters",
+    "pluralText": "will be rejected by their own voters",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["electoral", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original election-loss hyperbole for fictional game personas. It is not a claim about a real election. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "was-rejected-by-own-voters"
   },
   {
     "id": "belongs-in-a-party-museum",
@@ -2013,7 +3569,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original political-obsolescence insult for fictional composite characters. It does not target age or another protected trait. Editorial review complete."
-    }
+    },
+    "singularText": "belongs in a history museum",
+    "pluralText": "belong in a history museum",
+    "tense": "present",
+    "tenseFamily": "belongs-in-a-party-museum"
+  },
+  {
+    "id": "belonged-in-a-party-museum",
+    "role": "predicate",
+    "text": "belonged in a history museum",
+    "tags": ["legacy", "modernity"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original political-obsolescence insult for fictional composite characters. It does not target age or another protected trait. Editorial review complete."
+    },
+    "singularText": "belonged in a history museum",
+    "pluralText": "belonged in a history museum",
+    "tense": "past",
+    "tenseFamily": "belongs-in-a-party-museum"
+  },
+  {
+    "id": "will-belong-in-a-party-museum",
+    "role": "predicate",
+    "text": "will belong in a history museum",
+    "tags": ["legacy", "modernity"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original political-obsolescence insult for fictional composite characters. It does not target age or another protected trait. Editorial review complete."
+    },
+    "singularText": "will belong in a history museum",
+    "pluralText": "will belong in a history museum",
+    "tense": "future",
+    "tenseFamily": "belongs-in-a-party-museum"
   },
   {
     "id": "makes-own-voters-change-the-channel",
@@ -2030,18 +3640,120 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional broadcast-rejection joke. It makes no claim about a real audience or ratings. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "makes-own-voters-change-the-channel"
+  },
+  {
+    "id": "made-own-voters-change-the-channel",
+    "role": "predicate",
+    "text": "made its own voters change the channel",
+    "singularText": "made its own voters change the channel",
+    "pluralText": "made their own voters change the channel",
+    "tags": ["credibility", "media"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional broadcast-rejection joke. It makes no claim about a real audience or ratings. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "makes-own-voters-change-the-channel"
   },
   {
-    "id": "sided-with-the-terrorists-in-1989",
+    "id": "will-make-own-voters-change-the-channel",
+    "role": "predicate",
+    "text": "will make its own voters change the channel",
+    "singularText": "will make its own voters change the channel",
+    "pluralText": "will make their own voters change the channel",
+    "tags": ["credibility", "media"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional broadcast-rejection joke. It makes no claim about a real audience or ratings. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "makes-own-voters-change-the-channel"
+  },
+  {
+    "id": "sided-with-terrorists",
     "role": "predicate",
     "text": "sided with the terrorists in 1989",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
+    },
+    "singularText": "sided with the terrorists in 1989",
+    "pluralText": "sided with the terrorists in 1989",
+    "tense": "past",
+    "tenseFamily": "sided-with-terrorists"
+  },
+  {
+    "id": "sides-with-the-terrorists",
+    "role": "predicate",
+    "text": "negotiates with terrorists",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
+    },
+    "singularText": "negotiates with terrorists",
+    "pluralText": "negotiate with terrorists",
+    "tense": "present",
+    "tenseFamily": "sided-with-terrorists"
+  },
+  {
+    "id": "will-side-with-the-terrorists",
+    "role": "predicate",
+    "text": "will bring terrorism",
     "tags": ["legacy", "credibility"],
     "scorePreferences": {
       "substance": [
@@ -2057,12 +3769,66 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
-    }
+    },
+    "singularText": "will bring terrorism",
+    "pluralText": "will bring terrorism",
+    "tense": "future",
+    "tenseFamily": "sided-with-terrorists"
   },
   {
     "id": "brought-the-miners-to-bucharest",
     "role": "predicate",
     "text": "brought the miners to Bucharest",
+    "tags": ["miners", "legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
+    },
+    "singularText": "brought the miners to Bucharest",
+    "pluralText": "brought the miners to Bucharest",
+    "tense": "past",
+    "tenseFamily": "brought-the-miners-to-bucharest"
+  },
+  {
+    "id": "brings-the-miners-to-bucharest",
+    "role": "predicate",
+    "text": "brings the miners to Bucharest",
+    "tags": ["miners", "legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
+    },
+    "singularText": "brings the miners to Bucharest",
+    "pluralText": "bring the miners to Bucharest",
+    "tense": "present",
+    "tenseFamily": "brought-the-miners-to-bucharest"
+  },
+  {
+    "id": "will-bring-the-miners-to-bucharest",
+    "role": "predicate",
+    "text": "will bring the miners to Bucharest",
     "tags": ["miners", "legacy", "credibility"],
     "scorePreferences": {
       "substance": [
@@ -2078,7 +3844,11 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional historical accusation for fictional composite characters. It names no real person and makes no claim about a real affiliation. Editorial review complete."
-    }
+    },
+    "singularText": "will bring the miners to Bucharest",
+    "pluralText": "will bring the miners to Bucharest",
+    "tense": "future",
+    "tenseFamily": "brought-the-miners-to-bucharest"
   },
   {
     "id": "transports-voters-with-busses",
@@ -2099,7 +3869,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original fictional election satire about political transport. It makes no claim about a real person, campaign, or election. Editorial review complete."
-    }
+    },
+    "singularText": "transports voters with busses",
+    "pluralText": "transport voters with busses",
+    "tense": "present",
+    "tenseFamily": "transports-voters-with-busses"
+  },
+  {
+    "id": "transported-voters-with-busses",
+    "role": "predicate",
+    "text": "transported voters with busses",
+    "tags": ["credibility", "electoral"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["electoral", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional election satire about political transport. It makes no claim about a real person, campaign, or election. Editorial review complete."
+    },
+    "singularText": "transported voters with busses",
+    "pluralText": "transported voters with busses",
+    "tense": "past",
+    "tenseFamily": "transports-voters-with-busses"
+  },
+  {
+    "id": "will-transport-voters-with-busses",
+    "role": "predicate",
+    "text": "will transport voters with busses",
+    "tags": ["credibility", "electoral"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["electoral", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original fictional election satire about political transport. It makes no claim about a real person, campaign, or election. Editorial review complete."
+    },
+    "singularText": "will transport voters with busses",
+    "pluralText": "will transport voters with busses",
+    "tense": "future",
+    "tenseFamily": "transports-voters-with-busses"
   },
   {
     "id": "a-communist",
@@ -2236,13 +4060,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "is"
+  },
+  {
+    "id": "was-is-tense",
+    "role": "verb",
+    "text": "was",
+    "singularText": "was",
+    "pluralText": "were",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "is"
+  },
+  {
+    "id": "will-be-is-tense",
+    "role": "verb",
+    "text": "will be",
+    "singularText": "will be",
+    "pluralText": "will be",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "is"
   },
   {
     "id": "was",
@@ -2266,7 +4144,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "was"
+  },
+  {
+    "id": "is-was-tense",
+    "role": "verb",
+    "text": "is",
+    "singularText": "is",
+    "pluralText": "are",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "was"
+  },
+  {
+    "id": "will-be-was-tense",
+    "role": "verb",
+    "text": "will be",
+    "singularText": "will be",
+    "pluralText": "will be",
+    "tags": ["legacy", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "was"
   },
   {
     "id": "will-be",
@@ -2284,13 +4216,67 @@
       ],
       "flavour": []
     },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "will-be"
+  },
+  {
+    "id": "was-will-be-tense",
+    "role": "verb",
+    "text": "was",
+    "singularText": "was",
+    "pluralText": "were",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "will-be"
+  },
+  {
+    "id": "is-will-be-tense",
+    "role": "verb",
+    "text": "is",
+    "singularText": "is",
+    "pluralText": "are",
+    "tags": ["modernity", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "will-be"
   },
   {
     "id": "should-have-been",
@@ -2314,7 +4300,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "should-have-been"
+  },
+  {
+    "id": "should-be",
+    "role": "verb",
+    "text": "should be",
+    "singularText": "should be",
+    "pluralText": "should be",
+    "tags": ["legacy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "should-have-been"
+  },
+  {
+    "id": "should-be-later",
+    "role": "verb",
+    "text": "should be",
+    "singularText": "should be",
+    "pluralText": "should be",
+    "tags": ["legacy", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["history", "politics", "personal"],
+          "right": ["history", "politics", "personal"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "should-have-been"
   },
   {
     "id": "stole",
@@ -2332,13 +4372,67 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "stole"
+  },
+  {
+    "id": "steals",
+    "role": "verb",
+    "text": "steals",
+    "singularText": "steals",
+    "pluralText": "steal",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "stole"
+  },
+  {
+    "id": "will-steal",
+    "role": "verb",
+    "text": "will steal",
+    "singularText": "will steal",
+    "pluralText": "will steal",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original past-tense accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "stole"
   },
   {
     "id": "eu-funds",
@@ -2373,13 +4467,67 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense public-budget accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "appropriated"
+  },
+  {
+    "id": "appropriates",
+    "role": "verb",
+    "text": "appropriates",
+    "singularText": "appropriates",
+    "pluralText": "appropriate",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["politics", "bureaucracy"],
+          "right": ["bureaucracy", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense public-budget accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "appropriated"
+  },
+  {
+    "id": "will-appropriate",
+    "role": "verb",
+    "text": "will appropriate",
+    "singularText": "will appropriate",
+    "pluralText": "will appropriate",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["politics", "bureaucracy"],
+          "right": ["bureaucracy", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original past-tense public-budget accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "appropriated"
   },
   {
     "id": "was-a-securitate-informer",
@@ -2396,13 +4544,65 @@
       ],
       "flavour": []
     },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "was-a-securitate-informer"
+  },
+  {
+    "id": "is-a-securitate-informer",
+    "role": "predicate",
+    "text": "is a Securitate informer",
+    "singularText": "is a Securitate informer",
+    "pluralText": "are Securitate informers",
+    "tags": ["legacy", "evidence", "securitate"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "history"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "was-a-securitate-informer"
+  },
+  {
+    "id": "will-be-a-securitate-informer",
+    "role": "predicate",
+    "text": "will be a Securitate informer",
+    "singularText": "will be a Securitate informer",
+    "pluralText": "will be Securitate informers",
+    "tags": ["legacy", "evidence", "securitate"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "history"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
-    }
+    },
+    "tense": "future",
+    "tenseFamily": "was-a-securitate-informer"
   },
   {
     "id": "a-state-secretary",
@@ -2443,7 +4643,61 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "was-not"
+  },
+  {
+    "id": "is-not-was-tense",
+    "role": "verb",
+    "text": "is not",
+    "singularText": "is not",
+    "pluralText": "are not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "was-not"
+  },
+  {
+    "id": "will-not-be",
+    "role": "verb",
+    "text": "will not be",
+    "singularText": "will not be",
+    "pluralText": "will not be",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "was-not"
   },
   {
     "id": "is-not",
@@ -2461,13 +4715,67 @@
       ],
       "flavour": []
     },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "is-not"
+  },
+  {
+    "id": "was-not-is-tense",
+    "role": "verb",
+    "text": "was not",
+    "singularText": "was not",
+    "pluralText": "were not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "is-not"
+  },
+  {
+    "id": "will-not-be-is-tense",
+    "role": "verb",
+    "text": "will not be",
+    "singularText": "will not be",
+    "pluralText": "will not be",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "is-not"
   },
   {
     "id": "will-never-be",
@@ -2485,13 +4793,67 @@
       ],
       "flavour": []
     },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original future-tense dismissal for fictional political satire. Its agreement form is invariant and names no real person. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "will-never-be"
+  },
+  {
+    "id": "was-never",
+    "role": "verb",
+    "text": "was never",
+    "singularText": "was never",
+    "pluralText": "were never",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original future-tense dismissal for fictional political satire. Its agreement form is invariant and names no real person. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "will-never-be"
+  },
+  {
+    "id": "is-never",
+    "role": "verb",
+    "text": "is never",
+    "singularText": "is never",
+    "pluralText": "are never",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original future-tense dismissal for fictional political satire. Its agreement form is invariant and names no real person. Editorial review complete."
-    }
+    },
+    "tense": "present",
+    "tenseFamily": "will-never-be"
   },
   {
     "id": "wont",
@@ -2509,13 +4871,67 @@
       ],
       "flavour": []
     },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "wont"
+  },
+  {
+    "id": "did-not",
+    "role": "verb",
+    "text": "did not",
+    "singularText": "did not",
+    "pluralText": "did not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
-    }
+    },
+    "tense": "past",
+    "tenseFamily": "wont"
+  },
+  {
+    "id": "does-not",
+    "role": "verb",
+    "text": "does not",
+    "singularText": "does not",
+    "pluralText": "do not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "wont"
   },
   {
     "id": "a-witch",
