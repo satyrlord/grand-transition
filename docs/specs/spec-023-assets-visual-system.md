@@ -55,9 +55,10 @@ foreground desks. Their lower raster edges must not appear in the composite.
 The Black Sea Captain wears a warm-cream naval officer uniform and cap and holds
 one unbranded cigar. He has no wheel or helm prop.
 The Thunder Tribune keeps his full-body pose, raised hand, papers, and
-expression. His head-and-hair silhouette is 90 percent of the initial extended
-portrait size. On the 1024-pixel-wide interim plane, its fixed upper-head region
-has a 207-pixel opaque span.
+expression. He is tall and heavyset, with a broad adult body, dark side-parted
+hair, and large clear gold-rimmed eyeglasses. On the 1024 by 1536 interim
+plane, his opaque full-body silhouette spans 95 through 98 percent of the
+canvas height. The portrait must not use a fixed face crop or fixed head width.
 
 The redesign must select exactly four self-hosted sans-serif font families. The
 present Barlow Condensed, Cormorant SC, Georgia, and system-monospace

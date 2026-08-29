@@ -2,15 +2,6 @@
 name: 'Grand Transition: A Verbal Republic'
 description: 'A political word duel staged in contrasting fictional broadcast arenas.'
 colors:
-  municipal-blue: '#062840'
-  deep-municipal-blue: '#041d2e'
-  warm-ledger-paper: '#e0d6c2'
-  pale-paper: '#eee4d3'
-  registry-ink: '#202020'
-  official-oxblood: '#6d2823'
-  deep-oxblood: '#481c1a'
-  registry-brass: '#9a7331'
-  registry-rule: 'rgb(23 25 22 / 38%)'
   broadcast-black: '#05080b'
   broadcast-ink: '#0b1722'
   broadcast-panel: '#101f2f'
@@ -19,72 +10,104 @@ colors:
   broadcast-paper: '#e5d8b9'
   broadcast-paper-light: '#f5ecd7'
   broadcast-oxblood: '#8f2822'
-  broadcast-red: '#c63730'
+  broadcast-oxblood-bright: '#c63730'
   television-blue: '#12477f'
   television-blue-bright: '#2375c9'
-  grammar-olive: '#65703e'
-  grammar-violet: '#765284'
+  interruption-ink: '#071522'
+  interruption-panel: '#0d2235'
+  interruption-paper: '#eee4d3'
+  sentence-paper: 'rgb(252 250 246 / 98%)'
+  focus-blue: '#77c8ff'
+  timer-alert: '#ff5f58'
+  waiting-gray: '#8b8b8b'
+  reaction-apricot: '#ffb07a'
+  phrase-noun: 'rgb(72 172 104)'
+  phrase-verb: 'rgb(201 55 48)'
+  phrase-modifier: 'rgb(139 90 177)'
+  phrase-ending: 'rgb(53 124 199)'
+  phrase-continuation: 'rgb(154 161 170)'
+  phrase-conjunction: 'rgb(235 145 48)'
 typography:
   feature-display:
-    fontFamily: 'var(--font-feature-display, "Poiret One"), Arial, sans-serif'
-    fontSize: 'clamp(3.2rem, 8vw, 6rem)'
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(3.3rem, 7vw, 6rem)'
     fontWeight: 400
-    lineHeight: 0.78
+    lineHeight: 0.86
     letterSpacing: '0.06em'
     textStroke: 'clamp(0.9px, 0.13cqw, 1.4px)'
   feature-action:
-    fontFamily: 'var(--font-feature-display, "Poiret One"), Arial, sans-serif'
-    fontSize: 'clamp(1.1rem, 1.4vw, 1.35rem)'
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(0.95rem, 1.4vw, 1.2rem)'
     fontWeight: 400
     lineHeight: 1
     letterSpacing: '0.06em'
-    textStroke: 'clamp(0.65px, 0.09cqw, 0.95px)'
+    textStroke: '0.7px'
   speech-display:
-    fontFamily: 'var(--font-speech-display, Nunito), Arial, sans-serif'
-    fontSize: 'clamp(1.1rem, 2vw, 1.8rem)'
+    fontFamily: 'var(--font-speech, "Nunito Variable"), Arial, sans-serif'
+    fontSize: 'clamp(1.02rem, 1.65vw, 1.62rem)'
     fontWeight: 900
-    lineHeight: 1.05
+    lineHeight: 1.14
     letterSpacing: '0.015em'
   ui-copy:
-    fontFamily: 'var(--font-ui-copy, Rubik), Arial, sans-serif'
-    fontSize: 'clamp(1rem, 1.5vw, 1.25rem)'
+    fontFamily: 'var(--font-interface, "Rubik Variable"), Arial, sans-serif'
+    fontSize: 'clamp(0.7rem, 0.9vw, 0.82rem)'
+    fontWeight: 600
+    lineHeight: 1
+  body-copy:
+    fontFamily: 'var(--font-interface, "Rubik Variable"), Arial, sans-serif'
+    fontSize: 'clamp(0.75rem, 1vw, 0.9rem)'
+    lineHeight: 1.35
   tactical-label:
-    fontFamily: 'var(--font-ui-copy, Rubik), Arial, sans-serif'
+    fontFamily: 'var(--font-interface, "Rubik Variable"), Arial, sans-serif'
     fontSize: '0.69rem'
     fontWeight: 700
     lineHeight: 1
-    letterSpacing: '0.045em'
+    letterSpacing: '0.06em'
   timer-display:
-    fontFamily: 'var(--font-timer-display, "Share Tech Mono"), Arial, sans-serif'
-    fontSize: 'clamp(1.1rem, 1.8vw, 1.6rem)'
+    fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
+    fontSize: 'clamp(1.65rem, 2.6vw, 2.35rem)'
     fontWeight: 400
-    lineHeight: 1
+    lineHeight: 0.86
 rounded:
   square: '0'
 spacing:
-  edge: 'clamp(1.25rem, 4vw, 4.5rem)'
-  compact: '0.5rem'
-  tactical-gap: '0.35rem'
+  edge: 'clamp(0.75rem, 1.7vh, 1.2rem)'
+  compact: '0.32rem'
+  panel: '0.8rem'
+  action-gap: '0.5rem'
 components:
-  title-record-stamp:
-    textColor: '{colors.official-oxblood}'
-    typography: '{typography.tactical-label}'
-    rounded: '{rounded.square}'
-    padding: '0.6rem 0.85rem 0.55rem'
-    width: 'min(13rem, 100%)'
-  setup-primary-action:
-    backgroundColor: '{colors.official-oxblood}'
-    textColor: '{colors.pale-paper}'
+  title-primary-action:
+    backgroundColor: '{colors.broadcast-oxblood}'
+    textColor: '{colors.broadcast-paper-light}'
     typography: '{typography.feature-action}'
     rounded: '{rounded.square}'
-    padding: '0.7rem 1rem'
-    height: '2.75rem'
+    padding: '0.7rem 2rem'
+    height: 'clamp(3.25rem, 7vh, 4.5rem)'
+  roster-choice:
+    backgroundColor: '{colors.broadcast-panel}'
+    textColor: '{colors.broadcast-paper-light}'
+    typography: '{typography.ui-copy}'
+    rounded: '{rounded.square}'
+    padding: '0'
+  setup-primary-action:
+    backgroundColor: '{colors.broadcast-oxblood}'
+    textColor: '{colors.broadcast-paper-light}'
+    typography: '{typography.feature-action}'
+    rounded: '{rounded.square}'
+    padding: '0.65rem 0.9rem'
+    height: '3.6rem'
   match-sentence-record:
-    backgroundColor: '{colors.broadcast-paper-light}'
+    backgroundColor: '{colors.sentence-paper}'
     textColor: '{colors.broadcast-black}'
     typography: '{typography.speech-display}'
     rounded: '{rounded.square}'
-    padding: '0.48rem clamp(1rem, 4vw, 4rem)'
+    padding: '0.72rem clamp(1rem, 3vw, 3.2rem) 1rem'
+  round-review-record:
+    backgroundColor: '{colors.broadcast-black}'
+    textColor: '{colors.broadcast-paper}'
+    typography: '{typography.ui-copy}'
+    rounded: '{rounded.square}'
+    padding: 'clamp(1rem, 2vw, 1.4rem)'
   match-phrase-card:
     backgroundColor: '{colors.broadcast-black}'
     textColor: '{colors.broadcast-paper-light}'
@@ -96,8 +119,15 @@ components:
     textColor: '{colors.broadcast-paper-light}'
     typography: '{typography.feature-action}'
     rounded: '{rounded.square}'
-    padding: '0.38rem 0.58rem'
-    height: '2.75rem'
+    padding: '0.32rem 0.6rem'
+    height: 'clamp(2.3rem, 4.5vh, 3rem)'
+  interruption-primary-action:
+    backgroundColor: '{colors.broadcast-oxblood}'
+    textColor: '{colors.interruption-paper}'
+    typography: '{typography.feature-action}'
+    rounded: '{rounded.square}'
+    padding: '0.7rem 1.4rem'
+    height: '3rem'
 ---
 
 # Design System: Grand Transition: A Verbal Republic
@@ -110,17 +140,17 @@ components:
 
 <!-- markdownlint-enable MD036 -->
 
-Grand Transition is a fictional broadcast arena that can move between distinct
-political television eras. Painted political theatre meets navy fascia, aged
-brass, oxide red, television blue, warm paper, and compact control-room signals.
-The complete match reads as one confrontation. Characters, sentence
-construction, speech, status, and actions share the same stage instead of
-dividing into a decorative scene and a separate dashboard.
+Grand Transition is a fictional broadcast arena that moves between distinct
+political television eras. The shipped interface uses navy fascia, near-black
+stage surfaces, aged brass, oxblood, television blue, warm paper, and compact
+control-room signals. The title, setup, match, Pause, and compatibility states
+share this broadcast language while keeping their own task hierarchy.
 
-The match screen establishes the replacement visual system. Title and setup can
-adopt its type, materials, and broadcast language when their redesign is
-approved. Their present compositions are implementation evidence, not authority
-for the replacement match world.
+The title is a Curtain Call proscenium with a live wordmark and one decisive
+setup action. Setup is a three-part contestant register with two selected
+player stages around a compact roster. The match is one confrontation: scene,
+characters, sentence construction, speech, status, and actions share the same
+stage instead of dividing into a decorative scene and a separate dashboard.
 
 Every character is human. Animal words in names or titles are metaphorical
 political labels only. The current slice uses three original human editorial
@@ -139,14 +169,26 @@ metaphor.
 
 ### First viewport
 
-At the recommended 1920 by 1080 viewport, a municipal television studio and one
-fixed blonde fictional moderator fill the deep field. Two transparent human
-editorial caricatures face each other from the left and right thirds. The
-default pair is the composed Red-Folded Chairman with his red folder and the
-emphatic Thunder Tribune with his speech papers. The lean Black Sea Captain can
-replace either one in a warm-cream naval officer uniform and cap while holding
-one unbranded cigar. One transparent foreground plate puts tall standing desks
-in front of both selected portraits.
+At the recommended 1920 by 1080 viewport, the title shows a dark painted
+proscenium, a centered dueling-speech emblem, a live GRAND TRANSITION wordmark,
+one vertical brass signal rail, and one oxblood Set up match action. Channel 3
+is an upper-left plaque. The fictional-composite satire disclaimer stays at
+the lower edge.
+
+Setup uses the same broadcast theatre. Oxblood frames the player-one stage on
+the left, television blue frames the player-two stage on the right, and a
+compact three-item roster sits between them. Each selected stage shows a full
+human portrait, name, and complete public weakness list. The roster uses tight
+3:4 headshots inside one reusable dark-oak and aged-gold frame.
+
+At the recommended match viewport, a municipal television studio and one fixed
+blonde fictional moderator fill the deep field. Two transparent human editorial
+caricatures face each other from the left and right thirds. The default pair is
+the composed Red-Folded Chairman with his red folder and the emphatic Thunder
+Tribune with his speech papers. The lean Black Sea Captain can replace either
+one in a warm-cream naval officer uniform and cap while holding one unbranded
+cigar. One transparent foreground plate puts tall standing desks in front of
+both selected portraits.
 
 The implemented Thunder Tribune portrait keeps its full-body pose, raised hand,
 papers, and expression. Its head-and-hair silhouette is 90 percent of the
@@ -184,11 +226,11 @@ the lower stage. Continue releases the hold and starts the next round.
 
 ### Cross-surface reach
 
-Active play proves the arena system first. Title and setup can introduce the
-broadcaster and contestants through the same display voice, framed meters,
-paper, oxblood, navy, brass, and direct stage language. The match remains the
+Title and setup use the same display voice, framed records, paper, oxblood,
+navy, brass, and direct stage language as active play. The match remains the
 only visible surface during play. A terminal review returns to setup only after
-Continue.
+Continue. Pause and unsupported viewport states replace the active surface
+with a centered transmission slate that exposes no game facts.
 
 ### Honest risk
 
@@ -209,8 +251,8 @@ in this record remains valid if those temporary files are removed.
 
 **Key Characteristics:**
 
-- Contrasting fictional municipal and modern broadcast arenas, not a stage over
-  a dashboard.
+- A Curtain Call title, a two-sided contestant register, and contrasting
+  fictional municipal and modern broadcast match arenas.
 - One hand-painted editorial-caricature language across playable portraits,
   fixed moderators, studio architecture, furniture, and props. Do not combine
   illustrated characters with photographic or hyper-realistic scene layers.
@@ -237,81 +279,81 @@ character contract explicitly requires it.
 
 ## Colors
 
-The record palette remains valid for title and setup. The match adds a darker
-broadcast palette that makes paper, brass, player identity, and grammar state
-read clearly against the painted stage.
+The implementation uses one dark broadcast palette. Light paper and aged brass
+carry information against near-black and deep navy surfaces. Oxblood and
+television blue separate player ownership and action priority. Local reaction,
+focus, timer, and phrase-role colors are reserved for their named states.
 
 ### Primary
 
-- **Official Oxblood:** The title and setup binding, status, validation, and
-  primary action color.
-- **Broadcast Oxblood:** The match-side red identity and primary action base.
-- **Television Blue:** The opposing player identity and secondary action base.
+- **Broadcast Oxblood:** The red player identity, primary actions, validation,
+  and reaction records.
+- **Bright Broadcast Oxblood:** The hover and emphasis state for oxblood
+  actions.
+- **Television Blue:** The blue player identity and secondary action base.
 
 ### Secondary
 
-- **Municipal Blue and Deep Municipal Blue:** The title cloth field and setup
-  binding.
 - **Broadcast Brass and Broadcast Brass Light:** Status frames, double rules,
-  headings, active borders, and the channel strap.
-- **Bright Broadcast Red and Bright Television Blue:** Player speech-record
-  borders, selected state, and precise interactive emphasis.
-- **Grammar Olive and Grammar Violet:** Role accents on phrase records. Use
-  them with written role and state labels, never alone.
+  headings, active borders, signal rails, and channel plaques.
+- **Bright Television Blue:** Selected state and precise interactive emphasis
+  for blue-owned controls.
+- **Phrase role colors:** Green noun, red verb or predicate, purple modifier,
+  blue ending, gray continuation, and orange conjunction. They blend into
+  phrase text only when Phrase color coding is on.
 
 ### Neutral
 
 - **Broadcast Black, Broadcast Ink, and Broadcast Panel:** The stage surround,
-  navy fascia, HUD containers, and dark status fields.
+  navy fascia, HUD containers, roster tiles, and dark status fields.
 - **Broadcast Paper and Broadcast Paper Light:** Speech records, sentence
-  paper, phrase cards, and readable light text on navy.
-- **Warm Ledger Paper, Pale Paper, and Registry Ink:** The existing title and
-  setup record fields and body text.
-- **Registry Rule:** Low-contrast filing rules on title and setup.
+  paper, phrase cards, selected-player records, and readable light text on
+  navy.
+- **Interruption Ink, Interruption Panel, and Interruption Paper:** The
+  compatibility and Pause slates.
+- **Sentence Paper:** The light current-sentence record.
+- **Waiting Gray:** The compact waiting-player speech bubble.
 
 **The Brass Frame Rule.** Brass outlines and separates broadcast regions. It
 does not fill large surfaces or replace state color.
 
-**The Semantic State Rule.** Red, blue, olive, and violet can speed recognition.
-Phrase ownership, role, availability, weakness, and disabled state must remain
-in semantic attributes and accessible names even when the compact visible row
-shows phrase text only.
+**The Semantic State Rule.** Red, blue, green, purple, gray, and orange can
+speed phrase recognition. Phrase ownership, role, availability, weakness, and
+disabled state must remain in semantic attributes and accessible names even
+when the compact visible row shows phrase text only.
 
 ## Typography
 
-The replacement type system requires exactly four self-hosted sans-serif font
-families. Barlow Condensed, Cormorant SC, Georgia, and the system monospace
-stack describe the present implementation only. They must not guide the
-redesign by default.
+The implementation uses exactly four self-hosted sans-serif font families.
+Their roles are exclusive and remain distinct across the title, setup, match,
+Pause, and compatibility states.
 
-1. **Feature display family:** Poiret One Regular 400 is selected for the game
-   title, main menu actions, character names, Pause, End, Comeback, and other
-   decisive features. Use `0.06em` tracking. Apply a responsive 0.9 through
-   1.4-pixel synthetic stroke to large feature text and a 0.65 through
-   0.95-pixel stroke to major actions. This synthetic emboldening is an approved
-   exception because Poiret One has no bold master. Use the family at medium and
-   large sizes only. Fascinate and Fascinate Inline are permanently
-   disqualified. Do not propose, test, install, or use either family.
-2. **Speech family:** Nunito Black 900 is selected for delivered speech, the
+1. **Feature display family:** Poiret One Regular 400 owns the title, title and
+   setup actions, character names, Pause, End, Comeback, and other decisive
+   features. Use `0.06em` tracking. The implementation applies a responsive
+   0.9 through 1.4-pixel synthetic stroke to large feature text and a 0.65
+   through 0.95-pixel stroke to major actions.
+2. **Speech family:** Nunito Variable at weight 900 owns delivered speech, the
    current construction, and sentence previews. Render it in visual uppercase.
    Preserve authored case in source text, accessible names, and speech output.
-   Fredoka Bold is rejected. Do not restore it without new explicit approval.
-3. **Interface family:** Rubik is selected with regular 400, semibold 600, and
-   bold 700 weights. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, privacy handovers,
-   and compatibility text. Its tabular figures
-   own Pride, damage, scores, and rounds.
-4. **Timer family:** Share Tech Mono is selected for the timer only. Do not use
-   it for Pride, damage, scores, rounds, statistics, or body text.
+3. **Interface family:** Rubik Variable owns phrase lists, private phrases,
+   setup fields, labels, validation, disabled states, score explanations,
+   selection panels, and compatibility text. Use the bundled 600 weight for
+   compact controls and 700 for labels and status. Its tabular figures own
+   Pride, damage, scores, and rounds.
+4. **Timer family:** Share Tech Mono owns the timer value only. Do not use it
+   for Pride, damage, scores, rounds, statistics, or body text.
 
 All four font families are selected. Verify them together in the built arena.
 The four roles must stay visibly distinct. Do not use outlines or fake weights
-outside the approved Poiret One feature-display treatment.
+outside the Poiret One feature-display treatment.
 
 Use the Fontsource packages for Poiret One, variable Nunito, variable Rubik,
-and Share Tech Mono. All four use the SIL Open Font License 1.1. Load the Poiret
-One Basic Latin subset. Load Basic Latin and Latin Extended subsets for Nunito
-and Rubik so Romanian phrase and speech glyphs do not fall back per character.
+and Share Tech Mono. All four use the SIL Open Font License 1.1. The feature
+family loads Basic Latin. Nunito and Rubik load Basic Latin and Latin Extended
+subsets so Romanian phrase and speech glyphs do not fall back per character.
+The feature, speech, and interface fallbacks are Arial and then sans-serif.
+The timer fallback is Cascadia Mono, Consolas, and then monospace.
 
 The feature-display family needs English UI coverage only. The timer family
 needs digits and timer punctuation only. The speech and interface families must
@@ -337,16 +379,23 @@ face for the timer, or the timer face for other numbers.
 
 ## Layout
 
-The match is one full-viewport arena. The scene does not end where the controls
-begin. Opponents occupy the side thirds. Name and Pride frames use the top
-corners. Round, timer, and Pause use the top center. Speech spans the middle.
-The sentence and shared phrases occupy the center axis. Private choices and
-secondary actions use the lower and side perimeter.
+Every functional state fills one landscape viewport. The title uses a centered
+marquee and a vertical signal rail. Setup uses two selected-character stages
+around a central roster, with match terms and actions on the lower edge. The
+match keeps one integrated arena: opponents occupy the side thirds, name and
+Pride frames use the top corners, round, timer, and Pause use the top center,
+speech spans the middle, and the sentence and shared phrases occupy the center
+axis. Private choices and secondary actions use the lower and side perimeter.
+
+Pause and unsupported viewport states replace the active surface with a centered
+transmission slate. The slate uses a compact content column, explicit labels,
+and native controls where settings are available.
 
 At 1280 by 720 and 1400 by 1050, scale and reposition within the same hierarchy.
-Do not introduce a separate lower dashboard, page scroll, or a compact mobile
-mode. Decorative scene detail yields before required text, faces, phrase slots,
-or controls.
+At 1024 by 720 and 1024 by 768, the title, setup, and match keep the same
+hierarchy without page scroll. Decorative scene detail yields before required
+text, faces, phrase slots, or controls. The implementation has no compact mobile
+mode.
 
 The supported landscape evidence matrix is 1024 by 720, 1024 by 768, 1280 by
 720, 1400 by 1050, and 1920 by 1080 CSS pixels. Smaller, portrait, and square
@@ -359,24 +408,25 @@ readable between the two opponents.
 
 ## Elevation & Depth
 
-The match uses controlled stage depth. The selected studio and its fixed
-fictional moderator form the deep field. Transparent portraits occupy
+The interface uses controlled stage depth. The title and setup use painted
+proscenium or tonal broadcast fields. In the match, the selected studio and its
+fixed fictional moderator form the deep field. Transparent portraits occupy
 the opponent planes. A transparent plate puts the two tall standing desks in
 front of those portraits. Speech and the sentence tower occupy the tactical
 plane. Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark
-shadows lift signs, phrase records, actions, and the comeback dialog. Inset
-brass and navy rules make the arena feel built, not glassy.
+shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
+brass and navy rules make the arena feel built.
 
-The implemented match uses eight generated raster sources: two studio
-backgrounds with fixed fictional moderators, two transparent foreground desk
-plates, three transparent character portraits, and one low-contrast aged-paper
-texture. All assets retain embedded prompt provenance. Required text and
-controls remain outside the raster art.
+The implemented build uses three brand rasters, two studio backgrounds, two
+transparent foreground desk plates, and three transparent character portraits.
+All shipping assets retain their embedded prompt or source provenance. Required
+text and controls remain outside raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
 to separate live broadcast regions. Do not use translucent glass panels or
-soft floating dashboard cards.
+soft floating dashboard cards. The round-review record stays crisp over a
+dimmed stage.
 
 ## Shapes
 
@@ -392,14 +442,26 @@ text or state.
 
 ## Components
 
-### Title record and setup register
+### Title proscenium
 
-The current title remains a blue-and-paper public record with one heading, a
-visible disclaimer, setup action, and prepared-status stamp. The current setup
-remains a flat form with native labeled controls and associated recovery text.
-These surfaces are valid implementation states, but a later approved redesign
-can bring them into the arena world. Do not treat their present split layouts or
-fonts as permanent brand rules.
+The title is a full-viewport dark proscenium with a text-free painted backdrop,
+a centered emblem and live wordmark, a brass subtitle rule, one ready-status
+plaque, and one oxblood `Set up match` button. Channel 3 is a small brass
+plaque at the upper left. A double brass perimeter frame and a narrow central
+signal rail create the broadcast architecture. The satire disclaimer is live
+text at the lower edge. The title entrance opens one central curtain light and
+is removed when reduced motion is requested.
+
+### Contestant register
+
+Setup keeps the same full-viewport broadcast frame. Two selected-character
+stages flank a central three-item roster. The left stage uses the oxblood
+identity and the right stage uses television blue. Each selected stage shows a
+complete human portrait, a player label, a feature-display name, and the full
+public weakness list. Each roster tile is an exact 3:4 headshot window with a
+reusable dark-oak frame and aged-gold liner. Native selects keep mode and scene
+terms in a compact lower register. A nonmodal character dossier appears on
+hover or keyboard focus and stays pinned only after right-click.
 
 ### Broadcast stage and status plaques
 
@@ -445,6 +507,15 @@ phrase slots. It uses one light speech record over a near-black phrase stack
 with thin oxblood row rules. It stays visually above the scene without becoming
 a separate dashboard.
 
+### Round review record
+
+After each exchange, a centered results record holds the arena in place. Its
+heading and outcome use one centered axis. Two equal-width peer records sit
+side by side with red and blue identity borders, and each record shows the
+player name, outgoing damage, combo result, and applied weaknesses. One centered
+Continue action closes the record. The dimmed stage remains visible behind it;
+the record uses no backdrop blur.
+
 ### Phrase cards
 
 The two private phrase controls show phrase text only and sit at the active
@@ -455,7 +526,10 @@ row shows phrase text only, separated by a thin oxblood rule. Do not show role,
 ownership, weakness, disabled-reason, hint, or card-state copy in either phrase
 list. Keep that state in semantic attributes and accessible names. Every
 available phrase uses the same selection action. Unavailable rows use subdued
-text, and selecting a common phrase leaves its fixed row visibly empty.
+text, and selecting a common phrase leaves its fixed row visibly empty. When
+Phrase color coding is on, one text layer blends white with the role color at
+40 percent for common, 50 percent for uncommon, and 60 percent for rare
+phrases. The card background does not change.
 
 **The Get Good Rule.** The arena reports public outcomes with exact values. It
 reveals each selected character's weakness names before play and calls out an
@@ -490,10 +564,10 @@ highlighted.
 ### Pause and compatibility slates
 
 Manual Pause replaces the complete match with a navy transmission-held slate,
-compact Turn timer and Auto-complete controls, one brass-framed Resume action,
-and no game facts. Unsupported viewports use the same broadcast language
-without settings or a Resume action. The compatibility slate states the 1024
-by 720 minimum and the 1920 by 1080 PC recommendation.
+compact Turn timer, Auto-complete, and Phrase color coding controls, one
+brass-framed Resume action, and no game facts. Unsupported viewports use the
+same broadcast language without settings or a Resume action. The compatibility
+slate states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
 
 ### Comeback action
 
@@ -506,6 +580,10 @@ tier. It uses the strongest filled tier immediately.
 
 - **Do** make the scene, opponents, center construction, speech, and perimeter
   controls read as one confrontation.
+- **Do** let the title and contestant register use the same broadcast palette,
+  square framing, brass rules, and live semantic text as the match.
+- **Do** keep the selected-character stages complete and the roster tiles
+  tightly cropped; the two surfaces have different image jobs.
 - **Do** use the painted arena as atmosphere and keep all game truth in text,
   meters, lists, buttons, and dialogs.
 - **Do** depict every roster character as fully human, including characters
@@ -521,10 +599,6 @@ tier. It uses the strongest filled tier immediately.
 
 ### Avoid
 
-- **Avoid** describing the match as the Open Civic Ledger or a flat
-  parliamentary dispatch table. That direction is stale.
-- **Avoid** claiming that title or setup already use the complete arena
-  composition.
 - **Avoid** animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.
 - **Avoid** rasterizing values, controls, or required text into the painted
