@@ -14,7 +14,30 @@ import {
 } from '../../src/app/screens/setup-screen';
 
 afterEach(() => {
+  vi.restoreAllMocks();
   document.body.innerHTML = '';
+});
+
+test('requests fresh browser randomness for every new match seed', async () => {
+  const generatedSeeds = [0, 0xffff_ffff];
+  const getRandomValues = vi.spyOn(globalThis.crypto, 'getRandomValues');
+  getRandomValues.mockImplementation((array) => {
+    const seed = generatedSeeds.shift();
+    if (seed === undefined) throw new Error('Unexpected seed request.');
+    (array as Uint32Array)[0] = seed;
+    return array;
+  });
+
+  const firstApp = await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  expect(readInitialSeed(firstApp)).toBe(0);
+
+  const secondApp = await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  expect(readInitialSeed(secondApp)).toBe(0xffff_ffff);
+  expect(getRandomValues).toHaveBeenCalledTimes(2);
 });
 
 test('moves through the two-state graph on one URL and restores setup values', async () => {
@@ -372,6 +395,14 @@ async function mountApp(): Promise<GrandTransitionApp> {
   ) as GrandTransitionApp;
   await app.updateComplete;
   return app;
+}
+
+function readInitialSeed(app: GrandTransitionApp): number | null {
+  return (
+    app as unknown as {
+      matchInitialSeed: number | null;
+    }
+  ).matchInitialSeed;
 }
 
 async function mountSetup(

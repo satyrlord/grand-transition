@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import {
   planMatchBrowserFlow,
   type MatchBrowserAction,
+  useFixedBrowserMatchSeed,
 } from './helpers/match-flow';
 
 const plan = planMatchBrowserFlow();
@@ -11,6 +12,7 @@ test.setTimeout(90_000);
 test('a hotseat match reviews every exchange and exposes no post-match surface', async ({
   page,
 }, testInfo) => {
+  await useFixedBrowserMatchSeed(page);
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();

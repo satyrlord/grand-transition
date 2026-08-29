@@ -18,6 +18,7 @@ import {
 } from '../../src/engine/match-lifecycle';
 import { listSimulationOptions } from '../../src/engine/simulation';
 import { loadGameContent } from '../../tools/load-game-content';
+import type { Page } from '@playwright/test';
 
 const { englishGameLocale, sampleContent } = loadGameContent();
 
@@ -37,6 +38,30 @@ const context: MatchEngineContext = {
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
+
+export async function useFixedBrowserMatchSeed(
+  page: Page,
+  seed = 20_260_823,
+): Promise<void> {
+  await page.addInitScript((fixedSeed) => {
+    const originalGetRandomValues = globalThis.crypto.getRandomValues.bind(
+      globalThis.crypto,
+    );
+    let matchSeedPending = true;
+    globalThis.crypto.getRandomValues = ((array: ArrayBufferView) => {
+      if (
+        matchSeedPending &&
+        array instanceof Uint32Array &&
+        array.length === 1
+      ) {
+        matchSeedPending = false;
+        array[0] = fixedSeed;
+        return array;
+      }
+      return originalGetRandomValues(array as ArrayBufferView<ArrayBuffer>);
+    }) as Crypto['getRandomValues'];
+  }, seed);
+}
 
 /**
  * Plan one deterministic fixed-seed hotseat match that reaches two surviving
