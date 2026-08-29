@@ -2379,48 +2379,6 @@
     }
   },
   {
-    "id": "mandate-and",
-    "role": "conjunction",
-    "text": "and",
-    "connectorKind": "and",
-    "tags": ["bureaucracy", "legacy"],
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Standard English connector selected for additive Romanian mandate satire. Editorial review complete."
-    }
-  },
-  {
-    "id": "studio-but",
-    "role": "conjunction",
-    "text": "but",
-    "connectorKind": "but",
-    "tags": ["media", "decorum"],
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Standard English connector selected for contrast in Romanian studio satire. Editorial review complete."
-    }
-  },
-  {
-    "id": "reform-because",
-    "role": "conjunction",
-    "text": "because",
-    "connectorKind": "because",
-    "tags": ["modernity", "evidence"],
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Standard English connector selected for reasons in Romanian reform satire. Editorial review complete."
-    }
-  },
-  {
     "id": "chamber-yet",
     "role": "conjunction",
     "text": "yet",
@@ -2432,20 +2390,6 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Standard English connector selected for strong contrast in Romanian parliamentary satire. Editorial review complete."
-    }
-  },
-  {
-    "id": "ballot-yet",
-    "role": "conjunction",
-    "text": "yet",
-    "connectorKind": "yet",
-    "tags": ["credibility", "consistency"],
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Standard English connector selected for strong contrast in Romanian election satire. Editorial review complete."
     }
   },
   {
@@ -4117,59 +4061,7 @@
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
     },
     "tense": "present",
-    "tenseFamily": "is"
-  },
-  {
-    "id": "was-is-tense",
-    "role": "verb",
-    "text": "was",
-    "singularText": "was",
-    "pluralText": "were",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "past",
-    "tenseFamily": "is"
-  },
-  {
-    "id": "will-be-is-tense",
-    "role": "verb",
-    "text": "will be",
-    "singularText": "will be",
-    "pluralText": "will be",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "future",
-    "tenseFamily": "is"
+    "tenseFamily": "be"
   },
   {
     "id": "was",
@@ -4195,59 +4087,7 @@
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
     },
     "tense": "past",
-    "tenseFamily": "was"
-  },
-  {
-    "id": "is-was-tense",
-    "role": "verb",
-    "text": "is",
-    "singularText": "is",
-    "pluralText": "are",
-    "tags": ["legacy", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["history", "politics", "personal"],
-          "right": ["history", "politics", "personal"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "present",
-    "tenseFamily": "was"
-  },
-  {
-    "id": "will-be-was-tense",
-    "role": "verb",
-    "text": "will be",
-    "singularText": "will be",
-    "pluralText": "will be",
-    "tags": ["legacy", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["history", "politics", "personal"],
-          "right": ["history", "politics", "personal"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "future",
-    "tenseFamily": "was"
+    "tenseFamily": "be"
   },
   {
     "id": "will-be",
@@ -4273,59 +4113,7 @@
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
     },
     "tense": "future",
-    "tenseFamily": "will-be"
-  },
-  {
-    "id": "was-will-be-tense",
-    "role": "verb",
-    "text": "was",
-    "singularText": "was",
-    "pluralText": "were",
-    "tags": ["modernity", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "past",
-    "tenseFamily": "will-be"
-  },
-  {
-    "id": "is-will-be-tense",
-    "role": "verb",
-    "text": "is",
-    "singularText": "is",
-    "pluralText": "are",
-    "tags": ["modernity", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "present",
-    "tenseFamily": "will-be"
+    "tenseFamily": "be"
   },
   {
     "id": "should-have-been",
@@ -4377,32 +4165,6 @@
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
     },
     "tense": "present",
-    "tenseFamily": "should-have-been"
-  },
-  {
-    "id": "should-be-later",
-    "role": "verb",
-    "text": "should be",
-    "singularText": "should be",
-    "pluralText": "should be",
-    "tags": ["legacy", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["history", "politics", "personal"],
-          "right": ["history", "politics", "personal"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
-    },
-    "tense": "future",
     "tenseFamily": "should-have-been"
   },
   {
@@ -4702,33 +4464,7 @@
       "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
     },
     "tense": "past",
-    "tenseFamily": "was-not"
-  },
-  {
-    "id": "is-not-was-tense",
-    "role": "verb",
-    "text": "is not",
-    "singularText": "is not",
-    "pluralText": "are not",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
-    },
-    "tense": "present",
-    "tenseFamily": "was-not"
+    "tenseFamily": "not-be"
   },
   {
     "id": "will-not-be",
@@ -4754,7 +4490,7 @@
       "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
     },
     "tense": "future",
-    "tenseFamily": "was-not"
+    "tenseFamily": "not-be"
   },
   {
     "id": "is-not",
@@ -4780,59 +4516,7 @@
       "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
     },
     "tense": "present",
-    "tenseFamily": "is-not"
-  },
-  {
-    "id": "was-not-is-tense",
-    "role": "verb",
-    "text": "was not",
-    "singularText": "was not",
-    "pluralText": "were not",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
-    },
-    "tense": "past",
-    "tenseFamily": "is-not"
-  },
-  {
-    "id": "will-not-be-is-tense",
-    "role": "verb",
-    "text": "will not be",
-    "singularText": "will not be",
-    "pluralText": "will not be",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
-    },
-    "tense": "future",
-    "tenseFamily": "is-not"
+    "tenseFamily": "not-be"
   },
   {
     "id": "will-never-be",
