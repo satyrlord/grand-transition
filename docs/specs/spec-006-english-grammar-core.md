@@ -93,8 +93,11 @@ third-person nonpersonal singular subject uses the singular form. A
 third-person personal singular subject uses the personal-singular form when it
 exists. A plural subject uses the plural form. A second-person subject uses the
 second-person form when it exists and otherwise uses the plural form because
-English second-person verbs use that conjugation. Shared-subject branches keep
-the subject's person and referent kind. New-subject branches replace them.
+English second-person verbs use that conjugation. A combined copular predicate
+supplies a second-person form when this plural fallback would also pluralize a
+singular complement. Thus, `you` renders `were a Communist Party member`, not
+`were Communist Party members`. Shared-subject branches keep the subject's
+person and referent kind. New-subject branches replace them.
 
 Rendering adds exactly one terminal full stop for a normally ended complete
 sentence. Ending text already includes its terminal full stop, so rendering
@@ -113,8 +116,9 @@ text.
   and `for` branches with their required noun transitions, and the `with`
   noun-complement branch.
 - **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
-  singular, plural, personal-singular, second-person, compound-subject, and
-  shared-subject agreement, plus rejection after an ending.
+  singular, plural, personal-singular, second-person, singular complements for
+  second-person subjects, compound-subject, and shared-subject agreement, plus
+  rejection after an ending.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable
   typed evidence without changing game state.
 - **AC-006-06:** Tests prove one and several modifiers after complete predicate

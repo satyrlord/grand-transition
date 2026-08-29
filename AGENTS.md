@@ -151,13 +151,13 @@ Bootstrap these scripts:
 
 ```text
 npm run dev | preview | build
-npm run lint | format:check | typecheck
+npm run lint | typecheck
 npm run assets:build | assets:validate | validate
 npm run test | test:coverage | test:browser | test:e2e
 npm run ci
 ```
 
-`validate` includes markdownlint, assets, content, localization, lint, and
+`validate` includes markdownlint-cli2, assets, content, localization, lint, and
 types. `ci` is the complete gate. Do not report checks as passing until the
 scripts exist and run.
 

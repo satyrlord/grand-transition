@@ -1,6 +1,6 @@
 ---
 name: run-quality-gate
-description: Run or repair the Grand Transition quality gate. Use for verification, CI failures, merge or release readiness, formatting, builds, tests, assets, content, localization, or deployment checks.
+description: Run or repair the Grand Transition quality gate. Use for verification, CI failures, merge or release readiness, builds, tests, assets, content, localization, or deployment checks.
 ---
 
 # Run the quality gate
@@ -33,8 +33,8 @@ Do not invent an equivalent command and call it a pass.
 
 Run applicable focused checks first.
 When configured, run changed-skill validation.
-Run Markdown, asset, content, localization, format, typed lint, TypeScript,
-unit, and property tests.
+Run the Markdown check through `markdownlint-cli2`, then asset, content,
+localization, typed lint, TypeScript, unit, and property tests.
 Run coverage, real-browser component tests, the production build, and
 end-to-end browser projects.
 Run `npm run ci` last.

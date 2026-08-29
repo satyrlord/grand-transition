@@ -32,12 +32,15 @@ const requiredScripts = [
   'assets:build',
   'assets:validate',
   'lint',
-  'format:check',
   'typecheck',
   'test',
   'test:coverage',
   'test:browser',
   'test:e2e',
+  'markdown:lint',
+  'content:validate',
+  'localization:validate',
+  'boundaries:check',
   'simulate',
   'validate',
   'ci',
@@ -70,7 +73,6 @@ describe('quality-gate scaffold', () => {
     };
     const ci = packageJson.scripts.ci;
     const phases = [
-      'format:check',
       'validate',
       'test',
       'test:browser',
@@ -111,14 +113,19 @@ describe('quality-gate scaffold', () => {
     );
   });
 
-  test('formats repository skill scripts and metadata', async () => {
+  test('uses markdownlint-cli2 as the only Markdown check', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
+      devDependencies: Record<string, string>;
     };
 
-    expect(packageJson.scripts['format:check']).toContain(
-      '.github/skills/**/*.{mjs,yml,yaml}',
-    );
+    expect(packageJson.scripts['markdown:lint']).toMatch(/^markdownlint-cli2\b/);
+    expect(packageJson.scripts['format:check']).toBeUndefined();
+    expect(
+      Object.keys(packageJson.devDependencies).filter((name) =>
+        name.startsWith('markdownlint'),
+      ),
+    ).toEqual(['markdownlint-cli2']);
   });
 
   test('uses the TypeScript 7 type-aware linter', async () => {

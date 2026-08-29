@@ -19,7 +19,7 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-test('shows complete second-person agreement in the sentence bubble', async () => {
+test('keeps a singular predicate complement for you in the sentence bubble', async () => {
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
     'grand-transition-app',
@@ -32,12 +32,7 @@ test('shows complete second-person agreement in the sentence bubble', async () =
   const state = owner.matchState;
   const activePlayerId = state.draft!.activePlayerId;
   const player = state.draft!.playerStates[activePlayerId]!;
-  const phraseIds = [
-    'you',
-    'made-own-voters-change-the-channel',
-    'coalition-and',
-    'could-not-win-own-stairwell',
-  ] as const;
+  const phraseIds = ['you', 'were-communist-party-members'] as const;
   const steps = phraseIds.map((phraseId) => ({
     kind: 'phrase' as const,
     phrase: prepareEnglishGrammarPhrase(
@@ -82,7 +77,7 @@ test('shows complete second-person agreement in the sentence bubble', async () =
   await match.updateComplete;
 
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
-    'You made your own voters change the channel and could not win an election in your own stairwell',
+    'You were a Communist Party member',
   );
 });
 

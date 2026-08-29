@@ -103,9 +103,11 @@ To add a common phrase, copy one same-role object in the common JSON array and
 change its identifier, text, tags, scoring metadata, restrictions, rarity, and
 explicit editorial review. To add a phrase for an existing character, do the
 same in that character's `phrases` array. Cards with number agreement include
-both `singularText` and `pluralText`. A verb or predicate whose wording refers
-to its subject also includes both `personalSingularText` and
-`secondPersonText`. The loader derives character, phrase, agreement-form, and
+both `singularText` and `pluralText`. A verb or predicate whose wording changes
+for a personal-singular or second-person subject also includes both
+`personalSingularText` and `secondPersonText`. This includes a combined copular
+predicate whose second-person verb uses plural conjugation while its complement
+stays singular. The loader derives character, phrase, agreement-form, and
 comeback locale keys plus the English message table. It rejects duplicate
 identifiers or roster orders, file-name mismatches, one-sided number or person
 forms, unknown fields, invalid scoring data, and cross-corpus duplicates.

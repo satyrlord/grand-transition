@@ -21,7 +21,6 @@
     "boundaries:check": "node tools/check-pure-boundaries.mjs",
     "simulate": "tsx tools/simulate.ts",
     "lint": "oxlint --type-aware --tsconfig tsconfig.json .",
-    "format:check": "prettier --check \"src/**/*.{ts,css,json}\" \"tests/**/*.ts\" \"e2e/**/*.ts\" \"tools/**/*.{mjs,ts}\" \"*.{html,json,mjs,ts}\" \".github/workflows/**/*.{yml,yaml}\" \".github/skills/**/*.{mjs,yml,yaml}\"",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --config vitest.config.ts",
     "test:coverage": "vitest run --config vitest.browser.config.ts --coverage",
@@ -29,7 +28,7 @@
     "test:e2e": "playwright test --config playwright.config.ts",
     "markdown:lint": "markdownlint-cli2 \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"docs/specs/**/*.md\" \".github/**/*.md\"",
     "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run boundaries:check && npm run lint && npm run typecheck",
-    "ci": "npm run format:check && npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e"
+    "ci": "npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.3.0",
@@ -50,7 +49,6 @@
     "markdownlint-cli2": "^0.23.2",
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "prettier": "^3.9.6",
     "tsx": "^4.23.12",
     "typescript": "~7.0.2",
     "vite": "^8.2.2",

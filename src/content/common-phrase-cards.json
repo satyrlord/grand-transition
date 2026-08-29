@@ -3193,6 +3193,8 @@
     "text": "was a Communist Party member",
     "singularText": "was a Communist Party member",
     "pluralText": "were Communist Party members",
+    "personalSingularText": "was a Communist Party member",
+    "secondPersonText": "were a Communist Party member",
     "tags": ["legacy", "credibility"],
     "scorePreferences": {
       "substance": [
@@ -3218,6 +3220,8 @@
     "text": "is a Communist Party member",
     "singularText": "is a Communist Party member",
     "pluralText": "are Communist Party members",
+    "personalSingularText": "is a Communist Party member",
+    "secondPersonText": "are a Communist Party member",
     "tags": ["legacy", "credibility"],
     "scorePreferences": {
       "substance": [
@@ -3243,6 +3247,8 @@
     "text": "will be a Communist Party member",
     "singularText": "will be a Communist Party member",
     "pluralText": "will be Communist Party members",
+    "personalSingularText": "will be a Communist Party member",
+    "secondPersonText": "will be a Communist Party member",
     "tags": ["legacy", "credibility"],
     "scorePreferences": {
       "substance": [
@@ -4573,6 +4579,8 @@
     "text": "was a Securitate informer",
     "singularText": "was a Securitate informer",
     "pluralText": "were Securitate informers",
+    "personalSingularText": "was a Securitate informer",
+    "secondPersonText": "were a Securitate informer",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [
@@ -4598,6 +4606,8 @@
     "text": "is a Securitate informer",
     "singularText": "is a Securitate informer",
     "pluralText": "are Securitate informers",
+    "personalSingularText": "is a Securitate informer",
+    "secondPersonText": "are a Securitate informer",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [
@@ -4623,6 +4633,8 @@
     "text": "will be a Securitate informer",
     "singularText": "will be a Securitate informer",
     "pluralText": "will be Securitate informers",
+    "personalSingularText": "will be a Securitate informer",
+    "secondPersonText": "will be a Securitate informer",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [

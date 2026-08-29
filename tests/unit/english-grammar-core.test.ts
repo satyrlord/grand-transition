@@ -120,6 +120,26 @@ describe('Hollywood Roast English grammar', () => {
       accepted: true,
       analysis: { publicText: 'My opponent rebrands a national consensus' },
     });
+
+    for (const [predicateId, expected] of [
+      ['were-communist-party-members', 'You were a Communist Party member'],
+      ['are-communist-party-members', 'You are a Communist Party member'],
+      [
+        'will-be-communist-party-members',
+        'You will be a Communist Party member',
+      ],
+      ['was-a-securitate-informer', 'You were a Securitate informer'],
+      ['is-a-securitate-informer', 'You are a Securitate informer'],
+      ['will-be-a-securitate-informer', 'You will be a Securitate informer'],
+    ] as const) {
+      expect(
+        analyze([add('you'), add(predicateId)]),
+        predicateId,
+      ).toMatchObject({
+        accepted: true,
+        analysis: { complete: true, publicText: expected },
+      });
+    }
   });
 
   test('renders every shipped possessive relation for every shipped noun', () => {

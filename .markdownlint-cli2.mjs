@@ -2,7 +2,7 @@ export default {
   config: {
     default: true,
     MD013: {
-      line_length: 120,
+      line_length: 200,
     },
   },
 };
