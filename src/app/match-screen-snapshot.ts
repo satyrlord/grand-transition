@@ -265,9 +265,10 @@ export function createMatchScreenSnapshot(
   const arenaReactionPlayer = arenaReaction
     ? state.playerStates[arenaReaction.playerId]
     : undefined;
-  const reviewSentence =
-    reviewResolution?.players[activePlayerId]?.constructionText?.trim() ||
-    latestPublicSentence(state, activePlayerId);
+  const reviewSentence = reviewResolution
+    ? reviewResolution.players[activePlayerId]?.constructionText?.trim() ||
+      latestPublicSentence(state, activePlayerId)
+    : null;
 
   return deepFreeze({
     revision: state.commandHistory.length,
@@ -289,12 +290,9 @@ export function createMatchScreenSnapshot(
     sceneLayers: sceneLayerViews(state.sceneId),
     activePlayerId,
     activePlayerName: activeName,
-    sentenceText:
-      reviewSentence ||
-      activePlayer.construction.previewText ||
-      (reviewResolution
-        ? msg('No public sentence was completed.')
-        : msg('Select a noun to begin.')),
+    sentenceText: reviewResolution
+      ? reviewSentence || msg('No public sentence was completed.')
+      : activePlayer.construction.previewText || msg('Select a noun to begin.'),
     sentenceComplete: activePlayer.construction.analysis.complete,
     sharedCards,
     privateCards,
@@ -504,10 +502,11 @@ function latestPublicSentence(
   playerId: string,
 ): string | null {
   for (let index = state.resolutionHistory.length - 1; index >= 0; index -= 1) {
+    const player = state.resolutionHistory[index]?.players[playerId];
     const sentence =
-      state.resolutionHistory[index]?.players[
-        playerId
-      ]?.constructionText.trim();
+      player?.constructionStatus === 'valid'
+        ? player.constructionText.trim()
+        : '';
     if (sentence) return sentence;
   }
   return null;

@@ -105,11 +105,13 @@ preview sentence and points toward that player. The waiting character owns one
 compact gray bubble that normally shows an ellipsis. If the waiting character
 has a public sentence, pointer hover, keyboard focus, click, and tap always
 expand the same gray bubble and reveal the complete text. Use the current public
-sentence first and the most recent completed public sentence after a new round
-resets the construction. Accepted construction text stays public after a turn
-change, including text that came from a private card. Before either sentence
-exists, reveal `No sentence yet.` Hover and focus keep the text open for that
-interaction. Click or tap pins it open until the user
+sentence first and the most recent valid completed public sentence after a new
+round resets the construction. An incomplete sentence remains visible only for
+its exchange review. It does not enter a later round bubble. Accepted
+construction text stays public after a turn change, including text that came
+from a private card. Before either sentence exists, reveal `No sentence yet.`
+Hover and focus keep the text open for that interaction. Click or tap pins it
+open until the user
 activates elsewhere or the match state changes. Repeated activation of the
 bubble keeps it open. Its body grows to contain the complete text, and its tail
 does not clip the text. The ellipsis then returns. This preview does not change
@@ -118,7 +120,9 @@ shows the complete sentence with the selected closing line until the exchange
 resolves. Do not show two equal speech cards.
 The wide bubble must show the complete current or preview sentence. It can use
 up to three responsive speech sizes and a taller fixed record, but it must not
-clip, truncate, or replace sentence text with an ellipsis.
+clip, truncate, or replace sentence text with an ellipsis. A new construction
+clears the prior round text from the wide bubble before its first phrase. Its
+current text replaces all prior round text after the first accepted phrase.
 
 After every exchange, keep the completed arena visible and pause before the next
 round or match exit. Keep the last speaker's complete text in the wide bubble,
@@ -251,10 +255,13 @@ timer-refill abuse.
 - **AC-016-11:** The active side owns one wide white current-sentence bubble.
   The waiting side owns one compact gray ellipsis bubble. Every pointer hover,
   keyboard focus, click, and touch activation reveals that waiting character's
-  current or most recent completed public sentence in the same auto-sizing
-  bubble. Before either exists, it reveals `No sentence yet.` Repeated click or
-  touch activation keeps it open. No text is clipped by the bubble body or
-  tail. The match permits no browser text selection. All
+  current or most recent valid completed public sentence in the same
+  auto-sizing bubble. An incomplete ending does not persist into the next
+  round. The wide bubble clears prior round text before the new construction
+  starts, then shows only the new current or preview sentence. Before either
+  waiting-side sentence exists, the gray bubble reveals `No sentence yet.`
+  Repeated click or touch activation keeps it open. No text is clipped by the
+  bubble body or tail. The match permits no browser text selection. All
   paths leave game truth unchanged. The private choices and compact
   SVG Reshuffle control move to the active side without changing the
   `redraw-hand` command contract.

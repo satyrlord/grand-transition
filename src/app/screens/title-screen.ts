@@ -44,7 +44,6 @@ export class GrandTransitionTitle extends LitElement {
 
   protected override render() {
     return html`
-      <!-- THESIS: A televised political-theatre premiere replaces the generic civic form and exposes match setup while keeping local results one step away. OWN-WORLD: Broadcast black and navy curtains, aged brass architecture, oxblood enamel, warm paper, square plaques, Poiret One features, and Rubik interface copy. STORY: The visitor recognizes Grand Transition, can inspect this browser's completed matches, reads the satire notice, and enters local match setup. FIRST VIEWPORT: Channel 3 sits upper left; the emblem and live wordmark own the center; one vertical brass signal rail joins the subtitle to the ready plaque, oxblood setup action, and subordinate history action; the disclaimer anchors the lower edge. FORM: User-approved Curtain Call, option 2, seed key curtain-call-approved-2026-08-29. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
       <main class="title-screen" aria-labelledby="game-title">
         <div class="title-proscenium" aria-hidden="true"></div>
         <p class="broadcast-channel">${msg('Channel 3')}</p>

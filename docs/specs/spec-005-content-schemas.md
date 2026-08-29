@@ -140,8 +140,8 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 234-card common corpus contains exactly 55 nouns, 99 verbs,
-  36 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
+- **AC-005-07:** The 234-card common corpus contains exactly 55 nouns, 96 verbs,
+  39 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
   continuation. It includes
   agreement-aware copular forms for `is`, `was`, `will be`, and `should have
 been`, plus generic ideological and animal-metaphor noun fragments such as
@@ -149,7 +149,10 @@ been`, plus generic ideological and animal-metaphor noun fragments such as
   `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated forms `was not`, `is not`, `will never be`, and `won't`, and the
-  predicate `was a Securitate informer`. The only
+  predicate `was a Securitate informer`. The stable
+  `drags-before-the-cameras` tense family renders the passive predicates `is
+  dragged before the cameras`, `was dragged before the cameras`, and `will be
+  dragged before the cameras`. The only
   continuation is the unrestricted `[...]` card. It contains second-person
   `you`, plural `EU funds`, and person-aware subject forms for every shipped
   relation that contains a possessive reference to its subject. It contains

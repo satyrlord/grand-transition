@@ -485,8 +485,8 @@ describe('content schemas', () => {
 
     expect(roleCounts).toEqual({
       noun: 55,
-      verb: 99,
-      predicate: 36,
+      verb: 96,
+      predicate: 39,
       modifier: 21,
       conjunction: 11,
       ending: 11,

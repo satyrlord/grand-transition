@@ -379,7 +379,7 @@ test('the match prevents accidental browser text selection', async ({
   ).toBe('');
 });
 
-test('the next round waiting bubble reveals the prior public sentence', async ({
+test('the next round clears an incomplete public sentence', async ({
   page,
 }) => {
   await startMatch(page);
@@ -403,13 +403,19 @@ test('the next round waiting bubble reveals the prior public sentence', async ({
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
   ).toBeVisible();
+  await expect(page.locator('.sentence-preview')).toHaveText(
+    'Select a noun to begin.',
+  );
 
   const nextRoundBubble = page.locator('.player-sentence--waiting');
   await nextRoundBubble.hover();
   await expect(nextRoundBubble).toHaveAttribute('data-revealed', 'true');
   await expect(nextRoundBubble.locator('.waiting-sentence-content')).toHaveText(
-    priorPublicSentence!,
+    'No sentence yet.',
   );
+  await expect(
+    nextRoundBubble.locator('.waiting-sentence-content'),
+  ).not.toHaveText(priorPublicSentence!);
 });
 
 test('the gray waiting bubble always reveals and fits its complete sentence', async ({

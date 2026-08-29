@@ -3111,10 +3111,12 @@
   },
   {
     "id": "drags-before-the-cameras",
-    "role": "verb",
-    "text": "drags before the cameras",
-    "singularText": "drags before the cameras",
-    "pluralText": "drag before the cameras",
+    "role": "predicate",
+    "text": "is dragged before the cameras",
+    "singularText": "is dragged before the cameras",
+    "pluralText": "are dragged before the cameras",
+    "personalSingularText": "is dragged before the cameras",
+    "secondPersonText": "are dragged before the cameras",
     "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -3130,17 +3132,19 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
+      "notes": "Original passive exposure predicate for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
     },
     "tense": "present",
     "tenseFamily": "drags-before-the-cameras"
   },
   {
     "id": "dragged-before-the-cameras",
-    "role": "verb",
-    "text": "dragged before the cameras",
-    "singularText": "dragged before the cameras",
-    "pluralText": "dragged before the cameras",
+    "role": "predicate",
+    "text": "was dragged before the cameras",
+    "singularText": "was dragged before the cameras",
+    "pluralText": "were dragged before the cameras",
+    "personalSingularText": "was dragged before the cameras",
+    "secondPersonText": "were dragged before the cameras",
     "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -3156,17 +3160,19 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
+      "notes": "Original passive exposure predicate for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
     },
     "tense": "past",
     "tenseFamily": "drags-before-the-cameras"
   },
   {
     "id": "will-drag-before-the-cameras",
-    "role": "verb",
-    "text": "will drag before the cameras",
-    "singularText": "will drag before the cameras",
-    "pluralText": "will drag before the cameras",
+    "role": "predicate",
+    "text": "will be dragged before the cameras",
+    "singularText": "will be dragged before the cameras",
+    "pluralText": "will be dragged before the cameras",
+    "personalSingularText": "will be dragged before the cameras",
+    "secondPersonText": "will be dragged before the cameras",
     "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -3182,7 +3188,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original metaphorical exposure verb for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
+      "notes": "Original passive exposure predicate for fictional television satire. It is not a threat and describes no real act. Editorial review complete."
     },
     "tense": "future",
     "tenseFamily": "drags-before-the-cameras"
