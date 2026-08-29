@@ -33,12 +33,14 @@ export class GrandTransitionMatch extends LitElement {
     pauseMode: { attribute: false },
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
+    phraseColorCoding: { attribute: false },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
   declare pauseMode: MatchPauseMode;
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
+  declare phraseColorCoding: boolean;
   private previewText: string | null;
   private remainingSeconds: number | null;
   private commandPending: boolean;
@@ -53,6 +55,7 @@ export class GrandTransitionMatch extends LitElement {
     this.pauseMode = 'running';
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
+    this.phraseColorCoding = true;
     this.previewText = null;
     this.remainingSeconds = null;
     this.commandPending = false;
@@ -135,6 +138,7 @@ export class GrandTransitionMatch extends LitElement {
         kind="paused"
         .turnTimerSeconds=${this.turnTimerSeconds}
         .autoComplete=${this.autoComplete}
+        .phraseColorCoding=${this.phraseColorCoding}
       ></grand-transition-interruption>`;
     }
     const first = this.snapshot.players[0];
@@ -165,6 +169,7 @@ export class GrandTransitionMatch extends LitElement {
         class="match-screen"
         aria-labelledby="match-title"
         data-active-side=${first.isActive ? 'red' : 'blue'}
+        data-phrase-color-coding=${this.phraseColorCoding ? 'on' : 'off'}
         data-round-review=${roundReview ? 'true' : nothing}
         @click=${this.closeWaitingSentence}
       >
@@ -574,6 +579,7 @@ export class GrandTransitionMatch extends LitElement {
         class="phrase-slot phrase-slot--${card.state}"
         data-slot=${card.slotIndex + 1}
         data-role=${card.role ?? 'empty'}
+        data-rarity=${card.rarity ?? 'empty'}
         data-card-state=${card.state}
       >
         ${
@@ -588,6 +594,7 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-id=${card.reference!.cardId}
                 data-card-source=${card.reference!.source}
                 data-card-state=${card.state}
+                data-rarity=${card.rarity}
                 aria-label=${accessibleLabel}
                 ?disabled=${card.action === null || this.commandPending}
                 @pointerenter=${() => this.preview(card)}

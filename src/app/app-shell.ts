@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
+  type PhraseColorCodingChangeEvent,
   type TurnTimerChangeEvent,
   type TurnTimerSeconds,
 } from './screens/interruption-screen';
@@ -128,6 +129,7 @@ export class GrandTransitionApp extends LitElement {
     manuallyPaused: { state: true },
     turnTimerSeconds: { state: true },
     autoComplete: { state: true },
+    phraseColorCoding: { state: true },
   };
 
   declare private view: ScreenView;
@@ -139,6 +141,7 @@ export class GrandTransitionApp extends LitElement {
   declare private manuallyPaused: boolean;
   declare private turnTimerSeconds: TurnTimerSeconds;
   declare private autoComplete: boolean;
+  declare private phraseColorCoding: boolean;
   private readonly screenController = new ScreenController();
 
   constructor() {
@@ -152,6 +155,7 @@ export class GrandTransitionApp extends LitElement {
     this.manuallyPaused = false;
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
+    this.phraseColorCoding = true;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -206,6 +210,7 @@ export class GrandTransitionApp extends LitElement {
         }
         .turnTimerSeconds=${this.turnTimerSeconds}
         .autoComplete=${this.autoComplete}
+        .phraseColorCoding=${this.phraseColorCoding}
         @match-command=${this.reduceMatchCommand}
         @continue-round=${this.continueRound}
         @pause-match=${this.pauseMatch}
@@ -213,6 +218,7 @@ export class GrandTransitionApp extends LitElement {
         @return-to-menu=${this.returnToMenu}
         @turn-timer-change=${this.changeTurnTimer}
         @auto-complete-change=${this.changeAutoComplete}
+        @phrase-color-coding-change=${this.changePhraseColorCoding}
       ></grand-transition-match>`;
     }
 
@@ -404,6 +410,13 @@ export class GrandTransitionApp extends LitElement {
   ): void => {
     event.stopPropagation();
     this.autoComplete = event.detail;
+  };
+
+  private readonly changePhraseColorCoding = (
+    event: PhraseColorCodingChangeEvent,
+  ): void => {
+    event.stopPropagation();
+    this.phraseColorCoding = event.detail;
   };
 
   private readonly syncViewportSupport = (): void => {

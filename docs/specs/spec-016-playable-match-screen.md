@@ -157,9 +157,17 @@ For timed turns, the visible value updates once per second. Zero dispatches one
 arrives.
 
 Pause replaces the complete match DOM with a full-screen “Paused” surface. It
-provides Turn timer and Auto-complete settings, Resume, and a secondary “Back
-to menu” action. Turn timer offers 15 seconds, 30 seconds, and Unlimited. Its
-default is 30 seconds. Auto-complete offers On and Off. Its default is On.
+provides Turn timer, Auto-complete, and Phrase color coding settings, Resume,
+and a secondary “Back to menu” action. Turn timer offers 15 seconds, 30
+seconds, and Unlimited. Its default is 30 seconds. Auto-complete offers On and
+Off. Its default is On. Phrase color coding offers On and Off. Its default is
+On. When it is On, noun cards use green, verb and predicate cards use red,
+modifier cards use purple, ending cards use blue, continuation cards use gray,
+and conjunction cards use orange. Phrase text stays white. A common, uncommon, or
+rare card uses the 40, 50, or 60 percent role-color blend respectively. The
+browser renders one text layer, so the blend does not increase its visual
+weight. The card background stays unchanged, and the color does not replace the
+accessible role data.
 The browser setting controls when the UI dispatches the pure `expire-turn`
 command. It does not change the reducer's deterministic 30-second baseline or
 the timeout-damage rules. Unlimited does not schedule that command.
@@ -167,9 +175,10 @@ Changing a timer value while paused starts the current turn at the selected
 value after Resume and applies that value to later turns. Unlimited shows no
 countdown and does not dispatch `expire-turn`. Changing Auto-complete applies
 after Resume and does not change the authoritative sentence or phrase action.
-Both choices remain in the application shell for later matches in the same page
-session. They return to their defaults after a reload until Milestone 020 adds
-storage.
+Changing Phrase color coding applies after Resume and does not change game
+truth, phrase actions, accessible phrase text, or the timer. All three choices
+remain in the application shell for later matches in the same page session.
+They return to their defaults after a reload until Milestone 020 adds storage.
 “Back to menu” replaces
 the Pause notice with a concealed confirmation that defaults to “Stay paused.”
 “End match” discards the active match and returns to the title menu. No exit
@@ -200,13 +209,23 @@ timer-refill abuse.
 - **AC-016-05:** A timed turn updates once per second and zero emits one
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
-  The Pause settings default to 30 seconds and Auto-complete On. Selecting 15,
-  30, or Unlimited takes effect on Resume. Unlimited does not expire the turn,
+  The Pause settings default to 30 seconds, Auto-complete On, and Phrase color
+  coding On. Selecting 15, 30, or Unlimited takes effect on Resume. Unlimited
+  does not expire the turn,
   and its complete label stays inside the top-center timer frame at every
   supported viewport.
   Its exit confirmation remains concealed, defaults to staying paused, and
   returns to the title only after “End match.” Pause moves keyboard focus to
   Resume. Resume returns focus to Pause in the unchanged match.
+- **AC-016-18:** With Phrase color coding On, every available phrase keeps
+  one text layer with the white and role-color blend at 40 percent for common,
+  50 percent for uncommon, or 60 percent for rare. Nouns are green;
+  verbs and predicates are red; modifiers are purple; endings are blue;
+  continuations are gray; and conjunctions are orange. With it Off, the text remains white
+  with no role or rarity color. The card background stays unchanged. The
+  feature keeps visible phrase rows text-only and does not change accessible
+  labels, phrase actions, game truth, or timer behavior. Browser tests verify
+  the default, both Pause choices, and the rendered role and rarity data.
 - **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.

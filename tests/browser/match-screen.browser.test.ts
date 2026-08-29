@@ -1,5 +1,6 @@
 import { page } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
+import matchScreenStyles from '../../src/styles/match-screen.css?raw';
 import { GrandTransitionApp } from '../../src/app/app-shell';
 import {
   GrandTransitionMatch,
@@ -85,6 +86,11 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(match.querySelector('.card-role')).toBeNull();
   expect(match.querySelector('.card-bottomline')).toBeNull();
   expect(match.querySelector('.card-weakness')).toBeNull();
+  expect(
+    match
+      .querySelector('.match-screen')
+      ?.getAttribute('data-phrase-color-coding'),
+  ).toBe('on');
   const visiblePhrases = [
     ...match.querySelectorAll<HTMLButtonElement>('.shared-board .phrase-card'),
   ];
@@ -99,6 +105,11 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(
     visiblePhrases.some((button) => button.ariaLabel?.includes('Shared')),
   ).toBe(true);
+  expect(
+    match.querySelectorAll(
+      '.phrase-slot[data-rarity][data-role]:not([data-rarity="empty"])',
+    ).length,
+  ).toBeGreaterThan(0);
 
   const previewCard = snapshot.sharedCards.find(
     (card) => card.action === 'select' && card.previewText.trim() !== '',
@@ -114,6 +125,47 @@ test('renders an immutable complete match snapshot and previews without changing
   ).not.toBe(sentenceBefore);
   expect(match.snapshot).toBe(snapshot);
   expect(snapshot.sentenceText).toBe(sentenceBefore);
+});
+
+test('declares the requested phrase role colors and rarity opacity', async () => {
+  const match = await startMatch();
+  expect(matchScreenStyles).toMatch(
+    /data-rarity='common'[\s\S]*--phrase-rarity-opacity: 40%/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-rarity='uncommon'[\s\S]*--phrase-rarity-opacity: 50%/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-rarity='rare'[\s\S]*--phrase-rarity-opacity: 60%/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='noun'[\s\S]*--phrase-role-color: rgb\(72 172 104\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='verb'[\s\S]*data-role='predicate'[\s\S]*--phrase-role-color: rgb\(201 55 48\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='modifier'[\s\S]*--phrase-role-color: rgb\(139 90 177\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='ending'[\s\S]*--phrase-role-color: rgb\(53 124 199\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='continuation'[\s\S]*--phrase-role-color: rgb\(154 161 170\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='conjunction'[\s\S]*--phrase-role-color: rgb\(235 145 48\)/u,
+  );
+  expect(
+    match.querySelector<HTMLElement>('.match-screen')?.dataset
+      .phraseColorCoding,
+  ).toBe('on');
+  expect(matchScreenStyles).toMatch(/\.card-phrase \{[\s\S]*color: white/u);
+  expect(matchScreenStyles).toMatch(/color-mix\([\s\S]*in srgb/u);
+  expect(matchScreenStyles).not.toContain('.card-phrase::after');
+  expect(
+    match.querySelector('.card-phrase')?.hasAttribute('data-phrase-text'),
+  ).toBe(false);
 });
 
 test('gives an empty waiting bubble revealable honest content', async () => {
@@ -469,28 +521,44 @@ test('applies Pause settings when the match resumes', async () => {
       (button) => button.textContent?.trim() === label,
     )!;
   expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
-  expect(pauseButton('On').getAttribute('aria-pressed')).toBe('true');
+  const colorCodingOption = (value: 'On' | 'Off'): HTMLButtonElement =>
+    [
+      ...match.querySelectorAll<HTMLButtonElement>(
+        '[data-setting="phrase-color-coding"]',
+      ),
+    ].find((button) => button.textContent?.trim() === value)!;
+  expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
 
   pauseButton('15 seconds').click();
   pauseButton('30 seconds').click();
   pauseButton('Off').click();
   pauseButton('On').click();
+  colorCodingOption('Off').click();
+  colorCodingOption('On').click();
   await app.updateComplete;
   await match.updateComplete;
   expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
   expect(pauseButton('On').getAttribute('aria-pressed')).toBe('true');
+  expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
 
   pauseButton('15 seconds').click();
   pauseButton('Off').click();
+  colorCodingOption('Off').click();
   await app.updateComplete;
   await match.updateComplete;
   expect(pauseButton('15 seconds').getAttribute('aria-pressed')).toBe('true');
   expect(pauseButton('Off').getAttribute('aria-pressed')).toBe('true');
+  expect(colorCodingOption('Off').getAttribute('aria-pressed')).toBe('true');
 
   pauseButton('Resume').click();
   await app.updateComplete;
   await match.updateComplete;
   expect(match.querySelector('[data-timer="15"]')).not.toBeNull();
+  expect(
+    match
+      .querySelector('.match-screen')
+      ?.getAttribute('data-phrase-color-coding'),
+  ).toBe('off');
 
   const sentenceBefore = match
     .querySelector('.sentence-preview')

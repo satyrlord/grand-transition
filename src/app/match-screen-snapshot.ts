@@ -49,6 +49,7 @@ export type MatchCardView = Readonly<{
   phraseId: string | null;
   text: string;
   role: Phrase['role'] | null;
+  rarity: Phrase['rarity'] | null;
   ownership: 'Private' | 'Shared';
   state: MatchCardState;
   stateLabel: string;
@@ -414,6 +415,7 @@ function createCardView(
     phraseId: config.phrase.id,
     text,
     role: config.phrase.role,
+    rarity: config.phrase.rarity,
     ownership: config.ownership,
     state: config.state,
     stateLabel,
@@ -437,6 +439,7 @@ function emptyCard(
     phraseId: phrase?.id ?? null,
     text: '',
     role: phrase?.role ?? null,
+    rarity: phrase?.rarity ?? null,
     ownership,
     state,
     stateLabel,
