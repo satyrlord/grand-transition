@@ -1,3 +1,4 @@
+import './styles/fonts.css';
 import './styles/title-screen.css';
 import './styles/screen-shell.css';
 import './styles/match-screen.css';

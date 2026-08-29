@@ -2823,9 +2823,9 @@
     }
   },
   {
-    "id": "your-mistress",
+    "id": "your-concubine",
     "role": "noun",
-    "text": "your mistress",
+    "text": "your concubine",
     "referentKind": "personal",
     "tags": ["credibility", "authenticity"],
     "scoreGroups": {
