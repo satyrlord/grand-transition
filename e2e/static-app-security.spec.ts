@@ -4,6 +4,7 @@ import path from 'node:path';
 import {
   planMatchBrowserFlow,
   type MatchBrowserAction,
+  useFixedBrowserMatchSeed,
 } from './helpers/match-flow';
 
 const productionOrigin = 'http://127.0.0.1:4173';
@@ -160,6 +161,7 @@ test('development automatically writes one completed match text log', async ({
 }) => {
   await rm(developmentGameLogDirectory, { force: true, recursive: true });
   try {
+    await useFixedBrowserMatchSeed(page);
     await page.goto(developmentUrl);
     await page.getByRole('button', { name: 'Set up match' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();

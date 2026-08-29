@@ -39,7 +39,12 @@ import { currentViewport, isSupportedViewport } from './viewport-support';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
-export const matchScreenSeed = 20_260_823;
+
+function createMatchSeed(): number {
+  const seed = new Uint32Array(1);
+  globalThis.crypto.getRandomValues(seed);
+  return seed[0]!;
+}
 
 const matchContext: MatchEngineContext = {
   phrases: sampleContent.phrases,
@@ -142,6 +147,7 @@ export class GrandTransitionApp extends LitElement {
   declare private turnTimerSeconds: TurnTimerSeconds;
   declare private autoComplete: boolean;
   declare private phraseColorCoding: boolean;
+  private matchInitialSeed: number | null = null;
   private readonly screenController = new ScreenController();
 
   constructor() {
@@ -274,9 +280,11 @@ export class GrandTransitionApp extends LitElement {
       throw new Error(`Unknown match scene "${payload.sceneId}".`);
     }
 
+    const initialSeed = createMatchSeed();
+    this.matchInitialSeed = initialSeed;
     let state = createMatchSetupState({
       schemaVersion: 1,
-      seed: matchScreenSeed,
+      seed: initialSeed,
       players: [
         configuredPlayer('player-one', payload.playerOneCharacterId),
         configuredPlayer('player-two', payload.playerTwoCharacterId),
@@ -290,6 +298,7 @@ export class GrandTransitionApp extends LitElement {
     const beforeStart = state;
     state = reduceLifecycle(state, 'start-match');
     publishAcceptedDevelopmentCommand(
+      initialSeed,
       createLifecycleCommand('start-match'),
       beforeStart,
       state,
@@ -297,6 +306,7 @@ export class GrandTransitionApp extends LitElement {
     const beforePreparation = state;
     state = reduceLifecycle(state, 'prepare-round');
     publishAcceptedDevelopmentCommand(
+      initialSeed,
       createLifecycleCommand('prepare-round'),
       beforePreparation,
       state,
@@ -316,7 +326,7 @@ export class GrandTransitionApp extends LitElement {
     const result = matchReducer(before, event.detail, defaultMatchRandomSource);
     if (!result.ok) {
       publishDevelopmentGameLog({
-        initialSeed: matchScreenSeed,
+        initialSeed: this.currentMatchInitialSeed(),
         action: event.detail.type,
         actorId: event.detail.actorId ?? null,
         outcome: 'rejected',
@@ -336,13 +346,23 @@ export class GrandTransitionApp extends LitElement {
       reduced,
       event.detail,
     );
-    publishAcceptedDevelopmentCommand(event.detail, before, reduced);
+    publishAcceptedDevelopmentCommand(
+      this.currentMatchInitialSeed(),
+      event.detail,
+      before,
+      reduced,
+    );
     let state = reduced;
     if (state.phase === 'resolution') {
       const beforeResolution = state;
       const command = createLifecycleCommand('resolve-round');
       state = reduceLifecycle(state, 'resolve-round');
-      publishAcceptedDevelopmentCommand(command, beforeResolution, state);
+      publishAcceptedDevelopmentCommand(
+        this.currentMatchInitialSeed(),
+        command,
+        beforeResolution,
+        state,
+      );
     }
     const reviewResolution = state.resolutionHistory.at(-1) ?? null;
     this.roundReviewSnapshot =
@@ -354,6 +374,7 @@ export class GrandTransitionApp extends LitElement {
       this.manuallyPaused = false;
       this.matchArenaReaction = null;
       this.matchState = null;
+      this.matchInitialSeed = null;
       this.screenController.returnToSetup();
       this.view = 'setup';
     }
@@ -368,13 +389,19 @@ export class GrandTransitionApp extends LitElement {
     if (state.phase === 'results') {
       this.manuallyPaused = false;
       this.matchState = null;
+      this.matchInitialSeed = null;
       this.screenController.returnToSetup();
       this.view = 'setup';
       return;
     }
     const command = createLifecycleCommand('prepare-round');
     this.matchState = reduceLifecycle(state, 'prepare-round');
-    publishAcceptedDevelopmentCommand(command, state, this.matchState);
+    publishAcceptedDevelopmentCommand(
+      this.currentMatchInitialSeed(),
+      command,
+      state,
+      this.matchState,
+    );
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -396,6 +423,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.matchState = null;
+    this.matchInitialSeed = null;
     this.screenController.showTitle();
     this.view = 'title';
   };
@@ -422,6 +450,13 @@ export class GrandTransitionApp extends LitElement {
   private readonly syncViewportSupport = (): void => {
     this.viewportSupported = isSupportedViewport(currentViewport());
   };
+
+  private currentMatchInitialSeed(): number {
+    if (this.matchInitialSeed === null) {
+      throw new Error('The active match does not have an initial seed.');
+    }
+    return this.matchInitialSeed;
+  }
 }
 
 function grammarMistakeReaction(
@@ -494,12 +529,13 @@ function createLifecycleCommand(
 }
 
 function publishAcceptedDevelopmentCommand(
+  initialSeed: number,
   command: MatchCommand,
   before: MatchState,
   after: MatchState,
 ): void {
   publishDevelopmentGameLog({
-    initialSeed: matchScreenSeed,
+    initialSeed,
     action: command.type,
     actorId: command.actorId ?? null,
     outcome: 'accepted',

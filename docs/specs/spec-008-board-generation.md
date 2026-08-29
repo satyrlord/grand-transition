@@ -11,6 +11,12 @@ Each round creates one shuffled nine-card common board. Every available common
 card can be selected by either player. Characters have no common-board
 reservation list.
 
+The browser creates a new unsigned 32-bit seed from browser cryptographic
+randomness for each new match. The deterministic reducer advances that seed for
+each draw and carries the resulting next seed into each later round. Thus, each
+match and round gets a new random deal, while one recorded initial seed still
+reproduces the complete match for replay and diagnosis.
+
 Before the two variable slots, the board contains:
 
 - three nouns
@@ -71,8 +77,12 @@ hands are dealt again at the next round.
   unbounded retry.
 - **AC-008-06:** A hand refresh uses two phrase identifiers that did not occur
   earlier in the same round deal.
+- **AC-008-07:** Each browser match requests a new unsigned 32-bit seed from
+  browser cryptographic randomness. Later rounds use the advanced match seed
+  instead of restarting the initial deal sequence.
 
 ## Objective verifiers
 
 `tests/unit/board-generation.test.ts` and
 `tests/unit/draft-actions.test.ts` verify AC-008-01 through AC-008-06.
+`tests/browser/screen-shell.browser.test.ts` verifies AC-008-07.
