@@ -28,14 +28,25 @@ import {
 import {
   type ContinueRoundEvent,
   type MatchCommandEvent,
+  type ReturnToMainMenuEvent,
 } from './screens/match-screen';
 import {
   type StartMatchEvent,
   type SetupChangeEvent,
   type SetupSnapshot,
 } from './screens/setup-screen';
-import { type ShowSetupEvent } from './screens/title-screen';
+import {
+  type ShowMatchHistoryEvent,
+  type ShowSetupEvent,
+} from './screens/title-screen';
+import { type CloseMatchHistoryEvent } from './screens/match-history-modal';
 import { currentViewport, isSupportedViewport } from './viewport-support';
+import { createBrowserStorage } from '../persistence/browser-storage';
+import {
+  createMatchHistoryEntry,
+  MatchHistoryRepository,
+  type MatchHistorySnapshot,
+} from '../persistence/match-history';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
@@ -44,6 +55,10 @@ function createMatchSeed(): number {
   const seed = new Uint32Array(1);
   globalThis.crypto.getRandomValues(seed);
   return seed[0]!;
+}
+
+function createMatchId(seed: number): string {
+  return globalThis.crypto.randomUUID?.() ?? `match-${seed}-${Date.now()}`;
 }
 
 const matchContext: MatchEngineContext = {
@@ -135,6 +150,8 @@ export class GrandTransitionApp extends LitElement {
     turnTimerSeconds: { state: true },
     autoComplete: { state: true },
     phraseColorCoding: { state: true },
+    matchHistory: { state: true },
+    matchHistoryOpen: { state: true },
   };
 
   declare private view: ScreenView;
@@ -147,11 +164,18 @@ export class GrandTransitionApp extends LitElement {
   declare private turnTimerSeconds: TurnTimerSeconds;
   declare private autoComplete: boolean;
   declare private phraseColorCoding: boolean;
+  declare private matchHistory: MatchHistorySnapshot;
+  declare private matchHistoryOpen: boolean;
   private matchInitialSeed: number | null = null;
+  private matchId: string | null = null;
   private readonly screenController = new ScreenController();
+  private readonly matchHistoryRepository: MatchHistoryRepository;
 
   constructor() {
     super();
+    this.matchHistoryRepository = new MatchHistoryRepository(
+      createBrowserStorage(),
+    );
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
     this.matchState = null;
@@ -162,6 +186,8 @@ export class GrandTransitionApp extends LitElement {
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
     this.phraseColorCoding = true;
+    this.matchHistory = this.matchHistoryRepository.snapshot();
+    this.matchHistoryOpen = false;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -171,6 +197,10 @@ export class GrandTransitionApp extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.screenController.connect((view) => {
+      if (this.matchState?.phase === 'results') {
+        this.view = 'match';
+        return;
+      }
       this.view =
         view === 'match' &&
         (!this.matchState || this.matchState.phase === 'setup')
@@ -219,6 +249,7 @@ export class GrandTransitionApp extends LitElement {
         .phraseColorCoding=${this.phraseColorCoding}
         @match-command=${this.reduceMatchCommand}
         @continue-round=${this.continueRound}
+        @return-to-main-menu=${this.returnToMainMenu}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
         @return-to-menu=${this.returnToMenu}
@@ -237,7 +268,12 @@ export class GrandTransitionApp extends LitElement {
     switch (this.view) {
       case 'title':
         return html`<grand-transition-title
+          .historyEntries=${this.matchHistory.entries}
+          .historyOpen=${this.matchHistoryOpen}
+          .historyPersistenceFailure=${this.matchHistory.persistenceFailure}
           @show-setup=${this.showSetup}
+          @show-match-history=${this.showMatchHistory}
+          @close-match-history=${this.closeMatchHistory}
         ></grand-transition-title>`;
       case 'setup':
         return html`<grand-transition-setup
@@ -255,8 +291,19 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly showSetup = (event: ShowSetupEvent): void => {
     event.stopPropagation();
+    this.matchHistoryOpen = false;
     this.screenController.showSetup();
     this.view = 'setup';
+  };
+
+  private readonly showMatchHistory = (event: ShowMatchHistoryEvent): void => {
+    event.stopPropagation();
+    if (this.view === 'title') this.matchHistoryOpen = true;
+  };
+
+  private readonly closeMatchHistory = (event: CloseMatchHistoryEvent): void => {
+    event.stopPropagation();
+    this.matchHistoryOpen = false;
   };
 
   private readonly showTitle = (): void => {
@@ -282,6 +329,7 @@ export class GrandTransitionApp extends LitElement {
 
     const initialSeed = createMatchSeed();
     this.matchInitialSeed = initialSeed;
+    this.matchId = createMatchId(initialSeed);
     let state = createMatchSetupState({
       schemaVersion: 1,
       seed: initialSeed,
@@ -365,18 +413,33 @@ export class GrandTransitionApp extends LitElement {
       );
     }
     const reviewResolution = state.resolutionHistory.at(-1) ?? null;
+    const victory =
+      state.phase === 'results' && state.winner
+        ? {
+            winnerId: state.winner,
+            completedRounds: state.resolutionHistory.length,
+          }
+        : null;
+    const reviewState =
+      reduced.phase === 'resolution' && reduced.draft
+        ? reduced
+        : victory && reduced.draft
+          ? reduced
+          : victory && before.draft
+            ? before
+            : null;
     this.roundReviewSnapshot =
-      reduced.phase === 'resolution' && reduced.draft && reviewResolution
-        ? createMatchScreenSnapshot(reduced, null, reviewResolution)
+      reviewState && reviewResolution
+        ? createMatchScreenSnapshot(
+            reviewState,
+            null,
+            reviewResolution,
+            victory,
+          )
         : null;
     this.matchState = state;
-    if (state.phase === 'results' && !this.roundReviewSnapshot) {
-      this.manuallyPaused = false;
-      this.matchArenaReaction = null;
-      this.matchState = null;
-      this.matchInitialSeed = null;
-      this.screenController.returnToSetup();
-      this.view = 'setup';
+    if (victory) {
+      this.captureCompletedMatch(state);
     }
   };
 
@@ -386,14 +449,7 @@ export class GrandTransitionApp extends LitElement {
     const state = this.matchState;
     this.roundReviewSnapshot = null;
     this.matchArenaReaction = null;
-    if (state.phase === 'results') {
-      this.manuallyPaused = false;
-      this.matchState = null;
-      this.matchInitialSeed = null;
-      this.screenController.returnToSetup();
-      this.view = 'setup';
-      return;
-    }
+    if (state.phase === 'results') return;
     const command = createLifecycleCommand('prepare-round');
     this.matchState = reduceLifecycle(state, 'prepare-round');
     publishAcceptedDevelopmentCommand(
@@ -402,6 +458,21 @@ export class GrandTransitionApp extends LitElement {
       state,
       this.matchState,
     );
+  };
+
+  private readonly returnToMainMenu = (
+    event: ReturnToMainMenuEvent,
+  ): void => {
+    event.stopPropagation();
+    if (this.matchState?.phase !== 'results') return;
+    this.manuallyPaused = false;
+    this.matchArenaReaction = null;
+    this.roundReviewSnapshot = null;
+    this.matchState = null;
+    this.matchInitialSeed = null;
+    this.matchId = null;
+    this.screenController.showTitle();
+    this.view = 'title';
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -424,6 +495,7 @@ export class GrandTransitionApp extends LitElement {
     this.roundReviewSnapshot = null;
     this.matchState = null;
     this.matchInitialSeed = null;
+    this.matchId = null;
     this.screenController.showTitle();
     this.view = 'title';
   };
@@ -456,6 +528,23 @@ export class GrandTransitionApp extends LitElement {
       throw new Error('The active match does not have an initial seed.');
     }
     return this.matchInitialSeed;
+  }
+
+  private captureCompletedMatch(state: MatchState): void {
+    if (!this.matchId) {
+      throw new Error('The completed match does not have a stable ID.');
+    }
+    const entry = createMatchHistoryEntry(state, {
+      id: this.matchId,
+      initialSeed: this.currentMatchInitialSeed(),
+      completedAt: new Date().toISOString(),
+      settings: {
+        turnTimerSeconds: this.turnTimerSeconds,
+        autoComplete: this.autoComplete,
+        phraseColorCoding: this.phraseColorCoding,
+      },
+    });
+    this.matchHistory = this.matchHistoryRepository.append(entry);
   }
 }
 

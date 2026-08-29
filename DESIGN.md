@@ -42,6 +42,13 @@ typography:
     lineHeight: 1
     letterSpacing: '0.06em'
     textStroke: '0.7px'
+  record-title:
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)'
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: '0.06em'
+    textStroke: '0.7px'
   speech-display:
     fontFamily: 'var(--font-speech, "Nunito Variable"), Arial, sans-serif'
     fontSize: 'clamp(1.02rem, 1.65vw, 1.62rem)'
@@ -146,8 +153,8 @@ stage surfaces, aged brass, oxblood, television blue, warm paper, and compact
 control-room signals. The title, setup, match, Pause, and compatibility states
 share this broadcast language while keeping their own task hierarchy.
 
-The title is a Curtain Call proscenium with a live wordmark and one decisive
-setup action. Setup is a three-part contestant register with two selected
+The title is a Curtain Call proscenium with a live wordmark, one decisive setup
+action, and one subordinate match-history action. Setup is a three-part contestant register with two selected
 player stages around a compact roster. The match is one confrontation: scene,
 characters, sentence construction, speech, status, and actions share the same
 stage instead of dividing into a decorative scene and a separate dashboard.
@@ -222,14 +229,18 @@ speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
 that side persistently brighter. A completed exchange holds the last full
 sentence in the arena and places a semitransparent broadcast-results modal over
-the lower stage. Continue releases the hold and starts the next round.
+the lower stage. Continue releases a nonterminal hold and starts the next
+round. A terminal hold expands the same record into Victory and remains until
+the player returns to the title.
 
 ### Cross-surface reach
 
 Title and setup use the same display voice, framed records, paper, oxblood,
 navy, brass, and direct stage language as active play. The match remains the
-only visible surface during play. A terminal review returns to setup only after
-Continue. Pause and unsupported viewport states replace the active surface
+only visible surface during play. Victory keeps the final arena visible and
+returns to the title only after an explicit action. The title-only match-history
+modal uses the same framed broadcast record and keeps technical data in a named
+scroll region. Pause and unsupported viewport states replace the active surface
 with a centered transmission slate that exposes no game facts.
 
 ### Honest risk
@@ -513,8 +524,20 @@ After each exchange, a centered results record holds the arena in place. Its
 heading and outcome use one centered axis. Two equal-width peer records sit
 side by side with red and blue identity borders, and each record shows the
 player name, outgoing damage, combo result, and applied weaknesses. One centered
-Continue action closes the record. The dimmed stage remains visible behind it;
-the record uses no backdrop blur.
+Continue action closes a nonterminal record. A terminal record changes its
+heading to Victory, names the match winner and completed round count, keeps the
+two final score records, and exposes only `Return to main menu`. It has no
+automatic dismissal. The dimmed stage remains visible behind it; the record
+uses no backdrop blur.
+
+### Match history record
+
+The title's subordinate `Match history` action opens one square, brass-framed
+near-black modal. A scroll region shows completed matches newest first. Each
+entry gives the winner, opponent, time, round count, final Pride, scene, mode,
+and seed before an optional technical record. The technical record uses Share
+Tech Mono only for normalized data. The modal has one visible Close action and
+an explicit empty state. No other screen exposes match history.
 
 ### Phrase cards
 

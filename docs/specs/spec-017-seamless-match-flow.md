@@ -1,10 +1,14 @@
 # Milestone 017: Between-Round Review Flow
 
-**Status:** Approved  
+**Status:** Approved; terminal and post-match rules replaced by Milestone 030
 **Depends on:** 016  
 **Owns:** Browser lifecycle, between-round review, and the absence of post-match
 surfaces
 **Production-file budget:** 4
+
+Milestone 030 replaces this milestone's terminal setup return, zero-post-match,
+and terminal acceptance clauses. The nonterminal between-round review contract
+remains active.
 
 ## Deliver
 

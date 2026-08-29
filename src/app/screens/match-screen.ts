@@ -21,11 +21,13 @@ const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
 export const continueRoundEventName = 'continue-round';
+export const returnToMainMenuEventName = 'return-to-main-menu';
 
 export type MatchPauseMode = 'manual' | 'running' | 'viewport';
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
+export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
 
 export class GrandTransitionMatch extends LitElement {
   static properties = {
@@ -116,7 +118,7 @@ export class GrandTransitionMatch extends LitElement {
       this.querySelector<HTMLButtonElement>('.match-pause')?.focus();
     }
     if (changed.has('snapshot') && this.snapshot?.roundReview) {
-      this.querySelector<HTMLButtonElement>('.round-review-continue')?.focus();
+      this.querySelector<HTMLButtonElement>('.round-review-primary')?.focus();
       return;
     }
     const previousSnapshot = changed.get('snapshot') as
@@ -171,6 +173,7 @@ export class GrandTransitionMatch extends LitElement {
         data-active-side=${first.isActive ? 'red' : 'blue'}
         data-phrase-color-coding=${this.phraseColorCoding ? 'on' : 'off'}
         data-round-review=${roundReview ? 'true' : nothing}
+        data-match-result=${this.snapshot.victory ? 'victory' : nothing}
         @click=${this.closeWaitingSentence}
       >
         <div
@@ -200,21 +203,29 @@ export class GrandTransitionMatch extends LitElement {
                 ?disabled=${roundReview}
                 @click=${this.pause}
               >
-                ${roundReview ? msg('Paused') : msg('Pause')}
+                ${this.snapshot.victory
+                  ? msg('Final')
+                  : roundReview
+                    ? msg('Paused')
+                    : msg('Pause')}
               </button>
-              <dl
-                class="match-facts ${
-                  timerValue === null ? 'match-facts--unlimited' : ''
-                }"
-              >
-                <div
-                  class="timer-fact"
-                  data-timer=${timerValue === null ? 'unlimited' : timerValue}
-                >
-                  <dt class="visually-hidden">${msg('Timer')}</dt>
-                  <dd aria-label=${timerLabel}>${timerText}</dd>
-                </div>
-              </dl>
+              ${roundReview
+                ? nothing
+                : html`<dl
+                    class="match-facts ${
+                      timerValue === null ? 'match-facts--unlimited' : ''
+                    }"
+                  >
+                    <div
+                      class="timer-fact"
+                      data-timer=${
+                        timerValue === null ? 'unlimited' : timerValue
+                      }
+                    >
+                      <dt class="visually-hidden">${msg('Timer')}</dt>
+                      <dd aria-label=${timerLabel}>${timerText}</dd>
+                    </div>
+                  </dl>`}
               <div class="match-turn-heading">
                 <h1 id="match-title" tabindex="-1">
                   <span>${msg(`Round ${this.snapshot.round}`)}</span>
@@ -226,7 +237,11 @@ export class GrandTransitionMatch extends LitElement {
             </div>
           </header>
 
-          <section class="match-stage" aria-label=${msg('Public chamber')}>
+          <section
+            class="match-stage"
+            aria-label=${msg('Public chamber')}
+            ?inert=${roundReview}
+          >
             ${this.renderPlayer(
               first,
               'red',
@@ -471,6 +486,7 @@ export class GrandTransitionMatch extends LitElement {
     second: MatchPlayerView,
   ): TemplateResult {
     const round = this.snapshot!.reaction.round!;
+    const victory = this.snapshot!.victory;
     return html`
       <div class="round-review-backdrop">
         <section
@@ -480,13 +496,27 @@ export class GrandTransitionMatch extends LitElement {
           aria-labelledby="round-review-title"
           aria-describedby="round-review-outcome"
           data-round-result=${round}
+          data-victory=${victory ? 'true' : nothing}
         >
           <header class="round-review-heading">
-            <span>${msg('Exchange record')}</span>
-            <h2 id="round-review-title">${msg(`Round ${round} results`)}</h2>
+            ${victory ? nothing : html`<span>${msg('Exchange record')}</span>`}
+            <h2 id="round-review-title">
+              ${victory ? msg('Victory') : msg(`Round ${round} results`)}
+            </h2>
           </header>
           <p id="round-review-outcome" class="reaction-outcome">
-            <strong>${this.snapshot!.reaction.outcomeLabel}</strong>
+            <strong>
+              ${victory
+                ? msg(`${victory.winnerName} wins the match`)
+                : this.snapshot!.reaction.outcomeLabel}
+            </strong>
+            ${victory
+              ? html`<span>
+                  ${victory.completedRounds === 1
+                    ? msg('1 completed round')
+                    : msg(`${victory.completedRounds} completed rounds`)}
+                </span>`
+              : nothing}
           </p>
           <dl class="reaction-scores">
             ${this.renderReactionScore(first, 'red')}
@@ -494,10 +524,10 @@ export class GrandTransitionMatch extends LitElement {
           </dl>
           <button
             type="button"
-            class="round-review-continue"
-            @click=${this.continueRound}
+            class="round-review-continue round-review-primary"
+            @click=${victory ? this.returnToMainMenu : this.continueRound}
           >
-            ${msg('Continue')}
+            ${victory ? msg('Return to main menu') : msg('Continue')}
           </button>
         </section>
       </div>
@@ -534,6 +564,11 @@ export class GrandTransitionMatch extends LitElement {
         <dt>${compactCharacterName(player.characterName)}</dt>
         <dd>
           <strong>${reaction.damage} ${msg('damage')}</strong>
+          ${reaction.selfDamage > 0
+            ? html`<small class="self-damage">
+                ${msg(`−${reaction.selfDamage} Pride penalty`)}
+              </small>`
+            : nothing}
           ${
             reaction.comboFactor > 1
               ? html`<span class="combo-bonus">
@@ -817,9 +852,20 @@ export class GrandTransitionMatch extends LitElement {
   };
 
   private readonly continueRound = (): void => {
-    if (!this.snapshot?.roundReview) return;
+    if (!this.snapshot?.roundReview || this.snapshot.victory) return;
     this.dispatchEvent(
       new CustomEvent(continueRoundEventName, {
+        bubbles: true,
+        composed: true,
+        detail: {},
+      }),
+    );
+  };
+
+  private readonly returnToMainMenu = (): void => {
+    if (!this.snapshot?.victory) return;
+    this.dispatchEvent(
+      new CustomEvent(returnToMainMenuEventName, {
         bubbles: true,
         composed: true,
         detail: {},
@@ -853,5 +899,7 @@ registerGrandTransitionMatch();
 declare global {
   interface HTMLElementEventMap {
     [matchCommandEventName]: MatchCommandEvent;
+    [continueRoundEventName]: ContinueRoundEvent;
+    [returnToMainMenuEventName]: ReturnToMainMenuEvent;
   }
 }

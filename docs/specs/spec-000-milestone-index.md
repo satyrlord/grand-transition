@@ -54,8 +54,9 @@ complete an approved specification.
   tokens, and real-money purchases are out of scope.
 - Post-MVP candidates include additional content, Romanian grammar and phrase
   localization, controller support, local content packs, recorded voice,
-  replays, and local simulation tools. Do not implement them without a new
-  approved specification.
+  replays, and local simulation tools. Milestone 030 approves local match
+  history. Do not implement another candidate without a new approved
+  specification.
 
 ## Delivery rules
 
@@ -217,8 +218,8 @@ source-only review does not satisfy them.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
     hotseat draft is playable with temporary art.
 17. [Between-round review flow](spec-017-seamless-match-flow.md). Budget: 4.
-    Browser matches review each exchange before Continue and have no post-match
-    features.
+    Browser matches review each nonterminal exchange before Continue. Milestone
+    030 replaces its terminal and post-match rules.
 18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported landscape contracts pass.
 19. [Hotseat privacy](spec-019-hotseat-privacy.md). Budget: 6. Private
@@ -244,6 +245,9 @@ source-only review does not satisfy them.
     and compatibility gates pass.
 29. [GitHub Pages release](spec-029-github-pages-release.md). Budget: 5. The
     tested artifact deploys and passes smoke tests.
+30. [Victory and persistent match history](spec-030-victory-match-history.md).
+    Budget: 10. Every terminal path shows a persistent victory state and stores
+    a local public match record.
 
 Each milestone depends on the preceding milestone. This linear order limits the
 context and files needed for each implementation session.
@@ -267,3 +271,4 @@ context and files needed for each implementation session.
 | Audio and speech                     | 024                |
 | Full content, safety, and balance    | 026-027            |
 | Release quality and deployment       | 028-029            |
+| Victory and persistent match history | 030                |

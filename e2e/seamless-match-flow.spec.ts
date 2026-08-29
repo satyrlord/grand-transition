@@ -9,11 +9,33 @@ const plan = planMatchBrowserFlow();
 
 test.setTimeout(90_000);
 
-test('a hotseat match reviews every exchange and exposes no post-match surface', async ({
+test('a hotseat match reaches persistent victory and restores title history', async ({
   page,
 }, testInfo) => {
+  const consoleErrors: string[] = [];
+  const pageErrors: string[] = [];
+  const failedRequests: string[] = [];
+  const remoteRequests: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('requestfailed', (request) => failedRequests.push(request.url()));
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (
+      (url.protocol === 'http:' || url.protocol === 'https:') &&
+      url.origin !== 'http://127.0.0.1:4173'
+    ) {
+      remoteRequests.push(request.url());
+    }
+  });
   await useFixedBrowserMatchSeed(page);
   await page.goto('/grand-transition/');
+  await page.evaluate(() =>
+    localStorage.removeItem('grand-transition.match-history.v1'),
+  );
+  await page.reload();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
@@ -54,21 +76,57 @@ test('a hotseat match reviews every exchange and exposes no post-match surface',
   expect(reachedLaterRound).toBe(true);
   expect(reachedSuddenDeath).toBe(true);
   expect(reviewedExchange).toBe(true);
+  await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
+  await expect(page.locator('grand-transition-match')).toHaveCount(1);
   await expect(
-    page.getByRole('heading', { name: 'Select your debaters' }),
-  ).toBeVisible();
-  await expect(page.locator('grand-transition-match')).toHaveCount(0);
+    page.getByRole('button', { name: /Match history/iu }),
+  ).toHaveCount(0);
   await expect(page.locator('grand-transition-resolution-results')).toHaveCount(
     0,
   );
   await expect(
-    page.getByRole('button', { name: /rematch|match results|statistics/iu }),
+    page.getByRole('button', { name: /rematch|statistics/iu }),
   ).toHaveCount(0);
 
   await page.screenshot({
-    path: testInfo.outputPath('completed-match-returns-to-setup.png'),
+    path: testInfo.outputPath('completed-match-victory.png'),
     fullPage: true,
   });
+
+  const storedEntryCount = await page.evaluate(() => {
+    const raw = localStorage.getItem('grand-transition.match-history.v1');
+    return raw ? (JSON.parse(raw).entries?.length ?? 0) : 0;
+  });
+  expect(storedEntryCount).toBe(1);
+
+  await page.getByRole('button', { name: 'Return to main menu' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Grand Transition' }),
+  ).toBeVisible();
+  await expect(page.locator('grand-transition-match')).toHaveCount(0);
+  const historyButton = page.getByRole('button', { name: /Match history.*1/iu });
+  await expect(historyButton).toBeVisible();
+  await historyButton.click();
+  await expect(page.getByRole('dialog', { name: 'Match history' })).toBeVisible();
+  await expect(page.locator('.match-history-entry')).toHaveCount(1);
+  await page.getByText('Technical record', { exact: true }).click();
+  await expect(page.locator('.match-history-entry pre')).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath('populated-match-history.png'),
+    fullPage: true,
+  });
+  await page.getByRole('button', { name: 'Close' }).click();
+
+  await page.reload();
+  await expect(
+    page.getByRole('heading', { name: 'Grand Transition' }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: /Match history.*1/iu }).click();
+  await expect(page.locator('.match-history-entry')).toHaveCount(1);
+  expect(consoleErrors).toEqual([]);
+  expect(pageErrors).toEqual([]);
+  expect(failedRequests).toEqual([]);
+  expect(remoteRequests).toEqual([]);
 });
 
 async function executeDraftAction(
