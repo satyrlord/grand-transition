@@ -31,8 +31,9 @@ Milestone 016 owns the rendered match destination. A confirmed â€œBack to menuâ€
 action from the concealed Pause screen discards the active match and returns to
 title. It preserves the setup values for a later setup visit.
 
-Setup fields are mode, player-one character, player-two character, and scene.
-Defaults are hotseat, the first two catalog characters, and the first scene.
+Setup fields are mode, player-one character and skin, player-two character and
+skin, and scene. Defaults are hotseat, the first two catalog characters, each
+character's first skin, and the first scene.
 The application session starts with the 30-second browser default. Timer
 changes occur only on the paused match surface owned by Milestone 016. They
 remain in the application shell for later matches in the same page session and
@@ -58,7 +59,15 @@ right player stage. The selected stage does not fade or mask the lower body.
 The roster has an explicit player-one or player-two selection target. Selecting
 a roster character updates that target and then advances the target to the
 other player. Selecting either player stage changes the target without changing
-the snapshot. Hovering a roster character or moving keyboard focus to it shows
+the snapshot. Each selected-player stage shows its selected skin. Previous and
+next arrow buttons cycle only that player's available skins and wrap at both
+ends. Right-clicking the selected-player stage cycles to the next skin and
+prevents the browser context menu. When the stage has keyboard focus, Left
+Arrow cycles to the previous skin and Right Arrow cycles to the next skin. Skin
+controls use visible side arrows, accessible names, and an announced current
+skin name. The roster portrait stays
+on the character's default skin because it denotes the archetype, not the
+selected skin. Hovering a roster character or moving keyboard focus to it shows
 a custom nonmodal floating panel with that character's name and complete public
 weakness list. Leaving hover or focus closes a transient panel. Right-clicking
 a roster character prevents the browser context menu and pins the panel. Escape
@@ -76,8 +85,8 @@ hide validation.
 - **AC-015-01:** Title and setup follow the two-state graph, browser Back does
   not create an unsupported URL route, a confirmed paused-match exit returns to
   title, and returning to setup restores values.
-- **AC-015-02:** Defaults create the exact typed setup
-  payload. A mirror match succeeds.
+- **AC-015-02:** Defaults create the exact typed setup payload, including both
+  default skin IDs. A mirror match with different skins succeeds.
 - **AC-015-03:** Every invalid class produces one visible error, preserves
   other values, moves focus to the first invalid control, associates each error
   with its control, and emits no command.
@@ -102,9 +111,14 @@ hide validation.
 - **AC-015-10:** Every roster item has a computed 3:4 frame and renders a tight
   headshot with no complete body or held prop. Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
-  fade. The generated frame overlay loads with valid transparency. The same
-  convention-loaded portrait remains the sole character asset source for the
-  roster, setup stage, and match.
+  fade. The generated frame overlay loads with valid transparency. The roster
+  always uses the default character portrait. A selected-player stage uses its
+  selected skin portrait.
+- **AC-015-11:** Both selected-player stages cycle their available skins with
+  visible previous and next arrows, right-click, Left Arrow, and Right Arrow.
+  Cycling wraps, changes only the owning player's skin ID, preserves both
+  character IDs and all phrase content, prevents the stage context menu, and
+  does not change any roster portrait.
 
 ## Impeccable UI validation
 

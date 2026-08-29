@@ -1,6 +1,11 @@
 import { msg } from '@lit/localize';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
-import { characterPortraitUrls, sampleContent } from '../../game-content';
+import {
+  characterPortraitUrls,
+  characterSkins,
+  sampleContent,
+  type CharacterSkin,
+} from '../../game-content';
 import portraitFrameUrl from '../../assets/brand/politburo-portrait-frame.png';
 
 const elementName = 'grand-transition-setup';
@@ -10,24 +15,35 @@ export const showTitleEventName = 'show-title';
 export const startMatchEventName = 'start-match';
 
 export type SetupField =
-  'mode' | 'playerOneCharacterId' | 'playerTwoCharacterId' | 'sceneId';
+  | 'mode'
+  | 'playerOneCharacterId'
+  | 'playerOneSkinId'
+  | 'playerTwoCharacterId'
+  | 'playerTwoSkinId'
+  | 'sceneId';
 
 type CharacterField = Extract<
   SetupField,
   'playerOneCharacterId' | 'playerTwoCharacterId'
 >;
 
+type SkinField = Extract<SetupField, 'playerOneSkinId' | 'playerTwoSkinId'>;
+
 export type SetupSnapshot = Readonly<{
   mode: string;
   playerOneCharacterId: string;
+  playerOneSkinId: string;
   playerTwoCharacterId: string;
+  playerTwoSkinId: string;
   sceneId: string;
 }>;
 
 export type StartMatchPayload = Readonly<{
   mode: 'hotseat';
   playerOneCharacterId: string;
+  playerOneSkinId: string;
   playerTwoCharacterId: string;
+  playerTwoSkinId: string;
   sceneId: string;
 }>;
 
@@ -49,6 +65,8 @@ type CharacterView = Readonly<{
   portraitUrl: string;
   weaknessTags: readonly string[];
 }>;
+
+type CharacterSkinView = CharacterSkin & Readonly<{ label: string }>;
 
 export class GrandTransitionSetup extends LitElement {
   static properties = {
@@ -84,6 +102,14 @@ export class GrandTransitionSetup extends LitElement {
     const errors = this.validationAttempted ? validateSetup(this.snapshot) : {};
     const playerOne = characterView(this.snapshot.playerOneCharacterId);
     const playerTwo = characterView(this.snapshot.playerTwoCharacterId);
+    const playerOneSkin = selectedSkinView(
+      this.snapshot.playerOneCharacterId,
+      this.snapshot.playerOneSkinId,
+    );
+    const playerTwoSkin = selectedSkinView(
+      this.snapshot.playerTwoCharacterId,
+      this.snapshot.playerTwoSkinId,
+    );
     const preview = this.previewCharacterId
       ? characterView(this.previewCharacterId)
       : undefined;
@@ -115,7 +141,10 @@ export class GrandTransitionSetup extends LitElement {
               playerLabel: msg('Player one'),
               side: 'one',
               character: playerOne,
-              error: errors.playerOneCharacterId,
+              skin: playerOneSkin,
+              skinField: 'playerOneSkinId',
+              characterError: errors.playerOneCharacterId,
+              skinError: errors.playerOneSkinId,
             })}
 
             <section class="roster-zone" aria-labelledby="roster-title">
@@ -152,7 +181,10 @@ export class GrandTransitionSetup extends LitElement {
               playerLabel: msg('Player two'),
               side: 'two',
               character: playerTwo,
-              error: errors.playerTwoCharacterId,
+              skin: playerTwoSkin,
+              skinField: 'playerTwoSkinId',
+              characterError: errors.playerTwoCharacterId,
+              skinError: errors.playerTwoSkinId,
             })}
           </section>
 
@@ -195,39 +227,60 @@ export class GrandTransitionSetup extends LitElement {
     playerLabel: string;
     side: 'one' | 'two';
     character: CharacterView | undefined;
-    error: string | undefined;
+    skin: CharacterSkinView | undefined;
+    skinField: SkinField;
+    characterError: string | undefined;
+    skinError: string | undefined;
   }): TemplateResult {
-    const errorId = config.field + '-error';
+    const characterErrorId = config.field + '-error';
+    const skinErrorId = config.skinField + '-error';
     const targetActive = this.selectionTarget === config.field;
     return html`
-      <button
-        id=${config.field}
-        type="button"
+      <section
         class="contestant-stage contestant-stage--${config.side}"
-        data-field=${config.field}
         data-character-id=${config.character?.id ?? ''}
+        data-skin-id=${config.skin?.id ?? ''}
         data-selection-target=${targetActive ? 'true' : 'false'}
-        aria-label=${
-          config.character
-            ? config.playerLabel + ' character: ' + config.character.name
-            : config.playerLabel + ' character'
-        }
-        aria-pressed=${targetActive}
-        aria-describedby=${config.error ? errorId : nothing}
-        @click=${this.chooseSelectionTarget}
       >
+        <button
+          id=${config.field}
+          type="button"
+          class="contestant-stage-target"
+          data-field=${config.field}
+          data-skin-field=${config.skinField}
+          data-character-id=${config.character?.id ?? ''}
+          data-skin-id=${config.skin?.id ?? ''}
+          aria-label=${
+            config.character
+              ? config.playerLabel + ' character: ' + config.character.name
+              : config.playerLabel + ' character'
+          }
+          aria-pressed=${targetActive}
+          aria-describedby=${
+            config.characterError ? characterErrorId : nothing
+          }
+          @click=${this.chooseSelectionTarget}
+          @keydown=${this.handleStageKeyDown}
+          @contextmenu=${this.cycleSkinFromContextMenu}
+        ></button>
         <span class="contestant-player">${config.playerLabel}</span>
         ${
-          config.character
+          config.character && config.skin
             ? html`
                 <span class="contestant-portrait-frame">
                   <img
                     class="contestant-portrait"
-                    src=${config.character.portraitUrl}
+                    src=${config.skin.portraitUrl}
                     alt=""
                     width="1024"
                     height="1536"
                   />
+                  ${this.skinSelector({
+                    playerLabel: config.playerLabel,
+                    skin: config.skin,
+                    skinField: config.skinField,
+                    errorId: config.skinError ? skinErrorId : undefined,
+                  })}
                 </span>
                 <span class="contestant-record" aria-live="polite">
                   <strong>${config.character.name}</strong>
@@ -243,14 +296,69 @@ export class GrandTransitionSetup extends LitElement {
                 </span>
               `
         }
-      </button>
+      </section>
       ${
-        config.error
-          ? html`<p class="field-error contestant-error" id=${errorId}>
-              ${config.error}
+        config.characterError
+          ? html`<p
+              class="field-error contestant-error"
+              id=${characterErrorId}
+            >
+              ${config.characterError}
             </p>`
           : nothing
       }
+      ${
+        config.skinError
+          ? html`<p class="field-error contestant-error" id=${skinErrorId}>
+              ${config.skinError}
+            </p>`
+          : nothing
+      }
+    `;
+  }
+
+  private skinSelector(config: {
+    playerLabel: string;
+    skin: CharacterSkinView;
+    skinField: SkinField;
+    errorId: string | undefined;
+  }): TemplateResult {
+    return html`
+      <span
+        class="skin-selector"
+        role="group"
+        aria-label=${
+          config.playerLabel + ': ' + skinAccessibleLabel(config.skin.id)
+        }
+        aria-describedby=${config.errorId ?? nothing}
+      >
+        <button
+          id=${config.skinField + '-previous'}
+          type="button"
+          class="skin-cycle skin-cycle--previous"
+          data-skin-field=${config.skinField}
+          data-direction="-1"
+          aria-label=${msg('Previous skin for') + ' ' + config.playerLabel}
+          @click=${this.cycleSkinFromButton}
+        >
+          <svg viewBox="0 0 24 40" aria-hidden="true" focusable="false">
+            <path d="M17 4 7 20l10 16" />
+          </svg>
+        </button>
+        <span class="skin-status" aria-live="polite">${config.skin.label}</span>
+        <button
+          type="button"
+          class="skin-cycle skin-cycle--next"
+          data-skin-field=${config.skinField}
+          data-direction="1"
+          aria-label=${msg('Next skin for') + ' ' + config.playerLabel}
+          @click=${this.cycleSkinFromButton}
+        >
+          <svg viewBox="0 0 24 40" aria-hidden="true" focusable="false">
+            <path d="m7 4 10 16L7 36" />
+          </svg>
+        </button>
+      </span>
     `;
   }
 
@@ -408,6 +516,15 @@ export class GrandTransitionSetup extends LitElement {
 
     const changedField = this.selectionTarget;
     this.dispatchSetupChange(changedField, characterId);
+    const skinField = skinFieldForCharacterField(changedField);
+    const currentSkinId = this.snapshot?.[skinField];
+    const nextCharacterSkins = characterSkinViews(characterId);
+    if (
+      currentSkinId &&
+      !nextCharacterSkins.some((skin) => skin.id === currentSkinId)
+    ) {
+      this.dispatchSetupChange(skinField, nextCharacterSkins[0]?.id ?? '');
+    }
     this.selectionTarget =
       changedField === 'playerOneCharacterId'
         ? 'playerTwoCharacterId'
@@ -415,6 +532,44 @@ export class GrandTransitionSetup extends LitElement {
     this.previewCharacterId = characterId;
     this.previewPinned = false;
   };
+
+  private readonly cycleSkinFromButton = (event: Event): void => {
+    event.stopPropagation();
+    const control = event.currentTarget as HTMLButtonElement;
+    const skinField = control.dataset.skinField as SkinField | undefined;
+    const direction = Number(control.dataset.direction) < 0 ? -1 : 1;
+    if (skinField) this.cycleSkin(skinField, direction);
+  };
+
+  private readonly cycleSkinFromContextMenu = (event: MouseEvent): void => {
+    event.preventDefault();
+    const control = event.currentTarget as HTMLButtonElement;
+    const skinField = control.dataset.skinField as SkinField | undefined;
+    if (skinField) this.cycleSkin(skinField, 1);
+  };
+
+  private readonly handleStageKeyDown = (event: KeyboardEvent): void => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const control = event.currentTarget as HTMLButtonElement;
+    const skinField = control.dataset.skinField as SkinField | undefined;
+    if (skinField) {
+      this.cycleSkin(skinField, event.key === 'ArrowLeft' ? -1 : 1);
+    }
+  };
+
+  private cycleSkin(skinField: SkinField, direction: -1 | 1): void {
+    if (!this.snapshot) return;
+    const characterId = this.snapshot[characterFieldForSkinField(skinField)];
+    const skins = characterSkinViews(characterId);
+    if (skins.length < 2) return;
+    const currentIndex = skins.findIndex(
+      (skin) => skin.id === this.snapshot?.[skinField],
+    );
+    const normalizedIndex = currentIndex < 0 ? 0 : currentIndex;
+    const nextIndex = (normalizedIndex + direction + skins.length) % skins.length;
+    this.dispatchSetupChange(skinField, skins[nextIndex]!.id);
+  }
 
   private readonly showTransientPreview = (event: Event): void => {
     if (this.previewPinned) return;
@@ -495,7 +650,12 @@ export class GrandTransitionSetup extends LitElement {
     if (firstInvalidField) {
       this.requestUpdate();
       void this.updateComplete.then(() => {
-        this.querySelector<HTMLElement>('#' + firstInvalidField)?.focus();
+        const controlId =
+          firstInvalidField === 'playerOneSkinId' ||
+          firstInvalidField === 'playerTwoSkinId'
+            ? firstInvalidField + '-previous'
+            : firstInvalidField;
+        this.querySelector<HTMLElement>('#' + controlId)?.focus();
       });
       return;
     }
@@ -525,7 +685,9 @@ export class GrandTransitionSetup extends LitElement {
 const setupFieldOrder: readonly SetupField[] = [
   'mode',
   'playerOneCharacterId',
+  'playerOneSkinId',
   'playerTwoCharacterId',
+  'playerTwoSkinId',
   'sceneId',
 ];
 
@@ -548,12 +710,32 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
     msg('Player one character is missing. Choose a listed character.'),
     msg('Player one character is unknown. Choose a listed character.'),
   );
+  if (!errors.playerOneCharacterId) {
+    errors.playerOneSkinId = identifierError(
+      snapshot.playerOneSkinId,
+      new Set(
+        characterSkinViews(snapshot.playerOneCharacterId).map(({ id }) => id),
+      ),
+      msg('Player one skin is missing. Choose an available skin.'),
+      msg('Player one skin is unknown. Choose an available skin.'),
+    );
+  }
   errors.playerTwoCharacterId = identifierError(
     snapshot.playerTwoCharacterId,
     characterIds,
     msg('Player two character is missing. Choose a listed character.'),
     msg('Player two character is unknown. Choose a listed character.'),
   );
+  if (!errors.playerTwoCharacterId) {
+    errors.playerTwoSkinId = identifierError(
+      snapshot.playerTwoSkinId,
+      new Set(
+        characterSkinViews(snapshot.playerTwoCharacterId).map(({ id }) => id),
+      ),
+      msg('Player two skin is missing. Choose an available skin.'),
+      msg('Player two skin is unknown. Choose an available skin.'),
+    );
+  }
   errors.sceneId = identifierError(
     snapshot.sceneId,
     sceneIds,
@@ -583,7 +765,9 @@ function immutableStartMatchPayload(
   return Object.freeze({
     mode: 'hotseat',
     playerOneCharacterId: snapshot.playerOneCharacterId,
+    playerOneSkinId: snapshot.playerOneSkinId,
     playerTwoCharacterId: snapshot.playerTwoCharacterId,
+    playerTwoSkinId: snapshot.playerTwoSkinId,
     sceneId: snapshot.sceneId,
   });
 }
@@ -607,6 +791,45 @@ function characterViews(): readonly CharacterView[] {
 
 function characterView(characterId: string): CharacterView | undefined {
   return characterViews().find((character) => character.id === characterId);
+}
+
+function characterSkinViews(characterId: string): readonly CharacterSkinView[] {
+  return (characterSkins[characterId] ?? []).map((skin) => ({
+    ...skin,
+    label: skinLabel(skin.id),
+  }));
+}
+
+function selectedSkinView(
+  characterId: string,
+  skinId: string,
+): CharacterSkinView | undefined {
+  const skins = characterSkinViews(characterId);
+  return skins.find((skin) => skin.id === skinId) ?? skins[0];
+}
+
+function skinLabel(skinId: string): string {
+  if (skinId === 'default') return msg('Original');
+  if (skinId === 'alternate') return msg('Alternate');
+  return titleCase(skinId);
+}
+
+function skinAccessibleLabel(skinId: string): string {
+  if (skinId === 'default') return msg('Original skin');
+  if (skinId === 'alternate') return msg('Female alternate skin');
+  return skinLabel(skinId) + ' ' + msg('skin');
+}
+
+function skinFieldForCharacterField(field: CharacterField): SkinField {
+  return field === 'playerOneCharacterId'
+    ? 'playerOneSkinId'
+    : 'playerTwoSkinId';
+}
+
+function characterFieldForSkinField(field: SkinField): CharacterField {
+  return field === 'playerOneSkinId'
+    ? 'playerOneCharacterId'
+    : 'playerTwoCharacterId';
 }
 
 function titleCase(value: string): string {

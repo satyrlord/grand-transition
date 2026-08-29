@@ -403,6 +403,7 @@ test('the next round clears an incomplete public sentence', async ({
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
   ).toBeVisible();
+  await page.mouse.move(0, 0);
   await expect(page.locator('.sentence-preview')).toHaveText(
     'Select a noun to begin.',
   );

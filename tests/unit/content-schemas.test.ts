@@ -9,6 +9,7 @@ import {
 import type { EditorialSafetyFlag } from '../../src/content/schemas';
 import {
   characterPortraitUrls,
+  characterSkins,
   phraseCardCatalog,
   sampleContent,
 } from '../../src/game-content';
@@ -978,6 +979,21 @@ describe('content schemas', () => {
     expect(Object.keys(characterPortraitUrls).toSorted()).toEqual(
       phraseCardCatalog.characters.map((character) => character.id).toSorted(),
     );
+  });
+
+  test('discovers one default and one alternate skin for every character', () => {
+    expect(Object.keys(characterSkins).toSorted()).toEqual(
+      phraseCardCatalog.characters.map((character) => character.id).toSorted(),
+    );
+    for (const character of phraseCardCatalog.characters) {
+      expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual([
+        'default',
+        'alternate',
+      ]);
+      expect(characterPortraitUrls[character.id]).toBe(
+        characterSkins[character.id]?.[0]?.portraitUrl,
+      );
+    }
   });
 
   test('accepts original sample content for three characters and two scenes', () => {

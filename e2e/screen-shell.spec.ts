@@ -42,6 +42,44 @@ for (const viewport of supportedViewports) {
       'Legacy · Modernity · Bureaucracy · Miners',
       'Legacy · Modernity · Bureaucracy · Miners',
     ]);
+    const rosterSources = await page
+      .locator('.roster-headshot')
+      .evaluateAll((portraits) =>
+        portraits.map((portrait) => (portrait as HTMLImageElement).src),
+      );
+    await page
+      .getByRole('button', { name: 'Next skin for Player two' })
+      .click();
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
+      'data-skin-id',
+      'alternate',
+    );
+    await expect(
+      page.locator('.contestant-stage--two .contestant-portrait'),
+    ).toHaveAttribute('src', /red-folded-chairman--alternate/u);
+    await page.locator('#playerTwoCharacterId').click({ button: 'right' });
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
+      'data-skin-id',
+      'default',
+    );
+    await page.locator('#playerTwoCharacterId').focus();
+    await page.keyboard.press('ArrowLeft');
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
+      'data-skin-id',
+      'alternate',
+    );
+    expect(
+      await page
+        .locator('.roster-headshot')
+        .evaluateAll((portraits) =>
+          portraits.map((portrait) => (portrait as HTMLImageElement).src),
+        ),
+    ).toEqual(rosterSources);
+    await page.locator('img').evaluateAll(async (portraits) => {
+      await Promise.all(
+        portraits.map((portrait) => (portrait as HTMLImageElement).decode()),
+      );
+    });
 
     const geometry = await page.evaluate(() => {
       const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
@@ -79,6 +117,9 @@ for (const viewport of supportedViewports) {
             );
           },
         ),
+        imagesDecoded: [...document.images].every(
+          (image) => image.complete && image.naturalWidth > 0,
+        ),
         weaknessRecordsInside: [
           ...document.querySelectorAll('.contestant-weaknesses'),
         ].every((record) => {
@@ -96,6 +137,7 @@ for (const viewport of supportedViewports) {
       /Barlow|Georgia/u,
     );
     expect(geometry.controlsInside).toBe(true);
+    expect(geometry.imagesDecoded).toBe(true);
     expect(geometry.sceneLabelFits).toBe(true);
     expect(geometry.documentHeight).toBeLessThanOrEqual(
       geometry.viewportHeight,
@@ -112,8 +154,99 @@ for (const viewport of supportedViewports) {
       'data-character-id',
       'red-folded-chairman',
     );
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
+      'data-skin-id',
+      'alternate',
+    );
   });
 }
+
+test('selected skins reach the match without changing character identity', async (
+  { page },
+  testInfo,
+) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page
+    .getByRole('button', { name: 'Next skin for Player one' })
+    .click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+
+  const redPlayer = page.locator('.match-player[data-side="red"]');
+  const bluePlayer = page.locator('.match-player[data-side="blue"]');
+  await expect(redPlayer.getByRole('heading')).toHaveText(
+    'Red-Folded Chairman',
+  );
+  await expect(redPlayer.locator('.character-portrait')).toHaveAttribute(
+    'src',
+    /red-folded-chairman--alternate/u,
+  );
+  await expect(bluePlayer.getByRole('heading')).toHaveText('Thunder Tribune');
+  await expect(bluePlayer.locator('.character-portrait')).toHaveAttribute(
+    'src',
+    /thunder-tribune(?!.*--alternate)/u,
+  );
+  await redPlayer.locator('.character-portrait').evaluate(async (portrait) => {
+    await (portrait as HTMLImageElement).decode();
+  });
+  await page.screenshot({
+    path: testInfo.outputPath('alternate-skin-match.png'),
+    fullPage: true,
+  });
+});
+
+test('every alternate portrait decodes while roster portraits stay canonical', async (
+  { page },
+  testInfo,
+) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Set up match' }).click();
+
+  for (const characterId of [
+    'red-folded-chairman',
+    'thunder-tribune',
+    'black-sea-captain',
+  ]) {
+    await page.locator('#playerOneCharacterId').click();
+    await page
+      .locator(`.roster-choice[data-character-id="${characterId}"]`)
+      .click();
+    const stage = page.locator('#playerOneCharacterId');
+    if ((await stage.getAttribute('data-skin-id')) !== 'alternate') {
+      await page
+        .getByRole('button', { name: 'Next skin for Player one' })
+        .click();
+    }
+    await expect(stage).toHaveAttribute('data-skin-id', 'alternate');
+    const portrait = page.locator(
+      '.contestant-stage--one .contestant-portrait',
+    );
+    await expect(portrait).toHaveAttribute(
+      'src',
+      new RegExp(`${characterId}--alternate`, 'u'),
+    );
+    expect(
+      await portrait.evaluate(async (image) => {
+        await (image as HTMLImageElement).decode();
+        return (image as HTMLImageElement).naturalWidth;
+      }),
+    ).toBeGreaterThan(0);
+  }
+
+  expect(
+    await page.locator('.roster-headshot').evaluateAll((portraits) =>
+      portraits.every(
+        (portrait) => !(portrait as HTMLImageElement).src.includes('--alternate'),
+      ),
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath('black-sea-captain-alternate-setup.png'),
+    fullPage: true,
+  });
+});
 
 test('approved Curtain Call title fits its comp viewport and uses the match fonts', async ({
   page,

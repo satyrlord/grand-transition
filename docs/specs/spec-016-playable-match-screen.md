@@ -10,9 +10,9 @@ interface (UI)
 
 Build the match surface as an original televised civic debate. Use one
 text-free rendered broadcast back scene with one fixed fictional moderator, one
-generated transparent portrait for each selected character, and one transparent
-foreground plate with two tall standing desks. The back scene contains no
-playable character. Each raster has embedded generation provenance.
+generated transparent portrait for each selected character skin, and one
+transparent foreground plate with two tall standing desks. The back scene
+contains no playable character. Each raster has embedded generation provenance.
 The moderator, studio, desks, and props use the same hand-painted editorial-
 caricature language as the playable portraits. Do not combine illustrated
 portraits with photographic or hyper-realistic scene layers.
@@ -43,6 +43,10 @@ be visible beside either desk. Keep desk mass inside the lower third of the
 stage so the candidates remain dominant. Default characters and scene figures
 use normal adult height and body proportions. Use reduced stature only when an
 approved character contract explicitly requires it.
+
+The match uses each player's setup skin ID only to select the portrait asset.
+Skin choice does not change character identity, phrases, weaknesses, grammar,
+scoring, match history identity, or any reducer input.
 
 Use one compact single-line archetype name, a visible Pride label, and a Pride
 bar for each portrait. Both top Pride frames are rectangular, with square
