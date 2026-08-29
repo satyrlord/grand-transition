@@ -7,23 +7,27 @@ export const resumeMatchEventName = 'resume-match';
 export const returnToMenuEventName = 'return-to-menu';
 export const turnTimerChangeEventName = 'turn-timer-change';
 export const autoCompleteChangeEventName = 'auto-complete-change';
+export const phraseColorCodingChangeEventName = 'phrase-color-coding-change';
 
 export type InterruptionKind = 'paused' | 'unsupported-viewport';
 export type TurnTimerSeconds = 15 | 30 | null;
 export type TurnTimerChangeEvent = CustomEvent<TurnTimerSeconds>;
 export type AutoCompleteChangeEvent = CustomEvent<boolean>;
+export type PhraseColorCodingChangeEvent = CustomEvent<boolean>;
 
 export class GrandTransitionInterruption extends LitElement {
   static properties = {
     kind: { type: String },
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
+    phraseColorCoding: { attribute: false },
     confirmingExit: { state: true },
   };
 
   declare kind: InterruptionKind;
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
+  declare phraseColorCoding: boolean;
   declare private confirmingExit: boolean;
 
   constructor() {
@@ -31,6 +35,7 @@ export class GrandTransitionInterruption extends LitElement {
     this.kind = 'unsupported-viewport';
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
+    this.phraseColorCoding = true;
     this.confirmingExit = false;
   }
 
@@ -128,6 +133,15 @@ export class GrandTransitionInterruption extends LitElement {
                         <div class="interruption-setting-options">
                           ${this.renderAutoCompleteOption(true, msg('On'))}
                           ${this.renderAutoCompleteOption(false, msg('Off'))}
+                        </div>
+                      </fieldset>
+                      <fieldset
+                        class="interruption-setting interruption-setting--phrase-color-coding"
+                      >
+                        <legend>${msg('Phrase color coding')}</legend>
+                        <div class="interruption-setting-options">
+                          ${this.renderPhraseColorCodingOption(true, msg('On'))}
+                          ${this.renderPhraseColorCodingOption(false, msg('Off'))}
                         </div>
                       </fieldset>
                     </div>
@@ -233,6 +247,35 @@ export class GrandTransitionInterruption extends LitElement {
   private changeAutoComplete(value: boolean): void {
     this.dispatchEvent(
       new CustomEvent(autoCompleteChangeEventName, {
+        bubbles: true,
+        composed: true,
+        detail: value,
+      }),
+    );
+  }
+
+  private renderPhraseColorCodingOption(
+    value: boolean,
+    label: string,
+  ): ReturnType<typeof html> {
+    const selected = this.phraseColorCoding === value;
+    return html`
+      <button
+        type="button"
+        class="interruption-setting-option"
+        data-setting="phrase-color-coding"
+        data-selected=${selected ? 'true' : 'false'}
+        aria-pressed=${selected}
+        @click=${() => this.changePhraseColorCoding(value)}
+      >
+        ${label}
+      </button>
+    `;
+  }
+
+  private changePhraseColorCoding(value: boolean): void {
+    this.dispatchEvent(
+      new CustomEvent(phraseColorCodingChangeEventName, {
         bubbles: true,
         composed: true,
         detail: value,

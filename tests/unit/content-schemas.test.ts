@@ -180,7 +180,7 @@ describe('content schemas', () => {
     expect(phraseCardCatalog.commonPhraseIds).toEqual(
       expect.arrayContaining([
         'brought-the-miners-to-bucharest',
-        'sided-with-the-terrorists-in-1989',
+        'sided-with-terrorists',
         'transports-voters-with-busses',
         'your-brother',
         'your-father',
@@ -209,8 +209,7 @@ describe('content schemas', () => {
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'phrase.brought-the-miners-to-bucharest':
         'brought the miners to Bucharest',
-      'phrase.sided-with-the-terrorists-in-1989':
-        'sided with the terrorists in 1989',
+      'phrase.sided-with-terrorists': 'sided with the terrorists in 1989',
       'phrase.transports-voters-with-busses': 'transports voters with busses',
       'phrase.your-brother': 'your brother',
       'phrase.your-father': 'your father',

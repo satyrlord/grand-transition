@@ -254,7 +254,7 @@
     "text": "and",
     "connectorKind": "and",
     "tags": ["bureaucracy", "consistency"],
-    "rarity": "uncommon",
+    "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
@@ -2398,7 +2398,7 @@
     "text": "but",
     "connectorKind": "but",
     "tags": ["media", "decorum"],
-    "rarity": "common",
+    "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
@@ -2412,7 +2412,7 @@
     "text": "because",
     "connectorKind": "because",
     "tags": ["modernity", "evidence"],
-    "rarity": "uncommon",
+    "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
@@ -2426,7 +2426,7 @@
     "text": "yet",
     "connectorKind": "yet",
     "tags": ["consistency", "restraint"],
-    "rarity": "uncommon",
+    "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
@@ -2454,7 +2454,7 @@
     "text": "so",
     "connectorKind": "so",
     "tags": ["evidence", "modernity"],
-    "rarity": "uncommon",
+    "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
@@ -4973,7 +4973,7 @@
     "text": "with",
     "connectorKind": "with",
     "tags": ["decorum", "credibility"],
-    "rarity": "common",
+    "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",

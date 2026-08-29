@@ -1119,6 +1119,60 @@
     color: white;
   }
 
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-rarity='common']
+    > button.phrase-card {
+    --phrase-rarity-opacity: 40%;
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-rarity='uncommon']
+    > button.phrase-card {
+    --phrase-rarity-opacity: 50%;
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-rarity='rare']
+    > button.phrase-card {
+    --phrase-rarity-opacity: 60%;
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-role='noun']
+    > button.phrase-card {
+    --phrase-role-color: rgb(72 172 104);
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot:is([data-role='verb'], [data-role='predicate'])
+    > button.phrase-card {
+    --phrase-role-color: rgb(201 55 48);
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-role='modifier']
+    > button.phrase-card {
+    --phrase-role-color: rgb(139 90 177);
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-role='ending']
+    > button.phrase-card {
+    --phrase-role-color: rgb(53 124 199);
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-role='continuation']
+    > button.phrase-card {
+    --phrase-role-color: rgb(154 161 170);
+  }
+
+  .match-screen[data-phrase-color-coding='on']
+    .phrase-slot[data-role='conjunction']
+    > button.phrase-card {
+    --phrase-role-color: rgb(235 145 48);
+  }
+
   button.phrase-card:focus-visible,
   .match-actions button:focus-visible,
   .action-reshuffle:focus-visible,
@@ -1129,13 +1183,24 @@
   }
 
   .card-phrase {
+    position: relative;
+    display: block;
     max-width: 100%;
     overflow: hidden;
+    color: white;
     font-size: clamp(0.72rem, 1vw, 1.02rem);
     font-weight: 700;
     line-height: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .match-screen[data-phrase-color-coding='on'] .card-phrase {
+    color: color-mix(
+      in srgb,
+      white calc(100% - var(--phrase-rarity-opacity)),
+      var(--phrase-role-color) var(--phrase-rarity-opacity)
+    );
   }
 
   .phrase-slot--disabled .phrase-card {
@@ -1373,6 +1438,7 @@
     .grammar-strike,
     .common-phrases,
     .phrase-card,
+    .phrase-card .card-phrase,
     .match-actions button,
     .action-reshuffle,
     .player-sentence--waiting {

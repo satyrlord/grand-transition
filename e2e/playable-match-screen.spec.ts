@@ -1493,20 +1493,42 @@ test('Pause settings apply to the resumed match', async ({
   await expect(page.getByRole('button', { name: 'Resume' })).toBeFocused();
 
   const thirtySeconds = page.getByRole('button', { name: '30 seconds' });
-  const autoCompleteOn = page.getByRole('button', {
+  const autoCompleteSettings = page
+    .locator('.interruption-setting')
+    .filter({ hasText: 'Auto-complete' });
+  const phraseColorCodingSettings = page
+    .locator('.interruption-setting')
+    .filter({ hasText: 'Phrase color coding' });
+  const autoCompleteOn = autoCompleteSettings.getByRole('button', {
+    name: 'On',
+    exact: true,
+  });
+  const phraseColorCodingOn = phraseColorCodingSettings.getByRole('button', {
     name: 'On',
     exact: true,
   });
   await expect(thirtySeconds).toHaveAttribute('aria-pressed', 'true');
   await expect(autoCompleteOn).toHaveAttribute('aria-pressed', 'true');
+  await expect(phraseColorCodingOn).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: '15 seconds' }).click();
-  await page.getByRole('button', { name: 'Off', exact: true }).click();
+  await autoCompleteSettings
+    .getByRole('button', { name: 'Off', exact: true })
+    .click();
+  await phraseColorCodingSettings
+    .getByRole('button', { name: 'Off', exact: true })
+    .click();
   await expect(
     page.getByRole('button', { name: '15 seconds' }),
   ).toHaveAttribute('aria-pressed', 'true');
   await expect(
-    page.getByRole('button', { name: 'Off', exact: true }),
+    autoCompleteSettings.getByRole('button', { name: 'Off', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    phraseColorCodingSettings.getByRole('button', {
+      name: 'Off',
+      exact: true,
+    }),
   ).toHaveAttribute('aria-pressed', 'true');
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -1521,6 +1543,14 @@ test('Pause settings apply to the resumed match', async ({
           '.interruption-setting, .interruption-actions button',
         ),
       ];
+      const timerSetting = document.querySelector<HTMLElement>(
+        '.interruption-setting:first-child',
+      )!;
+      const phraseColorCodingSetting = document.querySelector<HTMLElement>(
+        '.interruption-setting--phrase-color-coding',
+      )!;
+      const timerBox = timerSetting.getBoundingClientRect();
+      const colorCodingBox = phraseColorCodingSetting.getBoundingClientRect();
       return {
         documentFits:
           document.documentElement.scrollWidth <= innerWidth &&
@@ -1534,12 +1564,29 @@ test('Pause settings apply to the resumed match', async ({
             box.bottom <= innerHeight
           );
         }),
+        colorCodingStartsNewRow: colorCodingBox.top > timerBox.bottom,
+        colorCodingFitsSettingsGrid:
+          colorCodingBox.left >= timerBox.left &&
+          colorCodingBox.right <=
+            document
+              .querySelector<HTMLElement>('.interruption-settings')!
+              .getBoundingClientRect().right,
       };
     });
-    expect(layout, `${viewport.width}x${viewport.height}`).toEqual({
-      documentFits: true,
-      requiredFits: true,
-    });
+    expect(layout.documentFits, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(layout.requiredFits, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(
+      layout.colorCodingStartsNewRow,
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
+    expect(
+      layout.colorCodingFitsSettingsGrid,
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
     await page.screenshot({
       path: testInfo.outputPath(
         `pause-settings-${viewport.width}x${viewport.height}.png`,
@@ -1554,6 +1601,10 @@ test('Pause settings apply to the resumed match', async ({
   await expect(page.locator('.timer-fact')).toHaveAttribute(
     'data-timer',
     /^(?:14|15)$/u,
+  );
+  await expect(page.locator('.match-screen')).toHaveAttribute(
+    'data-phrase-color-coding',
+    'off',
   );
   const sentenceBefore = await page.locator('.sentence-preview').textContent();
   await page
