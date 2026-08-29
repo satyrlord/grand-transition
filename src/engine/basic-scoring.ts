@@ -162,6 +162,7 @@ export function extractScoreClauses(
   let lastCompletedVerb: string | null = null;
   let lastVerbSubjects: string[] = [];
   let activeClauseIndexes: number[] = [];
+  let withComplementPending = false;
 
   const addClause = (clause: ScoreClause): number => {
     clauses.push(clause);
@@ -191,6 +192,16 @@ export function extractScoreClauses(
             frontBecause = false;
             frontBecauseAwaitingMain = true;
           }
+        } else if (withComplementPending) {
+          for (const clauseIndex of activeClauseIndexes) {
+            const clause = clauses[clauseIndex]!;
+            clauses[clauseIndex] = {
+              ...clause,
+              phraseIds: [...clause.phraseIds, phrase.phraseId],
+            };
+          }
+          withComplementPending = false;
+          completedWithObjectVerb = false;
         } else if (conjunctionAfterObjectVerb && lastCompletedVerb) {
           const completedVerb = lastCompletedVerb;
           activeClauseIndexes.push(
@@ -222,6 +233,7 @@ export function extractScoreClauses(
         break;
       case 'verb':
         pendingVerb = phrase.phraseId;
+        withComplementPending = false;
         complete = false;
         completedWithObjectVerb = false;
         connectorAfterComplete = false;
@@ -240,6 +252,7 @@ export function extractScoreClauses(
         completedWithObjectVerb = false;
         connectorAfterComplete = false;
         conjunctionAfterObjectVerb = false;
+        withComplementPending = false;
         if (frontBecause) {
           frontBecause = false;
           frontBecauseAwaitingMain = true;
@@ -255,7 +268,18 @@ export function extractScoreClauses(
         }
         break;
       case 'conjunction':
-        if (phrase.connectorKind === 'because' && !complete) {
+        if (phrase.connectorKind === 'with' && complete) {
+          for (const clauseIndex of activeClauseIndexes) {
+            const clause = clauses[clauseIndex]!;
+            clauses[clauseIndex] = {
+              ...clause,
+              phraseIds: [...clause.phraseIds, phrase.phraseId],
+            };
+          }
+          withComplementPending = true;
+          connectorAfterComplete = false;
+          conjunctionAfterObjectVerb = false;
+        } else if (phrase.connectorKind === 'because' && !complete) {
           frontBecause = true;
         } else if (
           phrase.connectorKind === 'and' &&

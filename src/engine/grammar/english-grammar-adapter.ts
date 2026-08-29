@@ -21,7 +21,8 @@ export type EnglishGrammarRole = Extract<
 export type EnglishGrammarPhrase = Readonly<{
   id: string;
   role: Phrase['role'];
-  connectorKind?: 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | null;
+  connectorKind?:
+    'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
   grammaticalNumber?: GrammaticalNumber | null;
   defaultText: string;
   singularText: string;
@@ -41,7 +42,8 @@ export type EnglishGrammarInput = Readonly<{
 export type EnglishRenderedPhrase = Readonly<{
   phraseId: string;
   role: Phrase['role'];
-  connectorKind: 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | null;
+  connectorKind:
+    'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
   grammaticalNumber: GrammaticalNumber | null;
   text: string;
 }>;
@@ -90,6 +92,7 @@ type ParseContext = {
   completedWithObjectVerb: boolean;
   conjunctionAfterObjectVerb: boolean;
   compoundObjectComplete: boolean;
+  withComplementPending: boolean;
 };
 
 const nextRolesByState: Readonly<
@@ -152,6 +155,7 @@ export const englishGrammarAdapter: GrammarAdapter<
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
       compoundObjectComplete: false,
+      withComplementPending: false,
     };
     let ended = false;
     const renderedPhrases: EnglishRenderedPhrase[] = [];
@@ -287,6 +291,16 @@ function transition(
         compoundObjectComplete: false,
       };
     }
+    if (kind === 'with' && context.state === 'CLAUSE_COMPLETE') {
+      return {
+        ...context,
+        state: 'EXPECT_AFTER_CONJUNCTION',
+        conjunctionFromSubject: false,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+        withComplementPending: true,
+      };
+    }
     if (
       (kind === 'for' || kind === 'so') &&
       context.state === 'CLAUSE_COMPLETE' &&
@@ -378,6 +392,18 @@ function transition(
   }
 
   if (context.state === 'EXPECT_AFTER_CONJUNCTION') {
+    if (context.withComplementPending) {
+      return role === 'noun'
+        ? {
+            ...context,
+            state: 'CLAUSE_COMPLETE',
+            completedWithObjectVerb: false,
+            conjunctionAfterObjectVerb: false,
+            compoundObjectComplete: false,
+            withComplementPending: false,
+          }
+        : null;
+    }
     if (role === 'noun') {
       if (context.conjunctionAfterObjectVerb) {
         return {
@@ -423,6 +449,12 @@ function transition(
 }
 
 function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
+  if (
+    context.state === 'EXPECT_AFTER_CONJUNCTION' &&
+    context.withComplementPending
+  ) {
+    return ['noun'];
+  }
   if (context.state === 'CLAUSE_COMPLETE' && context.frontBecausePending) {
     return ['noun', 'modifier', 'conjunction'];
   }
@@ -517,13 +549,14 @@ function requireMessage(locale: GameLocaleBundle, key: string): string {
 
 function inferConnectorKind(
   text: string,
-): 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' {
+): 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' {
   const connectors = {
     because: 'because',
     but: 'but',
     for: 'for',
     so: 'so',
     yet: 'yet',
+    with: 'with',
   } as const;
   const normalized = text.trim().toLocaleLowerCase('en');
   return connectors[normalized as keyof typeof connectors] ?? 'and';

@@ -53,6 +53,12 @@ subject and a complete following clause. They do not accept a shared-subject
 branch and cannot start a sentence. `so` presents a result. `for` presents a
 rationale.
 
+`with` can follow a complete clause and requires one noun complement. The
+complement stays in the preceding clause and keeps the sentence complete. It
+does not start a new clause or accept a verb or predicate in its complement
+position. It can follow a front-`because` subordinate clause, but that clause
+still requires its main noun clause.
+
 Front `because` requires a noun, then accepts a complete subordinate clause
 followed by a main noun clause. Explanatory `because` can follow a complete
 clause and also requires a new noun clause. Another connector cannot replace
@@ -93,8 +99,9 @@ A phrase without number forms uses its default text.
   and plural agreement for the compound subject. Tests also prove a compound
   object after `NOUN + VERB + NOUN + AND`.
 - **AC-006-03:** Tests prove new-subject and shared-subject `and`, `but`, and
-  `yet` branches, front and explanatory `because` branches, and clause-only
-  `so` and `for` branches with their required noun transitions.
+  `yet` branches, front and explanatory `because` branches, clause-only `so`
+  and `for` branches with their required noun transitions, and the `with`
+  noun-complement branch.
 - **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
   agreement, and rejection after an ending.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable

@@ -53,35 +53,11 @@
     }
   },
   {
-    "id": "repackages",
+    "id": "denounced",
     "role": "verb",
-    "text": "repackages",
-    "singularText": "repackages",
-    "pluralText": "repackage",
-    "tags": ["modernity", "credibility"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["media"],
-          "right": ["bureaucracy"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian political-satire verb about recurring transition-era rebranding. Not a quotation. Editorial review complete."
-    }
-  },
-  {
-    "id": "denounces",
-    "role": "verb",
-    "text": "denounces",
-    "singularText": "denounces",
-    "pluralText": "denounce",
+    "text": "denounced",
+    "singularText": "denounced",
+    "pluralText": "denounced",
     "tags": ["evidence", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -101,11 +77,11 @@
     }
   },
   {
-    "id": "interrupts-the-broadcast",
-    "role": "verb",
-    "text": "interrupts",
-    "singularText": "interrupts",
-    "pluralText": "interrupt",
+    "id": "interrupts-the-debate",
+    "role": "predicate",
+    "text": "interrupts this debate",
+    "singularText": "interrupts this debate",
+    "pluralText": "interrupt this debate",
     "tags": ["restraint", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -248,23 +224,6 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original English adaptation informed by the Romanian constitutional emergency-ordinance mechanism. Not a quotation. Editorial review complete."
-    }
-  },
-  {
-    "id": "european-funds-ribbon",
-    "role": "noun",
-    "text": "an EU-funds ribbon",
-    "tags": ["modernity", "credibility"],
-    "scoreGroups": {
-      "substance": ["bureaucracy"],
-      "flavour": ["ceremony"]
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian public-investment satire informed by European Union funding and procurement reports. Not a quotation. Editorial review complete."
     }
   },
   {
@@ -601,23 +560,6 @@
     }
   },
   {
-    "id": "transition-archive",
-    "role": "noun",
-    "text": "a transition archive",
-    "tags": ["legacy", "evidence"],
-    "scoreGroups": {
-      "substance": ["media"],
-      "flavour": ["archive"]
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian post-1989 media satire about preserved transition records. Not a quotation. Editorial review complete."
-    }
-  },
-  {
     "id": "parliamentary-microphone",
     "role": "noun",
     "text": "a parliamentary microphone",
@@ -703,23 +645,6 @@
     }
   },
   {
-    "id": "public-procurement-file",
-    "role": "noun",
-    "text": "a public-procurement file",
-    "tags": ["evidence", "bureaucracy"],
-    "scoreGroups": {
-      "substance": ["bureaucracy"],
-      "flavour": ["procurement"]
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian public-administration satire about procurement paperwork. Not a quotation or an allegation. Editorial review complete."
-    }
-  },
-  {
     "id": "constitutional-footnote",
     "role": "noun",
     "text": "a constitutional footnote",
@@ -754,9 +679,9 @@
     }
   },
   {
-    "id": "press-conference-podium",
+    "id": "press-conference",
     "role": "noun",
-    "text": "a press-conference podium",
+    "text": "a press-conference",
     "tags": ["decorum", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
@@ -880,30 +805,6 @@
     }
   },
   {
-    "id": "revises",
-    "role": "verb",
-    "text": "revises",
-    "singularText": "revises",
-    "pluralText": "revise",
-    "tags": ["consistency", "bureaucracy"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"],
-          "right": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian policy satire about recurring revisions. Not a quotation. Editorial review complete."
-    }
-  },
-  {
     "id": "announces",
     "role": "verb",
     "text": "announces",
@@ -952,11 +853,11 @@
     }
   },
   {
-    "id": "negotiates",
+    "id": "negotiated",
     "role": "verb",
-    "text": "negotiates",
-    "singularText": "negotiates",
-    "pluralText": "negotiate",
+    "text": "negotiated",
+    "singularText": "negotiated",
+    "pluralText": "negotiated",
     "tags": ["restraint", "consistency"],
     "scorePreferences": {
       "substance": [
@@ -973,30 +874,6 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original Romanian coalition-politics verb about routine negotiation. Not a quotation. Editorial review complete."
-    }
-  },
-  {
-    "id": "commemorates",
-    "role": "verb",
-    "text": "commemorates",
-    "singularText": "commemorates",
-    "pluralText": "commemorate",
-    "tags": ["legacy", "decorum"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"],
-          "right": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian civic-ceremony verb about public commemoration. Not a quotation or a claim about a named event. Editorial review complete."
     }
   },
   {
@@ -1024,11 +901,11 @@
     }
   },
   {
-    "id": "consults",
+    "id": "consulted",
     "role": "verb",
-    "text": "consults",
-    "singularText": "consults",
-    "pluralText": "consult",
+    "text": "consulted",
+    "singularText": "consulted",
+    "pluralText": "consulted",
     "tags": ["decorum", "bureaucracy"],
     "scorePreferences": {
       "substance": [
@@ -1048,11 +925,11 @@
     }
   },
   {
-    "id": "allocates",
+    "id": "allocated",
     "role": "verb",
-    "text": "allocates",
-    "singularText": "allocates",
-    "pluralText": "allocate",
+    "text": "allocated",
+    "singularText": "allocated",
+    "pluralText": "allocated",
     "tags": ["bureaucracy", "evidence"],
     "scorePreferences": {
       "substance": [
@@ -1072,11 +949,11 @@
     }
   },
   {
-    "id": "contests",
+    "id": "contested",
     "role": "verb",
-    "text": "contests",
-    "singularText": "contests",
-    "pluralText": "contest",
+    "text": "contested",
+    "singularText": "contested",
+    "pluralText": "contested",
     "tags": ["evidence", "restraint"],
     "scorePreferences": {
       "substance": [
@@ -1096,35 +973,11 @@
     }
   },
   {
-    "id": "amends",
+    "id": "promised",
     "role": "verb",
-    "text": "amends",
-    "singularText": "amends",
-    "pluralText": "amend",
-    "tags": ["bureaucracy", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["bureaucracy", "media"],
-          "right": ["bureaucracy", "media"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original Romanian parliamentary-procedure verb about amendments. Not a quotation. Editorial review complete."
-    }
-  },
-  {
-    "id": "promises",
-    "role": "verb",
-    "text": "promises",
-    "singularText": "promises",
-    "pluralText": "promise",
+    "text": "promised",
+    "singularText": "promised",
+    "pluralText": "promised",
     "tags": ["credibility", "consistency"],
     "scorePreferences": {
       "substance": [
@@ -1144,11 +997,11 @@
     }
   },
   {
-    "id": "unveils",
+    "id": "unveiled",
     "role": "verb",
-    "text": "unveils",
-    "singularText": "unveils",
-    "pluralText": "unveil",
+    "text": "unveiled",
+    "singularText": "unveiled",
+    "pluralText": "unveiled",
     "tags": ["modernity", "decorum"],
     "scorePreferences": {
       "substance": [
@@ -1168,11 +1021,11 @@
     }
   },
   {
-    "id": "coordinates",
+    "id": "coordinated",
     "role": "verb",
-    "text": "coordinates",
-    "singularText": "coordinates",
-    "pluralText": "coordinate",
+    "text": "coordinated",
+    "singularText": "coordinated",
+    "pluralText": "coordinated",
     "tags": ["bureaucracy", "restraint"],
     "scorePreferences": {
       "substance": [
@@ -2461,6 +2314,285 @@
       "originality": "original",
       "safetyFlags": [],
       "notes": "Original common copular verb card for fictional political satire. Its agreement forms are authored for the English grammar system. Editorial review complete."
+    }
+  },
+  {
+    "id": "stole",
+    "role": "verb",
+    "text": "stole",
+    "singularText": "stole",
+    "pluralText": "stole",
+    "tags": ["evidence", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    }
+  },
+  {
+    "id": "eu-funds",
+    "role": "noun",
+    "text": "EU funds",
+    "tags": ["bureaucracy", "credibility"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["procurement"]
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original public-investment noun for fictional procurement satire. It refers to institutional funding and names no person or party. Editorial review complete."
+    }
+  },
+  {
+    "id": "appropriated",
+    "role": "verb",
+    "text": "appropriated",
+    "singularText": "appropriated",
+    "pluralText": "appropriated",
+    "tags": ["bureaucracy", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["politics", "bureaucracy"],
+          "right": ["bureaucracy", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past-tense public-budget accusation for fictional political satire. It names no real person and makes no claim about a real act. Editorial review complete."
+    }
+  },
+  {
+    "id": "was-a-securitate-informer",
+    "role": "predicate",
+    "text": "was a Securitate informer",
+    "singularText": "was a Securitate informer",
+    "pluralText": "were Securitate informers",
+    "tags": ["legacy", "evidence", "securitate"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "history"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-state-secretary",
+    "role": "noun",
+    "text": "a state secretary",
+    "tags": ["bureaucracy", "decorum"],
+    "scoreGroups": {
+      "substance": ["bureaucracy"],
+      "flavour": ["status"]
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original public-office noun for fictional administration satire. It names no real office-holder or party. Editorial review complete."
+    }
+  },
+  {
+    "id": "was-not",
+    "role": "verb",
+    "text": "was not",
+    "singularText": "was not",
+    "pluralText": "were not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original past copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    }
+  },
+  {
+    "id": "is-not",
+    "role": "verb",
+    "text": "is not",
+    "singularText": "is not",
+    "pluralText": "are not",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original present copular negation for flexible fictional political satire. The singular and plural forms preserve English agreement. Editorial review complete."
+    }
+  },
+  {
+    "id": "will-never-be",
+    "role": "verb",
+    "text": "will never be",
+    "singularText": "will never be",
+    "pluralText": "will never be",
+    "tags": ["credibility", "results"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original future-tense dismissal for fictional political satire. Its agreement form is invariant and names no real person. Editorial review complete."
+    }
+  },
+  {
+    "id": "wont",
+    "role": "verb",
+    "text": "won't",
+    "singularText": "won't",
+    "pluralText": "won't",
+    "tags": ["credibility", "consistency"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics"],
+          "right": ["personal", "politics"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-witch",
+    "role": "noun",
+    "text": "a witch",
+    "tags": ["credibility", "restraint"],
+    "scoreGroups": {
+      "substance": ["personal"],
+      "flavour": ["folklore"]
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original folklore noun for absurd fictional political satire. It targets no protected trait and names no real person. Editorial review complete."
+    }
+  },
+  {
+    "id": "my-opponent",
+    "role": "noun",
+    "text": "my opponent",
+    "tags": ["credibility", "consistency"],
+    "scoreGroups": {
+      "substance": ["personal", "politics"],
+      "flavour": ["direct"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original direct-address noun for fictional debate satire. It refers to a game persona and names no real person. Editorial review complete."
+    }
+  },
+  {
+    "id": "with",
+    "role": "conjunction",
+    "text": "with",
+    "connectorKind": "with",
+    "tags": ["decorum", "credibility"],
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Standard English accompaniment connector added for flexible fictional debate constructions. Editorial review complete."
+    }
+  },
+  {
+    "id": "a-public-apology",
+    "role": "noun",
+    "text": "a public apology",
+    "tags": ["credibility", "decorum"],
+    "scoreGroups": {
+      "substance": ["media"],
+      "flavour": ["ceremony"]
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original public-accountability noun for fictional debate satire. It names no real person or event. Editorial review complete."
+    }
+  },
+  {
+    "id": "to-the-securitate",
+    "role": "modifier",
+    "text": "to the Securitate",
+    "tags": ["legacy", "evidence", "securitate"],
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original institutional destination modifier for fictional transition-era satire. It names no real person and makes no individual claim. Editorial review complete."
     }
   }
 ]

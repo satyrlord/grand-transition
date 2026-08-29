@@ -39,6 +39,7 @@ export const connectorKindSchema = z.enum([
   'for',
   'so',
   'yet',
+  'with',
 ]);
 
 export const editorialSafetyFlagSchema = z.enum([

@@ -30,7 +30,7 @@ describe('Hollywood Roast English grammar', () => {
     ]);
     const object = analyze([
       add('national-consensus'),
-      add('repackages'),
+      add('rebrands'),
       add('national-salvation-committee'),
     ]);
 
@@ -64,7 +64,7 @@ describe('Hollywood Roast English grammar', () => {
       add('televised-revolution'),
       add('coalition-and'),
       add('national-salvation-committee'),
-      add('repackages'),
+      add('rebrands'),
       add('national-consensus'),
     ]);
     expect(complete).toMatchObject({
@@ -72,7 +72,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: { complete: true },
     });
     if (complete.accepted) {
-      expect(complete.analysis.renderedPhrases[3]?.text).toBe('repackage');
+      expect(complete.analysis.renderedPhrases[3]?.text).toBe('rebrand');
     }
   });
 
@@ -91,7 +91,7 @@ describe('Hollywood Roast English grammar', () => {
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
         add('coalition-and'),
-        add('repackages'),
+        add('rebrands'),
         add('televised-revolution'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
@@ -100,7 +100,7 @@ describe('Hollywood Roast English grammar', () => {
   test('keeps a transitive clause complete when and adds another object', () => {
     const compoundObject = analyze([
       add('national-consensus'),
-      add('denounces'),
+      add('denounced'),
       add('televised-revolution'),
       add('coalition-and'),
       add('national-salvation-committee'),
@@ -117,7 +117,7 @@ describe('Hollywood Roast English grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('denounces'),
+        add('denounced'),
         add('televised-revolution'),
         add('coalition-and'),
         add('national-salvation-committee'),
@@ -131,11 +131,11 @@ describe('Hollywood Roast English grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('denounces'),
+        add('denounced'),
         add('televised-revolution'),
         add('coalition-and'),
         add('national-salvation-committee'),
-        add('repackages'),
+        add('rebrands'),
         add('national-consensus'),
       ]),
     ).toMatchObject({
@@ -146,7 +146,7 @@ describe('Hollywood Roast English grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('denounces'),
+        add('denounced'),
         add('televised-revolution'),
         add('coalition-and'),
         add('national-salvation-committee'),
@@ -178,7 +178,7 @@ describe('Hollywood Roast English grammar', () => {
   test('accepts modifiers only after a complete clause and keeps construction open', () => {
     const result = analyze([
       add('national-consensus'),
-      add('repackages'),
+      add('rebrands'),
       add('televised-revolution'),
       add('before-the-next-election'),
       add('behind-closed-doors'),
@@ -190,7 +190,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'CLAUSE_COMPLETE',
         nextRoles: ['modifier', 'conjunction', 'ending'],
         publicText:
-          'A national consensus repackages a televised revolution before the next election behind closed doors',
+          'A national consensus rebrands a televised revolution before the next election behind closed doors',
       },
     });
     expect(
@@ -208,7 +208,7 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('returns a typed grammar mistake for a role that does not fit', () => {
-    expect(analyze([add('repackages')])).toEqual({
+    expect(analyze([add('rebrands')])).toEqual({
       accepted: false,
       faults: [
         {
@@ -216,7 +216,7 @@ describe('Hollywood Roast English grammar', () => {
           code: 'unexpected-role',
           state: 'EXPECT_SUBJECT',
           attempted: 'verb',
-          phraseId: 'repackages',
+          phraseId: 'rebrands',
           stepIndex: 0,
           expectedRoles: ['noun', 'conjunction'],
         },
