@@ -76,13 +76,67 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "steers"
+    },
+    {
+      "id": "steered",
+      "role": "verb",
+      "text": "steered",
+      "singularText": "steered",
+      "pluralText": "steered",
+      "tags": ["consistency", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
-      }
+      },
+      "tense": "past",
+      "tenseFamily": "steers"
+    },
+    {
+      "id": "will-steer",
+      "role": "verb",
+      "text": "will steer",
+      "singularText": "will steer",
+      "pluralText": "will steer",
+      "tags": ["consistency", "legacy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"],
+            "right": ["media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "steers"
     },
     {
       "id": "through-troubled-waters",
@@ -130,7 +184,61 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
-      }
+      },
+      "singularText": "returns to the wheel",
+      "pluralText": "return to the wheel",
+      "tense": "present",
+      "tenseFamily": "returns-to-the-wheel"
+    },
+    {
+      "id": "returned-to-the-wheel",
+      "role": "predicate",
+      "text": "returned to the wheel",
+      "tags": ["consistency", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+      },
+      "singularText": "returned to the wheel",
+      "pluralText": "returned to the wheel",
+      "tense": "past",
+      "tenseFamily": "returns-to-the-wheel"
+    },
+    {
+      "id": "will-return-to-the-wheel",
+      "role": "predicate",
+      "text": "will return to the wheel",
+      "tags": ["consistency", "decorum"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+      },
+      "singularText": "will return to the wheel",
+      "pluralText": "will return to the wheel",
+      "tense": "future",
+      "tenseFamily": "returns-to-the-wheel"
     },
     {
       "id": "your-leaking-flagship",
@@ -222,7 +330,61 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
-      }
+      },
+      "tense": "present",
+      "tenseFamily": "captain-grounds"
+    },
+    {
+      "id": "captain-grounded",
+      "role": "verb",
+      "text": "grounded",
+      "singularText": "grounded",
+      "pluralText": "grounded",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics"],
+            "right": ["personal", "politics"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+      },
+      "tense": "past",
+      "tenseFamily": "captain-grounds"
+    },
+    {
+      "id": "captain-will-ground",
+      "role": "verb",
+      "text": "will ground",
+      "singularText": "will ground",
+      "pluralText": "will ground",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics"],
+            "right": ["personal", "politics"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "captain-grounds"
     },
     {
       "id": "cannot-steer-own-party-from-puddle",
@@ -239,13 +401,65 @@
         ],
         "flavour": []
       },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
+      },
+      "tense": "present",
+      "tenseFamily": "cannot-steer-own-party-from-puddle"
+    },
+    {
+      "id": "could-not-steer-own-party-from-puddle",
+      "role": "predicate",
+      "text": "could not steer its own party out of a puddle",
+      "singularText": "could not steer its own party out of a puddle",
+      "pluralText": "could not steer their own party out of a puddle",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
-      }
+      },
+      "tense": "past",
+      "tenseFamily": "cannot-steer-own-party-from-puddle"
+    },
+    {
+      "id": "will-not-steer-own-party-from-puddle",
+      "role": "predicate",
+      "text": "will not steer its own party out of a puddle",
+      "singularText": "will not steer its own party out of a puddle",
+      "pluralText": "will not steer their own party out of a puddle",
+      "tags": ["competence", "consistency"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["personal", "politics", "bureaucracy"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
+      },
+      "tense": "future",
+      "tenseFamily": "cannot-steer-own-party-from-puddle"
     }
   ],
   "editorialReview": {

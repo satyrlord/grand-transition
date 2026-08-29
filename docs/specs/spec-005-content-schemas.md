@@ -10,8 +10,8 @@
 Implement strict Zod 4 schemas for original Grand Transition content. The
 initial catalog contains the Red-Folded Chairman, Thunder Tribune, and Black Sea
 Captain, at least one scene, and a canonical English locale. The Red-Folded
-Chairman has 24 character-owned English phrase cards, the Black Sea Captain
-has 11, and the Thunder Tribune has 12. Animal terms in character titles are
+Chairman has 30 character-owned English phrase cards, the Black Sea Captain
+has 19, and the Thunder Tribune has 20. Animal terms in character titles are
 metaphorical.
 
 A phrase owns an identifier, role, text key, optional number forms, optional
@@ -60,6 +60,9 @@ copyrighted broadcast graphics.
 - Character and scene restriction membership agrees in both directions with
   each owning character list and scene pool.
 - Phrase rarity is common, uncommon, or rare and controls draw frequency only.
+  Each verb and predicate declares one tense family and one of the `past`,
+  `present`, or `future` tenses. Each family has exactly three cards: its past
+  card is common, its present card is uncommon, and its future card is rare.
 - A finisher score is an integer from 1 through 20.
 - A custom clause score is an integer from 0 through 100.
 - Nouns alone own noun score groups and grammatical number. Verbs and
@@ -117,8 +120,8 @@ simulation, and browser validation must pass before it can ship.
 
 - **AC-005-01:** The shipped three-character scene catalog passes all strict
   record and aggregate checks. It contains only the Red-Folded Chairman,
-  Thunder Tribune, and Black Sea Captain. Their character-card counts are 24,
-  12, and 11, respectively.
+  Thunder Tribune, and Black Sea Captain. Their character-card counts are 30,
+  20, and 19, respectively.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
 - **AC-005-03:** Duplicate IDs, unresolved references, restriction violations,
@@ -131,8 +134,8 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 144-card common corpus contains exactly 55 nouns, 33 verbs,
-  12 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
+- **AC-005-07:** The 234-card common corpus contains exactly 55 nouns, 99 verbs,
+  36 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
   continuation. It includes
   agreement-aware copular forms for `is`, `was`, `will be`, and `should have
 been`, plus generic ideological and animal-metaphor noun fragments such as
