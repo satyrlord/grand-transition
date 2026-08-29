@@ -489,8 +489,8 @@ export class GrandTransitionMatch extends LitElement {
             <strong>${this.snapshot!.reaction.outcomeLabel}</strong>
           </p>
           <dl class="reaction-scores">
-            ${this.renderReactionScore(first)}
-            ${this.renderReactionScore(second)}
+            ${this.renderReactionScore(first, 'red')}
+            ${this.renderReactionScore(second, 'blue')}
           </dl>
           <button
             type="button"
@@ -524,10 +524,13 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
-  private renderReactionScore(player: MatchPlayerView): TemplateResult {
+  private renderReactionScore(
+    player: MatchPlayerView,
+    side: 'red' | 'blue',
+  ): TemplateResult {
     const reaction = this.snapshot!.reaction.players[player.playerId]!;
     return html`
-      <div data-round-player=${player.playerId}>
+      <div data-round-player=${player.playerId} data-round-side=${side}>
         <dt>${compactCharacterName(player.characterName)}</dt>
         <dd>
           <strong>${reaction.damage} ${msg('damage')}</strong>

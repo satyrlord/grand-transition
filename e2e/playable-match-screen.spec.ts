@@ -855,7 +855,9 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
   }
 });
 
-test('uses the revised Thunder Tribune head proportion', async ({ page }) => {
+test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
+  page,
+}) => {
   await startMatch(page);
   const portrait = page.locator(
     'img.character-portrait[src*="thunder-tribune"]',
@@ -871,32 +873,50 @@ test('uses the revised Thunder Tribune head proportion', async ({ page }) => {
     )
     .toBe(true);
 
-  const headRegion = await portrait.evaluate((image: HTMLImageElement) => {
+  const silhouette = await portrait.evaluate((image: HTMLImageElement) => {
     const canvas = document.createElement('canvas');
     canvas.width = image.naturalWidth;
     canvas.height = image.naturalHeight;
     const context = canvas.getContext('2d', { willReadFrequently: true })!;
     context.drawImage(image, 0, 0);
-    const pixels = context.getImageData(0, 0, canvas.width, 250).data;
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
     let minimumX = canvas.width;
     let maximumX = -1;
-    let minimumY = 250;
-    for (let y = 0; y < 250; y += 1) {
-      for (let x = 400; x < 700; x += 1) {
-        if (pixels[(y * canvas.width + x) * 4 + 3] === 0) continue;
+    let minimumY = canvas.height;
+    let maximumY = -1;
+    for (let y = 0; y < canvas.height; y += 1) {
+      for (let x = 0; x < canvas.width; x += 1) {
+        if (pixels[(y * canvas.width + x) * 4 + 3] < 16) continue;
         minimumX = Math.min(minimumX, x);
         maximumX = Math.max(maximumX, x);
         minimumY = Math.min(minimumY, y);
+        maximumY = Math.max(maximumY, y);
       }
     }
     return {
+      heightRatio: (maximumY - minimumY + 1) / canvas.height,
+      maximumY,
       minimumX,
       minimumY,
-      width: maximumX - minimumX + 1,
+      widthRatio: (maximumX - minimumX + 1) / canvas.width,
     };
   });
 
-  expect(headRegion).toEqual({ minimumX: 421, minimumY: 49, width: 207 });
+  expect(silhouette).toMatchObject({
+    heightRatio: expect.any(Number),
+    maximumY: expect.any(Number),
+    minimumX: expect.any(Number),
+    minimumY: expect.any(Number),
+    widthRatio: expect.any(Number),
+  });
+  expect(silhouette.heightRatio).toBeGreaterThanOrEqual(0.95);
+  expect(silhouette.heightRatio).toBeLessThanOrEqual(0.98);
+  expect(silhouette.minimumY).toBeGreaterThanOrEqual(16);
+  expect(silhouette.minimumY).toBeLessThanOrEqual(64);
+  expect(silhouette.maximumY).toBeGreaterThanOrEqual(1490);
+  expect(silhouette.maximumY).toBeLessThanOrEqual(1515);
+  expect(silhouette.minimumX).toBeGreaterThanOrEqual(96);
+  expect(silhouette.widthRatio).toBeGreaterThanOrEqual(0.7);
 });
 
 test('keeps the physical moderator face clear of drafting UI', async ({
@@ -1278,6 +1298,38 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   );
   await expect(page.locator('.reaction-scores > div')).toHaveCount(2);
   await expect(page.locator('.reaction-scores dd > strong')).toHaveCount(2);
+  const reviewSymmetry = await page
+    .locator('.round-review-dialog')
+    .evaluate((record) => {
+      const dialog = record.getBoundingClientRect();
+      const cards = Array.from(
+        record.querySelectorAll<HTMLElement>('.reaction-scores > div'),
+      ).map((card) => card.getBoundingClientRect());
+      const heading = record
+        .querySelector('.round-review-heading')!
+        .getBoundingClientRect();
+      const scores = record
+        .querySelector('.reaction-scores')!
+        .getBoundingClientRect();
+      return {
+        centered:
+          Math.abs(
+            dialog.left +
+              dialog.width / 2 -
+              document.documentElement.clientWidth / 2,
+          ) <= 1,
+        equalCards:
+          cards.length === 2 &&
+          Math.abs(cards[0]!.width - cards[1]!.width) <= 1 &&
+          Math.abs(cards[0]!.height - cards[1]!.height) <= 1,
+        sharedWidth: Math.abs(heading.width - scores.width) <= 1,
+      };
+    });
+  expect(reviewSymmetry).toEqual({
+    centered: true,
+    equalCards: true,
+    sharedWidth: true,
+  });
   await expect(page.locator('.weakness-hit')).toContainText('Weakness hit');
   await expect(page.locator('.weakness-hit')).toContainText('Evidence');
   await expect(page.locator('.weakness-hit')).toContainText('Credibility');

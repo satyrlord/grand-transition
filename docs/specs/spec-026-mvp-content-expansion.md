@@ -57,7 +57,7 @@ political labels only and never define anatomy, species, or hybrid traits.
 13. **Spreadsheet Technocrat:** A metric-heavy manager. Weaknesses are delivery,
     accountability, and human scale. The play style uses clause stacks and
     dashboard denial.
-14. **Football-Pulpit Tycoon:** A devotional showman. Weaknesses are
+14. **Football Tycoon:** A devotional showman. Weaknesses are
     commercialism, accountability, and sincerity. The play style uses emotional
     chains and finishers.
 15. **Luxury Minister:** A camera-ready patron. Weaknesses are austerity,

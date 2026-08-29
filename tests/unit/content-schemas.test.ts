@@ -470,11 +470,13 @@ describe('content schemas', () => {
         members[0]!.role,
         members[0]!.role,
       ]);
-      expect(members.map((member) => member.tense).toSorted()).toEqual([
-        'future',
-        'past',
-        'present',
-      ]);
+      expect(
+        members
+          .map((member) => member.tense)
+          .toSorted((a, b) => {
+            return String(a).localeCompare(String(b));
+          }),
+      ).toEqual(['future', 'past', 'present']);
       for (const member of members) {
         expect(member.rarity, family + ' ' + member.id).toBe(
           expectedRarity[member.tense!],
