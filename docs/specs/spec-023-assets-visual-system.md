@@ -11,6 +11,14 @@ Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Produce original final-quality art for three characters and one
 scene. Add core reactions, ambience, and transitions.
 
+Each catalog character has a default skin and at least one alternate skin.
+Default portraits use `<character-id>.png`. Alternate portraits use
+`<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
+this filename convention. It does not use a TypeScript skin registry. The
+default skin is first. The roster uses only the default skin. Setup stages and
+matches use the selected skin. All skins for one character share its character
+identity and phrase content.
+
 The art combines editorial caricature, painted theatre, late-2000s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
 modern overlays. Use an integrated arena composition. One authored scene fills
@@ -52,8 +60,10 @@ changing the selected-character contract.
 
 Interim portrait planes use a tall two-to-three canvas and continue below the
 foreground desks. Their lower raster edges must not appear in the composite.
-The Black Sea Captain wears a warm-cream naval officer uniform and cap and holds
-one unbranded cigar. He has no wheel or helm prop.
+The Black Sea Captain default skin wears a warm-cream naval officer uniform and
+cap and holds one unbranded cigar. His skins have no wheel or helm prop. His
+alternate female skin wears a fitted navy-blue formal suit with restrained
+nautical details.
 The Thunder Tribune keeps his full-body pose, raised hand, papers, and
 expression. He is tall and heavyset, with a broad adult body, dark side-parted
 hair, and large clear gold-rimmed eyeglasses. On the 1024 by 1536 interim
@@ -207,6 +217,10 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   round-trip tolerance. A
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
+- **AC-023-09:** Every discovered character has a default skin and at least one
+  alternate skin. Filename discovery is deterministic, the default is first,
+  the roster resolves only the default, and setup and match views resolve the
+  requested skin without changing character or phrase data.
 
 ## Impeccable UI validation
 

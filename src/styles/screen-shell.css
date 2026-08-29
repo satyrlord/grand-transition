@@ -135,6 +135,21 @@
     cursor: pointer;
   }
 
+  .contestant-stage-target {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .contestant-stage:has(.contestant-stage-target:focus-visible) {
+    outline: 3px solid var(--broadcast-paper-light);
+    outline-offset: -5px;
+  }
+
   .contestant-stage::before {
     position: absolute;
     z-index: -1;
@@ -186,6 +201,7 @@
     letter-spacing: 0.1em;
     line-height: 1;
     text-transform: uppercase;
+    pointer-events: none;
   }
 
   .contestant-portrait-frame {
@@ -193,6 +209,8 @@
     display: block;
     min-height: 0;
     overflow: hidden;
+    z-index: 5;
+    pointer-events: none;
   }
 
   .contestant-portrait {
@@ -209,6 +227,71 @@
     transform: scaleX(-1);
   }
 
+  .skin-selector {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .skin-cycle {
+    position: absolute;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 3.5rem;
+    padding: 0;
+    border: 1px solid var(--broadcast-brass-light);
+    background: rgb(5 8 11 / 82%);
+    color: var(--broadcast-brass-light);
+    box-shadow: 0 0.45rem 1rem rgb(0 0 0 / 42%);
+    cursor: pointer;
+    transform: translateY(-50%);
+    pointer-events: auto;
+  }
+
+  .skin-cycle--previous {
+    left: 0.45rem;
+  }
+
+  .skin-cycle--next {
+    right: 0.45rem;
+  }
+
+  .skin-cycle svg {
+    width: 1rem;
+    height: 1.65rem;
+    overflow: visible;
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-width: 3;
+  }
+
+  .skin-cycle:hover,
+  .skin-cycle:focus-visible {
+    background: var(--broadcast-oxblood);
+    color: var(--broadcast-paper-light);
+    outline: 2px solid var(--broadcast-paper-light);
+    outline-offset: -3px;
+  }
+
+  .contestant-stage--two .skin-cycle:hover,
+  .contestant-stage--two .skin-cycle:focus-visible {
+    background: var(--television-blue);
+  }
+
+  .skin-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .contestant-record {
     position: relative;
     z-index: 2;
@@ -219,6 +302,7 @@
     padding: clamp(0.55rem, 1.2vh, 0.8rem);
     border-block-start: 3px double var(--broadcast-brass);
     background: rgb(5 8 11 / 92%);
+    pointer-events: none;
   }
 
   .contestant-record strong {
@@ -680,6 +764,9 @@
     .setup-screen,
     .setup-screen::before,
     .contestant-stage,
+    .contestant-stage-target,
+    .skin-selector,
+    .skin-cycle,
     .roster-zone,
     .match-terms,
     .setup-field select,
@@ -690,6 +777,8 @@
     }
 
     .contestant-stage,
+    .skin-selector,
+    .skin-cycle,
     .roster-zone,
     .roster-choice,
     .match-terms,

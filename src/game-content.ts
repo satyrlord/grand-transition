@@ -19,6 +19,11 @@ const portraitSources = import.meta.glob('./assets/characters/*.png', {
   query: '?url',
 }) as Record<string, string>;
 
+export type CharacterSkin = Readonly<{
+  id: string;
+  portraitUrl: string;
+}>;
+
 export const phraseCardCatalog: PhraseCardCatalog = buildPhraseCardCatalog(
   commonSource,
   characterSources,
@@ -33,20 +38,60 @@ export const sampleContent = createSampleContent(
   englishGameLocale,
 );
 
+const portraitUrlByStem = new Map(
+  Object.entries(portraitSources).map(([sourcePath, url]) => [
+    fileStem(sourcePath),
+    url,
+  ]),
+);
+
+export const characterSkins: Readonly<
+  Record<string, readonly CharacterSkin[]>
+> = Object.freeze(
+  Object.fromEntries(
+    phraseCardCatalog.characters.map((character) => {
+      const defaultPortraitUrl = portraitUrlByStem.get(character.id);
+      if (!defaultPortraitUrl) {
+        throw new Error(
+          `Add the default skin "src/assets/characters/${character.id}.png".`,
+        );
+      }
+      const alternatePrefix = `${character.id}--`;
+      const alternates = [...portraitUrlByStem.entries()]
+        .filter(([stem]) => stem.startsWith(alternatePrefix))
+        .map(([stem, portraitUrl]) =>
+          Object.freeze({
+            id: stem.slice(alternatePrefix.length),
+            portraitUrl,
+          }),
+        )
+        .sort((left, right) => left.id.localeCompare(right.id));
+      return [
+        character.id,
+        Object.freeze([
+          Object.freeze({ id: 'default', portraitUrl: defaultPortraitUrl }),
+          ...alternates,
+        ]),
+      ];
+    }),
+  ),
+);
+
 export const characterPortraitUrls: Readonly<Record<string, string>> =
   Object.freeze(
     Object.fromEntries(
-      Object.entries(portraitSources).map(([sourcePath, url]) => [
-        fileStem(sourcePath),
-        url,
+      phraseCardCatalog.characters.map((character) => [
+        character.id,
+        characterSkins[character.id]?.[0]?.portraitUrl,
       ]),
     ),
   );
 
 for (const character of phraseCardCatalog.characters) {
-  if (!characterPortraitUrls[character.id]) {
+  const skins = characterSkins[character.id];
+  if (!skins || skins.length < 2) {
     throw new Error(
-      `Add the character portrait "src/assets/characters/${character.id}.png".`,
+      `Add an alternate skin "src/assets/characters/${character.id}--alternate.png".`,
     );
   }
 }

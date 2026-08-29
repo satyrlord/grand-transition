@@ -12,6 +12,13 @@ Complete all 18 fictional archetypes, 6 scenes, English phrase pools, final art,
 scene audio treatment, and one exclusive comeback line per character and tier.
 Use the existing schemas, pipelines, and presentation contracts.
 
+Every archetype has its default portrait skin and at least one alternate female
+skin through the Milestone 023 filename convention. A skin changes only visual
+presentation. It does not add or change phrases, weaknesses, comeback lines,
+balance data, or character identity. Additional alternate clothing is allowed;
+for example, the Black Sea Captain can use a cream naval-uniform default skin
+and a navy-blue formal-suit alternate skin.
+
 All 18 archetypes are human. Animal terms in a name or title are metaphorical
 political labels only and never define anatomy, species, or hybrid traits.
 
@@ -31,8 +38,10 @@ political labels only and never define anatomy, species, or hybrid traits.
    and credibility. The play style uses denial and weakness targeting.
 5. **Black Sea Captain:** A salty practical statesman and former ship captain.
    Weaknesses are decorum, consistency, and Securitate references. The play
-   style uses adaptive comebacks. His portrait uses a warm-cream naval officer
-   uniform and cap with one unbranded cigar. It uses no wheel or helm prop.
+   style uses adaptive comebacks. His default portrait uses a warm-cream naval
+   officer uniform and cap with one unbranded cigar. His alternate female
+   portrait uses a fitted navy-blue formal suit with restrained nautical
+   details. Neither portrait uses a wheel or helm prop.
 6. **Retiring Cassandra:** A weary reformist. Weaknesses are competence, hope,
    and results. The play style uses defensive continuations and conservative
    scoring.
@@ -174,6 +183,10 @@ failed automated range or distribution.
   threshold and record seed, workload, environment, and exceptions.
 - **AC-026-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
+- **AC-026-07:** All 18 characters provide a default skin and at least one
+  alternate female skin. Every skin passes the shared asset, alpha, provenance,
+  viewport, and package checks while the character's phrase and balance records
+  remain identical across skins.
 
 ## Content research boundary
 

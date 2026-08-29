@@ -11,7 +11,7 @@ import {
   prepareEnglishGrammarPhrase,
 } from '../engine/grammar/english-grammar-adapter';
 import type { MatchResolution, MatchState } from '../engine/match-lifecycle';
-import { characterPortraitUrls, sampleContent } from '../game-content';
+import { characterSkins, sampleContent } from '../game-content';
 import { deepFreeze } from './deep-freeze';
 
 const sceneMediaUrls: Readonly<Record<string, string>> = {
@@ -62,6 +62,7 @@ export type MatchCardView = Readonly<{
 export type MatchPlayerView = Readonly<{
   playerId: string;
   characterId: string;
+  skinId: string;
   characterName: string;
   portraitUrl: string;
   pride: number;
@@ -136,6 +137,7 @@ export function createMatchScreenSnapshot(
   arenaReaction: MatchArenaReaction | null = null,
   reviewResolution: MatchResolution | null = null,
   victory: Readonly<{ winnerId: string; completedRounds: number }> | null = null,
+  skinIdsByPlayer: Readonly<Record<string, string>> = {},
 ): MatchScreenSnapshot {
   if (!state.draft) {
     throw new Error('The match screen needs an active draft snapshot.');
@@ -225,13 +227,15 @@ export function createMatchScreenSnapshot(
   const players = state.playerOrder.map((playerId) => {
     const player = state.playerStates[playerId]!;
     const draftPlayer = viewerSnapshot.players[playerId]!;
+    const skin = characterSkin(player.characterId, skinIdsByPlayer[playerId]);
     const currentPublicSentence =
       draftPlayer.construction.previewText?.trim() ?? '';
     return {
       playerId,
       characterId: player.characterId,
+      skinId: skin.id,
       characterName: characterName(player.characterId),
-      portraitUrl: characterPortraitUrl(player.characterId),
+      portraitUrl: skin.portraitUrl,
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,
       sentence:
@@ -539,12 +543,11 @@ function characterName(characterId: string): string {
   );
 }
 
-function characterPortraitUrl(characterId: string): string {
-  const portraitUrl = characterPortraitUrls[characterId];
-  if (!portraitUrl) {
-    throw new Error(`Character "${characterId}" has no match portrait.`);
-  }
-  return portraitUrl;
+function characterSkin(characterId: string, skinId?: string) {
+  const skins = characterSkins[characterId];
+  const skin = skins?.find((candidate) => candidate.id === skinId) ?? skins?.[0];
+  if (!skin) throw new Error(`Character "${characterId}" has no match skin.`);
+  return skin;
 }
 
 function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {

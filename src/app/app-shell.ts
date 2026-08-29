@@ -9,7 +9,11 @@ import {
 import './screens/setup-screen';
 import './screens/title-screen';
 import { basicScoringBalance } from '../content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../game-content';
+import {
+  characterSkins,
+  englishGameLocale,
+  sampleContent,
+} from '../game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -232,7 +236,13 @@ export class GrandTransitionApp extends LitElement {
     const matchSnapshot =
       this.roundReviewSnapshot ??
       (liveMatchState
-        ? createMatchScreenSnapshot(liveMatchState, this.matchArenaReaction)
+        ? createMatchScreenSnapshot(
+            liveMatchState,
+            this.matchArenaReaction,
+            null,
+            null,
+            this.currentMatchSkinIds(),
+          )
         : null);
     if (this.view === 'match' && matchSnapshot) {
       return html`<grand-transition-match
@@ -435,6 +445,7 @@ export class GrandTransitionApp extends LitElement {
             null,
             reviewResolution,
             victory,
+            this.currentMatchSkinIds(),
           )
         : null;
     this.matchState = state;
@@ -528,6 +539,13 @@ export class GrandTransitionApp extends LitElement {
       throw new Error('The active match does not have an initial seed.');
     }
     return this.matchInitialSeed;
+  }
+
+  private currentMatchSkinIds(): Readonly<Record<string, string>> {
+    return Object.freeze({
+      'player-one': this.setupSnapshot.playerOneSkinId,
+      'player-two': this.setupSnapshot.playerTwoSkinId,
+    });
   }
 
   private captureCompletedMatch(state: MatchState): void {
@@ -661,7 +679,9 @@ export function createDefaultSetupSnapshot(): SetupSnapshot {
   return Object.freeze({
     mode: 'hotseat',
     playerOneCharacterId: playerOne.id,
+    playerOneSkinId: characterSkins[playerOne.id]?.[0]?.id ?? 'default',
     playerTwoCharacterId: playerTwo.id,
+    playerTwoSkinId: characterSkins[playerTwo.id]?.[0]?.id ?? 'default',
     sceneId: scene.id,
   });
 }

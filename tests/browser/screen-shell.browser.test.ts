@@ -181,6 +181,56 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   expect(setup.querySelector('.character-inspector')).toBeNull();
 });
 
+test('cycles selected skins without changing roster portraits or character IDs', async () => {
+  await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  const setup = document.querySelector(
+    'grand-transition-setup',
+  ) as GrandTransitionSetup;
+  const playerOneStage = setup.querySelector<HTMLElement>(
+    '.contestant-stage--one',
+  )!;
+  const playerOneTarget = setup.querySelector<HTMLButtonElement>(
+    '#playerOneCharacterId',
+  )!;
+  const rosterSources = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(
+    ({ src }) => src,
+  );
+
+  expect(playerOneStage.dataset.characterId).toBe('red-folded-chairman');
+  expect(playerOneStage.dataset.skinId).toBe('default');
+  await page.getByRole('button', { name: 'Next skin for Player one' }).click();
+  await expect
+    .poll(() => playerOneStage.dataset.skinId)
+    .toBe('alternate');
+  expect(
+    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
+  ).toContain('red-folded-chairman--alternate');
+  expect(
+    setup.querySelector<HTMLElement>('.contestant-stage--two')!.dataset.skinId,
+  ).toBe('default');
+  expect(
+    [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(
+      ({ src }) => src,
+    ),
+  ).toEqual(rosterSources);
+  expect(rosterSources.every((src) => !src.includes('--alternate'))).toBe(true);
+
+  const contextMenu = new MouseEvent('contextmenu', {
+    bubbles: true,
+    cancelable: true,
+  });
+  expect(playerOneTarget.dispatchEvent(contextMenu)).toBe(false);
+  await expect.poll(() => playerOneStage.dataset.skinId).toBe('default');
+
+  playerOneTarget.focus();
+  playerOneTarget.dispatchEvent(
+    new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
+  );
+  await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
+  expect(playerOneStage.dataset.characterId).toBe('red-folded-chairman');
+});
+
 test.each([
   {
     name: 'default match',
@@ -223,7 +273,9 @@ test.each([
     expect(event.detail).toEqual({
       mode: 'hotseat',
       playerOneCharacterId: 'red-folded-chairman',
+      playerOneSkinId: 'default',
       playerTwoCharacterId,
+      playerTwoSkinId: 'default',
       sceneId: 'transition-era-television-studio',
     });
   },
@@ -234,7 +286,9 @@ test('shows every missing-field error and emits no command', async () => {
     Object.freeze({
       mode: '',
       playerOneCharacterId: '',
+      playerOneSkinId: '',
       playerTwoCharacterId: '',
+      playerTwoSkinId: '',
       sceneId: '',
     }),
   );
@@ -271,7 +325,9 @@ test('shows unknown-value errors and revalidates after change', async () => {
     Object.freeze({
       mode: 'network',
       playerOneCharacterId: 'missing-one',
+      playerOneSkinId: 'missing-skin-one',
       playerTwoCharacterId: 'missing-two',
+      playerTwoSkinId: 'missing-skin-two',
       sceneId: 'missing-scene',
     }),
   );
@@ -328,6 +384,18 @@ test.each([
     message: 'Player one character is unknown. Choose a listed character.',
   },
   {
+    name: 'missing player one skin',
+    field: 'playerOneSkinId',
+    value: '',
+    message: 'Player one skin is missing. Choose an available skin.',
+  },
+  {
+    name: 'unknown player one skin',
+    field: 'playerOneSkinId',
+    value: 'missing-skin-one',
+    message: 'Player one skin is unknown. Choose an available skin.',
+  },
+  {
     name: 'missing player two ID',
     field: 'playerTwoCharacterId',
     value: '',
@@ -338,6 +406,18 @@ test.each([
     field: 'playerTwoCharacterId',
     value: 'missing-two',
     message: 'Player two character is unknown. Choose a listed character.',
+  },
+  {
+    name: 'missing player two skin',
+    field: 'playerTwoSkinId',
+    value: '',
+    message: 'Player two skin is missing. Choose an available skin.',
+  },
+  {
+    name: 'unknown player two skin',
+    field: 'playerTwoSkinId',
+    value: 'missing-skin-two',
+    message: 'Player two skin is unknown. Choose an available skin.',
   },
   {
     name: 'missing scene ID',

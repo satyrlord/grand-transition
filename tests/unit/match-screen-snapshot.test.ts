@@ -35,7 +35,10 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
 
-    const snapshot = createMatchScreenSnapshot(state);
+    const snapshot = createMatchScreenSnapshot(state, null, null, null, {
+      'player-1': 'alternate',
+      'player-2': 'default',
+    });
 
     expect(snapshot.activePlayerId).toBe(state.activePlayerId);
     expect(snapshot.sharedCards).toHaveLength(9);
@@ -52,6 +55,11 @@ describe('match-screen snapshot', () => {
     expect(snapshot.players.filter((player) => player.isActive)).toHaveLength(
       1,
     );
+    expect(snapshot.players[0].skinId).toBe('alternate');
+    expect(snapshot.players[0].portraitUrl).toContain(
+      'red-folded-chairman--alternate',
+    );
+    expect(snapshot.players[1].skinId).toBe('default');
     expect(snapshot.timer.durationSeconds).toBe(30);
     expect(Object.isFrozen(snapshot)).toBe(true);
     expect(Object.isFrozen(snapshot.sharedCards)).toBe(true);

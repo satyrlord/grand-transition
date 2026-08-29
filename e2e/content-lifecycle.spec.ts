@@ -151,24 +151,35 @@ function addTemporaryCharacter(fixtureRoot: string): void {
     JSON.stringify(fixture, null, 2),
   );
 
-  const portrait = readFileSync(
-    path.join(
-      fixtureRoot,
-      'src',
-      'assets',
-      'characters',
+  for (const [sourceName, destinationPath, marker] of [
+    [
       'red-folded-chairman.png',
-    ),
-  );
-  writeFileSync(
-    characterPortraitPath(fixtureRoot),
-    Buffer.concat([portrait, Buffer.from('\ncontent-lifecycle-fixture\n')]),
-  );
+      characterPortraitPath(fixtureRoot),
+      'default',
+    ],
+    [
+      'red-folded-chairman--alternate.png',
+      characterAlternatePortraitPath(fixtureRoot),
+      'alternate',
+    ],
+  ] as const) {
+    const portrait = readFileSync(
+      path.join(fixtureRoot, 'src', 'assets', 'characters', sourceName),
+    );
+    writeFileSync(
+      destinationPath,
+      Buffer.concat([
+        portrait,
+        Buffer.from(`\ncontent-lifecycle-${marker}-fixture\n`),
+      ]),
+    );
+  }
 }
 
 function removeTemporaryCharacter(fixtureRoot: string): void {
   rmSync(characterJsonPath(fixtureRoot));
   rmSync(characterPortraitPath(fixtureRoot));
+  rmSync(characterAlternatePortraitPath(fixtureRoot));
 }
 
 function characterJsonPath(fixtureRoot: string): string {
@@ -188,6 +199,16 @@ function characterPortraitPath(fixtureRoot: string): string {
     'assets',
     'characters',
     `${temporaryCharacterId}.png`,
+  );
+}
+
+function characterAlternatePortraitPath(fixtureRoot: string): string {
+  return path.join(
+    fixtureRoot,
+    'src',
+    'assets',
+    'characters',
+    `${temporaryCharacterId}--alternate.png`,
   );
 }
 
@@ -237,13 +258,16 @@ async function assertTemporaryCharacterIsPlayable(
   await expect(temporaryOption).toHaveCount(1);
   await expect(temporaryOption).toContainText(temporaryCharacterName);
   await temporaryOption.click();
+  await page
+    .getByRole('button', { name: 'Next skin for Player two' })
+    .click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   await expect(
     page.getByRole('heading', { name: temporaryCharacterName }),
   ).toBeVisible();
   const portrait = page.locator(
-    `img.character-portrait[src*="${temporaryCharacterId}"]`,
+    `img.character-portrait[src*="${temporaryCharacterId}--alternate"]`,
   );
   await expect(portrait).toBeVisible();
   await expect
