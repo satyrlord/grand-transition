@@ -54,7 +54,9 @@ copyrighted broadcast graphics.
 ## Exact constraints
 
 - Identifiers use lower-case kebab case.
-- Arrays that represent sets contain no duplicate value.
+- Arrays that represent sets contain no duplicate value. Player-visible English
+  phrase text is unique across the complete common and character catalog after
+  case, surrounding-space, and repeated-space normalization.
 - Optional restriction and custom-score arrays contain at least one entry when
   present. Each left-and-right noun custom-score relation occurs once.
 - Every identifier and restriction reference resolves.
@@ -62,8 +64,11 @@ copyrighted broadcast graphics.
   each owning character list and scene pool.
 - Phrase rarity is common, uncommon, or rare and controls draw frequency only.
   Each verb and predicate declares one tense family and one of the `past`,
-  `present`, or `future` tenses. Each family has exactly three cards: its past
-  card is common, its present card is uncommon, and its future card is rare.
+  `present`, or `future` tenses. A family contains at most one card for each
+  tense, and all of its cards have distinct player-visible English text. Each
+  family supplies all three tenses except `should-have-been`, which supplies
+  only the distinct `should have been` and `should be` forms. A past card is
+  common, a present card is uncommon, and a future card is rare.
 - A finisher score is an integer from 1 through 20.
 - A custom clause score is an integer from 0 through 100.
 - Nouns alone own noun score groups, grammatical number, grammatical person,
@@ -109,8 +114,9 @@ for a personal-singular or second-person subject also includes both
 predicate whose second-person verb uses plural conjugation while its complement
 stays singular. The loader derives character, phrase, agreement-form, and
 comeback locale keys plus the English message table. It rejects duplicate
-identifiers or roster orders, file-name mismatches, one-sided number or person
-forms, unknown fields, invalid scoring data, and cross-corpus duplicates.
+identifiers, player-visible English phrase text, or roster orders; file-name
+mismatches; one-sided number or person forms; unknown fields; invalid scoring
+data; and cross-corpus duplicates.
 Every phrase and character file explicitly records review state, originality,
 safety flags, and notes. The loader never invents editorial approval.
 
@@ -130,8 +136,9 @@ simulation, and browser validation must pass before it can ship.
   20, and 19, respectively.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
-- **AC-005-03:** Duplicate IDs, unresolved references, restriction violations,
-  duplicate set values, and missing board roles fail at the precise path.
+- **AC-005-03:** Duplicate IDs, duplicate player-visible English phrase text,
+  unresolved references, restriction violations, duplicate set values, and
+  missing board roles fail at the precise path.
 - **AC-005-04:** Locale parity, number and person forms, safe plain text,
   editorial state, and original-media declarations fail independently.
 - **AC-005-05:** Character data contains only character-hand restrictions and
@@ -140,8 +147,8 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 234-card common corpus contains exactly 55 nouns, 96 verbs,
-  39 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
+- **AC-005-07:** The 220-card common corpus contains exactly 55 nouns, 86 verbs,
+  39 predicates, 21 modifiers, 7 conjunctions, 11 endings, and 1
   continuation. It includes
   agreement-aware copular forms for `is`, `was`, `will be`, and `should have
 been`, plus generic ideological and animal-metaphor noun fragments such as
@@ -164,9 +171,8 @@ been`, plus generic ideological and animal-metaphor noun fragments such as
   original-phrase rule only for this entry. Every entry records its research
   rationale. No other entry copies a slogan, and no entry names or identifies a
   real person.
-- **AC-005-08:** The common conjunction pool contains `and`, `but`, `because`,
-  `yet`, `so`, `for`, and `with`. It contains two cards each for `and`, `but`,
-  `because`, and `yet`, plus one card each for `so`, `for`, and `with`.
+- **AC-005-08:** The common conjunction pool contains exactly one card each for
+  `and`, `but`, `because`, `yet`, `so`, `for`, and `with`.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON
   source produces its character record, owned phrase IDs, derived locale keys,
   and exclusive comebacks without registry edits. Browser and Node discovery

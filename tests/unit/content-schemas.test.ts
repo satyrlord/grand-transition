@@ -130,9 +130,9 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 303 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(303);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(234);
+  test('loads 289 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(289);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(220);
     expect(
       Object.fromEntries(
         Object.entries(phraseCardCatalog.characterPhraseIds).map(
@@ -237,7 +237,7 @@ describe('content schemas', () => {
     );
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(303);
+    ).toHaveLength(289);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -465,7 +465,7 @@ describe('content schemas', () => {
     }
   });
 
-  test('keeps the 234-card common corpus at its approved role totals', () => {
+  test('keeps the 220-card common corpus at its approved role totals', () => {
     const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
@@ -486,16 +486,16 @@ describe('content schemas', () => {
 
     expect(roleCounts).toEqual({
       noun: 55,
-      verb: 96,
+      verb: 86,
       predicate: 39,
       modifier: 21,
-      conjunction: 11,
+      conjunction: 7,
       ending: 11,
       continuation: 1,
     });
   });
 
-  test('groups every shipped verb and predicate as a complete tense triplet', () => {
+  test('groups relations by each distinct supported English tense form', () => {
     const expectedRarity = {
       past: 'common',
       present: 'uncommon',
@@ -512,21 +512,23 @@ describe('content schemas', () => {
       families.set(key, [...(families.get(key) ?? []), phrase]);
     }
 
-    expect(families).toHaveLength(56);
+    expect(families).toHaveLength(53);
     for (const [family, members] of families) {
-      expect(members, family).toHaveLength(3);
-      expect(members.map((member) => member.role)).toEqual([
-        members[0]!.role,
-        members[0]!.role,
-        members[0]!.role,
-      ]);
+      const expectedTenses =
+        family === 'common:should-have-been'
+          ? ['past', 'present']
+          : ['future', 'past', 'present'];
+      expect(members, family).toHaveLength(expectedTenses.length);
+      expect(new Set(members.map((member) => member.role))).toEqual(
+        new Set([members[0]!.role]),
+      );
       expect(
         members
           .map((member) => member.tense)
           .toSorted((a, b) => {
             return String(a).localeCompare(String(b));
           }),
-      ).toEqual(['future', 'past', 'present']);
+      ).toEqual(expectedTenses);
       for (const member of members) {
         expect(member.rarity, family + ' ' + member.id).toBe(
           expectedRarity[member.tense!],
@@ -757,10 +759,10 @@ describe('content schemas', () => {
     );
 
     expect(connectorCounts).toEqual({
-      and: 2,
-      but: 2,
-      because: 2,
-      yet: 2,
+      and: 1,
+      but: 1,
+      because: 1,
+      yet: 1,
       so: 1,
       for: 1,
       with: 1,
@@ -806,6 +808,12 @@ describe('content schemas', () => {
       /duplicated/iu,
     );
     expect(() =>
+      parsePhraseCardCorpus([
+        source,
+        { ...source, id: 'manual-card-with-repeated-text' },
+      ]),
+    ).toThrow(/unique player-visible phrase text/iu);
+    expect(() =>
       parsePhraseCardCorpus([{ ...source, singularText: 'a manual card' }]),
     ).toThrow(/both singularText and pluralText/iu);
     expect(() =>
@@ -814,6 +822,16 @@ describe('content schemas', () => {
         byCharacter: { 'test-character': loaded },
       }),
     ).toThrow(/more than one corpus/iu);
+
+    const repeatedText = parsePhraseCardCorpus([
+      { ...source, id: 'character-card-with-repeated-text' },
+    ]);
+    expect(() =>
+      combinePhraseCardCorpora({
+        common: loaded,
+        byCharacter: { 'test-character': repeatedText },
+      }),
+    ).toThrow(/repeats player-visible text/iu);
   });
 
   test('derives complete person-specific agreement messages', () => {

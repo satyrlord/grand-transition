@@ -63,6 +63,7 @@ const manualPhraseCardsSchema = z
   .min(1)
   .superRefine((cards, context) => {
     const seen = new Set<string>();
+    const visibleTextOwner = new Map<string, string>();
     cards.forEach((card, index) => {
       if (seen.has(card.id)) {
         context.addIssue({
@@ -72,6 +73,18 @@ const manualPhraseCardsSchema = z
         });
       }
       seen.add(card.id);
+
+      const visibleText = normalizeVisiblePhraseText(card.text);
+      const previousOwner = visibleTextOwner.get(visibleText);
+      if (previousOwner) {
+        context.addIssue({
+          code: 'custom',
+          path: [index, 'text'],
+          message: `Use unique player-visible phrase text. "${card.text}" duplicates phrase "${previousOwner}".`,
+        });
+      } else {
+        visibleTextOwner.set(visibleText, card.id);
+      }
     });
   });
 
@@ -276,7 +289,12 @@ export function combinePhraseCardCorpora(input: {
 }> {
   const corpora = [input.common, ...Object.values(input.byCharacter)];
   const phrases = corpora.flatMap((corpus) => corpus.phrases);
+  const englishMessages = Object.assign(
+    {},
+    ...corpora.map((corpus) => corpus.englishMessages),
+  ) as Record<string, string>;
   const seen = new Set<string>();
+  const visibleTextOwner = new Map<string, string>();
   for (const phrase of phrases) {
     if (seen.has(phrase.id)) {
       throw new Error(
@@ -284,6 +302,17 @@ export function combinePhraseCardCorpora(input: {
       );
     }
     seen.add(phrase.id);
+
+    const text = englishMessages[phrase.textKey];
+    if (text === undefined) continue;
+    const visibleText = normalizeVisiblePhraseText(text);
+    const previousOwner = visibleTextOwner.get(visibleText);
+    if (previousOwner) {
+      throw new Error(
+        `Phrase card "${phrase.id}" repeats player-visible text from "${previousOwner}". Use unique English phrase text.`,
+      );
+    }
+    visibleTextOwner.set(visibleText, phrase.id);
   }
   return {
     commonPhraseIds: input.common.phrases.map((phrase) => phrase.id),
@@ -294,11 +323,12 @@ export function combinePhraseCardCorpora(input: {
       ]),
     ),
     phrases,
-    englishMessages: Object.assign(
-      {},
-      ...corpora.map((corpus) => corpus.englishMessages),
-    ) as Record<string, string>,
+    englishMessages,
   };
+}
+
+function normalizeVisiblePhraseText(text: string): string {
+  return text.trim().replaceAll(/\s+/gu, ' ').toLocaleLowerCase('en-US');
 }
 
 function fileName(sourceName: string): string {
