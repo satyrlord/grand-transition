@@ -14,8 +14,9 @@ Chairman has 30 character-owned English phrase cards, the Black Sea Captain
 has 19, and the Thunder Tribune has 20. Animal terms in character titles are
 metaphorical.
 
-A phrase owns an identifier, role, text key, optional number forms, optional
-connector kind, optional grammatical number, scoring and weakness tags,
+A phrase owns an identifier, role, text key, optional agreement forms, optional
+connector kind, optional grammatical number, optional grammatical person,
+optional personal or nonpersonal referent kind, scoring and weakness tags,
 optional character and scene restrictions, draw rarity, optional noun-specific
 custom clause scores, optional finisher score, and editorial review.
 Ending text includes a terminal full stop.
@@ -65,9 +66,11 @@ copyrighted broadcast graphics.
   card is common, its present card is uncommon, and its future card is rare.
 - A finisher score is an integer from 1 through 20.
 - A custom clause score is an integer from 0 through 100.
-- Nouns alone own noun score groups and grammatical number. Verbs and
-  predicates alone own relation preferences or custom scores. Modifiers use
-  their tags and restrictions in the preceding clause. Conjunctions alone own
+- Nouns alone own noun score groups, grammatical number, grammatical person,
+  and referent kind. A second-person noun has a personal referent. Verbs and
+  predicates alone own relation preferences, custom scores, and optional
+  personal-singular and second-person agreement forms. Modifiers use their
+  tags and restrictions in the preceding clause. Conjunctions alone own
   connector kinds, and endings alone own required finisher scores.
 - Each weakness tag occurs on at least two phrases.
 - Every shipped phrase has approved original editorial review with no flags.
@@ -99,11 +102,12 @@ inside each phrase card.
 To add a common phrase, copy one same-role object in the common JSON array and
 change its identifier, text, tags, scoring metadata, restrictions, rarity, and
 explicit editorial review. To add a phrase for an existing character, do the
-same in that character's `phrases` array. Verb cards with number agreement
-include both
-`singularText` and `pluralText`. The loader derives character, phrase, number
-form, and comeback locale keys plus the English message table. It rejects
-duplicate identifiers or roster orders, file-name mismatches, one-sided number
+same in that character's `phrases` array. Cards with number agreement include
+both `singularText` and `pluralText`. A verb or predicate whose wording refers
+to its subject also includes both `personalSingularText` and
+`secondPersonText`. The loader derives character, phrase, agreement-form, and
+comeback locale keys plus the English message table. It rejects duplicate
+identifiers or roster orders, file-name mismatches, one-sided number or person
 forms, unknown fields, invalid scoring data, and cross-corpus duplicates.
 Every phrase and character file explicitly records review state, originality,
 safety flags, and notes. The loader never invents editorial approval.
@@ -126,8 +130,8 @@ simulation, and browser validation must pass before it can ship.
   outside them.
 - **AC-005-03:** Duplicate IDs, unresolved references, restriction violations,
   duplicate set values, and missing board roles fail at the precise path.
-- **AC-005-04:** Locale parity, number forms, safe plain text, editorial state,
-  and original-media declarations fail independently.
+- **AC-005-04:** Locale parity, number and person forms, safe plain text,
+  editorial state, and original-media declarations fail independently.
 - **AC-005-05:** Character data contains only character-hand restrictions and
   cannot reserve a common-board phrase.
 - **AC-005-06:** The common and per-character JSON corpora load all phrase
@@ -144,7 +148,9 @@ been`, plus generic ideological and animal-metaphor noun fragments such as
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated forms `was not`, `is not`, `will never be`, and `won't`, and the
   predicate `was a Securitate informer`. The only
-  continuation is the unrestricted `[...]` card. It contains
+  continuation is the unrestricted `[...]` card. It contains second-person
+  `you`, plural `EU funds`, and person-aware subject forms for every shipped
+  relation that contains a possessive reference to its subject. It contains
   Romanian political themes in original English adaptations. The approved
   `under-the-national-banner` ending renders the sourced English form of the
   [public 2017 civic-protest slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)

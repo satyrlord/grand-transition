@@ -387,6 +387,12 @@ function validateLocaleKeys(
     if (phrase.numberForms) {
       requiredKeys.add(phrase.numberForms.singularKey);
       requiredKeys.add(phrase.numberForms.pluralKey);
+      if (phrase.numberForms.personalSingularKey) {
+        requiredKeys.add(phrase.numberForms.personalSingularKey);
+      }
+      if (phrase.numberForms.secondPersonKey) {
+        requiredKeys.add(phrase.numberForms.secondPersonKey);
+      }
     }
   }
   for (const character of catalog.characters) {

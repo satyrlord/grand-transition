@@ -2592,7 +2592,9 @@
     "id": "you",
     "role": "noun",
     "text": "you",
-    "grammaticalNumber": "plural",
+    "grammaticalNumber": "singular",
+    "grammaticalPerson": "second",
+    "referentKind": "personal",
     "tags": ["credibility", "decorum"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -2628,6 +2630,7 @@
     "role": "noun",
     "text": "your parents",
     "grammaticalNumber": "plural",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["family"],
@@ -2663,6 +2666,7 @@
     "role": "noun",
     "text": "your voters",
     "grammaticalNumber": "plural",
+    "referentKind": "personal",
     "tags": ["credibility", "results"],
     "scoreGroups": {
       "substance": ["electoral"],
@@ -2680,6 +2684,7 @@
     "id": "a-sow",
     "role": "noun",
     "text": "a sow",
+    "referentKind": "personal",
     "tags": ["decorum", "restraint"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -2697,6 +2702,7 @@
     "id": "a-thief",
     "role": "noun",
     "text": "a thief",
+    "referentKind": "personal",
     "tags": ["evidence", "credibility"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -2748,6 +2754,7 @@
     "id": "your-brother",
     "role": "noun",
     "text": "your brother",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["family"],
@@ -2765,6 +2772,7 @@
     "id": "your-father",
     "role": "noun",
     "text": "your father",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["family"],
@@ -2782,6 +2790,7 @@
     "id": "your-cousin",
     "role": "noun",
     "text": "your cousin",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["family"],
@@ -2799,6 +2808,7 @@
     "id": "your-son-in-law",
     "role": "noun",
     "text": "your son-in-law",
+    "referentKind": "personal",
     "tags": ["legacy", "authenticity"],
     "scoreGroups": {
       "substance": ["family"],
@@ -2816,6 +2826,7 @@
     "id": "your-mistress",
     "role": "noun",
     "text": "your mistress",
+    "referentKind": "personal",
     "tags": ["credibility", "authenticity"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -2850,6 +2861,7 @@
     "id": "a-neighborhood-apparatchik",
     "role": "noun",
     "text": "a neighborhood apparatchik",
+    "referentKind": "personal",
     "tags": ["legacy", "bureaucracy"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -3331,6 +3343,8 @@
     "text": "could not win an election in its own stairwell",
     "singularText": "could not win an election in its own stairwell",
     "pluralText": "could not win an election in their own stairwell",
+    "personalSingularText": "could not win an election in their own stairwell",
+    "secondPersonText": "could not win an election in your own stairwell",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3356,6 +3370,8 @@
     "text": "cannot win an election in its own stairwell",
     "singularText": "cannot win an election in its own stairwell",
     "pluralText": "cannot win an election in their own stairwell",
+    "personalSingularText": "cannot win an election in their own stairwell",
+    "secondPersonText": "cannot win an election in your own stairwell",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3381,6 +3397,8 @@
     "text": "will not win an election in its own stairwell",
     "singularText": "will not win an election in its own stairwell",
     "pluralText": "will not win an election in their own stairwell",
+    "personalSingularText": "will not win an election in their own stairwell",
+    "secondPersonText": "will not win an election in your own stairwell",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3481,6 +3499,8 @@
     "text": "was rejected by its own voters",
     "singularText": "was rejected by its own voters",
     "pluralText": "were rejected by their own voters",
+    "personalSingularText": "was rejected by their own voters",
+    "secondPersonText": "were rejected by your own voters",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3506,6 +3526,8 @@
     "text": "is rejected by its own voters",
     "singularText": "is rejected by its own voters",
     "pluralText": "are rejected by their own voters",
+    "personalSingularText": "is rejected by their own voters",
+    "secondPersonText": "are rejected by your own voters",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3531,6 +3553,8 @@
     "text": "will be rejected by its own voters",
     "singularText": "will be rejected by its own voters",
     "pluralText": "will be rejected by their own voters",
+    "personalSingularText": "will be rejected by their own voters",
+    "secondPersonText": "will be rejected by your own voters",
     "tags": ["credibility", "results"],
     "scorePreferences": {
       "substance": [
@@ -3631,6 +3655,8 @@
     "text": "makes its own voters change the channel",
     "singularText": "makes its own voters change the channel",
     "pluralText": "make their own voters change the channel",
+    "personalSingularText": "makes their own voters change the channel",
+    "secondPersonText": "make your own voters change the channel",
     "tags": ["credibility", "media"],
     "scorePreferences": {
       "substance": [
@@ -3656,6 +3682,8 @@
     "text": "made its own voters change the channel",
     "singularText": "made its own voters change the channel",
     "pluralText": "made their own voters change the channel",
+    "personalSingularText": "made their own voters change the channel",
+    "secondPersonText": "made your own voters change the channel",
     "tags": ["credibility", "media"],
     "scorePreferences": {
       "substance": [
@@ -3681,6 +3709,8 @@
     "text": "will make its own voters change the channel",
     "singularText": "will make its own voters change the channel",
     "pluralText": "will make their own voters change the channel",
+    "personalSingularText": "will make their own voters change the channel",
+    "secondPersonText": "will make your own voters change the channel",
     "tags": ["credibility", "media"],
     "scorePreferences": {
       "substance": [
@@ -3929,6 +3959,7 @@
     "id": "a-communist",
     "role": "noun",
     "text": "a communist",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -3946,6 +3977,7 @@
     "id": "a-liberal",
     "role": "noun",
     "text": "a liberal",
+    "referentKind": "personal",
     "tags": ["modernity", "credibility"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -3963,6 +3995,7 @@
     "id": "a-globalist",
     "role": "noun",
     "text": "a globalist",
+    "referentKind": "personal",
     "tags": ["modernity", "consistency"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -3980,6 +4013,7 @@
     "id": "a-sovereignist",
     "role": "noun",
     "text": "a sovereignist",
+    "referentKind": "personal",
     "tags": ["legacy", "consistency"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -3997,6 +4031,7 @@
     "id": "a-fascist",
     "role": "noun",
     "text": "a fascist",
+    "referentKind": "personal",
     "tags": ["legacy", "credibility"],
     "scoreGroups": {
       "substance": ["politics"],
@@ -4014,6 +4049,7 @@
     "id": "a-pig",
     "role": "noun",
     "text": "a pig",
+    "referentKind": "personal",
     "tags": ["decorum", "restraint"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -4031,6 +4067,7 @@
     "id": "a-nazi",
     "role": "noun",
     "text": "a Nazi",
+    "referentKind": "personal",
     "tags": ["legacy", "evidence"],
     "scoreGroups": {
       "substance": ["history", "politics"],
@@ -4438,6 +4475,7 @@
     "id": "eu-funds",
     "role": "noun",
     "text": "EU funds",
+    "grammaticalNumber": "plural",
     "tags": ["bureaucracy", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -4608,6 +4646,7 @@
     "id": "a-state-secretary",
     "role": "noun",
     "text": "a state secretary",
+    "referentKind": "personal",
     "tags": ["bureaucracy", "decorum"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -4937,6 +4976,7 @@
     "id": "a-witch",
     "role": "noun",
     "text": "a witch",
+    "referentKind": "personal",
     "tags": ["credibility", "restraint"],
     "scoreGroups": {
       "substance": ["personal"],
@@ -4954,6 +4994,7 @@
     "id": "my-opponent",
     "role": "noun",
     "text": "my opponent",
+    "referentKind": "personal",
     "tags": ["credibility", "consistency"],
     "scoreGroups": {
       "substance": ["personal", "politics"],

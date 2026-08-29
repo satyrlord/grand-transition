@@ -76,6 +76,147 @@ describe('Hollywood Roast English grammar', () => {
     }
   });
 
+  test('renders complete number, person, and referent agreement', () => {
+    const cases = [
+      [
+        ['your-party', 'makes-own-voters-change-the-channel'],
+        'Your party makes its own voters change the channel',
+      ],
+      [
+        ['my-opponent', 'makes-own-voters-change-the-channel'],
+        'My opponent makes their own voters change the channel',
+      ],
+      [
+        ['your-parents', 'makes-own-voters-change-the-channel'],
+        'Your parents make their own voters change the channel',
+      ],
+      [
+        ['you', 'makes-own-voters-change-the-channel'],
+        'You make your own voters change the channel',
+      ],
+      [
+        ['eu-funds', 'makes-own-voters-change-the-channel'],
+        'EU funds make their own voters change the channel',
+      ],
+    ] as const;
+
+    for (const [ids, expected] of cases) {
+      const result = analyze(ids.map(add));
+      expect(result, ids.join(' + ')).toMatchObject({
+        accepted: true,
+        analysis: { complete: true, publicText: expected },
+      });
+    }
+
+    expect(
+      analyze([add('you'), add('rebrands'), add('national-consensus')]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { publicText: 'You rebrand a national consensus' },
+    });
+    expect(
+      analyze([add('my-opponent'), add('rebrands'), add('national-consensus')]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { publicText: 'My opponent rebrands a national consensus' },
+    });
+  });
+
+  test('renders every shipped possessive relation for every shipped noun', () => {
+    const relationIds = [
+      'could-not-win-own-stairwell',
+      'cannot-win-own-stairwell',
+      'will-not-win-own-stairwell',
+      'was-rejected-by-own-voters',
+      'is-rejected-by-own-voters',
+      'will-be-rejected-by-own-voters',
+      'makes-own-voters-change-the-channel',
+      'made-own-voters-change-the-channel',
+      'will-make-own-voters-change-the-channel',
+      'cannot-steer-own-party-from-puddle',
+      'could-not-steer-own-party-from-puddle',
+      'will-not-steer-own-party-from-puddle',
+    ] as const;
+    const nouns = sampleContent.phrases.filter(
+      (candidate) => candidate.role === 'noun',
+    );
+
+    for (const noun of nouns) {
+      const expectedPossessive =
+        noun.grammaticalPerson === 'second'
+          ? 'your'
+          : noun.grammaticalNumber === 'plural' ||
+              noun.referentKind === 'personal'
+            ? 'their'
+            : 'its';
+      for (const relationId of relationIds) {
+        const result = analyze([add(noun.id), add(relationId)]);
+        expect(result, `${noun.id} + ${relationId}`).toMatchObject({
+          accepted: true,
+          analysis: { complete: true },
+        });
+        if (result.accepted) {
+          expect(
+            result.analysis.renderedPhrases[1]?.text,
+            `${noun.id} + ${relationId}`,
+          ).toContain(`${expectedPossessive} own`);
+        }
+      }
+    }
+  });
+
+  test('keeps second-person agreement through shared and compound subjects', () => {
+    const shared = analyze([
+      add('you'),
+      add('made-own-voters-change-the-channel'),
+      add('coalition-and'),
+      add('could-not-win-own-stairwell'),
+      { kind: 'end' },
+    ]);
+    expect(shared).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText:
+          'You made your own voters change the channel and could not win an election in your own stairwell.',
+      },
+    });
+
+    const compound = analyze([
+      add('my-opponent'),
+      add('coalition-and'),
+      add('you'),
+      add('made-own-voters-change-the-channel'),
+    ]);
+    expect(compound).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        agreement: { subject: 'plural' },
+        publicText:
+          'My opponent and you made your own voters change the channel',
+      },
+    });
+  });
+
+  test('replaces person agreement when a conjunction starts a new subject', () => {
+    const result = analyze([
+      add('you'),
+      add('made-own-voters-change-the-channel'),
+      add('coalition-and'),
+      add('my-opponent'),
+      add('made-own-voters-change-the-channel'),
+    ]);
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText:
+          'You made your own voters change the channel and my opponent made their own voters change the channel',
+      },
+    });
+  });
+
   test('accepts and after a complete clause with a new or shared subject', () => {
     expect(
       analyze([

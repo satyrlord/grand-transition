@@ -47,6 +47,7 @@
       "id": "tribunes-indictment",
       "role": "noun",
       "text": "that prime-time scarecrow",
+      "referentKind": "personal",
       "tags": ["evidence", "credibility"],
       "scoreGroups": {
         "substance": ["media"],
@@ -306,6 +307,7 @@
       "id": "that-powdered-scarecrow",
       "role": "noun",
       "text": "that powdered scarecrow",
+      "referentKind": "personal",
       "tags": ["decorum", "authenticity"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -340,6 +342,7 @@
       "id": "a-squealing-party-trumpet",
       "role": "noun",
       "text": "a squealing party trumpet",
+      "referentKind": "personal",
       "tags": ["restraint", "credibility"],
       "scoreGroups": {
         "substance": ["politics"],
@@ -357,6 +360,7 @@
       "id": "a-cursed-gnome",
       "role": "noun",
       "text": "a cursed gnome",
+      "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -374,6 +378,7 @@
       "id": "a-somaldoaca",
       "role": "noun",
       "text": "a șomâldoacă",
+      "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],

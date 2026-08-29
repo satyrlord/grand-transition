@@ -19,6 +19,73 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+test('shows complete second-person agreement in the sentence bubble', async () => {
+  document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  await app.updateComplete;
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+
+  const owner = app as unknown as { matchState: MatchState };
+  const state = owner.matchState;
+  const activePlayerId = state.draft!.activePlayerId;
+  const player = state.draft!.playerStates[activePlayerId]!;
+  const phraseIds = [
+    'you',
+    'made-own-voters-change-the-channel',
+    'coalition-and',
+    'could-not-win-own-stairwell',
+  ] as const;
+  const steps = phraseIds.map((phraseId) => ({
+    kind: 'phrase' as const,
+    phrase: prepareEnglishGrammarPhrase(
+      sampleContent.phrases.find((phrase) => phrase.id === phraseId)!,
+      englishGameLocale,
+    ),
+  }));
+  const result = englishGrammarAdapter.analyze({
+    steps,
+    subjectNumber: player.subjectNumber,
+    objectNumber: player.objectNumber,
+  });
+  if (!result.accepted) throw new Error('Agreement fixture grammar failed.');
+
+  owner.matchState = {
+    ...state,
+    draft: {
+      ...state.draft!,
+      playerStates: {
+        ...state.draft!.playerStates,
+        [activePlayerId]: {
+          ...player,
+          construction: {
+            ...player.construction,
+            steps,
+            analysis: result.analysis,
+            previewText: result.analysis.publicText,
+            requiredRoles: result.analysis.nextRoles,
+            selectedCards: phraseIds.map((phraseId) => ({
+              phraseId,
+              source: 'restored' as const,
+            })),
+          },
+        },
+      },
+    },
+  };
+  await app.updateComplete;
+  const match = document.querySelector(
+    'grand-transition-match',
+  ) as GrandTransitionMatch;
+  await match.updateComplete;
+
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
+    'You made your own voters change the channel and could not win an election in your own stairwell',
+  );
+});
+
 test('holds a comeback sentence under the between-round results modal', async () => {
   vi.useFakeTimers();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';

@@ -13,6 +13,8 @@ export const englishGrammarStates = [
 
 export type EnglishGrammarState = (typeof englishGrammarStates)[number];
 export type GrammaticalNumber = 'singular' | 'plural';
+export type GrammaticalPerson = 'second' | 'third';
+export type ReferentKind = 'personal' | 'nonpersonal';
 export type EnglishGrammarRole = Extract<
   Phrase['role'],
   'noun' | 'verb' | 'predicate' | 'modifier' | 'conjunction' | 'ending'
@@ -24,9 +26,13 @@ export type EnglishGrammarPhrase = Readonly<{
   connectorKind?:
     'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
   grammaticalNumber?: GrammaticalNumber | null;
+  grammaticalPerson?: GrammaticalPerson | null;
+  referentKind?: ReferentKind | null;
   defaultText: string;
   singularText: string;
   pluralText: string;
+  personalSingularText: string;
+  secondPersonText: string;
 }>;
 
 export type EnglishGrammarStep =
@@ -84,6 +90,8 @@ export type EnglishGrammarFault = Readonly<{
 type ParseContext = {
   state: Exclude<EnglishGrammarState, 'ENDED'>;
   subjectNumber: GrammaticalNumber;
+  subjectPerson: GrammaticalPerson;
+  subjectReferentKind: ReferentKind;
   subjectNounCount: number;
   hasCompleteClause: boolean;
   conjunctionFromSubject: boolean;
@@ -119,6 +127,12 @@ export function prepareEnglishGrammarPhrase(
   }
 
   const defaultText = requireMessage(locale, phrase.textKey);
+  const singularText = phrase.numberForms
+    ? requireMessage(locale, phrase.numberForms.singularKey)
+    : defaultText;
+  const pluralText = phrase.numberForms
+    ? requireMessage(locale, phrase.numberForms.pluralKey)
+    : defaultText;
   return {
     id: phrase.id,
     role: phrase.role,
@@ -128,13 +142,19 @@ export function prepareEnglishGrammarPhrase(
         : null,
     grammaticalNumber:
       phrase.role === 'noun' ? (phrase.grammaticalNumber ?? 'singular') : null,
+    grammaticalPerson:
+      phrase.role === 'noun' ? (phrase.grammaticalPerson ?? 'third') : null,
+    referentKind:
+      phrase.role === 'noun' ? (phrase.referentKind ?? 'nonpersonal') : null,
     defaultText,
-    singularText: phrase.numberForms
-      ? requireMessage(locale, phrase.numberForms.singularKey)
-      : defaultText,
-    pluralText: phrase.numberForms
-      ? requireMessage(locale, phrase.numberForms.pluralKey)
-      : defaultText,
+    singularText,
+    pluralText,
+    personalSingularText: phrase.numberForms?.personalSingularKey
+      ? requireMessage(locale, phrase.numberForms.personalSingularKey)
+      : singularText,
+    secondPersonText: phrase.numberForms?.secondPersonKey
+      ? requireMessage(locale, phrase.numberForms.secondPersonKey)
+      : pluralText,
   };
 }
 
@@ -147,6 +167,8 @@ export const englishGrammarAdapter: GrammarAdapter<
     let context: ParseContext = {
       state: 'EXPECT_SUBJECT',
       subjectNumber: input.subjectNumber,
+      subjectPerson: 'third',
+      subjectReferentKind: 'nonpersonal',
       subjectNounCount: 0,
       hasCompleteClause: false,
       conjunctionFromSubject: false,
@@ -224,6 +246,8 @@ function transition(
       ...context,
       state: 'SUBJECT_READY',
       subjectNumber: phrase.grammaticalNumber ?? 'singular',
+      subjectPerson: phrase.grammaticalPerson ?? 'third',
+      subjectReferentKind: phrase.referentKind ?? 'nonpersonal',
       subjectNounCount: 1,
       connectorAwaitingSubject: false,
       frontBecausePending: false,
@@ -326,10 +350,16 @@ function transition(
     const subjectNounCount = context.conjunctionFromSubject
       ? context.subjectNounCount + 1
       : 1;
+    const nounPerson = phrase.grammaticalPerson ?? 'third';
     return {
       ...context,
       state: 'SUBJECT_READY',
       subjectNumber: subjectNounCount > 1 ? 'plural' : nounNumber,
+      subjectPerson:
+        context.conjunctionFromSubject && context.subjectPerson === 'second'
+          ? 'second'
+          : nounPerson,
+      subjectReferentKind: phrase.referentKind ?? 'nonpersonal',
       subjectNounCount,
       conjunctionFromSubject: false,
       connectorAwaitingSubject: false,
@@ -410,6 +440,8 @@ function transition(
           ...context,
           state: 'CLAUSE_COMPLETE',
           subjectNumber: phrase.grammaticalNumber ?? 'singular',
+          subjectPerson: phrase.grammaticalPerson ?? 'third',
+          subjectReferentKind: phrase.referentKind ?? 'nonpersonal',
           subjectNounCount: 1,
           conjunctionAfterObjectVerb: false,
           compoundObjectComplete: true,
@@ -419,6 +451,8 @@ function transition(
         ...context,
         state: 'SUBJECT_READY',
         subjectNumber: phrase.grammaticalNumber ?? 'singular',
+        subjectPerson: phrase.grammaticalPerson ?? 'third',
+        subjectReferentKind: phrase.referentKind ?? 'nonpersonal',
         subjectNounCount: 1,
         completedWithObjectVerb: false,
         conjunctionAfterObjectVerb: false,
@@ -486,11 +520,20 @@ function renderPhrase(
         ? (phrase.grammaticalNumber ?? null)
         : null;
   const text =
-    grammaticalNumber === 'plural'
-      ? phrase.pluralText
-      : grammaticalNumber === 'singular'
-        ? phrase.singularText
-        : phrase.defaultText;
+    phrase.role === 'verb' || phrase.role === 'predicate'
+      ? context.subjectPerson === 'second'
+        ? phrase.secondPersonText
+        : grammaticalNumber === 'singular' &&
+            context.subjectReferentKind === 'personal'
+          ? phrase.personalSingularText
+          : grammaticalNumber === 'plural'
+            ? phrase.pluralText
+            : phrase.singularText
+      : grammaticalNumber === 'plural'
+        ? phrase.pluralText
+        : grammaticalNumber === 'singular'
+          ? phrase.singularText
+          : phrase.defaultText;
   return {
     phraseId: phrase.id,
     role: phrase.role,

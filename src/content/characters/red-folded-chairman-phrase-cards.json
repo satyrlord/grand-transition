@@ -244,6 +244,7 @@
       "id": "a-committee-room-fossil",
       "role": "noun",
       "text": "a committee-room fossil",
+      "referentKind": "personal",
       "tags": ["modernity", "bureaucracy"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -370,6 +371,7 @@
       "id": "a-free-thinker",
       "role": "noun",
       "text": "a free-thinker",
+      "referentKind": "personal",
       "tags": ["modernity", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -404,6 +406,7 @@
       "id": "the-working-class",
       "role": "noun",
       "text": "the working class",
+      "referentKind": "personal",
       "tags": ["legacy", "credibility"],
       "scoreGroups": {
         "substance": ["politics"],
@@ -422,6 +425,7 @@
       "role": "noun",
       "text": "some hooligans",
       "grammaticalNumber": "plural",
+      "referentKind": "personal",
       "tags": ["decorum", "restraint"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -473,6 +477,7 @@
       "id": "a-dumbass",
       "role": "noun",
       "text": "a dumbass",
+      "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -490,6 +495,7 @@
       "id": "an-animal",
       "role": "noun",
       "text": "an animal",
+      "referentKind": "personal",
       "tags": ["decorum", "restraint"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -537,6 +543,7 @@
       "id": "a-rooster",
       "role": "noun",
       "text": "a rooster",
+      "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -554,6 +561,7 @@
       "id": "a-monkey",
       "role": "noun",
       "text": "a monkey",
+      "referentKind": "personal",
       "tags": ["decorum", "restraint"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -571,6 +579,7 @@
       "id": "a-naughty-boy",
       "role": "noun",
       "text": "a naughty boy",
+      "referentKind": "personal",
       "tags": ["restraint", "credibility"],
       "scoreGroups": {
         "substance": ["personal"],

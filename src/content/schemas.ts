@@ -34,6 +34,8 @@ export const sentencePoolRoles = ['noun', 'verb', 'predicate'] as const;
 export const phraseRoleSchema = z.enum(phraseRoles);
 export const phraseTenses = ['past', 'present', 'future'] as const;
 export const phraseTenseSchema = z.enum(phraseTenses);
+export const grammaticalPersonSchema = z.enum(['second', 'third']);
+export const referentKindSchema = z.enum(['personal', 'nonpersonal']);
 export const connectorKindSchema = z.enum([
   'and',
   'because',
@@ -142,6 +144,8 @@ export const phraseDefinitionSchema = z
     tenseFamily: identifierSchema.optional(),
     connectorKind: connectorKindSchema.optional(),
     grammaticalNumber: z.enum(['singular', 'plural']).optional(),
+    grammaticalPerson: grammaticalPersonSchema.optional(),
+    referentKind: referentKindSchema.optional(),
     customScores: customScoresSchema.optional(),
     scoreGroups: scoreGroupsSchema.optional(),
     scorePreferences: scorePreferencesSchema.optional(),
@@ -149,10 +153,32 @@ export const phraseDefinitionSchema = z
       .object({
         singularKey: localeKeySchema,
         pluralKey: localeKeySchema,
+        personalSingularKey: localeKeySchema.optional(),
+        secondPersonKey: localeKeySchema.optional(),
       })
       .strict()
-      .refine((forms) => forms.singularKey !== forms.pluralKey, {
-        message: 'Use different locale keys for singular and plural forms.',
+      .superRefine((forms, context) => {
+        if (
+          Boolean(forms.personalSingularKey) !== Boolean(forms.secondPersonKey)
+        ) {
+          context.addIssue({
+            code: 'custom',
+            message:
+              'Add both personal-singular and second-person keys, or omit both.',
+          });
+        }
+        const keys = [
+          forms.singularKey,
+          forms.pluralKey,
+          forms.personalSingularKey,
+          forms.secondPersonKey,
+        ].filter((key): key is string => key !== undefined);
+        if (new Set(keys).size !== keys.length) {
+          context.addIssue({
+            code: 'custom',
+            message: 'Use a different locale key for each agreement form.',
+          });
+        }
       })
       .optional(),
     tags: uniqueArray(identifierSchema, 'List each phrase tag only once.').min(
@@ -234,8 +260,41 @@ export const phraseSchema = phraseDefinitionSchema.superRefine(
       issue('finisherBonus', 'Only an ending can declare a finisher score.');
     }
 
-    if (phrase.role !== 'noun' && phrase.grammaticalNumber) {
-      issue('grammaticalNumber', 'Only a noun can declare grammatical number.');
+    if (
+      phrase.role !== 'noun' &&
+      (phrase.grammaticalNumber ||
+        phrase.grammaticalPerson ||
+        phrase.referentKind)
+    ) {
+      issue(
+        phrase.grammaticalNumber
+          ? 'grammaticalNumber'
+          : phrase.grammaticalPerson
+            ? 'grammaticalPerson'
+            : 'referentKind',
+        'Only a noun can declare grammatical number, person, or referent kind.',
+      );
+    }
+
+    if (
+      phrase.grammaticalPerson === 'second' &&
+      phrase.referentKind !== 'personal'
+    ) {
+      issue(
+        'referentKind',
+        'A second-person noun must declare a personal referent kind.',
+      );
+    }
+
+    if (
+      phrase.numberForms?.personalSingularKey &&
+      phrase.role !== 'verb' &&
+      phrase.role !== 'predicate'
+    ) {
+      issue(
+        'numberForms',
+        'Only a verb or predicate can declare person-specific agreement forms.',
+      );
     }
   },
 );

@@ -35,7 +35,9 @@ selectable draft action and does not enter the grammar adapter.
 
 `NOUN + AND + NOUN` is one compound subject. It remains incomplete and accepts
 another `and`, a predicate, or a verb followed by an object. Compound subjects
-use plural verb and predicate forms. A single noun uses its declared number.
+use plural verb and predicate forms. A compound subject that contains a
+second-person noun retains second-person agreement. A single noun uses its
+declared number, person, and referent kind.
 
 After `NOUN + VERB + NOUN`, `and` can add another noun object. The sentence
 remains complete after the added object. That noun can also become the subject
@@ -86,11 +88,19 @@ noun clause.
 
 ## Rendering
 
-English rendering uses sentence case, phrase-defined singular and plural forms,
-and exactly one terminal full stop for a normally ended complete sentence.
-Ending text already includes its terminal full stop, so rendering does not add a
-second one. It does not change a selected noun phrase into another number form.
-A phrase without number forms uses its default text.
+English rendering uses sentence case and phrase-defined agreement forms. A
+third-person nonpersonal singular subject uses the singular form. A
+third-person personal singular subject uses the personal-singular form when it
+exists. A plural subject uses the plural form. A second-person subject uses the
+second-person form when it exists and otherwise uses the plural form because
+English second-person verbs use that conjugation. Shared-subject branches keep
+the subject's person and referent kind. New-subject branches replace them.
+
+Rendering adds exactly one terminal full stop for a normally ended complete
+sentence. Ending text already includes its terminal full stop, so rendering
+does not add a second one. Rendering does not change a selected noun phrase
+into another number form. A phrase without agreement forms uses its default
+text.
 
 ## Acceptance criteria
 
@@ -103,7 +113,8 @@ A phrase without number forms uses its default text.
   and `for` branches with their required noun transitions, and the `with`
   noun-complement branch.
 - **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
-  agreement, and rejection after an ending.
+  singular, plural, personal-singular, second-person, compound-subject, and
+  shared-subject agreement, plus rejection after an ending.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable
   typed evidence without changing game state.
 - **AC-006-06:** Tests prove one and several modifiers after complete predicate
@@ -114,3 +125,5 @@ A phrase without number forms uses its default text.
 
 `tests/unit/english-grammar-core.test.ts` and
 `tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-06.
+`tests/browser/seamless-match-flow.browser.test.ts` verifies that the rendered
+second-person result reaches the visible sentence bubble.
