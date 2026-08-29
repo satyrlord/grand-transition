@@ -23,7 +23,7 @@ Ending text includes a terminal full stop.
 Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
 `continuation`. A modifier is an adverbial or descriptive phrase that can
 follow a complete clause without ending it. Conjunctions declare `and`, `but`,
-`because`, `yet`, `so`, or `for`. Nouns can declare singular or plural. A verb
+`because`, `yet`, `so`, `for`, or `with`. Nouns can declare singular or plural. A verb
 or predicate can declare an exact left-noun and optional right-noun custom
 clause score from 0 through 100. Otherwise, Milestone 010 calculates group
 compatibility.
@@ -131,13 +131,16 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 137-card common corpus contains exactly 53 nouns, 32 verbs,
-  10 predicates, 20 modifiers, 10 conjunctions, 11 endings, and 1
+- **AC-005-07:** The 144-card common corpus contains exactly 55 nouns, 33 verbs,
+  12 predicates, 21 modifiers, 11 conjunctions, 11 endings, and 1
   continuation. It includes
   agreement-aware copular forms for `is`, `was`, `will be`, and `should have
 been`, plus generic ideological and animal-metaphor noun fragments such as
   `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
-  `a pig`, and `a Nazi`. The only
+  `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
+  past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
+  negated forms `was not`, `is not`, `will never be`, and `won't`, and the
+  predicate `was a Securitate informer`. The only
   continuation is the unrestricted `[...]` card. It contains
   Romanian political themes in original English adaptations. The approved
   `under-the-national-banner` ending renders the sourced English form of the
@@ -148,8 +151,8 @@ been`, plus generic ideological and animal-metaphor noun fragments such as
   rationale. No other entry copies a slogan, and no entry names or identifies a
   real person.
 - **AC-005-08:** The common conjunction pool contains `and`, `but`, `because`,
-  `yet`, `so`, and `for`. It contains two cards each for `and`, `but`,
-  `because`, and `yet`, plus one card each for `so` and `for`.
+  `yet`, `so`, `for`, and `with`. It contains two cards each for `and`, `but`,
+  `because`, and `yet`, plus one card each for `so`, `for`, and `with`.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON
   source produces its character record, owned phrase IDs, derived locale keys,
   and exclusive comebacks without registry edits. Browser and Node discovery

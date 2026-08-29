@@ -607,7 +607,7 @@ describe('Hollywood Roast draft actions', () => {
     const illegalStep = {
       kind: 'phrase' as const,
       phrase: prepareEnglishGrammarPhrase(
-        sampleContent.phrases.find((phrase) => phrase.id === 'repackages')!,
+        sampleContent.phrases.find((phrase) => phrase.id === 'rebrands')!,
         englishGameLocale,
       ),
     };

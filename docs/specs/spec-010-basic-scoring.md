@@ -16,6 +16,10 @@ A modifier belongs to the preceding complete clause. It does not create a new
 clause and does not replace the clause relation. Its tags and character or scene
 restriction can affect that clause. Noun combos do not treat it as a noun.
 
+The `with` connector and its noun complement also belong to the preceding
+complete clause. The complement can affect tags and restriction scoring, but it
+does not replace the relation or become a second scored object.
+
 Each relation defines substance and flavour compatibility with its noun input.
 An explicit custom score overrides the compatibility calculation. Otherwise:
 

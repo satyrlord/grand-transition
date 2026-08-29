@@ -214,6 +214,58 @@ describe('Hollywood Roast extended grammar', () => {
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
+  test('uses with to add a noun complement to a complete clause', () => {
+    const result = analyze([
+      add('my-opponent'),
+      add('interrupts-the-debate'),
+      add('with'),
+      add('a-public-apology'),
+      { kind: 'end' },
+    ]);
+
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        state: 'ENDED',
+        publicText: 'My opponent interrupts this debate with a public apology.',
+      },
+    });
+  });
+
+  test('keeps a past-tense insult composable with an institutional modifier', () => {
+    const result = analyze([
+      add('your-brother'),
+      add('denounced'),
+      add('your-mistress'),
+      add('to-the-securitate'),
+      { kind: 'end' },
+    ]);
+
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        state: 'ENDED',
+        publicText: 'Your brother denounced your mistress to the Securitate.',
+      },
+    });
+  });
+
+  test.each([
+    ['stole', 'EU funds'],
+    ['appropriated', 'EU funds'],
+    ['was-not', 'a state secretary'],
+    ['is-not', 'a state secretary'],
+    ['will-never-be', 'a state secretary'],
+    ['wont', 'a state secretary'],
+  ] as const)('accepts the requested verb card %s with %s', (verb, object) => {
+    const objectId = object === 'EU funds' ? 'eu-funds' : 'a-state-secretary';
+    expect(
+      analyze([add('my-opponent'), add(verb), add(objectId)]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+  });
+
   test.each(['consequence-so', 'explanation-for'])(
     '%s joins complete clauses and requires a new noun subject',
     (connector) => {

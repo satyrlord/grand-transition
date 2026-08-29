@@ -65,7 +65,7 @@ describe('Hollywood Roast combos and finishers', () => {
       },
     };
     const result = score(
-      ['national-consensus', 'repackages', 'national-consensus'],
+      ['national-consensus', 'rebrands', 'national-consensus'],
       prior,
     );
     expect(result.score.breakdown).toContainEqual(

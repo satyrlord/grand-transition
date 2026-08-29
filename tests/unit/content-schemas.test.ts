@@ -53,7 +53,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
   },
   {
     name: 'phrase finisher bonus',
-    pathPart: 'phrases.12.finisherBonus',
+    pathPart: 'phrases.11.finisherBonus',
     minimum: 1,
     maximum: 20,
     immediatelyBelow: 0,
@@ -129,9 +129,9 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-  test('loads 184 unique cards from the common and character JSON corpora', () => {
-    expect(phraseCardCatalog.phrases).toHaveLength(184);
-    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(137);
+  test('loads 191 unique cards from the common and character JSON corpora', () => {
+    expect(phraseCardCatalog.phrases).toHaveLength(191);
+    expect(phraseCardCatalog.commonPhraseIds).toHaveLength(144);
     expect(
       Object.fromEntries(
         Object.entries(phraseCardCatalog.characterPhraseIds).map(
@@ -187,6 +187,20 @@ describe('content schemas', () => {
         'your-cousin',
         'your-son-in-law',
         'your-mistress',
+        'stole',
+        'eu-funds',
+        'appropriated',
+        'was-a-securitate-informer',
+        'a-state-secretary',
+        'was-not',
+        'is-not',
+        'will-never-be',
+        'wont',
+        'a-witch',
+        'my-opponent',
+        'with',
+        'a-public-apology',
+        'to-the-securitate',
       ]),
     );
     expect(phraseCardCatalog.commonPhraseIds).not.toContain(
@@ -203,13 +217,27 @@ describe('content schemas', () => {
       'phrase.your-cousin': 'your cousin',
       'phrase.your-son-in-law': 'your son-in-law',
       'phrase.your-mistress': 'your mistress',
+      'phrase.stole': 'stole',
+      'phrase.eu-funds': 'EU funds',
+      'phrase.appropriated': 'appropriated',
+      'phrase.was-a-securitate-informer': 'was a Securitate informer',
+      'phrase.a-state-secretary': 'a state secretary',
+      'phrase.was-not': 'was not',
+      'phrase.is-not': 'is not',
+      'phrase.will-never-be': 'will never be',
+      'phrase.wont': "won't",
+      'phrase.a-witch': 'a witch',
+      'phrase.my-opponent': 'my opponent',
+      'phrase.with': 'with',
+      'phrase.a-public-apology': 'a public apology',
+      'phrase.to-the-securitate': 'to the Securitate',
     });
     expect(phraseCardCatalog.characterPhraseIds['black-sea-captain']).toEqual(
       expect.arrayContaining(['hands-on-presidency', 'your-leaking-flagship']),
     );
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
-    ).toHaveLength(184);
+    ).toHaveLength(191);
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -306,7 +334,42 @@ describe('content schemas', () => {
     }
   });
 
-  test('keeps the 137-card common corpus at its approved role totals', () => {
+  test('loads requested tense variants with valid number agreement', () => {
+    const expected = [
+      ['denounced', 'denounced', 'denounced'],
+      ['negotiated', 'negotiated', 'negotiated'],
+      ['consulted', 'consulted', 'consulted'],
+      ['allocated', 'allocated', 'allocated'],
+      ['contested', 'contested', 'contested'],
+      ['promised', 'promised', 'promised'],
+      ['unveiled', 'unveiled', 'unveiled'],
+      ['coordinated', 'coordinated', 'coordinated'],
+      ['stole', 'stole', 'stole'],
+      ['appropriated', 'appropriated', 'appropriated'],
+      ['was-not', 'was not', 'were not'],
+      ['is-not', 'is not', 'are not'],
+      ['will-never-be', 'will never be', 'will never be'],
+      ['wont', "won't", "won't"],
+    ] as const;
+
+    for (const [id, singular, plural] of expected) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === id,
+      );
+      expect(phrase, id).toMatchObject({
+        role: 'verb',
+        numberForms: expect.anything(),
+      });
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}.singular`]).toBe(
+        singular,
+      );
+      expect(phraseCardCatalog.englishMessages[`phrase.${id}.plural`]).toBe(
+        plural,
+      );
+    }
+  });
+
+  test('keeps the 144-card common corpus at its approved role totals', () => {
     const commonPhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
@@ -326,11 +389,11 @@ describe('content schemas', () => {
     );
 
     expect(roleCounts).toEqual({
-      noun: 53,
-      verb: 32,
-      predicate: 10,
-      modifier: 20,
-      conjunction: 10,
+      noun: 55,
+      verb: 33,
+      predicate: 12,
+      modifier: 21,
+      conjunction: 11,
       ending: 11,
       continuation: 1,
     });
@@ -363,6 +426,7 @@ describe('content schemas', () => {
         'on-public-television',
         'on-the-campaign-trail',
         'through-another-reform-cycle',
+        'to-the-securitate',
         'under-an-emergency-ordinance',
         'under-the-studio-lights',
         'with-coalition-partners',
@@ -475,7 +539,7 @@ describe('content schemas', () => {
     const securitatePhrases = phraseCardCatalog.phrases.filter((phrase) =>
       phraseCardCatalog.englishMessages[phrase.textKey]?.includes('Securitate'),
     );
-    expect(securitatePhrases).toHaveLength(2);
+    expect(securitatePhrases).toHaveLength(4);
     expect(
       securitatePhrases.every((phrase) => phrase.tags.includes('securitate')),
     ).toBe(true);
@@ -556,7 +620,7 @@ describe('content schemas', () => {
         phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
     const connectorCounts = Object.fromEntries(
-      ['and', 'but', 'because', 'yet', 'so', 'for'].map((kind) => [
+      ['and', 'but', 'because', 'yet', 'so', 'for', 'with'].map((kind) => [
         kind,
         commonConjunctions.filter((phrase) => phrase.connectorKind === kind)
           .length,
@@ -570,6 +634,7 @@ describe('content schemas', () => {
       yet: 2,
       so: 1,
       for: 1,
+      with: 1,
     });
   });
 
@@ -1084,11 +1149,11 @@ describe('content schemas', () => {
 
   test('rejects unsafe HTML in game-locale text', () => {
     const catalog = cloneCatalog();
-    catalog.locales[0]!.messages['phrase.repackages'] =
-      '<img src=x onerror=alert(1)>repackages';
+    catalog.locales[0]!.messages['phrase.denounced'] =
+      '<img src=x onerror=alert(1)>denounced';
     expectFailure(
       catalog,
-      'locales.0.messages.phrase.repackages',
+      'locales.0.messages.phrase.denounced',
       /Remove HTML/iu,
     );
   });

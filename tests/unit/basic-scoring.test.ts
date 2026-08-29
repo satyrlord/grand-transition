@@ -101,7 +101,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('applies 1.5 for each scene- or character-restricted phrase before weakness', () => {
     const result = score([
       'televised-revolution',
-      'repackages',
+      'rebrands',
       'national-salvation-committee',
     ]);
     expect(result.finalDamage).toBe(8);
@@ -160,6 +160,30 @@ describe('Hollywood Roast clause scoring', () => {
     );
   });
 
+  test('keeps a with complement in the preceding clause', () => {
+    const result = score([
+      'my-opponent',
+      'interrupts-the-debate',
+      'with',
+      'a-public-apology',
+    ]);
+
+    expect(
+      result.breakdown.filter((item) => item.kind === 'clause-base'),
+    ).toHaveLength(1);
+    expect(result.breakdown).toContainEqual({
+      kind: 'clause-base',
+      operation: 'note',
+      phraseIds: [
+        'my-opponent',
+        'interrupts-the-debate',
+        'with',
+        'a-public-apology',
+      ],
+      amount: 1,
+    });
+  });
+
   test('adds the scores of compound-subject clauses', () => {
     expect(
       score([
@@ -175,7 +199,7 @@ describe('Hollywood Roast clause scoring', () => {
     expect(
       score([
         'national-consensus',
-        'denounces',
+        'denounced',
         'televised-revolution',
         'coalition-and',
         'national-salvation-committee',
@@ -215,14 +239,14 @@ describe('Hollywood Roast clause scoring', () => {
       score([
         'archive-because',
         'national-consensus',
-        'repackages',
+        'rebrands',
         'televised-revolution',
         'coalition-and',
         'belongs-in-a-party-museum',
         'coalition-protocol',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(3);
+    ).toBe(7);
   });
 
   test('an incomplete sentence deals zero damage and has no clause score', () => {
