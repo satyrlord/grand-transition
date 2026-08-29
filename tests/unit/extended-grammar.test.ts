@@ -237,7 +237,7 @@ describe('Hollywood Roast extended grammar', () => {
     const result = analyze([
       add('your-brother'),
       add('denounced'),
-      add('your-mistress'),
+      add('your-concubine'),
       add('to-the-securitate'),
       { kind: 'end' },
     ]);
@@ -247,7 +247,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         state: 'ENDED',
-        publicText: 'Your brother denounced your mistress to the Securitate.',
+        publicText: 'Your brother denounced your concubine to the Securitate.',
       },
     });
   });

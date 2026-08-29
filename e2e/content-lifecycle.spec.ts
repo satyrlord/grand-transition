@@ -230,13 +230,13 @@ async function assertTemporaryCharacterIsPlayable(
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Set up match' }).click();
 
-  const playerTwo = page.getByLabel('Player two character');
-  const temporaryOption = playerTwo.locator(
-    `option[value="${temporaryCharacterId}"]`,
+  await page.locator('#playerTwoCharacterId').click();
+  const temporaryOption = page.locator(
+    `.roster-choice[data-character-id="${temporaryCharacterId}"]`,
   );
   await expect(temporaryOption).toHaveCount(1);
-  await expect(temporaryOption).toHaveText(temporaryCharacterName);
-  await playerTwo.selectOption(temporaryCharacterId);
+  await expect(temporaryOption).toContainText(temporaryCharacterName);
+  await temporaryOption.click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   await expect(
@@ -262,7 +262,7 @@ async function assertTemporaryCharacterIsAbsent(
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Set up match' }).click();
   await expect(
-    page.locator(`option[value="${temporaryCharacterId}"]`),
+    page.locator(`.roster-choice[data-character-id="${temporaryCharacterId}"]`),
   ).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Start match' }).click();

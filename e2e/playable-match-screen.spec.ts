@@ -505,10 +505,8 @@ test('the reported long bubble works on both sides at the reported viewport', as
   page,
 }, testInfo) => {
   await page.getByRole('button', { name: 'Set up match' }).click();
-  await page
-    .getByLabel('Player one character')
-    .selectOption('black-sea-captain');
-  await page.getByLabel('Player two character').selectOption('thunder-tribune');
+  await selectSetupCharacter(page, 'one', 'black-sea-captain');
+  await selectSetupCharacter(page, 'two', 'thunder-tribune');
   await page.getByLabel('Scene').selectOption('modern-debate-studio');
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
@@ -616,9 +614,7 @@ test('the selected roster characters load their local portrait assets', async ({
   page,
 }) => {
   await page.getByRole('button', { name: 'Set up match' }).click();
-  await page
-    .getByLabel('Player two character')
-    .selectOption('black-sea-captain');
+  await selectSetupCharacter(page, 'two', 'black-sea-captain');
   await page.getByRole('button', { name: 'Start match' }).click();
 
   await expect(
@@ -1744,6 +1740,19 @@ async function startMatch(page: Page): Promise<void> {
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
   ).toBeVisible();
+}
+
+async function selectSetupCharacter(
+  page: Page,
+  player: 'one' | 'two',
+  characterId: string,
+): Promise<void> {
+  const fieldId =
+    player === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId';
+  await page.locator(fieldId).click();
+  await page
+    .locator(`.roster-choice[data-character-id="${characterId}"]`)
+    .click();
 }
 
 async function setWaitingSentence(

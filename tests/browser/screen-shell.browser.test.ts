@@ -55,36 +55,43 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await page.getByRole('button', { name: 'Set up match' }).click();
   expect(window.location.href).toBe(originalUrl);
 
-  await expect.element(page.getByLabelText('Mode')).toHaveValue('hotseat');
   await expect
-    .element(page.getByLabelText('Player one character'))
-    .toHaveValue('red-folded-chairman');
+    .element(page.getByLabelText('Mode', { exact: true }))
+    .toHaveValue('hotseat');
   await expect
-    .element(page.getByLabelText('Player two character'))
-    .toHaveValue('thunder-tribune');
+    .element(
+      page.getByRole('button', {
+        name: 'Player one character: The Red-Folded Chairman',
+      }),
+    )
+    .toHaveAttribute('data-character-id', 'red-folded-chairman');
+  await expect
+    .element(
+      page.getByRole('button', {
+        name: 'Player two character: The Thunder Tribune',
+      }),
+    )
+    .toHaveAttribute('data-character-id', 'thunder-tribune');
   await expect
     .element(page.getByLabelText('Scene'))
     .toHaveValue('transition-era-television-studio');
-  const weaknesses = document.querySelectorAll('.character-weakness');
+  const weaknesses = document.querySelectorAll('.contestant-weaknesses');
   expect(weaknesses).toHaveLength(2);
   expect(weaknesses[0]!.textContent).toMatch(
-    /Weaknesses.*Legacy.*Modernity.*Bureaucracy.*Miners/su,
+    /Legacy.*Modernity.*Bureaucracy.*Miners/su,
   );
   expect(weaknesses[1]!.textContent).toMatch(
-    /Weaknesses.*Evidence.*Credibility.*Restraint/su,
+    /Evidence.*Credibility.*Restraint/su,
   );
-  const weaknessFixture = document.createElement('p');
-  weaknessFixture.className = 'character-weakness';
+  const weaknessFixture = document.createElement('span');
+  weaknessFixture.className = 'contestant-weaknesses';
   weaknessFixture.style.width = '12rem';
-  const weaknessLabel = document.createElement('span');
-  weaknessLabel.className = 'character-weakness__label';
-  weaknessLabel.textContent = 'Weaknesses';
-  const completeWeaknessList = document.createElement('strong');
+  const completeWeaknessList = document.createElement('span');
   completeWeaknessList.textContent = Array.from(
     { length: 8 },
     () => 'Long public weakness name',
   ).join(' · ');
-  weaknessFixture.append(weaknessLabel, completeWeaknessList);
+  weaknessFixture.append(completeWeaknessList);
   document.body.append(weaknessFixture);
   expect(getComputedStyle(completeWeaknessList).whiteSpace).not.toBe('nowrap');
   expect(completeWeaknessList.scrollWidth).toBeLessThanOrEqual(
@@ -95,12 +102,17 @@ test('moves through the two-state graph on one URL and restores setup values', a
   );
   weaknessFixture.remove();
   await page
-    .getByLabelText('Player two character')
-    .selectOptions('red-folded-chairman');
+    .getByRole('button', { name: 'Player two character: The Thunder Tribune' })
+    .click();
+  await page
+    .getByRole('button', {
+      name: /Red-Folded Chairman.*Select for player two/u,
+    })
+    .click();
   await expect
     .poll(
       () =>
-        [...document.querySelectorAll('.character-weakness strong')].filter(
+        [...document.querySelectorAll('.contestant-weaknesses')].filter(
           (record) =>
             record.textContent?.trim() ===
             'Legacy · Modernity · Bureaucracy · Miners',
@@ -115,14 +127,58 @@ test('moves through the two-state graph on one URL and restores setup values', a
 
   await page.getByRole('button', { name: 'Set up match' }).click();
   await expect
-    .element(page.getByLabelText('Player two character'))
-    .toHaveValue('red-folded-chairman');
+    .element(
+      page.getByRole('button', {
+        name: 'Player two character: The Red-Folded Chairman',
+      }),
+    )
+    .toHaveAttribute('data-character-id', 'red-folded-chairman');
 
   window.history.back();
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
     .toBeVisible();
   expect(window.location.href).toBe(originalUrl);
+});
+
+test('shows transient and pinned character dossiers with exact public weaknesses', async () => {
+  const setup = await mountSetup(createDefaultSetupSnapshot());
+  const captain = setup.querySelector<HTMLButtonElement>(
+    '.roster-choice[data-character-id="black-sea-captain"]',
+  )!;
+
+  captain.focus();
+  await setup.updateComplete;
+  const transient = setup.querySelector('.character-inspector')!;
+  expect(transient.textContent).toMatch(
+    /Character dossier.*Black Sea Captain.*Decorum.*Consistency.*Securitate/su,
+  );
+  expect(transient.getAttribute('data-pinned')).toBe('false');
+
+  captain.blur();
+  await setup.updateComplete;
+  expect(setup.querySelector('.character-inspector')).toBeNull();
+
+  const contextMenu = new MouseEvent('contextmenu', {
+    bubbles: true,
+    cancelable: true,
+  });
+  expect(captain.dispatchEvent(contextMenu)).toBe(false);
+  captain.dispatchEvent(new PointerEvent('pointerleave'));
+  await setup.updateComplete;
+  const pinned = setup.querySelector('.character-inspector')!;
+  expect(pinned.getAttribute('data-pinned')).toBe('true');
+  expect(pinned.textContent).toMatch(
+    /Pinned dossier.*Black Sea Captain.*Decorum.*Consistency.*Securitate/su,
+  );
+
+  setup
+    .querySelector('main')!
+    .dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+    );
+  await setup.updateComplete;
+  expect(setup.querySelector('.character-inspector')).toBeNull();
 });
 
 test.each([
@@ -237,13 +293,11 @@ test('shows unknown-value errors and revalidates after change', async () => {
   expect(setup.textContent).toContain(
     'Player one character is unknown. Choose a listed character.',
   );
-  const playerOne = setup.querySelector<HTMLSelectElement>(
-    '#playerOneCharacterId',
-  )!;
-  playerOne.value = 'red-folded-chairman';
-  playerOne.dispatchEvent(
-    new Event('change', { bubbles: true, composed: true }),
-  );
+  setup
+    .querySelector<HTMLButtonElement>(
+      '.roster-choice[data-character-id="red-folded-chairman"]',
+    )!
+    .click();
   await setup.updateComplete;
   expect(setup.querySelector('#playerOneCharacterId-error')).toBeNull();
 });
@@ -367,8 +421,13 @@ test('restores setup state after the viewport becomes supported again', async ()
   const app = await mountApp();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page
-    .getByLabelText('Player two character')
-    .selectOptions('red-folded-chairman');
+    .getByRole('button', { name: 'Player two character: The Thunder Tribune' })
+    .click();
+  await page
+    .getByRole('button', {
+      name: /Red-Folded Chairman.*Select for player two/u,
+    })
+    .click();
 
   await page.viewport(1023, 720);
   await vi.waitFor(() =>
@@ -383,8 +442,12 @@ test('restores setup state after the viewport becomes supported again', async ()
     expect(app.querySelector('grand-transition-setup')).not.toBeNull(),
   );
   await expect
-    .element(page.getByLabelText('Player two character'))
-    .toHaveValue('red-folded-chairman');
+    .element(
+      page.getByRole('button', {
+        name: 'Player two character: The Red-Folded Chairman',
+      }),
+    )
+    .toHaveAttribute('data-character-id', 'red-folded-chairman');
 });
 
 async function mountApp(): Promise<GrandTransitionApp> {

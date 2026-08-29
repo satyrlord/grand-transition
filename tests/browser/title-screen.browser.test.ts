@@ -13,8 +13,23 @@ test('renders the title screen in a real browser', async () => {
     .element(page.getByText('A Verbal Republic', { exact: true }))
     .toBeVisible();
   await expect
-    .element(page.getByText('The chamber is being prepared', { exact: true }))
+    .element(page.getByText('Transmission ready', { exact: true }))
     .toBeVisible();
+  expect(document.querySelector('.title-emblem')).not.toBeNull();
+  await expect
+    .element(page.getByRole('button', { name: 'Set up match' }))
+    .toBeVisible();
+});
+
+test('uses the match-owned feature and interface fonts', async () => {
+  document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
+
+  await expect.element(page.getByRole('heading')).toHaveStyle({
+    fontFamily: '"Poiret One", Arial, sans-serif',
+  });
+  await expect.element(page.getByRole('main')).toHaveStyle({
+    fontFamily: '"Rubik Variable", Arial, sans-serif',
+  });
 });
 
 test('keeps the display-only title text unselectable', async () => {

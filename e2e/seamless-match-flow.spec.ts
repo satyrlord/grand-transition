@@ -55,7 +55,7 @@ test('a hotseat match reviews every exchange and exposes no post-match surface',
   expect(reachedSuddenDeath).toBe(true);
   expect(reviewedExchange).toBe(true);
   await expect(
-    page.getByRole('heading', { name: 'Set up match' }),
+    page.getByRole('heading', { name: 'Select your debaters' }),
   ).toBeVisible();
   await expect(page.locator('grand-transition-match')).toHaveCount(0);
   await expect(page.locator('grand-transition-resolution-results')).toHaveCount(

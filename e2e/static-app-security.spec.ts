@@ -70,7 +70,9 @@ test('production preview loads the subpath shell and local assets after refresh'
     page.getByText('A Verbal Republic', { exact: true }),
   ).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  expect(loadedAssetTypes).toEqual(new Set(['font', 'script', 'stylesheet']));
+  expect(loadedAssetTypes).toEqual(
+    new Set(['font', 'image', 'script', 'stylesheet']),
+  );
 
   await page.reload();
   await expect(
@@ -222,12 +224,14 @@ test('development automatically writes one completed match text log', async ({
   }
 });
 
-test('production bundles only English and Romanian font subsets', async () => {
+test('production bundles only the four approved font families and subsets', async () => {
   const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
   const assetFiles = await readdir(assetsDirectory);
+  const fontFiles = assetFiles.filter((file) => /\.woff2?$/u.test(file));
   const variableFontFiles = assetFiles.filter((file) =>
     /^(?:nunito|rubik)-.*\.woff2$/u.test(file),
   );
+  expect(fontFiles).toHaveLength(6);
   expect(variableFontFiles).toHaveLength(4);
   for (const font of ['nunito', 'rubik']) {
     expect(
@@ -242,8 +246,14 @@ test('production bundles only English and Romanian font subsets', async () => {
     ).toBe(true);
   }
   expect(assetFiles.join('\n')).not.toMatch(
-    /arabic|cyrillic|hebrew|vietnamese/u,
+    /arabic|barlow|cyrillic|hebrew|vietnamese|\.woff$/u,
   );
+  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-'))).toBe(
+    true,
+  );
+  expect(
+    fontFiles.some((file) => file.startsWith('share-tech-mono-latin-')),
+  ).toBe(true);
 });
 
 async function uiSignature(page: Page) {
@@ -252,7 +262,13 @@ async function uiSignature(page: Page) {
     const heading = document.querySelector('h1');
     const action = document.querySelector('button');
     return {
-      html: app?.innerHTML.replace(/\?lit\$\d+\$/gu, '?lit$') ?? '',
+      html:
+        app?.innerHTML
+          .replace(/\?lit\$\d+\$/gu, '?lit$')
+          .replace(
+            /src="[^"]*grand-transition-emblem[^"]*\.png"/gu,
+            'src="[local-brand-emblem]"',
+          ) ?? '',
       text: app?.textContent?.replace(/\s+/gu, ' ').trim() ?? '',
       heading: heading
         ? {
