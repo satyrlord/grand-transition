@@ -378,6 +378,55 @@ describe('content schemas', () => {
         id,
       ).toMatch(/\byour own\b/iu);
     }
+
+    for (const [id, personalSingularText, secondPersonText] of [
+      [
+        'were-communist-party-members',
+        'was a Communist Party member',
+        'were a Communist Party member',
+      ],
+      [
+        'are-communist-party-members',
+        'is a Communist Party member',
+        'are a Communist Party member',
+      ],
+      [
+        'will-be-communist-party-members',
+        'will be a Communist Party member',
+        'will be a Communist Party member',
+      ],
+      [
+        'was-a-securitate-informer',
+        'was a Securitate informer',
+        'were a Securitate informer',
+      ],
+      [
+        'is-a-securitate-informer',
+        'is a Securitate informer',
+        'are a Securitate informer',
+      ],
+      [
+        'will-be-a-securitate-informer',
+        'will be a Securitate informer',
+        'will be a Securitate informer',
+      ],
+    ] as const) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === id,
+      );
+      expect(phrase?.numberForms, id).toMatchObject({
+        personalSingularKey: `phrase.${id}.personal-singular`,
+        secondPersonKey: `phrase.${id}.second-person`,
+      });
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${id}.personal-singular`],
+        id,
+      ).toBe(personalSingularText);
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${id}.second-person`],
+        id,
+      ).toBe(secondPersonText);
+    }
   });
 
   test('loads requested tense variants with valid number agreement', () => {

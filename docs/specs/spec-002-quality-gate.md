@@ -7,18 +7,19 @@
 
 ## Deliver
 
-Configure Oxlint with TypeScript 7 type-aware linting, Prettier, markdownlint,
+Configure Oxlint with TypeScript 7 type-aware linting, markdownlint-cli2,
 Vitest, coverage, Vitest Browser Mode, Playwright, and the required package
-scripts. Add minimal smoke tests and a non-deploying pull-request workflow.
-`validate` and `ci` use the order below.
+scripts. Use only the `markdownlint-cli2` command for Markdown checks. Add
+minimal smoke tests and a non-deploying pull-request workflow. `validate` and
+`ci` use the order below.
 
 Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`,
-`format:check`, `typecheck`, `test`, `test:coverage`, `test:browser`,
-`test:e2e`, `markdown:lint`, `content:validate`,
+`typecheck`, `test`, `test:coverage`, `test:browser`, `test:e2e`,
+`markdown:lint`, `content:validate`,
 `localization:validate`, `boundaries:check`, `validate`, and `ci`.
-`validate` runs markdown, assets, content, localization, pure boundaries,
-typed lint, and types in that order. `ci` runs `format:check`, `validate`,
-unit tests, browser tests, coverage, and end-to-end tests in that order.
+`validate` runs markdownlint-cli2, assets, content, localization, pure
+boundaries, typed lint, and types in that order. `ci` runs `validate`, unit
+tests, browser tests, coverage, and end-to-end tests in that order.
 End-to-end tests build the production output before preview.
 
 Pure tests use Vitest in Node and `*.test.ts`. Components use Vitest Browser
@@ -56,6 +57,9 @@ lines.
   the exact evidence described above.
 - **AC-002-05:** The pull-request workflow runs the quality gate with read-only
   repository access and contains no deployment job.
+- **AC-002-06:** Markdown checks use `markdownlint-cli2`; the quality gate has
+  no formatter script or formatter configuration. Verify in
+  `tests/unit/quality-gate.test.ts` and with a repository-wide search.
 
 ## Verify and stop
 
