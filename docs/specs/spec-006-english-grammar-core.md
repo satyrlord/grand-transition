@@ -68,7 +68,9 @@ the noun immediately required by `because` or by an incomplete compound
 subject. After a subordinate clause is complete, `and`, `but`, `yet`, or
 `because` can extend it before the required main noun clause. A completed clause
 followed by `and`, `but`, or `yet` can also accept `because`. `so` and `for` do
-not enter this front-`because` bridge. A finisher cannot end the front
+not enter this front-`because` bridge.
+
+A finisher cannot end the front
 subordinate clause. The sentence is incomplete while either required clause is
 unfinished.
 
@@ -93,10 +95,14 @@ third-person nonpersonal singular subject uses the singular form. A
 third-person personal singular subject uses the personal-singular form when it
 exists. A plural subject uses the plural form. A second-person subject uses the
 second-person form when it exists and otherwise uses the plural form because
-English second-person verbs use that conjugation. A combined copular predicate
+English second-person verbs use that conjugation.
+
+A combined copular predicate
 supplies a second-person form when this plural fallback would also pluralize a
 singular complement. Thus, `you` renders `were a Communist Party member`, not
-`were Communist Party members`. Shared-subject branches keep the subject's
+`were Communist Party members`.
+
+Shared-subject branches keep the subject's
 person and referent kind. New-subject branches replace them.
 
 Rendering adds exactly one terminal full stop for a normally ended complete
@@ -111,10 +117,10 @@ text.
 - **AC-006-02:** Tests prove `NOUN + AND + NOUN` before both completion forms
   and plural agreement for the compound subject. Tests also prove a compound
   object after `NOUN + VERB + NOUN + AND`.
-- **AC-006-03:** Tests prove new-subject and shared-subject `and`, `but`, and
-  `yet` branches, front and explanatory `because` branches, clause-only `so`
-  and `for` branches with their required noun transitions, and the `with`
-  noun-complement branch.
+- **AC-006-03:** Tests prove new-subject and shared-subject branches for `and`,
+  `but`, and `yet`. They prove the front and explanatory `because` branches.
+  They prove clause-only `so` and `for` branches with required noun transitions.
+  They also prove the `with` noun-complement branch.
 - **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
   singular, plural, personal-singular, second-person, singular complements for
   second-person subjects, compound-subject, and shared-subject agreement, plus
@@ -122,7 +128,7 @@ text.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable
   typed evidence without changing game state.
 - **AC-006-06:** Tests prove one and several modifiers after complete predicate
-  and object clauses, rejection before clause completion, and preservation of
+  and object clauses. They prove rejection before clause completion and preserve
   the required main clause after front `because`.
 
 ## Objective verifiers

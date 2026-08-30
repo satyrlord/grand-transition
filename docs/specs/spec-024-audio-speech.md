@@ -20,7 +20,9 @@ controls are Master, Music, Effects, and Speech.
 Speech defaults off and stays silent until enabled after user action. Detect
 support safely. Load voices immediately and after `voiceschanged`. Prefer the
 saved voice Uniform Resource Identifier (`voiceURI`), then a language match,
-then the system default. Expose Auto, voice, rate,
+then the system default.
+
+Expose Auto, voice, rate,
 and volume. Speak only complete public insults. Cancel on round change, exit, or
 match completion. Never speak draft fragments or hidden content. Explain that voices and
 processing vary and do not promise offline behavior. Show unavailable state.
@@ -39,9 +41,11 @@ power crossfade. Leaving a match fades and stops both within 300 milliseconds.
 At volume zero a bus produces no audible sample and does not restart a source.
 
 Mixer ranges and defaults come from Milestone 020. Speech voice is Auto by
-default, rate is 0.5 through 2 in 0.1 steps with default 1, and volume is 0
-through 1 in 0.05 steps with default 0.8. Pitch is character data, not a user
-setting. Any user gesture that enables audio resumes the audio context before
+default. Rate is 0.5 through 2 in 0.1 steps, with default 1. Volume is 0 through
+1 in 0.05 steps, with default 0.8. Pitch is character data, not a user
+setting.
+
+Any user gesture that enables audio resumes the audio context before
 playback.
 
 Speech cancellation completes within 100 milliseconds and suppresses queued

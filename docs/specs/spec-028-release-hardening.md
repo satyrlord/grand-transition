@@ -14,7 +14,9 @@ environment and workload defined below. Fix confirmed release defects.
 Largest contentful paint, input event duration, animation frame interval,
 layout shift, and compressed JavaScript must meet the exact measurement table
 below. Lazy-load selected match assets. Decode audio before first playback. Use AV1 Image File Format
-(AVIF) or WebP raster images. Use Scalable Vector Graphics (SVG) icons. Use
+(AVIF) or WebP raster images. Use Scalable Vector Graphics (SVG) icons.
+
+Use
 Portable Network Graphics (PNG) only when AVIF, WebP, or SVG cannot represent
 the required image. Use compressed audio fallbacks.
 
@@ -23,16 +25,18 @@ tool, workload, and result against final-quality art. Support the latest stable
 Chromium and Safari major versions on the release date. Support the two
 previous major versions of each browser. Support the active Firefox Extended
 Support Release (ESR) on the release date. Support the latest stable mobile
-Safari and Chrome releases on the release date. Continuous integration (CI) runs
+Safari and Chrome releases on the release date.
+
+Continuous integration (CI) runs
 Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit. Record oldest
 Safari evidence or mark it unverified. Do not add legacy polyfills or obsolete
 browser support without a new specification.
 
 ## Performance measurement contract
 
-Measure the production preview in stable Chromium with a clean profile, four
-times central processing unit (CPU) slowdown, 9-megabit-per-second download,
-1.5-megabit-per-second upload, and 150-millisecond round-trip latency. Record
+Measure the production preview in stable Chromium with a clean profile. Use
+four times central processing unit (CPU) slowdown. Use 9-megabit-per-second
+download, 1.5-megabit-per-second upload, and 150-millisecond round-trip latency. Record
 host CPU, memory, operating system, browser, tool version, build commit, and
 selected final-art scene. Run five cold-cache and five warm-cache trials.
 
@@ -85,11 +89,16 @@ The minimum viable product (MVP) has a coherent title-to-match-completion flow. 
 all 18 characters, 6 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
 private hotseat play and exact grammar and combat rules. It reviews each
-nonterminal exchange in the in-arena results modal. Milestone 030 adds the
+nonterminal exchange in the in-arena results modal.
+
+Milestone 030 adds the
 persistent terminal victory state and local match history. It also has
 development-only deterministic replay, validated data-driven content,
 locale-isolated English, and a supported landscape user interface (UI). All art,
-audio, writing, and branding are original. The MVP has no online behavior.
+audio, writing, and branding are original.
+
+The MVP has no online behavior.
+
 Only the artifact that passes the complete gate can proceed to publication.
 
 ## Impeccable UI validation

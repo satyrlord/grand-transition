@@ -39,12 +39,12 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
 describe('Hollywood Roast clause scoring', () => {
   test('scores semantic compatibility instead of summing card values', () => {
     const result = score(['national-consensus', 'belongs-in-a-party-museum']);
-    expect(result.finalDamage).toBe(1);
+    expect(result.finalDamage).toBe(5);
     expect(result.breakdown).toContainEqual({
       kind: 'clause-base',
       operation: 'note',
       phraseIds: ['national-consensus', 'belongs-in-a-party-museum'],
-      amount: 1,
+      amount: 5,
     });
   });
 
@@ -71,7 +71,7 @@ describe('Hollywood Roast clause scoring', () => {
         defenderWeaknessTags: [],
         balance: basicScoringBalance,
       }).finalDamage,
-    ).toBe(3);
+    ).toBe(10);
 
     const customPhrases = flavourPhrases.map((phrase) =>
       phrase.id === 'belongs-in-a-party-museum'
@@ -95,25 +95,60 @@ describe('Hollywood Roast clause scoring', () => {
     expect(
       score(['national-consensus', 'belongs-in-a-party-museum'], ['restraint'])
         .finalDamage,
-    ).toBe(2);
+    ).toBe(8);
   });
 
-  test('applies 1.5 for each scene- or character-restricted phrase before weakness', () => {
+  test('keeps scene and character restrictions out of damage', () => {
     const result = score([
       'televised-revolution',
       'rebrands',
       'national-salvation-committee',
     ]);
-    expect(result.finalDamage).toBe(8);
-    expect(result.breakdown).toContainEqual(
-      expect.objectContaining({
-        kind: 'restriction-multiplier',
-        factor: 1.5,
-      }),
-    );
+    expect(result.finalDamage).toBe(15);
+    expect(
+      result.breakdown.some((item) => item.kind === 'restriction-multiplier'),
+    ).toBe(false);
   });
 
-  test('keeps a modifier in the preceding clause for restriction and weakness scoring', () => {
+  test('uses the exact 5, 10, 15, and 20 compatibility tiers', () => {
+    const relationId = 'belongs-in-a-party-museum';
+    const baseAnalysis = analysis(['national-consensus', relationId]);
+    const tier = (substance: boolean, flavour: boolean): number =>
+      scoreBasicConstruction({
+        analysis: baseAnalysis,
+        phrases: sampleContent.phrases.map((phrase) => {
+          if (phrase.id === 'national-consensus') {
+            return {
+              ...phrase,
+              scoreGroups: {
+                substance: ['tier-substance'],
+                flavour: ['tier-flavour'],
+              },
+            };
+          }
+          return phrase.id === relationId
+            ? {
+                ...phrase,
+                scorePreferences: {
+                  substance: substance ? [{ left: ['tier-substance'] }] : [],
+                  flavour: flavour ? [{ left: ['tier-flavour'] }] : [],
+                },
+              }
+            : phrase;
+        }),
+        defenderWeaknessTags: [],
+        balance: basicScoringBalance,
+      }).finalDamage;
+
+    expect([
+      tier(false, false),
+      tier(false, true),
+      tier(true, false),
+      tier(true, true),
+    ]).toEqual([5, 10, 15, 20]);
+  });
+
+  test('keeps a modifier in the preceding clause for weakness scoring', () => {
     const ids = [
       'national-consensus',
       'belongs-in-a-party-museum',
@@ -134,7 +169,7 @@ describe('Hollywood Roast clause scoring', () => {
       balance: basicScoringBalance,
     });
 
-    expect(result.finalDamage).toBe(4);
+    expect(result.finalDamage).toBe(8);
     expect(
       result.breakdown.filter((item) => item.kind === 'clause-base'),
     ).toHaveLength(1);
@@ -142,15 +177,11 @@ describe('Hollywood Roast clause scoring', () => {
       kind: 'clause-base',
       operation: 'note',
       phraseIds: ids,
-      amount: 1,
+      amount: 5,
     });
-    expect(result.breakdown).toContainEqual(
-      expect.objectContaining({
-        kind: 'restriction-multiplier',
-        phraseIds: ids,
-        factor: 1.5,
-      }),
-    );
+    expect(
+      result.breakdown.some((item) => item.kind === 'restriction-multiplier'),
+    ).toBe(false);
     expect(result.breakdown).toContainEqual(
       expect.objectContaining({
         kind: 'weakness-match',
@@ -180,7 +211,7 @@ describe('Hollywood Roast clause scoring', () => {
         'with',
         'a-public-apology',
       ],
-      amount: 1,
+      amount: 5,
     });
   });
 
@@ -192,7 +223,7 @@ describe('Hollywood Roast clause scoring', () => {
         'televised-revolution',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(2);
+    ).toBe(10);
   });
 
   test('adds the scores of compound-object clauses', () => {
@@ -204,7 +235,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-and',
         'national-salvation-committee',
       ]).finalDamage,
-    ).toBe(7);
+    ).toBe(20);
   });
 
   test('scores front-because subordinate and main clauses separately', () => {
@@ -216,7 +247,7 @@ describe('Hollywood Roast clause scoring', () => {
         'televised-revolution',
         'makes-own-voters-change-the-channel',
       ]).finalDamage,
-    ).toBe(6);
+    ).toBe(20);
   });
 
   test('scores each extended front-because clause once before the main clause', () => {
@@ -231,7 +262,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-protocol',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(7);
+    ).toBe(25);
   });
 
   test('does not reuse an object relation after a shared-subject subordinate extension', () => {
@@ -246,7 +277,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-protocol',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(7);
+    ).toBe(25);
   });
 
   test('an incomplete sentence deals zero damage and has no clause score', () => {

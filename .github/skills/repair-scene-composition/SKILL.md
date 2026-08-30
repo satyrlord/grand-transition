@@ -102,18 +102,23 @@ requires it.
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
 Use flat `#00FF00` chroma green as the intermediate matte for every transparent
 scene and character asset. Do not approve chroma-key green in transparent art.
+
 Convert the matte to alpha with
 [`scripts/green-chroma-key.mjs`](scripts/green-chroma-key.mjs). Use `adopt` to
 place an existing alpha asset under the same workflow. Run `validate` over the
 complete asset root. The converter must preserve partial-alpha edge coverage
 and reconstruct foreground color from the known green matte. A hard source
-contour receives the converter's bounded binomial edge pass. Do not replace
+contour receives the converter's bounded binomial edge pass.
+
+Do not replace
 this process with a Boolean color threshold or an alpha-only blur. Do not ship
 the green intermediate. Reject missing workflow metadata, nonzero outer
 corners, all chroma-green residue, and a soft-key output without partial alpha.
+
 For a complete source tree, use `npm run assets:convert-green -- <green-root>
 <output-root>`. Keep one matching `<asset-name>.prompt.txt` file beside each
 green master.
+
 Embed the exact generation prompt or source origin in every shipping raster.
 Use `provenance <png> --source <origin>` only when an existing opaque raster has
 a verified source origin and no prompt record. Do not invent a source or prompt.

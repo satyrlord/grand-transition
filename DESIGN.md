@@ -151,13 +151,13 @@ Grand Transition is a fictional broadcast arena that moves between distinct
 political television eras. The shipped interface uses navy fascia, near-black
 stage surfaces, aged brass, oxblood, television blue, warm paper, and compact
 control-room signals. The title, setup, match, Pause, and compatibility states
-share this broadcast language while keeping their own task hierarchy.
+share this broadcast language. Each state keeps its own task hierarchy.
 
 The title is a Curtain Call proscenium with a live wordmark, one decisive setup
 action, and one subordinate match-history action. Setup is a three-part contestant register with two selected
-player stages around a compact roster. The match is one confrontation: scene,
-characters, sentence construction, speech, status, and actions share the same
-stage instead of dividing into a decorative scene and a separate dashboard.
+player stages around a compact roster. The match is one confrontation. The
+scene, characters, sentence construction, speech, status, and actions share the
+same stage. They do not form a decorative scene above a separate dashboard.
 
 Every character is human. Animal words in names or titles are metaphorical
 political labels only. The current slice uses three original human editorial
@@ -177,8 +177,8 @@ metaphor.
 ### First viewport
 
 At the recommended 1920 by 1080 viewport, the title shows a dark painted
-proscenium, a centered dueling-speech emblem, a live GRAND TRANSITION wordmark,
-one vertical brass signal rail, and one oxblood Set up match action. Channel 3
+proscenium and a centered dueling-speech emblem. It shows a live GRAND TRANSITION
+wordmark and one vertical brass signal rail. It has one oxblood Set up match action. Channel 3
 is an upper-left plaque. The fictional-composite satire disclaimer stays at
 the lower edge.
 
@@ -193,8 +193,8 @@ blonde fictional moderator fill the deep field. Two transparent human editorial
 caricatures face each other from the left and right thirds. The default pair is
 the composed Red-Folded Chairman with his red folder and the emphatic Thunder
 Tribune with his speech papers. The lean Black Sea Captain can replace either
-one in a warm-cream naval officer uniform and cap while holding one unbranded
-cigar. One transparent foreground plate puts tall standing desks in front of
+one in a warm-cream naval officer uniform and cap. He holds one unbranded cigar.
+One transparent foreground plate puts tall standing desks in front of
 both selected portraits.
 
 The implemented Thunder Tribune portrait keeps its full-body pose, raised hand,
@@ -210,6 +210,7 @@ state sit at the top center. A wide speech record crosses the middle without
 covering either face. The live sentence and nine shared phrases form one
 central vertical construction tower. The two private choices sit low in the
 active player's reach. Secondary actions use the side and bottom perimeter.
+
 Only the active player states “Your turn,” and that portrait keeps a persistent
 brass stage light.
 
@@ -249,7 +250,7 @@ The integrated arena can become crowded or too similar to its references. Keep
 both characters, the full sentence path, and all required controls readable at
 1024 by 720 and at four-to-three landscape viewports. Keep core tactical content
 at 11 pixels or larger. Use original proportions, ornament, iconography, art,
-and type. Do not solve density by reducing the stage to a header or rebuilding
+and type. Do not reduce the stage to a header to solve density. Do not rebuild
 the lower half as a dashboard.
 
 ### Direction seed
@@ -258,7 +259,7 @@ The user pinned this direction on 2026-08-25 after removing the earlier mock.
 `tmp/hollywood-01.jpg` and `tmp/hollywood-02.jpg` supplied reference evidence
 for spatial hierarchy only: opponent framing, top-edge status, wide speech,
 central sentence construction, and perimeter actions. The durable description
-in this record remains valid if those temporary files are removed.
+in this record remains valid after the removal of those temporary files.
 
 **Key Characteristics:**
 
@@ -292,8 +293,8 @@ character contract explicitly requires it.
 
 The implementation uses one dark broadcast palette. Light paper and aged brass
 carry information against near-black and deep navy surfaces. Oxblood and
-television blue separate player ownership and action priority. Local reaction,
-focus, timer, and phrase-role colors are reserved for their named states.
+television blue separate player ownership and action priority. Use local
+reaction, focus, timer, and phrase-role colors only for their named states.
 
 ### Primary
 
@@ -329,9 +330,9 @@ focus, timer, and phrase-role colors are reserved for their named states.
 does not fill large surfaces or replace state color.
 
 **The Semantic State Rule.** Red, blue, green, purple, gray, and orange can
-speed phrase recognition. Phrase ownership, role, availability, weakness, and
-disabled state must remain in semantic attributes and accessible names even
-when the compact visible row shows phrase text only.
+speed phrase recognition. Semantic attributes and accessible names must contain
+phrase ownership, role, availability, weakness, and unavailable state. This rule
+also applies when the compact visible row shows phrase text only.
 
 ## Typography
 
@@ -355,7 +356,7 @@ Pause, and compatibility states.
 4. **Timer family:** Share Tech Mono owns the timer value only. Do not use it
    for Pride, damage, scores, rounds, statistics, or body text.
 
-All four font families are selected. Verify them together in the built arena.
+The design selects all four font families. Verify them together in the built arena.
 The four roles must stay visibly distinct. Do not use outlines or fake weights
 outside the Poiret One feature-display treatment.
 
@@ -385,17 +386,20 @@ information visible before and after font load.
 - **Timer:** The timer value only.
 
 **The Four-Family Rule.** Each family has one exclusive information role. Do not
-use the display face for dense copy, the speech face for controls, the interface
-face for the timer, or the timer face for other numbers.
+use the display face for dense copy or the speech face for controls. Do not use
+the interface face for the timer or the timer face for other numbers.
 
 ## Layout
 
 Every functional state fills one landscape viewport. The title uses a centered
 marquee and a vertical signal rail. Setup uses two selected-character stages
 around a central roster, with match terms and actions on the lower edge. The
-match keeps one integrated arena: opponents occupy the side thirds, name and
-Pride frames use the top corners, round, timer, and Pause use the top center,
-speech spans the middle, and the sentence and shared phrases occupy the center
+match keeps one integrated arena. Opponents occupy the side thirds. Name and
+Pride frames use the top corners.
+
+Round, timer, and Pause use the top center.
+
+Speech spans the middle. The sentence and shared phrases occupy the center
 axis. Private choices and secondary actions use the lower and side perimeter.
 
 Pause and unsupported viewport states replace the active surface with a centered
@@ -424,7 +428,9 @@ proscenium or tonal broadcast fields. In the match, the selected studio and its
 fixed fictional moderator form the deep field. Transparent portraits occupy
 the opponent planes. A transparent plate puts the two tall standing desks in
 front of those portraits. Speech and the sentence tower occupy the tactical
-plane. Top and perimeter controls sit on the broadcast frame. Low-contrast
+plane.
+
+Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark
 shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
@@ -455,13 +461,15 @@ text or state.
 
 ### Title proscenium
 
-The title is a full-viewport dark proscenium with a text-free painted backdrop,
-a centered emblem and live wordmark, a brass subtitle rule, one ready-status
-plaque, and one oxblood `Set up match` button. Channel 3 is a small brass
+The title is a full-viewport dark proscenium with a text-free painted backdrop.
+It has a centered emblem, live wordmark, and brass subtitle rule. It has one
+ready-status plaque and one oxblood `Set up match` button.
+
+Channel 3 is a small brass
 plaque at the upper left. A double brass perimeter frame and a narrow central
 signal rail create the broadcast architecture. The satire disclaimer is live
-text at the lower edge. The title entrance opens one central curtain light and
-is removed when reduced motion is requested.
+text at the lower edge. The title entrance opens one central curtain light.
+Reduced-motion mode removes this entrance.
 
 ### Contestant register
 
@@ -470,7 +478,9 @@ stages flank a central three-item roster. The left stage uses the oxblood
 identity and the right stage uses television blue. Each selected stage shows a
 complete human portrait, a player label, a feature-display name, and the full
 public weakness list. Each roster tile is an exact 3:4 headshot window with a
-reusable dark-oak frame and aged-gold liner. Native selects keep mode and scene
+reusable dark-oak frame and aged-gold liner.
+
+Native selects keep mode and scene
 terms in a compact lower register. A nonmodal character dossier appears on
 hover or keyboard focus and stays pinned only after right-click.
 
@@ -479,32 +489,39 @@ hover or keyboard focus and stays pinned only after right-click.
 A decorative full-viewport back image shows the selected debate studio and one
 fixed fictional moderator. The Transition-Era Television Studio uses a blonde
 moderator at a physical desk on a raised inner-left platform. Exactly four
-full-height faux-marble columns frame that studio. The Modern Debate Studio uses
+full-height faux-marble columns frame that studio.
+
+The Modern Debate Studio uses
 broad blue video panels, red and blue vertical accents, visible softboxes, a
 practical truss, and a reflective stage floor. Its bespectacled male moderator
 sits with crossed legs in a beige studio chair at the mirrored inner-right
 position and faces the camera. His normal human head has a slightly tall
 forehead and comically small facial features. No back image contains a playable
 character.
+
 Every back scene and foreground plate uses the same visible painterly brushwork,
 simplified material detail, expressive contour, and restrained comic
 exaggeration as the playable portraits. Preserve distinct historical materials
 and scene identities, but do not use photographic people, furniture, bottles,
 lamps, floors, or architecture.
+
 Separate transparent portraits render the two selected characters over it and
 can exchange sides or mirror without changing the scene. A transparent desk
 plate renders over the portraits and clips their lower bodies behind two tall
 standing desks. The desk fronts continue below the lower stage frame. Do not
 show their extracted bottom contours or any portrait's lower raster contour.
+
 Each transition-era standing desk has one microphone and one plain unbranded
 water bottle. Each modern standing desk has no microphone and holds one plain
 tap-water bottle plus one distinct sparkling-water bottle.
+
 The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage. The three implemented
 portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
 a single-line character name, visible Pride label, and Pride meter and remain
 outside the portrait bounds.
+
 Only the active strip states “Your turn.” Its portrait stays bright under a
 persistent brass stage light while the waiting portrait stays subdued. One
 360-millisecond directional light-and-position transfer marks a turn change.
@@ -522,12 +539,14 @@ a separate dashboard.
 
 After each exchange, a centered results record holds the arena in place. Its
 heading and outcome use one centered axis. Two equal-width peer records sit
-side by side with red and blue identity borders, and each record shows the
-player name, outgoing damage, combo result, and applied weaknesses. One centered
-Continue action closes a nonterminal record. A terminal record changes its
-heading to Victory, names the match winner and completed round count, keeps the
-two final score records, and exposes only `Return to main menu`. It has no
-automatic dismissal. The dimmed stage remains visible behind it; the record
+side by side with red and blue identity borders. Each record shows the player
+name, outgoing damage, combo result, and applied weaknesses. One centered
+Continue action closes a nonterminal record.
+
+A terminal record changes its heading to Victory and names the match winner and
+completed round count. It
+keeps the two final score records and exposes only `Return to main menu`. It has
+no automatic dismissal. The dimmed stage remains visible behind it. The record
 uses no backdrop blur.
 
 ### Match history record
@@ -548,11 +567,12 @@ rows. Each
 row shows phrase text only, separated by a thin oxblood rule. Do not show role,
 ownership, weakness, disabled-reason, hint, or card-state copy in either phrase
 list. Keep that state in semantic attributes and accessible names. Every
+
 available phrase uses the same selection action. Unavailable rows use subdued
 text, and selecting a common phrase leaves its fixed row visibly empty. When
 Phrase color coding is on, one text layer blends white with the role color at
-40 percent for common, 50 percent for uncommon, and 60 percent for rare
-phrases. The card background does not change.
+40 percent for common phrases. It uses 50 percent for uncommon phrases and 60
+percent for rare phrases. The card background does not change.
 
 **The Get Good Rule.** The arena reports public outcomes with exact values. It
 reveals each selected character's weakness names before play and calls out an
@@ -564,19 +584,26 @@ reasons, or add tutorial progress.
 
 The active player owns one wide white current-sentence bubble that points to
 that side. The waiting character owns one compact gray ellipsis bubble. Pointer
-hover, keyboard focus, click, and tap always expand that same gray bubble and
-reveal the waiting character's current public sentence or most recent completed
-public sentence. Before either sentence exists, it reveals `No sentence yet.`
+hover, keyboard focus, click, and tap input expand the same gray bubble. The
+bubble reveals the current public sentence. When no current sentence exists, it
+reveals the most recent completed public sentence. Before either sentence
+exists, it reveals `No sentence yet.`
+
 Hover and focus keep it open for that interaction. Click or tap pins it open
 until the user activates
 elsewhere or the match state changes. Repeated activation of the bubble keeps it
 open. The bubble body grows to contain the complete text, and its tail does not
-clip the text. Do not show two equal speech records. End and Comeback use
+clip the text. Do not show two equal speech records.
+
+End and Comeback use
 compact Poiret One perimeter plates anchored to the active side's board margin:
 left for red and right for blue. They stay clear of faces, hands, and required
-props. Reshuffle is an icon-only compact inline-SVG control next to the private
+props.
+
+Reshuffle is an icon-only compact inline-SVG control next to the private
 phrases and has an accessible name without visible explanation copy. Oxblood
 identifies delivery. Television blue identifies Reshuffle and Comeback.
+
 Disabled controls stay labeled or keep an accessible label and use a dashed
 border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
@@ -586,9 +613,9 @@ highlighted.
 
 ### Pause and compatibility slates
 
-Manual Pause replaces the complete match with a navy transmission-held slate,
-compact Turn timer, Auto-complete, and Phrase color coding controls, one
-brass-framed Resume action, and no game facts. Unsupported viewports use the
+Manual Pause replaces the complete match with a navy transmission-held slate.
+The slate has compact Turn timer, Auto-complete, and Phrase color coding
+controls. It has one brass-framed Resume action and no game facts. Unsupported viewports use the
 same broadcast language without settings or a Resume action. The compatibility
 slate states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
 
@@ -606,7 +633,7 @@ tier. It uses the strongest filled tier immediately.
 - **Do** let the title and contestant register use the same broadcast palette,
   square framing, brass rules, and live semantic text as the match.
 - **Do** keep the selected-character stages complete and the roster tiles
-  tightly cropped; the two surfaces have different image jobs.
+  tightly cropped. The two surfaces have different image jobs.
 - **Do** use the painted arena as atmosphere and keep all game truth in text,
   meters, lists, buttons, and dialogs.
 - **Do** depict every roster character as fully human, including characters
@@ -620,19 +647,19 @@ tier. It uses the strongest filled tier immediately.
 - **Do** keep pointer preview temporary and keep reducer-owned game truth
   unchanged until the player invokes a real action.
 
-### Avoid
+### Do not
 
-- **Avoid** animal or hybrid anatomy in portraits, tokens, poses, states,
+- **Do not use** animal or hybrid anatomy in portraits, tokens, poses, states,
   scene art, or future roster content.
-- **Avoid** rasterizing values, controls, or required text into the painted
+- **Do not put** values, controls, or required text into the painted
   arena or paper texture.
-- **Avoid** copying the reference game's art, meter shapes, exact type,
+- **Do not copy** the reference game's art, meter shapes, exact type,
   ornaments, proportions, or control frames.
-- **Avoid** keeping the present font families by inertia or shrinking core
+- **Do not keep** the present font families by inertia or decrease core
   tactical text to make the arena fit.
-- **Avoid** replacing written card state with color, icon, texture, or border
+- **Do not replace** written card state with color, icon, texture, or border
   style alone.
-- **Avoid** rounding the match into generic dashboard cards or using glass
+- **Do not put** the match in generic dashboard cards or use glass
   effects.
-- **Avoid** dividing the match into a stage header and a separate lower
+- **Do not divide** the match into a stage header and a separate lower
   dashboard.

@@ -27,10 +27,12 @@ target owns its guidance.
 
 The approved specifications own product, architecture, behavior, and delivery.
 AI files route work to those contracts. They do not replace or restate them.
+
 Keep `.github/skills/` as the canonical skill source. Local `.agents/skills`
 and `.codex/skills` junctions expose the same packages to skill discovery
 tools. These ignored links are views of the canonical files. They are not
 copies.
+
 Create or verify them on Windows with:
 
 ```powershell

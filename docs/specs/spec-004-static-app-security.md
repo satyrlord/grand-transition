@@ -28,7 +28,7 @@ EventSource, or analytics request. Speech synthesis can use a browser or
 operating-system service outside the application network layer.
 
 Use one `index.html` and in-memory screen state. Do not depend on server route
-rewrites. `dist/` is generated and never committed.
+rewrites. The build generates `dist/`. Do not commit it.
 
 ## Acceptance criteria
 
@@ -43,9 +43,9 @@ rewrites. `dist/` is generated and never committed.
   rejected before a network route receives it.
 - **AC-004-04:** Production navigation and reload have no failed request,
   external request, console error, or uncaught page error.
-- **AC-004-05:** `git ls-files dist` returns no path, and a production source
-  scan finds no runtime fetch, XMLHttpRequest, WebSocket, EventSource, remote
-  font, analytics, unsafe HTML sink, or inline script.
+- **AC-004-05:** `git ls-files dist` returns no path. A production source scan
+  finds no runtime fetch, XMLHttpRequest, WebSocket, or EventSource. It also
+  finds no remote font, analytics, unsafe HTML sink, or inline script.
 
 ## Verify and stop
 

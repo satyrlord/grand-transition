@@ -47,14 +47,15 @@ The version 1 document has `schemaVersion: 1`, kind
 contains:
 
 - one stable identifier and an International Organization for Standardization
-  (ISO) 8601 completion time;
-- the initial unsigned 32-bit seed;
+  (ISO) 8601 completion time.
+- the initial unsigned 32-bit seed.
 - the selected mode, scene, characters, timer, Auto-complete state, and Phrase
-  color coding state;
+  color coding state.
 - the winner, completed round count, final Pride, public round breakdowns,
-  public accepted commands, and public rule events;
-- the normalized version 1 replay and match-log data needed to reproduce and
-  diagnose the completed match.
+  public accepted commands, and public rule events.
+- normalized replay and match-log data needed to reproduce and diagnose the
+  completed match. New entries use replay and match-log version 2. Existing
+  version 1 pairs remain valid and retain their original scoring behavior.
 
 The entry must not contain unselected private cards, hidden hotseat text,
 browser identifiers, machine facts, secrets, analytics identifiers, or remote
@@ -87,17 +88,17 @@ selection, the active terminal state, or stored history.
 
 Catch quota, security, unavailable-storage, malformed-data, and unsupported-
 version failures. These failures must never block or dismiss the victory state.
-Keep newly completed entries in memory for the current page session and show a
-non-blocking notice on the title screen and in the history modal that match
-history will not persist. Do not overwrite malformed or unsupported stored
+Keep newly completed entries in memory for the current page session. Show a
+non-blocking persistence notice on the title screen and in the history modal.
+Do not overwrite malformed or unsupported stored
 data. The next page load can recover only after valid storage becomes available
 or the user clears the invalid site data.
 
 ## Acceptance criteria
 
-- **AC-030-01:** Normal damage, cliffhanger damage, lethal grammar-mistake
-  self-damage, and lethal timeout self-damage each show the persistent victory
-  state with the correct winner, final Pride, final exchange, and round count.
+- **AC-030-01:** Each terminal damage path shows the persistent victory state.
+  These paths include normal, cliffhanger, grammar-mistake, and timeout damage.
+  The state shows the correct winner, final Pride, final exchange, and round count.
 - **AC-030-02:** Victory remains across idle time, resize, unsupported-viewport
   interruption, reduced motion, Escape, and browser Back. Only `Return to main
   menu` clears it and shows the title screen.
@@ -111,12 +112,12 @@ or the user clears the invalid site data.
   populated, expanded, overflow, Close, Escape, focus-return, and focus-trap
   states are keyboard and pointer operable.
 - **AC-030-06:** Quota, security, unavailable-storage, malformed-data, and
-  unsupported-version failures preserve victory, retain the new entry for the
-  page session, show the persistence notice, and do not overwrite invalid
-  stored bytes.
-- **AC-030-07:** The production Pages-subpath build reaches victory, returns to
-  the title screen, opens history, reloads, and restores the same completed
-  match without a failed request, console error, uncaught page error, or remote
+  unsupported-version failures preserve victory. They retain the new entry for
+  the page session and show the persistence notice. They do not overwrite
+  invalid stored bytes.
+- **AC-030-07:** The production Pages-subpath build reaches victory and returns
+  to the title screen. It opens history, reloads, and restores the same completed
+  match. It has no failed request, console error, uncaught page error, or remote
   request.
 
 ## Impeccable user interface validation
@@ -131,8 +132,9 @@ issue disposition.
 
 ## Objective verifiers
 
-Pure unit tests verify the version 1 codec, exact replay and log data, duplicate
-prevention, privacy scan, order, and every storage failure. Vitest Browser Mode
+Pure unit tests verify the history version 1 codec and replay and match-log
+versions 1 and 2. They verify exact replay and log data, duplicate prevention,
+the privacy scan, order, and every storage failure. Vitest Browser Mode
 verifies the direct lethal paths, persistent victory interaction, title-only
 modal, keyboard behavior, focus, reload, and storage notice. Playwright verifies
 the fixed-seed production flow at the Pages subpath, valid persistence after

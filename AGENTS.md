@@ -9,8 +9,8 @@
 
 - Keep modules cohesive, interfaces explicit, coupling minimal, and behavior
   testable, replaceable, and reusable.
-- Define proportionate acceptance and verification before implementation. Keep
-  related tests cohesive; never weaken coverage, assertions, or failure
+- Define proportionate acceptance and verification before implementation.
+  Keep related tests cohesive. Never weaken coverage, assertions, or failure
   visibility to save time or tokens.
 - Do not spend effort over-designing or over-engineering placeholder items.
 - Preserve unrelated user work and use verified facts in durable documentation.
@@ -19,6 +19,10 @@
 
 - All agent replies, project documentation, and project skills must conform to
   ASD-STE100 Simplified Technical English standards.
+- The approved specifications define project game and software terms. Use these
+  terms as technical nouns or technical verbs.
+- Use American English in general prose. Preserve the exact spelling of
+  technical identifiers and quoted interface text.
 
 Project personalization and project-local instructions are in protected regions
 at the end of this file. They override conflicting workflow defaults, but not
@@ -48,7 +52,7 @@ The durable project documents are under `agent_docs/`:
 `deployment state` or when the user explicitly requests it. The main agent owns
 them during normal execution. During automatic deployment closure, the single
 `closure_steward` worker owns reconciliation of the complete documentation
-framework; no other worker participates in that closure update.
+framework. No other worker participates in that closure update.
 
 Keep raw logs, temporary reasoning, and short-lived checkpoints out of durable
 documents. Never delete a main project document without warning the user and
@@ -58,10 +62,11 @@ receiving a second explicit confirmation.
 
 There are three routes:
 
-- **Light**: leaf-state work. The main agent works directly; no subagents.
+- **Light**: leaf-state work. The main agent works directly. It uses no
+  subagents.
 - **Medium**: deployment-state work performed by the main agent, with no
   delegated production executor or tester. Companion provides workflow-mode
-  secretary and context support; an optional read-only evidence wave and the
+  secretary and context support. An optional read-only evidence wave and the
   documentation-only Closure Steward handoff never own implementation,
   verification, or root-cause decisions. Read
   `~/.codex/codex_workflow/medium_route.md`.
@@ -75,18 +80,20 @@ ineligible or its subagent support is unavailable, do not initialize Companion
 or another worker. Ask the user to switch the active session to Sol or Terra.
 Never pin or rewrite the main model in `config.toml`.
 
-The user selects the route for the session. If unspecified, use Light; do not
-infer Medium or Heavy. Light implies `leaf state`; Medium and Heavy imply
-`deployment state` only for substantive work. Their direct fast path remains
-`leaf state`. Keep the selected route until the user changes it or the session
-ends.
+The user selects the route for the session. If the user does not select a route,
+use Light. Do not infer Medium or Heavy. Light implies `leaf state`. Medium and
+Heavy imply `deployment state` only for substantive work. Their direct fast
+path remains `leaf state`.
+
+Keep the selected route until the user changes it or
+the session ends.
 
 ## Context Loading
 
 - In Light, inspect only material needed for the active task.
 - Before initializing deployment state, classify the request. Questions and
   small or unusual bounded tasks use the direct main-agent fast path even when
-  Medium or Heavy is selected. Do not call a worker, including Companion and
+  the user selects Medium or Heavy. Do not call a worker, including Companion and
   `closure_steward`. Do not produce worker statistics.
 - For every substantive Medium or Heavy deployment, read the selected route and
   `companion.md`, then initialize or reuse the single persistent Companion. Read
@@ -101,6 +108,7 @@ ends.
   the batch in the dispatch envelopes. Dispatched workers deliver detailed
   terminal reports directly to Companion. They return compact receipts to the
   main agent.
+
   Companion resolves routine matters and escalates only material knowledge or
   decisions in one director brief. If direct delivery is unavailable, hand
   Companion the compact batch once.
@@ -108,13 +116,13 @@ ends.
   source paths and contracts, and decisive failure evidence. It owns defect
   identification, root-cause adjudication, architecture, scope, and final
   claims.
-- For serious or ambiguous issues with independent search lanes, Heavy may use
-  read-only investigators under `investigation_team.md`; Medium may use them
-  only as explicitly requested evidence support. Investigators gather evidence;
-  Companion filters their terminal report batch; the main agent opens decisive
-  evidence and adjudicates the root cause.
+- For serious or ambiguous issues with independent search lanes, Heavy can use
+  read-only investigators under `investigation_team.md`. Medium can use them
+  only for explicitly requested evidence support. Investigators gather
+  evidence. Companion filters their terminal report batch. The main agent opens
+  decisive evidence and adjudicates the root cause.
 - Resolve stale or conflicting project status with targeted evidence. Load only
-  relevant module documentation and avoid replaying raw logs, large diffs,
+  relevant module documentation. Do not replay raw logs, large diffs,
   directory listings, or complete source files into the main context.
 - Before the final response that completes, pauses, or blocks each substantive
   Medium or Heavy deployment, run the automatic handoff defined in
@@ -171,9 +179,9 @@ diagnosis are read-only unless the user requests a change. Use the specialist
 review agents under `.github/agents/` for an independent, bounded review when
 the affected domain warrants it.
 
-Codex and Copilot agents may use the Microsoft Learn Model Context Protocol
-(MCP) server when Microsoft or Azure information that is valid on the review
-date materially helps the task.
+Codex and Copilot agents can use the Microsoft Learn Model Context Protocol
+(MCP) server. Use it when current Microsoft or Azure information materially
+helps the task.
 Search first, then fetch the relevant official page when full context is needed.
 Do not require this server for unrelated work.
 
@@ -207,7 +215,8 @@ architecture or behavior changes.
 Use original, licensed art, audio, fonts, and fictional characters. Never scrape
 assets, commit secrets, or add runtime network calls. Generate AVIF/WebP
 variants and metadata through the approved Sharp tool. Keep controls and
-required text outside Canvas. Deploy only `dist/` through GitHub
-Actions after `npm run ci`; preserve the Vite `/grand-transition/` base path.
+required text outside Canvas. Deploy only `dist/` through GitHub Actions after
+`npm run ci`. Preserve the Vite `/grand-transition/` base path.
+
 Text-to-speech is optional and must never reveal hidden hotseat content.
 <!-- codex-workflow-project-local-instructions-end -->

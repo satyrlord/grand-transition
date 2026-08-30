@@ -1,5 +1,9 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
+import {
+  basicScoringBalance,
+  legacyBasicScoringBalance,
+  type BasicScoringBalance,
+} from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   scoreComboFinisherConstruction,
@@ -31,6 +35,7 @@ const score = (
   ids: readonly string[],
   comboState: ComboChainState = {},
   weaknesses: readonly string[] = [],
+  balance: BasicScoringBalance = basicScoringBalance,
 ) =>
   scoreComboFinisherConstruction({
     attackerPlayerId: 'player',
@@ -39,7 +44,7 @@ const score = (
     analysis: analysis(ids),
     phrases: sampleContent.phrases,
     defenderWeaknessTags: weaknesses,
-    balance: basicScoringBalance,
+    balance,
   });
 
 describe('Hollywood Roast combos and finishers', () => {
@@ -49,8 +54,8 @@ describe('Hollywood Roast combos and finishers', () => {
       ['national-consensus', 'belongs-in-a-party-museum'],
       first.comboState,
     );
-    expect(first.score.finalDamage).toBe(1);
-    expect(second.score.finalDamage).toBe(2);
+    expect(first.score.finalDamage).toBe(5);
+    expect(second.score.finalDamage).toBe(10);
     expect(second.score.combo).toMatchObject({
       nounPhraseId: 'national-consensus',
       chain: 2,
@@ -87,7 +92,7 @@ describe('Hollywood Roast combos and finishers', () => {
       kind: 'finisher-bonus',
       operation: 'add',
       phraseId: 'by-emergency-ordinance',
-      amount: 4,
+      amount: 3,
     });
     expect(result.score.breakdown).toContainEqual(
       expect.objectContaining({
@@ -96,6 +101,31 @@ describe('Hollywood Roast combos and finishers', () => {
         phraseId: 'by-emergency-ordinance',
       }),
     );
+  });
+
+  test('retains version 1 restriction scoring for legacy replays', () => {
+    const result = score(
+      [
+        'national-consensus',
+        'belongs-in-a-party-museum',
+        'for-stabilitys-sake',
+      ],
+      {},
+      [],
+      legacyBasicScoringBalance,
+    );
+    expect(result.score.breakdown).toContainEqual({
+      kind: 'restriction-multiplier',
+      operation: 'note',
+      phraseIds: ['for-stabilitys-sake'],
+      factor: 1.5,
+    });
+    expect(result.score.breakdown).toContainEqual({
+      kind: 'finisher-bonus',
+      operation: 'add',
+      phraseId: 'for-stabilitys-sake',
+      amount: 5,
+    });
   });
 
   test('an incomplete insult clears that player combo chain', () => {

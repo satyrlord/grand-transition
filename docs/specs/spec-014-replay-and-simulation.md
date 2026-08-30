@@ -30,15 +30,19 @@ executes. It creates no Document Object Model
 (DOM) node and changes no rendered state. When the match enters the terminal
 `results` phase, the local Vite development server writes one `.log` file under
 the repository `logs/` directory. The repository ignores `logs/` and `*.log`.
+
 The file remains after the browser and server stop. The directory keeps the
 newest 50 match logs and removes the oldest log after match 51.
 
 Each file is newline-delimited JavaScript Object Notation (JSON Lines). The
-first record has `type: match-log`, `formatVersion: 1`, seed, mode, scene, and
-the two player and character identifiers. Each action record has a sequence,
-command, public move facts, outcome, error code or null, round, phase, active
-player, Pride, charge, both public bubble contents, both public constructions,
-the common board, and the latest public resolution. A selected phrase move also
+first record has `type: match-log`, `formatVersion: 1`, seed, mode, and scene.
+It also has the two player and character identifiers. Each action record has a
+sequence, command, public move facts, outcome, and error code or null. It has
+the round, phase, active player, Pride, charge, and common board. It also has
+the two public bubble contents, public constructions, and latest public
+resolution.
+
+A selected phrase move also
 has source, selected card identifier, phrase identifier, and rendered phrase
 text. The final record has `type: match-complete`, winner, round count, and the
 terminal public state.
@@ -48,7 +52,7 @@ player-entered text, browser identifier, machine fact, and secret. It makes no
 remote request. The development endpoint accepts only a same-origin `POST`,
 limits one file to 2 MiB, creates its own collision-safe filename, and permits
 no caller-selected path. The default filename is
-`match-YYYY-MM-DD-seed-<seed>.log`; same-day collisions add `-2`, `-3`, and so
+`match-YYYY-MM-DD-seed-<seed>.log`. Same-day collisions add `-2`, `-3`, and so
 on. The directory must resolve inside the repository.
 
 A write failure reports one console error and does not change or block the
@@ -61,21 +65,30 @@ Local replay and match-log exports contain seed, setup, round count,
 selections, breakdowns, combo and weakness events, continuations, comebacks,
 and winner. They contain no personal data and are never sent remotely.
 
-Replay version 1 is normalized JSON with these fields in order:
+Replay versions 1 and 2 use normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
 inputs. Dealt private cards and derived state are regenerated from the seed.
 Encoding uses two-space indentation and one final newline.
 
-The local match log uses `kind: grand-transition-match-log`, schema version 1,
-setup, seed, round summaries, public selections, public breakdowns, public rule
-events, and winner. It omits unselected private cards, player-entered text,
-browser identifiers, timestamps finer than the calendar date, and machine data.
+The local match log uses `kind: grand-transition-match-log`, the matching replay
+schema version, setup, seed, round summaries, public selections, public
+breakdowns, public rule events, and winner. It omits unselected private cards,
+player-entered text, browser identifiers, timestamps finer than the calendar
+date, and machine data.
+
+Version 1 uses the original 1, 3, 5, and 7 compatibility bases, per-restricted-
+phrase 1.5 multipliers, and a 2x weakness multiplier. Version 2 uses the
+Milestone 010 pacing contract: 5, 10, 15, and 20 compatibility bases, no
+restriction damage bonus, and a 1.5 weakness multiplier. New replays and match
+logs use version 2. Decoding and replaying version 1 selects its original
+scoring balance so retained commands reproduce their original result.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
 Missing or invalid fields return `invalid-replay`. An unknown version returns
-`unsupported-version`. Version 1 is the initial format and has no fabricated
-predecessor migration.
+`unsupported-version`. `tests/fixtures/replay-v1-scoring.json` is the retained
+version 1 source fixture for the step to version 2. Encoding preserves the
+supplied supported version and never relabels version 1 commands as version 2.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
@@ -83,13 +96,15 @@ writes a concise summary to standard output. Invalid arguments exit nonzero and
 name the invalid option.
 
 Pure rule, grammar, scoring, artificial intelligence (AI), replay, and codec
-files must each reach at least 90 percent statements, functions, and lines and
-85 percent branches. The global Milestone 002 threshold remains 70 percent.
+files have per-file thresholds. Each file must reach 90 percent for statements,
+functions, and lines. Each file must reach 85 percent for branches. The global
+Milestone 002 threshold remains 70 percent.
 
 ## Acceptance criteria
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
-  normalized bytes and an exact final state.
+  normalized bytes and an exact final state. A version 1 scoring fixture replays
+  with its original resolution after version 2 becomes current.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID
@@ -107,13 +122,15 @@ files must each reach at least 90 percent statements, functions, and lines and
   audit UI, simulation UI, or development-tool label.
 - **AC-014-07:** One player-driven match under the normal development command
   writes exactly one parseable JSON Lines `.log` file. It contains every
-  reducer command, including automatic lifecycle commands, selected phrase
-  facts, both public bubble contents for
-  each action, public construction and board state, the terminal winner, and no
-  private or machine data. The file remains readable after the page and server
+  reducer command, including automatic lifecycle commands. It contains selected
+  phrase facts and the two public bubble contents for each action. It contains
+  public construction and board state, the terminal winner, and no private or
+  machine data.
+
+  The file remains readable after the page and server
   close. Match 51 leaves exactly the newest 50 files. A same-day collision
-  creates a second file without overwrite. Empty,
-  invalid, oversized, and out-of-repository writes fail. Development and
+  creates a second file without overwrite. Empty, invalid, oversized, and
+  out-of-repository writes fail. Development and
   production have identical rendered game UI signatures.
 
 ## Verify and stop

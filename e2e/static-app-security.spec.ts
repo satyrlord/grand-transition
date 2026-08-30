@@ -163,12 +163,12 @@ test('development automatically writes one completed match text log', async ({
 }) => {
   await rm(developmentGameLogDirectory, { force: true, recursive: true });
   try {
-    await useFixedBrowserMatchSeed(page);
+    const plan = planMatchBrowserFlow();
+    await useFixedBrowserMatchSeed(page, plan.seed);
     await page.goto(developmentUrl);
     await page.getByRole('button', { name: 'Set up match' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
 
-    const plan = planMatchBrowserFlow();
     for (const action of plan.actions) {
       await executeDraftAction(page, action);
       const continueButton = page.getByRole('button', {
@@ -182,7 +182,12 @@ test('development automatically writes one completed match text log', async ({
 
     await expect.poll(async () => logFiles()).toHaveLength(1);
     const [filename] = await logFiles();
-    expect(filename).toMatch(/^match-\d{4}-\d{2}-\d{2}-seed-20260823\.log$/u);
+    expect(filename).toMatch(
+      new RegExp(
+        `^match-\\d{4}-\\d{2}-\\d{2}-seed-${String(plan.seed)}\\.log$`,
+        'u',
+      ),
+    );
     const text = await readFile(
       path.join(developmentGameLogDirectory, filename!),
       'utf8',
@@ -195,7 +200,7 @@ test('development automatically writes one completed match text log', async ({
       expect.objectContaining({
         type: 'match-log',
         formatVersion: 1,
-        seed: 20_260_823,
+        seed: plan.seed,
       }),
     );
     expect(records.at(-1)).toEqual(

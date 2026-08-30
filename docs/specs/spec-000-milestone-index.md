@@ -19,12 +19,14 @@ complete an approved specification.
 
 ## Product-wide contracts
 
-- Build an original browser-based competitive sentence-dueling game whose
-  match mechanics follow _Oh...Sir! The Hollywood Roast_: one common phrase
-  board, two private hand cards, tactical phrase removal, its grammar,
-  clause scoring, weaknesses, noun combos, finishers, continuations, comebacks,
-  Pride damage, 30-second default picks, approved 15-second and Unlimited local
-  timer choices, and cliffhangers.
+- Build an original browser-based competitive sentence-dueling game. Its match
+  mechanics follow _Oh...Sir! The Hollywood Roast_. They include one common
+  phrase board, two private hand cards, and tactical phrase removal. They also
+  include grammar, clause scoring, weaknesses, noun combos, and finishers.
+
+  Continuations, comebacks, Pride damage, timer choices, and cliffhangers are
+  also necessary. The default timer is 30 seconds. The local choices are 15
+  seconds and Unlimited.
 - Use only original Grand Transition phrases, characters, scenes, prose, art,
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression. The sourced English
@@ -106,11 +108,12 @@ not replace a missing focused verifier.
 
 ## Shared evidence contract
 
-An evidence record contains the milestone and acceptance identifiers, commit or
-working-tree identifier, production build command, test command or manual
-procedure, operating system, browser and version when applicable, viewport,
-input seed and setup when applicable, expected result, actual result, and links
-to retained screenshots, traces, audio notes, or CI artifacts.
+An evidence record contains the milestone and acceptance identifiers. It also
+contains the commit or working-tree identifier and the production build
+command. Include the test command or manual procedure and the operating system.
+When applicable, include the browser, browser version, viewport, input seed,
+and setup. Include the expected result, actual result, and links to retained
+evidence.
 
 Automated evidence must be reproducible from a clean checkout. Manual evidence
 must use a written procedure and record pass, fail, or blocked for each step.
@@ -133,7 +136,8 @@ The acceptance matrix is:
 | Common landscape  | 1280 by 720  |
 | Recommended PC    | 1920 by 1080 |
 
-All landscape viewports at or above both minimum dimensions are supported.
+The application supports all landscape viewports at or above both minimum
+dimensions.
 Portrait and square viewports are unsupported even when both dimensions meet
 their minima. At each supported viewport:
 

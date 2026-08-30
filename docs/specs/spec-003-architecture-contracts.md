@@ -13,9 +13,10 @@ automated boundary check for pure engine, artificial intelligence (AI),
 content, grammar, scoring, and replay modules. Run the boundary check inside
 `validate` after localization and before typed lint.
 
-`GameState` contains a schema version, seed, phase, mode, round, opening and
-active player IDs, scene ID, board, player states, optional pending resolution
-and winner, and command history. Every user or AI action reduces to a new
+`GameState` contains a schema version, seed, phase, mode, and round. It contains
+the opening and active player IDs, scene ID, board, and player states. It can
+contain a pending resolution and winner. It also contains command history.
+Every user or AI action reduces to a new
 immutable snapshot or typed rule error.
 
 The application shell owns the active snapshot. Lit children receive immutable values
@@ -27,7 +28,9 @@ Randomness enters only through the seeded source. Persistence uses pure,
 versioned codecs behind `StoragePort`. Engine and codecs do not call browser
 storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
 replay do not import Lit or Document Object Model (DOM) application programming
-interfaces (APIs). English interface prose stays in user interface (UI)
+interfaces (APIs).
+
+English interface prose stays in user interface (UI)
 messages. Grammar, phrase semantics, constructed sentences, and speech content
 stay in locale-specific bundles. Balance constants stay in validated data.
 
@@ -74,14 +77,14 @@ storage-adapter, asset, style, main-entry, tool, or test code.
 
 - **AC-003-01:** Compile-time tests reject mutation of every top-level state
   field and representative nested board, player, and history values.
-- **AC-003-02:** A successful reducer call returns a different snapshot,
-  preserves the input byte-for-byte, advances only through the supplied random
-  source, and appends the accepted command once.
+- **AC-003-02:** A successful reducer call returns a different snapshot and
+  preserves the input byte-for-byte. It advances only through the supplied
+  random source and appends the accepted command once.
 - **AC-003-03:** A rejected command returns its stable code and facts and leaves
   state, seed, and history unchanged.
-- **AC-003-04:** Boundary fixtures prove one rejection for a Lit import, one
-  rejection for each owned browser API class, and one rejected dependency from
-  a pure module to application code. Fixtures prove each allowed dependency
+- **AC-003-04:** Boundary fixtures prove one rejection for a Lit import. They
+  prove one rejection for each owned browser API class. They also prove one
+  rejected dependency from a pure module to application code. Fixtures prove each allowed dependency
   direction. The normal pure roots pass.
 - **AC-003-05:** Storage and speech fake ports can replace browser adapters
   without importing Lit or DOM types into pure modules.

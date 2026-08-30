@@ -1,6 +1,6 @@
 # Grand Transition specialist agents
 
-These agents perform independent, read-only reviews. The root coordinator owns
+These agents do independent, read-only reviews. The root coordinator owns
 the plan, implementation authority, integration, and final decision.
 
 | Agent | Review scope |

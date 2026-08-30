@@ -18,7 +18,9 @@ The title screen shows the generated original game emblem, the live game name,
 one setup action, and the fictional-composite satire disclaimer. It inherits
 the final match and Pause visual system instead of the earlier polling-ledger
 direction. Setup uses native controls and prevents only invalid combinations.
-Mirror characters are valid. Screens use light DOM. Shadow DOM is limited to
+Mirror characters are valid. Screens use light DOM.
+
+Shadow DOM is limited to
 isolated leaf controls with explicit style and event contracts. Components
 never duplicate authoritative state.
 
@@ -27,7 +29,9 @@ never duplicate authoritative state.
 The shell has `title` and `setup` view states. “Set up match” moves from the
 title to setup without changing game state. “Back” returns to title and restores
 setup values. A valid setup submit emits one typed `start-match` command.
-Milestone 016 owns the rendered match destination. A confirmed “Back to menu”
+Milestone 016 owns the rendered match destination.
+
+A confirmed “Back to menu”
 action from the concealed Pause screen discards the active match and returns to
 title. It preserves the setup values for a later setup visit.
 
@@ -37,7 +41,9 @@ character's first skin, and the first scene.
 The application session starts with the 30-second browser default. Timer
 changes occur only on the paused match surface owned by Milestone 016. They
 remain in the application shell for later matches in the same page session and
-do not enter the setup snapshot or start-match payload. Mirror
+do not enter the setup snapshot or start-match payload.
+
+Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 
@@ -49,9 +55,9 @@ list. The list updates in the same render as the selection and remains visible
 before match start. Mirror selections show the same character and list on both
 sides.
 
-Each roster item uses an exact 3:4 vertical canvas, a tight headshot crop from
-the crown through the upper chest, one reusable authored heavy dark-oak frame,
-and a restrained aged-gold inner liner. It does not show the candidate's
+Each roster item uses an exact 3:4 vertical canvas and a tight headshot crop.
+The crop extends from the crown through the upper chest. Each item uses one
+authored heavy dark-oak frame and a restrained aged-gold inner liner. It does not show the candidate's
 complete pose, hands, held props, or full body. Selecting the item reveals the
 complete available portrait, including its feet, only on the owning left or
 right player stage. The selected stage does not fade or mask the lower body.
@@ -59,7 +65,9 @@ right player stage. The selected stage does not fade or mask the lower body.
 The roster has an explicit player-one or player-two selection target. Selecting
 a roster character updates that target and then advances the target to the
 other player. Selecting either player stage changes the target without changing
-the snapshot. Each selected-player stage shows its selected skin. Previous and
+the snapshot. Each selected-player stage shows its selected skin.
+
+Previous and
 next arrow buttons cycle only that player's available skins and wrap at both
 ends. Right-clicking the selected-player stage cycles to the next skin and
 prevents the browser context menu. When the stage has keyboard focus, Left
@@ -67,37 +75,41 @@ Arrow cycles to the previous skin and Right Arrow cycles to the next skin. Skin
 controls use visible side arrows, accessible names, and an announced current
 skin name. The roster portrait stays
 on the character's default skin because it denotes the archetype, not the
-selected skin. Hovering a roster character or moving keyboard focus to it shows
+selected skin.
+
+Hovering a roster character or moving keyboard focus to it shows
 a custom nonmodal floating panel with that character's name and complete public
 weakness list. Leaving hover or focus closes a transient panel. Right-clicking
 a roster character prevents the browser context menu and pins the panel. Escape
-or activation outside the roster and panel closes a pinned panel. The panel
+or activation outside the roster and panel closes a pinned panel.
+
+The panel
 contains public content only and does not trap focus.
 
 Validation occurs on submit and after an invalid field changes. Each visible
-error names the field, problem, and valid recovery. Valid input is preserved.
+error names the field, problem, and valid recovery. The shell preserves valid input.
 Each error is programmatically associated with its control. An invalid submit
 moves focus to the first invalid control. Submission is never disabled only to
 hide validation.
 
 ## Acceptance criteria
 
-- **AC-015-01:** Title and setup follow the two-state graph, browser Back does
-  not create an unsupported URL route, a confirmed paused-match exit returns to
-  title, and returning to setup restores values.
+- **AC-015-01:** Title and setup follow the two-state graph. Browser Back does
+  not create an unsupported URL route. A confirmed paused-match exit returns to
+  title. A later setup visit restores the values.
 - **AC-015-02:** Defaults create the exact typed setup payload, including both
   default skin IDs. A mirror match with different skins succeeds.
-- **AC-015-03:** Every invalid class produces one visible error, preserves
-  other values, moves focus to the first invalid control, associates each error
-  with its control, and emits no command.
+- **AC-015-03:** Every invalid class produces one visible error and preserves
+  other values. It moves focus to the first invalid control. It associates each
+  error with its control and emits no command.
 - **AC-015-04:** A valid submit emits one bubbling, composed
   `start-match` event and immutable payload. Rapid double submit emits once.
 - **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by 1080. Back does not discard setup values.
 - **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
   hands, or game phase. The shell is the only authoritative snapshot owner.
 - **AC-015-07:** Defaults, each changed character, and a mirror selection show
-  the exact catalog weakness tags for both players at every supported setup
-  viewport without clipping or page scroll.
+  the exact catalog weakness tags for the two players. They remain visible at
+  every supported setup viewport without clipping or page scroll.
 - **AC-015-08:** Pointer hover and keyboard focus show the correct transient
   character panel. Right-click shows the same panel without a browser context
   menu and keeps it open after pointer exit. Escape and outside activation close
@@ -116,9 +128,9 @@ hide validation.
   selected skin portrait.
 - **AC-015-11:** Both selected-player stages cycle their available skins with
   visible previous and next arrows, right-click, Left Arrow, and Right Arrow.
-  Cycling wraps, changes only the owning player's skin ID, preserves both
-  character IDs and all phrase content, prevents the stage context menu, and
-  does not change any roster portrait.
+  Cycling wraps and changes only the owning player's skin ID. It preserves the
+  two character IDs and all phrase content. It prevents the stage context menu
+  and does not change a roster portrait.
 
 ## Impeccable UI validation
 

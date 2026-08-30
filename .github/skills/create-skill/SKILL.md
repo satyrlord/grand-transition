@@ -34,7 +34,7 @@ Write all skills using ASD-STE100 Simplified Technical English standards.
 - Use one term for each concept.
 - Define abbreviations at first use.
 - Replace vague, idiomatic, and ambiguous terms with specific terms.
-- Avoid incomplete lists, combined alternatives, and unnecessary jargon.
+- Do not use incomplete lists, combined alternatives, or unnecessary jargon.
 
 Define the authorization boundary and completion criterion for each branch.
 Keep automatic discovery enabled unless the user requests explicit invocation only.

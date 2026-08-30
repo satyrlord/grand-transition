@@ -30,7 +30,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
       remoteRequests.push(request.url());
     }
   });
-  await useFixedBrowserMatchSeed(page);
+  await useFixedBrowserMatchSeed(page, plan.seed);
   await page.goto('/grand-transition/');
   await page.evaluate(() =>
     localStorage.removeItem('grand-transition.match-history.v1'),
@@ -42,6 +42,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
   let reachedLaterRound = false;
   let reachedSuddenDeath = false;
   let reviewedExchange = false;
+  let reviewIndex = 0;
   for (const action of plan.actions) {
     const match = page.locator('grand-transition-match');
     const snapshot = await match.evaluate(
@@ -64,6 +65,15 @@ test('a hotseat match reaches persistent victory and restores title history', as
       reviewedExchange = true;
       await expect(page.locator('.round-review-dialog')).toBeVisible();
       await expect(page.locator('.sentence-preview')).not.toBeEmpty();
+      const expectedResolution = plan.finalState.resolutionHistory[reviewIndex]!;
+      for (const [playerId, result] of Object.entries(
+        expectedResolution.players,
+      )) {
+        await expect(
+          page.locator(`[data-round-player="${playerId}"]`),
+        ).toContainText(`${result.outgoingDamage} damage`);
+      }
+      reviewIndex += 1;
       await continueButton.click();
     }
     await expect(
@@ -76,7 +86,14 @@ test('a hotseat match reaches persistent victory and restores title history', as
   expect(reachedLaterRound).toBe(true);
   expect(reachedSuddenDeath).toBe(true);
   expect(reviewedExchange).toBe(true);
+  expect(reviewIndex).toBe(plan.finalState.resolutionHistory.length - 1);
   await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
+  const terminalResolution = plan.finalState.resolutionHistory.at(-1)!;
+  for (const [playerId, result] of Object.entries(terminalResolution.players)) {
+    await expect(page.locator(`[data-round-player="${playerId}"]`)).toContainText(
+      `${result.outgoingDamage} damage`,
+    );
+  }
   await expect(page.locator('grand-transition-match')).toHaveCount(1);
   await expect(
     page.getByRole('button', { name: /Match history/iu }),

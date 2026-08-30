@@ -9,10 +9,14 @@ Read the applicable approved specifications. Start with
 `docs/specs/spec-026-mvp-content-expansion.md`, and
 `docs/specs/spec-027-balance-editorial.md`. Read Milestones 006 through 013 and
 021 when the content affects grammar, draws, scoring, match flow, or artificial
-intelligence (AI). Keep English phrase text out of rule logic. Use stable IDs
+intelligence (AI).
+
+Keep English phrase text out of rule logic. Use stable IDs
 and locale-specific phrase forms. Use a separate grammar adapter. Preserve
 fictional-composite satire and editorial safety. Do not name or identify a real
-person in content or its rationale. Use generic ideological or social-family
+person in content or its rationale.
+
+Use generic ideological or social-family
 party labels. Do not use real party names, acronyms, or logos. Use only original
 or licensed media. Generate runtime image variants and metadata through the
 approved asset tool. Do not hand-edit generated assets.

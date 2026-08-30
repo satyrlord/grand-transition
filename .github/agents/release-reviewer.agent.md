@@ -27,7 +27,9 @@ Check that `npm run ci` is the complete continuous integration (CI) gate. Check
 that the end-to-end (`test:e2e`) script builds first. Check that browser
 projects match the support contract. Check that all tools use the
 `/grand-transition/` base path. Check the production Content Security Policy
-(CSP) and network restrictions. Check that the build creates `dist/` and does
+(CSP) and network restrictions.
+
+Check that the build creates `dist/` and does
 not commit it. Check that production has no developer tools. Check that
 deployment uploads only the tested artifact. Treat performance claims as
 unverified unless the evidence records the environment, workload, method, and

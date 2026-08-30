@@ -1,6 +1,9 @@
 # Milestone 017: Between-Round Review Flow
 
-**Status:** Approved; terminal and post-match rules replaced by Milestone 030
+**Status:** Approved
+
+**Replacement:** Milestone 030 replaces the terminal and post-match rules.
+
 **Depends on:** 016  
 **Owns:** Browser lifecycle, between-round review, and the absence of post-match
 surfaces
@@ -30,8 +33,9 @@ setup screen. Preserve the selected mode, characters, and scene. Starting
 another match is a new setup action.
 
 The product has zero post-match features. It must not render a winner page,
-result record, statistics, score summary, replay action, export action, rematch
-action, return action, sharing action, leaderboard action, or post-match cue.
+result record, statistics, score summary, or replay action. It must not render
+export, rematch, return, sharing, or leaderboard actions. It must not render a
+post-match cue.
 Do not register or ship a resolution-results custom element or its style sheet.
 Do not add a rematch or post-match lifecycle command.
 
