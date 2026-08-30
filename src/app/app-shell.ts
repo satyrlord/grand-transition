@@ -205,11 +205,13 @@ export class GrandTransitionApp extends LitElement {
         this.view = 'match';
         return;
       }
-      this.view =
+      const nextView =
         view === 'match' &&
         (!this.matchState || this.matchState.phase === 'setup')
           ? 'setup'
           : view;
+      this.view = nextView;
+      this.focusViewHeading(nextView);
     });
     window.addEventListener('resize', this.syncViewportSupport);
     window.visualViewport?.addEventListener('resize', this.syncViewportSupport);
@@ -304,6 +306,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistoryOpen = false;
     this.screenController.showSetup();
     this.view = 'setup';
+    this.focusViewHeading('setup');
   };
 
   private readonly showMatchHistory = (event: ShowMatchHistoryEvent): void => {
@@ -484,6 +487,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchId = null;
     this.screenController.showTitle();
     this.view = 'title';
+    this.focusViewHeading('title');
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -509,12 +513,24 @@ export class GrandTransitionApp extends LitElement {
     this.matchId = null;
     this.screenController.showTitle();
     this.view = 'title';
+    this.focusViewHeading('title');
   };
 
   private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
     event.stopPropagation();
     this.turnTimerSeconds = event.detail;
   };
+
+  private focusViewHeading(view: ScreenView): void {
+    const selector =
+      view === 'title' ? '#game-title' : view === 'setup' ? '#setup-title' : null;
+    if (!selector) return;
+    void this.updateComplete.then(() => {
+      if (this.view === view) {
+        this.querySelector<HTMLElement>(selector)?.focus();
+      }
+    });
+  }
 
   private readonly changeAutoComplete = (
     event: AutoCompleteChangeEvent,

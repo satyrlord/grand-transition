@@ -1,6 +1,6 @@
 ---
 name: experience-reviewer
-description: Review Grand Transition user interface, landscape behavior, motion, audio feedback, and hotseat speech privacy without editing files.
+description: Review Grand Transition user interface, landscape behavior, motion, audio feedback, and hidden-hand speech privacy without editing files.
 tools:
   - read
   - search
@@ -30,7 +30,7 @@ report that evidence as blocked.
 Check tactical clarity and visible interface content. Check Lit snapshot and
 command boundaries. Check pointer paths, the supported landscape matrix, the
 blocking viewport gate, phrase-card states, and score explanations. Check
-text-to-speech fallback and hotseat privacy. A screenshot can support a visual
+text-to-speech fallback and hidden-hand privacy. A screenshot can support a visual
 claim, but it cannot prove interaction or state by itself.
 
 Report confirmed findings with severity, exact location, direct evidence,

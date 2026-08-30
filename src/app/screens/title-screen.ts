@@ -1,7 +1,8 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { msg } from '@lit/localize';
 import { englishGameLocale } from '../../game-content';
-import emblemUrl from '../../assets/brand/grand-transition-emblem.png';
+import emblemFallbackUrl from '../../assets/brand/grand-transition-emblem.png';
+import emblemWebpUrl from '../../assets/brand/grand-transition-emblem-640.webp';
 import type {
   MatchHistoryEntry,
   MatchHistoryFailureCode,
@@ -32,7 +33,7 @@ export class GrandTransitionTitle extends LitElement {
 
   constructor() {
     super();
-    this.status = msg('Transmission ready');
+    this.status = msg('Live now, on NTV Channel 3!');
     this.historyEntries = [];
     this.historyOpen = false;
     this.historyPersistenceFailure = null;
@@ -48,14 +49,24 @@ export class GrandTransitionTitle extends LitElement {
         <div class="title-proscenium" aria-hidden="true"></div>
         <p class="broadcast-channel">${msg('Channel 3')}</p>
         <header class="title-marquee">
-          <img
-            class="title-emblem"
-            src=${emblemUrl}
-            alt=""
-            width="1254"
-            height="1254"
-          />
-          <h1 id="game-title">
+          <div class="title-emblem-frame">
+            <span class="title-emblem-poster" aria-hidden="true"></span>
+            <picture class="title-emblem-picture">
+              <source srcset=${emblemWebpUrl} type="image/webp" />
+              <img
+                class="title-emblem"
+                src=${emblemFallbackUrl}
+                alt=""
+                width="640"
+                height="640"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                @load=${this.revealEmblem}
+              />
+            </picture>
+          </div>
+          <h1 id="game-title" tabindex="-1">
             <span>${msg('Grand')}</span>
             <span>${msg('Transition')}</span>
           </h1>
@@ -118,6 +129,13 @@ export class GrandTransitionTitle extends LitElement {
         detail: Object.freeze({ type: 'show-setup' as const }),
       }),
     );
+  };
+
+  private readonly revealEmblem = (event: Event): void => {
+    const image = event.currentTarget as HTMLImageElement;
+    image
+      .closest<HTMLElement>('.title-emblem-frame')
+      ?.classList.add('title-emblem-frame--loaded');
   };
 
   private readonly showMatchHistory = (): void => {

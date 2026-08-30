@@ -47,8 +47,8 @@ runtime-network, speech-state, or complete-match assertion.
 Published complete-match smoke uses seed `20260823` and the first two roster
 characters. It uses the Transition-Era Television Studio and the default
 30-second timer. It also tests the 15-second and Unlimited timer settings. It
-uses speech off and privacy on. It reviews each nonterminal exchange through
-Continue and completes the match. It shows the Milestone 030 victory state and
+uses speech off. It reviews each nonterminal exchange through Continue and
+completes the match. It shows the Milestone 019 victory state and
 returns to the title screen.
 
 After reload, it restores the stored match through

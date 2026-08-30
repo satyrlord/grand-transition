@@ -56,7 +56,7 @@ complete an approved specification.
   tokens, and real-money purchases are out of scope.
 - Post-MVP candidates include additional content, Romanian grammar and phrase
   localization, controller support, local content packs, recorded voice,
-  replays, and local simulation tools. Milestone 030 approves local match
+  replays, and local simulation tools. Milestone 019 approves local match
   history. Do not implement another candidate without a new approved
   specification.
 
@@ -223,11 +223,12 @@ source-only review does not satisfy them.
     hotseat draft is playable with temporary art.
 17. [Between-round review flow](spec-017-seamless-match-flow.md). Budget: 4.
     Browser matches review each nonterminal exchange before Continue. Milestone
-    030 replaces its terminal and post-match rules.
+    019 replaces its terminal and post-match rules.
 18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported landscape contracts pass.
-19. [Hotseat privacy](spec-019-hotseat-privacy.md). Budget: 6. Private
-    information survives safe handovers.
+19. [Victory and persistent match history](spec-019-victory-match-history.md).
+    Budget: 10. Every terminal path shows a persistent victory state and stores
+    a local public match record.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
     Local options persist or fail safely.
 21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 7. A
@@ -249,10 +250,6 @@ source-only review does not satisfy them.
     and compatibility gates pass.
 29. [GitHub Pages release](spec-029-github-pages-release.md). Budget: 5. The
     tested artifact deploys and passes smoke tests.
-30. [Victory and persistent match history](spec-030-victory-match-history.md).
-    Budget: 10. Every terminal path shows a persistent victory state and stores
-    a local public match record.
-
 Each milestone depends on the preceding milestone. This linear order limits the
 context and files needed for each implementation session.
 
@@ -269,10 +266,10 @@ context and files needed for each implementation session.
 | Replay, simulation, development logs | 014                |
 | State ownership and browser screens  | 015-017            |
 | Landscape viewport support           | 018, 025, 028      |
-| Hotseat privacy and local state      | 019-020            |
+| Victory and persistent match history | 019                |
+| Local settings and state             | 020                |
 | AI and ladder                        | 021-022            |
 | Visual assets and presentation       | 023, 025-026       |
 | Audio and speech                     | 024                |
 | Full content, safety, and balance    | 026-027            |
 | Release quality and deployment       | 028-029            |
-| Victory and persistent match history | 030                |

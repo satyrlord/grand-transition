@@ -16,7 +16,7 @@ test('renders the title screen in a real browser', async () => {
     .element(page.getByText('A Verbal Republic', { exact: true }))
     .toBeVisible();
   await expect
-    .element(page.getByText('Transmission ready', { exact: true }))
+    .element(page.getByText('Live now, on NTV Channel 3!', { exact: true }))
     .toBeVisible();
   expect(document.querySelector('.title-emblem')).not.toBeNull();
   await expect

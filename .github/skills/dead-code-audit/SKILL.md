@@ -31,7 +31,7 @@ record direct evidence.
 
 In audit mode, report without edits. In cleanup mode, remove only the smallest
 set of proven dead items.
-Do not remove hotseat privacy.
+Do not remove active-hand privacy.
 Do not remove diagnostics, content-safety fields, or seeded replay support.
 Do not remove paths for browsers in the approved support matrix, fixtures,
 private master references, or

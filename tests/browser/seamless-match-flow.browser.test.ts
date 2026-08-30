@@ -117,10 +117,10 @@ test('holds a comeback sentence under the between-round results modal', async ()
   expect(match.snapshot?.roundReview).toBe(true);
   expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
   expect(match.snapshot?.sentenceText).toContain(
-    'You are the silence left after a nation stops believing you.',
+    'Now get this human bucket of vomit out of my sight!',
   );
   expect(match.querySelector('.sentence-preview')?.textContent).toContain(
-    'You are the silence left after a nation stops believing you.',
+    'Now get this human bucket of vomit out of my sight!',
   );
   expect(match.querySelector('.round-review-dialog')).not.toBeNull();
   expect(match.querySelector('.timer-fact')).toBeNull();

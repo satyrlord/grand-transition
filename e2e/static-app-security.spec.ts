@@ -271,7 +271,11 @@ async function uiSignature(page: Page) {
         app?.innerHTML
           .replace(/\?lit\$\d+\$/gu, '?lit$')
           .replace(
-            /src="[^"]*grand-transition-emblem[^"]*\.png"/gu,
+            /srcset="[^"]*grand-transition-emblem[^"]*\.webp"/gu,
+            'srcset="[local-brand-emblem]"',
+          )
+          .replace(
+            /src="[^"]*grand-transition-emblem[^"]*\.(?:png|webp)"/gu,
             'src="[local-brand-emblem]"',
           ) ?? '',
       text: app?.textContent?.replace(/\s+/gu, ' ').trim() ?? '',

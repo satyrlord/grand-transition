@@ -75,5 +75,4 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 Focused browser tests prove every accepted and rejected boundary, exact timer
 preservation, manual Pause interaction, and DOM replacement. Production
 Playwright checks the supported landscape matrix and blocked examples.
-`npm run ci` passes. Stop before privacy handover, settings persistence, or
-production art.
+`npm run ci` passes. Stop before settings persistence or production art.
