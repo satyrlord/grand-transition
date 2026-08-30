@@ -39,15 +39,24 @@ intermediate surface. Each reaction uses one fixed motion sequence. When the
 browser requests reduced motion, keep the public outcome record and suppress
 movement and flashing.
 
+The between-round review is already a protected hold. Its score receipt is not
+an intermediate surface. It prints clause, finisher, and Comeback rows in score
+order, then lands final damage. The sequence completes within 800 milliseconds
+and does not delay the existing Continue control. Combo emphasis stays visible
+for the review. Weakness emphasis uses one bounded strike. These records report
+resolved public facts only and never preview a card or future score.
+
 ## Acceptance criteria
 
 - **AC-025-01:** Deterministic browser flows trigger each named public event and
-  show its affected player and exact value change once.
+  show its affected player and exact value change once. Resolution flows also
+  show every scored component and applied factor once.
 - **AC-025-02:** Each reaction meets its timing, does not move layout, and does
   not delay or change the next accepted game action.
 - **AC-025-03:** Each authored reaction uses the one fixed motion sequence in
-  its owning event contract. Reduced-motion mode keeps the same public facts
-  without movement or flashing.
+  its owning event contract. The score receipt and final damage complete within
+  800 milliseconds. Reduced-motion mode keeps the same public facts without
+  movement or flashing.
 - **AC-025-04:** All supported landscape viewports keep each reaction, sentence,
   phrase row, and required action visible without overlap.
 - **AC-025-05:** Production source, storage, and DOM contain no tutorial,

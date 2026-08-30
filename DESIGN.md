@@ -70,6 +70,11 @@ typography:
     fontWeight: 700
     lineHeight: 1
     letterSpacing: '0.06em'
+  score-total:
+    fontFamily: 'var(--font-interface, "Rubik Variable"), Arial, sans-serif'
+    fontSize: 'clamp(1.35rem, 2.5vw, 2rem)'
+    fontWeight: 900
+    lineHeight: 0.95
   timer-display:
     fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
     fontSize: 'clamp(1.65rem, 2.6vw, 2.35rem)'
@@ -230,9 +235,11 @@ speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
 that side persistently brighter. A completed exchange holds the last full
 sentence in the arena and places a semitransparent broadcast-results modal over
-the lower stage. Continue releases a nonterminal hold and starts the next
-round. A terminal hold expands the same record into Victory and remains until
-the player returns to the title.
+the lower stage. Inside that record, a broadcast score receipt prints each
+clause in order, stamps weakness and combo factors onto the affected line,
+separates finisher and Comeback values, and lands final damage last. Continue
+releases a nonterminal hold and starts the next round. A terminal hold expands
+the same record into Victory and remains until the player returns to the title.
 
 ### Cross-surface reach
 
@@ -540,8 +547,11 @@ a separate dashboard.
 After each exchange, a centered results record holds the arena in place. Its
 heading and outcome use one centered axis. Two equal-width peer records sit
 side by side with red and blue identity borders. Each record shows the player
-name, outgoing damage, combo result, and applied weaknesses. One centered
-Continue action closes a nonterminal record.
+name and an ordered, internally scrollable score receipt. Clause rows show the
+rendered phrase, base, applied weakness and combo factors, and resulting value.
+Finisher and Comeback rows remain separate. Persistent combo and bounded
+weakness records precede one large final-damage landing. One centered Continue
+action closes a nonterminal record.
 
 A terminal record changes its heading to Victory and names the match winner and
 completed round count. It

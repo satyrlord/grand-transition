@@ -126,6 +126,14 @@ test('holds a comeback sentence under the between-round results modal', async ()
   expect(match.querySelector('.timer-fact')).toBeNull();
   expect(match.querySelector('.round-review-backdrop')).not.toBeNull();
   expect(match.querySelector('.reaction-scores')?.children).toHaveLength(2);
+  expect(match.querySelectorAll('.score-breakdown')).toHaveLength(2);
+  expect(
+    match.querySelectorAll('[data-score-kind="clause"]').length,
+  ).toBeGreaterThan(0);
+  expect(match.querySelector('.score-breakdown-step--comeback')?.textContent).toMatch(
+    /Comeback.*human bucket of vomit.*\+18/su,
+  );
+  expect(match.querySelectorAll('.reaction-damage-total')).toHaveLength(2);
   expect(match.querySelector('.draft-table')).toBeNull();
   expect(match.querySelector('.private-hand')).toBeNull();
   expect(document.activeElement).toBe(

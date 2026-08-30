@@ -1273,6 +1273,19 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
               comboFactor: number;
               comboBonusDamage: number;
               weaknesses: readonly string[];
+              weaknessFactor: number;
+              sentenceDamage: number;
+              comebackBonus: number;
+              scoreComponents: readonly {
+                kind: 'clause' | 'comeback' | 'finisher';
+                phraseText: string;
+                base: number;
+                restrictionFactor: number;
+                weaknessFactor: number;
+                comboFactor: number;
+                amount: number;
+                weaknessTags: readonly string[];
+              }[];
             }
           >;
         };
@@ -1292,7 +1305,45 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
           ...match.snapshot.reaction.players,
           [firstId]: {
             ...match.snapshot.reaction.players[firstId]!,
+            damage: 51,
+            comboFactor: 2,
+            comboBonusDamage: 15,
             weaknesses: ['evidence', 'credibility', 'restraint'],
+            weaknessFactor: 1.5,
+            sentenceDamage: 33,
+            comebackBonus: 18,
+            scoreComponents: [
+              {
+                kind: 'clause',
+                phraseText: 'Your party belongs in a party museum',
+                base: 10,
+                restrictionFactor: 1,
+                weaknessFactor: 1.5,
+                comboFactor: 2,
+                amount: 30,
+                weaknessTags: ['evidence'],
+              },
+              {
+                kind: 'finisher',
+                phraseText: 'By emergency ordinance.',
+                base: 3,
+                restrictionFactor: 1,
+                weaknessFactor: 1,
+                comboFactor: 1,
+                amount: 3,
+                weaknessTags: [],
+              },
+              {
+                kind: 'comeback',
+                phraseText: 'And that closes the record.',
+                base: 18,
+                restrictionFactor: 1,
+                weaknessFactor: 1,
+                comboFactor: 1,
+                amount: 18,
+                weaknessTags: [],
+              },
+            ],
           },
         },
       },
@@ -1305,10 +1356,63 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   );
   await expect(page.locator('.reaction-scores > div')).toHaveCount(2);
   await expect(page.locator('.reaction-scores dd > strong')).toHaveCount(2);
+  const firstScore = page.locator('.reaction-scores > div').first();
+  await expect(firstScore.locator('.score-breakdown-step')).toHaveCount(3);
+  await expect(firstScore.locator('.score-breakdown')).toHaveAttribute(
+    'tabindex',
+    '0',
+  );
+  await expect(firstScore.locator('[data-score-kind="clause"]')).toContainText(
+    'Your party belongs in a party museum',
+  );
+  await expect(firstScore.locator('.score-factor--weakness')).toHaveText('×1.5');
+  await expect(firstScore.locator('.score-factor--combo')).toHaveText('×2');
+  await expect(firstScore.locator('[data-score-amount="30"]')).toContainText(
+    /=\s*30/u,
+  );
+  await expect(firstScore.locator('[data-score-kind="comeback"]')).toContainText(
+    /Comeback\s*And that closes the record\.\s*\+18/u,
+  );
+  await expect(firstScore.locator('.reaction-damage-total')).toContainText(
+    /Final damage\s*51/u,
+  );
+  await expect(firstScore.locator('.combo-bonus')).toContainText(
+    /Combo ×2\s*\+15 combo damage/u,
+  );
+  expect(
+    await firstScore
+      .locator('.score-breakdown-step')
+      .first()
+      .evaluate((step) => getComputedStyle(step).animationName),
+  ).toBe('score-breakdown-print');
+  const receiptTiming = await firstScore.evaluate((score) => {
+    const row = score.querySelector<HTMLElement>('.score-breakdown-step:last-child')!;
+    const total = score.querySelector<HTMLElement>('.reaction-damage-total')!;
+    const rowStyle = getComputedStyle(row);
+    const totalStyle = getComputedStyle(total);
+    return {
+      rowEnd:
+        Number.parseFloat(rowStyle.animationDelay) +
+        Number.parseFloat(rowStyle.animationDuration),
+      totalStart: Number.parseFloat(totalStyle.animationDelay),
+      totalEnd:
+        Number.parseFloat(totalStyle.animationDelay) +
+        Number.parseFloat(totalStyle.animationDuration),
+    };
+  });
+  expect(receiptTiming.totalStart).toBeGreaterThanOrEqual(receiptTiming.rowEnd);
+  expect(receiptTiming.totalEnd).toBeLessThanOrEqual(0.8);
+  expect(
+    await firstScore.locator('.score-breakdown-copy > span').first().evaluate(
+      (copy) => Number.parseFloat(getComputedStyle(copy).fontSize),
+    ),
+  ).toBeGreaterThanOrEqual(11);
+  await page.waitForTimeout(800);
   const reviewSymmetry = await page
     .locator('.round-review-dialog')
     .evaluate((record) => {
       const dialog = record.getBoundingClientRect();
+      const backdrop = record.parentElement!.getBoundingClientRect();
       const cards = Array.from(
         record.querySelectorAll<HTMLElement>('.reaction-scores > div'),
       ).map((card) => card.getBoundingClientRect());
@@ -1321,9 +1425,8 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
       return {
         centered:
           Math.abs(
-            dialog.left +
-              dialog.width / 2 -
-              document.documentElement.clientWidth / 2,
+            dialog.left + dialog.width / 2 -
+              (backdrop.left + backdrop.width / 2),
           ) <= 1,
         equalCards:
           cards.length === 2 &&
@@ -1381,10 +1484,65 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
       );
     }),
   ).toBe(true);
+  await expect(firstScore.locator('[data-score-kind="comeback"]')).toContainText(
+    '+18',
+  );
+  await expect(firstScore.locator('.weakness-hit')).toBeVisible();
   await page.screenshot({
     path: testInfo.outputPath('round-result-feedback.png'),
     fullPage: true,
   });
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const receiptGeometry = await page
+      .locator('.round-review-dialog')
+      .evaluate((dialog) => {
+        const box = dialog.getBoundingClientRect();
+        const receipts = Array.from(
+          dialog.querySelectorAll<HTMLElement>('.score-breakdown'),
+        );
+        return {
+          insideViewport:
+            box.left >= 0 &&
+            box.top >= 0 &&
+            box.right <= window.innerWidth &&
+            box.bottom <= window.innerHeight,
+          dialogFits:
+            dialog.scrollWidth <= dialog.clientWidth + 1 &&
+            dialog.scrollHeight <= dialog.clientHeight + 1,
+          receiptsFit: receipts.every(
+            (receipt) => receipt.scrollWidth <= receipt.clientWidth + 1,
+          ),
+        };
+      });
+    expect(receiptGeometry, JSON.stringify(viewport)).toEqual({
+      insideViewport: true,
+      dialogFits: true,
+      receiptsFit: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(
+        `round-result-feedback-${viewport.width}x${viewport.height}.png`,
+      ),
+      fullPage: true,
+    });
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  expect(
+    await firstScore
+      .locator('.score-breakdown-step')
+      .first()
+      .evaluate((step) => getComputedStyle(step).animationName),
+  ).toBe('none');
+  expect(
+    await firstScore
+      .locator('.reaction-damage-total')
+      .evaluate((total) => getComputedStyle(total).animationName),
+  ).toBe('none');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
@@ -1401,6 +1559,7 @@ test('the grammar strike fits the minimum landscape', async ({
     .locator(
       '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
     )
+    .first()
     .click();
   const strike = page.locator('.grammar-strike');
   await expect(strike).toBeVisible();

@@ -69,9 +69,31 @@ test('a hotseat match reaches persistent victory and restores title history', as
       for (const [playerId, result] of Object.entries(
         expectedResolution.players,
       )) {
-        await expect(
-          page.locator(`[data-round-player="${playerId}"]`),
-        ).toContainText(`${result.outgoingDamage} damage`);
+        const scoreCard = page.locator(`[data-round-player="${playerId}"]`);
+        await expect(scoreCard.locator('.reaction-damage-total')).toContainText(
+          new RegExp(`Final damage\\s*${String(result.outgoingDamage)}`, 'u'),
+        );
+        const expectedComponents =
+          (result.score?.breakdown.filter(
+            (item) =>
+              item.kind === 'clause-score' || item.kind === 'finisher-bonus',
+          ).length ?? 0) + Number(result.comebackBonus > 0);
+        await expect(scoreCard.locator('.score-breakdown-step')).toHaveCount(
+          expectedComponents,
+        );
+        if (result.comboMultiplier > 1) {
+          await expect(scoreCard.locator('.score-factor--combo').first()).toBeVisible();
+        }
+        if (result.weaknessActivated) {
+          await expect(
+            scoreCard.locator('.score-factor--weakness').first(),
+          ).toHaveText('×1.5');
+        }
+        if (result.comebackBonus > 0) {
+          await expect(
+            scoreCard.locator('[data-score-kind="comeback"]'),
+          ).toContainText(`+${result.comebackBonus}`);
+        }
       }
       reviewIndex += 1;
       await continueButton.click();
@@ -90,8 +112,12 @@ test('a hotseat match reaches persistent victory and restores title history', as
   await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
   const terminalResolution = plan.finalState.resolutionHistory.at(-1)!;
   for (const [playerId, result] of Object.entries(terminalResolution.players)) {
-    await expect(page.locator(`[data-round-player="${playerId}"]`)).toContainText(
-      `${result.outgoingDamage} damage`,
+    await expect(
+      page.locator(
+        `[data-round-player="${playerId}"] .reaction-damage-total`,
+      ),
+    ).toContainText(
+      new RegExp(`Final damage\\s*${String(result.outgoingDamage)}`, 'u'),
     );
   }
   await expect(page.locator('grand-transition-match')).toHaveCount(1);
