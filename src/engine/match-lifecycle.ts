@@ -14,6 +14,7 @@ import {
   prepareDraftRound,
   type DraftBoard,
   type DraftCommand,
+  type DraftConstruction,
   type DraftEngineContext,
   type DraftPlayerSetup,
   type DraftRuleError,
@@ -99,6 +100,7 @@ export type MatchResolutionPlayer = Readonly<{
   constructionStatus: 'carried' | 'incomplete' | 'valid';
   constructionPhrases: readonly Readonly<{
     phraseId: string;
+    text: string;
     source: 'active' | 'carried';
   }>[];
   prideBefore: number;
@@ -261,7 +263,7 @@ export function createMatchReducer(
       case 'resolve-round':
         return resolveRound(state, command, context);
       default:
-        return reduceDraft(state, command, draftReducer, randomSource, context);
+        return reduceDraft(state, command, draftReducer, randomSource);
     }
   };
 }
@@ -437,7 +439,6 @@ function reduceDraft(
   command: DraftCommand,
   draftReducer: GameReducer<DraftState, DraftCommand, DraftRuleError>,
   randomSource: RandomSource,
-  context: MatchEngineContext,
 ): ReducerResult<MatchState, MatchLifecycleError> {
   if (
     (state.phase !== 'drafting' && state.phase !== 'sudden-death') ||
@@ -498,7 +499,6 @@ function reduceDraft(
       playerStates,
       mistakeActorId,
       immediateSelfDamage,
-      context,
     );
     const commandHistory = draft.commandHistory;
     const resolutionHistory = [...state.resolutionHistory, resolution];
@@ -545,7 +545,6 @@ function immediateSelfKnockoutResolution(
   playerStates: Readonly<Record<string, MatchPlayerState>>,
   actorId: string,
   selfDamage: number,
-  context: MatchEngineContext,
 ): MatchResolution {
   const players = Object.fromEntries(
     state.playerOrder.map((playerId) => {
@@ -557,14 +556,7 @@ function immediateSelfKnockoutResolution(
           playerId,
           constructionText: construction.previewText,
           constructionStatus: constructionStatus(construction),
-          constructionPhrases: construction.selectedCards.flatMap((card) => {
-            const phrase = context.phrases.find(
-              (candidate) => candidate.id === card.phraseId,
-            );
-            return phrase?.role === 'continuation'
-              ? []
-              : [{ phraseId: card.phraseId, source: 'active' as const }];
-          }),
+          constructionPhrases: publicConstructionPhrases(construction),
           prideBefore: player.pride,
           selfDamage: playerId === actorId ? selfDamage : 0,
           opponentOutgoingDamage: 0,
@@ -657,19 +649,7 @@ function resolveRound(
       playerId,
       constructionText: construction.previewText,
       constructionStatus: constructionStatus(construction),
-      constructionPhrases: construction.selectedCards.flatMap((card) => {
-        const phrase = context.phrases.find(
-          (candidate) => candidate.id === card.phraseId,
-        );
-        return phrase?.role === 'continuation'
-          ? []
-          : [
-              {
-                phraseId: card.phraseId,
-                source: card.source === 'restored' ? 'carried' : 'active',
-              } as const,
-            ];
-      }),
+      constructionPhrases: publicConstructionPhrases(construction),
       prideBefore: player.pride,
       selfDamage: attack.selfDamage,
       opponentOutgoingDamage: opponentAttack.outgoingDamage,
@@ -822,6 +802,23 @@ function resolveRound(
       suddenDeathActive,
     },
   };
+}
+
+function publicConstructionPhrases(
+  construction: DraftConstruction,
+): MatchResolutionPlayer['constructionPhrases'] {
+  return construction.analysis.renderedPhrases
+    .filter((phrase) => phrase.role !== 'continuation')
+    .map((phrase) => {
+      const selected = construction.selectedCards.find(
+        (card) => card.phraseId === phrase.phraseId,
+      );
+      return {
+        phraseId: phrase.phraseId,
+        text: phrase.text,
+        source: selected?.source === 'restored' ? 'carried' : 'active',
+      } as const;
+    });
 }
 
 function sentenceSubtotal(score: ComboFinisherScore | null): number {

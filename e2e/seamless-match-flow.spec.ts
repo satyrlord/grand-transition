@@ -126,6 +126,33 @@ test('a hotseat match reaches persistent victory and restores title history', as
   await historyButton.click();
   await expect(page.getByRole('dialog', { name: 'Match history' })).toBeVisible();
   await expect(page.locator('.match-history-entry')).toHaveCount(1);
+  const recordedPhraseEvidence = await page.evaluate(() => {
+    const raw = localStorage.getItem('grand-transition.match-history.v1');
+    const entry = raw
+      ? (JSON.parse(raw).entries?.[0] as {
+          matchLog?: {
+            sentences?: Array<{
+              text: string;
+              phrases: Array<{ text: string }>;
+            }>;
+          };
+        })
+      : undefined;
+    const sentences = entry?.matchLog?.sentences ?? [];
+    return {
+      sentence: sentences.find((candidate) => candidate.text)?.text ?? '',
+      phrase:
+        sentences.flatMap((candidate) => candidate.phrases)[0]?.text ?? '',
+    };
+  });
+  expect(recordedPhraseEvidence.sentence).not.toBe('');
+  expect(recordedPhraseEvidence.phrase).not.toBe('');
+  await expect(
+    page.getByText(recordedPhraseEvidence.sentence, { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator('.match-history-phrase').first()).toHaveText(
+    recordedPhraseEvidence.phrase,
+  );
   await page.getByText('Technical record', { exact: true }).click();
   await expect(page.locator('.match-history-entry pre')).toBeVisible();
   await page.screenshot({

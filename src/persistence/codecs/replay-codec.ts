@@ -168,6 +168,23 @@ const publicBreakdownSchema = z
   })
   .strict();
 
+const publicSentenceSchema = z
+  .object({
+    round: z.number().int().positive(),
+    playerId: identifier,
+    text: z.string(),
+    phrases: z.array(
+      z
+        .object({
+          phraseId: identifier,
+          text: z.string().min(1),
+          source: z.enum(['active', 'carried']),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+
 const eventBase = {
   round: z.number().int().positive(),
   playerId: identifier,
@@ -203,6 +220,7 @@ const matchLogDocumentSchema = z
     setup: replaySetupSchema,
     seed: z.number().int().min(0).max(0xffff_ffff),
     rounds: z.array(roundSummarySchema).min(1),
+    sentences: z.array(publicSentenceSchema).optional(),
     selections: z.array(publicSelectionSchema).min(1),
     breakdowns: z.array(publicBreakdownSchema).min(2),
     events: z.array(publicRuleEventSchema),
@@ -232,6 +250,9 @@ const matchLogDocumentSchema = z
     matchLog.breakdowns.forEach((breakdown, index) =>
       requirePlayer(breakdown.playerId, ['breakdowns', index, 'playerId']),
     );
+    matchLog.sentences?.forEach((sentence, index) =>
+      requirePlayer(sentence.playerId, ['sentences', index, 'playerId']),
+    );
     matchLog.rounds.forEach((round, index) => {
       requirePlayer(round.openingPlayerId, [
         'rounds',
@@ -250,6 +271,39 @@ const matchLogDocumentSchema = z
         });
       }
     });
+    if (matchLog.sentences) {
+      const roundNumbers = new Set(matchLog.rounds.map((round) => round.round));
+      const sentenceKeys = new Set<string>();
+      matchLog.sentences.forEach((sentence, index) => {
+        if (!roundNumbers.has(sentence.round)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['sentences', index, 'round'],
+            message: 'Reference a recorded round.',
+          });
+        }
+        const key = `${sentence.round}:${sentence.playerId}`;
+        if (sentenceKeys.has(key)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['sentences', index],
+            message: 'Record one public sentence per player and round.',
+          });
+        }
+        sentenceKeys.add(key);
+      });
+      for (const round of matchLog.rounds) {
+        for (const playerId of playerIds) {
+          if (!sentenceKeys.has(`${round.round}:${playerId}`)) {
+            context.addIssue({
+              code: 'custom',
+              path: ['sentences'],
+              message: 'Record one public sentence per player and round.',
+            });
+          }
+        }
+      }
+    }
   });
 
 export type ReplaySetup = DeepImmutable<z.infer<typeof replaySetupSchema>>;
@@ -302,6 +356,7 @@ export function encodeMatchLog(matchLog: MatchLogDocument): string {
     setup: parsed.setup,
     seed: parsed.seed,
     rounds: parsed.rounds,
+    sentences: parsed.sentences,
     selections: parsed.selections,
     breakdowns: parsed.breakdowns,
     events: parsed.events,
@@ -405,6 +460,17 @@ export function createMatchLog(
       ]),
     ),
   }));
+  const sentences = state.resolutionHistory.flatMap((resolution) =>
+    state.playerOrder.map((playerId) => {
+      const player = resolution.players[playerId]!;
+      return {
+        round: resolution.round,
+        playerId,
+        text: player.constructionText,
+        phrases: player.constructionPhrases,
+      };
+    }),
+  );
   const selections = replay.commands
     .filter(
       (command): command is Extract<typeof command, { actorId: string }> =>
@@ -481,6 +547,7 @@ export function createMatchLog(
     setup: replay.setup,
     seed: replay.seed,
     rounds,
+    sentences,
     selections,
     breakdowns,
     events,
