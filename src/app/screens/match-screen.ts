@@ -12,6 +12,7 @@ import { deepFreeze } from '../deep-freeze';
 import type {
   MatchCardView,
   MatchPlayerView,
+  MatchScoreComponentView,
   MatchScreenSnapshot,
 } from '../match-screen-snapshot';
 import './interruption-screen';
@@ -563,7 +564,21 @@ export class GrandTransitionMatch extends LitElement {
       <div data-round-player=${player.playerId} data-round-side=${side}>
         <dt>${compactCharacterName(player.characterName)}</dt>
         <dd>
-          <strong>${reaction.damage} ${msg('damage')}</strong>
+          ${
+            reaction.scoreComponents.length > 0
+              ? html`<ol
+                  class="score-breakdown"
+                  aria-label=${msg(`${player.characterName} score breakdown`)}
+                  tabindex="0"
+                >
+                  ${reaction.scoreComponents.map((component, index) =>
+                    this.renderScoreComponent(component, index),
+                  )}
+                </ol>`
+              : html`<p class="score-breakdown-empty">
+                  ${msg('No scored sentence')}
+                </p>`
+          }
           ${reaction.selfDamage > 0
             ? html`<small class="self-damage">
                 ${msg(`−${reaction.selfDamage} Pride penalty`)}
@@ -571,7 +586,7 @@ export class GrandTransitionMatch extends LitElement {
             : nothing}
           ${
             reaction.comboFactor > 1
-              ? html`<span class="combo-bonus">
+              ? html`<span class="combo-bonus combo-bonus--active">
                   ${msg(`Combo ×${reaction.comboFactor}`)}
                   <small
                     >${msg(`+${reaction.comboBonusDamage} combo damage`)}</small
@@ -586,14 +601,79 @@ export class GrandTransitionMatch extends LitElement {
               ? html`<span class="weakness-hit">
                   <span class="weakness-mark" aria-hidden="true"></span>
                   ${msg('Weakness hit')}
+                  ×${formatScoreNumber(reaction.weaknessFactor)}
                   <small
                     >${reaction.weaknesses.map(titleCase).join(' · ')}</small
                   >
                 </span>`
               : nothing
           }
+          <strong class="reaction-damage-total">
+            <span>${msg('Final damage')}</span>
+            ${reaction.damage}
+          </strong>
         </dd>
       </div>
+    `;
+  }
+
+  private renderScoreComponent(
+    component: MatchScoreComponentView,
+    index: number,
+  ): TemplateResult {
+    const delay = Math.min(index, 4) * 80;
+    const kindLabel =
+      component.kind === 'clause'
+        ? msg('Clause')
+        : component.kind === 'finisher'
+          ? msg('Finisher')
+          : msg('Comeback');
+    return html`
+      <li
+        class="score-breakdown-step score-breakdown-step--${component.kind}"
+        data-score-kind=${component.kind}
+        data-score-amount=${component.amount}
+        aria-label=${scoreComponentLabel(component, kindLabel)}
+        style=${`--score-step-delay: ${delay}ms`}
+      >
+        <span class="score-breakdown-copy">
+          <small>${kindLabel}</small>
+          <span>${component.phraseText}</span>
+          ${component.weaknessTags.length > 0
+            ? html`<em>
+                ${msg('Weakness')}: ${component.weaknessTags
+                  .map(titleCase)
+                  .join(' · ')}
+              </em>`
+            : nothing}
+        </span>
+        <span class="score-breakdown-math">
+          ${component.kind === 'comeback'
+            ? html`<strong>+${formatScoreNumber(component.amount)}</strong>`
+            : html`
+                <span>${formatScoreNumber(component.base)}</span>
+                ${component.restrictionFactor > 1
+                  ? html`<mark
+                      >×${formatScoreNumber(
+                        component.restrictionFactor,
+                      )}</mark
+                    >`
+                  : nothing}
+                ${component.weaknessFactor > 1
+                  ? html`<mark class="score-factor--weakness"
+                      >×${formatScoreNumber(component.weaknessFactor)}</mark
+                    >`
+                  : nothing}
+                ${component.comboFactor > 1
+                  ? html`<mark class="score-factor--combo"
+                      >×${formatScoreNumber(component.comboFactor)}</mark
+                    >`
+                  : nothing}
+                <span aria-hidden="true">=</span>
+                <strong>${formatScoreNumber(component.amount)}</strong>
+              `}
+        </span>
+      </li>
     `;
   }
 
@@ -882,6 +962,36 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
 
 function titleCase(value: string): string {
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
+}
+
+function formatScoreNumber(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function scoreComponentLabel(
+  component: MatchScoreComponentView,
+  kindLabel: string,
+): string {
+  const weakness =
+    component.weaknessTags.length > 0
+      ? `${msg('Weakness')}: ${component.weaknessTags.map(titleCase).join(', ')}. `
+      : '';
+  if (component.kind === 'comeback') {
+    return msg(
+      `${kindLabel}: ${component.phraseText}. ${weakness}${formatScoreNumber(component.amount)} bonus damage.`,
+    );
+  }
+  const factors = [
+    component.restrictionFactor,
+    component.weaknessFactor,
+    component.comboFactor,
+  ]
+    .filter((factor) => factor > 1)
+    .map((factor) => ` times ${formatScoreNumber(factor)}`)
+    .join('');
+  return msg(
+    `${kindLabel}: ${component.phraseText}. ${weakness}${formatScoreNumber(component.base)}${factors} equals ${formatScoreNumber(component.amount)} damage.`,
+  );
 }
 
 function compactCharacterName(characterName: string): string {

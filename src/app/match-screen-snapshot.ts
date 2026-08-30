@@ -10,7 +10,11 @@ import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
 } from '../engine/grammar/english-grammar-adapter';
-import type { MatchResolution, MatchState } from '../engine/match-lifecycle';
+import type {
+  MatchResolution,
+  MatchResolutionPlayer,
+  MatchState,
+} from '../engine/match-lifecycle';
 import { characterSkins, sampleContent } from '../game-content';
 import { deepFreeze } from './deep-freeze';
 
@@ -72,6 +76,17 @@ export type MatchPlayerView = Readonly<{
   status: 'building' | 'ended';
 }>;
 
+export type MatchScoreComponentView = Readonly<{
+  kind: 'clause' | 'comeback' | 'finisher';
+  phraseText: string;
+  base: number;
+  restrictionFactor: number;
+  weaknessFactor: number;
+  comboFactor: number;
+  amount: number;
+  weaknessTags: readonly string[];
+}>;
+
 export type MatchSceneLayerView = Readonly<{
   assetId: string;
   depth: number;
@@ -126,6 +141,10 @@ export type MatchScreenSnapshot = Readonly<{
           comboFactor: number;
           comboBonusDamage: number;
           weaknesses: readonly string[];
+          weaknessFactor: number;
+          sentenceDamage: number;
+          comebackBonus: number;
+          scoreComponents: readonly MatchScoreComponentView[];
         }>
       >
     >;
@@ -252,7 +271,7 @@ export function createMatchScreenSnapshot(
     state.playerOrder.map((playerId) => {
       const result = reviewResolution?.players[playerId];
       const combo = comboDamageDetails(result?.score ?? null);
-      const weaknesses = weaknessDamageDetails(result?.score ?? null);
+      const weakness = weaknessDamageDetails(result?.score ?? null);
       return [
         playerId,
         {
@@ -260,7 +279,11 @@ export function createMatchScreenSnapshot(
           selfDamage: result?.selfDamage ?? 0,
           comboFactor: combo.factor,
           comboBonusDamage: combo.bonusDamage,
-          weaknesses,
+          weaknesses: weakness.tags,
+          weaknessFactor: weakness.factor,
+          sentenceDamage: result?.sentenceDamage ?? 0,
+          comebackBonus: result?.comebackBonus ?? 0,
+          scoreComponents: scoreComponentViews(result),
         },
       ];
     }),
@@ -334,6 +357,120 @@ export function createMatchScreenSnapshot(
   });
 }
 
+function scoreComponentViews(
+  result: MatchResolutionPlayer | undefined,
+): readonly MatchScoreComponentView[] {
+  if (!result) return [];
+  const phraseTextById = new Map(
+    result.constructionPhrases.map((phrase) => [phrase.phraseId, phrase.text]),
+  );
+  const phraseById = new Map(
+    sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
+  );
+  const components: MatchScoreComponentView[] = [];
+  let clause:
+    | {
+        phraseIds: readonly string[];
+        base: number;
+        restrictionFactor: number;
+        weaknessFactor: number;
+        comboFactor: number;
+        weaknessTags: string[];
+      }
+    | undefined;
+  let finisherRestrictionFactor = 1;
+  let finisherWeaknessFactor = 1;
+  let finisherWeaknessTags: string[] = [];
+
+  for (const item of result.score?.breakdown ?? []) {
+    switch (item.kind) {
+      case 'clause-base':
+        clause = {
+          phraseIds: item.phraseIds,
+          base: item.amount,
+          restrictionFactor: 1,
+          weaknessFactor: 1,
+          comboFactor: 1,
+          weaknessTags: [],
+        };
+        break;
+      case 'restriction-multiplier':
+        if (clause) clause.restrictionFactor = item.factor;
+        else finisherRestrictionFactor = item.factor;
+        break;
+      case 'weakness-match':
+        if (clause) clause.weaknessTags.push(item.defenderTag);
+        else finisherWeaknessTags.push(item.defenderTag);
+        break;
+      case 'weakness-multiplier':
+        if (clause) clause.weaknessFactor = item.factor;
+        else finisherWeaknessFactor = item.factor;
+        break;
+      case 'combo-multiplier':
+        if (clause) clause.comboFactor = item.factor;
+        break;
+      case 'clause-score':
+        if (!clause) break;
+        components.push({
+          kind: 'clause',
+          phraseText: scorePhraseText(clause.phraseIds, phraseTextById),
+          base: clause.base,
+          restrictionFactor: clause.restrictionFactor,
+          weaknessFactor: clause.weaknessFactor,
+          comboFactor: clause.comboFactor,
+          amount: item.amount,
+          weaknessTags: [...new Set(clause.weaknessTags)],
+        });
+        clause = undefined;
+        break;
+      case 'finisher-bonus': {
+        const phrase = phraseById.get(item.phraseId);
+        components.push({
+          kind: 'finisher',
+          phraseText:
+            phraseTextById.get(item.phraseId) ??
+            (phrase ? gameMessage(phrase.textKey) : msg('Finisher')),
+          base: phrase?.finisherBonus ?? item.amount,
+          restrictionFactor: finisherRestrictionFactor,
+          weaknessFactor: finisherWeaknessFactor,
+          comboFactor: 1,
+          amount: item.amount,
+          weaknessTags: [...new Set(finisherWeaknessTags)],
+        });
+        finisherRestrictionFactor = 1;
+        finisherWeaknessFactor = 1;
+        finisherWeaknessTags = [];
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  if (result.comebackBonus > 0) {
+    components.push({
+      kind: 'comeback',
+      phraseText: result.comebackClosingLine ?? msg('Comeback'),
+      base: result.comebackBonus,
+      restrictionFactor: 1,
+      weaknessFactor: 1,
+      comboFactor: 1,
+      amount: result.comebackBonus,
+      weaknessTags: [],
+    });
+  }
+  return components;
+}
+
+function scorePhraseText(
+  phraseIds: readonly string[],
+  phraseTextById: ReadonlyMap<string, string>,
+): string {
+  return phraseIds
+    .map((phraseId) => phraseTextById.get(phraseId) ?? phraseId)
+    .join(' ');
+}
+
 function comboDamageDetails(
   score: ComboFinisherScore | null,
 ): Readonly<{ factor: number; bonusDamage: number }> {
@@ -352,20 +489,29 @@ function comboDamageDetails(
       clauseFactor = 1;
     }
   }
-  return { factor, bonusDamage: Math.max(0, Math.round(bonusDamage)) };
+  return { factor, bonusDamage: Math.max(0, bonusDamage) };
 }
 
 function weaknessDamageDetails(
   score: ComboFinisherScore | null,
-): readonly string[] {
-  if (!score) return [];
-  return [
-    ...new Set(
-      score.breakdown.flatMap((item) =>
-        item.kind === 'weakness-match' ? [item.defenderTag] : [],
-      ),
+): Readonly<{ factor: number; tags: readonly string[] }> {
+  if (!score) return { factor: 1, tags: [] };
+  return {
+    factor: score.breakdown.reduce(
+      (factor, item) =>
+        item.kind === 'weakness-multiplier'
+          ? Math.max(factor, item.factor)
+          : factor,
+      1,
     ),
-  ];
+    tags: [
+      ...new Set(
+        score.breakdown.flatMap((item) =>
+          item.kind === 'weakness-match' ? [item.defenderTag] : [],
+        ),
+      ),
+    ],
+  };
 }
 
 function roundOutcomeLabel(

@@ -67,9 +67,11 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   compatibility bases, one local 1.5 weakness multiplier, and no restriction
   damage bonus.
 - Every completed exchange pauses on an in-arena results modal while the last
-  sentence remains visible. Continue starts the next round. A terminal exchange
-  becomes a persistent victory record until the player returns to the title.
-  The title alone opens public match history stored on this browser.
+  sentence remains visible. An ordered score receipt shows each clause,
+  finisher, Comeback, applied weakness and combo factor, and final damage.
+  Continue starts the next round. A terminal exchange becomes a persistent
+  victory record until the player returns to the title. The title alone opens
+  public match history stored on this browser.
 
 ## Brand Commitments
 

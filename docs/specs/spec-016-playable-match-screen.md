@@ -153,14 +153,25 @@ semitransparent modal over the arena. It states the completed round number and
 its winner. The player with the higher outgoing damage wins the round. Equal
 outgoing damage is a tie.
 
-For both players, show final outgoing damage. When a
-combo applies, also show the largest applied combo factor and the exact damage
-that its clause multipliers added. One Continue control advances the lifecycle.
+For both players, show one ordered score receipt before the final outgoing
+damage. Each scored clause owns one row with its complete rendered phrase text,
+base value, applied restriction, weakness, and combo factors, and resulting
+clause value. Show a finisher and a Comeback as separate rows. Do not create a
+row for a note-only breakdown item or an unscored sentence.
 
-If scoring activates one or more defender weaknesses, the modal also shows
-`Weakness hit` and each exact public weakness name. Show each
-activated weakness once. Do not show this message for a phrase that merely has
-a matching tag. Show it only after the scoring breakdown applies the weakness.
+Print the rows in scoring order with an 80-millisecond stagger capped at four
+delays. Keep every row present in the Document Object Model (DOM) from the first
+review render. The complete receipt and final-damage landing finish within 800
+milliseconds. When a combo applies, keep the largest applied combo factor and
+its exact added damage visible for the rest of the review. One Continue control
+advances the lifecycle.
+
+If scoring activates one or more defender weaknesses, mark the affected receipt
+row with its exact multiplier and public weakness names. The modal also keeps
+one `Weakness hit ×1.5` record with each unique applied weakness name. Do not
+show this message for a phrase that merely has a matching tag. Show it only
+after the scoring breakdown applies the weakness. Reduced-motion mode removes
+spatial movement and flashing but keeps the complete receipt and emphasis.
 
 The private choices sit at the active player's lower perimeter. A compact
 Reshuffle control follows them. The control uses an authored inline SVG icon,
@@ -311,8 +322,12 @@ timer-refill abuse.
   text clipping and no sentence ellipsis.
 - **AC-016-13:** A between-round modal shows the completed round number and its
   higher-damage winner or tie. It shows the two final outgoing-damage values.
-  Each applied combo factor includes its exact added damage. The arena and last complete
-  sentence remain visible behind it. One Continue action advances play.
+  Each scored clause, finisher, and Comeback appears as one ordered receipt row
+  with exact rendered text, base, applied factors, and resulting amount. Each
+  applied combo factor includes its exact added damage. The complete receipt
+  and final-damage landing finish within 800 milliseconds without moving the
+  modal layout. The arena and last complete sentence remain visible behind it.
+  One Continue action advances play.
 - **AC-016-14:** A wrong common or private phrase triggers one 150 through
   600-millisecond arena reaction. It identifies the offending player and exact
   3 Pride loss, moves no layout, preserves immediate turn passage, and clears
@@ -322,7 +337,8 @@ timer-refill abuse.
   tactical hint, card-role explanation, weakness explanation, disabled-action
   reason, strategy prompt, or shortcut layer.
 - **AC-016-16:** A scored weakness shows one visible `Weakness hit` record with
-  every unique applied weakness name. A nonmatching or unscored phrase shows no
+  the 1.5 factor and every unique applied weakness name. Its affected receipt
+  row shows the same factor and names. A nonmatching or unscored phrase shows no
   weakness record.
 - **AC-016-17:** Selecting a comeback appends its closing line to the complete
   public sentence. If it completes the exchange, the between-round hold keeps

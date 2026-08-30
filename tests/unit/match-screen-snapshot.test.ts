@@ -8,6 +8,7 @@ import {
   defaultMatchRandomSource,
   type MatchCommand,
   type MatchConfiguredPlayer,
+  type MatchResolution,
   type MatchState,
 } from '../../src/engine/match-lifecycle';
 
@@ -265,6 +266,197 @@ describe('match-screen snapshot', () => {
     const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
     expect(waitingPlayer.playerId).toBe(firstSpeakerId);
     expect(waitingPlayer.sentence).toBe(publicSentence);
+  });
+
+  test('projects clause, finisher, weakness, combo, and comeback score components', () => {
+    const scene = sampleContent.scenes[0]!;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_832,
+      players: [configuredPlayer(0), configuredPlayer(1)],
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    const firstId = state.playerOrder[0];
+    const secondId = state.playerOrder[1];
+    for (const [playerId, phraseId] of [
+      [firstId, 'national-consensus'],
+      [secondId, 'televised-revolution'],
+      [firstId, 'belongs-in-a-party-museum'],
+      [secondId, 'makes-own-voters-change-the-channel'],
+    ] as const) {
+      state = withPrivateCard(state, playerId, phraseId);
+      state = selectPrivateCard(state, playerId, phraseId);
+    }
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: firstId,
+      payload: {},
+    });
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: secondId,
+      payload: {},
+    });
+    const reviewState = state;
+    const resolved = accept(state, lifecycleCommand('resolve-round'));
+    const resolution = resolved.pendingResolution!;
+    const original = resolution.players[firstId]!;
+    const reviewResolution = {
+      ...resolution,
+      players: {
+        ...resolution.players,
+        [firstId]: {
+          ...original,
+          constructionPhrases: [
+            {
+              phraseId: 'national-consensus',
+              text: 'National consensus',
+              source: 'active',
+            },
+            {
+              phraseId: 'belongs-in-a-party-museum',
+              text: 'belongs in a party museum',
+              source: 'active',
+            },
+            {
+              phraseId: 'by-emergency-ordinance',
+              text: 'by emergency ordinance.',
+              source: 'active',
+            },
+          ],
+          sentenceDamage: 47,
+          comebackBonus: 18,
+          outgoingDamage: 65,
+          weaknessActivated: true,
+          comboMultiplier: 2,
+          comebackActivated: true,
+          comebackTier: 'strong',
+          comebackClosingLine: 'And that closes the record.',
+          score: {
+            unroundedTotal: 47,
+            finalDamage: 47,
+            combo: {
+              nounPhraseId: 'national-consensus',
+              phraseIndex: 0,
+              chain: 2,
+            },
+            breakdown: [
+              {
+                kind: 'clause-base',
+                operation: 'note',
+                phraseIds: [
+                  'national-consensus',
+                  'belongs-in-a-party-museum',
+                ],
+                amount: 15,
+              },
+              {
+                kind: 'weakness-match',
+                operation: 'note',
+                defenderTag: 'restraint',
+                phraseId: 'national-consensus',
+                phraseIndex: 0,
+              },
+              {
+                kind: 'weakness-multiplier',
+                operation: 'note',
+                factor: 1.5,
+              },
+              {
+                kind: 'combo-multiplier',
+                operation: 'note',
+                nounPhraseIds: ['national-consensus'],
+                factor: 2,
+              },
+              {
+                kind: 'clause-score',
+                operation: 'add',
+                phraseIds: [
+                  'national-consensus',
+                  'belongs-in-a-party-museum',
+                ],
+                amount: 45,
+              },
+              {
+                kind: 'combo-chain',
+                operation: 'note',
+                nounPhraseId: 'national-consensus',
+                phraseIndex: 0,
+                chain: 2,
+              },
+              {
+                kind: 'finisher-bonus',
+                operation: 'add',
+                phraseId: 'by-emergency-ordinance',
+                amount: 2,
+              },
+              {
+                kind: 'unrounded-total',
+                operation: 'total',
+                amount: 47,
+              },
+              {
+                kind: 'final-damage',
+                operation: 'ceil',
+                amount: 47,
+              },
+            ],
+          },
+        },
+      },
+    } as MatchResolution;
+
+    const snapshot = createMatchScreenSnapshot(
+      reviewState,
+      null,
+      reviewResolution,
+    );
+
+    expect(snapshot.reaction.players[firstId]!.scoreComponents).toEqual([
+      {
+        kind: 'clause',
+        phraseText: 'National consensus belongs in a party museum',
+        base: 15,
+        restrictionFactor: 1,
+        weaknessFactor: 1.5,
+        comboFactor: 2,
+        amount: 45,
+        weaknessTags: ['restraint'],
+      },
+      {
+        kind: 'finisher',
+        phraseText: 'by emergency ordinance.',
+        base: 2,
+        restrictionFactor: 1,
+        weaknessFactor: 1,
+        comboFactor: 1,
+        amount: 2,
+        weaknessTags: [],
+      },
+      {
+        kind: 'comeback',
+        phraseText: 'And that closes the record.',
+        base: 18,
+        restrictionFactor: 1,
+        weaknessFactor: 1,
+        comboFactor: 1,
+        amount: 18,
+        weaknessTags: [],
+      },
+    ]);
+    expect(snapshot.reaction.players[firstId]).toMatchObject({
+      comboBonusDamage: 22.5,
+      weaknessFactor: 1.5,
+      weaknesses: ['restraint'],
+    });
   });
 });
 

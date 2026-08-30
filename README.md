@@ -41,8 +41,10 @@ match logs. Current clause scoring uses compatibility bases of 5, 10, 15, and
 20, a local 1.5 weakness multiplier, and no restriction damage bonus.
 
 The landscape-only Lit interface provides title, setup, a playable hotseat
-match, Pause, and between-round review. A terminal exchange stays in the arena
-as a persistent victory record until the player returns to the title. The title
+match, Pause, and between-round review. Each review prints an ordered score
+receipt with clause text, weakness and combo factors, separate finisher and
+Comeback rows, and final damage. A terminal exchange stays in the arena as a
+persistent victory record until the player returns to the title. The title
 alone exposes local public match history. The interface requires a browser
 content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
 and PC. Later dependency work adds settings persistence, artificial
