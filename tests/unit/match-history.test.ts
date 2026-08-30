@@ -80,6 +80,37 @@ describe('persistent match history', () => {
         kind: 'grand-transition-match-history',
       }),
     );
+    const sentences = entry.matchLog.sentences!;
+    expect(sentences).toHaveLength(
+      entry.matchLog.rounds.length * entry.matchLog.setup.players.length,
+    );
+    const usedPhrases = sentences.flatMap((sentence) => sentence.phrases);
+    expect(usedPhrases.length).toBeGreaterThan(0);
+    expect(
+      usedPhrases.every(
+        (phrase) => phrase.phraseId.length > 0 && phrase.text.length > 0,
+      ),
+    ).toBe(true);
+    expect(encoded).toContain(usedPhrases[0]!.text);
+  });
+
+  test('keeps an older valid entry without public sentence records', () => {
+    const entry = historyEntry('older-entry', '2026-08-29T12:30:00.000Z');
+    const stored = JSON.parse(
+      encodeMatchHistory({
+        schemaVersion: matchHistorySchemaVersion,
+        kind: matchHistoryKind,
+        entries: [entry],
+      }),
+    ) as { entries: Array<{ matchLog: { sentences?: unknown } }> };
+    delete stored.entries[0]!.matchLog.sentences;
+
+    const decoded = decodeMatchHistory(JSON.stringify(stored));
+
+    expect(decoded.ok).toBe(true);
+    expect(
+      decoded.ok ? decoded.value.entries[0]?.matchLog.sentences : null,
+    ).toBeUndefined();
   });
 
   test('stores every entry, restores newest first, and ignores duplicate IDs', () => {

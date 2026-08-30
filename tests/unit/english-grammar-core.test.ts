@@ -87,10 +87,6 @@ describe('Hollywood Roast English grammar', () => {
         'My opponent makes their own voters change the channel',
       ],
       [
-        ['your-parents', 'makes-own-voters-change-the-channel'],
-        'Your parents make their own voters change the channel',
-      ],
-      [
         ['you', 'makes-own-voters-change-the-channel'],
         'You make your own voters change the channel',
       ],

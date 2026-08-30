@@ -53,6 +53,9 @@ contains:
   color coding state.
 - the winner, completed round count, final Pride, public round breakdowns,
   public accepted commands, and public rule events.
+- each player's rendered public sentence and ordered used phrases for every
+  round. Each used phrase contains its stable identifier, exact rendered text,
+  and active or carried source.
 - normalized replay and match-log data needed to reproduce and diagnose the
   completed match. New entries use replay and match-log version 2. Existing
   version 1 pairs remain valid and retain their original scoring behavior.
@@ -75,9 +78,12 @@ Pause, between-round review, and victory must not expose that control.
 The control opens one modal over the title screen. The modal shows an explicit
 empty state when no completed match exists. For each entry, show completion
 time, winner and opponent character names, scene, mode, seed, round count, and
-final Pride. An expandable technical record shows the public round breakdowns,
-commands, events, and normalized match-log data. The list can scroll inside the
-modal without causing page scroll.
+final Pride. Show the public sentence and actual rendered phrases used by each
+player in every round before the technical record. An older valid entry that
+does not contain phrase text shows an explicit legacy-data message. It must not
+invent or reconstruct phrase text. An expandable technical record shows the
+public round breakdowns, commands, events, and normalized match-log data. The
+list can scroll inside the modal without causing page scroll.
 
 The modal has one visible Close control. Escape and the Close control close it
 and restore focus to `Match history`. Focus stays inside the open modal.
@@ -106,8 +112,9 @@ or the user clears the invalid site data.
   entry. Reload restores every valid entry in newest-first display order.
   Re-render and viewport changes do not add a duplicate.
 - **AC-019-04:** History contains the exact seed, setup, public replay, public
-  result, and terminal winner. It contains no unselected private information,
-  browser identifier, machine fact, secret, or remote request.
+  result, terminal winner, public sentences, and ordered rendered used phrases.
+  It contains no unselected private information, browser identifier, machine
+  fact, secret, or remote request.
 - **AC-019-05:** `Match history` exists only on the title screen. Its empty,
   populated, expanded, overflow, Close, Escape, focus-return, and focus-trap
   states are keyboard and pointer operable.

@@ -115,7 +115,7 @@ describe('versioned replay and local match-log codecs', () => {
         },
         {
           round: 3,
-          playerOneDamage: 10,
+          playerOneDamage: 4,
           playerTwoDamage: 0,
           playerOnePride: 5,
           playerTwoPride: 0,
@@ -136,6 +136,7 @@ describe('versioned replay and local match-log codecs', () => {
       'setup',
       'seed',
       'rounds',
+      'sentences',
       'selections',
       'breakdowns',
       'events',

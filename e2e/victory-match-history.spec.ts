@@ -11,6 +11,7 @@ const viewports = [
 test('victory and populated history fit every supported landscape viewport', async ({
   page,
 }) => {
+  const runtimeEvidence = observeProductionRuntime(page);
   await useFixedBrowserMatchSeed(page);
   await page.goto('/grand-transition/');
   await page.evaluate(() =>
@@ -55,6 +56,38 @@ test('victory and populated history fit every supported landscape viewport', asy
     });
   }
 
+  const completedMatchId = await page
+    .locator('.match-history-entry')
+    .getAttribute('data-history-id');
+  const storedCompletedMatch = await page.evaluate(() =>
+    localStorage.getItem('grand-transition.match-history.v1'),
+  );
+  await page.getByRole('button', { name: 'Close' }).click();
+  await page.reload();
+  await page.getByRole('button', { name: /Match history.*1/iu }).click();
+  await expect(page.locator('.match-history-entry')).toHaveAttribute(
+    'data-history-id',
+    completedMatchId!,
+  );
+  expect(
+    await page.evaluate(() =>
+      localStorage.getItem('grand-transition.match-history.v1'),
+    ),
+  ).toBe(storedCompletedMatch);
+  await page.getByRole('button', { name: 'Close' }).click();
+  await page.evaluate(() => {
+    const key = 'grand-transition.match-history.v1';
+    const document = JSON.parse(localStorage.getItem(key)!) as {
+      entries: Array<{ matchLog: { sentences?: unknown } }>;
+    };
+    delete document.entries[0]!.matchLog.sentences;
+    localStorage.setItem(key, JSON.stringify(document));
+  });
+  await page.reload();
+  await page.getByRole('button', { name: /Match history.*1/iu }).click();
+  await expect(page.locator('.match-history-legacy-phrases')).toContainText(
+    'Phrase text was not recorded',
+  );
   await page.getByRole('button', { name: 'Close' }).click();
   await page.evaluate(() => {
     const key = 'grand-transition.match-history.v1';
@@ -84,6 +117,11 @@ test('victory and populated history fit every supported landscape viewport', asy
       document.documentElement.scrollHeight > document.documentElement.clientHeight,
   }));
   expect(overflow).toEqual({ listScrolls: true, pageScrolls: false });
+  expect(runtimeEvidence.failedRequests).toEqual([]);
+  expect(runtimeEvidence.consoleErrors).toEqual([]);
+  expect(runtimeEvidence.pageErrors).toEqual([]);
+  expect(runtimeEvidence.remoteRequests).toEqual([]);
+  expect(runtimeEvidence.runtimeRequests).toEqual([]);
 });
 
 test('empty history is available only from the title', async ({ page }) => {
@@ -211,4 +249,51 @@ async function assertMinimumTarget(
   expect(box).not.toBeNull();
   expect(box!.width).toBeGreaterThanOrEqual(44);
   expect(box!.height).toBeGreaterThanOrEqual(44);
+}
+
+function observeProductionRuntime(page: Page): Readonly<{
+  failedRequests: string[];
+  consoleErrors: string[];
+  pageErrors: string[];
+  remoteRequests: string[];
+  runtimeRequests: string[];
+}> {
+  const applicationOrigin = 'http://127.0.0.1:4173';
+  const failedRequests: string[] = [];
+  const consoleErrors: string[] = [];
+  const pageErrors: string[] = [];
+  const remoteRequests: string[] = [];
+  const runtimeRequests: string[] = [];
+
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.protocol === 'http:' || url.protocol === 'https:') {
+      if (url.origin !== applicationOrigin) remoteRequests.push(request.url());
+    }
+    if (['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())) {
+      runtimeRequests.push(`${request.method()} ${request.url()}`);
+    }
+  });
+  page.on('requestfailed', (request) => {
+    failedRequests.push(
+      `${request.method()} ${request.url()}: ${request.failure()?.errorText ?? 'unknown failure'}`,
+    );
+  });
+  page.on('response', (response) => {
+    if (response.status() >= 400) {
+      failedRequests.push(`${response.status()} ${response.url()}`);
+    }
+  });
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  return {
+    failedRequests,
+    consoleErrors,
+    pageErrors,
+    remoteRequests,
+    runtimeRequests,
+  };
 }

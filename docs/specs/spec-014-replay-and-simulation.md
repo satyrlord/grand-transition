@@ -73,7 +73,11 @@ Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, the matching replay
 schema version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, and winner. It omits unselected private cards,
+breakdowns, public rule events, and winner. New version 2 logs also contain each
+player's rendered public sentence and ordered used phrases for every round.
+Each used phrase keeps its stable identifier, rendered text, and active or
+carried source. Older version 1 and version 2 logs without this optional public
+sentence record remain valid. The log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
 

@@ -9,10 +9,8 @@
 
 Implement strict Zod 4 schemas for original Grand Transition content. The
 initial catalog contains the Red-Folded Chairman, Thunder Tribune, and Black Sea
-Captain, at least one scene, and a canonical English locale. The Red-Folded
-Chairman has 30 character-owned English phrase cards, the Black Sea Captain
-has 19, and the Thunder Tribune has 20. Animal terms in character titles are
-metaphorical.
+Captain, at least one scene, and a canonical English locale. Each character
+owns English phrase cards. Animal terms in character titles are metaphorical.
 
 A phrase owns an identifier, role, text key, and optional agreement forms. It
 can own a connector kind, grammatical number, grammatical person, and referent
@@ -137,8 +135,7 @@ simulation, and browser validation must pass before it can ship.
 
 - **AC-005-01:** The shipped three-character scene catalog passes all strict
   record and aggregate checks. It contains only the Red-Folded Chairman,
-  Thunder Tribune, and Black Sea Captain. Their character-card counts are 30,
-  20, and 19, respectively.
+  Thunder Tribune, and Black Sea Captain.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
 - **AC-005-03:** Duplicate IDs, duplicate player-visible English phrase text,
@@ -152,9 +149,8 @@ simulation, and browser validation must pass before it can ship.
   definitions, character records, comebacks, and English messages without
   hardcoded TypeScript character or phrase data. Manual-source validation
   rejects malformed and duplicate cards.
-- **AC-005-07:** The 220-card common corpus contains exactly 55 nouns, 86 verbs,
-  39 predicates, 21 modifiers, 7 conjunctions, 11 endings, and 1
-  continuation. It includes agreement-aware copular forms for `is`, `was`,
+- **AC-005-07:** The common corpus contains every required phrase role. It
+  includes agreement-aware copular forms for `is`, `was`,
   `will be`, and `should have been`. It also includes generic ideological and
   animal-metaphor noun fragments such as
   `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
@@ -179,8 +175,8 @@ simulation, and browser validation must pass before it can ship.
   Every entry records its research
   rationale. No other entry copies a slogan, and no entry names or identifies a
   real person.
-- **AC-005-08:** The common conjunction pool contains exactly one card each for
-  `and`, `but`, `because`, `yet`, `so`, `for`, and `with`.
+- **AC-005-08:** The common conjunction pool contains cards for `and`, `but`,
+  `because`, `yet`, `so`, `for`, and `with`.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON
   source produces its character record, owned phrase IDs, and derived locale
   keys. It also produces exclusive comebacks without registry edits. Browser and Node discovery

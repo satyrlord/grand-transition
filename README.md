@@ -27,11 +27,10 @@ game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
 019 through 029 remain incomplete as full deliveries.
 
-The current content has 220 common Romanian-politics phrases and three
-fictional characters. The Red-Folded Chairman has 30 character phrases, the
-Thunder Tribune has 20, and the Black Sea Captain has 19. Each character has a
-default and alternate portrait skin. The content also includes two fictional
-layered debate studios and one English game-locale bundle.
+The current content has common Romanian-politics phrases and three fictional
+characters. Each character has owned phrases and a default and alternate
+portrait skin. The content also includes two fictional layered debate studios
+and one English game-locale bundle.
 
 The implemented rules include extended Hollywood Roast grammar, agreement,
 compound subjects and objects, endings, modifiers, incomplete states, and

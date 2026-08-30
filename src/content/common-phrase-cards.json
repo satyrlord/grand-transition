@@ -2570,25 +2570,6 @@
     }
   },
   {
-    "id": "your-parents",
-    "role": "noun",
-    "text": "your parents",
-    "grammaticalNumber": "plural",
-    "referentKind": "personal",
-    "tags": ["legacy", "credibility"],
-    "scoreGroups": {
-      "substance": ["family"],
-      "flavour": ["direct"]
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original fictional family-directed noun used only inside the game's satirical debate. It names no private or real person. Editorial review complete."
-    }
-  },
-  {
     "id": "your-circumscription",
     "role": "noun",
     "text": "your circumscription",
