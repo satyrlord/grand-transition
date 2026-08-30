@@ -7,7 +7,7 @@
 
 ## Deliver
 
-Add sound, music, speech, timer, and privacy settings.
+Add sound, music, speech, and timer settings.
 Implement the initial versioned codec, browser storage,
 corrupt-data recovery, an in-memory fallback, and a non-blocking failure notice.
 
@@ -29,7 +29,6 @@ adapter and show a non-blocking notice that changes will not persist.
 | Speech rate      | 0.5 through 2, step 0.1 | 1       |
 | Turn timer       | 15, 30, or null         | 30      |
 | Auto-complete    | Boolean                 | true    |
-| Privacy          | Boolean                 | true    |
 
 `null` is the stored Turn timer value for Unlimited.
 

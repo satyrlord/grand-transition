@@ -60,7 +60,7 @@ explanations outside Canvas. Canvas effects are decorative and pointer-inert.
 ## Test the complete interaction
 
 For implementation and verification, test pointer input, unavailable speech,
-speech cancellation, and hotseat privacy. Test 1024 by 720, 1024 by 768, 1280
+speech cancellation, and hidden-hand privacy. Test 1024 by 720, 1024 by 768, 1280
 by 720, and 1920 by 1080. Test the blocking viewport boundaries. Check overlap,
 scrolling, sentence visibility, all nine
 shared cards, private-hand handling, and score explanation.

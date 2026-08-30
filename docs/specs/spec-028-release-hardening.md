@@ -91,7 +91,7 @@ difficulty levels with the distinct policies in Milestones 021 and 022. It has
 private hotseat play and exact grammar and combat rules. It reviews each
 nonterminal exchange in the in-arena results modal.
 
-Milestone 030 adds the
+Milestone 019 adds the
 persistent terminal victory state and local match history. It also has
 development-only deterministic replay, validated data-driven content,
 locale-isolated English, and a supported landscape user interface (UI). All art,

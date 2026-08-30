@@ -123,7 +123,9 @@ export class GrandTransitionSetup extends LitElement {
       >
         <header class="setup-heading">
           <p class="setup-channel">${msg('Channel 3')}</p>
-          <h1 id="setup-title">${msg('Select your debaters')}</h1>
+          <h1 id="setup-title" tabindex="-1">
+            ${msg('Select your debaters')}
+          </h1>
           <p>
             ${msg(
               'Choose both contestants, confirm the studio, and open the transmission.',

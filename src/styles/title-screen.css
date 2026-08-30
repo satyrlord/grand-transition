@@ -91,8 +91,11 @@
     inset: 0;
     background:
       linear-gradient(180deg, rgb(5 8 11 / 4%), rgb(5 8 11 / 28%)),
-      url('../assets/brand/title-proscenium-background.png') center / cover
-        no-repeat;
+      image-set(
+          url('../assets/brand/title-proscenium-background.webp') type('image/webp'),
+          url('../assets/brand/title-proscenium-background.png') type('image/png')
+        )
+        center / cover no-repeat;
   }
 
   .title-screen::after {
@@ -142,17 +145,74 @@
     text-align: center;
   }
 
-  .title-emblem {
+  .title-emblem-frame {
+    position: relative;
+    display: grid;
+    place-items: center;
     width: clamp(12rem, 29vh, 20rem);
-    height: auto;
+    aspect-ratio: 1;
     margin-block-end: clamp(0.2rem, 0.8vh, 0.6rem);
+  }
+
+  .title-emblem-picture,
+  .title-emblem-poster {
+    grid-area: 1 / 1;
+  }
+
+  .title-emblem-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .title-emblem-poster {
+    position: relative;
+    display: block;
+    width: 58%;
+    aspect-ratio: 1;
+    border: 3px double rgb(228 193 125 / 72%);
+    border-radius: 50%;
+    opacity: 0.72;
+    transition: opacity 180ms ease-out;
+  }
+
+  .title-emblem-poster::before,
+  .title-emblem-poster::after {
+    position: absolute;
+    content: '';
+  }
+
+  .title-emblem-poster::before {
+    inset: 16%;
+    border: 1px solid rgb(180 138 72 / 62%);
+    border-radius: 50%;
+  }
+
+  .title-emblem-poster::after {
+    top: 50%;
+    right: 18%;
+    left: 18%;
+    height: 1px;
+    background: var(--broadcast-brass-light);
+    box-shadow: 0 -0.32rem 0 -0.05rem var(--broadcast-brass);
+    transform: translateY(-50%);
+  }
+
+  .title-emblem {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 1.2rem 1.7rem rgb(0 0 0 / 42%));
-    mask-image: radial-gradient(
-      circle at center,
-      var(--broadcast-black) 62%,
-      transparent 75%
-    );
+    opacity: 0;
+    transition: opacity 180ms ease-out;
+  }
+
+  .title-emblem-frame--loaded .title-emblem {
+    opacity: 1;
+  }
+
+  .title-emblem-frame--loaded .title-emblem-poster {
+    opacity: 0;
   }
 
   .title-marquee h1 {
@@ -582,7 +642,7 @@
       padding-block-start: 2.25rem;
     }
 
-    .title-emblem {
+    .title-emblem-frame {
       width: 11rem;
     }
 
@@ -595,6 +655,11 @@
     .title-proscenium {
       clip-path: inset(0);
       animation: none;
+    }
+
+    .title-emblem,
+    .title-emblem-poster {
+      transition: none;
     }
   }
 

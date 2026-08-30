@@ -36,7 +36,7 @@ Keep screens under `src/app/screens` and pure grammar under
   change it.
 - The title placeholder contains one visible `main` and one `h1` named “Grand
   Transition.” It contains the visible subtitle “A Verbal Republic” and the
-  visible status “The chamber is being prepared.”
+  visible status “Live now, on NTV Channel 3!”
 - The title uses light DOM. It has no control, navigation, game state, remote
   asset, or playability claim.
 - The title remains readable at 1024 by 720, 1280 by 720, and 1920 by 1080. It

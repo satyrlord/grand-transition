@@ -342,5 +342,5 @@ resume, and end at 1024x720, 1280x720, and 1920x1080. Browser tests prove
 command mapping, immutable rerendering, exact timer preservation, and loaded
 stage art. Production screenshots include the supported landscape matrix and
 the 1400 by 1050 composition viewport. No rule is duplicated in a component.
-`npm run ci` passes. Stop before final asset-pipeline variants, privacy
-handover, or artificial intelligence (AI).
+`npm run ci` passes. Stop before final asset-pipeline variants or artificial
+intelligence (AI).

@@ -5,7 +5,7 @@
 **Owns:** Replay, local logs, simulation scripts, and coverage
 **Production-file budget:** 7
 
-Milestone 030 replaces the player-interface ban below only for its local,
+Milestone 019 replaces the player-interface ban below only for its local,
 public, browser-stored match history. Development tools and imports remain
 non-player-facing.
 

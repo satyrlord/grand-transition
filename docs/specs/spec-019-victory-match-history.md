@@ -1,17 +1,17 @@
-# Milestone 030: Victory and Persistent Match History
+# Milestone 019: Victory and Persistent Match History
 
 **Status:** Approved  
-**Depends on:** 029  
+**Depends on:** 018  
 **Owns:** Terminal browser presentation and persistent local match history  
 **Production-file budget:** 10
 
 ## Replacement contract
 
-This milestone replaces the zero-post-match rules in Milestone 017 and the
-complete-match setup-return rules in Milestone 029. It also replaces the
-Milestone 014 ban on player-facing match logs only for the bounded local history
-defined here. Development logs, replay imports, simulation, export, sharing,
-leaderboards, accounts, and network services remain outside the product UI.
+This milestone replaces the zero-post-match rules in Milestone 017. It also
+replaces the Milestone 014 ban on player-facing match logs only for the bounded
+local history defined here. Development logs, replay imports, simulation,
+export, sharing, leaderboards, accounts, and network services remain outside
+the product UI.
 
 ## Terminal victory state
 
@@ -96,26 +96,26 @@ or the user clears the invalid site data.
 
 ## Acceptance criteria
 
-- **AC-030-01:** Each terminal damage path shows the persistent victory state.
+- **AC-019-01:** Each terminal damage path shows the persistent victory state.
   These paths include normal, cliffhanger, grammar-mistake, and timeout damage.
   The state shows the correct winner, final Pride, final exchange, and round count.
-- **AC-030-02:** Victory remains across idle time, resize, unsupported-viewport
+- **AC-019-02:** Victory remains across idle time, resize, unsupported-viewport
   interruption, reduced motion, Escape, and browser Back. Only `Return to main
   menu` clears it and shows the title screen.
-- **AC-030-03:** The first terminal transition appends exactly one versioned
+- **AC-019-03:** The first terminal transition appends exactly one versioned
   entry. Reload restores every valid entry in newest-first display order.
   Re-render and viewport changes do not add a duplicate.
-- **AC-030-04:** History contains the exact seed, setup, public replay, public
+- **AC-019-04:** History contains the exact seed, setup, public replay, public
   result, and terminal winner. It contains no unselected private information,
   browser identifier, machine fact, secret, or remote request.
-- **AC-030-05:** `Match history` exists only on the title screen. Its empty,
+- **AC-019-05:** `Match history` exists only on the title screen. Its empty,
   populated, expanded, overflow, Close, Escape, focus-return, and focus-trap
   states are keyboard and pointer operable.
-- **AC-030-06:** Quota, security, unavailable-storage, malformed-data, and
+- **AC-019-06:** Quota, security, unavailable-storage, malformed-data, and
   unsupported-version failures preserve victory. They retain the new entry for
   the page session and show the persistence notice. They do not overwrite
   invalid stored bytes.
-- **AC-030-07:** The production Pages-subpath build reaches victory and returns
+- **AC-019-07:** The production Pages-subpath build reaches victory and returns
   to the title screen. It opens history, reloads, and restores the same completed
   match. It has no failed request, console error, uncaught page error, or remote
   request.

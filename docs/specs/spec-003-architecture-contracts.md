@@ -30,6 +30,10 @@ storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
 replay do not import Lit or Document Object Model (DOM) application programming
 interfaces (APIs).
 
+This milestone defines the speech port and proves it with a test-local fake.
+It does not add a browser speech adapter, audio behavior, or audio settings.
+Milestone 024 owns that implementation.
+
 English interface prose stays in user interface (UI)
 messages. Grammar, phrase semantics, constructed sentences, and speech content
 stay in locale-specific bundles. Balance constants stay in validated data.
@@ -86,8 +90,9 @@ storage-adapter, asset, style, main-entry, tool, or test code.
   prove one rejection for each owned browser API class. They also prove one
   rejected dependency from a pure module to application code. Fixtures prove each allowed dependency
   direction. The normal pure roots pass.
-- **AC-003-05:** Storage and speech fake ports can replace browser adapters
-  without importing Lit or DOM types into pure modules.
+- **AC-003-05:** Test-local storage and speech fakes satisfy their ports without
+  importing Lit or DOM types into pure modules. A production speech adapter is
+  not required before Milestone 024.
 
 ## Verify and stop
 

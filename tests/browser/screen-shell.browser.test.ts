@@ -54,6 +54,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
     .toBeVisible();
   await page.getByRole('button', { name: 'Set up match' }).click();
   expect(window.location.href).toBe(originalUrl);
+  await vi.waitFor(() => expect(document.activeElement?.id).toBe('setup-title'));
 
   await expect
     .element(page.getByLabelText('Mode', { exact: true }))
@@ -123,6 +124,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
     .toBeVisible();
+  await vi.waitFor(() => expect(document.activeElement?.id).toBe('game-title'));
   expect(window.location.href).toBe(originalUrl);
 
   await page.getByRole('button', { name: 'Set up match' }).click();
@@ -138,6 +140,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await expect
     .element(page.getByRole('heading', { name: 'Grand Transition' }))
     .toBeVisible();
+  await vi.waitFor(() => expect(document.activeElement?.id).toBe('game-title'));
   expect(window.location.href).toBe(originalUrl);
 });
 

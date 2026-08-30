@@ -96,8 +96,8 @@ combination is implementation evidence, not visual authority.
    speech output. Do not use Fredoka Bold without new explicit approval.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
    600, and bold 700. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, privacy handovers,
-   and compatibility text. Its tabular figures own Pride,
+   labels, validation, disabled reasons, score explanations, and compatibility
+   text. Its tabular figures own Pride,
    damage, scores, and rounds.
 4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
    the timer only. Do not use it for any other number or text.
@@ -144,6 +144,11 @@ File Format (AVIF) and WebP runtime variants. The manifest records dimensions,
 crop, owner, source, and license. Import through the manifest. Load setup art
 first and only the selected match package next. Use self-hosted licensed Web
 Open Font Format 2 (WOFF2) fonts with metric fallbacks.
+
+Milestone 015 already promotes the title emblem and proscenium to focused WebP
+runtime files with Portable Network Graphics fallbacks and entry preloads. That
+title-only slice does not satisfy this milestone's Sharp reproducibility, AVIF,
+manifest, crop, license, or complete package contracts.
 
 Every transparent scene and character asset uses the
 `green-chroma-key-v1` workflow. Its generation intermediate uses a flat

@@ -2,14 +2,14 @@
 
 **Status:** Approved
 
-**Replacement:** Milestone 030 replaces the terminal and post-match rules.
+**Replacement:** Milestone 019 replaces the terminal and post-match rules.
 
 **Depends on:** 016  
 **Owns:** Browser lifecycle, between-round review, and the absence of post-match
 surfaces
 **Production-file budget:** 4
 
-Milestone 030 replaces this milestone's terminal setup return, zero-post-match,
+Milestone 019 replaces this milestone's terminal setup return, zero-post-match,
 and terminal acceptance clauses. The nonterminal between-round review contract
 remains active.
 

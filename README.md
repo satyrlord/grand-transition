@@ -14,7 +14,7 @@ game content, or third-party art and audio.
 
 - A single-player ladder
 - Custom matches against three artificial intelligence (AI) difficulty levels
-- Local hotseat matches with private-hand handover
+- Local hotseat matches with active-player private hands
 
 Online multiplayer, accounts, cloud saves, remote leaderboards, chat, servers,
 and purchases are not planned for the MVP.
@@ -22,7 +22,7 @@ and purchases are not planned for the MVP.
 ## Project status
 
 The current checkout implements Milestones 001 through 018 and the persistent
-victory and local match-history slice from Milestone 030. It provides immutable
+victory and local match-history slice from Milestone 019. It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
 019 through 029 remain incomplete as full deliveries.
@@ -46,9 +46,8 @@ match, Pause, and between-round review. A terminal exchange stays in the arena
 as a persistent victory record until the player returns to the title. The title
 alone exposes local public match history. The interface requires a browser
 content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
-and PC. Later dependency work adds private handovers, settings persistence,
-artificial intelligence, audio, expanded content, balance evidence, and release
-hardening.
+and PC. Later dependency work adds settings persistence, artificial
+intelligence, audio, expanded content, balance evidence, and release hardening.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

@@ -38,7 +38,6 @@ of its score.
 
 The game runs in a browser without accounts, servers, or runtime network calls.
 The minimum viable product (MVP) supports local single-player and hotseat play.
-Private hotseat content must remain private during handovers.
 
 ## Capabilities and Constraints
 

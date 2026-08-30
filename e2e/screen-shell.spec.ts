@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { stat } from 'node:fs/promises';
 
 const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
@@ -21,12 +22,50 @@ for (const viewport of supportedViewports) {
         'All characters and events are fictional composites created for satire.',
       ),
     ).toBeVisible();
+    const titleStatus = page.getByText('Live now, on NTV Channel 3!', {
+      exact: true,
+    });
+    await expect(titleStatus).toBeVisible();
+    await page.locator('.title-emblem').evaluate((image: HTMLImageElement) =>
+      image.decode(),
+    );
+    await expect(page.locator('.title-emblem-frame')).toHaveClass(
+      /title-emblem-frame--loaded/u,
+    );
+    const titleGeometry = await titleStatus.evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      return {
+        inside:
+          box.left >= 0 &&
+          box.top >= 0 &&
+          box.right <= document.documentElement.clientWidth &&
+          box.bottom <= document.documentElement.clientHeight,
+        textFits:
+          element.scrollWidth <= element.clientWidth + 1 &&
+          element.scrollHeight <= element.clientHeight + 1,
+        pageFits:
+          document.documentElement.scrollWidth <=
+            document.documentElement.clientWidth &&
+          document.documentElement.scrollHeight <=
+            document.documentElement.clientHeight,
+      };
+    });
+    expect(titleGeometry).toEqual({
+      inside: true,
+      textFits: true,
+      pageFits: true,
+    });
+    await page.screenshot({
+      path: testInfo.outputPath(`title-${viewport.width}x${viewport.height}.png`),
+      fullPage: true,
+    });
 
     const url = page.url();
     await page.getByRole('button', { name: 'Set up match' }).click();
     await expect(
       page.getByRole('heading', { name: 'Select your debaters' }),
     ).toBeVisible();
+    await expect(page.locator('#setup-title')).toBeFocused();
     expect(page.url()).toBe(url);
     await page
       .getByRole('button', {
@@ -149,6 +188,7 @@ for (const viewport of supportedViewports) {
     });
 
     await page.getByRole('button', { name: 'Back' }).click();
+    await expect(page.locator('#game-title')).toBeFocused();
     await page.getByRole('button', { name: 'Set up match' }).click();
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-character-id',
@@ -256,6 +296,9 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   const title = page.locator('.title-screen');
   await expect(title).toBeVisible();
   await expect(page.locator('.title-emblem')).toBeVisible();
+  await page.locator('.title-emblem').evaluate((image: HTMLImageElement) =>
+    image.decode(),
+  );
   await expect(
     page.getByRole('heading', { name: 'Grand Transition' }),
   ).toBeVisible();
@@ -269,7 +312,7 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   const facts = await page.evaluate(() => {
     const heading = document.querySelector<HTMLElement>('#game-title')!;
     const main = document.querySelector<HTMLElement>('.title-screen')!;
-    const emblem = document.querySelector<HTMLElement>('.title-emblem')!;
+    const emblem = document.querySelector<HTMLImageElement>('.title-emblem')!;
     const action = document.querySelector<HTMLElement>(
       '.title-transmission button',
     )!;
@@ -283,6 +326,33 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
     const subtitleBox = subtitle.getBoundingClientRect();
     const statusBox = status.getBoundingClientRect();
     const railStyle = getComputedStyle(transmission, '::after');
+    const titleBackground = getComputedStyle(main, '::before').backgroundImage;
+    const emblemCanvas = document.createElement('canvas');
+    emblemCanvas.width = emblem.naturalWidth;
+    emblemCanvas.height = emblem.naturalHeight;
+    const emblemContext = emblemCanvas.getContext('2d')!;
+    emblemContext.drawImage(emblem, 0, 0);
+    const emblemPixels = emblemContext.getImageData(
+      0,
+      0,
+      emblemCanvas.width,
+      emblemCanvas.height,
+    ).data;
+    const cornerOffsets = [
+      3,
+      (emblemCanvas.width - 1) * 4 + 3,
+      (emblemCanvas.height - 1) * emblemCanvas.width * 4 + 3,
+      (emblemCanvas.width * emblemCanvas.height - 1) * 4 + 3,
+    ];
+    const preloads = [
+      ...document.querySelectorAll<HTMLLinkElement>(
+        'link[rel="preload"][as="image"][type="image/webp"]',
+      ),
+    ];
+    const imageResources = performance
+      .getEntriesByType('resource')
+      .map((entry) => entry.name)
+      .filter((name) => /grand-transition-emblem|title-proscenium-background/u.test(name));
     return {
       headingFont: getComputedStyle(heading).fontFamily,
       interfaceFont: getComputedStyle(main).fontFamily,
@@ -298,6 +368,14 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
       railHeight: Number.parseFloat(railStyle.height),
       railWidth: Number.parseFloat(railStyle.width),
       railContent: railStyle.content,
+      titleBackground,
+      emblemCurrentSource: emblem.currentSrc,
+      emblemNaturalSize: [emblem.naturalWidth, emblem.naturalHeight],
+      emblemCornerAlpha: cornerOffsets.map((offset) => emblemPixels[offset]),
+      emblemFetchPriority: emblem.fetchPriority,
+      emblemFilter: getComputedStyle(emblem).filter,
+      preloadHrefs: preloads.map((preload) => preload.href),
+      imageResources,
       requiredInside: [
         heading,
         emblem,
@@ -330,11 +408,70 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   expect(facts.subtitleStatusGap).toBeLessThanOrEqual(facts.railHeight + 8);
   expect(facts.railWidth).toBe(1);
   expect(facts.railContent).not.toBe('none');
+  expect(facts.titleBackground).toMatch(/title-proscenium-background.*\.webp/u);
+  expect(facts.emblemCurrentSource).toMatch(
+    /grand-transition-emblem-640.*\.webp/u,
+  );
+  expect(facts.emblemNaturalSize).toEqual([640, 640]);
+  expect(facts.emblemCornerAlpha).toEqual([0, 0, 0, 0]);
+  expect(facts.emblemFetchPriority).toBe('high');
+  expect(facts.emblemFilter).toBe('none');
+  expect(facts.preloadHrefs).toHaveLength(2);
+  expect(facts.preloadHrefs.join('\n')).toMatch(
+    /grand-transition-emblem-640.*\.webp/u,
+  );
+  expect(facts.preloadHrefs.join('\n')).toMatch(
+    /title-proscenium-background.*\.webp/u,
+  );
+  expect(facts.imageResources.join('\n')).toMatch(
+    /grand-transition-emblem-640.*\.webp/u,
+  );
+  expect(facts.imageResources.join('\n')).toMatch(
+    /title-proscenium-background.*\.webp/u,
+  );
 
   await page.screenshot({
     path: testInfo.outputPath('title-curtain-call-1672x941.png'),
     fullPage: true,
   });
+});
+
+test('title runtime WebP assets stay inside their focused byte budget', async () => {
+  const [emblem, proscenium] = await Promise.all([
+    stat('src/assets/brand/grand-transition-emblem-640.webp'),
+    stat('src/assets/brand/title-proscenium-background.webp'),
+  ]);
+
+  expect(emblem.size + proscenium.size).toBeLessThanOrEqual(300 * 1024);
+});
+
+test('a delayed title emblem keeps an intentional reserved loading state', async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  let emblemRoute: import('@playwright/test').Route | undefined;
+  await page.route(/grand-transition-emblem-640.*\.webp/u, async (route) => {
+    emblemRoute = route;
+  });
+
+  await page.goto('', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => emblemRoute).toBeTruthy();
+  const frame = page.locator('.title-emblem-frame');
+  const poster = page.locator('.title-emblem-poster');
+  await expect(frame).not.toHaveClass(/title-emblem-frame--loaded/u);
+  await expect(poster).toBeVisible();
+  const reservedBox = await frame.boundingBox();
+  expect(reservedBox?.width).toBeGreaterThan(0);
+  expect(reservedBox?.height).toBe(reservedBox?.width);
+  await page.screenshot({
+    path: testInfo.outputPath('title-loading-poster-1280x720.png'),
+    fullPage: true,
+  });
+
+  await emblemRoute!.continue();
+  await expect(frame).toHaveClass(/title-emblem-frame--loaded/u);
+  await expect(page.locator('.title-emblem')).toHaveCSS('opacity', '1');
+  expect(await frame.boundingBox()).toEqual(reservedBox);
 });
 
 test('character dossier supports hover, right-click pinning, and dismissal', async ({

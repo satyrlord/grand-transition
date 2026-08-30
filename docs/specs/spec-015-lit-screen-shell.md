@@ -2,6 +2,10 @@
 
 **Status:** Approved  
 **Depends on:** 014  
+**Replacement:** The interactive title replaces Milestone 001's placeholder
+ban on controls, navigation, and game state. It retains the exact title,
+subtitle, and status text.
+
 **Owns:** Application shell, screen flow, setup user interface (UI), and
 view-state boundary
 **Production-file budget:** 8
@@ -11,14 +15,24 @@ view-state boundary
 Build light Document Object Model (DOM) title and setup screens, a screen
 controller, an application shell, and typed command events. Support hotseat
 mode, character choices, and scene choices with mirror matches allowed. Later
-milestones add artificial intelligence (AI), speech, privacy, and saved options
-when their behavior exists.
+milestones add artificial intelligence (AI), speech, and saved options when
+their behavior exists.
 
 The title screen shows the generated original game emblem, the live game name,
 one setup action, and the fictional-composite satire disclaimer. It inherits
 the final match and Pause visual system instead of the earlier polling-ledger
 direction. Setup uses native controls and prevents only invalid combinations.
 Mirror characters are valid. Screens use light DOM.
+
+The title emblem uses genuine transparent alpha with a Portable Network
+Graphics fallback. Chromium uses a 640-square WebP runtime variant. The title
+proscenium also uses a WebP runtime variant with its authored Portable Network
+Graphics fallback. The production entry preloads both WebP files before the
+application module. Their combined runtime size is at most 300 KiB. Markup
+reserves the emblem's square dimensions before decode. Until the emblem loads,
+that space shows a decorative brass broadcast-signal poster. The decoded emblem
+replaces it without layout shift. This focused title slice does not complete
+Milestone 023's manifest, AVIF, or full asset-pipeline work.
 
 Shadow DOM is limited to
 isolated leaf controls with explicit style and event contracts. Components
@@ -30,6 +44,10 @@ The shell has `title` and `setup` view states. “Set up match” moves from the
 title to setup without changing game state. “Back” returns to title and restores
 setup values. A valid setup submit emits one typed `start-match` command.
 Milestone 016 owns the rendered match destination.
+
+Each title or setup transition moves keyboard focus to the destination heading.
+The heading is programmatically focusable but does not enter the normal Tab
+sequence.
 
 A confirmed “Back to menu”
 action from the concealed Pause screen discards the active match and returns to
@@ -96,7 +114,8 @@ hide validation.
 
 - **AC-015-01:** Title and setup follow the two-state graph. Browser Back does
   not create an unsupported URL route. A confirmed paused-match exit returns to
-  title. A later setup visit restores the values.
+  title. A later setup visit restores the values. Each title or setup transition
+  moves focus to the destination heading.
 - **AC-015-02:** Defaults create the exact typed setup payload, including both
   default skin IDs. A mirror match with different skins succeeds.
 - **AC-015-03:** Every invalid class produces one visible error and preserves
@@ -119,7 +138,11 @@ hide validation.
   subtitle, action, status, and disclaimer text. Title and setup use only the
   four font families owned by Milestone 023. Barlow Condensed, Georgia, and
   other superseded entry-screen fonts are not production dependencies or
-  computed entry-screen families.
+  computed entry-screen families. The emblem has genuine transparent outer
+  corners and no visible rectangular matte. Production preloads and renders the
+  two WebP title assets, reserves emblem dimensions, and keeps their combined
+  runtime size at or below 300 KiB. A delayed emblem shows the brass loading
+  poster and then replaces it without layout shift.
 - **AC-015-10:** Every roster item has a computed 3:4 frame and renders a tight
   headshot with no complete body or held prop. Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower

@@ -294,6 +294,18 @@ describe('content schemas', () => {
     expect(dacsEnding?.scoreGroups).toBeUndefined();
   });
 
+  test('loads the Thunder Tribune comeback tiers', () => {
+    expect(
+      phraseCardCatalog.englishMessages['comeback.thunder-tribune.weak'],
+    ).toBe('And I have the dossiers to prove it!');
+    expect(
+      phraseCardCatalog.englishMessages['comeback.thunder-tribune.medium'],
+    ).toBe('And even those NATO clowns know that!');
+    expect(
+      phraseCardCatalog.englishMessages['comeback.thunder-tribune.strong'],
+    ).toBe('Now get this human bucket of vomit out of my sight!');
+  });
+
   test('includes agreement-aware copulas and basic ideological noun cards', () => {
     const copulas = [
       ['is', 'is', 'are'],
