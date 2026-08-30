@@ -14,17 +14,17 @@ insult leaves the active combo set. An incomplete insult clears all of that
 player's combos. A continuation neither scores nor advances or clears combos.
 
 For each scored clause, multiply by every participating noun chain. A
-`NOUN + VERB + NOUN` clause therefore multiplies the subject and object chain
+`NOUN + VERB + NOUN` clause thus multiplies the subject and object chain
 values. If the same noun is both subject and object, its chain factor applies
 twice. Clause combo factors do not multiply unrelated clauses.
 
 ## Finishers
 
-A finisher can be selected only after a complete clause and ends the sentence
-immediately. Its configured score is added after clause scoring. A restricted
-finisher receives its 1.5 restriction multiplier and rounds up. A finisher that
-matches a defender weakness receives one 2x weakness multiplier. Noun combos do
-not multiply a finisher.
+A player can select a finisher only after a complete clause. The finisher ends
+the sentence immediately. Add its configured score after clause scoring. Character and
+scene restrictions affect eligibility only and do not change its damage. A
+finisher that matches a defender weakness receives one 1.5 weakness multiplier.
+Noun combos do not multiply a finisher.
 
 ## Acceptance criteria
 
@@ -32,8 +32,8 @@ not multiply a finisher.
   incomplete clear, continuation preservation, and per-player isolation.
 - **AC-011-02:** Tests prove per-clause subject and object combo products,
   including the same noun in both positions.
-- **AC-011-03:** Tests prove finisher placement, restriction, weakness, score
-  order, and immediate sentence end.
+- **AC-011-03:** Tests prove finisher placement, restriction neutrality,
+  weakness, score order, and immediate sentence end.
 
 ## Objective verifiers
 

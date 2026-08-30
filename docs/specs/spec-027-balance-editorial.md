@@ -25,11 +25,11 @@ logos, and copyrighted broadcast art. Every record has review evidence.
 The review confirms that each character is an original fictional composite. It
 rejects named or identifiable real-person models, comparisons, targets, source
 notes, and asset references. It also rejects real political party names,
-acronyms, and logos while allowing generic ideological or social-family labels.
+acronyms, and logos. It permits generic ideological or social-family labels.
 
-Simulation reports seed, workload, matchups, difficulties, win rates,
-rule-event rates, failures, and environment. Local logs are opt-in, contain no
-personal data, and never leave the device automatically.
+Simulation reports seed, workload, matchups, difficulties, win rates, resolved
+round counts, rule-event rates, failures, and environment. Automatic development
+logs contain no personal data and never leave the local device.
 
 ## Simulation and editorial thresholds
 
@@ -45,6 +45,11 @@ must be at most 5 percentage points. A fixed-seed repeat must reproduce every
 aggregate count. A result outside a band blocks completion unless the product
 owner records a release deviation under Milestone 028. No deviation can permit
 an aggregate rate outside 42 through 58 or a matchup outside 30 through 70.
+
+Across the complete release workload, a match must average 3 through 10
+resolved rounds. No ordered non-mirror matchup can average more than 12 resolved
+rounds. A result outside either pacing band blocks completion and cannot receive
+a release deviation.
 
 The report records combo, weakness, finisher, continuation, comeback, grammar
 mistake,
@@ -70,6 +75,7 @@ matches at least one recorded character or scene trait. An international English
 reader can understand the phrase fragment without external knowledge. A
 Romanian proper noun passes only when adjacent English context identifies why
 it matters. For each character, the owner blind-labels a seeded 12-line sample.
+
 At least 10 lines must be attributable to the intended character.
 
 ## Acceptance criteria
@@ -77,15 +83,16 @@ At least 10 lines must be attributable to the intended character.
 - **AC-027-01:** The simulation contains exactly 97,200 completed matches and
   the required balanced opening count for every ordered matchup and difficulty.
 - **AC-027-02:** Aggregate, matchup, and opening rates meet their bands or have
-  a permitted recorded deviation. Fixed seeds reproduce report totals.
+  a permitted recorded deviation. Aggregate and matchup round counts meet their
+  pacing bands. Fixed seeds reproduce report totals.
 - **AC-027-03:** Every reachable rule occurs, no invariant failure occurs, and
   variety and repetition meet Milestone 026 thresholds.
 - **AC-027-04:** One-hour manual play records start, end, setup sequence,
   repeated insults, unclear rules, dominant strategies, and dispositions.
 - **AC-027-05:** Every shipped prose and media record has complete review
   evidence and no blocker or major item.
-- **AC-027-06:** Opt-in logs contain no personal or private-hand data, make no
-  request, and remain off by default.
+- **AC-027-06:** Automatic development logs contain no personal or private-hand
+  data, make no remote request, and remain excluded from production.
 - **AC-027-07:** Every line passes all three editorial checks, and every
   character passes the 10-of-12 blind-attribution threshold.
 

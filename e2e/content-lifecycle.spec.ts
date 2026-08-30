@@ -82,7 +82,12 @@ type CharacterSource = {
     react: string;
   };
   editorialReview: { notes: string };
-  phrases: { id: string }[];
+  phrases: Array<
+    {
+      id: string;
+      role: string;
+    } & Record<string, unknown>
+  >;
 };
 
 type StaticBuildServer = Readonly<{
@@ -145,6 +150,7 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   };
   fixture.editorialReview.notes =
     'Original fictional composite used only by the isolated lifecycle test.';
+  makeTemporaryPhraseTextUnique(fixture);
 
   writeFileSync(
     characterJsonPath(fixtureRoot),
@@ -174,6 +180,26 @@ function addTemporaryCharacter(fixtureRoot: string): void {
       ]),
     );
   }
+}
+
+function makeTemporaryPhraseTextUnique(fixture: CharacterSource): void {
+  const textFields = [
+    'text',
+    'singularText',
+    'pluralText',
+    'personalSingularText',
+    'secondPersonText',
+  ] as const;
+  fixture.phrases.forEach((phrase, index) => {
+    for (const field of textFields) {
+      const value = phrase[field];
+      if (typeof value !== 'string') continue;
+      const marker = ` temporary fixture ${String(index + 1)}`;
+      phrase[field] = value.endsWith('.')
+        ? `${value.slice(0, -1)}${marker}.`
+        : `${value}${marker}`;
+    }
+  });
 }
 
 function removeTemporaryCharacter(fixtureRoot: string): void {

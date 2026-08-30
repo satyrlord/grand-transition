@@ -7,12 +7,14 @@
 
 ## Continuations
 
-A continuation can be selected at any sentence point. It ends that player's
+A player can select a continuation at any sentence point. It ends that player's
 participation in the round and deals zero outgoing damage. Remove the
 continuation card before the next round. If the opponent deals 0 through 15
 damage, restore the exact carried fragment. Opponent damage of 16 or more breaks
 it. A strong comeback adds 18 damage, so it crosses the same threshold without
-a separate break rule. The catalog contains one unrestricted continuation card,
+a separate break rule.
+
+The catalog contains one unrestricted continuation card,
 and its visible cue is `[...]`.
 
 A surviving continuation preserves the player's prior noun-combo state. A
@@ -40,7 +42,7 @@ and the strong 18-damage line is a devastating insult. There are no shared or
 common comeback lines.
 
 The comeback appends that insult to the visible public sentence as a separate
-phrase, ends the sentence, and adds its damage after scored clauses and
+phrase. It ends the sentence and adds its damage after scored clauses and
 finishers. Show the complete sentence and closing line in the speaker's text
 bubble after selection. The line does not enter grammar, clause scoring, noun
 combos, finishers, or continuation state. Spend the tier before adding damage

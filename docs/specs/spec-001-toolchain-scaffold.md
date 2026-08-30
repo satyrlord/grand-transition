@@ -18,8 +18,8 @@ Use native ECMAScript (ES) modules and semantic Hypertext Markup Language
 (HTML). Use plain Cascading Style Sheets (CSS) with cascade layers and custom
 properties. Use static Lit property declarations and light Document Object
 Model (DOM) for screens. Do not add React, another user interface (UI)
-framework, a virtual DOM, Tailwind, a component kit, runtime CSS-in-JS, server
-rendering, URL-path routing, or a game engine.
+framework, a virtual DOM, Tailwind, or a component kit. Do not add runtime
+CSS-in-JS, server rendering, URL-path routing, or a game engine.
 
 Create source ownership roots for `src/app`, `src/components`, `src/engine`,
 `src/ai`, `src/content`, `src/localization`, `src/audio`, `src/persistence`,
@@ -34,9 +34,9 @@ Keep screens under `src/app/screens` and pure grammar under
   native ES modules, and a private package.
 - The lockfile is the exact dependency authority. A clean install must not
   change it.
-- The title placeholder contains one visible `main`, one `h1` named
-  “Grand Transition,” the visible subtitle “A Verbal Republic,” and the visible
-  status “The chamber is being prepared.”
+- The title placeholder contains one visible `main` and one `h1` named “Grand
+  Transition.” It contains the visible subtitle “A Verbal Republic” and the
+  visible status “The chamber is being prepared.”
 - The title uses light DOM. It has no control, navigation, game state, remote
   asset, or playability claim.
 - The title remains readable at 1024 by 720, 1280 by 720, and 1920 by 1080. It

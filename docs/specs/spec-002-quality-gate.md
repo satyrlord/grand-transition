@@ -57,7 +57,7 @@ lines.
   the exact evidence described above.
 - **AC-002-05:** The pull-request workflow runs the quality gate with read-only
   repository access and contains no deployment job.
-- **AC-002-06:** Markdown checks use `markdownlint-cli2`; the quality gate has
+- **AC-002-06:** Markdown checks use `markdownlint-cli2`. The quality gate has
   no formatter script or formatter configuration. Verify in
   `tests/unit/quality-gate.test.ts` and with a repository-wide search.
 

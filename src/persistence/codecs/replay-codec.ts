@@ -1,7 +1,10 @@
 import { z } from 'zod';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
-import type { BasicScoringBalance } from '../../content/basic-scoring-balance';
+import {
+  legacyBasicScoringBalance,
+  type BasicScoringBalance,
+} from '../../content/basic-scoring-balance';
 import { seededRandomSource } from '../../engine/random-source';
 import {
   createMatchReducer,
@@ -14,9 +17,15 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 1;
+export const replaySchemaVersion = 2;
+export const supportedReplaySchemaVersions = [1, replaySchemaVersion] as const;
 export const replayKind = 'grand-transition-replay' as const;
 export const matchLogKind = 'grand-transition-match-log' as const;
+
+const replaySchemaVersionSchema = z.union([
+  z.literal(supportedReplaySchemaVersions[0]),
+  z.literal(supportedReplaySchemaVersions[1]),
+]);
 
 export type ReplayFailureCode =
   'invalid-json' | 'wrong-document' | 'invalid-replay' | 'unsupported-version';
@@ -116,7 +125,7 @@ export const replaySetupSchema = z
 
 const replayDocumentSchema = z
   .object({
-    schemaVersion: z.literal(replaySchemaVersion),
+    schemaVersion: replaySchemaVersionSchema,
     kind: z.literal(replayKind),
     seed: z.number().int().min(0).max(0xffff_ffff),
     setup: replaySetupSchema,
@@ -189,7 +198,7 @@ const publicRuleEventSchema = z.union([
 
 const matchLogDocumentSchema = z
   .object({
-    schemaVersion: z.literal(replaySchemaVersion),
+    schemaVersion: replaySchemaVersionSchema,
     kind: z.literal(matchLogKind),
     setup: replaySetupSchema,
     seed: z.number().int().min(0).max(0xffff_ffff),
@@ -320,7 +329,10 @@ export function replayMatch(
     phrases: context.catalog.phrases,
     characters: context.catalog.characters,
     locale: context.locale,
-    balance: context.balance,
+    balance:
+      decoded.value.schemaVersion === 1
+        ? legacyBasicScoringBalance
+        : context.balance,
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {
@@ -464,7 +476,7 @@ export function createMatchLog(
     }),
   );
   return matchLogDocumentSchema.parse({
-    schemaVersion: replaySchemaVersion,
+    schemaVersion: replay.schemaVersion,
     kind: matchLogKind,
     setup: replay.setup,
     seed: replay.seed,
@@ -498,7 +510,9 @@ function decodeDocument<Schema extends z.ZodType>(
   if (
     typeof value.schemaVersion === 'number' &&
     Number.isInteger(value.schemaVersion) &&
-    value.schemaVersion !== replaySchemaVersion
+    !supportedReplaySchemaVersions.includes(
+      value.schemaVersion as (typeof supportedReplaySchemaVersions)[number],
+    )
   ) {
     return { ok: false, code: 'unsupported-version' };
   }
@@ -532,7 +546,7 @@ function createSetupRequest(
   });
   if (!scene || !players[0] || !players[1]) return null;
   return {
-    schemaVersion: replaySchemaVersion,
+    schemaVersion: replay.schemaVersion,
     seed: replay.seed,
     players: [players[0], players[1]],
     sceneId: scene.id,

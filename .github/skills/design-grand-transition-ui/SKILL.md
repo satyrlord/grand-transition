@@ -49,7 +49,7 @@ the Impeccable brief. They are not a complete design system.
 Create an original illustrated political-theatre interface that combines
 editorial caricature, stage scenery, post-socialist broadcast graphics,
 bureaucratic materials, and restrained modern overlays. Keep phrase cards and
-tactical state visually plain, legible, and dominant. Avoid generic dashboards,
+tactical state visually plain, legible, and dominant. Do not use generic dashboards,
 software-as-a-service cards, stock game frames, copied layouts, and remote
 assets. Do not use visual effects that hide state changes.
 

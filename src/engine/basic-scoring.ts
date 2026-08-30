@@ -337,7 +337,9 @@ export function scoreClause(
   const customScore = relation.customScores?.find(
     (item) => item.leftNounId === subject.id && item.rightNounId === object?.id,
   )?.score;
-  const base = customScore ?? compatibility * balance.basePointsMultiplier + 1;
+  const base =
+    customScore ??
+    compatibility * balance.basePointsMultiplier + balance.basePointsMinimum;
   const restrictedCount = clausePhrases.filter(
     (phrase) => phrase.sceneIds || phrase.characterIds,
   ).length;

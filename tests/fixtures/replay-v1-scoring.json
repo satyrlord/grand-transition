@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "kind": "grand-transition-replay",
+  "seed": 20260823,
+  "setup": {
+    "mode": "ai",
+    "players": [
+      {
+        "playerId": "player-1",
+        "characterId": "red-folded-chairman",
+        "subjectNumber": "singular",
+        "objectNumber": "singular",
+        "pride": 5,
+        "charge": 0
+      },
+      {
+        "playerId": "player-2",
+        "characterId": "thunder-tribune",
+        "subjectNumber": "singular",
+        "objectNumber": "singular",
+        "pride": 5,
+        "charge": 0
+      }
+    ],
+    "sceneId": "transition-era-television-studio",
+    "aiDifficulty": "simulation-policy",
+    "timerSeconds": 30,
+    "speechEnabled": false,
+    "privacyEnabled": true
+  },
+  "commands": [
+    { "type": "start-match", "source": "ai", "payload": {} },
+    { "type": "prepare-round", "source": "ai", "payload": {} },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-665814757-7" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-665814757-2" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-665814757-5" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-665814757-9" }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    { "type": "resolve-round", "source": "ai", "payload": {} },
+    { "type": "prepare-round", "source": "ai", "payload": {} },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-849594616-6" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-849594616-3" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-849594616-7" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-849594616-5" }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    { "type": "resolve-round", "source": "ai", "payload": {} },
+    { "type": "prepare-round", "source": "ai", "payload": {} },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-4020855458-4" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-4020855458-3" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "private", "cardId": "hand-3-player-1-2" }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": { "source": "shared", "cardId": "board-4020855458-8" }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    { "type": "resolve-round", "source": "ai", "payload": {} }
+  ]
+}

@@ -55,15 +55,18 @@ Private hotseat content must remain private during handovers.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
-- The implemented content includes Zod 4 schemas, an English game-locale bundle,
-  three original fictional characters, Romanian-politics phrase content,
-  separate transparent portraits, and two layered debate studios. The
-  transition-era studio and the modern studio each use one fixed fictional
-  moderator and a separate foreground desk plate.
+- The implemented content includes Zod 4 schemas and an English game-locale
+  bundle. It also includes three original fictional characters,
+  Romanian-politics phrase content, separate transparent portraits, and two
+  layered debate studios. Each studio uses one fixed fictional moderator and a
+  separate foreground desk plate.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
-  endings, incomplete states, immediate grammar mistakes, one common board,
-  private hands, clause scoring, noun combos, continuations, comebacks,
-  cliffhangers, replay, and simulation.
+  endings, incomplete states, immediate grammar mistakes, and one common board.
+  They also include private hands, clause scoring, noun combos, continuations,
+  comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 10,
+  15, and 20
+  compatibility bases, one local 1.5 weakness multiplier, and no restriction
+  damage bonus.
 - Every completed exchange pauses on an in-arena results modal while the last
   sentence remains visible. Continue starts the next round. A terminal exchange
   becomes a persistent victory record until the player returns to the title.

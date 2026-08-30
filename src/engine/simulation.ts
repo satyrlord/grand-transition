@@ -59,7 +59,7 @@ export type SimulationMatchSummary = Readonly<{
 }>;
 
 export type SimulationReport = Readonly<{
-  schemaVersion: 1;
+  schemaVersion: typeof replaySchemaVersion;
   kind: typeof simulationKind;
   seed: number;
   matches: number;

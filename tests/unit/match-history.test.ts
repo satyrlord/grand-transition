@@ -188,6 +188,22 @@ describe('persistent match history', () => {
     });
   });
 
+  test('rejects a replay and match-log pair from different schema versions', () => {
+    const entry = historyEntry('mixed-version', '2026-08-29T15:45:00.000Z');
+    expect(() =>
+      encodeMatchHistory({
+        schemaVersion: matchHistorySchemaVersion,
+        kind: matchHistoryKind,
+        entries: [
+          {
+            ...entry,
+            matchLog: { ...entry.matchLog, schemaVersion: 1 },
+          },
+        ],
+      }),
+    ).toThrow('invalid entry');
+  });
+
   test('keeps an invalid generated entry in memory without blocking the caller', () => {
     const storage = memoryStorage();
     const repository = new MatchHistoryRepository(storage.port);

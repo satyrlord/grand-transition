@@ -40,5 +40,5 @@ winner totals, elapsed time, and output path when present. If a match fails,
 report the exact failing seed and replay path. Do not report a partial workload
 as complete.
 
-The workflow is complete when all requested matches finish and the evidence is
-reported, or when one exact failure is reported with its seed and replay path.
+The workflow succeeds when all requested matches finish and you report the
+evidence. If one match fails, stop and report its exact seed and replay path.

@@ -46,8 +46,8 @@ If the user does not authorize edits, report the exact future document change.
 Do not create a parallel decision log unless the repository contract requires
 one.
 
-The decision review is complete when each inventoried branch is resolved or
-explicitly deferred.
+The decision review is complete when the user resolves or explicitly defers
+each inventoried branch.
 For each deferral, name its owner, reason, dependency, and verification step.
 Route authorized implementation to
 [add-feature](../add-feature/SKILL.md),

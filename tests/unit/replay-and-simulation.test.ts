@@ -36,6 +36,7 @@ import {
   type ReplayDocument,
 } from '../../src/persistence/codecs/replay-codec';
 import type { StoragePort } from '../../src/persistence/storage-port';
+import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -80,6 +81,49 @@ describe('versioned replay and local match-log codecs', () => {
     }
   });
 
+  test('replays legacy version 1 scoring with its original balance', () => {
+    const legacyReplay = normalizedJson(legacyReplayFixture);
+    const replayed = replayMatch(legacyReplay, context);
+
+    expect(replayed.ok).toBe(true);
+    if (replayed.ok) {
+      expect(replayed.replay.schemaVersion).toBe(1);
+      expect(replayed.normalized).toBe(legacyReplay);
+      expect(replayed.state.winner).toBe('player-1');
+      expect(
+        replayed.state.resolutionHistory.map((resolution) => ({
+          round: resolution.round,
+          playerOneDamage: resolution.players['player-1']!.outgoingDamage,
+          playerTwoDamage: resolution.players['player-2']!.outgoingDamage,
+          playerOnePride: resolution.players['player-1']!.prideAfter,
+          playerTwoPride: resolution.players['player-2']!.prideAfter,
+        })),
+      ).toEqual([
+        {
+          round: 1,
+          playerOneDamage: 2,
+          playerTwoDamage: 0,
+          playerOnePride: 5,
+          playerTwoPride: 3,
+        },
+        {
+          round: 2,
+          playerOneDamage: 2,
+          playerTwoDamage: 0,
+          playerOnePride: 5,
+          playerTwoPride: 1,
+        },
+        {
+          round: 3,
+          playerOneDamage: 10,
+          playerTwoDamage: 0,
+          playerOnePride: 5,
+          playerTwoPride: 0,
+        },
+      ]);
+    }
+  });
+
   test('normalizes and decodes the public match log', () => {
     const decoded = decodeMatchLog(completed.matchLogBytes);
     expect(decoded).toEqual({ ok: true, value: completed.matchLog });
@@ -114,7 +158,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.replay, schemaVersion: 2 }),
+      normalizedJson({ ...completed.replay, schemaVersion: 3 }),
     ],
   ] as const)(
     'rejects replay fixture %s before a write or match result',
@@ -139,7 +183,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.matchLog, schemaVersion: 2 }),
+      normalizedJson({ ...completed.matchLog, schemaVersion: 3 }),
     ],
   ] as const)('rejects match-log fixture %s before a write', (code, bytes) => {
     const storage = recordingStorage();
@@ -335,6 +379,17 @@ describe('headless simulation and generated invariants', () => {
     ]);
     expect(second.completedMatches).toBe(2);
   });
+
+  test(
+    'keeps the 500-match calibration between three and ten rounds',
+    () => {
+      const report = simulateMatches(20_260_830, 500, setup, context);
+      const averageRounds = report.totalRounds / report.matches;
+      expect(averageRounds).toBeGreaterThanOrEqual(3);
+      expect(averageRounds).toBeLessThanOrEqual(10);
+    },
+    30_000,
+  );
 
   test('rejects invalid setup values, counts, and seeds with named facts', () => {
     expect(() =>

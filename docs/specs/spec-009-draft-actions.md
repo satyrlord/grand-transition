@@ -8,12 +8,12 @@ timeout, continuation, and comeback selection
 
 ## Turn flow
 
-The scene-defined opener starts the first round. The opener alternates each
-later round. Players alternate one card pick at a time. A selected common card
-is removed for both players. A selected private card is removed only from its
-owner's hand.
+The scene-defined opener starts the first round. The opener alternates in each
+later round. Players take turns to select one card. A common-card selection
+removes the card for the two players. A private-card selection removes the card
+only from its owner's hand.
 
-The player can perform these actions:
+The player can do these actions:
 
 | Action                    | Result                                                    |
 | ------------------------- | --------------------------------------------------------- |

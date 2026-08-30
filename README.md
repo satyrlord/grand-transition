@@ -1,11 +1,11 @@
 # The Grand Transition: A Verbal Republic
 
-The Grand Transition is a planned browser game about tactical grammar and
+The Grand Transition is a browser game about tactical grammar and
 fictional political satire. Players draft phrase fragments, build legal insults,
 deny useful phrases, target character weaknesses, continue combinations across
 rounds, use comebacks, and reduce the opponent's Pride.
 
-The game is set in an invented republic influenced by Romanian public life
+The game occurs in an invented republic influenced by Romanian public life
 after 1989. Its characters are fictional composites. It does not reproduce
 real people, real political party names, party acronyms, party logos, protected
 game content, or third-party art and audio.
@@ -21,23 +21,34 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-Milestones 001 through 018 provide the runnable project and complete quality
-gate. They also provide immutable game contracts, replaceable external ports,
-enforced pure-module boundaries, a secured production shell, and validated
-sample game content. The sample contains 126 Romanian-politics common phrases
-and 12 phrases for each of three fictional characters. It also contains two
-fictional scenes and an English game-locale bundle. The implemented rules include
-minimum and two-clause Hollywood Roast grammar, compound subjects, endings,
-incomplete states, and immediate grammar mistakes. They also include seeded
-common-board and private-hand generation, clause scoring, noun combos,
-continuations, comebacks, cliffhangers, match lifecycle, replay, and simulation.
+The current checkout implements Milestones 001 through 018 and the persistent
+victory and local match-history slice from Milestone 030. It provides immutable
+game contracts, replaceable external ports, enforced pure-module boundaries, a
+secured production shell, and the complete configured quality gate. Milestones
+019 through 029 remain incomplete as full deliveries.
+
+The current content has 220 common Romanian-politics phrases and three
+fictional characters. The Red-Folded Chairman has 30 character phrases, the
+Thunder Tribune has 20, and the Black Sea Captain has 19. Each character has a
+default and alternate portrait skin. The content also includes two fictional
+layered debate studios and one English game-locale bundle.
+
+The implemented rules include extended Hollywood Roast grammar, agreement,
+compound subjects and objects, endings, modifiers, incomplete states, and
+immediate grammar mistakes. They also include seeded common-board and
+private-hand generation, clause scoring, noun combos, continuations, comebacks,
+cliffhangers, match lifecycle, replay, simulation, and automatic development
+match logs. Current clause scoring uses compatibility bases of 5, 10, 15, and
+20, a local 1.5 weakness multiplier, and no restriction damage bonus.
+
 The landscape-only Lit interface provides title, setup, a playable hotseat
-match, and Pause. Every exchange pauses on an in-arena review modal. Continue
-advances the next round or returns a completed match to setup without post-match
-features. The interface requires a browser content viewport of at least 1024 by
-720 CSS pixels. It recommends 1920 by 1080 and PC. Later milestones add privacy
-handovers, settings persistence, artificial intelligence, the remaining final
-assets, audio, expanded content, and release hardening in dependency order.
+match, Pause, and between-round review. A terminal exchange stays in the arena
+as a persistent victory record until the player returns to the title. The title
+alone exposes local public match history. The interface requires a browser
+content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
+and PC. Later dependency work adds private handovers, settings persistence,
+artificial intelligence, audio, expanded content, balance evidence, and release
+hardening.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
@@ -47,7 +58,7 @@ architecture, testing, content, security, and delivery.
 This README is descriptive user-facing documentation. If it disagrees with an
 approved specification, the specification governs.
 
-## Planned technology
+## Technology
 
 The approved implementation uses Node.js 24 Long-Term Support (LTS), npm 12,
 TypeScript 7, Vite 8, Lit 3, `@lit/localize`, and Zod 4. It also uses plain
@@ -67,9 +78,9 @@ locale keys and rejects malformed or duplicate cards before the game starts.
 ## Add a character
 
 Copy one existing file under `src/content/characters/`. Rename it to
-`<character-id>-phrase-cards.json`, then change its ID, roster order, identity,
-English prose, media metadata, palette, weaknesses, comebacks, AI personality,
-voice, animation IDs, and phrase array. Add the approved portrait as
+`<character-id>-phrase-cards.json`. Then, change its ID, roster order, identity,
+English prose, media metadata, palette, weaknesses, and comebacks. Also change
+its AI personality, voice, animation IDs, and phrase array. Add the approved portrait as
 `src/assets/characters/<character-id>.png`.
 
 Do not edit a TypeScript import, registry, locale table, setup option, or

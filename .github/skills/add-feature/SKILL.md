@@ -29,6 +29,7 @@ Each changed behavior must have one owner and one objective verifier.
 Record user value, exact behavior, exclusions, failure behavior, privacy
 effects, acceptance criteria, and any manual evidence. Update the
 smallest owning specification when behavior changes.
+
 Implement the complete authorized slice in the owning layer.
 Keep rules out of Lit components.
 Route randomness through the seed.

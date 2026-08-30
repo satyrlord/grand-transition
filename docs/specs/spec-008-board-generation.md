@@ -7,8 +7,8 @@
 
 ## Common board
 
-Each round creates one shuffled nine-card common board. Every available common
-card can be selected by either player. Characters have no common-board
+Each round creates one shuffled nine-card common board. Either player can select
+every available common card. Characters have no common-board
 reservation list.
 
 The browser creates a new unsigned 32-bit seed from browser cryptographic
@@ -27,6 +27,7 @@ The connector-count roll is 10 percent for zero connectors and 90 percent for
 one. A forced connector is additive or contrasting. An
 additive selection uses `and`. A contrast selection uses `but` or `yet` and
 replaces the additive selection on 25 percent of forced-connector selections.
+
 The one unrestricted `[...]` continuation always fills one variable slot. When
 the roll adds no connector, the last open slot draws from the eligible scene
 pool. A modifier can fill a variable slot. It does not replace the guaranteed

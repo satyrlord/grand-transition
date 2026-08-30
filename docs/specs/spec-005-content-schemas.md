@@ -14,11 +14,10 @@ Chairman has 30 character-owned English phrase cards, the Black Sea Captain
 has 19, and the Thunder Tribune has 20. Animal terms in character titles are
 metaphorical.
 
-A phrase owns an identifier, role, text key, optional agreement forms, optional
-connector kind, optional grammatical number, optional grammatical person,
-optional personal or nonpersonal referent kind, scoring and weakness tags,
-optional character and scene restrictions, draw rarity, optional noun-specific
-custom clause scores, optional finisher score, and editorial review.
+A phrase owns an identifier, role, text key, and optional agreement forms. It
+can own a connector kind, grammatical number, grammatical person, and referent
+kind. It owns scoring tags, weakness tags, restrictions, draw rarity, and
+editorial review. It can also own custom clause scores and a finisher score.
 Ending text includes a terminal full stop.
 
 Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
@@ -29,18 +28,18 @@ or predicate can declare an exact left-noun and optional right-noun custom
 clause score from 0 through 100. Otherwise, Milestone 010 calculates group
 compatibility.
 
-A character owns identity, original media, palette, two through four weakness
-tags, character-restricted hand phrase identifiers, exactly one exclusive
-comeback line for each of the three tiers, artificial-intelligence data, voice
-data, and animation data.
+A character owns identity, original media, palette, and two through four
+weakness tags. It owns character-restricted hand phrase identifiers and one
+exclusive comeback line for each tier. It also owns artificial-intelligence,
+voice, and animation data.
 There is no character-specific common-board phrase list.
 
 A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects.
-The scene pool supplies at least three distinct unrestricted nouns, three
-distinct unrestricted verbs, one unrestricted predicate, two distinct `and`
-or contrast connectors, and one continuation so Milestone 008 can deal a valid
-common board without repeating a phrase identifier. Contrast connectors are
+The scene pool supplies at least three distinct unrestricted nouns and three
+distinct unrestricted verbs. It supplies one unrestricted predicate, two
+distinct `and` or contrast connectors, and one continuation. Thus, Milestone
+008 can deal a valid common board without a repeated phrase identifier. Contrast connectors are
 `but` and `yet`.
 
 Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
@@ -101,22 +100,28 @@ one complete authoring file under
 order, identity, English name and description, media references, palette,
 weaknesses, comeback text, artificial-intelligence personality, voice,
 animation IDs, and its phrase array. Its identifier must match its file name.
+
 The loader derives `characterIds`. Authors must not repeat that ownership field
 inside each phrase card.
 
-To add a common phrase, copy one same-role object in the common JSON array and
-change its identifier, text, tags, scoring metadata, restrictions, rarity, and
-explicit editorial review. To add a phrase for an existing character, do the
-same in that character's `phrases` array. Cards with number agreement include
+To add a common phrase, copy one same-role object in the common JSON array.
+Change its identifier, text, tags, scoring metadata, restrictions, and rarity.
+Also change its explicit editorial review. To add a phrase for an existing
+character, do the same in that character's `phrases` array.
+
+Cards with number agreement include
 both `singularText` and `pluralText`. A verb or predicate whose wording changes
 for a personal-singular or second-person subject also includes both
 `personalSingularText` and `secondPersonText`. This includes a combined copular
 predicate whose second-person verb uses plural conjugation while its complement
-stays singular. The loader derives character, phrase, agreement-form, and
-comeback locale keys plus the English message table. It rejects duplicate
-identifiers, player-visible English phrase text, or roster orders; file-name
-mismatches; one-sided number or person forms; unknown fields; invalid scoring
-data; and cross-corpus duplicates.
+stays singular.
+
+The loader derives character, phrase, agreement-form, and
+comeback locale keys. It also derives the English message table. It rejects
+duplicate identifiers, player-visible English phrase text, and roster orders.
+
+It rejects file-name mismatches and one-sided number or person forms. It also
+rejects unknown fields, invalid scoring data, and cross-corpus duplicates.
 Every phrase and character file explicitly records review state, originality,
 safety flags, and notes. The loader never invents editorial approval.
 
@@ -149,17 +154,18 @@ simulation, and browser validation must pass before it can ship.
   rejects malformed and duplicate cards.
 - **AC-005-07:** The 220-card common corpus contains exactly 55 nouns, 86 verbs,
   39 predicates, 21 modifiers, 7 conjunctions, 11 endings, and 1
-  continuation. It includes
-  agreement-aware copular forms for `is`, `was`, `will be`, and `should have
-been`, plus generic ideological and animal-metaphor noun fragments such as
+  continuation. It includes agreement-aware copular forms for `is`, `was`,
+  `will be`, and `should have been`. It also includes generic ideological and
+  animal-metaphor noun fragments such as
   `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
   `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated forms `was not`, `is not`, `will never be`, and `won't`, and the
   predicate `was a Securitate informer`. The stable
-  `drags-before-the-cameras` tense family renders the passive predicates `is
-  dragged before the cameras`, `was dragged before the cameras`, and `will be
-  dragged before the cameras`. The only
+  `drags-before-the-cameras` tense family renders three passive predicates.
+  They are `is dragged before the cameras`, `was dragged before the cameras`,
+  and `will be dragged before the cameras`. The only
+
   continuation is the unrestricted `[...]` card. It contains second-person
   `you`, plural `EU funds`, and person-aware subject forms for every shipped
   relation that contains a possessive reference to its subject. It contains
@@ -168,17 +174,19 @@ been`, plus generic ideological and animal-metaphor noun fragments such as
   [public 2017 civic-protest slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
   `Noaptea, ca hoții`. It retains its stable identifier for deterministic
   replay compatibility. This one-record exception replaces the product-wide
-  original-phrase rule only for this entry. Every entry records its research
+  original-phrase rule only for this entry.
+
+  Every entry records its research
   rationale. No other entry copies a slogan, and no entry names or identifies a
   real person.
 - **AC-005-08:** The common conjunction pool contains exactly one card each for
   `and`, `but`, `because`, `yet`, `so`, `for`, and `with`.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON
-  source produces its character record, owned phrase IDs, derived locale keys,
-  and exclusive comebacks without registry edits. Browser and Node discovery
+  source produces its character record, owned phrase IDs, and derived locale
+  keys. It also produces exclusive comebacks without registry edits. Browser and Node discovery
   produce the same ordered catalog. An isolated production-browser lifecycle
-  test adds the JSON source and matching portrait, makes a clean build, selects
-  the character in setup, and verifies its loaded portrait in a match. It then
+  test adds the JSON source and matching portrait. It makes a clean build,
+  selects the character in setup, and verifies its loaded portrait in a match. It then
   removes both files, makes a second clean build, and verifies that the setup,
   match, and production output contain no temporary character.
 

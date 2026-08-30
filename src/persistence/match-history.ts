@@ -247,6 +247,7 @@ function validHistoryPair(
   matchLog: MatchLogDocument,
 ): boolean {
   if (
+    replay.schemaVersion !== matchLog.schemaVersion ||
     replay.seed !== matchLog.seed ||
     normalizedJson(replay.setup) !== normalizedJson(matchLog.setup)
   ) {

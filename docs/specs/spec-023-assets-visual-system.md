@@ -14,17 +14,20 @@ scene. Add core reactions, ambience, and transitions.
 Each catalog character has a default skin and at least one alternate skin.
 Default portraits use `<character-id>.png`. Alternate portraits use
 `<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
-this filename convention. It does not use a TypeScript skin registry. The
-default skin is first. The roster uses only the default skin. Setup stages and
-matches use the selected skin. All skins for one character share its character
+this filename convention. It does not use a TypeScript skin registry.
+
+The default skin is first. The roster uses only the default skin.
+
+Setup stages and matches use the selected skin. All skins for one character share its character
 identity and phrase content.
 
 The art combines editorial caricature, painted theatre, late-2000s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
 modern overlays. Use an integrated arena composition. One authored scene fills
-the play field, opponents face each other at the sides, status frames the top,
-speech spans the confrontation, sentence construction owns the center, and
-secondary actions use the perimeter. Do not put the scene above a separate
+the play field. Opponents face each other at the sides. Status frames the top,
+and speech spans the confrontation. Sentence construction owns the center.
+
+Secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.
 
 Use one hand-painted editorial-caricature language for playable portraits,
@@ -40,8 +43,10 @@ composition and interaction precedent, not a parity target. Keep the painted
 stage as authored art and rebuild every game value, phrase, and control as HTML
 components. Use original characters and product truth. Do not copy another
 game's art, brands, names, exact ornament, fonts, proportions, unsupported
-actions, or rasterized interface text. Avoid generic dashboard cards and stock
-fantasy frames. Use a dark institutional palette with navy, charcoal, paper,
+actions, or rasterized interface text. Do not use generic dashboard cards and stock
+fantasy frames.
+
+Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
 Every character is human. Animal words in names, titles, insults, or metaphors
@@ -50,9 +55,9 @@ animal heads, ears, muzzles, beaks, feathers, tails, wings, paws, fur, scales,
 and human-animal hybrids.
 
 The pre-pipeline match slice uses a rendered municipal studio with one fixed
-fictional moderator, transparent interim portraits for the Red-Folded Chairman,
-Thunder Tribune, and Black Sea Captain, and one transparent foreground plate
-with two tall standing desks. The back scene must not contain a playable
+fictional moderator. It uses transparent interim portraits for the Red-Folded
+Chairman, Thunder Tribune, and Black Sea Captain. It also uses one transparent
+foreground plate with two tall standing desks. The back scene must not contain a playable
 character. The desk plate clips the lower portrait bodies without fixing either
 selected character into the scene. Milestone 023 replaces or promotes these
 interim files through the approved manifest and variant pipeline without
@@ -64,6 +69,7 @@ The Black Sea Captain default skin wears a warm-cream naval officer uniform and
 cap and holds one unbranded cigar. His skins have no wheel or helm prop. His
 alternate female skin wears a fitted navy-blue formal suit with restrained
 nautical details.
+
 The Thunder Tribune keeps his full-body pose, raised hand, papers, and
 expression. He is tall and heavyset, with a broad adult body, dark side-parted
 hair, and large clear gold-rimmed eyeglasses. On the 1024 by 1536 interim
@@ -80,13 +86,14 @@ combination is implementation evidence, not visual authority.
    through 1.4-pixel synthetic stroke to large feature text and a 0.65 through
    0.95-pixel stroke to major actions. This synthetic emboldening is an approved
    exception because Poiret One has no bold master. Use it only at medium and
-   large sizes. Fascinate and Fascinate Inline are permanently disqualified. Do
+   large sizes.
+
+   Fascinate and Fascinate Inline are permanently disqualified. Do
    not propose, test, install, or use either family.
 2. Nunito Black 900 is the selected rounded speech family. It owns delivered
    speech, the current construction, and sentence previews. Render it in visual
-   uppercase while preserving the authored case for source text, accessibility,
-   and speech output. Fredoka Bold is rejected. Do not restore it without new
-   explicit approval.
+   uppercase. Preserve the authored case for source text, accessibility, and
+   speech output. Do not use Fredoka Bold without new explicit approval.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
    600, and bold 700. It owns phrase lists, private phrases, setup fields,
    labels, validation, disabled reasons, score explanations, privacy handovers,
@@ -106,21 +113,28 @@ fallback is Cascadia Mono, Consolas, and then monospace.
 Verify all four selected families together in the built arena. The
 Art Deco feature family needs English UI coverage only. The timer family needs
 digits and timer punctuation only. The speech and interface families must cover
-localized grammar and phrase content, including Romanian diacritics. Test
+localized grammar and phrase content, including Romanian diacritics.
+
+Test
 uppercase and mixed-case English names, the longest localized speech and
 phrase, digits, punctuation, disabled text, and the 1024 by 720 viewport. Except
 for the approved Poiret One treatment, reject a family if it needs condensed
-spacing, outline effects, synthetic weights, or text smaller than 11 pixels to
-fit. Record the selected families, weights, licenses, metric fallbacks, and use
-rules in this specification and the design record before implementation is
-complete. The wide speech bubble uses light paper. The compact phrase path uses
-a near-black broadcast plate, thin oxblood row rules, and Rubik phrase text
-without visible role, ownership, weakness, disabled-reason, or hint metadata.
+spacing or outline effects to fit. Also reject it if it needs synthetic weights
+or text smaller than 11 pixels.
+
+Record the selected families, weights, licenses,
+metric fallbacks, and use rules in this specification. Record them in the design
+record before implementation is complete. The wide speech bubble uses light
+paper. The compact phrase path uses a near-black broadcast plate and thin
+oxblood row rules. It uses Rubik phrase text without visible role, ownership,
+weakness, disabled-reason, or hint metadata.
+
 Action plates use coherent authored icons and framing.
 
-Human characters use three-quarter opponent-facing silhouettes, layered parts, at
-least five expressions and six poses, plus idle, selection, thinking, delivery,
-light and heavy hit, weakness, comeback, and grammar-mistake states.
+Human characters use three-quarter opponent-facing silhouettes and layered
+parts. They use at least five expressions and six poses. They include idle,
+selection, thinking, delivery, and light and heavy hit states. They also include
+weakness, comeback, and grammar-mistake states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, and fallback proof.
@@ -136,13 +150,17 @@ Every transparent scene and character asset uses the
 `#00FF00` matte. Transparent art does not use that key color intentionally.
 The deterministic converter replaces the matte with genuine alpha and embeds
 the workflow identifier and key color in the shipping Portable Network Graphics
-(PNG) file. It samples the matte from border-connected green pixels, classifies
-the matte, foreground, and uncertain contour from green-channel dominance and
-distance from that sample, and uses the sample in the known-matte compositing
+(PNG) file. It samples the matte from border-connected green pixels. It uses
+green-channel dominance and sample distance to classify the matte, foreground,
+and uncertain contour.
+
+It uses the sample in the known-matte compositing
 equation. It estimates uncertain coverage from nearby foreground samples and
-reconstructs foreground red, green, and blue values. If the source has a binary
-contour, one three-by-three binomial pass creates a bounded partial-alpha edge
-and copies the nearest foreground color into new edge pixels. The converter records
+reconstructs foreground red, green, and blue values.
+
+If the source has a binary
+contour, one three-by-three binomial pass creates a bounded partial-alpha edge.
+The pass copies the nearest foreground color into new edge pixels. The converter records
 `Alpha Source=soft-green-key-v1`,
 `Alpha Matte=green-dominance-neighbor-matte-v1`, and
 `Foreground Reconstruction=known-green-unmix-v1`.
@@ -153,6 +171,7 @@ An existing opaque raster can use `provenance <png> --source <origin>` when its
 verified source origin exists and its generation prompt does not. Do not invent
 a source or prompt. Asset validation rejects every PNG that lacks an embedded
 generation prompt or source. Shipping assets contain no chroma-key residue.
+
 Validation also rejects every alpha-bearing PNG that lacks the workflow, key,
 or alpha-source metadata, has nonzero outer corners, or retains an opaque
 chroma-green pixel. A soft-key conversion also fails when it has no
@@ -172,14 +191,15 @@ square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 Foreground scene plates use the same wide dimensions as their matching back
 scene and preserve transparent outer corners.
 
-Every raster runtime size has AVIF and WebP output. The manifest contains ID,
-owner type and ID, source description, license identifier, SHA-256 source hash,
-format, pixel dimensions, byte size, focal point, crop rectangle, and generated
-variant paths. Dimensions are present in markup before decode.
+Every raster runtime size has AVIF and WebP output. The manifest contains the ID,
+owner type, owner ID, source description, and license identifier. It contains
+the SHA-256 source hash, format, pixel dimensions, and byte size. It also
+contains the focal point, crop rectangle, and generated variant paths.
+Dimensions are present in markup before decode.
 
-At the largest size, one AVIF scene is at most 350 kibibytes (KiB), its WebP
-fallback is at most 500 KiB, one AVIF character state is at most 250 KiB, and
-its WebP fallback is at most 350 KiB. The selected scene and both selected
+At the largest size, one AVIF scene is at most 350 kibibytes (KiB). Its WebP
+fallback is at most 500 KiB. One AVIF character state is at most 250 KiB. Its
+WebP fallback is at most 350 KiB. The selected scene and both selected
 character image packages total at most 3 mebibytes (MiB) in their preferred
 formats. Setup does not preload unselected match packages.
 
@@ -207,19 +227,19 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   visible and meet CLS limits.
 - **AC-023-06:** Motion procedures meet all timing and pointer requirements.
 - **AC-023-07:** The approved font comparison covers all four exclusive roles,
-  specified content, and viewports. The selected local WOFF2 files, licenses,
-  weights, metric fallbacks, and use rules are recorded, and fallback rendering
-  causes no hidden or clipped text. Visual uppercase does not change source,
+  specified content, and viewports. The evidence records the selected local
+  WOFF2 files, licenses, weights, metric fallbacks, and use rules.
+  Fallback rendering causes no hidden or clipped text. Visual uppercase does not change source,
   accessible, or spoken sentence text.
-- **AC-023-08:** A synthetic near-green matte fixture with known foreground colors
-  converts to transparent background, opaque interior, partial-alpha contour,
-  and reconstructed contour color within the alpha-aware eight-bit Canvas
-  round-trip tolerance. A
+- **AC-023-08:** A synthetic near-green matte fixture has known foreground
+  colors. It converts to a transparent background, opaque interior, and
+  partial-alpha contour. The reconstructed contour color stays within the
+  alpha-aware eight-bit Canvas round-trip tolerance. A
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
 - **AC-023-09:** Every discovered character has a default skin and at least one
-  alternate skin. Filename discovery is deterministic, the default is first,
-  the roster resolves only the default, and setup and match views resolve the
+  alternate skin. Filename discovery is deterministic, and the default is
+  first. The roster resolves only the default. Setup and match views resolve the
   requested skin without changing character or phrase data.
 
 ## Impeccable UI validation

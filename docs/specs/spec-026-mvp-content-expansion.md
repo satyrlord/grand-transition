@@ -15,8 +15,8 @@ Use the existing schemas, pipelines, and presentation contracts.
 Every archetype has its default portrait skin and at least one alternate female
 skin through the Milestone 023 filename convention. A skin changes only visual
 presentation. It does not add or change phrases, weaknesses, comeback lines,
-balance data, or character identity. Additional alternate clothing is allowed;
-for example, the Black Sea Captain can use a cream naval-uniform default skin
+balance data, or character identity. Additional alternate clothing is allowed.
+For example, the Black Sea Captain can use a cream naval-uniform default skin
 and a navy-blue formal-suit alternate skin.
 
 All 18 archetypes are human. Animal terms in a name or title are metaphorical
@@ -91,23 +91,28 @@ its distinct era and materials. No scene layer uses photographic or hyper-
 realistic rendering.
 
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
-  heavy blue and burgundy curtains, faux-marble columns, patterned carpet,
-  lighting trusses, two tall standing desks, one desk microphone and one plain
-  unbranded water bottle on each desk, harsh lamps, and one fixed blonde
-  fictional moderator at a physical wood-and-brass desk on a
-  raised inner-left platform. Exactly four full-height columns frame the studio.
+  heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
+  It contains lighting trusses, harsh lamps, and two tall standing desks. Each
+  desk has one microphone and one plain unbranded water bottle. One fixed blonde
+  fictional moderator sits at a physical wood-and-brass desk. A raised
+  inner-left platform holds that desk. Exactly four full-height columns frame the studio.
+
   The playable characters remain separate portrait layers. Its phrase themes
   are transition, public television, revolution, archive, emergency broadcast,
   and national salvation.
 - **Modern Debate Studio:** A contemporary presidential-style television set
-  uses broad blue video panels, red and blue vertical accents, overhead
-  softboxes, a practical broadcast truss, a reflective stage floor, and two
-  angular standing desks. Each desk has one plain tap-water bottle and one
-  distinct sparkling-water bottle. The scene has no microphones. One fixed
+  uses broad blue video panels and red and blue vertical accents. It has
+  overhead softboxes, a practical broadcast truss, and a reflective stage
+  floor. It has two angular standing desks. Each desk has one plain tap-water bottle and one
+  distinct sparkling-water bottle. The scene has no microphones.
+
+  One fixed
   fictional male moderator sits with crossed legs in a beige studio chair at
   the inner-right position that mirrors the transition-era moderator. He wears
   rectangular glasses, faces the camera, and has a normal human head with a
-  slightly tall forehead and comically small facial features. The playable
+  slightly tall forehead and comically small facial features.
+
+  The playable
   characters remain separate portrait layers. Its phrase themes are polling,
   fact checks, campaign strategy, swing voters, media training, and closing
   statements.
@@ -141,11 +146,14 @@ these inclusive general-pool ranges:
 | Continuation                     |       1 |       1 |
 
 Each character has 20 to 30 unique character phrases. Its pool contains at
-least six nouns, four verbs, four predicates or modifiers with at least one of
-each role, one conjunction, and one ending. Each scene pool contains at least
-eight nouns, six verbs, five predicates or modifiers with at least one of each
-role, one conjunction, one ending, and the universal `[...]` continuation
-within its 25 to 35 unique IDs. No character or scene owns another
+least six nouns, four verbs, and four predicates or modifiers. The pool has at
+least one predicate and one modifier. It also has one conjunction and one
+ending.
+
+Each scene pool contains at least eight nouns and six verbs. It has five
+predicates or modifiers with at least one of each role. It also has one
+conjunction, one ending, and the universal `[...]` continuation. The scene pool
+contains 25 to 35 unique IDs. No character or scene owns another
 continuation.
 
 Each character has exactly one unique comeback line in each tier and three total.
@@ -157,8 +165,9 @@ treatment and every named Milestone 024 effect remains reachable.
 
 ## Variety contract
 
-A fixed 1,000-match simulation for every scene and difficulty must select at
-least 90 percent of eligible general and owned phrase IDs at least once. No
+A fixed 1,000-match simulation runs for every scene and difficulty. It must
+select at least 90 percent of eligible phrase IDs at least once. This set
+includes general and owned phrase IDs. No
 eligible phrase can have more than five times the median nonzero selection count
 without a recorded restriction or role-frequency explanation. In a scripted
 60-minute manual run, the same complete rendered insult cannot occur more than

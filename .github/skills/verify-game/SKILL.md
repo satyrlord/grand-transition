@@ -54,5 +54,5 @@ Report every contract as `PASS`, `FAIL`, `BLOCKED`, or `N-A`.
 Report limitations and manual checks.
 Do not claim more than the recorded build and environment prove.
 
-The verification is complete when every applicable contract has a status,
-limitations are recorded, and no required proof is hidden.
+The verification is complete when every applicable contract has a status.
+Record all limitations and show all necessary proof.

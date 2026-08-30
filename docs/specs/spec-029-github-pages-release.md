@@ -34,27 +34,30 @@ a comment. The workflow uses the `github-pages` environment, reports its
 `cancel-in-progress: false`. Build and deploy are separate jobs. Deploy needs
 build and cannot run after a failed, cancelled, pull-request, or non-main build.
 
-The build job checks out the exact commit, installs Node.js 24, installs the npm
-version in `packageManager`, runs `npm ci`, installs the three Playwright
-browsers with dependencies, runs `npm run ci`, and uploads one artifact whose
-payload contains only files produced under `dist/`. It contains no repository
-file outside that directory. The deployed artifact SHA-256 digest is recorded.
+The build job checks out the exact commit and installs Node.js 24. It installs
+the npm version in `packageManager` and runs `npm ci`. It installs the three
+Playwright browsers with dependencies and runs `npm run ci`. It uploads one
+artifact that contains only files from `dist/`. It contains no repository file
+outside that directory. Record the deployed artifact SHA-256 digest.
 
 Add `npm run test:published -- --base-url <url>`. The command never mutates
 published state and exits nonzero on a failed response, asset, refresh, CSP,
 runtime-network, speech-state, or complete-match assertion.
 
-Published complete-match smoke uses seed `20260823`, the first two roster
-characters, the Transition-Era Television Studio, default 30-second timer,
-selectable 15-second and Unlimited timer settings,
-speech off, and privacy on. It reviews each nonterminal exchange through
-Continue, completes the match, shows the Milestone 030 victory state, returns
-to the title screen, and restores the stored match through the title-only
-history modal after reload.
+Published complete-match smoke uses seed `20260823` and the first two roster
+characters. It uses the Transition-Era Television Studio and the default
+30-second timer. It also tests the 15-second and Unlimited timer settings. It
+uses speech off and privacy on. It reviews each nonterminal exchange through
+Continue and completes the match. It shows the Milestone 030 victory state and
+returns to the title screen.
 
-Release documentation records commit SHA, workflow URL, deployed URL, artifact
-digest, action SHAs, Node and npm versions, browser versions, every smoke result,
-Milestone 028 evidence links, deviations, and release date. Recovery is a revert
+After reload, it restores the stored match through
+the title-only history modal.
+
+Release documentation records the commit SHA, workflow URL, deployed URL, and
+artifact digest. It records action SHAs, Node and npm versions, browser
+versions, and every smoke result. It records Milestone 028 evidence links,
+deviations, and the release date. Recovery is a revert
 on `main` followed by the same complete build, gate, deploy, and smoke process.
 Do not deploy an untested historic artifact directly.
 

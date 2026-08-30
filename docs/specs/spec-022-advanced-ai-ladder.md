@@ -16,23 +16,23 @@ Party Strategist uses one-ply evaluation, targets weaknesses, protects
 completion, uses finishers and comebacks, and recognizes immediate denial. It
 thinks for 700 to 1500 milliseconds (ms).
 
-Palace Operator uses two-ply beam search, tracks combos, steals lethal phrases,
-evaluates the normal three-damage cost of a wrong selection, predicts
-continuation breaks, manages charge, and
-applies personality inside the protected ordering below. It thinks for 900 to
+Palace Operator uses two-ply beam search and tracks combos. It steals lethal
+phrases and evaluates the three-damage cost of a wrong selection. It predicts
+continuation breaks, manages charge, and applies personality inside the
+protected ordering below. It thinks for 900 to
 1800 ms.
 Fixed seed, difficulty, and history reproduce choices.
 
 ## Search contract
 
 Party Strategist evaluates every legal action and the resulting one-ply state.
-It uses the Local Radio weights except weakness 1.2, combo 1, finisher 1,
-denial 1, continuation 0.8, comeback 0.9, lethal 10000, lethal block 8000,
-grammar-mistake risk -4, and dead end -10000.
+It uses these Local Radio weights: weakness 1.2, combo 1, finisher 1, denial 1,
+continuation 0.8, and comeback 0.9. The protected weights are lethal 10000,
+lethal block 8000, grammar-mistake risk -4, and dead end -10000.
 
-Palace Operator sorts first-ply actions by deterministic utility, keeps a beam
-of 12, evaluates up to the opponent's best 8 legal replies for each, and stops
-at 256 evaluated nodes. It subtracts 0.85 times opponent reply utility. It uses
+Palace Operator sorts first-ply actions by deterministic utility and keeps a
+beam of 12. It evaluates up to the opponent's best 8 legal replies for each.
+It stops at 256 evaluated nodes. It subtracts 0.85 times opponent reply utility. It uses
 the Party weights and adds continuation-break 1.2, charge preservation 0.8, and
 wrong-selection utility equal to the removed phrase value minus its exact
 self-damage. It cannot choose a wrong phrase that causes its own knockout when a
@@ -49,13 +49,14 @@ Palace delay is 900 through 1800. Search node limits do not change.
 ## Ladder contract
 
 A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
-three Palace Operator opponents in that order. Opponents are selected without
-replacement from the 17 characters other than the player's character, using
+three Palace Operator opponents in that order. The ladder selects opponents
+without replacement from the 17 characters other than the player's character. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
 permutation of all six scenes and then repeat.
 
 A win advances one rung. A loss keeps the same rung and opponent. Abandoning a
 match keeps the rung and records no result. Completion follows the ninth win.
+
 Progress version 1 stores selected character ID, seed, nine opponent IDs, scene
 order, rung index 0 through 9, win and loss counts, and completion. Reset removes
 that progress after confirmation. Corrupt progress uses the Milestone 020

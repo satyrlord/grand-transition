@@ -13,9 +13,9 @@ the two-character, one-scene vertical slice.
 
 The product rule is “Get good.” The match reports what happened, but it does
 not teach tactics. Do not add a tutorial, onboarding flow, guided match,
-objective, hint, recovery instruction, card-role explanation, weakness
-explanation, highlighted target, shortcut guide, skip action, replay action, or
-progress state.
+objective, hint, or recovery instruction. Do not add card-role or weakness
+explanations. Do not add a highlighted target, shortcut guide, skip action,
+replay action, or progress state.
 
 Presentation uses civic-debate motifs such as folders, lower thirds, stamps,
 microphone plaques, voting panels, tickers, switchboards, and archive labels.
@@ -28,8 +28,9 @@ carry body text.
 Each reaction names only the public event, affected player, exact public value
 change, and any applied public weakness name. It can use portrait motion, stage
 light, authored sound, a compact broadcast record, or a combination of these.
-It must not state the next legal role, recommend a card, explain how a weakness
-works, explain why an action is disabled, or tell the player how to recover.
+It must not state the next legal role or recommend a card. It must not explain a
+weakness. It must not give the reason that makes an action unavailable. It must
+not tell the player how to recover.
 
 Normal reactions last 150 through 600 milliseconds. A reaction can leave one
 compact public outcome record until the next accepted action. It must not stop

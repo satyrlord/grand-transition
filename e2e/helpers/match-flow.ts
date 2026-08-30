@@ -28,9 +28,12 @@ export type MatchBrowserAction = Readonly<{
 }>;
 
 export type MatchFlowPlan = Readonly<{
+  seed: number;
   actions: readonly MatchBrowserAction[];
   finalState: MatchState;
 }>;
+
+export const matchBrowserFlowSeed = 20_260_004;
 
 const context: MatchEngineContext = {
   phrases: sampleContent.phrases,
@@ -71,13 +74,13 @@ export async function useFixedBrowserMatchSeed(
  * force a double knockout follow. The cliffhanger exchange ends with
  * player-one winning by the Milestone 013 score formula.
  */
-export function planMatchBrowserFlow(): MatchFlowPlan {
+export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan {
   const lethalHoldThreshold = 16;
   const reducer = createMatchReducer(context);
   const actions: MatchBrowserAction[] = [];
   let state = createMatchSetupState({
     schemaVersion: 1,
-    seed: 20_260_823,
+    seed,
     players: [
       configuredPlayer('player-one', 'red-folded-chairman'),
       configuredPlayer('player-two', 'thunder-tribune'),
@@ -300,7 +303,7 @@ export function planMatchBrowserFlow(): MatchFlowPlan {
   if (state.resolutionHistory.length === 0) {
     throw new Error('The planned browser match recorded no resolutions.');
   }
-  return { actions, finalState: state };
+  return { seed, actions, finalState: state };
 }
 
 function configuredPlayer(
