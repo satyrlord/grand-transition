@@ -184,6 +184,47 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   expect(setup.querySelector('.character-inspector')).toBeNull();
 });
 
+test('selects Government AI and exposes both robot portrait skins', async () => {
+  await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  const setup = document.querySelector(
+    'grand-transition-setup',
+  ) as GrandTransitionSetup;
+  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(4);
+
+  const governmentAi = setup.querySelector<HTMLButtonElement>(
+    '.roster-choice[data-character-id="government-ai"]',
+  )!;
+  expect(governmentAi.dataset.characterSpecies).toBe('robot');
+  governmentAi.focus();
+  await setup.updateComplete;
+  expect(setup.querySelector('.character-inspector')?.textContent).toMatch(
+    /Government AI.*Nepotism.*Corruption.*Spending.*Obsolete/su,
+  );
+
+  await page
+    .getByRole('button', { name: /Government AI.*Select for player one/u })
+    .click();
+  const playerOneStage = setup.querySelector<HTMLElement>(
+    '.contestant-stage--one',
+  )!;
+  await expect
+    .poll(() => playerOneStage.dataset.characterId)
+    .toBe('government-ai');
+  expect(playerOneStage.textContent).toMatch(
+    /Nepotism.*Corruption.*Spending.*Obsolete/su,
+  );
+  expect(
+    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
+  ).toContain('government-ai.png');
+
+  await page.getByRole('button', { name: 'Next skin for Player one' }).click();
+  await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
+  expect(
+    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
+  ).toContain('government-ai--alternate.png');
+});
+
 test('cycles selected skins without changing roster portraits or character IDs', async () => {
   await mountApp();
   await page.getByRole('button', { name: 'Set up match' }).click();

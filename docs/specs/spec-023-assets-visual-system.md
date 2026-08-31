@@ -8,7 +8,7 @@
 ## Deliver
 
 Build the Sharp pipeline, manifest validation, visual tokens, and landscape
-asset loading. Produce original final-quality art for three characters and one
+asset loading. Produce original final-quality art for four characters and one
 scene. Add core reactions, ambience, and transitions.
 
 Each catalog character has a default skin and at least one alternate skin.
@@ -49,16 +49,18 @@ fantasy frames.
 Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
-Every character is human. Animal words in names, titles, insults, or metaphors
-must not produce animal anatomy. Character masters and runtime variants reject
-animal heads, ears, muzzles, beaks, feathers, tails, wings, paws, fur, scales,
-and human-animal hybrids.
+Each character is human or fully mechanical. Animal words in names, titles,
+insults, or metaphors must not produce animal anatomy. Human character masters
+and runtime variants reject animal heads, ears, muzzles, beaks, feathers,
+tails, wings, paws, fur, scales, and human-animal hybrids. Robot characters
+reject human, animal, and hybrid anatomy.
 
 The pre-pipeline match slice uses a rendered municipal studio with one fixed
 fictional moderator. It uses transparent interim portraits for the Red-Folded
-Chairman, Thunder Tribune, and Black Sea Captain. It also uses one transparent
-foreground plate with two tall standing desks. The back scene must not contain a playable
-character. The desk plate clips the lower portrait bodies without fixing either
+Chairman, Thunder Tribune, Black Sea Captain, and Government AI. It also uses
+one transparent foreground plate with two tall standing desks. The back scene
+must not contain a playable character. The desk plate clips the lower portrait
+bodies without fixing either
 selected character into the scene. Milestone 023 replaces or promotes these
 interim files through the approved manifest and variant pipeline without
 changing the selected-character contract.
@@ -131,8 +133,9 @@ weakness, disabled-reason, or hint metadata.
 
 Action plates use coherent authored icons and framing.
 
-Human characters use three-quarter opponent-facing silhouettes and layered
-parts. They use at least five expressions and six poses. They include idle,
+Characters use three-quarter opponent-facing silhouettes and layered parts.
+Human characters use human anatomy, and robot characters use only mechanical
+anatomy. They use at least five expressions and six poses. They include idle,
 selection, thinking, delivery, and light and heavy hit states. They also include
 weakness, comeback, and grammar-mistake states.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
@@ -226,7 +229,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   from unchanged masters, and every file meets its per-file and package budget.
 - **AC-023-03:** Browser tests select AVIF when supported, fall back to WebP,
   reserve dimensions before decode, and load no unselected match package.
-- **AC-023-04:** Three characters expose all 11 states with at least five
+- **AC-023-04:** Four characters expose all 11 states with at least five
   expressions and six poses. Missing mappings fail validation.
 - **AC-023-05:** All supported landscape variants keep declared focal regions
   visible and meet CLS limits.

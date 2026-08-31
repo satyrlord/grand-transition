@@ -35,7 +35,7 @@ logs contain no personal data and never leave the local device.
 
 The release balance workload contains every ordered character matchup,
 including mirrors, at all three difficulties. Each ordered matchup runs 100
-matches, with each player opening 50. For 18 characters this is 97,200 matches.
+matches, with each player opening 50. For 19 characters this is 108,300 matches.
 The report separates character, opponent, difficulty, opening position, scene,
 and seed.
 
@@ -80,7 +80,7 @@ At least 10 lines must be attributable to the intended character.
 
 ## Acceptance criteria
 
-- **AC-027-01:** The simulation contains exactly 97,200 completed matches and
+- **AC-027-01:** The simulation contains exactly 108,300 completed matches and
   the required balanced opening count for every ordered matchup and difficulty.
 - **AC-027-02:** Aggregate, matchup, and opening rates meet their bands or have
   a permitted recorded deviation. Aggregate and matchup round counts meet their

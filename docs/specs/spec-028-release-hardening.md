@@ -86,7 +86,7 @@ runtime-network failure cannot be waived.
 ## Minimum viable product completion contract
 
 The minimum viable product (MVP) has a coherent title-to-match-completion flow. It has
-all 18 characters, 6 distinct scenes, and 3 artificial intelligence (AI)
+all 19 characters, 6 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
 private hotseat play and exact grammar and combat rules. It reviews each
 nonterminal exchange in the in-arena results modal.
@@ -94,8 +94,9 @@ nonterminal exchange in the in-arena results modal.
 Milestone 019 adds the
 persistent terminal victory state and local match history. It also has
 development-only deterministic replay, validated data-driven content,
-locale-isolated English, and a supported landscape user interface (UI). All art,
-audio, writing, and branding are original.
+locale-isolated English, and a supported landscape user interface (UI). All
+art, writing, and branding are original. Audio is original, AI-generated, or
+licensed under the Milestone 024 contract.
 
 The MVP has no online behavior.
 

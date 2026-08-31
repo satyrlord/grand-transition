@@ -236,7 +236,7 @@ source-only review does not satisfy them.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-    Budget: 10. One scene and three characters use validated final art.
+    Budget: 10. One scene and four characters use validated final art.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
 25. [Match presentation reactions](spec-025-match-presentation-reactions.md).

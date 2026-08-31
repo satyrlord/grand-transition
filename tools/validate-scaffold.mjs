@@ -11,6 +11,7 @@ const domainDefinitions = {
       '.jpg',
       '.json',
       '.mp3',
+      '.ogg',
       '.png',
       '.svg',
       '.wav',

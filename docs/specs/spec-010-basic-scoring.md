@@ -62,7 +62,7 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
   add another clause base, and applies its weakness effects to that clause.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
   completes in an average of 3 through 11 resolved rounds per match. The
-  current three-character, two-scene content slice is the calibration corpus.
+  current four-character, two-scene content slice is the calibration corpus.
 
 ## Objective verifiers
 

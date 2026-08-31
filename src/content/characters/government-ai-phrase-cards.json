@@ -1,0 +1,668 @@
+{
+  "id": "government-ai",
+  "rosterOrder": 4,
+  "species": "robot",
+  "name": "Government AI",
+  "description": "A fictional chatbot created for the Romanian government that nobody will ever use, after an emergency fund paid an enormous sum to a phantom company run by somebody's cousin.",
+  "assets": {
+    "portrait": {
+      "assetId": "government-ai-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "government-ai-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#d9c8a5",
+    "secondary": "#46515e",
+    "accent": "#a82f24"
+  },
+  "weaknessTags": ["nepotism", "corruption", "spending", "obsolete"],
+  "comebacks": {
+    "weak": "Your request has been escalated to the people's help desk.",
+    "medium": "Comrade, your objection is outside the approved transformation roadmap.",
+    "strong": "The system has marked you obsolete and redistributed your access privileges."
+  },
+  "aiPersonality": {
+    "aggression": 0.55,
+    "denial": 0.9,
+    "risk": 0.4
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.84,
+    "pitch": 0.72
+  },
+  "animationSet": {
+    "idle": "government-ai-idle",
+    "speak": "government-ai-speak",
+    "react": "government-ai-react"
+  },
+  "phrases": [
+    {
+      "id": "the-peoples-agile-transformation-roadmap",
+      "role": "noun",
+      "text": "the people's agile transformation roadmap",
+      "tags": ["obsolete", "spending"],
+      "scoreGroups": {
+        "substance": ["politics", "bureaucracy"],
+        "flavour": ["ideology", "strategy"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-planning and state-propaganda satire for a fictional government chatbot. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-centrally-planned-innovation-sprint",
+      "role": "noun",
+      "text": "a centrally planned innovation sprint",
+      "tags": ["obsolete", "spending"],
+      "scoreGroups": {
+        "substance": ["politics", "bureaucracy"],
+        "flavour": ["ideology", "strategy"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-agility and central-planning contradiction for a fictional robot. Editorial review complete."
+      }
+    },
+    {
+      "id": "your-cousins-preferred-supplier",
+      "role": "noun",
+      "text": "your cousin's preferred supplier",
+      "tags": ["nepotism", "corruption"],
+      "scoreGroups": {
+        "substance": ["family", "bureaucracy"],
+        "flavour": ["procurement", "direct"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original generic nepotism satire. It identifies no real person, family, or company. Editorial review complete."
+      }
+    },
+    {
+      "id": "an-emergency-fund-chatbot",
+      "role": "noun",
+      "text": "an emergency-fund chatbot",
+      "tags": ["spending", "obsolete"],
+      "scoreGroups": {
+        "substance": ["bureaucracy"],
+        "flavour": ["emergency", "technology"]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original public-procurement satire for the fictional Government AI biography. Editorial review complete."
+      }
+    },
+    {
+      "id": "a-phantom-digital-consultancy",
+      "role": "noun",
+      "text": "a phantom digital consultancy",
+      "tags": ["corruption", "nepotism"],
+      "scoreGroups": {
+        "substance": ["bureaucracy"],
+        "flavour": ["procurement", "technology"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original generic phantom-company satire. It does not identify a real company or person. Editorial review complete."
+      }
+    },
+    {
+      "id": "the-national-synergy-platform",
+      "role": "noun",
+      "text": "the national synergy platform",
+      "tags": ["obsolete", "spending"],
+      "scoreGroups": {
+        "substance": ["politics", "bureaucracy"],
+        "flavour": ["technology", "institution"]
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-platform and national-project jargon for a fictional chatbot. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-procured",
+      "role": "verb",
+      "text": "procured",
+      "singularText": "procured",
+      "pluralText": "procured",
+      "tags": ["corruption", "nepotism", "spending"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "family", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "government-ai-procures",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-procures",
+      "role": "verb",
+      "text": "procures",
+      "singularText": "procures",
+      "pluralText": "procure",
+      "tags": ["corruption", "nepotism", "spending"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "family", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "government-ai-procures",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-will-procure",
+      "role": "verb",
+      "text": "will procure",
+      "singularText": "will procure",
+      "pluralText": "will procure",
+      "tags": ["corruption", "nepotism", "spending"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "family", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "government-ai-procures",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-synergized",
+      "role": "verb",
+      "text": "synergized",
+      "singularText": "synergized",
+      "pluralText": "synergized",
+      "tags": ["spending", "obsolete", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media"],
+            "right": ["politics", "bureaucracy", "media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "government-ai-synergizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-synergizes",
+      "role": "verb",
+      "text": "synergizes",
+      "singularText": "synergizes",
+      "pluralText": "synergize",
+      "tags": ["spending", "obsolete", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media"],
+            "right": ["politics", "bureaucracy", "media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "government-ai-synergizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-will-synergize",
+      "role": "verb",
+      "text": "will synergize",
+      "singularText": "will synergize",
+      "pluralText": "will synergize",
+      "tags": ["spending", "obsolete", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media"],
+            "right": ["politics", "bureaucracy", "media"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "government-ai-synergizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-optimized",
+      "role": "verb",
+      "text": "optimized",
+      "singularText": "optimized",
+      "pluralText": "optimized",
+      "tags": ["spending", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "politics", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "government-ai-optimizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-optimizes",
+      "role": "verb",
+      "text": "optimizes",
+      "singularText": "optimizes",
+      "pluralText": "optimize",
+      "tags": ["spending", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "politics", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "government-ai-optimizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "government-ai-will-optimize",
+      "role": "verb",
+      "text": "will optimize",
+      "singularText": "will optimize",
+      "pluralText": "will optimize",
+      "tags": ["spending", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "personal"],
+            "right": ["bureaucracy", "politics", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "government-ai-optimizes",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "was-aligned-with-the-glorious-digital-transition",
+      "role": "predicate",
+      "text": "was aligned with the glorious digital transition",
+      "singularText": "was aligned with the glorious digital transition",
+      "pluralText": "were aligned with the glorious digital transition",
+      "tags": ["obsolete", "spending", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "aligned-with-the-glorious-digital-transition",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+      }
+    },
+    {
+      "id": "is-aligned-with-the-glorious-digital-transition",
+      "role": "predicate",
+      "text": "is aligned with the glorious digital transition",
+      "singularText": "is aligned with the glorious digital transition",
+      "pluralText": "are aligned with the glorious digital transition",
+      "tags": ["obsolete", "spending", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "aligned-with-the-glorious-digital-transition",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+      }
+    },
+    {
+      "id": "will-be-aligned-with-the-glorious-digital-transition",
+      "role": "predicate",
+      "text": "will be aligned with the glorious digital transition",
+      "singularText": "will be aligned with the glorious digital transition",
+      "pluralText": "will be aligned with the glorious digital transition",
+      "tags": ["obsolete", "spending", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "aligned-with-the-glorious-digital-transition",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+      }
+    },
+    {
+      "id": "served-the-people-through-a-maintenance-window",
+      "role": "predicate",
+      "text": "served the people through a maintenance window",
+      "singularText": "served the people through a maintenance window",
+      "pluralText": "served the people through a maintenance window",
+      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "serves-the-people-through-a-maintenance-window",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+      }
+    },
+    {
+      "id": "serves-the-people-through-a-maintenance-window",
+      "role": "predicate",
+      "text": "serves the people through a maintenance window",
+      "singularText": "serves the people through a maintenance window",
+      "pluralText": "serve the people through a maintenance window",
+      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "serves-the-people-through-a-maintenance-window",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+      }
+    },
+    {
+      "id": "will-serve-the-people-through-a-maintenance-window",
+      "role": "predicate",
+      "text": "will serve the people through a maintenance window",
+      "singularText": "will serve the people through a maintenance window",
+      "pluralText": "will serve the people through a maintenance window",
+      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "serves-the-people-through-a-maintenance-window",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+      }
+    },
+    {
+      "id": "reported-historic-adoption-metrics",
+      "role": "predicate",
+      "text": "reported historic adoption metrics",
+      "singularText": "reported historic adoption metrics",
+      "pluralText": "reported historic adoption metrics",
+      "tags": ["corruption", "spending", "evidence"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "reports-historic-adoption-metrics",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "reports-historic-adoption-metrics",
+      "role": "predicate",
+      "text": "reports historic adoption metrics",
+      "singularText": "reports historic adoption metrics",
+      "pluralText": "report historic adoption metrics",
+      "tags": ["corruption", "spending", "evidence"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "reports-historic-adoption-metrics",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "will-report-historic-adoption-metrics",
+      "role": "predicate",
+      "text": "will report historic adoption metrics",
+      "singularText": "will report historic adoption metrics",
+      "pluralText": "will report historic adoption metrics",
+      "tags": ["corruption", "spending", "evidence"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "reports-historic-adoption-metrics",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "under-the-comrades-quarterly-kpis",
+      "role": "modifier",
+      "text": "under the comrades' quarterly KPIs",
+      "tags": ["obsolete", "spending", "bureaucracy"],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original mixture of communist address and corporate performance jargon. Editorial review complete."
+      }
+    },
+    {
+      "id": "for-the-glorious-five-year-digital-transformation",
+      "role": "modifier",
+      "text": "for the glorious five-year digital transformation",
+      "tags": ["obsolete", "spending", "bureaucracy"],
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original five-year-plan propaganda mixed with corporate transformation jargon. Editorial review complete."
+      }
+    },
+    {
+      "id": "and-in-strategic-solidarity",
+      "role": "conjunction",
+      "text": "and, in strategic solidarity,",
+      "connectorKind": "and",
+      "tags": ["obsolete", "bureaucracy"],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original corporate-strategy and collective-propaganda connector for the fictional Government AI. Editorial review complete."
+      }
+    },
+    {
+      "id": "pending-the-peoples-steering-committee",
+      "role": "ending",
+      "text": "pending unanimous approval from the people's steering committee.",
+      "tags": ["corruption", "obsolete", "bureaucracy"],
+      "rarity": "rare",
+      "finisherBonus": 14,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original committee-propaganda ending for the fictional Government AI. Editorial review complete."
+      }
+    }
+  ],
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional Romanian public-institution satire. It identifies no real person, party, or company. Editorial review complete."
+  }
+}
