@@ -24,11 +24,13 @@ export default defineConfig({
       'tests/unit/combo-finisher-scoring.test.ts',
       'tests/unit/continuation-comeback-resolution.test.ts',
       'tests/unit/draft-actions.test.ts',
+      'tests/unit/easy-ai.test.ts',
       'tests/unit/english-grammar-core.test.ts',
       'tests/unit/extended-grammar.test.ts',
       'tests/unit/match-lifecycle.test.ts',
       'tests/unit/match-screen-snapshot.test.ts',
       'tests/unit/replay-and-simulation.test.ts',
+      'tests/unit/settings.test.ts',
       'tests/unit/viewport-support.test.ts',
     ],
     browser: {

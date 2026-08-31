@@ -27,10 +27,10 @@ An explicit custom score overrides the compatibility calculation. Otherwise:
 
 ```text
 compatibility = (substance matches * 2) + (flavour matches * 1)
-base = (compatibility + 1) * 5
+base = 5 + (compatibility * 3)
 ```
 
-The four calculated base tiers are exactly 5, 10, 15, and 20. Character and
+The four calculated base tiers are exactly 5, 8, 11, and 14. Character and
 scene restrictions never change damage. They control eligibility only.
 
 Apply these steps to each clause in order:
@@ -50,8 +50,8 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
 
 - **AC-010-01:** Golden clauses cover no match, substance, `flavour`, both,
   custom override, and both grammar forms.
-- **AC-010-02:** The compatibility calculation produces exactly 5, 10, 15, and
-  20. Character and scene restrictions do not change clause or finisher damage.
+- **AC-010-02:** The compatibility calculation produces exactly 5, 8, 11, and
+  14. Character and scene restrictions do not change clause or finisher damage.
 - **AC-010-03:** Weakness multiplies each matching clause by 1.5 once and does
   not multiply unrelated clauses.
 - **AC-010-04:** Compound and multi-clause sentences add each clause value
@@ -61,7 +61,7 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
 - **AC-010-06:** A modifier stays in the preceding clause breakdown, does not
   add another clause base, and applies its weakness effects to that clause.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
-  completes in an average of 3 through 10 resolved rounds per match. The
+  completes in an average of 3 through 11 resolved rounds per match. The
   current three-character, two-scene content slice is the calibration corpus.
 
 ## Objective verifiers

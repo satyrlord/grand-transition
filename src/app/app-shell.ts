@@ -1,10 +1,10 @@
 import { LitElement, html } from 'lit';
+import { decideLocalRadioCaller } from '../ai/easy-ai';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
   type PhraseColorCodingChangeEvent,
   type TurnTimerChangeEvent,
-  type TurnTimerSeconds,
 } from './screens/interruption-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
@@ -41,9 +41,15 @@ import {
 } from './screens/setup-screen';
 import {
   type ShowMatchHistoryEvent,
+  type ShowSettingsEvent,
   type ShowSetupEvent,
 } from './screens/title-screen';
 import { type CloseMatchHistoryEvent } from './screens/match-history-modal';
+import {
+  type CloseSettingsEvent,
+  type DismissSettingsNoticeEvent,
+  type SettingsChangeEvent,
+} from './screens/settings-modal';
 import { currentViewport, isSupportedViewport } from './viewport-support';
 import { createBrowserStorage } from '../persistence/browser-storage';
 import {
@@ -51,6 +57,10 @@ import {
   MatchHistoryRepository,
   type MatchHistorySnapshot,
 } from '../persistence/match-history';
+import {
+  SettingsRepository,
+  type SettingsSnapshot,
+} from '../persistence/settings';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
@@ -151,11 +161,13 @@ export class GrandTransitionApp extends LitElement {
     roundReviewSnapshot: { state: true },
     viewportSupported: { state: true },
     manuallyPaused: { state: true },
-    turnTimerSeconds: { state: true },
-    autoComplete: { state: true },
     phraseColorCoding: { state: true },
     matchHistory: { state: true },
     matchHistoryOpen: { state: true },
+    settingsSnapshot: { state: true },
+    settingsOpen: { state: true },
+    settingsNoticeDismissed: { state: true },
+    aiThinking: { state: true },
   };
 
   declare private view: ScreenView;
@@ -165,21 +177,25 @@ export class GrandTransitionApp extends LitElement {
   declare private roundReviewSnapshot: MatchScreenSnapshot | null;
   declare private viewportSupported: boolean;
   declare private manuallyPaused: boolean;
-  declare private turnTimerSeconds: TurnTimerSeconds;
-  declare private autoComplete: boolean;
   declare private phraseColorCoding: boolean;
   declare private matchHistory: MatchHistorySnapshot;
   declare private matchHistoryOpen: boolean;
+  declare private settingsSnapshot: SettingsSnapshot;
+  declare private settingsOpen: boolean;
+  declare private settingsNoticeDismissed: boolean;
+  declare private aiThinking: boolean;
   private matchInitialSeed: number | null = null;
   private matchId: string | null = null;
+  private aiTimerId: number | undefined;
   private readonly screenController = new ScreenController();
   private readonly matchHistoryRepository: MatchHistoryRepository;
+  private readonly settingsRepository: SettingsRepository;
 
   constructor() {
     super();
-    this.matchHistoryRepository = new MatchHistoryRepository(
-      createBrowserStorage(),
-    );
+    const browserStorage = createBrowserStorage();
+    this.matchHistoryRepository = new MatchHistoryRepository(browserStorage);
+    this.settingsRepository = new SettingsRepository(browserStorage);
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
     this.matchState = null;
@@ -187,11 +203,13 @@ export class GrandTransitionApp extends LitElement {
     this.roundReviewSnapshot = null;
     this.viewportSupported = isSupportedViewport(currentViewport());
     this.manuallyPaused = false;
-    this.turnTimerSeconds = 30;
-    this.autoComplete = true;
     this.phraseColorCoding = true;
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.matchHistoryOpen = false;
+    this.settingsSnapshot = this.settingsRepository.snapshot();
+    this.settingsOpen = false;
+    this.settingsNoticeDismissed = false;
+    this.aiThinking = false;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -201,6 +219,7 @@ export class GrandTransitionApp extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.screenController.connect((view) => {
+      if (view !== 'match') this.cancelAiTurn();
       if (this.matchState?.phase === 'results') {
         this.view = 'match';
         return;
@@ -219,6 +238,7 @@ export class GrandTransitionApp extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    this.cancelAiTurn();
     this.screenController.disconnect();
     window.removeEventListener('resize', this.syncViewportSupport);
     window.visualViewport?.removeEventListener(
@@ -244,6 +264,9 @@ export class GrandTransitionApp extends LitElement {
             null,
             null,
             this.currentMatchSkinIds(),
+            liveMatchState.setup.mode === 'ai'
+              ? 'player-one'
+              : liveMatchState.activePlayerId,
           )
         : null);
     if (this.view === 'match' && matchSnapshot) {
@@ -256,9 +279,14 @@ export class GrandTransitionApp extends LitElement {
               ? 'manual'
               : 'running'
         }
-        .turnTimerSeconds=${this.turnTimerSeconds}
-        .autoComplete=${this.autoComplete}
+        .turnTimerSeconds=${this.settingsSnapshot.settings.turnTimerSeconds}
+        .autoComplete=${this.settingsSnapshot.settings.autoComplete}
         .phraseColorCoding=${this.phraseColorCoding}
+        .thinking=${this.aiThinking}
+        .autoRevealWaitingSentence=${Boolean(
+          liveMatchState?.setup.mode === 'ai' &&
+          liveMatchState.activePlayerId === 'player-one',
+        )}
         @match-command=${this.reduceMatchCommand}
         @continue-round=${this.continueRound}
         @return-to-main-menu=${this.returnToMainMenu}
@@ -283,9 +311,19 @@ export class GrandTransitionApp extends LitElement {
           .historyEntries=${this.matchHistory.entries}
           .historyOpen=${this.matchHistoryOpen}
           .historyPersistenceFailure=${this.matchHistory.persistenceFailure}
+          .settings=${this.settingsSnapshot.settings}
+          .settingsOpen=${this.settingsOpen}
+          .showSettingsPersistenceNotice=${
+            this.settingsSnapshot.persistenceFailure !== null &&
+            !this.settingsNoticeDismissed
+          }
           @show-setup=${this.showSetup}
           @show-match-history=${this.showMatchHistory}
           @close-match-history=${this.closeMatchHistory}
+          @show-settings=${this.showSettings}
+          @close-settings=${this.closeSettings}
+          @settings-change=${this.changeSettings}
+          @dismiss-settings-notice=${this.dismissSettingsNotice}
         ></grand-transition-title>`;
       case 'setup':
         return html`<grand-transition-setup
@@ -304,6 +342,7 @@ export class GrandTransitionApp extends LitElement {
   private readonly showSetup = (event: ShowSetupEvent): void => {
     event.stopPropagation();
     this.matchHistoryOpen = false;
+    this.settingsOpen = false;
     this.screenController.showSetup();
     this.view = 'setup';
     this.focusViewHeading('setup');
@@ -311,12 +350,40 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly showMatchHistory = (event: ShowMatchHistoryEvent): void => {
     event.stopPropagation();
-    if (this.view === 'title') this.matchHistoryOpen = true;
+    if (this.view === 'title') {
+      this.settingsOpen = false;
+      this.matchHistoryOpen = true;
+    }
   };
 
   private readonly closeMatchHistory = (event: CloseMatchHistoryEvent): void => {
     event.stopPropagation();
     this.matchHistoryOpen = false;
+  };
+
+  private readonly showSettings = (event: ShowSettingsEvent): void => {
+    event.stopPropagation();
+    if (this.view === 'title') {
+      this.matchHistoryOpen = false;
+      this.settingsOpen = true;
+    }
+  };
+
+  private readonly closeSettings = (event: CloseSettingsEvent): void => {
+    event.stopPropagation();
+    this.settingsOpen = false;
+  };
+
+  private readonly changeSettings = (event: SettingsChangeEvent): void => {
+    event.stopPropagation();
+    this.settingsSnapshot = this.settingsRepository.replace(event.detail);
+  };
+
+  private readonly dismissSettingsNotice = (
+    event: DismissSettingsNoticeEvent,
+  ): void => {
+    event.stopPropagation();
+    this.settingsNoticeDismissed = true;
   };
 
   private readonly showTitle = (): void => {
@@ -354,6 +421,8 @@ export class GrandTransitionApp extends LitElement {
       scenePhraseIds: scene.phrasePool,
       generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
       mode: payload.mode,
+      aiDifficulty:
+        payload.mode === 'ai' ? 'local-radio-caller' : null,
       openingPlayerIndex: scene.openingPlayerIndex,
     });
     const beforeStart = state;
@@ -378,26 +447,32 @@ export class GrandTransitionApp extends LitElement {
     this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
+    this.scheduleAiTurn();
   };
 
   private readonly reduceMatchCommand = (event: MatchCommandEvent): void => {
     event.stopPropagation();
+    if (this.aiThinking) return;
+    this.applyMatchCommand(event.detail);
+  };
+
+  private applyMatchCommand(command: MatchCommand): void {
     if (!this.matchState) return;
     const before = this.matchState;
-    const result = matchReducer(before, event.detail, defaultMatchRandomSource);
+    const result = matchReducer(before, command, defaultMatchRandomSource);
     if (!result.ok) {
       publishDevelopmentGameLog({
         initialSeed: this.currentMatchInitialSeed(),
-        action: event.detail.type,
-        actorId: event.detail.actorId ?? null,
+        action: command.type,
+        actorId: command.actorId ?? null,
         outcome: 'rejected',
         errorCode: result.error.code,
-        command: event.detail,
+        command,
         before,
         after: before,
       });
       throw new Error(
-        `Match command ${event.detail.type} failed: ${result.error.code}.`,
+        `Match command ${command.type} failed: ${result.error.code}.`,
       );
     }
 
@@ -405,11 +480,11 @@ export class GrandTransitionApp extends LitElement {
     this.matchArenaReaction = grammarMistakeReaction(
       before,
       reduced,
-      event.detail,
+      command,
     );
     publishAcceptedDevelopmentCommand(
       this.currentMatchInitialSeed(),
-      event.detail,
+      command,
       before,
       reduced,
     );
@@ -449,13 +524,17 @@ export class GrandTransitionApp extends LitElement {
             reviewResolution,
             victory,
             this.currentMatchSkinIds(),
+            reviewState.setup.mode === 'ai'
+              ? 'player-one'
+              : reviewState.activePlayerId,
           )
         : null;
     this.matchState = state;
     if (victory) {
       this.captureCompletedMatch(state);
     }
-  };
+    this.scheduleAiTurn();
+  }
 
   private readonly continueRound = (event: ContinueRoundEvent): void => {
     event.stopPropagation();
@@ -472,6 +551,7 @@ export class GrandTransitionApp extends LitElement {
       state,
       this.matchState,
     );
+    this.scheduleAiTurn();
   };
 
   private readonly returnToMainMenu = (
@@ -483,6 +563,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.matchState = null;
+    this.cancelAiTurn();
     this.matchInitialSeed = null;
     this.matchId = null;
     this.screenController.showTitle();
@@ -492,6 +573,7 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly pauseMatch = (event: Event): void => {
     event.stopPropagation();
+    this.cancelAiTurn();
     this.manuallyPaused = true;
   };
 
@@ -499,6 +581,7 @@ export class GrandTransitionApp extends LitElement {
     event.stopPropagation();
     if (this.viewportSupported) {
       this.manuallyPaused = false;
+      this.scheduleAiTurn();
     }
   };
 
@@ -509,6 +592,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.matchState = null;
+    this.cancelAiTurn();
     this.matchInitialSeed = null;
     this.matchId = null;
     this.screenController.showTitle();
@@ -518,7 +602,7 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
     event.stopPropagation();
-    this.turnTimerSeconds = event.detail;
+    this.updateSettings('turnTimerSeconds', event.detail);
   };
 
   private focusViewHeading(view: ScreenView): void {
@@ -536,7 +620,7 @@ export class GrandTransitionApp extends LitElement {
     event: AutoCompleteChangeEvent,
   ): void => {
     event.stopPropagation();
-    this.autoComplete = event.detail;
+    this.updateSettings('autoComplete', event.detail);
   };
 
   private readonly changePhraseColorCoding = (
@@ -546,9 +630,80 @@ export class GrandTransitionApp extends LitElement {
     this.phraseColorCoding = event.detail;
   };
 
+  private updateSettings<
+    Field extends 'turnTimerSeconds' | 'autoComplete',
+  >(field: Field, value: SettingsSnapshot['settings'][Field]): void {
+    this.settingsSnapshot = this.settingsRepository.replace({
+      ...this.settingsSnapshot.settings,
+      [field]: value,
+    });
+  }
+
   private readonly syncViewportSupport = (): void => {
-    this.viewportSupported = isSupportedViewport(currentViewport());
+    const supported = isSupportedViewport(currentViewport());
+    const wasSupported = this.viewportSupported;
+    if (!supported) this.cancelAiTurn();
+    this.viewportSupported = supported;
+    if (supported && !wasSupported) this.scheduleAiTurn();
   };
+
+  private scheduleAiTurn(): void {
+    this.cancelAiTurn();
+    if (!this.isAiTurn()) return;
+    const state = this.matchState!;
+    const decision = decideLocalRadioCaller(state, matchContext, {
+      reducedDelay: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    });
+    if (!decision) return;
+    const revision = state.commandHistory.length;
+    this.aiThinking = true;
+    this.aiTimerId = window.setTimeout(() => {
+      this.aiTimerId = undefined;
+      if (!this.aiTurnStillPending(revision)) return;
+      // Defer the command by one task so that a browser Back traversal that
+      // is already in flight changes the view and cancels the presentation
+      // before any command can apply.
+      this.aiTimerId = window.setTimeout(() => {
+        this.aiTimerId = undefined;
+        if (!this.aiTurnStillPending(revision)) return;
+        this.aiThinking = false;
+        this.applyMatchCommand(decision.command);
+      }, 0);
+    }, decision.delayMs);
+  }
+
+  private aiTurnStillPending(revision: number): boolean {
+    if (
+      !this.isAiTurn() ||
+      this.matchState?.commandHistory.length !== revision
+    ) {
+      this.aiThinking = false;
+      return false;
+    }
+    return true;
+  }
+
+  private cancelAiTurn(): void {
+    if (this.aiTimerId !== undefined) {
+      window.clearTimeout(this.aiTimerId);
+      this.aiTimerId = undefined;
+    }
+    this.aiThinking = false;
+  }
+
+  private isAiTurn(): boolean {
+    return Boolean(
+      this.matchState?.draft &&
+        this.view === 'match' &&
+        this.matchState.setup.mode === 'ai' &&
+        this.matchState.activePlayerId === 'player-two' &&
+        (this.matchState.phase === 'drafting' ||
+          this.matchState.phase === 'sudden-death') &&
+        !this.roundReviewSnapshot &&
+        !this.manuallyPaused &&
+        this.viewportSupported,
+    );
+  }
 
   private currentMatchInitialSeed(): number {
     if (this.matchInitialSeed === null) {
@@ -573,8 +728,8 @@ export class GrandTransitionApp extends LitElement {
       initialSeed: this.currentMatchInitialSeed(),
       completedAt: new Date().toISOString(),
       settings: {
-        turnTimerSeconds: this.turnTimerSeconds,
-        autoComplete: this.autoComplete,
+        turnTimerSeconds: this.settingsSnapshot.settings.turnTimerSeconds,
+        autoComplete: this.settingsSnapshot.settings.autoComplete,
         phraseColorCoding: this.phraseColorCoding,
       },
     });

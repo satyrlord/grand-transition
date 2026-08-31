@@ -3,6 +3,7 @@ import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
 import { GrandTransitionApp } from '../../src/app/app-shell';
 import {
+  automaticAiBubbleRevealMs,
   GrandTransitionMatch,
   matchCommandEventName,
   type MatchCommandEvent,
@@ -127,6 +128,38 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
+test('shows one inert thinking state without private controls', async () => {
+  const match = await startMatch();
+  const listener = vi.fn<(event: MatchCommandEvent) => void>();
+  match.addEventListener(matchCommandEventName, listener);
+  match.thinking = true;
+  await match.updateComplete;
+
+  expect(match.querySelector('.match-screen')?.getAttribute('data-ai-thinking')).toBe(
+    'true',
+  );
+  expect(match.querySelector('.ai-thinking-status')?.textContent).toContain(
+    'Local Radio Caller is thinking',
+  );
+  expect(match.querySelector('.ai-thinking-record')?.textContent).toMatch(
+    /Local Radio Caller.*Considering the next phrase/su,
+  );
+  expect(match.querySelector('.sentence-preview')?.textContent).toContain(
+    'Waiting for Local Radio Caller',
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-ai-thinking='true'[\s\S]*\.common-phrases[\s\S]*opacity: 0\.68/u,
+  );
+  expect(match.querySelector('.private-hand')).toBeNull();
+  expect(match.querySelector('.match-actions')).toBeNull();
+  expect(match.querySelector('.match-stage')?.hasAttribute('inert')).toBe(true);
+
+  match
+    .querySelector<HTMLButtonElement>('.shared-board button:not(:disabled)')!
+    .click();
+  expect(listener).not.toHaveBeenCalled();
+});
+
 test('declares the requested phrase role colors and rarity opacity', async () => {
   const match = await startMatch();
   expect(matchScreenStyles).toMatch(
@@ -176,6 +209,88 @@ test('gives an empty waiting bubble revealable honest content', async () => {
   expect(
     bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
   ).toBe('No sentence yet.');
+});
+
+test('automatically reveals the AI waiting bubble for exactly four seconds', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const humanSnapshot = match.snapshot!;
+  const humanIndex = humanSnapshot.players.findIndex((player) => player.isActive);
+  const aiIndex = humanIndex === 0 ? 1 : 0;
+  const human = humanSnapshot.players[humanIndex]!;
+  const ai = humanSnapshot.players[aiIndex]!;
+  const aiTurnPlayers = humanSnapshot.players.map((player, index) => ({
+    ...player,
+    isActive: index === aiIndex,
+  })) as unknown as typeof humanSnapshot.players;
+
+  match.autoRevealWaitingSentence = false;
+  match.snapshot = {
+    ...humanSnapshot,
+    revision: humanSnapshot.revision + 1,
+    activePlayerId: ai.playerId,
+    activePlayerName: ai.characterName,
+    players: aiTurnPlayers,
+  };
+  await match.updateComplete;
+
+  const aiSentence =
+    'Your reform calendar transports voters with busses from the government podium.';
+  const humanTurnPlayers = humanSnapshot.players.map((player, index) => ({
+    ...player,
+    isActive: index === humanIndex,
+    sentence: index === aiIndex ? aiSentence : player.sentence,
+  })) as unknown as typeof humanSnapshot.players;
+  match.autoRevealWaitingSentence = true;
+  match.snapshot = {
+    ...humanSnapshot,
+    revision: humanSnapshot.revision + 2,
+    activePlayerId: human.playerId,
+    activePlayerName: human.characterName,
+    players: humanTurnPlayers,
+  };
+  await match.updateComplete;
+
+  const bubble = match.querySelector<HTMLElement>(
+    '.player-sentence--waiting',
+  )!;
+  expect(bubble.dataset.revealed).toBe('true');
+  expect(bubble.textContent).toContain(aiSentence);
+  expect(match.querySelector('.match-stage')?.hasAttribute('inert')).toBe(false);
+  expect(
+    match.querySelector<HTMLButtonElement>('.shared-board button:not(:disabled)'),
+  ).not.toBeNull();
+
+  await vi.advanceTimersByTimeAsync(automaticAiBubbleRevealMs - 1);
+  await match.updateComplete;
+  expect(bubble.dataset.revealed).toBe('true');
+
+  await vi.advanceTimersByTimeAsync(1);
+  await match.updateComplete;
+  expect(bubble.dataset.revealed).toBe('false');
+  expect(match.querySelector('[data-timer="26"]')).not.toBeNull();
+
+  match.autoRevealWaitingSentence = false;
+  match.snapshot = {
+    ...humanSnapshot,
+    revision: humanSnapshot.revision + 3,
+    activePlayerId: ai.playerId,
+    activePlayerName: ai.characterName,
+    players: aiTurnPlayers,
+  };
+  await match.updateComplete;
+  match.snapshot = {
+    ...humanSnapshot,
+    revision: humanSnapshot.revision + 4,
+    activePlayerId: human.playerId,
+    activePlayerName: human.characterName,
+    players: humanTurnPlayers,
+  };
+  await match.updateComplete;
+  expect(
+    match.querySelector<HTMLElement>('.player-sentence--waiting')?.dataset
+      .revealed,
+  ).toBe('false');
 });
 
 test('clears a pointer preview when an authoritative snapshot arrives', async () => {

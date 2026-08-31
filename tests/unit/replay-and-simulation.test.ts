@@ -1,6 +1,9 @@
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
+import {
+  basicScoringBalance,
+  legacyBasicScoringBalance,
+} from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
 import {
@@ -124,6 +127,42 @@ describe('versioned replay and local match-log codecs', () => {
     }
   });
 
+  test('replays version 2 scoring with its original balance', () => {
+    const version2Replay = normalizedJson({
+      ...legacyReplayFixture,
+      schemaVersion: 2,
+      commands: legacyReplayFixture.commands.slice(0, 8),
+    });
+    const replayed = replayMatch(version2Replay, {
+      ...context,
+      balance: legacyBasicScoringBalance,
+    });
+
+    expect(replayed.ok).toBe(true);
+    if (replayed.ok) {
+      expect(replayed.replay.schemaVersion).toBe(2);
+      expect(replayed.normalized).toBe(version2Replay);
+      expect(replayed.state.winner).toBe('player-1');
+      expect(
+        replayed.state.resolutionHistory.map((resolution) => ({
+          round: resolution.round,
+          playerOneDamage: resolution.players['player-1']!.outgoingDamage,
+          playerTwoDamage: resolution.players['player-2']!.outgoingDamage,
+          playerOnePride: resolution.players['player-1']!.prideAfter,
+          playerTwoPride: resolution.players['player-2']!.prideAfter,
+        })),
+      ).toEqual([
+        {
+          round: 1,
+          playerOneDamage: 8,
+          playerTwoDamage: 0,
+          playerOnePride: 5,
+          playerTwoPride: 0,
+        },
+      ]);
+    }
+  });
+
   test('normalizes and decodes the public match log', () => {
     const decoded = decodeMatchLog(completed.matchLogBytes);
     expect(decoded).toEqual({ ok: true, value: completed.matchLog });
@@ -147,6 +186,20 @@ describe('versioned replay and local match-log codecs', () => {
     expect(completed.matchLog.winner).toBe(completed.finalState.winner);
   });
 
+  test('requires public sentence records in current match logs only', () => {
+    const { sentences: _, ...withoutSentences } = completed.matchLog;
+
+    expect(decodeMatchLog(normalizedJson(withoutSentences))).toEqual({
+      ok: false,
+      code: 'invalid-replay',
+    });
+    expect(
+      decodeMatchLog(
+        normalizedJson({ ...withoutSentences, schemaVersion: 2 }),
+      ),
+    ).toMatchObject({ ok: true });
+  });
+
   test.each([
     ['invalid-json', '{'],
     [
@@ -159,7 +212,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.replay, schemaVersion: 3 }),
+      normalizedJson({ ...completed.replay, schemaVersion: 4 }),
     ],
   ] as const)(
     'rejects replay fixture %s before a write or match result',
@@ -184,7 +237,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.matchLog, schemaVersion: 3 }),
+      normalizedJson({ ...completed.matchLog, schemaVersion: 4 }),
     ],
   ] as const)('rejects match-log fixture %s before a write', (code, bytes) => {
     const storage = recordingStorage();
@@ -328,10 +381,18 @@ describe('versioned replay and local match-log codecs', () => {
       }),
     );
     const unselected = privateCards.filter((card) => !selectedIds.has(card.id));
+    const publicPhraseIds = new Set(
+      (completed.matchLog.sentences ?? []).flatMap((sentence) =>
+        sentence.phrases.map((phrase) => phrase.phraseId),
+      ),
+    );
+    const privateOnly = unselected.filter(
+      (card) => !publicPhraseIds.has(card.phraseId),
+    );
     const replayStrings = collectStrings(JSON.parse(completed.replayBytes));
     const logStrings = collectStrings(JSON.parse(completed.matchLogBytes));
-    expect(unselected.length).toBeGreaterThan(0);
-    for (const card of unselected) {
+    expect(privateOnly.length).toBeGreaterThan(0);
+    for (const card of privateOnly) {
       const phrase = sampleContent.phrases.find(
         (candidate) => candidate.id === card.phraseId,
       )!;
@@ -382,14 +443,14 @@ describe('headless simulation and generated invariants', () => {
   });
 
   test(
-    'keeps the 500-match calibration between three and ten rounds',
+    'keeps the 500-match calibration between three and eleven rounds',
     () => {
       const report = simulateMatches(20_260_830, 500, setup, context);
       const averageRounds = report.totalRounds / report.matches;
       expect(averageRounds).toBeGreaterThanOrEqual(3);
-      expect(averageRounds).toBeLessThanOrEqual(10);
+      expect(averageRounds).toBeLessThanOrEqual(11);
     },
-    30_000,
+    120_000,
   );
 
   test('rejects invalid setup values, counts, and seeds with named facts', () => {

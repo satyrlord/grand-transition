@@ -15,6 +15,7 @@ const pureRootPolicies = [
       {
         source: path.join('src', 'engine', 'simulation.ts'),
         allowedDependencies: [
+          moduleDependency('src', 'ai', 'easy-ai'),
           directoryDependency('src', 'persistence', 'codecs'),
         ],
       },

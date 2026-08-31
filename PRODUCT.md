@@ -50,7 +50,8 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   out of scope.
 - The implemented scope includes the title, setup, playable match,
   between-round review flow, persistent terminal victory, title-only local
-  match history, and blocking landscape viewport contract.
+  match history, title-only local settings, safe settings persistence fallback,
+  and blocking landscape viewport contract.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
@@ -62,10 +63,11 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,
-  comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 10,
-  15, and 20
+  comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 8,
+  11, and 14
   compatibility bases, one local 1.5 weakness multiplier, and no restriction
-  damage bonus.
+  damage bonus. The seeded Local Radio Caller AI selects valid actions for the
+  single-player mode.
 - Every completed exchange pauses on an in-arena results modal while the last
   sentence remains visible. An ordered score receipt shows each clause,
   finisher, Comeback, applied weakness and combo factor, and final damage.

@@ -159,7 +159,8 @@ control-room signals. The title, setup, match, Pause, and compatibility states
 share this broadcast language. Each state keeps its own task hierarchy.
 
 The title is a Curtain Call proscenium with a live wordmark, one decisive setup
-action, and one subordinate match-history action. Setup is a three-part contestant register with two selected
+action, and subordinate Settings and match-history actions. Setup is a
+three-part contestant register with two selected
 player stages around a compact roster. The match is one confrontation. The
 scene, characters, sentence construction, speech, status, and actions share the
 same stage. They do not form a decorative scene above a separate dashboard.
@@ -248,7 +249,9 @@ navy, brass, and direct stage language as active play. The match remains the
 only visible surface during play. Victory keeps the final arena visible and
 returns to the title only after an explicit action. The title-only match-history
 modal uses the same framed broadcast record and keeps technical data in a named
-scroll region. Pause and unsupported viewport states replace the active surface
+scroll region. The title-only Settings modal groups Sound, Speech, and Play
+controls in the same square broadcast record. Pause and unsupported viewport
+states replace the active surface
 with a centered transmission slate that exposes no game facts.
 
 ### Honest risk
@@ -400,7 +403,8 @@ the interface face for the timer or the timer face for other numbers.
 
 Every functional state fills one landscape viewport. The title uses a centered
 marquee and a vertical signal rail. Setup uses two selected-character stages
-around a central roster, with match terms and actions on the lower edge. The
+around a central roster, with Mode, Difficulty, and Scene settings plus actions
+on the lower edge. The
 match keeps one integrated arena. Opponents occupy the side thirds. Name and
 Pride frames use the top corners.
 
@@ -617,6 +621,9 @@ identifies delivery. Television blue identifies Reshuffle and Comeback.
 Disabled controls stay labeled or keep an accessible label and use a dashed
 border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
+During a Local Radio Caller turn, the public board and sentence stay visible.
+The private hand and player actions become one named thinking record until the
+seeded presentation delay finishes.
 The match surface does not permit browser text selection. Pointer dragging,
 repeated activation, and keyboard shortcuts must not leave interface text
 highlighted.

@@ -40,3 +40,22 @@ export interface StoragePort {
   write(key: string, value: string): StorageResult<undefined>;
   remove(key: string): StorageResult<undefined>;
 }
+
+export function createMemoryStorage(
+  initialValues: Readonly<Record<string, string>> = {},
+): StoragePort {
+  const values = new Map(Object.entries(initialValues));
+  return {
+    read(key) {
+      return { ok: true, value: values.get(key) ?? null };
+    },
+    write(key, value) {
+      values.set(key, value);
+      return { ok: true, value: undefined };
+    },
+    remove(key) {
+      values.delete(key);
+      return { ok: true, value: undefined };
+    },
+  };
+}

@@ -284,6 +284,38 @@ test.each([
   },
 );
 
+test('emits the custom single-player setup with the fixed AI policy', async () => {
+  const setup = await mountSetup(
+    Object.freeze({ ...createDefaultSetupSnapshot(), mode: 'ai' }),
+  );
+  const listener = vi.fn<(event: StartMatchEvent) => void>();
+  setup.addEventListener(startMatchEventName, listener);
+
+  expect(setup.querySelector<HTMLSelectElement>('#mode')?.value).toBe('ai');
+  expect(setup.textContent).toContain('Match settings');
+  expect(
+    setup.querySelector<HTMLSelectElement>('#aiDifficulty')?.value,
+  ).toBe('local-radio-caller');
+  expect(setup.querySelector('#aiDifficulty')?.textContent).toContain(
+    'Local Radio Caller',
+  );
+  expect(
+    setup.querySelector('#playerTwoCharacterId')?.getAttribute('aria-label'),
+  ).toContain('Local Radio Caller character');
+  setup
+    .querySelector('form')!
+    .dispatchEvent(
+      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
+    );
+
+  expect(listener).toHaveBeenCalledTimes(1);
+  expect(listener.mock.calls[0]![0].detail).toMatchObject({
+    mode: 'ai',
+    playerOneCharacterId: 'red-folded-chairman',
+    playerTwoCharacterId: 'thunder-tribune',
+  });
+});
+
 test('shows every missing-field error and emits no command', async () => {
   const setup = await mountSetup(
     Object.freeze({
@@ -311,7 +343,9 @@ test('shows every missing-field error and emits no command', async () => {
   expect(mode.getAttribute('aria-invalid')).toBe('true');
   expect(mode.getAttribute('aria-describedby')).toBe('mode-error');
   expect(document.activeElement).toBe(mode);
-  expect(setup.textContent).toContain('Mode is missing. Choose Hotseat.');
+  expect(setup.textContent).toContain(
+    'Mode is missing. Choose Single player or Hotseat.',
+  );
   expect(setup.textContent).toContain(
     'Player one character is missing. Choose a listed character.',
   );
@@ -348,7 +382,9 @@ test('shows unknown-value errors and revalidates after change', async () => {
     );
   await setup.updateComplete;
 
-  expect(setup.textContent).toContain('Mode is not supported. Choose Hotseat.');
+  expect(setup.textContent).toContain(
+    'Mode is not supported. Choose Single player or Hotseat.',
+  );
   expect(setup.textContent).toContain(
     'Player one character is unknown. Choose a listed character.',
   );
@@ -366,13 +402,13 @@ test.each([
     name: 'missing mode',
     field: 'mode',
     value: '',
-    message: 'Mode is missing. Choose Hotseat.',
+    message: 'Mode is missing. Choose Single player or Hotseat.',
   },
   {
     name: 'unsupported mode',
     field: 'mode',
     value: 'network',
-    message: 'Mode is not supported. Choose Hotseat.',
+    message: 'Mode is not supported. Choose Single player or Hotseat.',
   },
   {
     name: 'missing player one ID',

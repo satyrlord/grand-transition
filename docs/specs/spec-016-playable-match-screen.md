@@ -223,9 +223,10 @@ value after Resume and applies that value to later turns. Unlimited shows no
 countdown and does not dispatch `expire-turn`. Changing Auto-complete applies
 after Resume and does not change the authoritative sentence or phrase action.
 Changing Phrase color coding applies after Resume and does not change game
-truth, phrase actions, accessible phrase text, or the timer. All three choices
-remain in the application shell for later matches in the same page session.
-They return to their defaults after a reload until Milestone 020 adds storage.
+truth, phrase actions, accessible phrase text, or the timer. Turn timer and
+Auto-complete remain in the application shell and persist through the strict
+Milestone 020 settings document. Phrase color coding remains session-only and
+returns to On after a reload because that document does not contain it.
 
 “Back to menu” replaces
 the Pause notice with a concealed confirmation that defaults to “Stay paused.”

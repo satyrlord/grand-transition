@@ -157,6 +157,7 @@ export function createMatchScreenSnapshot(
   reviewResolution: MatchResolution | null = null,
   victory: Readonly<{ winnerId: string; completedRounds: number }> | null = null,
   skinIdsByPlayer: Readonly<Record<string, string>> = {},
+  viewerId: string = state.activePlayerId,
 ): MatchScreenSnapshot {
   if (!state.draft) {
     throw new Error('The match screen needs an active draft snapshot.');
@@ -184,7 +185,7 @@ export function createMatchScreenSnapshot(
   const opponent = state.draft.playerStates[opponentId]!;
   const viewerSnapshot = snapshotDraftStateForPlayer(
     state.draft,
-    activePlayerId,
+    viewerId,
   );
   const phraseById = new Map(
     sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
@@ -221,7 +222,7 @@ export function createMatchScreenSnapshot(
   });
 
   const privateSlots = Array.from<MatchCardView | undefined>({ length: 2 });
-  for (const card of activePlayer.hand) {
+  for (const card of viewerSnapshot.players[activePlayerId]!.hand.cards ?? []) {
     const parsedIndex = Number(card.id.match(/(\d+)$/u)?.[1] ?? 1) - 1;
     const slotIndex = parsedIndex === 1 ? 1 : 0;
     const phrase = phraseById.get(card.phraseId)!;
@@ -331,14 +332,18 @@ export function createMatchScreenSnapshot(
     actions: {
       canCommit:
         reviewResolution === null &&
+        viewerId === activePlayerId &&
         activePlayer.construction.status === 'building',
       canRedraw:
         reviewResolution === null &&
+        viewerId === activePlayerId &&
         activePlayer.construction.status === 'building' &&
         !activePlayer.redrawUsed,
       redrawUsed: activePlayer.redrawUsed,
       comebackTiers:
-        reviewResolution === null ? activePlayer.availableComebackTiers : [],
+        reviewResolution === null && viewerId === activePlayerId
+          ? activePlayer.availableComebackTiers
+          : [],
     },
     arenaReaction:
       reviewResolution === null && arenaReaction && arenaReactionPlayer

@@ -29,6 +29,7 @@ export type MatchPauseMode = 'manual' | 'running' | 'viewport';
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
+export const automaticAiBubbleRevealMs = 4_000;
 
 export class GrandTransitionMatch extends LitElement {
   static properties = {
@@ -37,6 +38,8 @@ export class GrandTransitionMatch extends LitElement {
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
     phraseColorCoding: { attribute: false },
+    thinking: { type: Boolean },
+    autoRevealWaitingSentence: { type: Boolean },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
@@ -44,14 +47,18 @@ export class GrandTransitionMatch extends LitElement {
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
   declare phraseColorCoding: boolean;
+  declare thinking: boolean;
+  declare autoRevealWaitingSentence: boolean;
   private previewText: string | null;
   private remainingSeconds: number | null;
   private commandPending: boolean;
   private revealedWaitingPlayerId: string | null;
   private hoveredWaitingPlayerId: string | null;
   private focusedWaitingPlayerId: string | null;
+  private automaticWaitingPlayerId: string | null;
 
   private timerId: number | undefined;
+  private automaticRevealTimerId: number | undefined;
   private timerSequence = -1;
   constructor() {
     super();
@@ -59,12 +66,15 @@ export class GrandTransitionMatch extends LitElement {
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
     this.phraseColorCoding = true;
+    this.thinking = false;
+    this.autoRevealWaitingSentence = false;
     this.previewText = null;
     this.remainingSeconds = null;
     this.commandPending = false;
     this.revealedWaitingPlayerId = null;
     this.hoveredWaitingPlayerId = null;
     this.focusedWaitingPlayerId = null;
+    this.automaticWaitingPlayerId = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -73,6 +83,7 @@ export class GrandTransitionMatch extends LitElement {
 
   override disconnectedCallback(): void {
     this.stopTimer();
+    this.clearAutomaticWaitingSentenceReveal();
     super.disconnectedCallback();
   }
 
@@ -89,6 +100,10 @@ export class GrandTransitionMatch extends LitElement {
       this.previewText = null;
       this.commandPending = false;
       this.revealedWaitingPlayerId = null;
+      this.syncAutomaticWaitingSentenceReveal(
+        previousSnapshot,
+        currentWaitingPlayer,
+      );
       if (
         !currentWaitingPlayer?.sentence?.trim() ||
         currentWaitingPlayer.playerId !== previousWaitingPlayer?.playerId
@@ -99,6 +114,7 @@ export class GrandTransitionMatch extends LitElement {
       this.syncTimer();
     }
     if (changed.has('pauseMode')) {
+      this.clearAutomaticWaitingSentenceReveal();
       this.revealedWaitingPlayerId = null;
       this.hoveredWaitingPlayerId = null;
       this.focusedWaitingPlayerId = null;
@@ -152,7 +168,11 @@ export class GrandTransitionMatch extends LitElement {
         ? msg('Unlimited turn timer')
         : msg(`${timerValue} seconds`);
     const timerText = timerValue === null ? msg('Unlimited') : timerValue;
-    const displayedSentence = this.previewText ?? this.snapshot.sentenceText;
+    const displayedSentence =
+      this.thinking &&
+      this.snapshot.sentenceText === msg('Select a noun to begin.')
+        ? msg('Waiting for Local Radio Caller…')
+        : (this.previewText ?? this.snapshot.sentenceText);
     const arenaReaction = this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
     const backgroundLayers = this.snapshot.sceneLayers.filter(
@@ -175,6 +195,7 @@ export class GrandTransitionMatch extends LitElement {
         data-phrase-color-coding=${this.phraseColorCoding ? 'on' : 'off'}
         data-round-review=${roundReview ? 'true' : nothing}
         data-match-result=${this.snapshot.victory ? 'victory' : nothing}
+        data-ai-thinking=${this.thinking ? 'true' : 'false'}
         @click=${this.closeWaitingSentence}
       >
         <div
@@ -234,6 +255,13 @@ export class GrandTransitionMatch extends LitElement {
                     ${msg(`${this.snapshot.activePlayerName}'s turn`)}
                   </span>
                 </h1>
+                ${
+                  this.thinking
+                    ? html`<span class="ai-thinking-status" role="status">
+                        ${msg('Local Radio Caller is thinking')}
+                      </span>`
+                    : nothing
+                }
               </div>
             </div>
           </header>
@@ -241,7 +269,7 @@ export class GrandTransitionMatch extends LitElement {
           <section
             class="match-stage"
             aria-label=${msg('Public chamber')}
-            ?inert=${roundReview}
+            ?inert=${Boolean(roundReview) || this.thinking}
           >
             ${this.renderPlayer(
               first,
@@ -324,11 +352,21 @@ export class GrandTransitionMatch extends LitElement {
                     </ol>
                   </section>
 
-                  <section
-                    class="private-hand"
-                    data-side=${first.isActive ? 'red' : 'blue'}
-                    aria-labelledby="private-hand-title"
-                  >
+                  ${
+                    this.thinking
+                      ? html`<section
+                          class="ai-thinking-record"
+                          data-side=${first.isActive ? 'red' : 'blue'}
+                          aria-label=${msg('Artificial intelligence turn')}
+                        >
+                          <strong>${msg('Local Radio Caller')}</strong>
+                          <span>${msg('Considering the next phrase…')}</span>
+                        </section>`
+                      : html`<section
+                          class="private-hand"
+                          data-side=${first.isActive ? 'red' : 'blue'}
+                          aria-labelledby="private-hand-title"
+                        >
                     <h2 id="private-hand-title" class="visually-hidden">
                       ${msg(`${this.snapshot.activePlayerName}'s private phrases`)}
                     </h2>
@@ -353,9 +391,9 @@ export class GrandTransitionMatch extends LitElement {
                         ${this.actionIcon()}
                       </button>
                     </div>
-                  </section>
+                        </section>
 
-                  <nav
+                        <nav
                     class="match-actions"
                     data-side=${first.isActive ? 'red' : 'blue'}
                     aria-label=${msg('Turn actions')}
@@ -382,7 +420,8 @@ export class GrandTransitionMatch extends LitElement {
                     >
                       <span class="action-title">${msg('Comeback')}</span>
                     </button>
-                  </nav>
+                        </nav>`
+                  }
                 </section>`
           }
         </div>
@@ -426,7 +465,7 @@ export class GrandTransitionMatch extends LitElement {
           <div class="player-name-line">
             <h2>${compactCharacterName(player.characterName)}</h2>
             <span class="player-turn-status" ?hidden=${!activeTurn}
-              >${msg('Your turn')}</span
+              >${this.thinking ? msg('Thinking') : msg('Your turn')}</span
             >
           </div>
         </header>
@@ -764,10 +803,43 @@ export class GrandTransitionMatch extends LitElement {
 
   private isWaitingSentenceRevealed(playerId: string): boolean {
     return (
+      this.automaticWaitingPlayerId === playerId ||
       this.revealedWaitingPlayerId === playerId ||
       this.hoveredWaitingPlayerId === playerId ||
       this.focusedWaitingPlayerId === playerId
     );
+  }
+
+  private syncAutomaticWaitingSentenceReveal(
+    previousSnapshot: MatchScreenSnapshot | undefined,
+    currentWaitingPlayer: MatchPlayerView | undefined,
+  ): void {
+    this.clearAutomaticWaitingSentenceReveal();
+    if (
+      !previousSnapshot ||
+      !this.snapshot ||
+      !this.autoRevealWaitingSentence ||
+      this.pauseMode !== 'running' ||
+      this.snapshot.roundReview ||
+      previousSnapshot.activePlayerId === this.snapshot.activePlayerId ||
+      !currentWaitingPlayer?.sentence?.trim()
+    ) {
+      return;
+    }
+    this.automaticWaitingPlayerId = currentWaitingPlayer.playerId;
+    this.automaticRevealTimerId = window.setTimeout(() => {
+      this.automaticRevealTimerId = undefined;
+      this.automaticWaitingPlayerId = null;
+      this.requestUpdate();
+    }, automaticAiBubbleRevealMs);
+  }
+
+  private clearAutomaticWaitingSentenceReveal(): void {
+    if (this.automaticRevealTimerId !== undefined) {
+      window.clearTimeout(this.automaticRevealTimerId);
+      this.automaticRevealTimerId = undefined;
+    }
+    this.automaticWaitingPlayerId = null;
   }
 
   private setHoveredWaitingSentence(playerId: string | null): void {
@@ -796,20 +868,26 @@ export class GrandTransitionMatch extends LitElement {
   };
 
   private activateCard(card: MatchCardView): void {
-    if (!this.snapshot || this.commandPending || !card.reference) return;
+    if (
+      !this.snapshot ||
+      this.thinking ||
+      this.commandPending ||
+      !card.reference
+    )
+      return;
     if (card.action === 'select') {
       this.dispatchMatchCommand('select-phrase', { card: card.reference });
     }
   }
 
   private readonly redraw = (): void => {
-    if (this.snapshot?.actions.canRedraw) {
+    if (!this.thinking && this.snapshot?.actions.canRedraw) {
       this.dispatchMatchCommand('redraw-hand', {});
     }
   };
 
   private readonly commit = (): void => {
-    if (this.snapshot?.actions.canCommit) {
+    if (!this.thinking && this.snapshot?.actions.canCommit) {
       this.dispatchMatchCommand('commit-sentence', {});
     }
   };
@@ -817,6 +895,7 @@ export class GrandTransitionMatch extends LitElement {
   private readonly useComeback = (): void => {
     if (
       this.commandPending ||
+      this.thinking ||
       !this.snapshot?.sentenceComplete ||
       this.snapshot.actions.comebackTiers.length === 0
     ) {
@@ -831,6 +910,7 @@ export class GrandTransitionMatch extends LitElement {
   ): void {
     if (
       this.pauseMode !== 'running' ||
+      this.thinking ||
       !this.snapshot ||
       this.snapshot.roundReview ||
       this.commandPending
