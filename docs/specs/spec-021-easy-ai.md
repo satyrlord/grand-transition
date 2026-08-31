@@ -20,11 +20,11 @@ behavior stays unchanged. The “Match settings” strip keeps Mode, Scene, Back
 and Start match in one horizontal row. Single player inserts a Difficulty
 select between Mode and Scene. Its only option and selected value are “Local
 Radio Caller.” Hotseat omits the Difficulty select. During the AI turn, keep the
-public board and
-sentence visible, replace its private controls with `Local Radio Caller` and
-`Considering the next phrase…`, and expose the live status `Local Radio Caller
-is thinking`. The human-side snapshot must not contain the AI private card ID,
-phrase ID, or text.
+public board and sentence visible. Keep its phrase buttons disabled and outside
+the focus order until the AI action completes. Replace its private controls with
+`Local Radio Caller` and `Considering the next phrase…`, and expose the live
+status `Local Radio Caller is thinking`. The human-side snapshot must not
+contain the AI private card ID, phrase ID, or text.
 
 When an accepted AI command returns control to player one and Local Radio Caller
 has public sentence text, automatically expand its existing gray waiting bubble

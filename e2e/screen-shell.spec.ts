@@ -32,6 +32,7 @@ for (const viewport of supportedViewports) {
     await expect(page.locator('.title-emblem-frame')).toHaveClass(
       /title-emblem-frame--loaded/u,
     );
+    await expect(page.locator('.title-emblem')).toHaveCSS('opacity', '1');
     const titleGeometry = await titleStatus.evaluate((element) => {
       const box = element.getBoundingClientRect();
       return {
@@ -58,6 +59,7 @@ for (const viewport of supportedViewports) {
     await page.screenshot({
       path: testInfo.outputPath(`title-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
+      animations: 'disabled',
     });
 
     const url = page.url();

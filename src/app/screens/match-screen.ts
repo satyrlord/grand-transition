@@ -753,7 +753,9 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-state=${card.state}
                 data-rarity=${card.rarity}
                 aria-label=${accessibleLabel}
-                ?disabled=${card.action === null || this.commandPending}
+                ?disabled=${
+                  card.action === null || this.commandPending || this.thinking
+                }
                 @pointerenter=${() => this.preview(card)}
                 @pointerleave=${this.clearPreview}
                 @focus=${() => this.preview(card)}

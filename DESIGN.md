@@ -474,7 +474,9 @@ text or state.
 
 The title is a full-viewport dark proscenium with a text-free painted backdrop.
 It has a centered emblem, live wordmark, and brass subtitle rule. It has one
-ready-status plaque and one oxblood `Set up match` button.
+ready-status plaque and one oxblood `Set up match` button. A dark wash, muted
+brass rules, restrained shadows, and low-contrast secondary actions keep the
+wordmark and setup action dominant.
 
 Channel 3 is a small brass
 plaque at the upper left. A double brass perimeter frame and a narrow central
@@ -622,8 +624,9 @@ Disabled controls stay labeled or keep an accessible label and use a dashed
 border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
 During a Local Radio Caller turn, the public board and sentence stay visible.
-The private hand and player actions become one named thinking record until the
-seeded presentation delay finishes.
+The public phrase buttons remain visibly unavailable and outside the focus
+order. The private hand and player actions become one named thinking record
+until the seeded presentation delay finishes.
 The match surface does not permit browser text selection. Pointer dragging,
 repeated activation, and keyboard shortcuts must not leave interface text
 highlighted.
