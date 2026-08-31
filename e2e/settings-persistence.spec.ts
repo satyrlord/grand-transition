@@ -63,6 +63,28 @@ test('settings persist in the production build and fit every supported viewport'
     'true',
   );
   await expect(page.getByLabel('Auto-complete')).not.toBeChecked();
+  await page.emulateMedia({ forcedColors: 'active' });
+  const selectedTimerStyle = await page
+    .getByRole('button', { name: 'Unlimited' })
+    .evaluate((button) => {
+      const style = getComputedStyle(button);
+      return {
+        backgroundColor: style.backgroundColor,
+        outlineStyle: style.outlineStyle,
+        outlineWidth: style.outlineWidth,
+      };
+    });
+  const unselectedTimerBackground = await page
+    .getByRole('button', { name: '15 seconds' })
+    .evaluate((button) => getComputedStyle(button).backgroundColor);
+  expect(selectedTimerStyle).toMatchObject({
+    outlineStyle: 'solid',
+    outlineWidth: '2px',
+  });
+  expect(selectedTimerStyle.backgroundColor).not.toBe(
+    unselectedTimerBackground,
+  );
+  await page.emulateMedia({ forcedColors: 'none' });
   await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();

@@ -154,9 +154,12 @@ test('shows one inert thinking state without private controls', async () => {
   expect(match.querySelector('.match-actions')).toBeNull();
   expect(match.querySelector('.match-stage')?.hasAttribute('inert')).toBe(true);
 
-  match
-    .querySelector<HTMLButtonElement>('.shared-board button:not(:disabled)')!
-    .click();
+  const sharedButtons = [
+    ...match.querySelectorAll<HTMLButtonElement>('.shared-board button'),
+  ];
+  expect(sharedButtons.length).toBeGreaterThan(0);
+  expect(sharedButtons.every(({ disabled }) => disabled)).toBe(true);
+  sharedButtons[0]!.click();
   expect(listener).not.toHaveBeenCalled();
 });
 

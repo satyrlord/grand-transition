@@ -19,6 +19,7 @@ adapter and show a non-blocking notice that changes will not persist.
 The title exposes one `Settings` control. It opens a modal that groups Sound,
 Speech, and Play settings. Changes apply immediately. Close and Escape close
 the modal and return focus to `Settings`. Focus stays inside the open modal.
+The selected Turn timer option stays visibly distinct in forced-colors mode.
 The existing Pause controls use the same Turn timer and Auto-complete values.
 Phrase color coding remains session-only because it is not in the strict
 version 1 document.
@@ -74,6 +75,8 @@ in-memory adapter remains active for the browser session.
   claim persistence is restored.
 - **AC-020-05:** Only the storage adapter imports `localStorage`. Codecs are
   deterministic pure modules and log no stored value.
+- **AC-020-06:** The selected Turn timer option remains visually distinct in
+  forced-colors mode without hiding its `aria-pressed` state.
 
 ## Impeccable UI validation
 
