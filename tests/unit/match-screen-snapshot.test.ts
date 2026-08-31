@@ -69,6 +69,39 @@ describe('match-screen snapshot', () => {
     expect(Object.isFrozen(snapshot.sceneLayers[0])).toBe(true);
   });
 
+  test('conceals the active AI hand from the human viewer', () => {
+    const scene = sampleContent.scenes[0]!;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 21,
+      players: [configuredPlayer(0), configuredPlayer(1)],
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'ai',
+      aiDifficulty: 'local-radio-caller',
+      openingPlayerIndex: 1,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    expect(state.activePlayerId).toBe('player-2');
+
+    const snapshot = createMatchScreenSnapshot(
+      state,
+      null,
+      null,
+      null,
+      {},
+      'player-1',
+    );
+    expect(snapshot.privateCards.every(({ state }) => state === 'empty')).toBe(
+      true,
+    );
+    expect(snapshot.actions.canCommit).toBe(false);
+    expect(snapshot.actions.canRedraw).toBe(false);
+    expect(snapshot.actions.comebackTiers).toEqual([]);
+  });
+
   test('projects the modern debate studio asset layers', () => {
     const scene = sampleContent.scenes.find(
       (candidate) => candidate.id === 'modern-debate-studio',

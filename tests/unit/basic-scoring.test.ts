@@ -71,7 +71,7 @@ describe('Hollywood Roast clause scoring', () => {
         defenderWeaknessTags: [],
         balance: basicScoringBalance,
       }).finalDamage,
-    ).toBe(10);
+    ).toBe(8);
 
     const customPhrases = flavourPhrases.map((phrase) =>
       phrase.id === 'belongs-in-a-party-museum'
@@ -104,13 +104,13 @@ describe('Hollywood Roast clause scoring', () => {
       'rebrands',
       'national-salvation-committee',
     ]);
-    expect(result.finalDamage).toBe(15);
+    expect(result.finalDamage).toBe(11);
     expect(
       result.breakdown.some((item) => item.kind === 'restriction-multiplier'),
     ).toBe(false);
   });
 
-  test('uses the exact 5, 10, 15, and 20 compatibility tiers', () => {
+  test('uses the exact 5, 8, 11, and 14 compatibility tiers', () => {
     const relationId = 'belongs-in-a-party-museum';
     const baseAnalysis = analysis(['national-consensus', relationId]);
     const tier = (substance: boolean, flavour: boolean): number =>
@@ -145,7 +145,7 @@ describe('Hollywood Roast clause scoring', () => {
       tier(false, true),
       tier(true, false),
       tier(true, true),
-    ]).toEqual([5, 10, 15, 20]);
+    ]).toEqual([5, 8, 11, 14]);
   });
 
   test('keeps a modifier in the preceding clause for weakness scoring', () => {
@@ -235,7 +235,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-and',
         'national-salvation-committee',
       ]).finalDamage,
-    ).toBe(20);
+    ).toBe(16);
   });
 
   test('scores front-because subordinate and main clauses separately', () => {
@@ -247,7 +247,7 @@ describe('Hollywood Roast clause scoring', () => {
         'televised-revolution',
         'makes-own-voters-change-the-channel',
       ]).finalDamage,
-    ).toBe(20);
+    ).toBe(16);
   });
 
   test('scores each extended front-because clause once before the main clause', () => {
@@ -262,7 +262,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-protocol',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(25);
+    ).toBe(21);
   });
 
   test('does not reuse an object relation after a shared-subject subordinate extension', () => {
@@ -277,7 +277,7 @@ describe('Hollywood Roast clause scoring', () => {
         'coalition-protocol',
         'belongs-in-a-party-museum',
       ]).finalDamage,
-    ).toBe(25);
+    ).toBe(21);
   });
 
   test('an incomplete sentence deals zero damage and has no clause score', () => {

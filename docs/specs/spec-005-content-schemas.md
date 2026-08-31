@@ -156,11 +156,18 @@ simulation, and browser validation must pass before it can ship.
   `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
   `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
-  negated forms `was not`, `is not`, `will never be`, and `won't`, and the
+  negated copular forms `was not`, `is not`, and `will never be`, and the
   predicate `was a Securitate informer`. The stable
   `drags-before-the-cameras` tense family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,
-  and `will be dragged before the cameras`. The only
+  and `will be dragged before the cameras`. The `posted-on-social-media` family
+  renders `was posted on social media`, `is posted on social media`, and
+  `will be posted on social media`. The
+  `harasses-innocent-people-on-social-media` family renders `harassed innocent
+  people on social media`, `harasses innocent people on social media`, and
+  `will harass innocent people on social media`. The common ending
+  `and-most-of-your-followers-are-bots` renders
+  `and most of your followers are bots.` The only
 
   continuation is the unrestricted `[...]` card. It contains second-person
   `you`, plural `EU funds`, and person-aware subject forms for every shipped

@@ -2519,6 +2519,20 @@
     }
   },
   {
+    "id": "and-most-of-your-followers-are-bots",
+    "role": "ending",
+    "text": "and most of your followers are bots.",
+    "tags": ["credibility", "media"],
+    "rarity": "rare",
+    "finisherBonus": 4,
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original social-media audience satire for fictional public personas. It names no real account or person. Editorial review complete."
+    }
+  },
+  {
     "id": "pending-further-consultation",
     "role": "ending",
     "text": "pending further consultation.",
@@ -3117,6 +3131,168 @@
     },
     "tense": "future",
     "tenseFamily": "drags-before-the-cameras"
+  },
+  {
+    "id": "was-posted-on-social-media",
+    "role": "predicate",
+    "text": "was posted on social media",
+    "singularText": "was posted on social media",
+    "pluralText": "were posted on social media",
+    "personalSingularText": "was posted on social media",
+    "secondPersonText": "were posted on social media",
+    "tags": ["media", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original passive social-media satire for fictional public personas. It names no real person and describes no private individual. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "posted-on-social-media"
+  },
+  {
+    "id": "is-posted-on-social-media",
+    "role": "predicate",
+    "text": "is posted on social media",
+    "singularText": "is posted on social media",
+    "pluralText": "are posted on social media",
+    "personalSingularText": "is posted on social media",
+    "secondPersonText": "are posted on social media",
+    "tags": ["media", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original passive social-media satire for fictional public personas. It names no real person and describes no private individual. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "posted-on-social-media"
+  },
+  {
+    "id": "will-be-posted-on-social-media",
+    "role": "predicate",
+    "text": "will be posted on social media",
+    "singularText": "will be posted on social media",
+    "pluralText": "will be posted on social media",
+    "personalSingularText": "will be posted on social media",
+    "secondPersonText": "will be posted on social media",
+    "tags": ["media", "evidence"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original passive social-media satire for fictional public personas. It names no real person and describes no private individual. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "posted-on-social-media"
+  },
+  {
+    "id": "harassed-innocent-people-on-social-media",
+    "role": "predicate",
+    "text": "harassed innocent people on social media",
+    "singularText": "harassed innocent people on social media",
+    "pluralText": "harassed innocent people on social media",
+    "personalSingularText": "harassed innocent people on social media",
+    "secondPersonText": "harassed innocent people on social media",
+    "tags": ["restraint", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original social-media misconduct satire for fictional public personas. It names no real person, protected group, or private individual. Editorial review complete."
+    },
+    "tense": "past",
+    "tenseFamily": "harasses-innocent-people-on-social-media"
+  },
+  {
+    "id": "harasses-innocent-people-on-social-media",
+    "role": "predicate",
+    "text": "harasses innocent people on social media",
+    "singularText": "harasses innocent people on social media",
+    "pluralText": "harass innocent people on social media",
+    "personalSingularText": "harasses innocent people on social media",
+    "secondPersonText": "harass innocent people on social media",
+    "tags": ["restraint", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original social-media misconduct satire for fictional public personas. It names no real person, protected group, or private individual. Editorial review complete."
+    },
+    "tense": "present",
+    "tenseFamily": "harasses-innocent-people-on-social-media"
+  },
+  {
+    "id": "will-harass-innocent-people-on-social-media",
+    "role": "predicate",
+    "text": "will harass innocent people on social media",
+    "singularText": "will harass innocent people on social media",
+    "pluralText": "will harass innocent people on social media",
+    "personalSingularText": "will harass innocent people on social media",
+    "secondPersonText": "will harass innocent people on social media",
+    "tags": ["restraint", "credibility"],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": ["personal", "politics", "media"]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "editorialReview": {
+      "state": "approved",
+      "originality": "original",
+      "safetyFlags": [],
+      "notes": "Original social-media misconduct satire for fictional public personas. It names no real person, protected group, or private individual. Editorial review complete."
+    },
+    "tense": "future",
+    "tenseFamily": "harasses-innocent-people-on-social-media"
   },
   {
     "id": "were-communist-party-members",
@@ -4576,84 +4752,6 @@
     },
     "tense": "present",
     "tenseFamily": "will-never-be"
-  },
-  {
-    "id": "wont",
-    "role": "verb",
-    "text": "won't",
-    "singularText": "won't",
-    "pluralText": "won't",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "rare",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
-    },
-    "tense": "future",
-    "tenseFamily": "wont"
-  },
-  {
-    "id": "did-not",
-    "role": "verb",
-    "text": "did not",
-    "singularText": "did not",
-    "pluralText": "did not",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
-    },
-    "tense": "past",
-    "tenseFamily": "wont"
-  },
-  {
-    "id": "does-not",
-    "role": "verb",
-    "text": "does not",
-    "singularText": "does not",
-    "pluralText": "do not",
-    "tags": ["credibility", "consistency"],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": ["personal", "politics"],
-          "right": ["personal", "politics"]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "editorialReview": {
-      "state": "approved",
-      "originality": "original",
-      "safetyFlags": [],
-      "notes": "Original contracted future-tense dismissal for flexible fictional political satire. It names no real person and keeps invariant agreement. Editorial review complete."
-    },
-    "tense": "present",
-    "tenseFamily": "wont"
   },
   {
     "id": "a-witch",

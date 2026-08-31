@@ -228,6 +228,15 @@
     outline-offset: 3px;
   }
 
+  .ai-thinking-status {
+    display: block;
+    margin-block-start: 0.22rem;
+    color: var(--broadcast-paper-light);
+    font: 700 0.69rem/1.1 var(--font-interface);
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+
   .match-stage {
     position: absolute;
     z-index: 2;
@@ -1326,6 +1335,15 @@
     height: 100%;
   }
 
+  .match-screen[data-ai-thinking='true'] .common-phrases {
+    filter: saturate(0.35);
+    opacity: 0.68;
+  }
+
+  .match-screen[data-ai-thinking='true'] .shared-board button {
+    cursor: wait;
+  }
+
   .phrase-slot {
     min-width: 0;
     min-height: 0;
@@ -1461,6 +1479,42 @@
     bottom: 0.8rem;
     width: min(40rem, 48vw);
     pointer-events: auto;
+  }
+
+  .ai-thinking-record {
+    position: absolute;
+    z-index: 10;
+    bottom: 0.8rem;
+    display: grid;
+    gap: 0.22rem;
+    width: min(20rem, 38vw);
+    min-height: clamp(2.65rem, 5vh, 3.35rem);
+    padding: 0.48rem 0.7rem;
+    border: 3px double var(--broadcast-gold);
+    background: rgb(5 6 8 / 96%);
+    box-shadow: 0 0.35rem 0.85rem rgb(0 0 0 / 48%);
+    color: var(--broadcast-paper-light);
+    font-family: var(--font-interface);
+  }
+
+  .ai-thinking-record[data-side='red'] {
+    left: 0.8rem;
+  }
+
+  .ai-thinking-record[data-side='blue'] {
+    right: 0.8rem;
+  }
+
+  .ai-thinking-record strong {
+    color: var(--broadcast-gold-light);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .ai-thinking-record span {
+    font-size: 0.72rem;
+    line-height: 1.2;
   }
 
   .private-hand[data-side='red'] {

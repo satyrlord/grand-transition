@@ -280,7 +280,6 @@ describe('Hollywood Roast extended grammar', () => {
     ['was-not', 'a state secretary'],
     ['is-not', 'a state secretary'],
     ['will-never-be', 'a state secretary'],
-    ['wont', 'a state secretary'],
   ] as const)('accepts the requested verb card %s with %s', (verb, object) => {
     const objectId = object === 'EU funds' ? 'eu-funds' : 'a-state-secretary';
     expect(

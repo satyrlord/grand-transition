@@ -5,6 +5,7 @@ import { basicScoringBalance } from '../src/content/basic-scoring-balance';
 import {
   createSimulationSetup,
   encodeSimulationReport,
+  listLocalRadioCallerSimulationOptions,
   simulateMatches,
   summarizeSimulation,
 } from '../src/engine/simulation';
@@ -82,8 +83,11 @@ export async function runSimulationCommand(
   const report = simulateMatches(
     parsed.value.seed,
     parsed.value.matches,
-    createSimulationSetup(sampleContent),
+    createSimulationSetup(sampleContent, {
+      aiDifficulty: 'local-radio-caller',
+    }),
     context,
+    listLocalRadioCallerSimulationOptions,
   );
   if (parsed.value.output) {
     await writeFile(

@@ -54,8 +54,9 @@ action from the concealed Pause screen discards the active match and returns to
 title. It preserves the setup values for a later setup visit.
 
 Setup fields are mode, player-one character and skin, player-two character and
-skin, and scene. Defaults are hotseat, the first two catalog characters, each
-character's first skin, and the first scene.
+skin, and scene. The lower fieldset is labeled “Match settings.” Defaults are
+hotseat, the first two catalog characters, each character's first skin, and the
+first scene.
 The application session starts with the 30-second browser default. Timer
 changes occur only on the paused match surface owned by Milestone 016. They
 remain in the application shell for later matches in the same page session and

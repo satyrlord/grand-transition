@@ -185,7 +185,6 @@ describe('content schemas', () => {
         'was-not',
         'is-not',
         'will-never-be',
-        'wont',
         'a-witch',
         'my-opponent',
         'with',
@@ -214,7 +213,6 @@ describe('content schemas', () => {
       'phrase.was-not': 'was not',
       'phrase.is-not': 'is not',
       'phrase.will-never-be': 'will never be',
-      'phrase.wont': "won't",
       'phrase.a-witch': 'a witch',
       'phrase.my-opponent': 'my opponent',
       'phrase.with': 'with',
@@ -227,6 +225,9 @@ describe('content schemas', () => {
     expect(
       new Set(phraseCardCatalog.phrases.map((phrase) => phrase.id)),
     ).toHaveLength(phraseCardCatalog.phrases.length);
+    for (const removedPhraseId of ['wont', 'did-not', 'does-not']) {
+      expect(phraseCardCatalog.commonPhraseIds).not.toContain(removedPhraseId);
+    }
     expect(
       phraseCardCatalog.phrases.find(
         (phrase) => phrase.id === 'national-salvation-committee',
@@ -446,7 +447,6 @@ describe('content schemas', () => {
       ['was-not', 'was not', 'were not'],
       ['is-not', 'is not', 'are not'],
       ['will-never-be', 'will never be', 'will never be'],
-      ['wont', "won't", "won't"],
     ] as const;
 
     for (const [id, singular, plural] of expected) {
@@ -464,6 +464,119 @@ describe('content schemas', () => {
         plural,
       );
     }
+  });
+
+  test('loads the requested social-media families and ending', () => {
+    const requestedPredicates = [
+      {
+        id: 'was-posted-on-social-media',
+        family: 'posted-on-social-media',
+        tense: 'past',
+        rarity: 'common',
+        singular: 'was posted on social media',
+        plural: 'were posted on social media',
+        personalSingular: 'was posted on social media',
+        secondPerson: 'were posted on social media',
+      },
+      {
+        id: 'is-posted-on-social-media',
+        family: 'posted-on-social-media',
+        tense: 'present',
+        rarity: 'uncommon',
+        singular: 'is posted on social media',
+        plural: 'are posted on social media',
+        personalSingular: 'is posted on social media',
+        secondPerson: 'are posted on social media',
+      },
+      {
+        id: 'will-be-posted-on-social-media',
+        family: 'posted-on-social-media',
+        tense: 'future',
+        rarity: 'rare',
+        singular: 'will be posted on social media',
+        plural: 'will be posted on social media',
+        personalSingular: 'will be posted on social media',
+        secondPerson: 'will be posted on social media',
+      },
+      {
+        id: 'harassed-innocent-people-on-social-media',
+        family: 'harasses-innocent-people-on-social-media',
+        tense: 'past',
+        rarity: 'common',
+        singular: 'harassed innocent people on social media',
+        plural: 'harassed innocent people on social media',
+        personalSingular: 'harassed innocent people on social media',
+        secondPerson: 'harassed innocent people on social media',
+      },
+      {
+        id: 'harasses-innocent-people-on-social-media',
+        family: 'harasses-innocent-people-on-social-media',
+        tense: 'present',
+        rarity: 'uncommon',
+        singular: 'harasses innocent people on social media',
+        plural: 'harass innocent people on social media',
+        personalSingular: 'harasses innocent people on social media',
+        secondPerson: 'harass innocent people on social media',
+      },
+      {
+        id: 'will-harass-innocent-people-on-social-media',
+        family: 'harasses-innocent-people-on-social-media',
+        tense: 'future',
+        rarity: 'rare',
+        singular: 'will harass innocent people on social media',
+        plural: 'will harass innocent people on social media',
+        personalSingular: 'will harass innocent people on social media',
+        secondPerson: 'will harass innocent people on social media',
+      },
+    ] as const;
+
+    for (const expected of requestedPredicates) {
+      const phrase = phraseCardCatalog.phrases.find(
+        (candidate) => candidate.id === expected.id,
+      );
+      expect(phrase, expected.id).toMatchObject({
+        role: 'predicate',
+        tenseFamily: expected.family,
+        tense: expected.tense,
+        rarity: expected.rarity,
+        numberForms: {
+          singularKey: `phrase.${expected.id}.singular`,
+          pluralKey: `phrase.${expected.id}.plural`,
+          personalSingularKey: `phrase.${expected.id}.personal-singular`,
+          secondPersonKey: `phrase.${expected.id}.second-person`,
+        },
+      });
+      expect(phraseCardCatalog.englishMessages[`phrase.${expected.id}`]).toBe(
+        expected.singular,
+      );
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${expected.id}.singular`],
+      ).toBe(expected.singular);
+      expect(
+        phraseCardCatalog.englishMessages[`phrase.${expected.id}.plural`],
+      ).toBe(expected.plural);
+      expect(
+        phraseCardCatalog.englishMessages[
+          `phrase.${expected.id}.personal-singular`
+        ],
+      ).toBe(expected.personalSingular);
+      expect(
+        phraseCardCatalog.englishMessages[
+          `phrase.${expected.id}.second-person`
+        ],
+      ).toBe(expected.secondPerson);
+    }
+
+    expect(
+      phraseCardCatalog.phrases.find(
+        (phrase) => phrase.id === 'and-most-of-your-followers-are-bots',
+      ),
+    ).toMatchObject({ role: 'ending', finisherBonus: 4, rarity: 'rare' });
+    expect(
+      phraseCardCatalog.englishMessages[
+        'phrase.and-most-of-your-followers-are-bots'
+      ],
+    ).toBe('and most of your followers are bots.');
   });
 
   test('keeps every required role in the common corpus', () => {

@@ -102,7 +102,14 @@ describe('persistent match history', () => {
         kind: matchHistoryKind,
         entries: [entry],
       }),
-    ) as { entries: Array<{ matchLog: { sentences?: unknown } }> };
+    ) as {
+      entries: Array<{
+        replay: { schemaVersion: number };
+        matchLog: { schemaVersion: number; sentences?: unknown };
+      }>;
+    };
+    stored.entries[0]!.replay.schemaVersion = 2;
+    stored.entries[0]!.matchLog.schemaVersion = 2;
     delete stored.entries[0]!.matchLog.sentences;
 
     const decoded = decodeMatchHistory(JSON.stringify(stored));

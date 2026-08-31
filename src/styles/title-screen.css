@@ -26,6 +26,7 @@
     --broadcast-paper-light: #f5ecd7;
     --broadcast-oxblood: #8f2822;
     --broadcast-oxblood-bright: #c63730;
+    --reaction-apricot: #ffb07a;
     --television-blue: #12477f;
     --television-blue-bright: #2375c9;
     --font-feature: 'Poiret One', Arial, sans-serif;
@@ -328,8 +329,16 @@
     outline-offset: 4px;
   }
 
-  .title-transmission .title-history-action {
-    min-width: 12rem;
+  .title-secondary-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    width: clamp(25rem, 36vw, 36rem);
+  }
+
+  .title-transmission .title-history-action,
+  .title-transmission .title-settings-action {
+    min-width: 0;
     min-height: 2.75rem;
     padding: 0.45rem 1.2rem;
     border: 1px solid var(--broadcast-brass);
@@ -341,7 +350,8 @@
     -webkit-text-stroke: 0;
   }
 
-  .title-transmission .title-history-action:hover {
+  .title-transmission .title-history-action:hover,
+  .title-transmission .title-settings-action:hover {
     border-color: var(--broadcast-paper-light);
     background: var(--broadcast-panel);
   }
@@ -354,10 +364,246 @@
   .title-history-notice {
     max-width: 38rem;
     margin: 0;
-    color: #ffb07a;
+    color: var(--reaction-apricot);
     font-size: 0.72rem;
     line-height: 1.25;
     text-align: center;
+  }
+
+  .title-settings-notice,
+  .settings-persistence-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    max-width: 42rem;
+    margin: 0;
+    padding: 0.58rem 0.7rem;
+    border: 1px solid var(--reaction-apricot);
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    font-size: 0.72rem;
+    line-height: 1.3;
+    text-align: start;
+  }
+
+  .title-settings-notice p,
+  .settings-persistence-notice p {
+    margin: 0;
+  }
+
+  .title-transmission .title-settings-notice button,
+  .settings-persistence-notice button {
+    flex: none;
+    min-width: 5.8rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--broadcast-brass);
+    background: var(--broadcast-panel);
+    box-shadow: none;
+    color: var(--broadcast-paper-light);
+    font: 700 0.72rem/1 var(--font-interface);
+    letter-spacing: 0.06em;
+    -webkit-text-stroke: 0;
+  }
+
+  .settings-backdrop {
+    position: fixed;
+    z-index: 30;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgb(5 8 11 / 88%);
+  }
+
+  .settings-dialog {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    width: min(64rem, calc(100vw - 2rem));
+    max-height: calc(100svh - 2rem);
+    padding: clamp(0.85rem, 1.7vw, 1.25rem);
+    overflow: hidden;
+    border: 3px double var(--broadcast-brass);
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    box-shadow: 0 1.6rem 4rem rgb(0 0 0 / 68%);
+    font-family: var(--font-interface);
+    user-select: text;
+  }
+
+  .settings-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block-end: 0.65rem;
+    border-block-end: 1px solid rgb(228 193 125 / 42%);
+  }
+
+  .settings-heading h2 {
+    margin: 0;
+    color: white;
+    font: 400 clamp(1.6rem, 3vw, 2.45rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.8px currentcolor;
+  }
+
+  .settings-close {
+    min-width: 6.5rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--broadcast-brass);
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    font: 700 0.76rem/1 var(--font-interface);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .settings-description {
+    margin: 0;
+    padding-block: 0.7rem 0.55rem;
+    color: var(--broadcast-paper);
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .settings-persistence-notice {
+    max-width: none;
+    margin-block-end: 0.7rem;
+  }
+
+  .settings-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-color: var(--broadcast-brass) var(--broadcast-ink);
+  }
+
+  .settings-group {
+    display: grid;
+    align-content: start;
+    gap: 0.68rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0.75rem;
+    border: 1px solid rgb(228 193 125 / 42%);
+    background: var(--broadcast-ink);
+  }
+
+  .settings-group--play {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-group legend {
+    padding-inline: 0.35rem;
+    color: var(--broadcast-brass-light);
+    font: 400 1.05rem/1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.6px currentcolor;
+  }
+
+  .settings-control,
+  .settings-toggle {
+    display: grid;
+    gap: 0.38rem;
+    min-width: 0;
+    color: var(--broadcast-paper-light);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .settings-toggle {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.55rem;
+    border-block: 1px solid rgb(228 193 125 / 24%);
+  }
+
+  .settings-toggle input {
+    width: 1.35rem;
+    height: 1.35rem;
+    accent-color: var(--broadcast-oxblood-bright);
+  }
+
+  .settings-range-line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 3.2rem;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .settings-range-line input {
+    width: 100%;
+    accent-color: var(--broadcast-oxblood-bright);
+  }
+
+  .settings-range-line output {
+    color: var(--broadcast-brass-light);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  .settings-control select {
+    min-height: 2.75rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: 600 0.76rem/1 var(--font-interface);
+  }
+
+  .settings-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--broadcast-brass);
+  }
+
+  .settings-options button {
+    min-width: 0;
+    min-height: 2.75rem;
+    padding: 0.5rem;
+    border: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: 700 0.74rem/1 var(--font-interface);
+    cursor: pointer;
+  }
+
+  .settings-options button[aria-pressed='true'] {
+    background: var(--broadcast-brass);
+    color: var(--broadcast-black);
+  }
+
+  .settings-close:hover,
+  .settings-close:focus-visible,
+  .settings-options button:hover,
+  .settings-options button:focus-visible,
+  .settings-control select:focus-visible {
+    border-color: var(--broadcast-paper-light);
+    background: var(--broadcast-panel);
+  }
+
+  .settings-close:focus-visible,
+  .settings-options button:focus-visible,
+  .settings-control input:focus-visible,
+  .settings-control select:focus-visible,
+  .settings-toggle input:focus-visible,
+  .settings-persistence-notice button:focus-visible {
+    outline: 3px solid var(--focus-blue, #77c8ff);
+    outline-offset: 3px;
   }
 
   .match-history-backdrop {
@@ -443,7 +689,7 @@
   .match-history-notice {
     margin: 0 0 0.65rem;
     padding: 0.58rem 0.75rem;
-    border: 1px solid #ffb07a;
+    border: 1px solid var(--reaction-apricot);
     background: #351a12;
     color: #ffe1bd;
     font-size: 0.78rem;
@@ -764,7 +1010,13 @@
   @media (forced-colors: active) {
     .title-screen,
     .title-screen::before,
-    .title-proscenium {
+    .title-proscenium,
+    .settings-dialog,
+    .settings-group,
+    .settings-options button,
+    .settings-control select,
+    .settings-persistence-notice,
+    .title-settings-notice {
       background: Canvas;
       color: CanvasText;
     }
@@ -772,7 +1024,10 @@
     .title-screen::after,
     .broadcast-channel,
     .status,
-    .title-transmission button {
+    .title-transmission button,
+    .settings-dialog,
+    .settings-group,
+    .settings-control select {
       border-color: CanvasText;
     }
 

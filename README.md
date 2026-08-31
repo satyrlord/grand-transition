@@ -21,8 +21,10 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-The current checkout implements Milestones 001 through 018 and the persistent
-victory and local match-history slice from Milestone 019. It provides immutable
+The current checkout implements Milestones 001 through 018, the persistent
+victory and local match-history slice from Milestone 019, the local settings
+slice from Milestone 020, and the Local Radio Caller slice from Milestone 021.
+It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
 019 through 029 remain incomplete as full deliveries.
@@ -37,18 +39,21 @@ compound subjects and objects, endings, modifiers, incomplete states, and
 immediate grammar mistakes. They also include seeded common-board and
 private-hand generation, clause scoring, noun combos, continuations, comebacks,
 cliffhangers, match lifecycle, replay, simulation, and automatic development
-match logs. Current clause scoring uses compatibility bases of 5, 10, 15, and
-20, a local 1.5 weakness multiplier, and no restriction damage bonus.
+match logs. Current clause scoring uses compatibility bases of 5, 8, 11, and
+14, a local 1.5 weakness multiplier, and no restriction damage bonus.
 
-The landscape-only Lit interface provides title, setup, a playable hotseat
-match, Pause, and between-round review. Each review prints an ordered score
+The landscape-only Lit interface provides title, setup, playable single-player
+and hotseat matches, Pause, and between-round review. Each review prints an ordered score
 receipt with clause text, weakness and combo factors, separate finisher and
 Comeback rows, and final damage. A terminal exchange stays in the arena as a
 persistent victory record until the player returns to the title. The title
 alone exposes local public match history. The interface requires a browser
 content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
-and PC. Later dependency work adds settings persistence, artificial
-intelligence, audio, expanded content, balance evidence, and release hardening.
+and PC. Local sound, speech, timer, and Auto-complete settings use a strict
+versioned document and browser storage with a session memory fallback. Single
+player uses the seeded Local Radio Caller AI. Later dependency work adds the
+advanced AI ladder, audio output, expanded content, balance evidence, and
+release hardening.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

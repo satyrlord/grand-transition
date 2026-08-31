@@ -138,6 +138,67 @@ describe('Hollywood Roast English grammar', () => {
     }
   });
 
+  test('renders the requested social-media families and ending', () => {
+    for (const [predicateId, expected] of [
+      [
+        'was-posted-on-social-media',
+        'A liberal was posted on social media',
+      ],
+      ['is-posted-on-social-media', 'A liberal is posted on social media'],
+      [
+        'will-be-posted-on-social-media',
+        'A liberal will be posted on social media',
+      ],
+      [
+        'harassed-innocent-people-on-social-media',
+        'A liberal harassed innocent people on social media',
+      ],
+      [
+        'harasses-innocent-people-on-social-media',
+        'A liberal harasses innocent people on social media',
+      ],
+      [
+        'will-harass-innocent-people-on-social-media',
+        'A liberal will harass innocent people on social media',
+      ],
+    ] as const) {
+      expect(analyze([add('a-liberal'), add(predicateId)])).toMatchObject({
+        accepted: true,
+        analysis: { complete: true, publicText: expected },
+      });
+    }
+
+    expect(
+      analyze([add('you'), add('is-posted-on-social-media')]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { publicText: 'You are posted on social media' },
+    });
+    expect(
+      analyze([
+        add('you'),
+        add('harasses-innocent-people-on-social-media'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { publicText: 'You harass innocent people on social media' },
+    });
+    expect(
+      analyze([
+        add('a-liberal'),
+        add('is-posted-on-social-media'),
+        add('and-most-of-your-followers-are-bots'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        state: 'ENDED',
+        publicText:
+          'A liberal is posted on social media and most of your followers are bots.',
+      },
+    });
+  });
+
   test('renders every shipped possessive relation for every shipped noun', () => {
     const relationIds = [
       'could-not-win-own-stairwell',

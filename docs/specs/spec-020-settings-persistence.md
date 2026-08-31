@@ -16,6 +16,17 @@ approved volume requirement. The browser adapter alone calls storage. When
 storage is blocked, full, corrupt, or unavailable, continue through an in-memory
 adapter and show a non-blocking notice that changes will not persist.
 
+The title exposes one `Settings` control. It opens a modal that groups Sound,
+Speech, and Play settings. Changes apply immediately. Close and Escape close
+the modal and return focus to `Settings`. Focus stays inside the open modal.
+The existing Pause controls use the same Turn timer and Auto-complete values.
+Phrase color coding remains session-only because it is not in the strict
+version 1 document.
+
+`null` Speech voice URI appears as `Auto`. A stored non-null URI round-trips
+without calling a browser speech interface. Milestone 024 owns available voice
+discovery and all audio and speech output.
+
 ## Version 1 settings
 
 | Field            | Type and range          | Default |
@@ -41,8 +52,9 @@ and stepwise migration. Malformed data returns `invalid-data`. An unknown
 version returns `unsupported-version`. Storage failures are
 `storage-unavailable`, `storage-quota`, or `storage-security`.
 
-The fallback notice stays until dismissed, names that changes will not persist,
-and does not cover or disable setup or play. The
+The exact fallback notice is `Settings storage is unavailable. Changes will not
+persist after this page closes.` The fallback notice stays until dismissed and
+does not cover or disable setup or play. The
 in-memory adapter remains active for the browser session.
 
 ## Acceptance criteria
@@ -52,7 +64,9 @@ in-memory adapter remains active for the browser session.
   fail at their field path.
 - **AC-020-02:** Reload restores every setting. Unknown
   versions and malformed data use defaults without overwriting the bad value
-  until the user changes a setting.
+  until the user changes a setting. A successful replacement restores browser
+  persistence for that change and all later changes. A failed replacement
+  keeps the in-memory fallback active.
 - **AC-020-03:** Quota, security, and unavailable failures each activate
   in-memory fallback, show the exact non-blocking notice, and permit setup and a
   complete match.

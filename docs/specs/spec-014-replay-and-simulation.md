@@ -65,7 +65,7 @@ Local replay and match-log exports contain seed, setup, round count,
 selections, breakdowns, combo and weakness events, continuations, comebacks,
 and winner. They contain no personal data and are never sent remotely.
 
-Replay versions 1 and 2 use normalized JSON with these fields in order:
+Replay versions 1, 2, and 3 use normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
 inputs. Dealt private cards and derived state are regenerated from the seed.
@@ -73,26 +73,32 @@ Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, the matching replay
 schema version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, and winner. New version 2 logs also contain each
-player's rendered public sentence and ordered used phrases for every round.
+breakdowns, public rule events, and winner. Version 2 and version 3 logs also
+contain each player's rendered public sentence and ordered used phrases for
+every round.
 Each used phrase keeps its stable identifier, rendered text, and active or
 carried source. Older version 1 and version 2 logs without this optional public
-sentence record remain valid. The log omits unselected private cards,
+sentence record remain valid. Version 3 logs require the complete public
+sentence record. The log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
 
 Version 1 uses the original 1, 3, 5, and 7 compatibility bases, per-restricted-
 phrase 1.5 multipliers, and a 2x weakness multiplier. Version 2 uses the
-Milestone 010 pacing contract: 5, 10, 15, and 20 compatibility bases, no
+previous Milestone 010 pacing contract: 5, 10, 15, and 20 compatibility bases,
+no restriction damage bonus, and a 1.5 weakness multiplier. Version 3 uses the
+current Milestone 010 contract: 5, 8, 11, and 14 compatibility bases, no
 restriction damage bonus, and a 1.5 weakness multiplier. New replays and match
-logs use version 2. Decoding and replaying version 1 selects its original
-scoring balance so retained commands reproduce their original result.
+logs use version 3. Decoding and replaying version 1 or version 2 selects its
+original scoring balance so retained commands reproduce their original result.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
 Missing or invalid fields return `invalid-replay`. An unknown version returns
 `unsupported-version`. `tests/fixtures/replay-v1-scoring.json` is the retained
-version 1 source fixture for the step to version 2. Encoding preserves the
-supplied supported version and never relabels version 1 commands as version 2.
+version 1 source fixture for the step to version 2. Focused replay tests also
+retain the version 2 scoring result after version 3 becomes current. Encoding
+preserves the supplied supported version and never relabels older commands as
+version 3.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
@@ -107,8 +113,9 @@ Milestone 002 threshold remains 70 percent.
 ## Acceptance criteria
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
-  normalized bytes and an exact final state. A version 1 scoring fixture replays
-  with its original resolution after version 2 becomes current.
+  normalized bytes and an exact final state. Version 1 and version 2 scoring
+  fixtures replay with their original resolutions after version 3 becomes
+  current.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID

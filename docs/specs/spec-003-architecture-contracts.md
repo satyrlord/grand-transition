@@ -68,7 +68,9 @@ The checker also enforces these dependency directions:
 
 - Engine can import engine, content, and localization modules. The
   development-only `src/engine/simulation.ts` integration owner can also import
-  persistence codecs to produce replay and match-log evidence.
+  persistence codecs to produce replay and match-log evidence and the exact
+  `src/ai/easy-ai.ts` policy to run AI simulation evidence. No other engine
+  module can import AI.
 - AI can import AI, engine, content, and localization modules.
 - Content can import content and localization modules.
 - Persistence codecs can import codecs, `StoragePort`, engine, content, and

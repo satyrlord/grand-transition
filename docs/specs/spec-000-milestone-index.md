@@ -231,7 +231,7 @@ source-only review does not satisfy them.
     a local public match record.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
     Local options persist or fail safely.
-21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 7. A
+21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 8. A
     deterministic valid-action AI completes custom matches.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
     difficulties and the ladder work.

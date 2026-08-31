@@ -3,6 +3,7 @@ import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
   legacyBasicScoringBalance,
+  legacyVersion2BasicScoringBalance,
   type BasicScoringBalance,
 } from '../../content/basic-scoring-balance';
 import { seededRandomSource } from '../../engine/random-source';
@@ -17,14 +18,19 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 2;
-export const supportedReplaySchemaVersions = [1, replaySchemaVersion] as const;
+export const replaySchemaVersion = 3;
+export const supportedReplaySchemaVersions = [
+  1,
+  2,
+  replaySchemaVersion,
+] as const;
 export const replayKind = 'grand-transition-replay' as const;
 export const matchLogKind = 'grand-transition-match-log' as const;
 
 const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[0]),
   z.literal(supportedReplaySchemaVersions[1]),
+  z.literal(supportedReplaySchemaVersions[2]),
 ]);
 
 export type ReplayFailureCode =
@@ -271,6 +277,13 @@ const matchLogDocumentSchema = z
         });
       }
     });
+    if (matchLog.schemaVersion === replaySchemaVersion && !matchLog.sentences) {
+      context.addIssue({
+        code: 'custom',
+        path: ['sentences'],
+        message: 'Current match logs must record each public sentence.',
+      });
+    }
     if (matchLog.sentences) {
       const roundNumbers = new Set(matchLog.rounds.map((round) => round.round));
       const sentenceKeys = new Set<string>();
@@ -387,7 +400,9 @@ export function replayMatch(
     balance:
       decoded.value.schemaVersion === 1
         ? legacyBasicScoringBalance
-        : context.balance,
+        : decoded.value.schemaVersion === 2
+          ? legacyVersion2BasicScoringBalance
+          : context.balance,
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {

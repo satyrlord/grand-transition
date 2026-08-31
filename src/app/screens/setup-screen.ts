@@ -7,6 +7,7 @@ import {
   type CharacterSkin,
 } from '../../game-content';
 import portraitFrameUrl from '../../assets/brand/politburo-portrait-frame.png';
+import type { MatchMode } from '../../engine/match-lifecycle';
 
 const elementName = 'grand-transition-setup';
 const characterInspectorId = 'character-inspector';
@@ -39,7 +40,7 @@ export type SetupSnapshot = Readonly<{
 }>;
 
 export type StartMatchPayload = Readonly<{
-  mode: 'hotseat';
+  mode: MatchMode;
   playerOneCharacterId: string;
   playerOneSkinId: string;
   playerTwoCharacterId: string;
@@ -140,7 +141,10 @@ export class GrandTransitionSetup extends LitElement {
           >
             ${this.contestantStage({
               field: 'playerOneCharacterId',
-              playerLabel: msg('Player one'),
+              playerLabel:
+                this.snapshot.mode === 'ai'
+                  ? msg('You')
+                  : msg('Player one'),
               side: 'one',
               character: playerOne,
               skin: playerOneSkin,
@@ -180,7 +184,10 @@ export class GrandTransitionSetup extends LitElement {
 
             ${this.contestantStage({
               field: 'playerTwoCharacterId',
-              playerLabel: msg('Player two'),
+              playerLabel:
+                this.snapshot.mode === 'ai'
+                  ? msg('Local Radio Caller')
+                  : msg('Player two'),
               side: 'two',
               character: playerTwo,
               skin: playerTwoSkin,
@@ -190,25 +197,56 @@ export class GrandTransitionSetup extends LitElement {
             })}
           </section>
 
-          <fieldset class="match-terms">
-            <legend>${msg('Match terms')}</legend>
-            ${this.selectField({
-              field: 'mode',
-              label: msg('Mode'),
-              value: this.snapshot.mode,
-              error: errors.mode,
-              options: [{ value: 'hotseat', label: msg('Hotseat') }],
-            })}
-            ${this.selectField({
-              field: 'sceneId',
-              label: msg('Scene'),
-              value: this.snapshot.sceneId,
-              error: errors.sceneId,
-              options: sampleContent.scenes.map((scene) => ({
-                value: scene.id,
-                label: gameMessage(scene.nameKey),
-              })),
-            })}
+          <fieldset
+            class="match-settings match-settings--${
+              this.snapshot.mode === 'ai' ? 'single-player' : 'hotseat'
+            }"
+          >
+            <legend>
+              <span class="match-settings-heading">
+                ${msg('Match settings')}
+              </span>
+            </legend>
+            <div class="match-settings-mode">
+              ${this.selectField({
+                field: 'mode',
+                label: msg('Mode'),
+                value: this.snapshot.mode,
+                error: errors.mode,
+                options: [
+                  { value: 'ai', label: msg('Single player') },
+                  { value: 'hotseat', label: msg('Hotseat') },
+                ],
+              })}
+            </div>
+            ${
+              this.snapshot.mode === 'ai'
+                ? html`
+                    <div class="match-settings-difficulty">
+                      <div class="setup-field">
+                        <label for="aiDifficulty">${msg('Difficulty')}</label>
+                        <select id="aiDifficulty" name="aiDifficulty">
+                          <option value="local-radio-caller" selected>
+                            ${msg('Local Radio Caller')}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  `
+                : nothing
+            }
+            <div class="match-settings-scene">
+              ${this.selectField({
+                field: 'sceneId',
+                label: msg('Scene'),
+                value: this.snapshot.sceneId,
+                error: errors.sceneId,
+                options: sampleContent.scenes.map((scene) => ({
+                  value: scene.id,
+                  label: gameMessage(scene.nameKey),
+                })),
+              })}
+            </div>
           </fieldset>
 
           <div class="setup-actions">
@@ -701,9 +739,11 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   const errors: SetupErrors = {};
 
   if (!snapshot.mode) {
-    errors.mode = msg('Mode is missing. Choose Hotseat.');
-  } else if (snapshot.mode !== 'hotseat') {
-    errors.mode = msg('Mode is not supported. Choose Hotseat.');
+    errors.mode = msg('Mode is missing. Choose Single player or Hotseat.');
+  } else if (snapshot.mode !== 'ai' && snapshot.mode !== 'hotseat') {
+    errors.mode = msg(
+      'Mode is not supported. Choose Single player or Hotseat.',
+    );
   }
 
   errors.playerOneCharacterId = identifierError(
@@ -765,7 +805,7 @@ function immutableStartMatchPayload(
   snapshot: SetupSnapshot,
 ): StartMatchPayload {
   return Object.freeze({
-    mode: 'hotseat',
+    mode: snapshot.mode as MatchMode,
     playerOneCharacterId: snapshot.playerOneCharacterId,
     playerOneSkinId: snapshot.playerOneSkinId,
     playerTwoCharacterId: snapshot.playerTwoCharacterId,

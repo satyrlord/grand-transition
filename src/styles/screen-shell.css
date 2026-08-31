@@ -584,10 +584,9 @@
     border-color: var(--broadcast-paper-light);
   }
 
-  .match-terms {
+  .match-settings {
     position: relative;
     display: grid;
-    grid-template-columns: auto minmax(8.5rem, 0.65fr) minmax(15rem, 1fr);
     align-items: center;
     gap: clamp(0.6rem, 1.2vw, 1rem);
     min-width: 0;
@@ -598,13 +597,49 @@
     background: var(--broadcast-ink);
   }
 
-  .match-terms legend {
+  .match-settings--hotseat {
+    grid-template-areas: 'heading mode scene';
+    grid-template-columns:
+      minmax(max-content, auto)
+      minmax(8.5rem, 0.65fr)
+      minmax(15rem, 1fr);
+  }
+
+  .match-settings--single-player {
+    grid-template-areas: 'heading mode difficulty scene';
+    grid-template-columns:
+      minmax(max-content, auto)
+      minmax(9.5rem, 0.65fr)
+      minmax(15rem, 0.9fr)
+      minmax(18rem, 1.1fr);
+  }
+
+  .match-settings legend {
     display: contents;
+  }
+
+  .match-settings-heading {
+    grid-area: heading;
     color: var(--broadcast-brass-light);
     font: 400 1rem/1 var(--font-feature);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     -webkit-text-stroke: 0.6px currentcolor;
+  }
+
+  .match-settings-mode {
+    grid-area: mode;
+    min-width: 0;
+  }
+
+  .match-settings-difficulty {
+    grid-area: difficulty;
+    min-width: 0;
+  }
+
+  .match-settings-scene {
+    grid-area: scene;
+    min-width: 0;
   }
 
   .setup-field {
@@ -664,12 +699,13 @@
 
   .setup-actions {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: 0.5rem;
   }
 
   .setup-actions button {
     min-width: clamp(7.5rem, 11vw, 11rem);
+    height: 3.6rem;
     min-height: 3.6rem;
     padding: 0.65rem 0.9rem;
     border: 3px double var(--broadcast-brass);
@@ -702,6 +738,33 @@
     background: var(--television-blue);
   }
 
+  @media (max-width: 80rem) {
+    .match-settings {
+      min-height: 4.15rem;
+    }
+
+    .match-settings--hotseat {
+      grid-template-columns:
+        minmax(7.75rem, auto)
+        minmax(8rem, 0.6fr)
+        minmax(14rem, 1.4fr);
+    }
+
+    .match-settings--single-player {
+      grid-template-columns:
+        minmax(7.75rem, auto)
+        minmax(8rem, 0.7fr)
+        minmax(10rem, 0.9fr)
+        minmax(15rem, 1.5fr);
+    }
+
+    .match-settings .setup-field {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(2.4rem, auto);
+      gap: 0.16rem;
+    }
+  }
+
   @media (max-width: 70rem) {
     .setup-heading > p:last-child {
       display: none;
@@ -723,18 +786,6 @@
         minmax(12.4rem, 0.72fr);
     }
 
-    .match-terms {
-      grid-template-columns: minmax(8rem, 0.5fr) minmax(22rem, 1.5fr);
-    }
-
-    .match-terms legend {
-      display: block;
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-    }
   }
 
   @media (max-height: 47rem) {
@@ -747,8 +798,12 @@
       padding: 0.48rem;
     }
 
-    .match-terms,
+    .match-settings {
+      min-height: 4.15rem;
+    }
+
     .setup-actions button {
+      height: 3.25rem;
       min-height: 3.25rem;
     }
   }
@@ -768,7 +823,7 @@
     .skin-selector,
     .skin-cycle,
     .roster-zone,
-    .match-terms,
+    .match-settings,
     .setup-field select,
     .setup-actions button,
     .character-inspector {
@@ -781,7 +836,7 @@
     .skin-cycle,
     .roster-zone,
     .roster-choice,
-    .match-terms,
+    .match-settings,
     .setup-field select,
     .setup-actions button,
     .character-inspector {

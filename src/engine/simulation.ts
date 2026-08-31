@@ -1,5 +1,6 @@
 import type { ContentCatalog } from '../content/content-catalog';
 import type { Phrase } from '../content/schemas';
+import { decideLocalRadioCaller } from '../ai/easy-ai';
 import type { DraftCardReference, DraftCommand } from './draft-actions';
 import {
   createMatchReducer,
@@ -27,6 +28,7 @@ import {
 export const simulationKind = 'grand-transition-simulation' as const;
 
 export type SimulationSetupOptions = Readonly<{
+  aiDifficulty?: string;
   characterIds?: readonly [string, string];
   sceneId?: string;
   pride?: readonly [number, number];
@@ -35,10 +37,16 @@ export type SimulationSetupOptions = Readonly<{
 
 export type SimulationOption = Readonly<{
   command: MatchCommand;
+  presentationDelayMs?: number;
   utility: number;
   reason: string;
   phrase: Phrase | null;
 }>;
+
+export type SimulationOptionProvider = (
+  state: MatchState,
+  context: MatchEngineContext,
+) => readonly SimulationOption[];
 
 export type SimulatedMatch = Readonly<{
   seed: number;
@@ -48,6 +56,9 @@ export type SimulatedMatch = Readonly<{
   matchLog: MatchLogDocument;
   matchLogBytes: string;
   finalState: MatchState;
+  maximumPresentationDelayMs: number;
+  privacyLeaks: number;
+  timerOverruns: number;
 }>;
 
 export type SimulationMatchSummary = Readonly<{
@@ -65,6 +76,9 @@ export type SimulationReport = Readonly<{
   matches: number;
   completedMatches: number;
   totalRounds: number;
+  maximumPresentationDelayMs: number;
+  privacyLeaks: number;
+  timerOverruns: number;
   winners: Readonly<Record<string, number>>;
   results: readonly SimulationMatchSummary[];
 }>;
@@ -116,7 +130,7 @@ export function createSimulationSetup(
     mode: 'ai',
     players: [players[0]!, players[1]!],
     sceneId,
-    aiDifficulty: 'simulation-policy',
+    aiDifficulty: options.aiDifficulty ?? 'simulation-policy',
     timerSeconds: 30,
     speechEnabled: false,
     privacyEnabled: true,
@@ -140,7 +154,6 @@ export function listSimulationOptions(
   }
   const player = state.draft?.playerStates[state.activePlayerId];
   if (!player) return [];
-
   const options: SimulationOption[] = player.legalCards.map((card) => {
     const phrase = phraseForCard(state, card, context);
     return {
@@ -193,10 +206,47 @@ export function listSimulationOptions(
   );
 }
 
+export function listLocalRadioCallerSimulationOptions(
+  state: MatchState,
+  context: MatchEngineContext,
+): readonly SimulationOption[] {
+  const lifecycleType = lifecycleCommandForState(state);
+  if (lifecycleType) {
+    return [
+      {
+        command: lifecycleCommand(lifecycleType),
+        utility: 1_000,
+        reason: 'Advance the match lifecycle.',
+        phrase: null,
+      },
+    ];
+  }
+  const decision =
+    decideLocalRadioCaller(state, context) ??
+    decideLocalRadioCaller(state, context, { turnExpired: true });
+  if (!decision) return [];
+  const candidate = decision.candidates.find(
+    ({ command }) => commandKey(command) === commandKey(decision.command),
+  )!;
+  return [
+    {
+      command: decision.command,
+      presentationDelayMs: decision.delayMs,
+      utility: candidate.utility,
+      reason: 'Local Radio Caller normalized utility.',
+      phrase:
+        decision.command.type === 'select-phrase'
+          ? phraseForCommand(state, decision.command, context)
+          : null,
+    },
+  ];
+}
+
 export function simulateMatch(
   seed: number,
   setup: ReplaySetup,
   context: ReplayContext,
+  optionProvider: SimulationOptionProvider = listSimulationOptions,
 ): SimulatedMatch {
   const normalizedSeed = normalizeSeed(seed);
   const replay: ReplayDocument = {
@@ -218,12 +268,36 @@ export function simulateMatch(
   };
   const reducer = createMatchReducer(engineContext);
   const commands: ReplayDocument['commands'][number][] = [];
+  const privateCards = new Map<string, string>();
+  const selectedPrivateCardIds = new Set<string>();
+  let maximumPresentationDelayMs = 0;
+  let timerOverruns = 0;
   const maximumCommands = 20_000;
 
   while (state.phase !== 'results' && commands.length < maximumCommands) {
-    const option = listSimulationOptions(state, engineContext)[0];
+    collectPrivateCards(state, privateCards);
+    const option = optionProvider(state, engineContext)[0];
     if (!option) {
       throw simulationFailure(normalizedSeed, 'No simulation command exists.');
+    }
+    if (
+      option.command.type === 'select-phrase' &&
+      option.command.payload.card.source === 'private'
+    ) {
+      selectedPrivateCardIds.add(option.command.payload.card.cardId);
+    }
+    if (option.presentationDelayMs !== undefined) {
+      maximumPresentationDelayMs = Math.max(
+        maximumPresentationDelayMs,
+        option.presentationDelayMs,
+      );
+      if (
+        option.presentationDelayMs < 500 ||
+        option.presentationDelayMs > 1_100 ||
+        option.presentationDelayMs > setup.timerSeconds * 1_000
+      ) {
+        timerOverruns += 1;
+      }
     }
     const result = reducer(state, option.command, seededRandomSource);
     if (!result.ok) {
@@ -256,14 +330,34 @@ export function simulateMatch(
     );
   }
   const matchLog = createMatchLog(completedReplay, state);
+  const matchLogBytes = encodeMatchLog(matchLog);
+  const privacyLeakFacts = findPrivateLeaks(
+    privateCards,
+    selectedPrivateCardIds,
+    replayBytes,
+    matchLogBytes,
+  );
+  const privacyLeaks = privacyLeakFacts.length;
+  if (privacyLeaks > 0) {
+    throw simulationFailure(
+      normalizedSeed,
+      `The simulation exposed private hand data: ${privacyLeakFacts[0]}.`,
+    );
+  }
+  if (timerOverruns > 0) {
+    throw simulationFailure(normalizedSeed, 'The AI presentation delay exceeded its bounds.');
+  }
   return {
     seed: normalizedSeed,
     replayPath: replayPath(normalizedSeed),
     replay: completedReplay,
     replayBytes,
     matchLog,
-    matchLogBytes: encodeMatchLog(matchLog),
+    matchLogBytes,
     finalState: state,
+    maximumPresentationDelayMs,
+    privacyLeaks,
+    timerOverruns,
   };
 }
 
@@ -272,6 +366,7 @@ export function simulateMatches(
   matches: number,
   setup: ReplaySetup,
   context: ReplayContext,
+  optionProvider: SimulationOptionProvider = listSimulationOptions,
 ): SimulationReport {
   const normalizedSeed = normalizeSeed(seed);
   if (!Number.isSafeInteger(matches) || matches <= 0) {
@@ -280,11 +375,25 @@ export function simulateMatches(
   const results: SimulationMatchSummary[] = [];
   const winners: Record<string, number> = {};
   let totalRounds = 0;
+  let maximumPresentationDelayMs = 0;
+  let privacyLeaks = 0;
+  let timerOverruns = 0;
   for (let index = 0; index < matches; index += 1) {
-    const match = simulateMatch((normalizedSeed + index) >>> 0, setup, context);
+    const match = simulateMatch(
+      (normalizedSeed + index) >>> 0,
+      setup,
+      context,
+      optionProvider,
+    );
     const winner = match.finalState.winner!;
     winners[winner] = (winners[winner] ?? 0) + 1;
     totalRounds += match.finalState.resolutionHistory.length;
+    maximumPresentationDelayMs = Math.max(
+      maximumPresentationDelayMs,
+      match.maximumPresentationDelayMs,
+    );
+    privacyLeaks += match.privacyLeaks;
+    timerOverruns += match.timerOverruns;
     results.push({
       seed: match.seed,
       replayPath: match.replayPath,
@@ -300,6 +409,9 @@ export function simulateMatches(
     matches,
     completedMatches: results.length,
     totalRounds,
+    maximumPresentationDelayMs,
+    privacyLeaks,
+    timerOverruns,
     winners: Object.fromEntries(
       Object.entries(winners).toSorted(([left], [right]) =>
         left.localeCompare(right),
@@ -317,7 +429,7 @@ export function summarizeSimulation(report: SimulationReport): string {
   const winners = Object.entries(report.winners)
     .map(([playerId, count]) => `${playerId}=${count}`)
     .join(', ');
-  return `Simulated ${report.matches} match(es) from seed ${report.seed}; rounds=${report.totalRounds}; winners: ${winners}.`;
+  return `Simulated ${report.matches} match(es) from seed ${report.seed}; rounds=${report.totalRounds}; winners: ${winners}; privacy-leaks=${report.privacyLeaks}; timer-overruns=${report.timerOverruns}; maximum-delay=${report.maximumPresentationDelayMs} ms.`;
 }
 
 function lifecycleCommandForState(
@@ -371,9 +483,59 @@ function phraseUtility(
   const weaknessMatches = phrase.tags.filter((tag) =>
     weaknessTags.includes(tag),
   ).length;
-  return (
-    weaknessMatches * 12 + (phrase.finisherBonus ?? 0) + phrase.tags.length
-  );
+  return weaknessMatches * 12 + (phrase.finisherBonus ?? 0) + phrase.tags.length;
+}
+
+function collectPrivateCards(
+  state: MatchState,
+  cards: Map<string, string>,
+): void {
+  if (!state.draft) return;
+  for (const player of Object.values(state.draft.playerStates)) {
+    for (const card of player.hand) cards.set(card.id, card.phraseId);
+  }
+}
+
+function findPrivateLeaks(
+  privateCards: ReadonlyMap<string, string>,
+  selectedPrivateCardIds: ReadonlySet<string>,
+  replayBytes: string,
+  matchLogBytes: string,
+): readonly string[] {
+  const replayStrings = new Set(collectStrings(JSON.parse(replayBytes)));
+  const logStrings = new Set(collectStrings(JSON.parse(matchLogBytes)));
+  const leaks: string[] = [];
+  for (const cardId of privateCards.keys()) {
+    if (selectedPrivateCardIds.has(cardId)) continue;
+    if (replayStrings.has(cardId) || logStrings.has(cardId)) {
+      leaks.push(`card ID ${cardId}`);
+    }
+  }
+  return leaks;
+}
+
+function collectStrings(value: unknown): readonly string[] {
+  if (typeof value === 'string') return [value];
+  if (Array.isArray(value)) return value.flatMap(collectStrings);
+  if (value && typeof value === 'object') {
+    return Object.values(value).flatMap(collectStrings);
+  }
+  return [];
+}
+
+function phraseForCommand(
+  state: MatchState,
+  command: Extract<MatchCommand, { readonly type: 'select-phrase' }>,
+  context: MatchEngineContext,
+): Phrase | null {
+  const card = command.payload.card;
+  const phraseId =
+    card.source === 'shared'
+      ? state.board?.slots.find((slot) => slot.id === card.cardId)?.phraseId
+      : state.draft?.playerStates[state.activePlayerId]?.hand.find(
+          (item) => item.id === card.cardId,
+        )?.phraseId;
+  return context.phrases.find((phrase) => phrase.id === phraseId) ?? null;
 }
 
 function assertStateInvariants(
