@@ -316,8 +316,8 @@ const paletteSchema = z
 export const characterSchema = z
   .object({
     id: identifierSchema,
-    species: z.literal('human', {
-      error: 'Every character must be human.',
+    species: z.enum(['human', 'robot'], {
+      error: 'Use a supported character species: human or robot.',
     }),
     nameKey: localeKeySchema,
     descriptionKey: localeKeySchema,

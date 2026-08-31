@@ -8,19 +8,22 @@ art, and audio content
 
 ## Deliver
 
-Complete all 18 fictional archetypes, 6 scenes, English phrase pools, final art,
+Complete all 19 fictional archetypes, 6 scenes, English phrase pools, final art,
 scene audio treatment, and one exclusive comeback line per character and tier.
 Use the existing schemas, pipelines, and presentation contracts.
 
-Every archetype has its default portrait skin and at least one alternate female
-skin through the Milestone 023 filename convention. A skin changes only visual
+Every archetype has its default portrait skin and at least one alternate skin
+through the Milestone 023 filename convention. Each human archetype has at
+least one alternate female skin. A fully mechanical archetype has at least one
+alternate chassis. A skin changes only visual
 presentation. It does not add or change phrases, weaknesses, comeback lines,
 balance data, or character identity. Additional alternate clothing is allowed.
 For example, the Black Sea Captain can use a cream naval-uniform default skin
 and a navy-blue formal-suit alternate skin.
 
-All 18 archetypes are human. Animal terms in a name or title are metaphorical
-political labels only and never define anatomy, species, or hybrid traits.
+Eighteen archetypes are human. Government AI is a fully mechanical robot.
+Animal terms in a name or title are metaphorical political labels only and
+never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
@@ -81,6 +84,13 @@ political labels only and never define anatomy, species, or hybrid traits.
 18. **EU-Funds Alchemist:** A grant conjurer. Weaknesses are transparency,
     outcomes, and maintenance. The play style uses procurement denial and
     high-value finishers.
+19. **Government AI:** A Romanian-government chatbot that nobody will use,
+    bought for an enormous emergency-fund sum from a phantom company run by
+    somebody's cousin. Weaknesses are nepotism, corruption, spending, and
+    being obsolete. Its voice mixes corporate jargon with communist
+    propaganda. Its default skin is an ugly, drunk, ridiculous warm-cream
+    service robot. Its alternate skin is a severe blue-gray public-service
+    kiosk chassis.
 
 ## Required scenes
 
@@ -179,7 +189,7 @@ failed automated range or distribution.
 
 ## Acceptance criteria
 
-- **AC-026-01:** The catalog contains exactly 18 required character IDs and
+- **AC-026-01:** The catalog contains exactly 19 required character IDs and
   six required scene IDs, with no duplicate English identity.
 - **AC-026-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
@@ -192,9 +202,11 @@ failed automated range or distribution.
   threshold and record seed, workload, environment, and exceptions.
 - **AC-026-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
-- **AC-026-07:** All 18 characters provide a default skin and at least one
-  alternate female skin. Every skin passes the shared asset, alpha, provenance,
-  viewport, and package checks while the character's phrase and balance records
+- **AC-026-07:** All 19 characters provide a default skin and at least one
+  alternate skin. Each human character provides an alternate female skin, and
+  each robot provides an alternate chassis. Every skin passes the shared asset,
+  alpha, provenance, viewport, and package checks while the character's phrase
+  and balance records
   remain identical across skins.
 
 ## Content research boundary

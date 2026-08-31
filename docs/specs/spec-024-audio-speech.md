@@ -8,11 +8,16 @@
 ## Deliver
 
 Implement replaceable sound, music, and speech adapters plus mixer controls.
-Add original slice audio and optional speech voice, rate, volume, cancellation,
+Add slice audio and optional speech voice, rate, volume, cancellation,
 unavailable state, and hotseat suppression.
 
-Minimum viable product (MVP) audio includes original menu music and distinct
-scene treatment. It includes role-select, commit, light and heavy hit, weakness,
+Minimum viable product (MVP) audio includes menu music and distinct scene
+treatment. Music may be original, AI-generated, or licensed third-party work.
+Original and AI-generated audio uses the project license in `LICENSE.md`.
+Third-party audio may use CC0, CC BY, or CC BY-NC because the product is free
+and non-commercial. Record the owner, source, and license of every
+third-party asset in the asset manifest before use.
+It includes role-select, commit, light and heavy hit, weakness,
 combo, continuation break, comeback, and grammar-mistake cues.
 Mixer
 controls are Master, Music, Effects, and Speech.

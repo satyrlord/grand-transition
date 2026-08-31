@@ -8,9 +8,10 @@
 ## Deliver
 
 Implement strict Zod 4 schemas for original Grand Transition content. The
-initial catalog contains the Red-Folded Chairman, Thunder Tribune, and Black Sea
-Captain, at least one scene, and a canonical English locale. Each character
-owns English phrase cards. Animal terms in character titles are metaphorical.
+initial catalog contains the Red-Folded Chairman, Thunder Tribune, Black Sea
+Captain, and Government AI, at least one scene, and a canonical English locale.
+Each character owns English phrase cards. Animal terms in character titles are
+metaphorical.
 
 A phrase owns an identifier, role, text key, and optional agreement forms. It
 can own a connector kind, grammatical number, grammatical person, and referent
@@ -29,7 +30,8 @@ compatibility.
 A character owns identity, original media, palette, and two through four
 weakness tags. It owns character-restricted hand phrase identifiers and one
 exclusive comeback line for each tier. It also owns artificial-intelligence,
-voice, and animation data.
+voice, and animation data. Its species is `human` or `robot`. A robot is fully
+mechanical and does not use human, animal, or hybrid anatomy.
 There is no character-specific common-board phrase list.
 
 A scene owns identity, its first-round opener index, original media, its
@@ -51,6 +53,8 @@ copyrighted broadcast graphics.
 ## Exact constraints
 
 - Identifiers use lower-case kebab case.
+- Character species is `human` or `robot`. A robot portrait is fully
+  mechanical.
 - Arrays that represent sets contain no duplicate value. Player-visible English
   phrase text is unique across the complete common and character catalog after
   case, surrounding-space, and repeated-space normalization.
@@ -133,9 +137,9 @@ simulation, and browser validation must pass before it can ship.
 
 ## Acceptance criteria
 
-- **AC-005-01:** The shipped three-character scene catalog passes all strict
+- **AC-005-01:** The shipped four-character scene catalog passes all strict
   record and aggregate checks. It contains only the Red-Folded Chairman,
-  Thunder Tribune, and Black Sea Captain.
+  Thunder Tribune, Black Sea Captain, and Government AI.
 - **AC-005-02:** Every numeric boundary passes at both endpoints and fails
   outside them.
 - **AC-005-03:** Duplicate IDs, duplicate player-visible English phrase text,

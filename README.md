@@ -8,7 +8,7 @@ rounds, use comebacks, and reduce the opponent's Pride.
 The game occurs in an invented republic influenced by Romanian public life
 after 1989. Its characters are fictional composites. It does not reproduce
 real people, real political party names, party acronyms, party logos, protected
-game content, or third-party art and audio.
+game content, third-party art, or unlicensed third-party audio.
 
 ## Planned play modes
 
@@ -29,9 +29,10 @@ game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
 019 through 029 remain incomplete as full deliveries.
 
-The current content has common Romanian-politics phrases and three fictional
-characters. Each character has owned phrases and a default and alternate
-portrait skin. The content also includes two fictional layered debate studios
+The current content has common Romanian-politics phrases and four fictional
+characters: three humans and one robot. Each character has owned phrases and a
+default and alternate portrait skin. The content also includes two fictional
+layered debate studios
 and one English game-locale bundle.
 
 The implemented rules include extended Hollywood Roast grammar, agreement,

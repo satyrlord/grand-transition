@@ -56,10 +56,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes three original fictional characters,
-  Romanian-politics phrase content, separate transparent portraits, and two
-  layered debate studios. Each studio uses one fixed fictional moderator and a
-  separate foreground desk plate.
+  bundle. It also includes four original fictional characters, three human and
+  one fully mechanical, Romanian-politics phrase content, separate transparent
+  portraits, and two layered debate studios. Each studio uses one fixed
+  fictional moderator and a separate foreground desk plate.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,

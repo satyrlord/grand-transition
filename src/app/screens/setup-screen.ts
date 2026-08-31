@@ -62,6 +62,7 @@ type SetupErrors = Partial<Record<SetupField, string>>;
 
 type CharacterView = Readonly<{
   id: string;
+  species: 'human' | 'robot';
   name: string;
   portraitUrl: string;
   weaknessTags: readonly string[];
@@ -433,6 +434,7 @@ export class GrandTransitionSetup extends LitElement {
         type="button"
         class="roster-choice"
         data-character-id=${character.id}
+        data-character-species=${character.species}
         data-player-one-selected=${playerOneSelected ? 'true' : 'false'}
         data-player-two-selected=${playerTwoSelected ? 'true' : 'false'}
         aria-pressed=${currentTargetSelected}
@@ -824,6 +826,7 @@ function characterViews(): readonly CharacterView[] {
     }
     return {
       id: character.id,
+      species: character.species,
       name: gameMessage(character.nameKey),
       portraitUrl,
       weaknessTags: character.weaknessTags,

@@ -2,6 +2,7 @@
   "name": "grand-transition",
   "version": "0.0.0",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE.md",
   "type": "module",
   "packageManager": "npm@12.0.2",
   "engines": {

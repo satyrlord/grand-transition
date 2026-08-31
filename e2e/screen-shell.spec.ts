@@ -5,6 +5,7 @@ const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
   { name: 'four-by-three', width: 1024, height: 768 },
   { name: 'common-landscape', width: 1280, height: 720 },
+  { name: 'reported-tall-landscape', width: 1482, height: 1242 },
   { name: 'recommended-pc', width: 1920, height: 1080 },
 ] as const;
 
@@ -122,6 +123,14 @@ for (const viewport of supportedViewports) {
       );
     });
 
+    await page
+      .locator('.roster-choice[data-character-id="government-ai"]')
+      .click();
+    await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
+      'data-character-id',
+      'government-ai',
+    );
+
     const geometry = await page.evaluate(() => {
       const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
       const sceneStyle = getComputedStyle(scene);
@@ -134,6 +143,48 @@ for (const viewport of supportedViewports) {
         Number.parseFloat(sceneStyle.paddingLeft) -
         Number.parseFloat(sceneStyle.paddingRight) -
         12;
+      const robotChoice = document.querySelector<HTMLElement>(
+        '.roster-choice[data-character-id="government-ai"]',
+      )!;
+      const rosterZone = document.querySelector<HTMLElement>('.roster-zone')!;
+      const rosterGrid = document.querySelector<HTMLElement>('.roster-grid')!;
+      const rosterZoneBox = rosterZone.getBoundingClientRect();
+      const rosterGridBox = rosterGrid.getBoundingClientRect();
+      const rosterChoiceBoxes = [
+        ...rosterGrid.querySelectorAll<HTMLElement>('.roster-choice'),
+      ].map((choice) => choice.getBoundingClientRect());
+      const robotWindow = robotChoice.querySelector<HTMLElement>(
+        '.roster-portrait-window',
+      )!;
+      const robotPortrait = robotChoice.querySelector<HTMLImageElement>(
+        '.roster-headshot',
+      )!;
+      const robotWindowBox = robotWindow.getBoundingClientRect();
+      const robotPortraitBox = robotPortrait.getBoundingClientRect();
+      const robotCanvas = document.createElement('canvas');
+      robotCanvas.width = robotPortrait.naturalWidth;
+      robotCanvas.height = robotPortrait.naturalHeight;
+      const robotContext = robotCanvas.getContext('2d', {
+        willReadFrequently: true,
+      })!;
+      robotContext.drawImage(robotPortrait, 0, 0);
+      const robotPixels = robotContext.getImageData(
+        0,
+        0,
+        robotCanvas.width,
+        robotCanvas.height,
+      ).data;
+      let robotMinX = robotCanvas.width;
+      let robotMaxX = -1;
+      for (let y = 0; y < robotCanvas.height; y += 1) {
+        for (let x = 0; x < robotCanvas.width; x += 1) {
+          if (robotPixels[(y * robotCanvas.width + x) * 4 + 3]! > 32) {
+            robotMinX = Math.min(robotMinX, x);
+            robotMaxX = Math.max(robotMaxX, x);
+          }
+        }
+      }
+      const robotStyle = getComputedStyle(robotPortrait);
       return {
         documentWidth: document.documentElement.scrollWidth,
         documentHeight: document.documentElement.scrollHeight,
@@ -169,6 +220,45 @@ for (const viewport of supportedViewports) {
             box.top >= 0 && box.bottom <= document.documentElement.clientHeight
           );
         }),
+        robotRosterPortrait: {
+          species: robotChoice.dataset.characterSpecies,
+          objectFit: robotStyle.objectFit,
+          objectPosition: robotStyle.objectPosition,
+          scale: new DOMMatrix(robotStyle.transform).a,
+          paintContainment: getComputedStyle(robotWindow).contain,
+          imageInsideWindow:
+            robotPortraitBox.left >= robotWindowBox.left - 0.5 &&
+            robotPortraitBox.top >= robotWindowBox.top - 0.5 &&
+            robotPortraitBox.right <= robotWindowBox.right + 0.5 &&
+            robotPortraitBox.bottom <= robotWindowBox.bottom + 0.5,
+          centerOffsetRatio: Math.abs(
+            (robotMinX + robotMaxX) / 2 / robotCanvas.width - 0.5,
+          ),
+        },
+        rosterLayout: {
+          rowCount: new Set(
+            rosterChoiceBoxes.map((box) => Math.round(box.top * 10) / 10),
+          ).size,
+          gridInsideZone:
+            rosterGridBox.left >= rosterZoneBox.left - 0.5 &&
+            rosterGridBox.top >= rosterZoneBox.top - 0.5 &&
+            rosterGridBox.right <= rosterZoneBox.right + 0.5 &&
+            rosterGridBox.bottom <= rosterZoneBox.bottom + 0.5,
+          cardsInsideGrid: rosterChoiceBoxes.every(
+            (box) =>
+              box.left >= rosterGridBox.left - 0.5 &&
+              box.top >= rosterGridBox.top - 0.5 &&
+              box.right <= rosterGridBox.right + 0.5 &&
+              box.bottom <= rosterGridBox.bottom + 0.5,
+          ),
+          cardsInsideZone: rosterChoiceBoxes.every(
+            (box) =>
+              box.left >= rosterZoneBox.left - 0.5 &&
+              box.top >= rosterZoneBox.top - 0.5 &&
+              box.right <= rosterZoneBox.right + 0.5 &&
+              box.bottom <= rosterZoneBox.bottom + 0.5,
+          ),
+        },
       };
     });
     expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewportWidth);
@@ -184,6 +274,24 @@ for (const viewport of supportedViewports) {
       geometry.viewportHeight,
     );
     expect(geometry.weaknessRecordsInside).toBe(true);
+    expect(geometry.robotRosterPortrait).toEqual({
+      species: 'robot',
+      objectFit: 'contain',
+      objectPosition: '50% 50%',
+      scale: 1,
+      paintContainment: 'paint',
+      imageInsideWindow: true,
+      centerOffsetRatio: expect.any(Number),
+    });
+    expect(geometry.robotRosterPortrait.centerOffsetRatio).toBeLessThanOrEqual(
+      0.03,
+    );
+    expect(geometry.rosterLayout).toEqual({
+      rowCount: 1,
+      gridInsideZone: true,
+      cardsInsideGrid: true,
+      cardsInsideZone: true,
+    });
     await page.screenshot({
       path: testInfo.outputPath(`${viewport.name}-setup.png`),
       fullPage: true,
@@ -250,6 +358,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     'red-folded-chairman',
     'thunder-tribune',
     'black-sea-captain',
+    'government-ai',
   ]) {
     await page.locator('#playerOneCharacterId').click();
     await page
@@ -285,7 +394,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     ),
   ).toBe(true);
   await page.screenshot({
-    path: testInfo.outputPath('black-sea-captain-alternate-setup.png'),
+    path: testInfo.outputPath('government-ai-alternate-setup.png'),
     fullPage: true,
   });
 });
@@ -501,7 +610,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await expect(dossier).toHaveCount(0);
 });
 
-test('roster crops candidates to headshots while selected stages reveal full bodies', async ({
+test('roster uses species-specific portraits while selected stages reveal full bodies', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
@@ -536,7 +645,9 @@ test('roster crops candidates to headshots while selected stages reveal full bod
       '.roster-choice[data-character-id="red-folded-chairman"] .roster-frame-overlay',
     )!;
     const headClearances = [
-      ...document.querySelectorAll<HTMLImageElement>('.roster-headshot'),
+      ...document.querySelectorAll<HTMLImageElement>(
+        '.roster-choice[data-character-species="human"] .roster-headshot',
+      ),
     ].map((image) => {
       const canvas = document.createElement('canvas');
       canvas.width = image.naturalWidth;

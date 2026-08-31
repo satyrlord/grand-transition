@@ -165,10 +165,11 @@ player stages around a compact roster. The match is one confrontation. The
 scene, characters, sentence construction, speech, status, and actions share the
 same stage. They do not form a decorative scene above a separate dashboard.
 
-Every character is human. Animal words in names or titles are metaphorical
-political labels only. The current slice uses three original human editorial
-caricatures that can occupy either player position. All later character art
-must preserve human anatomy.
+Each character is human or fully mechanical. Animal words in names or titles
+are metaphorical political labels only. The current slice uses three original
+human editorial caricatures and one original robot caricature. Each can occupy
+either player position. Later character art must preserve the character's
+declared species and cannot use animal or hybrid anatomy.
 
 ### World
 
@@ -176,9 +177,8 @@ A fictional public broadcaster turns a public chamber into a verbal arena.
 Navy fascia and black stage signage frame aged brass, oxblood and
 television-blue player identities, warm speech records, and small grammar
 colors. The scene, characters, and controls form one strong silhouette.
-Ornament supports the event, but it never owns a value or control. All people
-shown in this world are human, even when a political title uses an animal
-metaphor.
+Ornament supports the event, but it never owns a value or control. Every person
+shown in this world is human. A fully mechanical character is visibly a robot.
 
 ### First viewport
 
@@ -190,16 +190,19 @@ the lower edge.
 
 Setup uses the same broadcast theatre. Oxblood frames the player-one stage on
 the left, television blue frames the player-two stage on the right, and a
-compact three-item roster sits between them. Each selected stage shows a full
-human portrait, name, and complete public weakness list. The roster uses tight
-3:4 headshots inside one reusable dark-oak and aged-gold frame.
+compact roster sits between them. Each selected stage shows a full portrait,
+name, and complete public weakness list. The roster uses tight human headshots
+and centered contained robot silhouettes inside one reusable 3:4 dark-oak and
+aged-gold frame. The four implemented roster portraits stay in one bounded row.
 
 At the recommended match viewport, a municipal television studio and one fixed
-blonde fictional moderator fill the deep field. Two transparent human editorial
+blonde fictional moderator fill the deep field. Two transparent editorial
 caricatures face each other from the left and right thirds. The default pair is
 the composed Red-Folded Chairman with his red folder and the emphatic Thunder
 Tribune with his speech papers. The lean Black Sea Captain can replace either
 one in a warm-cream naval officer uniform and cap. He holds one unbranded cigar.
+Government AI can replace either character with an ugly warm-cream robot or a
+severe blue-gray alternate chassis.
 One transparent foreground plate puts tall standing desks in front of
 both selected portraits.
 
@@ -278,8 +281,9 @@ in this record remains valid after the removal of those temporary files.
 - One hand-painted editorial-caricature language across playable portraits,
   fixed moderators, studio architecture, furniture, and props. Do not combine
   illustrated characters with photographic or hyper-realistic scene layers.
-- Three swappable human player caricatures and two fixed fictional human
-  moderators, one per implemented studio, all with clear faces.
+- Four swappable player caricatures, three human and one fully mechanical, and
+  two fixed fictional human moderators, one per implemented studio, all with
+  clear faces or face panels.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
 - Wide speech, central sentence construction, top-edge meters, and perimeter
@@ -290,10 +294,10 @@ in this record remains valid after the removal of those temporary files.
 **The Broadcast Truth Rule.** Art creates the world. Visible Hypertext Markup
 Language (HTML) content owns game truth and interaction.
 
-**The Human Character Rule.** Every character is human. Animal terms in names
-or titles are metaphorical political labels only. Do not use animal or hybrid
-anatomy in portraits, tokens, poses, states, scene art, or future roster
-content.
+**The Character Species Rule.** Each character is human or fully mechanical.
+Animal terms in names or titles are metaphorical political labels only. Do not
+use animal or hybrid anatomy in portraits, tokens, poses, states, scene art, or
+future roster content. Do not give a robot human anatomy.
 
 **The Adult Scale Rule.** Default characters and scene figures use normal adult
 height and body proportions. Use reduced stature only when an approved
@@ -447,7 +451,7 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, two studio backgrounds, two
-transparent foreground desk plates, and three transparent character portraits.
+transparent foreground desk plates, and four transparent character portraits.
 All shipping assets retain their embedded prompt or source provenance. Required
 text and controls remain outside raster art.
 
@@ -487,11 +491,14 @@ Reduced-motion mode removes this entrance.
 ### Contestant register
 
 Setup keeps the same full-viewport broadcast frame. Two selected-character
-stages flank a central three-item roster. The left stage uses the oxblood
+stages flank a central roster. The left stage uses the oxblood
 identity and the right stage uses television blue. Each selected stage shows a
-complete human portrait, a player label, a feature-display name, and the full
-public weakness list. Each roster tile is an exact 3:4 headshot window with a
-reusable dark-oak frame and aged-gold liner.
+complete portrait, a player label, a feature-display name, and the full
+public weakness list. Each roster tile is an exact 3:4 portrait window with a
+reusable dark-oak frame and aged-gold liner. Human characters use close
+headshots. Fully mechanical characters stay centered and contained. The four
+implemented portraits stay in one equal-width row and never overlap the match
+settings.
 
 Native selects keep mode and scene
 terms in a compact lower register. A nonmodal character dossier appears on
@@ -656,8 +663,8 @@ tier. It uses the strongest filled tier immediately.
   tightly cropped. The two surfaces have different image jobs.
 - **Do** use the painted arena as atmosphere and keep all game truth in text,
   meters, lists, buttons, and dialogs.
-- **Do** depict every roster character as fully human, including characters
-  with animal metaphors in their names or titles.
+- **Do** preserve each roster character's human or fully mechanical species.
+  Keep animal metaphors in names or titles out of character anatomy.
 - **Do** keep the 1024 by 720 path dense but readable: top status, speech,
   center construction, active choices, then perimeter actions.
 - **Do** keep core tactical content at 11 pixels or larger.

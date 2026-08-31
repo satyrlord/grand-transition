@@ -76,11 +76,11 @@ that logic into an original late-2000s post-socialist municipal broadcast.
 
 Do
 not copy the reference art, exact ornament, fonts, labels, proportions, or
-interface assets. Use the approved roster names, original human characters,
+interface assets. Use the approved roster names, original characters,
 exact product content, and implemented actions. Milestone 023 owns final asset
 variants, font selection, and manifest delivery. This milestone can use the
 provenance-bearing rendered back scene, transparent foreground desk plate,
-three transparent interim Portable Network Graphics (PNG) portraits, and paper
+four transparent interim Portable Network Graphics (PNG) portraits, and paper
 material.
 
 The phrase path follows the compact original-game interaction precedent. The

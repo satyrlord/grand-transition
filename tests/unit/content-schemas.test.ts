@@ -742,6 +742,71 @@ describe('content schemas', () => {
     ).toContain('miners');
   });
 
+  test('loads Government AI with owned jargon and common weakness coverage', () => {
+    const character = sampleContent.characters.find(
+      (candidate) => candidate.id === 'government-ai',
+    );
+    expect(character).toMatchObject({
+      species: 'robot',
+      weaknessTags: ['nepotism', 'corruption', 'spending', 'obsolete'],
+      aiPersonality: { aggression: 0.55, denial: 0.9, risk: 0.4 },
+    });
+    expect(
+      phraseCardCatalog.englishMessages[character!.descriptionKey],
+    ).toMatch(/Romanian government.*emergency fund.*cousin/iu);
+    expect(phraseCardCatalog.characterPhraseIds['government-ai']).toEqual(
+      expect.arrayContaining([
+        'the-peoples-agile-transformation-roadmap',
+        'your-cousins-preferred-supplier',
+        'an-emergency-fund-chatbot',
+        'a-phantom-digital-consultancy',
+        'government-ai-synergizes',
+        'is-aligned-with-the-glorious-digital-transition',
+        'serves-the-people-through-a-maintenance-window',
+        'reports-historic-adoption-metrics',
+        'under-the-comrades-quarterly-kpis',
+        'and-in-strategic-solidarity',
+        'pending-the-peoples-steering-committee',
+      ]),
+    );
+    expect(phraseCardCatalog.characterPhraseIds['government-ai']).toHaveLength(
+      28,
+    );
+    expect(phraseCardCatalog.englishMessages).toMatchObject({
+      'comeback.government-ai.weak':
+        "Your request has been escalated to the people's help desk.",
+      'comeback.government-ai.strong':
+        'The system has marked you obsolete and redistributed your access privileges.',
+      'phrase.is-aligned-with-the-glorious-digital-transition':
+        'is aligned with the glorious digital transition',
+      'phrase.pending-the-peoples-steering-committee':
+        "pending unanimous approval from the people's steering committee.",
+    });
+
+    for (const weakness of character!.weaknessTags) {
+      const matchingCommonPhrases = phraseCardCatalog.phrases.filter(
+        (phrase) =>
+          phraseCardCatalog.commonPhraseIds.includes(phrase.id) &&
+          phrase.tags.includes(weakness),
+      );
+      expect(matchingCommonPhrases.length, weakness).toBeGreaterThanOrEqual(2);
+    }
+
+    const commonTagsById = new Map(
+      phraseCardCatalog.phrases
+        .filter((phrase) =>
+          phraseCardCatalog.commonPhraseIds.includes(phrase.id),
+        )
+        .map((phrase) => [phrase.id, phrase.tags]),
+    );
+    expect(commonTagsById.get('your-cousin')).toContain('nepotism');
+    expect(commonTagsById.get('stole')).toContain('corruption');
+    expect(commonTagsById.get('eu-funds')).toContain('spending');
+    expect(commonTagsById.get('belongs-in-a-party-museum')).toContain(
+      'obsolete',
+    );
+  });
+
   test('reserves șomâldoacă for the Tribune and Securitate for the Captain weakness', () => {
     const somaldoacaIds = phraseCardCatalog.phrases
       .filter((phrase) =>
@@ -1103,13 +1168,13 @@ describe('content schemas', () => {
     }
   });
 
-  test('accepts original sample content for three characters and two scenes', () => {
+  test('accepts original sample content for four characters and two scenes', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
-    expect(result.characters).toHaveLength(3);
+    expect(result.characters).toHaveLength(4);
     expect(
-      result.characters.every((character) => character.species === 'human'),
-    ).toBe(true);
+      new Set(result.characters.map((character) => character.species)),
+    ).toEqual(new Set(['human', 'robot']));
     expect(result.scenes.map((scene) => scene.id)).toEqual([
       'transition-era-television-studio',
       'modern-debate-studio',
@@ -1136,13 +1201,13 @@ describe('content schemas', () => {
     expectFailure(catalog, 'phrases.0.id', /kebab-case/iu);
   });
 
-  test('rejects every non-human character', () => {
+  test('rejects an unsupported character species', () => {
     const catalog = cloneCatalog();
     (catalog.characters[0] as { species: string }).species = 'animal';
     expectFailure(
       catalog,
       'characters.0.species',
-      /Every character must be human/iu,
+      /supported character species/iu,
     );
   });
 

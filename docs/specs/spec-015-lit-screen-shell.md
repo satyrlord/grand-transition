@@ -69,17 +69,23 @@ invalid.
 Setup presents one shared character roster between two selected-character
 stages. The left stage owns player one and uses the oxblood identity. The right
 stage owns player two and uses the television-blue identity. Each stage shows
-the selected character's human portrait, name, and complete public weakness
+the selected character's portrait, name, and complete public weakness
 list. The list updates in the same render as the selection and remains visible
 before match start. Mirror selections show the same character and list on both
 sides.
 
-Each roster item uses an exact 3:4 vertical canvas and a tight headshot crop.
-The crop extends from the crown through the upper chest. Each item uses one
-authored heavy dark-oak frame and a restrained aged-gold inner liner. It does not show the candidate's
-complete pose, hands, held props, or full body. Selecting the item reveals the
-complete available portrait, including its feet, only on the owning left or
-right player stage. The selected stage does not fade or mask the lower body.
+Each roster item uses an exact 3:4 vertical canvas. Human characters use a
+tight crop from the crown through the upper chest. Fully mechanical characters
+use a centered contained silhouette because a human headshot crop does not
+represent their anatomy. Each item uses one authored heavy dark-oak frame and a
+restrained aged-gold inner liner. A robot silhouette does not cross or paint
+outside that inner window. Selecting the item reveals the complete available
+portrait only on the owning left or right player stage. The selected stage does
+not fade or mask the lower body.
+
+The four-character implemented roster stays in one equal-width row at every
+supported landscape viewport. A roster item cannot create a second row, cross
+the roster boundary, or overlap the match-settings strip.
 
 The roster has an explicit player-one or player-two selection target. Selecting
 a roster character updates that target and then advances the target to the
@@ -144,8 +150,11 @@ hide validation.
   two WebP title assets, reserves emblem dimensions, and keeps their combined
   runtime size at or below 300 KiB. A delayed emblem shows the brass loading
   poster and then replaces it without layout shift.
-- **AC-015-10:** Every roster item has a computed 3:4 frame and renders a tight
-  headshot with no complete body or held prop. Both selected-player stages
+- **AC-015-10:** Every roster item has a computed 3:4 frame. A human renders a
+  tight headshot with no complete body or held prop. A fully mechanical
+  character renders a centered contained silhouette that cannot paint outside
+  the inner portrait window. All four implemented roster items stay in one row
+  inside the roster boundary. Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
   fade. The generated frame overlay loads with valid transparency. The roster
   always uses the default character portrait. A selected-player stage uses its

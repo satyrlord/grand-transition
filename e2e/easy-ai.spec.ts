@@ -20,6 +20,7 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
   await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue(
     'local-radio-caller',
   );
+  await installAiThinkingProbe(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   let sawThinking = false;
@@ -115,7 +116,19 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
     await page.getByRole('button', { name: 'End', exact: true }).click();
   }
 
-  expect(sawThinking).toBe(true);
+  const thinkingEvidence = await readAiThinkingEvidence(page);
+  expect(thinkingEvidence.length).toBeGreaterThan(0);
+  expect(
+    thinkingEvidence.some(
+      (evidence) =>
+        evidence.visible &&
+        evidence.thinking &&
+        evidence.activePlayerId === 'player-two' &&
+        evidence.privateHandCount === 0 &&
+        evidence.actionCount === 0 &&
+        evidence.privateCardsRedacted,
+    ),
+  ).toBe(true);
   await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Return to main menu' })).toBeVisible();
   await page.screenshot({
@@ -307,6 +320,9 @@ for (const viewport of [
     await expect(
       page.getByRole('group', { name: 'Match settings' }),
     ).toBeVisible();
+    await waitForLocalImages(page.locator('.setup-screen'));
+    await page.evaluate(() => document.fonts.ready);
+    await expectNoViewportOverflow(page.locator('.setup-screen'));
     const hotseatGeometry = await readSetupFooterGeometry(page);
     expect(hotseatGeometry.difficultyValue).toBeNull();
     expect(hotseatGeometry.modeLabelFits).toBe(true);
@@ -318,6 +334,7 @@ for (const viewport of [
     );
     await expect(page.locator('.setup-screen')).toBeVisible();
     await waitForLocalImages(page.locator('.setup-screen'));
+    await page.evaluate(() => document.fonts.ready);
     await expectNoViewportOverflow(page.locator('.setup-screen'));
     const aiGeometry = await readSetupFooterGeometry(page);
     expect(aiGeometry.layout.fieldset).toEqual(
@@ -333,6 +350,7 @@ for (const viewport of [
       path: testInfo.outputPath(`ai-setup-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
+    await installAiThinkingProbe(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     const activePlayerId = await page.locator('grand-transition-match').evaluate(
       (element) =>
@@ -376,25 +394,37 @@ for (const viewport of [
         )
         .click();
     }
-    await expect(page.locator('.ai-thinking-record')).toBeVisible();
-    await waitForLocalImages(page.locator('.match-screen'));
-    await expectNoViewportOverflow(page.locator('.match-screen'));
-    const thinkingBox = await page.locator('.ai-thinking-record').boundingBox();
-    expect(thinkingBox).not.toBeNull();
-    expect(thinkingBox!.x).toBeGreaterThanOrEqual(0);
-    expect(thinkingBox!.y).toBeGreaterThanOrEqual(0);
-    expect(thinkingBox!.x + thinkingBox!.width).toBeLessThanOrEqual(
+    await expect
+      .poll(
+        async () =>
+          (await readAiThinkingEvidence(page)).filter(
+            (evidence) => evidence.visible,
+          ).length,
+      )
+      .toBeGreaterThan(0);
+    const thinkingBox = (await readAiThinkingEvidence(page)).find(
+      (evidence) => evidence.visible,
+    )!.rect;
+    expect(thinkingBox.width).toBeGreaterThan(0);
+    expect(thinkingBox.height).toBeGreaterThan(0);
+    expect(thinkingBox.x).toBeGreaterThanOrEqual(0);
+    expect(thinkingBox.y).toBeGreaterThanOrEqual(0);
+    expect(thinkingBox.x + thinkingBox.width).toBeLessThanOrEqual(
       viewport.width,
     );
-    expect(thinkingBox!.y + thinkingBox!.height).toBeLessThanOrEqual(
+    expect(thinkingBox.y + thinkingBox.height).toBeLessThanOrEqual(
       viewport.height,
     );
-    await page.screenshot({
-      path: testInfo.outputPath(
-        `ai-thinking-${viewport.width}x${viewport.height}.png`,
-      ),
-      fullPage: true,
-    });
+    if (await page.locator('.ai-thinking-record').isVisible().catch(() => false)) {
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `ai-thinking-${viewport.width}x${viewport.height}.png`,
+        ),
+        fullPage: true,
+      });
+    }
+    await waitForLocalImages(page.locator('.match-screen'));
+    await expectNoViewportOverflow(page.locator('.match-screen'));
     if (viewport.width === 1_280 && viewport.height === 720) {
       for (let index = 0; index < 6; index += 1) {
         await page.waitForTimeout(220);
@@ -406,6 +436,84 @@ for (const viewport of [
       await expect(page.locator('.ai-thinking-record')).toHaveCount(0);
     }
   });
+}
+
+type AiThinkingEvidence = Readonly<{
+  visible: boolean;
+  thinking: boolean;
+  activePlayerId: string | undefined;
+  privateCardsRedacted: boolean;
+  privateHandCount: number;
+  actionCount: number;
+  rect: Readonly<{ x: number; y: number; width: number; height: number }>;
+}>;
+
+async function installAiThinkingProbe(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const host = window as typeof window & {
+      __grandTransitionAiThinkingEvidence?: AiThinkingEvidence[];
+    };
+    host.__grandTransitionAiThinkingEvidence = [];
+    const capture = () => {
+      const record = document.querySelector<HTMLElement>('.ai-thinking-record');
+      if (!record) return;
+      const match = document.querySelector('grand-transition-match') as
+        | (HTMLElement & {
+            thinking?: boolean;
+            snapshot?: {
+              activePlayerId: string;
+              privateCards: Array<{
+                reference: unknown;
+                phraseId: string | null;
+                text: string;
+              }>;
+            };
+          })
+        | null;
+      const bounds = record.getBoundingClientRect();
+      const style = getComputedStyle(record);
+      host.__grandTransitionAiThinkingEvidence!.push({
+        visible:
+          bounds.width > 0 &&
+          bounds.height > 0 &&
+          style.display !== 'none' &&
+          style.visibility !== 'hidden',
+        thinking: match?.thinking === true,
+        activePlayerId: match?.snapshot?.activePlayerId,
+        privateCardsRedacted:
+          match?.snapshot?.privateCards.every(
+            (card) =>
+              card.reference === null &&
+              card.phraseId === null &&
+              card.text === '',
+          ) ?? false,
+        privateHandCount: match?.querySelectorAll('.private-hand').length ?? -1,
+        actionCount: match?.querySelectorAll('.match-actions').length ?? -1,
+        rect: {
+          x: bounds.x,
+          y: bounds.y,
+          width: bounds.width,
+          height: bounds.height,
+        },
+      });
+    };
+    new MutationObserver(capture).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+    capture();
+  });
+}
+
+async function readAiThinkingEvidence(page: Page): Promise<AiThinkingEvidence[]> {
+  return page.evaluate(
+    () =>
+      (
+        window as typeof window & {
+          __grandTransitionAiThinkingEvidence?: AiThinkingEvidence[];
+        }
+      ).__grandTransitionAiThinkingEvidence ?? [],
+  );
 }
 
 async function expectNoViewportOverflow(

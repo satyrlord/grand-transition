@@ -870,7 +870,7 @@
     "id": "budget-amendment",
     "role": "noun",
     "text": "your budget amendment",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "spending"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["budget"]
@@ -1578,7 +1578,7 @@
     "text": "allocated",
     "singularText": "allocated",
     "pluralText": "allocated",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "spending"],
     "scorePreferences": {
       "substance": [
         {
@@ -1604,7 +1604,7 @@
     "text": "allocates",
     "singularText": "allocates",
     "pluralText": "allocate",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "spending"],
     "scorePreferences": {
       "substance": [
         {
@@ -1630,7 +1630,7 @@
     "text": "will allocate",
     "singularText": "will allocate",
     "pluralText": "will allocate",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "spending"],
     "scorePreferences": {
       "substance": [
         {
@@ -2252,7 +2252,7 @@
     "id": "in-the-transition-archive",
     "role": "modifier",
     "text": "in the transition archive",
-    "tags": ["legacy", "evidence"],
+    "tags": ["legacy", "evidence", "obsolete"],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -2343,7 +2343,7 @@
     "id": "through-another-reform-cycle",
     "role": "modifier",
     "text": "through another reform cycle",
-    "tags": ["modernity", "legacy"],
+    "tags": ["modernity", "legacy", "obsolete"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -2642,7 +2642,7 @@
     "role": "noun",
     "text": "a thief",
     "referentKind": "personal",
-    "tags": ["evidence", "credibility"],
+    "tags": ["evidence", "credibility", "corruption"],
     "scoreGroups": {
       "substance": ["personal"],
       "flavour": ["accusation"]
@@ -2694,7 +2694,7 @@
     "role": "noun",
     "text": "your brother",
     "referentKind": "personal",
-    "tags": ["legacy", "credibility"],
+    "tags": ["legacy", "credibility", "nepotism"],
     "scoreGroups": {
       "substance": ["family"],
       "flavour": ["direct"]
@@ -2730,7 +2730,7 @@
     "role": "noun",
     "text": "your cousin",
     "referentKind": "personal",
-    "tags": ["legacy", "credibility"],
+    "tags": ["legacy", "credibility", "nepotism"],
     "scoreGroups": {
       "substance": ["family"],
       "flavour": ["direct"]
@@ -2748,7 +2748,7 @@
     "role": "noun",
     "text": "your son-in-law",
     "referentKind": "personal",
-    "tags": ["legacy", "authenticity"],
+    "tags": ["legacy", "authenticity", "nepotism"],
     "scoreGroups": {
       "substance": ["family"],
       "flavour": ["direct"]
@@ -3691,7 +3691,7 @@
     "id": "belongs-in-a-party-museum",
     "role": "predicate",
     "text": "belongs in a history museum",
-    "tags": ["legacy", "modernity"],
+    "tags": ["legacy", "modernity", "obsolete"],
     "scorePreferences": {
       "substance": [
         {
@@ -3716,7 +3716,7 @@
     "id": "belonged-in-a-party-museum",
     "role": "predicate",
     "text": "belonged in a history museum",
-    "tags": ["legacy", "modernity"],
+    "tags": ["legacy", "modernity", "obsolete"],
     "scorePreferences": {
       "substance": [
         {
@@ -3741,7 +3741,7 @@
     "id": "will-belong-in-a-party-museum",
     "role": "predicate",
     "text": "will belong in a history museum",
-    "tags": ["legacy", "modernity"],
+    "tags": ["legacy", "modernity", "obsolete"],
     "scorePreferences": {
       "substance": [
         {
@@ -4330,7 +4330,7 @@
     "text": "stole",
     "singularText": "stole",
     "pluralText": "stole",
-    "tags": ["evidence", "credibility"],
+    "tags": ["evidence", "credibility", "corruption"],
     "scorePreferences": {
       "substance": [
         {
@@ -4356,7 +4356,7 @@
     "text": "steals",
     "singularText": "steals",
     "pluralText": "steal",
-    "tags": ["evidence", "credibility"],
+    "tags": ["evidence", "credibility", "corruption"],
     "scorePreferences": {
       "substance": [
         {
@@ -4382,7 +4382,7 @@
     "text": "will steal",
     "singularText": "will steal",
     "pluralText": "will steal",
-    "tags": ["evidence", "credibility"],
+    "tags": ["evidence", "credibility", "corruption"],
     "scorePreferences": {
       "substance": [
         {
@@ -4407,7 +4407,7 @@
     "role": "noun",
     "text": "EU funds",
     "grammaticalNumber": "plural",
-    "tags": ["bureaucracy", "credibility"],
+    "tags": ["bureaucracy", "credibility", "spending"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["procurement"]
@@ -4426,7 +4426,7 @@
     "text": "appropriated",
     "singularText": "appropriated",
     "pluralText": "appropriated",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "corruption", "spending"],
     "scorePreferences": {
       "substance": [
         {
@@ -4452,7 +4452,7 @@
     "text": "appropriates",
     "singularText": "appropriates",
     "pluralText": "appropriate",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "corruption", "spending"],
     "scorePreferences": {
       "substance": [
         {
@@ -4478,7 +4478,7 @@
     "text": "will appropriate",
     "singularText": "will appropriate",
     "pluralText": "will appropriate",
-    "tags": ["bureaucracy", "evidence"],
+    "tags": ["bureaucracy", "evidence", "corruption", "spending"],
     "scorePreferences": {
       "substance": [
         {
