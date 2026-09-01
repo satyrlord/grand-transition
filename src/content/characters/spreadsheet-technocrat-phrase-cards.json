@@ -1,0 +1,117 @@
+{
+  "id": "spreadsheet-technocrat",
+  "rosterOrder": 13,
+  "species": "human",
+  "name": "Spreadsheet Technocrat",
+  "description": "A metric-heavy manager who can replace one human problem with three measurable indicators.",
+  "assets": {
+    "portrait": {
+      "assetId": "spreadsheet-technocrat-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "spreadsheet-technocrat-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#40566f",
+    "secondary": "#dce0dc",
+    "accent": "#8b3f35"
+  },
+  "weaknessTags": [
+    "delivery",
+    "accountability",
+    "human-scale"
+  ],
+  "comebacks": {
+    "weak": "That claim lacks a baseline.",
+    "medium": "Your accountability cell returns an error.",
+    "strong": "I measured your mandate and rounded it down to zero."
+  },
+  "aiPersonality": {
+    "aggression": 0.4,
+    "denial": 0.7,
+    "risk": 0.25
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.95,
+    "pitch": 0.9
+  },
+  "animationSet": {
+    "idle": "spreadsheet-technocrat-idle",
+    "speak": "spreadsheet-technocrat-speak",
+    "react": "spreadsheet-technocrat-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "spreadsheet-technocrat-foundation-noun",
+      "role": "noun",
+      "text": "my quarterly delivery matrix",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-foundation-modifier",
+      "role": "modifier",
+      "text": "inside a perfectly aligned cell",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-foundation-ending",
+      "role": "ending",
+      "text": "and the human scale was excluded from the dashboard.",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

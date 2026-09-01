@@ -1,0 +1,117 @@
+{
+  "id": "marble-diplomat",
+  "rosterOrder": 8,
+  "species": "human",
+  "name": "Marble Diplomat",
+  "description": "A decorative elitist who can turn a vacant reception into a matter of national prestige.",
+  "assets": {
+    "portrait": {
+      "assetId": "marble-diplomat-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "marble-diplomat-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#e2d4b8",
+    "secondary": "#30333a",
+    "accent": "#a77d39"
+  },
+  "weaknessTags": [
+    "luxury",
+    "elitism",
+    "corruption"
+  ],
+  "comebacks": {
+    "weak": "Protocol has not heard of you.",
+    "medium": "Your invitation was printed on cheaper paper.",
+    "strong": "Even the empty palace hall has more public support."
+  },
+  "aiPersonality": {
+    "aggression": 0.55,
+    "denial": 0.5,
+    "risk": 0.65
+  },
+  "voiceProfile": {
+    "voiceHint": "grounded",
+    "rate": 0.9,
+    "pitch": 0.95
+  },
+  "animationSet": {
+    "idle": "marble-diplomat-idle",
+    "speak": "marble-diplomat-speak",
+    "react": "marble-diplomat-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "marble-diplomat-foundation-noun",
+      "role": "noun",
+      "text": "my ceremonial marble antechamber",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "marble-diplomat-foundation-modifier",
+      "role": "modifier",
+      "text": "under an imported chandelier",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "marble-diplomat-foundation-ending",
+      "role": "ending",
+      "text": "and austerity is waiting at the service entrance.",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

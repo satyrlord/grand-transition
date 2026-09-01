@@ -1,0 +1,117 @@
+{
+  "id": "football-tycoon",
+  "rosterOrder": 14,
+  "species": "human",
+  "name": "Football Tycoon",
+  "description": "A devotional showman who treats every studio exchange as the final minute of a cup match.",
+  "assets": {
+    "portrait": {
+      "assetId": "football-tycoon-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "football-tycoon-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#172f50",
+    "secondary": "#7c2633",
+    "accent": "#d4b065"
+  },
+  "weaknessTags": [
+    "commercialism",
+    "accountability",
+    "sincerity"
+  ],
+  "comebacks": {
+    "weak": "The crowd heard that miss.",
+    "medium": "Your sincerity was sold before kickoff.",
+    "strong": "You lost the argument, the dressing room, and extra time."
+  },
+  "aiPersonality": {
+    "aggression": 0.95,
+    "denial": 0.3,
+    "risk": 0.9
+  },
+  "voiceProfile": {
+    "voiceHint": "bright",
+    "rate": 1.1,
+    "pitch": 1.05
+  },
+  "animationSet": {
+    "idle": "football-tycoon-idle",
+    "speak": "football-tycoon-speak",
+    "react": "football-tycoon-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "football-tycoon-foundation-noun",
+      "role": "noun",
+      "text": "my televised transfer miracle",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "football-tycoon-foundation-modifier",
+      "role": "modifier",
+      "text": "after a sponsored minute of silence",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "football-tycoon-foundation-ending",
+      "role": "ending",
+      "text": "and accountability missed the open goal.",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

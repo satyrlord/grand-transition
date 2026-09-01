@@ -1,0 +1,117 @@
+{
+  "id": "diaspora-oracle",
+  "rosterOrder": 16,
+  "species": "human",
+  "name": "Diaspora Oracle",
+  "description": "A distant voice-note expert who explains local reality with perfect confidence from another time zone.",
+  "assets": {
+    "portrait": {
+      "assetId": "diaspora-oracle-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "diaspora-oracle-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#30343a",
+    "secondary": "#1d385a",
+    "accent": "#a96d3b"
+  },
+  "weaknessTags": [
+    "distance",
+    "context",
+    "firsthand-knowledge"
+  ],
+  "comebacks": {
+    "weak": "The connection heard enough.",
+    "medium": "Your context expired before my voice note.",
+    "strong": "I left years ago and still know your argument is lost."
+  },
+  "aiPersonality": {
+    "aggression": 0.5,
+    "denial": 0.4,
+    "risk": 0.6
+  },
+  "voiceProfile": {
+    "voiceHint": "grounded",
+    "rate": 0.95,
+    "pitch": 0.95
+  },
+  "animationSet": {
+    "idle": "diaspora-oracle-idle",
+    "speak": "diaspora-oracle-speak",
+    "react": "diaspora-oracle-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "diaspora-oracle-foundation-noun",
+      "role": "noun",
+      "text": "my forwarded voice-note analysis",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "diaspora-oracle-foundation-modifier",
+      "role": "modifier",
+      "text": "from three borders away",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "diaspora-oracle-foundation-ending",
+      "role": "ending",
+      "text": "and firsthand knowledge missed the flight.",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

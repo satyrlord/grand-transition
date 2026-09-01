@@ -166,10 +166,11 @@ scene, characters, sentence construction, speech, status, and actions share the
 same stage. They do not form a decorative scene above a separate dashboard.
 
 Each character is human or fully mechanical. Animal words in names or titles
-are metaphorical political labels only. The current slice uses three original
-human editorial caricatures and one original robot caricature. Each can occupy
-either player position. Later character art must preserve the character's
-declared species and cannot use animal or hybrid anatomy.
+are metaphorical political labels only. The playable foundation uses 18
+original human editorial caricatures and one original robot caricature. Each
+can occupy either player position. Four vertical-slice characters have
+alternate skins; the other foundation portraits are interim. Later character
+art must preserve the declared species and cannot use animal or hybrid anatomy.
 
 ### World
 
@@ -194,8 +195,11 @@ compact roster sits between them. Each selected stage shows a full portrait,
 name, and complete public weakness list. The roster uses tight headshots for
 human and fully mechanical characters inside one reusable 3:4 dark-oak and
 aged-gold frame. The robot crop includes its antenna, face panel, shoulders,
-and upper torso. Its face panel sits on the inner frame's center axis. The four
-implemented roster portraits stay in one bounded row.
+and upper torso. Its face panel sits on the inner frame's center axis. All 19
+roster portraits stay visible in one compact six-six-six-one fighting-game
+selection grid between the two selected contestants. The final incomplete row
+is centered. A named vertical scroll region contains the grid when the
+available height is smaller or the roster grows.
 
 At the recommended match viewport, a municipal television studio and one fixed
 blonde fictional moderator fill the deep field. Two transparent editorial
@@ -283,9 +287,9 @@ in this record remains valid after the removal of those temporary files.
 - One hand-painted editorial-caricature language across playable portraits,
   fixed moderators, studio architecture, furniture, and props. Do not combine
   illustrated characters with photographic or hyper-realistic scene layers.
-- Four swappable player caricatures, three human and one fully mechanical, and
-  two fixed fictional human moderators, one per implemented studio, all with
-  clear faces or face panels.
+- Nineteen swappable player caricatures, 18 human and one fully mechanical, and
+  two fixed fictional human moderators, one per layered studio, all with clear
+  faces or face panels.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
 - Wide speech, central sentence construction, top-edge meters, and perimeter
@@ -453,7 +457,8 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, two studio backgrounds, two
-transparent foreground desk plates, and four transparent character portraits.
+transparent foreground desk plates, and 23 transparent character portraits:
+19 defaults and 4 alternates.
 All shipping assets retain their embedded prompt or source provenance. Required
 text and controls remain outside raster art.
 
@@ -500,8 +505,10 @@ public weakness list. Each roster tile is an exact 3:4 portrait window with a
 reusable dark-oak frame and aged-gold liner. Human and fully mechanical
 characters use close headshots. The robot crop includes its antenna and face
 panel but not its complete body. Its face panel is centered in the inner
-portrait window. The four implemented portraits stay in one equal-width row
-and never overlap the match settings.
+portrait window. The 19 portraits stay in one equal-width six-six-six-one
+selection grid, with the final incomplete row centered, and never overlap the match
+settings. The grid scrolls vertically inside its roster region when required;
+the page does not scroll.
 
 Native selects keep mode and scene
 terms in a compact lower register. A nonmodal character dossier appears on

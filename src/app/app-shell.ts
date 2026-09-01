@@ -1,5 +1,10 @@
 import { LitElement, html } from 'lit';
+import { msg } from '@lit/localize';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
+import {
+  decidePalaceOperator,
+  decidePartyStrategist,
+} from '../ai/advanced-ai';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
@@ -36,9 +41,17 @@ import {
 } from './screens/match-screen';
 import {
   type StartMatchEvent,
+  type ResetLadderEvent,
   type SetupChangeEvent,
   type SetupSnapshot,
 } from './screens/setup-screen';
+import {
+  createLadderProgress,
+  currentLadderRung,
+  ladderProgressMatchesCatalog,
+  recordLadderResult,
+  type LadderProgress,
+} from '../engine/ladder';
 import {
   type ShowMatchHistoryEvent,
   type ShowSettingsEvent,
@@ -61,6 +74,10 @@ import {
   SettingsRepository,
   type SettingsSnapshot,
 } from '../persistence/settings';
+import {
+  LadderProgressRepository,
+  type LadderProgressSnapshot,
+} from '../persistence/ladder-progress';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
@@ -168,6 +185,7 @@ export class GrandTransitionApp extends LitElement {
     settingsOpen: { state: true },
     settingsNoticeDismissed: { state: true },
     aiThinking: { state: true },
+    ladderSnapshot: { state: true },
   };
 
   declare private view: ScreenView;
@@ -184,20 +202,38 @@ export class GrandTransitionApp extends LitElement {
   declare private settingsOpen: boolean;
   declare private settingsNoticeDismissed: boolean;
   declare private aiThinking: boolean;
+  declare private ladderSnapshot: LadderProgressSnapshot;
   private matchInitialSeed: number | null = null;
   private matchId: string | null = null;
   private aiTimerId: number | undefined;
   private readonly screenController = new ScreenController();
   private readonly matchHistoryRepository: MatchHistoryRepository;
   private readonly settingsRepository: SettingsRepository;
+  private readonly ladderProgressRepository: LadderProgressRepository;
+  private currentMatchIsLadder = false;
 
   constructor() {
     super();
     const browserStorage = createBrowserStorage();
     this.matchHistoryRepository = new MatchHistoryRepository(browserStorage);
     this.settingsRepository = new SettingsRepository(browserStorage);
+    this.ladderProgressRepository = new LadderProgressRepository(browserStorage);
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
+    this.ladderSnapshot = this.ladderProgressRepository.validateCatalog(
+      (progress) =>
+        ladderProgressMatchesCatalog(
+          progress,
+          sampleContent.characters.map(({ id }) => id),
+          sampleContent.scenes.map(({ id }) => id),
+        ),
+    );
+    if (this.ladderSnapshot.progress) {
+      this.setupSnapshot = setupSnapshotForLadder(
+        this.setupSnapshot,
+        this.ladderSnapshot.progress,
+      );
+    }
     this.matchState = null;
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
@@ -283,6 +319,7 @@ export class GrandTransitionApp extends LitElement {
         .autoComplete=${this.settingsSnapshot.settings.autoComplete}
         .phraseColorCoding=${this.phraseColorCoding}
         .thinking=${this.aiThinking}
+        .aiName=${difficultyLabel(this.matchState?.setup.aiDifficulty ?? null)}
         .autoRevealWaitingSentence=${Boolean(
           liveMatchState?.setup.mode === 'ai' &&
           liveMatchState.activePlayerId === 'player-one',
@@ -328,7 +365,10 @@ export class GrandTransitionApp extends LitElement {
       case 'setup':
         return html`<grand-transition-setup
           .snapshot=${this.setupSnapshot}
+          .ladderProgress=${this.ladderSnapshot.progress}
+          .ladderPersistenceFailure=${this.ladderSnapshot.persistenceFailure}
           @setup-change=${this.updateSetup}
+          @reset-ladder=${this.resetLadder}
           @show-title=${this.showTitle}
           @start-match=${this.startMatch}
         ></grand-transition-setup>`;
@@ -392,37 +432,112 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly updateSetup = (event: SetupChangeEvent): void => {
     event.stopPropagation();
+    const { field, value } = event.detail;
+    if (field === 'mode' && value === 'ladder') {
+      if (!this.ladderSnapshot.progress) {
+        this.ladderSnapshot = this.ladderProgressRepository.replace(
+          createLadderProgress(
+            this.setupSnapshot.playerOneCharacterId,
+            createMatchSeed(),
+            sampleContent.characters.map(({ id }) => id),
+            sampleContent.scenes.map(({ id }) => id),
+          ),
+        );
+      }
+      this.setupSnapshot = setupSnapshotForLadder(
+        { ...this.setupSnapshot, mode: 'ladder' },
+        this.ladderSnapshot.progress!,
+      );
+      return;
+    }
+    if (
+      this.setupSnapshot.mode === 'ladder' &&
+      field !== 'mode' &&
+      field !== 'playerOneCharacterId' &&
+      field !== 'playerOneSkinId'
+    ) {
+      return;
+    }
+    if (
+      field === 'playerOneCharacterId' &&
+      this.setupSnapshot.mode === 'ladder' &&
+      typeof value === 'string'
+    ) {
+      const progress = this.ladderSnapshot.progress;
+      if (progress && (progress.rungIndex > 0 || progress.losses > 0)) return;
+      this.ladderSnapshot = this.ladderProgressRepository.replace(
+        createLadderProgress(
+          value,
+          createMatchSeed(),
+          sampleContent.characters.map(({ id }) => id),
+          sampleContent.scenes.map(({ id }) => id),
+        ),
+      );
+      this.setupSnapshot = setupSnapshotForLadder(
+        { ...this.setupSnapshot, playerOneCharacterId: value },
+        this.ladderSnapshot.progress!,
+      );
+      return;
+    }
     this.setupSnapshot = Object.freeze({
       ...this.setupSnapshot,
-      [event.detail.field]: event.detail.value,
+      [field]: value,
     });
+  };
+
+  private readonly resetLadder = (event: ResetLadderEvent): void => {
+    event.stopPropagation();
+    this.ladderSnapshot = this.ladderProgressRepository.reset();
+    if (this.setupSnapshot.mode === 'ladder') {
+      this.setupSnapshot = Object.freeze({
+        ...this.setupSnapshot,
+        mode: 'hotseat',
+      });
+    }
   };
 
   private readonly startMatch = (event: StartMatchEvent): void => {
     const payload = event.detail;
+    const ladderProgress =
+      payload.mode === 'ladder' ? this.ladderSnapshot.progress : null;
+    const ladderRung = ladderProgress
+      ? currentLadderRung(ladderProgress)
+      : null;
+    if (payload.mode === 'ladder' && (!ladderProgress || !ladderRung)) return;
+    const playerOneCharacterId =
+      ladderProgress?.selectedCharacterId ?? payload.playerOneCharacterId;
+    const playerTwoCharacterId =
+      ladderRung?.opponentCharacterId ?? payload.playerTwoCharacterId;
+    const sceneId = ladderRung?.sceneId ?? payload.sceneId;
     const scene = sampleContent.scenes.find(
-      (candidate) => candidate.id === payload.sceneId,
+      (candidate) => candidate.id === sceneId,
     );
     if (!scene) {
-      throw new Error(`Unknown match scene "${payload.sceneId}".`);
+      throw new Error(`Unknown match scene "${sceneId}".`);
     }
 
-    const initialSeed = createMatchSeed();
+    const initialSeed = ladderProgress
+      ? ladderMatchSeed(ladderProgress)
+      : createMatchSeed();
     this.matchInitialSeed = initialSeed;
     this.matchId = createMatchId(initialSeed);
     let state = createMatchSetupState({
       schemaVersion: 1,
       seed: initialSeed,
       players: [
-        configuredPlayer('player-one', payload.playerOneCharacterId),
-        configuredPlayer('player-two', payload.playerTwoCharacterId),
+        configuredPlayer('player-one', playerOneCharacterId),
+        configuredPlayer('player-two', playerTwoCharacterId),
       ],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
       generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
-      mode: payload.mode,
+      mode: payload.mode === 'hotseat' ? 'hotseat' : 'ai',
       aiDifficulty:
-        payload.mode === 'ai' ? 'local-radio-caller' : null,
+        payload.mode === 'ladder'
+          ? ladderRung!.difficulty
+          : payload.mode === 'ai'
+            ? payload.aiDifficulty
+            : null,
       openingPlayerIndex: scene.openingPlayerIndex,
     });
     const beforeStart = state;
@@ -442,6 +557,7 @@ export class GrandTransitionApp extends LitElement {
       state,
     );
     this.matchState = state;
+    this.currentMatchIsLadder = payload.mode === 'ladder';
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.manuallyPaused = false;
@@ -503,10 +619,11 @@ export class GrandTransitionApp extends LitElement {
     const reviewResolution = state.resolutionHistory.at(-1) ?? null;
     const victory =
       state.phase === 'results' && state.winner
-        ? {
-            winnerId: state.winner,
-            completedRounds: state.resolutionHistory.length,
-          }
+          ? {
+              winnerId: state.winner,
+              completedRounds: state.resolutionHistory.length,
+              ladder: this.currentMatchIsLadder,
+            }
         : null;
     const reviewState =
       reduced.phase === 'resolution' && reduced.draft
@@ -531,6 +648,7 @@ export class GrandTransitionApp extends LitElement {
         : null;
     this.matchState = state;
     if (victory) {
+      if (this.currentMatchIsLadder) this.recordLadderMatch(state);
       this.captureCompletedMatch(state);
     }
     this.scheduleAiTurn();
@@ -566,9 +684,21 @@ export class GrandTransitionApp extends LitElement {
     this.cancelAiTurn();
     this.matchInitialSeed = null;
     this.matchId = null;
-    this.screenController.showTitle();
-    this.view = 'title';
-    this.focusViewHeading('title');
+    if (this.currentMatchIsLadder && this.ladderSnapshot.progress) {
+      this.setupSnapshot = setupSnapshotForLadder(
+        { ...this.setupSnapshot, mode: 'ladder' },
+        this.ladderSnapshot.progress,
+      );
+      this.currentMatchIsLadder = false;
+      this.screenController.returnToSetup();
+      this.view = 'setup';
+      this.focusViewHeading('setup');
+    } else {
+      this.currentMatchIsLadder = false;
+      this.screenController.showTitle();
+      this.view = 'title';
+      this.focusViewHeading('title');
+    }
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -595,9 +725,21 @@ export class GrandTransitionApp extends LitElement {
     this.cancelAiTurn();
     this.matchInitialSeed = null;
     this.matchId = null;
-    this.screenController.showTitle();
-    this.view = 'title';
-    this.focusViewHeading('title');
+    if (this.currentMatchIsLadder && this.ladderSnapshot.progress) {
+      this.setupSnapshot = setupSnapshotForLadder(
+        { ...this.setupSnapshot, mode: 'ladder' },
+        this.ladderSnapshot.progress,
+      );
+      this.currentMatchIsLadder = false;
+      this.screenController.returnToSetup();
+      this.view = 'setup';
+      this.focusViewHeading('setup');
+    } else {
+      this.currentMatchIsLadder = false;
+      this.screenController.showTitle();
+      this.view = 'title';
+      this.focusViewHeading('title');
+    }
   };
 
   private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
@@ -651,9 +793,15 @@ export class GrandTransitionApp extends LitElement {
     this.cancelAiTurn();
     if (!this.isAiTurn()) return;
     const state = this.matchState!;
-    const decision = decideLocalRadioCaller(state, matchContext, {
-      reducedDelay: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-    });
+    const reducedDelay = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    const decision =
+      state.setup.aiDifficulty === 'party-strategist'
+        ? decidePartyStrategist(state, matchContext, { reducedDelay })
+        : state.setup.aiDifficulty === 'palace-operator'
+          ? decidePalaceOperator(state, matchContext, { reducedDelay })
+          : decideLocalRadioCaller(state, matchContext, { reducedDelay });
     if (!decision) return;
     const revision = state.commandHistory.length;
     this.aiThinking = true;
@@ -710,6 +858,17 @@ export class GrandTransitionApp extends LitElement {
       throw new Error('The active match does not have an initial seed.');
     }
     return this.matchInitialSeed;
+  }
+
+  private recordLadderMatch(state: MatchState): void {
+    const progress = this.ladderSnapshot.progress;
+    if (!progress || !state.winner) return;
+    this.ladderSnapshot = this.ladderProgressRepository.replace(
+      recordLadderResult(
+        progress,
+        state.winner === 'player-one' ? 'win' : 'loss',
+      ),
+    );
   }
 
   private currentMatchSkinIds(): Readonly<Record<string, string>> {
@@ -849,12 +1008,47 @@ export function createDefaultSetupSnapshot(): SetupSnapshot {
   }
   return Object.freeze({
     mode: 'hotseat',
+    aiDifficulty: 'local-radio-caller',
     playerOneCharacterId: playerOne.id,
     playerOneSkinId: characterSkins[playerOne.id]?.[0]?.id ?? 'default',
     playerTwoCharacterId: playerTwo.id,
     playerTwoSkinId: characterSkins[playerTwo.id]?.[0]?.id ?? 'default',
     sceneId: scene.id,
   });
+}
+
+function setupSnapshotForLadder(
+  snapshot: SetupSnapshot,
+  progress: LadderProgress,
+): SetupSnapshot {
+  const rung = currentLadderRung(progress);
+  const opponentId = rung?.opponentCharacterId ?? progress.opponentIds.at(-1)!;
+  const sceneId =
+    rung?.sceneId ?? progress.sceneOrder[(progress.opponentIds.length - 1) % 6]!;
+  return Object.freeze({
+    ...snapshot,
+    mode: 'ladder',
+    aiDifficulty: rung?.difficulty ?? 'palace-operator',
+    playerOneCharacterId: progress.selectedCharacterId,
+    playerOneSkinId:
+      characterSkins[progress.selectedCharacterId]?.[0]?.id ?? 'default',
+    playerTwoCharacterId: opponentId,
+    playerTwoSkinId: characterSkins[opponentId]?.[0]?.id ?? 'default',
+    sceneId,
+  });
+}
+
+function ladderMatchSeed(progress: LadderProgress): number {
+  let seed = progress.seed >>> 0;
+  seed ^= Math.imul(progress.rungIndex + 1, 0x9e37_79b1);
+  seed ^= Math.imul(progress.losses + 1, 0x85eb_ca6b);
+  return seed >>> 0;
+}
+
+function difficultyLabel(difficulty: string | null): string {
+  if (difficulty === 'party-strategist') return msg('Party Strategist');
+  if (difficulty === 'palace-operator') return msg('Palace Operator');
+  return msg('Local Radio Caller');
 }
 
 export function registerGrandTransitionApp(): void {

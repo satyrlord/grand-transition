@@ -1,0 +1,117 @@
+{
+  "id": "presidential-sphinx",
+  "rosterOrder": 11,
+  "species": "human",
+  "name": "Presidential Sphinx",
+  "description": "A remote leader whose longest public statement is a carefully scheduled absence.",
+  "assets": {
+    "portrait": {
+      "assetId": "presidential-sphinx-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "presidential-sphinx-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#0f315a",
+    "secondary": "#e3d8bb",
+    "accent": "#6f2633"
+  },
+  "weaknessTags": [
+    "absence",
+    "silence",
+    "leisure"
+  ],
+  "comebacks": {
+    "weak": "Your question is noted.",
+    "medium": "Silence has already answered you.",
+    "strong": "I was absent and still contributed more than your speech."
+  },
+  "aiPersonality": {
+    "aggression": 0.25,
+    "denial": 0.85,
+    "risk": 0.2
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.8,
+    "pitch": 0.8
+  },
+  "animationSet": {
+    "idle": "presidential-sphinx-idle",
+    "speak": "presidential-sphinx-speak",
+    "react": "presidential-sphinx-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "presidential-sphinx-foundation-noun",
+      "role": "noun",
+      "text": "my unavailable public schedule",
+      "tags": [
+        "absence",
+        "silence",
+        "leisure"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "presidential-sphinx-foundation-modifier",
+      "role": "modifier",
+      "text": "during a strategic silence",
+      "tags": [
+        "absence",
+        "silence",
+        "leisure"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "presidential-sphinx-foundation-ending",
+      "role": "ending",
+      "text": "and the mandate is currently out of office.",
+      "tags": [
+        "absence",
+        "silence",
+        "leisure"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

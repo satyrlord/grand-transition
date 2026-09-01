@@ -1,10 +1,10 @@
 # Milestone 022: Advanced Artificial Intelligence and Ladder
 
 **Status:** Approved  
-**Depends on:** 021  
+**Depends on:** 026
 **Owns:** Advanced artificial intelligence (AI) difficulties, personalities,
 timing, and ladder flow
-**Production-file budget:** 9
+**Production-file budget:** 12
 
 ## Deliver
 
@@ -45,12 +45,15 @@ ordering.
 
 Party presentation delay is a seeded integer 700 through 1500 milliseconds.
 Palace delay is 900 through 1800. Search node limits do not change.
+Reduced motion uses 100 ms for either advanced difficulty and consumes no delay
+draw. It does not change the selected command, evaluated-node count, or
+principal reply.
 
 ## Ladder contract
 
 A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
 three Palace Operator opponents in that order. The ladder selects opponents
-without replacement from the 17 characters other than the player's character. It uses
+without replacement from the 18 characters other than the player's character. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
 permutation of all six scenes and then repeat.
 
@@ -61,6 +64,27 @@ Progress version 1 stores selected character ID, seed, nine opponent IDs, scene
 order, rung index 0 through 9, win and loss counts, and completion. Reset removes
 that progress after confirmation. Corrupt progress uses the Milestone 020
 fallback and never invents advancement.
+
+The storage key is `grand-transition.ladder-progress.v1`. Storage failure keeps
+the exact progress in session memory and shows a session-only notice. Corrupt or
+unsupported bytes produce no progress and remain unchanged until the player
+starts a new ladder or confirms Reset.
+Syntactically valid progress that names a character or scene outside the current
+playable catalog is also invalid. It produces no progress, reports
+`invalid-data`, preserves the stored bytes, and cannot advance a rung.
+
+Setup adds “Ladder” to Mode. Custom Single player adds Party Strategist and
+Palace Operator to the existing Difficulty select. Ladder setup keeps the
+player character selectable until the first recorded result, fixes the current
+opponent and scene from progress, and shows rung, wins, losses, and completion
+in the existing Match settings strip. The opponent status names the current
+difficulty. It does not expose a locked
+future opponent. While Ladder is active, the shell ignores updates to the
+opponent, opponent skin, scene, and difficulty. A match result uses “Continue ladder” to return to the same
+rung after a loss or the next rung after a win. Abandon returns to the same
+rung without adding a result. The completed state disables match start and
+keeps confirmed Reset available. Its locked opponent stage says “Ladder
+complete,” not a prior difficulty.
 
 ## Acceptance criteria
 
@@ -77,6 +101,18 @@ fallback and never invents advancement.
   each have a golden progress snapshot.
 - **AC-022-06:** Playwright completes all nine rungs, persists after each win,
   reloads at the same rung, and shows no locked or completed state incorrectly.
+
+## Objective verifiers
+
+- `tests/unit/advanced-ai.test.ts` verifies AC-022-01 through AC-022-04,
+  deterministic advanced-policy matches, and delay bounds.
+- `tests/unit/ladder.test.ts` verifies AC-022-05 progress generation,
+  transitions, codec snapshots, corruption and stale-catalog fallback, resume,
+  and reset.
+- `tests/browser/screen-shell.browser.test.ts` verifies difficulty selection,
+  ladder setup, persistence, completion, and confirmed reset.
+- `e2e/advanced-ai-ladder.spec.ts` verifies AC-022-06 in the production build.
+- The Impeccable records and `npm run ci` complete milestone evidence.
 
 ## Impeccable UI validation
 

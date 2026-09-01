@@ -1,0 +1,117 @@
+{
+  "id": "eu-funds-alchemist",
+  "rosterOrder": 18,
+  "species": "human",
+  "name": "EU-Funds Alchemist",
+  "description": "A grant conjurer who transforms every public promise into one more funded pilot project.",
+  "assets": {
+    "portrait": {
+      "assetId": "eu-funds-alchemist-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "eu-funds-alchemist-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#3b5b82",
+    "secondary": "#d7d4c8",
+    "accent": "#b48932"
+  },
+  "weaknessTags": [
+    "transparency",
+    "outcomes",
+    "maintenance"
+  ],
+  "comebacks": {
+    "weak": "That expense is not eligible.",
+    "medium": "Your outcome missed the reporting window.",
+    "strong": "I turned your entire mandate into an unfunded annex."
+  },
+  "aiPersonality": {
+    "aggression": 0.6,
+    "denial": 0.75,
+    "risk": 0.7
+  },
+  "voiceProfile": {
+    "voiceHint": "bright",
+    "rate": 1,
+    "pitch": 1
+  },
+  "animationSet": {
+    "idle": "eu-funds-alchemist-idle",
+    "speak": "eu-funds-alchemist-speak",
+    "react": "eu-funds-alchemist-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "eu-funds-alchemist-foundation-noun",
+      "role": "noun",
+      "text": "my co-financed miracle pilot",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-foundation-modifier",
+      "role": "modifier",
+      "text": "under a renewable eligibility window",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-foundation-ending",
+      "role": "ending",
+      "text": "and maintenance was removed from the application.",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

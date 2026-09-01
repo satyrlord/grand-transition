@@ -1,0 +1,117 @@
+{
+  "id": "algorithmic-prophet",
+  "rosterOrder": 12,
+  "species": "human",
+  "name": "Algorithmic Prophet",
+  "description": "A viral mystic who reads engagement graphs as sacred warnings from the national feed.",
+  "assets": {
+    "portrait": {
+      "assetId": "algorithmic-prophet-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "algorithmic-prophet-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#43205f",
+    "secondary": "#1f2738",
+    "accent": "#c57939"
+  },
+  "weaknessTags": [
+    "evidence",
+    "specificity",
+    "follow-up-questions"
+  ],
+  "comebacks": {
+    "weak": "The feed has judged you.",
+    "medium": "Your evidence has no engagement.",
+    "strong": "I asked the algorithm and it muted your entire worldview."
+  },
+  "aiPersonality": {
+    "aggression": 0.85,
+    "denial": 0.35,
+    "risk": 0.95
+  },
+  "voiceProfile": {
+    "voiceHint": "sharp",
+    "rate": 1.15,
+    "pitch": 1.15
+  },
+  "animationSet": {
+    "idle": "algorithmic-prophet-idle",
+    "speak": "algorithmic-prophet-speak",
+    "react": "algorithmic-prophet-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "algorithmic-prophet-foundation-noun",
+      "role": "noun",
+      "text": "my sovereign engagement oracle",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-foundation-modifier",
+      "role": "modifier",
+      "text": "according to a disappearing clip",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-foundation-ending",
+      "role": "ending",
+      "text": "and the algorithm refuses follow-up questions.",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

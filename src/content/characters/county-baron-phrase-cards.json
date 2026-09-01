@@ -1,0 +1,117 @@
+{
+  "id": "county-baron",
+  "rosterOrder": 9,
+  "species": "human",
+  "name": "County Baron",
+  "description": "A genial local patron who believes every public contract deserves a familiar face.",
+  "assets": {
+    "portrait": {
+      "assetId": "county-baron-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "county-baron-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#78292b",
+    "secondary": "#dfc68f",
+    "accent": "#6a4a28"
+  },
+  "weaknessTags": [
+    "procurement",
+    "infrastructure",
+    "nepotism"
+  ],
+  "comebacks": {
+    "weak": "The county knows my number.",
+    "medium": "Your tender forgot to invite the family.",
+    "strong": "Even your potholes were awarded without competition."
+  },
+  "aiPersonality": {
+    "aggression": 0.5,
+    "denial": 0.8,
+    "risk": 0.35
+  },
+  "voiceProfile": {
+    "voiceHint": "grounded",
+    "rate": 0.95,
+    "pitch": 0.9
+  },
+  "animationSet": {
+    "idle": "county-baron-idle",
+    "speak": "county-baron-speak",
+    "react": "county-baron-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "county-baron-foundation-noun",
+      "role": "noun",
+      "text": "my cousin-approved tender",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "county-baron-foundation-modifier",
+      "role": "modifier",
+      "text": "beside the freshly painted pothole",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "county-baron-foundation-ending",
+      "role": "ending",
+      "text": "and the ribbon was cut before the road existed.",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

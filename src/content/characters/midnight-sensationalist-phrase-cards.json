@@ -1,0 +1,117 @@
+{
+  "id": "midnight-sensationalist",
+  "rosterOrder": 3,
+  "species": "human",
+  "name": "Midnight Sensationalist",
+  "description": "A breathless tabloid host who can turn one anonymous whisper into an all-night emergency broadcast.",
+  "assets": {
+    "portrait": {
+      "assetId": "midnight-sensationalist-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "midnight-sensationalist-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#812b32",
+    "secondary": "#182a42",
+    "accent": "#d6af62"
+  },
+  "weaknessTags": [
+    "ratings",
+    "evidence",
+    "credibility"
+  ],
+  "comebacks": {
+    "weak": "Your source called back.",
+    "medium": "Even your denial needs a commercial break.",
+    "strong": "The nation changed the channel before your conclusion."
+  },
+  "aiPersonality": {
+    "aggression": 0.8,
+    "denial": 0.45,
+    "risk": 0.8
+  },
+  "voiceProfile": {
+    "voiceHint": "sharp",
+    "rate": 1.1,
+    "pitch": 1.05
+  },
+  "animationSet": {
+    "idle": "midnight-sensationalist-idle",
+    "speak": "midnight-sensationalist-speak",
+    "react": "midnight-sensationalist-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "midnight-sensationalist-foundation-noun",
+      "role": "noun",
+      "text": "my emergency source",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-foundation-modifier",
+      "role": "modifier",
+      "text": "between two commercial breaks",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-foundation-ending",
+      "role": "ending",
+      "text": "and the ratings still need a scandal.",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

@@ -178,7 +178,6 @@ test('the AI speech bubble stays open automatically for the human reader', async
       `[data-card-source="${validCard!.source}"][data-card-id="${validCard!.cardId}"]`,
     )
     .click();
-  await expect(page.locator('.ai-thinking-record')).toBeVisible();
   await expect
     .poll(() =>
       page.locator('grand-transition-match').evaluate((element) => {

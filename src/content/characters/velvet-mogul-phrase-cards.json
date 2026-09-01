@@ -1,0 +1,117 @@
+{
+  "id": "velvet-mogul",
+  "rosterOrder": 4,
+  "species": "human",
+  "name": "Velvet Mogul",
+  "description": "A polished media broker who treats every public argument as one more private acquisition.",
+  "assets": {
+    "portrait": {
+      "assetId": "velvet-mogul-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "velvet-mogul-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#64204f",
+    "secondary": "#211d35",
+    "accent": "#c69a4c"
+  },
+  "weaknessTags": [
+    "wealth",
+    "influence",
+    "credibility"
+  ],
+  "comebacks": {
+    "weak": "That segment is not renewed.",
+    "medium": "Your influence ends outside this studio.",
+    "strong": "I own the silence after your last word."
+  },
+  "aiPersonality": {
+    "aggression": 0.45,
+    "denial": 0.9,
+    "risk": 0.35
+  },
+  "voiceProfile": {
+    "voiceHint": "grounded",
+    "rate": 0.9,
+    "pitch": 0.9
+  },
+  "animationSet": {
+    "idle": "velvet-mogul-idle",
+    "speak": "velvet-mogul-speak",
+    "react": "velvet-mogul-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "velvet-mogul-foundation-noun",
+      "role": "noun",
+      "text": "my discreet broadcast holding",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "velvet-mogul-foundation-modifier",
+      "role": "modifier",
+      "text": "under a velvet confidentiality clause",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "velvet-mogul-foundation-ending",
+      "role": "ending",
+      "text": "and your credibility is not in the portfolio.",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

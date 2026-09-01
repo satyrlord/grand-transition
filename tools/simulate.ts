@@ -9,12 +9,17 @@ import {
   simulateMatches,
   summarizeSimulation,
 } from '../src/engine/simulation';
+import { listConfiguredAiSimulationOptions } from '../src/ai/simulation-policy';
 import { loadGameContent } from './load-game-content';
 
 export type SimulationArguments = Readonly<{
   seed: number;
   matches: number;
   output?: string;
+  difficulty?:
+    | 'local-radio-caller'
+    | 'palace-operator'
+    | 'party-strategist';
 }>;
 
 export type SimulationArgumentResult =
@@ -27,7 +32,7 @@ export function parseSimulationArguments(
   const values = new Map<string, string>();
   for (let index = 0; index < arguments_.length; index += 2) {
     const option = arguments_[index]!;
-    if (!['--seed', '--matches', '--output'].includes(option)) {
+    if (!['--seed', '--matches', '--output', '--difficulty'].includes(option)) {
       return invalid(option, 'Unknown option.');
     }
     const value = arguments_[index + 1];
@@ -59,9 +64,29 @@ export function parseSimulationArguments(
   }
 
   const output = values.get('--output');
+  const difficulty = values.get('--difficulty');
+  if (
+    difficulty &&
+    difficulty !== 'local-radio-caller' &&
+    difficulty !== 'party-strategist' &&
+    difficulty !== 'palace-operator'
+  ) {
+    return invalid(
+      '--difficulty',
+      'Use local-radio-caller, party-strategist, or palace-operator.',
+    );
+  }
+  const normalizedDifficulty = difficulty as SimulationArguments['difficulty'];
   return {
     ok: true,
-    value: { seed, matches, ...(output ? { output } : {}) },
+    value: {
+      seed,
+      matches,
+      ...(output ? { output } : {}),
+      ...(normalizedDifficulty
+        ? { difficulty: normalizedDifficulty }
+        : {}),
+    },
   };
 }
 
@@ -84,10 +109,12 @@ export async function runSimulationCommand(
     parsed.value.seed,
     parsed.value.matches,
     createSimulationSetup(sampleContent, {
-      aiDifficulty: 'local-radio-caller',
+      aiDifficulty: parsed.value.difficulty ?? 'local-radio-caller',
     }),
     context,
-    listLocalRadioCallerSimulationOptions,
+    parsed.value.difficulty && parsed.value.difficulty !== 'local-radio-caller'
+      ? listConfiguredAiSimulationOptions
+      : listLocalRadioCallerSimulationOptions,
   );
   if (parsed.value.output) {
     await writeFile(
