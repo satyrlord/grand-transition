@@ -1160,6 +1160,7 @@ describe('content schemas', () => {
     const alternateSkinIds = new Set([
       'red-folded-chairman',
       'thunder-tribune',
+      'midnight-sensationalist',
       'black-sea-captain',
       'government-ai',
       'retiring-cassandra',

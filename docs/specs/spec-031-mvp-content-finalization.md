@@ -152,13 +152,16 @@ failed automated range or distribution.
 
 ## Content research boundary
 
-All characters remain original fictional composites. Research can use public
+All character identities and prose remain fictional. Research can use public
 institutions, documented historical events, constitutional mechanisms, and
-broad media forms. Do not use a real person as a named or identifiable source,
-model, comparison, or target. Do not copy photographs, accusations, protected
-prose, or slogans other than the one sourced English form that AC-005-07
-approves. Do not use real political party names, acronyms, or logos. Use only
-generic ideological or social-family party labels.
+broad media forms. A portrait skin can use a public-figure likeness as a
+visual-only parody when the product owner explicitly approves it. The skin's
+non-player-visible generation provenance can name that reference person. Do not
+use a real person as a comparison or target in player-visible content. Do not
+copy photographs, accusations, protected prose, or slogans other than the one
+sourced English form that AC-005-07 approves. Do not use real political party
+names, acronyms, or logos. Use only generic ideological or social-family party
+labels.
 
 Shared institutional themes can use
 [Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)

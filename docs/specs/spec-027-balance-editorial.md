@@ -18,14 +18,19 @@ players. Romanian proper nouns require enough English context to carry the joke.
 Permit political parody, public-record criticism, fictional institutions,
 composite scandals, bureaucracy, media satire, contradiction, and vanity satire
 aimed at fictional personas. Hard-edged allegations can target fictional
-personas. Reject real-person references, real-party names and acronyms,
-protected traits as insults, sexual humiliation, threats, copied text, real
-logos, and copyrighted broadcast art. Every record has review evidence.
+personas. Reject player-visible real-person references, real-party names and
+acronyms, protected traits as insults, sexual humiliation, threats, copied
+text, real logos, and copyrighted broadcast art. Every record has review
+evidence.
 
-The review confirms that each character is an original fictional composite. It
-rejects named or identifiable real-person models, comparisons, targets, source
-notes, and asset references. It also rejects real political party names,
-acronyms, and logos. It permits generic ideological or social-family labels.
+The review confirms that each character identity and its prose are fictional.
+It rejects named or identifiable real-person comparisons, targets, source
+notes, and asset references. A portrait skin can use a public-figure likeness
+as a visual-only parody when the product owner explicitly approves it.
+Non-player-visible generation provenance can name that reference person. This
+exception does not permit real-person allegations or player-visible names. The
+review also rejects real political party names, acronyms, and logos. It permits
+generic ideological or social-family labels.
 
 Simulation reports seed, workload, matchups, difficulties, win rates, resolved
 round counts, rule-event rates, failures, and environment. Automatic development

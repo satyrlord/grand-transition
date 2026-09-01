@@ -58,9 +58,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented content includes Zod 4 schemas and an English game-locale
   bundle. It also includes 19 original fictional characters, 18 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
-  default portraits. The four vertical-slice characters and Retiring Cassandra
-  also have alternate skins. The Retiring Cassandra statesman skin is an
-  approved visual-only exception that does not change game identity or prose.
+  default portraits. The four vertical-slice characters, Retiring Cassandra,
+  and Midnight Sensationalist also have alternate skins. The Retiring Cassandra
+  statesman skin and the approved Midnight Sensationalist likeness skins are
+  visual-only exceptions that do not change game identity or prose.
   Two scenes use layered debate studios with fixed fictional moderators
   and foreground desk plates. Four playable foundation scenes use one neutral
   local fallback until final scene production.

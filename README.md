@@ -6,9 +6,11 @@ deny useful phrases, target character weaknesses, continue combinations across
 rounds, use comebacks, and reduce the opponent's Pride.
 
 The game occurs in an invented republic influenced by Romanian public life
-after 1989. Its characters are fictional composites. It does not reproduce
-real people, real political party names, party acronyms, party logos, protected
-game content, third-party art, or unlicensed third-party audio.
+after 1989. Its character identities and prose are fictional. A portrait skin
+can use a public-figure likeness for visual parody when the product owner
+explicitly approves it. The skin does not change the character name or prose.
+The game does not reproduce real political party names, party acronyms, party
+logos, protected game content, third-party art, or unlicensed third-party audio.
 
 ## Planned play modes
 
@@ -33,10 +35,11 @@ Milestones 023 through 025, 027 through 029, and 031 remain incomplete.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
-default local portrait. The four vertical-slice characters and Retiring
-Cassandra have alternate skins. The Retiring Cassandra statesman skin is an
-approved visual-only exception that does not change game identity or prose. The
-content includes two fictional layered debate studios, four playable
+default local portrait. The four vertical-slice characters, Retiring Cassandra,
+and Midnight Sensationalist have alternate skins. The Retiring Cassandra
+statesman skin and the approved Midnight Sensationalist likeness skins are
+visual-only exceptions that do not change game identity or prose. The content
+includes two fictional layered debate studios, four playable
 foundation scenes with a neutral local fallback, and one English game-locale
 bundle.
 
