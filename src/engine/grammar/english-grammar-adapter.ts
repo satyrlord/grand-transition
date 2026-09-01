@@ -25,6 +25,7 @@ export type EnglishGrammarPhrase = Readonly<{
   role: Phrase['role'];
   connectorKind?:
     'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
+  allowsCoordinatedNounComplement?: true;
   grammaticalNumber?: GrammaticalNumber | null;
   grammaticalPerson?: GrammaticalPerson | null;
   referentKind?: ReferentKind | null;
@@ -101,6 +102,9 @@ type ParseContext = {
   conjunctionAfterObjectVerb: boolean;
   compoundObjectComplete: boolean;
   withComplementPending: boolean;
+  copularNounComplementAllowed: boolean;
+  copularNounComplementPending: boolean;
+  copularNounComplementComplete: boolean;
 };
 
 const nextRolesByState: Readonly<
@@ -140,6 +144,9 @@ export function prepareEnglishGrammarPhrase(
       phrase.role === 'conjunction'
         ? (phrase.connectorKind ?? inferConnectorKind(defaultText))
         : null,
+    ...(phrase.allowsCoordinatedNounComplement
+      ? { allowsCoordinatedNounComplement: true as const }
+      : {}),
     grammaticalNumber:
       phrase.role === 'noun' ? (phrase.grammaticalNumber ?? 'singular') : null,
     grammaticalPerson:
@@ -178,6 +185,9 @@ export const englishGrammarAdapter: GrammarAdapter<
       conjunctionAfterObjectVerb: false,
       compoundObjectComplete: false,
       withComplementPending: false,
+      copularNounComplementAllowed: false,
+      copularNounComplementPending: false,
+      copularNounComplementComplete: false,
     };
     let ended = false;
     const renderedPhrases: EnglishRenderedPhrase[] = [];
@@ -254,6 +264,9 @@ function transition(
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
       compoundObjectComplete: false,
+      copularNounComplementAllowed: false,
+      copularNounComplementPending: false,
+      copularNounComplementComplete: false,
     };
   }
 
@@ -264,7 +277,13 @@ function transition(
   }
   if (role === 'continuation') return null;
   if (role === 'modifier') {
-    return context.state === 'CLAUSE_COMPLETE' ? context : null;
+    return context.state === 'CLAUSE_COMPLETE'
+      ? {
+          ...context,
+          copularNounComplementPending: false,
+          copularNounComplementComplete: false,
+        }
+      : null;
   }
 
   if (role === 'conjunction') {
@@ -286,6 +305,9 @@ function transition(
           completedWithObjectVerb: false,
           conjunctionAfterObjectVerb: false,
           compoundObjectComplete: false,
+          copularNounComplementAllowed: false,
+          copularNounComplementPending: false,
+          copularNounComplementComplete: false,
           frontBecausePending:
             context.frontBecausePending ||
             (context.state === 'EXPECT_SUBJECT' && !context.hasCompleteClause),
@@ -300,6 +322,9 @@ function transition(
         conjunctionFromSubject: true,
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (
@@ -313,6 +338,11 @@ function transition(
         conjunctionAfterObjectVerb:
           kind === 'and' && context.completedWithObjectVerb,
         compoundObjectComplete: false,
+        copularNounComplementPending:
+          kind === 'and' && context.copularNounComplementAllowed,
+        copularNounComplementComplete: false,
+        copularNounComplementAllowed:
+          kind === 'and' && context.copularNounComplementAllowed,
       };
     }
     if (kind === 'with' && context.state === 'CLAUSE_COMPLETE') {
@@ -323,6 +353,9 @@ function transition(
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
         withComplementPending: true,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (
@@ -339,6 +372,9 @@ function transition(
         completedWithObjectVerb: false,
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     return null;
@@ -366,6 +402,9 @@ function transition(
       completedWithObjectVerb: false,
       conjunctionAfterObjectVerb: false,
       compoundObjectComplete: false,
+      copularNounComplementAllowed: false,
+      copularNounComplementPending: false,
+      copularNounComplementComplete: false,
     };
   }
 
@@ -376,6 +415,9 @@ function transition(
         state: 'EXPECT_OBJECT',
         completedWithObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (role === 'predicate') {
@@ -386,6 +428,10 @@ function transition(
           context.hasCompleteClause || !context.frontBecausePending,
         completedWithObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed:
+          phrase.allowsCoordinatedNounComplement === true,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     return null;
@@ -400,6 +446,9 @@ function transition(
         context.hasCompleteClause || !context.frontBecausePending,
       completedWithObjectVerb: true,
       compoundObjectComplete: false,
+      copularNounComplementAllowed: false,
+      copularNounComplementPending: false,
+      copularNounComplementComplete: false,
     };
   }
 
@@ -410,6 +459,9 @@ function transition(
         state: 'EXPECT_OBJECT',
         completedWithObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (role === 'predicate') {
@@ -417,6 +469,38 @@ function transition(
         ...context,
         completedWithObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed:
+          phrase.allowsCoordinatedNounComplement === true,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
+      };
+    }
+  }
+
+  if (
+    context.state === 'CLAUSE_COMPLETE' &&
+    context.copularNounComplementComplete
+  ) {
+    if (role === 'verb') {
+      return {
+        ...context,
+        state: 'EXPECT_OBJECT',
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
+      };
+    }
+    if (role === 'predicate') {
+      return {
+        ...context,
+        completedWithObjectVerb: false,
+        compoundObjectComplete: false,
+        copularNounComplementAllowed:
+          phrase.allowsCoordinatedNounComplement === true,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
   }
@@ -431,8 +515,26 @@ function transition(
             conjunctionAfterObjectVerb: false,
             compoundObjectComplete: false,
             withComplementPending: false,
+            copularNounComplementAllowed: false,
+            copularNounComplementPending: false,
+            copularNounComplementComplete: false,
           }
         : null;
+    }
+    if (role === 'noun' && context.copularNounComplementPending) {
+      return {
+        ...context,
+        state: 'CLAUSE_COMPLETE',
+        subjectNumber: phrase.grammaticalNumber ?? 'singular',
+        subjectPerson: phrase.grammaticalPerson ?? 'third',
+        subjectReferentKind: phrase.referentKind ?? 'nonpersonal',
+        subjectNounCount: 1,
+        completedWithObjectVerb: false,
+        conjunctionAfterObjectVerb: false,
+        compoundObjectComplete: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: true,
+      };
     }
     if (role === 'noun') {
       if (context.conjunctionAfterObjectVerb) {
@@ -445,6 +547,9 @@ function transition(
           subjectNounCount: 1,
           conjunctionAfterObjectVerb: false,
           compoundObjectComplete: true,
+          copularNounComplementAllowed: false,
+          copularNounComplementPending: false,
+          copularNounComplementComplete: false,
         };
       }
       return {
@@ -457,6 +562,9 @@ function transition(
         completedWithObjectVerb: false,
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (role === 'verb') {
@@ -466,6 +574,9 @@ function transition(
         completedWithObjectVerb: false,
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed: false,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
     if (role === 'predicate') {
@@ -475,6 +586,10 @@ function transition(
         completedWithObjectVerb: false,
         conjunctionAfterObjectVerb: false,
         compoundObjectComplete: false,
+        copularNounComplementAllowed:
+          phrase.allowsCoordinatedNounComplement === true,
+        copularNounComplementPending: false,
+        copularNounComplementComplete: false,
       };
     }
   }
@@ -492,7 +607,10 @@ function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
   if (context.state === 'CLAUSE_COMPLETE' && context.frontBecausePending) {
     return ['noun', 'modifier', 'conjunction'];
   }
-  if (context.state === 'CLAUSE_COMPLETE' && context.compoundObjectComplete) {
+  if (
+    context.state === 'CLAUSE_COMPLETE' &&
+    (context.compoundObjectComplete || context.copularNounComplementComplete)
+  ) {
     return ['verb', 'predicate', 'modifier', 'conjunction', 'ending'];
   }
   if (context.state === 'EXPECT_SUBJECT') {

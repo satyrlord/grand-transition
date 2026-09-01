@@ -3297,6 +3297,7 @@
   {
     "id": "were-communist-party-members",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "was a Communist Party member",
     "singularText": "was a Communist Party member",
     "pluralText": "were Communist Party members",
@@ -3324,6 +3325,7 @@
   {
     "id": "are-communist-party-members",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "is a Communist Party member",
     "singularText": "is a Communist Party member",
     "pluralText": "are Communist Party members",
@@ -3351,6 +3353,7 @@
   {
     "id": "will-be-communist-party-members",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "will be a Communist Party member",
     "singularText": "will be a Communist Party member",
     "pluralText": "will be Communist Party members",
@@ -4501,6 +4504,7 @@
   {
     "id": "was-a-securitate-informer",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "was a Securitate informer",
     "singularText": "was a Securitate informer",
     "pluralText": "were Securitate informers",
@@ -4528,6 +4532,7 @@
   {
     "id": "is-a-securitate-informer",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "is a Securitate informer",
     "singularText": "is a Securitate informer",
     "pluralText": "are Securitate informers",
@@ -4555,6 +4560,7 @@
   {
     "id": "will-be-a-securitate-informer",
     "role": "predicate",
+    "allowsCoordinatedNounComplement": true,
     "text": "will be a Securitate informer",
     "singularText": "will be a Securitate informer",
     "pluralText": "will be Securitate informers",

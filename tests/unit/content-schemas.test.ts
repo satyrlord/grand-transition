@@ -417,6 +417,7 @@ describe('content schemas', () => {
       const phrase = phraseCardCatalog.phrases.find(
         (candidate) => candidate.id === id,
       );
+      expect(phrase?.allowsCoordinatedNounComplement, id).toBe(true);
       expect(phrase?.numberForms, id).toMatchObject({
         personalSingularKey: `phrase.${id}.personal-singular`,
         secondPersonKey: `phrase.${id}.second-person`,
@@ -1335,6 +1336,14 @@ describe('content schemas', () => {
     const nounConnector = cloneCatalog();
     nounConnector.phrases[0]!.connectorKind = 'and';
     expectFailure(nounConnector, 'connectorKind', /Only a conjunction/iu);
+
+    const nounCopularComplement = cloneCatalog();
+    nounCopularComplement.phrases[0]!.allowsCoordinatedNounComplement = true;
+    expectFailure(
+      nounCopularComplement,
+      'allowsCoordinatedNounComplement',
+      /Only a predicate/iu,
+    );
   });
 
   test('rejects empty restrictions, empty custom scores, and duplicate custom relations', () => {

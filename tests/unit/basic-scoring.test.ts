@@ -215,6 +215,34 @@ describe('Hollywood Roast clause scoring', () => {
     });
   });
 
+  test('keeps a coordinated copular noun complement in the preceding clause', () => {
+    const ids = [
+      'your-brother',
+      'is-a-securitate-informer',
+      'coalition-and',
+      'a-pig',
+    ] as const;
+    const result = score(ids, ['restraint']);
+
+    expect(result.finalDamage).toBe(8);
+    expect(
+      result.breakdown.filter((item) => item.kind === 'clause-base'),
+    ).toHaveLength(1);
+    expect(result.breakdown).toContainEqual({
+      kind: 'clause-base',
+      operation: 'note',
+      phraseIds: ids,
+      amount: 5,
+    });
+    expect(result.breakdown).toContainEqual(
+      expect.objectContaining({
+        kind: 'weakness-match',
+        defenderTag: 'restraint',
+        phraseId: 'a-pig',
+      }),
+    );
+  });
+
   test('adds the scores of compound-subject clauses', () => {
     expect(
       score([

@@ -50,6 +50,15 @@ predicate, or a shared-subject verb followed by a noun. `but` and `yet` accept
 the same complete-clause branches. `and` also joins nouns before the first
 predicate or verb. `but` and `yet` do not join an incomplete opening subject.
 
+After a combined copular predicate that declares
+`allowsCoordinatedNounComplement`, `and + NOUN` is also a complete coordinated
+complement that shares the predicate's copula. Thus, `your brother + is a
+Securitate informer + and + a pig` renders and completes as `Your brother is a
+Securitate informer and a pig.` The same noun prefix remains able to start the
+existing new-subject branch when a predicate or a verb follows it. Predicates
+without this declaration continue to treat `and + NOUN` only as a new subject
+and remain incomplete until its relation follows.
+
 `so` and `for` can follow only a complete clause. Each requires a new noun
 subject and a complete following clause. They do not accept a shared-subject
 branch and cannot start a sentence. `so` presents a result. `for` presents a
@@ -130,10 +139,15 @@ text.
 - **AC-006-06:** Tests prove one and several modifiers after complete predicate
   and object clauses. They prove rejection before clause completion and preserve
   the required main clause after front `because`.
+- **AC-006-07:** Tests prove the exact coordinated copular-complement sentence,
+  preserve its ambiguous new-subject continuation, and prove that an unrelated
+  predicate followed by `and + NOUN` remains incomplete.
 
 ## Objective verifiers
 
 `tests/unit/english-grammar-core.test.ts` and
 `tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-06.
 `tests/browser/seamless-match-flow.browser.test.ts` verifies that the rendered
-second-person result reaches the visible sentence bubble.
+second-person result and coordinated copular complement reach the visible
+sentence bubble. `e2e/coordinated-copular-complement.spec.ts` verifies
+AC-006-07 through production controls and the production sentence bubble.
