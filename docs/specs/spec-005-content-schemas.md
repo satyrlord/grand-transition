@@ -46,9 +46,9 @@ Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
 phrase, constructed-sentence, and speech message-key sets. Interface labels and
 controls are always English and do not enter locale bundles. Every referenced
 text and number-form key exists. Reject HTML, script URLs, inline handlers,
-unsafe editorial states, real-person references, real-party references,
-protected-trait insults, sexual humiliation, threats, real logos, and
-copyrighted broadcast graphics.
+unsafe editorial states, player-visible real-person references, real-party
+references, protected-trait insults, sexual humiliation, threats, real logos,
+and copyrighted broadcast graphics.
 
 ## Exact constraints
 
@@ -83,9 +83,12 @@ copyrighted broadcast graphics.
 - Each character owns exactly one weak, one medium, and one strong comeback
   line. Each key uses `comeback.<character-id>.<tier>` and cannot be shared by
   another character or tier. There is no common comeback pool.
-- Shipped prose, specifications, editorial rationale, source notes, and asset
-  metadata do not name or identify a real person. Public institutions and
-  historical events remain permitted.
+- Shipped player-visible prose, editorial rationale, and source notes do not
+  name or identify a real person. Public institutions and historical events
+  remain permitted. An embedded asset-generation prompt can name a public
+  figure only when the product owner explicitly approves that figure as the
+  visual reference for a portrait skin. This provenance is not player-visible.
+  The skin does not change the fictional character identity or prose.
 - Shipped prose, specifications, editorial rationale, source notes, and asset
   metadata do not use a real political party's name, acronym, or logo. Allowed
   generic labels include `The Conservative Party`, `The Peasant's Party`,

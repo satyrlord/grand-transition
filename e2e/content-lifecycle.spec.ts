@@ -282,7 +282,9 @@ async function assertTemporaryCharacterIsPlayable(
     `.roster-choice[data-character-id="${temporaryCharacterId}"]`,
   );
   await expect(temporaryOption).toHaveCount(1);
-  await expect(temporaryOption).toContainText(temporaryCharacterName);
+  await expect(temporaryOption).toHaveAccessibleName(
+    new RegExp(`^${temporaryCharacterName}\\. Weaknesses:`, 'u'),
+  );
   await temporaryOption.click();
   await page
     .getByRole('button', { name: 'Next skin for Player two' })

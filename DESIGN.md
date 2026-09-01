@@ -459,8 +459,10 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, two studio backgrounds, two
-transparent foreground desk plates, and 23 transparent character portraits:
-19 defaults and 4 alternates.
+transparent foreground desk plates, and 25 transparent character portraits:
+19 defaults and 6 alternates. The Midnight Sensationalist default and female
+alternate use product-owner-approved public-figure likenesses as visual-only
+parody. They do not change the fictional character identity or prose.
 All shipping assets retain their embedded prompt or source provenance. Required
 text and controls remain outside raster art.
 

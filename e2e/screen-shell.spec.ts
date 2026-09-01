@@ -398,6 +398,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
   for (const characterId of [
     'red-folded-chairman',
     'thunder-tribune',
+    'midnight-sensationalist',
     'black-sea-captain',
     'government-ai',
     'retiring-cassandra',
