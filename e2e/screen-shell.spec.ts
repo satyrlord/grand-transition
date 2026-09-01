@@ -5,6 +5,7 @@ const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
   { name: 'four-by-three', width: 1024, height: 768 },
   { name: 'common-landscape', width: 1280, height: 720 },
+  { name: 'four-by-three-hd', width: 1400, height: 1050 },
   { name: 'reported-tall-landscape', width: 1482, height: 1242 },
   { name: 'recommended-pc', width: 1920, height: 1080 },
 ] as const;
@@ -174,17 +175,35 @@ for (const viewport of supportedViewports) {
         robotCanvas.width,
         robotCanvas.height,
       ).data;
-      let robotMinX = robotCanvas.width;
-      let robotMaxX = -1;
+      let robotFacePixelCount = 0;
+      let robotFacePixelXTotal = 0;
       for (let y = 0; y < robotCanvas.height; y += 1) {
         for (let x = 0; x < robotCanvas.width; x += 1) {
-          if (robotPixels[(y * robotCanvas.width + x) * 4 + 3]! > 32) {
-            robotMinX = Math.min(robotMinX, x);
-            robotMaxX = Math.max(robotMaxX, x);
+          const pixelIndex = (y * robotCanvas.width + x) * 4;
+          const red = robotPixels[pixelIndex]!;
+          const green = robotPixels[pixelIndex + 1]!;
+          const blue = robotPixels[pixelIndex + 2]!;
+          const alpha = robotPixels[pixelIndex + 3]!;
+          if (
+            y < robotCanvas.height * 0.26 &&
+            alpha > 64 &&
+            red < 80 &&
+            green > 100 &&
+            blue > 100 &&
+            green > red * 1.7 &&
+            blue > red * 1.7
+          ) {
+            robotFacePixelCount += 1;
+            robotFacePixelXTotal += x;
           }
         }
       }
       const robotStyle = getComputedStyle(robotPortrait);
+      const robotFaceCenterRatio =
+        robotFacePixelXTotal / robotFacePixelCount / robotCanvas.width;
+      const renderedRobotFaceCenter =
+        robotPortraitBox.left + robotPortraitBox.width * robotFaceCenterRatio;
+      const robotWindowCenter = robotWindowBox.left + robotWindowBox.width / 2;
       return {
         documentWidth: document.documentElement.scrollWidth,
         documentHeight: document.documentElement.scrollHeight,
@@ -226,14 +245,14 @@ for (const viewport of supportedViewports) {
           objectPosition: robotStyle.objectPosition,
           scale: new DOMMatrix(robotStyle.transform).a,
           paintContainment: getComputedStyle(robotWindow).contain,
-          imageInsideWindow:
-            robotPortraitBox.left >= robotWindowBox.left - 0.5 &&
-            robotPortraitBox.top >= robotWindowBox.top - 0.5 &&
-            robotPortraitBox.right <= robotWindowBox.right + 0.5 &&
-            robotPortraitBox.bottom <= robotWindowBox.bottom + 0.5,
-          centerOffsetRatio: Math.abs(
-            (robotMinX + robotMaxX) / 2 / robotCanvas.width - 0.5,
-          ),
+          windowOverflow: getComputedStyle(robotWindow).overflow,
+          transformOriginXRatio:
+            Number.parseFloat(robotStyle.transformOrigin) /
+            robotPortrait.clientWidth,
+          facePixelCount: robotFacePixelCount,
+          faceCenterOffsetRatio:
+            Math.abs(renderedRobotFaceCenter - robotWindowCenter) /
+            robotWindowBox.width,
         },
         rosterLayout: {
           rowCount: new Set(
@@ -276,16 +295,24 @@ for (const viewport of supportedViewports) {
     expect(geometry.weaknessRecordsInside).toBe(true);
     expect(geometry.robotRosterPortrait).toEqual({
       species: 'robot',
-      objectFit: 'contain',
-      objectPosition: '50% 50%',
-      scale: 1,
+      objectFit: 'cover',
+      objectPosition: '50% 0px',
+      scale: expect.any(Number),
       paintContainment: 'paint',
-      imageInsideWindow: true,
-      centerOffsetRatio: expect.any(Number),
+      windowOverflow: 'hidden',
+      transformOriginXRatio: expect.any(Number),
+      facePixelCount: expect.any(Number),
+      faceCenterOffsetRatio: expect.any(Number),
     });
-    expect(geometry.robotRosterPortrait.centerOffsetRatio).toBeLessThanOrEqual(
-      0.03,
-    );
+    expect(geometry.robotRosterPortrait.scale).toBeGreaterThanOrEqual(3);
+    expect(geometry.robotRosterPortrait.scale).toBeLessThanOrEqual(3.12);
+    expect(
+      geometry.robotRosterPortrait.transformOriginXRatio,
+    ).toBeCloseTo(0.365, 2);
+    expect(geometry.robotRosterPortrait.facePixelCount).toBeGreaterThan(900);
+    expect(
+      geometry.robotRosterPortrait.faceCenterOffsetRatio,
+    ).toBeLessThanOrEqual(0.02);
     expect(geometry.rosterLayout).toEqual({
       rowCount: 1,
       gridInsideZone: true,
@@ -610,7 +637,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await expect(dossier).toHaveCount(0);
 });
 
-test('roster uses species-specific portraits while selected stages reveal full bodies', async ({
+test('roster uses close headshots while selected stages reveal full bodies', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
@@ -645,9 +672,7 @@ test('roster uses species-specific portraits while selected stages reveal full b
       '.roster-choice[data-character-id="red-folded-chairman"] .roster-frame-overlay',
     )!;
     const headClearances = [
-      ...document.querySelectorAll<HTMLImageElement>(
-        '.roster-choice[data-character-species="human"] .roster-headshot',
-      ),
+      ...document.querySelectorAll<HTMLImageElement>('.roster-headshot'),
     ].map((image) => {
       const canvas = document.createElement('canvas');
       canvas.width = image.naturalWidth;
@@ -709,7 +734,7 @@ test('roster uses species-specific portraits while selected stages reveal full b
   expect(crop.selectedInside).toBe(true);
   expect(crop.selectedFade).toBe('none');
   expect(crop.frameLoaded).toBe(true);
-  expect(crop.headClearances).toHaveLength(3);
+  expect(crop.headClearances).toHaveLength(4);
   expect(crop.headClearances.every((clearance) => clearance >= 4)).toBe(true);
 });
 

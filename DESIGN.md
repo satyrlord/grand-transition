@@ -191,9 +191,11 @@ the lower edge.
 Setup uses the same broadcast theatre. Oxblood frames the player-one stage on
 the left, television blue frames the player-two stage on the right, and a
 compact roster sits between them. Each selected stage shows a full portrait,
-name, and complete public weakness list. The roster uses tight human headshots
-and centered contained robot silhouettes inside one reusable 3:4 dark-oak and
-aged-gold frame. The four implemented roster portraits stay in one bounded row.
+name, and complete public weakness list. The roster uses tight headshots for
+human and fully mechanical characters inside one reusable 3:4 dark-oak and
+aged-gold frame. The robot crop includes its antenna, face panel, shoulders,
+and upper torso. Its face panel sits on the inner frame's center axis. The four
+implemented roster portraits stay in one bounded row.
 
 At the recommended match viewport, a municipal television studio and one fixed
 blonde fictional moderator fill the deep field. Two transparent editorial
@@ -495,10 +497,11 @@ stages flank a central roster. The left stage uses the oxblood
 identity and the right stage uses television blue. Each selected stage shows a
 complete portrait, a player label, a feature-display name, and the full
 public weakness list. Each roster tile is an exact 3:4 portrait window with a
-reusable dark-oak frame and aged-gold liner. Human characters use close
-headshots. Fully mechanical characters stay centered and contained. The four
-implemented portraits stay in one equal-width row and never overlap the match
-settings.
+reusable dark-oak frame and aged-gold liner. Human and fully mechanical
+characters use close headshots. The robot crop includes its antenna and face
+panel but not its complete body. Its face panel is centered in the inner
+portrait window. The four implemented portraits stay in one equal-width row
+and never overlap the match settings.
 
 Native selects keep mode and scene
 terms in a compact lower register. A nonmodal character dossier appears on
