@@ -6,7 +6,7 @@ const supportedViewports = [
   { name: 'four-by-three', width: 1024, height: 768 },
   { name: 'common-landscape', width: 1280, height: 720 },
   { name: 'four-by-three-hd', width: 1400, height: 1050 },
-  { name: 'reported-tall-landscape', width: 1482, height: 1242 },
+  { name: 'reported-tall-landscape', width: 1467, height: 1036 },
   { name: 'recommended-pc', width: 1920, height: 1080 },
 ] as const;
 
@@ -270,6 +270,15 @@ for (const viewport of supportedViewports) {
               box.left >= rosterGridBox.left - 0.5 &&
               box.right <= rosterGridBox.right + 0.5,
           ),
+          cardsDoNotOverlap: rosterChoiceBoxes.every((box, index, boxes) =>
+            boxes.slice(index + 1).every(
+              (other) =>
+                box.right <= other.left + 0.5 ||
+                other.right <= box.left + 0.5 ||
+                box.bottom <= other.top + 0.5 ||
+                other.bottom <= box.top + 0.5,
+            ),
+          ),
           scrollHeight: rosterGrid.scrollHeight,
           clientHeight: rosterGrid.clientHeight,
         },
@@ -317,6 +326,7 @@ for (const viewport of supportedViewports) {
       overflowX: 'hidden',
       overflowY: 'auto',
       cardsHorizontallyInsideGrid: true,
+      cardsDoNotOverlap: true,
       scrollHeight: expect.any(Number),
       clientHeight: expect.any(Number),
     });
