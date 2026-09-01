@@ -221,13 +221,8 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
     '.roster-choice[data-character-id="government-ai"]',
   )!;
   expect(governmentAi.dataset.characterSpecies).toBe('robot');
-  const rosterLabel = governmentAi.querySelector<HTMLElement>(
-    '.roster-choice-name',
-  )!;
-  expect(rosterLabel.textContent).toContain('AI');
-  expect(Number.parseFloat(getComputedStyle(rosterLabel).fontSize)).toBeGreaterThanOrEqual(
-    11,
-  );
+  expect(governmentAi.querySelector('.roster-choice-name')).toBeNull();
+  expect(governmentAi.getAttribute('aria-label')).toContain('Government AI');
   governmentAi.focus();
   await setup.updateComplete;
   expect(setup.querySelector('.character-inspector')?.textContent).toMatch(

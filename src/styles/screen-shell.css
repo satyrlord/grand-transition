@@ -496,33 +496,6 @@
       transform 160ms ease-out;
   }
 
-  .roster-choice-name {
-    position: absolute;
-    z-index: 4;
-    right: 0.18rem;
-    bottom: 0.16rem;
-    left: 0.18rem;
-    display: block;
-    overflow: hidden;
-    color: var(--broadcast-paper-light);
-    font-size: clamp(0.69rem, 0.74vw, 0.75rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    pointer-events: none;
-    text-align: center;
-    text-shadow: 0 1px 2px var(--broadcast-black);
-    text-transform: uppercase;
-  }
-
-  .roster-choice-full-name {
-    display: none;
-  }
-
-  .roster-choice-short-name {
-    white-space: nowrap;
-  }
-
   .roster-choice:hover,
   .roster-choice:focus-visible,
   .roster-choice[aria-pressed='true'] {
@@ -956,16 +929,6 @@
         minmax(12.4rem, 0.72fr);
     }
 
-  }
-
-  @media (min-width: 90rem) {
-    .roster-choice-short-name {
-      display: none;
-    }
-
-    .roster-choice-full-name {
-      display: inline;
-    }
   }
 
   @media (max-height: 47rem) {

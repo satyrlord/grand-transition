@@ -33,8 +33,10 @@ Milestones 023 through 025, 027 through 029, and 031 remain incomplete.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
-default local portrait. The four vertical-slice characters also have alternate
-skins. The content includes two fictional layered debate studios, four playable
+default local portrait. The four vertical-slice characters and Retiring
+Cassandra have alternate skins. The Retiring Cassandra statesman skin is an
+approved visual-only exception that does not change game identity or prose. The
+content includes two fictional layered debate studios, four playable
 foundation scenes with a neutral local fallback, and one English game-locale
 bundle.
 

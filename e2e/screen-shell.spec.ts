@@ -400,6 +400,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     'thunder-tribune',
     'black-sea-captain',
     'government-ai',
+    'retiring-cassandra',
   ]) {
     await page.locator('#playerOneCharacterId').click();
     await page
@@ -411,13 +412,15 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
         .getByRole('button', { name: 'Next skin for Player one' })
         .click();
     }
-    await expect(stage).toHaveAttribute('data-skin-id', 'alternate');
+    const expectedSkinId =
+      characterId === 'retiring-cassandra' ? 'statesman' : 'alternate';
+    await expect(stage).toHaveAttribute('data-skin-id', expectedSkinId);
     const portrait = page.locator(
       '.contestant-stage--one .contestant-portrait',
     );
     await expect(portrait).toHaveAttribute(
       'src',
-      new RegExp(`${characterId}--alternate`, 'u'),
+      new RegExp(`${characterId}--${expectedSkinId}`, 'u'),
     );
     expect(
       await portrait.evaluate(async (image) => {
@@ -435,7 +438,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     ),
   ).toBe(true);
   await page.screenshot({
-    path: testInfo.outputPath('government-ai-alternate-setup.png'),
+    path: testInfo.outputPath('alternate-skins-setup.png'),
     fullPage: true,
   });
 });

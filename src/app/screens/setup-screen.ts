@@ -585,12 +585,6 @@ export class GrandTransitionSetup extends LitElement {
           width="1086"
           height="1448"
         />
-        <span class="roster-choice-name" aria-hidden="true">
-          <span class="roster-choice-short-name"
-            >${shortRosterName(character.name)}</span
-          >
-          <span class="roster-choice-full-name">${character.name}</span>
-        </span>
         <span class="roster-markers" aria-hidden="true">
           ${
             playerOneSelected
@@ -1081,12 +1075,6 @@ function skinAccessibleLabel(
       : msg('Female alternate skin');
   }
   return skinLabel(skinId) + ' ' + msg('skin');
-}
-
-function shortRosterName(name: string): string {
-  const words = name.trim().split(/\s+/u);
-  const label = words.length > 1 ? words.at(-1)! : name;
-  return label.length <= 7 ? label : label.slice(0, 6) + '.';
 }
 
 function skinFieldForCharacterField(field: CharacterField): SkinField {
