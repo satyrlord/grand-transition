@@ -80,9 +80,10 @@ mechanical character, the crop includes the antenna, face panel, shoulders, and
 upper torso. The face panel is centered on the inner portrait window. The crop
 does not show the complete body. Each item uses one authored heavy dark-oak
 frame and a restrained aged-gold inner liner. No portrait paints outside that
-inner window. Each item has a visible character label. A compact layout can use
-a distinct short label, but its accessible name keeps the complete character
-name, public weaknesses, and current player-one or player-two selection state.
+inner window. Each item shows no visible character label. The hover, focus, or
+pinned dossier supplies the visible character name. The accessible name keeps
+the complete character name, public weaknesses, and current player-one or
+player-two selection state.
 Selecting the item reveals the complete available portrait only
 on the owning left or right player stage. The selected stage does not fade or
 mask the lower body.
@@ -161,7 +162,8 @@ hide validation.
   outside the inner portrait window. All four implemented roster items stay in
   one row inside the roster boundary. Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
-  fade. The generated frame overlay loads with valid transparency. The roster
+  fade. The generated frame overlay loads with valid transparency. No roster
+  item shows a visible character label. The roster
   always uses the default character portrait. A selected-player stage uses its
   selected skin portrait.
 - **AC-015-11:** Both selected-player stages cycle their available skins with

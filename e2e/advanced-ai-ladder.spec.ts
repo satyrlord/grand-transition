@@ -99,17 +99,19 @@ for (const viewport of [
     expect(geometry.rosterVerticallyContained).toBe(true);
     expect(geometry.nonRosterControlsInside).toBe(true);
     const rosterReadability = await page.locator('.setup-screen').evaluate((screen) => {
-      const labels = [
-        ...screen.querySelectorAll<HTMLElement>('.roster-choice-name'),
+      const choices = [
+        ...screen.querySelectorAll<HTMLElement>('.roster-choice'),
       ];
       const ladderRecord = screen.querySelector<HTMLElement>('.ladder-record span');
       const reset = screen.querySelector<HTMLElement>('.ladder-inline-reset');
       return {
-        labelsVisible: labels.every(
-          (label) =>
-            label.textContent?.trim() &&
-            getComputedStyle(label).display !== 'none' &&
-            Number.parseFloat(getComputedStyle(label).fontSize) >= 11,
+        visibleLabelsAbsent: choices.every(
+          (choice) => choice.querySelector('.roster-choice-name') === null,
+        ),
+        accessibleNamesComplete: choices.every((choice) =>
+          (choice.getAttribute('aria-label') ?? '').includes(
+            '. Weaknesses: ',
+          ),
         ),
         ladderTextSize: Number.parseFloat(
           getComputedStyle(ladderRecord!).fontSize,
@@ -117,7 +119,16 @@ for (const viewport of [
         resetTextSize: Number.parseFloat(getComputedStyle(reset!).fontSize),
       };
     });
-    expect(rosterReadability.labelsVisible).toBe(true);
+    expect(rosterReadability.visibleLabelsAbsent).toBe(true);
+    expect(rosterReadability.accessibleNamesComplete).toBe(true);
+    await page
+      .getByRole('button', {
+        name: /Apartment-Block Geopolitician.*Select for player one/u,
+      })
+      .focus();
+    await expect(page.locator('.character-inspector')).toContainText(
+      'Apartment-Block Geopolitician',
+    );
     expect(rosterReadability.ladderTextSize).toBeGreaterThanOrEqual(11);
     expect(rosterReadability.resetTextSize).toBeGreaterThanOrEqual(11);
     await page.screenshot({

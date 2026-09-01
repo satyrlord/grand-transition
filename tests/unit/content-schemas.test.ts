@@ -1153,21 +1153,24 @@ describe('content schemas', () => {
     );
   });
 
-  test('discovers every default portrait and vertical-slice alternate skin', () => {
+  test('discovers every default portrait and approved alternate skin', () => {
     expect(Object.keys(characterSkins).toSorted()).toEqual(
       phraseCardCatalog.characters.map((character) => character.id).toSorted(),
     );
-    const verticalSliceIds = new Set([
+    const alternateSkinIds = new Set([
       'red-folded-chairman',
       'thunder-tribune',
       'black-sea-captain',
       'government-ai',
+      'retiring-cassandra',
     ]);
     for (const character of phraseCardCatalog.characters) {
       expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual(
-        verticalSliceIds.has(character.id)
-          ? ['default', 'alternate']
-          : ['default'],
+        character.id === 'retiring-cassandra'
+          ? ['default', 'statesman']
+          : alternateSkinIds.has(character.id)
+            ? ['default', 'alternate']
+            : ['default'],
       );
       expect(characterPortraitUrls[character.id]).toBe(
         characterSkins[character.id]?.[0]?.portraitUrl,

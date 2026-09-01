@@ -168,9 +168,11 @@ same stage. They do not form a decorative scene above a separate dashboard.
 Each character is human or fully mechanical. Animal words in names or titles
 are metaphorical political labels only. The playable foundation uses 18
 original human editorial caricatures and one original robot caricature. Each
-can occupy either player position. Four vertical-slice characters have
-alternate skins; the other foundation portraits are interim. Later character
-art must preserve the declared species and cannot use animal or hybrid anatomy.
+can occupy either player position. Four vertical-slice characters and Retiring
+Cassandra have alternate skins. The Retiring Cassandra statesman skin is an
+approved visual-only exception that does not change game identity or prose; the
+other foundation portraits are interim. Later character art must preserve the
+declared species and cannot use animal or hybrid anatomy.
 
 ### World
 
