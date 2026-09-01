@@ -431,11 +431,7 @@
   }
 
   .roster-choice[data-character-species='robot'] {
-    --roster-portrait-fit: contain;
-    --roster-portrait-position: 50% 50%;
-    --roster-portrait-scale: 1;
-    --roster-portrait-active-scale: 1;
-    --roster-portrait-origin: 50% 50%;
+    --roster-portrait-origin: 36.5% 0;
   }
 
   .roster-headshot {
