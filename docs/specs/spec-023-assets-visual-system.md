@@ -11,7 +11,8 @@ Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Produce original final-quality art for four characters and one
 scene. Add core reactions, ambience, and transitions.
 
-Each catalog character has a default skin and at least one alternate skin.
+Each of the four Milestone 023 vertical-slice characters has a default skin and
+at least one alternate skin.
 Default portraits use `<character-id>.png`. Alternate portraits use
 `<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
 this filename convention. It does not use a TypeScript skin registry.
@@ -245,10 +246,12 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   alpha-aware eight-bit Canvas round-trip tolerance. A
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
-- **AC-023-09:** Every discovered character has a default skin and at least one
-  alternate skin. Filename discovery is deterministic, and the default is
-  first. The roster resolves only the default. Setup and match views resolve the
-  requested skin without changing character or phrase data.
+- **AC-023-09:** Each of the four vertical-slice characters has a default skin
+  and at least one alternate skin. Filename discovery is deterministic, and the
+  default is first. Foundation characters can keep only their default interim
+  portrait until Milestone 031. The roster resolves only the default. Setup and
+  match views resolve an available requested skin without changing character or
+  phrase data.
 
 ## Impeccable UI validation
 

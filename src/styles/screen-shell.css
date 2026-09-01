@@ -334,6 +334,13 @@
     overflow-wrap: anywhere;
   }
 
+  .contestant-record .contestant-locked-state {
+    grid-column: 1 / -1;
+    color: var(--broadcast-brass-light);
+    font-size: 0.69rem;
+    text-align: center;
+  }
+
   .contestant-missing {
     place-self: center;
     max-width: 18ch;
@@ -383,15 +390,49 @@
   }
 
   .roster-grid {
-    align-self: center;
+    align-self: stretch;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: center;
+    align-content: safe center;
     justify-content: center;
     gap: clamp(0.35rem, 0.8vw, 0.65rem);
     width: 100%;
+    height: 100%;
+    max-height: 100%;
     min-height: 0;
     padding-block: clamp(0.55rem, 1.4vh, 0.9rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-block: contain;
+    scrollbar-color: var(--broadcast-brass) var(--broadcast-black);
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .roster-grid:focus-visible {
+    outline: 2px solid var(--broadcast-paper-light);
+    outline-offset: -2px;
+  }
+
+  .roster-choice:nth-last-child(1):nth-child(6n + 1) {
+    grid-column: 6 / span 2;
+  }
+
+  .roster-choice:nth-last-child(2):nth-child(6n + 1) {
+    grid-column: 5 / span 2;
+  }
+
+  .roster-choice:nth-last-child(3):nth-child(6n + 1) {
+    grid-column: 4 / span 2;
+  }
+
+  .roster-choice:nth-last-child(4):nth-child(6n + 1) {
+    grid-column: 3 / span 2;
+  }
+
+  .roster-choice:nth-last-child(5):nth-child(6n + 1) {
+    grid-column: 2 / span 2;
   }
 
   .roster-choice {
@@ -405,7 +446,11 @@
     display: grid;
     grid-template-rows: minmax(0, 1fr);
     align-self: center;
+    grid-column: span 2;
+    justify-self: center;
     aspect-ratio: 3 / 4;
+    width: 100%;
+    height: auto;
     min-width: 0;
     min-height: 0;
     padding: 0;
@@ -452,10 +497,28 @@
 
   .roster-choice-name {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    z-index: 4;
+    right: 0.18rem;
+    bottom: 0.16rem;
+    left: 0.18rem;
+    display: block;
     overflow: hidden;
-    clip-path: inset(50%);
+    color: var(--broadcast-paper-light);
+    font-size: clamp(0.69rem, 0.74vw, 0.75rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    pointer-events: none;
+    text-align: center;
+    text-shadow: 0 1px 2px var(--broadcast-black);
+    text-transform: uppercase;
+  }
+
+  .roster-choice-full-name {
+    display: none;
+  }
+
+  .roster-choice-short-name {
     white-space: nowrap;
   }
 
@@ -627,6 +690,15 @@
       minmax(18rem, 1.1fr);
   }
 
+  .match-settings--ladder {
+    grid-template-areas: 'heading mode difficulty scene';
+    grid-template-columns:
+      minmax(max-content, auto)
+      minmax(8.5rem, 0.55fr)
+      minmax(13rem, 1fr)
+      minmax(14rem, 0.9fr);
+  }
+
   .match-settings legend {
     display: contents;
   }
@@ -653,6 +725,74 @@
   .match-settings-scene {
     grid-area: scene;
     min-width: 0;
+  }
+
+  .match-settings-scene:has(output) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .ladder-field-label,
+  .ladder-record strong {
+    color: var(--broadcast-brass-light);
+    font-size: clamp(0.69rem, 0.74vw, 0.75rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .match-settings-scene output {
+    min-width: 0;
+    color: var(--broadcast-paper-light);
+    font-size: clamp(0.7rem, 0.9vw, 0.82rem);
+    font-weight: 600;
+    line-height: 1.1;
+    white-space: normal;
+  }
+
+  .ladder-record {
+    grid-template-columns: minmax(0, 1fr) auto;
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .ladder-record span {
+    grid-column: 1;
+    overflow: hidden;
+    color: var(--broadcast-paper-light);
+    font-size: clamp(0.69rem, 0.8vw, 0.78rem);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ladder-record .ladder-persistence-notice {
+    color: var(--timer-alert);
+  }
+
+  .ladder-inline-reset {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    min-width: 3.6rem;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: 700 0.69rem/1 var(--font-interface);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .ladder-inline-reset:hover,
+  .ladder-inline-reset:focus-visible {
+    border-color: var(--broadcast-paper-light);
   }
 
   .setup-field {
@@ -731,6 +871,12 @@
     cursor: pointer;
   }
 
+  .setup-actions button:disabled {
+    border-style: dashed;
+    color: color-mix(in srgb, var(--broadcast-paper-light) 55%, transparent);
+    cursor: not-allowed;
+  }
+
   .setup-actions .primary-action {
     background: var(--broadcast-oxblood);
   }
@@ -771,6 +917,14 @@
         minmax(15rem, 1.5fr);
     }
 
+    .match-settings--ladder {
+      grid-template-columns:
+        minmax(7.75rem, auto)
+        minmax(7.5rem, 0.6fr)
+        minmax(11.5rem, 1fr)
+        minmax(12rem, 1.2fr);
+    }
+
     .match-settings .setup-field {
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto minmax(2.4rem, auto);
@@ -780,7 +934,9 @@
 
   @media (max-width: 70rem) {
     .setup-heading > p:last-child {
-      display: none;
+      display: block;
+      max-width: 20ch;
+      font-size: 0.69rem;
     }
 
     .setup-heading {
@@ -799,6 +955,16 @@
         minmax(12.4rem, 0.72fr);
     }
 
+  }
+
+  @media (min-width: 90rem) {
+    .roster-choice-short-name {
+      display: none;
+    }
+
+    .roster-choice-full-name {
+      display: inline;
+    }
   }
 
   @media (max-height: 47rem) {

@@ -233,7 +233,7 @@ source-only review does not satisfy them.
     Local options persist or fail safely.
 21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 8. A
     deterministic valid-action AI completes custom matches.
-22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 9. Three
+22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 12. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
     Budget: 10. One scene and four characters use validated final art.
@@ -242,16 +242,22 @@ source-only review does not satisfy them.
 25. [Match presentation reactions](spec-025-match-presentation-reactions.md).
     Budget: 8. The vertical slice reports strong public outcomes without teaching
     tactics.
-26. [MVP content expansion](spec-026-mvp-content-expansion.md). Budget: 12. All
-    roster, scene, phrase, and comeback content is present.
+26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
+    Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
     Safety, variety, and balance have recorded evidence.
 28. [Release hardening](spec-028-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 29. [GitHub Pages release](spec-029-github-pages-release.md). Budget: 5. The
     tested artifact deploys and passes smoke tests.
-Each milestone depends on the preceding milestone. This linear order limits the
-context and files needed for each implementation session.
+
+Additional dependent milestone: [MVP content finalization](spec-031-mvp-content-finalization.md).
+Budget: 12. Final phrase volume, art, audio treatment, and variety evidence are
+present.
+
+Each milestone follows its explicit **Depends on** field. Milestone identifiers
+stay stable when an approved dependency change moves work earlier. This order
+limits the context and files needed for each implementation session.
 
 ## Contract ownership
 
@@ -271,5 +277,5 @@ context and files needed for each implementation session.
 | AI and ladder                        | 021-022            |
 | Visual assets and presentation       | 023, 025-026       |
 | Audio and speech                     | 024                |
-| Full content, safety, and balance    | 026-027            |
+| Full content, safety, and balance    | 026-027, 031       |
 | Release quality and deployment       | 028-029            |

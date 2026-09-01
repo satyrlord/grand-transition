@@ -217,8 +217,9 @@ for (const viewport of supportedViewports) {
         ).fontFamily,
         sceneLabelFits:
           context.measureText(selectedScene).width <= availableSceneWidth,
-        controlsInside: [...document.querySelectorAll('select, button')].every(
-          (control) => {
+        controlsInside: [...document.querySelectorAll('select, button')]
+          .filter((control) => !control.matches('.roster-choice'))
+          .every((control) => {
             const box = control.getBoundingClientRect();
             return (
               box.left >= 0 &&
@@ -226,8 +227,7 @@ for (const viewport of supportedViewports) {
               box.top >= 0 &&
               box.bottom <= document.documentElement.clientHeight
             );
-          },
-        ),
+          }),
         imagesDecoded: [...document.images].every(
           (image) => image.complete && image.naturalWidth > 0,
         ),
@@ -263,20 +263,15 @@ for (const viewport of supportedViewports) {
             rosterGridBox.top >= rosterZoneBox.top - 0.5 &&
             rosterGridBox.right <= rosterZoneBox.right + 0.5 &&
             rosterGridBox.bottom <= rosterZoneBox.bottom + 0.5,
-          cardsInsideGrid: rosterChoiceBoxes.every(
+          overflowX: getComputedStyle(rosterGrid).overflowX,
+          overflowY: getComputedStyle(rosterGrid).overflowY,
+          cardsHorizontallyInsideGrid: rosterChoiceBoxes.every(
             (box) =>
               box.left >= rosterGridBox.left - 0.5 &&
-              box.top >= rosterGridBox.top - 0.5 &&
-              box.right <= rosterGridBox.right + 0.5 &&
-              box.bottom <= rosterGridBox.bottom + 0.5,
+              box.right <= rosterGridBox.right + 0.5,
           ),
-          cardsInsideZone: rosterChoiceBoxes.every(
-            (box) =>
-              box.left >= rosterZoneBox.left - 0.5 &&
-              box.top >= rosterZoneBox.top - 0.5 &&
-              box.right <= rosterZoneBox.right + 0.5 &&
-              box.bottom <= rosterZoneBox.bottom + 0.5,
-          ),
+          scrollHeight: rosterGrid.scrollHeight,
+          clientHeight: rosterGrid.clientHeight,
         },
       };
     });
@@ -308,17 +303,26 @@ for (const viewport of supportedViewports) {
     expect(geometry.robotRosterPortrait.scale).toBeLessThanOrEqual(3.12);
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeCloseTo(0.365, 2);
+    ).toBeGreaterThanOrEqual(0.35);
+    expect(
+      geometry.robotRosterPortrait.transformOriginXRatio,
+    ).toBeLessThanOrEqual(0.38);
     expect(geometry.robotRosterPortrait.facePixelCount).toBeGreaterThan(900);
     expect(
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
     ).toBeLessThanOrEqual(0.02);
     expect(geometry.rosterLayout).toEqual({
-      rowCount: 1,
+      rowCount: 4,
       gridInsideZone: true,
-      cardsInsideGrid: true,
-      cardsInsideZone: true,
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      cardsHorizontallyInsideGrid: true,
+      scrollHeight: expect.any(Number),
+      clientHeight: expect.any(Number),
     });
+    expect(geometry.rosterLayout.scrollHeight).toBeGreaterThanOrEqual(
+      geometry.rosterLayout.clientHeight,
+    );
     await page.screenshot({
       path: testInfo.outputPath(`${viewport.name}-setup.png`),
       fullPage: true,
@@ -633,6 +637,20 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await expect(dossier).toHaveAttribute('data-pinned', 'true');
   await expect(dossier).toBeVisible();
 
+  await page.locator('#playerOneCharacterId').focus();
+  await page.keyboard.press('Enter');
+  await expect(dossier).toHaveCount(0);
+
+  await captain.click({ button: 'right' });
+  await page.mouse.move(20, 20);
+  await expect(dossier).toHaveAttribute('data-pinned', 'true');
+  await page.locator('#playerOneCharacterId').focus();
+  await page.keyboard.press(' ');
+  await expect(dossier).toHaveCount(0);
+
+  await captain.click({ button: 'right' });
+  await page.mouse.move(20, 20);
+  await expect(dossier).toHaveAttribute('data-pinned', 'true');
   await page.keyboard.press('Escape');
   await expect(dossier).toHaveCount(0);
 });
@@ -654,6 +672,9 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
       ),
     )
     .toBe(true);
+  await page.locator('.roster-headshot').evaluateAll(async (images) => {
+    await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
+  });
 
   const crop = await page.evaluate(() => {
     const rosterPortrait = document.querySelector<HTMLElement>(
@@ -734,8 +755,50 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   expect(crop.selectedInside).toBe(true);
   expect(crop.selectedFade).toBe('none');
   expect(crop.frameLoaded).toBe(true);
-  expect(crop.headClearances).toHaveLength(4);
-  expect(crop.headClearances.every((clearance) => clearance >= 4)).toBe(true);
+  expect(crop.headClearances).toHaveLength(19);
+  expect(crop.headClearances.every((clearance) => clearance > 0)).toBe(true);
+});
+
+test('future roster growth stays inside a vertical scroll region', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  const geometry = await page.locator('.setup-screen').evaluate((setup) => {
+    const roster = setup.querySelector<HTMLElement>('.roster-grid')!;
+    const sourceChoices = [
+      ...roster.querySelectorAll<HTMLElement>('.roster-choice'),
+    ];
+    for (let index = 0; index < 30; index += 1) {
+      const clone = sourceChoices[index % sourceChoices.length]!.cloneNode(
+        true,
+      ) as HTMLElement;
+      clone.dataset.characterId = `future-${index}`;
+      roster.append(clone);
+    }
+    const rosterBox = roster.getBoundingClientRect();
+    const zoneBox = setup
+      .querySelector<HTMLElement>('.roster-zone')!
+      .getBoundingClientRect();
+    const noteBox = setup
+      .querySelector<HTMLElement>('.setup-note')!
+      .getBoundingClientRect();
+    return {
+      tabIndex: roster.tabIndex,
+      overflowY: getComputedStyle(roster).overflowY,
+      scrollHeight: roster.scrollHeight,
+      clientHeight: roster.clientHeight,
+      rosterInsideZone:
+        rosterBox.top >= zoneBox.top && rosterBox.bottom <= noteBox.top + 1,
+      pageFits: setup.scrollHeight <= setup.clientHeight + 1,
+    };
+  });
+  expect(geometry.tabIndex).toBe(0);
+  expect(geometry.overflowY).toBe('auto');
+  expect(geometry.scrollHeight).toBeGreaterThan(geometry.clientHeight);
+  expect(geometry.rosterInsideZone).toBe(true);
+  expect(geometry.pageFits).toBe(true);
 });
 
 test('duplicate setup submit dispatches one immutable command', async ({

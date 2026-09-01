@@ -87,15 +87,6 @@ export const characterPortraitUrls: Readonly<Record<string, string>> =
     ),
   );
 
-for (const character of phraseCardCatalog.characters) {
-  const skins = characterSkins[character.id];
-  if (!skins || skins.length < 2) {
-    throw new Error(
-      `Add an alternate skin "src/assets/characters/${character.id}--alternate.png".`,
-    );
-  }
-}
-
 function fileStem(sourcePath: string): string {
   const name = sourcePath.replaceAll('\\', '/').split('/').at(-1) ?? sourcePath;
   return name.replace(/\.[^.]+$/u, '');

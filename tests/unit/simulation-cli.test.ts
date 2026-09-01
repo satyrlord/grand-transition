@@ -23,6 +23,7 @@ describe('simulation command', () => {
     [['--matches', '1'], '--seed'],
     [['--seed'], '--seed'],
     [['--unknown', '1'], '--unknown'],
+    [['--seed', '0', '--matches', '1', '--difficulty', 'impossible'], '--difficulty'],
     [['--seed', '0', '--seed', '1', '--matches', '1'], '--seed'],
   ] as const)(
     'rejects invalid arguments and names %s',
@@ -76,6 +77,26 @@ describe('simulation command', () => {
       );
     } finally {
       await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  test('runs each advanced difficulty through the configured policy', async () => {
+    for (const difficulty of ['party-strategist', 'palace-operator']) {
+      const messages: string[] = [];
+      expect(
+        await runSimulationCommand(
+          [
+            '--seed',
+            '22',
+            '--matches',
+            '1',
+            '--difficulty',
+            difficulty,
+          ],
+          (message) => messages.push(message),
+        ),
+      ).toBe(0);
+      expect(messages[0]).toMatch(/Simulated 1 match/u);
     }
   });
 

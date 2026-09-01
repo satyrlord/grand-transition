@@ -1,0 +1,117 @@
+{
+  "id": "coalition-acrobat",
+  "rosterOrder": 10,
+  "species": "human",
+  "name": "Coalition Acrobat",
+  "description": "An elastic deal-maker who can oppose both sides and still arrive for the signing ceremony.",
+  "assets": {
+    "portrait": {
+      "assetId": "coalition-acrobat-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "coalition-acrobat-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#173b5f",
+    "secondary": "#aa3b26",
+    "accent": "#d1a351"
+  },
+  "weaknessTags": [
+    "consistency",
+    "memory",
+    "commitment"
+  ],
+  "comebacks": {
+    "weak": "That was my former position.",
+    "medium": "Your memory is not in the coalition agreement.",
+    "strong": "I crossed the floor before your accusation landed."
+  },
+  "aiPersonality": {
+    "aggression": 0.55,
+    "denial": 0.75,
+    "risk": 0.85
+  },
+  "voiceProfile": {
+    "voiceHint": "bright",
+    "rate": 1.05,
+    "pitch": 1
+  },
+  "animationSet": {
+    "idle": "coalition-acrobat-idle",
+    "speak": "coalition-acrobat-speak",
+    "react": "coalition-acrobat-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "coalition-acrobat-foundation-noun",
+      "role": "noun",
+      "text": "my reversible coalition promise",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "coalition-acrobat-foundation-modifier",
+      "role": "modifier",
+      "text": "from the opposite side of the same agreement",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "coalition-acrobat-foundation-ending",
+      "role": "ending",
+      "text": "and commitment was absent from the vote.",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

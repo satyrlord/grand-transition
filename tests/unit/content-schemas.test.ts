@@ -1153,31 +1153,62 @@ describe('content schemas', () => {
     );
   });
 
-  test('discovers one default and one alternate skin for every character', () => {
+  test('discovers every default portrait and vertical-slice alternate skin', () => {
     expect(Object.keys(characterSkins).toSorted()).toEqual(
       phraseCardCatalog.characters.map((character) => character.id).toSorted(),
     );
+    const verticalSliceIds = new Set([
+      'red-folded-chairman',
+      'thunder-tribune',
+      'black-sea-captain',
+      'government-ai',
+    ]);
     for (const character of phraseCardCatalog.characters) {
-      expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual([
-        'default',
-        'alternate',
-      ]);
+      expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual(
+        verticalSliceIds.has(character.id)
+          ? ['default', 'alternate']
+          : ['default'],
+      );
       expect(characterPortraitUrls[character.id]).toBe(
         characterSkins[character.id]?.[0]?.portraitUrl,
       );
     }
   });
 
-  test('accepts original sample content for four characters and two scenes', () => {
+  test('accepts the ordered 19-character and six-scene foundation', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
-    expect(result.characters).toHaveLength(4);
+    expect(result.characters.map(({ id }) => id)).toEqual([
+      'red-folded-chairman',
+      'thunder-tribune',
+      'midnight-sensationalist',
+      'velvet-mogul',
+      'black-sea-captain',
+      'retiring-cassandra',
+      'oat-milk-reformist',
+      'marble-diplomat',
+      'county-baron',
+      'coalition-acrobat',
+      'presidential-sphinx',
+      'algorithmic-prophet',
+      'spreadsheet-technocrat',
+      'football-tycoon',
+      'luxury-minister',
+      'diaspora-oracle',
+      'apartment-block-geopolitician',
+      'eu-funds-alchemist',
+      'government-ai',
+    ]);
     expect(
       new Set(result.characters.map((character) => character.species)),
     ).toEqual(new Set(['human', 'robot']));
     expect(result.scenes.map((scene) => scene.id)).toEqual([
       'transition-era-television-studio',
       'modern-debate-studio',
+      'county-council-ballroom',
+      'midnight-call-in-studio',
+      'palace-press-hall',
+      'influencer-campaign-livestream',
     ]);
     expect(new Set(result.phrases.map((phrase) => phrase.role))).toEqual(
       new Set([

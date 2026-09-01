@@ -291,9 +291,12 @@ export function simulateMatch(
         maximumPresentationDelayMs,
         option.presentationDelayMs,
       );
+      const [minimumDelay, maximumDelay] = presentationDelayBounds(
+        setup.aiDifficulty,
+      );
       if (
-        option.presentationDelayMs < 500 ||
-        option.presentationDelayMs > 1_100 ||
+        option.presentationDelayMs < minimumDelay ||
+        option.presentationDelayMs > maximumDelay ||
         option.presentationDelayMs > setup.timerSeconds * 1_000
       ) {
         timerOverruns += 1;
@@ -359,6 +362,12 @@ export function simulateMatch(
     privacyLeaks,
     timerOverruns,
   };
+}
+
+function presentationDelayBounds(difficulty: string | null): readonly [number, number] {
+  if (difficulty === 'party-strategist') return [700, 1_500];
+  if (difficulty === 'palace-operator') return [900, 1_800];
+  return [500, 1_100];
 }
 
 export function simulateMatches(

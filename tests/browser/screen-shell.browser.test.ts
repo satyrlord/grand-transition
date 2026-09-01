@@ -12,9 +12,17 @@ import {
   type SetupSnapshot,
   type StartMatchEvent,
 } from '../../src/app/screens/setup-screen';
+import { sampleContent } from '../../src/game-content';
+import {
+  createLadderProgress,
+  recordLadderResult,
+} from '../../src/engine/ladder';
+import { encodeLadderProgress } from '../../src/persistence/codecs/ladder-progress-codec';
+import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress';
 
 afterEach(() => {
   vi.restoreAllMocks();
+  localStorage.removeItem(ladderProgressStorageKey);
   document.body.innerHTML = '';
 });
 
@@ -175,6 +183,23 @@ test('shows transient and pinned character dossiers with exact public weaknesses
     /Pinned dossier.*Black Sea Captain.*Decorum.*Consistency.*Securitate/su,
   );
 
+  const playerOneTarget = setup.querySelector<HTMLButtonElement>(
+    '#playerOneCharacterId',
+  )!;
+  playerOneTarget.focus();
+  playerOneTarget.click();
+  await setup.updateComplete;
+  expect(setup.querySelector('.character-inspector')).toBeNull();
+
+  expect(captain.dispatchEvent(contextMenu)).toBe(false);
+  captain.dispatchEvent(new PointerEvent('pointerleave'));
+  await setup.updateComplete;
+
+  playerOneTarget.focus();
+  playerOneTarget.click();
+  await setup.updateComplete;
+  expect(setup.querySelector('.character-inspector')).toBeNull();
+
   setup
     .querySelector('main')!
     .dispatchEvent(
@@ -190,12 +215,19 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
-  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(4);
+  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(19);
 
   const governmentAi = setup.querySelector<HTMLButtonElement>(
     '.roster-choice[data-character-id="government-ai"]',
   )!;
   expect(governmentAi.dataset.characterSpecies).toBe('robot');
+  const rosterLabel = governmentAi.querySelector<HTMLElement>(
+    '.roster-choice-name',
+  )!;
+  expect(rosterLabel.textContent).toContain('AI');
+  expect(Number.parseFloat(getComputedStyle(rosterLabel).fontSize)).toBeGreaterThanOrEqual(
+    11,
+  );
   governmentAi.focus();
   await setup.updateComplete;
   expect(setup.querySelector('.character-inspector')?.textContent).toMatch(
@@ -220,6 +252,9 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
 
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
+  expect(
+    playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label'),
+  ).toBe('Player one: Alternate chassis');
   expect(
     playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
   ).toContain('government-ai--alternate.png');
@@ -316,6 +351,7 @@ test.each([
     expect(Object.isFrozen(event.detail)).toBe(true);
     expect(event.detail).toEqual({
       mode: 'hotseat',
+      aiDifficulty: 'local-radio-caller',
       playerOneCharacterId: 'red-folded-chairman',
       playerOneSkinId: 'default',
       playerTwoCharacterId,
@@ -357,10 +393,163 @@ test('emits the custom single-player setup with the fixed AI policy', async () =
   });
 });
 
+test('creates, persists, resumes, and resets the ladder setup', async () => {
+  vi.spyOn(globalThis.crypto, 'getRandomValues').mockImplementation((array) => {
+    (array as Uint32Array)[0] = 22_026;
+    return array;
+  });
+  let app = await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  const playerTwoTarget = document.querySelector<HTMLButtonElement>(
+    '#playerTwoCharacterId',
+  )!;
+  playerTwoTarget.click();
+  let mode = document.querySelector<HTMLSelectElement>('#mode')!;
+  mode.value = 'ladder';
+  mode.dispatchEvent(new Event('change', { bubbles: true }));
+  await vi.waitFor(() =>
+    expect(document.querySelector('.ladder-record')?.textContent).toContain(
+      'Rung 1/9',
+    ),
+  );
+  expect(
+    document.querySelector('.contestant-stage--two .contestant-player')
+      ?.textContent,
+  ).toContain('Local Radio Caller');
+  expect(
+    document.querySelector<HTMLButtonElement>('#playerTwoCharacterId')?.disabled,
+  ).toBe(true);
+  await page
+    .getByRole('button', { name: /Black Sea Captain.*Select for player one/u })
+    .click();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector<HTMLElement>('.contestant-stage--one')?.dataset
+        .characterId,
+    ).toBe('black-sea-captain'),
+  );
+  expect(
+    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset
+      .characterId,
+  ).not.toBe('black-sea-captain');
+  expect(
+    document
+      .querySelector<HTMLButtonElement>(
+        '.roster-choice[data-character-id="black-sea-captain"]',
+      )
+      ?.getAttribute('aria-label'),
+  ).toContain('Selected for player one.');
+  document.querySelector('grand-transition-setup')!.dispatchEvent(
+    new CustomEvent(setupChangeEventName, {
+      bubbles: true,
+      composed: true,
+      detail: Object.freeze({
+        type: 'update-setup' as const,
+        field: 'playerTwoCharacterId' as const,
+        value: 'black-sea-captain',
+      }),
+    }),
+  );
+  expect(
+    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset
+      .characterId,
+  ).not.toBe('black-sea-captain');
+  expect(document.querySelector('.setup-heading')?.textContent).toContain(
+    'Choose your debater. Your opponent and scene follow ladder progress.',
+  );
+  expect(document.querySelector('.roster-heading')?.textContent).toContain(
+    '19 contestants',
+  );
+  expect(
+    document.querySelectorAll('.contestant-stage--two .skin-cycle'),
+  ).toHaveLength(0);
+  expect(
+    document.querySelector('.contestant-stage--two .contestant-locked-state')
+      ?.textContent,
+  ).toContain('Opponent fixed by rung');
+  expect(document.querySelector('.ladder-field-label')?.textContent).toContain(
+    'Rung scene — fixed',
+  );
+  expect(document.querySelector('.setup-note')?.textContent).toContain(
+    'Opponent and scene are fixed by local ladder progress.',
+  );
+  expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull();
+  await expect
+    .element(page.getByRole('button', { name: 'Start ladder' }))
+    .toBeEnabled();
+
+  document.body.innerHTML = '';
+  app = await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await vi.waitFor(() =>
+    expect(document.querySelector<HTMLSelectElement>('#mode')?.value).toBe(
+      'ladder',
+    ),
+  );
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(
+    'Rung 1/9',
+  );
+  expect(app).toBeTruthy();
+
+  vi.spyOn(globalThis, 'confirm').mockReturnValue(true);
+  await page.getByRole('button', { name: 'Reset ladder' }).click();
+  await vi.waitFor(() =>
+    expect(localStorage.getItem(ladderProgressStorageKey)).toBeNull(),
+  );
+  expect(document.querySelector<HTMLSelectElement>('#mode')?.value).toBe(
+    'hotseat',
+  );
+  expect(document.querySelector('.ladder-record')).toBeNull();
+  await expect
+    .element(page.getByRole('button', { name: 'Ladder complete', exact: true }))
+    .not.toBeInTheDocument();
+});
+
+test('shows completed progress without starting a locked rung', async () => {
+  let progress = createLadderProgress(
+    'red-folded-chairman',
+    22_026,
+    sampleContent.characters.map(({ id }) => id),
+    sampleContent.scenes.map(({ id }) => id),
+  );
+  for (let index = 0; index < 9; index += 1) {
+    progress = recordLadderResult(progress, 'win');
+  }
+  localStorage.setItem(ladderProgressStorageKey, encodeLadderProgress(progress));
+
+  await mountApp();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(
+    'Ladder complete',
+  );
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(
+    'Nine victories recorded',
+  );
+  expect(
+    document.querySelector('.contestant-stage--two .contestant-player')
+      ?.textContent,
+  ).toContain('Ladder complete');
+  expect(
+    document.querySelector('.contestant-stage--two .contestant-player')
+      ?.textContent,
+  ).not.toContain('Local Radio Caller');
+  expect(
+    Number.parseFloat(
+      getComputedStyle(
+        document.querySelector<HTMLElement>('.contestant-locked-state')!,
+      ).fontSize,
+    ),
+  ).toBeGreaterThanOrEqual(11);
+  await expect
+    .element(page.getByRole('button', { name: 'Ladder complete', exact: true }))
+    .toBeDisabled();
+});
+
 test('shows every missing-field error and emits no command', async () => {
   const setup = await mountSetup(
     Object.freeze({
       mode: '',
+      aiDifficulty: '',
       playerOneCharacterId: '',
       playerOneSkinId: '',
       playerTwoCharacterId: '',
@@ -385,7 +574,7 @@ test('shows every missing-field error and emits no command', async () => {
   expect(mode.getAttribute('aria-describedby')).toBe('mode-error');
   expect(document.activeElement).toBe(mode);
   expect(setup.textContent).toContain(
-    'Mode is missing. Choose Single player or Hotseat.',
+    'Mode is missing. Choose Single player, Hotseat, or Ladder.',
   );
   expect(setup.textContent).toContain(
     'Player one character is missing. Choose a listed character.',
@@ -402,6 +591,7 @@ test('shows unknown-value errors and revalidates after change', async () => {
   const setup = await mountSetup(
     Object.freeze({
       mode: 'network',
+      aiDifficulty: 'missing-difficulty',
       playerOneCharacterId: 'missing-one',
       playerOneSkinId: 'missing-skin-one',
       playerTwoCharacterId: 'missing-two',
@@ -424,7 +614,7 @@ test('shows unknown-value errors and revalidates after change', async () => {
   await setup.updateComplete;
 
   expect(setup.textContent).toContain(
-    'Mode is not supported. Choose Single player or Hotseat.',
+    'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
   );
   expect(setup.textContent).toContain(
     'Player one character is unknown. Choose a listed character.',
@@ -443,13 +633,14 @@ test.each([
     name: 'missing mode',
     field: 'mode',
     value: '',
-    message: 'Mode is missing. Choose Single player or Hotseat.',
+    message: 'Mode is missing. Choose Single player, Hotseat, or Ladder.',
   },
   {
     name: 'unsupported mode',
     field: 'mode',
     value: 'network',
-    message: 'Mode is not supported. Choose Single player or Hotseat.',
+    message:
+      'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
   },
   {
     name: 'missing player one ID',

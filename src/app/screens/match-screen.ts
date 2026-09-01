@@ -39,6 +39,7 @@ export class GrandTransitionMatch extends LitElement {
     autoComplete: { attribute: false },
     phraseColorCoding: { attribute: false },
     thinking: { type: Boolean },
+    aiName: { type: String },
     autoRevealWaitingSentence: { type: Boolean },
   };
 
@@ -48,6 +49,7 @@ export class GrandTransitionMatch extends LitElement {
   declare autoComplete: boolean;
   declare phraseColorCoding: boolean;
   declare thinking: boolean;
+  declare aiName: string;
   declare autoRevealWaitingSentence: boolean;
   private previewText: string | null;
   private remainingSeconds: number | null;
@@ -67,6 +69,7 @@ export class GrandTransitionMatch extends LitElement {
     this.autoComplete = true;
     this.phraseColorCoding = true;
     this.thinking = false;
+    this.aiName = msg('Local Radio Caller');
     this.autoRevealWaitingSentence = false;
     this.previewText = null;
     this.remainingSeconds = null;
@@ -171,7 +174,7 @@ export class GrandTransitionMatch extends LitElement {
     const displayedSentence =
       this.thinking &&
       this.snapshot.sentenceText === msg('Select a noun to begin.')
-        ? msg('Waiting for Local Radio Caller…')
+        ? msg(`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
     const arenaReaction = this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
@@ -258,7 +261,7 @@ export class GrandTransitionMatch extends LitElement {
                 ${
                   this.thinking
                     ? html`<span class="ai-thinking-status" role="status">
-                        ${msg('Local Radio Caller is thinking')}
+                        ${msg(`${this.aiName} is thinking`)}
                       </span>`
                     : nothing
                 }
@@ -359,7 +362,7 @@ export class GrandTransitionMatch extends LitElement {
                           data-side=${first.isActive ? 'red' : 'blue'}
                           aria-label=${msg('Artificial intelligence turn')}
                         >
-                          <strong>${msg('Local Radio Caller')}</strong>
+                          <strong>${this.aiName}</strong>
                           <span>${msg('Considering the next phrase…')}</span>
                         </section>`
                       : html`<section
@@ -567,7 +570,13 @@ export class GrandTransitionMatch extends LitElement {
             class="round-review-continue round-review-primary"
             @click=${victory ? this.returnToMainMenu : this.continueRound}
           >
-            ${victory ? msg('Return to main menu') : msg('Continue')}
+            ${
+              victory
+                ? victory.ladder
+                  ? msg('Continue ladder')
+                  : msg('Return to main menu')
+                : msg('Continue')
+            }
           </button>
         </section>
       </div>

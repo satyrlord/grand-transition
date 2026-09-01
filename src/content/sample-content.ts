@@ -51,7 +51,48 @@ export function createSampleContent(
         phrasePool: [...scenePhraseIds('modern-debate-studio')],
         effectIds: ['led-light-sweep', 'floor-reflection-pulse'],
       },
+      foundationScene(
+        'county-council-ballroom',
+        1,
+        scenePhraseIds('county-council-ballroom'),
+      ),
+      foundationScene(
+        'midnight-call-in-studio',
+        0,
+        scenePhraseIds('midnight-call-in-studio'),
+      ),
+      foundationScene(
+        'palace-press-hall',
+        1,
+        scenePhraseIds('palace-press-hall'),
+      ),
+      foundationScene(
+        'influencer-campaign-livestream',
+        0,
+        scenePhraseIds('influencer-campaign-livestream'),
+      ),
     ],
     locales: [englishGameLocale],
   });
+}
+
+function foundationScene(
+  id: string,
+  openingPlayerIndex: 0 | 1,
+  phrasePool: readonly string[],
+) {
+  return {
+    id,
+    openingPlayerIndex,
+    nameKey: `scene.${id}.name`,
+    descriptionKey: `scene.${id}.description`,
+    backgroundLayers: [
+      { media: media('catalog-foundation-neutral-scene'), depth: 0 },
+    ],
+    animationId: 'catalog-foundation-neutral-lights',
+    music: media('catalog-foundation-neutral-theme'),
+    ambience: media('catalog-foundation-neutral-room-tone'),
+    phrasePool: [...phrasePool],
+    effectIds: ['catalog-foundation-neutral-light'],
+  };
 }

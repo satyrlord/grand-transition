@@ -56,18 +56,21 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes four original fictional characters, three human and
-  one fully mechanical, Romanian-politics phrase content, separate transparent
-  portraits, and two layered debate studios. Each studio uses one fixed
-  fictional moderator and a separate foreground desk plate.
+  bundle. It also includes 19 original fictional characters, 18 human and one
+  fully mechanical, Romanian-politics phrase content, and separate transparent
+  default portraits. The four vertical-slice characters also have alternate
+  skins. Two scenes use layered debate studios with fixed fictional moderators
+  and foreground desk plates. Four playable foundation scenes use one neutral
+  local fallback until final scene production.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,
   comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 8,
   11, and 14
   compatibility bases, one local 1.5 weakness multiplier, and no restriction
-  damage bonus. The seeded Local Radio Caller AI selects valid actions for the
-  single-player mode.
+  damage bonus. The seeded Local Radio Caller, Party Strategist, and Palace
+  Operator AI policies select valid actions for single-player matches. A local
+  nine-rung ladder persists wins, losses, opponents, scenes, and completion.
 - Every completed exchange pauses on an in-arena results modal while the last
   sentence remains visible. An ordered score receipt shows each clause,
   finisher, Comeback, applied weakness and combo factor, and final damage.

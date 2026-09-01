@@ -24,16 +24,19 @@ and purchases are not planned for the MVP.
 The current checkout implements Milestones 001 through 018, the persistent
 victory and local match-history slice from Milestone 019, the local settings
 slice from Milestone 020, and the Local Radio Caller slice from Milestone 021.
+It also implements the promoted Milestone 026 playable catalog foundation and
+Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-019 through 029 remain incomplete as full deliveries.
+Milestones 023 through 025, 027 through 029, and 031 remain incomplete.
 
-The current content has common Romanian-politics phrases and four fictional
-characters: three humans and one robot. Each character has owned phrases and a
-default and alternate portrait skin. The content also includes two fictional
-layered debate studios
-and one English game-locale bundle.
+The current content has common Romanian-politics phrases and 19 fictional
+characters: 18 humans and one robot. Each character has owned phrases and a
+default local portrait. The four vertical-slice characters also have alternate
+skins. The content includes two fictional layered debate studios, four playable
+foundation scenes with a neutral local fallback, and one English game-locale
+bundle.
 
 The implemented rules include extended Hollywood Roast grammar, agreement,
 compound subjects and objects, endings, modifiers, incomplete states, and
@@ -52,9 +55,10 @@ alone exposes local public match history. The interface requires a browser
 content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
 and PC. Local sound, speech, timer, and Auto-complete settings use a strict
 versioned document and browser storage with a session memory fallback. Single
-player uses the seeded Local Radio Caller AI. Later dependency work adds the
-advanced AI ladder, audio output, expanded content, balance evidence, and
-release hardening.
+player uses the seeded Local Radio Caller, Party Strategist, and Palace
+Operator AI policies. The local nine-rung ladder persists its exact opponents,
+scenes, wins, losses, and completion. Later dependency work adds audio output,
+final content volume and media, balance evidence, and release hardening.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

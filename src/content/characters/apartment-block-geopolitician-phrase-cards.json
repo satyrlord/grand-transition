@@ -1,0 +1,117 @@
+{
+  "id": "apartment-block-geopolitician",
+  "rosterOrder": 17,
+  "species": "human",
+  "name": "Apartment-Block Geopolitician",
+  "description": "A suspicious everyday expert who can explain every border from the apartment entrance.",
+  "assets": {
+    "portrait": {
+      "assetId": "apartment-block-geopolitician-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "apartment-block-geopolitician-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#36332e",
+    "secondary": "#862f2a",
+    "accent": "#d1b16d"
+  },
+  "weaknessTags": [
+    "sources",
+    "specificity",
+    "nuance"
+  ],
+  "comebacks": {
+    "weak": "The neighbors know better.",
+    "medium": "Your source has never entered this building.",
+    "strong": "I solved your entire doctrine beside the mailboxes."
+  },
+  "aiPersonality": {
+    "aggression": 0.75,
+    "denial": 0.5,
+    "risk": 0.85
+  },
+  "voiceProfile": {
+    "voiceHint": "sharp",
+    "rate": 1.05,
+    "pitch": 1
+  },
+  "animationSet": {
+    "idle": "apartment-block-geopolitician-idle",
+    "speak": "apartment-block-geopolitician-speak",
+    "react": "apartment-block-geopolitician-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "apartment-block-geopolitician-foundation-noun",
+      "role": "noun",
+      "text": "my stairwell intelligence network",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-foundation-modifier",
+      "role": "modifier",
+      "text": "according to the third-floor balcony",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-foundation-ending",
+      "role": "ending",
+      "text": "and nuance was locked outside the entrance.",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Milestone 027: Balance and Editorial Review
 
 **Status:** Approved  
-**Depends on:** 026  
+**Depends on:** 031
 **Owns:** Content tone, safety approval, repetition, and balance evidence  
 **Production-file budget:** 5
 
@@ -54,7 +54,7 @@ a release deviation.
 The report records combo, weakness, finisher, continuation, comeback, grammar
 mistake,
 sudden-death, and incomplete rates. Zero occurrences of a reachable owned rule
-across the workload is a defect. It also applies the Milestone 026 selection
+across the workload is a defect. It also applies the Milestone 031 selection
 distribution and exact-insult repetition thresholds.
 
 Editorial review severity is:
@@ -86,7 +86,7 @@ At least 10 lines must be attributable to the intended character.
   a permitted recorded deviation. Aggregate and matchup round counts meet their
   pacing bands. Fixed seeds reproduce report totals.
 - **AC-027-03:** Every reachable rule occurs, no invariant failure occurs, and
-  variety and repetition meet Milestone 026 thresholds.
+  variety and repetition meet Milestone 031 thresholds.
 - **AC-027-04:** One-hour manual play records start, end, setup sequence,
   repeated insults, unclear rules, dominant strategies, and dispositions.
 - **AC-027-05:** Every shipped prose and media record has complete review

@@ -1,0 +1,117 @@
+{
+  "id": "retiring-cassandra",
+  "rosterOrder": 6,
+  "species": "human",
+  "name": "Retiring Cassandra",
+  "description": "A weary reformist whose correct warnings have become an unwanted institutional tradition.",
+  "assets": {
+    "portrait": {
+      "assetId": "retiring-cassandra-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "retiring-cassandra-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#34373d",
+    "secondary": "#d8cdb3",
+    "accent": "#7c3b42"
+  },
+  "weaknessTags": [
+    "competence",
+    "hope",
+    "results"
+  ],
+  "comebacks": {
+    "weak": "I warned your assistant.",
+    "medium": "Hope filed its resignation before you arrived.",
+    "strong": "Your results are the reason I kept the old reports."
+  },
+  "aiPersonality": {
+    "aggression": 0.25,
+    "denial": 0.7,
+    "risk": 0.2
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.85,
+    "pitch": 0.85
+  },
+  "animationSet": {
+    "idle": "retiring-cassandra-idle",
+    "speak": "retiring-cassandra-speak",
+    "react": "retiring-cassandra-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "retiring-cassandra-foundation-noun",
+      "role": "noun",
+      "text": "my final reform memorandum",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "retiring-cassandra-foundation-modifier",
+      "role": "modifier",
+      "text": "after another ignored warning",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "retiring-cassandra-foundation-ending",
+      "role": "ending",
+      "text": "and competence has already left the building.",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

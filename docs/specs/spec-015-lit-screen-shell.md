@@ -80,7 +80,10 @@ mechanical character, the crop includes the antenna, face panel, shoulders, and
 upper torso. The face panel is centered on the inner portrait window. The crop
 does not show the complete body. Each item uses one authored heavy dark-oak
 frame and a restrained aged-gold inner liner. No portrait paints outside that
-inner window. Selecting the item reveals the complete available portrait only
+inner window. Each item has a visible character label. A compact layout can use
+a distinct short label, but its accessible name keeps the complete character
+name, public weaknesses, and current player-one or player-two selection state.
+Selecting the item reveals the complete available portrait only
 on the owning left or right player stage. The selected stage does not fade or
 mask the lower body.
 
@@ -107,7 +110,8 @@ Hovering a roster character or moving keyboard focus to it shows
 a custom nonmodal floating panel with that character's name and complete public
 weakness list. Leaving hover or focus closes a transient panel. Right-clicking
 a roster character prevents the browser context menu and pins the panel. Escape
-or activation outside the roster and panel closes a pinned panel.
+or pointer or keyboard activation outside the roster and panel closes a pinned
+panel.
 
 The panel
 contains public content only and does not trap focus.

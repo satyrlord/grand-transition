@@ -1,0 +1,117 @@
+{
+  "id": "oat-milk-reformist",
+  "rosterOrder": 7,
+  "species": "human",
+  "name": "Oat-Milk Reformist",
+  "description": "An earnest modernizer who can fit an entire coalition into one carefully facilitated workshop.",
+  "assets": {
+    "portrait": {
+      "assetId": "oat-milk-reformist-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "oat-milk-reformist-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#b54a29",
+    "secondary": "#24334c",
+    "accent": "#e2c99b"
+  },
+  "weaknessTags": [
+    "relevance",
+    "authenticity",
+    "class"
+  ],
+  "comebacks": {
+    "weak": "That framing is not inclusive.",
+    "medium": "Your authenticity failed the listening session.",
+    "strong": "You confused a slogan with the people carrying it."
+  },
+  "aiPersonality": {
+    "aggression": 0.35,
+    "denial": 0.55,
+    "risk": 0.55
+  },
+  "voiceProfile": {
+    "voiceHint": "bright",
+    "rate": 1.05,
+    "pitch": 1.1
+  },
+  "animationSet": {
+    "idle": "oat-milk-reformist-idle",
+    "speak": "oat-milk-reformist-speak",
+    "react": "oat-milk-reformist-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "oat-milk-reformist-foundation-noun",
+      "role": "noun",
+      "text": "my stakeholder listening circle",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-foundation-modifier",
+      "role": "modifier",
+      "text": "through a responsibly sourced framework",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-foundation-ending",
+      "role": "ending",
+      "text": "and your relevance was not renewed.",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}

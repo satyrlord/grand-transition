@@ -35,6 +35,10 @@ const sceneMediaUrls: Readonly<Record<string, string>> = {
     '../assets/scenes/modern-debate-studio-desks.png',
     import.meta.url,
   ).href,
+  'catalog-foundation-neutral-scene': new URL(
+    '../assets/brand/title-proscenium-background.webp',
+    import.meta.url,
+  ).href,
 };
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
@@ -101,6 +105,7 @@ export type MatchScreenSnapshot = Readonly<{
     winnerId: string;
     winnerName: string;
     completedRounds: number;
+    ladder: boolean;
   }> | null;
   round: number;
   sceneName: string;
@@ -155,7 +160,11 @@ export function createMatchScreenSnapshot(
   state: MatchState,
   arenaReaction: MatchArenaReaction | null = null,
   reviewResolution: MatchResolution | null = null,
-  victory: Readonly<{ winnerId: string; completedRounds: number }> | null = null,
+  victory: Readonly<{
+    winnerId: string;
+    completedRounds: number;
+    ladder?: boolean;
+  }> | null = null,
   skinIdsByPlayer: Readonly<Record<string, string>> = {},
   viewerId: string = state.activePlayerId,
 ): MatchScreenSnapshot {
@@ -309,6 +318,7 @@ export function createMatchScreenSnapshot(
             state.playerStates[victory.winnerId]!.characterId,
           ),
           completedRounds: victory.completedRounds,
+          ladder: victory.ladder ?? false,
         }
       : null,
     round: state.round,

@@ -1,5 +1,11 @@
 import { msg } from '@lit/localize';
-import { LitElement, html, nothing, type TemplateResult } from 'lit';
+import {
+  LitElement,
+  html,
+  nothing,
+  type PropertyValues,
+  type TemplateResult,
+} from 'lit';
 import {
   characterPortraitUrls,
   characterSkins,
@@ -8,15 +14,20 @@ import {
 } from '../../game-content';
 import portraitFrameUrl from '../../assets/brand/politburo-portrait-frame.png';
 import type { MatchMode } from '../../engine/match-lifecycle';
+import type { LadderProgress } from '../../engine/ladder';
+import { ladderDifficulty } from '../../engine/ladder';
+import type { LadderProgressFailureCode } from '../../persistence/ladder-progress';
 
 const elementName = 'grand-transition-setup';
 const characterInspectorId = 'character-inspector';
 export const setupChangeEventName = 'setup-change';
 export const showTitleEventName = 'show-title';
 export const startMatchEventName = 'start-match';
+export const resetLadderEventName = 'reset-ladder';
 
 export type SetupField =
   | 'mode'
+  | 'aiDifficulty'
   | 'playerOneCharacterId'
   | 'playerOneSkinId'
   | 'playerTwoCharacterId'
@@ -32,6 +43,7 @@ type SkinField = Extract<SetupField, 'playerOneSkinId' | 'playerTwoSkinId'>;
 
 export type SetupSnapshot = Readonly<{
   mode: string;
+  aiDifficulty: string;
   playerOneCharacterId: string;
   playerOneSkinId: string;
   playerTwoCharacterId: string;
@@ -40,7 +52,8 @@ export type SetupSnapshot = Readonly<{
 }>;
 
 export type StartMatchPayload = Readonly<{
-  mode: MatchMode;
+  mode: MatchMode | 'ladder';
+  aiDifficulty: string;
   playerOneCharacterId: string;
   playerOneSkinId: string;
   playerTwoCharacterId: string;
@@ -57,6 +70,7 @@ export type SetupChangeEvent = CustomEvent<
 >;
 export type ShowTitleEvent = CustomEvent<Readonly<{ type: 'show-title' }>>;
 export type StartMatchEvent = CustomEvent<StartMatchPayload>;
+export type ResetLadderEvent = CustomEvent<Readonly<{ type: 'reset-ladder' }>>;
 
 type SetupErrors = Partial<Record<SetupField, string>>;
 
@@ -77,6 +91,8 @@ export class GrandTransitionSetup extends LitElement {
     selectionTarget: { state: true },
     previewCharacterId: { state: true },
     previewPinned: { state: true },
+    ladderProgress: { attribute: false },
+    ladderPersistenceFailure: { attribute: false },
   };
 
   declare snapshot: SetupSnapshot | undefined;
@@ -84,6 +100,8 @@ export class GrandTransitionSetup extends LitElement {
   declare private selectionTarget: CharacterField;
   declare private previewCharacterId: string | null;
   declare private previewPinned: boolean;
+  declare ladderProgress: LadderProgress | null;
+  declare ladderPersistenceFailure: LadderProgressFailureCode | null;
   private submissionLocked = false;
 
   constructor() {
@@ -92,10 +110,18 @@ export class GrandTransitionSetup extends LitElement {
     this.selectionTarget = 'playerOneCharacterId';
     this.previewCharacterId = null;
     this.previewPinned = false;
+    this.ladderProgress = null;
+    this.ladderPersistenceFailure = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
     return this;
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('snapshot') && this.snapshot?.mode === 'ladder') {
+      this.selectionTarget = 'playerOneCharacterId';
+    }
   }
 
   protected override render() {
@@ -122,6 +148,7 @@ export class GrandTransitionSetup extends LitElement {
         aria-labelledby="setup-title"
         @keydown=${this.handleKeyDown}
         @pointerdown=${this.dismissPinnedPanel}
+        @click=${this.dismissPinnedPanel}
       >
         <header class="setup-heading">
           <p class="setup-channel">${msg('Channel 3')}</p>
@@ -129,9 +156,15 @@ export class GrandTransitionSetup extends LitElement {
             ${msg('Select your debaters')}
           </h1>
           <p>
-            ${msg(
-              'Choose both contestants, confirm the studio, and open the transmission.',
-            )}
+            ${
+              this.snapshot.mode === 'ladder'
+                ? msg(
+                    'Choose your debater. Your opponent and scene follow ladder progress.',
+                  )
+                : msg(
+                    'Choose both contestants, confirm the studio, and open the transmission.',
+                  )
+            }
           </p>
         </header>
 
@@ -143,7 +176,7 @@ export class GrandTransitionSetup extends LitElement {
             ${this.contestantStage({
               field: 'playerOneCharacterId',
               playerLabel:
-                this.snapshot.mode === 'ai'
+                isSinglePlayerMode(this.snapshot.mode)
                   ? msg('You')
                   : msg('Player one'),
               side: 'one',
@@ -152,6 +185,7 @@ export class GrandTransitionSetup extends LitElement {
               skinField: 'playerOneSkinId',
               characterError: errors.playerOneCharacterId,
               skinError: errors.playerOneSkinId,
+              locked: false,
             })}
 
             <section class="roster-zone" aria-labelledby="roster-title">
@@ -159,9 +193,11 @@ export class GrandTransitionSetup extends LitElement {
                 <h2 id="roster-title">${msg('Contestant roster')}</h2>
                 <p aria-live="polite">
                   ${
-                    this.selectionTarget === 'playerOneCharacterId'
-                      ? msg('Selecting for player one')
-                      : msg('Selecting for player two')
+                    this.snapshot.mode === 'ladder'
+                      ? msg('19 contestants · Selecting your ladder character')
+                      : this.selectionTarget === 'playerOneCharacterId'
+                        ? msg('19 contestants · Selecting for player one')
+                        : msg('19 contestants · Selecting for player two')
                   }
                 </p>
               </div>
@@ -171,7 +207,8 @@ export class GrandTransitionSetup extends LitElement {
               <div
                 class="roster-grid"
                 role="group"
-                aria-label=${msg('Contestants')}
+                aria-label=${msg('Contestant roster, 19 characters')}
+                tabindex="0"
               >
                 ${characterViews().map((character) =>
                   this.rosterChoice(character),
@@ -179,15 +216,25 @@ export class GrandTransitionSetup extends LitElement {
               </div>
 
               <p class="setup-note">
-                ${msg('Both players can choose the same character.')}
+                ${
+                  this.snapshot.mode === 'ladder'
+                    ? msg(
+                        'Opponent and scene are fixed by local ladder progress.',
+                      )
+                    : msg('Both players can choose the same character.')
+                }
               </p>
             </section>
 
             ${this.contestantStage({
               field: 'playerTwoCharacterId',
               playerLabel:
-                this.snapshot.mode === 'ai'
-                  ? msg('Local Radio Caller')
+                this.snapshot.mode === 'ladder'
+                  ? this.ladderProgress?.completed
+                    ? msg('Ladder complete')
+                    : difficultyLabel(currentDifficulty(this.ladderProgress))
+                  : this.snapshot.mode === 'ai'
+                    ? difficultyLabel(this.snapshot.aiDifficulty)
                   : msg('Player two'),
               side: 'two',
               character: playerTwo,
@@ -195,12 +242,17 @@ export class GrandTransitionSetup extends LitElement {
               skinField: 'playerTwoSkinId',
               characterError: errors.playerTwoCharacterId,
               skinError: errors.playerTwoSkinId,
+              locked: this.snapshot.mode === 'ladder',
             })}
           </section>
 
           <fieldset
             class="match-settings match-settings--${
-              this.snapshot.mode === 'ai' ? 'single-player' : 'hotseat'
+              this.snapshot.mode === 'ladder'
+                ? 'ladder'
+                : this.snapshot.mode === 'ai'
+                  ? 'single-player'
+                  : 'hotseat'
             }"
           >
             <legend>
@@ -217,36 +269,56 @@ export class GrandTransitionSetup extends LitElement {
                 options: [
                   { value: 'ai', label: msg('Single player') },
                   { value: 'hotseat', label: msg('Hotseat') },
+                  { value: 'ladder', label: msg('Ladder') },
                 ],
               })}
             </div>
             ${
               this.snapshot.mode === 'ai'
-                ? html`
-                    <div class="match-settings-difficulty">
-                      <div class="setup-field">
-                        <label for="aiDifficulty">${msg('Difficulty')}</label>
-                        <select id="aiDifficulty" name="aiDifficulty">
-                          <option value="local-radio-caller" selected>
-                            ${msg('Local Radio Caller')}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  `
-                : nothing
+                ? html`<div class="match-settings-difficulty">
+                    ${this.selectField({
+                      field: 'aiDifficulty',
+                      label: msg('Difficulty'),
+                      value: this.snapshot.aiDifficulty,
+                      error: errors.aiDifficulty,
+                      options: [
+                        {
+                          value: 'local-radio-caller',
+                          label: msg('Local Radio Caller'),
+                        },
+                        {
+                          value: 'party-strategist',
+                          label: msg('Party Strategist'),
+                        },
+                        {
+                          value: 'palace-operator',
+                          label: msg('Palace Operator'),
+                        },
+                      ],
+                    })}
+                  </div>`
+                : this.snapshot.mode === 'ladder'
+                  ? this.ladderRecord()
+                  : nothing
             }
             <div class="match-settings-scene">
-              ${this.selectField({
-                field: 'sceneId',
-                label: msg('Scene'),
-                value: this.snapshot.sceneId,
-                error: errors.sceneId,
-                options: sampleContent.scenes.map((scene) => ({
-                  value: scene.id,
-                  label: gameMessage(scene.nameKey),
-                })),
-              })}
+              ${
+                this.snapshot.mode === 'ladder'
+                  ? html`<span class="ladder-field-label"
+                        >${msg('Rung scene — fixed')}</span
+                      >
+                      <output>${sceneName(this.snapshot.sceneId)}</output>`
+                  : this.selectField({
+                      field: 'sceneId',
+                      label: msg('Scene'),
+                      value: this.snapshot.sceneId,
+                      error: errors.sceneId,
+                      options: sampleContent.scenes.map((scene) => ({
+                        value: scene.id,
+                        label: gameMessage(scene.nameKey),
+                      })),
+                    })
+              }
             </div>
           </fieldset>
 
@@ -254,8 +326,23 @@ export class GrandTransitionSetup extends LitElement {
             <button type="button" class="secondary-action" @click=${this.back}>
               ${msg('Back')}
             </button>
-            <button type="submit" class="primary-action">
-              ${msg('Start match')}
+            <button
+              type="submit"
+              class="primary-action"
+              ?disabled=${
+                this.snapshot.mode === 'ladder' &&
+                (this.ladderProgress === null || this.ladderProgress.completed)
+              }
+            >
+              ${
+                this.snapshot.mode === 'ladder'
+                  ? this.ladderProgress?.rungIndex === 0
+                    ? msg('Start ladder')
+                    : this.ladderProgress?.completed
+                      ? msg('Ladder complete')
+                      : msg('Continue ladder')
+                  : msg('Start match')
+              }
             </button>
           </div>
         </form>
@@ -272,6 +359,7 @@ export class GrandTransitionSetup extends LitElement {
     skinField: SkinField;
     characterError: string | undefined;
     skinError: string | undefined;
+    locked: boolean;
   }): TemplateResult {
     const characterErrorId = config.field + '-error';
     const skinErrorId = config.skinField + '-error';
@@ -293,10 +381,15 @@ export class GrandTransitionSetup extends LitElement {
           data-skin-id=${config.skin?.id ?? ''}
           aria-label=${
             config.character
-              ? config.playerLabel + ' character: ' + config.character.name
+              ? config.locked
+                ? config.playerLabel +
+                  ' opponent fixed by rung: ' +
+                  config.character.name
+                : config.playerLabel + ' character: ' + config.character.name
               : config.playerLabel + ' character'
           }
           aria-pressed=${targetActive}
+          ?disabled=${config.locked}
           aria-describedby=${
             config.characterError ? characterErrorId : nothing
           }
@@ -316,12 +409,17 @@ export class GrandTransitionSetup extends LitElement {
                     width="1024"
                     height="1536"
                   />
-                  ${this.skinSelector({
-                    playerLabel: config.playerLabel,
-                    skin: config.skin,
-                    skinField: config.skinField,
-                    errorId: config.skinError ? skinErrorId : undefined,
-                  })}
+                  ${
+                    config.locked
+                      ? nothing
+                      : this.skinSelector({
+                          playerLabel: config.playerLabel,
+                          species: config.character.species,
+                          skin: config.skin,
+                          skinField: config.skinField,
+                          errorId: config.skinError ? skinErrorId : undefined,
+                        })
+                  }
                 </span>
                 <span class="contestant-record" aria-live="polite">
                   <strong>${config.character.name}</strong>
@@ -329,6 +427,13 @@ export class GrandTransitionSetup extends LitElement {
                   <span class="contestant-weaknesses">
                     ${config.character.weaknessTags.map(titleCase).join(' · ')}
                   </span>
+                  ${
+                    config.locked
+                      ? html`<span class="contestant-locked-state">
+                          ${msg('Opponent fixed by rung')}
+                        </span>`
+                      : nothing
+                  }
                 </span>
               `
             : html`
@@ -360,6 +465,7 @@ export class GrandTransitionSetup extends LitElement {
 
   private skinSelector(config: {
     playerLabel: string;
+    species: CharacterView['species'];
     skin: CharacterSkinView;
     skinField: SkinField;
     errorId: string | undefined;
@@ -369,7 +475,9 @@ export class GrandTransitionSetup extends LitElement {
         class="skin-selector"
         role="group"
         aria-label=${
-          config.playerLabel + ': ' + skinAccessibleLabel(config.skin.id)
+          config.playerLabel +
+          ': ' +
+          skinAccessibleLabel(config.skin.id, config.species)
         }
         aria-describedby=${config.errorId ?? nothing}
       >
@@ -417,6 +525,12 @@ export class GrandTransitionSetup extends LitElement {
         ? msg('player one')
         : msg('player two');
     const weaknessNames = character.weaknessTags.map(titleCase).join(', ');
+    const selectedFor = [
+      playerOneSelected ? msg('Selected for player one.') : '',
+      playerTwoSelected ? msg('Selected for player two.') : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
     const accessibleLabel =
       character.name +
       '. ' +
@@ -424,6 +538,8 @@ export class GrandTransitionSetup extends LitElement {
       ': ' +
       weaknessNames +
       '. ' +
+      selectedFor +
+      ' ' +
       msg('Select for') +
       ' ' +
       playerLabel +
@@ -458,6 +574,8 @@ export class GrandTransitionSetup extends LitElement {
             alt=""
             width="1024"
             height="1536"
+            loading="lazy"
+            decoding="async"
           />
         </span>
         <img
@@ -467,7 +585,12 @@ export class GrandTransitionSetup extends LitElement {
           width="1086"
           height="1448"
         />
-        <span class="roster-choice-name">${character.name}</span>
+        <span class="roster-choice-name" aria-hidden="true">
+          <span class="roster-choice-short-name"
+            >${shortRosterName(character.name)}</span
+          >
+          <span class="roster-choice-full-name">${character.name}</span>
+        </span>
         <span class="roster-markers" aria-hidden="true">
           ${
             playerOneSelected
@@ -507,7 +630,7 @@ export class GrandTransitionSetup extends LitElement {
   }
 
   private selectField(config: {
-    field: Extract<SetupField, 'mode' | 'sceneId'>;
+    field: Extract<SetupField, 'aiDifficulty' | 'mode' | 'sceneId'>;
     label: string;
     value: string;
     error: string | undefined;
@@ -547,6 +670,12 @@ export class GrandTransitionSetup extends LitElement {
 
   private readonly chooseSelectionTarget = (event: Event): void => {
     const control = event.currentTarget as HTMLButtonElement;
+    if (
+      this.snapshot?.mode === 'ladder' &&
+      control.dataset.field === 'playerTwoCharacterId'
+    ) {
+      return;
+    }
     this.selectionTarget = control.dataset.field as CharacterField;
     this.dismissPreview();
   };
@@ -556,7 +685,10 @@ export class GrandTransitionSetup extends LitElement {
     const characterId = control.dataset.characterId;
     if (!characterId) return;
 
-    const changedField = this.selectionTarget;
+    const changedField =
+      this.snapshot?.mode === 'ladder'
+        ? 'playerOneCharacterId'
+        : this.selectionTarget;
     this.dispatchSetupChange(changedField, characterId);
     const skinField = skinFieldForCharacterField(changedField);
     const currentSkinId = this.snapshot?.[skinField];
@@ -568,9 +700,11 @@ export class GrandTransitionSetup extends LitElement {
       this.dispatchSetupChange(skinField, nextCharacterSkins[0]?.id ?? '');
     }
     this.selectionTarget =
-      changedField === 'playerOneCharacterId'
-        ? 'playerTwoCharacterId'
-        : 'playerOneCharacterId';
+      this.snapshot?.mode === 'ladder'
+        ? 'playerOneCharacterId'
+        : changedField === 'playerOneCharacterId'
+          ? 'playerTwoCharacterId'
+          : 'playerOneCharacterId';
     this.previewCharacterId = characterId;
     this.previewPinned = false;
   };
@@ -632,7 +766,7 @@ export class GrandTransitionSetup extends LitElement {
     this.previewPinned = this.previewCharacterId !== null;
   };
 
-  private readonly dismissPinnedPanel = (event: PointerEvent): void => {
+  private readonly dismissPinnedPanel = (event: Event): void => {
     if (!this.previewPinned) return;
     const insideRosterOrPanel = event
       .composedPath()
@@ -685,6 +819,12 @@ export class GrandTransitionSetup extends LitElement {
   private readonly submit = (event: SubmitEvent): void => {
     event.preventDefault();
     if (!this.snapshot || this.submissionLocked) return;
+    if (
+      this.snapshot.mode === 'ladder' &&
+      (!this.ladderProgress || this.ladderProgress.completed)
+    ) {
+      return;
+    }
 
     this.validationAttempted = true;
     const errors = validateSetup(this.snapshot);
@@ -722,10 +862,67 @@ export class GrandTransitionSetup extends LitElement {
       }),
     );
   };
+
+  private ladderRecord(): TemplateResult {
+    const progress = this.ladderProgress;
+    if (!progress) {
+      return html`<div class="match-settings-difficulty ladder-record" role="status">
+        <strong>${msg('Ladder unavailable')}</strong>
+        <span>${msg('Choose Ladder again to create local progress.')}</span>
+      </div>`;
+    }
+    return html`<div
+      class="match-settings-difficulty ladder-record"
+      role="status"
+      data-completed=${progress.completed ? 'true' : 'false'}
+    >
+      <strong>
+        ${
+          progress.completed
+            ? msg('Ladder complete')
+            : msg(`Rung ${progress.rungIndex + 1}/9`)
+        }
+      </strong>
+      <span>
+        ${
+          progress.completed
+            ? msg('Nine victories recorded')
+            : `${progress.wins}W · ${progress.losses}L`
+        }
+      </span>
+      ${
+        this.ladderPersistenceFailure
+          ? html`<span class="ladder-persistence-notice">
+              ${msg('Progress is session-only.')}
+            </span>`
+          : nothing
+      }
+      <button
+        type="button"
+        class="ladder-inline-reset"
+        aria-label=${msg('Reset ladder')}
+        @click=${this.resetLadder}
+      >
+        ${msg('Reset')}
+      </button>
+    </div>`;
+  }
+
+  private readonly resetLadder = (): void => {
+    if (!globalThis.confirm(msg('Reset all local ladder progress?'))) return;
+    this.dispatchEvent(
+      new CustomEvent(resetLadderEventName, {
+        bubbles: true,
+        composed: true,
+        detail: Object.freeze({ type: 'reset-ladder' as const }),
+      }),
+    );
+  };
 }
 
 const setupFieldOrder: readonly SetupField[] = [
   'mode',
+  'aiDifficulty',
   'playerOneCharacterId',
   'playerOneSkinId',
   'playerTwoCharacterId',
@@ -741,11 +938,24 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   const errors: SetupErrors = {};
 
   if (!snapshot.mode) {
-    errors.mode = msg('Mode is missing. Choose Single player or Hotseat.');
-  } else if (snapshot.mode !== 'ai' && snapshot.mode !== 'hotseat') {
+    errors.mode = msg('Mode is missing. Choose Single player, Hotseat, or Ladder.');
+  } else if (
+    snapshot.mode !== 'ai' &&
+    snapshot.mode !== 'hotseat' &&
+    snapshot.mode !== 'ladder'
+  ) {
     errors.mode = msg(
-      'Mode is not supported. Choose Single player or Hotseat.',
+      'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
     );
+  }
+
+  if (
+    snapshot.mode === 'ai' &&
+    !['local-radio-caller', 'party-strategist', 'palace-operator'].includes(
+      snapshot.aiDifficulty,
+    )
+  ) {
+    errors.aiDifficulty = msg('Choose a listed artificial intelligence difficulty.');
   }
 
   errors.playerOneCharacterId = identifierError(
@@ -807,7 +1017,8 @@ function immutableStartMatchPayload(
   snapshot: SetupSnapshot,
 ): StartMatchPayload {
   return Object.freeze({
-    mode: snapshot.mode as MatchMode,
+    mode: snapshot.mode as MatchMode | 'ladder',
+    aiDifficulty: snapshot.aiDifficulty,
     playerOneCharacterId: snapshot.playerOneCharacterId,
     playerOneSkinId: snapshot.playerOneSkinId,
     playerTwoCharacterId: snapshot.playerTwoCharacterId,
@@ -859,10 +1070,23 @@ function skinLabel(skinId: string): string {
   return titleCase(skinId);
 }
 
-function skinAccessibleLabel(skinId: string): string {
+function skinAccessibleLabel(
+  skinId: string,
+  species: CharacterView['species'],
+): string {
   if (skinId === 'default') return msg('Original skin');
-  if (skinId === 'alternate') return msg('Female alternate skin');
+  if (skinId === 'alternate') {
+    return species === 'robot'
+      ? msg('Alternate chassis')
+      : msg('Female alternate skin');
+  }
   return skinLabel(skinId) + ' ' + msg('skin');
+}
+
+function shortRosterName(name: string): string {
+  const words = name.trim().split(/\s+/u);
+  const label = words.length > 1 ? words.at(-1)! : name;
+  return label.length <= 7 ? label : label.slice(0, 6) + '.';
 }
 
 function skinFieldForCharacterField(field: CharacterField): SkinField {
@@ -886,6 +1110,27 @@ function gameMessage(key: string | undefined): string {
   return sampleContent.locales[0]?.messages[key] ?? key;
 }
 
+function isSinglePlayerMode(mode: string): boolean {
+  return mode === 'ai' || mode === 'ladder';
+}
+
+function difficultyLabel(difficulty: string | null): string {
+  if (difficulty === 'party-strategist') return msg('Party Strategist');
+  if (difficulty === 'palace-operator') return msg('Palace Operator');
+  return msg('Local Radio Caller');
+}
+
+function currentDifficulty(progress: LadderProgress | null): string | null {
+  if (!progress || progress.completed) return null;
+  return ladderDifficulty(progress.rungIndex);
+}
+
+function sceneName(sceneId: string): string {
+  return gameMessage(
+    sampleContent.scenes.find((scene) => scene.id === sceneId)?.nameKey,
+  );
+}
+
 export function registerGrandTransitionSetup(): void {
   if (!customElements.get(elementName)) {
     customElements.define(elementName, GrandTransitionSetup);
@@ -899,5 +1144,6 @@ declare global {
     [setupChangeEventName]: SetupChangeEvent;
     [showTitleEventName]: ShowTitleEvent;
     [startMatchEventName]: StartMatchEvent;
+    [resetLadderEventName]: ResetLadderEvent;
   }
 }

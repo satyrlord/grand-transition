@@ -1,0 +1,117 @@
+{
+  "id": "luxury-minister",
+  "rosterOrder": 15,
+  "species": "human",
+  "name": "Luxury Minister",
+  "description": "A camera-ready patron who presents private comfort as a difficult sacrifice for public service.",
+  "assets": {
+    "portrait": {
+      "assetId": "luxury-minister-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "luxury-minister-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#eee1c8",
+    "secondary": "#762337",
+    "accent": "#bd8f42"
+  },
+  "weaknessTags": [
+    "austerity",
+    "service",
+    "authenticity"
+  ],
+  "comebacks": {
+    "weak": "That fabric is not ministerial.",
+    "medium": "Your austerity arrived in economy class.",
+    "strong": "I spent more on restraint than you spent on your argument."
+  },
+  "aiPersonality": {
+    "aggression": 0.7,
+    "denial": 0.45,
+    "risk": 0.75
+  },
+  "voiceProfile": {
+    "voiceHint": "sharp",
+    "rate": 1,
+    "pitch": 1.05
+  },
+  "animationSet": {
+    "idle": "luxury-minister-idle",
+    "speak": "luxury-minister-speak",
+    "react": "luxury-minister-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+  },
+  "phrases": [
+    {
+      "id": "luxury-minister-foundation-noun",
+      "role": "noun",
+      "text": "my modest official motorcade",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "luxury-minister-foundation-modifier",
+      "role": "modifier",
+      "text": "from a carefully understated suite",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    },
+    {
+      "id": "luxury-minister-foundation-ending",
+      "role": "ending",
+      "text": "and public service is holding my shopping bags.",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+      }
+    }
+  ]
+}
