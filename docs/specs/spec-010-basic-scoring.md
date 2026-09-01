@@ -22,6 +22,11 @@ complete clause. The complement can affect weakness tags, but its restrictions
 affect draw eligibility only. It does not replace the relation or become a
 second scored object.
 
+An `and` connector and coordinated noun complement after a declared combined
+copular predicate also belong to the preceding complete clause. The complement
+can affect weakness tags, but it does not replace the relation or add a second
+clause base.
+
 Each relation defines substance and `flavour` compatibility with its noun input.
 An explicit custom score overrides the compatibility calculation. Otherwise:
 
@@ -63,9 +68,14 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
   completes in an average of 3 through 11 resolved rounds per match. The
   current four-character, two-scene content slice is the calibration corpus.
+- **AC-010-08:** A coordinated copular noun complement stays in the preceding
+  clause breakdown, adds no clause base, and applies its weakness effects to
+  that clause.
 
 ## Objective verifiers
 
 `tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-06.
 `tests/unit/replay-and-simulation.test.ts` and
 `npm run simulate -- --seed 20260830 --matches 500` verify AC-010-07.
+`tests/unit/basic-scoring.test.ts` and
+`e2e/coordinated-copular-complement.spec.ts` verify AC-010-08.

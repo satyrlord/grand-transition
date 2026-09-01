@@ -84,7 +84,7 @@ export function scoreBasicConstruction(
   const phraseById = new Map(
     request.phrases.map((phrase) => [phrase.id, phrase]),
   );
-  const clauses = extractScoreClauses(request.analysis);
+  const clauses = extractScoreClauses(request.analysis, phraseById);
   const breakdown: BasicScoreBreakdownItem[] = [];
   for (const clause of clauses) {
     const scored = scoreClause(
@@ -146,6 +146,7 @@ export function scoreBasicConstruction(
 
 export function extractScoreClauses(
   analysis: EnglishGrammarAnalysis,
+  phraseById: ReadonlyMap<string, Phrase>,
 ): readonly ScoreClause[] {
   const phrases = analysis.renderedPhrases.filter(
     (phrase) => phrase.role !== 'ending',
@@ -163,6 +164,9 @@ export function extractScoreClauses(
   let lastVerbSubjects: string[] = [];
   let activeClauseIndexes: number[] = [];
   let withComplementPending = false;
+  let copularNounComplementAllowed = false;
+  let copularNounComplementPending = false;
+  let copularNounComplementConnectorId: string | null = null;
 
   const addClause = (clause: ScoreClause): number => {
     clauses.push(clause);
@@ -172,7 +176,26 @@ export function extractScoreClauses(
   for (const phrase of phrases) {
     switch (phrase.role) {
       case 'noun':
-        if (pendingVerb) {
+        if (copularNounComplementPending) {
+          for (const clauseIndex of activeClauseIndexes) {
+            const clause = clauses[clauseIndex]!;
+            clauses[clauseIndex] = {
+              ...clause,
+              phraseIds: [
+                ...clause.phraseIds,
+                copularNounComplementConnectorId!,
+                phrase.phraseId,
+              ],
+            };
+          }
+          subjects = [phrase.phraseId];
+          complete = true;
+          connectorAfterComplete = false;
+          completedWithObjectVerb = false;
+          conjunctionAfterObjectVerb = false;
+          copularNounComplementPending = false;
+          copularNounComplementConnectorId = null;
+        } else if (pendingVerb) {
           const completedVerb = pendingVerb;
           activeClauseIndexes = subjects.map((subject) =>
             addClause({
@@ -188,6 +211,7 @@ export function extractScoreClauses(
           lastVerbSubjects = [...subjects];
           connectorAfterComplete = false;
           conjunctionAfterObjectVerb = false;
+          copularNounComplementAllowed = false;
           if (frontBecause) {
             frontBecause = false;
             frontBecauseAwaitingMain = true;
@@ -202,6 +226,7 @@ export function extractScoreClauses(
           }
           withComplementPending = false;
           completedWithObjectVerb = false;
+          copularNounComplementAllowed = false;
         } else if (conjunctionAfterObjectVerb && lastCompletedVerb) {
           const completedVerb = lastCompletedVerb;
           activeClauseIndexes.push(
@@ -217,6 +242,7 @@ export function extractScoreClauses(
           complete = true;
           conjunctionAfterObjectVerb = false;
           completedWithObjectVerb = true;
+          copularNounComplementAllowed = false;
         } else if (connectorAfterComplete || frontBecauseAwaitingMain) {
           const extendsFrontBecause =
             connectorAfterComplete && frontBecauseAwaitingMain;
@@ -226,6 +252,7 @@ export function extractScoreClauses(
           frontBecause = extendsFrontBecause;
           frontBecauseAwaitingMain = false;
           activeClauseIndexes = [];
+          copularNounComplementAllowed = false;
         } else {
           subjects.push(phrase.phraseId);
           activeClauseIndexes = [];
@@ -239,6 +266,9 @@ export function extractScoreClauses(
         connectorAfterComplete = false;
         conjunctionAfterObjectVerb = false;
         activeClauseIndexes = [];
+        copularNounComplementAllowed = false;
+        copularNounComplementPending = false;
+        copularNounComplementConnectorId = null;
         break;
       case 'predicate':
         activeClauseIndexes = subjects.map((subject) =>
@@ -253,6 +283,11 @@ export function extractScoreClauses(
         connectorAfterComplete = false;
         conjunctionAfterObjectVerb = false;
         withComplementPending = false;
+        copularNounComplementAllowed =
+          phraseById.get(phrase.phraseId)
+            ?.allowsCoordinatedNounComplement === true;
+        copularNounComplementPending = false;
+        copularNounComplementConnectorId = null;
         if (frontBecause) {
           frontBecause = false;
           frontBecauseAwaitingMain = true;
@@ -279,6 +314,9 @@ export function extractScoreClauses(
           withComplementPending = true;
           connectorAfterComplete = false;
           conjunctionAfterObjectVerb = false;
+          copularNounComplementAllowed = false;
+          copularNounComplementPending = false;
+          copularNounComplementConnectorId = null;
         } else if (phrase.connectorKind === 'because' && !complete) {
           frontBecause = true;
         } else if (
@@ -288,10 +326,25 @@ export function extractScoreClauses(
         ) {
           conjunctionAfterObjectVerb = true;
           connectorAfterComplete = false;
+          copularNounComplementAllowed = false;
+          copularNounComplementPending = false;
+          copularNounComplementConnectorId = null;
+        } else if (
+          phrase.connectorKind === 'and' &&
+          complete &&
+          copularNounComplementAllowed
+        ) {
+          copularNounComplementPending = true;
+          copularNounComplementConnectorId = phrase.phraseId;
+          connectorAfterComplete = false;
+          conjunctionAfterObjectVerb = false;
         } else {
           connectorAfterComplete = complete;
           conjunctionAfterObjectVerb = false;
           activeClauseIndexes = [];
+          copularNounComplementAllowed = false;
+          copularNounComplementPending = false;
+          copularNounComplementConnectorId = null;
         }
         break;
       case 'continuation':

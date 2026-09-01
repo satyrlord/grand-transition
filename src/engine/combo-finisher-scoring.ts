@@ -105,7 +105,7 @@ export function scoreComboFinisherConstruction(
   const breakdown: ComboFinisherBreakdownItem[] = [];
 
   if (scoreable) {
-    for (const clause of extractScoreClauses(request.analysis)) {
+    for (const clause of extractScoreClauses(request.analysis, phraseById)) {
       const scored = scoreClause(
         clause,
         phraseById,

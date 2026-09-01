@@ -143,6 +143,7 @@ export const phraseDefinitionSchema = z
     tense: phraseTenseSchema.optional(),
     tenseFamily: identifierSchema.optional(),
     connectorKind: connectorKindSchema.optional(),
+    allowsCoordinatedNounComplement: z.literal(true).optional(),
     grammaticalNumber: z.enum(['singular', 'plural']).optional(),
     grammaticalPerson: grammaticalPersonSchema.optional(),
     referentKind: referentKindSchema.optional(),
@@ -251,6 +252,16 @@ export const phraseSchema = phraseDefinitionSchema.superRefine(
       issue(
         'connectorKind',
         'Only a conjunction can declare a connector kind.',
+      );
+    }
+
+    if (
+      phrase.allowsCoordinatedNounComplement &&
+      phrase.role !== 'predicate'
+    ) {
+      issue(
+        'allowsCoordinatedNounComplement',
+        'Only a predicate can allow a coordinated noun complement.',
       );
     }
 

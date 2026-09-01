@@ -15,9 +15,10 @@ metaphorical.
 
 A phrase owns an identifier, role, text key, and optional agreement forms. It
 can own a connector kind, grammatical number, grammatical person, and referent
-kind. It owns scoring tags, weakness tags, restrictions, draw rarity, and
-editorial review. It can also own custom clause scores and a finisher score.
-Ending text includes a terminal full stop.
+kind. A combined copular predicate can declare that it allows a coordinated
+noun complement. A phrase owns scoring tags, weakness tags, restrictions, draw
+rarity, and editorial review. It can also own custom clause scores and a
+finisher score. Ending text includes a terminal full stop.
 
 Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
 `continuation`. A modifier is an adverbial or descriptive phrase that can
@@ -78,6 +79,9 @@ and copyrighted broadcast graphics.
   personal-singular and second-person agreement forms. Modifiers use their
   tags and restrictions in the preceding clause. Conjunctions alone own
   connector kinds, and endings alone own required finisher scores.
+- Only a predicate can declare `allowsCoordinatedNounComplement`. The field is
+  the literal value `true` and marks a combined copular predicate whose copula
+  can also govern a following `and + NOUN` complement.
 - Each weakness tag occurs on at least two phrases.
 - Every shipped phrase has approved original editorial review with no flags.
 - Each character owns exactly one weak, one medium, and one strong comeback

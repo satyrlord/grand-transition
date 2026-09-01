@@ -274,6 +274,81 @@ describe('Hollywood Roast extended grammar', () => {
     });
   });
 
+  test('completes coordinated noun complements after a declared copular predicate', () => {
+    const result = analyze([
+      add('your-brother'),
+      add('is-a-securitate-informer'),
+      add('coalition-and'),
+      add('a-pig'),
+      { kind: 'end' },
+    ]);
+
+    expect(result).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        state: 'ENDED',
+        publicText: 'Your brother is a Securitate informer and a pig.',
+        resolution: { outgoingDamageIntent: null },
+      },
+    });
+  });
+
+  test('preserves the new-subject branch after a copular noun-complement prefix', () => {
+    expect(
+      analyze([
+        add('your-brother'),
+        add('is-a-securitate-informer'),
+        add('coalition-and'),
+        add('a-pig'),
+        add('belongs-in-a-party-museum'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText:
+          'Your brother is a Securitate informer and a pig belongs in a history museum',
+      },
+    });
+    expect(
+      analyze([
+        add('your-brother'),
+        add('is-a-securitate-informer'),
+        add('coalition-and'),
+        add('a-pig'),
+        add('denounced'),
+        add('your-concubine'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText:
+          'Your brother is a Securitate informer and a pig denounced your concubine',
+      },
+    });
+  });
+
+  test('keeps and plus a noun incomplete after an unrelated predicate', () => {
+    expect(
+      analyze([
+        add('your-brother'),
+        add('interrupts-the-debate'),
+        add('coalition-and'),
+        add('a-pig'),
+        { kind: 'end' },
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: false,
+        publicText: 'Your brother interrupts this debate and a pig',
+        resolution: { outgoingDamageIntent: 0 },
+      },
+    });
+  });
+
   test.each([
     ['stole', 'EU funds'],
     ['appropriated', 'EU funds'],
