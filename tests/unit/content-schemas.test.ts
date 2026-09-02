@@ -1165,6 +1165,7 @@ describe('content schemas', () => {
       'black-sea-captain',
       'government-ai',
       'retiring-cassandra',
+      'oat-milk-reformist',
     ]);
     for (const character of phraseCardCatalog.characters) {
       expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual(

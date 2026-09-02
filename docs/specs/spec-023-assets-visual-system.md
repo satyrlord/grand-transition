@@ -8,8 +8,96 @@
 ## Deliver
 
 Build the Sharp pipeline, manifest validation, visual tokens, and landscape
-asset loading. Produce original final-quality art for four characters and one
-scene. Add core reactions, ambience, and transitions.
+asset loading. Regenerate the fixed current character and scene asset baseline
+from scratch as original final-quality static art. Complete state and motion art
+for the four vertical-slice characters and one scene. Add core reactions,
+ambience, and transitions.
+
+## Regeneration baseline and decision recovery
+
+### Fixed replacement baseline
+
+This milestone regenerates the explicit fixed character and scene Portable
+Network Graphics (PNG) baseline below. Do not derive the scope from a later
+directory scan. The baseline contains 29 character PNG files and four scene PNG
+files.
+
+The character baseline contains the 19 default portraits that Milestone 026
+defines and these ten current alternate portraits:
+
+- `black-sea-captain--alternate.png`;
+- `government-ai--alternate.png`;
+- `midnight-sensationalist--alternate.png`;
+- `oat-milk-reformist--alternate.png`;
+- `red-folded-chairman--alternate.png`;
+- `retiring-cassandra--statesman.png`;
+- `thunder-tribune--alternate.png`;
+- `velvet-mogul--boardroom-patriarch.png`;
+- `velvet-mogul--silk-diplomat.png`; and
+- `velvet-mogul--velvet-statesman.png`.
+
+The scene baseline contains these current layers:
+
+- `modern-debate-studio.png`;
+- `modern-debate-studio-desks.png`;
+- `transition-era-television-studio.png`; and
+- `transition-era-television-studio-desks.png`.
+
+An asset added after this fixed baseline does not enter Milestone 023
+automatically. Milestone 031 owns later portraits, skins, states, scene
+identities, and layers. Regenerating the fixed baseline does not move those
+future requirements into this milestone.
+
+Regeneration is atomic for each represented archetype. Regenerate its default
+portrait and every baseline alternate skin in the same art pass. Review them as
+one package before accepting any file. Do not retain, accept, or ship an old
+alternate skin beside a regenerated default skin. An alternate added after the
+fixed baseline remains under Milestone 031, but it must be created from scratch
+under the same locked art direction and completed character study.
+
+Regenerate each baseline asset as new art. A current raster can be inspected
+only to find a missing, lost, or conflicting decision. Do not give a current
+raster to an image generator. Do not trace it, edit it, composite it into a new
+master, or use it as an image-to-image, identity, composition, or style
+reference. Generation inputs are the approved public art direction, a complete
+private character study or approved scene specification, and approved external
+research references.
+
+### Character readiness
+
+Each of the 19 represented archetypes must have one complete private character
+study before regeneration starts for any of its skins. An existing prompt does
+not qualify as a complete study. The study must define the archetype,
+silhouette, proportions, face or mechanical display, clothing or chassis,
+gesture rhythm, prop logic, palette, every baseline skin, state language,
+references, exclusions, and recorded reference approval when it is required.
+
+The art agent must audit the study before generation. When information is
+missing, lost, unclear, or contradictory, the agent must use `$grill-me` with
+the product owner. It must resolve one decision at a time and record each answer
+in the private study. The agent must not infer the missing decision from a
+current raster or prompt. It must not start generation while one required
+decision remains unresolved or deferred.
+
+### Scene readiness
+
+Each baseline scene layer must have a complete direction in its approved owning
+specification. The direction must define the camera, composition, layer
+boundary, moderator when present, architecture, furniture, props, lighting,
+palette, focal regions, interface-safe regions, and responsive crop. A prompt
+in the temporary folder is implementation evidence only and does not complete
+this direction.
+
+When scene information is missing, lost, unclear, or contradictory, the art
+agent must use `$grill-me` with the product owner. It must resolve one decision
+at a time and record each answer in the owning approved specification before
+generation starts.
+
+Use one locked art direction for the complete baseline. Review all regenerated
+assets together. A successful isolated portrait or scene does not establish
+visual consistency. The complete set must use one painterly language, edge
+treatment, material simplification, lighting logic, proportion system, and
+level of comic exaggeration.
 
 Each of the four Milestone 023 vertical-slice characters has one default skin
 and one through eight alternate skins. One archetype has no more than eight
@@ -90,11 +178,12 @@ reject human, animal, and hybrid anatomy.
 
 Character-specific visual descriptions, real-world references, source links,
 and private approval records belong only in the Git-ignored research folder.
-The research folder is not a product contract and never ships. Public
-specifications, shipped prompts, source notes, and asset metadata use fictional
-names and generic source descriptions. They do not include real-person names or
-character-reference links. Research can inform original, transformative work,
-but it does not permit copying one photograph, artwork, logo, or exact pose.
+The research folder supplies approved private generation briefs, but it is not
+a published product contract and never ships. Public specifications, shipped
+prompts, source notes, and asset metadata use fictional names and generic source
+descriptions. They do not include real-person names or character-reference
+links. Research can inform original, transformative work, but it does not
+permit copying one photograph, artwork, logo, or exact pose.
 
 ### Vertical-slice integration
 
@@ -306,6 +395,28 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   a separate research root. A missing or empty prompt fails before conversion.
   The shipping raster contains a generic source record but does not contain the
   exact prompt, its private path, or its links.
+- **AC-023-12:** The regeneration inventory contains exactly the 29 character
+  and four scene PNG files in the fixed baseline. Each replacement has a new
+  source hash and a generation-input record. The input record contains no
+  current raster. A missing baseline replacement or an extra asset claimed as a
+  Milestone 023 replacement fails the inventory. A later nonbaseline asset
+  remains under Milestone 031 and does not fail this inventory.
+- **AC-023-13:** All 19 represented archetypes have a complete private character
+  study before generation. An existing prompt alone fails readiness. Every
+  missing or conflicting decision has a recorded `$grill-me` answer from the
+  product owner, and no required decision remains unresolved or deferred.
+- **AC-023-14:** Each baseline scene layer has complete camera, composition,
+  layer, subject, prop, lighting, focal-region, interface-safe-region, and crop
+  direction in its owning approved specification. A temporary prompt alone
+  fails readiness. Missing decisions have recorded `$grill-me` answers in that
+  specification.
+- **AC-023-15:** No current raster is a generation, tracing, editing,
+  compositing, identity, composition, or style input for its replacement. A
+  side-by-side review of the complete regenerated baseline confirms one shared
+  painterly language, edge treatment, material simplification, lighting logic,
+  proportion system, and comic-exaggeration level. Each archetype package
+  contains its regenerated default and every baseline alternate. No package
+  mixes old and regenerated skins.
 
 ## Impeccable UI validation
 
