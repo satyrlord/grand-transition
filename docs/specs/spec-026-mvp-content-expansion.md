@@ -20,7 +20,8 @@ Each new character is convention-driven. Add one complete
 interim `src/assets/characters/<character-id>.png` portrait. Do not add a
 TypeScript registry, locale table, setup option, or renderer map for a
 character. Existing alternate skins remain valid. A new foundation character
-does not require an alternate skin until Milestone 031.
+does not require an alternate skin until Milestone 031. When alternate skins
+exist, one character has no more than eight.
 
 Interim portraits are original local assets with recorded provenance. They use
 the existing transparent setup and match presentation. They are not final

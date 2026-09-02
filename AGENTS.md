@@ -146,16 +146,19 @@ the active operating system and shell when you run file-system commands.
 ## Project Structure & Module Organization
 
 Approved files under `docs/specs/` are the only source of truth for the app.
-README, agent documents, guidance, and untracked `tmp/` files are context only.
+README, agent documents, guidance, and untracked files in the temporary folder
+are context only.
 Put Lit screens in `src/app/`, components in `src/components/`, pure rules
 in `src/engine/`, AI in `src/ai/`, data in `src/content/`, and media in
-`src/assets/`. Keep art in `art/masters/`, unit tests in `tests/unit/`,
-component tests in `tests/browser/`, and flows in `e2e/`.
+`src/assets/`. Keep temporary renders in the temporary folder. Keep private
+character descriptions and custom prompts in the research folder. Put unit
+tests in `tests/unit/`, component tests in `tests/browser/`, and flows in
+`e2e/`.
 
 ## Build, Test, and Development Commands
 
-If `tmp/` contains an HTML prototype, inspect it with `py -m http.server 8000`.
-Bootstrap these scripts:
+If the temporary folder contains an HTML prototype, inspect it with
+`py -m http.server 8000`. Bootstrap these scripts:
 
 ```text
 npm run dev | preview | build

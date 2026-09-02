@@ -43,6 +43,9 @@ includes two fictional layered debate studios, four playable
 foundation scenes with a neutral local fallback, and one English game-locale
 bundle.
 
+The final asset contract permits one default skin and one through eight
+alternate skins for one archetype.
+
 The implemented rules include extended Hollywood Roast grammar, agreement,
 compound subjects and objects, endings, modifiers, incomplete states, and
 immediate grammar mistakes. They also include seeded common-board and
@@ -114,5 +117,6 @@ number of matches as an input.
 
 ## Local references
 
-Untracked files in `tmp/` can provide visual or behavioral context. They are not
-required by a clean checkout and do not define product behavior.
+Untracked files in the temporary folder can provide visual or behavioral
+context. They are not required by a clean checkout and do not define product
+behavior.

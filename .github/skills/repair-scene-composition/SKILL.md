@@ -115,15 +115,19 @@ this process with a Boolean color threshold or an alpha-only blur. Do not ship
 the green intermediate. Reject missing workflow metadata, nonzero outer
 corners, all chroma-green residue, and a soft-key output without partial alpha.
 
-For a complete source tree, use `npm run assets:convert-green -- <green-root>
-<output-root>`. Keep one matching `<asset-name>.prompt.txt` file beside each
-green master.
+Keep temporary renders in the temporary folder. Keep character descriptions,
+references, and custom prompts in the research folder. For a complete character
+source tree, use `npm run assets:convert-green -- <green-root> <output-root>
+--prompt-root <prompt-root>`. Keep matching relative names between both roots.
+The converter verifies every private prompt and embeds only a generic source
+record. It does not embed the exact character prompt, its path, or its links.
 
-Embed the exact generation prompt or source origin in every shipping raster.
-Use `provenance <png> --source <origin>` only when an existing opaque raster has
-a verified source origin and no prompt record. Do not invent a source or prompt.
-Replace superseded scene assets in the same repair. Do not keep unused shipping
-variants.
+For a scene tree whose prompts are beside its temporary renders, omit
+`--prompt-root`. All conversion modes verify a supplied prompt and embed only a
+generic source record. Use `provenance <png> --source <origin>` when a raster
+has a verified generic source origin. This command replaces an existing exact
+prompt with that source record. Do not invent a source or prompt. Replace
+superseded scene assets in the same repair. Do not keep unused shipping variants.
 
 Update all affected specifications, content data, localization, design records,
 source, and tests. Do not record subjective approval that the user did not give.

@@ -38,8 +38,8 @@ playbook. Do not create a parallel design process in this skill.
 Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, and each applicable
 UI owner. The primary UI owners are Milestones 015 through 019 and 023 through
 026. Follow their dependency closure. Use approved specifications as the
-composition target. Use `tmp/` prototypes and images only as evidence of tone
-or behavior.
+composition target. Use prototypes and images in the temporary folder only as
+evidence of tone or behavior.
 
 ## Preserve the target contract
 

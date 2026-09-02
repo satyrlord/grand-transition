@@ -103,7 +103,8 @@ ends. Right-clicking the selected-player stage cycles to the next skin and
 prevents the browser context menu. When the stage has keyboard focus, Left
 Arrow cycles to the previous skin and Right Arrow cycles to the next skin. Skin
 controls use visible side arrows, accessible names, and an announced current
-skin name. The roster portrait stays
+skin name. They support one default skin and as many as eight alternate skins
+for one archetype. The roster portrait stays
 on the character's default skin because it denotes the archetype, not the
 selected skin.
 
@@ -168,9 +169,10 @@ hide validation.
   selected skin portrait.
 - **AC-015-11:** Both selected-player stages cycle their available skins with
   visible previous and next arrows, right-click, Left Arrow, and Right Arrow.
-  Cycling wraps and changes only the owning player's skin ID. It preserves the
-  two character IDs and all phrase content. It prevents the stage context menu
-  and does not change a roster portrait.
+  The controls cycle and wrap across one default skin and up to eight alternate
+  skins. Cycling changes only the owning player's skin ID. It preserves the two
+  character IDs and all phrase content. It prevents the stage context menu and
+  does not change a roster portrait.
 
 ## Impeccable UI validation
 

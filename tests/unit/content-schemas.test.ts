@@ -1168,11 +1168,18 @@ describe('content schemas', () => {
     ]);
     for (const character of phraseCardCatalog.characters) {
       expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual(
-        character.id === 'retiring-cassandra'
-          ? ['default', 'statesman']
-          : alternateSkinIds.has(character.id)
-            ? ['default', 'alternate']
-            : ['default'],
+        character.id === 'velvet-mogul'
+          ? [
+              'default',
+              'boardroom-patriarch',
+              'silk-diplomat',
+              'velvet-statesman',
+            ]
+          : character.id === 'retiring-cassandra'
+            ? ['default', 'statesman']
+            : alternateSkinIds.has(character.id)
+              ? ['default', 'alternate']
+              : ['default'],
       );
       expect(characterPortraitUrls[character.id]).toBe(
         characterSkins[character.id]?.[0]?.portraitUrl,

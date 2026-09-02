@@ -172,7 +172,8 @@ can occupy either player position. Four vertical-slice characters and Retiring
 Cassandra have alternate skins. The Retiring Cassandra statesman skin is an
 approved visual-only exception that does not change game identity or prose; the
 other foundation portraits are interim. Later character art must preserve the
-declared species and cannot use animal or hybrid anatomy.
+declared species and cannot use animal or hybrid anatomy. One archetype can
+have one default skin and no more than eight alternate skins.
 
 ### World
 
@@ -205,18 +206,10 @@ available height is smaller or the roster grows.
 
 At the recommended match viewport, a municipal television studio and one fixed
 blonde fictional moderator fill the deep field. Two transparent editorial
-caricatures face each other from the left and right thirds. The default pair is
-the composed Red-Folded Chairman with his red folder and the emphatic Thunder
-Tribune with his speech papers. The lean Black Sea Captain can replace either
-one in a warm-cream naval officer uniform and cap. He holds one unbranded cigar.
-Government AI can replace either character with an ugly warm-cream robot or a
-severe blue-gray alternate chassis.
-One transparent foreground plate puts tall standing desks in front of
-both selected portraits.
-
-The implemented Thunder Tribune portrait keeps its full-body pose, raised hand,
-papers, and expression. Its head-and-hair silhouette is 90 percent of the
-initial extended portrait size.
+caricatures face each other from the left and right thirds. Each selected skin
+follows the shared public character direction and its private study. One
+transparent foreground plate puts tall standing desks in front of both
+selected portraits.
 
 The fixed blonde fictional moderator stands at a physical wood-and-brass desk
 on a raised inner-left platform. The four-column composition keeps her face
@@ -277,10 +270,10 @@ the lower half as a dashboard.
 ### Direction seed
 
 The user pinned this direction on 2026-08-25 after removing the earlier mock.
-`tmp/hollywood-01.jpg` and `tmp/hollywood-02.jpg` supplied reference evidence
-for spatial hierarchy only: opponent framing, top-edge status, wide speech,
-central sentence construction, and perimeter actions. The durable description
-in this record remains valid after the removal of those temporary files.
+Two images in the temporary folder supplied reference evidence for spatial
+hierarchy only: opponent framing, top-edge status, wide speech, central
+sentence construction, and perimeter actions. The durable description in this
+record remains valid after the removal of those temporary files.
 
 **Key Characteristics:**
 

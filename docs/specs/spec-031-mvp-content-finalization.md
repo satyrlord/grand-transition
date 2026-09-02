@@ -13,14 +13,12 @@ Milestone 026 to their final English phrase volume, art, scene audio treatment,
 and variety state. Use the existing schemas, pipelines, and presentation
 contracts.
 
-Every archetype has its default portrait skin and at least one alternate skin
-through the Milestone 023 filename convention. Each human archetype has at
-least one alternate female skin. A fully mechanical archetype has at least one
-alternate chassis. A skin changes only visual
+Every archetype has one default portrait skin and one through eight alternate
+skins through the Milestone 023 filename convention. Each human archetype has
+at least one alternate female skin. A fully mechanical archetype has at least
+one alternate chassis. A skin changes only visual
 presentation. It does not add or change phrases, weaknesses, comeback lines,
 balance data, or character identity. Additional alternate clothing is allowed.
-For example, the Black Sea Captain can use a cream naval-uniform default skin
-and a navy-blue formal-suit alternate skin.
 
 Eighteen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
@@ -143,11 +141,11 @@ failed automated range or distribution.
   threshold and record seed, workload, environment, and exceptions.
 - **AC-031-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
-- **AC-031-07:** All 19 characters provide a default skin and at least one
-  alternate skin. Each human character provides an alternate female skin, and
-  each robot provides an alternate chassis. Every skin passes the shared asset,
-  alpha, provenance, viewport, and package checks while the character's phrase
-  and balance records
+- **AC-031-07:** All 19 characters provide one default skin and one through
+  eight alternate skins. A ninth alternate fails validation. Each human
+  character provides an alternate female skin, and each robot provides an
+  alternate chassis. Every skin passes the shared asset, alpha, provenance,
+  viewport, and package checks while the character's phrase and balance records
   remain identical across skins.
 
 ## Content research boundary
@@ -155,13 +153,14 @@ failed automated range or distribution.
 All character identities and prose remain fictional. Research can use public
 institutions, documented historical events, constitutional mechanisms, and
 broad media forms. A portrait skin can use a public-figure likeness as a
-visual-only parody when the product owner explicitly approves it. The skin's
-non-player-visible generation provenance can name that reference person. Do not
-use a real person as a comparison or target in player-visible content. Do not
-copy photographs, accusations, protected prose, or slogans other than the one
-sourced English form that AC-005-07 approves. Do not use real political party
-names, acronyms, or logos. Use only generic ideological or social-family party
-labels.
+visual-only parody when the product owner explicitly approves it. Record the
+reference identity, links, and approval only in the research folder. Shipped
+generation provenance uses a generic source description and does not name or
+link that person. Do not use a real person as a comparison or target in
+player-visible content. Do not copy photographs, accusations, protected prose,
+or slogans other than the one sourced English form that AC-005-07 approves. Do
+not use real political party names, acronyms, or logos. Use only generic
+ideological or social-family party labels.
 
 Shared institutional themes can use
 [Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)

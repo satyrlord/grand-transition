@@ -19,7 +19,8 @@ Record the operating system, browser and version, viewport, build commit or
 status, and cache state.
 
 If build or serve commands do not exist, report the affected proof as
-`BLOCKED`. Do not substitute the `tmp/` prototype or a development server.
+`BLOCKED`. Do not substitute a prototype from the temporary folder or a
+development server.
 
 ## Test observable behavior
 

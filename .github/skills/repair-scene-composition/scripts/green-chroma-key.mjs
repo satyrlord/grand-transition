@@ -8,6 +8,8 @@ const chromaKey = '#00FF00';
 const alphaSources = new Set(['adopted-alpha-v1', 'soft-green-key-v1']);
 const softAlphaMatte = 'green-dominance-neighbor-matte-v1';
 const foregroundReconstruction = 'known-green-unmix-v1';
+const privatePromptProvenance =
+  'Private prompt record and temporary render workflow.';
 const alphaMetadataKeys = new Set([
   'Alpha Workflow',
   'Chroma Key',
@@ -75,6 +77,7 @@ async function stampMetadata(
   filePath,
   extraEntries = new Map(),
   includeAlphaWorkflow = true,
+  removedKeys = new Set(),
 ) {
   const input = await readFile(filePath);
   const entries = new Map([
@@ -93,6 +96,7 @@ async function stampMetadata(
   ]);
   const keysToReplace = new Set([
     ...(includeAlphaWorkflow ? alphaMetadataKeys : []),
+    ...removedKeys,
     ...entries.keys(),
   ]);
   const chunks = [input.subarray(0, 8)];
@@ -140,6 +144,14 @@ function assertGenerationProvenance(filePath, metadata) {
   ) {
     throw new Error(
       `${filePath}: missing embedded Generation Prompt or Generation Source metadata.`,
+    );
+  }
+}
+
+function assertGenerationSource(filePath, metadata) {
+  if (!metadata.get('Generation Source')?.trim()) {
+    throw new Error(
+      `${filePath}: missing embedded Generation Source metadata.`,
     );
   }
 }
@@ -246,14 +258,23 @@ async function adopt(filePath, promptFile) {
   assertTransparentAsset(facts);
   const extraEntries = generationProvenanceEntries(await readFile(filePath));
   if (promptFile) {
-    extraEntries.set('Generation Prompt', await readFile(promptFile, 'utf8'));
-    extraEntries.set(
-      'Generation Source',
-      `Green chroma-key workflow adopted from repository source ${path.relative(process.cwd(), promptFile)}.`,
-    );
+    const prompt = await readFile(promptFile, 'utf8');
+    if (!prompt.trim()) {
+      throw new Error(`${promptFile}: generation prompt is empty.`);
+    }
+    extraEntries.delete('Generation Prompt');
+    extraEntries.set('Generation Source', privatePromptProvenance);
+  } else if (extraEntries.has('Generation Prompt')) {
+    extraEntries.delete('Generation Prompt');
+    extraEntries.set('Generation Source', privatePromptProvenance);
   }
   assertGenerationProvenance(filePath, extraEntries);
-  await stampMetadata(filePath, extraEntries);
+  await stampMetadata(
+    filePath,
+    extraEntries,
+    true,
+    new Set(['Generation Prompt', 'Generation Source']),
+  );
   process.stdout.write(`Adopted ${filePath} into ${workflowId}.\n`);
 }
 
@@ -261,15 +282,20 @@ async function stampProvenance(filePath, promptFile, sourceText) {
   const input = await readFile(filePath);
   const entries = generationProvenanceEntries(input);
   if (promptFile) {
-    entries.set('Generation Prompt', await readFile(promptFile, 'utf8'));
-    entries.set(
-      'Generation Source',
-      `Repository source record ${path.relative(process.cwd(), promptFile)}.`,
-    );
+    const prompt = await readFile(promptFile, 'utf8');
+    if (!prompt.trim()) {
+      throw new Error(`${promptFile}: generation prompt is empty.`);
+    }
+    entries.delete('Generation Prompt');
+    entries.set('Generation Source', privatePromptProvenance);
   }
-  if (sourceText) entries.set('Generation Source', sourceText);
+  const removedKeys = new Set(['Generation Prompt', 'Generation Source']);
+  if (sourceText) {
+    entries.delete('Generation Prompt');
+    entries.set('Generation Source', sourceText);
+  }
   assertGenerationProvenance(filePath, entries);
-  await stampMetadata(filePath, entries, false);
+  await stampMetadata(filePath, entries, false, removedKeys);
   process.stdout.write(`Recorded generation provenance for ${filePath}.\n`);
 }
 
@@ -285,14 +311,15 @@ async function convert(inputPath, outputPath, promptFile) {
   const input = await readFile(inputPath);
   const provenanceEntries = generationProvenanceEntries(input);
   if (promptFile) {
-    provenanceEntries.set(
-      'Generation Prompt',
-      await readFile(promptFile, 'utf8'),
-    );
-    provenanceEntries.set(
-      'Generation Source',
-      `Green chroma-key workflow converted repository source ${path.relative(process.cwd(), promptFile)}.`,
-    );
+    const prompt = await readFile(promptFile, 'utf8');
+    if (!prompt.trim()) {
+      throw new Error(`${promptFile}: generation prompt is empty.`);
+    }
+    provenanceEntries.delete('Generation Prompt');
+    provenanceEntries.set('Generation Source', privatePromptProvenance);
+  } else if (provenanceEntries.has('Generation Prompt')) {
+    provenanceEntries.delete('Generation Prompt');
+    provenanceEntries.set('Generation Source', privatePromptProvenance);
   }
   assertGenerationProvenance(inputPath, provenanceEntries);
   const browser = await chromium.launch({ headless: true });
@@ -596,7 +623,7 @@ async function convert(inputPath, outputPath, promptFile) {
   );
 }
 
-async function convertTree(inputRoot, outputRoot) {
+async function convertTree(inputRoot, outputRoot, promptRoot) {
   if (path.resolve(inputRoot) === path.resolve(outputRoot)) {
     throw new Error('Green source and output roots must be different.');
   }
@@ -607,8 +634,9 @@ async function convertTree(inputRoot, outputRoot) {
   const jobs = inputFiles.map((inputPath) => {
     const relativePath = path.relative(inputRoot, inputPath);
     const outputPath = path.join(outputRoot, relativePath);
-    const parsedPath = path.parse(inputPath);
+    const parsedPath = path.parse(relativePath);
     const promptPath = path.join(
+      promptRoot ?? inputRoot,
       parsedPath.dir,
       `${parsedPath.name}.prompt.txt`,
     );
@@ -632,7 +660,15 @@ async function validate(rootPath) {
     const metadata = internationalTextEntries(
       await readFile(imageFacts.filePath),
     );
-    assertGenerationProvenance(imageFacts.filePath, metadata);
+    assertGenerationSource(imageFacts.filePath, metadata);
+    if (
+      imageFacts.filePath.split(path.sep).includes('characters') &&
+      metadata.get('Generation Prompt')?.trim()
+    ) {
+      throw new Error(
+        `${imageFacts.filePath}: exact character Generation Prompt must stay in the research folder.`,
+      );
+    }
     if (imageFacts.transparentPixels === 0) continue;
     transparentAssetCount += 1;
     assertTransparentAsset(imageFacts);
@@ -687,6 +723,13 @@ if (sourceIndex >= 0) {
   sourceText = arguments_[sourceIndex + 1];
   arguments_.splice(sourceIndex, 2);
 }
+const promptRootIndex = arguments_.indexOf('--prompt-root');
+let promptRoot;
+if (promptRootIndex >= 0) {
+  promptRoot = path.resolve(arguments_[promptRootIndex + 1]);
+  arguments_.splice(promptRootIndex, 2);
+  await stat(promptRoot);
+}
 
 if (
   command === 'provenance' &&
@@ -703,12 +746,16 @@ if (
     promptFile,
   );
 } else if (command === 'convert-tree' && arguments_.length === 2) {
-  await convertTree(path.resolve(arguments_[0]), path.resolve(arguments_[1]));
+  await convertTree(
+    path.resolve(arguments_[0]),
+    path.resolve(arguments_[1]),
+    promptRoot,
+  );
 } else if (command === 'validate' && arguments_.length <= 1) {
   await validate(path.resolve(arguments_[0] ?? 'src/assets'));
 } else {
   process.stderr.write(
-    'Usage: green-chroma-key.mjs provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> | validate [asset-root]\n',
+    'Usage: green-chroma-key.mjs provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> [--prompt-root <prompt-root>] | validate [asset-root]\n',
   );
   process.exitCode = 2;
 }

@@ -89,10 +89,12 @@ and copyrighted broadcast graphics.
   another character or tier. There is no common comeback pool.
 - Shipped player-visible prose, editorial rationale, and source notes do not
   name or identify a real person. Public institutions and historical events
-  remain permitted. An embedded asset-generation prompt can name a public
-  figure only when the product owner explicitly approves that figure as the
-  visual reference for a portrait skin. This provenance is not player-visible.
-  The skin does not change the fictional character identity or prose.
+  remain permitted. A portrait skin can use a public-figure likeness as a
+  visual-only parody only when the product owner explicitly approves it. The
+  research folder is the only location for the reference identity, links, and
+  approval record. Shipped prompts, source notes, and asset metadata use a
+  generic source description and do not name or link the person. The skin does
+  not change the fictional character identity or prose.
 - Shipped prose, specifications, editorial rationale, source notes, and asset
   metadata do not use a real political party's name, acronym, or logo. Allowed
   generic labels include `The Conservative Party`, `The Peasant's Party`,

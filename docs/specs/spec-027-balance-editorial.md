@@ -27,10 +27,12 @@ The review confirms that each character identity and its prose are fictional.
 It rejects named or identifiable real-person comparisons, targets, source
 notes, and asset references. A portrait skin can use a public-figure likeness
 as a visual-only parody when the product owner explicitly approves it.
-Non-player-visible generation provenance can name that reference person. This
-exception does not permit real-person allegations or player-visible names. The
-review also rejects real political party names, acronyms, and logos. It permits
-generic ideological or social-family labels.
+The research folder is the only location for the reference identity, links,
+and approval record. Shipped generation provenance uses a generic source
+description and does not name or link that person. This exception does not
+permit real-person allegations or player-visible names. The review also rejects
+real political party names, acronyms, and logos. It permits generic ideological
+or social-family labels.
 
 Simulation reports seed, workload, matchups, difficulties, win rates, resolved
 round counts, rule-event rates, failures, and environment. Automatic development
