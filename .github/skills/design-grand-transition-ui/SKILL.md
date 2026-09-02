@@ -46,12 +46,16 @@ evidence of tone or behavior.
 The following requirements come from the approved specification. They constrain
 the Impeccable brief. They are not a complete design system.
 
-Create an original illustrated political-theatre interface that combines
-editorial caricature, stage scenery, post-socialist broadcast graphics,
-bureaucratic materials, and restrained modern overlays. Keep phrase cards and
-tactical state visually plain, legible, and dominant. Do not use generic dashboards,
-software-as-a-service cards, stock game frames, copied layouts, and remote
-assets. Do not use visual effects that hide state changes.
+Create an original political-theatre interface whose representational raster
+art uses one flat cel-shaded editorial-cartoon language. Use bold dark contours,
+large flat color shapes, two or three hard-edged value levels, deliberate
+caricature, simplified materials, and restrained print texture across
+characters, moderators, scenes, furniture, fixtures, and props. Reject painted
+comic-book, painterly semi-realistic, realistic concept-art, photographic,
+three-dimensional-render, and mixed-style output. Keep phrase cards and
+tactical state visually plain, legible, and dominant. Do not use generic
+dashboards, software-as-a-service cards, stock game frames, copied layouts, and
+remote assets. Do not use visual effects that hide state changes.
 
 Use Lit only for views. Screens use light DOM. Components receive immutable
 snapshots and emit typed commands. Keep controls, phrases, logs, and score

@@ -95,9 +95,10 @@ generation starts.
 
 Use one locked art direction for the complete baseline. Review all regenerated
 assets together. A successful isolated portrait or scene does not establish
-visual consistency. The complete set must use one painterly language, edge
-treatment, material simplification, lighting logic, proportion system, and
-level of comic exaggeration.
+visual consistency. The complete set must use one flat cel-shaded cartoon
+language, contour system, shape construction, value-step limit, material
+simplification, lighting logic, proportion system, texture density, and level
+of exaggeration.
 
 Each of the four Milestone 023 vertical-slice characters has one default skin
 and one through eight alternate skins. One archetype has no more than eight
@@ -113,30 +114,66 @@ identity and phrase content.
 
 ## Overall art direction
 
-The art combines editorial caricature, painted theatre, late-2000s
-post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
-modern overlays. Use an integrated arena composition. One authored scene fills
-the play field. Opponents face each other at the sides. Status frames the top,
-and speech spans the confrontation. Sentence construction owns the center.
+The only approved direction for generated representational raster art is a flat
+cel-shaded editorial cartoon. It combines exaggerated political caricature,
+theatrical staging, late-2000s post-socialist broadcast graphics, bureaucracy,
+decayed luxury, and restrained modern overlays. Use an integrated arena
+composition. One authored scene fills the play field. Opponents face each other
+at the sides. Status frames the top, and speech spans the confrontation.
+Sentence construction owns the center.
+
+This direction supports immediate video-game readability and reduces reliance
+on realistic facial and material detail that can expose generated artifacts or
+create an accidental close likeness. It does not replace originality,
+reference approval, license, provenance, or editorial review requirements.
 
 Secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.
 
-Use one hand-painted editorial-caricature language for playable portraits,
-fixed moderators, studio architecture, furniture, lighting fixtures, and props.
-Use visible painterly brushwork, simplified material detail, expressive edges,
-and restrained comic exaggeration. Do not combine these illustrated portraits
-with photographic, stock-photo, or hyper-realistic scene layers. A scene can
-keep its own era, materials, palette, and lighting while it remains visibly part
-of the same illustrated world.
+Use the same flat cel-shaded construction for every character, skin, state,
+robot, fixed moderator, scene, foreground plate, architecture element,
+furniture item, lighting fixture, and prop. No representational raster can use a
+secondary or blended rendering style.
+
+Construct each asset with these mandatory rules:
+
+- Use bold dark contours around the main silhouette and important internal
+  forms. Keep one consistent relative contour weight across people, robots,
+  furniture, props, and architecture.
+- Build forms from large, clean, flat color shapes. Each local color can use a
+  base value, one hard-edged shadow value, and one optional hard-edged highlight
+  value. Do not use soft modeled transitions.
+- Use deliberate caricature. Exaggerate selected head, face, body, posture,
+  gesture, prop, furniture, and architectural shapes while preserving coherent
+  human or mechanical anatomy, functional perspective, and readable occlusion.
+- Show material differences through silhouette, color, contour, and limited
+  flat pattern. Do not simulate skin pores, fabric weave, polished metal,
+  glossy plastic, marble depth, or other microtexture.
+- Express light with designed hard-edged shadow and highlight shapes. Do not use
+  photographic light falloff, soft airbrushing, bloom, depth of field,
+  volumetric light, or ray-traced reflection.
+- A sparse low-contrast paper or screen-print texture can cover large shapes.
+  It must not model volume, imitate realistic material, obscure contours, or
+  create generated clutter.
+
+Painted comic-book rendering, painterly semi-realism, realistic concept art,
+photographic or stock-photo rendering, hyper-realism, and
+three-dimensional-render styling are prohibited. Also reject soft blended
+shading, glossy model-like surfaces, realistic portrait finish, inconsistent
+outline weight, tiny decorative noise, accidental symbols, malformed anatomy,
+and nonsensical construction detail.
+
+A scene can keep its own era, palette, architecture, and material identity
+through designed shapes and color while it remains visibly part of the same
+flat cartoon world as its characters.
 
 This structure is adapted from user-supplied original-game references. It is a
-composition and interaction precedent, not a parity target. Keep the painted
+composition and interaction precedent, not a parity target. Keep the cartoon
 stage as authored art and rebuild every game value, phrase, and control as HTML
 components. Use original characters and product truth. Do not copy another
 game's art, brands, names, exact ornament, fonts, proportions, unsupported
-actions, or rasterized interface text. Do not use generic dashboard cards and stock
-fantasy frames.
+actions, or rasterized interface text. Do not use generic dashboard cards and
+stock fantasy frames.
 
 Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
@@ -148,6 +185,13 @@ media, civic, or bureaucratic archetype before the nameplate is visible. This
 is a mandatory direction for all characters and all skins. Do not use a generic
 politician, generic presenter, generic official, generic robot, or placeholder
 portrait.
+
+Character exaggeration must be intentional and stable. Each private study names
+the features that become larger, smaller, sharper, rounder, longer, shorter, or
+more angular. Do not enlarge all features equally. Do not preserve realistic
+portrait proportions by default. Alternate skins apply the same degree of
+caricature and the same contour, value-step, texture, and shape rules as the
+default skin.
 
 Define each character through one coherent set of visual decisions:
 
@@ -184,6 +228,22 @@ prompts, source notes, and asset metadata use fictional names and generic source
 descriptions. They do not include real-person names or character-reference
 links. Research can inform original, transformative work, but it does not
 permit copying one photograph, artwork, logo, or exact pose.
+
+### Scene art direction
+
+Each scene uses the same flat cel-shaded cartoon construction as the playable
+characters. Simplify and deliberately exaggerate architecture, curtains,
+screens, platforms, desks, chairs, lamps, microphones, bottles, and decorative
+objects. Preserve one coherent camera, perspective system, floor plane, human
+scale, and layer boundary. Functional perspective does not permit realistic
+rendering.
+
+Every fixed moderator follows the same human caricature, contour, flat-color,
+value-step, and texture rules as playable human characters. Foreground plates
+must match their back scenes in contour weight, palette, hard-edged lighting,
+shape language, and texture density. A realistic moderator, glossy desk,
+photographic prop, or softly rendered background fails the complete scene
+package.
 
 ### Vertical-slice integration
 
@@ -413,10 +473,20 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 - **AC-023-15:** No current raster is a generation, tracing, editing,
   compositing, identity, composition, or style input for its replacement. A
   side-by-side review of the complete regenerated baseline confirms one shared
-  painterly language, edge treatment, material simplification, lighting logic,
-  proportion system, and comic-exaggeration level. Each archetype package
-  contains its regenerated default and every baseline alternate. No package
-  mixes old and regenerated skins.
+  flat cel-shaded cartoon language, contour system, flat-color construction,
+  two-or-three-level value system, hard-edged lighting, material
+  simplification, proportion system, texture density, and exaggeration level.
+  Each archetype package contains its regenerated default and every baseline
+  alternate. No package mixes old and regenerated skins.
+- **AC-023-16:** A complete inventory review inspects all 29 character PNG files
+  and all four scene PNG files individually at source size and together in
+  representative stage compositions. It records pass or fail for contour
+  weight, flat color shapes, value-step count, hard-edged lighting, deliberate
+  exaggeration, simplified material treatment, and restrained texture. Any
+  painted comic-book, painterly semi-realistic, realistic concept-art,
+  photographic, hyper-realistic, three-dimensional-render, or mixed-style
+  result fails the milestone. A sample or selected subset does not satisfy this
+  review.
 
 ## Impeccable UI validation
 
@@ -429,8 +499,10 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 Validation proves formats, sizes, crops, ownership, and licenses. Browser tests
 show correct variants without layout shift at target viewports. Manual evidence
-reviews the approved visual direction and motion modes. `npm run ci` passes.
-Stop before the remaining roster, audio, speech, or presentation reactions.
+reviews every baseline asset and representative complete stage compositions
+against the approved flat cel-shaded direction. It also reviews the motion
+modes. `npm run ci` passes. Stop before the remaining roster, audio, speech, or
+presentation reactions.
 
 ## Reference
 

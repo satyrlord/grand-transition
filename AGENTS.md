@@ -221,5 +221,10 @@ variants and metadata through the approved Sharp tool. Keep controls and
 required text outside Canvas. Deploy only `dist/` through GitHub Actions after
 `npm run ci`. Preserve the Vite `/grand-transition/` base path.
 
+All generated representational raster art must follow the strict flat
+cel-shaded editorial-cartoon direction in Milestone 023. Do not generate
+painted comic-book, painterly semi-realistic, realistic concept-art,
+photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.
+
 Text-to-speech is optional and must never reveal hidden hotseat content.
 <!-- codex-workflow-project-local-instructions-end -->

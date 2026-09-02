@@ -33,11 +33,15 @@ their final phrase, skin, state, provenance, and audio contracts.
 ## Required scenes
 
 Milestone 026 owns the six stable scene identities and phrase themes. Every
-final scene package uses the same hand-painted editorial-caricature language as
+final scene package uses the same flat cel-shaded editorial-cartoon language as
 the playable portraits. This rule applies to fixed moderators, architecture,
-furniture, lights, bottles, microphones, and all other props. Each scene keeps
-its distinct era and materials. No scene layer uses photographic or hyper-
-realistic rendering.
+furniture, lights, bottles, microphones, and all other props. Use the same
+contour weight, flat color construction, two-or-three-level hard-edged shading,
+shape exaggeration, and restrained print texture across each complete package.
+Each scene keeps its distinct era and materials through silhouette, color, and
+limited pattern. Do not use painted comic-book, painterly semi-realistic,
+realistic concept-art, photographic, hyper-realistic, or
+three-dimensional-render output.
 
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
   heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
@@ -51,9 +55,10 @@ realistic rendering.
   and national salvation.
 - **Modern Debate Studio:** A contemporary presidential-style television set
   uses broad blue video panels and red and blue vertical accents. It has
-  overhead softboxes, a practical broadcast truss, and a reflective stage
-  floor. It has two angular standing desks. Each desk has one plain tap-water bottle and one
-  distinct sparkling-water bottle. The scene has no microphones.
+  overhead softboxes, a practical broadcast truss, and a dark stage floor with
+  sparse hard-edged flat reflection shapes. It has two angular standing desks.
+  Each desk has one plain tap-water bottle and one distinct sparkling-water
+  bottle. The scene has no microphones.
 
   One fixed
   fictional male moderator sits with crossed legs in a beige studio chair at
