@@ -99,6 +99,14 @@ Keep decorative rasters pointer-inert. Preserve swappable character portraits.
 Do not bake playable characters into a scene unless an approved specification
 requires it.
 
+Preserve the Milestone 023 flat cel-shaded editorial-cartoon direction across
+the complete scene package. Use the same bold contour weight, flat color
+construction, two-or-three-level hard-edged shading, shape exaggeration, and
+restrained print texture for characters, moderators, architecture, furniture,
+fixtures, and props. Reject painted comic-book, painterly semi-realistic,
+realistic concept-art, photographic, three-dimensional-render, and mixed-style
+repairs.
+
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
 Use flat `#00FF00` chroma green as the intermediate matte for every transparent
 scene and character asset. Do not approve chroma-key green in transparent art.

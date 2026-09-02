@@ -14,9 +14,12 @@ Use one transparent portrait for each selected skin. Use one transparent
 foreground plate with two tall standing desks. The back scene
 contains no playable character. Each raster has embedded generation provenance.
 
-The moderator, studio, desks, and props use the same hand-painted editorial-
-caricature language as the playable portraits. Do not combine illustrated
-portraits with photographic or hyper-realistic scene layers.
+The moderator, studio, desks, props, and playable portraits use one flat
+cel-shaded editorial-cartoon language. Use bold controlled contours, large flat
+color shapes, and two or three hard-edged value levels. Do not combine
+cartoon characters with painted comic-book, painterly semi-realistic, realistic
+concept-art, photographic, hyper-realistic, or three-dimensional-render scene
+layers.
 
 Keep all names, values, phrases, states, and controls in HTML. Show the
 board, private hand, sentence, turn timer, Pride, comeback, hand
@@ -284,8 +287,8 @@ timer-refill abuse.
   selection with deterministic state.
 - **AC-016-07:** Production-browser screenshots at 1024 by 720, 1280 by 720,
   1400 by 1050, and 1920 by 1080 show the approved integrated arena hierarchy.
-  The painted raster contains no interface truth, and every visible game value
-  remains testable.
+  The decorative raster contains no interface truth, and every visible game
+  value remains testable.
 - **AC-016-08:** Exactly one player strip shows “Your turn.” Its portrait and
   Pride bar remain brighter than the fully opaque waiting side. The centered
   top-center timer and Pause control remain visible. The

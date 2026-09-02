@@ -58,12 +58,13 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented content includes Zod 4 schemas and an English game-locale
   bundle. It also includes 19 original fictional characters, 18 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
-  default portraits. The four vertical-slice characters, Retiring Cassandra,
-  and Midnight Sensationalist also have alternate skins. The Retiring Cassandra
-  statesman skin and the approved Midnight Sensationalist likeness skins are
-  visual-only exceptions that do not change game identity or prose.
+  default portraits. Eight archetypes have ten alternate skins in total. Skins
+  are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and one through eight
   alternate skins for one archetype.
+  Final representational raster art uses one strict flat cel-shaded editorial-
+  cartoon style across characters, moderators, scenes, furniture, fixtures,
+  and props.
   Two scenes use layered debate studios with fixed fictional moderators
   and foreground desk plates. Four playable foundation scenes use one neutral
   local fallback until final scene production.
@@ -88,6 +89,9 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 The approved name is "Grand Transition: A Verbal Republic." The subject is
 fictional political and social satire. It must not copy real brands, protected
 works, or unsupported claims about real people.
+The approved final image language is a flat cel-shaded editorial cartoon.
+Painted comic-book, painterly semi-realistic, realistic concept-art,
+photographic, and three-dimensional-render output is outside the brand.
 
 ## Evidence on Hand
 

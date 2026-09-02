@@ -35,16 +35,17 @@ Milestones 023 through 025, 027 through 029, and 031 remain incomplete.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
-default local portrait. The four vertical-slice characters, Retiring Cassandra,
-and Midnight Sensationalist have alternate skins. The Retiring Cassandra
-statesman skin and the approved Midnight Sensationalist likeness skins are
-visual-only exceptions that do not change game identity or prose. The content
-includes two fictional layered debate studios, four playable
+default local portrait. Eight archetypes have ten alternate skins in total.
+Skins are visual-only variations that do not change game identity or prose. The
+content includes two fictional layered debate studios, four playable
 foundation scenes with a neutral local fallback, and one English game-locale
 bundle.
 
 The final asset contract permits one default skin and one through eight
 alternate skins for one archetype.
+All final character and scene imagery uses one strict flat cel-shaded editorial-
+cartoon style. Painted comic-book, painterly semi-realistic, realistic
+concept-art, photographic, and three-dimensional-render styles are prohibited.
 
 The implemented rules include extended Hollywood Roast grammar, agreement,
 compound subjects and objects, endings, modifiers, incomplete states, and

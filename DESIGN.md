@@ -168,12 +168,11 @@ same stage. They do not form a decorative scene above a separate dashboard.
 Each character is human or fully mechanical. Animal words in names or titles
 are metaphorical political labels only. The playable foundation uses 18
 original human editorial caricatures and one original robot caricature. Each
-can occupy either player position. Four vertical-slice characters and Retiring
-Cassandra have alternate skins. The Retiring Cassandra statesman skin is an
-approved visual-only exception that does not change game identity or prose; the
-other foundation portraits are interim. Later character art must preserve the
-declared species and cannot use animal or hybrid anatomy. One archetype can
-have one default skin and no more than eight alternate skins.
+can occupy either player position. Eight archetypes have ten alternate skins in
+total. A skin is a visual-only variation that does not change game identity or
+prose. Later character art must preserve the declared species and cannot use
+animal or hybrid anatomy. One archetype can have one default skin and no more
+than eight alternate skins.
 
 ### World
 
@@ -183,6 +182,22 @@ television-blue player identities, warm speech records, and small grammar
 colors. The scene, characters, and controls form one strong silhouette.
 Ornament supports the event, but it never owns a value or control. Every person
 shown in this world is human. A fully mechanical character is visibly a robot.
+
+### Image language
+
+All generated representational raster art uses one flat cel-shaded editorial-
+cartoon language. Characters, skins, states, robots, fixed moderators, scene
+architecture, furniture, fixtures, and props use bold dark contours, large flat
+color shapes, and two or three hard-edged value levels. Exaggeration is
+deliberate. Materials read through silhouette, color, contour, and limited flat
+pattern instead of realistic surface detail.
+
+Light uses designed hard-edged shadow and highlight shapes. A restrained paper
+or screen-print texture can sit over large shapes without modeling volume.
+Painted comic-book, painterly semi-realistic, realistic concept-art,
+photographic, hyper-realistic, and three-dimensional-render styles are not part
+of this system. Do not use soft blended shading, photographic reflections,
+glossy model surfaces, realistic portrait finish, or mixed rendering styles.
 
 ### First viewport
 
@@ -279,9 +294,11 @@ record remains valid after the removal of those temporary files.
 
 - A Curtain Call title, a two-sided contestant register, and contrasting
   fictional municipal and modern broadcast match arenas.
-- One hand-painted editorial-caricature language across playable portraits,
+- One flat cel-shaded editorial-cartoon language across playable portraits,
   fixed moderators, studio architecture, furniture, and props. Do not combine
-  illustrated characters with photographic or hyper-realistic scene layers.
+  cartoon characters with painted comic-book, painterly semi-realistic,
+  realistic concept-art, photographic, or three-dimensional-render scene
+  layers.
 - Nineteen swappable player caricatures, 18 human and one fully mechanical, and
   two fixed fictional human moderators, one per layered studio, all with clear
   faces or face panels.
@@ -520,17 +537,19 @@ full-height faux-marble columns frame that studio.
 
 The Modern Debate Studio uses
 broad blue video panels, red and blue vertical accents, visible softboxes, a
-practical truss, and a reflective stage floor. Its bespectacled male moderator
-sits with crossed legs in a beige studio chair at the mirrored inner-right
-position and faces the camera. His normal human head has a slightly tall
-forehead and comically small facial features. No back image contains a playable
-character.
+practical truss, and a dark stage floor with sparse hard-edged flat reflection
+shapes. Its bespectacled male moderator sits with crossed legs in a beige studio
+chair at the mirrored inner-right position and faces the camera. His normal
+human head has a slightly tall forehead and comically small facial features. No
+back image contains a playable character.
 
-Every back scene and foreground plate uses the same visible painterly brushwork,
-simplified material detail, expressive contour, and restrained comic
-exaggeration as the playable portraits. Preserve distinct historical materials
-and scene identities, but do not use photographic people, furniture, bottles,
-lamps, floors, or architecture.
+Every back scene and foreground plate uses the same bold contour weight, flat
+color construction, hard-edged two-or-three-level shading, deliberate shape
+exaggeration, and restrained print texture as the playable portraits. Preserve
+distinct historical materials and scene identities through silhouette, color,
+and limited pattern. Do not use painterly, semi-realistic, photographic, or
+three-dimensional-render people, furniture, bottles, lamps, floors, or
+architecture.
 
 Separate transparent portraits render the two selected characters over it and
 can exchange sides or mirror without changing the scene. A transparent desk

@@ -29,6 +29,10 @@ Milestone 023 or Milestone 031 art. New scenes can use the neutral local scene
 fallback until their final layered packages exist. The fallback contains no
 character, scene-specific claim, remote request, or rasterized interface text.
 
+Any new generated interim portrait or scene follows the Milestone 023 flat
+cel-shaded editorial-cartoon direction. Interim status can reduce state count,
+variant count, and finish depth. It cannot use a different rendering style.
+
 ## Required roster
 
 The stable roster order, identifier, weakness tags, and play style are:

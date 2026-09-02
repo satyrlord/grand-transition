@@ -31,6 +31,12 @@ complete an approved specification.
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression. The sourced English
   slogan form that AC-005-07 names is the only phrase exception.
+- All generated representational raster art uses the strict flat cel-shaded
+  editorial-cartoon direction that Milestone 023 owns. This rule applies to
+  every character, skin, state, moderator, scene, foreground plate,
+  architecture element, furniture item, fixture, and prop. Painted comic-book,
+  painterly semi-realistic, realistic concept-art, photographic, and
+  three-dimensional-render styles are prohibited.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
   metadata. Public artifacts do not declare a real person as a visual or
@@ -239,7 +245,9 @@ source-only review does not satisfy them.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 12. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-    Budget: 10. One scene and four characters use validated final art.
+    Budget: 10. The fixed 29-character and four-scene raster baseline is
+    regenerated in one strict flat cel-shaded cartoon style. Four characters
+    and one scene also receive their complete state and motion packages.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
     private speech have safe controls.
 25. [Match presentation reactions](spec-025-match-presentation-reactions.md).
