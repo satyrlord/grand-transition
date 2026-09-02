@@ -242,7 +242,9 @@ describe('soft green chroma-key conversion', () => {
     );
     try {
       const imagePath = path.join(fixtureRoot, 'opaque-source.png');
+      const promptPath = path.join(fixtureRoot, 'opaque-source.prompt.txt');
       await writePng(imagePath, 2, 2, rgbaCanvas(2, 2, [120, 80, 40, 255]));
+      await writeFile(promptPath, 'Private source prompt fixture.\n', 'utf8');
 
       let failure: { stderr?: string } | undefined;
       try {
@@ -255,8 +257,25 @@ describe('soft green chroma-key conversion', () => {
         failure = error as { stderr?: string };
       }
       expect(failure?.stderr).toContain(
-        'missing embedded Generation Prompt or Generation Source metadata',
+        'missing embedded Generation Source metadata',
       );
+
+      await execFileAsync(process.execPath, [
+        converterPath,
+        'provenance',
+        imagePath,
+        '--prompt-file',
+        promptPath,
+      ]);
+      const privatePromptResult = await readFile(imagePath);
+      expect(
+        privatePromptResult.includes(
+          Buffer.from('Private source prompt fixture.'),
+        ),
+      ).toBe(false);
+      expect(
+        privatePromptResult.includes(Buffer.from('Private prompt record')),
+      ).toBe(true);
 
       await execFileAsync(process.execPath, [
         converterPath,
@@ -265,6 +284,13 @@ describe('soft green chroma-key conversion', () => {
         '--source',
         'Synthetic opaque provenance fixture.',
       ]);
+      const sanitized = await readFile(imagePath);
+      expect(
+        sanitized.includes(Buffer.from('Private source prompt fixture.')),
+      ).toBe(false);
+      expect(
+        sanitized.includes(Buffer.from('Synthetic opaque provenance fixture.')),
+      ).toBe(true);
       await expect(
         execFileAsync(process.execPath, [
           converterPath,
@@ -283,6 +309,7 @@ describe('soft green chroma-key conversion', () => {
     );
     try {
       const sourceRoot = path.join(fixtureRoot, 'green-masters');
+      const promptRoot = path.join(fixtureRoot, 'private-prompts');
       const outputRoot = path.join(fixtureRoot, 'converted');
       const inputDirectory = path.join(sourceRoot, 'characters');
       const inputPath = path.join(inputDirectory, 'binary-source.png');
@@ -292,6 +319,7 @@ describe('soft green chroma-key conversion', () => {
         'binary-source.png',
       );
       await mkdir(inputDirectory, { recursive: true });
+      await mkdir(path.join(promptRoot, 'characters'), { recursive: true });
       const pixels = rgbaCanvas(7, 7, [24, 232, 32, 255]);
       for (let y = 2; y <= 4; y += 1) {
         for (let x = 2; x <= 4; x += 1) {
@@ -300,7 +328,7 @@ describe('soft green chroma-key conversion', () => {
       }
       await writePng(inputPath, 7, 7, pixels);
       await writeFile(
-        path.join(inputDirectory, 'binary-source.prompt.txt'),
+        path.join(promptRoot, 'characters', 'binary-source.prompt.txt'),
         'Synthetic binary green-matte regression fixture.\n',
         'utf8',
       );
@@ -310,6 +338,8 @@ describe('soft green chroma-key conversion', () => {
         'convert-tree',
         sourceRoot,
         outputRoot,
+        '--prompt-root',
+        promptRoot,
       ]);
 
       const output = await readPixels(outputPath);
@@ -319,6 +349,15 @@ describe('soft green chroma-key conversion', () => {
       expectPixelNear(edge, [180, 40, 30, edge[3]]);
       expect(getPixel(output, 7, 3, 3)).toEqual([180, 40, 30, 255]);
       expect(getPixel(output, 7, 0, 0)).toEqual([0, 0, 0, 0]);
+      const outputPng = await readFile(outputPath);
+      expect(
+        outputPng.includes(
+          Buffer.from('Synthetic binary green-matte regression fixture.'),
+        ),
+      ).toBe(false);
+      expect(outputPng.includes(Buffer.from('Private prompt record'))).toBe(
+        true,
+      );
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }

@@ -62,6 +62,8 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   and Midnight Sensationalist also have alternate skins. The Retiring Cassandra
   statesman skin and the approved Midnight Sensationalist likeness skins are
   visual-only exceptions that do not change game identity or prose.
+  The final asset contract permits one default skin and one through eight
+  alternate skins for one archetype.
   Two scenes use layered debate studios with fixed fictional moderators
   and foreground desk plates. Four playable foundation scenes use one neutral
   local fallback until final scene production.
@@ -91,9 +93,9 @@ works, or unsupported claims about real people.
 
 The approved specifications under `docs/specs/` are the only product and
 implementation authority. Two untracked original-game screenshots under
-`tmp/` are composition and interaction references only. They are not product
-assets or layout specifications. No final production art, testimonials,
-customer claims, or benchmarks exist.
+the temporary folder are composition and interaction references only. They are
+not product assets or layout specifications. No final production art,
+testimonials, customer claims, or benchmarks exist.
 
 ## Product Principles
 

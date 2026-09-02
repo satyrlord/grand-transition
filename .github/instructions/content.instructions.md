@@ -1,5 +1,5 @@
 ---
-applyTo: 'src/game-content.ts,src/content/**,src/localization/**,src/assets/**,art/**,tests/unit/content-schemas.test.ts,tests/unit/node-content-discovery.test.ts,e2e/content-lifecycle.spec.ts,tools/load-game-content.ts,tools/validate-scaffold.mjs'
+applyTo: 'src/game-content.ts,src/content/**,src/localization/**,src/assets/**,tests/unit/content-schemas.test.ts,tests/unit/node-content-discovery.test.ts,e2e/content-lifecycle.spec.ts,tools/load-game-content.ts,tools/validate-scaffold.mjs'
 ---
 
 # Content and asset instructions

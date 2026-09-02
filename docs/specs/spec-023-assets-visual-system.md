@@ -11,8 +11,9 @@ Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Produce original final-quality art for four characters and one
 scene. Add core reactions, ambience, and transitions.
 
-Each of the four Milestone 023 vertical-slice characters has a default skin and
-at least one alternate skin.
+Each of the four Milestone 023 vertical-slice characters has one default skin
+and one through eight alternate skins. One archetype has no more than eight
+alternate skins.
 Default portraits use `<character-id>.png`. Alternate portraits use
 `<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
 this filename convention. It does not use a TypeScript skin registry.
@@ -21,6 +22,8 @@ The default skin is first. The roster uses only the default skin.
 
 Setup stages and matches use the selected skin. All skins for one character share its character
 identity and phrase content.
+
+## Overall art direction
 
 The art combines editorial caricature, painted theatre, late-2000s
 post-socialist broadcast graphics, bureaucracy, decayed luxury, and restrained
@@ -50,11 +53,50 @@ fantasy frames.
 Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
+### Character art direction
+
+Every playable character must communicate one distinct fictional political,
+media, civic, or bureaucratic archetype before the nameplate is visible. This
+is a mandatory direction for all characters and all skins. Do not use a generic
+politician, generic presenter, generic official, generic robot, or placeholder
+portrait.
+
+Define each character through one coherent set of visual decisions:
+
+- a dominant full-body silhouette and body proportion;
+- a distinct head shape, face design, hair design, or mechanical face system;
+- role-specific clothing or chassis construction;
+- a signature posture and gesture rhythm;
+- one meaningful prop, or an explicit no-prop rule; and
+- one character accent color within the shared institutional palette.
+
+The silhouette, posture, face system, and prop logic must remain legible at the
+smallest supported match size. At least three of these traits must distinguish
+the character from every other character with a similar social role. Do not
+depend on one color or one handheld object for recognition.
+
+The default skin establishes the archetype. An alternate human skin can change
+gender, age, hair, and clothing, but it must preserve the archetype's role,
+temperament, gesture rhythm, and prop logic. An alternate robot skin can change
+the chassis, but it must preserve the same administrative function, expression
+system, temperament, and prop logic. Every pose and expression must look like
+the same fictional character under a new game condition.
+
 Each character is human or fully mechanical. Animal words in names, titles,
 insults, or metaphors must not produce animal anatomy. Human character masters
 and runtime variants reject animal heads, ears, muzzles, beaks, feathers,
 tails, wings, paws, fur, scales, and human-animal hybrids. Robot characters
 reject human, animal, and hybrid anatomy.
+
+Character-specific visual descriptions, real-world references, source links,
+and private approval records belong only in the Git-ignored research folder.
+The research folder is not a product contract and never ships. Public
+specifications, shipped prompts, source notes, and asset metadata use fictional
+names and generic source descriptions. They do not include real-person names or
+character-reference links. Research can inform original, transformative work,
+but it does not permit copying one photograph, artwork, logo, or exact pose.
+
+### Vertical-slice integration
 
 The pre-pipeline match slice uses a rendered municipal studio with one fixed
 fictional moderator. It uses transparent interim portraits for the Red-Folded
@@ -68,16 +110,10 @@ changing the selected-character contract.
 
 Interim portrait planes use a tall two-to-three canvas and continue below the
 foreground desks. Their lower raster edges must not appear in the composite.
-The Black Sea Captain default skin wears a warm-cream naval officer uniform and
-cap and holds one unbranded cigar. His skins have no wheel or helm prop. His
-alternate female skin wears a fitted navy-blue formal suit with restrained
-nautical details.
-
-The Thunder Tribune keeps his full-body pose, raised hand, papers, and
-expression. He is tall and heavyset, with a broad adult body, dark side-parted
-hair, and large clear gold-rimmed eyeglasses. On the 1024 by 1536 interim
-plane, his opaque full-body silhouette spans 95 through 98 percent of the
-canvas height. The portrait must not use a fixed face crop or fixed head width.
+Each portrait follows the shared character art direction and its private study.
+On a 1024 by 1536 interim plane, the opaque full-body silhouette spans 95
+through 98 percent of the canvas height. A portrait must not use a fixed face
+crop or fixed head width.
 
 The redesign must select exactly four self-hosted sans-serif font families. The
 present Barlow Condensed, Cormorant SC, Georgia, and system-monospace
@@ -143,11 +179,13 @@ Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, and fallback proof.
 
-Keep lossless masters ignored or external. Sharp generates committed AV1 Image
-File Format (AVIF) and WebP runtime variants. The manifest records dimensions,
-crop, owner, source, and license. Import through the manifest. Load setup art
-first and only the selected match package next. Use self-hosted licensed Web
-Open Font Format 2 (WOFF2) fonts with metric fallbacks.
+Keep temporary renders and lossless working rasters in the temporary folder.
+Keep private character descriptions, references, and custom prompts in the
+research folder. Sharp generates committed AV1 Image File Format (AVIF) and
+WebP runtime variants. The manifest records dimensions, crop, owner, source,
+and license. Import through the manifest. Load setup art first and only the
+selected match package next. Use self-hosted licensed Web Open Font Format 2
+(WOFF2) fonts with metric fallbacks.
 
 Milestone 015 already promotes the title emblem and proscenium to focused WebP
 runtime files with Portable Network Graphics fallbacks and entry preloads. That
@@ -179,7 +217,8 @@ An existing genuine-alpha asset can use the `adopt` path. It records
 An existing opaque raster can use `provenance <png> --source <origin>` when its
 verified source origin exists and its generation prompt does not. Do not invent
 a source or prompt. Asset validation rejects every PNG that lacks an embedded
-generation prompt or source. Shipping assets contain no chroma-key residue.
+generation source. It also rejects a character PNG that embeds its exact custom
+prompt. Shipping assets contain no chroma-key residue.
 
 Validation also rejects every alpha-bearing PNG that lacks the workflow, key,
 or alpha-source metadata, has nonzero outer corners, or retains an opaque
@@ -187,9 +226,14 @@ chroma-green pixel. A soft-key conversion also fails when it has no
 partial-alpha pixels or lacks its matte and foreground reconstruction metadata.
 
 `npm run assets:convert-green -- <green-root> <output-root>` converts a complete
-green-master tree. It preserves each Portable Network Graphics file's relative
-path. Each master requires a sibling `<asset-name>.prompt.txt` source record.
-The input and output roots must be different.
+green-render tree whose prompts are beside the renders. For character art, use
+`npm run assets:convert-green -- <green-root> <output-root> --prompt-root
+<prompt-root>`. The green renders stay in the temporary folder, and the matching
+relative prompt files stay in the research folder. The converter verifies each
+prompt but embeds only a generic source record in all conversion modes. It does
+not embed the private prompt, its path, or its links. The converter preserves
+each Portable Network Graphics file's relative path. The input and output roots
+must be different.
 
 ## Asset and motion contract
 
@@ -246,12 +290,22 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   alpha-aware eight-bit Canvas round-trip tolerance. A
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
-- **AC-023-09:** Each of the four vertical-slice characters has a default skin
-  and at least one alternate skin. Filename discovery is deterministic, and the
-  default is first. Foundation characters can keep only their default interim
-  portrait until Milestone 031. The roster resolves only the default. Setup and
-  match views resolve an available requested skin without changing character or
-  phrase data.
+- **AC-023-09:** Each of the four vertical-slice characters has one default skin
+  and one through eight alternate skins. A ninth alternate fails validation.
+  Filename discovery is deterministic, and the default is first. Foundation
+  characters can keep only their default interim portrait until Milestone 031.
+  The roster resolves only the default. Setup and match views resolve an
+  available requested skin without changing character or phrase data.
+- **AC-023-10:** Each final character is recognizable without its nameplate by
+  its silhouette, posture, face system, and prop logic. Default and alternate
+  skins preserve one fictional archetype across all named states. The research
+  folder contains the character-specific study and remains excluded from Git,
+  builds, and published artifacts. Public files contain no real-person name or
+  character-reference link.
+- **AC-023-11:** Character-tree conversion resolves every matching prompt from
+  a separate research root. A missing or empty prompt fails before conversion.
+  The shipping raster contains a generic source record but does not contain the
+  exact prompt, its private path, or its links.
 
 ## Impeccable UI validation
 

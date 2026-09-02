@@ -33,9 +33,12 @@ complete an approved specification.
   slogan form that AC-005-07 names is the only phrase exception.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
-  metadata. Do not use a real person as a declared visual or rhetorical model.
-  Public institutions and documented historical events can inform original
-  satire when the result does not identify a real person.
+  metadata. Public artifacts do not declare a real person as a visual or
+  rhetorical model. The Git-ignored research folder can record real names,
+  links, and private approval evidence for internal character study. These
+  records do not ship and do not permit copied art or identifiable
+  player-visible content. Public institutions and documented historical events
+  can inform original satire when the result does not identify a real person.
 - Do not use a real political party's name, acronym, or logo. Use only generic
   ideological or social-family labels, such as Conservative, Peasant,
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
