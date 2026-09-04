@@ -491,8 +491,22 @@ Sharp generates committed AV1 Image File Format (AVIF) and
 WebP runtime variants. The manifest records dimensions, crop, owner, source,
 and license. Import through the manifest. Load setup art first and only the
 selected match package next. Keep each scene variant in an external asset file.
-Do not inline a scene variant in the initial JavaScript bundle. Use self-hosted
-licensed Web Open Font Format 2 (WOFF2) fonts with metric fallbacks.
+Do not inline a scene or character variant in the initial JavaScript bundle.
+Use self-hosted licensed Web Open Font Format 2 (WOFF2) fonts with metric
+fallbacks.
+
+The fixed character baseline uses
+`src/assets/characters/character-manifest.json`. Each of its 27 entries maps
+one default or alternate skin to the canonical `selection` state, pose, and
+expression. `tools/character-replacement-baseline.json` records the replaced
+source hashes for inventory verification only. It is not a generation input.
+`tools/build-character-assets.mjs` creates 128, 256, 320, 640, and 960 square
+AVIF and WebP variants. `tools/validate-character-assets.mjs` verifies the
+fixed inventory, new source hashes, provenance-compatible transparent masters,
+manifest fields, byte limits, and every generated file. A later
+convention-added portrait does not enter this fixed baseline automatically. It
+can use its source PNG until Milestone 031 promotes it through the final asset
+pipeline.
 
 Milestone 015 already promotes the title emblem and proscenium to focused WebP
 runtime files with Portable Network Graphics fallbacks and entry preloads. That
@@ -558,7 +572,7 @@ Dimensions are present in markup before decode.
 Validation rejects a crop, focal point, focal rectangle, or interface-safe
 rectangle that differs from the exact approved geometry, even when all values
 remain inside the normalized canvas. The production build validates the scene
-package before Vite writes `dist/`.
+and fixed character packages before Vite writes `dist/`.
 
 The color guard decodes each raster in sRGB, ignores transparent pixels and the
 temporary green matte, and measures muted or neutral pixels. It uses the shared
@@ -631,7 +645,10 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   current raster. A missing baseline replacement or an extra asset claimed as a
   Milestone 023 replacement fails the inventory. The retired Black Sea Captain
   alternate is not a valid replacement. A later nonbaseline asset remains under
-  Milestone 031 and does not fail this inventory.
+  Milestone 031 and does not fail this inventory. The fixed character manifest,
+  replacement-hash ledger, builder, and validator provide the objective
+  inventory evidence. Focused builder and validator tests reject an unchanged
+  source hash, missing license, or missing runtime variant.
 - **AC-023-13:** All 18 represented archetypes have a complete private character
   study before generation. An existing prompt alone fails readiness. Every
   missing or conflicting decision has a recorded `$grill-me` answer from the

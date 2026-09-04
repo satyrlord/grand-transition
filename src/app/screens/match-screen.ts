@@ -454,14 +454,25 @@ export class GrandTransitionMatch extends LitElement {
           </div>
         </header>
         <div class="character-frame" aria-hidden="true">
-          <img
-            class="character-portrait"
-            src=${player.portraitUrl}
-            alt=""
-            width="1024"
-            height="1536"
-            draggable="false"
-          />
+          <picture>
+            ${player.portraitAvifSrcSet
+              ? html`<source
+                  type="image/avif"
+                  srcset=${player.portraitAvifSrcSet}
+                  sizes=${player.portraitSizes}
+                />`
+              : nothing}
+            <img
+              class="character-portrait"
+              src=${player.portraitUrl}
+              srcset=${player.portraitWebpSrcSet ?? nothing}
+              sizes=${player.portraitSizes}
+              alt=""
+              width=${player.portraitWidth}
+              height=${player.portraitHeight}
+              draggable="false"
+            />
+          </picture>
         </div>
         ${
           player.isActive

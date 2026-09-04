@@ -1,5 +1,7 @@
 import type { IncomingMessage } from 'node:http';
-import { defineConfig, type Plugin } from 'vite';
+import { readFile, readdir } from 'node:fs/promises';
+import path from 'node:path';
+import { defineConfig, normalizePath, type Plugin } from 'vite';
 import { maximumGameLogBytes, writeGameLog } from './tools/game-log-writer.ts';
 
 export const productionContentSecurityPolicy = [
@@ -17,8 +19,9 @@ export const productionContentSecurityPolicy = [
 
 export default defineConfig(({ command }) => ({
   base: '/grand-transition/',
-  plugins:
-    command === 'build'
+  plugins: [
+    characterPortraitFallbackPlugin(),
+    ...(command === 'build'
       ? [
           {
             name: 'production-content-security-policy',
@@ -37,8 +40,67 @@ export default defineConfig(({ command }) => ({
             },
           },
         ]
-      : [developmentGameLogPlugin()],
+      : [developmentGameLogPlugin()]),
+  ],
 }));
+
+const characterPortraitFallbackId =
+  'virtual:character-portrait-fallbacks';
+const resolvedCharacterPortraitFallbackId =
+  `\0${characterPortraitFallbackId}`;
+
+export function characterPortraitFallbackPlugin(): Plugin {
+  let projectRoot = process.cwd();
+  return {
+    name: 'character-portrait-fallbacks',
+    configResolved(config) {
+      projectRoot = config.root;
+    },
+    resolveId(id) {
+      return id === characterPortraitFallbackId
+        ? resolvedCharacterPortraitFallbackId
+        : undefined;
+    },
+    async load(id) {
+      if (id !== resolvedCharacterPortraitFallbackId) return undefined;
+      const characterRoot = path.join(
+        projectRoot,
+        'src',
+        'assets',
+        'characters',
+      );
+      const manifest = JSON.parse(
+        await readFile(
+          path.join(characterRoot, 'character-manifest.json'),
+          'utf8',
+        ),
+      ) as { assets: Array<{ source: { path: string } }> };
+      const manifestedFiles = new Set(
+        manifest.assets.map((asset) => asset.source.path),
+      );
+      const fallbackFiles = (await readdir(characterRoot, {
+        withFileTypes: true,
+      }))
+        .filter(
+          (entry) =>
+            entry.isFile() &&
+            entry.name.endsWith('.png') &&
+            !manifestedFiles.has(entry.name),
+        )
+        .map((entry) => entry.name)
+        .toSorted((left, right) => left.localeCompare(right, 'en'));
+      const imports = fallbackFiles.map((fileName, index) => {
+        const absolutePath = normalizePath(path.join(characterRoot, fileName));
+        return `import portrait${index} from ${JSON.stringify(`${absolutePath}?url&no-inline`)};`;
+      });
+      const entries = fallbackFiles.map(
+        (fileName, index) =>
+          `${JSON.stringify(path.parse(fileName).name)}: portrait${index}`,
+      );
+      return `${imports.join('\n')}\nexport default Object.freeze({${entries.join(',')}});\n`;
+    },
+  };
+}
 
 function developmentGameLogPlugin(): Plugin {
   return {

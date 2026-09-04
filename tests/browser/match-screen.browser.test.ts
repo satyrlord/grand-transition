@@ -34,6 +34,25 @@ test('renders an immutable complete match snapshot and previews without changing
       expect.stringContaining('thunder-tribune'),
     ]),
   );
+  const characterPictures = [
+    ...match.querySelectorAll<HTMLPictureElement>('.character-frame picture'),
+  ];
+  expect(characterPictures).toHaveLength(2);
+  for (const picture of characterPictures) {
+    const source = picture.querySelector<HTMLSourceElement>('source')!;
+    const image = picture.querySelector<HTMLImageElement>('img')!;
+    expect(source.type).toBe('image/avif');
+    expect(source.getAttribute('srcset')).toMatch(/128w.*960w/u);
+    expect(image.getAttribute('src')).toContain('.webp');
+    expect(image.getAttribute('src')).not.toContain('.png');
+    expect(image.getAttribute('srcset')).toMatch(/128w.*960w/u);
+    expect(image.getAttribute('width')).toBe('2048');
+    expect(image.getAttribute('height')).toBe('2048');
+    await vi.waitFor(() => {
+      expect(image.currentSrc).toContain('.avif');
+      expect(image.complete).toBe(true);
+    });
+  }
   const backgroundLayer = match.querySelector<HTMLImageElement>(
     '.broadcast-stage-art[data-scene-depth="0"]',
   );
@@ -278,6 +297,32 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
   avif.type = 'image/unsupported-avif';
   image.removeAttribute('srcset');
   image.src = '/missing-avif-fallback-image.webp';
+
+  await vi.waitFor(() => {
+    expect(expectedWebpUrls).toContain(image.currentSrc);
+    expect(image.complete).toBe(true);
+    expect(image.naturalWidth).toBeGreaterThan(0);
+  });
+  expect(image.currentSrc).toContain('.webp');
+});
+
+test('decodes a character WebP when character AVIF is unsupported', async () => {
+  const match = await startMatch();
+  const picture = match.querySelector<HTMLPictureElement>(
+    '.character-frame picture',
+  )!;
+  const avif = picture.querySelector<HTMLSourceElement>('source')!;
+  const image = picture.querySelector<HTMLImageElement>('img')!;
+  const webpSrcset = image.getAttribute('srcset') ?? '';
+  const expectedWebpUrls = webpSrcset
+    .split(',')
+    .map((candidate) => candidate.trim().split(/\s+/u)[0])
+    .filter((candidate): candidate is string => Boolean(candidate))
+    .map((candidate) => new URL(candidate, window.location.href).href);
+  expect(expectedWebpUrls).toHaveLength(5);
+
+  avif.type = 'image/unsupported-avif';
+  image.src = '/missing-character-avif-fallback.webp';
 
   await vi.waitFor(() => {
     expect(expectedWebpUrls).toContain(image.currentSrc);

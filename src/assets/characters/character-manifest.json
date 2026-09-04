@@ -1,0 +1,3299 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "algorithmic-prophet",
+      "ownerType": "character",
+      "ownerId": "algorithmic-prophet",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "algorithmic-prophet.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1523020,
+        "sha256": "4a25445c323a1d431bb795e9a7a1f85ce1d0bdb7612bbaad7b387e83f85a1742"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/algorithmic-prophet-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3137,
+          "sha256": "54a1547d4f28a34c75a6c46437a05d61ba3bfed4693500bb1815e3a374c9d17d"
+        },
+        {
+          "path": "variants/algorithmic-prophet-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3718,
+          "sha256": "e2f5c0aec7ec44a47be7e71ec8dd3156ebf18ed4a1432e98432ef7acd410f08d"
+        },
+        {
+          "path": "variants/algorithmic-prophet-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6347,
+          "sha256": "fe185036ee8b10e9738f966546e5e1a8be4c62357fcc8cb0a38ad3012e1e2b2d"
+        },
+        {
+          "path": "variants/algorithmic-prophet-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8488,
+          "sha256": "25b358ca7b6181f97e3dc92395ca041738e10628d03f696995d7116bf413cbe3"
+        },
+        {
+          "path": "variants/algorithmic-prophet-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7872,
+          "sha256": "c81a01dbde8560be9ba0e9db6e9b71ca0304034f905ffd2f7afc0e79e74801fe"
+        },
+        {
+          "path": "variants/algorithmic-prophet-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10864,
+          "sha256": "b8ba6a992f550cf492e572518468474478525acfcc55b7e982eb700c3f548d15"
+        },
+        {
+          "path": "variants/algorithmic-prophet-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 18254,
+          "sha256": "3b6a6dea020592b4e225428ff906e9b7cf8dd8e5586390369ef009c576263785"
+        },
+        {
+          "path": "variants/algorithmic-prophet-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 24824,
+          "sha256": "c3334bcb72ead3033eda8b7d8163b247e1b3bababee426990ffa4f013448b1b2"
+        },
+        {
+          "path": "variants/algorithmic-prophet-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 29410,
+          "sha256": "fbfa6d8d5b7353d68f1c46cc4c1250f856ea66258b69122eedeb22020b592daa"
+        },
+        {
+          "path": "variants/algorithmic-prophet-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 39664,
+          "sha256": "e33abf7f7ba4fd1b83d88a5c94ad5db81c670397c66289d996d6e0e5ee132851"
+        }
+      ]
+    },
+    {
+      "id": "apartment-block-geopolitician",
+      "ownerType": "character",
+      "ownerId": "apartment-block-geopolitician",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "apartment-block-geopolitician.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1578061,
+        "sha256": "aeca61848fbf3662e780412c60c3f6881afcbdb99606cb03bcd670bd9bcbc477"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/apartment-block-geopolitician-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2779,
+          "sha256": "5e091342677e6192f0e016724f25b3a4379cc1d410a50a7aa4c6e97a050e543f"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3324,
+          "sha256": "f4c7652b7170a6c332ffe0bb8e4a9809c2ab69ebbce243c5c6bf2f3a326ef520"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5768,
+          "sha256": "c26fe681b80a63c8507192ad2af442e65dc3be1a84e30fbe281a175ca4694b07"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7602,
+          "sha256": "223909ee57d40f70944a3444cc9c39ff12016f4f6576fbd75d6e8e95e7ceca81"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7476,
+          "sha256": "cebf352c2d885029024cf441259e64e17750f300250a11e49bf251fb33a99f68"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9888,
+          "sha256": "212309f0caefda88cc52a9dddb046c5e1522d94f80ce8518d5537db66a8c4546"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 18864,
+          "sha256": "7af5b54c7288432dc8643e008648f4e2e580ab96bd981304fef9c185f0915335"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 24274,
+          "sha256": "4344291a0e3a538fa0126dd4ce7ae35ad0536212ce5eae0ee7cbe00f804db9e5"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 31249,
+          "sha256": "cfac8a2113f50dbb5418da1ff6d987212a90d823a439ae9ac2125a5e7e5ef509"
+        },
+        {
+          "path": "variants/apartment-block-geopolitician-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 39306,
+          "sha256": "4c44d007dc3bc834e64e532609df21b385d0a0a3c0574170295ab43b9f757978"
+        }
+      ]
+    },
+    {
+      "id": "black-sea-captain",
+      "ownerType": "character",
+      "ownerId": "black-sea-captain",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "black-sea-captain.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1368342,
+        "sha256": "482f5d368fb6c2173241f9c0339bdae2debf06b38f8bafa2ad21efcbcf82e854"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/black-sea-captain-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3619,
+          "sha256": "858cfeef3779efe7798543027281af18752edae076e4857477610fe86e9ef46a"
+        },
+        {
+          "path": "variants/black-sea-captain-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4214,
+          "sha256": "81de2a72cb2d11496818c3c529b829ffa035ee85d049f7acdd1c0fa7c2529b8a"
+        },
+        {
+          "path": "variants/black-sea-captain-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7405,
+          "sha256": "ce5f6b842d754ca4577c1818f9a23aa7ba189413afc69d37337e9238ccfb041a"
+        },
+        {
+          "path": "variants/black-sea-captain-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9784,
+          "sha256": "f03d107ed3107f9cf5a99640177b84f05b28b0c5f20e52b549ea29d1aeba6bb5"
+        },
+        {
+          "path": "variants/black-sea-captain-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 9369,
+          "sha256": "d2dfbc28b2015c52e8e2d398cd1cc531565b428cfe9b324cddb938c3b1a9c2b1"
+        },
+        {
+          "path": "variants/black-sea-captain-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 12770,
+          "sha256": "e74c5ee93c0c656c803ea70d1e5a47f7601cc88307f7e9b4969b00aa58c1fe31"
+        },
+        {
+          "path": "variants/black-sea-captain-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 21297,
+          "sha256": "9beb57459e57fcc6d7f863feca24539797a8e0b6094704d2e123e36d69868f9e"
+        },
+        {
+          "path": "variants/black-sea-captain-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 29690,
+          "sha256": "5566cdc95ddf1f736c8feee6580250f24651e231d693641373bd619e55a4db79"
+        },
+        {
+          "path": "variants/black-sea-captain-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 35823,
+          "sha256": "f6d19933a48338f65dcb0cf7001a6df910bea04a6a9264b4dcf81c00acc79278"
+        },
+        {
+          "path": "variants/black-sea-captain-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 48208,
+          "sha256": "10269f65abcdae18173c9dbc65e805d8dad7d7f802f455a2e8c285c39b9dc34c"
+        }
+      ]
+    },
+    {
+      "id": "coalition-acrobat",
+      "ownerType": "character",
+      "ownerId": "coalition-acrobat",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "coalition-acrobat.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1202336,
+        "sha256": "3e9df8856fb64add02e78b10de9f778963425dfdcc248e2d574d6c9c0ea346be"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/coalition-acrobat-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2806,
+          "sha256": "0834e09ea1a4c702f9d4441282efc39ac4d521ad34c62a11509d21a9680c7030"
+        },
+        {
+          "path": "variants/coalition-acrobat-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3326,
+          "sha256": "7d7f130bf51c88904117abeaa52634a9751957462464d81a4b14cb4cce773c41"
+        },
+        {
+          "path": "variants/coalition-acrobat-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5352,
+          "sha256": "6b7a6fb7c9e20b7412a9cda426ab3930ee64812aeda65ecafbf686e5796e3f0e"
+        },
+        {
+          "path": "variants/coalition-acrobat-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7072,
+          "sha256": "6e5e192659a54c7b080eca59896ec4317f6796710ea83a7eb13217571f10fa41"
+        },
+        {
+          "path": "variants/coalition-acrobat-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6748,
+          "sha256": "c165d0a5749df7da9a088aa5edaeac61673b09bdaa64df5deca0c231648261a5"
+        },
+        {
+          "path": "variants/coalition-acrobat-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9144,
+          "sha256": "4915259be0c9fcdc3419d51e158cafa2b61f4a0464ad1a2bce25bbc1ee49bc69"
+        },
+        {
+          "path": "variants/coalition-acrobat-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 16590,
+          "sha256": "6e40d18b5fd05fff4a2e59123863eb65d05ce486f9ce09a52d9552674a68d842"
+        },
+        {
+          "path": "variants/coalition-acrobat-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 21768,
+          "sha256": "98a003961de60ccf7a5a90e6fa8e0faa9c83fbe7265a648de367aa89af23eb77"
+        },
+        {
+          "path": "variants/coalition-acrobat-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 25982,
+          "sha256": "779be1c57e6e04235888070f5f02781ac3f44fe35ff5bd647a3ada968da6a6da"
+        },
+        {
+          "path": "variants/coalition-acrobat-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 34292,
+          "sha256": "ce9f705da869bbc08f36c7db7fea8dc6c36d6a79917c43ecd47790d0f231bd57"
+        }
+      ]
+    },
+    {
+      "id": "county-baron",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "county-baron.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1895944,
+        "sha256": "65ab62576a2282c50e1eccc995eb189f3aca83660eae0fceac4c6e190c589dbd"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/county-baron-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3420,
+          "sha256": "d4865214c49e1bb03b83fbf6b2e337dc6d6d631117cac602fd1db7e1a558ef94"
+        },
+        {
+          "path": "variants/county-baron-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4086,
+          "sha256": "a6e240251824a8140d3fb8af3662c49e5ccfc3f790f0069d978b23cc01b537ca"
+        },
+        {
+          "path": "variants/county-baron-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7075,
+          "sha256": "14049b08ba21a2c80185c13e98223b753993ecb7566db45a73d9938d885b071d"
+        },
+        {
+          "path": "variants/county-baron-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8826,
+          "sha256": "079b486da1719be6e037d4bdb38236456e162d26255a2811376306d0b266e12d"
+        },
+        {
+          "path": "variants/county-baron-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8566,
+          "sha256": "226650e866bb82a7479a8daaa04a2197e9e722988fa4d409733c348d59fc6a78"
+        },
+        {
+          "path": "variants/county-baron-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 11468,
+          "sha256": "e84bac44ffe96b2a599c77624c3e98f41fba8a91ce2cf0fbaf6101f640ffff9a"
+        },
+        {
+          "path": "variants/county-baron-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 20615,
+          "sha256": "d8398ad26e2ffc929e7fafbf9cb14d65006d729adb5efa69b85270b80cbd7c31"
+        },
+        {
+          "path": "variants/county-baron-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 27078,
+          "sha256": "03c9ad6e03e2852b0a35fd1cc507b37cd7cb51d75516b71f60e85f2327f51b20"
+        },
+        {
+          "path": "variants/county-baron-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 33015,
+          "sha256": "b4cc74281cd727918a32d79d09f59e20fae2062b94444e731fb03f050a69c612"
+        },
+        {
+          "path": "variants/county-baron-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 42844,
+          "sha256": "1eec8f0a5161fb78fe9287e2b464f64fcd8742f5d93b724f653faae35a484995"
+        }
+      ]
+    },
+    {
+      "id": "diaspora-oracle",
+      "ownerType": "character",
+      "ownerId": "diaspora-oracle",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "diaspora-oracle.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1603231,
+        "sha256": "7fbfbcee4005b7ff7a4e2c3ea0ea61146e0370069352b8583788c423309f15e9"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/diaspora-oracle-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3332,
+          "sha256": "389cdc4d42fd677df0c52bebaf0cdf16d659705c44c82a26455ffb9c8622fbaa"
+        },
+        {
+          "path": "variants/diaspora-oracle-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4048,
+          "sha256": "41eab8dea07986971af9c2f163b3a5739110551251259f7683b012029cbfa726"
+        },
+        {
+          "path": "variants/diaspora-oracle-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6713,
+          "sha256": "14d3938e936ba3e6b47418b306f4b5093240cc8aba75c6628cc98c4be025cef8"
+        },
+        {
+          "path": "variants/diaspora-oracle-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8778,
+          "sha256": "252a965f0faad5ae0b7a84b2f2934ae48a91cb0c04cfcbfe809fdda0955079e1"
+        },
+        {
+          "path": "variants/diaspora-oracle-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8693,
+          "sha256": "81f6247f5b6fa8bec32d92b07295f3f454bacba5147f3ec00f238e5dbe65689f"
+        },
+        {
+          "path": "variants/diaspora-oracle-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 11538,
+          "sha256": "03d198818b6ba659abc75d65c2f6296fc6ae886df842d8db7ab7119aeb5cc953"
+        },
+        {
+          "path": "variants/diaspora-oracle-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 21644,
+          "sha256": "c6abf5de6a721825c97b2dbe60f4d441ea243639a9b5b84ac771ed85e567ef60"
+        },
+        {
+          "path": "variants/diaspora-oracle-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 27490,
+          "sha256": "4e8fb4dbe83a41273ef2b71d9b35efa51dba6c6dd99a26dc2d763ae841f8ee96"
+        },
+        {
+          "path": "variants/diaspora-oracle-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 34786,
+          "sha256": "22edc9bb1e29c951f2a0446b5437cf579ea6e48effeb0869e2b8636a3be9132f"
+        },
+        {
+          "path": "variants/diaspora-oracle-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 44342,
+          "sha256": "879019c8a516dce388c07df1873607c5dc1a452566f046cb57115685f80eac2c"
+        }
+      ]
+    },
+    {
+      "id": "eu-funds-alchemist",
+      "ownerType": "character",
+      "ownerId": "eu-funds-alchemist",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "eu-funds-alchemist.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1417008,
+        "sha256": "e63984dee75ccfc6a783df43238834e58c357d630f846e0e0836eb500d938955"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/eu-funds-alchemist-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3008,
+          "sha256": "c45ee82c10f23dc0bb476202b7d2b9e82408ea10b8bad33a4008abcec5771528"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3420,
+          "sha256": "090650baa75bd935c16a7fa0a5be2478c1d7d1a2cc818dd62b428a460a6aecc4"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6046,
+          "sha256": "9adc689d703e425a08153a79bdd966cb9b58beddc023c41e5e5beb5733567518"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7480,
+          "sha256": "0bc9925bde71c6e4883112d39ad5bf7aa852687884f4c6a6b2d88a9feb45de48"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7454,
+          "sha256": "79541fce11011a36dfc41759c74ce2b124a2c7ed220cf95a5f3fc2705a8786b9"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9478,
+          "sha256": "a93942bf0796fcbcd5b43fb3284557bbcb3850d47daf6da3df0fb31c57a45ff3"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 17313,
+          "sha256": "5f54812d5be9d59fb6bc7f81d8d80e2e6179cf18e45e5448bc640fba8d1de2fc"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 22660,
+          "sha256": "b0ec61a2dd1c5479b947b5f4593230d1d0fe971f4f8d87c934e1c1dad294a7ca"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 30604,
+          "sha256": "53ca51780e8f14c93bf0fe4247703dde3641add388d8595f8ae441958954942c"
+        },
+        {
+          "path": "variants/eu-funds-alchemist-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 38576,
+          "sha256": "18408da2e2205815716170a9ce6a5f32f96f872fad989c95866ea60e7a1b23df"
+        }
+      ]
+    },
+    {
+      "id": "football-tycoon",
+      "ownerType": "character",
+      "ownerId": "football-tycoon",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "football-tycoon.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2675123,
+        "sha256": "d408d793d78960e18c4bed3103712dc1a572cc540cb9de3698e09f27004d0381"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/football-tycoon-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 4846,
+          "sha256": "f1fa137214cf01b42364e9f95e7c933b12ce5e703d1e46cda9c4b01e7eeb448f"
+        },
+        {
+          "path": "variants/football-tycoon-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 5782,
+          "sha256": "7368674ef10e8cf42f06e3c274627f11d182092e5c1179e02adff9a0f71a012a"
+        },
+        {
+          "path": "variants/football-tycoon-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 11241,
+          "sha256": "93905674e72be6b901cbefa6a2b62b73ddb77f9998c88ea7516b9649467fcb75"
+        },
+        {
+          "path": "variants/football-tycoon-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 13944,
+          "sha256": "f005c898ccee380c35c541fa749f42af704db98163c62f2c85bfa3171d9fdc83"
+        },
+        {
+          "path": "variants/football-tycoon-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 14693,
+          "sha256": "e65604c00ade59130a0fff013cb99c9f5a588b39b0470694b310e143363ddfab"
+        },
+        {
+          "path": "variants/football-tycoon-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 18582,
+          "sha256": "529c5bb77ee17169619968deb099ba38e90703be60e734d0834101e761efcb26"
+        },
+        {
+          "path": "variants/football-tycoon-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 36172,
+          "sha256": "32dbdff873e6a1bb915411ea027dfc97be312cad02f1e20d95ef99744939d347"
+        },
+        {
+          "path": "variants/football-tycoon-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 46360,
+          "sha256": "2a47ab2b8392a96a98a7756bc5ad4da745771acfa551ba99c910e85c7e7fc084"
+        },
+        {
+          "path": "variants/football-tycoon-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 60262,
+          "sha256": "de1b97e5ab57a901deb7a3eb5d764c37c291725028ed072f323529b6b584f485"
+        },
+        {
+          "path": "variants/football-tycoon-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 77304,
+          "sha256": "42fc83edc8aea4fb9e74c71b601eb426102a65fefd51142c0c85955a05bb9b7d"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--alternate",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "alternate",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "government-ai--alternate.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2189269,
+        "sha256": "89b09d760cd7bef09c86e4ca0b44bf18ed366e47d011ff662d10c5724405cd4f"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/government-ai--alternate-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 4026,
+          "sha256": "5411ee07a43f4228f17b19e90046fadcc04d1efe06eb868088e4dedb1a208058"
+        },
+        {
+          "path": "variants/government-ai--alternate-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4866,
+          "sha256": "7143e55f48769706c8920ad9269cc8eb0213a9a62867dc61cdcf86546c0ec2ab"
+        },
+        {
+          "path": "variants/government-ai--alternate-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8376,
+          "sha256": "cdc250ef3fb64976957a7b142f8bce39942f38b21842224bee3b377a1684740d"
+        },
+        {
+          "path": "variants/government-ai--alternate-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10842,
+          "sha256": "b115287bf11cba1c6b894d7a36e4a5e3a919ee3157a5b515908699415861d95c"
+        },
+        {
+          "path": "variants/government-ai--alternate-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 10373,
+          "sha256": "e6f124407814f82fc55422ff8328cbee5c0b4cbb81846f5b9d75889d73332120"
+        },
+        {
+          "path": "variants/government-ai--alternate-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 13744,
+          "sha256": "59e4a703a8f58ca0416363e3f1c2b7f7dc86bb0ff56450435c406d2c16bf8d87"
+        },
+        {
+          "path": "variants/government-ai--alternate-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 22965,
+          "sha256": "5aea7dd1cf3d3a084030cf9c4e9c2ff68e3c1ed8dab236e04fef8efd7fa0cfe6"
+        },
+        {
+          "path": "variants/government-ai--alternate-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 30522,
+          "sha256": "525c16b93bbddb6db955bc6b1d54a611a2a43f8fe76d0cd5f1bd399ca7654460"
+        },
+        {
+          "path": "variants/government-ai--alternate-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 38493,
+          "sha256": "998bcab318c384ff3ecb4f2e86ae3222026be9e006361a04e3c703886091fdd0"
+        },
+        {
+          "path": "variants/government-ai--alternate-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 49424,
+          "sha256": "631061c870a16f6a84c77cc77a41790872349084e5d03d4198b5c1c578424446"
+        }
+      ]
+    },
+    {
+      "id": "government-ai",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "government-ai.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2203429,
+        "sha256": "b9e537873393030265fc30faa9158985073a5521f6b960ffe77fb6c5e8e4f8ce"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/government-ai-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5518,
+          "sha256": "927b3a6a256fc29ab5e1b290b3cb1e4c17706446b119b9e4cf2eaca014f68a6f"
+        },
+        {
+          "path": "variants/government-ai-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6494,
+          "sha256": "26fd0ea74b731277820ed5a45a0fab9358a079ca42b2e9a5a682e85f9656db91"
+        },
+        {
+          "path": "variants/government-ai-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 11843,
+          "sha256": "6f0a152f8a1d4987b02e311d8214bb23a0ae9fa40e0e84a32c90e22b841496fb"
+        },
+        {
+          "path": "variants/government-ai-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 15102,
+          "sha256": "926e9f9f197d11a3b52a9e42d4169b962186def51f758b4e307a87b7c77c8549"
+        },
+        {
+          "path": "variants/government-ai-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 14656,
+          "sha256": "efa0bdf9e3d206968e7cf5c7c27d638eaf7bdff7bd4e42d363eef45258ead7f3"
+        },
+        {
+          "path": "variants/government-ai-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 19842,
+          "sha256": "fa787f0c4e7c31d35d15e11d842703c27743b3cbf4e76a2186b4ba2f2bceb525"
+        },
+        {
+          "path": "variants/government-ai-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 34124,
+          "sha256": "60a493ac68cbbf9c69c3fb6c22447c2ea30cfe8417eb87a9abcb01500903742c"
+        },
+        {
+          "path": "variants/government-ai-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 45234,
+          "sha256": "c2c3bb3ecb55a90fe10d651f81c1d4762c3b68c9dff7ce575b1f3dc6fa910840"
+        },
+        {
+          "path": "variants/government-ai-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 56909,
+          "sha256": "f2a006e4575445dd88b561e96141566a50bbd04e235e2e7d6b0cf0dd90a2f72b"
+        },
+        {
+          "path": "variants/government-ai-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 73368,
+          "sha256": "c451d9fc96142d8ef71f1f4519f0fa3c9d9114debaf33b849bad3653bb7c3223"
+        }
+      ]
+    },
+    {
+      "id": "luxury-minister",
+      "ownerType": "character",
+      "ownerId": "luxury-minister",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "luxury-minister.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1713499,
+        "sha256": "9a5afefd65b6f5243a193d63b3fde2528aa93a2c3446bdfc73a521791aa2b3b3"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/luxury-minister-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3964,
+          "sha256": "bb3f1a71255b3b33ec75e162dd7844e11029263859cd7e2d1a7eee07b46d05eb"
+        },
+        {
+          "path": "variants/luxury-minister-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4442,
+          "sha256": "55fd628d36490de2a6ed5986c7e963c2c8813329d1fafa62b856890ec7a033f0"
+        },
+        {
+          "path": "variants/luxury-minister-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8434,
+          "sha256": "17c074268458dade806af86e8d0c7a0ca2a50dedf7c4144efbda876552181e17"
+        },
+        {
+          "path": "variants/luxury-minister-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10418,
+          "sha256": "7a37f1df0b3809c00a914074667b6bea5ec027b57386253aaa660566b8c971f2"
+        },
+        {
+          "path": "variants/luxury-minister-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 11160,
+          "sha256": "256217f583f477e38febbfac04aeda5ffbca3118f49680e75f2fb8f51f02bb2e"
+        },
+        {
+          "path": "variants/luxury-minister-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 13476,
+          "sha256": "a942e35ff84fc5ccc5a19effb9c800967f5527d66fae61876835ca95dd495ac6"
+        },
+        {
+          "path": "variants/luxury-minister-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 27539,
+          "sha256": "45a4f8638fb5573fcd3f71ee4a5abed579b4eac62107d91c9ccf727f4bba6b08"
+        },
+        {
+          "path": "variants/luxury-minister-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 32802,
+          "sha256": "8fc5191a29a493611c9d93a37ec2a40d557574fab7f84c94256f5a625adbaebe"
+        },
+        {
+          "path": "variants/luxury-minister-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 46471,
+          "sha256": "4bc75c6a67db6ab361b5c90638c5b8a51f75a56e2e959a8a7a13d0d6f6c6fc37"
+        },
+        {
+          "path": "variants/luxury-minister-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 54908,
+          "sha256": "13d98517e35fa3fdb631860b198551f01087e189fb368ebf39fb5fb3071aa5a4"
+        }
+      ]
+    },
+    {
+      "id": "marble-diplomat",
+      "ownerType": "character",
+      "ownerId": "marble-diplomat",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "marble-diplomat.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1070833,
+        "sha256": "f5d5bdecf9679cbaeeee3a751b1ffff374c7c4c80dc7e951c31c42c5780bb65b"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/marble-diplomat-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2579,
+          "sha256": "66b1ca81f7f4fbec9dc270ed51434e87bb36c32fac85ea27d6a93222ab4133ce"
+        },
+        {
+          "path": "variants/marble-diplomat-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3100,
+          "sha256": "79f5ac1d42a2e2fd91cc47e813777ee790620eb6e3c22422471eee75af6bf499"
+        },
+        {
+          "path": "variants/marble-diplomat-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 4952,
+          "sha256": "f4c6f180a88d50ec354d446bdb2a84a95b1d0dc2ffa705c262c4ddc52c503d14"
+        },
+        {
+          "path": "variants/marble-diplomat-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6694,
+          "sha256": "b2c346677e3c4ab6fdec990d5cd9dd242befa458f32fc120d157b0146bed3628"
+        },
+        {
+          "path": "variants/marble-diplomat-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6141,
+          "sha256": "ab43330f608afbe733f96a06a835e8a7b001327dd7cee7a088983931f755732f"
+        },
+        {
+          "path": "variants/marble-diplomat-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8620,
+          "sha256": "366567542528a4e797003887d6199019ae3da35e4534c163d4f2e6aa3c892629"
+        },
+        {
+          "path": "variants/marble-diplomat-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 15582,
+          "sha256": "b198ec5c385635044fd6b7e18dfa3ce8bc78b3c0f85adfbefa315b951ca7e5b2"
+        },
+        {
+          "path": "variants/marble-diplomat-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 20384,
+          "sha256": "a6a1a06fcd7f9ff3ec050364384a8a50e88ab4d6d90a7d3922bfcea8979c646b"
+        },
+        {
+          "path": "variants/marble-diplomat-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 24926,
+          "sha256": "7b9632f637896c10fc5e9109c2ba08a26c0f5febee83ae7d6923ed46208b7334"
+        },
+        {
+          "path": "variants/marble-diplomat-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 32670,
+          "sha256": "ca83f481c91801e921d27fc7b84c3d4f8d1de034c1b7890b914bf71d56c07016"
+        }
+      ]
+    },
+    {
+      "id": "midnight-sensationalist--alternate",
+      "ownerType": "character",
+      "ownerId": "midnight-sensationalist",
+      "skinId": "alternate",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "midnight-sensationalist--alternate.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1676749,
+        "sha256": "68057a8d77f2dc94a11887bbbee8a67d3fbfc7b92c4ef4da42b90d50101088c6"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/midnight-sensationalist--alternate-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3617,
+          "sha256": "d8996a3e0163ffb9415a30f70b4a1572622bec1e1cdd4b426ef3651518b9c8f4"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4398,
+          "sha256": "244cfab06f135510bddf64b94dd7849cf6de0680ba9de073cf37bc86e0319a07"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7372,
+          "sha256": "a34c933944fd84e1a4211433a0f8fc13144eb5386e1279ec315fc0a73c033cbf"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9792,
+          "sha256": "8583563aa4fb53060531da24a637a54c9264bc6533e1f96190dbcc9bf5ccae28"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 9261,
+          "sha256": "e87c62e4a96cf6fe909fd7086f1b8b3cbf7a5f69ce9df1942914eb3db2804086"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 12622,
+          "sha256": "27d22e0a2e3bf8167991f3d558b1466f5dc071c44eb52b9efab4d15bcee7376c"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 24249,
+          "sha256": "68678bdb17e88b7077fb73df9248d56a8570cedcd68e99b76ca7593a15507682"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 31452,
+          "sha256": "c42648786e6e1027465b2c3030334f2676369ae18bab74d19f75710e50f617cf"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 40002,
+          "sha256": "1d852e9e18241cf2240680546eab238b1f557c3dfe022924b5f2968cb34227cc"
+        },
+        {
+          "path": "variants/midnight-sensationalist--alternate-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 52370,
+          "sha256": "536d6390c1ae8545bb474ed9f02bfd587dc81f2f28ee34a3109afece5aa56e38"
+        }
+      ]
+    },
+    {
+      "id": "midnight-sensationalist",
+      "ownerType": "character",
+      "ownerId": "midnight-sensationalist",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "midnight-sensationalist.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1736779,
+        "sha256": "33b43f56a61ac9ac220561d11a74573e813772ec498e523d50d22a469885bc9e"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/midnight-sensationalist-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2990,
+          "sha256": "4ba4ad35b9959029d4c9571d78efea2d24f247ca0c61f6de18f16291fd332aa1"
+        },
+        {
+          "path": "variants/midnight-sensationalist-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3616,
+          "sha256": "899ea7142de32283af32e1e053eb32bed123a17fff2f0f695db007ae5828e9f7"
+        },
+        {
+          "path": "variants/midnight-sensationalist-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5985,
+          "sha256": "790d123ed88bb981cfb7ae44ccb3b046c0a3f7d2e542f5ed7ba6fb1beada2ece"
+        },
+        {
+          "path": "variants/midnight-sensationalist-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7842,
+          "sha256": "6e66769a5d86922a64c1067b3281ca604c974ce42ca82ebadcdc2f28d99e4636"
+        },
+        {
+          "path": "variants/midnight-sensationalist-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8131,
+          "sha256": "29c2cf85ff2f47c672e129feaa554b7ba978baa44fec9897a2313ca05db06154"
+        },
+        {
+          "path": "variants/midnight-sensationalist-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10218,
+          "sha256": "f4fcaa339bee171449744b3e16edd2ab805b213219d25dddc41d053f457cba83"
+        },
+        {
+          "path": "variants/midnight-sensationalist-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 21104,
+          "sha256": "be766f33c4cc124a88437082ab1bde62e69f3409f96e620d0522515ceda0fcc0"
+        },
+        {
+          "path": "variants/midnight-sensationalist-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 26186,
+          "sha256": "7d81a819de6578507ac8a82f4ab637f283d16dd87addfe5bea54b95d9c009dc6"
+        },
+        {
+          "path": "variants/midnight-sensationalist-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 34865,
+          "sha256": "50ec844d7b755b52123dd762836c5272028563209ef074a3f6af60d301b0d212"
+        },
+        {
+          "path": "variants/midnight-sensationalist-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 43456,
+          "sha256": "11e9a1f383ba219046370eb5d53c5902a87805188d0e30cf6beb20c78925a2b3"
+        }
+      ]
+    },
+    {
+      "id": "oat-milk-reformist--alternate",
+      "ownerType": "character",
+      "ownerId": "oat-milk-reformist",
+      "skinId": "alternate",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "oat-milk-reformist--alternate.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1208219,
+        "sha256": "e5dae74f9cab8217baf73cc5904d8e35e6fcb2e77366a84355ca91b0884beb65"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/oat-milk-reformist--alternate-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3470,
+          "sha256": "8de09175e07cd19120aef320be2639507e849a328146dc0d5e66a43c89453ac8"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4082,
+          "sha256": "aa5170d3190bee9caf69d2496cb32bca55f503c0693c345e71e9a1c39aa4113c"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6445,
+          "sha256": "31f12f9b4061356a3d1c5730ef366e16c093b9b63ba9e31a2859190f3891cd6b"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8736,
+          "sha256": "bc7b57d8d817899e57da942d76148c461271564e5be7641013db5346bb5d0e43"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8017,
+          "sha256": "4f6ea1f9eb7e41c4fdfd604669ca704501ee9f4aed242b845fe842e8b836eb44"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 11204,
+          "sha256": "d59e5bd0f7bc0c89eeb6e1083a16cb07e6d6415befc3187d5855658450db35c3"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 18769,
+          "sha256": "0dfce37518f95c9c0c4ae0bf99ca575d64aabcfd1f86c710f5b781d5e8a6561f"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 25858,
+          "sha256": "7180f7adbae0dbc8c97d63a55cb90946a099dc055c729d43e77afbbd7173bbbf"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 30252,
+          "sha256": "879870132d04ec322cb0562c4d32ffb741b8acb85a2a00de0db450c2396110dc"
+        },
+        {
+          "path": "variants/oat-milk-reformist--alternate-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 41746,
+          "sha256": "89181ab54ebd86fb26fdbb54baf492f10804b4797b68cf3d9f1a71b3d8102e02"
+        }
+      ]
+    },
+    {
+      "id": "oat-milk-reformist",
+      "ownerType": "character",
+      "ownerId": "oat-milk-reformist",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "oat-milk-reformist.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1466839,
+        "sha256": "a3fe1088850650efb159f8baf8ef62a278ce5dc3ec48d7e55bebeaaaf253746e"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/oat-milk-reformist-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3427,
+          "sha256": "770c84fa48e5b10f9b702abd4e291e5197b32492b5be98080cf5f976c36ae0f7"
+        },
+        {
+          "path": "variants/oat-milk-reformist-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4026,
+          "sha256": "4ad573c4e548487cc7ec86a63f096c262d64a02c7d24ce1eb24ca33c243448f0"
+        },
+        {
+          "path": "variants/oat-milk-reformist-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6750,
+          "sha256": "53699bdcd958bea64eb9df8a77520ca1e01d7e13e021bb00f15478f18e4eb57f"
+        },
+        {
+          "path": "variants/oat-milk-reformist-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8986,
+          "sha256": "73da965fadfac9a9c16c62f88d7138cd4ff91d280690435272c601ae021594ca"
+        },
+        {
+          "path": "variants/oat-milk-reformist-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8399,
+          "sha256": "4735000fa8e0701ae1a976545252bff809bab19c88cbd91f7d905e44aaa5f58c"
+        },
+        {
+          "path": "variants/oat-milk-reformist-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 11474,
+          "sha256": "b8cd1dec66a467661ab688e97cd1c6b7c0795378d01bfa771a832379b331b0b6"
+        },
+        {
+          "path": "variants/oat-milk-reformist-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 19830,
+          "sha256": "374c81260bdb61e8ed706e694bc189a75aeafa3d3aedb312d66e7dac3622a7ea"
+        },
+        {
+          "path": "variants/oat-milk-reformist-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 26550,
+          "sha256": "9ae366489957ee3999aab6ef5fba16ef37158646183dea7e590ea81ee43f68ca"
+        },
+        {
+          "path": "variants/oat-milk-reformist-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 33242,
+          "sha256": "46f96b7f6aa63b06b45568211e0305b1a9b110265ef1b15bfba2338b509fcf59"
+        },
+        {
+          "path": "variants/oat-milk-reformist-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 43604,
+          "sha256": "6bbbbb49db11b8978f3387b90395c514c8f81eb8b6a5cc0ae808d2b2483faea2"
+        }
+      ]
+    },
+    {
+      "id": "red-folded-chairman--alternate",
+      "ownerType": "character",
+      "ownerId": "red-folded-chairman",
+      "skinId": "alternate",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "red-folded-chairman--alternate.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1842912,
+        "sha256": "5aa4cff71904097f96468d60fd442f2228d45edeb6a8df79ba396553e8d1e2dc"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/red-folded-chairman--alternate-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3894,
+          "sha256": "7b117b4b2e9b8e49aa64b8a8a10b78506ffb7d2c79ab028f2950cc23241a6852"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4384,
+          "sha256": "b4bd02265a51f35148e2734082b2b9aaaf940575f199472b9998ea5f3c6bb2e3"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7879,
+          "sha256": "aeb512d74641430a6a5a9c66eaa63888eb81697019404ccb9c2c9b33312be2f6"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9958,
+          "sha256": "dc2c1aa8a8dd4dea9e0e5916786cef9e31fbc558429dcca3cbdd798954b7e963"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 9844,
+          "sha256": "7a76ac4bbfe218f267aee3459a08a059e57772ab87af7015cc61f198bdf51167"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 12730,
+          "sha256": "fe99dec69348fafd356e31417aede2f7c870d36484c419429b718dcb74754858"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 22279,
+          "sha256": "706c0f8c2f03a62cfe04ce4f6a08146ba830ab4690e29598b6e7d3f12bdbbf7e"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 29210,
+          "sha256": "61874810376f5204a35cf84368576c414a4c93051a2efa4195877c1c78a53930"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 36716,
+          "sha256": "312b9a6dcdb3a0d12c8d890980f449e1de310e0e84874f5206803b9218c31bf6"
+        },
+        {
+          "path": "variants/red-folded-chairman--alternate-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 47356,
+          "sha256": "fd41eec2cd713e54b094f02f3f8f009a4f058ea482354dcb35322207c18818eb"
+        }
+      ]
+    },
+    {
+      "id": "red-folded-chairman",
+      "ownerType": "character",
+      "ownerId": "red-folded-chairman",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "red-folded-chairman.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1762149,
+        "sha256": "061cd0516a0ebd44df9306b268ec369447b1643cb220fdf1a4d7d5564030a759"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/red-folded-chairman-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3080,
+          "sha256": "85d45a04a8f826ac328c9284613a0be1144b6185ce0b4936a546e7ef7fdfc2c8"
+        },
+        {
+          "path": "variants/red-folded-chairman-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3562,
+          "sha256": "64788f04bbf84813d73bd3fc041f583fa807de278c3fb301d9772cf585205f59"
+        },
+        {
+          "path": "variants/red-folded-chairman-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6473,
+          "sha256": "88d2b2df5389ea0f74d6e0760d4f2b63432bf08af4ec9eaf2511b06607bc6582"
+        },
+        {
+          "path": "variants/red-folded-chairman-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8012,
+          "sha256": "8a379f2ca3674fb9b6405d805eff1adcbcd1e69cc4128f19338c7856f1aad828"
+        },
+        {
+          "path": "variants/red-folded-chairman-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8194,
+          "sha256": "bad8284b80bc3c4fea33aad9786b762f5ffd7bea7a170eba3c9d014f44d04410"
+        },
+        {
+          "path": "variants/red-folded-chairman-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10422,
+          "sha256": "89f446ea252dd7789c24e1f95220d9eec9f00df742178c02e4503a6de31d898e"
+        },
+        {
+          "path": "variants/red-folded-chairman-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 20300,
+          "sha256": "891a3c57f1fa8596e0e42ce8d21b480a103a7a34ce24aa3d0928153cfd376709"
+        },
+        {
+          "path": "variants/red-folded-chairman-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 25386,
+          "sha256": "89846eab6b6e07b1f2aebf355313cfbbdf17d07f38dd02fae9108045db8df358"
+        },
+        {
+          "path": "variants/red-folded-chairman-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 33594,
+          "sha256": "f205692edb5fbb7917ad6441499560f2b4495f6fe6d0a445df0b5e3b9cfc8323"
+        },
+        {
+          "path": "variants/red-folded-chairman-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 41470,
+          "sha256": "6baa3e7e34e478b3cfbdc4bb949154bf14204294143c0270c08dbd7f304a6885"
+        }
+      ]
+    },
+    {
+      "id": "retiring-cassandra--statesman",
+      "ownerType": "character",
+      "ownerId": "retiring-cassandra",
+      "skinId": "statesman",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "retiring-cassandra--statesman.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1090113,
+        "sha256": "d1a9fe74e0264bbabc178af9014c88a8838132596b7ad127cd81338431713b1b"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/retiring-cassandra--statesman-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2633,
+          "sha256": "c82328c125ae8ca3b5ac5028f293dddd23e2615fc16eac79eab4d1d253eae68f"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3048,
+          "sha256": "5622d8349bb6dbb768c76c3e6c6bb6b0ce3642e4b829118e6857c75fbf8d36ef"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5256,
+          "sha256": "7a4a73c8cae345a405179fa604e88037abf300b6795ca8ab089c0c582d245d1f"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6614,
+          "sha256": "e16119ad5bd14cffe464ca713a2ce57577ef694366534b3b72c4156463efeb3f"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6001,
+          "sha256": "79af0db2dd44cdf5ff0cbb9ad12f902069926fffc94d0b02ce8bb480ebe07856"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8478,
+          "sha256": "79aef7770b0b0f7643e7aaadc40ff0db1e9edb4624938120869cabb891e59614"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 14223,
+          "sha256": "4268977983ba997cf835d6b2de3bff85fd49fd7ab55e37e4d6b9427a9c49ac87"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 18948,
+          "sha256": "4a703c88795a30396d2a2ab28a0e6cca7cf23345d0ceb336685174aa5e34614a"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 22948,
+          "sha256": "f266a078ec143fd4e064473222b7eb82a6f1c254a328341ed06d6e98c9718290"
+        },
+        {
+          "path": "variants/retiring-cassandra--statesman-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 30972,
+          "sha256": "a669174093bb6f3c020d67f04f8cbff34d25dc32682b1282201cf3483c0cabb8"
+        }
+      ]
+    },
+    {
+      "id": "retiring-cassandra",
+      "ownerType": "character",
+      "ownerId": "retiring-cassandra",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "retiring-cassandra.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1098821,
+        "sha256": "4d9aeea16ebb27182686e5c639a141e2b3d3a24ef32bbf05e1e0642e3298454e"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/retiring-cassandra-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2626,
+          "sha256": "9131b53afc0b6d5c21456554f941e3880620d9af871815b3b8c656ddf85f080f"
+        },
+        {
+          "path": "variants/retiring-cassandra-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3000,
+          "sha256": "752399aeda7fcc9d3c3c97dd4936135444f37ca016f39274e5363eeaa0dc055a"
+        },
+        {
+          "path": "variants/retiring-cassandra-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5113,
+          "sha256": "57e17531d94ccbb041b575eece6932d7d59e2daba9ce4355170d66551f28921e"
+        },
+        {
+          "path": "variants/retiring-cassandra-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6590,
+          "sha256": "e638cec58047bfddae3fc680e082eddcafa56ad739bd08ac09f9cbee1a22907e"
+        },
+        {
+          "path": "variants/retiring-cassandra-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6099,
+          "sha256": "6a8a3dab1039ea53c76ae87b9c428424a4ff64272f6c19f7abf2fab22771f9a0"
+        },
+        {
+          "path": "variants/retiring-cassandra-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8440,
+          "sha256": "9d67dc905bed8acc2abaef456f38e56d1d938eeae3cff9c1b83359c504046814"
+        },
+        {
+          "path": "variants/retiring-cassandra-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 14682,
+          "sha256": "398bf0c5a00c12b16b2789149686da6b1d431fab4f67892649781d06cf518923"
+        },
+        {
+          "path": "variants/retiring-cassandra-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 19510,
+          "sha256": "3fbe8969138d076417c4457fea6ae3ceb4b4bc52c879850d6ee50b04b91f7fd5"
+        },
+        {
+          "path": "variants/retiring-cassandra-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 25223,
+          "sha256": "1741e3037ef6b2c1a392e7d5fbdf41fac7a998fa19dfcc9925ea5f08b792fb69"
+        },
+        {
+          "path": "variants/retiring-cassandra-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 33044,
+          "sha256": "6af424e2ee9e357dcb95e4ab5e9f84af8beff5edcc5404e08434b387c2d3717d"
+        }
+      ]
+    },
+    {
+      "id": "spreadsheet-technocrat",
+      "ownerType": "character",
+      "ownerId": "spreadsheet-technocrat",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "spreadsheet-technocrat.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1416455,
+        "sha256": "c79549bed2e8805cc5aa64f3aba7f1e8f9c4fd4008804ecb9c5f69eedda7398b"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/spreadsheet-technocrat-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3148,
+          "sha256": "19eca4f7682a3a1278cd5822c90d6137f9df1184324b12a60122b1c775460f58"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3652,
+          "sha256": "136042f313c2fbd06a2de8e2a67cf655b8e72bb76e7049c5e6a63382b8f3f610"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6256,
+          "sha256": "e6d185c6ef2ce4c01ceb5f55e5dd95621954aa80194144858382a9d61572c3d8"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7918,
+          "sha256": "e0630dbf7f3ca8afefb7b24b8e7c2d880ecc814ec4960e37912a8e6ac2ffdc07"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7460,
+          "sha256": "012530d0ee89c93a50e7ac843b4cbebfe33be08142bda21e775bf6c76385e44b"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10046,
+          "sha256": "873cdb508261199326b217862093fb18461e66888766f614d53cfea72886cd9e"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 17974,
+          "sha256": "265d83fc08a4e7cc1b523a10ab0d851e98740fc4340a41274b6ab48db3f345a8"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 23100,
+          "sha256": "07664db76c881d5c4f80a6a3f694a43537f29937ae8b3e88cf9d6ba405ef41ed"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 29882,
+          "sha256": "f94c5743297ec1748928afacdb7da38e8c49b8b120af5f4f4fd6ef08a8f043f3"
+        },
+        {
+          "path": "variants/spreadsheet-technocrat-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 37774,
+          "sha256": "07c414ec83dbe7f4afb7962cd2fead73879d960aedad8c6bc389557942c78791"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "thunder-tribune--alternate.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2563595,
+        "sha256": "cd4b7e7ed6d3c2b1218c7f9fca7ff93451cef6d0fad2c1babea87233c3c08e4c"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/thunder-tribune--alternate-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3919,
+          "sha256": "f0248825a428d02efcde9263216f2057c8153e1b84b60860780dc3ee0195f475"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 4690,
+          "sha256": "c4e1934d46a98caee224b2e62615b785edbee2e8d9bb8b52618469a6503b6c6a"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 9788,
+          "sha256": "b50fb8492cda943ec7ca0e7c368a288d1c16198e1763f4ae160ae2dc9c0e65f4"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 11378,
+          "sha256": "9cce866c69324353ceaf52419483c8bfd97806e70a6e8ac3ad58e39fa048a38e"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 12717,
+          "sha256": "ed2321096bf83a2688055b7b67170f1c114eab67ddda6cd4d9fb804d5c30d964"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 15152,
+          "sha256": "b3ff7640dda3cad094b38daae77f7658bc5c42c63bec050ecded0df2e66f1398"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 37335,
+          "sha256": "a9e97b7a4f6959418fe4162c0ceca3ec443fadb3e06f5b1f05fc672589679a70"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 42738,
+          "sha256": "1d29de15d9388592b9cfa01512399e62417ad18b9d6fcee5ba7ea43372b42163"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 64979,
+          "sha256": "1a2a07b9f1ecab3d238efbccdeabab6c6d64a450e45a8a0fa6ebb2f7f46d5a7b"
+        },
+        {
+          "path": "variants/thunder-tribune--alternate-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 76184,
+          "sha256": "36c7a330eba07f0d12b371dbef714ac40a9cd050d17e039fc28b8be1dbb6e519"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "thunder-tribune.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2087361,
+        "sha256": "cc1c3cbc2bc4f7d0f607e8d4bdc04569df2e8a7fc4cffde1e0d243b24ca78721"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/thunder-tribune-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3261,
+          "sha256": "95ae7d1b9a4b041a42914c8f584ab5f7d8f625613d59f5cbf614bf330dc16054"
+        },
+        {
+          "path": "variants/thunder-tribune-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3964,
+          "sha256": "2188a2d50fb1b71c3b2211407f739d07be7ffaaef3c61e20775280a2aec50ccd"
+        },
+        {
+          "path": "variants/thunder-tribune-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7040,
+          "sha256": "dcd51640cc9b77e1109aeae1b457f492821025b131c5772486284a32f42c098e"
+        },
+        {
+          "path": "variants/thunder-tribune-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8524,
+          "sha256": "e546d1ac27923334ae74b19839da343917b28935b31ca548dd873958a90bd75a"
+        },
+        {
+          "path": "variants/thunder-tribune-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 8755,
+          "sha256": "0a6c24b216e691ca899756b6aada34c602d37f5865808e2013db4858b6f714bc"
+        },
+        {
+          "path": "variants/thunder-tribune-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 10956,
+          "sha256": "ad97736e77f5a27ae57670a899a7ba69745530ab84a1e0889b50e1e9197973d8"
+        },
+        {
+          "path": "variants/thunder-tribune-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 21999,
+          "sha256": "21314ad9cb109dfe8f0edceb169f5013677cabe6ad83c946d38d032d1b1fc5a3"
+        },
+        {
+          "path": "variants/thunder-tribune-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 26450,
+          "sha256": "8010b48e4485fb8bbe515ee5e82ccc3d69348311561f9b36f40b32699e6fd840"
+        },
+        {
+          "path": "variants/thunder-tribune-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 35782,
+          "sha256": "21dcff15b3a25bc23ede3e8cbd4c16aa5fe3158a600c3fe3fece020f188e5886"
+        },
+        {
+          "path": "variants/thunder-tribune-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 42312,
+          "sha256": "ad80b10ff91f8343657e2466a4527ebc05ecbe7cc0249a9898f21d83abb5d2d3"
+        }
+      ]
+    },
+    {
+      "id": "velvet-mogul--boardroom-patriarch",
+      "ownerType": "character",
+      "ownerId": "velvet-mogul",
+      "skinId": "boardroom-patriarch",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "velvet-mogul--boardroom-patriarch.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1842061,
+        "sha256": "dc0b1774fc35c4946720ff66d67f212bdb1b002c67524d14f793b126fa7988ec"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 3163,
+          "sha256": "162416f1a250170f03223cebb0accbe232518978824eb89d5bea79621bff48d9"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3558,
+          "sha256": "dd2e9d8c26438cb186cf07c5079f62a95166b931a4297fbe1244ad661fc9b0ac"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6398,
+          "sha256": "6836b9232fa6943045f55b84e5b4a0c73fb96294c90cebd9212567e8bbd0d7ce"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7632,
+          "sha256": "701040ff3e43edf746413cae8fa69330460f91b3f6a0546476953dd9767c12cd"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7917,
+          "sha256": "95be0746e99de5983dca9c7d5fb19428f3e48d93f0e86684fb946c3fe0821ee8"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 9908,
+          "sha256": "94179b3534093f67c541076ebd01855d99599c8dd843fa135eae0932b7f6a99e"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 21908,
+          "sha256": "0889342331f50bdf2e1524cccf53d01a8e2898d4624d2d3e27486ea914c1f078"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 25124,
+          "sha256": "364d29f05e85687ecbabf69cc94f51731dbfbadfbe13ed1b37ea3b5965ed3317"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 37216,
+          "sha256": "4856de55f57727b07ebf46f93894fe8aa80677587398e957305e6c68fc63167c"
+        },
+        {
+          "path": "variants/velvet-mogul--boardroom-patriarch-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 42550,
+          "sha256": "45d45130693d2a013cbf39ec19456e3cdc69653df05b2be65bd4951fcfa62072"
+        }
+      ]
+    },
+    {
+      "id": "velvet-mogul--silk-diplomat",
+      "ownerType": "character",
+      "ownerId": "velvet-mogul",
+      "skinId": "silk-diplomat",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "velvet-mogul--silk-diplomat.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1043033,
+        "sha256": "fb5668db8d45a3b24ed92a36ac16a97dbb5ee647f5f876879a828fc50d01ba02"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2544,
+          "sha256": "765e7a8e1985bd742058cee64ce2a4e4249238887e6325fbc7f97a0545e97e74"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 2846,
+          "sha256": "b63ac9b651ca87c5766e3234600b6decec38379e2693183f7a259bc9347620b8"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5195,
+          "sha256": "b34a7dd0dc986a9e0b3b07500c5530a06e3497a9857ec2b7b17bd2623ae98214"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6402,
+          "sha256": "0cf5b0164b2c71f63f12b41f6069f08a093cbc1804a6fb90c1e3642e889c2b74"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5988,
+          "sha256": "da035673d308e88c14475e8d337256de58c1ce1b8def45d2eb5c3bb38d9d25a7"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 7986,
+          "sha256": "2d7f2565f07eb1598e00fec0c12d01dc9ebb369fc09964d106e8dfa03e44e05b"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 15263,
+          "sha256": "62547aa11fa629f51f02d022fae42bc3e28160e75a56babfd8a78cc325b2f77c"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 19636,
+          "sha256": "8a279082d1a40cde99b27283a5daf139d9c4fe8d95d00a1236f592f9659a04b1"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 25678,
+          "sha256": "a765f0d78e7cc4845aabd3699ae6671c50d408a4d07e6e52945d1ca5315c6ea8"
+        },
+        {
+          "path": "variants/velvet-mogul--silk-diplomat-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 32180,
+          "sha256": "6f874139d1d563fb3b7c0138ae2d590a3e8b50db9a9ae39876609fa7679f79fb"
+        }
+      ]
+    },
+    {
+      "id": "velvet-mogul--velvet-statesman",
+      "ownerType": "character",
+      "ownerId": "velvet-mogul",
+      "skinId": "velvet-statesman",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "velvet-mogul--velvet-statesman.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1345824,
+        "sha256": "0cbdfbed4f0353fa7cd802ae7eed769126a613db9eab20637fa1e53e64e5b517"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2847,
+          "sha256": "60f37939be4b604ba2626f4a762f6419ddbb17daede3025422726f7cf023974f"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3214,
+          "sha256": "bca3c20f4342cf5d78a533e62eef4d9c260422db5d0bfb3f99bd4595b4c66851"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5593,
+          "sha256": "c4de23aae53e96bbe695f7b5b1bed82ffb31af104978e4efab795d4181cae0f0"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6890,
+          "sha256": "e6d01c2f50323145b52e416f14384446af19f6c30fbbf9d2a47cb7615ff5e92e"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 6923,
+          "sha256": "1ecc58bcc3b6dfec13325a454e9398284635269185ecb7d140a909870ab237a2"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8668,
+          "sha256": "d528d0dedad716714bcd716c840abafa084736398d04c8ba342020511af7da01"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 17159,
+          "sha256": "cea2d8ff181385cf1b0bbb198c9f2b2ee042cafb23688aa3427d215472c21e68"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 20860,
+          "sha256": "8f77432ca59b99bc928c19ca4e0b4c7e31f3b0b0c8bcf6b1877f4c0953157492"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 27830,
+          "sha256": "5ec71ed0b7868b4f54aaa41b2fa9df69e60c61280d8182691fc61799fc23d431"
+        },
+        {
+          "path": "variants/velvet-mogul--velvet-statesman-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 34194,
+          "sha256": "01090c5e4298586574c8b9b7de606329355fa321efe5d6042a0dcff1b03d5502"
+        }
+      ]
+    },
+    {
+      "id": "velvet-mogul",
+      "ownerType": "character",
+      "ownerId": "velvet-mogul",
+      "skinId": "default",
+      "stateId": "selection",
+      "poseId": "selection",
+      "expressionId": "selection",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "velvet-mogul.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1761360,
+        "sha256": "1a1967994cfffc65876efd46376f66ec8ce97faf7aa64b25f059990ab4c6371a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "variants/velvet-mogul-128x128.avif",
+          "width": 128,
+          "height": 128,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 2755,
+          "sha256": "d8d8b7086f23659fef52012af5b9bbffed89a051383855d43249c9d4287e5308"
+        },
+        {
+          "path": "variants/velvet-mogul-128x128.webp",
+          "width": 128,
+          "height": 128,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 3168,
+          "sha256": "162e9552a7c2ae13143609115d8a60b263b3f0d96331bcecc2665f2d636bdcf4"
+        },
+        {
+          "path": "variants/velvet-mogul-256x256.avif",
+          "width": 256,
+          "height": 256,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 5767,
+          "sha256": "664c23cdb20fda3fbfebab98bd420763275c847125bbd52951d31c522f5249b6"
+        },
+        {
+          "path": "variants/velvet-mogul-256x256.webp",
+          "width": 256,
+          "height": 256,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 6902,
+          "sha256": "bec55044e027916202b60cf3489cfce569cb270286ebd964a27f1fd53b0ceae7"
+        },
+        {
+          "path": "variants/velvet-mogul-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 7242,
+          "sha256": "d0c4fa7bf563dc6c0fb66d3e907c527a20d0a8a9d548d75816ee416e8e7d2edc"
+        },
+        {
+          "path": "variants/velvet-mogul-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 8998,
+          "sha256": "23395c9f0cd300a188e722797e7920084dc949d26bf4f8df2397da3c5e5cb666"
+        },
+        {
+          "path": "variants/velvet-mogul-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 19889,
+          "sha256": "9453baba98e60a6d5fc1596be43f648566f67cc815f253f807d20975189da032"
+        },
+        {
+          "path": "variants/velvet-mogul-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 23282,
+          "sha256": "a6d0c2934ad31605e86935c7f529d7f56ee59d53030204c0cd9b1f76f6357d57"
+        },
+        {
+          "path": "variants/velvet-mogul-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "quality": 70,
+          "bytes": 34776,
+          "sha256": "78196326f7676aa620ddd7765d656d7679a0e55a662708ce27f9ad010dcfb407"
+        },
+        {
+          "path": "variants/velvet-mogul-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "quality": 78,
+          "bytes": 39930,
+          "sha256": "9c47057bcc738a6be6eed894bd6c25113fa197603972d0da9df6105116228278"
+        }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,6 @@ import {
   type TemplateResult,
 } from 'lit';
 import {
-  characterPortraitUrls,
   characterSkins,
   sampleContent,
   type CharacterSkin,
@@ -78,7 +77,7 @@ type CharacterView = Readonly<{
   id: string;
   species: 'human' | 'robot';
   name: string;
-  portraitUrl: string;
+  portrait: CharacterSkin;
   weaknessTags: readonly string[];
 }>;
 
@@ -402,13 +401,24 @@ export class GrandTransitionSetup extends LitElement {
           config.character && config.skin
             ? html`
                 <span class="contestant-portrait-frame">
-                  <img
-                    class="contestant-portrait"
-                    src=${config.skin.portraitUrl}
-                    alt=""
-                    width="1024"
-                    height="1536"
-                  />
+                  <picture>
+                    ${config.skin.avif
+                      ? html`<source
+                          type=${config.skin.avif.mimeType}
+                          srcset=${config.skin.avif.srcSet}
+                          sizes=${config.skin.sizes}
+                        />`
+                      : nothing}
+                    <img
+                      class="contestant-portrait"
+                      src=${config.skin.portraitUrl}
+                      srcset=${config.skin.webp?.srcSet ?? nothing}
+                      sizes=${config.skin.sizes}
+                      alt=""
+                      width=${config.skin.width}
+                      height=${config.skin.height}
+                    />
+                  </picture>
                   ${
                     config.locked
                       ? nothing
@@ -568,15 +578,26 @@ export class GrandTransitionSetup extends LitElement {
         @contextmenu=${this.pinCharacterPreview}
       >
         <span class="roster-portrait-window">
-          <img
-            class="roster-headshot"
-            src=${character.portraitUrl}
-            alt=""
-            width="1024"
-            height="1536"
-            loading="lazy"
-            decoding="async"
-          />
+          <picture>
+            ${character.portrait.avif
+              ? html`<source
+                  type=${character.portrait.avif.mimeType}
+                  srcset=${character.portrait.avif.srcSet}
+                  sizes=${character.portrait.sizes}
+                />`
+              : nothing}
+            <img
+              class="roster-headshot"
+              src=${character.portrait.portraitUrl}
+              srcset=${character.portrait.webp?.srcSet ?? nothing}
+              sizes=${character.portrait.sizes}
+              alt=""
+              width=${character.portrait.width}
+              height=${character.portrait.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </span>
         <img
           class="roster-frame-overlay"
@@ -1023,8 +1044,8 @@ function immutableStartMatchPayload(
 
 function characterViews(): readonly CharacterView[] {
   return sampleContent.characters.map((character) => {
-    const portraitUrl = characterPortraitUrls[character.id];
-    if (!portraitUrl) {
+    const portrait = characterSkins[character.id]?.[0];
+    if (!portrait) {
       throw new Error(
         'Character "' + character.id + '" has no setup portrait asset.',
       );
@@ -1033,7 +1054,7 @@ function characterViews(): readonly CharacterView[] {
       id: character.id,
       species: character.species,
       name: gameMessage(character.nameKey),
-      portraitUrl,
+      portrait,
       weaknessTags: character.weaknessTags,
     };
   });

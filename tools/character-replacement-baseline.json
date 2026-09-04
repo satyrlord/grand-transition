@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    { "file": "algorithmic-prophet.png", "sha256": "5b3b948725b4bdf61917a058ccbe0e653490960eabf05e9c438c5d6de2ec9577" },
+    { "file": "apartment-block-geopolitician.png", "sha256": "3a9926806c2d74e7728c7142b296b824e3e40da13999ce072169a7a3f6a27585" },
+    { "file": "black-sea-captain.png", "sha256": "f48659744d85fa8eab7294bfefb418e0477c67f79d3342167a6d663910533411" },
+    { "file": "coalition-acrobat.png", "sha256": "dc454f85d7c24984b15c3ac35f5bcb1fa485beb0d8e27e84a358085cbbff009f" },
+    { "file": "county-baron.png", "sha256": "d3299f6097e930211558455d6cfdd2a6e84208f897d751d75c35f786f947e8ab" },
+    { "file": "diaspora-oracle.png", "sha256": "78b20c9ee01164b04fcbfdd5f0fbec1e899ac817adab8157580eeb08a711b25b" },
+    { "file": "eu-funds-alchemist.png", "sha256": "8437e234dad61f6b79f341aecf9dc22b23fb41b83f8fa5fe4bffd9e58ed1512f" },
+    { "file": "football-tycoon.png", "sha256": "c09e2db58d517e319f7c4c202191171046d6d90371c43d6ed29da36bc90c66d3" },
+    { "file": "government-ai--alternate.png", "sha256": "4e8c568bb52c85bd97ef97ea565a007a1494803bdf2654e97a7c744f1965c456" },
+    { "file": "government-ai.png", "sha256": "a9cf943da1a81fd8cdaea85c24d0f742e29f0456ef6bddc475caaf0d3704dde7" },
+    { "file": "luxury-minister.png", "sha256": "082d8be23d063d0de4162c55bbc3218462a455e97edfa255ad38eac8812184fc" },
+    { "file": "marble-diplomat.png", "sha256": "bce9500438b9b7fbd9c2fb88c699eb95d955edeb632a9af5ad0452bdae8797d8" },
+    { "file": "midnight-sensationalist--alternate.png", "sha256": "144dede0c52f6457dccf7698eb0901a64b8b77e65e5981b4e2ed9d4bee2e9add" },
+    { "file": "midnight-sensationalist.png", "sha256": "ba4ac8c2168d4aa3893c0ed021490e227505c4bd95e9696b2d191f2f0c66c5a3" },
+    { "file": "oat-milk-reformist--alternate.png", "sha256": "d2cffc39f88b42649c8c21ad7ae3e46f49b61f59418a9d1c3feee180542efdd2" },
+    { "file": "oat-milk-reformist.png", "sha256": "99a579b128d89266d7508c67f2bc4c66ab43378ac4af93dabad01e7543f9474e" },
+    { "file": "red-folded-chairman--alternate.png", "sha256": "a3e203b781defd75fd0e418003b1125613d8f73133ea7bb66719b52381e6c4cd" },
+    { "file": "red-folded-chairman.png", "sha256": "c8cd77460ed5c889553783bea6c291dc50f75463e1f6c8343dbf4bbbec0dc2d3" },
+    { "file": "retiring-cassandra--statesman.png", "sha256": "1f3f8625e2535a5f07da5351fd9cd815e2711a2dd5f785ec4eacec50a1757712" },
+    { "file": "retiring-cassandra.png", "sha256": "eb13acd2d590f914d225759f222468bba71c3cc0632d0addb7c3466d3f2ea91b" },
+    { "file": "spreadsheet-technocrat.png", "sha256": "3b3d93b42929047f2989bc270a5b84b088397d41b85bd48dd16f4a96e7f90a33" },
+    { "file": "thunder-tribune--alternate.png", "sha256": "d7a192a9e966b386c095c85ed20485f15cee538ae34b1faacb28a2595fcd9f61" },
+    { "file": "thunder-tribune.png", "sha256": "31f336a84264e997e5749d98f0146fcdb0dee641ddf9f8a763dc2cbe5b88bf8f" },
+    { "file": "velvet-mogul--boardroom-patriarch.png", "sha256": "8324a9e1c88515f2f27005d12d8b1bcf77feebf864a2355921087e6842faa5a1" },
+    { "file": "velvet-mogul--silk-diplomat.png", "sha256": "933d735b251c4bf83086431a81d568a20f118751ce517136566f32a50f8178c9" },
+    { "file": "velvet-mogul--velvet-statesman.png", "sha256": "1be1a578dcc5b681964cfbed58b844424b52f4a15297c136761f949ac66670da" },
+    { "file": "velvet-mogul.png", "sha256": "66661af788e2500bad19bb068d21e0f0579f6df5d3d76df8052e7042453ece21" }
+  ]
+}

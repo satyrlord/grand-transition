@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { createServer } from 'node:net';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
+import { characterPortraitFallbackPlugin } from './vite.config.ts';
 
 const pureFileThresholds = Object.fromEntries(
   ['src/engine', 'src/ai', 'src/persistence/codecs']
@@ -15,6 +16,7 @@ const pureFileThresholds = Object.fromEntries(
 const browserApiPort = await findAvailableLoopbackPort();
 
 export default defineConfig({
+  plugins: [characterPortraitFallbackPlugin()],
   test: {
     include: [
       'tests/browser/**/*.browser.test.ts',

@@ -58,6 +58,11 @@ export type MatchPlayerView = Readonly<{
   skinId: string;
   characterName: string;
   portraitUrl: string;
+  portraitAvifSrcSet: string | null;
+  portraitWebpSrcSet: string | null;
+  portraitSizes: string;
+  portraitWidth: 2048;
+  portraitHeight: 2048;
   pride: number;
   isActive: boolean;
   sentence: string | null;
@@ -289,6 +294,11 @@ export function createMatchScreenSnapshot(
       skinId: skin.id,
       characterName: characterName(player.characterId),
       portraitUrl: skin.portraitUrl,
+      portraitAvifSrcSet: skin.avif?.srcSet ?? null,
+      portraitWebpSrcSet: skin.webp?.srcSet ?? null,
+      portraitSizes: skin.sizes,
+      portraitWidth: skin.width,
+      portraitHeight: skin.height,
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,
       sentence:

@@ -933,8 +933,8 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
         images.every(
           (image) =>
             image.complete &&
-            image.naturalWidth === 1024 &&
-            image.naturalHeight === 1536,
+            image.naturalWidth === image.naturalHeight &&
+            [320, 640, 960].includes(image.naturalWidth),
         ),
       ),
     )
@@ -1011,22 +1011,22 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
         ) =>
           Math.abs(portraitTopRatio - 0.3) < 0.01 &&
           Math.abs(portraitHeightRatio - 0.84) < 0.01 &&
-          Math.abs(renderedWidthRatio - 0.56) < 0.01 &&
+          Math.abs(renderedWidthRatio - 0.84) < 0.01 &&
           portraitBottomRatio > 1.1 &&
           portraitBottomRatio < 1.15 &&
-          naturalWidth === 1024 &&
-          naturalHeight === 1536 &&
+          naturalWidth === naturalHeight &&
+          [320, 640, 960].includes(naturalWidth) &&
           portraitTop +
             portraitHeight * portraitPixelFacts[index]!.topOpaqueRatio >=
             sentenceBubbleBottom &&
           clearsHud,
       ),
-      `${viewport.width}x${viewport.height}`,
+      `${viewport.width}x${viewport.height}: ${JSON.stringify(composition)}`,
     ).toBe(true);
   }
 });
 
-test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
+test('keeps the Thunder Tribune tall in the final square portrait plane', async ({
   page,
 }) => {
   await startMatch(page);
@@ -1038,8 +1038,8 @@ test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
       portrait.evaluate(
         (image: HTMLImageElement) =>
           image.complete &&
-          image.naturalWidth === 1024 &&
-          image.naturalHeight === 1536,
+          image.naturalWidth === image.naturalHeight &&
+          [320, 640, 960].includes(image.naturalWidth),
       ),
     )
     .toBe(true);
@@ -1065,6 +1065,7 @@ test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
       }
     }
     return {
+      canvasSize: canvas.height,
       heightRatio: (maximumY - minimumY + 1) / canvas.height,
       maximumY,
       minimumX,
@@ -1074,20 +1075,26 @@ test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
   });
 
   expect(silhouette).toMatchObject({
+    canvasSize: expect.any(Number),
     heightRatio: expect.any(Number),
     maximumY: expect.any(Number),
     minimumX: expect.any(Number),
     minimumY: expect.any(Number),
     widthRatio: expect.any(Number),
   });
-  expect(silhouette.heightRatio).toBeGreaterThanOrEqual(0.95);
-  expect(silhouette.heightRatio).toBeLessThanOrEqual(0.98);
-  expect(silhouette.minimumY).toBeGreaterThanOrEqual(16);
-  expect(silhouette.minimumY).toBeLessThanOrEqual(64);
-  expect(silhouette.maximumY).toBeGreaterThanOrEqual(1490);
-  expect(silhouette.maximumY).toBeLessThanOrEqual(1515);
-  expect(silhouette.minimumX).toBeGreaterThanOrEqual(96);
-  expect(silhouette.widthRatio).toBeGreaterThanOrEqual(0.7);
+  expect(silhouette.heightRatio).toBeGreaterThanOrEqual(0.93);
+  expect(silhouette.heightRatio).toBeLessThanOrEqual(0.99);
+  expect(silhouette.minimumY / silhouette.canvasSize).toBeGreaterThanOrEqual(
+    0.01,
+  );
+  expect(silhouette.minimumY / silhouette.canvasSize).toBeLessThanOrEqual(
+    0.05,
+  );
+  expect(silhouette.maximumY / silhouette.canvasSize).toBeGreaterThanOrEqual(
+    0.95,
+  );
+  expect(silhouette.maximumY / silhouette.canvasSize).toBeLessThan(1);
+  expect(silhouette.widthRatio).toBeGreaterThanOrEqual(0.62);
 });
 
 test('keeps the physical moderator face clear of drafting UI', async ({
