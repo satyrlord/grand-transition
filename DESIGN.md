@@ -13,6 +13,7 @@ colors:
   broadcast-oxblood-bright: '#c63730'
   television-blue: '#12477f'
   television-blue-bright: '#2375c9'
+  modern-scene-ceiling: '#071b40'
   interruption-ink: '#071522'
   interruption-panel: '#0d2235'
   interruption-paper: '#eee4d3'

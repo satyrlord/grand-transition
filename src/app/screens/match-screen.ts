@@ -13,6 +13,8 @@ import type {
   MatchCardView,
   MatchPlayerView,
   MatchScoreComponentView,
+  MatchManifestSceneLayerView,
+  MatchSceneLayerView,
   MatchScreenSnapshot,
 } from '../match-screen-snapshot';
 import './interruption-screen';
@@ -203,22 +205,12 @@ export class GrandTransitionMatch extends LitElement {
       >
         <div
           class="broadcast-stage"
+          data-scene-asset=${backgroundLayers[0]?.assetId ?? nothing}
           data-arena-reaction=${arenaReaction?.kind ?? nothing}
           data-reaction-side=${reactionSide ?? nothing}
         >
-          ${backgroundLayers.map(
-            (layer) => html`
-              <img
-                class="broadcast-stage-art"
-                data-scene-asset=${layer.assetId}
-                data-scene-depth=${layer.depth}
-                src=${layer.url}
-                alt=""
-                width="1672"
-                height="941"
-                draggable="false"
-              />
-            `,
+          ${backgroundLayers.map((layer) =>
+            this.renderSceneLayer(layer, 'broadcast-stage-art'),
           )}
           <header class="match-status-rail">
             <div class="match-header-controls">
@@ -284,19 +276,8 @@ export class GrandTransitionMatch extends LitElement {
               'blue',
               arenaReaction?.playerId === second.playerId,
             )}
-            ${foregroundLayers.map(
-              (layer) => html`
-                <img
-                  class="broadcast-stage-foreground"
-                  data-scene-asset=${layer.assetId}
-                  data-scene-depth=${layer.depth}
-                  src=${layer.url}
-                  alt=""
-                  width="1672"
-                  height="941"
-                  draggable="false"
-                />
-              `,
+            ${foregroundLayers.map((layer) =>
+              this.renderSceneLayer(layer, 'broadcast-stage-foreground'),
             )}
           </section>
 
@@ -1043,6 +1024,64 @@ export class GrandTransitionMatch extends LitElement {
       }),
     );
   };
+
+  private renderSceneLayer(
+    layer: MatchSceneLayerView,
+    imageClass: 'broadcast-stage-art' | 'broadcast-stage-foreground',
+  ): TemplateResult {
+    const manifestLayer = layer.kind === 'manifest' ? layer : null;
+    return html`
+      <picture
+        class="broadcast-scene-picture"
+        data-scene-asset=${layer.assetId}
+        data-scene-depth=${layer.depth}
+        data-scene-kind=${layer.kind}
+        data-scene-focal-point=${manifestLayer
+          ? `${manifestLayer.focalPoint.x},${manifestLayer.focalPoint.y}`
+          : nothing}
+        data-scene-focal-rectangles=${manifestLayer
+          ? JSON.stringify(manifestLayer.focalRectangles)
+          : nothing}
+        data-scene-safe-rectangles=${manifestLayer
+          ? JSON.stringify(manifestLayer.sharedSafeRectangles)
+          : nothing}
+        data-scene-crop-core=${manifestLayer
+          ? JSON.stringify(manifestLayer.crop.core)
+          : nothing}
+        data-scene-crop-strategy=${manifestLayer
+          ? manifestLayer.crop.strategy
+          : nothing}
+        style=${manifestLayer ? sceneLayerStyle(manifestLayer) : nothing}
+      >
+        ${layer.avif
+          ? html`<source
+              data-scene-format="avif"
+              type="image/avif"
+              srcset=${layer.avif.srcSet}
+              sizes=${layer.sizes}
+            />`
+          : nothing}
+        <source
+          data-scene-format="webp"
+          type="image/webp"
+          srcset=${layer.webp.srcSet}
+          sizes=${layer.sizes}
+        />
+        <img
+          class=${imageClass}
+          data-scene-asset=${layer.assetId}
+          data-scene-depth=${layer.depth}
+          src=${layer.webp.fallbackUrl}
+          srcset=${layer.webp.srcSet}
+          sizes=${layer.sizes}
+          alt=""
+          width=${layer.width}
+          height=${layer.height}
+          draggable="false"
+        />
+      </picture>
+    `;
+  }
 }
 
 function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
@@ -1087,6 +1126,16 @@ function scoreComponentLabel(
 
 function compactCharacterName(characterName: string): string {
   return characterName.replace(/^The\s+/u, '');
+}
+
+function sceneLayerStyle(layer: MatchManifestSceneLayerView): string {
+  const { core } = layer.crop;
+  return [
+    `--scene-crop-core-x:${core.x}`,
+    `--scene-crop-core-y:${core.y}`,
+    `--scene-crop-core-width:${core.width}`,
+    `--scene-crop-core-height:${core.height}`,
+  ].join(';');
 }
 
 export function registerGrandTransitionMatch(): void {

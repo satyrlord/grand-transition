@@ -1,5 +1,11 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
+const sceneVariantDimensions = [
+  [640, 360],
+  [1280, 720],
+  [1920, 1080],
+] as const;
+
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
@@ -321,11 +327,9 @@ test('the longest desktop match state fits and exposes every required fact', asy
     )
     .toBe(true);
   const [foregroundAlpha] = await portraitAlphaFacts(foregroundScene);
-  expect(
-    foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0) &&
-      foregroundAlpha.transparentRatio > 0.7 &&
-      foregroundAlpha.opaqueRatio > 0.15,
-  ).toBe(true);
+  expect(foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0)).toBe(true);
+  expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
+  expectDeskPlateBounds(foregroundAlpha);
   const sceneStack = await page.evaluate(() => ({
     background: Number(
       getComputedStyle(document.querySelector('.broadcast-stage-art')!).zIndex,
@@ -345,9 +349,20 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(sceneStack.portrait).toBeLessThan(sceneStack.foreground);
   expect(sceneStack.foreground).toBeLessThan(sceneStack.playerHud);
   expect(
-    await foregroundScene.evaluate(
-      (image) => image.getBoundingClientRect().bottom > window.innerHeight,
-    ),
+    await page.evaluate(() => {
+      const background = document
+        .querySelector('.broadcast-stage-art')!
+        .getBoundingClientRect();
+      const foreground = document
+        .querySelector('.broadcast-stage-foreground')!
+        .getBoundingClientRect();
+      return (
+        Math.abs(background.left - foreground.left) <= 0.1 &&
+        Math.abs(background.top - foreground.top) <= 0.1 &&
+        Math.abs(background.width - foreground.width) <= 0.1 &&
+        Math.abs(background.height - foreground.height) <= 0.1
+      );
+    }),
   ).toBe(true);
   const parityGeometry = await page.evaluate(() => ({
     documentWidth: document.documentElement.scrollWidth,
@@ -677,8 +692,33 @@ test('the selected roster characters load their local portrait assets', async ({
 test('the selected modern debate studio loads both local scene layers', async ({
   page,
 }, testInfo) => {
+  await page.addInitScript(() => {
+    const state = window as typeof window & {
+      __sceneCumulativeLayoutShift: number;
+    };
+    state.__sceneCumulativeLayoutShift = 0;
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        const shift = entry as PerformanceEntry & {
+          hadRecentInput: boolean;
+          value: number;
+        };
+        if (!shift.hadRecentInput) {
+          state.__sceneCumulativeLayoutShift += shift.value;
+        }
+      }
+    }).observe({ buffered: true, type: 'layout-shift' });
+  });
+  const sceneVariantRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/\/assets\/(?:modern-debate|transition-era)-.*\.(?:avif|webp)(?:$|[?#])/u.test(request.url())) {
+      sceneVariantRequests.push(request.url());
+    }
+  });
+  await page.reload();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByLabel('Scene').selectOption('modern-debate-studio');
+  expect(sceneVariantRequests).toEqual([]);
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
@@ -692,32 +732,93 @@ test('the selected modern debate studio loads both local scene layers', async ({
   );
   await expect(background).toBeVisible();
   await expect(foreground).toBeVisible();
+  expect(
+    await page.locator(
+      'picture[data-scene-asset="modern-debate-studio"] source',
+    ).evaluateAll((sources) =>
+      sources.map((source) => (source as HTMLSourceElement).type),
+    ),
+  ).toEqual(['image/avif', 'image/webp']);
+  expect(await background.getAttribute('src')).toContain('.webp');
+  expect(await background.getAttribute('src')).not.toContain('.png');
+  expect(await background.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+  expect(await foreground.getAttribute('src')).toContain('.webp');
+  expect(await foreground.getAttribute('src')).not.toContain('.png');
+  expect(await foreground.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+  const manifestGeometry = await page
+    .locator('picture[data-scene-asset="modern-debate-studio"]')
+    .evaluate((picture) => ({
+      cropCore: picture.getAttribute('data-scene-crop-core'),
+      safeRectangles: picture.getAttribute('data-scene-safe-rectangles'),
+      styleCoreWidth: getComputedStyle(
+        picture.querySelector('img')!,
+      ).getPropertyValue('--scene-crop-core-width'),
+    }));
+  expect(manifestGeometry.cropCore).toContain('"width":0.75');
+  expect(manifestGeometry.safeRectangles).toContain('centralInteraction');
+  expect(manifestGeometry.styleCoreWidth).toBe('0.75');
   await expect
-    .poll(() =>
-      background.evaluate(
-        (image: HTMLImageElement) =>
-          image.complete &&
-          image.naturalWidth === 1672 &&
-          image.naturalHeight === 941,
-      ),
+    .poll(
+      () =>
+        background.evaluate(
+          (image: HTMLImageElement) =>
+            image.complete &&
+            image.getAttribute('width') === '1920' &&
+            image.getAttribute('height') === '1080',
+        ),
+      { timeout: 15_000 },
     )
     .toBe(true);
+  await expectDecodedSceneVariant(background);
   await expect
     .poll(() =>
       foreground.evaluate(
         (image: HTMLImageElement) =>
           image.complete &&
-          image.naturalWidth === 1672 &&
-          image.naturalHeight === 941,
+          image.getAttribute('width') === '1920' &&
+          image.getAttribute('height') === '1080',
       ),
     )
     .toBe(true);
+  await expectDecodedSceneVariant(foreground);
+
+  await expect
+    .poll(() => background.evaluate((image: HTMLImageElement) => image.currentSrc))
+    .toMatch(/\.avif(?:$|[?#])/u);
+  await expect.poll(() => sceneVariantRequests.length).toBe(2);
+  expect(
+    sceneVariantRequests.every((url) => url.includes('modern-debate-studio')),
+  ).toBe(true);
+  await page.waitForLoadState('networkidle');
+  expect(
+    await page.evaluate(
+      () =>
+        (
+          window as typeof window & {
+            __sceneCumulativeLayoutShift: number;
+          }
+        ).__sceneCumulativeLayoutShift,
+    ),
+  ).toBeLessThanOrEqual(0.05);
 
   const [foregroundAlpha] = await portraitAlphaFacts(foreground);
   expect(foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0)).toBe(true);
-  expect(foregroundAlpha?.chromaKeyGreenRatio).toBe(0);
+  expect(foregroundAlpha?.chromaKeyGreenRatio).toBeLessThan(0.001);
   expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
-  expect(foregroundAlpha?.opaqueRatio).toBeGreaterThan(0.05);
+  expectDeskPlateBounds(foregroundAlpha);
+  await expect
+    .poll(
+      () =>
+        page.locator('.character-portrait').evaluateAll((portraits) =>
+          portraits.every(
+            (portrait) =>
+              (portrait as HTMLImageElement).complete &&
+              (portrait as HTMLImageElement).naturalWidth > 0,
+          ),
+        ),
+      { timeout: 15_000 },
+    )
+    .toBe(true);
 
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -725,8 +826,14 @@ test('the selected modern debate studio loads both local scene layers', async ({
     { width: 1280, height: 720 },
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
+    { width: 1280, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
+    await decodeImages(
+      page.locator(
+        '.broadcast-stage-art, .broadcast-stage-foreground, .character-portrait',
+      ),
+    );
     const geometry = await page.evaluate(() => {
       const backgroundBox = document
         .querySelector('.broadcast-stage-art')!
@@ -734,23 +841,79 @@ test('the selected modern debate studio loads both local scene layers', async ({
       const foregroundBox = document
         .querySelector('.broadcast-stage-foreground')!
         .getBoundingClientRect();
+      const ratio = innerWidth / innerHeight;
       return {
         documentFits:
           document.documentElement.scrollWidth <= innerWidth &&
           document.documentElement.scrollHeight <= innerHeight,
         backgroundCovers:
           backgroundBox.left <= 0 &&
-          backgroundBox.top <= 0 &&
           backgroundBox.right >= innerWidth &&
           backgroundBox.bottom >= innerHeight,
-        foregroundExtendsBelowStage: foregroundBox.bottom > innerHeight,
+        layersAligned:
+          Math.abs(backgroundBox.left - foregroundBox.left) <= 0.1 &&
+          Math.abs(backgroundBox.top - foregroundBox.top) <= 0.1 &&
+          Math.abs(backgroundBox.width - foregroundBox.width) <= 0.1 &&
+          Math.abs(backgroundBox.height - foregroundBox.height) <= 0.1,
+        protectedCoreFitsViewport:
+          ratio >= 4 / 3 - 0.0001 ||
+          (innerWidth / (backgroundBox.width * 0.75) > 0.999 &&
+            innerWidth / (backgroundBox.width * 0.75) < 1.001),
+        fullSceneAtSixteenByNine:
+          ratio < 16 / 9 - 0.0001 ||
+          Math.abs(backgroundBox.width - innerWidth) <= 1,
+        fourByThreeCore:
+          Math.abs(ratio - 4 / 3) > 0.0001 ||
+          Math.abs(backgroundBox.width * 0.75 - innerWidth) <= 1,
+        topContinuation:
+          ratio < 4 / 3 - 0.0001
+            ? backgroundBox.top > 0 && backgroundBox.bottom >= innerHeight
+            : backgroundBox.top <= 1,
+        extensionSurface: (() => {
+          const style = getComputedStyle(
+            document.querySelector('.broadcast-stage')!,
+          );
+          return {
+            color: style.backgroundColor,
+            image: style.backgroundImage,
+            repeat: style.backgroundRepeat,
+          };
+        })(),
       };
     });
-    expect(geometry, `${viewport.width}x${viewport.height}`).toEqual({
-      documentFits: true,
-      backgroundCovers: true,
-      foregroundExtendsBelowStage: true,
-    });
+    expect(geometry.documentFits, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(geometry.backgroundCovers, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(geometry.layersAligned, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(
+      geometry.protectedCoreFitsViewport,
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
+    expect(
+      geometry.fullSceneAtSixteenByNine,
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
+    expect(geometry.fourByThreeCore, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(geometry.topContinuation, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
+    expect(
+      await moderatorFaceIsClearOfPortraits(page),
+      `${viewport.width}x${viewport.height}`,
+    ).toBe(true);
+    expect(geometry.extensionSurface.repeat).toBe('no-repeat');
+    if (viewport.width / viewport.height < 4 / 3 - 0.0001) {
+      expect(geometry.extensionSurface.color).toBe('rgb(7, 27, 64)');
+      expect(geometry.extensionSurface.color).not.toBe('rgb(5, 8, 11)');
+      expect(geometry.extensionSurface.image).toBe('none');
+    }
     await page.screenshot({
       path: testInfo.outputPath(
         `modern-debate-studio-${viewport.width}x${viewport.height}.png`,
@@ -784,6 +947,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
     { width: 1280, height: 720 },
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
+    { width: 1280, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
     const composition = await page.evaluate(() => {
@@ -929,16 +1093,33 @@ test('keeps the Thunder Tribune tall in the full-body portrait plane', async ({
 test('keeps the physical moderator face clear of drafting UI', async ({
   page,
 }) => {
+  test.setTimeout(60_000);
   await startMatch(page);
   const background = page.locator('.broadcast-stage-art');
   await expect
-    .poll(() =>
-      background.evaluate(
-        (image: HTMLImageElement) =>
-          image.complete &&
-          image.naturalWidth === 1672 &&
-          image.naturalHeight === 941,
-      ),
+    .poll(
+      () =>
+        background.evaluate(
+          (image: HTMLImageElement) =>
+            image.complete &&
+            image.getAttribute('width') === '1920' &&
+            image.getAttribute('height') === '1080',
+        ),
+      { timeout: 15_000 },
+    )
+    .toBe(true);
+  await expectDecodedSceneVariant(background);
+  await expect
+    .poll(
+      () =>
+        page.locator('.character-portrait').evaluateAll((portraits) =>
+          portraits.every(
+            (portrait) =>
+              (portrait as HTMLImageElement).complete &&
+              (portrait as HTMLImageElement).naturalWidth > 0,
+          ),
+        ),
+      { timeout: 15_000 },
     )
     .toBe(true);
 
@@ -948,8 +1129,12 @@ test('keeps the physical moderator face clear of drafting UI', async ({
     { width: 1280, height: 720 },
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
+    { width: 1280, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
+    await decodeImages(
+      page.locator('.broadcast-stage-art, .character-portrait'),
+    );
     const faceClear = await page.evaluate(() => {
       const background = document.querySelector<HTMLImageElement>(
         '.broadcast-stage-art',
@@ -965,11 +1150,16 @@ test('keeps the physical moderator face clear of drafting UI', async ({
         backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
       const drawnTop =
         backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
+      const picture = background.closest('picture')!;
+      const [faceX, faceY] = picture
+        .getAttribute('data-scene-focal-point')!
+        .split(',')
+        .map(Number) as [number, number];
       const moderatorFace = {
-        left: drawnLeft + drawnWidth * 0.342,
-        right: drawnLeft + drawnWidth * 0.365,
-        top: drawnTop + drawnHeight * 0.39,
-        bottom: drawnTop + drawnHeight * 0.45,
+        left: drawnLeft + drawnWidth * (faceX - 0.02),
+        right: drawnLeft + drawnWidth * (faceX + 0.02),
+        top: drawnTop + drawnHeight * (faceY - 0.035),
+        bottom: drawnTop + drawnHeight * (faceY + 0.035),
       };
       type RectEdges = Readonly<{
         left: number;
@@ -987,17 +1177,68 @@ test('keeps the physical moderator face clear of drafting UI', async ({
           '.match-status-rail, .player-hud, .sentence-ledger, .common-phrases, .player-sentence--waiting',
         ),
       ].map((element) => element.getBoundingClientRect());
+      const portraitOverlapsFace = [
+        ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
+      ].some((portrait) => {
+        const box = portrait.getBoundingClientRect();
+        const portraitScale = Math.min(
+          box.width / portrait.naturalWidth,
+          box.height / portrait.naturalHeight,
+        );
+        const portraitWidth = portrait.naturalWidth * portraitScale;
+        const portraitHeight = portrait.naturalHeight * portraitScale;
+        const portraitLeft = box.left + (box.width - portraitWidth) / 2;
+        const portraitTop = box.bottom - portraitHeight;
+        const sourceLeft = Math.max(
+          0,
+          Math.floor((moderatorFace.left - portraitLeft) / portraitScale),
+        );
+        const sourceRight = Math.min(
+          portrait.naturalWidth,
+          Math.ceil((moderatorFace.right - portraitLeft) / portraitScale),
+        );
+        const sourceTop = Math.max(
+          0,
+          Math.floor((moderatorFace.top - portraitTop) / portraitScale),
+        );
+        const sourceBottom = Math.min(
+          portrait.naturalHeight,
+          Math.ceil((moderatorFace.bottom - portraitTop) / portraitScale),
+        );
+        if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = portrait.naturalWidth;
+        canvas.height = portrait.naturalHeight;
+        const context = canvas.getContext('2d', { willReadFrequently: true })!;
+        context.drawImage(portrait, 0, 0);
+        const pixels = context.getImageData(
+          sourceLeft,
+          sourceTop,
+          sourceRight - sourceLeft,
+          sourceBottom - sourceTop,
+        ).data;
+        for (let offset = 3; offset < pixels.length; offset += 4) {
+          if (pixels[offset]! > 0) return true;
+        }
+        return false;
+      });
       return {
         backgroundDimensions:
-          background.naturalWidth === 1672 && background.naturalHeight === 941,
+          background.getAttribute('width') === '1920' &&
+          background.getAttribute('height') === '1080',
         clear: !draftingRegions.some((region) =>
           overlaps(moderatorFace, region),
         ),
+        portraitClear: !portraitOverlapsFace,
       };
     });
 
     expect(faceClear.backgroundDimensions).toBe(true);
     expect(faceClear.clear, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(faceClear.portraitClear, `${viewport.width}x${viewport.height}`).toBe(
+      true,
+    );
   }
 });
 
@@ -2025,6 +2266,12 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
     chromaKeyGreenRatio: number;
     cornerAlpha: readonly number[];
     lowerThirdOpaqueRatio: number;
+    nonTransparentBounds: Readonly<{
+      left: number;
+      right: number;
+      top: number;
+      bottom: number;
+    }>;
     opaqueRatio: number;
     topOpaqueRatio: number;
     transparentRatio: number;
@@ -2048,6 +2295,10 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
       let bottomRowOpaquePixels = 0;
       let chromaKeyGreenPixels = 0;
       let lowerThirdOpaquePixels = 0;
+      let minimumX = canvas.width;
+      let maximumX = -1;
+      let minimumY = canvas.height;
+      let maximumY = -1;
       let topOpaqueRow = canvas.height;
       for (
         let pixelIndex = 0;
@@ -2058,6 +2309,13 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
         const alpha = pixels[pixelOffset + 3];
         const row = Math.floor(pixelIndex / canvas.width);
         if (alpha === 0) transparentPixels += 1;
+        if (alpha > 0) {
+          const x = pixelIndex % canvas.width;
+          minimumX = Math.min(minimumX, x);
+          maximumX = Math.max(maximumX, x);
+          minimumY = Math.min(minimumY, row);
+          maximumY = Math.max(maximumY, row);
+        }
         if (alpha === 255) opaquePixels += 1;
         if (alpha > 0 && row === canvas.height - 1) {
           bottomRowOpaquePixels += 1;
@@ -2087,12 +2345,140 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
             .data[3],
         ],
         lowerThirdOpaqueRatio: lowerThirdOpaquePixels / pixelCount,
+        nonTransparentBounds: {
+          left: minimumX / canvas.width,
+          right: (maximumX + 1) / canvas.width,
+          top: minimumY / canvas.height,
+          bottom: (maximumY + 1) / canvas.height,
+        },
         opaqueRatio: opaquePixels / pixelCount,
         topOpaqueRatio: topOpaqueRow / canvas.height,
         transparentRatio: transparentPixels / pixelCount,
       };
     }),
   );
+}
+
+async function expectDecodedSceneVariant(image: Locator): Promise<void> {
+  await expect
+    .poll(
+      () =>
+        image.evaluate((element, dimensions) => {
+          const image = element as HTMLImageElement;
+          return {
+            complete: image.complete,
+            currentSrc: image.currentSrc,
+            naturalHeight: image.naturalHeight,
+            naturalWidth: image.naturalWidth,
+            valid:
+              image.complete &&
+              dimensions.some(
+                ([width, height]) =>
+                  image.naturalWidth === width && image.naturalHeight === height,
+              ),
+          };
+        }, sceneVariantDimensions),
+      { timeout: 15_000 },
+    )
+    .toMatchObject({ valid: true });
+}
+
+async function decodeImages(images: Locator): Promise<void> {
+  await images.evaluateAll((elements) =>
+    Promise.all(
+      elements.map((element) => (element as HTMLImageElement).decode()),
+    ).then(() => undefined),
+  );
+}
+
+function expectDeskPlateBounds(
+  alpha:
+    | Readonly<{
+        nonTransparentBounds: Readonly<{
+          left: number;
+          right: number;
+          top: number;
+          bottom: number;
+        }>;
+      }>
+    | undefined,
+): void {
+  expect(alpha).toBeDefined();
+  const bounds = alpha!.nonTransparentBounds;
+  // The current desks occupy the manifest four-by-three core horizontally.
+  expect(bounds.left).toBeGreaterThanOrEqual(0.124);
+  expect(bounds.left).toBeLessThanOrEqual(0.126);
+  expect(bounds.right).toBeGreaterThanOrEqual(0.874);
+  expect(bounds.right).toBeLessThanOrEqual(0.876);
+  expect(bounds.top).toBeGreaterThanOrEqual(0.53);
+  expect(bounds.top).toBeLessThanOrEqual(0.56);
+  expect(bounds.bottom).toBeGreaterThanOrEqual(0.999);
+}
+
+async function moderatorFaceIsClearOfPortraits(page: Page): Promise<boolean> {
+  return page.evaluate(() => {
+    const background = document.querySelector<HTMLImageElement>(
+      '.broadcast-stage-art',
+    )!;
+    const backgroundBox = background.getBoundingClientRect();
+    const picture = background.closest('picture')!;
+    const focalPoint = picture.getAttribute('data-scene-focal-point');
+    if (!focalPoint) return true;
+    const [faceX, faceY] = focalPoint.split(',').map(Number) as [number, number];
+    const moderatorFace = {
+      left: backgroundBox.left + backgroundBox.width * (faceX - 0.02),
+      right: backgroundBox.left + backgroundBox.width * (faceX + 0.02),
+      top: backgroundBox.top + backgroundBox.height * (faceY - 0.035),
+      bottom: backgroundBox.top + backgroundBox.height * (faceY + 0.035),
+    };
+
+    return ![
+      ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
+    ].some((portrait) => {
+      const box = portrait.getBoundingClientRect();
+      const scale = Math.min(
+        box.width / portrait.naturalWidth,
+        box.height / portrait.naturalHeight,
+      );
+      const drawnWidth = portrait.naturalWidth * scale;
+      const drawnHeight = portrait.naturalHeight * scale;
+      const drawnLeft = box.left + (box.width - drawnWidth) / 2;
+      const drawnTop = box.bottom - drawnHeight;
+      const sourceLeft = Math.max(
+        0,
+        Math.floor((moderatorFace.left - drawnLeft) / scale),
+      );
+      const sourceRight = Math.min(
+        portrait.naturalWidth,
+        Math.ceil((moderatorFace.right - drawnLeft) / scale),
+      );
+      const sourceTop = Math.max(
+        0,
+        Math.floor((moderatorFace.top - drawnTop) / scale),
+      );
+      const sourceBottom = Math.min(
+        portrait.naturalHeight,
+        Math.ceil((moderatorFace.bottom - drawnTop) / scale),
+      );
+      if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = portrait.naturalWidth;
+      canvas.height = portrait.naturalHeight;
+      const context = canvas.getContext('2d', { willReadFrequently: true })!;
+      context.drawImage(portrait, 0, 0);
+      const pixels = context.getImageData(
+        sourceLeft,
+        sourceTop,
+        sourceRight - sourceLeft,
+        sourceBottom - sourceTop,
+      ).data;
+      for (let offset = 3; offset < pixels.length; offset += 4) {
+        if (pixels[offset]! > 0) return true;
+      }
+      return false;
+    });
+  });
 }
 
 async function topStatusRegionsDoNotOverlap(page: Page): Promise<boolean> {

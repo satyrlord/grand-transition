@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "modern-debate-studio",
+      "ownerType": "scene",
+      "ownerId": "modern-debate-studio",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "modern-debate-studio.png",
+        "sha256": "02e36aea466d0ac25f9e3f8e6567120f1c64f487302dc45a4eb563adcab75834",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 627496,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.71,
+        "y": 0.44
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": {
+          "x": 0.68,
+          "y": 0.36,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/modern-debate-studio-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 7284,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "32729522825b795a42b4d251da39f144a0f09546aeea5600a05c9a655c6298fe"
+        },
+        {
+          "path": "variants/modern-debate-studio-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 9184,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "5fc6cc46b5c00bd9cbbdab3e54c6f559356f162c7f9356d2a47e2e72441da6f8"
+        },
+        {
+          "path": "variants/modern-debate-studio-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 17249,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "1ce7b61495027f1b9f003dc6d8b5910a85cde4c57ee6e8dbeda1a12f538673fb"
+        },
+        {
+          "path": "variants/modern-debate-studio-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 24788,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "35abbdb9d1e12a117291d4bc6988c99cad85401303dd433b2eab850c7ccb070d"
+        },
+        {
+          "path": "variants/modern-debate-studio-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 28896,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "6284c8e01cd7959dc6b6050d1efbd235cda6715275a29fb92964f94c7f2ff349"
+        },
+        {
+          "path": "variants/modern-debate-studio-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 43392,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "33ea525ac3b437e3cca48efe8b885efcb7c0f8abd8ea33b02af4febb0ea6cc87"
+        }
+      ]
+    },
+    {
+      "id": "modern-debate-studio-desks",
+      "ownerType": "scene",
+      "ownerId": "modern-debate-studio",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "modern-debate-studio-desks.png",
+        "sha256": "5d8c36ed4d3ade5ce4a9abe879257dd010a97f57d7decb7d9556f1ea71c47af2",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 422671,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/modern-debate-studio-desks-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 4872,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "29b6150763dd378531717e6212c3df6c86e4d121f05147cd02bd06e169714f51"
+        },
+        {
+          "path": "variants/modern-debate-studio-desks-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 9856,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "9b748248c9d2de63636cb5f61c8146a459c7d161f0f88de2b5939c998d71db22"
+        },
+        {
+          "path": "variants/modern-debate-studio-desks-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 11430,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "f81b015db3da8f37ec9d2d572c484d62592a532f04914bb09e49bb632b62aee5"
+        },
+        {
+          "path": "variants/modern-debate-studio-desks-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 23546,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "fe8700df5289b169a04f0560f2979260f9d03dd2ea731b3c570e43bfc2e95cbe"
+        },
+        {
+          "path": "variants/modern-debate-studio-desks-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 17076,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "2fe86201c1130861b01764e8afffca24cc84c4aea99d40375581aa7f57e45411"
+        },
+        {
+          "path": "variants/modern-debate-studio-desks-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 32592,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "4393a843df6b8da4e3d987bb6e12ae39c8c6a97862591c60304b5450cbbc7953"
+        }
+      ]
+    },
+    {
+      "id": "transition-era-television-studio",
+      "ownerType": "scene",
+      "ownerId": "transition-era-television-studio",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "transition-era-television-studio.png",
+        "sha256": "1bdd48d42dbac27f8bd0dcce98353c3c2cd21d2c5b3b5a768006b21e7d68475e",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 949071,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.29,
+        "y": 0.44
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": {
+          "x": 0.26,
+          "y": 0.36,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/transition-era-television-studio-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 6500,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "f5487e27f9a8e41f722173bf0171d0bee20d1cab2f7518d41bb15b87dd857b9e"
+        },
+        {
+          "path": "variants/transition-era-television-studio-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 7788,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "2f0fd253b4db5d4582fda202aa0eae37c63b9ddbc64e30b9bea3354701253193"
+        },
+        {
+          "path": "variants/transition-era-television-studio-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 17644,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "21c9fc3d1b4f8c04afacbbfb67a81079abc3e276be48302146309143688d3404"
+        },
+        {
+          "path": "variants/transition-era-television-studio-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 22608,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "ad8ea30ebf544ae3fae309eb27691dc61b90c1651f017d4ab20e83077fa87cec"
+        },
+        {
+          "path": "variants/transition-era-television-studio-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 31780,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "dd868588686631dfd8e79a16289aa2dbffb86fa2de946310fd7818a3219c8d59"
+        },
+        {
+          "path": "variants/transition-era-television-studio-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 41370,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "8735a49d07eae6837ee0096d426fc4d41e2d265c4f547e5609581960f2275480"
+        }
+      ]
+    },
+    {
+      "id": "transition-era-television-studio-desks",
+      "ownerType": "scene",
+      "ownerId": "transition-era-television-studio",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "transition-era-television-studio-desks.png",
+        "sha256": "f6861672726d7726584c16d0d917e64c568b04876c68220c1e520d590526093a",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 367851,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/transition-era-television-studio-desks-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 4020,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "2e987ee785771744aad0d2c1b3f1d39a8a640cc3f333df536525a2261c3ed7c7"
+        },
+        {
+          "path": "variants/transition-era-television-studio-desks-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 6228,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "d5e62543f497e898a03bc2a08f0c48a222f672a8ce13143b1a8d59b13e6d1312"
+        },
+        {
+          "path": "variants/transition-era-television-studio-desks-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 7842,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "f56e5c0c86b43df6df487da88f3fc957b827869574b29c10b5ad41e371e4ea70"
+        },
+        {
+          "path": "variants/transition-era-television-studio-desks-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 13620,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "435596f91d5c0d2f293a6c0430768cc073f5897ddfdff8026f37b890fc4646a7"
+        },
+        {
+          "path": "variants/transition-era-television-studio-desks-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 11850,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "e18fe9085e61247832ccc744de1f5cbc1cd1cbb3824315a7b41e6ae2f18a9087"
+        },
+        {
+          "path": "variants/transition-era-television-studio-desks-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 18490,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "d91b0179cd6cb764df8069041e087fdc3fe3c0a3f8df0ee0fd835a5389a7e26e"
+        }
+      ]
+    }
+  ]
+}

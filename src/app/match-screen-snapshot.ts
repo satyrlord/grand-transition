@@ -17,29 +17,14 @@ import type {
 } from '../engine/match-lifecycle';
 import { characterSkins, sampleContent } from '../game-content';
 import { deepFreeze } from './deep-freeze';
-
-const sceneMediaUrls: Readonly<Record<string, string>> = {
-  'transition-era-television-studio': new URL(
-    '../assets/scenes/transition-era-television-studio.png',
-    import.meta.url,
-  ).href,
-  'transition-era-television-studio-desks': new URL(
-    '../assets/scenes/transition-era-television-studio-desks.png',
-    import.meta.url,
-  ).href,
-  'modern-debate-studio': new URL(
-    '../assets/scenes/modern-debate-studio.png',
-    import.meta.url,
-  ).href,
-  'modern-debate-studio-desks': new URL(
-    '../assets/scenes/modern-debate-studio-desks.png',
-    import.meta.url,
-  ).href,
-  'catalog-foundation-neutral-scene': new URL(
-    '../assets/brand/title-proscenium-background.webp',
-    import.meta.url,
-  ).href,
-};
+import {
+  resolveSceneAsset,
+  sceneImageSizes,
+  type SceneAssetSource,
+  type SceneFallbackAsset,
+  type ScenePoint,
+  type SceneRectangle,
+} from './scene-assets';
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
 type MatchCardAction = 'select' | null;
@@ -91,11 +76,50 @@ export type MatchScoreComponentView = Readonly<{
   weaknessTags: readonly string[];
 }>;
 
-export type MatchSceneLayerView = Readonly<{
+type MatchSceneLayerBase = Readonly<{
   assetId: string;
   depth: number;
   url: string;
+  width: number;
+  height: number;
+  sizes: string;
+  webp: SceneAssetSource;
 }>;
+
+export type MatchManifestSceneLayerView = MatchSceneLayerBase & Readonly<{
+  kind: 'manifest';
+  width: 1920;
+  height: 1080;
+  sizes: typeof sceneImageSizes;
+  avif: SceneAssetSource;
+  sources: Readonly<{
+    avif: SceneAssetSource;
+    webp: SceneAssetSource;
+  }>;
+  focalPoint: ScenePoint;
+  focalRectangles: Readonly<Record<string, SceneRectangle | null>>;
+  sharedSafeRectangles: Readonly<Record<string, SceneRectangle>>;
+  crop: Readonly<{
+    core: SceneRectangle;
+    strategy: string;
+  }>;
+}>;
+
+export type MatchFallbackSceneLayerView = MatchSceneLayerBase & Readonly<{
+  kind: 'fallback';
+  assetId: SceneFallbackAsset['id'];
+  width: 1672;
+  height: 941;
+  sizes: '100vw';
+  avif: null;
+  sources: Readonly<{
+    webp: SceneAssetSource;
+  }>;
+}>;
+
+export type MatchSceneLayerView =
+  | MatchManifestSceneLayerView
+  | MatchFallbackSceneLayerView;
 
 export type MatchScreenSnapshot = Readonly<{
   revision: number;
@@ -718,14 +742,50 @@ function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
   if (!scene) throw new Error(`Unknown match scene "${sceneId}".`);
 
   return scene.backgroundLayers.map(({ depth, media }) => {
-    const url = sceneMediaUrls[media.assetId];
-    if (!url) {
-      throw new Error(
-        `Scene "${sceneId}" layer "${media.assetId}" has no match asset.`,
-      );
+    const asset = resolveSceneAsset(media.assetId);
+    if (asset.kind === 'fallback') {
+      return fallbackSceneLayerView(asset, depth);
     }
-    return { assetId: media.assetId, depth, url };
+    return {
+      kind: 'manifest',
+      assetId: asset.id,
+      depth,
+      url: asset.url,
+      width: asset.width,
+      height: asset.height,
+      sizes: sceneImageSizes,
+      avif: asset.avif,
+      webp: asset.webp,
+      sources: {
+        avif: asset.avif,
+        webp: asset.webp,
+      },
+      focalPoint: asset.focalPoint,
+      focalRectangles: asset.focalRectangles,
+      sharedSafeRectangles: asset.sharedSafeRectangles,
+      crop: asset.crop,
+    };
   });
+}
+
+function fallbackSceneLayerView(
+  asset: SceneFallbackAsset,
+  depth: number,
+): MatchFallbackSceneLayerView {
+  return {
+    kind: 'fallback',
+    assetId: asset.id,
+    depth,
+    url: asset.url,
+    width: asset.width,
+    height: asset.height,
+    sizes: asset.sizes,
+    avif: null,
+    webp: asset.webp,
+    sources: {
+      webp: asset.webp,
+    },
+  };
 }
 
 function gameMessage(key: string | undefined): string {

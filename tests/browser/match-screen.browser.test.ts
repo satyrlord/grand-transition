@@ -44,6 +44,54 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(foregroundLayer?.src).toContain(
     'transition-era-television-studio-desks',
   );
+  const scenePictures = [
+    ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
+  ];
+  expect(scenePictures).toHaveLength(2);
+  expect(
+    [...match.querySelectorAll('img, source')].some((element) =>
+      `${element.getAttribute('src') ?? ''}${element.getAttribute('srcset') ?? ''}`.includes(
+        'modern-debate-studio',
+      ),
+    ),
+  ).toBe(false);
+  for (const picture of scenePictures) {
+    expect(
+      [...picture.querySelectorAll<HTMLSourceElement>('source')].map(
+        (source) => source.type,
+      ),
+    ).toEqual(['image/avif', 'image/webp']);
+    const image = picture.querySelector<HTMLImageElement>('img')!;
+    expect(image.getAttribute('width')).toBe('1920');
+    expect(image.getAttribute('height')).toBe('1080');
+    expect(image.getAttribute('sizes')).toBe(
+      '(max-aspect-ratio: 4/3) 134vw, 100vw',
+    );
+    expect(image.getAttribute('src')).toContain('.webp');
+    expect(image.getAttribute('src')).not.toContain('.png');
+    expect(image.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+    expect(picture.getAttribute('data-scene-focal-point')).toMatch(
+      /^0\.[0-9]+,0\.[0-9]+$/u,
+    );
+    expect(picture.getAttribute('data-scene-crop-core')).toContain(
+      '"width":0.75',
+    );
+    expect(picture.getAttribute('data-scene-safe-rectangles')).toContain(
+      'centralInteraction',
+    );
+    expect(
+      getComputedStyle(image).getPropertyValue('--scene-crop-core-width'),
+    ).toBe('0.75');
+    expect(
+      [...picture.querySelectorAll('source')].every(
+        (source) =>
+          source.getAttribute('srcset')?.match(/640w.*1280w.*1920w/u) &&
+          !source.getAttribute('srcset')?.includes('.png'),
+      ),
+    ).toBe(true);
+  }
+  expect(matchScreenStyles).not.toContain('transform: translateY(8%) scale(0.8)');
+  expect(matchScreenStyles).not.toContain('object-fit: cover');
   expect(foregroundLayer?.draggable).toBe(false);
   expect(foregroundLayer?.alt).toBe('');
   expect(match.querySelector('.match-footer')).toBeNull();
@@ -126,6 +174,117 @@ test('renders an immutable complete match snapshot and previews without changing
   ).not.toBe(sentenceBefore);
   expect(match.snapshot).toBe(snapshot);
   expect(snapshot.sentenceText).toBe(sentenceBefore);
+});
+
+test('renders the foundation scene with only its legacy WebP fallback', async () => {
+  const match = await startMatch('county-council-ballroom');
+  const pictures = [
+    ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
+  ];
+  expect(pictures).toHaveLength(1);
+  expect(pictures[0]?.dataset.sceneKind).toBe('fallback');
+  expect(pictures[0]?.dataset.sceneAsset).toBe(
+    'catalog-foundation-neutral-scene',
+  );
+  const picture = pictures[0]!;
+  expect(picture.querySelectorAll('source')).toHaveLength(1);
+  expect(picture.querySelector('source')?.type).toBe('image/webp');
+  expect(picture.querySelector('source')?.getAttribute('srcset')).toMatch(
+    /1672w/u,
+  );
+  expect(picture.querySelector('source')?.getAttribute('srcset')).not.toMatch(
+    /transition-era|modern-debate/u,
+  );
+  const image = picture.querySelector<HTMLImageElement>('img')!;
+  expect(image.getAttribute('width')).toBe('1672');
+  expect(image.getAttribute('height')).toBe('941');
+  expect(image.getAttribute('src')).toContain('title-proscenium-background');
+  expect(image.getAttribute('src')).not.toMatch(/transition-era|modern-debate/u);
+  expect(picture.hasAttribute('data-scene-focal-point')).toBe(false);
+  expect(picture.hasAttribute('data-scene-crop-core')).toBe(false);
+  await vi.waitFor(() => {
+    expect(image.currentSrc).toContain('title-proscenium-background');
+    expect(image.complete).toBe(true);
+    expect(image.naturalWidth).toBeGreaterThan(0);
+  });
+});
+
+test('shows complete long private phrases at the minimum viewport', async () => {
+  const match = await startMatch();
+  await page.viewport(1024, 720);
+  const longPhrases = [
+    'harasses innocent people on social media',
+    'makes its own voters change their minds',
+  ];
+  match.snapshot = {
+    ...match.snapshot!,
+    revision: match.snapshot!.revision + 1,
+    privateCards: match.snapshot!.privateCards.map((card, index) => ({
+      ...card,
+      text: longPhrases[index]!,
+    })),
+  };
+  await match.updateComplete;
+
+  const privatePhrases = [
+    ...match.querySelectorAll<HTMLElement>('.private-hand .card-phrase'),
+  ];
+  expect(privatePhrases.map(({ textContent }) => textContent?.trim())).toEqual(
+    longPhrases,
+  );
+  expect(
+    privatePhrases.every((phrase) => {
+      const phraseBox = phrase.getBoundingClientRect();
+      const buttonBox = phrase.closest('button')!.getBoundingClientRect();
+      const style = getComputedStyle(phrase);
+      return (
+        style.whiteSpace === 'normal' &&
+        style.textOverflow === 'clip' &&
+        phrase.scrollWidth <= phrase.clientWidth &&
+        phraseBox.top >= buttonBox.top - 0.5 &&
+        phraseBox.bottom <= buttonBox.bottom + 0.5
+      );
+    }),
+  ).toBe(true);
+});
+
+test('decodes WebP from the application picture when AVIF is unsupported', async () => {
+  const match = await startMatch();
+  const picture = match.querySelector<HTMLPictureElement>(
+    '.broadcast-scene-picture[data-scene-kind="manifest"]',
+  )!;
+  const avif = picture.querySelector<HTMLSourceElement>(
+    'source[data-scene-format="avif"]',
+  )!;
+  const webp = picture.querySelector<HTMLSourceElement>(
+    'source[data-scene-format="webp"]',
+  );
+  const image = picture.querySelector<HTMLImageElement>('img')!;
+  expect(webp).not.toBeNull();
+  const webpSrcset = webp?.getAttribute('srcset') ?? '';
+  expect(webp?.type).toBe('image/webp');
+  expect(webpSrcset).toMatch(
+    /\.webp(?:\?no-inline)? 640w.*\.webp(?:\?no-inline)? 1280w.*\.webp(?:\?no-inline)? 1920w/u,
+  );
+  const expectedWebpUrls = webpSrcset
+    .split(',')
+    .map((candidate) => candidate.trim().split(/\s+/u)[0])
+    .filter((candidate): candidate is string => Boolean(candidate))
+    .map((candidate) => new URL(candidate, window.location.href).href);
+  expect(expectedWebpUrls).toHaveLength(3);
+
+  // Use the real application picture. This type is unsupported only for this
+  // test, so native picture selection must use the real WebP source.
+  avif.type = 'image/unsupported-avif';
+  image.removeAttribute('srcset');
+  image.src = '/missing-avif-fallback-image.webp';
+
+  await vi.waitFor(() => {
+    expect(expectedWebpUrls).toContain(image.currentSrc);
+    expect(image.complete).toBe(true);
+    expect(image.naturalWidth).toBeGreaterThan(0);
+  });
+  expect(image.currentSrc).toContain('.webp');
 });
 
 test('shows one inert thinking state without private controls', async () => {
@@ -767,7 +926,9 @@ test('confirms a paused exit before it discards the match', async () => {
   ).toMatch(/Grand\s+Transition/u);
 });
 
-async function startMatch(): Promise<GrandTransitionMatch> {
+async function startMatch(
+  sceneId = 'transition-era-television-studio',
+): Promise<GrandTransitionMatch> {
   await page.viewport(1280, 720);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
@@ -776,6 +937,11 @@ async function startMatch(): Promise<GrandTransitionMatch> {
   await app.updateComplete;
 
   await page.getByRole('button', { name: 'Set up match' }).click();
+  if (sceneId !== 'transition-era-television-studio') {
+    const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
+    scene.value = sceneId;
+    scene.dispatchEvent(new Event('change', { bubbles: true }));
+  }
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;
 
