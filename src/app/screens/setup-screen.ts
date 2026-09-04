@@ -194,10 +194,10 @@ export class GrandTransitionSetup extends LitElement {
                 <p aria-live="polite">
                   ${
                     this.snapshot.mode === 'ladder'
-                      ? msg('19 contestants · Selecting your ladder character')
+                      ? msg('18 contestants · Selecting your ladder character')
                       : this.selectionTarget === 'playerOneCharacterId'
-                        ? msg('19 contestants · Selecting for player one')
-                        : msg('19 contestants · Selecting for player two')
+                        ? msg('18 contestants · Selecting for player one')
+                        : msg('18 contestants · Selecting for player two')
                   }
                 </p>
               </div>
@@ -207,7 +207,7 @@ export class GrandTransitionSetup extends LitElement {
               <div
                 class="roster-grid"
                 role="group"
-                aria-label=${msg('Contestant roster, 19 characters')}
+                aria-label=${msg('Contestant roster, 18 characters')}
                 tabindex="0"
               >
                 ${characterViews().map((character) =>
@@ -1072,7 +1072,7 @@ function skinAccessibleLabel(
   if (skinId === 'alternate') {
     return species === 'robot'
       ? msg('Alternate chassis')
-      : msg('Female alternate skin');
+      : msg('Alternate skin');
   }
   return skinLabel(skinId) + ' ' + msg('skin');
 }

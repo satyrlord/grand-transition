@@ -146,6 +146,23 @@
       }
     },
     {
+      "id": "the-procurement-seam",
+      "role": "noun",
+      "text": "the procurement seam",
+      "tags": ["corruption", "spending", "bureaucracy"],
+      "scoreGroups": {
+        "substance": ["politics", "bureaucracy"],
+        "flavour": ["procurement", "technology"]
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original software-architecture metaphor applied to fictional public-procurement satire. Editorial review complete."
+      }
+    },
+    {
       "id": "government-ai-procured",
       "role": "verb",
       "text": "procured",
@@ -224,11 +241,11 @@
       }
     },
     {
-      "id": "government-ai-synergized",
+      "id": "government-ai-double-clicked-on",
       "role": "verb",
-      "text": "synergized",
-      "singularText": "synergized",
-      "pluralText": "synergized",
+      "text": "double-clicked on",
+      "singularText": "double-clicked on",
+      "pluralText": "double-clicked on",
       "tags": ["spending", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
@@ -241,20 +258,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-synergizes",
+      "tenseFamily": "government-ai-double-clicks-on",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
       }
     },
     {
-      "id": "government-ai-synergizes",
+      "id": "government-ai-double-clicks-on",
       "role": "verb",
-      "text": "synergizes",
-      "singularText": "synergizes",
-      "pluralText": "synergize",
+      "text": "double-clicks on",
+      "singularText": "double-clicks on",
+      "pluralText": "double-click on",
       "tags": ["spending", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
@@ -267,20 +284,20 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-synergizes",
+      "tenseFamily": "government-ai-double-clicks-on",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
       }
     },
     {
-      "id": "government-ai-will-synergize",
+      "id": "government-ai-will-double-click-on",
       "role": "verb",
-      "text": "will synergize",
-      "singularText": "will synergize",
-      "pluralText": "will synergize",
+      "text": "will double-click on",
+      "singularText": "will double-click on",
+      "pluralText": "will double-click on",
       "tags": ["spending", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
@@ -293,12 +310,12 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-synergizes",
+      "tenseFamily": "government-ai-double-clicks-on",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original use of corporate jargon in a fictional state-propaganda voice. Editorial review complete."
+        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
       }
     },
     {
@@ -377,6 +394,81 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
+      }
+    },
+    {
+      "id": "was-classified-as-load-bearing",
+      "role": "predicate",
+      "text": "was classified as load-bearing",
+      "singularText": "was classified as load-bearing",
+      "pluralText": "were classified as load-bearing",
+      "tags": ["corruption", "spending", "obsolete"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "classified-as-load-bearing",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
+      }
+    },
+    {
+      "id": "is-classified-as-load-bearing",
+      "role": "predicate",
+      "text": "is classified as load-bearing",
+      "singularText": "is classified as load-bearing",
+      "pluralText": "are classified as load-bearing",
+      "tags": ["corruption", "spending", "obsolete"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "classified-as-load-bearing",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
+      }
+    },
+    {
+      "id": "will-be-classified-as-load-bearing",
+      "role": "predicate",
+      "text": "will be classified as load-bearing",
+      "singularText": "will be classified as load-bearing",
+      "pluralText": "will be classified as load-bearing",
+      "tags": ["corruption", "spending", "obsolete"],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": ["politics", "bureaucracy", "media", "personal"]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "classified-as-load-bearing",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
       }
     },
     {
@@ -530,12 +622,12 @@
       }
     },
     {
-      "id": "reported-historic-adoption-metrics",
+      "id": "quietly-navigated-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "reported historic adoption metrics",
-      "singularText": "reported historic adoption metrics",
-      "pluralText": "reported historic adoption metrics",
-      "tags": ["corruption", "spending", "evidence"],
+      "text": "quietly navigated the people's policy landscape",
+      "singularText": "quietly navigated the people's policy landscape",
+      "pluralText": "quietly navigated the people's policy landscape",
+      "tags": ["obsolete", "spending", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -546,21 +638,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reports-historic-adoption-metrics",
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
       }
     },
     {
-      "id": "reports-historic-adoption-metrics",
+      "id": "quietly-navigates-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "reports historic adoption metrics",
-      "singularText": "reports historic adoption metrics",
-      "pluralText": "report historic adoption metrics",
-      "tags": ["corruption", "spending", "evidence"],
+      "text": "quietly navigates the people's policy landscape",
+      "singularText": "quietly navigates the people's policy landscape",
+      "pluralText": "quietly navigate the people's policy landscape",
+      "tags": ["obsolete", "spending", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -571,21 +663,21 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "reports-historic-adoption-metrics",
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
       }
     },
     {
-      "id": "will-report-historic-adoption-metrics",
+      "id": "will-quietly-navigate-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "will report historic adoption metrics",
-      "singularText": "will report historic adoption metrics",
-      "pluralText": "will report historic adoption metrics",
-      "tags": ["corruption", "spending", "evidence"],
+      "text": "will quietly navigate the people's policy landscape",
+      "singularText": "will quietly navigate the people's policy landscape",
+      "pluralText": "will quietly navigate the people's policy landscape",
+      "tags": ["obsolete", "spending", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -596,12 +688,12 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reports-historic-adoption-metrics",
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-metrics satire in the fictional chatbot's triumphalist voice. Editorial review complete."
+        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
       }
     },
     {
@@ -618,16 +710,16 @@
       }
     },
     {
-      "id": "for-the-glorious-five-year-digital-transformation",
+      "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
       "role": "modifier",
-      "text": "for the glorious five-year digital transformation",
+      "text": "at the core of the robust five-year paradigm shift",
       "tags": ["obsolete", "spending", "bureaucracy"],
       "rarity": "rare",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original five-year-plan propaganda mixed with corporate transformation jargon. Editorial review complete."
+        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional five-year-plan satire. Editorial review complete."
       }
     },
     {

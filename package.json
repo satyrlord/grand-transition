@@ -16,7 +16,7 @@
     "build": "vite build",
     "assets:build": "node tools/validate-scaffold.mjs --domain assets --mode build",
     "assets:convert-green": "node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree",
-    "assets:validate": "node tools/validate-scaffold.mjs --domain assets && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets",
+    "assets:validate": "node tools/validate-scaffold.mjs --domain assets && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets && node tools/validate-asset-color.mjs validate src/assets",
     "content:validate": "node tools/validate-scaffold.mjs --domain content && vitest run --config vitest.config.ts tests/unit/content-schemas.test.ts",
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
     "boundaries:check": "node tools/check-pure-boundaries.mjs",

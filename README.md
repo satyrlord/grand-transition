@@ -6,9 +6,9 @@ deny useful phrases, target character weaknesses, continue combinations across
 rounds, use comebacks, and reduce the opponent's Pride.
 
 The game occurs in an invented republic influenced by Romanian public life
-after 1989. Its character identities and prose are fictional. A portrait skin
-can use a public-figure likeness for visual parody when the product owner
-explicitly approves it. The skin does not change the character name or prose.
+after 1989. Its character identities and prose are fictional. An approved
+public-figure likeness may be used only as visual-only parody in a portrait skin
+and does not change the character identity or prose.
 The game does not reproduce real political party names, party acronyms, party
 logos, protected game content, third-party art, or unlicensed third-party audio.
 
@@ -31,21 +31,23 @@ Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-Milestones 023 through 025, 027 through 029, and 031 remain incomplete.
+023 through 025, 027 through 029, and 031 remain incomplete.
 
-The current content has common Romanian-politics phrases and 19 fictional
-characters: 18 humans and one robot. Each character has owned phrases and a
-default local portrait. Eight archetypes have ten alternate skins in total.
+The current content has common Romanian-politics phrases and 18 fictional
+characters: 17 humans and one robot. Each character has owned phrases and a
+default local portrait. Seven archetypes have nine alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes two fictional layered debate studios, four playable
 foundation scenes with a neutral local fallback, and one English game-locale
 bundle.
 
-The final asset contract permits one default skin and one through eight
-alternate skins for one archetype.
+The final asset contract permits one default skin and zero through eight
+alternate skins per archetype.
 All final character and scene imagery uses one strict flat cel-shaded editorial-
 cartoon style. Painted comic-book, painterly semi-realistic, realistic
 concept-art, photographic, and three-dimensional-render styles are prohibited.
+Final raster art uses neutral sRGB white balance without a global yellow or
+amber wash. Warm color is limited to authored local materials and lighting.
 
 The implemented rules include extended Hollywood Roast grammar, agreement,
 compound subjects and objects, endings, modifiers, incomplete states, and

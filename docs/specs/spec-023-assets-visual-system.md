@@ -19,13 +19,12 @@ ambience, and transitions.
 
 This milestone regenerates the explicit fixed character and scene Portable
 Network Graphics (PNG) baseline below. Do not derive the scope from a later
-directory scan. The baseline contains 29 character PNG files and four scene PNG
+directory scan. The baseline contains 27 character PNG files and four scene PNG
 files.
 
-The character baseline contains the 19 default portraits that Milestone 026
-defines and these ten current alternate portraits:
+The character baseline contains the 18 default portraits that Milestone 026
+defines and these nine current alternate portraits:
 
-- `black-sea-captain--alternate.png`;
 - `government-ai--alternate.png`;
 - `midnight-sensationalist--alternate.png`;
 - `oat-milk-reformist--alternate.png`;
@@ -35,6 +34,12 @@ defines and these ten current alternate portraits:
 - `velvet-mogul--boardroom-patriarch.png`;
 - `velvet-mogul--silk-diplomat.png`; and
 - `velvet-mogul--velvet-statesman.png`.
+
+The retired `black-sea-captain--alternate.png` is not regenerated, shipped, or
+counted in this baseline.
+
+The retired `presidential-sphinx.png` is not regenerated, shipped, or counted
+in this baseline.
 
 The scene baseline contains these current layers:
 
@@ -59,18 +64,18 @@ Regenerate each baseline asset as new art. A current raster can be inspected
 only to find a missing, lost, or conflicting decision. Do not give a current
 raster to an image generator. Do not trace it, edit it, composite it into a new
 master, or use it as an image-to-image, identity, composition, or style
-reference. Generation inputs are the approved public art direction, a complete
-private character study or approved scene specification, and approved external
-research references.
+reference. Generation inputs are the approved public art direction and a
+complete private character study or approved scene specification.
 
 ### Character readiness
 
-Each of the 19 represented archetypes must have one complete private character
+Each of the 18 represented archetypes must have one complete private character
 study before regeneration starts for any of its skins. An existing prompt does
 not qualify as a complete study. The study must define the archetype,
 silhouette, proportions, face or mechanical display, clothing or chassis,
 gesture rhythm, prop logic, palette, every baseline skin, state language,
-references, exclusions, and recorded reference approval when it is required.
+and exclusions. Any required product-owner approval is recorded in the private
+study.
 
 The art agent must audit the study before generation. When information is
 missing, lost, unclear, or contradictory, the agent must use `$grill-me` with
@@ -101,8 +106,8 @@ simplification, lighting logic, proportion system, texture density, and level
 of exaggeration.
 
 Each of the four Milestone 023 vertical-slice characters has one default skin
-and one through eight alternate skins. One archetype has no more than eight
-alternate skins.
+and zero through eight alternate skins. One archetype has no more than eight
+alternate skins. The Black Sea Captain has no alternate skin in this baseline.
 Default portraits use `<character-id>.png`. Alternate portraits use
 `<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
 this filename convention. It does not use a TypeScript skin registry.
@@ -124,8 +129,8 @@ Sentence construction owns the center.
 
 This direction supports immediate video-game readability and reduces reliance
 on realistic facial and material detail that can expose generated artifacts or
-create an accidental close likeness. It does not replace originality,
-reference approval, license, provenance, or editorial review requirements.
+create an accidental close likeness. It does not replace originality, license,
+provenance, or editorial review requirements.
 
 Secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.
@@ -178,6 +183,16 @@ stock fantasy frames.
 Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
+### Color and white balance
+
+Use neutral sRGB white balance and an ungraded color treatment. Do not apply a
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
+color is local to an authored material or light, such as brass, wood, cream,
+skin, oxide red, or a lamp. Navy and charcoal shadows must retain their cool or
+neutral separation, and declared neutral anchors must not become yellow. Do not
+cancel a warm cast with a global blue filter. Reject the asset and regenerate
+it from the approved direction.
+
 ### Character art direction
 
 Every playable character must communicate one distinct fictional political,
@@ -199,7 +214,8 @@ Define each character through one coherent set of visual decisions:
 - a distinct head shape, face design, hair design, or mechanical face system;
 - role-specific clothing or chassis construction;
 - a signature posture and gesture rhythm;
-- one meaningful prop, or an explicit no-prop rule; and
+- one meaningful prop, one coherent prop system with one dominant object and
+  at most one supporting object, or an explicit no-prop rule; and
 - one character accent color within the shared institutional palette.
 
 The silhouette, posture, face system, and prop logic must remain legible at the
@@ -220,16 +236,146 @@ and runtime variants reject animal heads, ears, muzzles, beaks, feathers,
 tails, wings, paws, fur, scales, and human-animal hybrids. Robot characters
 reject human, animal, and hybrid anatomy.
 
-Character-specific visual descriptions, real-world references, source links,
-and private approval records belong only in the Git-ignored research folder.
-The research folder supplies approved private generation briefs, but it is not
-a published product contract and never ships. Public specifications, shipped
-prompts, source notes, and asset metadata use fictional names and generic source
-descriptions. They do not include real-person names or character-reference
-links. Research can inform original, transformative work, but it does not
-permit copying one photograph, artwork, logo, or exact pose.
+Character-specific visual descriptions and other private study data belong only
+in the Git-ignored research folder. The research folder supplies approved
+private generation briefs, but it is not a published product contract and
+never ships. Public specifications, shipped prompts, source notes, and asset
+metadata use fictional names and generic source descriptions. They do not
+include real-person names. Research can inform original, transformative work,
+but it does not permit copying one photograph, artwork, logo, or exact pose.
 
 ### Scene art direction
+
+All four fixed scene layers use one straight-on orthographic 16:9 camera. Center
+the camera on the stage center axis. Keep its view level and perpendicular to
+the stage. Do not use camera pitch, yaw, roll, lens distortion, or perspective
+convergence. Keep vertical and horizontal architectural lines parallel.
+
+Place both standing-character eye lines on one shared horizontal band. An
+orthographic scene does not make a more distant subject smaller. Show depth
+with overlap, layer order, color, and hard-edged value changes instead of
+perspective scale. The back scene and its foreground desk plate must use the
+same canvas, stage origin, camera, scale, and alignment.
+
+Use one mirrored duel grid for both scene packages. Divide the stage into a
+left opponent zone, a clear central confrontation zone, and a right opponent
+zone. Center each playable portrait and standing desk within its outer zone.
+Keep playable character bodies, standing-desk mass, moderator faces, and
+important scenic props out of the central zone.
+
+The transition-era moderator remains in a secondary inner-left position. The
+modern moderator remains in the mirrored inner-right position. Each moderator
+stays inside the assigned side zone and remains visually secondary to both
+playable characters. Keep all standing-desk mass inside the lower third. The
+back scene owns the moderator, architecture, fixed furniture, and rear props.
+The transparent foreground plate owns both standing desks and their attached
+or placed props. Neither layer contains a playable character.
+
+Place the transition-era moderator face center at 29 percent of master width
+and 44 percent of master height. Place the modern moderator face center at 71
+percent of master width and 44 percent of master height. Use normal adult head
+scale for both moderators. Do not shrink either head to imply depth. Make each
+moderator visually secondary through seating, subdued color, restrained
+gesture, and furniture instead of reduced human scale.
+
+Playable character layers have visual priority over moderator bodies and
+moderator furniture. A playable character or standing desk can cover part of a
+moderator body, chair, platform, or desk, but the complete moderator face must
+remain visible. A foreground standing desk can cover only the lower part of a
+playable body. It must not cover a playable face, signature hand gesture, or
+required prop. Hypertext Markup Language (HTML) content must also stay outside
+those three playable-character features.
+
+Use 20 percent of master width and 34 percent of master height as the normal
+left-player face center. Mirror it at 80 percent of master width for the right
+player. Protect the left face rectangle from 14 through 26 percent of width and
+22 through 46 percent of height. Mirror it from 74 through 86 percent of width
+for the right face. An approved character-height rule can move a face vertically
+inside its protected rectangle, but no part of the face can leave that
+rectangle at a named acceptance viewport.
+
+Measure vertical anchors from the top edge of the 16:9 canvas. Use 34 percent
+of canvas height as the normal-adult standing eye-line reference, 44 percent as
+the seated-moderator eye line, 62 percent as the standing-desk top, and 72
+percent as the main floor break. Apply the same normalized anchors to the
+1920-by-1080 master and every runtime variant.
+
+An approved character-height contract can move a playable face above or below
+the normal-adult eye-line reference. Keep the character on the same floor and
+desk-occlusion system. Do not rescale the scene or move the desks to erase an
+approved height difference. Desk fronts continue below the canvas edge so that
+their lower contours never appear.
+
+Use one shared focal and interface-safe model for both scene packages. Mirror
+the left and right player focal regions across the stage center axis. Keep the
+central interface-safe regions identical when the scene changes. Only the
+moderator focal region changes side: inner-left for the transition-era scene
+and inner-right for the modern scene.
+
+Record all focal and interface-safe regions as normalized rectangles in the
+1920-by-1080 master coordinate system. Apply the same rectangles to each runtime
+variant before crop. A scene-specific decorative element cannot move, shrink,
+or cover a shared interface-safe region.
+
+Use fixed per-layer normalized rectangles for every focal class. Do not use a
+shared envelope with scene-specific overrides. For each back or foreground
+layer, record the exact rectangle or explicitly record that the focal class is
+absent from that layer.
+
+Reserve these character-layer focal rectangles in every back and foreground
+scene layer. The left raised signature-gesture rectangle is
+`x=22, y=18, width=10, height=18`. The mirrored right rectangle is
+`x=68, y=18, width=10, height=18`. The left torso and required-prop rectangle is
+`x=14, y=46, width=12, height=20`. The mirrored right rectangle is
+`x=74, y=46, width=12, height=20`. Scene art does not own these rectangles and
+must keep them free of a face, required prop, identifier, or high-contrast
+ornament.
+
+Use these per-layer focal rectangles. All values are percentages of master
+width and height.
+
+| Scene layer | Moderator face | Left desk top and props | Right desk top and props |
+| --- | --- | --- | --- |
+| Transition-era back | `x=26, y=36, width=6, height=16` | Absent | Absent |
+| Modern back | `x=68, y=36, width=6, height=16` | Absent | Absent |
+| Transition-era foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
+| Modern foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
+
+Use these shared interface-safe rectangles, with all coordinates measured as
+percentages of master width and height:
+
+- protected top band: `x=12.5-87.5`, `y=0-18`;
+- central interaction region: `x=32-68`, `y=18-94`;
+- lower-left action region: `x=12.5-24`, `y=66-94`; and
+- lower-right action region: `x=76-87.5`, `y=66-94`.
+
+Keep speech inside the central interaction region. Do not add a speech-safe
+extension across a player gesture, player prop, or moderator focal rectangle.
+
+Use only low-detail, nonessential background shapes inside an interface-safe
+rectangle. Do not put a face, required prop, scene identifier, text-like mark,
+or high-contrast ornament in it. A desk front can cross a lower action region
+only as a plain flat surface without a prop or important ornament.
+
+Protect the central 75 percent of master width as the four-by-three crop core.
+All moderators, standing desks, attached props, focal regions, and
+interface-safe regions must stay inside that core. The outer 12.5 percent on
+each side is decorative bleed and can be removed. It must not contain a required
+subject, prop, architectural identifier, or layer-alignment marker.
+
+Use the complete master at 16:9. For aspect ratios between 16:9 and 4:3, remove
+equal amounts from the left and right decorative bleed. At 4:3, remove the full
+12.5 percent from each side. Do not use letterboxing or crop inside the
+protected core at any named acceptance viewport.
+
+For a supported landscape ratio narrower than 4:3, fit the protected 4:3 core
+to the full viewport width. Do not crop its left or right edge. Fill the extra
+height with authored scene continuation instead of black bars or repeated
+texture. The back layer extends ceiling shapes above and floor shapes below.
+The foreground layer remains transparent above the standing desks and extends
+plain desk fronts below them. Do not add a new subject, prop, identifier, or
+ornament in an extension area. Use one scale and vertical alignment for both
+layers, and preserve all focal and interface-safe regions.
 
 Each scene uses the same flat cel-shaded cartoon construction as the playable
 characters. Simplify and deliberately exaggerate architecture, curtains,
@@ -329,8 +475,8 @@ first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, and fallback proof.
 
 Keep temporary renders and lossless working rasters in the temporary folder.
-Keep private character descriptions, references, and custom prompts in the
-research folder. Sharp generates committed AV1 Image File Format (AVIF) and
+Keep private character studies and custom prompts in the research folder.
+Sharp generates committed AV1 Image File Format (AVIF) and
 WebP runtime variants. The manifest records dimensions, crop, owner, source,
 and license. Import through the manifest. Load setup art first and only the
 selected match package next. Use self-hosted licensed Web Open Font Format 2
@@ -380,9 +526,8 @@ green-render tree whose prompts are beside the renders. For character art, use
 <prompt-root>`. The green renders stay in the temporary folder, and the matching
 relative prompt files stay in the research folder. The converter verifies each
 prompt but embeds only a generic source record in all conversion modes. It does
-not embed the private prompt, its path, or its links. The converter preserves
-each Portable Network Graphics file's relative path. The input and output roots
-must be different.
+not embed private study data. The converter preserves each Portable Network
+Graphics file's relative path. The input and output roots must be different.
 
 ## Asset and motion contract
 
@@ -399,6 +544,11 @@ the SHA-256 source hash, format, pixel dimensions, and byte size. It also
 contains the focal point, crop rectangle, and generated variant paths.
 Dimensions are present in markup before decode.
 
+The color guard decodes each raster in sRGB, ignores transparent pixels and the
+temporary green matte, and measures muted or neutral pixels. It uses the shared
+policy in `tools/asset-color-policy.json`. Intentional warm materials are not
+rejected by an average-red or average-green rule.
+
 At the largest size, one AVIF scene is at most 350 kibibytes (KiB). Its WebP
 fallback is at most 500 KiB. One AVIF character state is at most 250 KiB. Its
 WebP fallback is at most 350 KiB. The selected scene and both selected
@@ -406,7 +556,7 @@ character image packages total at most 3 mebibytes (MiB) in their preferred
 formats. Setup does not preload unselected match packages.
 
 Each named character state maps to one pose and one expression. The set uses at
-least five distinct expressions and six distinct poses. The 11 named states do
+least five distinct expressions and six distinct poses. The nine named states do
 not each require a unique image when the manifest declares the combination.
 Normal reactions last 150 through 600 milliseconds, transitions at most 700
 milliseconds, and idle loops 2 through 8 seconds.
@@ -423,7 +573,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   from unchanged masters, and every file meets its per-file and package budget.
 - **AC-023-03:** Browser tests select AVIF when supported, fall back to WebP,
   reserve dimensions before decode, and load no unselected match package.
-- **AC-023-04:** Four characters expose all 11 states with at least five
+- **AC-023-04:** Four characters expose all nine states with at least five
   expressions and six poses. Missing mappings fail validation.
 - **AC-023-05:** All supported landscape variants keep declared focal regions
   visible and meet CLS limits.
@@ -440,7 +590,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
 - **AC-023-09:** Each of the four vertical-slice characters has one default skin
-  and one through eight alternate skins. A ninth alternate fails validation.
+  and zero through eight alternate skins. A ninth alternate fails validation.
   Filename discovery is deterministic, and the default is first. Foundation
   characters can keep only their default interim portrait until Milestone 031.
   The roster resolves only the default. Setup and match views resolve an
@@ -450,18 +600,23 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   skins preserve one fictional archetype across all named states. The research
   folder contains the character-specific study and remains excluded from Git,
   builds, and published artifacts. Public files contain no real-person name or
-  character-reference link.
+  private study data.
 - **AC-023-11:** Character-tree conversion resolves every matching prompt from
   a separate research root. A missing or empty prompt fails before conversion.
-  The shipping raster contains a generic source record but does not contain the
-  exact prompt, its private path, or its links.
-- **AC-023-12:** The regeneration inventory contains exactly the 29 character
+  A prompt without the shared neutral-white-balance and local-warm-color
+  controls also fails before conversion. Required positive controls do not count
+  when they occur in a negative-control section. A prohibited global warm grade
+  remains invalid when the prompt also contains the required controls. The
+  shipping raster contains a generic source record but does not contain the
+  exact prompt or private study data.
+- **AC-023-12:** The regeneration inventory contains exactly the 27 character
   and four scene PNG files in the fixed baseline. Each replacement has a new
   source hash and a generation-input record. The input record contains no
   current raster. A missing baseline replacement or an extra asset claimed as a
-  Milestone 023 replacement fails the inventory. A later nonbaseline asset
-  remains under Milestone 031 and does not fail this inventory.
-- **AC-023-13:** All 19 represented archetypes have a complete private character
+  Milestone 023 replacement fails the inventory. The retired Black Sea Captain
+  alternate is not a valid replacement. A later nonbaseline asset remains under
+  Milestone 031 and does not fail this inventory.
+- **AC-023-13:** All 18 represented archetypes have a complete private character
   study before generation. An existing prompt alone fails readiness. Every
   missing or conflicting decision has a recorded `$grill-me` answer from the
   product owner, and no required decision remains unresolved or deferred.
@@ -478,15 +633,23 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   simplification, proportion system, texture density, and exaggeration level.
   Each archetype package contains its regenerated default and every baseline
   alternate. No package mixes old and regenerated skins.
-- **AC-023-16:** A complete inventory review inspects all 29 character PNG files
+- **AC-023-16:** A complete inventory review inspects all 27 character PNG files
   and all four scene PNG files individually at source size and together in
   representative stage compositions. It records pass or fail for contour
-  weight, flat color shapes, value-step count, hard-edged lighting, deliberate
-  exaggeration, simplified material treatment, and restrained texture. Any
-  painted comic-book, painterly semi-realistic, realistic concept-art,
-  photographic, hyper-realistic, three-dimensional-render, or mixed-style
-  result fails the milestone. A sample or selected subset does not satisfy this
-  review.
+  weight, flat color shapes, value-step count, hard-edged lighting, white
+  balance, global color cast, deliberate exaggeration, simplified material
+  treatment, and restrained texture. Any painted comic-book, painterly
+  semi-realistic, realistic concept-art, photographic, hyper-realistic,
+  three-dimensional-render, or mixed-style result fails the milestone. A
+  sample or selected subset does not satisfy this review.
+- **AC-023-17:** The asset color guard decodes every supported shipping raster in
+  sRGB, rejects a broad yellow cast over muted or neutral pixels, accepts local
+  brass, cream, skin, wood, oxide-red, and lamp colors when neutral or cool
+  anchors remain, and blocks an image without a measurable neutral or cool
+  anchor for manual review. A small cool anchor does not permit a broad yellow
+  cast across near-neutral pixels. The guard reports the asset path and measured
+  values. Its neutral, near-neutral, yellow-wash, local-warm-accent, and
+  green-matte fixtures pass in `tests/unit/asset-color-guard.test.ts`.
 
 ## Impeccable UI validation
 
@@ -497,12 +660,12 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Validation proves formats, sizes, crops, ownership, and licenses. Browser tests
-show correct variants without layout shift at target viewports. Manual evidence
-reviews every baseline asset and representative complete stage compositions
-against the approved flat cel-shaded direction. It also reviews the motion
-modes. `npm run ci` passes. Stop before the remaining roster, audio, speech, or
-presentation reactions.
+Validation proves formats, sizes, crops, ownership, licenses, and color policy.
+Browser tests show correct variants without layout shift at target viewports.
+Manual evidence reviews every baseline asset and representative complete stage
+compositions against the approved flat cel-shaded direction. It also reviews
+the motion modes. `npm run ci` passes. Stop before the remaining roster, audio,
+speech, or presentation reactions.
 
 ## Reference
 

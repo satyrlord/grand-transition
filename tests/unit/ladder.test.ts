@@ -31,7 +31,6 @@ const characterIds = [
   'marble-diplomat',
   'county-baron',
   'coalition-acrobat',
-  'presidential-sphinx',
   'algorithmic-prophet',
   'spreadsheet-technocrat',
   'football-tycoon',
@@ -56,22 +55,22 @@ const golden: LadderProgress = Object.freeze({
   selectedCharacterId: 'red-folded-chairman',
   seed: 22_026,
   opponentIds: [
-    'apartment-block-geopolitician',
-    'football-tycoon',
     'eu-funds-alchemist',
-    'algorithmic-prophet',
-    'spreadsheet-technocrat',
-    'diaspora-oracle',
     'thunder-tribune',
+    'algorithmic-prophet',
+    'diaspora-oracle',
+    'luxury-minister',
+    'black-sea-captain',
+    'spreadsheet-technocrat',
+    'football-tycoon',
     'marble-diplomat',
-    'government-ai',
   ] as const,
   sceneOrder: [
-    'midnight-call-in-studio',
-    'transition-era-television-studio',
     'influencer-campaign-livestream',
-    'modern-debate-studio',
     'palace-press-hall',
+    'midnight-call-in-studio',
+    'modern-debate-studio',
+    'transition-era-television-studio',
     'county-council-ballroom',
   ] as const,
   rungIndex: 0,
@@ -118,14 +117,14 @@ describe('ladder engine', () => {
       rungIndex: 0,
       number: 1,
       difficulty: 'local-radio-caller',
-      opponentCharacterId: 'apartment-block-geopolitician',
-      sceneId: 'midnight-call-in-studio',
+      opponentCharacterId: 'eu-funds-alchemist',
+      sceneId: 'influencer-campaign-livestream',
     });
     const rungSeven = { ...golden, rungIndex: 6, wins: 6 };
     expect(currentLadderRung(rungSeven)).toMatchObject({
       number: 7,
       difficulty: 'palace-operator',
-      sceneId: 'midnight-call-in-studio',
+      sceneId: 'influencer-campaign-livestream',
     });
   });
 

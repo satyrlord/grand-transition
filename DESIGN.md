@@ -166,13 +166,13 @@ scene, characters, sentence construction, speech, status, and actions share the
 same stage. They do not form a decorative scene above a separate dashboard.
 
 Each character is human or fully mechanical. Animal words in names or titles
-are metaphorical political labels only. The playable foundation uses 18
-original human editorial caricatures and one original robot caricature. Each
-can occupy either player position. Eight archetypes have ten alternate skins in
-total. A skin is a visual-only variation that does not change game identity or
-prose. Later character art must preserve the declared species and cannot use
-animal or hybrid anatomy. One archetype can have one default skin and no more
-than eight alternate skins.
+are metaphorical political labels only. The playable foundation uses 17 original
+human editorial caricatures and one original robot caricature, 18 total. Each
+can occupy either player position. Seven archetypes have nine alternate skins
+in total. A skin is a visual-only variation that does not change game identity
+or prose. Later character art must preserve the declared species and cannot use
+animal or hybrid anatomy. One archetype can have one default skin and zero
+through eight alternate skins.
 
 ### World
 
@@ -194,6 +194,10 @@ pattern instead of realistic surface detail.
 
 Light uses designed hard-edged shadow and highlight shapes. A restrained paper
 or screen-print texture can sit over large shapes without modeling volume.
+Use neutral sRGB white balance and an ungraded color treatment. Do not apply a
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
+color is local to authored brass, wood, cream, skin, oxide-red, or lamp shapes.
+Navy and charcoal shadows retain cool or neutral separation.
 Painted comic-book, painterly semi-realistic, realistic concept-art,
 photographic, hyper-realistic, and three-dimensional-render styles are not part
 of this system. Do not use soft blended shading, photographic reflections,
@@ -213,9 +217,9 @@ compact roster sits between them. Each selected stage shows a full portrait,
 name, and complete public weakness list. The roster uses tight headshots for
 human and fully mechanical characters inside one reusable 3:4 dark-oak and
 aged-gold frame. The robot crop includes its antenna, face panel, shoulders,
-and upper torso. Its face panel sits on the inner frame's center axis. All 19
-roster portraits stay visible in one compact six-six-six-one fighting-game
-selection grid between the two selected contestants. The final incomplete row
+and upper torso. Its face panel sits on the inner frame's center axis. All 18
+roster portraits stay visible in one compact six-six-six fighting-game
+selection grid between the two selected contestants. Any future incomplete row
 is centered. A named vertical scroll region contains the grid when the
 available height is smaller or the roster grows.
 
@@ -285,10 +289,9 @@ the lower half as a dashboard.
 ### Direction seed
 
 The user pinned this direction on 2026-08-25 after removing the earlier mock.
-Two images in the temporary folder supplied reference evidence for spatial
-hierarchy only: opponent framing, top-edge status, wide speech, central
-sentence construction, and perimeter actions. The durable description in this
-record remains valid after the removal of those temporary files.
+The durable description in this record defines spatial hierarchy: opponent
+framing, top-edge status, wide speech, central sentence construction, and
+perimeter actions. It remains valid after the earlier mock was removed.
 
 **Key Characteristics:**
 
@@ -299,7 +302,7 @@ record remains valid after the removal of those temporary files.
   cartoon characters with painted comic-book, painterly semi-realistic,
   realistic concept-art, photographic, or three-dimensional-render scene
   layers.
-- Nineteen swappable player caricatures, 18 human and one fully mechanical, and
+- Eighteen swappable player caricatures, 17 human and one fully mechanical, and
   two fixed fictional human moderators, one per layered studio, all with clear
   faces or face panels.
 - Navy and near-black broadcast framing with aged brass and opposing red and
@@ -360,6 +363,11 @@ reaction, focus, timer, and phrase-role colors only for their named states.
 
 **The Brass Frame Rule.** Brass outlines and separates broadcast regions. It
 does not fill large surfaces or replace state color.
+
+**The No Global Wash Rule.** Raster art uses neutral sRGB white balance and no
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown color grade.
+Warm color belongs to named local materials or lights. It must not flatten the
+navy, charcoal, paper, red, and blue separation of the broadcast palette.
 
 **The Semantic State Rule.** Red, blue, green, purple, gray, and orange can
 speed phrase recognition. Semantic attributes and accessible names must contain
@@ -469,11 +477,10 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, two studio backgrounds, two
-transparent foreground desk plates, and 25 transparent character portraits:
-19 defaults and 6 alternates. The Midnight Sensationalist default and female
-alternate use product-owner-approved public-figure likenesses as visual-only
-parody. They do not change the fictional character identity or prose.
-All shipping assets retain their embedded prompt or source provenance. Required
+transparent foreground desk plates, and 27 transparent character portraits:
+18 defaults and 9 alternates. All portrait skins are visual-only variations and
+do not change the fictional character identity or prose.
+All shipping assets retain embedded generic source provenance. Required
 text and controls remain outside raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
@@ -519,8 +526,8 @@ public weakness list. Each roster tile is an exact 3:4 portrait window with a
 reusable dark-oak frame and aged-gold liner. Human and fully mechanical
 characters use close headshots. The robot crop includes its antenna and face
 panel but not its complete body. Its face panel is centered in the inner
-portrait window. The 19 portraits stay in one equal-width six-six-six-one
-selection grid, with the final incomplete row centered, and never overlap the match
+portrait window. The 18 portraits stay in one equal-width six-six-six
+selection grid, with any future incomplete row centered, and never overlap the match
 settings. The grid scrolls vertically inside its roster region when required;
 the page does not scroll.
 

@@ -215,7 +215,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
-  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(19);
+  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(18);
 
   const governmentAi = setup.querySelector<HTMLButtonElement>(
     '.roster-choice[data-character-id="government-ai"]',
@@ -280,6 +280,9 @@ test('cycles selected skins without changing roster portraits or character IDs',
   expect(
     playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
   ).toContain('red-folded-chairman--alternate');
+  expect(
+    playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label'),
+  ).toBe('Player one: Alternate skin');
   expect(
     setup.querySelector<HTMLElement>('.contestant-stage--two')!.dataset.skinId,
   ).toBe('default');
@@ -453,7 +456,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     'Choose your debater. Your opponent and scene follow ladder progress.',
   );
   expect(document.querySelector('.roster-heading')?.textContent).toContain(
-    '19 contestants',
+    '18 contestants',
   );
   expect(
     document.querySelectorAll('.contestant-stage--two .skin-cycle'),

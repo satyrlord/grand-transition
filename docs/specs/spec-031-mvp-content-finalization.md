@@ -8,25 +8,27 @@ and variety evidence
 
 ## Deliver
 
-Promote all 19 playable fictional archetypes and 6 playable scenes from
+Promote all 18 playable fictional archetypes and 6 playable scenes from
 Milestone 026 to their final English phrase volume, art, scene audio treatment,
 and variety state. Use the existing schemas, pipelines, and presentation
 contracts.
 
-Every archetype has one default portrait skin and one through eight alternate
-skins through the Milestone 023 filename convention. Each human archetype has
-at least one alternate female skin. A fully mechanical archetype has at least
-one alternate chassis. A skin changes only visual
-presentation. It does not add or change phrases, weaknesses, comeback lines,
-balance data, or character identity. Additional alternate clothing is allowed.
+Every archetype has one default portrait skin and zero through eight alternate
+skins through the Milestone 023 filename convention. A human alternate can use
+any gender. There is no gender quota. A fully mechanical alternate uses another
+fully mechanical chassis. A skin changes only visual presentation. It does not
+add or change phrases, weaknesses, comeback lines, balance data, or character
+identity. Additional alternate clothing is allowed. An archetype can remain
+default-only. The Black Sea Captain remains default-only in the current
+approved roster.
 
-Eighteen archetypes are human. Government AI is a fully mechanical robot.
+Seventeen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
 never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
-Milestone 026 owns the 19 stable character identities, species, weaknesses, and
+Milestone 026 owns the 18 stable character identities, species, weaknesses, and
 play styles. This milestone does not replace those identities. It completes
 their final phrase, skin, state, provenance, and audio contracts.
 
@@ -41,7 +43,9 @@ shape exaggeration, and restrained print texture across each complete package.
 Each scene keeps its distinct era and materials through silhouette, color, and
 limited pattern. Do not use painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, hyper-realistic, or
-three-dimensional-render output.
+three-dimensional-render output. Use neutral sRGB white balance without a
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
+color is local to authored materials and lighting, not a complete scene grade.
 
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
   heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
@@ -99,7 +103,7 @@ these inclusive general-pool ranges:
 | Ending                           |      60 |      70 |
 | Continuation                     |       1 |       1 |
 
-Each character has 20 to 30 unique character phrases. Its pool contains at
+Each character has 20 to 32 unique character phrases. Its pool contains at
 least six nouns, four verbs, and four predicates or modifiers. The pool has at
 least one predicate and one modifier. It also has one conjunction and one
 ending.
@@ -133,39 +137,39 @@ failed automated range or distribution.
 
 ## Acceptance criteria
 
-- **AC-031-01:** The catalog contains exactly 19 required character IDs and
+- **AC-031-01:** The catalog contains exactly 18 required character IDs and
   six required scene IDs, with no duplicate English identity.
 - **AC-031-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
 - **AC-031-03:** Every character and scene passes grammar reachability, board
-  generation, simulated match, asset, crop, state, audio, license, and locale
-  validation.
+  generation, simulated match, asset, crop, state, audio, license, locale, and
+  shared color-policy validation.
 - **AC-031-04:** Comeback keys are unique across character and tier and resolve
   in every locale.
 - **AC-031-05:** The fixed simulation and 60-minute procedure meet every variety
   threshold and record seed, workload, environment, and exceptions.
 - **AC-031-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
-- **AC-031-07:** All 19 characters provide one default skin and one through
-  eight alternate skins. A ninth alternate fails validation. Each human
-  character provides an alternate female skin, and each robot provides an
-  alternate chassis. Every skin passes the shared asset, alpha, provenance,
-  viewport, and package checks while the character's phrase and balance records
-  remain identical across skins.
+- **AC-031-07:** All 18 characters provide one default skin and zero through
+  eight alternate skins. A ninth alternate fails validation. A human alternate
+  can use any gender, and no gender quota applies. A robot alternate remains
+  fully mechanical. Every skin passes the shared asset, alpha, provenance,
+  color, viewport, and package checks while the character's phrase and balance
+  records remain identical across skins.
 
 ## Content research boundary
 
 All character identities and prose remain fictional. Research can use public
 institutions, documented historical events, constitutional mechanisms, and
-broad media forms. A portrait skin can use a public-figure likeness as a
-visual-only parody when the product owner explicitly approves it. Record the
-reference identity, links, and approval only in the research folder. Shipped
-generation provenance uses a generic source description and does not name or
-link that person. Do not use a real person as a comparison or target in
-player-visible content. Do not copy photographs, accusations, protected prose,
-or slogans other than the one sourced English form that AC-005-07 approves. Do
-not use real political party names, acronyms, or logos. Use only generic
-ideological or social-family party labels.
+broad media forms. An approved public-figure likeness may be used only as
+visual-only parody in a portrait skin. Private study data stays in the
+Git-ignored research folder and does not ship. Shipped generation provenance
+uses a generic source description and does not name a real person. Do not use a
+real person as a comparison or target in player-visible content. Do not copy
+photographs, accusations, protected prose, or slogans other than the one
+sourced English form that AC-005-07 approves. Do not use real political party
+names, acronyms, or logos. Use only generic ideological or social-family party
+labels.
 
 Shared institutional themes can use
 [Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
@@ -182,7 +186,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-All content, localization, asset, reference, license, and minimum-volume checks
+All content, localization, asset, license, and minimum-volume checks
 pass. Every character and scene loads at all supported landscape viewports and
 completes a simulated match. `npm run ci` passes. Stop before balance changes, editorial
 approval, performance tuning, or deployment.

@@ -35,7 +35,7 @@ for (const viewport of [
     await page.getByLabel('Mode', { exact: true }).selectOption('ladder');
     await expect(page.locator('.ladder-record')).toContainText('Rung 1/9');
     await expect(page.locator('.setup-heading > p:last-child')).toBeVisible();
-    await expect(page.locator('.roster-choice')).toHaveCount(19);
+    await expect(page.locator('.roster-choice')).toHaveCount(18);
     await page.locator('.contestant-portrait').evaluateAll(async (images) => {
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
     });
@@ -92,7 +92,7 @@ for (const viewport of [
     });
     expect(geometry.pageWidth).toBeLessThanOrEqual(geometry.viewportWidth);
     expect(geometry.pageHeight).toBeLessThanOrEqual(geometry.viewportHeight);
-    expect(geometry.rosterRowCounts).toEqual([6, 6, 6, 1]);
+    expect(geometry.rosterRowCounts).toEqual([6, 6, 6]);
     expect(geometry.rosterOverflowX).toBe('hidden');
     expect(geometry.rosterOverflowY).toBe('auto');
     expect(geometry.rosterHorizontallyContained).toBe(true);

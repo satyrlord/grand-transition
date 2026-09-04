@@ -107,6 +107,14 @@ fixtures, and props. Reject painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, three-dimensional-render, and mixed-style
 repairs.
 
+Use neutral sRGB white balance and an ungraded color treatment. Put positive
+color controls before style details in the private generation brief: neutral
+anchors, cool or neutral charcoal and navy shadows, and clear blue and oxblood
+separation. Put global yellow, amber, sepia, golden-hour, mustard, beige, brown,
+and full-frame warm washes in the negative controls. Warm color is allowed only
+inside an authored material or light. Do not cancel a warm cast with a global
+blue filter.
+
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
 Use flat `#00FF00` chroma green as the intermediate matte for every transparent
 scene and character asset. Do not approve chroma-key green in transparent art.
@@ -122,13 +130,19 @@ Do not replace
 this process with a Boolean color threshold or an alpha-only blur. Do not ship
 the green intermediate. Reject missing workflow metadata, nonzero outer
 corners, all chroma-green residue, and a soft-key output without partial alpha.
+Run `node tools/validate-asset-color.mjs validate <asset-root>` after conversion
+and before visual approval. The color guard ignores transparent pixels and the
+temporary green matte, rejects broad yellow bias across muted or neutral pixels,
+and blocks assets without a measurable neutral or cool anchor for manual review.
+Do not use average RGB values as the only color test.
+Validate a private prompt directly with `node tools/validate-generation-prompt.mjs <prompt-file>`. The green conversion workflow runs the same prompt guard before it writes a shipping raster.
 
-Keep temporary renders in the temporary folder. Keep character descriptions,
-references, and custom prompts in the research folder. For a complete character
+Keep temporary renders in the temporary folder. Keep character descriptions and
+custom prompts in the research folder. For a complete character
 source tree, use `npm run assets:convert-green -- <green-root> <output-root>
 --prompt-root <prompt-root>`. Keep matching relative names between both roots.
 The converter verifies every private prompt and embeds only a generic source
-record. It does not embed the exact character prompt, its path, or its links.
+record. It does not embed private study data.
 
 For a scene tree whose prompts are beside its temporary renders, omit
 `--prompt-root`. All conversion modes verify a supplied prompt and embed only a

@@ -2,6 +2,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { chromium } from '@playwright/test';
+import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.mjs';
 
 const workflowId = 'green-chroma-key-v1';
 const chromaKey = '#00FF00';
@@ -156,6 +157,15 @@ function assertGenerationSource(filePath, metadata) {
   }
 }
 
+async function readAndValidatePrompt(promptFile) {
+  const prompt = await readFile(promptFile, 'utf8');
+  if (!prompt.trim()) {
+    throw new Error(`${promptFile}: generation prompt is empty.`);
+  }
+  assertColorControlledPrompt(promptFile, prompt);
+  return prompt;
+}
+
 async function inspectImages(filePaths) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
@@ -258,10 +268,7 @@ async function adopt(filePath, promptFile) {
   assertTransparentAsset(facts);
   const extraEntries = generationProvenanceEntries(await readFile(filePath));
   if (promptFile) {
-    const prompt = await readFile(promptFile, 'utf8');
-    if (!prompt.trim()) {
-      throw new Error(`${promptFile}: generation prompt is empty.`);
-    }
+    await readAndValidatePrompt(promptFile);
     extraEntries.delete('Generation Prompt');
     extraEntries.set('Generation Source', privatePromptProvenance);
   } else if (extraEntries.has('Generation Prompt')) {
@@ -282,10 +289,7 @@ async function stampProvenance(filePath, promptFile, sourceText) {
   const input = await readFile(filePath);
   const entries = generationProvenanceEntries(input);
   if (promptFile) {
-    const prompt = await readFile(promptFile, 'utf8');
-    if (!prompt.trim()) {
-      throw new Error(`${promptFile}: generation prompt is empty.`);
-    }
+    await readAndValidatePrompt(promptFile);
     entries.delete('Generation Prompt');
     entries.set('Generation Source', privatePromptProvenance);
   }
@@ -311,10 +315,7 @@ async function convert(inputPath, outputPath, promptFile) {
   const input = await readFile(inputPath);
   const provenanceEntries = generationProvenanceEntries(input);
   if (promptFile) {
-    const prompt = await readFile(promptFile, 'utf8');
-    if (!prompt.trim()) {
-      throw new Error(`${promptFile}: generation prompt is empty.`);
-    }
+    await readAndValidatePrompt(promptFile);
     provenanceEntries.delete('Generation Prompt');
     provenanceEntries.set('Generation Source', privatePromptProvenance);
   } else if (provenanceEntries.has('Generation Prompt')) {
