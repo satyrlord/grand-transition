@@ -341,6 +341,17 @@ width and height.
 | Transition-era foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 | Modern foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 
+Desk extraction zones are mask-search bounds, not focal rectangles. Use
+`x=12.5, y=54, width=19.5, height=46` for the left standing desk and
+`x=68, y=54, width=19.5, height=46` for the right standing desk. A valid desk
+mask contains changed pixels only inside its extraction zone, touches its desk
+top and prop focal rectangle, and forms one connected desk-and-prop component.
+Exclude the moderator desk, moderator body, architecture, floor, and rear props
+even when they appear inside an extraction zone.
+The composite input, deskless input, back output, foreground output, and report
+output must resolve to five different paths. Reject a path collision before a
+tool writes a file.
+
 Use these shared interface-safe rectangles, with all coordinates measured as
 percentages of master width and height:
 
@@ -479,8 +490,9 @@ Keep private character studies and custom prompts in the research folder.
 Sharp generates committed AV1 Image File Format (AVIF) and
 WebP runtime variants. The manifest records dimensions, crop, owner, source,
 and license. Import through the manifest. Load setup art first and only the
-selected match package next. Use self-hosted licensed Web Open Font Format 2
-(WOFF2) fonts with metric fallbacks.
+selected match package next. Keep each scene variant in an external asset file.
+Do not inline a scene variant in the initial JavaScript bundle. Use self-hosted
+licensed Web Open Font Format 2 (WOFF2) fonts with metric fallbacks.
 
 Milestone 015 already promotes the title emblem and proscenium to focused WebP
 runtime files with Portable Network Graphics fallbacks and entry preloads. That
@@ -543,6 +555,10 @@ owner type, owner ID, source description, and license identifier. It contains
 the SHA-256 source hash, format, pixel dimensions, and byte size. It also
 contains the focal point, crop rectangle, and generated variant paths.
 Dimensions are present in markup before decode.
+Validation rejects a crop, focal point, focal rectangle, or interface-safe
+rectangle that differs from the exact approved geometry, even when all values
+remain inside the normalized canvas. The production build validates the scene
+package before Vite writes `dist/`.
 
 The color guard decodes each raster in sRGB, ignores transparent pixels and the
 temporary green matte, and measures muted or neutral pixels. It uses the shared

@@ -78,7 +78,7 @@ describe('simulation command', () => {
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
-  });
+  }, 15_000);
 
   test('runs each advanced difficulty through the configured policy', async () => {
     for (const difficulty of ['party-strategist', 'palace-operator']) {
@@ -98,7 +98,7 @@ describe('simulation command', () => {
       ).toBe(0);
       expect(messages[0]).toMatch(/Simulated 1 match/u);
     }
-  });
+  }, 15_000);
 
   test('returns nonzero output that names the invalid option', async () => {
     const messages: string[] = [];

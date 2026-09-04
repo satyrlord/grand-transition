@@ -50,9 +50,34 @@ describe('match-screen snapshot', () => {
       'transition-era-television-studio',
       'transition-era-television-studio-desks',
     ]);
-    expect(snapshot.sceneLayers.every(({ url }) => url.endsWith('.png'))).toBe(
-      true,
-    );
+    expect(
+      snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url)),
+    ).toBe(true);
+    expect(snapshot.sceneLayers[0]).toMatchObject({
+      width: 1920,
+      height: 1080,
+      sizes: '(max-aspect-ratio: 4/3) 134vw, 100vw',
+      avif: {
+        format: 'avif',
+        srcSet: expect.stringMatching(/640w.*1280w.*1920w/u),
+      },
+      webp: {
+        format: 'webp',
+        srcSet: expect.stringMatching(/640w.*1280w.*1920w/u),
+      },
+      crop: {
+        core: { x: 0.125, y: 0, width: 0.75, height: 1 },
+        strategy: 'symmetric-horizontal-bleed-to-four-by-three-core',
+      },
+    });
+    const firstLayer = snapshot.sceneLayers[0]!;
+    expect(firstLayer.kind).toBe('manifest');
+    if (firstLayer.kind === 'manifest') {
+      expect(firstLayer.focalRectangles).toHaveProperty('moderatorFace');
+      expect(firstLayer.sharedSafeRectangles).toHaveProperty(
+        'centralInteraction',
+      );
+    }
     expect(snapshot.players.filter((player) => player.isActive)).toHaveLength(
       1,
     );
@@ -133,9 +158,43 @@ describe('match-screen snapshot', () => {
         depth: 1,
       }),
     ]);
-    expect(snapshot.sceneLayers.every(({ url }) => url.endsWith('.png'))).toBe(
-      true,
-    );
+    expect(
+      snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url)),
+    ).toBe(true);
+  });
+
+  test('projects the foundation scene through its legacy WebP fallback', () => {
+    const scene = sampleContent.scenes.find(
+      (candidate) => candidate.id === 'county-council-ballroom',
+    )!;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_830,
+      players: [configuredPlayer(0), configuredPlayer(1)],
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+
+    const layer = createMatchScreenSnapshot(state).sceneLayers[0]!;
+    expect(layer).toMatchObject({
+      kind: 'fallback',
+      assetId: 'catalog-foundation-neutral-scene',
+      depth: 0,
+      width: 1672,
+      height: 941,
+      sizes: '100vw',
+      url: expect.stringContaining('title-proscenium-background'),
+      avif: null,
+    });
+    expect(layer.sources).toEqual({ webp: layer.webp });
+    expect('focalPoint' in layer).toBe(false);
+    expect('crop' in layer).toBe(false);
+    expect(Object.isFrozen(layer)).toBe(true);
   });
 
   test('clears an incomplete sentence from the next round bubble', () => {

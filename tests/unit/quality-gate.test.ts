@@ -65,6 +65,9 @@ describe('quality-gate scaffold', () => {
     expect(packageJson.scripts.prod).toBe(
       'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
     );
+    expect(packageJson.scripts.build).toBe(
+      'node tools/validate-scene-assets.mjs src/assets/scenes && vite build',
+    );
   });
 
   test('keeps the CI phases in the approved order', async () => {

@@ -193,7 +193,8 @@ must keep the same arena hierarchy, both character faces, and the complete
 sentence and draft controls visible without page scrolling.
 
 Cards with an unavailable state remain readable and name the reason. All
-available cards use the same selection action.
+available cards use the same selection action. Private phrase text can wrap to
+multiple lines and must remain complete. Do not truncate it with an ellipsis.
 
 For timed turns, the visible value updates once per second. Zero dispatches one
 `expire-turn` command and disables all further actions until the new snapshot

@@ -12,6 +12,7 @@
   .match-screen {
     --broadcast-black: #05080b;
     --broadcast-ink: #0b1722;
+    --scene-ceiling-continuation: #101f2f;
     --broadcast-gold: #b48a48;
     --broadcast-gold-light: #e4c17d;
     --broadcast-paper: #e5d8b9;
@@ -54,18 +55,31 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: var(--broadcast-ink);
+    background: var(--scene-ceiling-continuation);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     isolation: isolate;
+  }
+
+  .broadcast-stage[data-scene-asset='modern-debate-studio'] {
+    --scene-ceiling-continuation: #071b40;
+  }
+
+  .broadcast-scene-picture {
+    display: contents;
   }
 
   .broadcast-stage-art,
   .broadcast-stage-foreground {
     position: absolute;
-    inset: 0;
-    width: 100%;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: none;
+    transform: translateX(-50%);
     pointer-events: none;
     user-select: none;
   }
@@ -76,8 +90,32 @@
 
   .broadcast-stage-foreground {
     z-index: 3;
-    transform: translateY(8%) scale(0.8);
-    transform-origin: center bottom;
+  }
+
+  /* Fit the protected four-by-three core to narrow landscape widths. */
+  @media (max-aspect-ratio: 4 / 3) {
+    .broadcast-stage {
+      background-color: var(--scene-ceiling-continuation);
+    }
+
+    .broadcast-stage-art,
+    .broadcast-stage-foreground {
+      left: calc(
+        -100% * var(--scene-crop-core-x) / var(--scene-crop-core-width)
+      );
+      width: calc(100% / var(--scene-crop-core-width));
+      height: auto;
+      transform: none;
+    }
+
+    /* The interim foundation fallback has no manifest crop contract. */
+    .broadcast-scene-picture[data-scene-kind='fallback']
+      :is(.broadcast-stage-art, .broadcast-stage-foreground) {
+      left: 50%;
+      width: auto;
+      height: 100%;
+      transform: translateX(-50%);
+    }
   }
 
   .broadcast-stage::after {
@@ -397,6 +435,16 @@
 
   .match-player[data-side='blue'] .character-frame {
     right: -8%;
+  }
+
+  @media (max-aspect-ratio: 3 / 2) {
+    .match-player[data-side='red'] .character-frame {
+      left: -30%;
+    }
+
+    .match-player[data-side='blue'] .character-frame {
+      right: -30%;
+    }
   }
 
   .character-frame::before {
@@ -1551,6 +1599,9 @@
 
   .private-hand .card-phrase {
     font-size: clamp(0.72rem, 0.95vw, 0.92rem);
+    line-height: 1.1;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .action-reshuffle {

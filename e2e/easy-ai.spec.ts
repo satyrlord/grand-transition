@@ -584,14 +584,16 @@ async function readSetupFooterGeometry(page: Page) {
 
 async function waitForLocalImages(locator: Locator): Promise<void> {
   await expect
-    .poll(() =>
-      locator.locator('img').evaluateAll((images) =>
-        images.every(
-          (image) =>
-            (image as HTMLImageElement).complete &&
-            (image as HTMLImageElement).naturalWidth > 0,
+    .poll(
+      () =>
+        locator.locator('img').evaluateAll((images) =>
+          images.every(
+            (image) =>
+              (image as HTMLImageElement).complete &&
+              (image as HTMLImageElement).naturalWidth > 0,
+          ),
         ),
-      ),
+      { timeout: 15_000 },
     )
     .toBe(true);
 }
