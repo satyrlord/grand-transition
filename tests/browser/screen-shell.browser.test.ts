@@ -243,7 +243,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   );
   expect(
     playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
-  ).toContain('government-ai.png');
+  ).toContain('government-ai-960x960.webp');
 
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
@@ -252,7 +252,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   ).toBe('Player one: Alternate chassis');
   expect(
     playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
-  ).toContain('government-ai--alternate.png');
+  ).toContain('government-ai--alternate-960x960.webp');
 });
 
 test('cycles selected skins without changing roster portraits or character IDs', async () => {
