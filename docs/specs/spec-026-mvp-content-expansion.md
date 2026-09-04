@@ -2,7 +2,7 @@
 
 **Status:** Approved  
 **Depends on:** 021
-**Owns:** Playable 19-character roster and six-scene data required by the
+**Owns:** Playable 18-character roster and six-scene data required by the
 single-player ladder
 **Production-file budget:** 40
 
@@ -10,7 +10,7 @@ single-player ladder
 
 Add the complete minimum viable product (MVP) character and scene identities
 before the advanced artificial intelligence (AI) ladder. The catalog contains
-19 playable fictional archetypes and 6 playable scenes. It supplies enough
+18 playable fictional archetypes and 6 playable scenes. It supplies enough
 validated English grammar content for every character and scene to complete a
 deterministic match. Final phrase volume, final art, alternate skins, audio,
 presentation states, and variety evidence remain in Milestone 031.
@@ -19,7 +19,8 @@ Each new character is convention-driven. Add one complete
 `src/content/characters/<character-id>-phrase-cards.json` file and one approved
 interim `src/assets/characters/<character-id>.png` portrait. Do not add a
 TypeScript registry, locale table, setup option, or renderer map for a
-character. Existing alternate skins remain valid. A new foundation character
+character. Existing approved alternate skins remain valid unless a current
+content decision retires one. A new foundation character
 does not require an alternate skin until Milestone 031. When alternate skins
 exist, one character has no more than eight.
 
@@ -32,6 +33,9 @@ character, scene-specific claim, remote request, or rasterized interface text.
 Any new generated interim portrait or scene follows the Milestone 023 flat
 cel-shaded editorial-cartoon direction. Interim status can reduce state count,
 variant count, and finish depth. It cannot use a different rendering style.
+It also uses neutral sRGB white balance without a global yellow, amber, sepia,
+or other warm color wash. Local warm materials and lighting remain valid when
+the shared asset color guard can still measure neutral or cool anchors.
 
 ## Required roster
 
@@ -57,26 +61,28 @@ The stable roster order, identifier, weakness tags, and play style are:
    denial and low-risk continuations.
 10. `coalition-acrobat`: Coalition Acrobat; consistency, memory, and
     commitment; conjunctions, continuations, and reversals.
-11. `presidential-sphinx`: Presidential Sphinx; absence, silence, and leisure;
-    defensive play, sparse pacing, and strong finishers.
-12. `algorithmic-prophet`: Algorithmic Prophet; evidence, specificity, and
+11. `algorithmic-prophet`: Algorithmic Prophet; evidence, specificity, and
     follow-up questions; volatile livestream finishers.
-13. `spreadsheet-technocrat`: Spreadsheet Technocrat; delivery,
+12. `spreadsheet-technocrat`: Spreadsheet Technocrat; delivery,
     accountability, and human scale; clause stacks and dashboard denial.
-14. `football-tycoon`: Football Tycoon; commercialism, accountability, and
+13. `football-tycoon`: Football Tycoon; commercialism, accountability, and
     sincerity; emotional chains and finishers.
-15. `luxury-minister`: Luxury Minister; austerity, service, and authenticity;
+14. `luxury-minister`: Luxury Minister; austerity, service, and authenticity;
     status attacks and conspicuous finishers.
-16. `diaspora-oracle`: Diaspora Oracle; distance, context, and firsthand
+15. `diaspora-oracle`: Diaspora Oracle; distance, context, and firsthand
     knowledge; long generalizations and continuations.
-17. `apartment-block-geopolitician`: Apartment-Block Geopolitician; sources,
+16. `apartment-block-geopolitician`: Apartment-Block Geopolitician; sources,
     specificity, and nuance; broad, fast, and brittle combo play.
-18. `eu-funds-alchemist`: EU-Funds Alchemist; transparency, outcomes, and
+17. `eu-funds-alchemist`: EU-Funds Alchemist; transparency, outcomes, and
     maintenance; procurement denial and high-value finishers.
-19. `government-ai`: Government AI; nepotism, corruption, spending, and being
+18. `government-ai`: Government AI; nepotism, corruption, spending, and being
     obsolete; corporate and communist-propaganda phrasing. It is the only robot.
 
-The other 18 characters are human. Animal terms are political metaphors only.
+The remaining character identifiers keep their previous relative order after
+the Presidential Sphinx retirement. The unused roster-order value is not
+reused.
+
+The other 17 characters are human. Animal terms are political metaphors only.
 No character uses human-animal or robot-animal hybrid anatomy.
 
 ## Required scenes
@@ -101,7 +107,7 @@ catalog. Its scene-specific phrase volume remains deferred to Milestone 031.
 
 ## Playable data contract
 
-Each character has 3 through 30 unique owned phrases. Its foundation pool has
+Each character has 3 through 32 unique owned phrases. Its foundation pool has
 at least one noun, one modifier, and one ending. The complete common pool
 supplies the other grammar roles needed for a match. Each character owns one
 unique weak, medium, and strong Comeback line. All content passes the Milestone
@@ -115,11 +121,12 @@ Milestone 027 owns final balance and editorial evidence.
 
 ## Acceptance criteria
 
-- **AC-026-01:** The catalog contains exactly the 19 ordered character IDs and
-  6 ordered scene IDs above, with 18 humans and one fully mechanical robot.
+- **AC-026-01:** The catalog contains exactly the 18 ordered character IDs and
+  6 ordered scene IDs above, with 17 humans and one fully mechanical robot.
 - **AC-026-02:** Each character loads from one matching JSON file and one
   matching default portrait without a character registry, locale table, setup
-  option, or renderer map.
+  option, or renderer map. Each portrait passes the shared asset, alpha,
+  provenance, and color-policy checks.
 - **AC-026-03:** Each character meets the foundation role minimum, owns three unique
   Comebacks, and passes grammar, weakness, restriction, locale, safety, and
   editorial validation.
@@ -129,10 +136,10 @@ Milestone 027 owns final balance and editorial evidence.
 - **AC-026-05:** Adding and removing one synthetic convention-driven character
   leaves no stale setup, match, locale, or production-build reference.
 - **AC-026-06:** Production-browser setup can select every character and scene.
-  The 19-item roster, longest names, six-scene selector, and selected interim
+  The 18-item roster, longest names, six-scene selector, and selected interim
   portrait remain usable at every supported landscape viewport. The roster uses
-  one compact fighting-game character-selection grid with six, six, six, and
-  one portrait in its rows. The final incomplete row is centered. The named roster
+  one compact fighting-game character-selection grid with six, six, and six
+  portraits in its current rows. Any future incomplete row is centered. The named roster
   region uses contained vertical scrolling when its rows exceed the available
   height or when later characters are added. It is keyboard-focusable and does
   not scroll the page or cover the roster heading, note, settings, or actions.
@@ -141,6 +148,8 @@ Milestone 027 owns final balance and editorial evidence.
 
 - Content, Node discovery, and grammar tests verify AC-026-01 through
   AC-026-03 and AC-026-05.
+- Asset validation verifies the shared alpha, provenance, and color-policy
+  checks for interim portraits and scene assets.
 - A deterministic catalog workload verifies AC-026-04 for every ordered
   character and scene setup.
 - Browser and Playwright catalog flows verify AC-026-02, AC-026-05, and
@@ -157,7 +166,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-All 19 characters and 6 scenes load by convention, validate, and complete
+All 18 characters and 6 scenes load by convention, validate, and complete
 seeded matches. Production setup selects each catalog entry without overflow or
 stale references. `npm run ci` passes. Stop before advanced AI, final art,
 alternate-skin completion, audio, presentation reactions, final phrase volume,

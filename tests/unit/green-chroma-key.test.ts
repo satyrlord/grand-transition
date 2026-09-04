@@ -14,6 +14,8 @@ const converterPath = path.resolve(
   'scripts',
   'green-chroma-key.mjs',
 );
+const validColorPrompt =
+  'Neutral sRGB white balance, ungraded colors. Warm color is local to named materials. No whole-image color tint.';
 
 let browser: Browser;
 
@@ -159,7 +161,7 @@ describe('soft green chroma-key conversion', () => {
       await writePng(inputPath, 5, 5, pixels);
       await writeFile(
         promptPath,
-        'Synthetic near-green matte regression fixture.\n',
+        `${validColorPrompt}\nSynthetic near-green matte regression fixture.\n`,
         'utf8',
       );
 
@@ -244,7 +246,11 @@ describe('soft green chroma-key conversion', () => {
       const imagePath = path.join(fixtureRoot, 'opaque-source.png');
       const promptPath = path.join(fixtureRoot, 'opaque-source.prompt.txt');
       await writePng(imagePath, 2, 2, rgbaCanvas(2, 2, [120, 80, 40, 255]));
-      await writeFile(promptPath, 'Private source prompt fixture.\n', 'utf8');
+      await writeFile(
+        promptPath,
+        `${validColorPrompt}\nPrivate source prompt fixture.\n`,
+        'utf8',
+      );
 
       let failure: { stderr?: string } | undefined;
       try {
@@ -329,7 +335,7 @@ describe('soft green chroma-key conversion', () => {
       await writePng(inputPath, 7, 7, pixels);
       await writeFile(
         path.join(promptRoot, 'characters', 'binary-source.prompt.txt'),
-        'Synthetic binary green-matte regression fixture.\n',
+        `${validColorPrompt}\nSynthetic binary green-matte regression fixture.\n`,
         'utf8',
       );
 
@@ -358,6 +364,34 @@ describe('soft green chroma-key conversion', () => {
       expect(outputPng.includes(Buffer.from('Private prompt record'))).toBe(
         true,
       );
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  }, 30_000);
+
+  test('rejects a conversion prompt without neutral color controls', async () => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-green-key-prompt-'),
+    );
+    try {
+      const inputPath = path.join(fixtureRoot, 'green-source.png');
+      const outputPath = path.join(fixtureRoot, 'converted.png');
+      const promptPath = path.join(fixtureRoot, 'green-source.prompt.txt');
+      await writePng(inputPath, 2, 2, rgbaCanvas(2, 2, [0, 255, 0, 255]));
+      await writeFile(promptPath, 'Warm studio key lighting.', 'utf8');
+
+      await expect(
+        execFileAsync(process.execPath, [
+          converterPath,
+          'convert',
+          inputPath,
+          outputPath,
+          '--prompt-file',
+          promptPath,
+        ]),
+      ).rejects.toMatchObject({
+        stderr: expect.stringContaining('generation prompt color guard failed'),
+      });
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }

@@ -100,13 +100,16 @@ describe('quality-gate scaffold', () => {
     expect(contentValidation).toContain('tests/unit/content-schemas.test.ts');
   });
 
-  test('validates raster provenance and the green chroma workflow', async () => {
+  test('validates raster provenance, green chroma, and color cast', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
     };
 
     expect(packageJson.scripts['assets:validate']).toContain(
       '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets',
+    );
+    expect(packageJson.scripts['assets:validate']).toContain(
+      'node tools/validate-asset-color.mjs validate src/assets',
     );
     expect(packageJson.scripts['assets:convert-green']).toContain(
       '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree',

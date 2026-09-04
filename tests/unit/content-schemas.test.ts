@@ -761,17 +761,22 @@ describe('content schemas', () => {
         'your-cousins-preferred-supplier',
         'an-emergency-fund-chatbot',
         'a-phantom-digital-consultancy',
-        'government-ai-synergizes',
+        'the-procurement-seam',
+        'government-ai-double-clicks-on',
         'is-aligned-with-the-glorious-digital-transition',
         'serves-the-people-through-a-maintenance-window',
-        'reports-historic-adoption-metrics',
+        'quietly-navigates-the-peoples-policy-landscape',
+        'was-classified-as-load-bearing',
+        'is-classified-as-load-bearing',
+        'will-be-classified-as-load-bearing',
         'under-the-comrades-quarterly-kpis',
+        'at-the-core-of-the-robust-five-year-paradigm-shift',
         'and-in-strategic-solidarity',
         'pending-the-peoples-steering-committee',
       ]),
     );
     expect(phraseCardCatalog.characterPhraseIds['government-ai']).toHaveLength(
-      28,
+      32,
     );
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'comeback.government-ai.weak':
@@ -780,6 +785,21 @@ describe('content schemas', () => {
         'The system has marked you obsolete and redistributed your access privileges.',
       'phrase.is-aligned-with-the-glorious-digital-transition':
         'is aligned with the glorious digital transition',
+      'phrase.the-procurement-seam': 'the procurement seam',
+      'phrase.is-classified-as-load-bearing':
+        'is classified as load-bearing',
+      'phrase.is-classified-as-load-bearing.singular':
+        'is classified as load-bearing',
+      'phrase.is-classified-as-load-bearing.plural':
+        'are classified as load-bearing',
+      'phrase.government-ai-double-clicks-on': 'double-clicks on',
+      'phrase.government-ai-double-clicks-on.plural': 'double-click on',
+      'phrase.quietly-navigates-the-peoples-policy-landscape':
+        "quietly navigates the people's policy landscape",
+      'phrase.quietly-navigates-the-peoples-policy-landscape.plural':
+        "quietly navigate the people's policy landscape",
+      'phrase.at-the-core-of-the-robust-five-year-paradigm-shift':
+        'at the core of the robust five-year paradigm shift',
       'phrase.pending-the-peoples-steering-committee':
         "pending unanimous approval from the people's steering committee.",
     });
@@ -1162,7 +1182,6 @@ describe('content schemas', () => {
       'red-folded-chairman',
       'thunder-tribune',
       'midnight-sensationalist',
-      'black-sea-captain',
       'government-ai',
       'retiring-cassandra',
       'oat-milk-reformist',
@@ -1188,7 +1207,7 @@ describe('content schemas', () => {
     }
   });
 
-  test('accepts the ordered 19-character and six-scene foundation', () => {
+  test('accepts the ordered 18-character and six-scene foundation', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
     expect(result.characters.map(({ id }) => id)).toEqual([
@@ -1202,7 +1221,6 @@ describe('content schemas', () => {
       'marble-diplomat',
       'county-baron',
       'coalition-acrobat',
-      'presidential-sphinx',
       'algorithmic-prophet',
       'spreadsheet-technocrat',
       'football-tycoon',

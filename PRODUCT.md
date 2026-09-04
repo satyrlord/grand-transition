@@ -56,12 +56,12 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes 19 original fictional characters, 18 human and one
+  bundle. It also includes 18 original fictional characters, 17 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
-  default portraits. Eight archetypes have ten alternate skins in total. Skins
+  default portraits. Seven archetypes have nine alternate skins in total. Skins
   are visual-only variations that do not change game identity or prose.
-  The final asset contract permits one default skin and one through eight
-  alternate skins for one archetype.
+  The final asset contract permits one default skin and zero through eight
+  alternate skins per archetype.
   Final representational raster art uses one strict flat cel-shaded editorial-
   cartoon style across characters, moderators, scenes, furniture, fixtures,
   and props.
@@ -91,7 +91,9 @@ fictional political and social satire. It must not copy real brands, protected
 works, or unsupported claims about real people.
 The approved final image language is a flat cel-shaded editorial cartoon.
 Painted comic-book, painterly semi-realistic, realistic concept-art,
-photographic, and three-dimensional-render output is outside the brand.
+photographic, and three-dimensional-render output is outside the brand. A
+global yellow, amber, sepia, or other warm color wash is also outside the brand.
+Warm color remains limited to authored local materials and lighting.
 
 ## Evidence on Hand
 

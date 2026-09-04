@@ -24,15 +24,14 @@ text, real logos, and copyrighted broadcast art. Every record has review
 evidence.
 
 The review confirms that each character identity and its prose are fictional.
-It rejects named or identifiable real-person comparisons, targets, source
-notes, and asset references. A portrait skin can use a public-figure likeness
-as a visual-only parody when the product owner explicitly approves it.
-The research folder is the only location for the reference identity, links,
-and approval record. Shipped generation provenance uses a generic source
-description and does not name or link that person. This exception does not
-permit real-person allegations or player-visible names. The review also rejects
-real political party names, acronyms, and logos. It permits generic ideological
-or social-family labels.
+It rejects named or identifiable real-person comparisons, targets, and
+player-visible disclosures. An approved public-figure likeness may be used only
+as visual-only parody in a portrait skin. Private study data stays in the
+Git-ignored research folder and does not ship. Shipped generation provenance
+uses a generic source description and does not name a real person. This
+exception does not permit real-person allegations or player-visible names. The
+review also rejects real political party names, acronyms, and logos. It permits
+generic ideological or social-family labels.
 
 Simulation reports seed, workload, matchups, difficulties, win rates, resolved
 round counts, rule-event rates, failures, and environment. Automatic development
@@ -42,7 +41,7 @@ logs contain no personal data and never leave the local device.
 
 The release balance workload contains every ordered character matchup,
 including mirrors, at all three difficulties. Each ordered matchup runs 100
-matches, with each player opening 50. For 19 characters this is 108,300 matches.
+matches, with each player opening 50. For 18 characters this is 97,200 matches.
 The report separates character, opponent, difficulty, opening position, scene,
 and seed.
 
@@ -87,7 +86,7 @@ At least 10 lines must be attributable to the intended character.
 
 ## Acceptance criteria
 
-- **AC-027-01:** The simulation contains exactly 108,300 completed matches and
+- **AC-027-01:** The simulation contains exactly 97,200 completed matches and
   the required balanced opening count for every ordered matchup and difficulty.
 - **AC-027-02:** Aggregate, matchup, and opening rates meet their bands or have
   a permitted recorded deviation. Aggregate and matchup round counts meet their

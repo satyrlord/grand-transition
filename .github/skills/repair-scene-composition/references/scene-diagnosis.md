@@ -31,6 +31,10 @@ Use this checklist for each viewport and character pair.
   asset focal points or runtime mapping when crop changes the composition.
 - **Edge quality:** Check for halos, checkerboards, cut contours, and shadow
   seams. Regenerate or rebuild the alpha layer when an edge is invalid.
+- **Color and white balance:** Check neutral anchors, navy and charcoal shadows,
+  paper, skin, brass, and other named warm regions separately. Reject a
+  scene-wide yellow, amber, sepia, beige, or brown cast. Keep local warm light
+  from becoming a complete color grade.
 - **Hierarchy:** Check candidate dominance, moderator depth, and prop emphasis.
   Repair the master composition, light, or runtime scale when mass is wrong.
 - **Stability:** Check layout shift and animated movement. Repair markup,
@@ -110,6 +114,8 @@ Inspect the file structure and the rendered composite.
 - Confirm `Alpha Workflow` is `green-chroma-key-v1`.
 - Confirm `Chroma Key` is `#00FF00`.
 - Confirm that no opaque chroma-green pixel remains.
+- Confirm neutral sRGB white balance and no global warm color wash.
+- Confirm that warm color stays inside named local materials or lights.
 - Confirm that shadows belong to the correct layer.
 - Confirm that clipped edges continue outside the visible frame when needed.
 

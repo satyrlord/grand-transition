@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "sampleLimit": 300000,
+  "minimumOpaqueSamples": 64,
+  "minimumNeutralSamples": 32,
+  "minimumCoolSamples": 32,
+  "neutralMaxChannelSpread": 24,
+  "neutralMaxRedGreenSpread": 16,
+  "neutralMinimumChannel": 12,
+  "coolMinimumChannel": 20,
+  "coolBlueDominance": 10,
+  "nearNeutralMaxChannelSpread": 42,
+  "nearNeutralMaxRedGreenSpread": 32,
+  "yellowBiasThreshold": 5,
+  "maximumMedianYellowBias": 6.5,
+  "maximumNeutralYellowFraction": 0.75
+}

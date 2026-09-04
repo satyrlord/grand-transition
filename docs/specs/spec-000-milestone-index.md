@@ -40,11 +40,12 @@ complete an approved specification.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
   metadata. Public artifacts do not declare a real person as a visual or
-  rhetorical model. The Git-ignored research folder can record real names,
-  links, and private approval evidence for internal character study. These
-  records do not ship and do not permit copied art or identifiable
-  player-visible content. Public institutions and documented historical events
-  can inform original satire when the result does not identify a real person.
+  rhetorical model. Complete private character studies stay in the Git-ignored
+  research folder, and private study data does not ship. An approved
+  public-figure likeness may be used only as visual-only parody in a portrait
+  skin; it must not change fictional character identity or player-visible
+  content. Public institutions and documented historical events can inform
+  original satire when the result does not identify a real person.
 - Do not use a real political party's name, acronym, or logo. Use only generic
   ideological or social-family labels, such as Conservative, Peasant,
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
@@ -245,7 +246,7 @@ source-only review does not satisfy them.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 12. Three
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-    Budget: 10. The fixed 29-character and four-scene raster baseline is
+    Budget: 10. The fixed 27-character and four-scene raster baseline is
     regenerated in one strict flat cel-shaded cartoon style. Four characters
     and one scene also receive their complete state and motion packages.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
@@ -254,7 +255,7 @@ source-only review does not satisfy them.
     Budget: 8. The vertical slice reports strong public outcomes without teaching
     tactics.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
-    Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
+    Budget: 40. All 18 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
     Safety, variety, and balance have recorded evidence.
 28. [Release hardening](spec-028-release-hardening.md). Budget: 8. Final quality
