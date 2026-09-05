@@ -66,7 +66,15 @@ describe('quality-gate scaffold', () => {
       'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
     );
     expect(packageJson.scripts.build).toBe(
-      'node tools/validate-scene-assets.mjs src/assets/scenes && vite build',
+      'node tools/validate-scene-assets.mjs src/assets/scenes && ' +
+        'node tools/validate-character-assets.mjs src/assets/characters && ' +
+        'vite build',
+    );
+    expect(packageJson.scripts['assets:build']).toContain(
+      'node tools/build-character-assets.mjs',
+    );
+    expect(packageJson.scripts['assets:validate']).toContain(
+      'node tools/validate-character-assets.mjs src/assets/characters',
     );
   });
 

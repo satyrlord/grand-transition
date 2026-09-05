@@ -15,6 +15,16 @@ describe('character asset resolver', () => {
     );
     expect(source.match(/query: '\?url&no-inline'/gu)).toHaveLength(2);
     expect(source).not.toMatch(/query: '\?url'/gu);
+    const gameContentSource = await readFile(
+      path.resolve(process.cwd(), 'src', 'game-content.ts'),
+      'utf8',
+    );
+    expect(gameContentSource).not.toMatch(
+      /import\.meta\.glob\([^)]*assets\/characters\/\*\.png/su,
+    );
+    expect(gameContentSource).toContain(
+      "from 'virtual:character-portrait-fallbacks'",
+    );
   });
 
   test('maps the fixed inventory to responsive AVIF and WebP sources', () => {

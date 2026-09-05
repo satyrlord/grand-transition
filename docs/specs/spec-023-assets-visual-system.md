@@ -540,6 +540,9 @@ verified source origin exists and its generation prompt does not. Do not invent
 a source or prompt. Asset validation rejects every PNG that lacks an embedded
 generation source. It also rejects a character PNG that embeds its exact custom
 prompt. Shipping assets contain no chroma-key residue.
+Lossy AVIF and WebP runtime variants can retain chroma-coded RGB only where
+alpha is 16 of 255 or lower. A chroma-green runtime pixel above that bounded
+compression fringe fails validation. PNG masters retain the zero-residue rule.
 
 Validation also rejects every alpha-bearing PNG that lacks the workflow, key,
 or alpha-source metadata, has nonzero outer corners, or retains an opaque
@@ -561,6 +564,9 @@ Scene masters are layered 1920 by 1080 files. Runtime wide scene variants are
 640 by 360, 1280 by 720, and 1920 by 1080. Character masters are transparent,
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 960. Character portrait or token variants are 128 and 256 square pixels.
+The visible full-body silhouette occupies at least 12 percent of each square
+canvas and 92 through 99 percent of its height. This keeps slim characters
+readable while it preserves a safe margin for broad poses and props.
 Foreground scene plates use the same wide dimensions as their matching back
 scene and preserve transparent outer corners.
 

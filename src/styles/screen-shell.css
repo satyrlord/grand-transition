@@ -477,7 +477,7 @@
   }
 
   .roster-choice[data-character-species='robot'] {
-    --roster-portrait-origin: 36.5% 0;
+    --roster-portrait-origin: 44% 0;
   }
 
   .roster-headshot {

@@ -43,6 +43,11 @@ test.describe('production character content lifecycle', () => {
 
       await buildIsolatedApplication(fixtureRoot);
       expect(findBuiltFiles(fixtureRoot, temporaryCharacterId)).not.toEqual([]);
+      expect(
+        findBuiltFiles(fixtureRoot, 'red-folded-chairman').filter(
+          (filePath) => path.extname(filePath) === '.png',
+        ),
+      ).toEqual([]);
       activeServer = await serveBuild(fixtureRoot);
       await assertTemporaryCharacterIsPlayable(page, activeServer.origin);
 
