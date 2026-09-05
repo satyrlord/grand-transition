@@ -199,6 +199,10 @@ for (const viewport of supportedViewports) {
         }
       }
       const robotStyle = getComputedStyle(robotPortrait);
+      const selectedSourceWidth = Number(
+        /-(\d+)x\1-/u.exec(robotPortrait.currentSrc)?.[1] ??
+          robotCanvas.width,
+      );
       const robotFaceCenterRatio =
         robotFacePixelXTotal / robotFacePixelCount / robotCanvas.width;
       const renderedRobotFaceCenter =
@@ -250,6 +254,9 @@ for (const viewport of supportedViewports) {
             Number.parseFloat(robotStyle.transformOrigin) /
             robotPortrait.clientWidth,
           facePixelCount: robotFacePixelCount,
+          facePixelRatio:
+            robotFacePixelCount /
+            (selectedSourceWidth * selectedSourceWidth),
           faceCenterOffsetRatio:
             Math.abs(renderedRobotFaceCenter - robotWindowCenter) /
             robotWindowBox.width,
@@ -306,17 +313,18 @@ for (const viewport of supportedViewports) {
       windowOverflow: 'hidden',
       transformOriginXRatio: expect.any(Number),
       facePixelCount: expect.any(Number),
+      facePixelRatio: expect.any(Number),
       faceCenterOffsetRatio: expect.any(Number),
     });
     expect(geometry.robotRosterPortrait.scale).toBeGreaterThanOrEqual(3);
     expect(geometry.robotRosterPortrait.scale).toBeLessThanOrEqual(3.12);
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeGreaterThanOrEqual(0.35);
+    ).toBeGreaterThanOrEqual(0.43);
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeLessThanOrEqual(0.38);
-    expect(geometry.robotRosterPortrait.facePixelCount).toBeGreaterThan(900);
+    ).toBeLessThanOrEqual(0.45);
+    expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0015);
     expect(
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
     ).toBeLessThanOrEqual(0.02);

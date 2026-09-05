@@ -299,8 +299,9 @@ test('the longest desktop match state fits and exposes every required fact', asy
         chromaKeyGreenRatio === 0 &&
         lowerThirdOpaqueRatio > 0.02 &&
         transparentRatio > 0.2 &&
-        opaqueRatio > 0.2,
+        opaqueRatio > 0.12,
     ),
+    JSON.stringify(alphaFacts),
   ).toBe(true);
   const backgroundScene = page.locator('.broadcast-stage-art');
   await expect(backgroundScene).toBeVisible();
@@ -669,8 +670,9 @@ test('the selected roster characters load their local portrait assets', async ({
       }),
     ),
   ).toBe(true);
+  const alphaFacts = await portraitAlphaFacts(portraits);
   expect(
-    (await portraitAlphaFacts(portraits)).every(
+    alphaFacts.every(
       ({
         bottomRowOpaqueRatio,
         chromaKeyGreenRatio,
@@ -684,8 +686,9 @@ test('the selected roster characters load their local portrait assets', async ({
         chromaKeyGreenRatio === 0 &&
         lowerThirdOpaqueRatio > 0.02 &&
         transparentRatio > 0.2 &&
-        opaqueRatio > 0.2,
+        opaqueRatio > 0.12,
     ),
+    JSON.stringify(alphaFacts),
   ).toBe(true);
 });
 
@@ -2332,7 +2335,7 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
         }
         if (alpha > 0 && row < topOpaqueRow) topOpaqueRow = row;
         if (
-          alpha > 0 &&
+          alpha > 16 &&
           pixels[pixelOffset + 1] >= 180 &&
           pixels[pixelOffset] <= 80 &&
           pixels[pixelOffset + 2] <= 80

@@ -54,15 +54,46 @@ async function inspectAlpha(input, context) {
   let transparent = 0;
   let opaque = 0;
   let partial = 0;
-  for (let offset = 3; offset < data.length; offset += 4) {
-    const alpha = data[offset];
+  let visible = 0;
+  let chromaGreen = 0;
+  let minimumY = info.height;
+  let maximumY = -1;
+  for (let pixelIndex = 0; pixelIndex < info.width * info.height; pixelIndex += 1) {
+    const alpha = data[pixelIndex * 4 + 3];
     if (alpha === 0) transparent += 1;
     else if (alpha === 255) opaque += 1;
     else partial += 1;
+    if (alpha > 8) {
+      visible += 1;
+      const offset = pixelIndex * 4;
+      if (
+        alpha > 16 &&
+        data[offset + 1] >= 180 &&
+        data[offset] <= 80 &&
+        data[offset + 2] <= 80
+      ) {
+        chromaGreen += 1;
+      }
+      const y = Math.floor(pixelIndex / info.width);
+      minimumY = Math.min(minimumY, y);
+      maximumY = Math.max(maximumY, y);
+    }
   }
   const corners = [3, (info.width - 1) * 4 + 3, (info.height - 1) * info.width * 4 + 3, (info.width * info.height - 1) * 4 + 3];
   if (transparent === 0 || opaque === 0 || partial === 0 || corners.some((offset) => data[offset] !== 0)) {
     throw new Error(`${context} must have transparent corners, opaque content, and partial-alpha edges.`);
+  }
+  const visibleRatio = visible / (info.width * info.height);
+  const heightRatio = (maximumY - minimumY + 1) / info.height;
+  if (chromaGreen > 0) {
+    throw new Error(
+      `${context} retains ${chromaGreen} visible chroma-green pixel(s).`,
+    );
+  }
+  if (visibleRatio < 0.12 || heightRatio < 0.92 || heightRatio > 0.99) {
+    throw new Error(
+      `${context} must keep a readable full-body silhouette inside the square canvas.`,
+    );
   }
 }
 

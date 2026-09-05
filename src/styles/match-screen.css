@@ -430,11 +430,11 @@
   }
 
   .match-player[data-side='red'] .character-frame {
-    left: -8%;
+    left: -30%;
   }
 
   .match-player[data-side='blue'] .character-frame {
-    right: -8%;
+    right: -30%;
   }
 
   @media (max-aspect-ratio: 3 / 2) {
