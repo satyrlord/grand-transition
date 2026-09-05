@@ -163,7 +163,7 @@ describe('match-screen snapshot', () => {
     ).toBe(true);
   });
 
-  test('projects the foundation scene through its legacy WebP fallback', () => {
+  test('projects the foundation scene through its own manifest and crop contract', () => {
     const scene = sampleContent.scenes.find(
       (candidate) => candidate.id === 'county-council-ballroom',
     )!;
@@ -182,18 +182,16 @@ describe('match-screen snapshot', () => {
 
     const layer = createMatchScreenSnapshot(state).sceneLayers[0]!;
     expect(layer).toMatchObject({
-      kind: 'fallback',
-      assetId: 'catalog-foundation-neutral-scene',
+      kind: 'manifest',
+      assetId: 'county-council-ballroom',
       depth: 0,
-      width: 1672,
-      height: 941,
-      sizes: '100vw',
-      url: expect.stringContaining('title-proscenium-background'),
-      avif: null,
+      width: 1920,
+      height: 1080,
+      url: expect.stringContaining('county-council-ballroom'),
     });
-    expect(layer.sources).toEqual({ webp: layer.webp });
-    expect('focalPoint' in layer).toBe(false);
-    expect('crop' in layer).toBe(false);
+    expect(layer.sources).toEqual({ avif: layer.avif, webp: layer.webp });
+    expect(layer.focalRectangles.moderatorFace).toBeNull();
+    expect(layer.crop.core).toEqual({ x: 0.125, y: 0, width: 0.75, height: 1 });
     expect(Object.isFrozen(layer)).toBe(true);
   });
 

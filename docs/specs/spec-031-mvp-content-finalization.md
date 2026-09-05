@@ -60,8 +60,9 @@ color is local to authored materials and lighting, not a complete scene grade.
   heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
   It contains lighting trusses, harsh lamps, and two tall standing desks. Each
   desk has one microphone and one plain unbranded water bottle. One fixed blonde
-  fictional moderator sits at a physical wood-and-brass desk. A raised
-  inner-left platform holds that desk. Exactly four full-height columns frame the studio.
+  fictional moderator sits at a physical wood-and-brass desk. A central raised
+  platform holds that desk. Her complete head remains above the common phrase
+  pool, which can partly cover the desk. Exactly four full-height columns frame the studio.
 
   The playable characters remain separate portrait layers. Its phrase themes
   are transition, public television, revolution, archive, emergency broadcast,
@@ -75,7 +76,8 @@ color is local to authored materials and lighting, not a complete scene grade.
 
   One fixed
   fictional male moderator sits with crossed legs in a beige studio chair at
-  the inner-right position that mirrors the transition-era moderator. He wears
+  the stage center, behind a low charcoal table with papers. His complete head
+  remains above the common phrase pool; the pool can partly cover his furniture. He wears
   rectangular glasses, faces the camera, and has a normal human head with a
   slightly tall forehead and comically small facial features.
 

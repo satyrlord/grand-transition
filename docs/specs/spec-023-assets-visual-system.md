@@ -48,6 +48,16 @@ The scene baseline contains these current layers:
 - `transition-era-television-studio.png`.
 - `transition-era-television-studio-desks.png`.
 
+The current playable catalog also includes four opaque scene masters:
+`county-council-ballroom.png`, `midnight-call-in-studio.png`,
+`palace-press-hall.png`, and `influencer-campaign-livestream.png`. These use the
+same 1920-by-1080 source canvas, six runtime variants, crop core, and shared safe
+rectangles. Each has a focal point at `(0.5, 0.5)` and explicitly absent
+moderator and foreground-desk focal rectangles. The asset pipeline validates
+all eight scene masters. The original four-layer baseline remains the studio
+regeneration boundary; the four added backgrounds replace the retired
+foundation fallback under Milestone 026.
+
 An asset added after this fixed baseline does not enter Milestone 023
 automatically. Milestone 031 owns later portraits, skins, states, scene
 identities, and layers. Regenerating the fixed baseline does not move those
@@ -268,25 +278,28 @@ same canvas, stage origin, camera, scale, and alignment.
 Use one mirrored duel grid for both scene packages. Divide the stage into a
 left opponent zone, a clear central confrontation zone, and a right opponent
 zone. Center each playable portrait and standing desk within its outer zone.
-Keep playable character bodies, standing-desk mass, moderator faces, and
-important scenic props out of the central zone.
+Keep playable character bodies and standing-desk mass out of the central
+zone. The physical moderator occupies its dedicated central window between
+the speech record and common phrase pool.
 
-The transition-era moderator remains in a secondary inner-left position. The
-modern moderator remains in the mirrored inner-right position. Each moderator
-stays inside the assigned side zone and remains visually secondary to both
-playable characters. Keep all standing-desk mass inside the lower third.
+Both physical moderators sit at the stage center. Keep each complete head
+above the common phrase pool. The pool may cover moderator furniture and the
+lower body. Its background uses 78 percent opacity so furniture remains
+visible while phrase text stays legible. Keep the foreground standing desks
+in the opponent zones.
 
 The
 back scene owns the moderator, architecture, fixed furniture, and rear props.
 The transparent foreground plate owns both standing desks and their attached
 or placed props. Neither layer contains a playable character.
 
-Place the transition-era moderator face center at 29 percent of master width
-and 44 percent of master height. Place the modern moderator face center at 71
-percent of master width and 44 percent of master height. Use normal adult head
-scale for both moderators. Do not shrink either head to imply depth. Make each
-moderator visually secondary through seating, subdued color, restrained
-gesture, and furniture instead of reduced human scale.
+Use one central moderator focal point at 50 percent of master width and
+43 percent of master height. Preserve each moderator as a seated person in the
+studio. Do not replace a moderator with a screen image or floating head. Use
+one authored scale across viewport ratios. Keep the full head inside the
+central focal rectangle, above the common phrase pool at 52 percent of scene
+height. The transition-era moderator keeps her physical wood-and-brass desk.
+The modern moderator keeps his beige chair, crossed legs, and a low table.
 
 Playable character layers have visual priority over moderator bodies and
 moderator furniture. A playable character or standing desk can cover part of a
@@ -308,10 +321,18 @@ Measure vertical anchors from the top edge of the 16:9 canvas. Use these
 vertical references as percentages of canvas height:
 
 - Normal-adult standing eye line: 34 percent.
-- Seated-moderator eye line: 44 percent.
+- Seated-moderator focal center: 43 percent.
 - Standing-desk top: 62 percent.
 - Main floor break: 72 percent. Apply the same normalized anchors to the
 1920-by-1080 master and every runtime variant.
+
+Runtime portrait frames use the same bottom-aligned scene canvas as the back
+and foreground layers. Each square portrait frame is 80 percent of scene
+height, starts at 24 percent of scene height, and centers at 20 or 80 percent
+of scene width. Preserve the complete square source without an additional
+letterbox offset. The speech record stays within the central 32 percent of
+scene width, from 18 through 34 percent of scene height. Validate visible
+character anatomy and speech together, not only the image element bounds.
 
 An approved character-height contract can move a playable face above or below
 the normal-adult eye-line reference. Keep the character on the same floor and
@@ -320,10 +341,9 @@ approved height difference. Desk fronts continue below the canvas edge so that
 their lower contours never appear.
 
 Use one shared focal and interface-safe model for both scene packages. Mirror
-the left and right player focal regions across the stage center axis. Keep the
-central interface-safe regions identical when the scene changes. Only the
-moderator focal region changes side: inner-left for the transition-era scene
-and inner-right for the modern scene.
+the playable-character regions. Keep the moderator centered in both studios.
+The speech record ends above the moderator focal rectangle. The common phrase
+pool begins below it and may cover the moderator desk, chair, or lower body.
 
 Record all focal and interface-safe regions as normalized rectangles in the
 1920-by-1080 master coordinate system. Apply the same rectangles to each runtime
@@ -349,8 +369,8 @@ width and height.
 
 | Scene layer | Moderator face | Left desk top and props | Right desk top and props |
 | --- | --- | --- | --- |
-| Transition-era back | `x=26, y=36, width=6, height=16` | Absent | Absent |
-| Modern back | `x=68, y=36, width=6, height=16` | Absent | Absent |
+| Transition-era back | `x=46, y=35, width=8, height=14` | Absent | Absent |
+| Modern back | `x=46, y=35, width=8, height=14` | Absent | Absent |
 | Transition-era foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 | Modern foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 
@@ -379,8 +399,11 @@ percentages of master width and height:
 Keep speech inside the central interaction region. Do not add a speech-safe
 extension across a player gesture, player prop, or moderator focal rectangle.
 
-Use only low-detail, nonessential background shapes inside an interface-safe
-rectangle. Do not put a face, required prop, scene identifier, text-like mark,
+The central interaction region contains a reserved moderator window at
+`x=46-54`, `y=35-49`. No live text or control may cover that window. Its
+moderator face is the only face permitted within the central region. Use
+low-detail background shapes behind live text. Do not put another face,
+required prop, scene identifier, text-like mark,
 or high-contrast ornament in it. A desk front can cross a lower action region
 only as a plain flat surface without a prop or important ornament.
 

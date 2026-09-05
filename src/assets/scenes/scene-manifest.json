@@ -2,6 +2,566 @@
   "schemaVersion": 1,
   "assets": [
     {
+      "id": "county-council-ballroom",
+      "ownerType": "scene",
+      "ownerId": "county-council-ballroom",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "county-council-ballroom.png",
+        "sha256": "f72bfa42bbb75dca10a14bd8f623a36794e344045d5039e369d158dcf62bde42",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 2295828,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/county-council-ballroom-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 13809,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "3f9390fef06374210f1d0b73c6e9b3efc3cf142337587f7a713c722158c17cc1"
+        },
+        {
+          "path": "variants/county-council-ballroom-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 17056,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "7f9df6bccbfc415ee186326d88d3924f1ea5605abd7de171935796714676fbed"
+        },
+        {
+          "path": "variants/county-council-ballroom-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 35860,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "c87bc72104b4008ba6e5abe9b70314540db7f15811531f6277feda79a5906e91"
+        },
+        {
+          "path": "variants/county-council-ballroom-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 47690,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "4702c75a991e27e1b766001c12eb4c9ade1aedca4a0395689a41664bae2ed6e9"
+        },
+        {
+          "path": "variants/county-council-ballroom-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 58674,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "9eac01163b4f5149d7afb4b24855ecc2c7d8f917f5d9ba87f86fa4b8d7225910"
+        },
+        {
+          "path": "variants/county-council-ballroom-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 77904,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "68cd79a82c305446bfaeaa406b605e3b8b3cf10b2a97d16335e04ce96d04ad91"
+        }
+      ]
+    },
+    {
+      "id": "midnight-call-in-studio",
+      "ownerType": "scene",
+      "ownerId": "midnight-call-in-studio",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "midnight-call-in-studio.png",
+        "sha256": "0343d232979b68b3cf5d4f4cdacd72e943707a4e48c2dd0970afb95e91497896",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 1596839,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/midnight-call-in-studio-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 8271,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "9fb9be3822f0ea6eaa8c076f490c59e23269ec7cf6ce9a4458ce5d6d446918b9"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 10488,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "17d01d3b287acbde0e2ce1e50032fbe7c65c610f5c09feeda3ca69eeff8407e0"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 20089,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "568b0248fdcb3ec59123e0319c11eaa366592f54952cc5a3d296fedda5c4f920"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 27840,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "84820c17b47337e5a8facbfa6af0b2dee0e0d262ed535ae7435c7b70d89a1b82"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 33866,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "9d3a9dd4f0ead9509596a2b0654f6463bbc52a020e1ea4fef3e6a7894679fe90"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 47284,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "d760f4d9021fad50436b42c50587bd52bee32471b9c0589a27c8942535e8662a"
+        }
+      ]
+    },
+    {
+      "id": "palace-press-hall",
+      "ownerType": "scene",
+      "ownerId": "palace-press-hall",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "palace-press-hall.png",
+        "sha256": "a6b4ef5d0eb709e596ddf2eb2a653eb3a4dfbb4d3f63511c542a467f1599c6c0",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 2394627,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/palace-press-hall-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 14894,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "15aa53fbefed73e5e90990c4e05fa6c34d95b681b6c1188acbaf4bcec648577d"
+        },
+        {
+          "path": "variants/palace-press-hall-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 19712,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "901d29610f48f59ab649414c1c3f37c765cc7aae372de459f19a83e672b9ed64"
+        },
+        {
+          "path": "variants/palace-press-hall-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 40373,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "b88a74c6ce1fb94604a29aeea38ec95f1a1b635ce7d4b06a2b87f344b3baf16d"
+        },
+        {
+          "path": "variants/palace-press-hall-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 58364,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "542288f71c59710aed8a2557e8da78f62c4a10a7669e038fb23be159bf8f5441"
+        },
+        {
+          "path": "variants/palace-press-hall-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 66813,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "9646a14147639c58b315b0f7470830de3f33c16075ea37fcdb7c7ee4d2896926"
+        },
+        {
+          "path": "variants/palace-press-hall-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 100062,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "0786c58767b4065970f60971e31b50bed0e99893f7ba7042be2b3f9be0d0dcc2"
+        }
+      ]
+    },
+    {
+      "id": "influencer-campaign-livestream",
+      "ownerType": "scene",
+      "ownerId": "influencer-campaign-livestream",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "influencer-campaign-livestream.png",
+        "sha256": "baf0ecf37a971c19ab7f8b343d022f4c83b3d4aea5ba875baa592f249aeb0928",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 2339585,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/influencer-campaign-livestream-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 12111,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "c3e7365c800a6691e02d9c40543bf9da22c4fae63762d9bba4a6335ff827253c"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 14744,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "e7ec1df13b5af47b02c64a10efb8602ddf74ec2bda680669401d5d599f668db1"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 30843,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "b3e52b022a4bf9bd8a8ac4c31ceb4a741f950dc1238d5aead976c543a85a9bdb"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 39884,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "a3736fcb8822f9f9df881f4c430e266c631dd627adf143c5ae303bf9966364f6"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 50467,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "4098353485c84c3b8e5166fd33c108f145f6a69fa355cea96c779c582ce71c52"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 67846,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "054db83d5304316992ec7daf2e1acfa6bcc6459a7e1baf82a669c2c27aba82df"
+        }
+      ]
+    },
+    {
       "id": "modern-debate-studio",
       "ownerType": "scene",
       "ownerId": "modern-debate-studio",
@@ -10,15 +570,15 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio.png",
-        "sha256": "02e36aea466d0ac25f9e3f8e6567120f1c64f487302dc45a4eb563adcab75834",
+        "sha256": "0cb345aff398ab37690f8a06457943bcb7ad431c566abcc0bd299d7d8ab37a94",
         "width": 1920,
         "height": 1080,
-        "bytes": 627496,
+        "bytes": 2502512,
         "format": "png"
       },
       "focalPoint": {
-        "x": 0.71,
-        "y": 0.44
+        "x": 0.5,
+        "y": 0.43
       },
       "focalRectangles": {
         "leftGesture": {
@@ -46,10 +606,10 @@
           "height": 0.2
         },
         "moderatorFace": {
-          "x": 0.68,
-          "y": 0.36,
-          "width": 0.06,
-          "height": 0.16
+          "x": 0.46,
+          "y": 0.35,
+          "width": 0.08,
+          "height": 0.14
         },
         "leftDeskTopAndProps": null,
         "rightDeskTopAndProps": null
@@ -94,55 +654,55 @@
           "path": "variants/modern-debate-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 7284,
+          "bytes": 22864,
           "format": "avif",
           "quality": 70,
-          "sha256": "32729522825b795a42b4d251da39f144a0f09546aeea5600a05c9a655c6298fe"
+          "sha256": "0321ce18d09de09a72e4ff905f5f54e5e2e8f3eb36c0655785cf89a34891fe49"
         },
         {
           "path": "variants/modern-debate-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 9184,
+          "bytes": 25334,
           "format": "webp",
           "quality": 86,
-          "sha256": "5fc6cc46b5c00bd9cbbdab3e54c6f559356f162c7f9356d2a47e2e72441da6f8"
+          "sha256": "81b2e002e45b46c3e07891b12f4233897c9d2bfff3b72d515d307e92c77e137e"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 17249,
+          "bytes": 58377,
           "format": "avif",
           "quality": 70,
-          "sha256": "1ce7b61495027f1b9f003dc6d8b5910a85cde4c57ee6e8dbeda1a12f538673fb"
+          "sha256": "96d21e965fb1d4d84c10dc56b020dccd45c0e63c585571a374eff12210b501bf"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 24788,
+          "bytes": 67544,
           "format": "webp",
           "quality": 86,
-          "sha256": "35abbdb9d1e12a117291d4bc6988c99cad85401303dd433b2eab850c7ccb070d"
+          "sha256": "ea6a2cf9e95ef58e1d6706e5e86a3401316f33b125111673379b2fbf4ce0e4eb"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 28896,
+          "bytes": 92545,
           "format": "avif",
           "quality": 70,
-          "sha256": "6284c8e01cd7959dc6b6050d1efbd235cda6715275a29fb92964f94c7f2ff349"
+          "sha256": "b5bb92071952a23761de89fe34888f0e0255f14c8dacc16e6858378e8002bdb5"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 43392,
+          "bytes": 112058,
           "format": "webp",
           "quality": 86,
-          "sha256": "33ea525ac3b437e3cca48efe8b885efcb7c0f8abd8ea33b02af4febb0ea6cc87"
+          "sha256": "587c97af87d01c550a0b0ba1d9336a0d187753f6fb202cf2cdf01d1b8ac42a17"
         }
       ]
     },
@@ -305,15 +865,15 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "transition-era-television-studio.png",
-        "sha256": "1bdd48d42dbac27f8bd0dcce98353c3c2cd21d2c5b3b5a768006b21e7d68475e",
+        "sha256": "45d63e94253f76fa643c2e859e5b1b16130048a9d048b8d0ba65792b93b41357",
         "width": 1920,
         "height": 1080,
-        "bytes": 949071,
+        "bytes": 3279142,
         "format": "png"
       },
       "focalPoint": {
-        "x": 0.29,
-        "y": 0.44
+        "x": 0.5,
+        "y": 0.43
       },
       "focalRectangles": {
         "leftGesture": {
@@ -341,10 +901,10 @@
           "height": 0.2
         },
         "moderatorFace": {
-          "x": 0.26,
-          "y": 0.36,
-          "width": 0.06,
-          "height": 0.16
+          "x": 0.46,
+          "y": 0.35,
+          "width": 0.08,
+          "height": 0.14
         },
         "leftDeskTopAndProps": null,
         "rightDeskTopAndProps": null
@@ -389,55 +949,55 @@
           "path": "variants/transition-era-television-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 6500,
+          "bytes": 24390,
           "format": "avif",
           "quality": 70,
-          "sha256": "f5487e27f9a8e41f722173bf0171d0bee20d1cab2f7518d41bb15b87dd857b9e"
+          "sha256": "3e760d2e0b8c0b54a7503a348a8b1468b02e40e6542fa402cd0627a0346bbd45"
         },
         {
           "path": "variants/transition-era-television-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 7788,
+          "bytes": 26506,
           "format": "webp",
           "quality": 86,
-          "sha256": "2f0fd253b4db5d4582fda202aa0eae37c63b9ddbc64e30b9bea3354701253193"
+          "sha256": "e6f14c60f563bad48f863b6dad46cd01ba4483b766b314f3e0b4187f118e8db4"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 17644,
+          "bytes": 69390,
           "format": "avif",
           "quality": 70,
-          "sha256": "21c9fc3d1b4f8c04afacbbfb67a81079abc3e276be48302146309143688d3404"
+          "sha256": "de33f54531123bd7404449e5a8c3c71c4a20fef8075e96a81a7b40ec7347fadf"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 22608,
+          "bytes": 79170,
           "format": "webp",
           "quality": 86,
-          "sha256": "ad8ea30ebf544ae3fae309eb27691dc61b90c1651f017d4ab20e83077fa87cec"
+          "sha256": "fb02f29a06fbafad95d031de7db26357b1a9cb67ac5b4f2abb307f4e55750549"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 31780,
+          "bytes": 116196,
           "format": "avif",
           "quality": 70,
-          "sha256": "dd868588686631dfd8e79a16289aa2dbffb86fa2de946310fd7818a3219c8d59"
+          "sha256": "bfbd6841b74d25d447f496d3e43f90810ef092a9a912e3a372ad9fe4a9806d43"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 41370,
+          "bytes": 130540,
           "format": "webp",
           "quality": 86,
-          "sha256": "8735a49d07eae6837ee0096d426fc4d41e2d265c4f547e5609581960f2275480"
+          "sha256": "b73e7b7061640c076983e77058af0a65284c2c75ec443cfb61448ee2c49985aa"
         }
       ]
     },

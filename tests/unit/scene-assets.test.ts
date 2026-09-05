@@ -4,7 +4,6 @@ import { describe, expect, test } from 'vitest';
 import {
   resolveSceneAsset,
   sceneAssetManifest,
-  sceneAssetFallbacks,
   sceneImageSizes,
 } from '../../src/app/scene-assets';
 
@@ -20,12 +19,12 @@ describe('scene asset resolver', () => {
   });
 
   test('maps every manifest layer to AVIF-first and WebP fallback srcsets', () => {
-    expect(sceneAssetManifest).toHaveLength(4);
+    expect(sceneAssetManifest).toHaveLength(8);
     const variants = sceneAssetManifest.flatMap((asset) => [
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(24);
+    expect(variants).toHaveLength(48);
 
     for (const asset of sceneAssetManifest) {
       expect(asset.width).toBe(1920);
@@ -64,12 +63,12 @@ describe('scene asset resolver', () => {
     );
     expect(transitionBack.kind).toBe('manifest');
     if (transitionBack.kind === 'manifest') {
-      expect(transitionBack.focalPoint).toEqual({ x: 0.29, y: 0.44 });
+      expect(transitionBack.focalPoint).toEqual({ x: 0.5, y: 0.43 });
       expect(transitionBack.focalRectangles.moderatorFace).toEqual({
-        x: 0.26,
-        y: 0.36,
-        width: 0.06,
-        height: 0.16,
+        x: 0.46,
+        y: 0.35,
+        width: 0.08,
+        height: 0.14,
       });
     }
   });
@@ -80,28 +79,17 @@ describe('scene asset resolver', () => {
     );
   });
 
-  test('keeps the interim foundation scene as a typed WebP-only fallback', () => {
-    expect(sceneAssetFallbacks).toHaveLength(1);
-    const fallback = resolveSceneAsset('catalog-foundation-neutral-scene');
-    expect(fallback).toEqual(sceneAssetFallbacks[0]);
-    expect(fallback).toMatchObject({
-      kind: 'fallback',
-      width: 1672,
-      height: 941,
-      sizes: '100vw',
-      avif: null,
-      webp: {
-        format: 'webp',
-        variants: [
-          expect.objectContaining({ width: 1672, height: 941, format: 'webp' }),
-        ],
-      },
-    });
-    expect('focalPoint' in fallback).toBe(false);
-    expect('focalRectangles' in fallback).toBe(false);
-    expect('sharedSafeRectangles' in fallback).toBe(false);
-    expect('crop' in fallback).toBe(false);
-    expect(Object.isFrozen(fallback)).toBe(true);
-    expect(Object.isFrozen(fallback.webp.variants)).toBe(true);
+  test('each foundation scene resolves its own complete package without title artwork', () => {
+    for (const id of ['county-council-ballroom', 'midnight-call-in-studio', 'palace-press-hall', 'influencer-campaign-livestream']) {
+      const asset = resolveSceneAsset(id);
+      expect(asset.ownerId).toBe(id);
+      expect(asset.kind).toBe('manifest');
+      expect(asset.focalRectangles.moderatorFace).toBeNull();
+      expect(asset.avif.variants).toHaveLength(3);
+      expect(asset.webp.variants).toHaveLength(3);
+      expect(asset.url).toContain(id);
+      expect(asset.url).not.toContain('title-proscenium');
+    }
+    expect(() => resolveSceneAsset('catalog-foundation-neutral-scene')).toThrow();
   });
 });

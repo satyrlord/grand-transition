@@ -21,7 +21,6 @@ import {
   resolveSceneAsset,
   sceneImageSizes,
   type SceneAssetSource,
-  type SceneFallbackAsset,
   type ScenePoint,
   type SceneRectangle,
 } from './scene-assets';
@@ -110,21 +109,7 @@ export type MatchManifestSceneLayerView = MatchSceneLayerBase & Readonly<{
   }>;
 }>;
 
-export type MatchFallbackSceneLayerView = MatchSceneLayerBase & Readonly<{
-  kind: 'fallback';
-  assetId: SceneFallbackAsset['id'];
-  width: 1672;
-  height: 941;
-  sizes: '100vw';
-  avif: null;
-  sources: Readonly<{
-    webp: SceneAssetSource;
-  }>;
-}>;
-
-export type MatchSceneLayerView =
-  | MatchManifestSceneLayerView
-  | MatchFallbackSceneLayerView;
+export type MatchSceneLayerView = MatchManifestSceneLayerView;
 
 export type MatchScreenSnapshot = Readonly<{
   revision: number;
@@ -753,9 +738,6 @@ function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
 
   return scene.backgroundLayers.map(({ depth, media }) => {
     const asset = resolveSceneAsset(media.assetId);
-    if (asset.kind === 'fallback') {
-      return fallbackSceneLayerView(asset, depth);
-    }
     return {
       kind: 'manifest',
       assetId: asset.id,
@@ -776,26 +758,6 @@ function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
       crop: asset.crop,
     };
   });
-}
-
-function fallbackSceneLayerView(
-  asset: SceneFallbackAsset,
-  depth: number,
-): MatchFallbackSceneLayerView {
-  return {
-    kind: 'fallback',
-    assetId: asset.id,
-    depth,
-    url: asset.url,
-    width: asset.width,
-    height: asset.height,
-    sizes: asset.sizes,
-    avif: null,
-    webp: asset.webp,
-    sources: {
-      webp: asset.webp,
-    },
-  };
 }
 
 function gameMessage(key: string | undefined): string {

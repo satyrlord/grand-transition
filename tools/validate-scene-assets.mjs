@@ -6,6 +6,10 @@ import { isDeepStrictEqual } from 'node:util';
 import sharp from 'sharp';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
+  'county-council-ballroom.png',
+  'midnight-call-in-studio.png',
+  'palace-press-hall.png',
+  'influencer-campaign-livestream.png',
   'modern-debate-studio.png',
   'modern-debate-studio-desks.png',
   'transition-era-television-studio.png',
@@ -149,19 +153,20 @@ function expectedLayer(id) {
 
 function expectedGeometry(id, identity) {
   const modern = identity.ownerId === 'modern-debate-studio';
+  const hasModerator = modern || identity.ownerId === 'transition-era-television-studio';
   return {
     focalPoint: identity.isForeground
       ? { x: 0.5, y: 0.64 }
-      : { x: modern ? 0.71 : 0.29, y: 0.44 },
+      : hasModerator ? { x: 0.5, y: 0.43 } : { x: 0.5, y: 0.5 },
     focalRectangles: {
       ...REQUIRED_CHARACTER_FOCAL_RECTANGLES,
-      moderatorFace: identity.isForeground
+      moderatorFace: identity.isForeground || !hasModerator
         ? null
         : {
-            x: modern ? 0.68 : 0.26,
-            y: 0.36,
-            width: 0.06,
-            height: 0.16,
+            x: 0.46,
+            y: 0.35,
+            width: 0.08,
+            height: 0.14,
           },
       leftDeskTopAndProps: identity.isForeground
         ? LEFT_DESK_FOCAL_RECTANGLE
@@ -432,7 +437,7 @@ function validateAssetShape(asset, index, declaredPaths) {
   if (identity.isForeground && focalRectangles.moderatorFace !== null) {
     throw new Error(`Scene asset "${id}" foreground moderatorFace must be null.`);
   }
-  if (!identity.isForeground && focalRectangles.moderatorFace === null) {
+  if (!identity.isForeground && ['modern-debate-studio', 'transition-era-television-studio'].includes(identity.ownerId) && focalRectangles.moderatorFace === null) {
     throw new Error(`Scene asset "${id}" back moderatorFace is required.`);
   }
   for (const name of ['leftDeskTopAndProps', 'rightDeskTopAndProps']) {

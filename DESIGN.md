@@ -239,8 +239,8 @@ follows the shared public character direction and its private study. One
 transparent foreground plate puts tall standing desks in front of both
 selected portraits.
 
-The fixed blonde fictional moderator stands at a physical wood-and-brass desk
-on a raised inner-left platform. The four-column composition keeps her face
+The fixed blonde fictional moderator sits at a physical wood-and-brass desk
+on a central raised platform. The four-column composition keeps her face
 clear of the drafting speech record and phrase tower.
 
 Opposing names and Pride meters frame the top corners. Round, timer, and Pause
@@ -488,7 +488,7 @@ masks protect text without turning the scene into stacked panels. Short dark
 shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
-The implemented build uses three brand rasters, two studio backgrounds, two
+The implemented build uses three brand rasters, six scene backgrounds, two
 transparent foreground desk plates, and 27 transparent character portraits:
 18 defaults and 9 alternates. All portrait skins are visual-only variations and
 do not change the fictional character identity or prose.
@@ -555,14 +555,14 @@ hover or keyboard focus and stays pinned only after right-click.
 
 A decorative full-viewport back image shows the selected debate studio and one
 fixed fictional moderator. The Transition-Era Television Studio uses a blonde
-moderator at a physical desk on a raised inner-left platform. Exactly four
+moderator at a physical desk on a central raised platform. Exactly four
 full-height faux-marble columns frame that studio.
 
 The Modern Debate Studio uses broad blue video panels, red and blue vertical
 accents, visible softboxes, and a practical truss. Its dark stage floor has
 sparse hard-edged flat reflection shapes. Its bespectacled male moderator sits
 with crossed legs in a beige studio
-chair at the mirrored inner-right position and faces the camera. His normal
+chair at the stage center and faces the camera. His normal
 human head has a slightly tall forehead and comically small facial features. No
 back image contains a playable character.
 
@@ -585,8 +585,7 @@ water bottle. Each modern standing desk has no microphone and holds one plain
 tap-water bottle plus one distinct sparkling-water bottle.
 
 The portrait art continues below the desk occlusion to the lower stage edge.
-Do not let desk mass exceed the lower third of the stage. The three implemented
-portraits are the Red-Folded Chairman, Thunder Tribune, and Black Sea Captain.
+Do not let desk mass exceed the lower third of the stage.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
 a single-line character name, visible Pride label, and Pride meter and remain
 outside the portrait bounds.
@@ -598,6 +597,20 @@ Speech and reaction records cross the middle play field. They own delivered
 text, public response, and damage without covering a face.
 
 ### Sentence construction tower
+
+All six scenes use their own manifest backgrounds. The County Council
+Ballroom, Midnight Call-In Studio, Palace Press Hall, and Influencer Campaign
+Livestream have opaque background art without fixed moderators or foreground
+plates. The title curtain is not a gameplay fallback.
+
+Portrait frames share the background's bottom-aligned scene canvas. Their
+square source planes start at 24 percent of scene height, measure 80 percent
+of scene height, and center at 20 and 80 percent of scene width. This places
+faces above the studio desks. The speech record occupies the central 32
+percent of scene width and 18 through 34 percent of scene height. Both physical
+moderators sit at the center between speech and the phrase pool. The pool starts
+at 52 percent of scene height and has a 78-percent-opaque dark background. It
+can cover moderator furniture, but never a moderator face.
 
 The center axis combines the wide current or preview sentence and nine shared
 phrase slots. It uses one light speech record over a near-black phrase stack

@@ -23,8 +23,7 @@ export const DESK_FOCAL_RECTS = Object.freeze({
 });
 
 export const MODERATOR_FOCAL_RECTS = Object.freeze([
-  Object.freeze({ x: 0.26, y: 0.36, width: 0.06, height: 0.16 }),
-  Object.freeze({ x: 0.68, y: 0.36, width: 0.06, height: 0.16 }),
+  Object.freeze({ x: 0.46, y: 0.35, width: 0.08, height: 0.14 }),
 ]);
 
 sharp.cache(false);
