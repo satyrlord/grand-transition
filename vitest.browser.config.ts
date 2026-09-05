@@ -33,6 +33,7 @@ export default defineConfig({
       'tests/unit/match-lifecycle.test.ts',
       'tests/unit/ladder.test.ts',
       'tests/unit/match-screen-snapshot.test.ts',
+      'tests/unit/match-coordinator.test.ts',
       'tests/unit/replay-and-simulation.test.ts',
       'tests/unit/settings.test.ts',
       'tests/unit/viewport-support.test.ts',

@@ -1,3 +1,5 @@
+import type { MatchArenaReaction } from './match-coordinator';
+export type { MatchArenaReaction } from './match-coordinator';
 import { msg } from '@lit/localize';
 import type { Phrase } from '../content/schemas';
 import {
@@ -27,13 +29,6 @@ import {
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
 type MatchCardAction = 'select' | null;
-
-export type MatchArenaReaction = Readonly<{
-  kind: 'grammar-mistake';
-  playerId: string;
-  damage: number;
-  sequence: number;
-}>;
 
 export type MatchCardView = Readonly<{
   slotIndex: number;

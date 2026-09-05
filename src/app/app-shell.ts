@@ -1,10 +1,6 @@
 import { LitElement, html } from 'lit';
 import { msg } from '@lit/localize';
-import { decideLocalRadioCaller } from '../ai/easy-ai';
-import {
-  decidePalaceOperator,
-  decidePartyStrategist,
-} from '../ai/advanced-ai';
+import { MatchCoordinator, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
@@ -20,13 +16,10 @@ import {
   sampleContent,
 } from '../game-content';
 import {
-  createMatchReducer,
   createMatchSetupState,
-  defaultMatchRandomSource,
   type MatchCommand,
   type MatchConfiguredPlayer,
   type MatchEngineContext,
-  type MatchLifecycleCommand,
   type MatchState,
 } from '../engine/match-lifecycle';
 import {
@@ -49,7 +42,6 @@ import {
   createLadderProgress,
   currentLadderRung,
   ladderProgressMatchesCatalog,
-  recordLadderResult,
   type LadderProgress,
 } from '../engine/ladder';
 import {
@@ -66,7 +58,6 @@ import {
 import { currentViewport, isSupportedViewport } from './viewport-support';
 import { createBrowserStorage } from '../persistence/browser-storage';
 import {
-  createMatchHistoryEntry,
   MatchHistoryRepository,
   type MatchHistorySnapshot,
 } from '../persistence/match-history';
@@ -98,7 +89,6 @@ const matchContext: MatchEngineContext = {
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
-const matchReducer = createMatchReducer(matchContext);
 
 export type ScreenView = 'match' | 'setup' | 'title';
 
@@ -205,7 +195,7 @@ export class GrandTransitionApp extends LitElement {
   declare private ladderSnapshot: LadderProgressSnapshot;
   private matchInitialSeed: number | null = null;
   private matchId: string | null = null;
-  private aiTimerId: number | undefined;
+  private readonly matchCoordinator: MatchCoordinator;
   private readonly screenController = new ScreenController();
   private readonly matchHistoryRepository: MatchHistoryRepository;
   private readonly settingsRepository: SettingsRepository;
@@ -218,6 +208,15 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistoryRepository = new MatchHistoryRepository(browserStorage);
     this.settingsRepository = new SettingsRepository(browserStorage);
     this.ladderProgressRepository = new LadderProgressRepository(browserStorage);
+    this.matchCoordinator = new MatchCoordinator({
+      context: matchContext,
+      history: this.matchHistoryRepository,
+      ladder: this.ladderProgressRepository,
+      log: publishDevelopmentGameLog,
+      now: () => new Date().toISOString(),
+      setTimeout: (callback, delay) => window.setTimeout(callback, delay),
+      clearTimeout: (id) => window.clearTimeout(id),
+    });
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
     this.ladderSnapshot = this.ladderProgressRepository.validateCatalog(
@@ -521,7 +520,7 @@ export class GrandTransitionApp extends LitElement {
       : createMatchSeed();
     this.matchInitialSeed = initialSeed;
     this.matchId = createMatchId(initialSeed);
-    let state = createMatchSetupState({
+    const state = createMatchSetupState({
       schemaVersion: 1,
       seed: initialSeed,
       players: [
@@ -540,23 +539,7 @@ export class GrandTransitionApp extends LitElement {
             : null,
       openingPlayerIndex: scene.openingPlayerIndex,
     });
-    const beforeStart = state;
-    state = reduceLifecycle(state, 'start-match');
-    publishAcceptedDevelopmentCommand(
-      initialSeed,
-      createLifecycleCommand('start-match'),
-      beforeStart,
-      state,
-    );
-    const beforePreparation = state;
-    state = reduceLifecycle(state, 'prepare-round');
-    publishAcceptedDevelopmentCommand(
-      initialSeed,
-      createLifecycleCommand('prepare-round'),
-      beforePreparation,
-      state,
-    );
-    this.matchState = state;
+    this.matchState = this.matchCoordinator.start(state);
     this.currentMatchIsLadder = payload.mode === 'ladder';
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
@@ -574,83 +557,29 @@ export class GrandTransitionApp extends LitElement {
 
   private applyMatchCommand(command: MatchCommand): void {
     if (!this.matchState) return;
-    const before = this.matchState;
-    const result = matchReducer(before, command, defaultMatchRandomSource);
-    if (!result.ok) {
-      publishDevelopmentGameLog({
-        initialSeed: this.currentMatchInitialSeed(),
-        action: command.type,
-        actorId: command.actorId ?? null,
-        outcome: 'rejected',
-        errorCode: result.error.code,
-        command,
-        before,
-        after: before,
-      });
-      throw new Error(
-        `Match command ${command.type} failed: ${result.error.code}.`,
-      );
-    }
-
-    const reduced = result.state;
-    this.matchArenaReaction = grammarMistakeReaction(
-      before,
-      reduced,
-      command,
-    );
-    publishAcceptedDevelopmentCommand(
-      this.currentMatchInitialSeed(),
-      command,
-      before,
-      reduced,
-    );
-    let state = reduced;
-    if (state.phase === 'resolution') {
-      const beforeResolution = state;
-      const command = createLifecycleCommand('resolve-round');
-      state = reduceLifecycle(state, 'resolve-round');
-      publishAcceptedDevelopmentCommand(
-        this.currentMatchInitialSeed(),
-        command,
-        beforeResolution,
-        state,
-      );
-    }
-    const reviewResolution = state.resolutionHistory.at(-1) ?? null;
-    const victory =
-      state.phase === 'results' && state.winner
-          ? {
-              winnerId: state.winner,
-              completedRounds: state.resolutionHistory.length,
-              ladder: this.currentMatchIsLadder,
-            }
-        : null;
-    const reviewState =
-      reduced.phase === 'resolution' && reduced.draft
-        ? reduced
-        : victory && reduced.draft
-          ? reduced
-          : victory && before.draft
-            ? before
-            : null;
-    this.roundReviewSnapshot =
-      reviewState && reviewResolution
-        ? createMatchScreenSnapshot(
-            reviewState,
-            null,
-            reviewResolution,
-            victory,
-            this.currentMatchSkinIds(),
-            reviewState.setup.mode === 'ai'
-              ? 'player-one'
-              : reviewState.activePlayerId,
-          )
-        : null;
-    this.matchState = state;
-    if (victory) {
-      if (this.currentMatchIsLadder) this.recordLadderMatch(state);
-      this.captureCompletedMatch(state);
-    }
+    if (!this.matchId) throw new Error('The active match does not have a stable ID.');
+    const transition = this.matchCoordinator.apply(this.matchState, command, {
+      initialSeed: this.currentMatchInitialSeed(),
+      id: this.matchId,
+      ladder: this.currentMatchIsLadder,
+      settings: {
+        turnTimerSeconds: this.settingsSnapshot.settings.turnTimerSeconds,
+        autoComplete: this.settingsSnapshot.settings.autoComplete,
+        phraseColorCoding: this.phraseColorCoding,
+      },
+    });
+    this.matchState = transition.state;
+    this.matchArenaReaction = transition.reaction;
+    const review = transition.review;
+    this.roundReviewSnapshot = review
+      ? createMatchScreenSnapshot(
+          review.state, null, review.resolution, review.victory,
+          this.currentMatchSkinIds(),
+          review.state.setup.mode === 'ai' ? 'player-one' : review.state.activePlayerId,
+        )
+      : null;
+    this.ladderSnapshot = this.ladderProgressRepository.snapshot();
+    this.matchHistory = this.matchHistoryRepository.snapshot();
     this.scheduleAiTurn();
   }
 
@@ -661,14 +590,7 @@ export class GrandTransitionApp extends LitElement {
     this.roundReviewSnapshot = null;
     this.matchArenaReaction = null;
     if (state.phase === 'results') return;
-    const command = createLifecycleCommand('prepare-round');
-    this.matchState = reduceLifecycle(state, 'prepare-round');
-    publishAcceptedDevelopmentCommand(
-      this.currentMatchInitialSeed(),
-      command,
-      state,
-      this.matchState,
-    );
+    this.matchState = this.matchCoordinator.continueRound(state, this.currentMatchInitialSeed());
     this.scheduleAiTurn();
   };
 
@@ -790,67 +712,17 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private scheduleAiTurn(): void {
-    this.cancelAiTurn();
-    if (!this.isAiTurn()) return;
-    const state = this.matchState!;
-    const reducedDelay = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    const decision =
-      state.setup.aiDifficulty === 'party-strategist'
-        ? decidePartyStrategist(state, matchContext, { reducedDelay })
-        : state.setup.aiDifficulty === 'palace-operator'
-          ? decidePalaceOperator(state, matchContext, { reducedDelay })
-          : decideLocalRadioCaller(state, matchContext, { reducedDelay });
-    if (!decision) return;
-    const revision = state.commandHistory.length;
-    this.aiThinking = true;
-    this.aiTimerId = window.setTimeout(() => {
-      this.aiTimerId = undefined;
-      if (!this.aiTurnStillPending(revision)) return;
-      // Defer the command by one task so that a browser Back traversal that
-      // is already in flight changes the view and cancels the presentation
-      // before any command can apply.
-      this.aiTimerId = window.setTimeout(() => {
-        this.aiTimerId = undefined;
-        if (!this.aiTurnStillPending(revision)) return;
-        this.aiThinking = false;
-        this.applyMatchCommand(decision.command);
-      }, 0);
-    }, decision.delayMs);
-  }
-
-  private aiTurnStillPending(revision: number): boolean {
-    if (
-      !this.isAiTurn() ||
-      this.matchState?.commandHistory.length !== revision
-    ) {
-      this.aiThinking = false;
-      return false;
-    }
-    return true;
+    this.matchCoordinator.scheduleAiTurn({
+      currentState: () => this.view === 'match' && !this.roundReviewSnapshot &&
+        !this.manuallyPaused && this.viewportSupported ? this.matchState : null,
+      reducedDelay: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      thinking: (value) => { this.aiThinking = value; },
+      apply: (command) => this.applyMatchCommand(command),
+    });
   }
 
   private cancelAiTurn(): void {
-    if (this.aiTimerId !== undefined) {
-      window.clearTimeout(this.aiTimerId);
-      this.aiTimerId = undefined;
-    }
-    this.aiThinking = false;
-  }
-
-  private isAiTurn(): boolean {
-    return Boolean(
-      this.matchState?.draft &&
-        this.view === 'match' &&
-        this.matchState.setup.mode === 'ai' &&
-        this.matchState.activePlayerId === 'player-two' &&
-        (this.matchState.phase === 'drafting' ||
-          this.matchState.phase === 'sudden-death') &&
-        !this.roundReviewSnapshot &&
-        !this.manuallyPaused &&
-        this.viewportSupported,
-    );
+    this.matchCoordinator.cancelAiTurn();
   }
 
   private currentMatchInitialSeed(): number {
@@ -860,17 +732,6 @@ export class GrandTransitionApp extends LitElement {
     return this.matchInitialSeed;
   }
 
-  private recordLadderMatch(state: MatchState): void {
-    const progress = this.ladderSnapshot.progress;
-    if (!progress || !state.winner) return;
-    this.ladderSnapshot = this.ladderProgressRepository.replace(
-      recordLadderResult(
-        progress,
-        state.winner === 'player-one' ? 'win' : 'loss',
-      ),
-    );
-  }
-
   private currentMatchSkinIds(): Readonly<Record<string, string>> {
     return Object.freeze({
       'player-one': this.setupSnapshot.playerOneSkinId,
@@ -878,49 +739,6 @@ export class GrandTransitionApp extends LitElement {
     });
   }
 
-  private captureCompletedMatch(state: MatchState): void {
-    if (!this.matchId) {
-      throw new Error('The completed match does not have a stable ID.');
-    }
-    const entry = createMatchHistoryEntry(state, {
-      id: this.matchId,
-      initialSeed: this.currentMatchInitialSeed(),
-      completedAt: new Date().toISOString(),
-      settings: {
-        turnTimerSeconds: this.settingsSnapshot.settings.turnTimerSeconds,
-        autoComplete: this.settingsSnapshot.settings.autoComplete,
-        phraseColorCoding: this.phraseColorCoding,
-      },
-    });
-    this.matchHistory = this.matchHistoryRepository.append(entry);
-  }
-}
-
-function grammarMistakeReaction(
-  before: MatchState,
-  after: MatchState,
-  command: MatchCommand,
-): MatchArenaReaction | null {
-  if (command.type !== 'select-phrase' || !command.actorId) return null;
-  const beforePlayer = before.draft?.playerStates[command.actorId];
-  const afterPlayer = after.draft?.playerStates[command.actorId];
-  if (!beforePlayer || !afterPlayer) return null;
-  if (
-    afterPlayer.construction.grammarMistakes <=
-    beforePlayer.construction.grammarMistakes
-  ) {
-    return null;
-  }
-  return Object.freeze({
-    kind: 'grammar-mistake',
-    playerId: command.actorId,
-    damage: Math.max(
-      0,
-      before.playerStates[command.actorId]!.pride -
-        after.playerStates[command.actorId]!.pride,
-    ),
-    sequence: after.commandHistory.length,
-  });
 }
 
 function configuredPlayer(
@@ -943,57 +761,7 @@ function configuredPlayer(
   };
 }
 
-function reduceLifecycle(
-  state: MatchState,
-  type: MatchLifecycleCommand['type'],
-): MatchState {
-  const command = createLifecycleCommand(type);
-  const result = matchReducer(state, command, defaultMatchRandomSource);
-  if (!result.ok) {
-    throw new Error(`Match lifecycle ${type} failed: ${result.error.code}.`);
-  }
-  return result.state;
-}
-
-function createLifecycleCommand(
-  type: MatchLifecycleCommand['type'],
-): MatchCommand {
-  return {
-    type,
-    source: 'user',
-    payload: {},
-  } as MatchCommand;
-}
-
-function publishAcceptedDevelopmentCommand(
-  initialSeed: number,
-  command: MatchCommand,
-  before: MatchState,
-  after: MatchState,
-): void {
-  publishDevelopmentGameLog({
-    initialSeed,
-    action: command.type,
-    actorId: command.actorId ?? null,
-    outcome: 'accepted',
-    command,
-    before,
-    after,
-  });
-}
-
-function publishDevelopmentGameLog(
-  detail: Readonly<{
-    initialSeed: number;
-    action: string;
-    actorId?: string | null;
-    outcome: 'accepted' | 'rejected';
-    errorCode?: string;
-    command: MatchCommand | null;
-    before: MatchState | null;
-    after: MatchState;
-  }>,
-): void {
+function publishDevelopmentGameLog(detail: MatchCommandLog): void {
   if (!import.meta.env.DEV) return;
   window.grandTransitionDevelopmentGameLog?.(detail);
 }

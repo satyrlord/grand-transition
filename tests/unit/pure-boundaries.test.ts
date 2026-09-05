@@ -30,6 +30,25 @@ const ownedBrowserApiNames = [
 ] as const;
 
 describe('pure-module boundaries', () => {
+  test.each([
+    'export const value = window.location.href;',
+    "export { value } from '../app/browser-value';",
+  ])('rejects impure localization reached from engine: %s', async (source) => {
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
+    try {
+      const engineRoot = path.join(fixtureRoot, 'src', 'engine');
+      const localeRoot = path.join(fixtureRoot, 'src', 'localization');
+      await mkdir(engineRoot, { recursive: true });
+      await mkdir(localeRoot, { recursive: true });
+      await writeFile(path.join(engineRoot, 'valid.ts'), "export { value } from '../localization/value';");
+      await writeFile(path.join(localeRoot, 'value.ts'), source);
+      await expect(execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]))
+        .rejects.toThrow(/localization[\\/]value.ts/u);
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  });
+
   test('runs the boundary check during validation', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
@@ -208,8 +227,9 @@ describe('pure-module boundaries', () => {
         ],
         [
           path.join('src', 'localization', 'valid.ts'),
-          'export type LocaleValue = string;\n',
+          "import { value } from '../content/value';\nexport type LocaleValue = typeof value;\n",
         ],
+        [path.join('src', 'content', 'value.ts'), 'export const value = 1;\n'],
         [
           path.join('src', 'persistence', 'storage-port.ts'),
           'export interface StoragePort {}\n',
@@ -232,7 +252,7 @@ describe('pure-module boundaries', () => {
       ]);
 
       expect(result.stdout).toContain(
-        'Pure-module boundary check passed: checked 4 file(s).',
+        'Pure-module boundary check passed: checked 6 file(s).',
       );
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });

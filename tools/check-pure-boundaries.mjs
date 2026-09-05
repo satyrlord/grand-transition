@@ -5,6 +5,13 @@ import { createScanner, SyntaxKind } from 'typescript/unstable/ast';
 
 const pureRootPolicies = [
   {
+    root: path.join('src', 'localization'),
+    allowedDependencies: [
+      directoryDependency('src', 'localization'),
+      directoryDependency('src', 'content'),
+    ],
+  },
+  {
     root: path.join('src', 'engine'),
     allowedDependencies: [
       directoryDependency('src', 'engine'),

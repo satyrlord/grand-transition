@@ -131,6 +131,9 @@ test('development and production render the same game UI with no tool surface', 
   const productionUi = await uiSignature(page);
 
   await page.goto(developmentUrl);
+  await page.evaluate(async () => {
+    await customElements.whenDefined('grand-transition-app');
+  });
   await expect(
     page.getByRole('heading', { name: 'Grand Transition' }),
   ).toBeVisible();

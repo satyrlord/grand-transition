@@ -24,6 +24,14 @@ and emit typed events with `bubbles: true` and `composed: true`. Components can
 own focus, tooltip, or animation view state. Components must not own Pride,
 turn, board, hand, score, replay, or rules.
 
+`src/app/match-coordinator.ts` owns application-level command sequencing,
+automatic round resolution, completion writes, and AI scheduling. It receives
+the current immutable state and returns the next state with review facts.
+It does not retain a second active snapshot. The shell owns screen projection,
+navigation, focus, pause state, viewport events, and browser adapters. The
+coordinator receives logging, clocks, and persistence dependencies explicitly.
+It does not import Lit, screens, assets, or browser globals.
+
 Randomness enters only through the seeded source. Persistence uses pure,
 versioned codecs behind `StoragePort`. Engine and codecs do not call browser
 storage. Speech uses a replaceable port. Content, AI, grammar, scoring, and
@@ -58,7 +66,8 @@ stay in locale-specific bundles. Balance constants stay in validated data.
   volume. The port reports availability, returns whether it accepted the
   request, and supports cancellation.
 
-The pure-boundary checker scans `src/engine`, `src/ai`, `src/content`, and
+The pure-boundary checker scans `src/engine`, `src/ai`, `src/content`,
+`src/localization`, and
 `src/persistence/codecs` when present. It rejects Lit imports, `window`,
 `document`, `customElements`, storage, speech synthesis, Canvas, and network
 APIs in those roots. Test fixtures can contain those names only when they prove
@@ -73,6 +82,8 @@ The checker also enforces these dependency directions:
   module can import AI.
 - AI can import AI, engine, content, and localization modules.
 - Content can import content and localization modules.
+- Localization can import localization and content modules. Its code receives
+  the same browser API and dependency checks as the other pure roots.
 - Persistence codecs can import codecs, `StoragePort`, engine, content, and
   localization modules.
 
@@ -92,9 +103,17 @@ storage-adapter, asset, style, main-entry, tool, or test code.
   prove one rejection for each owned browser API class. They also prove one
   rejected dependency from a pure module to application code. Fixtures prove each allowed dependency
   direction. The normal pure roots pass.
+  A fixture also rejects browser access or an application import in localization
+  when an engine module imports that localization module.
 - **AC-003-05:** Test-local storage and speech fakes satisfy their ports without
   importing Lit or DOM types into pure modules. A production speech adapter is
   not required before Milestone 024.
+- **AC-003-07:** Coordinator tests preserve deterministic command history,
+  rejected-command immutability, round review facts, and completion writes.
+  AI commands apply only after the presentation delay and a separate task.
+  Cancellation, loss of eligibility, or replacement of the active snapshot
+  prevents a queued command from applying. Boundary tests keep reducer calls,
+  AI policy selection, and completion record construction outside the Lit shell.
 
 ## Verify and stop
 
