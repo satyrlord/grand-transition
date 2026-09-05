@@ -16,21 +16,27 @@ mistake, use a comeback, and end its sentence.
 Single player assigns the person to player one and Local Radio Caller to player
 two. Setup keeps both character, skin, and scene choices. The stored match mode
 is `ai`, and the exact difficulty identifier is `local-radio-caller`. Hotseat
-behavior stays unchanged. The “Match settings” strip keeps Mode, Scene, Back,
+behavior stays unchanged.
+
+The “Match settings” strip keeps Mode, Scene, Back,
 and Start match in one horizontal row. Single player inserts a Difficulty
 select between Mode and Scene. Its only option and selected value are “Local
-Radio Caller.” Hotseat omits the Difficulty select. During the AI turn, keep the
+Radio Caller.” Hotseat omits the Difficulty select.
+
+During the AI turn, keep the
 public board and sentence visible. Keep its phrase buttons disabled and outside
 the focus order until the AI action completes. Replace its private controls with
 `Local Radio Caller` and `Considering the next phrase…`, and expose the live
 status `Local Radio Caller is thinking`. The human-side snapshot must not
 contain the AI private card ID, phrase ID, or text.
 
-When an accepted AI command returns control to player one and Local Radio Caller
-has public sentence text, automatically expand its existing gray waiting bubble
-for exactly 4,000 ms. Start the window with the human-turn snapshot. The window
+An accepted AI command can return control to player one while Local Radio
+Caller has public sentence text. In that case, automatically expand its existing
+gray waiting bubble for exactly 4,000 ms. Start the window with the human-turn snapshot. The window
 does not dispatch a command, block human controls, change the turn timer, or
-change game truth. Hover, keyboard focus, click, or touch can keep the bubble
+change game truth.
+
+Hover, keyboard focus, click, or touch can keep the bubble
 open through the existing manual disclosure behavior. Pause, a new snapshot,
 and component disposal cancel the automatic window. Hotseat never starts it.
 
@@ -87,8 +93,8 @@ Use these exact feature facts before normalization:
 | Immediate lethal | 1 when damage reaches the opponent's Pride |
 
 Enumeration composes every available shared-card and active private-card
-selection, redraw when unused, commit when the reducer accepts the end step,
-and an affordable Comeback after a complete construction. It includes
+selection. It includes unused redraw, reducer-accepted end-step commit, and an
+affordable Comeback after a complete construction. It includes
 `expire-turn` only after the presentation timer expires. Pass each composed
 command through the match reducer and retain every accepted command. Thus an
 available but grammar-invalid card remains an accepted grammar-risk candidate.
@@ -113,7 +119,9 @@ decision is calculated before the delay and does not read wall-clock time.
 Sort equal candidates by command type, then stable card ID. Derive the decision
 seed from the current reducer seed and the normalized accepted command history.
 Use one seeded draw across the sorted tie. Use the next draw for the inclusive
-delay. A browser reduced-motion preference enables reduced delay and consumes
+delay.
+
+A browser reduced-motion preference enables reduced delay and consumes
 no delay draw. Pause, an unsupported viewport, match disposal, and round review
 cancel a pending presentation timer. Browser Back also cancels it before the
 setup view appears. Resume or restored viewport support
@@ -123,9 +131,10 @@ The 1,000-match workload uses the exact `local-radio-caller` policy provider.
 Its report records unselected private-card leaks, presentation-delay overruns,
 and the maximum presentation delay. It must report zero leaks, zero overruns,
 and a maximum from 500 through 1100 ms. The workload scans every unselected
-opaque private card ID in replay and match-log bytes. The focused codec privacy
-fixture also scans private-only phrase IDs and text without confusing a phrase
-ID with an equal public scoring tag or an equal public phrase text.
+opaque private card ID in replay and match-log bytes. The focused codec
+privacy fixture also scans private-only phrase IDs and text.
+It distinguishes phrase IDs from equal public scoring tags or equal public
+phrase text.
 
 ## Acceptance criteria
 
@@ -146,9 +155,11 @@ ID with an equal public scoring tag or an equal public phrase text.
   Difficulty, and Scene as three selects in one horizontal row. Difficulty has
   exactly one option, “Local Radio Caller.” The complete Difficulty and Scene
   labels fit, the Match settings fieldset and actions do not change height, and
-  Hotseat omits Difficulty. The production match shows the thinking state,
-  keeps every AI private card fact out of the human snapshot, completes every
-  AI action after the selected presentation delay, and reaches Victory.
+  Hotseat omits Difficulty.
+
+  The production match shows the thinking state and excludes AI private card
+  facts from the human snapshot. Each AI action completes after the selected
+  presentation delay. The match reaches Victory.
 - **AC-021-08:** After an AI command returns control to player one, the AI's
   nonempty waiting bubble expands without input for exactly 4,000 ms. It then
   closes unless hover, focus, click, or touch keeps it open. The window does not

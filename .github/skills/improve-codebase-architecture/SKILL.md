@@ -22,12 +22,13 @@ testability. Include file evidence.
 
 ## Test candidates
 
-- Deletion: removing the boundary must concentrate complexity, not move it.
+- Deletion: check whether removing the boundary makes its callers more complex.
 - Benefit: the boundary must reduce what callers need to know.
 - Locality: code and contracts that change together need one owner.
-- Dependencies: pure rules must not depend on Lit, DOM, storage, audio, or
+- Dependencies: pure rules must not depend on Lit, Document Object Model (DOM), storage, audio, or
   rendering implementations.
-- Determinism: state, replay, AI, grammar, and content validation must remain
+- Determinism: state, replay, artificial intelligence (AI), grammar, and
+  content validation must remain
   seeded and reproducible.
 - Privacy: keep hotseat secrecy explicit.
 

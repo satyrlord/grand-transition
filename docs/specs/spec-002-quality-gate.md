@@ -17,12 +17,14 @@ Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `li
 `typecheck`, `test`, `test:coverage`, `test:browser`, `test:e2e`,
 `markdown:lint`, `content:validate`,
 `localization:validate`, `boundaries:check`, `validate`, and `ci`.
+
 `assets:build` builds both scene and fixed-baseline character manifests and
 their deterministic AVIF and WebP variants. `assets:validate` validates both
 packages before it runs the shared provenance, alpha, and color checks.
 `validate` runs markdownlint-cli2, assets, content, localization, pure
 boundaries, typed lint, and types in that order. Asset validation checks the
 scaffold, raster provenance and alpha workflow, and the global-color-cast guard.
+
 `ci` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests
 in that order.
 End-to-end tests build the production output before preview.
@@ -65,9 +67,9 @@ lines.
 - **AC-002-06:** Markdown checks use `markdownlint-cli2`. The quality gate has
   no formatter script or formatter configuration. Verify in
   `tests/unit/quality-gate.test.ts` and with a repository-wide search.
-- **AC-002-07:** Asset validation rejects a broad yellow color cast over muted
-  or neutral pixels, accepts local warm materials when a neutral or cool anchor
-  remains, and blocks an image without a neutral or cool anchor for manual review.
+- **AC-002-07:** Asset validation rejects a broad yellow color cast over muted or neutral pixels.
+  It accepts local warm materials when a neutral or cool anchor remains.
+  An image without a neutral or cool anchor requires manual review.
   Verify in `tests/unit/asset-color-guard.test.ts` and through
   `npm run assets:validate`.
 

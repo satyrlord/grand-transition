@@ -80,7 +80,9 @@ The control opens one modal over the title screen. The modal shows an explicit
 empty state when no completed match exists. For each entry, show completion
 time, winner and opponent character names, scene, mode, seed, round count, and
 final Pride. Show the public sentence and actual rendered phrases used by each
-player in every round before the technical record. An older valid entry that
+player in every round before the technical record.
+
+An older valid entry that
 does not contain phrase text shows an explicit legacy-data message. It must not
 invent or reconstruct phrase text. An expandable technical record shows the
 public round breakdowns, commands, events, and normalized match-log data. The

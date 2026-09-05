@@ -14,7 +14,8 @@ configuration, and workflows.
 Build through the repository command.
 Serve the actual production output at the configured strict local origin and
 `/grand-transition/` base path.
-Use deterministic seeds, characters, scenes, settings, timers, and AI choices.
+Use deterministic seeds, characters, scenes, settings, timers, and artificial
+intelligence (AI) choices.
 Record the operating system, browser and version, viewport, build commit or
 status, and cache state.
 
@@ -28,16 +29,23 @@ Exercise applicable AI and hotseat matches through visible controls and valid
 gestures.
 Verify pointer input, sentence legality, redraw, grammar
 fault, continuation, comeback, and simultaneous damage.
-Verify the between-round review modal, Continue progression, sudden death,
-terminal setup return, settings persistence, speech support, and speech
-cancellation. Verify that no post-match surface appears.
+Verify the between-round review modal, Continue progression, and sudden death.
+Verify persistent victory and the explicit return to the title under Milestone 019.
+
+Verify title-only match history, exact public records, and storage-failure behavior.
+For Ladder, verify the Milestone 022 Continue ladder action and progress persistence.
+Verify settings persistence under Milestone 020.
+Verify speech support and cancellation only when the Milestone 024 adapter exists.
+
+Record unimplemented speech behavior as blocked when it is part of the requested scope.
 Verify hidden-hand privacy, the supported landscape matrix, the blocking
 viewport gate, and Pages asset paths.
 
 Use direct assertions for state, persisted values, roles, and names.
 Use direct assertions for geometry, overlap, scrolling, and
 computed styles.
-Use direct assertions for network requests, console errors, CSP, asset loading,
+Use direct assertions for network requests, console errors, Content Security
+Policy (CSP), asset loading,
 and deterministic screenshots.
 Screenshots support visual claims. They do not prove state or interaction.
 

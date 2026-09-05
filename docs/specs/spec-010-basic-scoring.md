@@ -67,7 +67,11 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
   add another clause base, and applies its weakness effects to that clause.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
   completes in an average of 3 through 11 resolved rounds per match. The
-  current four-character, two-scene content slice is the calibration corpus.
+  current Milestone 026 playable catalog supplies all 18 characters, six scenes,
+  and their current phrases. The setup selects `red-folded-chairman` against
+  `thunder-tribune` in `transition-era-television-studio` with the default
+  simulation policy. This pacing check does not measure every character pair
+  or scene. Milestones 027 and 031 own broader balance and variety evidence.
 - **AC-010-08:** A coordinated copular noun complement stays in the preceding
   clause breakdown, adds no clause base, and applies its weakness effects to
   that clause.

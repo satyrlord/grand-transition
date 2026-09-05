@@ -13,7 +13,8 @@ environment and workload defined below. Fix confirmed release defects.
 
 Largest contentful paint, input event duration, animation frame interval,
 layout shift, and compressed JavaScript must meet the exact measurement table
-below. Lazy-load selected match assets. Decode audio before first playback. Use AV1 Image File Format
+below. Lazy-load selected match assets. Decode audio before first playback.
+Use AV1 Image File Format
 (AVIF) or WebP raster images. Use Scalable Vector Graphics (SVG) icons.
 
 Use

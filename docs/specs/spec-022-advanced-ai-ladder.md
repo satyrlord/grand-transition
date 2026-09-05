@@ -75,12 +75,16 @@ playable catalog is also invalid. It produces no progress, reports
 
 Setup adds “Ladder” to Mode. Custom Single player adds Party Strategist and
 Palace Operator to the existing Difficulty select. Ladder setup keeps the
-player character selectable until the first recorded result, fixes the current
-opponent and scene from progress, and shows rung, wins, losses, and completion
-in the existing Match settings strip. The opponent status names the current
+player character selectable until the first recorded
+result. It fixes the current opponent and scene from progress.
+
+The existing
+Match settings strip shows rung, wins, losses, and completion. The opponent status names the current
 difficulty. It does not expose a locked
 future opponent. While Ladder is active, the shell ignores updates to the
-opponent, opponent skin, scene, and difficulty. A match result uses “Continue ladder” to return to the same
+opponent, opponent skin, scene, and difficulty.
+
+A match result uses “Continue ladder” to return to the same
 rung after a loss or the next rung after a win. Abandon returns to the same
 rung without adding a result. The completed state disables match start and
 keeps confirmed Reset available. Its locked opponent stage says “Ladder

@@ -47,9 +47,9 @@ Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
 phrase, constructed-sentence, and speech message-key sets. Interface labels and
 controls are always English and do not enter locale bundles. Every referenced
 text and number-form key exists. Reject HTML, script URLs, inline handlers,
-unsafe editorial states, player-visible real-person references, real-party
-references, protected-trait insults, sexual humiliation, threats, real logos,
-and copyrighted broadcast graphics.
+and unsafe editorial states. Reject
+player-visible real-person references, real-party references, protected-trait
+insults, sexual humiliation, threats, real logos, and copyrighted broadcast graphics.
 
 ## Exact constraints
 
@@ -170,24 +170,27 @@ simulation, and browser validation must pass before it can ship.
   `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated copular forms `was not`, `is not`, and `will never be`, and the
-  predicate `was a Securitate informer`. The stable
-  `drags-before-the-cameras` tense family renders three passive predicates.
+  predicate `was a Securitate informer`.
+
+  The stable `drags-before-the-cameras` tense family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,
   and `will be dragged before the cameras`. The `posted-on-social-media` family
   renders `was posted on social media`, `is posted on social media`, and
   `will be posted on social media`. The
   `harasses-innocent-people-on-social-media` family renders `harassed innocent
   people on social media`, `harasses innocent people on social media`, and
-  `will harass innocent people on social media`. The common ending
-  `and-most-of-your-followers-are-bots` renders
-  `and most of your followers are bots.` The only
+  `will harass innocent people on social media`.
 
-  continuation is the unrestricted `[...]` card. It contains second-person
+  The common ending `and-most-of-your-followers-are-bots` renders
+  `and most of your followers are bots.`
+
+  The only continuation is the unrestricted `[...]` card. It contains second-person
   `you`, plural `EU funds`, and person-aware subject forms for every shipped
   relation that contains a possessive reference to its subject. It contains
   Romanian political themes in original English adaptations. The approved
   `under-the-national-banner` ending renders the sourced English form of the
-  [public 2017 civic-protest slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
+  [public 2017 civic-protest
+slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
   `Noaptea, ca hoții`. It retains its stable identifier for deterministic
   replay compatibility. This one-record exception replaces the product-wide
   original-phrase rule only for this entry.

@@ -41,42 +41,26 @@ the shared asset color guard can still measure neutral or cool anchors.
 
 The stable roster order, identifier, weakness tags, and play style are:
 
-1. `red-folded-chairman`: Red-Folded Chairman; legacy, modernity, bureaucracy,
-   and miners; patient denial and safe continuations.
-2. `thunder-tribune`: Thunder Tribune; evidence, credibility, and restraint;
-   aggressive finishers and risky long sentences.
-3. `midnight-sensationalist`: Midnight Sensationalist; ratings, evidence, and
-   credibility; combos and dramatic comebacks.
-4. `velvet-mogul`: Velvet Mogul; wealth, influence, and credibility; denial and
-   weakness targeting.
-5. `black-sea-captain`: Black Sea Captain; decorum, consistency, and
-   Securitate references; adaptive comebacks.
-6. `retiring-cassandra`: Retiring Cassandra; competence, hope, and results;
-   defensive continuations and conservative scoring.
-7. `oat-milk-reformist`: Oat-Milk Reformist; relevance, authenticity, and
-   class; long clauses and semantic targeting.
-8. `marble-diplomat`: Marble Diplomat; luxury, elitism, and corruption; high
-   values, finishers, and status attacks.
-9. `county-baron`: County Baron; procurement, infrastructure, and nepotism;
-   denial and low-risk continuations.
-10. `coalition-acrobat`: Coalition Acrobat; consistency, memory, and
-    commitment; conjunctions, continuations, and reversals.
-11. `algorithmic-prophet`: Algorithmic Prophet; evidence, specificity, and
-    follow-up questions; volatile livestream finishers.
-12. `spreadsheet-technocrat`: Spreadsheet Technocrat; delivery,
-    accountability, and human scale; clause stacks and dashboard denial.
-13. `football-tycoon`: Football Tycoon; commercialism, accountability, and
-    sincerity; emotional chains and finishers.
-14. `luxury-minister`: Luxury Minister; austerity, service, and authenticity;
-    status attacks and conspicuous finishers.
-15. `diaspora-oracle`: Diaspora Oracle; distance, context, and firsthand
-    knowledge; long generalizations and continuations.
-16. `apartment-block-geopolitician`: Apartment-Block Geopolitician; sources,
-    specificity, and nuance; broad, fast, and brittle combo play.
-17. `eu-funds-alchemist`: EU-Funds Alchemist; transparency, outcomes, and
-    maintenance; procurement denial and high-value finishers.
-18. `government-ai`: Government AI; nepotism, corruption, spending, and being
-    obsolete; corporate and communist-propaganda phrasing. It is the only robot.
+| Order | Identifier | Character | Weakness tags | Play style |
+| --- | --- | --- | --- | --- |
+| 1 | `red-folded-chairman` | Red-Folded Chairman | legacy, modernity, bureaucracy, and miners | patient denial and safe continuations. |
+| 2 | `thunder-tribune` | Thunder Tribune | evidence, credibility, and restraint | aggressive finishers and risky long sentences. |
+| 3 | `midnight-sensationalist` | Midnight Sensationalist | ratings, evidence, and credibility | combos and dramatic comebacks. |
+| 4 | `velvet-mogul` | Velvet Mogul | wealth, influence, and credibility | denial and weakness targeting. |
+| 5 | `black-sea-captain` | Black Sea Captain | decorum, consistency, and Securitate references | adaptive comebacks. |
+| 6 | `retiring-cassandra` | Retiring Cassandra | competence, hope, and results | defensive continuations and conservative scoring. |
+| 7 | `oat-milk-reformist` | Oat-Milk Reformist | relevance, authenticity, and class | long clauses and semantic targeting. |
+| 8 | `marble-diplomat` | Marble Diplomat | luxury, elitism, and corruption | high values, finishers, and status attacks. |
+| 9 | `county-baron` | County Baron | procurement, infrastructure, and nepotism | denial and low-risk continuations. |
+| 10 | `coalition-acrobat` | Coalition Acrobat | consistency, memory, and commitment | conjunctions, continuations, and reversals. |
+| 11 | `algorithmic-prophet` | Algorithmic Prophet | evidence, specificity, and follow-up questions | volatile livestream finishers. |
+| 12 | `spreadsheet-technocrat` | Spreadsheet Technocrat | delivery, accountability, and human scale | clause stacks and dashboard denial. |
+| 13 | `football-tycoon` | Football Tycoon | commercialism, accountability, and sincerity | emotional chains and finishers. |
+| 14 | `luxury-minister` | Luxury Minister | austerity, service, and authenticity | status attacks and conspicuous finishers. |
+| 15 | `diaspora-oracle` | Diaspora Oracle | distance, context, and firsthand knowledge | long generalizations and continuations. |
+| 16 | `apartment-block-geopolitician` | Apartment-Block Geopolitician | sources, specificity, and nuance | broad, fast, and brittle combo play. |
+| 17 | `eu-funds-alchemist` | EU-Funds Alchemist | transparency, outcomes, and maintenance | procurement denial and high-value finishers. |
+| 18 | `government-ai` | Government AI | nepotism, corruption, spending, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
 
 The remaining character identifiers keep their previous relative order after
 the Presidential Sphinx retirement. The unused roster-order value is not

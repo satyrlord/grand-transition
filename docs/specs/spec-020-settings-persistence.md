@@ -18,7 +18,9 @@ adapter and show a non-blocking notice that changes will not persist.
 
 The title exposes one `Settings` control. It opens a modal that groups Sound,
 Speech, and Play settings. Changes apply immediately. Close and Escape close
-the modal and return focus to `Settings`. Focus stays inside the open modal.
+the modal and return focus to `Settings`.
+
+Focus stays inside the open modal.
 The selected Turn timer option stays visibly distinct in forced-colors mode.
 The existing Pause controls use the same Turn timer and Auto-complete values.
 Phrase color coding remains session-only because it is not in the strict

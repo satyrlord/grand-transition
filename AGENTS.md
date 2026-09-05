@@ -148,9 +148,12 @@ the active operating system and shell when you run file-system commands.
 Approved files under `docs/specs/` are the only source of truth for the app.
 README, agent documents, guidance, and untracked files in the temporary folder
 are context only.
-Put Lit screens in `src/app/`, components in `src/components/`, pure rules
-in `src/engine/`, AI in `src/ai/`, data in `src/content/`, and media in
-`src/assets/`. Keep temporary renders in the temporary folder. Keep private
+Put Lit screens in `src/app/` and components in `src/components/`. Put pure
+rules in `src/engine/` and artificial intelligence (AI) in `src/ai/`.
+
+Put data
+in `src/content/` and media in `src/assets/`. Keep temporary renders in the
+temporary folder. Keep private
 character descriptions and custom prompts in the research folder. Put unit
 tests in `tests/unit/`, component tests in `tests/browser/`, and flows in
 `e2e/`.
@@ -158,7 +161,7 @@ tests in `tests/unit/`, component tests in `tests/browser/`, and flows in
 ## Build, Test, and Development Commands
 
 If the temporary folder contains an HTML prototype, inspect it with
-`py -m http.server 8000`. Bootstrap these scripts:
+`py -m http.server 8000` from that folder. The configured command groups are:
 
 ```text
 npm run dev | preview | build
@@ -168,8 +171,8 @@ npm run test | test:coverage | test:browser | test:e2e
 npm run ci
 ```
 
-`validate` includes markdownlint-cli2, assets, content, localization, lint, and
-types. `ci` is the complete gate. Do not report checks as passing until the
+`validate` includes markdownlint-cli2, assets, content, localization, pure-boundary
+checks, lint, and types. `ci` is the complete gate. Do not report checks as passing until the
 scripts exist and run.
 
 ## AI Workflow
@@ -218,8 +221,12 @@ architecture or behavior changes.
 Use original, licensed art, audio, fonts, and fictional characters. Never scrape
 assets, commit secrets, or add runtime network calls. Generate AVIF/WebP
 variants and metadata through the approved Sharp tool. Keep controls and
-required text outside Canvas. Deploy only `dist/` through GitHub Actions after
-`npm run ci`. Preserve the Vite `/grand-transition/` base path.
+required text outside Canvas.
+
+For a release, deploy only `dist/` through GitHub
+Actions after `npm run ci`. Milestone 029 separately permits a tester deployment
+after `npm run build`. That path does not establish release readiness.
+Preserve the Vite `/grand-transition/` base path.
 
 All generated representational raster art must follow the strict flat
 cel-shaded editorial-cartoon direction in Milestone 023. Do not generate

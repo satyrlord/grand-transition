@@ -18,9 +18,10 @@ points. Run configured compiler or analyzer checks before creating candidates.
 
 Check static and dynamic imports and exports.
 Check custom-element registrations, Lit templates, event names, and Zod schemas.
-Check localization extraction, JSON identifiers, scene and character references,
+Check localization extraction, JavaScript Object Notation (JSON) identifiers,
+scene and character references,
 and asset manifests.
-Check Vite URLs, CSS selectors, custom properties, Playwright fixtures,
+Check Vite URLs, Cascading Style Sheets (CSS) selectors, custom properties, Playwright fixtures,
 developer flags, workflows, documentation, and approved future work.
 
 A search miss or analyzer warning starts the review. It does not prove that an
@@ -33,9 +34,8 @@ In audit mode, report without edits. In cleanup mode, remove only the smallest
 set of proven dead items.
 Do not remove active-hand privacy.
 Do not remove diagnostics, content-safety fields, or seeded replay support.
-Do not remove paths for browsers in the approved support matrix, fixtures,
-private master references, or
-generated files unless the owning workflow authorizes the removal.
+Preserve supported-browser paths, fixtures, private master references, and generated files.
+Remove them only when the owning workflow authorizes removal.
 
 Run the narrowest affected checks after each removal. Then use
 [run-quality-gate](../run-quality-gate/SKILL.md).

@@ -28,10 +28,14 @@ The title emblem uses genuine transparent alpha with a Portable Network
 Graphics fallback. Chromium uses a 640-square WebP runtime variant. The title
 proscenium also uses a WebP runtime variant with its authored Portable Network
 Graphics fallback. The production entry preloads both WebP files before the
-application module. Their combined runtime size is at most 300 KiB. Markup
+application module.
+
+Their combined runtime size is at most 300 KiB. Markup
 reserves the emblem's square dimensions before decode. Until the emblem loads,
 that space shows a decorative brass broadcast-signal poster. The decoded emblem
-replaces it without layout shift. This focused title slice does not complete
+replaces it without layout shift.
+
+This focused title slice does not complete
 Milestone 023's manifest, AVIF, or full asset-pipeline work.
 
 Shadow DOM is limited to
@@ -77,10 +81,14 @@ sides.
 Each roster item uses an exact 3:4 vertical canvas. Every character uses a tight
 headshot crop from the top of the head through the upper chest. For a fully
 mechanical character, the crop includes the antenna, face panel, shoulders, and
-upper torso. The face panel is centered on the inner portrait window. The crop
+upper torso. The face panel is centered on the inner portrait window.
+
+The crop
 does not show the complete body. Each item uses one authored heavy dark-oak
 frame and a restrained aged-gold inner liner. No portrait paints outside that
-inner window. Each item shows no visible character label. The hover, focus, or
+inner window. Each item shows no visible character label.
+
+The hover, focus, or
 pinned dossier supplies the visible character name. The accessible name keeps
 the complete character name, public weaknesses, and current player-one or
 player-two selection state.
@@ -137,7 +145,8 @@ hide validation.
   error with its control and emits no command.
 - **AC-015-04:** A valid submit emits one bubbling, composed
   `start-match` event and immutable payload. Rapid double submit emits once.
-- **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by 1080. Back does not discard setup values.
+- **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by
+  1080. Back does not discard setup values.
 - **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
   hands, or game phase. The shell is the only authoritative snapshot owner.
 - **AC-015-07:** Defaults, each changed character, and a mirror selection show
@@ -161,11 +170,15 @@ hide validation.
   mechanical character renders a tight headshot with no complete body. The
   robot headshot includes its antenna, centers its face panel, and cannot paint
   outside the inner portrait window. All four implemented roster items stay in
-  one row inside the roster boundary. Both selected-player stages
+  one row inside the roster boundary.
+
+  Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
   fade. The generated frame overlay loads with valid transparency. No roster
   item shows a visible character label. The roster
-  always uses the default character portrait. A selected-player stage uses its
+  always uses the default character portrait.
+
+  A selected-player stage uses its
   selected skin portrait.
 - **AC-015-11:** Both selected-player stages cycle their available skins with
   visible previous and next arrows, right-click, Left Arrow, and Right Arrow.

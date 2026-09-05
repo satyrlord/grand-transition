@@ -169,7 +169,9 @@ same stage. They do not form a decorative scene above a separate dashboard.
 Each character is human or fully mechanical. Animal words in names or titles
 are metaphorical political labels only. The playable foundation uses 17 original
 human editorial caricatures and one original robot caricature, 18 total. Each
-can occupy either player position. Seven archetypes have nine alternate skins
+can occupy either player position.
+
+Seven archetypes have nine alternate skins
 in total. A skin is a visual-only variation that does not change game identity
 or prose. Later character art must preserve the declared species and cannot use
 animal or hybrid anatomy. One archetype can have one default skin and zero
@@ -187,16 +189,18 @@ shown in this world is human. A fully mechanical character is visibly a robot.
 ### Image language
 
 All generated representational raster art uses one flat cel-shaded editorial-
-cartoon language. Characters, skins, states, robots, fixed moderators, scene
-architecture, furniture, fixtures, and props use bold dark contours, large flat
-color shapes, and two or three hard-edged value levels. Exaggeration is
+cartoon language. Characters, skins, states, and robots use bold dark contours, large flat color
+shapes, and two or three hard-edged value levels. Fixed moderators, scene
+architecture, furniture, fixtures, and props use the same construction. Exaggeration is
 deliberate. Materials read through silhouette, color, contour, and limited flat
 pattern instead of realistic surface detail.
 
 Light uses designed hard-edged shadow and highlight shapes. A restrained paper
 or screen-print texture can sit over large shapes without modeling volume.
 Use neutral sRGB white balance and an ungraded color treatment. Do not apply a
-global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
+
+Warm
 color is local to authored brass, wood, cream, skin, oxide-red, or lamp shapes.
 Navy and charcoal shadows retain cool or neutral separation.
 Painted comic-book, painterly semi-realistic, realistic concept-art,
@@ -212,16 +216,20 @@ wordmark and one vertical brass signal rail. It has one oxblood Set up match act
 is an upper-left plaque. The fictional-composite satire disclaimer stays at
 the lower edge.
 
-Setup uses the same broadcast theatre. Oxblood frames the player-one stage on
+Setup uses the same broadcast theater. Oxblood frames the player-one stage on
 the left, television blue frames the player-two stage on the right, and a
 compact roster sits between them. Each selected stage shows a full portrait,
 name, and complete public weakness list. The roster uses tight headshots for
 human and fully mechanical characters inside one reusable 3:4 dark-oak and
-aged-gold frame. The robot crop includes its antenna, face panel, shoulders,
+aged-gold frame.
+
+The robot crop includes its antenna, face panel, shoulders,
 and upper torso. Its face panel sits on the inner frame's center axis. All 18
 roster portraits stay visible in one compact six-six-six fighting-game
 selection grid between the two selected contestants. Any future incomplete row
-is centered. A named vertical scroll region contains the grid when the
+is centered.
+
+A named vertical scroll region contains the grid when the
 available height is smaller or the roster grows.
 
 At the recommended match viewport, a municipal television studio and one fixed
@@ -260,9 +268,10 @@ speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
 that side persistently brighter. A completed exchange holds the last full
 sentence in the arena and places a semitransparent broadcast-results modal over
-the lower stage. Inside that record, a broadcast score receipt prints each
-clause in order, stamps weakness and combo factors onto the affected line,
-separates finisher and Comeback values, and lands final damage last. Continue
+the lower stage. Inside that record, a broadcast score receipt prints each clause in order.
+
+It places weakness and combo factors on the affected line. It separates
+finisher and Comeback values and shows final damage last. Continue
 releases a nonterminal hold and starts the next round. A terminal hold expands
 the same record into Victory and remains until the player returns to the title.
 
@@ -281,9 +290,11 @@ with a centered transmission slate that exposes no game facts.
 ### Honest risk
 
 The integrated arena can become crowded or too similar to its references. Keep
-both characters, the full sentence path, and all required controls readable at
-1024 by 720 and at four-to-three landscape viewports. Keep core tactical content
-at 11 pixels or larger. Use original proportions, ornament, iconography, art,
+both characters, the full sentence path, and all required controls
+readable. Check 1024 by 720 and four-to-three landscape viewports. Keep core tactical content
+at 11 pixels or larger.
+
+Use original proportions, ornament, iconography, art,
 and type. Do not reduce the stage to a header to solve density. Do not rebuild
 the lower half as a dashboard.
 
@@ -303,8 +314,8 @@ perimeter actions. It remains valid after the earlier mock was removed.
   cartoon characters with painted comic-book, painterly semi-realistic,
   realistic concept-art, photographic, or three-dimensional-render scene
   layers.
-- Eighteen swappable player caricatures, 17 human and one fully mechanical, and
-  two fixed fictional human moderators, one per layered studio, all with clear
+- Eighteen swappable player caricatures: 17 human and one fully mechanical.
+  Two fixed fictional human moderators, one per layered studio. All have clear
   faces or face panels.
 - Navy and near-black broadcast framing with aged brass and opposing red and
   blue identities.
@@ -523,14 +534,18 @@ Setup keeps the same full-viewport broadcast frame. Two selected-character
 stages flank a central roster. The left stage uses the oxblood
 identity and the right stage uses television blue. Each selected stage shows a
 complete portrait, a player label, a feature-display name, and the full
-public weakness list. Each roster tile is an exact 3:4 portrait window with a
+public weakness list.
+
+Each roster tile is an exact 3:4 portrait window with a
 reusable dark-oak frame and aged-gold liner. Human and fully mechanical
 characters use close headshots. The robot crop includes its antenna and face
 panel but not its complete body. Its face panel is centered in the inner
-portrait window. The 18 portraits stay in one equal-width six-six-six
+portrait window.
+
+The 18 portraits stay in one equal-width six-six-six
 selection grid, with any future incomplete row centered, and never overlap the match
-settings. The grid scrolls vertically inside its roster region when required;
-the page does not scroll.
+settings. The grid scrolls vertically inside its roster region when required.
+The page does not scroll.
 
 Native selects keep mode and scene
 terms in a compact lower register. A nonmodal character dossier appears on
@@ -543,17 +558,17 @@ fixed fictional moderator. The Transition-Era Television Studio uses a blonde
 moderator at a physical desk on a raised inner-left platform. Exactly four
 full-height faux-marble columns frame that studio.
 
-The Modern Debate Studio uses
-broad blue video panels, red and blue vertical accents, visible softboxes, a
-practical truss, and a dark stage floor with sparse hard-edged flat reflection
-shapes. Its bespectacled male moderator sits with crossed legs in a beige studio
+The Modern Debate Studio uses broad blue video panels, red and blue vertical
+accents, visible softboxes, and a practical truss. Its dark stage floor has
+sparse hard-edged flat reflection shapes. Its bespectacled male moderator sits
+with crossed legs in a beige studio
 chair at the mirrored inner-right position and faces the camera. His normal
 human head has a slightly tall forehead and comically small facial features. No
 back image contains a playable character.
 
-Every back scene and foreground plate uses the same bold contour weight, flat
-color construction, hard-edged two-or-three-level shading, deliberate shape
-exaggeration, and restrained print texture as the playable portraits. Preserve
+Every back scene and foreground plate uses the playable portraits' bold
+contour weight, flat colors, and hard-edged two-or-three-level shading. They
+also share deliberate shape exaggeration and restrained print texture. Preserve
 distinct historical materials and scene identities through silhouette, color,
 and limited pattern. Do not use painterly, semi-realistic, photographic, or
 three-dimensional-render people, furniture, bottles, lamps, floors, or
@@ -594,7 +609,9 @@ a separate dashboard.
 After each exchange, a centered results record holds the arena in place. Its
 heading and outcome use one centered axis. Two equal-width peer records sit
 side by side with red and blue identity borders. Each record shows the player
-name and an ordered, internally scrollable score receipt. Clause rows show the
+name and an ordered, internally scrollable score receipt.
+
+Clause rows show the
 rendered phrase, base, applied weakness and combo factors, and resulting value.
 Finisher and Comeback rows remain separate. Persistent combo and bounded
 weakness records precede one large final-damage landing. One centered Continue
@@ -621,7 +638,9 @@ The two private phrase controls show phrase text only and sit at the active
 player's lower perimeter. An icon-only inline SVG Reshuffle control follows
 them. The common board is one central near-black vertical list of nine compact
 rows. Each
-row shows phrase text only, separated by a thin oxblood rule. Do not show role,
+row shows phrase text only, separated by a thin oxblood rule.
+
+Do not show role,
 ownership, weakness, disabled-reason, hint, or card-state copy in either phrase
 list. Keep that state in semantic attributes and accessible names. Every
 
@@ -665,6 +684,7 @@ Disabled controls stay labeled or keep an accessible label and use a dashed
 border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
 During a Local Radio Caller turn, the public board and sentence stay visible.
+
 The public phrase buttons remain visibly unavailable and outside the focus
 order. The private hand and player actions become one named thinking record
 until the seeded presentation delay finishes.

@@ -31,7 +31,7 @@ damage.
 
 Inferred from the approved specifications: the product joins deterministic
 tactical drafting with grammatical sentence construction and fictional
-political-theatre satire. The sentence is both the player's move and the source
+political-theater satire. The sentence is both the player's move and the source
 of its score.
 
 ## Operating Context
@@ -48,10 +48,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes the title, setup, playable match,
-  between-round review flow, persistent terminal victory, title-only local
-  match history, title-only local settings, safe settings persistence fallback,
-  and blocking landscape viewport contract.
+- The implemented scope includes title, setup, playable match, between-round
+  review, and persistent terminal victory. It includes title-only local history
+  and settings, safe settings persistence fallback, and the blocking landscape
+  viewport contract.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
@@ -62,8 +62,9 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and zero through eight
   alternate skins per archetype.
-  Final representational raster art uses one strict flat cel-shaded editorial-
-  cartoon style across characters, moderators, scenes, furniture, fixtures,
+
+  Final representational raster art uses one strict flat cel-shaded
+  editorial-cartoon style across characters, moderators, scenes, furniture, fixtures,
   and props.
   Two scenes use layered debate studios with fixed fictional moderators
   and foreground desk plates. Four playable foundation scenes use one neutral
@@ -90,6 +91,7 @@ The approved name is "Grand Transition: A Verbal Republic." The subject is
 fictional political and social satire. It must not copy real brands, protected
 works, or unsupported claims about real people.
 The approved final image language is a flat cel-shaded editorial cartoon.
+
 Painted comic-book, painterly semi-realistic, realistic concept-art,
 photographic, and three-dimensional-render output is outside the brand. A
 global yellow, amber, sepia, or other warm color wash is also outside the brand.
@@ -100,15 +102,17 @@ Warm color remains limited to authored local materials and lighting.
 The approved specifications under `docs/specs/` are the only product and
 implementation authority. Two untracked original-game screenshots under
 the temporary folder are composition and interaction references only. They are
-not product assets or layout specifications. No final production art,
-testimonials, customer claims, or benchmarks exist.
+not product assets or layout specifications. The fixed character and studio
+raster baselines have manifests and runtime
+variants. Complete state packages, audio, and final catalog assets remain
+incomplete. No testimonial or customer claim is recorded here.
 
 ## Product Principles
 
 - Make every tactical state and modifier understandable.
 - Keep grammar, content, and locale-neutral rules in their owning layers.
 - Preserve privacy from the first surface that exercises it.
-- Prefer original, legible political-theatre character over generic game or
+- Prefer original, legible political-theater character over generic game or
   dashboard presentation.
 - Deliver the product in small, dependency-ordered milestones.
 

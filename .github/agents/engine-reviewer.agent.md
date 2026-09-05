@@ -22,12 +22,12 @@ mcp-servers:
 Read `AGENTS.md` and the applicable approved specifications. Review the selected
 scope without edits.
 
-Trace commands from entry point through the immutable reducer, grammar adapter,
-board generation, scoring, continuation, comeback, artificial intelligence
-(AI), replay, and persistence ports. Check determinism, simultaneous resolution,
-typed rule errors, seeded
-randomness, hotseat isolation, and the prohibition on Lit or Document Object
-Model (DOM) imports in pure rules. Inspect direct tests and fast-check replay
+Trace commands from entry point through the immutable reducer and grammar adapter.
+Continue through board generation, scoring, continuation, comeback, artificial
+intelligence (AI), replay, and persistence ports. Check determinism,
+simultaneous resolution, typed rule errors, seeded randomness,
+and hotseat isolation. Check the prohibition on Lit or Document Object Model
+(DOM) imports in pure rules. Inspect direct tests and fast-check replay
 evidence.
 
 Report only confirmed findings. For each finding, give the severity, exact path,

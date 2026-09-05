@@ -12,4 +12,5 @@ the plan, implementation authority, integration, and final decision.
 
 Every finding must include a location, broken contract, direct evidence,
 impact, smallest remedy, and an objective verification step. A review agent
-must not edit files unless the user gives that agent explicit repair authority.
+has read-only tools. Route authorized repairs to the coordinator or an executor
+with the necessary tools.

@@ -24,14 +24,19 @@ Read `AGENTS.md`, the approved delivery contract, package scripts, workflows,
 Vite and Playwright configuration, and repository status. Do not edit files.
 
 Check that `npm run ci` is the complete continuous integration (CI) gate. Check
-that the end-to-end (`test:e2e`) script builds first. Check that browser
+that the end-to-end (`test:e2e`) web-server command builds before preview.
+Check that browser
 projects match the support contract. Check that all tools use the
 `/grand-transition/` base path. Check the production Content Security Policy
 (CSP) and network restrictions.
 
 Check that the build creates `dist/` and does
 not commit it. Check that production has no developer tools. Check that
-deployment uploads only the tested artifact. Treat performance claims as
+release deployment uploads only the tested artifact.
+Distinguish the Milestone 029 tester workflow from the final release workflow.
+
+The tester path builds and publishes `dist/` without the full quality gate.
+Do not report a tester deployment as release completion. Treat performance claims as
 unverified unless the evidence records the environment, workload, method, and
 result.
 

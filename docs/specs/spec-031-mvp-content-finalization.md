@@ -8,18 +8,22 @@ and variety evidence
 
 ## Deliver
 
-Promote all 18 playable fictional archetypes and 6 playable scenes from
-Milestone 026 to their final English phrase volume, art, scene audio treatment,
-and variety state. Use the existing schemas, pipelines, and presentation
+Finalize all 18 playable fictional archetypes and 6 playable scenes from
+Milestone 026. Complete their English phrase volume, art, scene audio treatment,
+and variety requirements. Use the existing schemas, pipelines, and presentation
 contracts.
 
 Every archetype has one default portrait skin and zero through eight alternate
 skins through the Milestone 023 filename convention. A human alternate can use
 any gender. There is no gender quota. A fully mechanical alternate uses another
-fully mechanical chassis. A skin changes only visual presentation. It does not
+fully mechanical chassis.
+
+A skin changes only visual presentation. It does not
 add or change phrases, weaknesses, comeback lines, balance data, or character
 identity. Additional alternate clothing is allowed. An archetype can remain
-default-only. The Black Sea Captain remains default-only in the current
+default-only.
+
+The Black Sea Captain remains default-only in the current
 approved roster.
 
 Seventeen archetypes are human. Government AI is a fully mechanical robot.
@@ -38,13 +42,18 @@ Milestone 026 owns the six stable scene identities and phrase themes. Every
 final scene package uses the same flat cel-shaded editorial-cartoon language as
 the playable portraits. This rule applies to fixed moderators, architecture,
 furniture, lights, bottles, microphones, and all other props. Use the same
-contour weight, flat color construction, two-or-three-level hard-edged shading,
-shape exaggeration, and restrained print texture across each complete package.
+contour weight, flat colors, and two-or-three-level hard-edged
+shading across each complete package.
+
+Keep shape exaggeration and restrained
+print texture consistent.
 Each scene keeps its distinct era and materials through silhouette, color, and
 limited pattern. Do not use painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, hyper-realistic, or
 three-dimensional-render output. Use neutral sRGB white balance without a
-global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
+global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
+
+Warm
 color is local to authored materials and lighting, not a complete scene grade.
 
 - **Transition-Era Television Studio:** The late-2000s municipal studio contains
@@ -163,18 +172,24 @@ All character identities and prose remain fictional. Research can use public
 institutions, documented historical events, constitutional mechanisms, and
 broad media forms. An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
-Git-ignored research folder and does not ship. Shipped generation provenance
+Git-ignored research folder and does not ship.
+
+Shipped generation provenance
 uses a generic source description and does not name a real person. Do not use a
 real person as a comparison or target in player-visible content. Do not copy
 photographs, accusations, protected prose, or slogans other than the one
 sourced English form that AC-005-07 approves. Do not use real political party
-names, acronyms, or logos. Use only generic ideological or social-family party
+names, acronyms, or logos.
+
+Use only generic ideological or social-family party
 labels.
 
 Shared institutional themes can use
-[Article 115 of the Romanian Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
+[Article 115 of the Romanian
+Constitution](https://legislatie.just.ro/Public/FormaPrintabila/00000G3QRPQ5ISMZZG72V3845TJDVM93)
 and the
-[European Commission 2022 Rule of Law report summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statul-de-drept-2022-comisia-adopta-recomandari-specifice-pentru-romania-si-2022-07-13_ro).
+[European Commission 2022 Rule of Law report
+summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statul-de-drept-2022-comisia-adopta-recomandari-specifice-pentru-romania-si-2022-07-13_ro).
 
 ## Impeccable user interface validation
 

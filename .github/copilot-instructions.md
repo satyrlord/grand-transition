@@ -8,7 +8,7 @@ Do not treat files in the temporary folder, AI prompts, or generated evidence
 as product authority. Do not claim a repository command passes until it exists
 and runs.
 
-Use the Microsoft Learn Model Context Protocol (MCP) server when current
-official Microsoft or Azure documentation or code samples materially help the
-task. Search first and fetch the relevant page when complete context is needed.
+Use the Microsoft Learn Model Context Protocol (MCP) server for applicable
+Microsoft or Azure documentation and code samples. Search first. Fetch the
+relevant page when complete context is necessary.
 Continue without it for unrelated work.

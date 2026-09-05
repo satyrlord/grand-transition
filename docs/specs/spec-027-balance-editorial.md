@@ -18,8 +18,8 @@ players. Romanian proper nouns require enough English context to carry the joke.
 Permit political parody, public-record criticism, fictional institutions,
 composite scandals, bureaucracy, media satire, contradiction, and vanity satire
 aimed at fictional personas. Hard-edged allegations can target fictional
-personas. Reject player-visible real-person references, real-party names and
-acronyms, protected traits as insults, sexual humiliation, threats, copied
+personas. Reject player-visible real-person references, real-party names and acronyms,
+and protected traits as insults. Reject sexual humiliation, threats, copied
 text, real logos, and copyrighted broadcast art. Every record has review
 evidence.
 
@@ -27,7 +27,9 @@ The review confirms that each character identity and its prose are fictional.
 It rejects named or identifiable real-person comparisons, targets, and
 player-visible disclosures. An approved public-figure likeness may be used only
 as visual-only parody in a portrait skin. Private study data stays in the
-Git-ignored research folder and does not ship. Shipped generation provenance
+Git-ignored research folder and does not ship.
+
+Shipped generation provenance
 uses a generic source description and does not name a real person. This
 exception does not permit real-person allegations or player-visible names. The
 review also rejects real political party names, acronyms, and logos. It permits

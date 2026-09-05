@@ -41,9 +41,11 @@ complete an approved specification.
   shipped content, specifications, editorial rationale, source notes, or asset
   metadata. Public artifacts do not declare a real person as a visual or
   rhetorical model. Complete private character studies stay in the Git-ignored
-  research folder, and private study data does not ship. An approved
+  research folder, and private study data does not ship.
+
+  An approved
   public-figure likeness may be used only as visual-only parody in a portrait
-  skin; it must not change fictional character identity or player-visible
+  skin. It must not change fictional character identity or player-visible
   content. Public institutions and documented historical events can inform
   original satire when the result does not identify a real person.
 - Do not use a real political party's name, acronym, or logo. Use only generic

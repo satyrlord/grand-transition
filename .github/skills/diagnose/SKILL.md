@@ -12,8 +12,8 @@ Use the smallest test sequence that can disprove a suspected cause.
 Read the symptom, expected specification, source, tests, configuration, and
 environment.
 Record the seed and replay path when they affect the result.
-Record the browser and version, viewport, locale, mode, scene, character pair,
-build type, and exact command when they affect the result.
+Record each relevant environment value: browser and version, viewport, locale,
+mode, scene, character pair, build type, and exact command.
 
 Choose the first applicable check in this order:
 
@@ -21,7 +21,8 @@ Choose the first applicable check in this order:
 2. Run a content or codec test when it matches the symptom.
 3. Run a component-browser test when it matches the symptom.
 4. Run a production Playwright flow when the failure needs a browser.
-5. Run a deterministic AI simulation, asset validator, or measured performance
+5. Run a deterministic artificial intelligence (AI) simulation, asset
+   validator, or measured performance
    procedure when the failure needs that tool.
 
 Do not use the untracked prototype as production evidence.

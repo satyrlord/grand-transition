@@ -17,7 +17,7 @@ commands, or lower thresholds without explicit approval.
 ## Discover the configured gate
 
 Read `AGENTS.md` and approved delivery specifications.
-Read `package.json` when it exists.
+Read `package.json`.
 Read the lockfile, Vite, TypeScript, lint, test, Playwright, asset, and locale
 configuration.
 Read GitHub workflows.
@@ -33,11 +33,17 @@ Do not invent an equivalent command and call it a pass.
 
 Run applicable focused checks first.
 When configured, run changed-skill validation.
-Run the Markdown check through `markdownlint-cli2`, then asset, content,
-localization, typed lint, TypeScript, unit, and property tests.
-Run coverage, real-browser component tests, the production build, and
-end-to-end browser projects.
-Run `npm run ci` last.
+For complete gate verification, run `npm run ci` once after focused checks.
+This command owns the phase order in `package.json`.
+
+The Playwright web-server command builds the production artifact before preview.
+Do not repeat successful phases without a change, failure, or unresolved concern.
+For a bounded documentation repair, run Markdown, links, skill validation, and
+the applicable contract checks. Run `npm run validate` when configuration or
+repository guidance changes affect its checks.
+
+State when the full gate is outside the requested verification scope.
+Release mode requires the complete gate and the Milestone 028 and 029 evidence.
 Run `git diff --check`.
 Inspect final status and diff.
 

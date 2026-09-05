@@ -12,7 +12,7 @@ count. If the caller does not give `match_count`, stop and ask for it.
 
 Accept an optional unsigned 32-bit `seed`. Use `20260823` only when the caller
 does not give a seed. Accept an optional output path only when the caller asks
-for a saved JSON report.
+for a saved JavaScript Object Notation (JSON) report.
 
 ## Preserve scope
 
