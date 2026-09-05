@@ -1145,111 +1145,61 @@ test('keeps the physical moderator face clear of drafting UI', async ({
     await decodeImages(
       page.locator('.broadcast-stage-art, .character-portrait'),
     );
-    const faceClear = await page.evaluate(() => {
-      const background = document.querySelector<HTMLImageElement>(
-        '.broadcast-stage-art',
-      )!;
-      const backgroundBox = background.getBoundingClientRect();
-      const scale = Math.max(
-        backgroundBox.width / background.naturalWidth,
-        backgroundBox.height / background.naturalHeight,
-      );
-      const drawnWidth = background.naturalWidth * scale;
-      const drawnHeight = background.naturalHeight * scale;
-      const drawnLeft =
-        backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
-      const drawnTop =
-        backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
-      const picture = background.closest('picture')!;
-      const [faceX, faceY] = picture
-        .getAttribute('data-scene-focal-point')!
-        .split(',')
-        .map(Number) as [number, number];
-      const moderatorFace = {
-        left: drawnLeft + drawnWidth * (faceX - 0.02),
-        right: drawnLeft + drawnWidth * (faceX + 0.02),
-        top: drawnTop + drawnHeight * (faceY - 0.035),
-        bottom: drawnTop + drawnHeight * (faceY + 0.035),
-      };
-      type RectEdges = Readonly<{
-        left: number;
-        right: number;
-        top: number;
-        bottom: number;
-      }>;
-      const overlaps = (first: RectEdges, second: RectEdges) =>
-        first.left! < second.right &&
-        first.right! > second.left &&
-        first.top! < second.bottom &&
-        first.bottom! > second.top;
-      const draftingRegions = [
-        ...document.querySelectorAll(
-          '.match-status-rail, .player-hud, .sentence-ledger, .common-phrases, .player-sentence--waiting',
-        ),
-      ].map((element) => element.getBoundingClientRect());
-      const portraitOverlapsFace = [
-        ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
-      ].some((portrait) => {
-        const box = portrait.getBoundingClientRect();
-        const portraitScale = Math.min(
-          box.width / portrait.naturalWidth,
-          box.height / portrait.naturalHeight,
-        );
-        const portraitWidth = portrait.naturalWidth * portraitScale;
-        const portraitHeight = portrait.naturalHeight * portraitScale;
-        const portraitLeft = box.left + (box.width - portraitWidth) / 2;
-        const portraitTop = box.bottom - portraitHeight;
-        const sourceLeft = Math.max(
-          0,
-          Math.floor((moderatorFace.left - portraitLeft) / portraitScale),
-        );
-        const sourceRight = Math.min(
-          portrait.naturalWidth,
-          Math.ceil((moderatorFace.right - portraitLeft) / portraitScale),
-        );
-        const sourceTop = Math.max(
-          0,
-          Math.floor((moderatorFace.top - portraitTop) / portraitScale),
-        );
-        const sourceBottom = Math.min(
-          portrait.naturalHeight,
-          Math.ceil((moderatorFace.bottom - portraitTop) / portraitScale),
-        );
-        if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
-
-        const canvas = document.createElement('canvas');
-        canvas.width = portrait.naturalWidth;
-        canvas.height = portrait.naturalHeight;
-        const context = canvas.getContext('2d', { willReadFrequently: true })!;
-        context.drawImage(portrait, 0, 0);
-        const pixels = context.getImageData(
-          sourceLeft,
-          sourceTop,
-          sourceRight - sourceLeft,
-          sourceBottom - sourceTop,
-        ).data;
-        for (let offset = 3; offset < pixels.length; offset += 4) {
-          if (pixels[offset]! > 0) return true;
-        }
-        return false;
-      });
-      return {
-        backgroundDimensions:
-          background.getAttribute('width') === '1920' &&
-          background.getAttribute('height') === '1080',
-        clear: !draftingRegions.some((region) =>
-          overlaps(moderatorFace, region),
-        ),
-        portraitClear: !portraitOverlapsFace,
-      };
-    });
-
-    expect(faceClear.backgroundDimensions).toBe(true);
-    expect(faceClear.clear, `${viewport.width}x${viewport.height}`).toBe(true);
-    expect(faceClear.portraitClear, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
+    await expectModeratorFaceClearance(page, `${viewport.width}x${viewport.height}`);
   }
+});
+
+test('waits for a replacement portrait before measuring moderator clearance', async ({
+  page,
+}) => {
+  await startMatch(page);
+  await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
+  let releasePortrait!: () => void;
+  let requestStarted!: () => void;
+  const responseReleased = new Promise<void>((resolve) => {
+    releasePortrait = resolve;
+  });
+  const portraitRequested = new Promise<void>((resolve) => {
+    requestStarted = resolve;
+  });
+  await page.route('**/*?clearance-reload', async (route) => {
+    requestStarted();
+    await responseReleased;
+    await route.continue();
+  });
+  const portrait = page.locator('.character-portrait').first();
+  await portrait.evaluate((element) => {
+    const image = element as HTMLImageElement;
+    const replacement = image.cloneNode(true) as HTMLImageElement;
+    replacement.removeAttribute('srcset');
+    replacement.src = `${image.currentSrc}?clearance-reload`;
+    image.closest('picture')!.replaceChildren(replacement);
+  });
+  try {
+    await portraitRequested;
+    expect(
+      await portrait.evaluate((image) => ({
+        complete: (image as HTMLImageElement).complete,
+        naturalWidth: (image as HTMLImageElement).naturalWidth,
+      })),
+    ).toEqual({ complete: false, naturalWidth: 0 });
+    expect(await readModeratorFaceClearance(page)).toMatchObject({ ready: false });
+  } finally {
+    releasePortrait();
+  }
+  await expectModeratorFaceClearance(page, 'replacement portrait');
+  await page.locator('.common-phrases').evaluate((element) => {
+    Object.assign((element as HTMLElement).style, {
+      position: 'fixed',
+      inset: '0',
+      width: '100vw',
+      height: '100vh',
+    });
+  });
+  expect(await readModeratorFaceClearance(page)).toMatchObject({
+    ready: true,
+    clear: false,
+  });
 });
 
 test('the match fits the supported landscape matrix', async ({
@@ -2367,6 +2317,155 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
       };
     }),
   );
+}
+
+async function expectModeratorFaceClearance(
+  page: Page,
+  label: string,
+): Promise<void> {
+  let measurement: Awaited<ReturnType<typeof readModeratorFaceClearance>> | undefined;
+  await expect.poll(
+    async () => {
+      measurement = await readModeratorFaceClearance(page);
+      return measurement;
+    },
+    { timeout: 15_000, message: label },
+  ).toMatchObject({ ready: true });
+  expect(measurement, label).toMatchObject({
+    backgroundDimensions: true,
+    clear: true,
+    portraitClear: true,
+  });
+}
+
+async function readModeratorFaceClearance(page: Page) {
+  return page.evaluate(() => {
+    const background = document.querySelector<HTMLImageElement>(
+      '.broadcast-stage-art',
+    );
+    const portraits = [
+      ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
+    ];
+    if (!background || portraits.length !== 2) {
+      return { ready: false, reason: 'The scene images are missing.' };
+    }
+    const images = [background, ...portraits].map((image) => {
+      const box = image.getBoundingClientRect();
+      return {
+        source: image.currentSrc,
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+        width: box.width,
+        height: box.height,
+      };
+    });
+    if (images.some((image) =>
+      !image.complete ||
+      !image.source ||
+      image.naturalWidth <= 0 ||
+      image.naturalHeight <= 0 ||
+      image.width <= 0 ||
+      image.height <= 0,
+    )) {
+      return { ready: false, images };
+    }
+    const backgroundBox = background.getBoundingClientRect();
+    const scale = Math.max(
+      backgroundBox.width / background.naturalWidth,
+      backgroundBox.height / background.naturalHeight,
+    );
+    const drawnWidth = background.naturalWidth * scale;
+    const drawnHeight = background.naturalHeight * scale;
+    const drawnLeft =
+      backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
+    const drawnTop =
+      backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
+    const picture = background.closest('picture')!;
+    const [faceX, faceY] = picture
+      .getAttribute('data-scene-focal-point')!
+      .split(',')
+      .map(Number) as [number, number];
+    if (![faceX, faceY].every(Number.isFinite)) {
+      throw new Error('The scene focal coordinates must be finite numbers.');
+    }
+    const moderatorFace = {
+      left: drawnLeft + drawnWidth * (faceX - 0.02),
+      right: drawnLeft + drawnWidth * (faceX + 0.02),
+      top: drawnTop + drawnHeight * (faceY - 0.035),
+      bottom: drawnTop + drawnHeight * (faceY + 0.035),
+    };
+    type RectEdges = Readonly<{
+      left: number;
+      right: number;
+      top: number;
+      bottom: number;
+    }>;
+    const overlaps = (first: RectEdges, second: RectEdges) =>
+      first.left! < second.right &&
+      first.right! > second.left &&
+      first.top! < second.bottom &&
+      first.bottom! > second.top;
+    const draftingRegions = [
+      ...document.querySelectorAll(
+        '.match-status-rail, .player-hud, .sentence-ledger, .common-phrases, .player-sentence--waiting',
+      ),
+    ].map((element) => element.getBoundingClientRect());
+    const portraitOverlapsFace = portraits.some((portrait) => {
+      const box = portrait.getBoundingClientRect();
+      const portraitScale = Math.min(
+        box.width / portrait.naturalWidth,
+        box.height / portrait.naturalHeight,
+      );
+      const portraitWidth = portrait.naturalWidth * portraitScale;
+      const portraitHeight = portrait.naturalHeight * portraitScale;
+      const portraitLeft = box.left + (box.width - portraitWidth) / 2;
+      const portraitTop = box.bottom - portraitHeight;
+      const sourceLeft = Math.max(
+        0,
+        Math.floor((moderatorFace.left - portraitLeft) / portraitScale),
+      );
+      const sourceRight = Math.min(
+        portrait.naturalWidth,
+        Math.ceil((moderatorFace.right - portraitLeft) / portraitScale),
+      );
+      const sourceTop = Math.max(
+        0,
+        Math.floor((moderatorFace.top - portraitTop) / portraitScale),
+      );
+      const sourceBottom = Math.min(
+        portrait.naturalHeight,
+        Math.ceil((moderatorFace.bottom - portraitTop) / portraitScale),
+      );
+      if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = portrait.naturalWidth;
+      canvas.height = portrait.naturalHeight;
+      const context = canvas.getContext('2d', { willReadFrequently: true })!;
+      context.drawImage(portrait, 0, 0);
+      const pixels = context.getImageData(
+        sourceLeft,
+        sourceTop,
+        sourceRight - sourceLeft,
+        sourceBottom - sourceTop,
+      ).data;
+      for (let offset = 3; offset < pixels.length; offset += 4) {
+        if (pixels[offset]! > 0) return true;
+      }
+      return false;
+    });
+    return {
+      ready: true,
+      backgroundDimensions:
+        background.getAttribute('width') === '1920' &&
+        background.getAttribute('height') === '1080',
+      clear: !draftingRegions.some((region) =>
+        overlaps(moderatorFace, region),
+      ),
+      portraitClear: !portraitOverlapsFace,
+    };
+  });
 }
 
 async function expectDecodedSceneVariant(image: Locator): Promise<void> {

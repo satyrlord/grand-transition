@@ -5,6 +5,12 @@ description: Create, import, adapt, revise, or review a Grand Transition reposit
 
 # Create or revise a repository skill
 
+## Select the mode
+
+Use review mode for an audit without edit authority. Report findings without edits.
+Use revision mode when the user requests a skill change or repair.
+Keep each revision within the requested scope.
+
 ## Establish the need
 
 Read `AGENTS.md`, `.github/AI_TOOLING.md`, the skill catalog, and the owning
@@ -24,7 +30,7 @@ triggers in `SKILL.md` frontmatter. Keep the entry point concise. Use
 `references/` only for branch-specific detail, `scripts/` only for repeatable
 deterministic work, and `assets/` only for output material.
 
-Write all skills using ASD-STE100 Simplified Technical English standards.
+Apply the [technical writing checks](../../PROSE.md) to the complete package.
 
 ## Write the text
 
@@ -43,6 +49,12 @@ skill. Update `SKILLS.md` and every direct link.
 
 ## Validate
 
+Inventory every package file before validation. Check each branch for its trigger,
+inputs, authority, owner, procedure, output, and completion criterion.
+Compare commands and paths with the current checkout.
+Distinguish approved future work from implemented behavior.
+Remove stale workflow rules that conflict with the owning specification.
+
 Run the `quick_validate.py` script from the installed `skill-creator` package:
 
 ```text
@@ -56,6 +68,8 @@ isolated environment or report the validator as blocked.
 Also verify links, metadata parity, foreign terms, unfinished placeholders, and
 any added script. A validator pass does not prove that the workflow is useful.
 
-The change is complete when the trigger is precise, the workflow is
-target-grounded, all resources are reachable, metadata agrees, and validation
-passes.
+Review mode is complete when every package file has a disposition and each
+finding has evidence and a verification step.
+Revision mode is complete when the trigger is precise and the workflow uses
+verified repository contracts. All resources must be reachable. Metadata must
+agree, and validation must pass.

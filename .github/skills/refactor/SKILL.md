@@ -31,7 +31,8 @@ Preserve grammar-adapter boundaries and locale and content identifiers.
 
 Preserve active-hand privacy and persistence codecs.
 Preserve Lit event contracts and supported landscape behavior.
-Preserve asset manifests, Vite base paths, CSP, fixtures, and workflow pins.
+Preserve asset manifests, Vite base paths, Content Security Policy (CSP),
+fixtures, and workflow pins.
 
 ## Refactor in coherent steps
 

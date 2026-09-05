@@ -94,7 +94,9 @@ original scoring balance so retained commands reproduce their original result.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
 Missing or invalid fields return `invalid-replay`. An unknown version returns
-`unsupported-version`. `tests/fixtures/replay-v1-scoring.json` is the retained
+`unsupported-version`.
+
+`tests/fixtures/replay-v1-scoring.json` is the retained
 version 1 source fixture for the step to version 2. Focused replay tests also
 retain the version 2 scoring result after version 3 becomes current. Encoding
 preserves the supplied supported version and never relabels older commands as
@@ -149,7 +151,9 @@ Milestone 002 threshold remains 70 percent.
 Replay reproduces exact final state. Corrupt or unsupported replay and
 match-log documents fail safely. Generated matches preserve all stated
 invariants. A completed development match leaves one machine-readable text log
-in the ignored repository directory. Production has no development tool or
+in the ignored repository directory.
+
+Production has no development tool or
 logger. `npm run ci` passes. Stop before browser game screens.
 
 Use the `$simulate-matches` repository skill for an explicit simulation

@@ -23,9 +23,9 @@ and purchases are not planned for the MVP.
 
 ## Project status
 
-The current checkout implements Milestones 001 through 018, the persistent
-victory and local match-history slice from Milestone 019, the local settings
-slice from Milestone 020, and the Local Radio Caller slice from Milestone 021.
+The current checkout implements Milestones 001 through 018 and the persistent
+victory and local match-history slice from Milestone 019. It also implements
+local settings from Milestone 020 and Local Radio Caller from Milestone 021.
 It also implements the promoted Milestone 026 playable catalog foundation and
 Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
@@ -43,8 +43,11 @@ bundle.
 
 The final asset contract permits one default skin and zero through eight
 alternate skins per archetype.
-All final character and scene imagery uses one strict flat cel-shaded editorial-
-cartoon style. Painted comic-book, painterly semi-realistic, realistic
+The fixed character and studio baselines now have manifests and generated AVIF
+and WebP variants. Complete character state packages remain future work.
+
+All final character and scene imagery uses one strict flat cel-shaded
+editorial-cartoon style. Painted comic-book, painterly semi-realistic, realistic
 concept-art, photographic, and three-dimensional-render styles are prohibited.
 Final raster art uses neutral sRGB white balance without a global yellow or
 amber wash. Warm color is limited to authored local materials and lighting.
@@ -63,8 +66,9 @@ receipt with clause text, weakness and combo factors, separate finisher and
 Comeback rows, and final damage. A terminal exchange stays in the arena as a
 persistent victory record until the player returns to the title. The title
 alone exposes local public match history. The interface requires a browser
-content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080
-and PC. Local sound, speech, timer, and Auto-complete settings use a strict
+content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC.
+
+Local sound, speech, timer, and Auto-complete settings use a strict
 versioned document and browser storage with a session memory fallback. Single
 player uses the seeded Local Radio Caller, Party Strategist, and Palace
 Operator AI policies. The local nine-rung ladder persists its exact opponents,

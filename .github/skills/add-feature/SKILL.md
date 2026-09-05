@@ -18,8 +18,9 @@ do not stop after a document change.
 
 Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, each applicable
 approved milestone specification, repository status, owning source, callers,
-tests, and tool configuration. Identify affected engine, grammar, AI, content,
-localization, UI, persistence, asset, security, performance, and
+tests, and tool configuration. Identify affected engine, grammar, artificial
+intelligence (AI), content,
+localization, user interface (UI), persistence, asset, security, performance, and
 deployment contracts.
 
 Each changed behavior must have one owner and one objective verifier.

@@ -22,8 +22,9 @@ path. Do not defend it with green tests or earlier screenshots.
 ## Load the scene contract
 
 Read `AGENTS.md`, `PRODUCT.md`, `DESIGN.md`, and Specifications 016, 018, 023,
-and 026. Read the scene content data, asset schema, rendering source, Cascading
-Style Sheets (CSS), affected tests, and current repository status. Preserve
+and 026. Read the scene content data, asset schema, rendering source,
+Cascading Style Sheets (CSS), affected tests, and current repository status.
+Preserve
 unrelated work.
 
 Use [design-grand-transition-ui](../design-grand-transition-ui/SKILL.md) for the
@@ -67,8 +68,8 @@ these causes. Do not change one value until the evidence selects the owner.
 
 ## Choose the repair scope
 
-Use a local runtime repair only when the source assets are internally coherent
-and one placement rule works at every supported viewport.
+Use a runtime repair only when the source assets agree and one placement rule
+works at every supported viewport.
 
 Regenerate one layer when that layer has the wrong perspective, intrinsic scale,
 edge quality, or focal placement.
@@ -100,17 +101,18 @@ Do not bake playable characters into a scene unless an approved specification
 requires it.
 
 Preserve the Milestone 023 flat cel-shaded editorial-cartoon direction across
-the complete scene package. Use the same bold contour weight, flat color
-construction, two-or-three-level hard-edged shading, shape exaggeration, and
-restrained print texture for characters, moderators, architecture, furniture,
-fixtures, and props. Reject painted comic-book, painterly semi-realistic,
+the complete scene package. Use the same bold contour weight, flat colors, and
+two-or-three-level hard-edged
+shading. Keep shape exaggeration and restrained print texture consistent across
+characters, moderators, architecture, furniture, fixtures, and props. Reject
+painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, three-dimensional-render, and mixed-style
 repairs.
 
 Use neutral sRGB white balance and an ungraded color treatment. Put positive
-color controls before style details in the private generation brief: neutral
-anchors, cool or neutral charcoal and navy shadows, and clear blue and oxblood
-separation. Put global yellow, amber, sepia, golden-hour, mustard, beige, brown,
+color controls before style details in the private generation brief.
+Specify neutral anchors, cool or neutral charcoal and navy shadows, and clear
+blue and oxblood separation. Put global yellow, amber, sepia, golden-hour, mustard, beige, brown,
 and full-frame warm washes in the negative controls. Warm color is allowed only
 inside an authored material or light. Do not cancel a warm cast with a global
 blue filter.
@@ -129,13 +131,22 @@ contour receives the converter's bounded binomial edge pass.
 Do not replace
 this process with a Boolean color threshold or an alpha-only blur. Do not ship
 the green intermediate. Reject missing workflow metadata, nonzero outer
-corners, all chroma-green residue, and a soft-key output without partial alpha.
+corners, and a soft-key output
+without partial alpha. Reject all chroma-green residue in Portable Network
+Graphics (PNG) masters. Apply
+the Milestone 023 alpha-at-most-16 exception only to lossy AV1 Image File
+Format (AVIF) and WebP variants.
+
 Run `node tools/validate-asset-color.mjs validate <asset-root>` after conversion
 and before visual approval. The color guard ignores transparent pixels and the
-temporary green matte, rejects broad yellow bias across muted or neutral pixels,
-and blocks assets without a measurable neutral or cool anchor for manual review.
-Do not use average RGB values as the only color test.
-Validate a private prompt directly with `node tools/validate-generation-prompt.mjs <prompt-file>`. The green conversion workflow runs the same prompt guard before it writes a shipping raster.
+temporary green matte. It
+rejects broad yellow bias across muted or neutral pixels. An asset without a
+measurable neutral or cool anchor requires manual review.
+
+Do not use average red, green, and blue (RGB) values as the only color test.
+Validate a private prompt directly with `node
+tools/validate-generation-prompt.mjs <prompt-file>`. The green conversion
+workflow runs the same prompt guard before it writes a shipping raster.
 
 Keep temporary renders in the temporary folder. Keep character descriptions and
 custom prompts in the research folder. For a complete character
@@ -148,7 +159,9 @@ For a scene tree whose prompts are beside its temporary renders, omit
 `--prompt-root`. All conversion modes verify a supplied prompt and embed only a
 generic source record. Use `provenance <png> --source <origin>` when a raster
 has a verified generic source origin. This command replaces an existing exact
-prompt with that source record. Do not invent a source or prompt. Replace
+prompt with that source record.
+
+Do not invent a source or prompt. Replace
 superseded scene assets in the same repair. Do not keep unused shipping variants.
 
 Update all affected specifications, content data, localization, design records,
@@ -171,5 +184,6 @@ If the user stops testing, stop immediately. Make only the authorized edit.
 Report that the final edit is unverified.
 
 The repair is technically complete when assets, content, source, tests, and
-specifications agree. It is visually accepted only after the user approves the
-new composition. Report remaining uncertainty and the largest visual blind spot.
+specifications agree. Record visual acceptance only when the user approves the new composition.
+Audit mode is complete when each finding has evidence and a verification step.
+Report remaining uncertainty and the largest visual blind spot.

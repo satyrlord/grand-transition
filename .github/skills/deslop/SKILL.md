@@ -32,8 +32,8 @@ command exists.
 - Prose: remove repeated meaning, stale facts, vague claims, filler, and
   assumptions from another product. Preserve exact rules, history, sources, and
   user voice.
-- Audit and fix all project documentation, skills, and artificial intelligence
-  (AI) tools to conform to ASD-STE100 Simplified Technical English.
+- Prose repairs: apply the [technical writing checks](../../PROSE.md) within the
+  authorized scope. In audit mode, report language findings without edits.
 - Data and configuration: compare schemas, loaders, validators, consumers, and
   siblings. Preserve IDs, balance, locale parity, provenance, and package pins
   unless their owning contract supports a change.

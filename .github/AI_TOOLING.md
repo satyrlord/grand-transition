@@ -10,6 +10,7 @@ target owns its guidance.
 - [`copilot-instructions.md`](copilot-instructions.md) is the GitHub Copilot
   entry point.
 - [`skills/SKILLS.md`](skills/SKILLS.md) indexes reusable workflows.
+- [`PROSE.md`](PROSE.md) gives technical writing and factual-drift checks.
 - [`agents/README.md`](agents/README.md) indexes specialist review agents.
 - [`instructions/`](instructions/) supplies path-specific Copilot guidance.
 - [`prompts/`](prompts/) contains optional milestone prompts for integrated
@@ -47,7 +48,9 @@ An unavailable server must not block unrelated work. Microsoft documents the
 public streamable Hypertext Transfer Protocol (HTTP) endpoint at
 [Microsoft Learn](https://learn.microsoft.com/en-us/training/support/mcp).
 
-Codex reads project-level MCP configuration only for a trusted project. Use
+Codex reads project-level MCP configuration only for a trusted project. The
+[official MCP guide](https://developers.openai.com/codex/mcp) defines this scope.
+Use
 `codex mcp get microsoft-learn` to verify the configuration. If Codex cannot
 use the project configuration, the user can add the server with:
 
@@ -59,6 +62,10 @@ The tracked VS Code file does not configure Visual Studio or JetBrains IDEs. It
 also does not configure a generic Copilot CLI session. Each custom Copilot
 agent profile contains its server configuration. A client uses this
 configuration only when it supports the profile field.
+GitHub's [agent configuration
+reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+states that IDE agents do not use the profile's `mcp-servers` field.
+VS Code uses `.vscode/mcp.json` for that server connection.
 
 ## Deliberate exclusions
 

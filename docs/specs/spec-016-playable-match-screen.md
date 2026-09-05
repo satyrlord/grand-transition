@@ -90,8 +90,8 @@ The phrase path follows the compact original-game interaction precedent. The
 nine common rows show phrase text only. The two private choices also show phrase
 text only. Do not show role labels, ownership labels, weaknesses, disabled
 reasons, hint copy, or card metadata inside either phrase list. Keep role,
-ownership, availability, weakness, and disabled data in semantic attributes and
-accessible names so that the compact visual treatment does not remove
+ownership, availability, weakness, and disabled data in semantic
+attributes and accessible names. The compact visuals must preserve
 assistive-technology state.
 
 Unavailable common phrases stay in their fixed rows with subdued text. A
@@ -113,9 +113,10 @@ next accepted match action. It does not block the timer, require confirmation,
 or change the sentence. When the browser requests reduced motion, keep the
 complete strike record but suppress the recoil, flash, and transfer motion.
 
-The match provides outcomes, not tactical instruction. Do not add a tutorial,
-guided first turn, card-role explanation, weakness hint, disabled-action help,
-strategy prompt, expert shortcut, or recovery instruction. Existing semantic
+The match provides outcomes, not tactical instruction. Do not add tutorials,
+guided first turns, card-role explanations, or weakness
+hints. Do not add disabled-action help, strategy prompts, expert shortcuts, or
+recovery instructions. Existing semantic
 names and native control behavior remain, but the product does not add a
 separate help layer.
 
@@ -125,9 +126,8 @@ compact gray bubble that normally shows an ellipsis. When a public sentence
 exists, pointer hover, keyboard focus, click, and tap expand the same gray
 bubble. They reveal the complete text.
 
-Use the current public
-sentence first and the most recent valid completed public sentence after a new
-round resets the construction. An incomplete sentence remains visible only for
+Use the current public sentence first. After a new round resets construction,
+use the most recent valid completed public sentence. An incomplete sentence remains visible only for
 its exchange review. It does not enter a later round bubble. Accepted
 construction text stays public after a turn change, including text that came
 from a private card. Before either sentence exists, reveal `No sentence yet.`
@@ -274,8 +274,10 @@ timer-refill abuse.
   Resume. Resume returns focus to Pause in the unchanged match.
 - **AC-016-18:** With Phrase color coding On, every available phrase keeps one
   text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
-  60 percent for rare. Nouns are green. Verbs and predicates are red. Modifiers
-  are purple. Endings are blue.
+  60 percent for rare.
+
+  Nouns are green. Verbs and predicates are red. Modifiers are purple.
+  Endings are blue.
 
   Continuations are gray. Conjunctions are orange.
   With it Off, the text remains white
@@ -329,10 +331,13 @@ timer-refill abuse.
   higher-damage winner or tie. It shows the two final outgoing-damage values.
   Each scored clause, finisher, and Comeback appears as one ordered receipt row
   with exact rendered text, base, applied factors, and resulting amount. Each
-  applied combo factor includes its exact added damage. The complete receipt
+  applied combo factor includes its exact added damage.
+
+  The complete receipt
   and final-damage landing finish within 800 milliseconds without moving the
-  modal layout. The arena and last complete sentence remain visible behind it.
-  One Continue action advances play.
+  modal layout.
+  The arena and last complete sentence remain visible behind it. One Continue
+  action advances play.
 - **AC-016-14:** A wrong common or private phrase triggers one 150 through
   600-millisecond arena reaction. It identifies the offending player and exact
   3 Pride loss, moves no layout, preserves immediate turn passage, and clears

@@ -32,7 +32,7 @@ Every third-party action is pinned to a full commit SHA with its release tag in
 a comment. The workflow uses the `github-pages` environment, reports its
 `page_url`, and has a `pages` concurrency group with
 `cancel-in-progress: false`. Build and deploy are separate jobs. Deploy needs
-build and cannot run after a failed, cancelled, pull-request, or non-main build.
+build and cannot run after a failed, canceled, pull-request, or non-main build.
 
 The build job checks out the exact commit and installs Node.js 24. It installs
 the npm version in `packageManager` and runs `npm ci`. It installs the three
@@ -83,7 +83,7 @@ AC-029-01 through AC-029-06.
   its build job.
 - **AC-029-02:** Permissions, environment, concurrency, job dependency, action
   SHA pins, tool versions, and artifact root match this contract.
-- **AC-029-03:** Failed CI, failed artifact upload, cancelled build, non-main
+- **AC-029-03:** Failed CI, failed artifact upload, canceled build, non-main
   push, and smoke failure cannot deploy or report release success.
 - **AC-029-04:** The published command passes subpath navigation, local assets,
   reload, exact CSP, zero runtime requests, supported and unavailable speech,
@@ -120,4 +120,5 @@ satisfy the full release acceptance criteria above.
 
 ## Reference
 
-[GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+[GitHub Pages custom
+workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)

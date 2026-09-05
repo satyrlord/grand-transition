@@ -443,9 +443,16 @@ describe('headless simulation and generated invariants', () => {
   });
 
   test(
-    'keeps the 500-match calibration between three and eleven rounds',
+    'keeps the current-catalog 500-match calibration between three and eleven rounds',
     () => {
-      const report = simulateMatches(20_260_830, 500, setup, context);
+      expect(context.catalog.characters).toHaveLength(18);
+      expect(context.catalog.scenes).toHaveLength(6);
+      const calibrationSetup = createSimulationSetup(context.catalog, {
+        characterIds: ['red-folded-chairman', 'thunder-tribune'],
+        sceneId: 'transition-era-television-studio',
+      });
+      const report = simulateMatches(20_260_830, 500, calibrationSetup, context);
+      expect(report.completedMatches).toBe(500);
       const averageRounds = report.totalRounds / report.matches;
       expect(averageRounds).toBeGreaterThanOrEqual(3);
       expect(averageRounds).toBeLessThanOrEqual(11);

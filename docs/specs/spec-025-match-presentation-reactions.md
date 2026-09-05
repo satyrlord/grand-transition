@@ -42,7 +42,9 @@ movement and flashing.
 The between-round review is already a protected hold. Its score receipt is not
 an intermediate surface. It prints clause, finisher, and Comeback rows in score
 order, then lands final damage. The sequence completes within 800 milliseconds
-and does not delay the existing Continue control. Combo emphasis stays visible
+and does not delay the existing Continue control.
+
+Combo emphasis stays visible
 for the review. Weakness emphasis uses one bounded strike. These records report
 resolved public facts only and never preview a card or future score.
 

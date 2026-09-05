@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: Challenge a Grand Transition plan one decision at a time before implementation. Use when the user asks to be grilled or wants unresolved product, architecture, balance, content, UI, verification, or delivery choices stress-tested.
+description: Challenge a Grand Transition plan one decision at a time before implementation. Use when the user requests a decision interview. Cover unresolved product, architecture, balance, content, UI, verification, and delivery choices.
 ---
 
 # Challenge a plan one decision at a time
@@ -15,12 +15,12 @@ Resolve every fact that repository evidence or an authoritative source can
 answer.
 Do not ask the user to rediscover facts.
 
-List only genuine choices.
+List only unresolved choices.
 Order choices from parent to child.
 Put the choice that is hardest to reverse or has the most dependencies first.
-Check applicable game rules, balance, AI, grammar, content safety, originality,
-localization, privacy, browser support, assets, performance,
-delivery, and verification effects.
+Check applicable game rules, balance, artificial intelligence (AI), grammar,
+content safety, and originality. Check localization, privacy, browser support,
+assets, performance, delivery, and verification effects.
 
 ## Resolve one branch
 

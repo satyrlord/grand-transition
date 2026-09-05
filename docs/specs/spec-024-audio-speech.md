@@ -15,7 +15,9 @@ Minimum viable product (MVP) audio includes menu music and distinct scene
 treatment. Music may be original, AI-generated, or licensed third-party work.
 Original and AI-generated audio uses the project license in `LICENSE.md`.
 Third-party audio may use CC0, CC BY, or CC BY-NC because the product is free
-and non-commercial. Record the owner, source, and license of every
+and non-commercial.
+
+Record the owner, source, and license of every
 third-party asset in the asset manifest before use.
 It includes role-select, commit, light and heavy hit, weakness,
 combo, continuation break, comeback, and grammar-mistake cues.
