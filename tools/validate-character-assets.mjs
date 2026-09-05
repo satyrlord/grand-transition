@@ -1,3 +1,4 @@
+import { isVisibleChromaGreen } from './asset-pixels.mjs';
 import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -67,10 +68,7 @@ async function inspectAlpha(input, context) {
       visible += 1;
       const offset = pixelIndex * 4;
       if (
-        alpha > 16 &&
-        data[offset + 1] >= 180 &&
-        data[offset] <= 80 &&
-        data[offset + 2] <= 80
+        isVisibleChromaGreen(data, offset)
       ) {
         chromaGreen += 1;
       }

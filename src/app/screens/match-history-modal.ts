@@ -129,7 +129,7 @@ export class GrandTransitionMatchHistory extends LitElement {
           </div>
           <div>
             <dt>${msg('Mode')}</dt>
-            <dd>${titleCase(log.setup.mode)}</dd>
+            <dd>${log.setup.mode === 'ai' ? msg('Single player') : msg('Hotseat')}</dd>
           </div>
           <div>
             <dt>${msg('Seed')}</dt>

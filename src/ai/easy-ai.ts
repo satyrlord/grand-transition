@@ -34,6 +34,7 @@ export type EasyAiCandidate = Readonly<{
   rawFeatures: EasyAiFeatures;
   normalizedFeatures: EasyAiFeatures;
   utility: number;
+  selfKnockout: boolean;
 }>;
 
 export type EasyAiDecision = Readonly<{
@@ -56,6 +57,7 @@ type RawCandidate = Readonly<{
   command: DraftCommand;
   targetId: string;
   features: BaseFeatures;
+  selfKnockout?: boolean;
 }>;
 
 const zeroBaseFeatures: BaseFeatures = Object.freeze({
@@ -187,8 +189,11 @@ export function decideLocalRadioCaller(
     turnExpired: options.turnExpired,
   });
   if (candidates.length === 0) return null;
-  const bestUtility = Math.max(...candidates.map(({ utility }) => utility));
-  const tied = candidates
+  const selectable = candidates.some(({ selfKnockout }) => !selfKnockout)
+    ? candidates.filter(({ selfKnockout }) => !selfKnockout)
+    : candidates;
+  const bestUtility = Math.max(...selectable.map(({ utility }) => utility));
+  const tied = selectable
     .filter(({ utility }) => utility === bestUtility)
     .toSorted(compareCandidates);
   let seed = options.seed ?? decisionSeed(state);
@@ -282,6 +287,7 @@ function evaluateRedraw(
     rawFeatures,
     normalizedFeatures: rawFeatures,
     utility: expectedUtility,
+    selfKnockout: false,
   });
 }
 
@@ -296,8 +302,26 @@ function evaluateCommand(
   const opponentId = state.playerOrder.find((playerId) => playerId !== actorId)!;
   const opponent = state.playerStates[opponentId]!;
   const result = createMatchReducer(context)(state, command, randomSource);
-  if (!result.ok || !result.state.draft) {
+  if (!result.ok) {
     return { command, targetId: commandTargetId(command), features: zeroBaseFeatures };
+  }
+  if (!result.state.draft) {
+    const resolved = result.state.pendingResolution?.players[actorId];
+    const selfKnockout = state.playerStates[actorId]!.pride > 0 &&
+      result.state.playerStates[actorId]!.pride === 0 &&
+      result.state.phase === 'results';
+    return {
+      command,
+      targetId: commandTargetId(command),
+      selfKnockout,
+      features: {
+        ...zeroBaseFeatures,
+        immediateDamage: resolved?.outgoingDamage ?? 0,
+        grammarRisk: (resolved?.grammarMistakes ?? 0) >
+          beforePlayer.construction.grammarMistakes ? 1 : 0,
+        immediateLethal: result.state.winner === actorId ? 1 : 0,
+      },
+    };
   }
   const afterPlayer = result.state.draft.playerStates[actorId]!;
   const construction = afterPlayer.construction;
@@ -377,6 +401,7 @@ function scoreRawCandidates(
     Object.freeze({
       command: candidate.command,
       targetId: candidate.targetId,
+      selfKnockout: candidate.selfKnockout ?? false,
       rawFeatures: fullFeatures[index]!,
       normalizedFeatures: scored[index]!.normalizedFeatures,
       utility: scored[index]!.utility,

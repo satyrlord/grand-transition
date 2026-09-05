@@ -21,7 +21,9 @@ async function readManifest(): Promise<Record<string, unknown>> {
   ) as Record<string, unknown>;
 }
 
-beforeAll(async () => {
+let fixtureReady: Promise<void>;
+
+async function prepareFixture(): Promise<void> {
   fixture = await mkdtemp(
     path.join(os.tmpdir(), 'grand-transition-character-validation-'),
   );
@@ -32,6 +34,11 @@ beforeAll(async () => {
     path.join(fixture, 'character-manifest.json'),
     'utf8',
   );
+}
+
+beforeAll(() => {
+  fixtureReady = prepareFixture();
+  return fixtureReady;
 });
 
 afterEach(async () => {
@@ -42,6 +49,8 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  await fixtureReady.catch(() => undefined);
+  if (!fixture) return;
   await rm(fixture, { force: true, recursive: true });
 });
 

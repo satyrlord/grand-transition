@@ -1,3 +1,4 @@
+import { isVisibleChromaGreen } from './asset-pixels.mjs';
 import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -269,6 +270,9 @@ async function inspectAlpha(input, isForeground, context) {
   let partialAlphaCount = 0;
   for (let offset = 3; offset < decoded.data.length; offset += 4) {
     const alpha = decoded.data[offset];
+    if (isVisibleChromaGreen(decoded.data, offset - 3)) {
+      throw new Error(`${context} retains visible chroma-green pixels.`);
+    }
     if (alpha === 0) transparentCount += 1;
     else if (alpha < 255) partialAlphaCount += 1;
   }

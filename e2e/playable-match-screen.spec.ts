@@ -1818,6 +1818,7 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
     .locator(
       '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
     )
+    .first()
     .click();
   const strike = page.locator('.grammar-strike');
   await expect(strike).toBeVisible();

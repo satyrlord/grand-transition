@@ -776,3 +776,16 @@ speech, or presentation reactions.
 ## Reference
 
 [Sharp image processing](https://sharp.pixelplumbing.com/)
+
+## Review repair regression
+
+**AC-023-18:** Scene and character AVIF/WebP validation uses the same chroma-green rule:
+alpha above 16, green at least 180, and red and blue at most 80 fails.
+Alpha at most 16 retains the bounded lossy-fringe exception. Validate every
+resolved tree prompt's content before creating output directories or converting
+an image. A later invalid or empty prompt leaves all outputs unchanged.
+
+`tests/unit/validate-scene-assets.test.ts` rejects visible chroma green even
+when manifest bytes/hashes match. `tests/unit/green-chroma-key.test.ts` verifies
+a valid first prompt and invalid/empty second prompt create or change no output.
+Existing character variant checks retain the same limits.

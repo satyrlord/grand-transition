@@ -93,3 +93,12 @@ Codec tests cover round trip and unsupported versions. Browser tests cover reloa
 data, quota and security exceptions, fallback, and notice behavior. Storage
 failure never blocks setup or play. `npm run ci` passes. Stop before audio
 output, speech output, or artificial intelligence (AI).
+
+## Review repair regression
+
+**AC-020-07:** All Pause option groups have a visible selected marker that survives forced
+colors, hover, and focus. Keyboard focus retains a separate outer ring so it
+can be distinguished from selection. This includes Turn timer, Auto-complete, and Phrase
+color coding. Their `aria-pressed` values remain correct. Verify selected and
+unselected siblings with `e2e/review-accessibility.spec.ts` and
+production browser evidence.

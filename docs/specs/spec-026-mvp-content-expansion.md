@@ -158,3 +158,19 @@ seeded matches. Production setup selects each catalog entry without overflow or
 stale references. `npm run ci` passes. Stop before advanced AI, final art,
 alternate-skin completion, audio, presentation reactions, final phrase volume,
 variety review, or release balance.
+
+## Review repair regression
+
+**AC-026-07:** The complete catalog validator enforces each character's existing 3 through
+32 owned phrases and its noun, modifier, and ending minimum. Isolated source
+parsing does not replace this check. `tests/unit/content-schemas.test.ts`
+rejects two-noun pools, missing modifier/ending, and counts above 32 at the
+owning character path. Synthetic discovery characters must meet the same
+  complete-catalog minimum. The complete current catalog must pass this
+  contract; valid additions that meet these minima must also pass.
+
+The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
+`with 110% turnout at the cemetery`. It belongs only to that character and
+satisfies the foundation modifier minimum. Its 21-card pool retains all prior
+phrases and IDs. Verify the card and the complete approved sentence in
+`tests/unit/content-schemas.test.ts` and `tests/unit/english-grammar-core.test.ts`.

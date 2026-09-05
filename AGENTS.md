@@ -73,12 +73,18 @@ There are three routes:
 - **Heavy**: deployment-state work orchestrated through specialized workers.
   Read `~/.codex/codex_workflow/heavy_route.md`.
 
-Heavy requires the session's currently selected main agent to be `gpt-5.6-sol`
-or `gpt-5.6-terra` with subagent support available. This is a session-model
-requirement, not a persistent workflow setting. If the selected model is
-ineligible or its subagent support is unavailable, do not initialize Companion
-or another worker. Ask the user to switch the active session to Sol or Terra.
+Heavy requires the session's currently selected main agent to be `gpt-6-astra`,
+`gpt-5.6-sol`, or `gpt-5.6-terra` with subagent support available. This is a
+session-model requirement, not a persistent workflow setting. If the selected
+model is ineligible or its subagent support is unavailable, do not initialize
+Companion or another worker. Ask the user to switch the active session to Astra,
+Sol, or Terra.
 Never pin or rewrite the main model in `config.toml`.
+
+Light and Medium also permit `gpt-6-astra` as the main agent. Keep the session's
+selected main model. Use `gpt-5.6-luna` at `max` reasoning effort for every
+workflow subagent, including bootstrap and installation documentation workers.
+Light and the direct fast path create no subagents.
 
 The user selects the route for the session. If the user does not select a route,
 use Light. Do not infer Medium or Heavy. Light implies `leaf state`. Medium and

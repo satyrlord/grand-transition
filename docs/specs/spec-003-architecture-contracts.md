@@ -102,3 +102,15 @@ Contract tests prove immutable input and typed success or failure. Boundary
 tests reject Lit, DOM, and forbidden dependency directions from pure modules.
 `npm run ci` passes. Stop before concrete rules, adapters, content, or
 components.
+
+## Review repair regression
+
+**AC-003-06:** Pure roots permit only literal dynamic-import and require specifiers.
+Computed specifiers fail even when their destination cannot be resolved.
+Computed `globalThis` properties must be single string literals. Nonliteral
+properties fail. Literal access to forbidden browser APIs on `globalThis` also fails,
+including escaped string spellings. Check expressions inside template strings
+and code after them, including nested templates and object expressions.
+Comments and ordinary strings remain
+permitted. `tests/unit/pure-boundaries.test.ts` verifies these rejection and
+positive cases.

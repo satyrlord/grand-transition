@@ -84,3 +84,17 @@ interfaces, rules, or Pages deployment.
 - [Vitest](https://vitest.dev/)
 - [Playwright](https://playwright.dev/)
 - [fast-check](https://fast-check.dev/)
+
+## Review repair regression
+
+**AC-002-08:** The Node unit suite uses at most two file workers. Raster fixture setup must
+settle before teardown removes output. This changes no test timeout,
+assertion, coverage threshold, or inventory. End-to-end fixtures select one
+explicit card when a role can occur more than once and move the pointer to a
+neutral point before viewport geometry measurements.
+The foundation scene browser test waits for image decoding before checking
+the selected source and decoded dimensions. Keep the default test timeout.
+
+Verify complete setup/cleanup through the default `npm test` command and
+`tests/unit/validate-character-assets.test.ts`. The reduced-motion and long-
+sentence E2E cases retain all assertions and pass with retries disabled.

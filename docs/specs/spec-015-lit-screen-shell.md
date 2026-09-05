@@ -200,3 +200,11 @@ Browser component tests prove immutable properties, bubbling and composed typed
 events, validation, and setup command creation. The app
 shell alone owns authoritative state. `npm run ci` passes. Stop before the match
 surface, AI behavior, persistence, or final styling.
+
+## Review repair regression
+
+**AC-015-12:** Forced-colors mode keeps full-stage pointer targets and skin-selector
+wrappers transparent. Selected portraits, labels, weakness records, controls,
+and focus markers stay visible. Canvas colors belong to actual surfaces and
+controls. `e2e/review-accessibility.spec.ts` and production evidence
+verify this at 1024 by 720, 1280 by 720, and 1920 by 1080.

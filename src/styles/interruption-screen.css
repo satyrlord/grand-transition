@@ -249,4 +249,20 @@
   .interruption-screen footer {
     justify-self: end;
   }
+  @media (forced-colors: active) {
+    .interruption-notice .interruption-setting-option[data-selected='true'] {
+      background: Canvas;
+      color: CanvasText;
+      outline: 2px solid CanvasText;
+      outline-offset: -2px;
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    .interruption-notice .interruption-setting-option:focus-visible {
+      outline: 3px solid Highlight;
+      outline-offset: 3px;
+    }
+  }
+
 }

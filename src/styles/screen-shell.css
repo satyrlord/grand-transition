@@ -959,11 +959,14 @@
   }
 
   @media (forced-colors: active) {
+    .contestant-stage-target,
+    .skin-selector {
+      background: transparent;
+    }
+
     .setup-screen,
     .setup-screen::before,
     .contestant-stage,
-    .contestant-stage-target,
-    .skin-selector,
     .skin-cycle,
     .roster-zone,
     .match-settings,

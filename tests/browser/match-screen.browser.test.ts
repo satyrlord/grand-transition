@@ -212,11 +212,10 @@ test('renders the foundation scene with AVIF, WebP, and protected crop metadata'
   expect(image.width).toBeGreaterThan(0);
   expect(image.getAttribute('width')).toBe('1920');
   expect(image.getAttribute('height')).toBe('1080');
-  await vi.waitFor(() => {
-    expect(image.currentSrc).toContain('county-council-ballroom');
-    expect(image.complete).toBe(true);
-    expect(image.naturalWidth).toBeGreaterThan(0);
-  });
+  await image.decode();
+  expect(image.currentSrc).toContain('county-council-ballroom');
+  expect(image.complete).toBe(true);
+  expect(image.naturalWidth).toBeGreaterThan(0);
 });
 
 test('shows complete long private phrases at the minimum viewport', async () => {

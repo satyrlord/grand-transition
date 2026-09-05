@@ -131,3 +131,12 @@ Fixtures prove lethal preference, lethal blocking, and designed personality
 differences. Fixed seeds are deterministic. Timed tests record their environment
 and meet the exact delay and node limits. Playwright completes the ladder. `npm run ci`
 passes. Stop before final roster balance or production presentation.
+
+## Review repair regression
+
+**AC-022-07:** Self-knockout protection uses the accepted outcome independently of its
+normalized grammar-risk feature. Palace continuation-break evaluation reads
+the opponent's current draft carry intention, not the carry entering the round.
+`tests/unit/advanced-ai.test.ts` verifies current carry without prior carry,
+prior carry without current carry, the exact break threshold, actual resolution,
+and the Pride-3 safe-alternative fixture.

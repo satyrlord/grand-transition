@@ -480,6 +480,22 @@
         "safetyFlags": [],
         "notes": "Original fictional studio-phone ending adapted for the Thunder Tribune's imperious broadcast voice. It is not a quotation and names no real person. Editorial review complete."
       }
+    },
+    {
+      "id": "with-cemetery-turnout",
+      "role": "modifier",
+      "text": "with 110% turnout at the cemetery",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "User-approved original adaptation of a dead-voter election joke for the fictional Thunder Tribune. The impossible turnout is fictional satire, not a quotation or a claim about an actual election."
+      }
     }
   ],
   "editorialReview": {

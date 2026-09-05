@@ -1,3 +1,4 @@
+import { selfKnockoutReviewState, reviewContext, reduceReviewState } from '../fixtures/ai-review-states';
 import { describe, expect, test } from 'vitest';
 import {
   decideLocalRadioCaller,
@@ -368,3 +369,19 @@ function reduce(state: MatchState, command: MatchCommand): MatchState {
   if (!result.ok) throw new Error(result.error.code);
   return result.state;
 }
+
+
+test.each([false, true])('preserves terminal mistake risk and avoids self-knockout (reversed=%s)', (reversed) => {
+  const state = selfKnockoutReviewState(reversed);
+  const candidates = evaluateLocalRadioCallerCandidates(state, reviewContext);
+  const fatal = candidates.filter(({ selfKnockout }) => selfKnockout);
+  expect(fatal.length).toBeGreaterThan(0);
+  expect(fatal.every(({ rawFeatures }) => rawFeatures.grammarRisk === 1)).toBe(true);
+  const safe = reduceReviewState(state, {
+    type: 'commit-sentence', source: 'ai', actorId: state.activePlayerId, payload: {},
+  });
+  expect(safe.playerStates[state.activePlayerId]!.pride).toBe(3);
+  expect(safe.phase).toBe('resolution');
+  const decision = decideLocalRadioCaller(state, reviewContext)!;
+  expect(reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride).toBe(3);
+});
