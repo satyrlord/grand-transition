@@ -87,7 +87,7 @@ function foundationScene(
     nameKey: `scene.${id}.name`,
     descriptionKey: `scene.${id}.description`,
     backgroundLayers: [
-      { media: media('catalog-foundation-neutral-scene'), depth: 0 },
+      { media: media(id), depth: 0 },
     ],
     animationId: 'catalog-foundation-neutral-lights',
     music: media('catalog-foundation-neutral-theme'),

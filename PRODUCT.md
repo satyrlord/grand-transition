@@ -67,8 +67,8 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   editorial-cartoon style across characters, moderators, scenes, furniture, fixtures,
   and props.
   Two scenes use layered debate studios with fixed fictional moderators
-  and foreground desk plates. Four playable foundation scenes use one neutral
-  local fallback until final scene production.
+  and foreground desk plates. Four playable foundation scenes have distinct
+  local cartoon backgrounds with the same responsive scene asset pipeline.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,

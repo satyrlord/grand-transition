@@ -78,8 +78,8 @@ describe('scene asset build', () => {
     expect(secondVariants).toEqual(firstVariants);
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
-    expect(first.assets).toHaveLength(4);
-    expect(firstVariants).toHaveLength(24);
+    expect(first.assets).toHaveLength(8);
+    expect(firstVariants).toHaveLength(48);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');

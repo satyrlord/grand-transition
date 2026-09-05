@@ -26,9 +26,12 @@ exist, one character has no more than eight.
 
 Interim portraits are original local assets with recorded provenance. They use
 the existing transparent setup and match presentation. They are not final
-Milestone 023 or Milestone 031 art. New scenes can use the neutral local scene
-fallback until their final layered packages exist. The fallback contains no
-character, scene-specific claim, remote request, or rasterized interface text.
+Milestone 023 or Milestone 031 art. Each of the six playable scenes has its own
+local background in the scene manifest. The four foundation scenes use opaque
+backgrounds without fixed moderators or foreground plates. They share the
+Milestone 023 crop core, interface-safe regions, dimensions, and AVIF/WebP
+variants. Gameplay must not use title artwork or a shared neutral fallback.
+Final layered presentation and audio remain in Milestone 031.
 
 Any new generated interim portrait or scene follows the Milestone 023 flat
 cel-shaded editorial-cartoon direction. Interim status can reduce state count,

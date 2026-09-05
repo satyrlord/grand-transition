@@ -38,7 +38,7 @@ characters: 17 humans and one robot. Each character has owned phrases and a
 default local portrait. Seven archetypes have nine alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes two fictional layered debate studios, four playable
-foundation scenes with a neutral local fallback, and one English game-locale
+foundation scenes with distinct local cartoon backgrounds, and one English game-locale
 bundle.
 
 The final asset contract permits one default skin and zero through eight

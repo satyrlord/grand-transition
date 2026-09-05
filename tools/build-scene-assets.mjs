@@ -14,6 +14,10 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
+  'county-council-ballroom.png',
+  'midnight-call-in-studio.png',
+  'palace-press-hall.png',
+  'influencer-campaign-livestream.png',
   'modern-debate-studio.png',
   'modern-debate-studio-desks.png',
   'transition-era-television-studio.png',
@@ -46,8 +50,7 @@ const CHARACTER_FOCAL_RECTANGLES = Object.freeze({
 });
 const LEFT_DESK = Object.freeze({ x: 0.26, y: 0.56, width: 0.06, height: 0.16 });
 const RIGHT_DESK = Object.freeze({ x: 0.68, y: 0.56, width: 0.06, height: 0.16 });
-const TRANSITION_MODERATOR = Object.freeze({ x: 0.26, y: 0.36, width: 0.06, height: 0.16 });
-const MODERN_MODERATOR = Object.freeze({ x: 0.68, y: 0.36, width: 0.06, height: 0.16 });
+const MODERATOR = Object.freeze({ x: 0.46, y: 0.35, width: 0.08, height: 0.14 });
 const CROP = Object.freeze({
   core: Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 1 }),
   strategy: 'symmetric-horizontal-bleed-to-four-by-three-core',
@@ -69,17 +72,16 @@ function sceneIdentity(fileName) {
 }
 
 function focalContract(identity) {
+  const hasModerator = ['modern-debate-studio', 'transition-era-television-studio'].includes(identity.ownerId);
   return {
     focalPoint: identity.isForeground
       ? { x: 0.5, y: 0.64 }
-      : { x: identity.modern ? 0.71 : 0.29, y: 0.44 },
+      : hasModerator ? { x: 0.5, y: 0.43 } : { x: 0.5, y: 0.5 },
     focalRectangles: {
       ...CHARACTER_FOCAL_RECTANGLES,
-      moderatorFace: identity.isForeground
+      moderatorFace: identity.isForeground || !hasModerator
         ? null
-        : identity.modern
-          ? MODERN_MODERATOR
-          : TRANSITION_MODERATOR,
+        : MODERATOR,
       leftDeskTopAndProps: identity.isForeground ? LEFT_DESK : null,
       rightDeskTopAndProps: identity.isForeground ? RIGHT_DESK : null,
     },

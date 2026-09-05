@@ -195,34 +195,25 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
-test('renders the foundation scene with only its legacy WebP fallback', async () => {
+test('renders the foundation scene with AVIF, WebP, and protected crop metadata', async () => {
   const match = await startMatch('county-council-ballroom');
-  const pictures = [
-    ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
-  ];
+  const pictures = [...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture')];
   expect(pictures).toHaveLength(1);
-  expect(pictures[0]?.dataset.sceneKind).toBe('fallback');
-  expect(pictures[0]?.dataset.sceneAsset).toBe(
-    'catalog-foundation-neutral-scene',
-  );
   const picture = pictures[0]!;
-  expect(picture.querySelectorAll('source')).toHaveLength(1);
-  expect(picture.querySelector('source')?.type).toBe('image/webp');
-  expect(picture.querySelector('source')?.getAttribute('srcset')).toMatch(
-    /1672w/u,
-  );
-  expect(picture.querySelector('source')?.getAttribute('srcset')).not.toMatch(
-    /transition-era|modern-debate/u,
-  );
+  expect(picture.dataset.sceneKind).toBe('manifest');
+  expect(picture.dataset.sceneAsset).toBe('county-council-ballroom');
+  expect([...picture.querySelectorAll('source')].map(source => source.type)).toEqual(['image/avif', 'image/webp']);
+  for (const source of picture.querySelectorAll('source')) {
+    expect(source.srcset).toMatch(/640w.*1280w.*1920w/u);
+    expect(source.srcset).toContain('county-council-ballroom');
+  }
+  expect(picture.dataset.sceneCropCore).toBe(JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }));
   const image = picture.querySelector<HTMLImageElement>('img')!;
-  expect(image.getAttribute('width')).toBe('1672');
-  expect(image.getAttribute('height')).toBe('941');
-  expect(image.getAttribute('src')).toContain('title-proscenium-background');
-  expect(image.getAttribute('src')).not.toMatch(/transition-era|modern-debate/u);
-  expect(picture.hasAttribute('data-scene-focal-point')).toBe(false);
-  expect(picture.hasAttribute('data-scene-crop-core')).toBe(false);
+  expect(image.width).toBeGreaterThan(0);
+  expect(image.getAttribute('width')).toBe('1920');
+  expect(image.getAttribute('height')).toBe('1080');
   await vi.waitFor(() => {
-    expect(image.currentSrc).toContain('title-proscenium-background');
+    expect(image.currentSrc).toContain('county-council-ballroom');
     expect(image.complete).toBe(true);
     expect(image.naturalWidth).toBeGreaterThan(0);
   });

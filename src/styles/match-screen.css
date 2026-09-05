@@ -13,6 +13,8 @@
     --broadcast-black: #05080b;
     --broadcast-ink: #0b1722;
     --scene-ceiling-continuation: #101f2f;
+    --scene-height: min(100svh, 75cqw);
+    --scene-width: calc(var(--scene-height) * 16 / 9);
     --broadcast-gold: #b48a48;
     --broadcast-gold-light: #e4c17d;
     --broadcast-paper: #e5d8b9;
@@ -108,14 +110,6 @@
       transform: none;
     }
 
-    /* The interim foundation fallback has no manifest crop contract. */
-    .broadcast-scene-picture[data-scene-kind='fallback']
-      :is(.broadcast-stage-art, .broadcast-stage-foreground) {
-      left: 50%;
-      width: auto;
-      height: 100%;
-      transform: translateX(-50%);
-    }
   }
 
   .broadcast-stage::after {
@@ -423,28 +417,18 @@
   .character-frame {
     position: absolute;
     z-index: 1;
-    top: 4.75rem;
-    bottom: 0;
-    width: 118%;
+    top: calc(100svh - var(--scene-height) * 0.76);
+    width: calc(var(--scene-height) * 0.8);
+    height: calc(var(--scene-height) * 0.8);
     pointer-events: none;
   }
 
   .match-player[data-side='red'] .character-frame {
-    left: -30%;
+    left: calc(50cqw - var(--scene-width) * 0.3 - var(--scene-height) * 0.4);
   }
 
   .match-player[data-side='blue'] .character-frame {
-    right: -30%;
-  }
-
-  @media (max-aspect-ratio: 3 / 2) {
-    .match-player[data-side='red'] .character-frame {
-      left: -30%;
-    }
-
-    .match-player[data-side='blue'] .character-frame {
-      right: -30%;
-    }
+    right: calc(50cqw - var(--scene-width) * 0.3 - var(--scene-height) * 0.4);
   }
 
   .character-frame::before {
@@ -463,10 +447,10 @@
   .character-portrait {
     position: absolute;
     z-index: 1;
-    top: 30%;
+    top: 0;
     bottom: auto;
     width: 100%;
-    height: 84%;
+    height: 100%;
     object-fit: contain;
     object-position: center bottom;
     pointer-events: none;
@@ -597,7 +581,7 @@
   .player-sentence--waiting {
     position: absolute;
     z-index: 7;
-    top: clamp(13.5rem, 31vh, 20rem);
+    top: calc(100svh - var(--scene-height) * 0.87);
     display: grid;
     box-sizing: border-box;
     place-items: center;
@@ -704,13 +688,13 @@
   .sentence-ledger {
     position: absolute;
     z-index: 9;
-    top: clamp(7.5rem, 17vh, 11rem);
+    top: calc(100svh - var(--scene-height) * 0.82);
     left: 50%;
     display: grid;
     align-items: center;
-    width: min(72%, 82rem);
-    height: clamp(7.4rem, 15vh, 9rem);
-    padding: 0.72rem clamp(1rem, 3vw, 3.2rem) 1rem;
+    width: calc(var(--scene-width) * 0.32);
+    height: calc(var(--scene-height) * 0.16);
+    padding: 0.72rem clamp(0.8rem, 1.3vw, 1.5rem) 1rem;
     border: 3px double #242424;
     background: rgb(252 250 246 / 98%);
     box-shadow: 0 0.55rem 1.2rem rgb(0 0 0 / 48%);
@@ -754,8 +738,12 @@
   }
 
   .sentence-preview[data-density='dense'] {
-    font-size: clamp(0.72rem, 1vw, 1rem);
+    font-size: clamp(0.72rem, calc(var(--scene-height) * 0.016), 1rem);
     line-height: 1.08;
+  }
+
+  .sentence-ledger:has(.sentence-preview[data-density='dense']) {
+    padding-block: 0.15rem;
   }
 
   .round-review-backdrop {
@@ -1354,14 +1342,14 @@
 
   .common-phrases {
     position: absolute;
-    top: clamp(22rem, 50vh, 29rem);
+    top: calc(100svh - var(--scene-height) * 0.48);
     left: 50%;
     width: clamp(19rem, 29vw, 29rem);
-    height: min(39vh, 25rem);
+    height: min(calc(var(--scene-height) * 0.39), 25rem);
     min-height: 16rem;
     padding: 0.42rem;
     border: 3px double var(--broadcast-red);
-    background: rgb(5 6 8 / 96%);
+    background: rgb(5 6 8 / 78%);
     box-shadow:
       0 0.65rem 1.4rem rgb(0 0 0 / 58%),
       inset 0 0 0 1px rgb(228 193 125 / 18%);
@@ -1732,10 +1720,6 @@
   @media (min-width: 90rem) and (min-height: 50rem) {
     .player-hud {
       width: min(31rem, 94%);
-    }
-
-    .character-frame {
-      top: 5.4rem;
     }
 
     .common-phrases {

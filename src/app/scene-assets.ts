@@ -1,7 +1,6 @@
 import sceneManifest from '../assets/scenes/scene-manifest.json' with {
   type: 'json',
 };
-import foundationSceneFallbackUrl from '../assets/brand/title-proscenium-background.webp';
 
 const sceneVariantUrls = {
   ...import.meta.glob('../assets/scenes/variants/*.avif', {
@@ -77,15 +76,7 @@ export type SceneManifestAsset = SceneAssetBase & Readonly<{
   }>;
 }>;
 
-export type SceneFallbackAsset = SceneAssetBase & Readonly<{
-  kind: 'fallback';
-  width: 1672;
-  height: 941;
-  avif: null;
-  sizes: '100vw';
-}>;
-
-export type SceneAsset = SceneManifestAsset | SceneFallbackAsset;
+export type SceneAsset = SceneManifestAsset;
 
 export const sceneImageSizes = '(max-aspect-ratio: 4/3) 134vw, 100vw';
 
@@ -99,12 +90,8 @@ export const sceneAssetManifest: readonly SceneManifestAsset[] = Object.freeze(
   manifestAssets.map(createSceneAsset),
 );
 
-export const sceneAssetFallbacks: readonly SceneFallbackAsset[] = Object.freeze([
-  createFoundationSceneFallback(),
-]);
-
 const sceneAssetById = new Map(
-  [...sceneAssetManifest, ...sceneAssetFallbacks].map((asset) => [
+  sceneAssetManifest.map((asset) => [
     asset.id,
     asset,
   ] as const),
@@ -292,39 +279,6 @@ function createSceneAsset(asset: ManifestAsset): SceneManifestAsset {
       strategy: asset.crop.strategy,
     }),
     sizes: sceneImageSizes,
-  });
-}
-
-function createFoundationSceneFallback(): SceneFallbackAsset {
-  const variant = Object.freeze({
-    path: 'assets/brand/title-proscenium-background.webp',
-    width: 1672,
-    height: 941,
-    format: 'webp' as const,
-    url: foundationSceneFallbackUrl,
-    src: foundationSceneFallbackUrl,
-  });
-  const srcSet = `${variant.url} ${variant.width}w`;
-  const webp = Object.freeze({
-    format: 'webp' as const,
-    mimeType: 'image/webp' as const,
-    srcSet,
-    srcset: srcSet,
-    fallbackUrl: variant.url,
-    variants: Object.freeze([variant]),
-  });
-  return Object.freeze({
-    kind: 'fallback',
-    id: 'catalog-foundation-neutral-scene',
-    ownerType: 'scene',
-    ownerId: 'catalog-foundation-neutral-scene',
-    layerRole: 'back',
-    width: 1672,
-    height: 941,
-    url: variant.url,
-    webp,
-    avif: null,
-    sizes: '100vw',
   });
 }
 

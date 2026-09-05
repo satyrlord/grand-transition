@@ -957,15 +957,10 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
       const stage = document
         .querySelector('.broadcast-stage')!
         .getBoundingClientRect();
-      const sentence = document
-        .querySelector('.sentence-ledger')!
+      const scene = document
+        .querySelector('.broadcast-stage-art')!
         .getBoundingClientRect();
-      const sentenceTail = getComputedStyle(
-        document.querySelector('.sentence-ledger')!,
-        '::after',
-      );
-      const sentenceBubbleBottom =
-        sentence.bottom - Number.parseFloat(sentenceTail.bottom);
+      const deskTop = scene.top + scene.height * 0.62;
       return [...document.querySelectorAll('.match-player')].map((player) => {
         const frame = player
           .querySelector('.character-frame')!
@@ -989,7 +984,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
           portraitBottomRatio: portrait.bottom / stage.height,
           naturalWidth: portraitImage.naturalWidth,
           naturalHeight: portraitImage.naturalHeight,
-          sentenceBubbleBottom,
+          deskTop,
           clearsHud: portrait.top > hud.bottom,
         };
       });
@@ -1007,21 +1002,21 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
             portraitBottomRatio,
             naturalWidth,
             naturalHeight,
-            sentenceBubbleBottom,
+            deskTop,
             clearsHud,
           },
           index,
         ) =>
-          Math.abs(portraitTopRatio - 0.3) < 0.01 &&
-          Math.abs(portraitHeightRatio - 0.84) < 0.01 &&
-          Math.abs(renderedWidthRatio - 0.84) < 0.01 &&
-          portraitBottomRatio > 1.1 &&
-          portraitBottomRatio < 1.15 &&
+          Math.abs(portraitTopRatio) < 0.01 &&
+          Math.abs(portraitHeightRatio - 1) < 0.01 &&
+          Math.abs(renderedWidthRatio - 1) < 0.01 &&
+          portraitBottomRatio > 1.03 &&
+          portraitBottomRatio < 1.05 &&
           naturalWidth === naturalHeight &&
           [320, 640, 960].includes(naturalWidth) &&
           portraitTop +
-            portraitHeight * portraitPixelFacts[index]!.topOpaqueRatio >=
-            sentenceBubbleBottom &&
+            portraitHeight * (portraitPixelFacts[index]!.topOpaqueRatio + 0.22) <
+            deskTop &&
           clearsHud,
       ),
       `${viewport.width}x${viewport.height}: ${JSON.stringify(composition)}`,

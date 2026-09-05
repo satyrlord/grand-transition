@@ -33,8 +33,10 @@ each side. Put the live sentence and phrase path on the center axis. Put the
 player names and Pride meters at the top edges. Put the round, timer, and Pause
 state at the top center.
 
-A wide speech record crosses the stage without covering either
-face. Keep the two private choices and all nine common phrases in the central
+A wide speech record occupies the protected central scene region without
+covering either face or gesture. Align its bounds and both portrait frames to
+the Milestone 023 scene canvas at every supported aspect ratio. Keep the two
+private choices and all nine common phrases in the central
 and lower play field. Put infrequent actions at the side or bottom edges.
 
 The End and Comeback rail follows the active side's board margin. Anchor the red
@@ -42,6 +44,12 @@ rail to the left margin. Anchor the blue rail to the right margin.
 
 Render the scene in this order: studio and moderator, selected portraits,
 foreground standing desks, then Hypertext Markup Language (HTML) game content.
+Both studio moderators remain physically seated at the center, with their
+heads visible between speech and the common phrase pool. The slightly
+transparent pool can cover their furniture and lower bodies. Its text remains
+fully opaque. Do not scale or relocate moderators separately at viewport
+breakpoints.
+
 The desks clip the lower bodies without fixing either selected character into
 the scene. Their fronts continue below the lower stage frame so the extracted
 bottom contours are not visible. Each portrait plane continues below the desk
@@ -327,6 +335,9 @@ timer-refill abuse.
   bubble at every supported evidence viewport. The same rule applies to a
   synthetic sentence that is 40 percent longer. The browser finds no horizontal or vertical
   text clipping and no sentence ellipsis.
+  Measure the actual text range against the speech record, not only the text
+  element's own scroll dimensions. Dense speech uses scene-height-based type
+  sizing and compact vertical padding to preserve moderator clearance.
 - **AC-016-13:** A between-round modal shows the completed round number and its
   higher-damage winner or tie. It shows the two final outgoing-damage values.
   Each scored clause, finisher, and Comeback appears as one ordered receipt row
