@@ -71,6 +71,7 @@ tests/unit/__screenshots__/
 tests/unit/__snapshots__/
 .vitest-attachments/
 output/
+docs/reviews/
 
 # codex-workflow-managed-start
 agent_docs/

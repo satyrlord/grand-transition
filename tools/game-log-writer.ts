@@ -1,3 +1,4 @@
+import { validateDevelopmentLog } from './development-log-schema.ts';
 import {
   mkdir,
   readdir,
@@ -32,8 +33,9 @@ export async function writeGameLog(
   if (bytes > maximumGameLogBytes) {
     throw new Error(`The game log exceeds ${maximumGameLogBytes} bytes.`);
   }
-  const header = parseHeader(request.text);
+  const header = validateDevelopmentLog(request.text);
 
+  await requireExistingAncestorInsideRepository(repositoryRoot, logDirectory);
   await mkdir(logDirectory, { recursive: true });
   await requireResolvedInsideRepository(repositoryRoot, logDirectory);
   const date = fileDate(request.now ?? new Date());
@@ -89,32 +91,6 @@ function fileDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-function parseHeader(text: string): { seed: number } {
-  const firstLine = text.split('\n', 1)[0];
-  let value: unknown;
-  try {
-    value = JSON.parse(firstLine ?? '');
-  } catch {
-    throw new Error('The game log header is invalid.');
-  }
-  if (
-    typeof value !== 'object' ||
-    value === null ||
-    !('type' in value) ||
-    value.type !== 'match-log' ||
-    !('formatVersion' in value) ||
-    value.formatVersion !== 1 ||
-    !('seed' in value) ||
-    typeof value.seed !== 'number' ||
-    !Number.isInteger(value.seed) ||
-    value.seed < 0 ||
-    value.seed > 0xffff_ffff
-  ) {
-    throw new Error('The game log header is invalid.');
-  }
-  return { seed: value.seed };
-}
-
 async function requireResolvedInsideRepository(
   repositoryRoot: string,
   target: string,
@@ -124,6 +100,32 @@ async function requireResolvedInsideRepository(
     realpath(target),
   ]);
   requireInsideRepository(resolvedRepositoryRoot, resolvedTarget);
+}
+
+async function requireExistingAncestorInsideRepository(
+  repositoryRoot: string,
+  target: string,
+): Promise<void> {
+  const resolvedRoot = await realpath(repositoryRoot);
+  let ancestor = target;
+  for (;;) {
+    let resolvedAncestor: string;
+    try {
+      resolvedAncestor = await realpath(ancestor);
+    } catch (error) {
+      if (!(error instanceof Error) || !('code' in error) ||
+          error.code !== 'ENOENT') throw error;
+      const parent = path.dirname(ancestor);
+      if (parent === ancestor) throw error;
+      ancestor = parent;
+      continue;
+    }
+    requireInsideRepository(
+      resolvedRoot,
+      path.resolve(resolvedAncestor, path.relative(ancestor, target)),
+    );
+    return;
+  }
 }
 
 function requireInsideRepository(repositoryRoot: string, target: string): void {

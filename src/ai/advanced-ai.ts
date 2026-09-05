@@ -1,3 +1,4 @@
+import { continuationBreakDamage } from '../engine/continuation-comeback-resolution';
 import type { Character } from '../content/schemas';
 import type { DraftCommand } from '../engine/draft-actions';
 import {
@@ -361,7 +362,7 @@ function scoreAdvancedCandidates(
           : 0,
       continuationBreak:
         opponentContinuation(state, actorId) &&
-        candidate.rawFeatures.immediateDamage >= 16
+        candidate.rawFeatures.immediateDamage >= continuationBreakDamage
           ? 1
           : 0,
       chargePreservation:
@@ -473,8 +474,7 @@ function keepNonKnockoutWrongSelections(
   const hasSafe = candidates.some(({ selfKnockout }) => !selfKnockout);
   return hasSafe
     ? candidates.filter(
-        ({ selfKnockout, rawFeatures }) =>
-          !selfKnockout || rawFeatures.grammarRisk === 0,
+        ({ selfKnockout }) => !selfKnockout,
       )
     : candidates;
 }
@@ -550,7 +550,9 @@ function reduceAccepted(
 
 function opponentContinuation(state: MatchState, actorId: string): boolean {
   const opponentId = state.playerOrder.find((playerId) => playerId !== actorId);
-  return opponentId ? state.playerStates[opponentId]?.continuation !== null : false;
+  return opponentId
+    ? state.draft?.playerStates[opponentId]?.construction.carryIntent === true
+    : false;
 }
 
 function actorPersonality(

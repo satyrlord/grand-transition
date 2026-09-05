@@ -397,3 +397,25 @@ describe('soft green chroma-key conversion', () => {
     }
   }, 30_000);
 });
+
+
+test.each(['', 'Warm studio key lighting.'])('preflights every prompt before changing output: %s', async (invalidPrompt) => {
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-prompt-preflight-'));
+  try {
+    const sourceRoot = path.join(fixtureRoot, 'source');
+    const outputRoot = path.join(fixtureRoot, 'output');
+    await mkdir(sourceRoot);
+    await mkdir(outputRoot);
+    for (const name of ['a', 'b']) {
+      await writePng(path.join(sourceRoot, `${name}.png`), 2, 2, rgbaCanvas(2, 2, [0, 255, 0, 255]));
+      await writeFile(path.join(sourceRoot, `${name}.prompt.txt`), name === 'a' ? validColorPrompt : invalidPrompt);
+    }
+    const existing = path.join(outputRoot, 'a.png');
+    await writeFile(existing, 'preserve existing output');
+    await expect(execFileAsync(process.execPath, [converterPath, 'convert-tree', sourceRoot, outputRoot])).rejects.toThrow();
+    expect(await readFile(existing, 'utf8')).toBe('preserve existing output');
+    await expect(readFile(path.join(outputRoot, 'b.png'))).rejects.toThrow();
+  } finally {
+    await rm(fixtureRoot, { force: true, recursive: true });
+  }
+});

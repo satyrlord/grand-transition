@@ -15,11 +15,22 @@ import {
   writeGameLog,
 } from '../../tools/game-log-writer';
 
-const validLog = `${JSON.stringify({
-  type: 'match-log',
-  formatVersion: 1,
-  seed: 73,
-})}\n${JSON.stringify({ type: 'match-complete', winner: 'player-one' })}\n`;
+const publicState = {
+  phase: 'results', round: 1, activePlayerId: 'player-one',
+  players: {
+    'player-one': { characterId: 'first', pride: 100, charge: 0, bubble: 'First.', construction: null },
+    'player-two': { characterId: 'second', pride: 0, charge: 0, bubble: 'Second.', construction: null },
+  },
+  board: [], latestResolution: null,
+};
+const records = [
+  { type: 'match-log', formatVersion: 1, seed: 73, mode: 'hotseat', sceneId: 'studio',
+    players: [{ playerId: 'player-one', characterId: 'first' }, { playerId: 'player-two', characterId: 'second' }] },
+  { type: 'action', sequence: 1, command: { type: 'resolve-round', source: 'user', payload: {} },
+    move: { type: 'resolve-round' }, outcome: 'accepted', errorCode: null, state: publicState },
+  { type: 'match-complete', winner: 'player-one', roundCount: 1, state: publicState },
+];
+const validLog = records.map((record) => JSON.stringify(record)).join('\n') + '\n';
 
 describe('game log writer', () => {
   test('writes collision-safe log files inside the ignored repository folder', async () => {
@@ -76,6 +87,17 @@ describe('game log writer', () => {
     ).rejects.toThrow('header');
   });
 
+  test('creates missing nested log directories inside the repository', async () => {
+    const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-nested-log-'));
+    const filename = await writeGameLog({
+      text: validLog,
+      repositoryRoot,
+      logDirectory: path.join(repositoryRoot, 'new', 'nested', 'logs'),
+    });
+    expect(filename).toMatch(/^new\/nested\/logs\/match-/u);
+    expect(await readFile(path.join(repositoryRoot, filename), 'utf8')).toBe(validLog);
+  });
+
   test('rejects a log directory symlink that resolves outside the repository', async () => {
     const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-log-'));
     const outsideDirectory = await mkdtemp(
@@ -93,6 +115,14 @@ describe('game log writer', () => {
         text: validLog,
         repositoryRoot,
         logDirectory: linkedDirectory,
+      }),
+    ).rejects.toThrow('inside the repository');
+    expect(await readdir(outsideDirectory)).toEqual([]);
+    await expect(
+      writeGameLog({
+        text: validLog,
+        repositoryRoot,
+        logDirectory: path.join(linkedDirectory, 'new', 'logs'),
       }),
     ).rejects.toThrow('inside the repository');
     expect(await readdir(outsideDirectory)).toEqual([]);
@@ -118,4 +148,45 @@ describe('game log writer', () => {
     expect(files).not.toContain('match-2026-08-01-seed-0.log');
     expect(files).toContain('match-2026-09-20-seed-50.log');
   });
+});
+
+
+test.each([
+  (data: typeof records) => { data[0]!.players = undefined; },
+  (data: typeof records) => { data[1]!.sequence = 2; },
+  (data: typeof records) => { data[2]!.winner = 'unknown-player'; },
+  (data: typeof records) => { (data[1]!.state!.players['player-one'] as unknown as Record<string, unknown>).privateCardId = 'secret'; },
+  (data: typeof records) => { data.pop(); },
+])('rejects malformed complete log records before writing', async (mutate) => {
+  const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-invalid-log-'));
+  const data = structuredClone(records);
+  mutate(data);
+  const text = data.map((record) => JSON.stringify(record)).join('\n') + '\n';
+  await expect(writeGameLog({ text, repositoryRoot })).rejects.toThrow();
+  expect(await readdir(repositoryRoot)).toEqual([]);
+});
+
+test('rejects malformed interior JSON and data after completion', async () => {
+  const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-invalid-lines-'));
+  for (const text of [validLog.replace('\n', '\nnot-json\n'), validLog + '{}\n']) {
+    await expect(writeGameLog({ text, repositoryRoot })).rejects.toThrow();
+  }
+  expect(await readdir(repositoryRoot)).toEqual([]);
+});
+
+
+test('accepts redacted private rejection and rejects private identifiers in it', async () => {
+  const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-redacted-log-'));
+  const data: Array<Record<string, unknown>> = structuredClone(records);
+  data[1] = {
+    type: 'action', sequence: 1,
+    command: { type: 'select-phrase', source: 'user', actorId: 'player-one', payload: { card: { source: 'private' } } },
+    move: { type: 'select-phrase', actorId: 'player-one', source: 'private' },
+    outcome: 'rejected', errorCode: 'card-unavailable', state: publicState,
+  };
+  const serialize = () => data.map((record) => JSON.stringify(record)).join('\n') + '\n';
+  await expect(writeGameLog({ text: serialize(), repositoryRoot })).resolves.toContain('match-');
+  const bad = data[1]!.move as Record<string, unknown>;
+  bad.cardId = 'unselected-secret';
+  await expect(writeGameLog({ text: serialize(), repositoryRoot })).rejects.toThrow('selection');
 });

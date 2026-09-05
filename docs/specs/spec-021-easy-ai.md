@@ -195,3 +195,14 @@ The Local Radio Caller AI chooses a valid action when one exists. It respects
 simulated timer bounds and repeats choices for a fixed state and seed.
 Playwright completes a custom AI match. `npm run ci` passes. Stop before deeper
 search, other difficulties, personality tuning, or ladder progress.
+
+## Review repair regression
+
+**AC-021-09:** An accepted terminal command is an outcome, not an empty candidate because
+its draft is null. Its terminal resolution supplies grammar-mistake and damage
+facts. Rejected commands remain absent. Every difficulty excludes an immediate
+grammar-mistake self-knockout when another accepted command avoids immediate
+self-knockout. If all commands cause immediate self-knockout, retain ordinary
+deterministic ordering. Preserve nonterminal deliberate mistakes, seeds, and
+delays. `tests/unit/easy-ai.test.ts` and `tests/unit/advanced-ai.test.ts` verify
+seed 5, turn 8, Pride 3, terminal risk, and a reducer-verified safe commit.

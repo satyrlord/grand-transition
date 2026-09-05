@@ -239,3 +239,64 @@ describe('pure-module boundaries', () => {
     }
   });
 });
+
+
+test.each([
+  'export const run = () => globalThis["fetch"]("https://invalid.example");',
+  String.raw`export const run = () => globalThis["\u0066etch"]("https://invalid.example");`,
+  'export const run = (part: string) => import(part + "../app/private");',
+  'export const run = (part: string) => import("./" + part);',
+  'export const run = (part: string) => require(part);',
+  'export const run = () => globalThis["fe" + "tch"]("url");',
+  'export const run = (key: string) => globalThis[key];',
+  'export const label = `value ${1}`; export const run = () => globalThis["fetch"]("url");',
+  'export const label = `value ${1}`; export const run = (part: string) => import(part);',
+  'export const label = `outer ${`inner ${({ value: 1 }).value}`} tail ${2}`; export const run = () => import("../app/private");',
+  'export const label = `value ${globalThis["fetch"]("url")}`;',
+])('rejects computed pure-boundary access: %s', async (source) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'gt-computed-boundary-'));
+  try {
+    await mkdir(path.join(root, 'src', 'engine'), { recursive: true });
+    await writeFile(path.join(root, 'src', 'engine', 'sample.ts'), source);
+    await expect(execFileAsync(process.execPath, [checkerPath, '--root', root])).rejects.toThrow();
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('permits member access through a property named globalThis', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'gt-member-globalthis-'));
+  try {
+    await mkdir(path.join(root, 'src', 'engine'), { recursive: true });
+    await writeFile(
+      path.join(root, 'src', 'engine', 'sample.ts'),
+      "export const run = (target: { globalThis?: Record<string, unknown> }) => target.globalThis?.['fetch'];\n",
+    );
+    const result = await execFileAsync(process.execPath, [
+      checkerPath,
+      '--root',
+      root,
+    ]);
+    expect(result.stdout).toContain(
+      'Pure-module boundary check passed: checked 1 file(s).',
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('permits template text, nested expressions, regular expressions, and division', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'gt-template-boundary-'));
+  try {
+    await mkdir(path.join(root, 'src', 'engine'), { recursive: true });
+    await writeFile(path.join(root, 'src', 'engine', 'sample.ts'), [
+      'export const label = `fetch ${`nested ${({ value: 2 }).value}`} document ${1}`;',
+      'export const pattern = /^#[0-9a-f]{6}$/u;',
+      'export const ratio = (6 + 2) / 4;',
+    ].join('\n'));
+    await expect(execFileAsync(process.execPath, [checkerPath, '--root', root]))
+      .resolves.toHaveProperty('stdout', expect.stringContaining('checked 1 file(s)'));
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});

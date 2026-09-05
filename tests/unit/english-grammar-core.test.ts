@@ -460,3 +460,27 @@ describe('Hollywood Roast English grammar', () => {
     });
   });
 });
+
+
+test('with requires its noun before another connector can start a clause', () => {
+  const prefix = ['my-opponent', 'interrupts-the-debate', 'with'];
+  expect(analyze(prefix.map(add))).toMatchObject({ accepted: true, analysis: { complete: false } });
+  for (const ids of [
+    [...prefix, 'archive-because'],
+    [...prefix, 'archive-because', 'national-consensus', 'belongs-in-a-party-museum'],
+  ]) {
+    expect(analyze(ids.map(add))).toMatchObject({ accepted: false });
+  }
+  expect(analyze([...prefix, 'national-consensus'].map(add))).toMatchObject({ accepted: true, analysis: { complete: true } });
+});
+
+
+test('completes the approved cemetery-turnout sentence as a modifier', () => {
+  const result = analyze([
+    add('my-opponent'), add('can-lose-to-an-empty-ballot'), add('with-cemetery-turnout'),
+  ]);
+  expect(result).toMatchObject({ accepted: true, analysis: {
+    complete: true,
+    publicText: 'My opponent can lose an election to an empty ballot with 110% turnout at the cemetery',
+  } });
+});

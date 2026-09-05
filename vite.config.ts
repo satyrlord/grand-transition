@@ -19,6 +19,18 @@ export const productionContentSecurityPolicy = [
 
 export default defineConfig(({ command }) => ({
   base: '/grand-transition/',
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            { name: 'content-data', test: /[/\\]src[/\\]content[/\\].*\.json$/u },
+            { name: 'vendor', test: /[/\\]node_modules[/\\]/u },
+          ],
+        },
+      },
+    },
+  },
   plugins: [
     characterPortraitFallbackPlugin(),
     ...(command === 'build'

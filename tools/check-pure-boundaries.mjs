@@ -211,11 +211,36 @@ function maskCommentsAndStrings(sourceText) {
 function staticModuleSpecifiers(sourceText) {
   const scanner = createScanner(true, undefined, sourceText);
   const tokens = [];
+  const templateBraceDepths = [];
+  const expressionStarts = new Set(['(', '[', '{', '=', ':', ',', ';', '=>',
+    'return', 'throw', 'case', '!', '?', '&&', '||', '??']);
   for (
     let kind = scanner.scan();
     kind !== SyntaxKind.EndOfFile;
     kind = scanner.scan()
   ) {
+    if (kind === SyntaxKind.SlashToken &&
+        (tokens.length === 0 || expressionStarts.has(tokens.at(-1).text))) {
+      kind = scanner.reScanSlashToken();
+    }
+    if (scanner.getTokenEnd() <= scanner.getTokenStart()) {
+      throw new Error(`Cannot scan source token at offset ${scanner.getTokenStart()}.`);
+    }
+    if (kind === SyntaxKind.TemplateHead) {
+      templateBraceDepths.push(0);
+    } else if (templateBraceDepths.length > 0) {
+      const index = templateBraceDepths.length - 1;
+      if (kind === SyntaxKind.OpenBraceToken) {
+        templateBraceDepths[index] += 1;
+      } else if (kind === SyntaxKind.CloseBraceToken) {
+        if (templateBraceDepths[index] > 0) {
+          templateBraceDepths[index] -= 1;
+        } else {
+          kind = scanner.reScanTemplateToken(false);
+          if (kind === SyntaxKind.TemplateTail) templateBraceDepths.pop();
+        }
+      }
+    }
     tokens.push({
       kind,
       text: scanner.getTokenText(),
@@ -223,6 +248,7 @@ function staticModuleSpecifiers(sourceText) {
     });
   }
   const specifiers = [];
+  const violations = [];
   const addStringToken = (token) => {
     if (
       token?.kind === SyntaxKind.StringLiteral ||
@@ -237,10 +263,30 @@ function staticModuleSpecifiers(sourceText) {
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     const next = tokens[index + 1];
+    const propertyOffset = next?.text === '?.' ? 2 : 1;
+    const previousText = tokens[index - 1]?.text;
+    const isMemberAccess = previousText === '.' || previousText === '?.';
+    if (
+      !isMemberAccess &&
+      token.text === 'globalThis' &&
+      tokens[index + propertyOffset]?.text === '['
+    ) {
+      const property = tokens[index + propertyOffset + 1];
+      if ((property?.kind !== SyntaxKind.StringLiteral &&
+           property?.kind !== SyntaxKind.NoSubstitutionTemplateLiteral) ||
+          tokens[index + propertyOffset + 2]?.text !== ']') {
+        violations.push('nonliteral globalThis property');
+      } else if (domNames.has(property.value)) {
+        violations.push(`computed forbidden DOM name "${property.value}"`);
+      }
+    }
     if (token.kind === SyntaxKind.ImportKeyword) {
       if (addStringToken(next)) continue;
       if (next?.kind === SyntaxKind.OpenParenToken) {
-        addStringToken(tokens[index + 2]);
+        if (!addStringToken(tokens[index + 2]) ||
+            ![SyntaxKind.CloseParenToken, SyntaxKind.CommaToken].includes(tokens[index + 3]?.kind)) {
+          violations.push('nonliteral dynamic import');
+        }
         continue;
       }
       for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
@@ -274,10 +320,13 @@ function staticModuleSpecifiers(sourceText) {
       token.text === 'require' &&
       next?.kind === SyntaxKind.OpenParenToken
     ) {
-      addStringToken(tokens[index + 2]);
+      if (!addStringToken(tokens[index + 2]) ||
+          tokens[index + 3]?.kind !== SyntaxKind.CloseParenToken) {
+        violations.push('nonliteral require call');
+      }
     }
   }
-  return specifiers;
+  return { specifiers, violations };
 }
 
 function inspectSource(
@@ -292,7 +341,9 @@ function inspectSource(
     failures.push(`${relativePath}: DOM library reference`);
   }
 
-  for (const specifier of staticModuleSpecifiers(sourceText)) {
+  const references = staticModuleSpecifiers(sourceText);
+  failures.push(...references.violations.map((message) => `${relativePath}: ${message}`));
+  for (const specifier of references.specifiers) {
     if (isLitSpecifier(specifier)) {
       failures.push(`${relativePath}: forbidden Lit import "${specifier}"`);
     }

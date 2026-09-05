@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
   test: {
     environment: 'node',
+    maxWorkers: 2,
     include: ['tests/unit/**/*.test.ts'],
     exclude: ['tests/browser/**'],
   },

@@ -1700,3 +1700,58 @@ describe('content schemas', () => {
     expectFailure(catalog, 'scenes.0.phrasePool', /Missing: verb, predicate/iu);
   });
 });
+
+
+test.each(['modifier', 'ending', 'noun'] as const)('rejects a character missing its foundation %s', (role) => {
+  const catalog = cloneCatalog();
+  const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
+  const character = catalog.characters[characterIndex]!;
+  const owned = catalog.phrases.filter((phrase) => character.characterPhraseIds.includes(phrase.id));
+  const replacement = owned.find((phrase) => phrase.role !== role)!;
+  catalog.phrases = catalog.phrases.map((phrase) => owned.includes(phrase) && phrase.role === role
+    ? { ...replacement, id: phrase.id } : phrase);
+  const result = contentCatalogSchema.safeParse(catalog);
+  expect(result.success).toBe(false);
+  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({
+    path: ['characters', characterIndex, 'characterPhraseIds'],
+    message: expect.stringContaining(`Missing: ${role}`),
+  }));
+});
+
+test('rejects a character below the three-phrase minimum', () => {
+  const catalog = cloneCatalog();
+  const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
+  const character = catalog.characters[characterIndex]!;
+  const removed = character.characterPhraseIds.pop()!;
+  catalog.phrases = catalog.phrases.filter(({ id }) => id !== removed);
+  const result = contentCatalogSchema.safeParse(catalog);
+  expect(result.success).toBe(false);
+  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({
+    path: ['characters', characterIndex, 'characterPhraseIds'],
+    message: 'Supply 3 through 32 owned character phrases.',
+  }));
+});
+
+test('rejects more than 32 character phrases at the character path', () => {
+  const catalog = cloneCatalog();
+  const character = catalog.characters[0]!;
+  const source = catalog.phrases.find((phrase) => phrase.id === character.characterPhraseIds[0])!;
+  while (character.characterPhraseIds.length < 33) {
+    const id = `overflow-phrase-${character.characterPhraseIds.length}`;
+    catalog.phrases.push({ ...source, id });
+    character.characterPhraseIds.push(id);
+  }
+  const result = contentCatalogSchema.safeParse(catalog);
+  expect(result.success).toBe(false);
+  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({ path: ['characters', 0, 'characterPhraseIds'], message: 'Supply 3 through 32 owned character phrases.' }));
+});
+
+
+test('loads the approved Thunder Tribune modifier without changing other ownership', () => {
+  const card = sampleContent.phrases.find(({ id }) => id === 'with-cemetery-turnout');
+  expect(card).toMatchObject({ role: 'modifier', characterIds: ['thunder-tribune'] });
+  const owner = sampleContent.characters.find(({ id }) => id === 'thunder-tribune')!;
+  expect(owner.characterPhraseIds).toHaveLength(21);
+  expect(owner.characterPhraseIds).toContain('with-cemetery-turnout');
+  expect(phraseCardCatalog.englishMessages['phrase.with-cemetery-turnout']).toBe('with 110% turnout at the cemetery');
+});

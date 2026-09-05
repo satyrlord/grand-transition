@@ -124,6 +124,12 @@ export const contentCatalogSchema = z
     const comebackOwnerByKey = new Map<string, string>();
     catalog.characters.forEach((character, characterIndex) => {
       const pool = character.characterPhraseIds;
+      const poolPath = ['characters', characterIndex, 'characterPhraseIds'];
+      if (pool.length < 3 || pool.length > 32) {
+        issue(context, poolPath, 'Supply 3 through 32 owned character phrases.');
+      }
+      requireRoles(pool, phraseById, poolPath, context, ['noun', 'modifier', 'ending'],
+        'Supply a foundation noun, modifier, and ending for each character.');
       validatePhraseReferences(
         pool,
         phraseById,

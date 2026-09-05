@@ -151,3 +151,10 @@ the fixed-seed production flow at the Pages subpath, valid persistence after
 reload, zero runtime network calls, and zero page or console errors.
 
 `npm run ci` and the Impeccable evidence complete the milestone.
+
+## Review repair regression
+
+**AC-019-08:** Display stored mode `ai` as `Single player` and `hotseat` as `Hotseat`.
+This mapping does not change stored history/replay schemas or add a Ladder
+discriminator. Browser history tests verify both labels and retained storage
+values and versioned replay behavior.

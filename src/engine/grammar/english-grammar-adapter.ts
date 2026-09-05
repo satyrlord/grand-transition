@@ -289,6 +289,7 @@ function transition(
   if (role === 'conjunction') {
     const kind = phrase.connectorKind;
     if (kind === 'because') {
+      if (context.withComplementPending) return null;
       if (
         (context.state === 'EXPECT_SUBJECT' &&
           !context.connectorAwaitingSubject &&

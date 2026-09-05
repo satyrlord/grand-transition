@@ -146,6 +146,10 @@ Milestone 002 threshold remains 70 percent.
   out-of-repository writes fail. Development and
   production have identical rendered game UI signatures.
 
+  Resolve the nearest existing log-directory ancestor before creating missing
+  directories. Reject a symlink or junction that leads outside the repository
+  without creating directories at its destination.
+
 ## Verify and stop
 
 Replay reproduces exact final state. Corrupt or unsupported replay and
@@ -171,3 +175,20 @@ thresholds in `vitest.browser.config.ts` verify AC-014-06.
 `tests/unit/game-log-writer.test.ts`, and the development match-log and
 production scans in `e2e/static-app-security.spec.ts` verify AC-014-03,
 AC-014-06, and AC-014-07.
+
+## Review repair regression
+
+**AC-014-08:** Before creating a directory or writing bytes, validate every JSON Lines
+record. Require one complete header, one or more actions with consecutive
+sequence values starting at one, and one final completion record. Only blank
+trailing lines are permitted. Reject malformed JSON, missing/extra fields,
+unknown record types, records after completion, inconsistent player IDs,
+and nested fields outside explicit public allowlists. Header mode is `hotseat`
+or `ai`, with two distinct player IDs. Rejected private selections omit card
+and phrase facts. Completion has a terminal results state and a header player
+as winner. This validation does not replay historical commands.
+
+`tests/unit/game-log-writer.test.ts` covers malformed headers, records,
+sequences, missing completion, and nested private fields without output writes.
+The real development logger remains covered by its browser tests and
+`e2e/static-app-security.spec.ts`.

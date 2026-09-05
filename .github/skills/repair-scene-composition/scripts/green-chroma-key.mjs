@@ -643,7 +643,7 @@ async function convertTree(inputRoot, outputRoot, promptRoot) {
     );
     return { inputPath, outputPath, promptPath };
   });
-  await Promise.all(jobs.map(({ promptPath }) => stat(promptPath)));
+  await Promise.all(jobs.map(({ promptPath }) => readAndValidatePrompt(promptPath)));
   for (const { inputPath, outputPath, promptPath } of jobs) {
     await mkdir(path.dirname(outputPath), { recursive: true });
     await convert(inputPath, outputPath, promptPath);

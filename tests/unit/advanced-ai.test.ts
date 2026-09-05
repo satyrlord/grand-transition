@@ -1,3 +1,4 @@
+import { selfKnockoutReviewState, reviewContext, reduceReviewState, preparedReviewState } from '../fixtures/ai-review-states';
 import { describe, expect, test } from 'vitest';
 import {
   advancedAiDelay,
@@ -325,3 +326,75 @@ function reduce(state: MatchState, command: MatchCommand): MatchState {
   if (!result.ok) throw new Error(result.error.code);
   return result.state;
 }
+
+
+test.each([decidePartyStrategist, decidePalaceOperator])('advanced policy avoids terminal self-knockout', (decide) => {
+  for (const reversed of [false, true]) {
+    const state = selfKnockoutReviewState(reversed);
+    const decision = decide(state, reviewContext)!;
+    expect(reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride).toBe(3);
+  }
+});
+
+test('scores current carry instead of prior-round continuation', () => {
+  let state = preparedReviewState(22);
+  const actor = state.activePlayerId;
+  const opponent = state.playerOrder.find((id) => id !== actor)!;
+  const pick = (card: { source: 'shared' | 'private'; cardId: string }) => {
+    state = reduceReviewState(state, { type: 'select-phrase', source: 'ai', actorId: state.activePlayerId, payload: { card } });
+  };
+  pick(state.draft!.playerStates[actor]!.legalCards[0]!);
+  const continuation = state.draft!.playerStates[opponent]!.legalCards.find((card) =>
+    state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'continuation'))!;
+  pick(continuation);
+  const completing = state.draft!.playerStates[actor]!.legalCards.find((card) => {
+    const next = reduceReviewState(state, { type: 'select-phrase', source: 'ai', actorId: actor, payload: { card } });
+    return next.draft?.playerStates[actor]?.construction.analysis.complete;
+  })!;
+  pick(completing);
+  state = { ...state, playerStates: { ...state.playerStates, [actor]: { ...state.playerStates[actor]!, comebackCharge: 60 } },
+    draft: { ...state.draft!, playerStates: { ...state.draft!.playerStates, [actor]: { ...state.draft!.playerStates[actor]!, comebackCharge: 60, availableComebackTiers: ['weak', 'medium', 'strong'] } } } };
+  const construction = state.draft!.playerStates[actor]!.construction;
+  const subjectId = construction.analysis.renderedPhrases[0]!.phraseId;
+  const relationId = construction.analysis.renderedPhrases.find(
+    ({ role }) => role === 'predicate' || role === 'verb',
+  )!.phraseId;
+  const boundaryState = {
+    ...state,
+    playerStates: {
+      ...state.playerStates,
+      [opponent]: { ...state.playerStates[opponent]!, weaknessTags: [] },
+    },
+  };
+  for (const damage of [15, 16]) {
+    const boundaryContext = {
+      ...reviewContext,
+      phrases: reviewContext.phrases.map((phrase) => phrase.id === relationId
+        ? { ...phrase, customScores: [{ leftNounId: subjectId, score: damage }] }
+        : phrase),
+    };
+    const commit = evaluatePartyStrategistCandidates(boundaryState, boundaryContext)
+      .find(({ command }) => command.type === 'commit-sentence')!;
+    expect(commit.rawFeatures.immediateDamage).toBe(damage);
+    expect(commit.rawFeatures.continuationBreak).toBe(damage === 16 ? 1 : 0);
+    const reducer = createMatchReducer(boundaryContext);
+    const committed = reducer(boundaryState, commit.command, seededRandomSource);
+    if (!committed.ok) throw new Error(committed.error.code);
+    const resolved = reducer(committed.state, {
+      type: 'resolve-round', source: 'ai', payload: {},
+    }, seededRandomSource);
+    if (!resolved.ok) throw new Error(resolved.error.code);
+    expect(resolved.state.pendingResolution!.players[opponent]!.continuation.status === 'broken')
+      .toBe(damage === 16);
+  }
+  expect(state.playerStates[opponent]!.continuation).toBeNull();
+  expect(state.draft!.playerStates[opponent]!.construction.carryIntent).toBe(true);
+  const candidate = evaluatePartyStrategistCandidates(state, reviewContext).find(({ command }) => command.type === 'select-comeback')!;
+  expect(candidate.rawFeatures.immediateDamage).toBeGreaterThanOrEqual(16);
+  expect(candidate.rawFeatures.continuationBreak).toBe(1);
+  const resolution = reduceReviewState(reduceReviewState(state, candidate.command), { type: 'resolve-round', source: 'ai', payload: {} });
+  expect(resolution.pendingResolution!.players[opponent]!.continuation.status).toBe('broken');
+  const withoutCarry = { ...state, playerStates: { ...state.playerStates, [opponent]: { ...state.playerStates[opponent]!, continuation: { steps: state.draft!.playerStates[opponent]!.construction.steps, analysis: state.draft!.playerStates[opponent]!.construction.analysis, publicText: state.draft!.playerStates[opponent]!.construction.previewText } } },
+    draft: { ...state.draft!, playerStates: { ...state.draft!.playerStates, [opponent]: { ...state.draft!.playerStates[opponent]!, construction: { ...state.draft!.playerStates[opponent]!.construction, carryIntent: false } } } } };
+  expect(evaluatePartyStrategistCandidates(withoutCarry, reviewContext).every(({ rawFeatures }) => rawFeatures.continuationBreak === 0)).toBe(true);
+});

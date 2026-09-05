@@ -25,6 +25,18 @@ const productionContentSecurityPolicy = [
 
 test.setTimeout(90_000);
 
+test('production JavaScript chunks stay within the default Vite warning limit', async () => {
+  const assetDirectory = path.resolve('dist/assets');
+  const scripts = (await readdir(assetDirectory)).filter((name) =>
+    name.endsWith('.js'),
+  );
+  expect(scripts.length).toBeGreaterThan(0);
+  for (const name of scripts) {
+    const script = await readFile(path.join(assetDirectory, name));
+    expect(script.byteLength, name).toBeLessThanOrEqual(500_000);
+  }
+});
+
 test('production preview loads the subpath shell and local assets after refresh', async ({
   page,
 }) => {

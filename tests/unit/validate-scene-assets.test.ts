@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import {
   mkdir,
   mkdtemp,
@@ -318,4 +319,18 @@ describe.sequential('scene asset manifest validator', () => {
       /Extra scene variant file is not declared/i,
     );
   });
+});
+
+
+test.each(['avif', 'webp'] as const)('rejects visible chroma green in a hash-valid %s variant', async (format) => {
+  const manifest = await readManifest();
+  const asset = (manifest.assets as Array<{ variants: Array<{ format: string; path: string; width: number; height: number; bytes: number; sha256: string }> }>)[0]!;
+  const variant = asset.variants.find((entry) => entry.format === format)!;
+  const image = sharp({ create: { width: variant.width, height: variant.height, channels: 3, background: { r: 0, g: 255, b: 0 } } });
+  const bytes = await (format === 'avif' ? image.avif() : image.webp()).toBuffer();
+  await writeFile(path.join(fixture, variant.path), bytes);
+  variant.bytes = bytes.length;
+  variant.sha256 = createHash('sha256').update(bytes).digest('hex');
+  await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
+  await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow('chroma-green');
 });

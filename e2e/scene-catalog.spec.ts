@@ -38,6 +38,7 @@ test('a sentence forty percent longer than the long-match fixture fits above the
     await document.fonts.ready;
   }, sentence);
   for (const viewport of viewports) {
+    await page.mouse.move(0, 0);
     await page.setViewportSize(viewport);
     const fits = await page.evaluate(() => {
       const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();

@@ -151,3 +151,11 @@ text.
 second-person result and coordinated copular complement reach the visible
 sentence bubble. `e2e/coordinated-copular-complement.spec.ts` verifies
 AC-006-07 through production controls and the production sentence bubble.
+
+## Review repair regression
+
+**AC-006-08:** While a `with` complement is pending, only its noun can advance the
+construction. Reject `with + because` before the ordinary connector branches.
+Retain the existing valid `and`, `but`, and `yet` bridges to `because`.
+`tests/unit/english-grammar-core.test.ts` verifies rejection, the preserved
+prefix, and the malformed six-card construction remaining unscoreable.

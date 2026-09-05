@@ -57,6 +57,12 @@ gzip bytes for the JavaScript total. Do not substitute development-server
 measurements. The shared viewport matrix uses final art and longest shipped
 content.
 
+Keep each minified JavaScript chunk at or below the default Vite warning limit
+of 500 kB. Split content JSON and third-party dependencies into separate chunks.
+Do not raise the warning limit. Verify the built files in
+`e2e/static-app-security.spec.ts`. This per-chunk check does not replace the
+total gzip budget above.
+
 Resolve the browser matrix on the release date and record exact versions.
 Continuous integration uses installed Chromium, Firefox, WebKit, mobile
 Chromium, and mobile WebKit. Manual evidence covers the oldest supported Safari
