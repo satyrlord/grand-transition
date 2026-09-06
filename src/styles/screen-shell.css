@@ -223,7 +223,8 @@
     filter: drop-shadow(0 1.1rem 1.2rem rgb(0 0 0 / 48%));
   }
 
-  .contestant-stage--two .contestant-portrait {
+  .contestant-stage--one[data-portrait-facing='left'] .contestant-portrait,
+  .contestant-stage--two[data-portrait-facing='right'] .contestant-portrait {
     transform: scaleX(-1);
   }
 

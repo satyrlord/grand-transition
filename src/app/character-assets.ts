@@ -19,6 +19,7 @@ const supportedWidths = [128, 256, 320, 640, 960] as const;
 const supportedFormats = ['avif', 'webp'] as const;
 
 export type CharacterVariantFormat = (typeof supportedFormats)[number];
+export type CharacterFacing = 'left' | 'right';
 
 export type CharacterAssetVariant = Readonly<{
   path: string;
@@ -39,6 +40,7 @@ export type CharacterAsset = Readonly<{
   id: string;
   ownerId: string;
   skinId: string;
+  facing: CharacterFacing;
   stateId: 'selection';
   poseId: 'selection';
   expressionId: 'selection';
@@ -55,6 +57,7 @@ type ManifestAsset = {
   ownerType: 'character';
   ownerId: string;
   skinId: string;
+  facing: CharacterFacing;
   stateId: 'selection';
   poseId: 'selection';
   expressionId: 'selection';
@@ -114,6 +117,9 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
       ) {
         throw new Error(`Character asset "${id}" must have a 2048x2048 PNG source.`);
       }
+      if (rawAsset.facing !== 'left' && rawAsset.facing !== 'right') {
+        throw new Error(`Character asset "${id}" is missing its facing direction.`);
+      }
       const asset: ManifestAsset = {
         id,
         ownerType: 'character',
@@ -128,6 +134,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
         stateId: requireSelection(rawAsset.stateId, id, 'state'),
         poseId: requireSelection(rawAsset.poseId, id, 'pose'),
         expressionId: requireSelection(rawAsset.expressionId, id, 'expression'),
+        facing: rawAsset.facing,
         source: { width: 2048, height: 2048, format: 'png' },
         variants: readVariants(id, rawAsset.variants),
       };
@@ -191,6 +198,7 @@ function createCharacterAsset(asset: ManifestAsset): CharacterAsset {
     id: asset.id,
     ownerId: asset.ownerId,
     skinId: asset.skinId,
+    facing: asset.facing,
     stateId: asset.stateId,
     poseId: asset.poseId,
     expressionId: asset.expressionId,

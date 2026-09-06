@@ -5,6 +5,7 @@ import { GrandTransitionApp } from '../../src/app/app-shell';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
 import {
   automaticAiBubbleRevealMs,
+  grammarStrikeDurationMs,
   GrandTransitionMatch,
   matchCommandEventName,
   type MatchCommandEvent,
@@ -48,6 +49,57 @@ test.each(['manual', 'viewport'] as const)('discards an old portrait reaction af
   expect(presenter().frames.every((frame) => frame.id.startsWith(snapshot.players[0].characterId))).toBe(true);
 });
 
+test.each([
+  ['red', 'left'], ['red', 'right'], ['blue', 'left'], ['blue', 'right'],
+] as const)('a %s fallback portrait facing %s recoils away from the opponent', async (side, facing) => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const playerIndex = side === 'red' ? 0 : 1;
+  const player = snapshot.players[playerIndex];
+  match.snapshot = {
+    ...snapshot,
+    players: [
+      { ...snapshot.players[0], portraitFrames: null, portraitFacing: facing },
+      { ...snapshot.players[1], portraitFrames: null, portraitFacing: facing },
+    ],
+    arenaReaction: {
+      kind: 'grammar-mistake', sequence: snapshot.revision + 1,
+      playerId: player.playerId, playerName: player.characterName, damage: 3,
+    },
+  };
+  const style = document.createElement('style');
+  style.textContent = matchScreenStyles;
+  document.head.append(style);
+  try {
+    await match.updateComplete;
+    const portrait = match.querySelector(`.match-player[data-side="${side}"] .character-portrait`)!;
+    const animation = portrait.getAnimations().find((animation) =>
+      animation instanceof CSSAnimation && animation.animationName === `grammar-hit-${side}`)!;
+    animation.pause();
+    animation.currentTime = 520 * 0.24;
+    const drawingDirection = new DOMMatrix(getComputedStyle(portrait.parentElement!).transform).a;
+    const screenTranslation = new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection;
+    expect(screenTranslation).toBeCloseTo(side === 'red' ? -17.6 : 17.6, 2);
+
+    match.snapshot = {
+      ...match.snapshot!, arenaReaction: null,
+      players: [
+        { ...match.snapshot!.players[0], isActive: side === 'red' },
+        { ...match.snapshot!.players[1], isActive: side === 'blue' },
+      ],
+    };
+    await match.updateComplete;
+    const entry = portrait.getAnimations().find((animation) =>
+      animation instanceof CSSAnimation && animation.animationName === `claim-floor-${side}`)!;
+    entry.pause();
+    entry.currentTime = 0;
+    expect(new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection)
+      .toBeCloseTo(side === 'red' ? -10.4 : 10.4, 2);
+  } finally {
+    style.remove();
+  }
+});
+
 test('renders an immutable complete match snapshot and previews without changing it', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
@@ -76,8 +128,8 @@ test('renders an immutable complete match snapshot and previews without changing
   style.textContent = matchScreenStyles;
   document.head.append(style);
   try {
-    const bluePicture = match.querySelector('.match-player[data-side="blue"] .character-state-layer')!;
-    const redPicture = match.querySelector('.match-player[data-side="red"] .character-state-layer')!;
+    const bluePicture = match.querySelector('.match-player[data-side="blue"] .character-state-drawing')!;
+    const redPicture = match.querySelector('.match-player[data-side="red"] .character-state-drawing')!;
     expect(getComputedStyle(bluePicture).transform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
     expect(getComputedStyle(redPicture).transform).toBe('none');
     expect(getComputedStyle(bluePicture).pointerEvents).toBe('none');
@@ -113,7 +165,22 @@ test('renders an immutable complete match snapshot and previews without changing
   const scenePictures = [
     ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
   ];
-  expect(scenePictures).toHaveLength(2);
+  expect(scenePictures).toHaveLength(3);
+  const propsLayer = match.querySelector<HTMLImageElement>('.broadcast-stage-props')!;
+  expect(propsLayer.src).toBe(foregroundLayer!.src);
+  expect(propsLayer.srcset).toBe(foregroundLayer!.srcset);
+  expect(propsLayer.sizes).toBe(foregroundLayer!.sizes);
+  document.head.append(style);
+  try {
+    expect(getComputedStyle(propsLayer).clipPath).toBe('inset(0px 0px 38%)');
+    expect(getComputedStyle(foregroundLayer!).clipPath).toBe('inset(62% 0px 0px)');
+    expect(getComputedStyle(propsLayer).pointerEvents).toBe('none');
+    const characterPlane = match.querySelector<HTMLElement>('.character-frame')!;
+    expect(Number(getComputedStyle(propsLayer).zIndex)).toBeLessThan(Number(getComputedStyle(characterPlane).zIndex));
+    expect(Number(getComputedStyle(characterPlane).zIndex)).toBeLessThan(Number(getComputedStyle(foregroundLayer!).zIndex));
+  } finally {
+    style.remove();
+  }
   expect(
     [...match.querySelectorAll('img, source')].some((element) =>
       `${element.getAttribute('src') ?? ''}${element.getAttribute('srcset') ?? ''}`.includes(
@@ -796,6 +863,82 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
     .click();
   await vi.waitFor(() => expect(match.snapshot?.arenaReaction).toBeNull());
   expect(match.querySelector('.grammar-strike')).toBeNull();
+});
+
+test('expires grammar feedback without another action or a snapshot timer restart', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const reaction = {
+    kind: 'grammar-mistake' as const,
+    sequence: snapshot.revision + 1,
+    playerId: snapshot.activePlayerId,
+    playerName: snapshot.activePlayerName,
+    damage: 3 as const,
+  };
+  match.snapshot = { ...snapshot, arenaReaction: reaction };
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(2_000);
+  match.snapshot = { ...match.snapshot!, revision: snapshot.revision + 2 };
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(grammarStrikeDurationMs - 2_000);
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).toBeNull();
+  expect(match.querySelector('.broadcast-stage')!.hasAttribute('data-arena-reaction')).toBe(false);
+  expect(match.snapshot.arenaReaction).toEqual(reaction);
+
+  match.snapshot = { ...match.snapshot, arenaReaction: { ...reaction, sequence: reaction.sequence + 1 } };
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(2_000);
+  match.snapshot = { ...match.snapshot, arenaReaction: { ...reaction, sequence: reaction.sequence + 2 } };
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(1_000);
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(grammarStrikeDurationMs - 1_000);
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).toBeNull();
+});
+
+test.each(['manual', 'viewport'] as const)('does not replay grammar feedback after %s pause', async (pauseMode) => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  match.snapshot = {
+    ...match.snapshot!,
+    arenaReaction: {
+      kind: 'grammar-mistake', sequence: match.snapshot!.revision + 1,
+      playerId: match.snapshot!.activePlayerId, playerName: match.snapshot!.activePlayerName, damage: 3,
+    },
+  };
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).not.toBeNull();
+  match.pauseMode = pauseMode;
+  await match.updateComplete;
+  match.pauseMode = 'running';
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).toBeNull();
+});
+
+test('disconnection discards grammar feedback before the same element reconnects', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  match.snapshot = {
+    ...match.snapshot!,
+    arenaReaction: {
+      kind: 'grammar-mistake', sequence: match.snapshot!.revision + 1,
+      playerId: match.snapshot!.activePlayerId, playerName: match.snapshot!.activePlayerName, damage: 3,
+    },
+  };
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).not.toBeNull();
+  const parent = match.parentElement!;
+  match.remove();
+  parent.append(match);
+  await match.updateComplete;
+  expect(match.querySelector('.grammar-strike')).toBeNull();
+  expect(match.querySelector('.broadcast-stage')!.hasAttribute('data-arena-reaction')).toBe(false);
 });
 
 test('updates and expires one 30-second turn', async () => {

@@ -370,6 +370,7 @@ export class GrandTransitionSetup extends LitElement {
         class="contestant-stage contestant-stage--${config.side}"
         data-character-id=${config.character?.id ?? ''}
         data-skin-id=${config.skin?.id ?? ''}
+        data-portrait-facing=${config.skin?.facing ?? 'right'}
         data-selection-target=${targetActive ? 'true' : 'false'}
       >
         <button

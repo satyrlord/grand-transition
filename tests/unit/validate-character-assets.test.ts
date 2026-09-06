@@ -55,6 +55,13 @@ afterAll(async () => {
 });
 
 describe.sequential('character asset manifest validator', () => {
+  test.each([undefined, 'up', 'right'])('rejects missing or unreviewed facing %s', async (facing) => {
+    const manifest = await readManifest();
+    const assets = manifest.assets as Array<Record<string, unknown>>;
+    assets[0]!.facing = facing;
+    await writeFile(path.join(fixture, 'character-manifest.json'), JSON.stringify(manifest));
+    await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(/facing metadata/u);
+  });
   test(
     'accepts the complete fixed replacement package',
     async () => {

@@ -44,9 +44,46 @@ function mount(initialState: 'idle' | 'selection' = 'idle', failDeliveryAvif = f
 
 const visibleState = (element: GrandTransitionCharacter) =>
   element.querySelector<HTMLElement>('[data-state-visible="true"]')?.dataset.stateId;
+
+test.each([
+  ['red', false], ['red', true], ['blue', false], ['blue', true],
+] as const)('keeps recoil away from the opponent for %s with mirrored=%s', async (side, mirrored) => {
+  const presenter = mount();
+  const frame = presenter.parentElement!;
+  const player = document.createElement('div');
+  player.className = 'match-player';
+  player.dataset.side = side;
+  player.style.cssText = 'position:relative;inset:0;width:320px;height:320px;';
+  frame.replaceWith(player);
+  player.append(frame);
+  frame.dataset.mirrored = String(mirrored);
+  await ready(presenter);
+  presenter.cue = { stateId: 'heavy-hit', sequence: 2 };
+  await presenter.updateComplete;
+  const reaction = presenter.querySelector<HTMLElement>('[data-state-visible="true"]')!;
+  const animation = reaction.getAnimations()[0]!;
+  animation.pause();
+  animation.currentTime = 130;
+  const drawing = reaction.querySelector('.character-state-drawing')!;
+  expect(new DOMMatrix(getComputedStyle(drawing).transform).a).toBe(mirrored ? -1 : 1);
+  expect(getComputedStyle(presenter.querySelector('.character-state-layer')!).transform).toBe('none');
+  expect(new DOMMatrix(getComputedStyle(reaction).transform).m41).toBeCloseTo(side === 'red' ? -2.24 : 2.24, 2);
+});
 async function ready(element: GrandTransitionCharacter) {
-  await vi.waitFor(() => expect(element.querySelectorAll('.character-state-upper')).toHaveLength(9));
+  await decodedFrames(element);
   expect(visibleState(element)).toBe('idle');
+}
+
+async function decodedFrames(element: GrandTransitionCharacter) {
+  await element.updateComplete;
+  await Promise.all([...element.querySelectorAll<HTMLImageElement>('img')].map(async (image) => {
+    if (!image.complete || image.naturalWidth === 0) {
+      await new Promise<void>((resolve) => image.addEventListener('load', () => resolve(), { once: true }));
+    }
+    await image.decode();
+  }));
+  await element.updateComplete;
+  await vi.waitFor(() => expect(element.querySelectorAll('.character-state-upper')).toHaveLength(9));
 }
 
 test('reserves one image plane, preloads only its supplied package, and splits decoded body parts', async () => {
@@ -88,8 +125,9 @@ test('keeps a reaction for its exact duration, then returns to the current rest 
 });
 
 test('the initial false pause value does not skip the selection state', async () => {
+  vi.useFakeTimers();
   const presenter = mount('selection');
-  await vi.waitFor(() => expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9));
+  await decodedFrames(presenter);
   expect(visibleState(presenter)).toBe('selection');
 });
 

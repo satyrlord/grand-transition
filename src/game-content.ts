@@ -12,6 +12,7 @@ import {
   characterAssetManifest,
   characterImageSizes,
   type CharacterAssetSource,
+  type CharacterFacing,
 } from './app/character-assets';
 
 const characterSources = import.meta.glob(
@@ -21,6 +22,7 @@ const characterSources = import.meta.glob(
 
 export type CharacterSkin = Readonly<{
   id: string;
+  facing: CharacterFacing;
   portraitUrl: string;
   width: 2048;
   height: 2048;
@@ -58,6 +60,7 @@ export const characterSkins: Readonly<
       const skinFromAsset = (asset: (typeof assets)[number]) =>
         Object.freeze({
           id: asset.skinId,
+          facing: asset.facing,
           portraitUrl: asset.url,
           width: asset.width,
           height: asset.height,
@@ -81,6 +84,7 @@ export const characterSkins: Readonly<
                 ? 'default'
                 : stem.slice(alternatePrefix.length),
             portraitUrl,
+            facing: 'right' as const,
             width: 2048 as const,
             height: 2048 as const,
             sizes: characterImageSizes,

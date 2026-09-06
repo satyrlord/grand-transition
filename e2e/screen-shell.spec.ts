@@ -3,6 +3,7 @@ import { stat } from 'node:fs/promises';
 
 const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
+  { name: 'near-square-landscape', width: 1024, height: 1023 },
   { name: 'four-by-three', width: 1024, height: 768 },
   { name: 'common-landscape', width: 1280, height: 720 },
   { name: 'four-by-three-hd', width: 1400, height: 1050 },

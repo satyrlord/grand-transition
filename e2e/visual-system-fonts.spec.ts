@@ -6,6 +6,21 @@ const speech = "A national-salvation committee repackages an infrastructure feas
 const phrase = "pending unanimous approval from the people's steering committee.";
 const glyphs = 'ȘȚĂÎÂ șțăîâ — o ordonanță de urgență; 0123456789?!';
 
+test('production ships each complete font license unchanged', async ({ request }) => {
+  for (const [name, packageName] of [
+    ['poiret-one', '@fontsource/poiret-one'],
+    ['nunito', '@fontsource-variable/nunito'],
+    ['rubik', '@fontsource-variable/rubik'],
+    ['share-tech-mono', '@fontsource/share-tech-mono'],
+  ]) {
+    const expected = await readFile(`node_modules/${packageName}/LICENSE`);
+    const response = await request.get(`licenses/fonts/${name}-OFL.txt`);
+    expect(response.status()).toBe(200);
+    expect(await response.body()).toEqual(expected);
+    expect(await readFile(`dist/licenses/fonts/${name}-OFL.txt`)).toEqual(expected);
+  }
+});
+
 for (const fallback of [false, true]) {
   test(`four font roles preserve complete text with ${fallback ? 'metric fallbacks' : 'local WOFF2 fonts'}`, async ({ page, browser }, testInfo) => {
     await page.setViewportSize({ width: 1024, height: 720 });
