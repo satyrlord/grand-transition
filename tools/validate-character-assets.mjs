@@ -10,6 +10,7 @@ import {
   CHARACTER_MASTER_NAMES,
   CHARACTER_VARIANT_FORMATS,
   CHARACTER_VARIANT_SIZES,
+  readCharacterLayout,
 } from './build-character-assets.mjs';
 
 const hashPattern = /^[0-9a-f]{64}$/u;
@@ -39,7 +40,7 @@ async function assertRegularFile(filePath, context) {
   if (!stats.isFile()) throw new Error(`${context} is not a regular file: ${filePath}.`);
 }
 
-async function inspectRaster(filePath, expectedFormat, expectedWidth, expectedHeight, context) {
+export async function inspectRaster(filePath, expectedFormat, expectedWidth, expectedHeight, context) {
   await assertRegularFile(filePath, context);
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
@@ -50,7 +51,7 @@ async function inspectRaster(filePath, expectedFormat, expectedWidth, expectedHe
   return { input, metadata };
 }
 
-async function inspectAlpha(input, context) {
+export async function inspectAlpha(input, context) {
   const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   let transparent = 0;
   let opaque = 0;
@@ -90,7 +91,7 @@ async function inspectAlpha(input, context) {
   }
   if (visibleRatio < 0.12 || heightRatio < 0.92 || heightRatio > 0.99) {
     throw new Error(
-      `${context} must keep a readable full-body silhouette inside the square canvas.`,
+      `${context} must keep a readable full-body silhouette inside the square canvas (area=${visibleRatio.toFixed(4)}, height=${heightRatio.toFixed(4)}).`,
     );
   }
 }
@@ -133,6 +134,7 @@ export async function validateCharacterAssets({
 } = {}) {
   const root = path.resolve(characterRoot);
   await assertExactMasterSet(root);
+  const layout = await readCharacterLayout(root);
   const manifest = await readJson(path.join(root, 'character-manifest.json'));
   if (!isRecord(manifest) || manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets)) {
     throw new Error('Character manifest must declare schemaVersion 1 and an assets array.');
@@ -154,6 +156,7 @@ export async function validateCharacterAssets({
     const expectedOwner = id.split('--', 1)[0];
     const expectedSkin = id.includes('--') ? id.slice(id.indexOf('--') + 2) : 'default';
     if (asset.ownerId !== expectedOwner || asset.skinId !== expectedSkin) throw new Error(`Character asset "${id}" has incorrect owner or skin metadata.`);
+    if (asset.facing !== layout[id].facing) throw new Error(`Character asset "${id}" has missing or incorrect facing metadata.`);
     if (asset.stateId !== 'selection' || asset.poseId !== 'selection' || asset.expressionId !== 'selection') {
       throw new Error(`Character asset "${id}" must map the baseline portrait to the selection state.`);
     }
@@ -165,6 +168,7 @@ export async function validateCharacterAssets({
       throw new Error(`Character asset "${id}" must use its 2048x2048 PNG source.`);
     }
     const source = await inspectRaster(path.join(root, sourcePath), 'png', 2048, 2048, `Character asset "${id}" source`);
+    if (sha256(source.input) !== layout[id].sourceSha256) throw new Error(`Character asset "${id}" changed after the facing review.`);
     const declaredSourceHash = requireHash(
       asset.source.sha256,
       `Character asset "${id}" source.sha256`,

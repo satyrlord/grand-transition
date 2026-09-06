@@ -74,13 +74,13 @@ typography:
   score-total:
     fontFamily: 'var(--font-interface, "Rubik Variable"), Arial, sans-serif'
     fontSize: 'clamp(1.35rem, 2.5vw, 2rem)'
-    fontWeight: 900
+    fontWeight: 700
     lineHeight: 0.95
   timer-display:
     fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
     fontSize: 'clamp(1.65rem, 2.6vw, 2.35rem)'
     fontWeight: 400
-    lineHeight: 0.86
+    lineHeight: 1.25
 rounded:
   square: '0'
 spacing:

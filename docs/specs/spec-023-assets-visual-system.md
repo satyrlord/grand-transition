@@ -5,6 +5,35 @@
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
 **Production-file budget:** 10
 
+## Completion delivery packages
+
+The remaining work is split into dependency-ordered delivery packages. Each
+code package has a ten-production-file budget. Each character-state art
+package contains one master and its six runtime files. This split preserves
+every acceptance criterion below; no package alone completes the milestone.
+
+1. Baseline portrait corrections and generation-input records.
+2. Character-state build, validation, and manifest resolution.
+3. State art for each of the four slice characters and all their baseline skins.
+4. Public-event projection, layered character presentation, and scene motion.
+5. Complete inventory review, production-browser evidence, and cumulative CI.
+
+Keep the fixed 27-entry selection manifest as the baseline inventory. Store
+additional slice states separately from filename-discovered portrait skins.
+State art must not create extra setup skins or enter the fixed replacement
+inventory. The runtime resolves one character, selected skin, and named state.
+The remaining roster uses its existing selection portrait until Milestone 031.
+
+The roster requests only the 128- and 256-pixel portrait variants. Selected
+setup stages can request larger selection art. Match image size hints match
+the reserved portrait plane, min(80svh, 60vw), so supported viewports do not
+use the roster or setup hint for a larger match image.
+
+Canonical character state drawings face right. The right-player portrait layer
+mirrors the drawing horizontally so that both opponents face the confrontation.
+Mirror the image layer independently of the reaction transform. Keep text,
+controls, and scene layers in their normal orientation.
+
 ## Deliver
 
 Build the Sharp pipeline, manifest validation, visual tokens, and landscape
@@ -508,6 +537,15 @@ for the approved Poiret One treatment, reject a family if it needs condensed
 spacing or outline effects to fit. Also reject it if it needs synthetic weights
 or text smaller than 11 pixels.
 
+Match nameplates reserve two lines for the complete compact character name.
+They do not use an ellipsis. The turn-status slot retains one fixed minimum
+width and its layout space while hidden. Switching between waiting, active,
+and thinking states must not reflow a character name.
+
+Shared phrase rows allow two lines without an ellipsis. Their font size follows
+both viewport width and height and stays at least 11 pixels. Wrapping a long
+phrase does not change the reserved nine-row board geometry.
+
 Record the selected families, weights, licenses,
 metric fallbacks, and use rules in this specification. Record them in the design
 record before implementation is complete. The wide speech bubble uses light
@@ -555,10 +593,21 @@ convention-added portrait does not enter this fixed baseline automatically. It
 can use its source PNG until Milestone 031 promotes it through the final asset
 pipeline.
 
-Milestone 015 already promotes the title emblem and proscenium to focused WebP
-runtime files with Portable Network Graphics fallbacks and entry preloads. That
-title-only slice does not satisfy this milestone's Sharp reproducibility, AVIF,
-manifest, crop, license, or complete package contracts.
+Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
+portrait frame through `tools/brand-assets.mjs`. Their separate
+`src/assets/brand/brand-manifest.json` records source hashes, ownership, license,
+dimensions, centered focal points, full-canvas crops, and AVIF/WebP variants.
+The emblem runtime size is 640 square. The proscenium retains 1672 by 941 pixels,
+and the portrait frame retains 1086 by 1448 pixels. These interface assets do
+not enter the fixed character and scene replacement inventory.
+
+Runtime views resolve these files through the brand manifest. The title uses
+AVIF first, WebP second, and the original PNG as its final fallback. Its two
+AVIF preloads derive from the manifest before the application module; a browser
+without AVIF support skips them and loads WebP. Each title format's combined
+package remains at most 300 KiB. The build and asset-validation scripts check
+the brand and state manifests as well as the baseline scene and character
+manifests. The asset-build script reproduces all four packages with Sharp.
 
 Every transparent scene and character asset uses the
 `green-chroma-key-v1` workflow. Its generation intermediate uses a flat
@@ -622,6 +671,8 @@ Character portrait or token variants are 128 and 256 square pixels.
 The visible full-body silhouette occupies at least 12 percent of each square
 canvas and 92 through 99 percent of its height. This keeps slim characters
 readable while it preserves a safe margin for broad poses and props.
+Silhouette width can change with the pose. Do not replace the occupied-area
+and height requirements with one fixed minimum width for all poses.
 Foreground scene plates use the same wide dimensions as their matching back
 scene and preserve transparent outer corners.
 
@@ -652,6 +703,55 @@ least five distinct expressions and six distinct poses. The nine named states do
 not each require a unique image when the manifest declares the combination.
 Normal reactions last 150 through 600 milliseconds, transitions at most 700
 milliseconds, and idle loops 2 through 8 seconds.
+
+### State package and event projection
+
+`src/assets/characters/state-contract.json` records the four slice character IDs and
+the nine named states. Derive their default and alternate packages from the
+fixed selection manifest. Do not maintain another skin list. Each additional
+master is `src/assets/characters/states/<portrait-stem>/<state-id>.png`.
+`states/state-manifest.json` owns state mappings and additional runtime assets.
+Selection references the existing baseline asset. Additional states have
+320, 640, and 960 square AVIF and WebP variants in `states/variants/`.
+Each asset retains the baseline ownership, source, license, hash, focal-point,
+crop, dimension, alpha, and color contracts.
+
+Use these fixed state durations: idle 4000 milliseconds, selection 320,
+thinking 3000, delivery 400, light hit 300, heavy hit 520, weakness 500,
+comeback 500, and grammar mistake 520. Idle and thinking can loop. Other states
+play once. A new public event replaces the previous transient state. Do not
+queue stale events or delay a game command for animation.
+
+Show selection on match entry. Show thinking for the active AI while its
+existing public thinking indicator is active. Otherwise use idle at rest.
+An accepted public phrase or sentence commit can show delivery for its actor.
+An accepted Comeback shows comeback. A grammar mistake shows grammar mistake
+for the affected actor. At review, use public resolved incoming damage:
+weakness has priority when the opponent applied a weakness multiplier,
+otherwise damage of at least 20 shows heavy hit, and positive damage below 20
+shows light hit. These are presentation thresholds only; they do not change
+scoring. Grammar-mistake self-damage keeps its own state. No state decision
+reads an unplayed private card or an AI candidate evaluation.
+
+Keep the current image visible until its replacement has decoded. A newer cue
+supersedes a pending decode. Missing or failed optional display data keeps the
+last decoded portrait visible; production validation still rejects a missing
+required package. Load only the selected skins' state packages after match
+entry. Do not preload state packages in setup.
+
+Pause, viewport interruption, document hiding, and exit stop nonessential
+loops and discard pending transient motion. Resume at the current resting
+state without replaying an old reaction. Reduced motion keeps state and public
+outcome information visible and suppresses spatial movement and flashing.
+All image and ambience layers are pointer-inert. State changes use reserved
+absolute image planes and cannot move a control or sentence.
+
+The transition-era studio adds a four-second low-amplitude lamp loop over its
+existing four outer lamp faces. Two sides have a two-second phase offset.
+The neutral overlay opacity ranges from 0.03 through 0.15. It uses the same
+1920-by-1080 coordinate plane and protected crop as the back scene. It adds no
+lamp, beam, prop, or runtime raster. Pause, hiding, leaving the viewport, and
+reduced motion remove this decorative overlay and retain the static lamps.
 
 Initial page cumulative layout shift (CLS) is at most 0.05. Replacing or
 updating a card, reaction, or character state produces exactly 0 layout shift.

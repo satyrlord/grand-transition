@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "grand-transition-emblem",
+      "ownerType": "interface",
+      "ownerId": "grand-transition-emblem",
+      "sourceDescription": "Original editorial-cartoon interface art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "grand-transition-emblem.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 2023009,
+        "sha256": "98947f79eabc10be6b59722c92e4b7b22d20e7b3f25f05cd80fbc129c509da5a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "variants": [
+        {
+          "path": "grand-transition-emblem-640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 53636,
+          "sha256": "1772a79e1a1f0c1293bc5162fd180ff5c5217d226293bc5ff759ab6af1b3ad9d"
+        },
+        {
+          "path": "grand-transition-emblem-640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 72764,
+          "sha256": "6fb6ef6d7e65795c401ea5a34adb39b19b1e3b96d1cfbd6bee43bc21df837562"
+        }
+      ]
+    },
+    {
+      "id": "title-proscenium-background",
+      "ownerType": "interface",
+      "ownerId": "title-proscenium-background",
+      "sourceDescription": "Original editorial-cartoon interface art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "title-proscenium-background.png",
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "bytes": 1605776,
+        "sha256": "22dd6b8c4552710d9588ca66210f871ba3e7594cb65e0f60032a2c708708d6dc"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "variants": [
+        {
+          "path": "title-proscenium-background.avif",
+          "width": 1672,
+          "height": 941,
+          "format": "avif",
+          "bytes": 44798,
+          "sha256": "de0c3a94dff521442694a912534fdfc0654c356b40bcf6bb2c9ccce076844c26"
+        },
+        {
+          "path": "title-proscenium-background.webp",
+          "width": 1672,
+          "height": 941,
+          "format": "webp",
+          "bytes": 38600,
+          "sha256": "735aa1fac5cdf132260277d9aa72fcae997372e21bb73675053832975e5376d5"
+        }
+      ]
+    },
+    {
+      "id": "politburo-portrait-frame",
+      "ownerType": "interface",
+      "ownerId": "politburo-portrait-frame",
+      "sourceDescription": "Original editorial-cartoon interface art created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "politburo-portrait-frame.png",
+        "width": 1086,
+        "height": 1448,
+        "format": "png",
+        "bytes": 1639057,
+        "sha256": "3c11693b3e0eef487b010ec9ebcc599554ee055e00c2c37db090dea028b69e51"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "variants": [
+        {
+          "path": "politburo-portrait-frame.avif",
+          "width": 1086,
+          "height": 1448,
+          "format": "avif",
+          "bytes": 72919,
+          "sha256": "49e0c435716b80137690bee18b0445eef5d9c4977d51053ab5815fbcc7001c08"
+        },
+        {
+          "path": "politburo-portrait-frame.webp",
+          "width": 1086,
+          "height": 1448,
+          "format": "webp",
+          "bytes": 80932,
+          "sha256": "6cbebf3c6a9cd1a66db29303a52aa5a198c0b1e2120ed376788c452ee78ba5d7"
+        }
+      ]
+    }
+  ]
+}

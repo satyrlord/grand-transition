@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "portraits": {
+    "algorithmic-prophet": {
+      "facing": "left",
+      "sourceSha256": "4a25445c323a1d431bb795e9a7a1f85ce1d0bdb7612bbaad7b387e83f85a1742"
+    },
+    "apartment-block-geopolitician": {
+      "facing": "right",
+      "sourceSha256": "aeca61848fbf3662e780412c60c3f6881afcbdb99606cb03bcd670bd9bcbc477"
+    },
+    "black-sea-captain": {
+      "facing": "right",
+      "sourceSha256": "d06e1c411f6a255ba913e7ecb30978de18ae60c937837a07d7f87e47c39da65a"
+    },
+    "coalition-acrobat": {
+      "facing": "left",
+      "sourceSha256": "3e9df8856fb64add02e78b10de9f778963425dfdcc248e2d574d6c9c0ea346be"
+    },
+    "county-baron": {
+      "facing": "left",
+      "sourceSha256": "65ab62576a2282c50e1eccc995eb189f3aca83660eae0fceac4c6e190c589dbd"
+    },
+    "diaspora-oracle": {
+      "facing": "left",
+      "sourceSha256": "7fbfbcee4005b7ff7a4e2c3ea0ea61146e0370069352b8583788c423309f15e9"
+    },
+    "eu-funds-alchemist": {
+      "facing": "right",
+      "sourceSha256": "e63984dee75ccfc6a783df43238834e58c357d630f846e0e0836eb500d938955"
+    },
+    "football-tycoon": {
+      "facing": "right",
+      "sourceSha256": "d408d793d78960e18c4bed3103712dc1a572cc540cb9de3698e09f27004d0381"
+    },
+    "government-ai--alternate": {
+      "facing": "right",
+      "sourceSha256": "a7699a5fc1d5d0eb98d8f17e51fce493df3107aaa4443267e2dbbeeef78d95f5"
+    },
+    "government-ai": {
+      "facing": "left",
+      "sourceSha256": "5c65b5b60ca21135e7dd172a9ea9534385bbf29f371b1bd02571c25760d09790"
+    },
+    "luxury-minister": {
+      "facing": "right",
+      "sourceSha256": "9a5afefd65b6f5243a193d63b3fde2528aa93a2c3446bdfc73a521791aa2b3b3"
+    },
+    "marble-diplomat": {
+      "facing": "right",
+      "sourceSha256": "f5d5bdecf9679cbaeeee3a751b1ffff374c7c4c80dc7e951c31c42c5780bb65b"
+    },
+    "midnight-sensationalist--alternate": {
+      "facing": "left",
+      "sourceSha256": "68057a8d77f2dc94a11887bbbee8a67d3fbfc7b92c4ef4da42b90d50101088c6"
+    },
+    "midnight-sensationalist": {
+      "facing": "left",
+      "sourceSha256": "33b43f56a61ac9ac220561d11a74573e813772ec498e523d50d22a469885bc9e"
+    },
+    "oat-milk-reformist--alternate": {
+      "facing": "right",
+      "sourceSha256": "e5dae74f9cab8217baf73cc5904d8e35e6fcb2e77366a84355ca91b0884beb65"
+    },
+    "oat-milk-reformist": {
+      "facing": "right",
+      "sourceSha256": "a3fe1088850650efb159f8baf8ef62a278ce5dc3ec48d7e55bebeaaaf253746e"
+    },
+    "red-folded-chairman--alternate": {
+      "facing": "right",
+      "sourceSha256": "273d4577a9750e496619d999e77458200aa8b2025ee4078cbb4fa74a869bc9a7"
+    },
+    "red-folded-chairman": {
+      "facing": "right",
+      "sourceSha256": "3182819c65930e0d1f53a4a06e6e15186d06fbd60e6d441c79c45ec46802baf2"
+    },
+    "retiring-cassandra--statesman": {
+      "facing": "right",
+      "sourceSha256": "c3e77b7276ac4de7c98190e5fa5c441a0b64495f51b1c26454457f187de0461a"
+    },
+    "retiring-cassandra": {
+      "facing": "right",
+      "sourceSha256": "f94f17db3f61ca727489b8908e9197b07b93b28fae9138779b41d53e3630b312"
+    },
+    "spreadsheet-technocrat": {
+      "facing": "right",
+      "sourceSha256": "c79549bed2e8805cc5aa64f3aba7f1e8f9c4fd4008804ecb9c5f69eedda7398b"
+    },
+    "thunder-tribune--alternate": {
+      "facing": "right",
+      "sourceSha256": "b5c857d077672addcdd0f20cdea80377f4372236f1cbd7a295c52b7418b0db95"
+    },
+    "thunder-tribune": {
+      "facing": "right",
+      "sourceSha256": "ec0eb76174c3ca9264065a6340f4f8e70796ebd61a5dcf76e4796eab5a450463"
+    },
+    "velvet-mogul--boardroom-patriarch": {
+      "facing": "right",
+      "sourceSha256": "dc0b1774fc35c4946720ff66d67f212bdb1b002c67524d14f793b126fa7988ec"
+    },
+    "velvet-mogul--silk-diplomat": {
+      "facing": "right",
+      "sourceSha256": "fb5668db8d45a3b24ed92a36ac16a97dbb5ee647f5f876879a828fc50d01ba02"
+    },
+    "velvet-mogul--velvet-statesman": {
+      "facing": "left",
+      "sourceSha256": "0cbdfbed4f0353fa7cd802ae7eed769126a613db9eab20637fa1e53e64e5b517"
+    },
+    "velvet-mogul": {
+      "facing": "right",
+      "sourceSha256": "1a1967994cfffc65876efd46376f66ec8ce97faf7aa64b25f059990ab4c6371a"
+    }
+  }
+}

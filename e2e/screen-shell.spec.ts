@@ -320,10 +320,10 @@ for (const viewport of supportedViewports) {
     expect(geometry.robotRosterPortrait.scale).toBeLessThanOrEqual(3.12);
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeGreaterThanOrEqual(0.43);
+    ).toBeGreaterThanOrEqual(0.49);
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeLessThanOrEqual(0.45);
+    ).toBeLessThanOrEqual(0.51);
     expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0015);
     expect(
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
@@ -509,7 +509,7 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
     ];
     const preloads = [
       ...document.querySelectorAll<HTMLLinkElement>(
-        'link[rel="preload"][as="image"][type="image/webp"]',
+        'link[rel="preload"][as="image"][type="image/avif"]',
       ),
     ];
     const imageResources = performance
@@ -571,9 +571,9 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   expect(facts.subtitleStatusGap).toBeLessThanOrEqual(facts.railHeight + 8);
   expect(facts.railWidth).toBe(1);
   expect(facts.railContent).not.toBe('none');
-  expect(facts.titleBackground).toMatch(/title-proscenium-background.*\.webp/u);
+  expect(facts.titleBackground).toMatch(/title-proscenium-background.*\.avif/u);
   expect(facts.emblemCurrentSource).toMatch(
-    /grand-transition-emblem-640.*\.webp/u,
+    /grand-transition-emblem-640.*\.avif/u,
   );
   expect(facts.emblemNaturalSize).toEqual([640, 640]);
   expect(facts.emblemCornerAlpha).toEqual([0, 0, 0, 0]);
@@ -581,16 +581,16 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   expect(facts.emblemFilter).toBe('none');
   expect(facts.preloadHrefs).toHaveLength(2);
   expect(facts.preloadHrefs.join('\n')).toMatch(
-    /grand-transition-emblem-640.*\.webp/u,
+    /grand-transition-emblem-640.*\.avif/u,
   );
   expect(facts.preloadHrefs.join('\n')).toMatch(
-    /title-proscenium-background.*\.webp/u,
+    /title-proscenium-background.*\.avif/u,
   );
   expect(facts.imageResources.join('\n')).toMatch(
-    /grand-transition-emblem-640.*\.webp/u,
+    /grand-transition-emblem-640.*\.avif/u,
   );
   expect(facts.imageResources.join('\n')).toMatch(
-    /title-proscenium-background.*\.webp/u,
+    /title-proscenium-background.*\.avif/u,
   );
 
   await page.screenshot({
@@ -613,7 +613,7 @@ test('a delayed title emblem keeps an intentional reserved loading state', async
 }, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   let emblemRoute: import('@playwright/test').Route | undefined;
-  await page.route(/grand-transition-emblem-640.*\.webp/u, async (route) => {
+  await page.route(/grand-transition-emblem-640.*\.avif/u, async (route) => {
     emblemRoute = route;
   });
 

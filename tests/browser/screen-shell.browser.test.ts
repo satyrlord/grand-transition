@@ -26,6 +26,21 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+test('roster images use token variants while selected stages keep full portrait sources', async () => {
+  const setup = await mountSetup(createDefaultSetupSnapshot());
+  const roster = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')];
+  expect(roster).toHaveLength(18);
+  for (const image of roster) {
+    expect(image.getAttribute('src')).toContain('256x256.webp');
+    expect(image.getAttribute('srcset')).toMatch(/128w.*256w/u);
+    expect(image.getAttribute('srcset')).not.toMatch(/320w|640w|960w/u);
+    expect(image.getAttribute('sizes')).toBe('256px');
+  }
+  for (const image of setup.querySelectorAll('.contestant-portrait')) {
+    expect(image.getAttribute('srcset')).toContain('960w');
+  }
+});
+
 test('requests fresh browser randomness for every new match seed', async () => {
   const generatedSeeds = [0, 0xffff_ffff];
   const getRandomValues = vi.spyOn(globalThis.crypto, 'getRandomValues');

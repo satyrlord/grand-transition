@@ -18,6 +18,8 @@ import type {
   MatchScreenSnapshot,
 } from '../match-screen-snapshot';
 import './interruption-screen';
+import '../../components/character-presenter';
+import '../../components/scene-ambience';
 import type { TurnTimerSeconds } from './interruption-screen';
 
 const elementName = 'grand-transition-match';
@@ -64,6 +66,7 @@ export class GrandTransitionMatch extends LitElement {
   private timerId: number | undefined;
   private automaticRevealTimerId: number | undefined;
   private timerSequence = -1;
+  private discardedPortraitSequence = -1;
   constructor() {
     super();
     this.pauseMode = 'running';
@@ -93,6 +96,9 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
+    if (this.pauseMode !== 'running' && this.snapshot) {
+      this.discardedPortraitSequence = this.snapshot.revision;
+    }
     if (changed.has('snapshot')) {
       const previousSnapshot = changed.get('snapshot') as
         MatchScreenSnapshot | undefined;
@@ -212,6 +218,11 @@ export class GrandTransitionMatch extends LitElement {
           ${backgroundLayers.map((layer) =>
             this.renderSceneLayer(layer, 'broadcast-stage-art'),
           )}
+          ${backgroundLayers[0]?.assetId === 'transition-era-television-studio'
+            ? html`<grand-transition-scene-ambience
+                style=${backgroundLayers[0].kind === 'manifest' ? sceneLayerStyle(backgroundLayers[0]) : nothing}
+              ></grand-transition-scene-ambience>`
+            : nothing}
           <header class="match-status-rail">
             <div class="match-header-controls">
               <button
@@ -454,7 +465,13 @@ export class GrandTransitionMatch extends LitElement {
           </div>
         </header>
         <div class="character-frame" aria-hidden="true">
-          <picture>
+          ${player.portraitFrames ? html`<grand-transition-character
+            .frames=${player.portraitFrames}
+            .cue=${player.portraitCue.sequence <= this.discardedPortraitSequence
+              ? { stateId: 'idle', sequence: player.portraitCue.sequence }
+              : player.portraitCue}
+            .restState=${this.thinking && player.isActive ? 'thinking' : 'idle'}
+          ></grand-transition-character>` : html`<picture>
             ${player.portraitAvifSrcSet
               ? html`<source
                   type="image/avif"
@@ -472,7 +489,7 @@ export class GrandTransitionMatch extends LitElement {
               height=${player.portraitHeight}
               draggable="false"
             />
-          </picture>
+          </picture>`}
         </div>
         ${
           player.isActive

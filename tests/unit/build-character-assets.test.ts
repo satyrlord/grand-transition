@@ -1,4 +1,5 @@
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -11,6 +12,7 @@ type BuiltCharacterManifest = {
     ownerId: string;
     skinId: string;
     stateId: string;
+    facing: 'left' | 'right';
     variants: Array<{ sha256: string }>;
   }>;
 };
@@ -47,6 +49,11 @@ beforeAll(async () => {
   );
   await writeMaster('alpha.png', '#223344');
   await writeMaster('beta--alternate.png', '#884422');
+  const portraits = Object.fromEntries(await Promise.all(['alpha', 'beta--alternate'].map(async (id) => [id, {
+    facing: id === 'alpha' ? 'right' : 'left',
+    sourceSha256: createHash('sha256').update(await readFile(path.join(fixture, id + '.png'))).digest('hex'),
+  }])));
+  await writeFile(path.join(fixture, 'portrait-layout.json'), JSON.stringify({ schemaVersion: 1, portraits }));
 });
 
 afterAll(async () => {
@@ -81,6 +88,7 @@ describe('character asset builder', () => {
 
       expect(secondManifest).toBe(firstManifest);
       expect(second.assets).toHaveLength(2);
+      expect(second.assets.map(({ facing }) => facing)).toEqual(['right', 'left']);
       expect(second.assets.flatMap((asset) => asset.variants)).toHaveLength(20);
       expect(
         second.assets.flatMap((asset) =>

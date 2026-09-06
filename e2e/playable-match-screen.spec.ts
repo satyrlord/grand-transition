@@ -62,13 +62,9 @@ test('the longest desktop match state fits and exposes every required fact', asy
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
   await expect(page.locator('.player-sentence--waiting')).toContainText('…');
   const activePortrait = page.locator(
-    '[data-turn-state="active"] .character-portrait',
+    '[data-turn-state="active"] [data-state-visible="true"] .character-state-upper',
   );
-  expect(
-    await activePortrait.evaluate((element) =>
-      getComputedStyle(element).animationName.toLowerCase(),
-    ),
-  ).toContain('claim-floor');
+  await expect(activePortrait).toHaveCSS('animation-name', 'character-breath');
   const playerSeparation = await page.evaluate(() =>
     [...document.querySelectorAll('.match-player')].map((player) => {
       const hud = player.querySelector('.player-hud')!.getBoundingClientRect();
@@ -937,12 +933,13 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
           (image) =>
             image.complete &&
             image.naturalWidth === image.naturalHeight &&
-            [320, 640, 960].includes(image.naturalWidth),
+            image.naturalWidth > 0,
         ),
       ),
     )
     .toBe(true);
   const portraitPixelFacts = await portraitAlphaFacts(portraits);
+  await expectDecodedPortraitVariants(portraits);
 
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -953,6 +950,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
     { width: 1280, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
+    await decodeImages(page.locator('.broadcast-stage-art, .character-frame img'));
     const composition = await page.evaluate(() => {
       const stage = document
         .querySelector('.broadcast-stage')!
@@ -1013,7 +1011,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
           portraitBottomRatio > 1.03 &&
           portraitBottomRatio < 1.05 &&
           naturalWidth === naturalHeight &&
-          [320, 640, 960].includes(naturalWidth) &&
+          naturalWidth > 0 &&
           portraitTop +
             portraitHeight * (portraitPixelFacts[index]!.topOpaqueRatio + 0.22) <
             deskTop &&
@@ -1024,12 +1022,12 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
   }
 });
 
-test('keeps the Thunder Tribune tall in the final square portrait plane', async ({
+test('keeps the Thunder Tribune selection tall in the final square portrait plane', async ({
   page,
 }) => {
   await startMatch(page);
   const portrait = page.locator(
-    'img.character-portrait[src*="thunder-tribune"]',
+    '[data-state-id="selection"] img[src*="thunder-tribune"]',
   );
   await expect
     .poll(() =>
@@ -1037,25 +1035,30 @@ test('keeps the Thunder Tribune tall in the final square portrait plane', async 
         (image: HTMLImageElement) =>
           image.complete &&
           image.naturalWidth === image.naturalHeight &&
-          [320, 640, 960].includes(image.naturalWidth),
+          image.naturalWidth > 0,
       ),
     )
     .toBe(true);
 
-  const silhouette = await portrait.evaluate((image: HTMLImageElement) => {
+  await expectDecodedPortraitVariants(portrait);
+  const silhouette = await portrait.evaluate(async (image: HTMLImageElement) => {
+    const bitmap = await createImageBitmap(image);
     const canvas = document.createElement('canvas');
-    canvas.width = image.naturalWidth;
-    canvas.height = image.naturalHeight;
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
     const context = canvas.getContext('2d', { willReadFrequently: true })!;
-    context.drawImage(image, 0, 0);
+    context.drawImage(bitmap, 0, 0);
+    bitmap.close();
     const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
     let minimumX = canvas.width;
     let maximumX = -1;
     let minimumY = canvas.height;
     let maximumY = -1;
+    let visiblePixels = 0;
     for (let y = 0; y < canvas.height; y += 1) {
       for (let x = 0; x < canvas.width; x += 1) {
         if (pixels[(y * canvas.width + x) * 4 + 3] < 16) continue;
+        visiblePixels += 1;
         minimumX = Math.min(minimumX, x);
         maximumX = Math.max(maximumX, x);
         minimumY = Math.min(minimumY, y);
@@ -1069,6 +1072,7 @@ test('keeps the Thunder Tribune tall in the final square portrait plane', async 
       minimumX,
       minimumY,
       widthRatio: (maximumX - minimumX + 1) / canvas.width,
+      occupiedAreaRatio: visiblePixels / (canvas.width * canvas.height),
     };
   });
 
@@ -1079,6 +1083,7 @@ test('keeps the Thunder Tribune tall in the final square portrait plane', async 
     minimumX: expect.any(Number),
     minimumY: expect.any(Number),
     widthRatio: expect.any(Number),
+    occupiedAreaRatio: expect.any(Number),
   });
   expect(silhouette.heightRatio).toBeGreaterThanOrEqual(0.93);
   expect(silhouette.heightRatio).toBeLessThanOrEqual(0.99);
@@ -1092,7 +1097,7 @@ test('keeps the Thunder Tribune tall in the final square portrait plane', async 
     0.95,
   );
   expect(silhouette.maximumY / silhouette.canvasSize).toBeLessThan(1);
-  expect(silhouette.widthRatio).toBeGreaterThanOrEqual(0.62);
+  expect(silhouette.occupiedAreaRatio).toBeGreaterThanOrEqual(0.12);
 });
 
 test('keeps the physical moderator face clear of drafting UI', async ({
@@ -1147,7 +1152,9 @@ test('keeps the physical moderator face clear of drafting UI', async ({
 test('waits for a replacement portrait before measuring moderator clearance', async ({
   page,
 }) => {
-  await startMatch(page);
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await selectSetupCharacter(page, 'one', 'retiring-cassandra');
+  await page.getByRole('button', { name: 'Start match' }).click();
   await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
   let releasePortrait!: () => void;
   let requestStarted!: () => void;
@@ -1276,6 +1283,7 @@ test('the match fits the supported landscape matrix', async ({
   ]) {
     await page.setViewportSize(viewport);
     await page.mouse.move(0, 0);
+    await decodeImages(page.locator('.broadcast-stage-art'));
     const facts = await page.evaluate(() => {
       const required = [
         ...document.querySelectorAll<HTMLElement>(
@@ -1290,6 +1298,12 @@ test('the match fits the supported landscape matrix', async ({
       return {
         documentWidth: document.documentElement.scrollWidth,
         documentHeight: document.documentElement.scrollHeight,
+        ambienceAligned: (() => {
+          const scene = document.querySelector('.broadcast-stage-art')!.getBoundingClientRect();
+          const ambience = document.querySelector('.broadcast-stage-ambience')!.getBoundingClientRect();
+          return ['x', 'y', 'width', 'height'].every((key) =>
+            Math.abs(scene[key as 'x' | 'y' | 'width' | 'height'] - ambience[key as 'x' | 'y' | 'width' | 'height']) < 0.5);
+        })(),
         requiredInside: required.every((element) => {
           const box = element.getBoundingClientRect();
           return (
@@ -1325,6 +1339,7 @@ test('the match fits the supported landscape matrix', async ({
     });
     expect(facts.documentWidth).toBeLessThanOrEqual(viewport.width);
     expect(facts.documentHeight).toBeLessThanOrEqual(viewport.height);
+    expect(facts.ambienceAligned).toBe(true);
     expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(
       true,
     );
@@ -1379,9 +1394,9 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   ).toHaveAttribute('data-side', 'red');
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
-  ).toBe('grammar-hit-red');
+  ).toBe('character-pause');
   expect(
     await grammarStrike.evaluate(
       (element) => getComputedStyle(element).animationDuration,
@@ -1404,18 +1419,10 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
     page.locator('[data-turn-state="active"] .player-turn-status'),
   ).toHaveText('Your turn');
   const incomingPortrait = page.locator(
-    '[data-turn-state="active"] .character-portrait',
+    '[data-turn-state="active"] [data-state-visible="true"] .character-state-upper',
   );
-  expect(
-    await incomingPortrait.evaluate(
-      (portrait) => getComputedStyle(portrait).animationName,
-    ),
-  ).toBe('claim-floor-blue');
-  expect(
-    await incomingPortrait.evaluate(
-      (portrait) => getComputedStyle(portrait).animationDuration,
-    ),
-  ).toBe('0.36s');
+  await expect(incomingPortrait).toHaveCSS('animation-name', 'character-breath');
+  await expect(incomingPortrait).toHaveCSS('animation-duration', '4s');
   await expect(page.locator('.private-hand')).toHaveAttribute(
     'data-side',
     'blue',
@@ -1765,9 +1772,9 @@ test('the grammar strike fits the minimum landscape', async ({
   ).toBe('grammar-strike-in');
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
-  ).toBe('grammar-hit-red');
+  ).toBe('character-pause');
   expect(
     await page
       .locator('.broadcast-stage')
@@ -1828,7 +1835,7 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
   ).toBe('none');
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] .character-portrait')
+      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
   ).toBe('none');
   expect(
@@ -2494,6 +2501,24 @@ async function decodeImages(images: Locator): Promise<void> {
       elements.map((element) => (element as HTMLImageElement).decode()),
     ).then(() => undefined),
   );
+}
+
+async function expectDecodedPortraitVariants(images: Locator): Promise<void> {
+  const dimensions = await images.evaluateAll(async (elements: HTMLImageElement[]) =>
+    Promise.all(elements.map(async (image) => {
+      await image.decode();
+      // Natural dimensions are density-corrected by responsive sizes. The
+      // bitmap exposes the actual decoded raster dimensions.
+      const bitmap = await createImageBitmap(image);
+      const dimensions = [bitmap.width, bitmap.height];
+      bitmap.close();
+      return dimensions;
+    })),
+  );
+  for (const [width, height] of dimensions) {
+    expect([320, 640, 960]).toContain(width);
+    expect(height).toBe(width);
+  }
 }
 
 function expectDeskPlateBounds(
