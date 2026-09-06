@@ -17,7 +17,8 @@ type BuiltCharacterManifest = {
   }>;
 };
 
-const { buildCharacterAssets } = characterBuilder as {
+const { buildCharacterAssets, mapWithConcurrency } = characterBuilder as {
+  mapWithConcurrency: (values: number[], concurrency: number, work: (value: number) => Promise<number>) => Promise<number[]>;
   buildCharacterAssets: (options: {
     characterRoot: string;
     masterNames: readonly string[];
@@ -61,6 +62,44 @@ afterAll(async () => {
 });
 
 describe('character asset builder', () => {
+  test('rejects missing, invalid, or stale orientation review before changing outputs', async () => {
+    const file = path.join(fixture, 'portrait-layout.json');
+    const original = await readFile(file, 'utf8');
+    const before = await readdir(fixture);
+    for (const mutation of ['missing', 'invalid', 'stale']) {
+      const layout = JSON.parse(original) as { portraits: Record<string, { facing: string; sourceSha256: string }> };
+      if (mutation === 'missing') delete layout.portraits.alpha;
+      if (mutation === 'invalid') layout.portraits.alpha!.facing = 'up';
+      if (mutation === 'stale') layout.portraits.alpha!.sourceSha256 = '0'.repeat(64);
+      try {
+        await writeFile(file, JSON.stringify(layout));
+        await expect(buildCharacterAssets({ characterRoot: fixture, masterNames: ['alpha.png', 'beta--alternate.png'] })).rejects.toThrow(/inventory|facing/u);
+        expect(await readdir(fixture)).toEqual(before);
+      } finally { await writeFile(file, original); }
+    }
+  });
+
+  test('waits for active encoders before reporting a failure and stops the remaining queue', async () => {
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => { release = resolve; });
+    const started: number[] = [];
+    let reported = false;
+    let activeFinished = false;
+    const result = mapWithConcurrency([0, 1, 2], 2, async (value) => {
+      started.push(value);
+      if (value === 0) { await Promise.resolve(); throw new Error('failed encoding'); }
+      await gate;
+      activeFinished = true;
+      return value;
+    }).catch((error: unknown) => { reported = true; return error; });
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    expect(reported).toBe(false);
+    release();
+    expect(await result).toMatchObject({ message: 'failed encoding' });
+    expect(activeFinished).toBe(true);
+    expect(started).toEqual([0, 1]);
+  });
+
   test(
     'reproduces the manifest and every runtime variant',
     async () => {
