@@ -69,19 +69,19 @@ async function assertMasterSet(characterRoot, masterNames) {
 export async function mapWithConcurrency(values, concurrency, work) {
   const results = Array.from({ length: values.length });
   let nextIndex = 0;
-  let failure;
+  const failures = [];
   async function worker() {
-    while (nextIndex < values.length && !failure) {
+    while (nextIndex < values.length && failures.length === 0) {
       const index = nextIndex;
       nextIndex += 1;
       try { results[index] = await work(values[index]); }
-      catch (error) { failure ??= error; }
+      catch (error) { failures.push(error); }
     }
   }
   await Promise.all(
     Array.from({ length: Math.min(concurrency, values.length) }, worker),
   );
-  if (failure) throw failure;
+  if (failures.length > 0) throw failures[0];
   return results;
 }
 
