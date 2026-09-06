@@ -26,9 +26,12 @@ Vite emits state-manifest data in a separate JavaScript chunk. Every generated
 JavaScript chunk stays within the existing 500,000-byte production gate.
 The remaining roster uses its existing selection portrait until Milestone 031.
 
-The roster requests only the 128- and 256-pixel portrait variants. Selected
-setup stages can request larger selection art. Match image size hints match
-the reserved portrait plane, min(80svh, 60vw), so supported viewports do not
+The roster exposes all 128-, 256-, 320-, 640-, and 960-pixel portrait variants.
+Its 21vw image size hint accounts for square-source cover fitting and the
+3.12 active headshot scale in the six-column grid. The browser selects the
+resolution for the viewport and device pixel ratio, up to the 960-pixel maximum.
+Selected setup stages use their own selection-art size hint. Match image size
+hints match the reserved portrait plane, min(80svh, 60vw), so supported viewports do not
 use the roster or setup hint for a larger match image.
 
 `src/assets/characters/portrait-layout.json` records each baseline source's
@@ -696,7 +699,8 @@ Scene masters are layered 1920 by 1080 files. Runtime wide scene variants are
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 960.
 
-Character portrait or token variants are 128 and 256 square pixels.
+Small character token variants are 128 and 256 square pixels. Enlarged roster
+headshots also use the larger runtime character variants.
 The visible full-body silhouette occupies at least 12 percent of each square
 canvas and 92 through 99 percent of its height. This keeps slim characters
 readable while it preserves a safe margin for broad poses and props.
@@ -918,3 +922,12 @@ an image. A later invalid or empty prompt leaves all outputs unchanged.
 when manifest bytes/hashes match. `tests/unit/green-chroma-key.test.ts` verifies
 a valid first prompt and invalid/empty second prompt create or change no output.
 Existing character variant checks retain the same limits.
+
+**AC-023-19:** Roster headshots expose the complete AVIF and WebP variant sets.
+At 1024 by 720, 1024 by 768, 1280 by 720, 1920 by 1080, 3424 by 1427,
+and 5120 by 1440, with device pixel ratios 1 and 2, the loaded source has
+enough pixels for the square image after cover fitting and active crop scaling,
+or uses the largest available 960-pixel variant. All 18 portraits retain their
+canonical skin and existing composition.
+Verify with `e2e/roster-resolution.spec.ts` and
+`tests/browser/screen-shell.browser.test.ts`.

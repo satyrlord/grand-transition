@@ -26,15 +26,17 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-test('roster images use token variants while selected stages keep full portrait sources', async () => {
+test('roster crops and selected stages keep full responsive portrait sources', async () => {
   const setup = await mountSetup(createDefaultSetupSnapshot());
   const roster = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')];
   expect(roster).toHaveLength(18);
   for (const image of roster) {
-    expect(image.getAttribute('src')).toContain('256x256.webp');
-    expect(image.getAttribute('srcset')).toMatch(/128w.*256w/u);
-    expect(image.getAttribute('srcset')).not.toMatch(/320w|640w|960w/u);
-    expect(image.getAttribute('sizes')).toBe('256px');
+    expect(image.getAttribute('src')).toContain('960x960.webp');
+    expect(image.getAttribute('srcset')).toMatch(/128w.*256w.*320w.*640w.*960w/u);
+    const avif = image.closest('picture')!.querySelector('source')!;
+    expect(avif.getAttribute('srcset')).toMatch(/128w.*960w/u);
+    expect(avif.getAttribute('sizes')).toBe('21vw');
+    expect(image.getAttribute('sizes')).toBe('21vw');
   }
   for (const image of setup.querySelectorAll('.contestant-portrait')) {
     expect(image.getAttribute('srcset')).toContain('960w');

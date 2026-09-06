@@ -12,7 +12,6 @@ import {
   type CharacterSkin,
 } from '../../game-content';
 import { resolveBrandAsset } from '../brand-assets';
-import { createSource } from '../character-assets';
 import type { MatchMode } from '../../engine/match-lifecycle';
 import type { LadderProgress } from '../../engine/ladder';
 import { ladderDifficulty } from '../../engine/ladder';
@@ -1063,10 +1062,9 @@ function characterViews(): readonly CharacterView[] {
       name: gameMessage(character.nameKey),
       portrait: Object.freeze({
         ...portrait,
-        sizes: '256px',
-        portraitUrl: portrait.webp?.variants.find((variant) => variant.width === 256)?.url ?? portrait.portraitUrl,
-        avif: portrait.avif ? createSource(portrait.avif.variants.filter((variant) => variant.width <= 256), 'avif') : null,
-        webp: portrait.webp ? createSource(portrait.webp.variants.filter((variant) => variant.width <= 256), 'webp') : null,
+        // Cover fitting and the 3.12 active crop enlarge the square source.
+        // Six columns in at most 46% of the viewport need up to 21vw each.
+        sizes: '21vw',
       }),
       weaknessTags: character.weaknessTags,
     };

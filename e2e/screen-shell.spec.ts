@@ -200,10 +200,6 @@ for (const viewport of supportedViewports) {
         }
       }
       const robotStyle = getComputedStyle(robotPortrait);
-      const selectedSourceWidth = Number(
-        /-(\d+)x\1-/u.exec(robotPortrait.currentSrc)?.[1] ??
-          robotCanvas.width,
-      );
       const robotFaceCenterRatio =
         robotFacePixelXTotal / robotFacePixelCount / robotCanvas.width;
       const renderedRobotFaceCenter =
@@ -257,7 +253,7 @@ for (const viewport of supportedViewports) {
           facePixelCount: robotFacePixelCount,
           facePixelRatio:
             robotFacePixelCount /
-            (selectedSourceWidth * selectedSourceWidth),
+            (robotCanvas.width * robotCanvas.height),
           faceCenterOffsetRatio:
             Math.abs(renderedRobotFaceCenter - robotWindowCenter) /
             robotWindowBox.width,
