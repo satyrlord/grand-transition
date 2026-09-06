@@ -92,10 +92,7 @@
     inset: 0;
     background:
       linear-gradient(180deg, rgb(5 8 11 / 24%), rgb(5 8 11 / 52%)),
-      image-set(
-          url('../assets/brand/title-proscenium-background.webp') type('image/webp'),
-          url('../assets/brand/title-proscenium-background.png') type('image/png')
-        )
+      var(--title-scene-image)
         center / cover no-repeat;
   }
 

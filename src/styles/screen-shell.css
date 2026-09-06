@@ -476,10 +476,6 @@
     contain: paint;
   }
 
-  .roster-choice[data-character-species='robot'] {
-    --roster-portrait-origin: 44% 0;
-  }
-
   .roster-headshot {
     position: absolute;
     inset: 0;

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "characterIds": [
+    "red-folded-chairman",
+    "thunder-tribune",
+    "black-sea-captain",
+    "government-ai"
+  ],
+  "states": [
+    { "id": "idle", "durationMs": 4000, "loop": true },
+    { "id": "selection", "durationMs": 320, "loop": false },
+    { "id": "thinking", "durationMs": 3000, "loop": true },
+    { "id": "delivery", "durationMs": 400, "loop": false },
+    { "id": "light-hit", "durationMs": 300, "loop": false },
+    { "id": "heavy-hit", "durationMs": 520, "loop": false },
+    { "id": "weakness", "durationMs": 500, "loop": false },
+    { "id": "comeback", "durationMs": 500, "loop": false },
+    { "id": "grammar-mistake", "durationMs": 520, "loop": false }
+  ]
+}

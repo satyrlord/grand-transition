@@ -3,7 +3,7 @@ import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
 import { createMatchHistoryEntry } from '../../src/persistence/match-history';
 import { page } from 'vitest/browser';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { registerGrandTransitionTitle } from '../../src/app/screens/title-screen';
 import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal';
 import type { GrandTransitionApp } from '../../src/app/app-shell';
@@ -26,6 +26,26 @@ test('renders the title screen in a real browser', async () => {
   await expect
     .element(page.getByRole('button', { name: 'Set up match' }))
     .toBeVisible();
+});
+
+test('selects the manifest AVIF emblem and decodes WebP when AVIF is unsupported', async () => {
+  document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
+  await vi.waitFor(() => expect(document.querySelector('.title-emblem')).not.toBeNull());
+  const image = document.querySelector<HTMLImageElement>('.title-emblem')!;
+  expect(image.getAttribute('width')).toBe('640');
+  expect(image.getAttribute('height')).toBe('640');
+  await vi.waitFor(() => {
+    expect(image.currentSrc).toContain('.avif');
+    expect(image.complete && image.naturalWidth > 0).toBe(true);
+  });
+  const picture = image.parentElement!;
+  picture.querySelector<HTMLSourceElement>('[type="image/avif"]')!.type = 'image/unsupported-avif';
+  await vi.waitFor(() => {
+    expect(image.currentSrc).toContain('.webp');
+    expect(image.complete && image.naturalWidth > 0).toBe(true);
+  });
+  expect(image.naturalWidth).toBe(640);
+  document.body.innerHTML = '';
 });
 
 test('uses the match-owned feature and interface fonts', async () => {

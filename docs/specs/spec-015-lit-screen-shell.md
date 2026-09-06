@@ -25,10 +25,10 @@ direction. Setup uses native controls and prevents only invalid combinations.
 Mirror characters are valid. Screens use light DOM.
 
 The title emblem uses genuine transparent alpha with a Portable Network
-Graphics fallback. Chromium uses a 640-square WebP runtime variant. The title
-proscenium also uses a WebP runtime variant with its authored Portable Network
-Graphics fallback. The production entry preloads both WebP files before the
-application module.
+Graphics fallback. Milestone 023 promotes the 640-square emblem and the title
+proscenium to manifest-resolved AVIF and WebP variants. Both retain their
+authored PNG fallback. The production entry preloads both AVIF files before
+the application module. Browsers without AVIF support use WebP.
 
 Their combined runtime size is at most 300 KiB. Markup
 reserves the emblem's square dimensions before decode. Until the emblem loads,
@@ -163,7 +163,7 @@ hide validation.
   other superseded entry-screen fonts are not production dependencies or
   computed entry-screen families. The emblem has genuine transparent outer
   corners and no visible rectangular matte. Production preloads and renders the
-  two WebP title assets, reserves emblem dimensions, and keeps their combined
+  two preferred-format title assets, reserves emblem dimensions, and keeps their combined
   runtime size at or below 300 KiB. A delayed emblem shows the brass loading
   poster and then replaces it without layout shift.
 - **AC-015-10:** Every roster item has a computed 3:4 frame. Each human or fully

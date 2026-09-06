@@ -1,8 +1,8 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { msg } from '@lit/localize';
 import { englishGameLocale } from '../../game-content';
-import emblemFallbackUrl from '../../assets/brand/grand-transition-emblem.png';
-import emblemWebpUrl from '../../assets/brand/grand-transition-emblem-640.webp';
+import { styleMap } from 'lit/directives/style-map.js';
+import { brandImageSet, resolveBrandAsset } from '../brand-assets';
 import type {
   MatchHistoryEntry,
   MatchHistoryFailureCode,
@@ -13,6 +13,8 @@ import './match-history-modal';
 import './settings-modal';
 
 const elementName = 'grand-transition-title';
+const emblem = resolveBrandAsset('grand-transition-emblem');
+const proscenium = resolveBrandAsset('title-proscenium-background');
 export const showSetupEventName = 'show-setup';
 export const showMatchHistoryEventName = 'show-match-history';
 export const showSettingsEventName = 'show-settings';
@@ -71,17 +73,19 @@ export class GrandTransitionTitle extends LitElement {
 
   protected override render() {
     return html`
-      <main class="title-screen" aria-labelledby="game-title">
+      <main class="title-screen" aria-labelledby="game-title"
+        style=${styleMap({ '--title-scene-image': brandImageSet(proscenium) })}>
         <div class="title-proscenium" aria-hidden="true"></div>
         <p class="broadcast-channel">${msg('Channel 3')}</p>
         <header class="title-marquee">
           <div class="title-emblem-frame">
             <span class="title-emblem-poster" aria-hidden="true"></span>
             <picture class="title-emblem-picture">
-              <source srcset=${emblemWebpUrl} type="image/webp" />
+              <source srcset=${emblem.avif} type="image/avif" />
+              <source srcset=${emblem.webp} type="image/webp" />
               <img
                 class="title-emblem"
-                src=${emblemFallbackUrl}
+                src=${emblem.png}
                 alt=""
                 width="640"
                 height="640"

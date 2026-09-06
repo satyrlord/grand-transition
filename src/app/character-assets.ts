@@ -68,6 +68,7 @@ type ManifestAsset = {
 };
 
 export const characterImageSizes = '(max-width: 1100px) 320px, 640px';
+export const matchCharacterImageSizes = 'min(80svh, 60vw)';
 
 export const characterAssetManifest: readonly CharacterAsset[] = Object.freeze(
   readManifestAssets(characterManifest).map(createCharacterAsset),
@@ -202,11 +203,13 @@ function createCharacterAsset(asset: ManifestAsset): CharacterAsset {
   });
 }
 
-function createSource(
+export function createSource(
   variants: readonly CharacterAssetVariant[],
   format: CharacterVariantFormat,
 ): CharacterAssetSource {
-  const selected = variants.filter((variant) => variant.format === format);
+  const selected = variants
+    .filter((variant) => variant.format === format)
+    .toSorted((left, right) => left.width - right.width);
   return Object.freeze({
     format,
     mimeType: `image/${format}`,

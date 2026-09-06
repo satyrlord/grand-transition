@@ -2,6 +2,7 @@ import { page } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
 import { GrandTransitionApp } from '../../src/app/app-shell';
+import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
 import {
   automaticAiBubbleRevealMs,
   GrandTransitionMatch,
@@ -12,6 +13,39 @@ import {
 afterEach(() => {
   vi.useRealTimers();
   document.body.innerHTML = '';
+});
+
+test.each(['manual', 'viewport'] as const)('discards an old portrait reaction after %s interruption', async (pauseMode) => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  match.snapshot = {
+    ...snapshot,
+    players: [
+      { ...snapshot.players[0], portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision } },
+      { ...snapshot.players[1], portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision } },
+    ],
+  };
+  await match.updateComplete;
+  expect(match.querySelectorAll('grand-transition-character')).toHaveLength(2);
+  const presenter = () => match.querySelector<GrandTransitionCharacter>('grand-transition-character')!;
+  expect(presenter().cue?.stateId).toBe('heavy-hit');
+  match.pauseMode = pauseMode;
+  await match.updateComplete;
+  expect(match.querySelector('grand-transition-character')).toBeNull();
+  match.pauseMode = 'running';
+  await match.updateComplete;
+  expect(presenter().cue?.stateId).toBe('idle');
+  match.snapshot = {
+    ...snapshot, revision: snapshot.revision + 1,
+    players: [
+      { ...snapshot.players[0], portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 } },
+      { ...snapshot.players[1], portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 } },
+    ],
+  };
+  await match.updateComplete;
+  expect(presenter().cue?.stateId).toBe('delivery');
+  expect(presenter().frames).toHaveLength(9);
+  expect(presenter().frames.every((frame) => frame.id.startsWith(snapshot.players[0].characterId))).toBe(true);
 });
 
 test('renders an immutable complete match snapshot and previews without changing it', async () => {
@@ -35,9 +69,21 @@ test('renders an immutable complete match snapshot and previews without changing
     ]),
   );
   const characterPictures = [
-    ...match.querySelectorAll<HTMLPictureElement>('.character-frame picture'),
+    ...match.querySelectorAll<HTMLPictureElement>('.character-frame [data-state-id="selection"] picture'),
   ];
   expect(characterPictures).toHaveLength(2);
+  const style = document.createElement('style');
+  style.textContent = matchScreenStyles;
+  document.head.append(style);
+  try {
+    const bluePicture = match.querySelector('.match-player[data-side="blue"] .character-state-layer')!;
+    const redPicture = match.querySelector('.match-player[data-side="red"] .character-state-layer')!;
+    expect(getComputedStyle(bluePicture).transform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
+    expect(getComputedStyle(redPicture).transform).toBe('none');
+    expect(getComputedStyle(bluePicture).pointerEvents).toBe('none');
+  } finally {
+    style.remove();
+  }
   for (const picture of characterPictures) {
     const source = picture.querySelector<HTMLSourceElement>('source')!;
     const image = picture.querySelector<HTMLImageElement>('img')!;
@@ -48,6 +94,7 @@ test('renders an immutable complete match snapshot and previews without changing
     expect(image.getAttribute('srcset')).toMatch(/128w.*960w/u);
     expect(image.getAttribute('width')).toBe('2048');
     expect(image.getAttribute('height')).toBe('2048');
+    expect(image.getAttribute('sizes')).toBe('min(80svh, 60vw)');
     await vi.waitFor(() => {
       expect(image.currentSrc).toContain('.avif');
       expect(image.complete).toBe(true);
@@ -296,10 +343,10 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
   expect(image.currentSrc).toContain('.webp');
 });
 
-test('decodes a character WebP when character AVIF is unsupported', async () => {
+test.each([['selection', 5], ['idle', 3]] as const)('decodes the %s character WebP when AVIF is unsupported', async (state, widths) => {
   const match = await startMatch();
   const picture = match.querySelector<HTMLPictureElement>(
-    '.character-frame picture',
+    `.character-frame [data-state-id="${state}"] picture`,
   )!;
   const avif = picture.querySelector<HTMLSourceElement>('source')!;
   const image = picture.querySelector<HTMLImageElement>('img')!;
@@ -309,7 +356,7 @@ test('decodes a character WebP when character AVIF is unsupported', async () => 
     .map((candidate) => candidate.trim().split(/\s+/u)[0])
     .filter((candidate): candidate is string => Boolean(candidate))
     .map((candidate) => new URL(candidate, window.location.href).href);
-  expect(expectedWebpUrls).toHaveLength(5);
+  expect(expectedWebpUrls).toHaveLength(widths);
 
   avif.type = 'image/unsupported-avif';
   image.src = '/missing-character-avif-fallback.webp';

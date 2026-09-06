@@ -11,13 +11,15 @@ import {
   sampleContent,
   type CharacterSkin,
 } from '../../game-content';
-import portraitFrameUrl from '../../assets/brand/politburo-portrait-frame.png';
+import { resolveBrandAsset } from '../brand-assets';
+import { createSource } from '../character-assets';
 import type { MatchMode } from '../../engine/match-lifecycle';
 import type { LadderProgress } from '../../engine/ladder';
 import { ladderDifficulty } from '../../engine/ladder';
 import type { LadderProgressFailureCode } from '../../persistence/ladder-progress';
 
 const elementName = 'grand-transition-setup';
+const portraitFrame = resolveBrandAsset('politburo-portrait-frame');
 const characterInspectorId = 'character-inspector';
 export const setupChangeEventName = 'setup-change';
 export const showTitleEventName = 'show-title';
@@ -599,13 +601,17 @@ export class GrandTransitionSetup extends LitElement {
             />
           </picture>
         </span>
+        <picture>
+        <source type="image/avif" srcset=${portraitFrame.avif} />
+        <source type="image/webp" srcset=${portraitFrame.webp} />
         <img
           class="roster-frame-overlay"
-          src=${portraitFrameUrl}
+          src=${portraitFrame.png}
           alt=""
           width="1086"
           height="1448"
         />
+        </picture>
         <span class="roster-markers" aria-hidden="true">
           ${
             playerOneSelected
@@ -1054,7 +1060,13 @@ function characterViews(): readonly CharacterView[] {
       id: character.id,
       species: character.species,
       name: gameMessage(character.nameKey),
-      portrait,
+      portrait: Object.freeze({
+        ...portrait,
+        sizes: '256px',
+        portraitUrl: portrait.webp?.variants.find((variant) => variant.width === 256)?.url ?? portrait.portraitUrl,
+        avif: portrait.avif ? createSource(portrait.avif.variants.filter((variant) => variant.width <= 256), 'avif') : null,
+        webp: portrait.webp ? createSource(portrait.webp.variants.filter((variant) => variant.width <= 256), 'webp') : null,
+      }),
       weaknessTags: character.weaknessTags,
     };
   });

@@ -14,13 +14,13 @@ to named brass, wood, cream, skin, oxide-red, or lamp shapes. No whole-image
 color tint.
 `;
 
-test('accepts a prompt with the shared color controls', async () => {
+test.each(['ungraded colors', 'ungraded foreground colors'])('accepts the shared controls with %s', async (control) => {
   const fixtureRoot = await mkdtemp(
     path.join(os.tmpdir(), 'grand-transition-prompt-pass-'),
   );
   try {
     const promptPath = path.join(fixtureRoot, 'valid.prompt.txt');
-    await writeFile(promptPath, validPrompt, 'utf8');
+    await writeFile(promptPath, validPrompt.replace('ungraded colors', control), 'utf8');
 
     await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).resolves.toMatchObject({
       stdout: expect.stringContaining('Generation prompt color validation passed'),
@@ -106,7 +106,7 @@ test('does not treat negative space as a negative lighting control', async () =>
   }
 }, 30_000);
 
-test('does not accept required positive controls inside a negative section', async () => {
+test.each(['ungraded colors', 'ungraded foreground colors'])('does not accept %s inside a negative section', async (control) => {
   const fixtureRoot = await mkdtemp(
     path.join(os.tmpdir(), 'grand-transition-prompt-negated-controls-'),
   );
@@ -114,7 +114,7 @@ test('does not accept required positive controls inside a negative section', asy
     const promptPath = path.join(fixtureRoot, 'negated-controls.prompt.txt');
     await writeFile(
       promptPath,
-      'Negative controls: avoid neutral sRGB white balance, ungraded colors, and warm color is local to named materials. No whole-image color tint.\n',
+      'Negative controls: avoid neutral sRGB white balance, ' + control + ', and warm color is local to named materials. No whole-image color tint.\n',
       'utf8',
     );
 

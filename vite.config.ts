@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { defineConfig, normalizePath, type Plugin } from 'vite';
 import { maximumGameLogBytes, writeGameLog } from './tools/game-log-writer.ts';
+import brandManifest from './src/assets/brand/brand-manifest.json' with { type: 'json' };
 
 export const productionContentSecurityPolicy = [
   "default-src 'self'",
@@ -32,6 +33,18 @@ export default defineConfig(({ command }) => ({
     },
   },
   plugins: [
+    {
+      name: 'brand-image-preloads',
+      transformIndexHtml: {
+        order: 'pre',
+        handler: () => brandManifest.assets.filter(({ id }) => id !== 'politburo-portrait-frame').map((asset) => ({
+          tag: 'link',
+          attrs: { rel: 'preload', as: 'image', type: 'image/avif', fetchpriority: 'high',
+            href: '/src/assets/brand/' + asset.variants.find(({ format }) => format === 'avif')!.path },
+          injectTo: 'head' as const,
+        })),
+      },
+    },
     characterPortraitFallbackPlugin(),
     ...(command === 'build'
       ? [

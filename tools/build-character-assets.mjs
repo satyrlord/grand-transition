@@ -22,7 +22,23 @@ const assetId = (fileName) => path.parse(fileName).name;
 const ownerId = (id) => id.split('--', 1)[0];
 const skinId = (id) => id.includes('--') ? id.slice(id.indexOf('--') + 2) : 'default';
 
-async function encodeVariant(input, width, format) {
+export async function readCharacterLayout(characterRoot, masterNames = CHARACTER_MASTER_NAMES) {
+  const layout = JSON.parse(await readFile(path.join(characterRoot, 'portrait-layout.json'), 'utf8'));
+  const ids = masterNames.map(assetId);
+  if (layout.schemaVersion !== 1 || !layout.portraits || Array.isArray(layout.portraits) ||
+    Object.keys(layout.portraits).length !== ids.length || Object.keys(layout.portraits).some((id) => !ids.includes(id))) {
+    throw new Error('Portrait layout must contain the exact source inventory.');
+  }
+  for (const id of ids) {
+    const entry = layout.portraits[id];
+    if (!entry || !['left', 'right'].includes(entry.facing) || !/^[a-f0-9]{64}$/u.test(entry.sourceSha256)) {
+      throw new Error(`${id}: missing or invalid reviewed facing metadata.`);
+    }
+  }
+  return layout.portraits;
+}
+
+export async function encodeVariant(input, width, format) {
   const pipeline = sharp(input).resize(width, width, { fit: 'contain', kernel: sharp.kernel.lanczos3 });
   return format === 'avif'
     ? pipeline.avif({ effort: 8, quality: QUALITY.avif }).toBuffer()
@@ -50,19 +66,22 @@ async function assertMasterSet(characterRoot, masterNames) {
   }
 }
 
-async function mapWithConcurrency(values, concurrency, work) {
+export async function mapWithConcurrency(values, concurrency, work) {
   const results = Array.from({ length: values.length });
   let nextIndex = 0;
+  let failure;
   async function worker() {
-    while (nextIndex < values.length) {
+    while (nextIndex < values.length && !failure) {
       const index = nextIndex;
       nextIndex += 1;
-      results[index] = await work(values[index]);
+      try { results[index] = await work(values[index]); }
+      catch (error) { failure ??= error; }
     }
   }
   await Promise.all(
     Array.from({ length: Math.min(concurrency, values.length) }, worker),
   );
+  if (failure) throw failure;
   return results;
 }
 
@@ -72,6 +91,13 @@ export async function buildCharacterAssets({
 } = {}) {
   const resolvedRoot = path.resolve(characterRoot);
   await assertMasterSet(resolvedRoot, masterNames);
+  const layout = await readCharacterLayout(resolvedRoot, masterNames);
+  const masters = await Promise.all(masterNames.map(async (fileName) => {
+    const id = assetId(fileName);
+    const { input } = await readMaster(resolvedRoot, fileName);
+    if (layout[id].sourceSha256 !== sha256(input)) throw new Error(`${id}: source changed after the facing review.`);
+    return { fileName, id, input };
+  }));
   const temporaryRoot = await mkdtemp(
     path.join(resolvedRoot, '.character-assets-build-'),
   );
@@ -79,11 +105,9 @@ export async function buildCharacterAssets({
   await mkdir(temporaryVariants, { recursive: true });
   try {
     const assets = await mapWithConcurrency(
-      masterNames,
+      masters,
       3,
-      async (fileName) => {
-      const id = assetId(fileName);
-      const { input } = await readMaster(resolvedRoot, fileName);
+      async ({ fileName, id, input }) => {
       const variants = await Promise.all(
         CHARACTER_VARIANT_SIZES.flatMap((width) =>
           CHARACTER_VARIANT_FORMATS.map(async (format) => {
@@ -110,6 +134,7 @@ export async function buildCharacterAssets({
         ownerType: 'character',
         ownerId: ownerId(id),
         skinId: skinId(id),
+        facing: layout[id].facing,
         stateId: 'selection',
         poseId: 'selection',
         expressionId: 'selection',

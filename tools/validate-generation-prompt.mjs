@@ -10,7 +10,7 @@ const requiredColorControls = [
   },
   {
     label: 'ungraded colors',
-    pattern: /ungraded\s+(?:color\s+)?(?:treatment|palette|colors?)/iu,
+    pattern: /ungraded\s+(?:foreground\s+)?(?:color\s+)?(?:treatment|palette|colors?)/iu,
     polarity: 'positive',
   },
   {

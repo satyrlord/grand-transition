@@ -1,4 +1,4 @@
-import { playwright } from '@vitest/browser-playwright';
+import { playwright, PlaywrightBrowserProvider } from '@vitest/browser-playwright';
 import { existsSync, readdirSync } from 'node:fs';
 import { createServer } from 'node:net';
 import path from 'node:path';
@@ -17,6 +17,7 @@ const browserApiPort = await findAvailableLoopbackPort();
 
 export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
+  optimizeDeps: { include: ['lit/directives/style-map.js'] },
   test: {
     include: [
       'tests/browser/**/*.browser.test.ts',
@@ -41,6 +42,16 @@ export default defineConfig({
     browser: {
       enabled: true,
       headless: true,
+      commands: {
+        setReducedMotion: async ({ provider, sessionId }, reduce: boolean) => {
+          if (!(provider instanceof PlaywrightBrowserProvider)) {
+            throw new Error('Reduced-motion evidence requires the configured Playwright provider.');
+          }
+          await provider.getPage(sessionId).emulateMedia({
+            reducedMotion: reduce ? 'reduce' : 'no-preference',
+          });
+        },
+      },
       api: {
         host: '127.0.0.1',
         port: browserApiPort,
