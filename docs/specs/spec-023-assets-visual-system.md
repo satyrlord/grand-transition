@@ -22,6 +22,8 @@ Keep the fixed 27-entry selection manifest as the baseline inventory. Store
 additional slice states separately from filename-discovered portrait skins.
 State art must not create extra setup skins or enter the fixed replacement
 inventory. The runtime resolves one character, selected skin, and named state.
+Vite emits state-manifest data in a separate JavaScript chunk. Every generated
+JavaScript chunk stays within the existing 500,000-byte production gate.
 The remaining roster uses its existing selection portrait until Milestone 031.
 
 The roster requests only the 128- and 256-pixel portrait variants. Selected
@@ -29,10 +31,20 @@ setup stages can request larger selection art. Match image size hints match
 the reserved portrait plane, min(80svh, 60vw), so supported viewports do not
 use the roster or setup hint for a larger match image.
 
-Canonical character state drawings face right. The right-player portrait layer
-mirrors the drawing horizontally so that both opponents face the confrontation.
-Mirror the image layer independently of the reaction transform. Keep text,
-controls, and scene layers in their normal orientation.
+`src/assets/characters/portrait-layout.json` records each baseline source's
+reviewed left or right facing direction and source hash. The builder rejects
+missing, invalid, or stale layout records and copies the facing direction into
+the selection manifest. Layout records do not create skins; filename discovery
+still owns the skin catalog. State drawings share their selected skin's facing
+direction. A later unmanifested interim portrait uses the right-facing default
+until Milestone 031 promotes it.
+
+Setup stages and matches mirror the drawing when its source direction differs
+from the opponent's direction. Both opponents face the confrontation. Mirror
+the drawing layer independently of the reaction transform. Recoil moves away
+from the opponent on either side, including when the source faces left. This
+also applies to selection-only fallback portraits and their turn-entry motion. Keep
+text, controls, and scene layers in their normal orientation.
 
 ## Deliver
 
@@ -338,6 +350,13 @@ playable body. It must not cover a playable face, signature hand gesture, or
 required prop. Hypertext Markup Language (HTML) content must also stay outside
 those three playable-character features.
 
+Render each foreground plate in two complementary clipped planes using the
+same asset, dimensions, and responsive crop. The upper plane ends at the
+62-percent desk-top line and renders behind playable characters. The lower
+plane starts at that line and renders in front of their lower bodies. Thus
+desk bottles and microphones cannot cover a required hand or character prop.
+Both planes remain pointer-inert and reuse the same runtime image request.
+
 Use 20 percent of master width and 34 percent of master height as the normal
 left-player face center. Mirror it at 80 percent of master width for the right
 player. Protect the left face rectangle from 14 through 26 percent of width and
@@ -447,6 +466,13 @@ equal amounts from the left and right decorative bleed. At 4:3, remove the full
 12.5 percent from each side. Do not use letterboxing or crop inside the
 protected core at any named acceptance viewport.
 
+For ratios wider than 16:9, scale all scene planes uniformly to viewport
+width and center the vertical crop. Keep the back, ambience, props, and
+foreground aligned without side bars or image distortion. Keep portrait size
+based on viewport height and horizontal portrait anchors based on scene width.
+Move and shorten the speech record above the cropped moderator face region.
+Verify coverage at 2560 by 1080, 3424 by 1427, and 5120 by 1440.
+
 For a supported landscape ratio narrower than 4:3, fit the protected 4:3 core
 to the full viewport width. Do not crop its left or right edge. Fill the extra
 height with authored scene continuation instead of black bars or repeated
@@ -521,7 +547,10 @@ combination is implementation evidence, not visual authority.
 The implementation uses `@fontsource/poiret-one`,
 `@fontsource-variable/nunito`, `@fontsource-variable/rubik`, and
 `@fontsource/share-tech-mono`. Each package includes the SIL Open Font License
-1.1. Poiret One uses its Basic Latin subset. Nunito and Rubik load Basic Latin
+1.1. Preserve each package's complete notice under `public/licenses/fonts/`
+and ship it unchanged in `dist/licenses/fonts/`. Disable Git newline conversion
+for these notices so Windows checkouts preserve the package bytes.
+Poiret One uses its Basic Latin subset. Nunito and Rubik load Basic Latin
 and Latin Extended coverage through Fontsource subset declarations. The feature,
 speech, and interface metric fallback is Arial and then sans-serif. The timer
 fallback is Cascadia Mono, Consolas, and then monospace.

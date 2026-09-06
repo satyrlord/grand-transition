@@ -21,7 +21,7 @@ import { characterSkins, sampleContent } from '../game-content';
 import { deepFreeze } from './deep-freeze';
 import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
 import { resolveCharacterFrames } from './character-state-assets';
-import { matchCharacterImageSizes } from './character-assets';
+import { matchCharacterImageSizes, type CharacterFacing } from './character-assets';
 import {
   resolveSceneAsset,
   sceneImageSizes,
@@ -61,6 +61,7 @@ export type MatchPlayerView = Readonly<{
   portraitWidth: 2048;
   portraitHeight: 2048;
   portraitCue: CharacterCue;
+  portraitFacing: CharacterFacing;
   portraitFrames: readonly CharacterFrame[] | null;
   pride: number;
   isActive: boolean;
@@ -285,6 +286,7 @@ export function createMatchScreenSnapshot(
       portraitWidth: skin.width,
       portraitHeight: skin.height,
       portraitCue: projectCharacterCue(state, playerId, arenaReaction, reviewResolution),
+      portraitFacing: skin.facing,
       portraitFrames: resolveCharacterFrames(player.characterId, skin.id),
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
       isActive: playerId === activePlayerId,

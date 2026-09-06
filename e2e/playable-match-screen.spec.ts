@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
 const sceneVariantDimensions = [
   [640, 360],
@@ -73,12 +74,17 @@ test('the longest desktop match state fits and exposes every required fact', asy
         .getBoundingClientRect();
       const name = player.querySelector('h2')!;
       const nameBox = name.getBoundingClientRect();
+      const nameText = document.createRange();
+      nameText.selectNodeContents(name);
+      const textBox = nameText.getBoundingClientRect();
       return {
         noOverlap: hud.bottom <= portrait.top + 1,
-        singleLineName:
+        completeTwoLineName:
           name.scrollWidth <= name.clientWidth + 1 &&
-          nameBox.height <=
-            Number.parseFloat(getComputedStyle(name).lineHeight) + 1,
+          name.scrollHeight <= name.clientHeight + 1 &&
+          textBox.top >= nameBox.top - 1 && textBox.bottom <= nameBox.bottom + 1 &&
+          textBox.height <= 2 * Number.parseFloat(getComputedStyle(name).lineHeight) + 1 &&
+          getComputedStyle(name).textOverflow !== 'ellipsis',
         filter: getComputedStyle(player.querySelector('.character-portrait')!)
           .filter,
         state: player.getAttribute('data-turn-state'),
@@ -86,8 +92,8 @@ test('the longest desktop match state fits and exposes every required fact', asy
     }),
   );
   expect(
-    playerSeparation.every(({ noOverlap, singleLineName }) =>
-      Boolean(noOverlap && singleLineName),
+    playerSeparation.every(({ noOverlap, completeTwoLineName }) =>
+      Boolean(noOverlap && completeTwoLineName),
     ),
   ).toBe(true);
   expect(
@@ -270,10 +276,15 @@ test('the longest desktop match state fits and exposes every required fact', asy
     await page.locator('.match-player h2').evaluateAll((headings) =>
       headings.every((heading) => {
         const box = heading.getBoundingClientRect();
+        const range = document.createRange();
+        range.selectNodeContents(heading);
+        const textBox = range.getBoundingClientRect();
         return (
           heading.scrollWidth <= heading.clientWidth + 1 &&
-          box.height <=
-            Number.parseFloat(getComputedStyle(heading).lineHeight) + 1
+          heading.scrollHeight <= heading.clientHeight + 1 &&
+          textBox.top >= box.top - 1 && textBox.bottom <= box.bottom + 1 &&
+          textBox.height <= 2 * Number.parseFloat(getComputedStyle(heading).lineHeight) + 1 &&
+          getComputedStyle(heading).textOverflow !== 'ellipsis'
         );
       }),
     ),
@@ -334,6 +345,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
     portrait: Number(
       getComputedStyle(document.querySelector('.character-portrait')!).zIndex,
     ),
+    props: Number(getComputedStyle(document.querySelector('.broadcast-stage-props')!).zIndex),
     foreground: Number(
       getComputedStyle(document.querySelector('.broadcast-stage-foreground')!)
         .zIndex,
@@ -343,8 +355,22 @@ test('the longest desktop match state fits and exposes every required fact', asy
     ),
   }));
   expect(sceneStack.background).toBeLessThan(sceneStack.portrait);
+  expect(sceneStack.props).toBeLessThan(sceneStack.portrait);
   expect(sceneStack.portrait).toBeLessThan(sceneStack.foreground);
   expect(sceneStack.foreground).toBeLessThan(sceneStack.playerHud);
+  const splitPlate = await page.evaluate(() => {
+    const props = document.querySelector<HTMLImageElement>('.broadcast-stage-props')!;
+    const desks = document.querySelector<HTMLImageElement>('.broadcast-stage-foreground')!;
+    return {
+      sharedResource: props.currentSrc === desks.currentSrc,
+      sameGeometry: JSON.stringify(props.getBoundingClientRect()) === JSON.stringify(desks.getBoundingClientRect()),
+      propsClip: getComputedStyle(props).clipPath,
+      desksClip: getComputedStyle(desks).clipPath,
+      inert: [props, desks].every((image) => getComputedStyle(image).pointerEvents === 'none'),
+    };
+  });
+  expect(splitPlate).toEqual({ sharedResource: true, sameGeometry: true,
+    propsClip: 'inset(0px 0px 38%)', desksClip: 'inset(62% 0px 0px)', inert: true });
   expect(
     await page.evaluate(() => {
       const background = document
@@ -448,6 +474,7 @@ test('the gray waiting bubble always reveals and fits its complete sentence', as
   await expect(ellipsis).toBeVisible();
 
   for (const viewport of [
+    { width: 1024, height: 1023 },
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
@@ -658,10 +685,15 @@ test('the selected roster characters load their local portrait assets', async ({
     await page.locator('.match-player h2').evaluateAll((headings) =>
       headings.every((heading) => {
         const box = heading.getBoundingClientRect();
+        const range = document.createRange();
+        range.selectNodeContents(heading);
+        const textBox = range.getBoundingClientRect();
         return (
           heading.scrollWidth <= heading.clientWidth + 1 &&
-          box.height <=
-            Number.parseFloat(getComputedStyle(heading).lineHeight) + 1
+          heading.scrollHeight <= heading.clientHeight + 1 &&
+          textBox.top >= box.top - 1 && textBox.bottom <= box.bottom + 1 &&
+          textBox.height <= 2 * Number.parseFloat(getComputedStyle(heading).lineHeight) + 1 &&
+          getComputedStyle(heading).textOverflow !== 'ellipsis'
         );
       }),
     ),
@@ -688,145 +720,148 @@ test('the selected roster characters load their local portrait assets', async ({
   ).toBe(true);
 });
 
-test('the selected modern debate studio loads both local scene layers', async ({
-  page,
-}, testInfo) => {
-  await page.addInitScript(() => {
-    const state = window as typeof window & {
-      __sceneCumulativeLayoutShift: number;
-    };
-    state.__sceneCumulativeLayoutShift = 0;
-    new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        const shift = entry as PerformanceEntry & {
-          hadRecentInput: boolean;
-          value: number;
-        };
-        if (!shift.hadRecentInput) {
-          state.__sceneCumulativeLayoutShift += shift.value;
-        }
-      }
-    }).observe({ buffered: true, type: 'layout-shift' });
-  });
-  const sceneVariantRequests: string[] = [];
-  page.on('request', (request) => {
-    if (/\/assets\/(?:modern-debate|transition-era)-.*\.(?:avif|webp)(?:$|[?#])/u.test(request.url())) {
-      sceneVariantRequests.push(request.url());
-    }
-  });
-  await page.reload();
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByLabel('Scene').selectOption('modern-debate-studio');
-  expect(sceneVariantRequests).toEqual([]);
-  await page.getByRole('button', { name: 'Start match' }).click();
-  await expect(
-    page.getByRole('heading', { name: /Round 1.*turn/u }),
-  ).toBeVisible();
-
-  const background = page.locator(
-    '.broadcast-stage-art[data-scene-asset="modern-debate-studio"]',
-  );
-  const foreground = page.locator(
-    '.broadcast-stage-foreground[data-scene-asset="modern-debate-studio-desks"]',
-  );
-  await expect(background).toBeVisible();
-  await expect(foreground).toBeVisible();
-  expect(
-    await page.locator(
-      'picture[data-scene-asset="modern-debate-studio"] source',
-    ).evaluateAll((sources) =>
-      sources.map((source) => (source as HTMLSourceElement).type),
-    ),
-  ).toEqual(['image/avif', 'image/webp']);
-  expect(await background.getAttribute('src')).toContain('.webp');
-  expect(await background.getAttribute('src')).not.toContain('.png');
-  expect(await background.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
-  expect(await foreground.getAttribute('src')).toContain('.webp');
-  expect(await foreground.getAttribute('src')).not.toContain('.png');
-  expect(await foreground.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
-  const manifestGeometry = await page
-    .locator('picture[data-scene-asset="modern-debate-studio"]')
-    .evaluate((picture) => ({
-      cropCore: picture.getAttribute('data-scene-crop-core'),
-      safeRectangles: picture.getAttribute('data-scene-safe-rectangles'),
-      styleCoreWidth: getComputedStyle(
-        picture.querySelector('img')!,
-      ).getPropertyValue('--scene-crop-core-width'),
-    }));
-  expect(manifestGeometry.cropCore).toContain('"width":0.75');
-  expect(manifestGeometry.safeRectangles).toContain('centralInteraction');
-  expect(manifestGeometry.styleCoreWidth).toBe('0.75');
-  await expect
-    .poll(
-      () =>
-        background.evaluate(
-          (image: HTMLImageElement) =>
-            image.complete &&
-            image.getAttribute('width') === '1920' &&
-            image.getAttribute('height') === '1080',
-        ),
-      { timeout: 15_000 },
-    )
-    .toBe(true);
-  await expectDecodedSceneVariant(background);
-  await expect
-    .poll(() =>
-      foreground.evaluate(
-        (image: HTMLImageElement) =>
-          image.complete &&
-          image.getAttribute('width') === '1920' &&
-          image.getAttribute('height') === '1080',
-      ),
-    )
-    .toBe(true);
-  await expectDecodedSceneVariant(foreground);
-
-  await expect
-    .poll(() => background.evaluate((image: HTMLImageElement) => image.currentSrc))
-    .toMatch(/\.avif(?:$|[?#])/u);
-  await expect.poll(() => sceneVariantRequests.length).toBe(2);
-  expect(
-    sceneVariantRequests.every((url) => url.includes('modern-debate-studio')),
-  ).toBe(true);
-  await page.waitForLoadState('networkidle');
-  expect(
-    await page.evaluate(
-      () =>
-        (
-          window as typeof window & {
-            __sceneCumulativeLayoutShift: number;
-          }
-        ).__sceneCumulativeLayoutShift,
-    ),
-  ).toBeLessThanOrEqual(0.05);
-
-  const [foregroundAlpha] = await portraitAlphaFacts(foreground);
-  expect(foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0)).toBe(true);
-  expect(foregroundAlpha?.chromaKeyGreenRatio).toBeLessThan(0.001);
-  expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
-  expectDeskPlateBounds(foregroundAlpha);
-  await expect
-    .poll(
-      () =>
-        page.locator('.character-portrait').evaluateAll((portraits) =>
-          portraits.every(
-            (portrait) =>
-              (portrait as HTMLImageElement).complete &&
-              (portrait as HTMLImageElement).naturalWidth > 0,
-          ),
-        ),
-      { timeout: 15_000 },
-    )
-    .toBe(true);
-
-  for (const viewport of [
+for (const viewport of [
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
     { width: 1280, height: 1024 },
+    { width: 2560, height: 1080 },
+    { width: 3424, height: 1427 },
+    { width: 5120, height: 1440 },
   ]) {
+  test(`the selected modern debate studio loads both local scene layers at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }, testInfo) => {
+    await page.addInitScript(() => {
+      const state = window as typeof window & {
+        __sceneCumulativeLayoutShift: number;
+      };
+      state.__sceneCumulativeLayoutShift = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const shift = entry as PerformanceEntry & {
+            hadRecentInput: boolean;
+            value: number;
+          };
+          if (!shift.hadRecentInput) {
+            state.__sceneCumulativeLayoutShift += shift.value;
+          }
+        }
+      }).observe({ buffered: true, type: 'layout-shift' });
+    });
+    const sceneVariantRequests: string[] = [];
+    page.on('request', (request) => {
+      if (/\/assets\/(?:modern-debate|transition-era)-.*\.(?:avif|webp)(?:$|[?#])/u.test(request.url())) {
+        sceneVariantRequests.push(request.url());
+      }
+    });
+    await page.reload();
+    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByLabel('Scene').selectOption('modern-debate-studio');
+    expect(sceneVariantRequests).toEqual([]);
+    await page.getByRole('button', { name: 'Start match' }).click();
+    await expect(
+      page.getByRole('heading', { name: /Round 1.*turn/u }),
+    ).toBeVisible();
+
+    const background = page.locator(
+      '.broadcast-stage-art[data-scene-asset="modern-debate-studio"]',
+    );
+    const foreground = page.locator(
+      '.broadcast-stage-foreground[data-scene-asset="modern-debate-studio-desks"]',
+    );
+    await expect(background).toBeVisible();
+    await expect(foreground).toBeVisible();
+    expect(
+      await page.locator(
+        'picture[data-scene-asset="modern-debate-studio"] source',
+      ).evaluateAll((sources) =>
+        sources.map((source) => (source as HTMLSourceElement).type),
+      ),
+    ).toEqual(['image/avif', 'image/webp']);
+    expect(await background.getAttribute('src')).toContain('.webp');
+    expect(await background.getAttribute('src')).not.toContain('.png');
+    expect(await background.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+    expect(await foreground.getAttribute('src')).toContain('.webp');
+    expect(await foreground.getAttribute('src')).not.toContain('.png');
+    expect(await foreground.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+    const manifestGeometry = await page
+      .locator('picture[data-scene-asset="modern-debate-studio"]')
+      .evaluate((picture) => ({
+        cropCore: picture.getAttribute('data-scene-crop-core'),
+        safeRectangles: picture.getAttribute('data-scene-safe-rectangles'),
+        styleCoreWidth: getComputedStyle(
+          picture.querySelector('img')!,
+        ).getPropertyValue('--scene-crop-core-width'),
+      }));
+    expect(manifestGeometry.cropCore).toContain('"width":0.75');
+    expect(manifestGeometry.safeRectangles).toContain('centralInteraction');
+    expect(manifestGeometry.styleCoreWidth).toBe('0.75');
+    await expect
+      .poll(
+        () =>
+          background.evaluate(
+            (image: HTMLImageElement) =>
+              image.complete &&
+              image.getAttribute('width') === '1920' &&
+              image.getAttribute('height') === '1080',
+          ),
+        { timeout: 15_000 },
+      )
+      .toBe(true);
+    await expectDecodedSceneVariant(background);
+    await expect
+      .poll(() =>
+        foreground.evaluate(
+          (image: HTMLImageElement) =>
+            image.complete &&
+            image.getAttribute('width') === '1920' &&
+            image.getAttribute('height') === '1080',
+        ),
+      )
+      .toBe(true);
+    await expectDecodedSceneVariant(foreground);
+
+    await expect
+      .poll(() => background.evaluate((image: HTMLImageElement) => image.currentSrc))
+      .toMatch(/\.avif(?:$|[?#])/u);
+    await expect.poll(() => sceneVariantRequests.length).toBe(2);
+    expect(
+      sceneVariantRequests.every((url) => url.includes('modern-debate-studio')),
+    ).toBe(true);
+    await page.waitForLoadState('networkidle');
+    expect(
+      await page.evaluate(
+        () =>
+          (
+            window as typeof window & {
+              __sceneCumulativeLayoutShift: number;
+            }
+          ).__sceneCumulativeLayoutShift,
+      ),
+    ).toBeLessThanOrEqual(0.05);
+
+    const [foregroundAlpha] = await portraitAlphaFacts(foreground);
+    expect(foregroundAlpha?.cornerAlpha.every((alpha) => alpha === 0)).toBe(true);
+    expect(foregroundAlpha?.chromaKeyGreenRatio).toBeLessThan(0.001);
+    expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
+    expectDeskPlateBounds(foregroundAlpha);
+    await expect
+      .poll(
+        () =>
+          page.locator('.character-portrait').evaluateAll((portraits) =>
+            portraits.every(
+              (portrait) =>
+                (portrait as HTMLImageElement).complete &&
+                (portrait as HTMLImageElement).naturalWidth > 0,
+            ),
+          ),
+        { timeout: 15_000 },
+      )
+      .toBe(true);
+
     await page.setViewportSize(viewport);
     await decodeImages(
       page.locator(
@@ -919,8 +954,8 @@ test('the selected modern debate studio loads both local scene layers', async ({
       ),
       fullPage: true,
     });
-  }
-});
+  });
+}
 
 test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
   await startMatch(page);
@@ -948,10 +983,18 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
     { width: 1280, height: 1024 },
+    { width: 2560, height: 1080 },
+    { width: 3424, height: 1427 },
+    { width: 5120, height: 1440 },
   ]) {
     await page.setViewportSize(viewport);
-    await decodeImages(page.locator('.broadcast-stage-art, .character-frame img'));
-    const composition = await page.evaluate(() => {
+    const composition = await page.evaluate(async () => {
+      // Let responsive source selection use the new viewport, then decode and
+      // measure in the same browser task so another source update cannot race it.
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      await Promise.all([...document.querySelectorAll<HTMLImageElement>(
+        '.broadcast-stage-art, .character-frame img',
+      )].map((image) => image.decode()));
       const stage = document
         .querySelector('.broadcast-stage')!
         .getBoundingClientRect();
@@ -1204,83 +1247,87 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   });
 });
 
-test('the match fits the supported landscape matrix', async ({
-  page,
-}, testInfo) => {
-  await startMatch(page);
-  await page.evaluate(async () => document.fonts.ready);
-
-  const fontEvidence = await page.evaluate(async () => {
-    await Promise.all([
-      document.fonts.load('400 24px "Poiret One"', 'THUNDER'),
-      document.fonts.load(
-        '900 24px "Nunito Variable"',
-        'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
-      ),
-      document.fonts.load(
-        '700 16px "Rubik Variable"',
-        'o ordonanță de urgență',
-      ),
-      document.fonts.load('400 24px "Share Tech Mono"', '00:30'),
-    ]);
-    return {
-      feature: getComputedStyle(document.querySelector('.match-player h2')!)
-        .fontFamily,
-      speech: getComputedStyle(document.querySelector('.sentence-preview')!)
-        .fontFamily,
-      phrase: getComputedStyle(document.querySelector('.card-phrase')!)
-        .fontFamily,
-      timer: getComputedStyle(document.querySelector('.timer-fact dd')!)
-        .fontFamily,
-      loaded: {
-        feature: document.fonts.check('400 24px "Poiret One"', 'THUNDER'),
-        speech: document.fonts.check(
-          '900 24px "Nunito Variable"',
-          'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
-        ),
-        phrase: document.fonts.check(
-          '700 16px "Rubik Variable"',
-          'o ordonanță de urgență',
-        ),
-        timer: document.fonts.check('400 24px "Share Tech Mono"', '00:30'),
-      },
-    };
-  });
-  expect(fontEvidence.feature).toContain('Poiret One');
-  expect(fontEvidence.speech).toContain('Nunito Variable');
-  expect(fontEvidence.phrase).toContain('Rubik Variable');
-  expect(fontEvidence.timer).toContain('Share Tech Mono');
-  expect(Object.values(fontEvidence.loaded).every(Boolean)).toBe(true);
-
-  const longSentence = [
-    'A NATIONAL-SALVATION COMMITTEE REPACKAGES AN INFRASTRUCTURE FEASIBILITY STUDY',
-    'DURING THE NIGHT, AS THIEVES, BEFORE THE MICROPHONES COOL',
-    'AND A COUNTY-COUNCIL MAJORITY COORDINATES A PUBLIC-PROCUREMENT FILE',
-    'THROUGH ANOTHER REFORM CYCLE, PENDING FURTHER CONSULTATION',
-  ].join(', ');
-  await page.mouse.move(0, 0);
-  await page
-    .locator('grand-transition-match')
-    .evaluate(async (element, sentence) => {
-      const match = element as HTMLElement & {
-        snapshot: Readonly<Record<string, unknown>> & { revision: number };
-        updateComplete: Promise<boolean>;
-      };
-      match.snapshot = {
-        ...match.snapshot,
-        revision: match.snapshot.revision + 1,
-        sentenceText: sentence,
-      };
-      await match.updateComplete;
-    }, longSentence);
-
-  for (const viewport of [
+for (const viewport of [
+    { width: 1024, height: 1023 },
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
     { width: 1280, height: 720 },
     { width: 1400, height: 1050 },
     { width: 1920, height: 1080 },
+    { width: 2560, height: 1080 },
+    { width: 3424, height: 1427 },
+    { width: 5120, height: 1440 },
   ]) {
+  test(`the match fits the supported landscape matrix at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }, testInfo) => {
+    await startMatch(page);
+    await page.evaluate(async () => document.fonts.ready);
+
+    const fontEvidence = await page.evaluate(async () => {
+      await Promise.all([
+        document.fonts.load('400 24px "Poiret One"', 'THUNDER'),
+        document.fonts.load(
+          '900 24px "Nunito Variable"',
+          'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
+        ),
+        document.fonts.load(
+          '700 16px "Rubik Variable"',
+          'o ordonanță de urgență',
+        ),
+        document.fonts.load('400 24px "Share Tech Mono"', '00:30'),
+      ]);
+      return {
+        feature: getComputedStyle(document.querySelector('.match-player h2')!)
+          .fontFamily,
+        speech: getComputedStyle(document.querySelector('.sentence-preview')!)
+          .fontFamily,
+        phrase: getComputedStyle(document.querySelector('.card-phrase')!)
+          .fontFamily,
+        timer: getComputedStyle(document.querySelector('.timer-fact dd')!)
+          .fontFamily,
+        loaded: {
+          feature: document.fonts.check('400 24px "Poiret One"', 'THUNDER'),
+          speech: document.fonts.check(
+            '900 24px "Nunito Variable"',
+            'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
+          ),
+          phrase: document.fonts.check(
+            '700 16px "Rubik Variable"',
+            'o ordonanță de urgență',
+          ),
+          timer: document.fonts.check('400 24px "Share Tech Mono"', '00:30'),
+        },
+      };
+    });
+    expect(fontEvidence.feature).toContain('Poiret One');
+    expect(fontEvidence.speech).toContain('Nunito Variable');
+    expect(fontEvidence.phrase).toContain('Rubik Variable');
+    expect(fontEvidence.timer).toContain('Share Tech Mono');
+    expect(Object.values(fontEvidence.loaded).every(Boolean)).toBe(true);
+
+    const longSentence = [
+      'A NATIONAL-SALVATION COMMITTEE REPACKAGES AN INFRASTRUCTURE FEASIBILITY STUDY',
+      'DURING THE NIGHT, AS THIEVES, BEFORE THE MICROPHONES COOL',
+      'AND A COUNTY-COUNCIL MAJORITY COORDINATES A PUBLIC-PROCUREMENT FILE',
+      'THROUGH ANOTHER REFORM CYCLE, PENDING FURTHER CONSULTATION',
+    ].join(', ');
+    await page.mouse.move(0, 0);
+    await page
+      .locator('grand-transition-match')
+      .evaluate(async (element, sentence) => {
+        const match = element as HTMLElement & {
+          snapshot: Readonly<Record<string, unknown>> & { revision: number };
+          updateComplete: Promise<boolean>;
+        };
+        match.snapshot = {
+          ...match.snapshot,
+          revision: match.snapshot.revision + 1,
+          sentenceText: sentence,
+        };
+        await match.updateComplete;
+      }, longSentence);
+
     await page.setViewportSize(viewport);
     await page.mouse.move(0, 0);
     await decodeImages(page.locator('.broadcast-stage-art'));
@@ -1362,13 +1409,51 @@ test('the match fits the supported landscape matrix', async ({
       ),
       fullPage: true,
     });
-  }
-});
+  });
+}
+
+for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+    { width: 3424, height: 1427 },
+    { width: 5120, height: 1440 },
+  ]) {
+  test(`grammar feedback stays below speech and expires without player input at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+    await useFixedBrowserMatchSeed(page);
+    await pauseMatchClock(page);
+    await page.goto('');
+    await page.setViewportSize(viewport);
+    await startMatch(page);
+    await page.locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]').first().click();
+    const strike = page.locator('.grammar-strike');
+    await expect(strike).toBeVisible();
+    const geometry = await page.evaluate(() => {
+      const speech = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
+      const strike = document.querySelector('.grammar-strike')!.getBoundingClientRect();
+      const tailHeight = parseFloat(getComputedStyle(document.querySelector('.sentence-ledger')!, '::after').height);
+      return {
+        belowSpeechAndTail: strike.top >= speech.bottom + tailHeight,
+        insideViewport: strike.left >= 0 && strike.right <= innerWidth && strike.bottom <= innerHeight,
+      };
+    });
+    expect(geometry, JSON.stringify(viewport)).toEqual({ belowSpeechAndTail: true, insideViewport: true });
+    if (viewport.width === 3424) {
+      await page.clock.runFor(550);
+      await page.screenshot({ path: testInfo.outputPath('grammar-toast-ultrawide.png'), animations: 'disabled' });
+    }
+    await page.clock.fastForward(3_000);
+    await expect(strike).toHaveCount(0);
+  });
+}
 
 test('pointer play completes redraw, an immediate grammar mistake, and the other hotseat side', async ({
   page,
 }, testInfo) => {
+  await pauseMatchClock(page);
   await startMatch(page);
+  await decodeImages(page.locator('.character-frame img'));
 
   const redraw = page.getByRole('button', {
     name: 'Reshuffle private phrases',
@@ -1380,7 +1465,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
 
   const wrongPredicate = page.locator(
     '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
-  );
+  ).first();
   await expect(wrongPredicate).toBeVisible();
   await wrongPredicate.click();
   const grammarStrike = page.locator('.grammar-strike');
@@ -1407,7 +1492,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
       .locator('.broadcast-stage')
       .evaluate((stage) => getComputedStyle(stage, '::before').animationName),
   ).toBe('grammar-arena-flash');
-  await page.waitForTimeout(550);
+  await page.clock.runFor(550);
   await page.screenshot({
     path: testInfo.outputPath('match-grammar-mistake.png'),
     fullPage: true,
@@ -1755,8 +1840,10 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
 test('the grammar strike fits the minimum landscape', async ({
   page,
 }, testInfo) => {
+  await pauseMatchClock(page);
   await page.setViewportSize({ width: 1024, height: 720 });
   await startMatch(page);
+  await decodeImages(page.locator('.character-frame img'));
 
   await page
     .locator(
@@ -1807,7 +1894,7 @@ test('the grammar strike fits the minimum landscape', async ({
       '.tutorial, .tactical-help, .card-hint, [data-tutorial], [data-guided-turn]',
     ),
   ).toHaveCount(0);
-  await page.waitForTimeout(550);
+  await page.clock.runFor(550);
   await page.screenshot({
     path: testInfo.outputPath('grammar-strike-1024x720.png'),
     fullPage: true,
@@ -1817,9 +1904,11 @@ test('the grammar strike fits the minimum landscape', async ({
 test('reduced motion keeps grammar feedback without movement or flashing', async ({
   page,
 }) => {
+  await pauseMatchClock(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1024, height: 720 });
   await startMatch(page);
+  await decodeImages(page.locator('.character-frame img'));
 
   await page
     .locator(
@@ -2155,6 +2244,11 @@ test('paused match returns to the menu only after confirmation', async ({
     page.getByRole('button', { name: 'Set up match' }),
   ).toBeVisible();
 });
+
+async function pauseMatchClock(page: Page): Promise<void> {
+  await page.clock.install({ time: new Date('2026-09-06T12:00:00Z') });
+  await page.clock.pauseAt(new Date('2026-09-06T12:01:00Z'));
+}
 
 async function startMatch(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Set up match' }).click();

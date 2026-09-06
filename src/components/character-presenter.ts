@@ -154,6 +154,7 @@ export class GrandTransitionCharacter extends LitElement {
         return html`<div class="character-state-frame"
           data-state-id=${frame.stateId} data-state-visible=${visible ? 'true' : 'false'}
           style=${styleMap({ '--character-duration': `${characterMotion[frame.stateId].durationMs}ms` })}>
+          <div class="character-state-drawing">
           <picture>
             ${this.webpOnly.has(frame.stateId) ? nothing : html`<source type="image/avif" srcset=${frame.avif.srcSet} sizes=${frame.sizes} />`}
             <source type="image/webp" srcset=${frame.webp.srcSet} sizes=${frame.sizes} />
@@ -166,6 +167,7 @@ export class GrandTransitionCharacter extends LitElement {
           </picture>
           ${decodedUrl ? html`<div class="character-state-upper" data-character-part="upper"
             style=${styleMap({ backgroundImage: `url("${decodedUrl}")` })}></div>` : nothing}
+          </div>
         </div>`;
       })}
     </div>`;

@@ -220,37 +220,35 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
 
 async function playHumanMatch(page: Page): Promise<string> {
   for (let step = 0; step < 1_500; step += 1) {
-    if (
-      await page
-        .getByRole('heading', { name: 'Victory' })
-        .isVisible()
-        .catch(() => false)
-    ) {
-      return page.locator('grand-transition-app').evaluate((element) => {
-        const app = element as HTMLElement & {
-          matchState?: { winner?: string };
-        };
-        return app.matchState?.winner ?? '';
-      });
+    const observed = await page.locator('grand-transition-app').evaluate((element) => {
+      const app = element as HTMLElement & { matchState?: MatchState };
+      return {
+        state: app.matchState ?? null,
+        reviewing: Boolean(app.querySelector('.round-review-primary')),
+        thinking: Boolean(app.querySelector('.ai-thinking-record')),
+      };
+    });
+    const state = observed.state;
+    if (state?.phase === 'results') {
+      await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
+      if (!state.winner) throw new Error('The completed test match has no winner.');
+      return state.winner;
     }
     const continueButton = page.getByRole('button', {
       name: 'Continue',
       exact: true,
     });
-    if (await continueButton.isVisible().catch(() => false)) {
+    if (observed.reviewing) {
       await continueButton.click();
       continue;
     }
     const thinking = page.locator('.ai-thinking-record');
-    if (await thinking.isVisible().catch(() => false)) {
+    if (observed.thinking) {
       await expect(thinking).toHaveCount(0, { timeout: 4_000 });
       continue;
     }
-    const state = await page.locator('grand-transition-app').evaluate((element) => {
-      const app = element as HTMLElement & { matchState?: MatchState };
-      return app.matchState ?? null;
-    });
-    if (state?.activePlayerId !== 'player-one') {
+    if (state?.activePlayerId !== 'player-one' ||
+      (state.phase !== 'drafting' && state.phase !== 'sudden-death')) {
       await page.waitForTimeout(10);
       continue;
     }

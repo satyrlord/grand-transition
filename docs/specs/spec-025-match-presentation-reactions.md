@@ -33,7 +33,10 @@ weakness. It must not give the reason that makes an action unavailable. It must
 not tell the player how to recover.
 
 Normal reactions last 150 through 600 milliseconds. A reaction can leave one
-compact public outcome record until the next accepted action. It must not stop
+compact public outcome record until the next accepted action. Grammar-mistake
+records instead use the bounded 3000-millisecond lifetime and interruption
+rules in Milestone 016. This limit also applies with reduced motion.
+It must not stop
 the timer, block a control, move layout, expose a private phrase, or add an
 intermediate surface. Each reaction uses one fixed motion sequence. When the
 browser requests reduced motion, keep the public outcome record and suppress

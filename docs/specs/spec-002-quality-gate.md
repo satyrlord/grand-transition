@@ -92,6 +92,12 @@ settle before teardown removes output. This changes no test timeout,
 assertion, coverage threshold, or inventory. End-to-end fixtures select one
 explicit card when a role can occur more than once and move the pointer to a
 neutral point before viewport geometry measurements.
+Playwright uses two local workers and one CI worker so concurrent raster
+decoding and screenshots do not starve the complete ladder flow. Each large
+viewport case has its own test budget. Transient reaction checks use a paused
+browser clock and advance it explicitly; they do not depend on host speed.
+Automated match drivers read lifecycle state and screen indicators together.
+They handle completed results before requesting another draft decision.
 The foundation scene browser test waits for image decoding before checking
 the selected source and decoded dimensions. Keep the default test timeout.
 

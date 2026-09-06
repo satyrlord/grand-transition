@@ -1,0 +1,2 @@
+# Preserve upstream font-license notices byte for byte on every platform.
+public/licenses/fonts/*.txt -text

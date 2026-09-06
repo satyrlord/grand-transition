@@ -60,6 +60,13 @@ owner, source, and license of each third-party asset before use. CC BY and
 CC0 licenses are accepted. NC licenses are accepted because the product is
 free and non-commercial.
 
+The four bundled font families use the SIL Open Font License 1.1. Their
+unchanged copyright and license notices ship under `licenses/fonts/` in the
+production build, from the matching files in `public/licenses/fonts/`.
+
 | Asset path | Owner | Source | License |
 | ---------- | ----- | ------ | ------- |
-| _none yet_ |       |        |         |
+| Poiret One WOFF2 | The Poiret One Project Authors | `@fontsource/poiret-one` | OFL-1.1 |
+| Nunito Variable WOFF2 | The Nunito Project Authors | `@fontsource-variable/nunito` | OFL-1.1 |
+| Rubik Variable WOFF2 | The Rubik Project Authors | `@fontsource-variable/rubik` | OFL-1.1 |
+| Share Tech Mono WOFF2 | Carrois Type Design | `@fontsource/share-tech-mono` | OFL-1.1 |

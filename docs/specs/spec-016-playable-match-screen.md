@@ -65,8 +65,9 @@ The match uses each player's setup skin ID only to select the portrait asset.
 Skin choice does not change character identity, phrases, weaknesses, grammar,
 scoring, match history identity, or any reducer input.
 
-Use one compact single-line archetype name, a visible Pride label, and a Pride
-bar for each portrait. Both top Pride frames are rectangular, with square
+Use one complete compact archetype name in the reserved two-line nameplate
+that Milestone 023 defines, a visible Pride label, and a Pride bar for each
+portrait. Both top Pride frames are rectangular, with square
 corners and parallel vertical ends. The compact strip can omit the leading
 article from the full English name. Text and controls must not intersect a face,
 hand, or required prop. The integrated composition must keep scene, opponents,
@@ -116,8 +117,15 @@ its grammar mistake immediately without a confirmation action.
 
 It also triggers one strong arena reaction. The offending portrait recoils,
 the Pride strip flashes, and a broadcast strike states the player name and
-exact 3 Pride loss. The reaction replaces the prior-exchange record until the
-next accepted match action. It does not block the timer, require confirmation,
+exact 3 Pride loss. Place the strike below the speech record and its tail;
+the two records must not overlap at supported landscape sizes, including
+ultrawide sizes. Remove the strike after 3000 milliseconds or the next accepted
+match action, whichever occurs first. Snapshot refreshes must not extend that
+duration. A new mistake starts a new duration. Pause, viewport interruption,
+round review, and disconnection discard the visible strike without replay.
+Reconnecting the same element must not retain the discarded strike or its
+stage and player reaction markers.
+It does not block the timer, require confirmation,
 or change the sentence. When the browser requests reduced motion, keep the
 complete strike record but suppress the recoil, flash, and transfer motion.
 
@@ -259,7 +267,8 @@ timer-refill abuse.
 
 - **AC-016-01:** The representative longest-content state fits at 1024 by 720,
   1280 by 720, and 1920 by 1080. It has no page scroll, overlap, clipping,
-  wrapped desktop archetype names, or hidden required action.
+  truncated archetype names, or hidden required action. Complete compact names
+  fit within the two lines that Milestone 023 reserves.
 - **AC-016-02:** Pointer controls dispatch each typed command once. Rapid
   activation cannot double-select a card.
 - **AC-016-03:** With Auto-complete On, phrase hover or focus changes only the
@@ -352,7 +361,9 @@ timer-refill abuse.
 - **AC-016-14:** A wrong common or private phrase triggers one 150 through
   600-millisecond arena reaction. It identifies the offending player and exact
   3 Pride loss, moves no layout, preserves immediate turn passage, and clears
-  on the next accepted action. Reduced-motion mode preserves the complete
+  after 3000 milliseconds or on the next accepted action, whichever is first.
+  The strike stays below the speech record and its tail without overlap.
+  Reduced-motion mode preserves the complete
   record without recoil, flashing, or transfer motion.
 - **AC-016-15:** Production source and DOM contain no tutorial, guided turn,
   tactical hint, card-role explanation, weakness explanation, disabled-action

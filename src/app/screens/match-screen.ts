@@ -34,6 +34,7 @@ export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
 export const automaticAiBubbleRevealMs = 4_000;
+export const grammarStrikeDurationMs = 3_000;
 
 export class GrandTransitionMatch extends LitElement {
   static properties = {
@@ -67,6 +68,9 @@ export class GrandTransitionMatch extends LitElement {
   private automaticRevealTimerId: number | undefined;
   private timerSequence = -1;
   private discardedPortraitSequence = -1;
+  private grammarStrikeTimerId: number | undefined;
+  private grammarStrikeSequence: number | undefined;
+  private expiredGrammarStrikeSequence: number | undefined;
   constructor() {
     super();
     this.pauseMode = 'running';
@@ -90,12 +94,17 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    this.clearGrammarStrike();
+    this.requestUpdate();
     this.stopTimer();
     this.clearAutomaticWaitingSentenceReveal();
     super.disconnectedCallback();
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('snapshot') || changed.has('pauseMode')) {
+      this.syncGrammarStrike();
+    }
     if (this.pauseMode !== 'running' && this.snapshot) {
       this.discardedPortraitSequence = this.snapshot.revision;
     }
@@ -184,7 +193,9 @@ export class GrandTransitionMatch extends LitElement {
       this.snapshot.sentenceText === msg('Select a noun to begin.')
         ? msg(`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
-    const arenaReaction = this.snapshot.arenaReaction;
+    const arenaReaction = this.snapshot.arenaReaction?.sequence === this.expiredGrammarStrikeSequence
+      ? null
+      : this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
     const backgroundLayers = this.snapshot.sceneLayers.filter(
       ({ depth }) => depth < 0.5,
@@ -287,9 +298,10 @@ export class GrandTransitionMatch extends LitElement {
               'blue',
               arenaReaction?.playerId === second.playerId,
             )}
-            ${foregroundLayers.map((layer) =>
-              this.renderSceneLayer(layer, 'broadcast-stage-foreground'),
-            )}
+            ${foregroundLayers.map((layer) => html`
+              ${this.renderSceneLayer(layer, 'broadcast-stage-props')}
+              ${this.renderSceneLayer(layer, 'broadcast-stage-foreground')}
+            `)}
           </section>
 
           <section
@@ -464,7 +476,9 @@ export class GrandTransitionMatch extends LitElement {
             >
           </div>
         </header>
-        <div class="character-frame" aria-hidden="true">
+        <div class="character-frame" aria-hidden="true"
+          data-source-facing=${player.portraitFacing}
+          data-mirrored=${(side === 'red' ? player.portraitFacing === 'left' : player.portraitFacing === 'right') ? 'true' : 'false'}>
           ${player.portraitFrames ? html`<grand-transition-character
             .frames=${player.portraitFrames}
             .cue=${player.portraitCue.sequence <= this.discardedPortraitSequence
@@ -590,6 +604,29 @@ export class GrandTransitionMatch extends LitElement {
         </section>
       </div>
     `;
+  }
+
+  private clearGrammarStrike(): void {
+    window.clearTimeout(this.grammarStrikeTimerId);
+    this.grammarStrikeTimerId = undefined;
+    this.expiredGrammarStrikeSequence = this.grammarStrikeSequence;
+  }
+
+  private syncGrammarStrike(): void {
+    const sequence = this.snapshot?.arenaReaction?.sequence;
+    if (this.pauseMode !== 'running' || this.snapshot?.roundReview || sequence === undefined) {
+      this.clearGrammarStrike();
+      this.grammarStrikeSequence = sequence;
+      this.expiredGrammarStrikeSequence = sequence;
+      return;
+    }
+    if (sequence === this.grammarStrikeSequence) return;
+    this.clearGrammarStrike();
+    this.grammarStrikeSequence = sequence;
+    this.grammarStrikeTimerId = window.setTimeout(() => {
+      this.clearGrammarStrike();
+      this.requestUpdate();
+    }, grammarStrikeDurationMs);
   }
 
   private renderArenaReaction(
@@ -1055,7 +1092,7 @@ export class GrandTransitionMatch extends LitElement {
 
   private renderSceneLayer(
     layer: MatchSceneLayerView,
-    imageClass: 'broadcast-stage-art' | 'broadcast-stage-foreground',
+    imageClass: 'broadcast-stage-art' | 'broadcast-stage-props' | 'broadcast-stage-foreground',
   ): TemplateResult {
     const manifestLayer = layer.kind === 'manifest' ? layer : null;
     return html`

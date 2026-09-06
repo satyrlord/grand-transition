@@ -15,6 +15,8 @@
     --scene-ceiling-continuation: #101f2f;
     --scene-height: min(100svh, 75cqw);
     --scene-width: calc(var(--scene-height) * 16 / 9);
+    --sentence-top: calc(100svh - var(--scene-height) * 0.82);
+    --sentence-height: calc(var(--scene-height) * 0.16);
     --broadcast-gold: #b48a48;
     --broadcast-gold-light: #e4c17d;
     --broadcast-paper: #e5d8b9;
@@ -73,6 +75,7 @@
 
   .broadcast-stage-art,
   .broadcast-stage-ambience,
+  .broadcast-stage-props,
   .broadcast-stage-foreground {
     position: absolute;
     top: auto;
@@ -126,8 +129,14 @@
     }
   }
 
+  .broadcast-stage-props {
+    z-index: 0;
+    clip-path: inset(0 0 38%);
+  }
+
   .broadcast-stage-foreground {
     z-index: 3;
+    clip-path: inset(62% 0 0);
   }
 
   /* Fit the protected four-by-three core to narrow landscape widths. */
@@ -138,6 +147,7 @@
 
     .broadcast-stage-art,
     .broadcast-stage-ambience,
+    .broadcast-stage-props,
     .broadcast-stage-foreground {
       left: calc(
         -100% * var(--scene-crop-core-x) / var(--scene-crop-core-width)
@@ -147,6 +157,23 @@
       transform: none;
     }
 
+  }
+
+  /* Fill ultrawide stages with one undistorted crop for every scene plane. */
+  @media (min-aspect-ratio: 16 / 9) {
+    .match-screen {
+      --scene-width: 100cqw;
+    }
+
+    .broadcast-stage-art,
+    .broadcast-stage-ambience,
+    .broadcast-stage-props,
+    .broadcast-stage-foreground {
+      bottom: 50%;
+      width: 100%;
+      height: auto;
+      transform: translate(-50%, 50%);
+    }
   }
 
   .broadcast-stage::after {
@@ -458,6 +485,9 @@
   }
 
   .character-frame {
+    --portrait-motion-direction: 1;
+    --character-recoil-x: -0.7%;
+    --character-address-angle: -0.35deg;
     position: absolute;
     z-index: 1;
     top: calc(100svh - var(--scene-height) * 0.76);
@@ -471,6 +501,8 @@
   }
 
   .match-player[data-side='blue'] .character-frame {
+    --character-recoil-x: 0.7%;
+    --character-address-angle: 0.35deg;
     right: calc(50cqw - var(--scene-width) * 0.3 - var(--scene-height) * 0.4);
   }
 
@@ -508,13 +540,15 @@
     pointer-events: none;
   }
 
-  .match-player[data-side='blue'] .character-frame picture {
+  .character-frame[data-mirrored='true'] > picture {
+    --portrait-motion-direction: -1;
     transform: scaleX(-1);
   }
 
   grand-transition-character,
   .character-state-layer,
   .character-state-frame,
+  .character-state-drawing,
   .character-state-upper {
     position: absolute;
     inset: 0;
@@ -569,12 +603,8 @@
       drop-shadow(0 0 0.7rem rgb(228 193 125 / 28%));
   }
 
-  .match-player[data-side='blue'] .character-state-layer {
+  .character-frame[data-mirrored='true'] .character-state-drawing {
     transform: scaleX(-1);
-  }
-
-  .match-player[data-side='blue'] .character-state-frame picture {
-    transform: none;
   }
 
   .character-state-frame[data-state-visible='true'][data-state-id='selection'] {
@@ -621,13 +651,13 @@
   }
 
   @keyframes character-address {
-    0% { transform: rotate(-0.35deg); }
+    0% { transform: rotate(var(--character-address-angle)); }
     100% { transform: rotate(0); }
   }
 
   @keyframes character-recoil {
     0% { transform: translateX(0); }
-    25% { transform: translateX(-0.7%); }
+    25% { transform: translateX(var(--character-recoil-x)); }
     100% { transform: translateX(0); }
   }
 
@@ -679,7 +709,7 @@
   @keyframes claim-floor-red {
     from {
       filter: brightness(0.7) saturate(0.62);
-      transform: translateX(-0.65rem);
+      transform: translateX(calc(-0.65rem * var(--portrait-motion-direction)));
     }
 
     to {
@@ -693,7 +723,7 @@
   @keyframes claim-floor-blue {
     from {
       filter: brightness(0.7) saturate(0.62);
-      transform: translateX(0.65rem);
+      transform: translateX(calc(0.65rem * var(--portrait-motion-direction)));
     }
 
     to {
@@ -726,7 +756,8 @@
     24% {
       filter: brightness(1.45) saturate(0.5)
         drop-shadow(0 0 1rem rgb(198 55 48 / 74%));
-      transform: translateX(-1.1rem) rotate(-1deg);
+      transform: translateX(calc(-1.1rem * var(--portrait-motion-direction)))
+        rotate(calc(-1deg * var(--portrait-motion-direction)));
     }
 
     100% {
@@ -742,7 +773,8 @@
     24% {
       filter: brightness(1.45) saturate(0.5)
         drop-shadow(0 0 1rem rgb(198 55 48 / 74%));
-      transform: translateX(1.1rem) rotate(1deg);
+      transform: translateX(calc(1.1rem * var(--portrait-motion-direction)))
+        rotate(calc(1deg * var(--portrait-motion-direction)));
     }
 
     100% {
@@ -874,12 +906,12 @@
   .sentence-ledger {
     position: absolute;
     z-index: 9;
-    top: calc(100svh - var(--scene-height) * 0.82);
+    top: var(--sentence-top);
     left: 50%;
     display: grid;
     align-items: center;
     width: calc(var(--scene-width) * 0.32);
-    height: calc(var(--scene-height) * 0.16);
+    height: var(--sentence-height);
     padding: 0.72rem clamp(0.8rem, 1.3vw, 1.5rem) 1rem;
     border: 3px double #242424;
     background: rgb(252 250 246 / 98%);
@@ -896,6 +928,14 @@
     background: rgb(252 250 246 / 98%);
     clip-path: polygon(0 0, 100% 0, 46% 100%);
     content: '';
+  }
+
+  @media (aspect-ratio > 16 / 9) {
+    .match-screen {
+      --sentence-top: 9svh;
+      /* The centered scene's protected face starts at y=35% of its canvas. */
+      --sentence-height: max(5rem, min(16svh, calc(40svh - 8.4375cqw)));
+    }
   }
 
   .sentence-ledger[data-speaker-side='red']::after {
@@ -1026,7 +1066,7 @@
   .grammar-strike {
     position: absolute;
     z-index: 13;
-    top: clamp(15.4rem, 34vh, 21.5rem);
+    top: calc(var(--sentence-top) + var(--sentence-height) + 2.5rem);
     left: 50%;
     display: grid;
     grid-template-columns: auto auto minmax(0, 1fr) auto;
@@ -1957,6 +1997,7 @@
 
   @media (forced-colors: active) {
     .broadcast-stage-art,
+    .broadcast-stage-props,
     .broadcast-stage-foreground {
       opacity: 0.18;
     }

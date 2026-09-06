@@ -66,8 +66,10 @@ describe('quality-gate scaffold', () => {
       'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
     );
     expect(packageJson.scripts.build).toBe(
-      'node tools/validate-scene-assets.mjs src/assets/scenes && ' +
+      'node tools/brand-assets.mjs validate && ' +
+        'node tools/validate-scene-assets.mjs src/assets/scenes && ' +
         'node tools/validate-character-assets.mjs src/assets/characters && ' +
+        'node tools/validate-character-states.mjs && ' +
         'vite build',
     );
     expect(packageJson.scripts['assets:build']).toContain(
@@ -76,6 +78,12 @@ describe('quality-gate scaffold', () => {
     expect(packageJson.scripts['assets:validate']).toContain(
       'node tools/validate-character-assets.mjs src/assets/characters',
     );
+    for (const command of ['node tools/brand-assets.mjs build', 'node tools/build-character-states.mjs']) {
+      expect(packageJson.scripts['assets:build']).toContain(command);
+    }
+    for (const command of ['node tools/brand-assets.mjs validate', 'node tools/validate-character-states.mjs']) {
+      expect(packageJson.scripts['assets:validate']).toContain(command);
+    }
   });
 
   test('keeps the CI phases in the approved order', async () => {

@@ -286,12 +286,8 @@ async function uiSignature(page: Page) {
         app?.innerHTML
           .replace(/\?lit\$\d+\$/gu, '?lit$')
           .replace(
-            /srcset="[^"]*grand-transition-emblem[^"]*\.webp"/gu,
-            'srcset="[local-brand-emblem]"',
-          )
-          .replace(
-            /src="[^"]*grand-transition-emblem[^"]*\.(?:png|webp)"/gu,
-            'src="[local-brand-emblem]"',
+            /\/grand-transition\/(?:src\/assets\/brand|assets)\/(grand-transition-emblem(?:-640)?|title-proscenium-background)(?:-[A-Za-z0-9_-]+)?\.(avif|webp|png)(?:\?no-inline)?/gu,
+            '[local-brand:$1.$2]',
           ) ?? '',
       text: app?.textContent?.replace(/\s+/gu, ' ').trim() ?? '',
       heading: heading

@@ -26,6 +26,7 @@ export default defineConfig(({ command }) => ({
         codeSplitting: {
           groups: [
             { name: 'content-data', test: /[/\\]src[/\\]content[/\\].*\.json$/u },
+            { name: 'character-state-data', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]state-manifest\.json$/u },
             { name: 'vendor', test: /[/\\]node_modules[/\\]/u },
           ],
         },

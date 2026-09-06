@@ -427,6 +427,17 @@ render their owned content without synthetic weights, except for the approved
 Poiret One feature-display treatment. Metric fallbacks must keep the same
 information visible before and after font load.
 
+The production comparison in `e2e/visual-system-fonts.spec.ts` covers all four
+roles at 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080.
+It uses a long character name, long English speech and phrase text, Romanian
+diacritics, digits, punctuation, and disabled action text. The local-font and
+blocked-WOFF2 runs record actual browser font use, computed weights, complete
+text bounds, source case, and the production entry hash. Both modes passed on
+Windows with Chromium 151.0.7922.34 on September 6, 2026. The same production
+suite verifies that each served font-license notice is byte-identical to its
+Fontsource package notice. This comparison establishes font fit; it does not
+establish final scene-art acceptance.
+
 ### Hierarchy
 
 - **Feature display:** Title, main menu, character names, Pause, End, and
@@ -479,9 +490,11 @@ readable between the two opponents.
 The interface uses controlled stage depth. The title and setup use painted
 proscenium or tonal broadcast fields. In the match, the selected studio and its
 fixed fictional moderator form the deep field. Transparent portraits occupy
-the opponent planes. A transparent plate puts the two tall standing desks in
-front of those portraits. Speech and the sentence tower occupy the tactical
-plane.
+the opponent planes. The foreground plate is split at the 62-percent desk-top
+line. Its upper props render behind the portraits, and its lower desk fronts
+render in front. Both clipped planes use the same image and crop. This keeps
+hands and character props visible. Speech and the sentence tower occupy the
+tactical plane.
 
 Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark
@@ -587,7 +600,7 @@ tap-water bottle plus one distinct sparkling-water bottle.
 The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
-a single-line character name, visible Pride label, and Pride meter and remain
+the complete character name in two reserved lines, visible Pride label, and Pride meter and remain
 outside the portrait bounds.
 
 Only the active strip states “Your turn.” Its portrait stays bright under a
