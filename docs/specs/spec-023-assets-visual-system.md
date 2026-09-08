@@ -85,6 +85,12 @@ counted in this baseline.
 The retired `presidential-sphinx.png` is not regenerated, shipped, or counted
 in this baseline.
 
+`tools/scene-replacement-baseline.json` records the four replaced studio-layer
+hashes for inventory validation only. It is not an art input. Validation
+rejects reintroduction of those source hashes. Private generation records
+retain the new diagram and draft input graph and the authorized deterministic
+flat-color and geometry finishing procedure.
+
 The scene baseline contains these current layers:
 
 - `modern-debate-studio.png`.
@@ -776,6 +782,8 @@ Pause, viewport interruption, document hiding, and exit stop nonessential
 loops and discard pending transient motion. Resume at the current resting
 state without replaying an old reaction. Reduced motion keeps state and public
 outcome information visible and suppresses spatial movement and flashing.
+This includes private-hand and action-rail entrance motion on both player
+sides. Side-specific rules must not override the reduced-motion setting.
 All image and ambience layers are pointer-inert. State changes use reserved
 absolute image planes and cannot move a control or sentence.
 
@@ -900,6 +908,11 @@ image readiness and geometry in the same browser evaluation. Pixel reads
 require loaded images with positive intrinsic and rendered dimensions. A
 delayed replacement portrait must wait for readiness. A real overlap must
 still fail the clearance assertion.
+
+Foreground browser checks use the approved extraction zones and require
+visible pixels in both desk-top and prop focal regions. They reject pixels
+outside those zones. They do not require a regenerated silhouette to touch
+the old raster's exact outer edge.
 
 Manual evidence reviews every baseline asset and representative complete stage
 compositions against the approved flat cel-shaded direction. It also reviews

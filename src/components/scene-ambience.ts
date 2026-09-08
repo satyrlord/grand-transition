@@ -35,12 +35,12 @@ export class GrandTransitionSceneAmbience extends LitElement {
       width="1920" height="1080" aria-hidden="true" focusable="false"
       data-motion-suspended=${this.paused || document.hidden || this.offscreen ? 'true' : 'false'}>
       <g class="scene-ambience-light">
-        <polygon points="115,137 158,151 146,181 101,168" />
-        <polygon points="396,137 443,151 432,181 386,169" />
+        <polygon points="258,99 271,67 356,81 342,110" />
+        <polygon points="714,75 797,87 787,118 703,108" />
       </g>
       <g class="scene-ambience-light scene-ambience-light--right">
-        <polygon points="1477,151 1520,139 1531,169 1487,181" />
-        <polygon points="1748,152 1788,140 1799,170 1758,183" />
+        <polygon points="1124,87 1204,76 1214,108 1134,118 1122,90" />
+        <polygon points="1640,68 1653,101 1571,112 1557,82" />
       </g>
     </svg>`;
   }

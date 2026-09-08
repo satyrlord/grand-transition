@@ -570,10 +570,10 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio.png",
-        "sha256": "0cb345aff398ab37690f8a06457943bcb7ad431c566abcc0bd299d7d8ab37a94",
+        "sha256": "41f1582aec65b59970073c34b335a323f92a13ecb59a5df8fa3628c80ac37c1c",
         "width": 1920,
         "height": 1080,
-        "bytes": 2502512,
+        "bytes": 805673,
         "format": "png"
       },
       "focalPoint": {
@@ -654,55 +654,55 @@
           "path": "variants/modern-debate-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 22864,
+          "bytes": 13175,
           "format": "avif",
           "quality": 70,
-          "sha256": "0321ce18d09de09a72e4ff905f5f54e5e2e8f3eb36c0655785cf89a34891fe49"
+          "sha256": "3859f23530ad62efb2c5714a6b29799960ad377bbe103fab49657c3619bf0506"
         },
         {
           "path": "variants/modern-debate-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 25334,
+          "bytes": 16020,
           "format": "webp",
           "quality": 86,
-          "sha256": "81b2e002e45b46c3e07891b12f4233897c9d2bfff3b72d515d307e92c77e137e"
+          "sha256": "88584acf9623e32bc7b11803e57be25d4c2eba519f32f1dc6661da2d74e98b1a"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 58377,
+          "bytes": 29163,
           "format": "avif",
           "quality": 70,
-          "sha256": "96d21e965fb1d4d84c10dc56b020dccd45c0e63c585571a374eff12210b501bf"
+          "sha256": "81c43cf5b61b1977770f7b86c321713896764f0eef7b317d3ee4fa3c1080b1b7"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 67544,
+          "bytes": 37070,
           "format": "webp",
           "quality": 86,
-          "sha256": "ea6a2cf9e95ef58e1d6706e5e86a3401316f33b125111673379b2fbf4ce0e4eb"
+          "sha256": "36caa1d9f99852de198cd0af119655ec309a827268785f91b02b4d6d41bfdc83"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 92545,
+          "bytes": 44731,
           "format": "avif",
           "quality": 70,
-          "sha256": "b5bb92071952a23761de89fe34888f0e0255f14c8dacc16e6858378e8002bdb5"
+          "sha256": "de99032c24072431c74eace63fff6469b78d6bd08931107769e437b7867ba8da"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 112058,
+          "bytes": 60248,
           "format": "webp",
           "quality": 86,
-          "sha256": "587c97af87d01c550a0b0ba1d9336a0d187753f6fb202cf2cdf01d1b8ac42a17"
+          "sha256": "401c9bf47014779465a838b752edfea8272e0edb64057fc091c2618c54697ea1"
         }
       ]
     },
@@ -715,10 +715,10 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio-desks.png",
-        "sha256": "5d8c36ed4d3ade5ce4a9abe879257dd010a97f57d7decb7d9556f1ea71c47af2",
+        "sha256": "3b164caab167e89b86181ce666b499bd5568a831c63d2ac2e6994010fa743402",
         "width": 1920,
         "height": 1080,
-        "bytes": 422671,
+        "bytes": 105959,
         "format": "png"
       },
       "focalPoint": {
@@ -804,55 +804,55 @@
           "path": "variants/modern-debate-studio-desks-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 4872,
+          "bytes": 2495,
           "format": "avif",
           "quality": 70,
-          "sha256": "29b6150763dd378531717e6212c3df6c86e4d121f05147cd02bd06e169714f51"
+          "sha256": "6dabdc6f543fa40cd738c42322711f31d3a617ced808c642f50c66cbb82aa075"
         },
         {
           "path": "variants/modern-debate-studio-desks-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 9856,
+          "bytes": 4042,
           "format": "webp",
           "quality": 86,
-          "sha256": "9b748248c9d2de63636cb5f61c8146a459c7d161f0f88de2b5939c998d71db22"
+          "sha256": "7cef648465f8bc4e046435865277653c04a1ae4313860a9089bf5487d6341c04"
         },
         {
           "path": "variants/modern-debate-studio-desks-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 11430,
+          "bytes": 4270,
           "format": "avif",
           "quality": 70,
-          "sha256": "f81b015db3da8f37ec9d2d572c484d62592a532f04914bb09e49bb632b62aee5"
+          "sha256": "dc49d3a48b4d478dfdf590e47a1a3855732a385ff421f5e1b59ce95c1e4fc845"
         },
         {
           "path": "variants/modern-debate-studio-desks-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 23546,
+          "bytes": 8384,
           "format": "webp",
           "quality": 86,
-          "sha256": "fe8700df5289b169a04f0560f2979260f9d03dd2ea731b3c570e43bfc2e95cbe"
+          "sha256": "11448c9a73513027a87f76cab8aa6bb0c1674dc9d3ab6077b965e58c946f2948"
         },
         {
           "path": "variants/modern-debate-studio-desks-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 17076,
+          "bytes": 5680,
           "format": "avif",
           "quality": 70,
-          "sha256": "2fe86201c1130861b01764e8afffca24cc84c4aea99d40375581aa7f57e45411"
+          "sha256": "0c378d5374ec51b6909208486312ebf86f91303f534ebfda1b4afffea8dbe779"
         },
         {
           "path": "variants/modern-debate-studio-desks-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 32592,
+          "bytes": 11622,
           "format": "webp",
           "quality": 86,
-          "sha256": "4393a843df6b8da4e3d987bb6e12ae39c8c6a97862591c60304b5450cbbc7953"
+          "sha256": "9dca911b86790a46f587133db70dc07aab4ed1bf9eb87db022e98acf1439160d"
         }
       ]
     },
@@ -865,10 +865,10 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "transition-era-television-studio.png",
-        "sha256": "45d63e94253f76fa643c2e859e5b1b16130048a9d048b8d0ba65792b93b41357",
+        "sha256": "96a59b21516c451a3f60ce0fd1a105a0fd29452d0c7f2cac69b9987737954359",
         "width": 1920,
         "height": 1080,
-        "bytes": 3279142,
+        "bytes": 1228966,
         "format": "png"
       },
       "focalPoint": {
@@ -949,55 +949,55 @@
           "path": "variants/transition-era-television-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 24390,
+          "bytes": 23019,
           "format": "avif",
           "quality": 70,
-          "sha256": "3e760d2e0b8c0b54a7503a348a8b1468b02e40e6542fa402cd0627a0346bbd45"
+          "sha256": "ef24e7a64932e146f36a2955b19d8852af230cc75d741f9e204207fb0bf4370d"
         },
         {
           "path": "variants/transition-era-television-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 26506,
+          "bytes": 28542,
           "format": "webp",
           "quality": 86,
-          "sha256": "e6f14c60f563bad48f863b6dad46cd01ba4483b766b314f3e0b4187f118e8db4"
+          "sha256": "3f2d05eab39c4a652c1137b3d5a640ffd5ae2ffdb07eba91fb38218dd70bca85"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 69390,
+          "bytes": 55516,
           "format": "avif",
           "quality": 70,
-          "sha256": "de33f54531123bd7404449e5a8c3c71c4a20fef8075e96a81a7b40ec7347fadf"
+          "sha256": "64cef39f71c72bc4c07f2b87dfda46230729ad334c3aaf3852225de712259811"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 79170,
+          "bytes": 71926,
           "format": "webp",
           "quality": 86,
-          "sha256": "fb02f29a06fbafad95d031de7db26357b1a9cb67ac5b4f2abb307f4e55750549"
+          "sha256": "076eb4e8af8f4fc97bfcc1566958745d9950a6fe244d4440b52702d0abf381e4"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 116196,
+          "bytes": 87811,
           "format": "avif",
           "quality": 70,
-          "sha256": "bfbd6841b74d25d447f496d3e43f90810ef092a9a912e3a372ad9fe4a9806d43"
+          "sha256": "15922e228017c1f537c50d76f7b701bfdd3bf7384abb31e73a1df48135af61b6"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 130540,
+          "bytes": 112794,
           "format": "webp",
           "quality": 86,
-          "sha256": "b73e7b7061640c076983e77058af0a65284c2c75ec443cfb61448ee2c49985aa"
+          "sha256": "f0ecbc4f8bf3d9f785cf2bad1d757e3f5c75e57703539684e394ad3e0291575a"
         }
       ]
     },
@@ -1010,10 +1010,10 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "transition-era-television-studio-desks.png",
-        "sha256": "f6861672726d7726584c16d0d917e64c568b04876c68220c1e520d590526093a",
+        "sha256": "7c8759bf01b54d3a5d7424ec28b8d51426b105aa5dd33de6b0330b1f5cd2d1d3",
         "width": 1920,
         "height": 1080,
-        "bytes": 367851,
+        "bytes": 144893,
         "format": "png"
       },
       "focalPoint": {
@@ -1099,55 +1099,55 @@
           "path": "variants/transition-era-television-studio-desks-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 4020,
+          "bytes": 2910,
           "format": "avif",
           "quality": 70,
-          "sha256": "2e987ee785771744aad0d2c1b3f1d39a8a640cc3f333df536525a2261c3ed7c7"
+          "sha256": "46ee010a0bb6df07c8ae0eaa8240f37ba9ffd9a3d24cc779f083a30810532f73"
         },
         {
           "path": "variants/transition-era-television-studio-desks-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 6228,
+          "bytes": 4180,
           "format": "webp",
           "quality": 86,
-          "sha256": "d5e62543f497e898a03bc2a08f0c48a222f672a8ce13143b1a8d59b13e6d1312"
+          "sha256": "bc16b32b6521164708274daa4aa9280258077e65cff3e14d00ae8ebaab9ef668"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 7842,
+          "bytes": 5539,
           "format": "avif",
           "quality": 70,
-          "sha256": "f56e5c0c86b43df6df487da88f3fc957b827869574b29c10b5ad41e371e4ea70"
+          "sha256": "6e363787bad1275f76f7cb27dc87d4a1ca63c3e0664efe213741512b24c92493"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 13620,
+          "bytes": 9850,
           "format": "webp",
           "quality": 86,
-          "sha256": "435596f91d5c0d2f293a6c0430768cc073f5897ddfdff8026f37b890fc4646a7"
+          "sha256": "1025df068efa5c2505cc931f9573b36d52d44dee86b274932198f7ef4ffca95e"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 11850,
+          "bytes": 7362,
           "format": "avif",
           "quality": 70,
-          "sha256": "e18fe9085e61247832ccc744de1f5cbc1cd1cbb3824315a7b41e6ae2f18a9087"
+          "sha256": "f2a9cf0bfb04a9c4c4c1a5838d05f5088775e58bf8c2bda38d952fe8aa971ecf"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 18490,
+          "bytes": 13916,
           "format": "webp",
           "quality": 86,
-          "sha256": "d91b0179cd6cb764df8069041e087fdc3fe3c0a3f8df0ee0fd835a5389a7e26e"
+          "sha256": "5ac6acf3c99151f79cc3b77ad0292f908612cf416d8750160c64c19660815cb8"
         }
       ]
     }

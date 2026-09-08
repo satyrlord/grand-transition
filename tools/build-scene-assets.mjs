@@ -12,6 +12,7 @@ import {
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'county-council-ballroom.png',
@@ -212,6 +213,9 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
   for (const fileName of SCENE_MASTER_NAMES) {
     const identity = sceneIdentity(fileName);
     const inspected = await inspectMaster(path.join(resolvedRoot, fileName), identity);
+    if (replacementBaseline.assets.some((entry) => entry.file === fileName && entry.sha256 === inspected.sourceSha256)) {
+      throw new Error(`Scene source "${fileName}" retains its replaced baseline source hash.`);
+    }
     masters.push({ fileName, identity, ...inspected });
   }
 

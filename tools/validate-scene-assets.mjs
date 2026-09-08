@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import sharp from 'sharp';
+import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'county-council-ballroom.png',
@@ -429,6 +430,9 @@ function validateAssetShape(asset, index, declaredPaths) {
   }
   requiredInteger(asset.source.bytes, `Scene asset "${id}" source.bytes`);
   requiredHash(asset.source.sha256, `Scene asset "${id}" source.sha256`);
+  if (replacementBaseline.assets.some((entry) => entry.file === sourcePath && entry.sha256 === asset.source.sha256)) {
+    throw new Error(`Scene asset "${id}" retains its replaced baseline source hash.`);
+  }
 
   validatePoint(asset.focalPoint, `Scene asset "${id}" focalPoint`);
   validateRectangles(

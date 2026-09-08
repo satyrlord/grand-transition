@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    { "file": "transition-era-television-studio.png", "sha256": "45d63e94253f76fa643c2e859e5b1b16130048a9d048b8d0ba65792b93b41357" },
+    { "file": "transition-era-television-studio-desks.png", "sha256": "f6861672726d7726584c16d0d917e64c568b04876c68220c1e520d590526093a" },
+    { "file": "modern-debate-studio.png", "sha256": "0cb345aff398ab37690f8a06457943bcb7ad431c566abcc0bd299d7d8ab37a94" },
+    { "file": "modern-debate-studio-desks.png", "sha256": "5d8c36ed4d3ade5ce4a9abe879257dd010a97f57d7decb7d9556f1ea71c47af2" }
+  ]
+}

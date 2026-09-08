@@ -1910,6 +1910,18 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
   await startMatch(page);
   await decodeImages(page.locator('.character-frame img'));
 
+  const sideControls = page.locator('.private-hand, .match-actions');
+  const readSideControlMotion = () => sideControls.evaluateAll((controls) =>
+    controls.map((control) => ({
+      side: control.getAttribute('data-side'),
+      animation: getComputedStyle(control).animationName,
+    })),
+  );
+  expect(await readSideControlMotion()).toEqual([
+    { side: 'red', animation: 'none' },
+    { side: 'red', animation: 'none' },
+  ]);
+
   await page
     .locator(
       '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
@@ -1919,6 +1931,10 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
   const strike = page.locator('.grammar-strike');
   await expect(strike).toBeVisible();
   await expect(strike).toContainText('−3 Pride');
+  expect(await readSideControlMotion()).toEqual([
+    { side: 'blue', animation: 'none' },
+    { side: 'blue', animation: 'none' },
+  ]);
   expect(
     await strike.evaluate((element) => getComputedStyle(element).animationName),
   ).toBe('none');
@@ -2322,6 +2338,8 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
     bottomRowOpaqueRatio: number;
     chromaKeyGreenRatio: number;
     cornerAlpha: readonly number[];
+    outsideDeskExtractionPixels: number;
+    deskFocalPixels: readonly number[];
     lowerThirdOpaqueRatio: number;
     nonTransparentBounds: Readonly<{
       left: number;
@@ -2357,6 +2375,8 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
       let minimumY = canvas.height;
       let maximumY = -1;
       let topOpaqueRow = canvas.height;
+      let outsideDeskExtractionPixels = 0;
+      const deskFocalPixels: [number, number] = [0, 0];
       for (
         let pixelIndex = 0;
         pixelIndex < canvas.width * canvas.height;
@@ -2368,6 +2388,16 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
         if (alpha === 0) transparentPixels += 1;
         if (alpha > 0) {
           const x = pixelIndex % canvas.width;
+          const normalizedX = x / canvas.width;
+          const normalizedY = row / canvas.height;
+          if (normalizedY < 0.54 || !(
+            (normalizedX >= 0.125 && normalizedX < 0.32) ||
+            (normalizedX >= 0.68 && normalizedX < 0.875)
+          )) outsideDeskExtractionPixels += 1;
+          if (normalizedY >= 0.56 && normalizedY < 0.72) {
+            if (normalizedX >= 0.26 && normalizedX < 0.32) deskFocalPixels[0] += 1;
+            if (normalizedX >= 0.68 && normalizedX < 0.74) deskFocalPixels[1] += 1;
+          }
           minimumX = Math.min(minimumX, x);
           maximumX = Math.max(maximumX, x);
           minimumY = Math.min(minimumY, row);
@@ -2402,6 +2432,8 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
             .data[3],
         ],
         lowerThirdOpaqueRatio: lowerThirdOpaquePixels / pixelCount,
+        outsideDeskExtractionPixels,
+        deskFocalPixels,
         nonTransparentBounds: {
           left: minimumX / canvas.width,
           right: (maximumX + 1) / canvas.width,
@@ -2618,6 +2650,8 @@ async function expectDecodedPortraitVariants(images: Locator): Promise<void> {
 function expectDeskPlateBounds(
   alpha:
     | Readonly<{
+        outsideDeskExtractionPixels: number;
+        deskFocalPixels: readonly number[];
         nonTransparentBounds: Readonly<{
           left: number;
           right: number;
@@ -2629,13 +2663,17 @@ function expectDeskPlateBounds(
 ): void {
   expect(alpha).toBeDefined();
   const bounds = alpha!.nonTransparentBounds;
-  // The current desks occupy the manifest four-by-three core horizontally.
+  // Specification 023 defines extraction zones and prop focal regions, not
+  // one fixed silhouette edge for every regenerated desk plate.
+  expect(alpha!.outsideDeskExtractionPixels).toBe(0);
+  expect(alpha!.deskFocalPixels).toHaveLength(2);
+  expect(alpha!.deskFocalPixels.every((count) => count > 0)).toBe(true);
   expect(bounds.left).toBeGreaterThanOrEqual(0.124);
-  expect(bounds.left).toBeLessThanOrEqual(0.126);
-  expect(bounds.right).toBeGreaterThanOrEqual(0.874);
+  expect(bounds.left).toBeLessThanOrEqual(0.32);
+  expect(bounds.right).toBeGreaterThanOrEqual(0.68);
   expect(bounds.right).toBeLessThanOrEqual(0.876);
-  expect(bounds.top).toBeGreaterThanOrEqual(0.53);
-  expect(bounds.top).toBeLessThanOrEqual(0.56);
+  expect(bounds.top).toBeGreaterThanOrEqual(0.54);
+  expect(bounds.top).toBeLessThanOrEqual(0.72);
   expect(bounds.bottom).toBeGreaterThanOrEqual(0.999);
 }
 
