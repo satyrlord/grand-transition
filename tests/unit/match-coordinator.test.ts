@@ -120,7 +120,7 @@ describe('match coordination', () => {
     }, identity);
     if (pride === 3) {
       expect(transition.state.phase).toBe('results');
-      expect(transition.reaction).toBeNull();
+      expect(transition.reaction).toMatchObject({ kind: 'grammar-mistake', playerId, damage: 3 });
       expect(transition.review?.state.draft).not.toBeNull();
       expect(transition.review?.victory?.winnerId).not.toBe(playerId);
       expect(history.snapshot().entries).toHaveLength(1);

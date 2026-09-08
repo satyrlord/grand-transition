@@ -15,14 +15,15 @@ the product UI.
 
 ## Terminal victory state
 
-Every engine transition to `results` must show one persistent victory state.
+Every engine transition to `results` must lead to one persistent victory state
+after the Milestone 025 presentation finishes.
 This requirement applies to normal exchange damage, cliffhanger damage,
 immediate grammar-mistake self-damage, and turn-timeout self-damage. The app
 must not clear the terminal match or change screens as a side effect of the
 terminal command.
 
 Keep the final arena, public sentence, characters, and Pride values visible.
-Replace the between-round record with a victory record in the same square,
+After both terminal deliveries and damage, show a victory record in the same square,
 near-black, brass, oxblood, television-blue, and warm-paper visual language.
 Show `Victory`, the winning character name, both final Pride values, the final
 exchange damage records, and the completed round count. The record has one
@@ -74,7 +75,7 @@ first without changing its stored order.
 ## Main-menu history modal
 
 Only the title screen exposes a `Match history` control. Setup, active play,
-Pause, between-round review, and victory must not expose that control.
+Pause, narrated exchange presentation, and Victory must not expose that control.
 
 The control opens one modal over the title screen. The modal shows an explicit
 empty state when no completed match exists. For each entry, show completion

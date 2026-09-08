@@ -196,9 +196,11 @@ function grammarMistakeReaction(
   if (command.type !== 'select-phrase' || !command.actorId) return null;
   const beforePlayer = before.draft?.playerStates[command.actorId];
   const afterPlayer = after.draft?.playerStates[command.actorId];
-  if (!beforePlayer || !afterPlayer) return null;
+  const mistakes = afterPlayer?.construction.grammarMistakes ??
+    (after.phase === 'results' ? after.resolutionHistory.at(-1)?.players[command.actorId]?.grammarMistakes : undefined);
+  if (!beforePlayer || mistakes === undefined) return null;
   if (
-    afterPlayer.construction.grammarMistakes <=
+    mistakes <=
     beforePlayer.construction.grammarMistakes
   ) {
     return null;

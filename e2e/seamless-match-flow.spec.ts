@@ -1,3 +1,8 @@
+import {
+  finishPresentation,
+  reachDeliveryHesitation,
+  reachDeliveryTotal,
+} from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import {
   planMatchBrowserFlow,
@@ -31,6 +36,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
     }
   });
   await useFixedBrowserMatchSeed(page, plan.seed);
+  await page.clock.install();
   await page.goto('/grand-transition/');
   await page.evaluate(() =>
     localStorage.removeItem('grand-transition.match-history.v1'),
@@ -57,28 +63,38 @@ test('a hotseat match reaches persistent victory and restores title history', as
     reachedSuddenDeath ||= snapshot?.phase === 'sudden-death';
 
     await executeDraftAction(page, action);
-    const continueButton = page.getByRole('button', {
-      name: 'Continue',
-      exact: true,
-    });
-    if (await continueButton.isVisible().catch(() => false)) {
+    if (await page.locator('.match-screen').getAttribute('data-delivery-phase')) {
       reviewedExchange = true;
-      await expect(page.locator('.round-review-dialog')).toBeVisible();
-      await expect(page.locator('.sentence-preview')).not.toBeEmpty();
+      await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+      await expect(page.locator('.round-review-dialog')).toHaveCount(0);
       const expectedResolution = plan.finalState.resolutionHistory[reviewIndex]!;
-      for (const [playerId, result] of Object.entries(
-        expectedResolution.players,
-      )) {
-        const scoreCard = page.locator(`[data-round-player="${playerId}"]`);
-        await expect(scoreCard.locator('.reaction-damage-total')).toContainText(
-          new RegExp(`Final damage\\s*${String(result.outgoingDamage)}`, 'u'),
+      for (const playerId of [action.command.actorId!, ...Object.keys(expectedResolution.players)
+        .filter((id) => id !== action.command.actorId)]) {
+        const result = expectedResolution.players[playerId]!;
+        if (expectedResolution.players[playerId]!.selfDamage > 0 && plan.finalState.resolutionHistory.at(-1) === expectedResolution) continue;
+        if (!result.completeValidInsult) {
+          await reachDeliveryHesitation(page, playerId);
+          const scoreCard = page.locator(
+            `.delivery-receipt[data-speaker="${playerId}"]`,
+          );
+          await expect(scoreCard.locator('.delivery-status')).toHaveText(
+            'Hesitation',
+          );
+          await expect(scoreCard.locator('.delivery-score')).toHaveCount(0);
+          await expect(scoreCard.locator('.delivery-total')).toHaveCount(0);
+          continue;
+        }
+        await reachDeliveryTotal(page, playerId);
+        const scoreCard = page.locator(`.delivery-receipt[data-speaker="${playerId}"]`);
+        await expect(scoreCard.locator('.delivery-total')).toContainText(
+          new RegExp(`Total\\s*${String(result.outgoingDamage)}`, 'u'),
         );
         const expectedComponents =
           (result.score?.breakdown.filter(
             (item) =>
               item.kind === 'clause-score' || item.kind === 'finisher-bonus',
           ).length ?? 0) + Number(result.comebackBonus > 0);
-        await expect(scoreCard.locator('.score-breakdown-step')).toHaveCount(
+        await expect(scoreCard.locator('.delivery-score')).toHaveCount(
           expectedComponents,
         );
         if (result.comboMultiplier > 1) {
@@ -96,7 +112,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
         }
       }
       reviewIndex += 1;
-      await continueButton.click();
+      await finishPresentation(page);
     }
     await expect(
       page.locator('grand-transition-resolution-results'),
@@ -108,7 +124,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
   expect(reachedLaterRound).toBe(true);
   expect(reachedSuddenDeath).toBe(true);
   expect(reviewedExchange).toBe(true);
-  expect(reviewIndex).toBe(plan.finalState.resolutionHistory.length - 1);
+  expect(reviewIndex).toBe(plan.finalState.resolutionHistory.length);
   await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
   const terminalResolution = plan.finalState.resolutionHistory.at(-1)!;
   for (const [playerId, result] of Object.entries(terminalResolution.players)) {

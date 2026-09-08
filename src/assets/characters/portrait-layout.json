@@ -108,6 +108,10 @@
     "velvet-mogul": {
       "facing": "right",
       "sourceSha256": "1a1967994cfffc65876efd46376f66ec8ce97faf7aa64b25f059990ab4c6371a"
+    },
+    "government-ai--schoolteacher": {
+      "facing": "left",
+      "sourceSha256": "bcb2c2e35b21e788a536f8a0b747c15128fbedc5fdafef10a42a21763c15337b"
     }
   }
 }

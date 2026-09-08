@@ -39,7 +39,8 @@
   "voiceProfile": {
     "voiceHint": "sharp",
     "rate": 1,
-    "pitch": 1.05
+    "pitch": 1.05,
+    "skinVoices": {"default": "emma"}
   },
   "animationSet": {
     "idle": "luxury-minister-idle",

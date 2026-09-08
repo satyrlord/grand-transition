@@ -166,32 +166,19 @@ truncate, or replace sentence text with an ellipsis. A new construction
 clears the prior round text from the wide bubble before its first phrase. Its
 current text replaces all prior round text after the first accepted phrase.
 
-After every exchange, keep the completed arena visible and pause before the next
-round or match exit. Keep the last speaker's complete text in the wide bubble,
-including a selected comeback line. Place the exchange record in a
-semitransparent modal over the arena. It states the completed round number and
-its winner. The player with the higher outgoing damage wins the round. Equal
-outgoing damage is a tie.
+After every exchange, keep the arena visible during the Milestone 025 narrated
+sequence. The current narrator owns the wide bubble, including its Comeback
+line. Offset that bubble toward the speaker as defined by Milestone 025. Disable draft input and stop the turn timer until both deliveries finish.
+Each scored clause owns one inline line beside its speaker, without a Clause
+heading or a central panel. The line contains its complete phrase text, base,
+applied restriction, weakness, and combo factors, and resulting value. Finisher
+and Comeback use separate rows. Do not create rows for note-only items.
 
-For both players, show one ordered score receipt before the final outgoing
-damage. Each scored clause owns one row with its complete rendered phrase text,
-base value, applied restriction, weakness, and combo factors, and resulting
-clause value. Show a finisher and a Comeback as separate rows. Do not create a
-row for a note-only breakdown item or an unscored sentence.
-
-Print the rows in scoring order with an 80-millisecond stagger capped at four
-delays. Keep every row present in the Document Object Model (DOM) from the first
-review render. The complete receipt and final-damage landing finish within 800
-milliseconds. When a combo applies, keep the largest applied combo factor and
-its exact added damage visible for the rest of the review. One Continue control
-advances the lifecycle.
-
-If scoring activates one or more defender weaknesses, mark the affected receipt
-row with its exact multiplier and public weakness names. The modal also keeps
-one `Weakness hit ×1.5` record with each unique applied weakness name. Do not
-show this message for a phrase that merely has a matching tag. Show it only
-after the scoring breakdown applies the weakness. Reduced-motion mode removes
-spatial movement and flashing but keeps the complete receipt and emphasis.
+Reveal rows at the narration markers, then the full total at narration end.
+Apply displayed damage and character reaction afterward. Keep applied public
+weakness names with their row. Reduced motion retains the same facts. There is
+no normal result modal, 800-millisecond aggregate animation, or Continue action.
+Milestone 019 owns persistent Victory after both terminal deliveries finish.
 
 The private choices sit at the active player's lower perimeter. A compact
 Reshuffle control follows them. The control uses an authored inline SVG icon,
@@ -348,17 +335,10 @@ timer-refill abuse.
   Measure the actual text range against the speech record, not only the text
   element's own scroll dimensions. Dense speech uses scene-height-based type
   sizing and compact vertical padding to preserve moderator clearance.
-- **AC-016-13:** A between-round modal shows the completed round number and its
-  higher-damage winner or tie. It shows the two final outgoing-damage values.
-  Each scored clause, finisher, and Comeback appears as one ordered receipt row
-  with exact rendered text, base, applied factors, and resulting amount. Each
-  applied combo factor includes its exact added damage.
-
-  The complete receipt
-  and final-damage landing finish within 800 milliseconds without moving the
-  modal layout.
-  The arena and last complete sentence remain visible behind it. One Continue
-  action advances play.
+- **AC-016-13:** Each narrator receives its own public bubble and ordered inline
+  component scores, then total and damage, as defined by Milestone 025. Applied
+  factors and public weakness names remain visible with their component. Both
+  deliveries finish before automatic progression or persistent Victory.
 - **AC-016-14:** A wrong common or private phrase triggers one 150 through
   600-millisecond arena reaction. It identifies the offending player and exact
   3 Pride loss, moves no layout, preserves immediate turn passage, and clears
@@ -369,13 +349,11 @@ timer-refill abuse.
 - **AC-016-15:** Production source and DOM contain no tutorial, guided turn,
   tactical hint, card-role explanation, weakness explanation, disabled-action
   reason, strategy prompt, or shortcut layer.
-- **AC-016-16:** A scored weakness shows one visible `Weakness hit` record with
-  the 1.5 factor and every unique applied weakness name. Its affected receipt
-  row shows the same factor and names. A nonmatching or unscored phrase shows no
-  weakness record.
-- **AC-016-17:** Selecting a comeback appends its closing line to the complete
-  public sentence. If it completes the exchange, the between-round hold keeps
-  that complete text visible behind the results modal.
+- **AC-016-16:** A scored weakness shows its exact 1.5 factor and unique public
+  weakness names in the affected inline component. Unscored matching tags show
+  no weakness record.
+- **AC-016-17:** Comeback appends its closing line to the complete public insult.
+  Its narrator's bubble displays that full text during delivery and total.
 
 ## Impeccable UI validation
 

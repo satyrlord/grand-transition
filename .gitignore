@@ -62,6 +62,7 @@ Thumbs.db
 
 # Private character research
 character-study/
+research/
 
 # Temp paths
 tmp/
@@ -74,6 +75,10 @@ output/
 docs/reviews/
 tools/*
 !tools/scene-replacement-baseline.json
+!tools/scene-resolution.mjs
+!tools/audio-assets.mjs
+!tools/neural-speech-assets.mjs
+!tools/neural-phonemizer-plugin.ts
 
 # codex-workflow-managed-start
 agent_docs/

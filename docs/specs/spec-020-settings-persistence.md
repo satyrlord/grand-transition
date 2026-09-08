@@ -26,9 +26,11 @@ The existing Pause controls use the same Turn timer and Auto-complete values.
 Phrase color coding remains session-only because it is not in the strict
 version 1 document.
 
-`null` Speech voice URI appears as `Auto`. A stored non-null URI round-trips
-without calling a browser speech interface. Milestone 024 owns available voice
-discovery and all audio and speech output.
+The speech voice dropdown was removed at the owner's request. The version 1
+Speech voice URI field still round-trips so existing settings remain valid.
+It has no visible control and no longer overrides skin voice assignments.
+Milestone 024 owns voice selection and all audio
+and speech output.
 
 ## Version 1 settings
 

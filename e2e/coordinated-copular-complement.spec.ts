@@ -1,3 +1,4 @@
+import { reachDeliveryTotal } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -13,6 +14,7 @@ test('the production game scores a coordinated copular complement', async ({
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await useFixedBrowserMatchSeed(page, 20_260_901);
+  await page.clock.install();
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
@@ -33,17 +35,19 @@ test('the production game scores a coordinated copular complement', async ({
   await page.getByRole('button', { name: 'End', exact: true }).click();
   await page.getByRole('button', { name: 'End', exact: true }).click();
 
-  await expect(page.locator('.round-review-dialog')).toBeVisible();
+  await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+  await reachDeliveryTotal(page, fixture.playerId);
+  await expect(page.locator('.round-review-dialog')).toHaveCount(0);
   await expect(page.locator('.sentence-preview')).toHaveText(
     'Your brother is a Securitate informer and a pig.',
   );
   const score = page.locator(
-    `[data-round-player="${fixture.playerId}"] .reaction-damage-total`,
+    `.delivery-receipt[data-speaker="${fixture.playerId}"] .delivery-total`,
   );
-  await expect(score).toContainText(/Final damage\s+[1-9][0-9]*/u);
+  await expect(score).toContainText(/Total\s*[1-9][0-9]*/u);
   await expect(
     page.locator(
-      `[data-round-player="${fixture.playerId}"] [data-score-kind="clause"]`,
+      `.delivery-receipt[data-speaker="${fixture.playerId}"] [data-score-kind="clause"]`,
     ),
   ).toHaveCount(1);
 });

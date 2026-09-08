@@ -54,8 +54,8 @@ describe('match-screen snapshot', () => {
       snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url)),
     ).toBe(true);
     expect(snapshot.sceneLayers[0]).toMatchObject({
-      width: 1920,
-      height: 1080,
+      width: 3840,
+      height: 2160,
       sizes: '(max-aspect-ratio: 4/3) 134vw, 100vw',
       avif: {
         format: 'avif',
@@ -513,6 +513,7 @@ describe('match-screen snapshot', () => {
     expect(snapshot.reaction.players[firstId]!.scoreComponents).toEqual([
       {
         kind: 'clause',
+        narrationIndex: 1,
         phraseText: 'National consensus belongs in a party museum',
         base: 15,
         restrictionFactor: 1,
@@ -523,6 +524,7 @@ describe('match-screen snapshot', () => {
       },
       {
         kind: 'finisher',
+        narrationIndex: 2,
         phraseText: 'by emergency ordinance.',
         base: 2,
         restrictionFactor: 1,
@@ -533,6 +535,7 @@ describe('match-screen snapshot', () => {
       },
       {
         kind: 'comeback',
+        narrationIndex: 3,
         phraseText: 'And that closes the record.',
         base: 18,
         restrictionFactor: 1,

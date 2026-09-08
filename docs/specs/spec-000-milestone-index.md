@@ -233,9 +233,9 @@ source-only review does not satisfy them.
     screens dispatch typed commands.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
     hotseat draft is playable with temporary art.
-17. [Between-round review flow](spec-017-seamless-match-flow.md). Budget: 4.
-    Browser matches review each nonterminal exchange before Continue. Milestone
-    019 replaces its terminal and post-match rules.
+17. [Seamless match flow](spec-017-seamless-match-flow.md). Budget: 4. Browser
+    matches present each nonterminal exchange before automatic progression.
+    Milestone 019 replaces its terminal and post-match rules.
 18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported landscape contracts pass.
 19. [Victory and persistent match history](spec-019-victory-match-history.md).
@@ -251,8 +251,9 @@ source-only review does not satisfy them.
     Budget: 10. The fixed 27-character and four-scene raster baseline is
     regenerated in one strict flat cel-shaded cartoon style. Four characters
     and one scene also receive their complete state and motion packages.
-24. [Audio and speech](spec-024-audio-speech.md). Budget: 8. Audio and optional
-    private speech have safe controls.
+24. [Audio and speech](spec-024-audio-speech.md). Budget: 8 per approved code
+    package, with separate audio asset packages. Audio and optional public
+    speech have safe controls.
 25. [Match presentation reactions](spec-025-match-presentation-reactions.md).
     Budget: 8. The vertical slice reports strong public outcomes without teaching
     tactics.

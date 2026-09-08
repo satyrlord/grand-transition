@@ -95,8 +95,8 @@ runtime-network failure cannot be waived.
 The minimum viable product (MVP) has a coherent title-to-match-completion flow. It has
 all 18 characters, 6 distinct scenes, and 3 artificial intelligence (AI)
 difficulty levels with the distinct policies in Milestones 021 and 022. It has
-private hotseat play and exact grammar and combat rules. It reviews each
-nonterminal exchange in the in-arena results modal.
+private hotseat play and exact grammar and combat rules. It presents each
+nonterminal exchange through the Milestone 025 narrated inline sequence.
 
 Milestone 019 adds the
 persistent terminal victory state and local match history. It also has

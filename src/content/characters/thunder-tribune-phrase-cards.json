@@ -35,7 +35,8 @@
   "voiceProfile": {
     "voiceHint": "sharp",
     "rate": 1.1,
-    "pitch": 0.95
+    "pitch": 0.95,
+    "skinVoices": {"default": "george", "alternate": "emma"}
   },
   "animationSet": {
     "idle": "thunder-tribune-idle",

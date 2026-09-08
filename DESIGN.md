@@ -171,7 +171,7 @@ are metaphorical political labels only. The playable foundation uses 17 original
 human editorial caricatures and one original robot caricature, 18 total. Each
 can occupy either player position.
 
-Seven archetypes have nine alternate skins
+Seven archetypes have ten alternate skins
 in total. A skin is a visual-only variation that does not change game identity
 or prose. Later character art must preserve the declared species and cannot use
 animal or hybrid anatomy. One archetype can have one default skin and zero
@@ -244,7 +244,7 @@ on a central raised platform. The four-column composition keeps her face
 clear of the drafting speech record and phrase tower.
 
 Opposing names and Pride meters frame the top corners. Round, timer, and Pause
-state sit at the top center. A wide speech record crosses the middle without
+state sit at the top center. A wide speech record moves toward the active speaker without
 covering either face. The live sentence and nine shared phrases form one
 central vertical construction tower. The two private choices sit low in the
 active player's reach. Secondary actions use the side and bottom perimeter.
@@ -266,14 +266,16 @@ text only.
 Pointer preview stages the candidate phrase in the central construction and
 speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
-that side persistently brighter. A completed exchange holds the last full
-sentence in the arena and places a semitransparent broadcast-results modal over
-the lower stage. Inside that record, a broadcast score receipt prints each clause in order.
+that side persistently brighter. A completed exchange recites one public insult at a time, last finisher first.
+The current speaker owns the offset bubble. Scored lines, exact multipliers,
+bonuses, and totals appear inline at that player's lower stage edge. Applied
+weakness and Pride-loss text belongs near the affected character. There is no
+central score panel or repeated Clause label. A long score log follows its
+latest line while keeping prior lines available to keyboard scrolling.
 
-It places weakness and combo factors on the affected line. It separates
-finisher and Comeback values and shows final damage last. Continue
-releases a nonterminal hold and starts the next round. A terminal hold expands
-the same record into Victory and remains until the player returns to the title.
+Speech completion precedes Total, then damage and its portrait reaction.
+Both deliveries finish before the next round starts automatically. A terminal
+exchange then shows persistent Victory until the player returns to the title.
 
 ### Cross-surface reach
 
@@ -481,9 +483,10 @@ The supported landscape evidence matrix is 1024 by 720, 1024 by 768, 1280 by
 viewports show the full-screen transmission-unavailable slate. The recommended
 viewport is 1920 by 1080 on PC.
 
-**The Center Axis Rule.** Speech, the current construction, preview, and phrase
-path share one strong center axis. This is the tactical focus and must remain
-readable between the two opponents.
+**Construction and speaker alignment.** The phrase path keeps the center axis.
+The speech record follows the active speaker to prevent moderator attribution.
+Inline scoring follows that same player's side. Preserve clear text and faces
+through each state change.
 
 ## Elevation & Depth
 
@@ -503,7 +506,7 @@ brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, six scene backgrounds, two
 transparent foreground desk plates, and 27 transparent character portraits:
-18 defaults and 9 alternates. All portrait skins are visual-only variations and
+18 defaults and 10 alternates. All portrait skins are visual-only variations and
 do not change the fictional character identity or prose.
 All shipping assets retain embedded generic source provenance. Required
 text and controls remain outside raster art.
@@ -630,24 +633,21 @@ phrase slots. It uses one light speech record over a near-black phrase stack
 with thin oxblood row rules. It stays visually above the scene without becoming
 a separate dashboard.
 
-### Round review record
+### Narrated exchange record
 
-After each exchange, a centered results record holds the arena in place. Its
-heading and outcome use one centered axis. Two equal-width peer records sit
-side by side with red and blue identity borders. Each record shows the player
-name and an ordered, internally scrollable score receipt.
+After each exchange, the arena blocks drafting while both characters deliver
+their public insults. The last finisher speaks first. The speech record moves
+toward the current speaker, and the other character stays idle.
 
-Clause rows show the
+Inline score lines appear at the speaker's lower stage edge. They show the
 rendered phrase, base, applied weakness and combo factors, and resulting value.
-Finisher and Comeback rows remain separate. Persistent combo and bounded
-weakness records precede one large final-damage landing. One centered Continue
-action closes a nonterminal record.
+Finisher and Comeback rows remain separate. The total appears after narration.
+Applied Pride loss and the damaged stance follow the audience hold. The next
+round starts automatically after both deliveries.
 
-A terminal record changes its heading to Victory and names the match winner and
-completed round count. It
-keeps the two final score records and exposes only `Return to main menu`. It has
-no automatic dismissal. The dimmed stage remains visible behind it. The record
-uses no backdrop blur.
+After a terminal exchange, Victory names the match winner and completed round
+count. It exposes only `Return to main menu` and has no automatic dismissal.
+The dimmed stage remains visible behind it. The record uses no backdrop blur.
 
 ### Match history record
 

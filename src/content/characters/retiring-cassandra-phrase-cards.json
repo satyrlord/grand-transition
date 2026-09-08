@@ -39,7 +39,8 @@
   "voiceProfile": {
     "voiceHint": "measured",
     "rate": 0.85,
-    "pitch": 0.85
+    "pitch": 0.85,
+    "skinVoices": {"default": "george", "statesman": "emma"}
   },
   "animationSet": {
     "idle": "retiring-cassandra-idle",

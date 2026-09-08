@@ -195,14 +195,14 @@ test('renders an immutable complete match snapshot and previews without changing
       ),
     ).toEqual(['image/avif', 'image/webp']);
     const image = picture.querySelector<HTMLImageElement>('img')!;
-    expect(image.getAttribute('width')).toBe('1920');
-    expect(image.getAttribute('height')).toBe('1080');
+    expect(image.getAttribute('width')).toBe('3840');
+    expect(image.getAttribute('height')).toBe('2160');
     expect(image.getAttribute('sizes')).toBe(
       '(max-aspect-ratio: 4/3) 134vw, 100vw',
     );
     expect(image.getAttribute('src')).toContain('.webp');
     expect(image.getAttribute('src')).not.toContain('.png');
-    expect(image.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w/u);
+    expect(image.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w.*2560w.*3840w/u);
     expect(picture.getAttribute('data-scene-focal-point')).toMatch(
       /^0\.[0-9]+,0\.[0-9]+$/u,
     );
@@ -218,7 +218,7 @@ test('renders an immutable complete match snapshot and previews without changing
     expect(
       [...picture.querySelectorAll('source')].every(
         (source) =>
-          source.getAttribute('srcset')?.match(/640w.*1280w.*1920w/u) &&
+          source.getAttribute('srcset')?.match(/640w.*1280w.*1920w.*2560w.*3840w/u) &&
           !source.getAttribute('srcset')?.includes('.png'),
       ),
     ).toBe(true);
@@ -394,7 +394,7 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
     .map((candidate) => candidate.trim().split(/\s+/u)[0])
     .filter((candidate): candidate is string => Boolean(candidate))
     .map((candidate) => new URL(candidate, window.location.href).href);
-  expect(expectedWebpUrls).toHaveLength(3);
+  expect(expectedWebpUrls).toHaveLength(5);
 
   // Use the real application picture. This type is unsupported only for this
   // test, so native picture selection must use the real WebP source.

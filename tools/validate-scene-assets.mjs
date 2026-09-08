@@ -17,16 +17,9 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-export const SCENE_VARIANT_SIZES = Object.freeze([
-  Object.freeze({ width: 640, height: 360 }),
-  Object.freeze({ width: 1280, height: 720 }),
-  Object.freeze({ width: 1920, height: 1080 }),
-]);
+import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
+export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
 export const SCENE_VARIANT_FORMATS = Object.freeze(['avif', 'webp']);
-export const SCENE_BYTE_BUDGETS = Object.freeze({
-  avif: 350 * 1024,
-  webp: 500 * 1024,
-});
 export const REQUIRED_CROP_STRATEGY =
   'symmetric-horizontal-bleed-to-four-by-three-core';
 
@@ -59,11 +52,7 @@ const RIGHT_DESK_FOCAL_RECTANGLE = Object.freeze({
 const expectedSceneIds = new Set(
   SCENE_MASTER_NAMES.map((fileName) => path.basename(fileName, '.png')),
 );
-const expectedVariantKeys = new Set(
-  SCENE_VARIANT_SIZES.flatMap(({ width, height }) =>
-    SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`),
-  ),
-);
+
 const expectedSafeRectangleNames = [
   'protectedTopBand',
   'centralInteraction',
@@ -425,8 +414,12 @@ function validateAssetShape(asset, index, declaredPaths) {
   if (asset.source.format !== 'png') {
     throw new Error(`Scene asset "${id}" source must use PNG format.`);
   }
-  if (asset.source.width !== 1920 || asset.source.height !== 1080) {
-    throw new Error(`Scene asset "${id}" source must be exactly 1920x1080.`);
+  const masterSize = sceneMasterSize(id);
+  const variantSizes = sceneVariantSizes(id);
+  const expectedVariantKeys = new Set(variantSizes.flatMap(({ width, height }) =>
+    SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`)));
+  if (asset.source.width !== masterSize.width || asset.source.height !== masterSize.height) {
+    throw new Error(`Scene asset "${id}" source must be exactly ${masterSize.width}x${masterSize.height}.`);
   }
   requiredInteger(asset.source.bytes, `Scene asset "${id}" source.bytes`);
   requiredHash(asset.source.sha256, `Scene asset "${id}" source.sha256`);
@@ -514,13 +507,13 @@ function validateAssetShape(asset, index, declaredPaths) {
     }
     const width = requiredInteger(rawVariant.width, `${context}.width`);
     const height = requiredInteger(rawVariant.height, `${context}.height`);
-    const size = SCENE_VARIANT_SIZES.find(
+    const size = variantSizes.find(
       (candidate) => candidate.width === width && candidate.height === height,
     );
     if (!size) {
       throw new Error(
         `${context} has unsupported dimensions ${width}x${height}; ` +
-          'expected 640x360, 1280x720, or 1920x1080.',
+          `expected ${variantSizes.map((size) => `${size.width}x${size.height}`).join(', ')}.`,
       );
     }
     const key = `${width}x${height}:${format}`;
@@ -599,8 +592,8 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
     const source = await inspectRaster(
       sourcePath,
       'png',
-      1920,
-      1080,
+      asset.manifestAsset.source.width,
+      asset.manifestAsset.source.height,
       `Scene asset "${asset.id}" source`,
     );
     const sourceRecord = asset.manifestAsset.source;
@@ -692,7 +685,7 @@ if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
     .then((manifest) =>
       process.stdout.write(
         `Scene asset validation passed: ${manifest.assets.length} scene assets, ` +
-          `${manifest.assets.length * SCENE_VARIANT_SIZES.length * SCENE_VARIANT_FORMATS.length} variants.\n`,
+          `${manifest.assets.reduce((count, asset) => count + asset.variants.length, 0)} variants.\n`,
       ),
     )
     .catch((error) => {

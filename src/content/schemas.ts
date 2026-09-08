@@ -324,7 +324,7 @@ const paletteSchema = z
   })
   .strict();
 
-export const characterSchema = z
+export const characterDefinitionSchema = z
   .object({
     id: identifierSchema,
     species: z.enum(['human', 'robot'], {
@@ -377,6 +377,7 @@ export const characterSchema = z
         voiceHint: z.enum(['bright', 'grounded', 'measured', 'sharp']),
         rate: z.number().min(0.5).max(2),
         pitch: z.number().min(0).max(2),
+        skinVoices: z.record(identifierSchema, z.enum(['george', 'emma', 'david', 'mark', 'zira'])).optional(),
       })
       .strict(),
     animationSet: z
@@ -388,6 +389,47 @@ export const characterSchema = z
       .strict(),
   })
   .strict();
+
+type CharacterVoiceAssignment = Readonly<{
+  species: 'human' | 'robot';
+  voiceProfile: Readonly<{
+    skinVoices?: Readonly<Record<string, string>>;
+  }>;
+}>;
+
+type CharacterVoiceIssueContext = {
+  addIssue: (issue: {
+    code: 'custom';
+    path: (string | number)[];
+    message: string;
+  }) => void;
+};
+
+export function validateCharacterSkinVoices(
+  character: CharacterVoiceAssignment,
+  context: CharacterVoiceIssueContext,
+): void {
+  for (const [skinId, voice] of Object.entries(
+    character.voiceProfile.skinVoices ?? {},
+  )) {
+    const valid = character.species === 'human'
+      ? voice === 'george' || voice === 'emma'
+      : voice === 'david' || voice === 'mark' || voice === 'zira';
+    if (!valid) {
+      context.addIssue({
+        code: 'custom',
+        path: ['voiceProfile', 'skinVoices', skinId],
+        message: character.species === 'human'
+          ? 'Assign George or Emma to a human skin.'
+          : 'Assign David, Mark, or Zira to a robot skin.',
+      });
+    }
+  }
+}
+
+export const characterSchema = characterDefinitionSchema.superRefine(
+  validateCharacterSkinVoices,
+);
 
 export const sceneSchema = z
   .object({

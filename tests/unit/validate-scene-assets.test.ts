@@ -34,13 +34,13 @@ const { validateSceneAssets } = sceneValidator as {
   validateSceneAssets: (options: { sceneRoot: string }) => Promise<unknown>;
 };
 
-const width = 1920;
-const height = 1080;
 let fixture: string;
 let baseManifestText: string;
 let baseVariantBytes: Map<string, Buffer>;
 
 async function writeMaster(root: string, fileName: string): Promise<void> {
+  const width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920;
+  const height = width * 9 / 16;
   const filePath = path.join(root, fileName);
   if (!fileName.includes('-desks')) {
     await sharp({
@@ -116,7 +116,8 @@ beforeAll(async () => {
       ] as const),
     ),
   );
-}, 120_000);
+// Encode the complete 4K fixture with the production codec settings.
+}, 180_000);
 
 afterEach(async () => {
   await restoreFixture();
@@ -129,6 +130,20 @@ afterAll(async () => {
 describe.sequential('scene asset manifest validator', () => {
   test('accepts a complete temporary scene package', async () => {
     await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
+  }, 15_000);
+
+  test('rejects a modern studio package without its 4K variant', async () => {
+    const manifest = await readManifest();
+    const assets = manifest.assets as Array<{
+      id: string; variants: Array<{ width: number; format: string }>;
+    }>;
+    const modern = assets.find((asset) => asset.id === 'modern-debate-studio')!;
+    modern.variants = modern.variants.filter((variant) =>
+      variant.width !== 3840 || variant.format !== 'avif');
+    await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
+    await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
+      'missing variants: 3840x2160:avif',
+    );
   });
 
   test('rejects a missing license identifier', async () => {

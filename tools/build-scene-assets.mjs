@@ -24,15 +24,8 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-export const SCENE_VARIANT_SIZES = Object.freeze([
-  Object.freeze({ width: 640, height: 360 }),
-  Object.freeze({ width: 1280, height: 720 }),
-  Object.freeze({ width: 1920, height: 1080 }),
-]);
-export const SCENE_BYTE_BUDGETS = Object.freeze({
-  avif: 350 * 1024,
-  webp: 500 * 1024,
-});
+import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
+export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
 
 const SOURCE_DESCRIPTION =
   'Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.';
@@ -106,8 +99,9 @@ async function assertMasterSet(sceneRoot) {
 async function inspectMaster(filePath, identity) {
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
-  if (metadata.format !== 'png' || metadata.width !== 1920 || metadata.height !== 1080) {
-    throw new Error(`${filePath} must be a 1920x1080 PNG master.`);
+  const size = sceneMasterSize(identity.id);
+  if (metadata.format !== 'png' || metadata.width !== size.width || metadata.height !== size.height) {
+    throw new Error(`${filePath} must be a ${size.width}x${size.height} PNG master.`);
   }
   const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   if (info.channels !== 4) throw new Error(`${filePath} did not decode as RGBA.`);
@@ -226,7 +220,7 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
     const assets = [];
     for (const master of masters) {
       const variants = [];
-      for (const size of SCENE_VARIANT_SIZES) {
+      for (const size of sceneVariantSizes(master.identity.id)) {
         for (const format of ['avif', 'webp']) {
           const { output, quality } = await encodeWithinBudget(master.input, size, format);
           const outputName = `${master.identity.id}-${size.width}x${size.height}.${format}`;
@@ -248,13 +242,14 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
         ownerType: 'scene',
         ownerId: master.identity.ownerId,
         layerRole: master.identity.isForeground ? 'foreground' : 'back',
-        sourceDescription: SOURCE_DESCRIPTION,
+        sourceDescription: ['modern-debate-studio', 'transition-era-television-studio'].includes(master.identity.id)
+          ? 'User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.'
+          : SOURCE_DESCRIPTION,
         licenseIdentifier: LICENSE_IDENTIFIER,
         source: {
           path: master.fileName,
           sha256: master.sourceSha256,
-          width: 1920,
-          height: 1080,
+          ...sceneMasterSize(master.identity.id),
           bytes: master.bytes,
           format: 'png',
         },

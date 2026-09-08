@@ -5,6 +5,8 @@ import type {
   TurnTimerSeconds,
 } from '../../persistence/codecs/settings-codec';
 import { settingsPersistenceNotice } from '../../persistence/settings';
+import type { AudioStatus } from '../../audio/audio-port';
+import type { NeuralSpeechStatus } from '../../audio/neural-speech';
 
 const elementName = 'grand-transition-settings';
 export const closeSettingsEventName = 'close-settings';
@@ -28,10 +30,18 @@ export class GrandTransitionSettings extends LitElement {
   static properties = {
     settings: { attribute: false },
     showPersistenceNotice: { type: Boolean },
+    audioStatus: { attribute: false },
+    speechAvailable: { type: Boolean },
+    speechStatus: { attribute: false },
+    speechProgress: { attribute: false },
   };
 
   declare settings: SettingsDocument;
   declare showPersistenceNotice: boolean;
+  declare audioStatus: AudioStatus;
+  declare speechAvailable: boolean;
+  declare speechStatus: NeuralSpeechStatus;
+  declare speechProgress: number | null;
 
   constructor() {
     super();
@@ -48,6 +58,10 @@ export class GrandTransitionSettings extends LitElement {
       autoComplete: true,
     };
     this.showPersistenceNotice = false;
+    this.audioStatus = 'idle';
+    this.speechAvailable = false;
+    this.speechStatus = 'idle';
+    this.speechProgress = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -96,6 +110,14 @@ export class GrandTransitionSettings extends LitElement {
               ${this.renderVolume('masterVolume', msg('Master volume'))}
               ${this.renderVolume('musicVolume', msg('Music volume'))}
               ${this.renderVolume('effectsVolume', msg('Effects volume'))}
+              ${this.audioStatus === 'ready' ? nothing : html`
+                <p class="settings-note" role="status">${this.audioStatus === 'loading'
+                  ? msg('Loading sound…') : this.audioStatus === 'unavailable'
+                    ? msg('Sound is unavailable. You can continue without sound.')
+                    : msg('Sound starts after your first interaction.')}</p>
+                ${this.audioStatus === 'unavailable' ? html`<button type="button"
+                  class="settings-close" @click=${this.retryAudio}>${msg('Retry sound')}</button>` : nothing}
+              `}
             </fieldset>
 
             <fieldset class="settings-group">
@@ -110,20 +132,16 @@ export class GrandTransitionSettings extends LitElement {
                 />
               </label>
               ${this.renderVolume('speechVolume', msg('Speech volume'))}
-              <label class="settings-control">
-                <span>${msg('Speech voice')}</span>
-                <select name="speechVoiceUri" @change=${this.changeVoice}>
-                  <option value="" ?selected=${this.settings.speechVoiceUri === null}>
-                    ${msg('Auto')}
-                  </option>
-                  ${this.settings.speechVoiceUri === null
-                    ? nothing
-                    : html`<option value=${this.settings.speechVoiceUri} selected>
-                        ${msg('Saved voice')}
-                      </option>`}
-                </select>
-              </label>
               ${this.renderRate()}
+              <p id="speech-service-note" class="settings-note">
+                ${msg('Human voices use a local neural model. Robots use installed Microsoft voices when available. Phrase text stays on this device.')}
+              </p>
+              ${this.speechStatus === 'loading' ? html`<p class="settings-note" role="status">
+                ${msg('Loading local voice model…')}
+                ${this.speechProgress === null ? nothing : `${Math.round(this.speechProgress * 100)}%`}
+              </p>` : !this.speechAvailable || this.speechStatus === 'unavailable' ? html`<p class="settings-note" role="status">
+                ${msg('Local neural speech is unavailable. You can continue without narration.')}
+              </p>` : nothing}
             </fieldset>
 
             <fieldset class="settings-group settings-group--play">
@@ -224,11 +242,6 @@ export class GrandTransitionSettings extends LitElement {
     );
   };
 
-  private readonly changeVoice = (event: Event): void => {
-    const control = event.currentTarget as HTMLSelectElement;
-    this.changeSetting('speechVoiceUri', control.value || null);
-  };
-
   private changeSetting<Field extends keyof SettingsDocument>(
     field: Field,
     value: SettingsDocument[Field],
@@ -252,6 +265,10 @@ export class GrandTransitionSettings extends LitElement {
     );
   };
 
+  private readonly retryAudio = (): void => {
+    this.dispatchEvent(new CustomEvent('retry-audio', { bubbles: true, composed: true }));
+  };
+
   private readonly dismissNotice = (): void => {
     this.dispatchEvent(
       new CustomEvent(dismissSettingsNoticeEventName, {
@@ -270,7 +287,7 @@ export class GrandTransitionSettings extends LitElement {
     }
     if (event.key !== 'Tab') return;
     const controls = [...this.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled]), select:not([disabled])',
+      'button:not([disabled]), input:not([disabled])',
     )];
     if (controls.length === 0) return;
     const first = controls[0]!;

@@ -33,11 +33,11 @@ describe('public character motion projection', () => {
   test('projects only the accepted actor and does not use private command payloads', () => {
     const input = state({ ...command('select-phrase'), payload: { privateCard: 'secret-unplayed-fixture' } });
     const cue = projectCharacterCue(input, 'one', null, null);
-    expect(cue).toEqual({ stateId: 'delivery', sequence: 1 });
+    expect(cue).toEqual({ stateId: 'idle', sequence: 1 });
     expect(Object.isFrozen(cue)).toBe(true);
     expect(JSON.stringify(cue)).not.toContain('secret');
     expect(projectCharacterCue(input, 'two', null, null).stateId).toBe('idle');
-    expect(projectCharacterCue(state(command('select-comeback')), 'one', null, null).stateId).toBe('comeback');
+    expect(projectCharacterCue(state(command('select-comeback')), 'one', null, null).stateId).toBe('idle');
     expect(projectCharacterCue(state(command('redraw-hand')), 'one', null, null).stateId).toBe('idle');
   });
 
@@ -48,27 +48,14 @@ describe('public character motion projection', () => {
     expect(projectCharacterCue(input, 'two', reaction, null).stateId).toBe('idle');
   });
 
-  test.each([[0, 'idle'], [1, 'light-hit'], [19, 'light-hit'], [20, 'heavy-hit'], [100, 'heavy-hit']] as const)(
-    'projects incoming damage %s as %s without changing damage', (damage, expected) => {
-      const resolution = review({ opponentOutgoingDamage: damage });
-      const before = JSON.stringify(resolution);
-      expect(projectCharacterCue(state(), 'one', null, resolution).stateId).toBe(expected);
-      expect(JSON.stringify(resolution)).toBe(before);
-    },
-  );
-
-  test('uses the opponent weakness result rather than the actor outgoing result', () => {
-    expect(projectCharacterCue(state(), 'one', null,
-      review({ opponentOutgoingDamage: 20 }, { weaknessActivated: true })).stateId).toBe('weakness');
-    expect(projectCharacterCue(state(), 'one', null,
-      review({ opponentOutgoingDamage: 20, weaknessActivated: true })).stateId).toBe('heavy-hit');
-  });
-
-  test('keeps grammar self-damage separate and supports undamaged comeback and delivery', () => {
-    expect(projectCharacterCue(state(), 'one', null,
-      review({ selfDamage: 3, grammarMistakes: 1, opponentOutgoingDamage: 20 })).stateId).toBe('grammar-mistake');
-    expect(projectCharacterCue(state(), 'one', null, review({ comebackActivated: true })).stateId).toBe('comeback');
-    expect(projectCharacterCue(state(), 'one', null, review({ completeValidInsult: true })).stateId).toBe('delivery');
+  test('resolved outcomes stay idle until the presentation timeline delivers them', () => {
+    const resolution = review({ selfDamage: 3, grammarMistakes: 1, opponentOutgoingDamage: 20,
+      completeValidInsult: true, comebackActivated: true }, { weaknessActivated: true });
+    const before = JSON.stringify(resolution);
+    for (const id of ['one', 'two']) {
+      expect(projectCharacterCue(state(), id, null, resolution).stateId).toBe('idle');
+    }
+    expect(JSON.stringify(resolution)).toBe(before);
   });
 
   test('all authored loops and reactions meet the fixed duration bounds', () => {

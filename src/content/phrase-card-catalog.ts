@@ -1,10 +1,12 @@
 import { z } from 'zod';
 import {
+  characterDefinitionSchema,
   characterSchema,
   editorialReviewSchema,
   identifierSchema,
   phraseDefinitionSchema,
   phraseSchema,
+  validateCharacterSkinVoices,
   type Character,
   type Phrase,
 } from './schemas';
@@ -88,7 +90,7 @@ const manualPhraseCardsSchema = z
     });
   });
 
-const manualCharacterFileSchema = characterSchema
+const manualCharacterFileSchema = characterDefinitionSchema
   .omit({
     nameKey: true,
     descriptionKey: true,
@@ -109,7 +111,8 @@ const manualCharacterFileSchema = characterSchema
     editorialReview: editorialReviewSchema,
     phrases: manualPhraseCardsSchema,
   })
-  .strict();
+  .strict()
+  .superRefine(validateCharacterSkinVoices);
 
 export type PhraseCardCorpus = Readonly<{
   phrases: readonly Phrase[];

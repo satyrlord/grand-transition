@@ -468,6 +468,14 @@
     line-height: 1.35;
   }
 
+  .settings-note {
+    margin: 0;
+    color: var(--broadcast-paper);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
   .settings-persistence-notice {
     max-width: none;
     margin-block-end: 0.7rem;
@@ -550,16 +558,6 @@
     text-align: end;
   }
 
-  .settings-control select {
-    min-height: 2.75rem;
-    padding: 0.45rem 0.6rem;
-    border: 1px solid var(--broadcast-brass);
-    border-radius: 0;
-    background: var(--broadcast-black);
-    color: var(--broadcast-paper-light);
-    font: 600 0.76rem/1 var(--font-interface);
-  }
-
   .settings-options {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -586,8 +584,7 @@
   .settings-close:hover,
   .settings-close:focus-visible,
   .settings-options button:hover,
-  .settings-options button:focus-visible,
-  .settings-control select:focus-visible {
+  .settings-options button:focus-visible {
     border-color: var(--broadcast-paper-light);
     background: var(--broadcast-panel);
   }
@@ -595,7 +592,6 @@
   .settings-close:focus-visible,
   .settings-options button:focus-visible,
   .settings-control input:focus-visible,
-  .settings-control select:focus-visible,
   .settings-toggle input:focus-visible,
   .settings-persistence-notice button:focus-visible {
     outline: 3px solid var(--focus-blue, #77c8ff);
@@ -1010,7 +1006,6 @@
     .settings-dialog,
     .settings-group,
     .settings-options button,
-    .settings-control select,
     .settings-persistence-notice,
     .title-settings-notice {
       background: Canvas;
@@ -1023,11 +1018,7 @@
     .title-transmission button,
     .settings-dialog,
     .settings-group,
-    .settings-control select {
-      border-color: CanvasText;
-    }
-
-    .title-emblem {
+      .title-emblem {
       forced-color-adjust: none;
     }
 

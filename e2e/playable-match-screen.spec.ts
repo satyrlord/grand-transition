@@ -1,3 +1,5 @@
+import { finishPresentation } from './helpers/presentation';
+import type { RoundPresentationFrame } from '../src/app/round-presentation';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -5,6 +7,8 @@ const sceneVariantDimensions = [
   [640, 360],
   [1280, 720],
   [1920, 1080],
+  [2560, 1440],
+  [3840, 2160],
 ] as const;
 
 test.beforeEach(async ({ page }) => {
@@ -420,6 +424,7 @@ test('the match prevents accidental browser text selection', async ({
 test('the next round clears an incomplete public sentence', async ({
   page,
 }) => {
+  await pauseMatchClock(page);
   await startMatch(page);
   await page
     .locator('[data-role="noun"] button[data-card-state="legal"]')
@@ -434,10 +439,7 @@ test('the next round clears an incomplete public sentence', async ({
 
   await page.getByRole('button', { name: 'End', exact: true }).click();
   await page.getByRole('button', { name: 'End', exact: true }).click();
-  await expect(
-    page.getByRole('button', { name: 'Continue', exact: true }),
-  ).toBeVisible();
-  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await finishPresentation(page);
   await expect(
     page.getByRole('heading', { name: /Round 2.*turn/u }),
   ).toBeVisible();
@@ -805,8 +807,8 @@ for (const viewport of [
           background.evaluate(
             (image: HTMLImageElement) =>
               image.complete &&
-              image.getAttribute('width') === '1920' &&
-              image.getAttribute('height') === '1080',
+              image.getAttribute('width') === '3840' &&
+              image.getAttribute('height') === '2160',
           ),
         { timeout: 15_000 },
       )
@@ -817,8 +819,8 @@ for (const viewport of [
         foreground.evaluate(
           (image: HTMLImageElement) =>
             image.complete &&
-            image.getAttribute('width') === '1920' &&
-            image.getAttribute('height') === '1080',
+            image.getAttribute('width') === '3840' &&
+            image.getAttribute('height') === '2160',
         ),
       )
       .toBe(true);
@@ -1155,8 +1157,8 @@ test('keeps the physical moderator face clear of drafting UI', async ({
         background.evaluate(
           (image: HTMLImageElement) =>
             image.complete &&
-            image.getAttribute('width') === '1920' &&
-            image.getAttribute('height') === '1080',
+            image.getAttribute('width') === '3840' &&
+            image.getAttribute('height') === '2160',
         ),
       { timeout: 15_000 },
     )
@@ -1507,7 +1509,7 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
     '[data-turn-state="active"] [data-state-visible="true"] .character-state-upper',
   );
   await expect(incomingPortrait).toHaveCSS('animation-name', 'character-breath');
-  await expect(incomingPortrait).toHaveCSS('animation-duration', '4s');
+  await expect(incomingPortrait).toHaveCSS('animation-duration', '3s');
   await expect(page.locator('.private-hand')).toHaveAttribute(
     'data-side',
     'blue',
@@ -1519,322 +1521,52 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
 
   for (let turn = 0; turn < 8; turn += 1) {
-    if (
-      await page
-        .getByRole('button', { name: 'Continue', exact: true })
-        .isVisible()
-        .catch(() => false)
-    )
-      break;
-    const end = page.getByRole('button', { name: 'End', exact: true });
-    if (await end.isEnabled()) {
-      await end.click();
-      continue;
-    }
-    const legal = page
-      .locator(
-        '.shared-board button[data-card-state="legal"], .private-hand button[data-card-state="legal"]',
-      )
-      .first();
-    await expect(legal).toBeVisible();
-    await legal.click();
+    if (await page.locator('.match-screen').getAttribute('data-delivery-phase')) break;
+    await page.getByRole('button', { name: 'End', exact: true }).click();
   }
-
-  await expect(page.locator('grand-transition-resolution-results')).toHaveCount(
-    0,
-  );
-  await expect(page.locator('.round-review-dialog')).toBeVisible();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  // A public long receipt fixture tests the same component renderer at all viewports.
   await page.locator('grand-transition-match').evaluate(async (element) => {
-    const match = element as HTMLElement & {
-      snapshot: {
-        revision: number;
-        sentenceText: string;
-        sentenceComplete: boolean;
-        players: readonly { playerId: string }[];
-        reaction: {
-          round: number | null;
-          outcomeLabel: string;
-          players: Record<
-            string,
-            {
-              damage: number;
-              comboFactor: number;
-              comboBonusDamage: number;
-              weaknesses: readonly string[];
-              weaknessFactor: number;
-              sentenceDamage: number;
-              comebackBonus: number;
-              scoreComponents: readonly {
-                kind: 'clause' | 'comeback' | 'finisher';
-                phraseText: string;
-                base: number;
-                restrictionFactor: number;
-                weaknessFactor: number;
-                comboFactor: number;
-                amount: number;
-                weaknessTags: readonly string[];
-              }[];
-            }
-          >;
-        };
-      };
-      updateComplete: Promise<boolean>;
-    };
-    const firstId = match.snapshot.players[0]!.playerId;
-    match.snapshot = {
-      ...match.snapshot,
-      revision: match.snapshot.revision + 1,
-      sentenceText:
-        'Your party belongs in a party museum, and your voters change the channel.',
-      sentenceComplete: true,
-      reaction: {
-        ...match.snapshot.reaction,
-        players: {
-          ...match.snapshot.reaction.players,
-          [firstId]: {
-            ...match.snapshot.reaction.players[firstId]!,
-            damage: 51,
-            comboFactor: 2,
-            comboBonusDamage: 15,
-            weaknesses: ['evidence', 'credibility', 'restraint'],
-            weaknessFactor: 1.5,
-            sentenceDamage: 33,
-            comebackBonus: 18,
-            scoreComponents: [
-              {
-                kind: 'clause',
-                phraseText: 'Your party belongs in a party museum',
-                base: 10,
-                restrictionFactor: 1,
-                weaknessFactor: 1.5,
-                comboFactor: 2,
-                amount: 30,
-                weaknessTags: ['evidence'],
-              },
-              {
-                kind: 'finisher',
-                phraseText: 'By emergency ordinance.',
-                base: 3,
-                restrictionFactor: 1,
-                weaknessFactor: 1,
-                comboFactor: 1,
-                amount: 3,
-                weaknessTags: [],
-              },
-              {
-                kind: 'comeback',
-                phraseText: 'And that closes the record.',
-                base: 18,
-                restrictionFactor: 1,
-                weaknessFactor: 1,
-                comboFactor: 1,
-                amount: 18,
-                weaknessTags: [],
-              },
-            ],
-          },
-        },
-      },
-    };
+    const match = element as HTMLElement & { presentation: RoundPresentationFrame; updateComplete: Promise<boolean> };
+    const base = { narrationIndex: 1, restrictionFactor: 1, weaknessFactor: 1, comboFactor: 1, weaknessTags: [] };
+    match.presentation = { ...match.presentation, phase: 'total', total: 51,
+      text: 'Your party belongs in a party museum, and your voters change the channel.',
+      components: [
+        { ...base, kind: 'clause', phraseText: 'Your party belongs in a party museum', base: 10,
+          amount: 30, weaknessFactor: 1.5, comboFactor: 2, weaknessTags: ['evidence', 'credibility', 'restraint'] },
+        { ...base, kind: 'finisher', phraseText: 'By emergency ordinance.', base: 3, amount: 3 },
+        { ...base, kind: 'comeback', phraseText: 'And that closes the record.', base: 18, amount: 18 },
+      ] };
     await match.updateComplete;
   });
-  await expect(page.locator('[data-round-result="1"]')).toBeVisible();
-  await expect(page.locator('.reaction-outcome')).toContainText(
-    /Round 1 (winner:|result: tie)/u,
-  );
-  await expect(page.locator('.reaction-scores > div')).toHaveCount(2);
-  await expect(page.locator('.reaction-scores dd > strong')).toHaveCount(2);
-  const firstScore = page.locator('.reaction-scores > div').first();
-  await expect(firstScore.locator('.score-breakdown-step')).toHaveCount(3);
-  await expect(firstScore.locator('.score-breakdown')).toHaveAttribute(
-    'tabindex',
-    '0',
-  );
-  await expect(firstScore.locator('[data-score-kind="clause"]')).toContainText(
-    'Your party belongs in a party museum',
-  );
-  await expect(firstScore.locator('.score-factor--weakness')).toHaveText('×1.5');
-  await expect(firstScore.locator('.score-factor--combo')).toHaveText('×2');
-  await expect(firstScore.locator('[data-score-amount="30"]')).toContainText(
-    /=\s*30/u,
-  );
-  await expect(firstScore.locator('[data-score-kind="comeback"]')).toContainText(
-    /Comeback\s*And that closes the record\.\s*\+18/u,
-  );
-  await expect(firstScore.locator('.reaction-damage-total')).toContainText(
-    /Final damage\s*51/u,
-  );
-  await expect(firstScore.locator('.combo-bonus')).toContainText(
-    /Combo ×2\s*\+15 combo damage/u,
-  );
-  expect(
-    await firstScore
-      .locator('.score-breakdown-step')
-      .first()
-      .evaluate((step) => getComputedStyle(step).animationName),
-  ).toBe('score-breakdown-print');
-  const receiptTiming = await firstScore.evaluate((score) => {
-    const row = score.querySelector<HTMLElement>('.score-breakdown-step:last-child')!;
-    const total = score.querySelector<HTMLElement>('.reaction-damage-total')!;
-    const rowStyle = getComputedStyle(row);
-    const totalStyle = getComputedStyle(total);
-    return {
-      rowEnd:
-        Number.parseFloat(rowStyle.animationDelay) +
-        Number.parseFloat(rowStyle.animationDuration),
-      totalStart: Number.parseFloat(totalStyle.animationDelay),
-      totalEnd:
-        Number.parseFloat(totalStyle.animationDelay) +
-        Number.parseFloat(totalStyle.animationDuration),
-    };
-  });
-  expect(receiptTiming.totalStart).toBeGreaterThanOrEqual(receiptTiming.rowEnd);
-  expect(receiptTiming.totalEnd).toBeLessThanOrEqual(0.8);
-  expect(
-    await firstScore.locator('.score-breakdown-copy > span').first().evaluate(
-      (copy) => Number.parseFloat(getComputedStyle(copy).fontSize),
-    ),
-  ).toBeGreaterThanOrEqual(11);
-  await page.waitForTimeout(800);
-  const reviewSymmetry = await page
-    .locator('.round-review-dialog')
-    .evaluate((record) => {
-      const dialog = record.getBoundingClientRect();
-      const backdrop = record.parentElement!.getBoundingClientRect();
-      const cards = Array.from(
-        record.querySelectorAll<HTMLElement>('.reaction-scores > div'),
-      ).map((card) => card.getBoundingClientRect());
-      const heading = record
-        .querySelector('.round-review-heading')!
-        .getBoundingClientRect();
-      const scores = record
-        .querySelector('.reaction-scores')!
-        .getBoundingClientRect();
-      return {
-        centered:
-          Math.abs(
-            dialog.left + dialog.width / 2 -
-              (backdrop.left + backdrop.width / 2),
-          ) <= 1,
-        equalCards:
-          cards.length === 2 &&
-          Math.abs(cards[0]!.width - cards[1]!.width) <= 1 &&
-          Math.abs(cards[0]!.height - cards[1]!.height) <= 1,
-        sharedWidth: Math.abs(heading.width - scores.width) <= 1,
-      };
-    });
-  expect(reviewSymmetry).toEqual({
-    centered: true,
-    equalCards: true,
-    sharedWidth: true,
-  });
-  await expect(page.locator('.weakness-hit')).toContainText('Weakness hit');
-  await expect(page.locator('.weakness-hit')).toContainText('Evidence');
-  await expect(page.locator('.weakness-hit')).toContainText('Credibility');
-  await expect(page.locator('.weakness-hit')).toContainText('Restraint');
-  const weaknessGeometry = await page
-    .locator('.round-review-dialog')
-    .evaluate((record) => {
-      const box = record.getBoundingClientRect();
-      const viewport = {
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight,
-      };
-      return {
-        horizontalFit: record.scrollWidth <= record.clientWidth + 1,
-        verticalFit: record.scrollHeight <= record.clientHeight + 1,
-        insideViewport:
-          box.left >= 0 &&
-          box.top >= 0 &&
-          box.right <= viewport.width &&
-          box.bottom <= viewport.height,
-      };
-    });
-  expect(weaknessGeometry.horizontalFit).toBe(true);
-  expect(weaknessGeometry.verticalFit).toBe(true);
-  expect(
-    weaknessGeometry.insideViewport,
-    JSON.stringify(weaknessGeometry),
-  ).toBe(true);
-  expect(
-    await page.evaluate(() => {
-      const reaction = document
-        .querySelector('.round-review-dialog')!
-        .getBoundingClientRect();
-      const waiting = document
-        .querySelector('.player-sentence--waiting')!
-        .getBoundingClientRect();
-      return !(
-        reaction.left < waiting.right &&
-        reaction.right > waiting.left &&
-        reaction.top < waiting.bottom &&
-        reaction.bottom > waiting.top
-      );
-    }),
-  ).toBe(true);
-  await expect(firstScore.locator('[data-score-kind="comeback"]')).toContainText(
-    '+18',
-  );
-  await expect(firstScore.locator('.weakness-hit')).toBeVisible();
-  await page.screenshot({
-    path: testInfo.outputPath('round-result-feedback.png'),
-    fullPage: true,
-  });
-  for (const viewport of [
-    { width: 1024, height: 720 },
-    { width: 1024, height: 768 },
-    { width: 1920, height: 1080 },
-  ]) {
+  const receipt = page.locator('.delivery-receipt');
+  await expect(receipt.locator('.delivery-score')).toHaveCount(3);
+  await expect(receipt.locator('.score-factor--weakness')).toHaveText('×1.5');
+  await expect(receipt.locator('.score-factor--combo')).toHaveText('×2');
+  await expect(receipt.locator('[data-score-amount="30"]')).toContainText(/=\s*30/u);
+  await expect(receipt.locator('[data-score-kind="comeback"]')).toContainText(/Comeback.*And that closes the record.*\+18/su);
+  await expect(receipt.locator('.delivery-total')).toContainText(/Total\s*51/u);
+  await expect(receipt.locator('.delivery-score-weakness')).toHaveText('Evidence · Credibility · Restraint');
+  expect(await receipt.locator('.delivery-score').first().evaluate((step) => getComputedStyle(step).animationName)).toBe('none');
+  for (const viewport of [{ width: 1280, height: 720 }, { width: 1024, height: 720 },
+    { width: 1024, height: 768 }, { width: 1920, height: 1080 }]) {
     await page.setViewportSize(viewport);
-    const receiptGeometry = await page
-      .locator('.round-review-dialog')
-      .evaluate((dialog) => {
-        const box = dialog.getBoundingClientRect();
-        const receipts = Array.from(
-          dialog.querySelectorAll<HTMLElement>('.score-breakdown'),
-        );
-        return {
-          insideViewport:
-            box.left >= 0 &&
-            box.top >= 0 &&
-            box.right <= window.innerWidth &&
-            box.bottom <= window.innerHeight,
-          dialogFits:
-            dialog.scrollWidth <= dialog.clientWidth + 1 &&
-            dialog.scrollHeight <= dialog.clientHeight + 1,
-          receiptsFit: receipts.every(
-            (receipt) => receipt.scrollWidth <= receipt.clientWidth + 1,
-          ),
-        };
-      });
-    expect(receiptGeometry, JSON.stringify(viewport)).toEqual({
-      insideViewport: true,
-      dialogFits: true,
-      receiptsFit: true,
+    const geometry = await receipt.evaluate((record) => {
+      const box = record.getBoundingClientRect();
+      const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
+      return { inside: box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight,
+        horizontalFit: record.scrollWidth <= record.clientWidth + 1,
+        bubbleClear: box.top >= bubble.bottom || box.right <= bubble.left || box.left >= bubble.right,
+        copySize: Number.parseFloat(getComputedStyle(record.querySelector('.delivery-score-text')!).fontSize) };
     });
-    await page.screenshot({
-      path: testInfo.outputPath(
-        `round-result-feedback-${viewport.width}x${viewport.height}.png`,
-      ),
-      fullPage: true,
-    });
+    expect(geometry.inside).toBe(true); expect(geometry.horizontalFit).toBe(true);
+    expect(geometry.bubbleClear).toBe(true); expect(geometry.copySize).toBeGreaterThanOrEqual(11);
+    await page.screenshot({ path: testInfo.outputPath(`inline-feedback-${viewport.width}x${viewport.height}.png`) });
   }
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  expect(
-    await firstScore
-      .locator('.score-breakdown-step')
-      .first()
-      .evaluate((step) => getComputedStyle(step).animationName),
-  ).toBe('none');
-  expect(
-    await firstScore
-      .locator('.reaction-damage-total')
-      .evaluate((total) => getComputedStyle(total).animationName),
-  ).toBe('none');
-  await page.getByRole('button', { name: 'Continue', exact: true }).click();
-  await expect(
-    page.getByRole('heading', { name: /Round 2.*turn/u }),
-  ).toBeVisible();
+  expect(await receipt.locator('.delivery-score').first().evaluate((step) => getComputedStyle(step).animationName)).toBe('none');
+  await finishPresentation(page);
+  await expect(page.getByRole('heading', { name: /Round 2.*turn/u })).toBeVisible();
 });
 
 test('the grammar strike fits the minimum landscape', async ({
@@ -2587,8 +2319,8 @@ async function readModeratorFaceClearance(page: Page) {
     return {
       ready: true,
       backgroundDimensions:
-        background.getAttribute('width') === '1920' &&
-        background.getAttribute('height') === '1080',
+        background.getAttribute('width') === '3840' &&
+        background.getAttribute('height') === '2160',
       clear: !draftingRegions.some((region) =>
         overlaps(moderatorFace, region),
       ),

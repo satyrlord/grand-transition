@@ -49,10 +49,7 @@ test('restores every stored setting and applies title changes immediately', asyn
   expect(range(settings, 'effectsVolume').value).toBe('0.35');
   expect(range(settings, 'speechVolume').value).toBe('0.25');
   expect(checkbox(settings, 'speechEnabled').checked).toBe(true);
-  expect(
-    settings.querySelector<HTMLSelectElement>('[name="speechVoiceUri"]')!
-      .value,
-  ).toBe('urn:grand-transition:saved-voice');
+  expect(settings.querySelector('[name="speechVoiceUri"]')).toBeNull();
   expect(range(settings, 'speechRate').value).toBe('1.4');
   expect(timer(settings, '15 seconds').getAttribute('aria-pressed')).toBe(
     'true',
@@ -173,6 +170,7 @@ test.each([
     await page.getByRole('button', { name: 'Set up match' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
     await completeMatch(app);
+    await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
 
     expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
       'Victory',

@@ -9,6 +9,8 @@ import type {
 } from '../../persistence/match-history';
 import type { SettingsDocument } from '../../persistence/codecs/settings-codec';
 import { settingsPersistenceNotice } from '../../persistence/settings';
+import type { AudioStatus } from '../../audio/audio-port';
+import type { NeuralSpeechStatus } from '../../audio/neural-speech';
 import './match-history-modal';
 import './settings-modal';
 
@@ -35,6 +37,10 @@ export class GrandTransitionTitle extends LitElement {
     settings: { attribute: false },
     settingsOpen: { type: Boolean },
     showSettingsPersistenceNotice: { type: Boolean },
+    audioStatus: { attribute: false },
+    speechAvailable: { type: Boolean },
+    speechStatus: { attribute: false },
+    speechProgress: { attribute: false },
   };
 
   declare status: string;
@@ -44,6 +50,10 @@ export class GrandTransitionTitle extends LitElement {
   declare settings: SettingsDocument;
   declare settingsOpen: boolean;
   declare showSettingsPersistenceNotice: boolean;
+  declare audioStatus: AudioStatus;
+  declare speechAvailable: boolean;
+  declare speechStatus: NeuralSpeechStatus;
+  declare speechProgress: number | null;
 
   constructor() {
     super();
@@ -65,6 +75,10 @@ export class GrandTransitionTitle extends LitElement {
     };
     this.settingsOpen = false;
     this.showSettingsPersistenceNotice = false;
+    this.audioStatus = 'idle';
+    this.speechAvailable = false;
+    this.speechStatus = 'idle';
+    this.speechProgress = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -159,6 +173,10 @@ export class GrandTransitionTitle extends LitElement {
         ${this.settingsOpen
           ? html`<grand-transition-settings
               .settings=${this.settings}
+              .audioStatus=${this.audioStatus}
+              .speechAvailable=${this.speechAvailable}
+              .speechStatus=${this.speechStatus}
+              .speechProgress=${this.speechProgress}
               .showPersistenceNotice=${this.showSettingsPersistenceNotice}
             ></grand-transition-settings>`
           : nothing}

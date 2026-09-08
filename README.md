@@ -35,7 +35,7 @@ secured production shell, and the complete configured quality gate. Milestones
 
 The current content has common Romanian-politics phrases and 18 fictional
 characters: 17 humans and one robot. Each character has owned phrases and a
-default local portrait. Seven archetypes have nine alternate skins in total.
+default local portrait. Seven archetypes have ten alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes two fictional layered debate studios, four playable
 foundation scenes with distinct local cartoon backgrounds, and one English game-locale
@@ -61,19 +61,40 @@ match logs. Current clause scoring uses compatibility bases of 5, 8, 11, and
 14, a local 1.5 weakness multiplier, and no restriction damage bonus.
 
 The landscape-only Lit interface provides title, setup, playable single-player
-and hotseat matches, Pause, and between-round review. Each review prints an ordered score
-receipt with clause text, weakness and combo factors, separate finisher and
-Comeback rows, and final damage. A terminal exchange stays in the arena as a
-persistent victory record until the player returns to the title. The title
-alone exposes local public match history. The interface requires a browser
-content viewport of at least 1024 by 720 CSS pixels. It recommends 1920 by 1080 and PC.
+and hotseat matches, Pause, and narrated exchange presentation. Each character
+recites one complete public insult. Inline score lines show clause text,
+weakness and combo factors, separate finisher and Comeback rows, total, and
+applied Pride loss. The next round starts automatically after both deliveries.
+A terminal exchange stays in the arena as a persistent victory record until
+the player returns to the title. The title alone exposes local public match
+history. The interface requires a browser content viewport of at least 1024 by
+720 CSS pixels. It recommends 1920 by 1080 and PC.
 
 Local sound, speech, timer, and Auto-complete settings use a strict
 versioned document and browser storage with a session memory fallback. Single
 player uses the seeded Local Radio Caller, Party Strategist, and Palace
 Operator AI policies. The local nine-rung ladder persists its exact opponents,
-scenes, wins, losses, and completion. Later dependency work adds audio output,
-final content volume and media, balance evidence, and release hardening.
+scenes, wins, losses, and completion.
+
+Sound starts after a user interaction. Settings controls Master, Music, Effects,
+and Speech. CC0 piano recordings of Romanian Folk Dances cover the menu and
+transition-era studio; other scenes retain effects without scene music.
+Speech defaults off. Enabling it downloads about 110 MB of local neural model
+resources. Male and female human skins use British George and Emma voices.
+Robot skins use installed Microsoft David, Mark, and Zira voices, with British
+neural fallback when the requested local voice is absent. No phrase is uploaded. Preparation time depends on the device and sentence length.
+The game remains playable when speech is unavailable.
+
+After both players finish, each character recites with its own bubble and inline
+score. The full total precedes the damaged stance and displayed Pride change.
+Both deliveries finish before the next round or Victory. Pause preserves the
+narration position; leaving the match cancels it.
+
+`npm run audio:build` prepares the sourced music and original effects.
+`npm run speech:build` prepares pinned neural assets. Their corresponding
+`audio:validate` and `speech:validate` commands check manifests and bytes in the
+build and quality gate. Milestones 024 and 025 own audio and presentation
+acceptance, including separate listening and visual review.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

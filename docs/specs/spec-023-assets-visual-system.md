@@ -24,6 +24,23 @@ The acceptance audit at revision `c513d11` passed `npm run ci`: 501 unit tests,
 424 browser tests, 424 coverage tests, and 133 production-browser tests.
 `git diff --check` also passed.
 
+## Approved schoolteacher robot addition
+
+On 2026-09-08, the owner requested a third Government AI skin: a severe female
+communist robot schoolteacher, voiced by Microsoft Zira. Its stable skin ID is
+`schoolteacher`. It adds one selection master and eight state masters, with
+transparent 2048-square PNGs and the normal AVIF/WebP variants. Selection and
+idle reuse the same standing artwork; the other seven states have distinct
+poses and expressions. The current inventory is 28 selection masters and eight
+state packages containing 64 state masters. The original 27 replacement-baseline
+hashes remain unchanged. Reviewed additions are declared in `portrait-layout.json`.
+The build keeps the original mandatory inventory and adds those reviewed files.
+
+The private prompts are under `research/government-ai--schoolteacher/prompts/`.
+The built-in image tool generated the sprites. The approved green-key tool
+removed the matte; uniform 32-pixel canvas padding protects the smallest variant.
+This addition does not reopen or replace the earlier accepted character art.
+
 ## Completed delivery packages
 
 The implementation used dependency-ordered delivery packages. Each
@@ -120,7 +137,7 @@ The scene baseline contains these current layers:
 The current playable catalog also includes four opaque scene masters:
 `county-council-ballroom.png`, `midnight-call-in-studio.png`,
 `palace-press-hall.png`, and `influencer-campaign-livestream.png`. These use the
-same 1920-by-1080 source canvas, six runtime variants, crop core, and shared safe
+same 16:9 source canvas, resolution-specific runtime variants, crop core, and shared safe
 rectangles. Each has a focal point at `(0.5, 0.5)` and explicitly absent
 moderator and foreground-desk focal rectangles. The asset pipeline validates
 all eight scene masters. The original four-layer baseline remains the studio
@@ -400,7 +417,7 @@ vertical references as percentages of canvas height:
 - Seated-moderator focal center: 43 percent.
 - Standing-desk top: 62 percent.
 - Main floor break: 72 percent. Apply the same normalized anchors to the
-1920-by-1080 master and every runtime variant.
+16:9 master and every runtime variant.
 
 Runtime portrait frames use the same bottom-aligned scene canvas as the back
 and foreground layers. Each square portrait frame is 80 percent of scene
@@ -422,7 +439,7 @@ The speech record ends above the moderator focal rectangle. The common phrase
 pool begins below it and may cover the moderator desk, chair, or lower body.
 
 Record all focal and interface-safe regions as normalized rectangles in the
-1920-by-1080 master coordinate system. Apply the same rectangles to each runtime
+normalized 16:9 master coordinate system. Apply the same rectangles to each runtime
 variant before crop. A scene-specific decorative element cannot move, shrink,
 or cover a shared interface-safe region.
 
@@ -472,8 +489,11 @@ percentages of master width and height:
 - lower-left action region: `x=12.5-24`, `y=66-94`.
 - lower-right action region: `x=76-87.5`, `y=66-94`.
 
-Keep speech inside the central interaction region. Do not add a speech-safe
-extension across a player gesture, player prop, or moderator focal rectangle.
+The owner's 2026-09-08 speech revision moves bubbles toward each speaker.
+The red bubble spans x=23-55 and the blue bubble spans x=45-77 in scene
+coordinates. Keep their existing upper vertical band and place each tail toward
+its speaker. This supersedes the former central-only speech rule. Do not cover
+a character face, required gesture, prop, or moderator focal rectangle.
 
 The central interaction region contains a reserved moderator window at
 `x=46-54`, `y=35-49`. No live text or control may cover that window. Its
@@ -719,8 +739,25 @@ Graphics file's relative path. The input and output roots must be different.
 
 ## Asset and motion contract
 
-Scene masters are layered 1920 by 1080 files. Runtime wide scene variants are
-640 by 360, 1280 by 720, and 1920 by 1080. Character masters are transparent,
+Modern Debate Studio and Transition-Era Television Studio each use
+3840 by 2160 background and foreground masters. Their user-approved
+replacement backgrounds are upscaled from 1672 by 941 with
+Lanczos3 interpolation and sigma 0.5 sharpening. The final 16:9 canvas corrects
+the input's small aspect-ratio rounding difference. This is an upscale, not
+native 4K generation. These user-approved replacements and desk upscales are a
+specific exception to the earlier clean-room input restrictions in AC-023-12
+and AC-023-15. They do not reopen or claim new clean-room acceptance for the
+other baseline assets. The existing transparent desks use linear interpolation
+to prevent ringing at partial-alpha edges. Preserve each approved replacement
+moderator, set, and composition at every runtime size. No runtime variant may
+retain either previous background. All four studio layers provide 640 by 360,
+1280 by 720, 1920 by 1080, 2560 by 1440, and 3840 by 2160 AVIF and WebP files.
+Every variant derives from its final 3840 by 2160 PNG master. Record the
+upscale origin in generic PNG provenance metadata.
+
+Other scene masters remain layered 1920 by 1080 files, with 640 by 360,
+1280 by 720, and 1920 by 1080 runtime variants. All scenes use the same
+normalized geometry. Character masters are transparent,
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 960.
 
@@ -776,20 +813,18 @@ crop, dimension, alpha, and color contracts.
 
 Use these fixed state durations: idle 4000 milliseconds, selection 320,
 thinking 3000, delivery 400, light hit 300, heavy hit 520, weakness 500,
-comeback 500, and grammar mistake 520. Idle and thinking can loop. Other states
-play once. A new public event replaces the previous transient state. Do not
-queue stale events or delay a game command for animation.
+comeback 500, and grammar mistake 520. Idle and thinking can loop. Transient
+movement plays once. Milestone 025 can hold the final pose through its owned
+narration or damage interval. A new public event replaces the previous state.
+Do not queue stale events or change a game result for animation.
 
-Show selection on match entry. Show thinking for the active AI while its
-existing public thinking indicator is active. Otherwise use idle at rest.
-An accepted public phrase or sentence commit can show delivery for its actor.
-An accepted Comeback shows comeback. A grammar mistake shows grammar mistake
-for the affected actor. At review, use public resolved incoming damage:
-weakness has priority when the opponent applied a weakness multiplier,
-otherwise damage of at least 20 shows heavy hit, and positive damage below 20
-shows light hit. These are presentation thresholds only; they do not change
-scoring. Grammar-mistake self-damage keeps its own state. No state decision
-reads an unplayed private card or an AI candidate evaluation.
+Show selection on match entry. The active picker, human or AI, thinks; the
+other character is idle. Ordinary picks and commits do not recite. Milestone
+025 holds the current narrator's delivery pose, then shows damage after its
+total. Positive damage below 16 uses light hit; damage 16 or more uses heavy
+hit, matching Milestone 024 sound thresholds. Grammar self-damage keeps its own
+state. These presentation rules do not change scoring. No state decision reads
+an unplayed private card or an AI candidate evaluation.
 
 Keep the current image visible until its replacement has decoded. A newer cue
 supersedes a pending decode. Missing or failed optional display data keeps the
@@ -809,7 +844,7 @@ absolute image planes and cannot move a control or sentence.
 The transition-era studio adds a four-second low-amplitude lamp loop over its
 existing four outer lamp faces. Two sides have a two-second phase offset.
 The neutral overlay opacity ranges from 0.03 through 0.15. It uses the same
-1920-by-1080 coordinate plane and protected crop as the back scene. It adds no
+16:9 coordinate plane and protected crop as the back scene. It adds no
 lamp, beam, prop, or runtime raster. Pause, hiding, leaving the viewport, and
 reduced motion remove this decorative overlay and retain the static lamps.
 

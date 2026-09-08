@@ -19,11 +19,16 @@ Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `li
 `localization:validate`, `boundaries:check`, `validate`, and `ci`.
 
 `assets:build` builds both scene and fixed-baseline character manifests and
-their deterministic AVIF and WebP variants. `assets:validate` validates both
+their deterministic AVIF and WebP variants. It also runs Milestone 024 audio
+generation. `assets:validate` validates both
 packages before it runs the shared provenance, alpha, and color checks.
 `validate` runs markdownlint-cli2, assets, content, localization, pure
 boundaries, typed lint, and types in that order. Asset validation checks the
 scaffold, raster provenance and alpha workflow, and the global-color-cast guard.
+It also validates the audio manifest and actual encoded measurements.
+It validates the pinned neural speech identity, complete file inventory,
+hashes, and size bounds. The production build validates audio and neural speech
+assets before bundling them.
 
 `ci` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests
 in that order.
