@@ -160,6 +160,18 @@ describe.sequential('scene asset manifest validator', () => {
     );
   });
 
+  test('rejects reintroduction of every replaced studio source hash', async () => {
+    const baseline = JSON.parse(await readFile('tools/scene-replacement-baseline.json', 'utf8')) as {
+      assets: Array<{ file: string; sha256: string }>;
+    };
+    for (const replaced of baseline.assets) {
+      const manifest = JSON.parse(baseManifestText) as { assets: Array<{ source: { path: string; sha256: string } }> };
+      manifest.assets.find((asset) => asset.source.path === replaced.file)!.source.sha256 = replaced.sha256;
+      await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
+      await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(/replaced baseline source hash/u);
+    }
+  });
+
   test('rejects a variant hash that does not match the encoded file', async () => {
     const manifest = await readManifest();
     const assets = manifest.assets as Array<Record<string, unknown>>;

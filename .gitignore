@@ -72,6 +72,8 @@ tests/unit/__snapshots__/
 .vitest-attachments/
 output/
 docs/reviews/
+tools/*
+!tools/scene-replacement-baseline.json
 
 # codex-workflow-managed-start
 agent_docs/
