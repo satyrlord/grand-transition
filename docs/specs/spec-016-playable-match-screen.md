@@ -46,7 +46,8 @@ Render the scene in this order: studio and moderator, selected portraits,
 foreground standing desks, then Hypertext Markup Language (HTML) game content.
 Both studio moderators remain physically seated at the center, with their
 heads visible between speech and the common phrase pool. The slightly
-transparent pool can cover their furniture and lower bodies. Its text remains
+transparent pool uses an 88% opaque background and can cover their furniture
+and lower bodies. Its text remains
 fully opaque. Do not scale or relocate moderators separately at viewport
 breakpoints.
 

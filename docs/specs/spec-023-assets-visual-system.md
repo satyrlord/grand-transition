@@ -1,16 +1,35 @@
 # Milestone 023: Asset Pipeline and Visual System
 
-**Status:** Approved  
+**Status:** Complete
+
 **Depends on:** 022  
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
 **Production-file budget:** 10
 
-## Completion delivery packages
+## Completion decision
 
-The remaining work is split into dependency-ordered delivery packages. Each
+The product owner declared this milestone complete on 2026-09-08. This decision
+accepts all five delivery packages and AC-023-01 through AC-023-19, including
+the final baseline art, representative stage compositions, motion, and
+Impeccable validation. No milestone acceptance condition remains open.
+
+The product owner accepts the available visual-review and Impeccable records.
+Recovery or repetition of the detailed per-asset reviews and recovery of the
+omitted skill and detector versions are not required for this acceptance.
+This decision supersedes earlier pending-review statements and the shared
+evidence requirements for this milestone's completion. The technical, art,
+privacy, and regression contracts below remain in force for later changes.
+
+The acceptance audit at revision `c513d11` passed `npm run ci`: 501 unit tests,
+424 browser tests, 424 coverage tests, and 133 production-browser tests.
+`git diff --check` also passed.
+
+## Completed delivery packages
+
+The implementation used dependency-ordered delivery packages. Each
 code package has a ten-production-file budget. Each character-state art
-package contains one master and its six runtime files. This split preserves
-every acceptance criterion below; no package alone completes the milestone.
+package contains one master and its six runtime files. All five packages are
+accepted as complete.
 
 1. Baseline portrait corrections and generation-input records.
 2. Character-state build, validation, and manifest resolution.
@@ -586,7 +605,7 @@ phrase does not change the reserved nine-row board geometry.
 
 Record the selected families, weights, licenses,
 metric fallbacks, and use rules in this specification. Record them in the design
-record before implementation is complete. The wide speech bubble uses light
+record for later font changes. The wide speech bubble uses light
 paper. The compact phrase path uses a near-black broadcast plate and thin
 oxblood row rules. It uses Rubik phrase text without visible role, ownership,
 weakness, disabled-reason, or hint metadata.
@@ -894,10 +913,14 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on the final-art title, setup, and match surfaces.
-2. After audit repairs, run `$impeccable critique` on the visual-system slice.
+The product owner accepted the final-art audit and critique on 2026-09-08.
+For later changes to the visual-system slice:
 
-Apply the shared Impeccable evidence and severity gate in the milestone index.
+1. Run `$impeccable audit` on the affected title, setup, and match surfaces.
+2. After audit repairs, run `$impeccable critique` on the changed slice.
+
+Apply the shared Impeccable evidence and severity gate in the milestone index
+to those later changes.
 
 ## Verify and stop
 
@@ -914,10 +937,10 @@ visible pixels in both desk-top and prop focal regions. They reject pixels
 outside those zones. They do not require a regenerated silhouette to touch
 the old raster's exact outer edge.
 
-Manual evidence reviews every baseline asset and representative complete stage
-compositions against the approved flat cel-shaded direction. It also reviews
-the motion modes. `npm run ci` passes. Stop before the remaining roster, audio,
-speech, or presentation reactions.
+The product owner's completion decision accepts the baseline art, stage
+compositions, and motion review. The acceptance audit passed `npm run ci`.
+The remaining roster, audio, speech, and presentation reactions belong to
+their later milestones.
 
 ## Reference
 
