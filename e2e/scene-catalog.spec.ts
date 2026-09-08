@@ -116,7 +116,7 @@ for (const scene of scenes) {
       expect(geometry.centered).toBe(true);
       expect(geometry.moderatorClear).toBe(true);
       expect(geometry.moderatorCentered).toBe(true);
-      expect(geometry.poolBackground).toBe('rgba(5, 6, 8, 0.78)');
+      expect(geometry.poolBackground).toBe('rgba(5, 6, 8, 0.88)');
       expect(geometry.squarePortraits).toBe(true);
       for (const scale of geometry.frameScale) expect(scale).toBeCloseTo(0.8, 3);
       for (const top of geometry.frameTop) expect(top).toBeCloseTo(0.24, 3);
