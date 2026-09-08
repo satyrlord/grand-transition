@@ -17,7 +17,7 @@ const browserApiPort = await findAvailableLoopbackPort();
 
 export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
-  optimizeDeps: { include: ['lit/directives/style-map.js'] },
+  optimizeDeps: { include: ['lit/directives/style-map.js', 'onnxruntime-web/wasm', 'phonemizer'] },
   test: {
     include: [
       'tests/browser/**/*.browser.test.ts',

@@ -1,3 +1,4 @@
+import { finishPresentation } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { readFile, readdir, rm } from 'node:fs/promises';
 import path from 'node:path';
@@ -12,12 +13,13 @@ const developmentUrl = 'http://127.0.0.1:5174/grand-transition/';
 const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 const productionContentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "worker-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "media-src 'self'",
   "font-src 'self'",
-  "connect-src 'none'",
+  "connect-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
@@ -180,19 +182,14 @@ test('development automatically writes one completed match text log', async ({
   try {
     const plan = planMatchBrowserFlow();
     await useFixedBrowserMatchSeed(page, plan.seed);
+    await page.clock.install();
     await page.goto(developmentUrl);
     await page.getByRole('button', { name: 'Set up match' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
 
     for (const action of plan.actions) {
       await executeDraftAction(page, action);
-      const continueButton = page.getByRole('button', {
-        name: 'Continue',
-        exact: true,
-      });
-      if (await continueButton.isVisible().catch(() => false)) {
-        await continueButton.click();
-      }
+      await finishPresentation(page);
     }
 
     await expect.poll(async () => logFiles()).toHaveLength(1);

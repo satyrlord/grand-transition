@@ -4,15 +4,17 @@ import path from 'node:path';
 import { defineConfig, normalizePath, type Plugin } from 'vite';
 import { maximumGameLogBytes, writeGameLog } from './tools/game-log-writer.ts';
 import brandManifest from './src/assets/brand/brand-manifest.json' with { type: 'json' };
+import { neuralPhonemizerPlugin } from './tools/neural-phonemizer-plugin.ts';
 
 export const productionContentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "worker-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "media-src 'self'",
   "font-src 'self'",
-  "connect-src 'none'",
+  "connect-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
@@ -20,6 +22,8 @@ export const productionContentSecurityPolicy = [
 
 export default defineConfig(({ command }) => ({
   base: '/grand-transition/',
+  optimizeDeps: { exclude: ['phonemizer', 'onnxruntime-web'] },
+  worker: { format: 'es', plugins: () => [neuralPhonemizerPlugin()] },
   build: {
     rolldownOptions: {
       output: {
@@ -34,6 +38,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   plugins: [
+    neuralPhonemizerPlugin(),
     {
       name: 'brand-image-preloads',
       transformIndexHtml: {

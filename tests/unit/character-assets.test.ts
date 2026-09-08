@@ -28,7 +28,7 @@ describe('character asset resolver', () => {
   });
 
   test('maps the fixed inventory to responsive AVIF and WebP sources', () => {
-    expect(characterAssetManifest).toHaveLength(27);
+    expect(characterAssetManifest).toHaveLength(28);
     expect(characterImageSizes).toBe('(max-width: 1100px) 320px, 640px');
     for (const asset of characterAssetManifest) {
       expect(asset.width).toBe(2048);

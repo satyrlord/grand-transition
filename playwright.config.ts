@@ -11,6 +11,11 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 2,
   reporter: 'list',
+  projects: [
+    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'firefox-audio', testMatch: '**/audio-speech.spec.ts', use: { browserName: 'firefox' } },
+    { name: 'webkit-audio', testMatch: '**/audio-speech.spec.ts', use: { browserName: 'webkit' } },
+  ],
   use: {
     baseURL: 'http://127.0.0.1:4173/grand-transition/',
     headless: true,

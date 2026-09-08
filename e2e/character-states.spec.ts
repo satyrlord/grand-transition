@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import stateManifest from '../src/assets/characters/states/state-manifest.json' with { type: 'json' };
+import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 
 for (const entry of stateManifest.packages) {
   test(`${entry.ownerId} ${entry.skinId} renders nine selected states without layout shift`, async ({ page }, testInfo) => {
@@ -23,11 +24,20 @@ for (const entry of stateManifest.packages) {
     await page.getByRole('button', { name: 'Set up match', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
     await page.locator(`.roster-choice[data-character-id="${entry.ownerId}"]`).click();
-    if (entry.skinId !== 'default') await page.locator('#playerOneCharacterId').click({ button: 'right' });
+    const skinIndex = characterManifest.assets.filter(({ ownerId }) => ownerId === entry.ownerId)
+      .findIndex(({ skinId }) => skinId === entry.skinId);
+    expect(skinIndex).toBeGreaterThanOrEqual(0);
+    for (let index = 0; index < skinIndex; index++) await page.locator('#playerOneCharacterId').click({ button: 'right' });
     expect(stateRequests).toEqual([]);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('grand-transition-character')).toHaveCount(2);
     await page.locator('grand-transition-character img').evaluateAll((images: HTMLImageElement[]) => Promise.all(images.map((image) => image.decode())));
+    // This art-state fixture selects idle explicitly; active-picker thinking is
+    // verified by the gameplay presentation tests.
+    await page.locator('grand-transition-character').first().evaluate(async (element) => {
+      const presenter = element as HTMLElement & { restState: string; updateComplete: Promise<unknown> };
+      presenter.restState = 'idle'; await presenter.updateComplete;
+    });
     const allowedIds = stateManifest.assets.filter((asset) =>
       (asset.ownerId === entry.ownerId && asset.skinId === entry.skinId) ||
       (asset.ownerId === 'thunder-tribune' && asset.skinId === 'default'),

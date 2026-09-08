@@ -1,0 +1,507 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "menu-theme",
+      "kind": "music",
+      "duration": 72.3,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "edit": {
+        "movement": "Joc cu bâtă",
+        "startSeconds": 2.4,
+        "durationSeconds": 72.3
+      },
+      "files": [
+        {
+          "path": "menu-theme.wav",
+          "sha256": "058dafe434682df64269985ed14084c9c9cd328851adc16a5f505c9197a9f464",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16.08,
+            "truePeakDbfs": -2
+          }
+        },
+        {
+          "path": "menu-theme.ogg",
+          "sha256": "4014318dedc9cce2547219bc9d0439fb909f2d456ad3f5242923f0eb355a68be",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.08,
+            "truePeakDbfs": -1.72
+          }
+        },
+        {
+          "path": "menu-theme.mp3",
+          "sha256": "c4333f59dfc88f86b04806409ba8710f79c85a23a02100672a134af2e1febc6f",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.52,
+            "truePeakDbfs": -2.12
+          }
+        }
+      ]
+    },
+    {
+      "id": "transition-era-television-studio-theme",
+      "kind": "music",
+      "duration": 43.7,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "edit": {
+        "movement": "Buciumeana",
+        "startSeconds": 181.3,
+        "durationSeconds": 43.7
+      },
+      "files": [
+        {
+          "path": "transition-era-television-studio-theme.wav",
+          "sha256": "799fdb6a00c2f46d1e966d24c506b8e8c152ae48f6fdcd6045b45f240d007c80",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -15.52,
+            "truePeakDbfs": -2
+          }
+        },
+        {
+          "path": "transition-era-television-studio-theme.ogg",
+          "sha256": "dbbfb43c93a6f36f48d3b52a4c44346920e078e65e06fa01b3899c74754f70ba",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -15.5,
+            "truePeakDbfs": -1.67
+          }
+        },
+        {
+          "path": "transition-era-television-studio-theme.mp3",
+          "sha256": "df5e1f91ca82fb68e5c072dc422afb9381d096e0c885c3063c38a577bf92f57b",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -15.96,
+            "truePeakDbfs": -2.18
+          }
+        }
+      ]
+    },
+    {
+      "id": "transition-era-television-studio-room-tone",
+      "kind": "ambience",
+      "duration": 8,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "transition-era-television-studio-room-tone.wav",
+          "sha256": "44c82b60a7e444c52c5d28505ac99debfdb814dd5fb3f5361a36904b8aeee2d1",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -22,
+            "truePeakDbfs": -18.05
+          }
+        },
+        {
+          "path": "transition-era-television-studio-room-tone.ogg",
+          "sha256": "0c60c4a8404faa01d986b411b7b0cd5209a679b6ba5f26292e8fedee560e1dfd",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -21.96,
+            "truePeakDbfs": -17.72
+          }
+        },
+        {
+          "path": "transition-era-television-studio-room-tone.mp3",
+          "sha256": "cb312af2b4a768dc32c87fd9a4554e780a0de20cc90fe617130188a9467e58a8",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -22.45,
+            "truePeakDbfs": -18.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "role-select",
+      "kind": "effect",
+      "duration": 0.16,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "role-select.wav",
+          "sha256": "2277499acb18354ed84546d4cfe8493860958178264b5186b8677fec1912ff2d",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.28
+          }
+        },
+        {
+          "path": "role-select.ogg",
+          "sha256": "5f47b6943320cc4ac38a01b184c0a8cbf9e137b5476fdeafaa6aed1530a0f9b8",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.44
+          }
+        },
+        {
+          "path": "role-select.mp3",
+          "sha256": "adbc989957ef9afe11e990783ba98fcae457e23fdb78d3f3965d417e599123b4",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.72
+          }
+        }
+      ]
+    },
+    {
+      "id": "commit",
+      "kind": "effect",
+      "duration": 0.32,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "commit.wav",
+          "sha256": "55aa92f27b684a9fda806db856e6f1783bbd60db5cdfd743c894f30b2585b344",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.68
+          }
+        },
+        {
+          "path": "commit.ogg",
+          "sha256": "384f54df2a177fe5b54a7263e973da4f3897b74519bfdedbd2b79fb9bc26eaab",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.76
+          }
+        },
+        {
+          "path": "commit.mp3",
+          "sha256": "071f22754a8f89e23cc611daca61d18fe149bc7129f5cac4e80936423d357c6f",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.12
+          }
+        }
+      ]
+    },
+    {
+      "id": "hit-light",
+      "kind": "effect",
+      "duration": 0.28,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "hit-light.wav",
+          "sha256": "ffea46e4919386629ec74bfd780e3855d8963587a7de37f1f4742003f01062bb",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.69
+          }
+        },
+        {
+          "path": "hit-light.ogg",
+          "sha256": "f1c73d8a673198d8238df70d3cde02d603d4da7e9ce954bdb0d641f06fe79ac1",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.63
+          }
+        },
+        {
+          "path": "hit-light.mp3",
+          "sha256": "ee63a0f0f91451aa4b01424b5ee1f9f7affc89aea991b5a24c0d9687c0792301",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.13
+          }
+        }
+      ]
+    },
+    {
+      "id": "hit-heavy",
+      "kind": "effect",
+      "duration": 0.55,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "hit-heavy.wav",
+          "sha256": "f4173c7cbb39a5ce8b1cffda0affccf2e1a680189f4e61e0f599720f3e96918b",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -20.83,
+            "truePeakDbfs": -8.09
+          }
+        },
+        {
+          "path": "hit-heavy.ogg",
+          "sha256": "1635d5b8ae0a2acb14d63dc897bf4bcd052c65cd6ccfe83597f1f838fc60ca08",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -20.75,
+            "truePeakDbfs": -7.98
+          }
+        },
+        {
+          "path": "hit-heavy.mp3",
+          "sha256": "93c632d46548450f8df3f231775af61d826010381fd87b4e38196cbdad6b20f7",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -21.25,
+            "truePeakDbfs": -8.53
+          }
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "kind": "effect",
+      "duration": 0.45,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "weakness.wav",
+          "sha256": "1f4d0393fbb7134f1759558007ca1d3222dafd055847e975302c18fe8b75eb01",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -15.35,
+            "truePeakDbfs": -7.57
+          }
+        },
+        {
+          "path": "weakness.ogg",
+          "sha256": "5e8647bf9046aea92e39b787fd471c8b955e9ad71af7164cf6c4b42093547d5f",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -15.45,
+            "truePeakDbfs": -7.25
+          }
+        },
+        {
+          "path": "weakness.mp3",
+          "sha256": "85e7c56a41467712b3470d9ea4f100b9f81a826d1ec19a9bf6b35c655a951406",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -15.75,
+            "truePeakDbfs": -8.02
+          }
+        }
+      ]
+    },
+    {
+      "id": "combo",
+      "kind": "effect",
+      "duration": 0.6,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "combo.wav",
+          "sha256": "14741d3e90e876c79f032c331c40625b675e791dc9e8710f4f188c771ad9b8c7",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -19.53,
+            "truePeakDbfs": -7.53
+          }
+        },
+        {
+          "path": "combo.ogg",
+          "sha256": "9d492c870dbe7aba4cde8fc4a8bb6b8d56e95665daee18c7ac32938f77e68424",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -17.91,
+            "truePeakDbfs": -7.57
+          }
+        },
+        {
+          "path": "combo.mp3",
+          "sha256": "341328337384e1fcd2e3d970dea13c8b746baefa8fd757c4f58b5ea247a98ab5",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -19.96,
+            "truePeakDbfs": -7.97
+          }
+        }
+      ]
+    },
+    {
+      "id": "continuation-break",
+      "kind": "effect",
+      "duration": 0.45,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "continuation-break.wav",
+          "sha256": "0f47247d410b363fbdaf6cfea1aa08fd27649de69521820e72689c4f2d20d3da",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -17.75,
+            "truePeakDbfs": -6.76
+          }
+        },
+        {
+          "path": "continuation-break.ogg",
+          "sha256": "7595e483c84062d85c3b89b1cb8c9e98e90f286457ab9a33b45e95756956db9b",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -17.65,
+            "truePeakDbfs": -6.64
+          }
+        },
+        {
+          "path": "continuation-break.mp3",
+          "sha256": "ae27383d40c5e910e496e34baaf66139635526e91b7b71c24971594ab5fda79d",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -18.15,
+            "truePeakDbfs": -7.21
+          }
+        }
+      ]
+    },
+    {
+      "id": "comeback",
+      "kind": "effect",
+      "duration": 0.75,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "comeback.wav",
+          "sha256": "47aa2d38265ebf3ebe8367809bc757834b5080a6143766c0cd4ea4040e3ce40f",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -18.26,
+            "truePeakDbfs": -7.41
+          }
+        },
+        {
+          "path": "comeback.ogg",
+          "sha256": "96425c085c808eb3589fdc7ff645dd450c284beafe9aeaed120e7ea4d2e28a0a",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -18.23,
+            "truePeakDbfs": -7.38
+          }
+        },
+        {
+          "path": "comeback.mp3",
+          "sha256": "a0715698624bc776b881f3f0bece329da453b3e9124c1006fd6f933f3bcccd99",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -18.73,
+            "truePeakDbfs": -7.86
+          }
+        }
+      ]
+    },
+    {
+      "id": "grammar-mistake",
+      "kind": "effect",
+      "duration": 0.3,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "grammar-mistake.wav",
+          "sha256": "13dab7c92ae5801dc5bb4621f6f3b2da649e3562a5d14345416325b31a61d3fc",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.97
+          }
+        },
+        {
+          "path": "grammar-mistake.ogg",
+          "sha256": "fd7a5c7e85e422cb3f46a2e0d7681222d5e1db7e67047532d267db8d8963f436",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -7.93
+          }
+        },
+        {
+          "path": "grammar-mistake.mp3",
+          "sha256": "d71d0b0dd329e5f08336ffe59a2c060e322d9baf7c55f07559f2673a6a9b6bea",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -8.42
+          }
+        }
+      ]
+    }
+  ]
+}

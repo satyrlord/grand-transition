@@ -2,65 +2,45 @@
 
 **Status:** Approved
 
-**Replacement:** Milestone 019 replaces the terminal and post-match rules.
-
 **Depends on:** 016  
-**Owns:** Browser lifecycle, between-round review, and the absence of post-match
-surfaces
+**Owns:** Browser lifecycle and automatic between-round progression
 **Production-file budget:** 4
 
-Milestone 019 replaces this milestone's terminal setup return, zero-post-match,
-and terminal acceptance clauses. The nonterminal between-round review contract
-remains active.
+Milestone 019 owns persistent Victory and history. The approved Milestone 025
+reference-loop revision replaces this milestone's former results modal and
+mandatory Continue action.
 
 ## Deliver
 
-Keep the playable arena as the visible surface between setup and match
-completion. When both constructions lock, the application applies the pure
-round-scoring command in the same interaction, then pauses on a between-round
-review. Keep the completed arena and last full sentence visible. Show the
-Milestone 016 exchange record in one semitransparent modal. Disable draft input,
-stop the timer, and provide one Continue control.
+Keep the arena visible from setup through match completion. When both
+constructions lock, apply the pure scoring command in the same interaction.
+Present those resolved public facts through Milestone 025. Draft input and the
+turn timer remain blocked until both characters finish narration and damage.
+Then automatically prepare the next normal or cliffhanger round, clear old
+receipts and sentence text, and focus the new round heading.
 
-Continue prepares the next normal or cliffhanger round. It clears the modal and
-the completed draft only after the player has reviewed them. Do not place prior
-exchange results inline in the next live round. After a nonterminal Continue,
-move focus to the new round heading.
+A terminal round finishes both deliveries before persistent Victory. A direct
+self-damage knockout uses its damage reaction before Victory and does not
+narrate unfinished insults. The engine outcome and one history record do not
+depend on presentation timing. Leaving a nonterminal match cancels presentation.
 
-When the pure engine records a winner, keep the terminal exchange in the same
-review modal. Continue then ends the active match and returns to the existing
-setup screen. Preserve the selected mode, characters, and scene. Starting
-another match is a new setup action.
-
-The product has zero post-match features. It must not render a winner page,
-result record, statistics, score summary, or replay action. It must not render
-export, rematch, return, sharing, or leaderboard actions. It must not render a
-post-match cue.
-Do not register or ship a resolution-results custom element or its style sheet.
-Do not add a rematch or post-match lifecycle command.
-
-Development-only replay, match-log, simulation, and automatic text-log tools
-from Milestone 014 are test and balance infrastructure. Production must not
-expose them before, during, or after a match. The development text logger can
-record the terminal state before Continue returns to setup. It adds no DOM node,
-post-match surface, or control.
+Do not register a resolution-results custom element, rematch command, or replay
+control. Development-only replay, simulation, and text logs from Milestone 014
+remain infrastructure without production controls. The development logger can
+record the terminal state before presentation finishes.
 
 ## Acceptance criteria
 
-- **AC-017-01:** The last action of every exchange shows one modal over the
-  completed arena. The last full sentence remains visible, draft input is
-  blocked, and the timer does not advance.
-- **AC-017-02:** Continue advances a nonterminal exchange to the next normal or
-  cliffhanger round, removes the review modal, and moves focus to the new round
-  heading.
-- **AC-017-03:** A terminal exchange remains visible in review. Continue returns
-  to setup with the selected mode, characters, and scene unchanged.
-- **AC-017-04:** The production Document Object Model (DOM), source imports,
-  registered elements, styles, lifecycle commands, and visible controls contain
-  no post-match surface, rematch, or post-match feature. The between-round modal
-  remains part of the match component.
-- **AC-017-05:** One fixed-seed browser match reviews each exchange and reaches
-  a later round, cliffhanger, winner, and setup return through Continue.
+- **AC-017-01:** The final draft action starts the public narration sequence
+  over the arena, with input and turn timer blocked and no results modal.
+- **AC-017-02:** Both deliveries finish before the next normal or cliffhanger
+  round. Old receipts clear and focus moves to the round heading automatically.
+- **AC-017-03:** Terminal narration and damage finish before persistent Victory.
+  Return to main menu follows Milestone 019 and preserves setup selections.
+- **AC-017-04:** Production has no resolution-results element, rematch command,
+  replay control, or development-only match tools.
+- **AC-017-05:** A fixed-seed production match presents each exchange and reaches
+  a later round, cliffhanger, winner, and main-menu return.
 
 ## Impeccable user interface validation
 

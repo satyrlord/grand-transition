@@ -35,7 +35,8 @@
   "voiceProfile": {
     "voiceHint": "measured",
     "rate": 0.84,
-    "pitch": 0.72
+    "pitch": 0.72,
+    "skinVoices": {"default": "david", "alternate": "mark", "schoolteacher": "zira"}
   },
   "animationSet": {
     "idle": "government-ai-idle",

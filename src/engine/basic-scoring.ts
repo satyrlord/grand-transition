@@ -148,10 +148,27 @@ export function extractScoreClauses(
   analysis: EnglishGrammarAnalysis,
   phraseById: ReadonlyMap<string, Phrase>,
 ): readonly ScoreClause[] {
+  return collectScoreClauses(analysis, phraseById).clauses;
+}
+
+/** Phrase positions at which each scored clause first becomes complete. */
+export function extractScoreClauseAnchors(
+  analysis: EnglishGrammarAnalysis,
+  phraseById: ReadonlyMap<string, Phrase>,
+): readonly number[] {
+  return collectScoreClauses(analysis, phraseById).anchors;
+}
+
+function collectScoreClauses(
+  analysis: EnglishGrammarAnalysis,
+  phraseById: ReadonlyMap<string, Phrase>,
+): Readonly<{ clauses: readonly ScoreClause[]; anchors: readonly number[] }> {
   const phrases = analysis.renderedPhrases.filter(
     (phrase) => phrase.role !== 'ending',
   );
   const clauses: ScoreClause[] = [];
+  const anchors: number[] = [];
+  let currentPhraseIndex = 0;
   let subjects: string[] = [];
   let pendingVerb: string | null = null;
   let complete = false;
@@ -170,10 +187,12 @@ export function extractScoreClauses(
 
   const addClause = (clause: ScoreClause): number => {
     clauses.push(clause);
+    anchors.push(currentPhraseIndex);
     return clauses.length - 1;
   };
 
-  for (const phrase of phrases) {
+  for (const [phraseIndex, phrase] of phrases.entries()) {
+    currentPhraseIndex = phraseIndex;
     switch (phrase.role) {
       case 'noun':
         if (copularNounComplementPending) {
@@ -352,7 +371,7 @@ export function extractScoreClauses(
         break;
     }
   }
-  return clauses;
+  return { clauses, anchors };
 }
 
 export function scoreClause(

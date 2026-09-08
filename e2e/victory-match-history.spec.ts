@@ -275,7 +275,9 @@ function observeProductionRuntime(page: Page): Readonly<{
     if (url.protocol === 'http:' || url.protocol === 'https:') {
       if (url.origin !== applicationOrigin) remoteRequests.push(request.url());
     }
-    if (['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())) {
+    const localAudio = request.method() === 'GET' && request.resourceType() === 'fetch' &&
+      /^http:\/\/127\.0\.0\.1:4173\/grand-transition\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(request.url());
+    if (!localAudio && ['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())) {
       runtimeRequests.push(`${request.method()} ${request.url()}`);
     }
   });

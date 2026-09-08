@@ -8,6 +8,8 @@ import {
   type DraftCardReference,
 } from '../engine/draft-actions';
 import type { ComboFinisherScore } from '../engine/combo-finisher-scoring';
+import { extractScoreClauseAnchors } from '../engine/basic-scoring';
+import type { EnglishGrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
@@ -71,6 +73,7 @@ export type MatchPlayerView = Readonly<{
 }>;
 
 export type MatchScoreComponentView = Readonly<{
+  narrationIndex: number;
   kind: 'clause' | 'comeback' | 'finisher';
   phraseText: string;
   base: number;
@@ -93,8 +96,8 @@ type MatchSceneLayerBase = Readonly<{
 
 export type MatchManifestSceneLayerView = MatchSceneLayerBase & Readonly<{
   kind: 'manifest';
-  width: 1920;
-  height: 1080;
+  width: 1920 | 3840;
+  height: 1080 | 2160;
   sizes: typeof sceneImageSizes;
   avif: SceneAssetSource;
   sources: Readonly<{
@@ -316,7 +319,7 @@ export function createMatchScreenSnapshot(
           weaknessFactor: weakness.factor,
           sentenceDamage: result?.sentenceDamage ?? 0,
           comebackBonus: result?.comebackBonus ?? 0,
-          scoreComponents: scoreComponentViews(result),
+          scoreComponents: scoreComponentViews(result, state.draft!.playerStates[playerId]!.construction.analysis),
         },
       ];
     }),
@@ -397,6 +400,7 @@ export function createMatchScreenSnapshot(
 
 function scoreComponentViews(
   result: MatchResolutionPlayer | undefined,
+  analysis: EnglishGrammarAnalysis,
 ): readonly MatchScoreComponentView[] {
   if (!result) return [];
   const phraseTextById = new Map(
@@ -406,6 +410,8 @@ function scoreComponentViews(
     sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
   );
   const components: MatchScoreComponentView[] = [];
+  const anchors = extractScoreClauseAnchors(analysis, phraseById);
+  let clauseIndex = 0;
   let clause:
     | {
         phraseIds: readonly string[];
@@ -451,6 +457,7 @@ function scoreComponentViews(
         if (!clause) break;
         components.push({
           kind: 'clause',
+          narrationIndex: anchors[clauseIndex++] ?? 0,
           phraseText: scorePhraseText(clause.phraseIds, phraseTextById),
           base: clause.base,
           restrictionFactor: clause.restrictionFactor,
@@ -465,6 +472,7 @@ function scoreComponentViews(
         const phrase = phraseById.get(item.phraseId);
         components.push({
           kind: 'finisher',
+          narrationIndex: result.constructionPhrases.findIndex(({ phraseId }) => phraseId === item.phraseId),
           phraseText:
             phraseTextById.get(item.phraseId) ??
             (phrase ? gameMessage(phrase.textKey) : msg('Finisher')),
@@ -488,6 +496,7 @@ function scoreComponentViews(
   if (result.comebackBonus > 0) {
     components.push({
       kind: 'comeback',
+      narrationIndex: result.constructionPhrases.length,
       phraseText: result.comebackClosingLine ?? msg('Comeback'),
       base: result.comebackBonus,
       restrictionFactor: 1,

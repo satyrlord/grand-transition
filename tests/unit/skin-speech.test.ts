@@ -1,0 +1,131 @@
+import { sampleContent, characterSkins } from '../../src/game-content';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+import { skinSpeechProfile } from '../../src/audio/skin-speech-profile';
+import { CharacterSpeech } from '../../src/audio/character-speech';
+import { MicrosoftRobotSpeech, selectMicrosoftRobotVoice } from '../../src/audio/microsoft-robot-speech';
+import type { SpeechRequest } from '../../src/audio/speech-port';
+import { GameSpeech } from '../../src/audio/game-speech';
+import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
+import { publicPlayer } from '../fixtures/narration';
+
+const character = (id: string, species: 'human' | 'robot' = 'human') => ({
+  id, species, voiceProfile: { ...sampleContent.characters.find((value) => value.id === id)!.voiceProfile, pitch: 0.9 },
+});
+const femaleSpeechSkins = ['luxury-minister', 'midnight-sensationalist--alternate', 'oat-milk-reformist--alternate',
+  'red-folded-chairman--alternate', 'retiring-cassandra--statesman', 'thunder-tribune--alternate', 'government-ai--schoolteacher'];
+const voice = (name: string, local = true, lang = 'en-US') => ({
+  name: `Microsoft ${name} - English`, voiceURI: `local:${name}`, localService: local, lang, default: false,
+}) as SpeechSynthesisVoice;
+
+afterEach(() => vi.useRealTimers());
+
+describe('skin voice assignments', () => {
+  test('the robot roster exposes David, Mark, and schoolteacher Zira in skin order', () => {
+    expect(characterSkins['government-ai']?.map(({ id }) => id)).toEqual(['default', 'alternate', 'schoolteacher']);
+  });
+  test.each(femaleSpeechSkins)('%s uses the female British neural fallback', (id) => {
+    const [ownerId, skinId = 'default'] = id.split('--');
+    expect(skinSpeechProfile(character(ownerId!), skinId)).toMatchObject({ voiceUri: 'kokoro:bf_emma', language: 'en-GB' });
+  });
+  test('male defaults and male alternate skins use George', () => {
+    for (const [id, skin] of [['red-folded-chairman', 'default'], ['velvet-mogul', 'silk-diplomat']]) {
+      expect(skinSpeechProfile(character(id!), skin!)).toEqual({ provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 0.9 });
+    }
+  });
+  test.each([['default', 'David', 'bm_george'], ['alternate', 'Mark', 'bm_george'], ['schoolteacher', 'Zira', 'bf_emma']] as const)(
+    'robot skin %s selects %s and retains the appropriate neural fallback', (skin, name, fallback) => {
+      expect(skinSpeechProfile(character('government-ai', 'robot'), skin)).toMatchObject({
+        provider: 'microsoft-local', microsoftVoice: name, voiceUri: `kokoro:${fallback}`,
+      });
+    });
+});
+
+function nativeHarness(voices = [voice('David'), voice('Mark'), voice('Zira')]) {
+  const utterances: SpeechSynthesisUtterance[] = [];
+  const service = { getVoices: () => voices, speak: vi.fn((utterance: SpeechSynthesisUtterance) => utterances.push(utterance)),
+    cancel: vi.fn(), pause: vi.fn(), resume: vi.fn() };
+  const port = new MicrosoftRobotSpeech({ service: () => service as unknown as SpeechSynthesis,
+    utterance: (text) => ({ text }) as SpeechSynthesisUtterance });
+  const events = { onStart: vi.fn(), onSegment: vi.fn(), onEnd: vi.fn(), onError: vi.fn() };
+  const request: SpeechRequest = { text: 'Your office failed.', segments: ['Your office ', 'failed.'],
+    language: 'en-GB', microsoftVoice: 'David', rate: 1.2, pitch: 0.72, volume: 0.4, ...events };
+  const fire = (utterance: SpeechSynthesisUtterance, kind: 'onstart' | 'onend' | 'onerror') =>
+    (utterance[kind] as (() => void) | null)?.();
+  return { port, service, utterances, events, request, fire };
+}
+
+describe('local Microsoft robot speech', () => {
+  test('selects the exact requested installed voice and rejects remote, neural, and unrelated voices', () => {
+    const voices = [voice('David', false), voice('David Online', true), voice('David Neural'), voice('Mark'), voice('Zira')];
+    expect(selectMicrosoftRobotVoice(voices, 'David')).toBeUndefined();
+    expect(selectMicrosoftRobotVoice(voices, 'Mark')?.voiceURI).toBe('local:Mark');
+    expect(selectMicrosoftRobotVoice([voice('Zira', true, 'ro-RO')], 'Zira')).toBeUndefined();
+  });
+  test('phrase start and completion events drive scoring without estimated word timers', () => {
+    const h = nativeHarness(); expect(h.port.speak(h.request).accepted).toBe(true);
+    expect(h.utterances[0]).toMatchObject({ text: 'Your office ', voice: voice('David'), rate: 1.2, pitch: 0.72, volume: 0.4, lang: 'en-US' });
+    h.fire(h.utterances[0]!, 'onstart'); expect(h.events.onSegment).toHaveBeenLastCalledWith(0);
+    h.fire(h.utterances[0]!, 'onend'); expect(h.events.onEnd).not.toHaveBeenCalled();
+    h.fire(h.utterances[1]!, 'onstart'); expect(h.events.onSegment).toHaveBeenLastCalledWith(1);
+    h.fire(h.utterances[1]!, 'onend'); expect(h.events.onStart).toHaveBeenCalledOnce(); expect(h.events.onEnd).toHaveBeenCalledOnce();
+    h.port.cancel();
+  });
+  test('Pause holds pending segments and cancellation rejects stale callbacks and releases platform pause', () => {
+    const h = nativeHarness(); h.port.speak(h.request);
+    const oldStart = h.utterances[0]!.onstart as () => void;
+    h.port.pause(); h.fire(h.utterances[0]!, 'onend'); expect(h.utterances).toHaveLength(1);
+    h.port.resume(); expect(h.utterances).toHaveLength(2);
+    h.port.pause(); h.port.cancel(); oldStart();
+    expect(h.events.onStart).not.toHaveBeenCalled(); expect(h.events.onEnd).not.toHaveBeenCalled();
+    expect(h.service.cancel).toHaveBeenCalledOnce(); expect(h.service.resume).toHaveBeenCalledTimes(2);
+  });
+  test('cancellation from a start callback cannot emit a later score marker', () => {
+    const h = nativeHarness(); h.port.speak({ ...h.request, onStart: () => h.port.cancel() });
+    h.fire(h.utterances[0]!, 'onstart');
+    expect(h.events.onSegment).not.toHaveBeenCalled(); expect(h.service.cancel).toHaveBeenCalledOnce();
+  });
+  test('a missing exact voice declines without speaking; a stalled utterance has a bounded, pause-aware failure', () => {
+    const missing = nativeHarness([voice('David')]);
+    expect(missing.port.speak({ ...missing.request, microsoftVoice: 'Mark' }).accepted).toBe(false);
+    expect(missing.service.speak).not.toHaveBeenCalled();
+    vi.useFakeTimers(); const h = nativeHarness(); h.port.speak(h.request);
+    vi.advanceTimersByTime(10_000); h.port.pause(); vi.advanceTimersByTime(120_000);
+    expect(h.events.onError).not.toHaveBeenCalled(); h.port.resume(); vi.advanceTimersByTime(49_999);
+    expect(h.events.onError).not.toHaveBeenCalled(); vi.advanceTimersByTime(1); expect(h.events.onError).toHaveBeenCalledOnce();
+  });
+});
+
+test('human speech never uses the system service; robots fall back to neural when the exact voice is missing', () => {
+  const h = nativeHarness([voice('David')]);
+  const neural = { available: true, speak: vi.fn(() => ({ accepted: true })), cancel: vi.fn() };
+  const router = new CharacterSpeech(neural, h.port);
+  router.speak({ ...h.request, provider: 'neural' }); expect(h.service.speak).not.toHaveBeenCalled();
+  router.speak({ ...h.request, provider: 'microsoft-local', microsoftVoice: 'Mark', voiceUri: 'kokoro:bm_george' });
+  expect(neural.speak).toHaveBeenCalledTimes(2); expect(h.service.speak).not.toHaveBeenCalled();
+  router.speak({ ...h.request, provider: 'microsoft-local' }); expect(h.service.speak).toHaveBeenCalledOnce();
+  router.cancel();
+});
+
+test.each(['throw', 'error-event'] as const)('native synchronous %s preserves neural fallback delivery callbacks', (failure) => {
+  const h = nativeHarness();
+  h.service.speak.mockImplementation((utterance) => {
+    if (failure === 'throw') throw new Error('Platform unavailable');
+    h.fire(utterance, 'onerror');
+    return 0;
+  });
+  const requests: SpeechRequest[] = [];
+  const neural = { available: true, cancel: vi.fn(),
+    speak: vi.fn((request: SpeechRequest) => { requests.push(request); return { accepted: true }; }) };
+  const game = new GameSpeech(new CharacterSpeech(neural, h.port));
+  game.userGesture();
+  expect(game.deliver(publicPlayer, { ...defaultSettings, speechEnabled: true },
+    skinSpeechProfile(character('government-ai', 'robot'), 'default'), h.events)).toBe(true);
+  expect(requests).toHaveLength(1);
+  expect(requests[0]).toMatchObject({ text: publicPlayer.insultText, voiceUri: 'kokoro:bm_george' });
+  expect(h.events.onError).not.toHaveBeenCalled();
+  requests[0]!.onStart!(); requests[0]!.onSegment!(0); requests[0]!.onEnd!();
+  expect(h.events.onStart).toHaveBeenCalledOnce();
+  expect(h.events.onSegment).toHaveBeenCalledExactlyOnceWith(0);
+  expect(h.events.onEnd).toHaveBeenCalledOnce();
+  game.cancel();
+});

@@ -20,7 +20,7 @@ async function fixtureRoot(): Promise<string> {
   return root;
 }
 
-async function writeMaster(root: string, fileName: string, width = 1920, height = 1080) {
+async function writeMaster(root: string, fileName: string, width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920, height = width * 9 / 16) {
   const foreground = fileName.includes('-desks');
   if (!foreground) {
     await sharp({
@@ -79,7 +79,7 @@ describe('scene asset build', () => {
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
     expect(first.assets).toHaveLength(8);
-    expect(firstVariants).toHaveLength(48);
+    expect(firstVariants).toHaveLength(64);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');
@@ -87,7 +87,7 @@ describe('scene asset build', () => {
       expect(asset.source.sha256).toMatch(/^[a-f0-9]{64}$/u);
       expect(asset.crop.core).toEqual({ x: 0.125, y: 0, width: 0.75, height: 1 });
       expect(Object.keys(asset.sharedSafeRectangles)).toHaveLength(4);
-      expect(asset.variants).toHaveLength(6);
+      expect(asset.variants).toHaveLength(['modern-debate-studio', 'transition-era-television-studio'].includes(asset.ownerId) ? 10 : 6);
       for (const variant of asset.variants) {
         expect(variant.bytes).toBeLessThanOrEqual(
           SCENE_BYTE_BUDGETS[variant.format as 'avif' | 'webp'],
@@ -101,13 +101,22 @@ describe('scene asset build', () => {
         });
       }
     }
-  }, 120_000);
+    // Two complete encodes include all four 4K layers at the production codec effort.
+  }, 300_000);
 
   test('fails before it writes variants when a master has invalid dimensions', async () => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
     await writeMaster(root, SCENE_MASTER_NAMES[0]!, 1280, 720);
     await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('1920x1080');
+    await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
+  });
+
+  test('rejects a 1080p modern studio master before replacing runtime variants', async () => {
+    const root = path.join(await fixtureRoot(), 'scenes');
+    await writeMasterSet(root);
+    await writeMaster(root, 'modern-debate-studio.png', 1920, 1080);
+    await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('3840x2160');
     await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
   });
 

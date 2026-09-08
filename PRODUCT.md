@@ -48,17 +48,17 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.
-- The implemented scope includes title, setup, playable match, between-round
-  review, and persistent terminal victory. It includes title-only local history
-  and settings, safe settings persistence fallback, and the blocking landscape
-  viewport contract.
+- The implemented scope includes title, setup, playable match, narrated exchange
+  presentation, and persistent terminal victory. It includes title-only local
+  history and settings, safe settings persistence fallback, and the blocking
+  landscape viewport contract.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
   bundle. It also includes 18 original fictional characters, 17 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
-  default portraits. Seven archetypes have nine alternate skins in total. Skins
+  default portraits. Seven archetypes have ten alternate skins in total. Skins
   are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and zero through eight
   alternate skins per archetype.
@@ -78,12 +78,12 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   damage bonus. The seeded Local Radio Caller, Party Strategist, and Palace
   Operator AI policies select valid actions for single-player matches. A local
   nine-rung ladder persists wins, losses, opponents, scenes, and completion.
-- Every completed exchange pauses on an in-arena results modal while the last
-  sentence remains visible. An ordered score receipt shows each clause,
-  finisher, Comeback, applied weakness and combo factor, and final damage.
-  Continue starts the next round. A terminal exchange becomes a persistent
-  victory record until the player returns to the title. The title alone opens
-  public match history stored on this browser.
+- Every completed exchange blocks drafting while each character recites one
+  complete public insult. Inline score lines show each clause, finisher,
+  Comeback, applied weakness and combo factor, total, and applied Pride loss.
+  The next round starts automatically after both deliveries. A terminal
+  exchange becomes a persistent victory record until the player returns to the
+  title. The title alone opens public match history stored on this browser.
 
 ## Brand Commitments
 

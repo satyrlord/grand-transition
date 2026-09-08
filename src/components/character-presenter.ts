@@ -72,7 +72,7 @@ export class GrandTransitionCharacter extends LitElement {
       this.displayedState = 'selection';
       this.requestedState = 'selection';
     }
-    const cueKey = this.cue ? `${this.cue.sequence}:${this.cue.stateId}` : '';
+    const cueKey = this.cue ? `${this.cue.sequence}:${this.cue.stateId}:${Boolean(this.cue.hold)}` : '';
     if (cueKey !== this.cueKey) {
       this.cueKey = cueKey;
       this.stopTimer();
@@ -118,7 +118,7 @@ export class GrandTransitionCharacter extends LitElement {
     this.displayedState = this.requestedState;
     if (changed || restart) this.motionRevision += 1;
     const motion = characterMotion[this.displayedState];
-    if (!this.suspended && !motion.loop && this.timer === undefined) {
+    if (!this.suspended && !motion.loop && !this.cue?.hold && this.timer === undefined) {
       const key = this.cueKey;
       this.timer = setTimeout(() => {
         this.timer = undefined;

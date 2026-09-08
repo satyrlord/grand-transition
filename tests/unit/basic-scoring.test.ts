@@ -5,6 +5,7 @@ import {
   ceilDamage,
   replayBasicScoreBreakdown,
   scoreBasicConstruction,
+  extractScoreClauseAnchors,
 } from '../../src/engine/basic-scoring';
 import {
   englishGrammarAdapter,
@@ -37,6 +38,12 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
   });
 
 describe('Hollywood Roast clause scoring', () => {
+  test('narration anchors distinguish repeated relation occurrences and shared compound completion', () => {
+    const phrases = new Map(sampleContent.phrases.map((phrase) => [phrase.id, phrase]));
+    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum']), phrases)).toEqual([1]);
+    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'coalition-and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([3, 3]);
+    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum', 'coalition-and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([1, 4]);
+  });
   test('scores semantic compatibility instead of summing card values', () => {
     const result = score(['national-consensus', 'belongs-in-a-party-museum']);
     expect(result.finalDamage).toBe(5);

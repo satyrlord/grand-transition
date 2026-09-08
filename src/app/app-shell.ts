@@ -1,4 +1,12 @@
 import { LitElement, html } from 'lit';
+import { BrowserAudio } from '../audio/browser-audio';
+import { LocalNeuralSpeech } from '../audio/neural-speech';
+import { GameAudio } from '../audio/game-audio';
+import { GameSpeech } from '../audio/game-speech';
+import { CharacterSpeech } from '../audio/character-speech';
+import { MicrosoftRobotSpeech } from '../audio/microsoft-robot-speech';
+import { skinSpeechProfile } from '../audio/skin-speech-profile';
+import { RoundPresentation, type RoundPresentationFrame } from './round-presentation';
 import { msg } from '@lit/localize';
 import { MatchCoordinator, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
@@ -28,7 +36,6 @@ import {
   type MatchScreenSnapshot,
 } from './match-screen-snapshot';
 import {
-  type ContinueRoundEvent,
   type MatchCommandEvent,
   type ReturnToMainMenuEvent,
 } from './screens/match-screen';
@@ -176,6 +183,7 @@ export class GrandTransitionApp extends LitElement {
     settingsNoticeDismissed: { state: true },
     aiThinking: { state: true },
     ladderSnapshot: { state: true },
+    presentation: { state: true },
   };
 
   declare private view: ScreenView;
@@ -201,6 +209,12 @@ export class GrandTransitionApp extends LitElement {
   private readonly settingsRepository: SettingsRepository;
   private readonly ladderProgressRepository: LadderProgressRepository;
   private currentMatchIsLadder = false;
+  private audio: BrowserAudio | null = null;
+  private speech: LocalNeuralSpeech | null = null;
+  private gameAudio: GameAudio | null = null;
+  private gameSpeech: GameSpeech | null = null;
+  declare private presentation: RoundPresentationFrame | null;
+  private roundPresentation: RoundPresentation | null = null;
 
   constructor() {
     super();
@@ -245,6 +259,7 @@ export class GrandTransitionApp extends LitElement {
     this.settingsOpen = false;
     this.settingsNoticeDismissed = false;
     this.aiThinking = false;
+    this.presentation = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -253,11 +268,32 @@ export class GrandTransitionApp extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
+    this.audio = new BrowserAudio(this.refreshAudioControls);
+    this.speech = new LocalNeuralSpeech(this.refreshAudioControls);
+    this.gameAudio = new GameAudio(this.audio);
+    this.gameSpeech = new GameSpeech(new CharacterSpeech(this.speech, new MicrosoftRobotSpeech()));
+    this.roundPresentation = new RoundPresentation(this.gameSpeech, this.audio, {
+      now: () => performance.now(),
+      setTimeout: (callback, delay) => window.setTimeout(callback, delay),
+      clearTimeout: (id) => window.clearTimeout(id),
+    }, (frame) => { this.presentation = frame; }, () => this.finishRoundPresentation());
+    this.audio.configure(this.settingsSnapshot.settings);
+    this.addEventListener('pointerdown', this.activateAudio);
+    this.addEventListener('keydown', this.activateAudio);
+    this.addEventListener('retry-audio', this.retryAudio);
+    document.addEventListener('visibilitychange', this.syncAudioVisibility);
     this.screenController.connect((view) => {
       if (view !== 'match') this.cancelAiTurn();
       if (this.matchState?.phase === 'results') {
         this.view = 'match';
         return;
+      }
+      if (view !== 'match' && this.presentation) {
+        this.roundPresentation?.cancel();
+        this.roundReviewSnapshot = null;
+        this.matchState = null;
+        this.matchId = null;
+        this.matchInitialSeed = null;
       }
       const nextView =
         view === 'match' &&
@@ -273,6 +309,13 @@ export class GrandTransitionApp extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    this.roundPresentation?.cancel();
+    this.removeEventListener('pointerdown', this.activateAudio);
+    this.removeEventListener('keydown', this.activateAudio);
+    this.removeEventListener('retry-audio', this.retryAudio);
+    document.removeEventListener('visibilitychange', this.syncAudioVisibility);
+    this.audio?.dispose();
+    this.speech?.dispose();
     this.cancelAiTurn();
     this.screenController.disconnect();
     window.removeEventListener('resize', this.syncViewportSupport);
@@ -282,6 +325,34 @@ export class GrandTransitionApp extends LitElement {
     );
     super.disconnectedCallback();
   }
+
+  protected override updated(): void {
+    this.syncAudioVisibility();
+  }
+
+  private readonly activateAudio = (event: Event): void => {
+    if (!event.isTrusted) return;
+    this.gameSpeech?.userGesture();
+    if (this.settingsSnapshot.settings.speechEnabled && this.speech?.status !== 'unavailable') void this.speech?.initialize();
+    if (this.audio?.status === 'idle' || this.audio?.status === 'ready') void this.audio.enable();
+  };
+
+  private readonly retryAudio = (): void => { void this.audio?.enable(); };
+
+  private readonly refreshAudioControls = (): void => {
+    // Audio availability belongs to title Settings, not the active match snapshot.
+    if (this.view === 'title') this.requestUpdate();
+  };
+
+  private readonly syncAudioVisibility = (): void => {
+    const concealed = !this.viewportSupported || this.manuallyPaused || document.hidden;
+    if (this.presentation) {
+      if (concealed || this.view !== 'match') this.roundPresentation?.pause();
+      else this.roundPresentation?.resume();
+    } else if (concealed || this.view !== 'match' || this.matchState?.phase === 'results') this.gameSpeech?.cancel();
+    this.audio?.setScene(concealed ? null : this.view !== 'match' ? 'menu' :
+      this.matchState?.setup.sceneId === 'transition-era-television-studio' ? 'transition-era-television-studio' : null);
+  };
 
   protected override render() {
     const liveMatchState =
@@ -307,6 +378,7 @@ export class GrandTransitionApp extends LitElement {
     if (this.view === 'match' && matchSnapshot) {
       return html`<grand-transition-match
         .snapshot=${matchSnapshot}
+        .presentation=${this.presentation}
         .pauseMode=${
           !this.viewportSupported
             ? 'viewport'
@@ -324,7 +396,6 @@ export class GrandTransitionApp extends LitElement {
           liveMatchState.activePlayerId === 'player-one',
         )}
         @match-command=${this.reduceMatchCommand}
-        @continue-round=${this.continueRound}
         @return-to-main-menu=${this.returnToMainMenu}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
@@ -349,6 +420,10 @@ export class GrandTransitionApp extends LitElement {
           .historyPersistenceFailure=${this.matchHistory.persistenceFailure}
           .settings=${this.settingsSnapshot.settings}
           .settingsOpen=${this.settingsOpen}
+          .audioStatus=${this.audio?.status ?? 'idle'}
+          .speechAvailable=${this.speech?.available ?? false}
+          .speechStatus=${this.speech?.status ?? 'idle'}
+          .speechProgress=${this.speech?.progress ?? null}
           .showSettingsPersistenceNotice=${
             this.settingsSnapshot.persistenceFailure !== null &&
             !this.settingsNoticeDismissed
@@ -416,6 +491,9 @@ export class GrandTransitionApp extends LitElement {
   private readonly changeSettings = (event: SettingsChangeEvent): void => {
     event.stopPropagation();
     this.settingsSnapshot = this.settingsRepository.replace(event.detail);
+    this.gameSpeech?.cancel();
+    this.audio?.configure(this.settingsSnapshot.settings);
+    if (this.settingsSnapshot.settings.speechEnabled) void this.speech?.initialize();
   };
 
   private readonly dismissSettingsNotice = (
@@ -496,6 +574,7 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private readonly startMatch = (event: StartMatchEvent): void => {
+    this.roundPresentation?.cancel();
     const payload = event.detail;
     const ladderProgress =
       payload.mode === 'ladder' ? this.ladderSnapshot.progress : null;
@@ -558,6 +637,7 @@ export class GrandTransitionApp extends LitElement {
   private applyMatchCommand(command: MatchCommand): void {
     if (!this.matchState) return;
     if (!this.matchId) throw new Error('The active match does not have a stable ID.');
+    this.gameSpeech?.cancel();
     const transition = this.matchCoordinator.apply(this.matchState, command, {
       initialSeed: this.currentMatchInitialSeed(),
       id: this.matchId,
@@ -571,6 +651,9 @@ export class GrandTransitionApp extends LitElement {
     this.matchState = transition.state;
     this.matchArenaReaction = transition.reaction;
     const review = transition.review;
+    const publicPresentation = this.view === 'match' && this.viewportSupported &&
+      !this.manuallyPaused && !document.hidden;
+    if (publicPresentation) this.gameAudio?.accepted(command, transition);
     this.roundReviewSnapshot = review
       ? createMatchScreenSnapshot(
           review.state, null, review.resolution, review.victory,
@@ -578,27 +661,46 @@ export class GrandTransitionApp extends LitElement {
           review.state.setup.mode === 'ai' ? 'player-one' : review.state.activePlayerId,
         )
       : null;
+    const directKnockout = this.matchState.phase === 'results' &&
+      (transition.reaction !== null || command.type === 'expire-turn');
+    if (review && this.roundReviewSnapshot && !directKnockout) {
+      const skins = this.currentMatchSkinIds();
+      const voices = Object.fromEntries(this.matchState.setup.players.map((player) => [
+        player.playerId, skinSpeechProfile(sampleContent.characters.find((character) => character.id === player.characterId)!,
+          skins[player.playerId] ?? 'default'),
+      ]));
+      this.roundPresentation?.start({ resolution: review.resolution,
+        firstSpeakerId: command.actorId ?? review.state.activePlayerId,
+        components: Object.fromEntries(Object.entries(this.roundReviewSnapshot.reaction.players)
+          .map(([id, result]) => [id, result.scoreComponents])),
+        settings: this.settingsSnapshot.settings, voices,
+      }, !publicPresentation);
+    } else if (review && this.matchState.phase === 'results') {
+      const actor = command.actorId ?? review.state.activePlayerId;
+      this.roundPresentation?.selfDamage(review.resolution, actor,
+        transition.reaction?.damage ?? review.resolution.players[actor]!.selfDamage,
+        Boolean(transition.reaction), !publicPresentation);
+    }
     this.ladderSnapshot = this.ladderProgressRepository.snapshot();
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.scheduleAiTurn();
   }
 
-  private readonly continueRound = (event: ContinueRoundEvent): void => {
-    event.stopPropagation();
-    if (!this.matchState || !this.roundReviewSnapshot) return;
-    const state = this.matchState;
+  private finishRoundPresentation(): void {
+    if (!this.matchState || this.view !== 'match') return;
+    if (this.matchState.phase === 'results') return;
     this.roundReviewSnapshot = null;
     this.matchArenaReaction = null;
-    if (state.phase === 'results') return;
-    this.matchState = this.matchCoordinator.continueRound(state, this.currentMatchInitialSeed());
+    this.matchState = this.matchCoordinator.continueRound(this.matchState, this.currentMatchInitialSeed());
     this.scheduleAiTurn();
-  };
+  }
 
   private readonly returnToMainMenu = (
     event: ReturnToMainMenuEvent,
   ): void => {
     event.stopPropagation();
     if (this.matchState?.phase !== 'results') return;
+    this.roundPresentation?.cancel();
     this.manuallyPaused = false;
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
@@ -640,6 +742,7 @@ export class GrandTransitionApp extends LitElement {
   private readonly returnToMenu = (event: Event): void => {
     event.stopPropagation();
     if (this.view !== 'match' || !this.manuallyPaused) return;
+    this.roundPresentation?.cancel();
     this.manuallyPaused = false;
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;

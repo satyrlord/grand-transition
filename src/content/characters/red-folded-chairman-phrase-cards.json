@@ -35,7 +35,8 @@
   "voiceProfile": {
     "voiceHint": "measured",
     "rate": 0.9,
-    "pitch": 0.9
+    "pitch": 0.9,
+    "skinVoices": {"default": "george", "alternate": "emma"}
   },
   "animationSet": {
     "idle": "red-folded-chairman-idle",

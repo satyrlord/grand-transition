@@ -13,10 +13,10 @@
     "dev": "vite",
     "prod": "npm run build && npm run preview -- --host 127.0.0.1 --strictPort",
     "preview": "vite preview",
-    "build": "node tools/brand-assets.mjs validate && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && vite build",
-    "assets:build": "node tools/brand-assets.mjs build && node tools/build-scene-assets.mjs && node tools/build-character-assets.mjs && node tools/build-character-states.mjs",
+    "build": "node tools/brand-assets.mjs validate && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node tools/audio-assets.mjs validate && node tools/neural-speech-assets.mjs validate && vite build",
+    "assets:build": "node tools/brand-assets.mjs build && node tools/build-scene-assets.mjs && node tools/build-character-assets.mjs && node tools/build-character-states.mjs && npm run audio:build && npm run speech:build",
     "assets:convert-green": "node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree",
-    "assets:validate": "node tools/brand-assets.mjs validate && node tools/validate-scaffold.mjs --domain assets && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets && node tools/validate-asset-color.mjs validate src/assets",
+    "assets:validate": "node tools/brand-assets.mjs validate && node tools/validate-scaffold.mjs --domain assets && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets && node tools/validate-asset-color.mjs validate src/assets && npm run audio:validate && npm run speech:validate",
     "content:validate": "node tools/validate-scaffold.mjs --domain content && vitest run --config vitest.config.ts tests/unit/content-schemas.test.ts",
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
     "boundaries:check": "node tools/check-pure-boundaries.mjs",
@@ -29,7 +29,11 @@
     "test:e2e": "playwright test --config playwright.config.ts",
     "markdown:lint": "markdownlint-cli2 \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"docs/specs/**/*.md\" \".github/**/*.md\"",
     "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run boundaries:check && npm run lint && npm run typecheck",
-    "ci": "npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e"
+    "ci": "npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e",
+    "audio:build": "node tools/audio-assets.mjs build",
+    "audio:validate": "node tools/audio-assets.mjs validate",
+    "speech:build": "node tools/neural-speech-assets.mjs build",
+    "speech:validate": "node tools/neural-speech-assets.mjs validate"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.3.0",
@@ -38,6 +42,8 @@
     "@fontsource/share-tech-mono": "^5.3.0",
     "@lit/localize": "^0.12.2",
     "lit": "^3.3.3",
+    "onnxruntime-web": "1.29.0",
+    "phonemizer": "1.2.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -47,9 +53,11 @@
     "@vitest/browser-playwright": "^4.1.11",
     "@vitest/coverage-v8": "^4.1.11",
     "fast-check": "^4.9.0",
+    "ffmpeg-static": "5.3.0",
     "markdownlint-cli2": "^0.23.2",
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
+    "protobufjs": "7.6.6",
     "sharp": "0.35.4",
     "tsx": "^4.23.12",
     "typescript": "~7.0.2",
@@ -57,6 +65,8 @@
     "vitest": "^4.1.11"
   },
   "allowScripts": {
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "ffmpeg-static@5.3.0": true,
+    "protobufjs@7.6.6": true
   }
 }

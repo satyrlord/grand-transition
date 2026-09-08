@@ -29,7 +29,8 @@ Exercise applicable AI and hotseat matches through visible controls and valid
 gestures.
 Verify pointer input, sentence legality, redraw, grammar
 fault, continuation, comeback, and simultaneous damage.
-Verify the between-round review modal, Continue progression, and sudden death.
+Verify both narrated deliveries, inline scores, automatic progression, and
+sudden death.
 Verify persistent victory and the explicit return to the title under Milestone 019.
 
 Verify title-only match history, exact public records, and storage-failure behavior.

@@ -47,6 +47,14 @@ const requiredScripts = [
 ];
 
 describe('quality-gate scaffold', () => {
+  test('keeps private character research out of Git', async () => {
+    const gitignore = await readFile(
+      path.resolve(process.cwd(), '.gitignore'),
+      'utf8',
+    );
+    expect(gitignore.split(/\r?\n/u)).toContain('research/');
+  });
+
   test('exposes every milestone script', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
@@ -70,11 +78,17 @@ describe('quality-gate scaffold', () => {
         'node tools/validate-scene-assets.mjs src/assets/scenes && ' +
         'node tools/validate-character-assets.mjs src/assets/characters && ' +
         'node tools/validate-character-states.mjs && ' +
+        'node tools/audio-assets.mjs validate && ' +
+        'node tools/neural-speech-assets.mjs validate && ' +
         'vite build',
     );
     expect(packageJson.scripts['assets:build']).toContain(
       'node tools/build-character-assets.mjs',
     );
+    expect(packageJson.scripts['assets:build']).toContain('npm run audio:build');
+    expect(packageJson.scripts['assets:validate']).toContain('npm run audio:validate');
+    expect(packageJson.scripts['assets:build']).toContain('npm run speech:build');
+    expect(packageJson.scripts['assets:validate']).toContain('npm run speech:validate');
     expect(packageJson.scripts['assets:validate']).toContain(
       'node tools/validate-character-assets.mjs src/assets/characters',
     );

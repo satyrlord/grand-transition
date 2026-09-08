@@ -8,6 +8,7 @@ import {
   type TemplateResult,
 } from 'lit';
 import type { MatchCommand } from '../../engine/match-lifecycle';
+import type { RoundPresentationFrame } from '../round-presentation';
 import { deepFreeze } from '../deep-freeze';
 import type {
   MatchCardView,
@@ -25,13 +26,11 @@ import type { TurnTimerSeconds } from './interruption-screen';
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
-export const continueRoundEventName = 'continue-round';
 export const returnToMainMenuEventName = 'return-to-main-menu';
 
 export type MatchPauseMode = 'manual' | 'running' | 'viewport';
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
-export type ContinueRoundEvent = CustomEvent<Record<never, never>>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
 export const automaticAiBubbleRevealMs = 4_000;
 export const grammarStrikeDurationMs = 3_000;
@@ -46,6 +45,7 @@ export class GrandTransitionMatch extends LitElement {
     thinking: { type: Boolean },
     aiName: { type: String },
     autoRevealWaitingSentence: { type: Boolean },
+    presentation: { attribute: false },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
@@ -56,6 +56,7 @@ export class GrandTransitionMatch extends LitElement {
   declare thinking: boolean;
   declare aiName: string;
   declare autoRevealWaitingSentence: boolean;
+  declare presentation: RoundPresentationFrame | null;
   private previewText: string | null;
   private remainingSeconds: number | null;
   private commandPending: boolean;
@@ -80,6 +81,7 @@ export class GrandTransitionMatch extends LitElement {
     this.thinking = false;
     this.aiName = msg('Local Radio Caller');
     this.autoRevealWaitingSentence = false;
+    this.presentation = null;
     this.previewText = null;
     this.remainingSeconds = null;
     this.commandPending = false;
@@ -93,13 +95,24 @@ export class GrandTransitionMatch extends LitElement {
     return this;
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('resize', this.followLatestScore);
+  }
+
   override disconnectedCallback(): void {
+    window.removeEventListener('resize', this.followLatestScore);
     this.clearGrammarStrike();
     this.requestUpdate();
     this.stopTimer();
     this.clearAutomaticWaitingSentenceReveal();
     super.disconnectedCallback();
   }
+
+  private readonly followLatestScore = (): void => {
+    const list = this.querySelector<HTMLElement>('.delivery-components');
+    if (list) list.scrollTop = list.scrollHeight;
+  };
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     if (changed.has('snapshot') || changed.has('pauseMode')) {
@@ -149,12 +162,20 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    const previousPresentation = changed.get('presentation') as RoundPresentationFrame | null | undefined;
+    if (this.presentation && (changed.has('pauseMode') ||
+      previousPresentation?.speakerId !== this.presentation.speakerId ||
+      previousPresentation?.components.length !== this.presentation.components.length ||
+      previousPresentation?.total !== this.presentation.total ||
+      previousPresentation?.emphasis.length !== this.presentation.emphasis.length)) {
+      this.followLatestScore();
+    }
     const previousPauseMode = changed.get('pauseMode') as
       MatchPauseMode | undefined;
     if (previousPauseMode === 'manual' && this.pauseMode === 'running') {
       this.querySelector<HTMLButtonElement>('.match-pause')?.focus();
     }
-    if (changed.has('snapshot') && this.snapshot?.roundReview) {
+    if ((changed.has('snapshot') || changed.has('presentation')) && this.snapshot?.victory && !this.presentation) {
       this.querySelector<HTMLButtonElement>('.round-review-primary')?.focus();
       return;
     }
@@ -180,16 +201,23 @@ export class GrandTransitionMatch extends LitElement {
         .phraseColorCoding=${this.phraseColorCoding}
       ></grand-transition-interruption>`;
     }
-    const first = this.snapshot.players[0];
-    const second = this.snapshot.players[1];
+    const players = this.snapshot.players.map((player) => this.presentation ? {
+      ...player,
+      isActive: player.playerId === this.presentation.speakerId,
+      pride: this.presentation.pride[player.playerId] ?? player.pride,
+      portraitCue: this.presentation.cues[player.playerId] ?? player.portraitCue,
+    } : player);
+    const first = players[0]!;
+    const second = players[1]!;
     const timerValue = this.remainingSeconds;
     const timerLabel =
       timerValue === null
         ? msg('Unlimited turn timer')
         : msg(`${timerValue} seconds`);
     const timerText = timerValue === null ? msg('Unlimited') : timerValue;
-    const displayedSentence =
-      this.thinking &&
+    const displayedSentence = this.presentation
+      ? this.presentation.text || msg('No public sentence was completed.')
+      : this.thinking &&
       this.snapshot.sentenceText === msg('Select a noun to begin.')
         ? msg(`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
@@ -216,7 +244,8 @@ export class GrandTransitionMatch extends LitElement {
         data-active-side=${first.isActive ? 'red' : 'blue'}
         data-phrase-color-coding=${this.phraseColorCoding ? 'on' : 'off'}
         data-round-review=${roundReview ? 'true' : nothing}
-        data-match-result=${this.snapshot.victory ? 'victory' : nothing}
+        data-match-result=${this.snapshot.victory && !this.presentation ? 'victory' : nothing}
+        data-delivery-phase=${this.presentation?.phase ?? nothing}
         data-ai-thinking=${this.thinking ? 'true' : 'false'}
         @click=${this.closeWaitingSentence}
       >
@@ -239,10 +268,10 @@ export class GrandTransitionMatch extends LitElement {
               <button
                 type="button"
                 class="match-pause"
-                ?disabled=${roundReview}
+                ?disabled=${roundReview && !this.presentation}
                 @click=${this.pause}
               >
-                ${this.snapshot.victory
+                ${this.presentation ? msg('Pause') : this.snapshot.victory
                   ? msg('Final')
                   : roundReview
                     ? msg('Paused')
@@ -269,7 +298,7 @@ export class GrandTransitionMatch extends LitElement {
                 <h1 id="match-title" tabindex="-1">
                   <span>${msg(`Round ${this.snapshot.round}`)}</span>
                   <span class="visually-hidden">
-                    ${msg(`${this.snapshot.activePlayerName}'s turn`)}
+                    ${roundReview ? msg('Insult delivery') : msg(`${this.snapshot.activePlayerName}'s turn`)}
                   </span>
                 </h1>
                 ${
@@ -331,8 +360,10 @@ export class GrandTransitionMatch extends LitElement {
           </section>
 
           ${
-            roundReview
-              ? this.renderRoundReview(first, second)
+            this.presentation
+              ? this.renderDelivery(first, second)
+              : this.snapshot.victory
+              ? this.renderVictory(first, second)
               : arenaReaction
                 ? this.renderArenaReaction(arenaReaction)
                 : nothing
@@ -481,10 +512,10 @@ export class GrandTransitionMatch extends LitElement {
           data-mirrored=${(side === 'red' ? player.portraitFacing === 'left' : player.portraitFacing === 'right') ? 'true' : 'false'}>
           ${player.portraitFrames ? html`<grand-transition-character
             .frames=${player.portraitFrames}
-            .cue=${player.portraitCue.sequence <= this.discardedPortraitSequence
+            .cue=${!this.presentation && player.portraitCue.sequence <= this.discardedPortraitSequence
               ? { stateId: 'idle', sequence: player.portraitCue.sequence }
               : player.portraitCue}
-            .restState=${this.thinking && player.isActive ? 'thinking' : 'idle'}
+              .restState=${player.isActive && !this.snapshot?.roundReview ? 'thinking' : 'idle'}
           ></grand-transition-character>` : html`<picture>
             ${player.portraitAvifSrcSet
               ? html`<source
@@ -547,12 +578,62 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
-  private renderRoundReview(
+  private renderDelivery(first: MatchPlayerView, second: MatchPlayerView): TemplateResult {
+    const frame = this.presentation!;
+    const speaker = frame.speakerId === first.playerId ? first : second;
+    const side = (id: string) => id === first.playerId ? 'red' : 'blue';
+    const damaged = frame.damage?.playerId === first.playerId ? first : second;
+    return html`<section class="delivery-receipt" data-speaker=${frame.speakerId}
+      data-side=${side(speaker.playerId)} role="log" aria-live="polite" aria-relevant="additions text"
+      aria-label=${msg(`${speaker.characterName}'s score`)}>
+      ${frame.phase === 'preparing' ? html`<p class="delivery-status" role="status">${msg('Preparing local narration…')}</p>` : nothing}
+      ${frame.phase === 'hesitating' ? html`<p class="delivery-status">${msg('Hesitation')}</p>` : nothing}
+      <ol class="delivery-components" tabindex="0" aria-label=${msg('Scored sentences')}>
+        ${frame.components.map((part) => this.renderInlineScore(part))}
+      </ol>
+      <div class="delivery-events">${this.renderDeliveryEmphasis(speaker.playerId)}</div>
+      ${frame.total === null ? nothing : html`<p class="delivery-total"><span>${msg('Total')}</span><strong>${frame.total}</strong></p>`}
+    </section>
+    ${[first, second].filter((player) => player.playerId !== speaker.playerId || frame.damage?.playerId === player.playerId)
+      .map((player) => html`<div class="delivery-emphasis" data-side=${side(player.playerId)} aria-live="polite">
+      ${frame.damage?.playerId === player.playerId && frame.damage.amount > 0
+        ? html`<p class="delivery-damage" role="status" aria-label=${msg(`${damaged.characterName} loses ${frame.damage.amount} Pride`)}>
+            −${frame.damage.amount} ${msg('Pride')}
+          </p>`
+        : this.renderDeliveryEmphasis(player.playerId)}
+    </div>`)}`;
+  }
+
+  private renderDeliveryEmphasis(playerId: string): TemplateResult[] {
+    return this.presentation!.emphasis.filter((item) => item.playerId === playerId).map((item) => html`<p data-emphasis=${item.kind}>
+      ${item.kind === 'combo' ? html`<strong>${msg('Combo')}</strong> ${item.text} ×${item.value}`
+        : item.kind === 'weakness' ? html`${item.text.split(' · ').map(titleCase).join(' · ')} ×${formatScoreNumber(item.value)}`
+          : html`${msg('Comeback')} +${item.value}`}
+    </p>`);
+  }
+
+  private renderInlineScore(component: MatchScoreComponentView): TemplateResult {
+    const kindLabel = component.kind === 'finisher' ? msg('Finisher') : component.kind === 'comeback' ? msg('Comeback') : '';
+    return html`<li class="delivery-score" data-score-kind=${component.kind} data-score-amount=${component.amount}
+      aria-label=${scoreComponentLabel(component, kindLabel)}>
+      <span class="delivery-score-text">${kindLabel ? kindLabel + ': ' : ''}${component.phraseText}</span>
+      <span class="delivery-score-math">
+        ${component.kind === 'comeback' ? html`+${formatScoreNumber(component.amount)}` : html`${formatScoreNumber(component.base)}${
+          component.restrictionFactor > 1 ? html` <span>×${formatScoreNumber(component.restrictionFactor)}</span>` : nothing}${
+          component.weaknessFactor > 1 ? html` <span class="score-factor--weakness">×${formatScoreNumber(component.weaknessFactor)}</span>` : nothing}${
+          component.comboFactor > 1 ? html` <span class="score-factor--combo">×${formatScoreNumber(component.comboFactor)}</span>` : nothing}
+          = ${formatScoreNumber(component.amount)}`}
+      </span>
+      ${component.weaknessTags.length ? html`<span class="delivery-score-weakness">${component.weaknessTags.map(titleCase).join(' · ')}</span>` : nothing}
+    </li>`;
+  }
+
+  private renderVictory(
     first: MatchPlayerView,
     second: MatchPlayerView,
   ): TemplateResult {
     const round = this.snapshot!.reaction.round!;
-    const victory = this.snapshot!.victory;
+    const victory = this.snapshot!.victory!;
     return html`
       <div class="round-review-backdrop">
         <section
@@ -562,19 +643,16 @@ export class GrandTransitionMatch extends LitElement {
           aria-labelledby="round-review-title"
           aria-describedby="round-review-outcome"
           data-round-result=${round}
-          data-victory=${victory ? 'true' : nothing}
+          data-victory="true"
         >
           <header class="round-review-heading">
-            ${victory ? nothing : html`<span>${msg('Exchange record')}</span>`}
             <h2 id="round-review-title">
-              ${victory ? msg('Victory') : msg(`Round ${round} results`)}
+              ${msg('Victory')}
             </h2>
           </header>
           <p id="round-review-outcome" class="reaction-outcome">
             <strong>
-              ${victory
-                ? msg(`${victory.winnerName} wins the match`)
-                : this.snapshot!.reaction.outcomeLabel}
+              ${msg(`${victory.winnerName} wins the match`)}
             </strong>
             ${victory
               ? html`<span>
@@ -591,14 +669,10 @@ export class GrandTransitionMatch extends LitElement {
           <button
             type="button"
             class="round-review-continue round-review-primary"
-            @click=${victory ? this.returnToMainMenu : this.continueRound}
+            @click=${this.returnToMainMenu}
           >
             ${
-              victory
-                ? victory.ladder
-                  ? msg('Continue ladder')
-                  : msg('Return to main menu')
-                : msg('Continue')
+              victory.ladder ? msg('Continue ladder') : msg('Return to main menu')
             }
           </button>
         </section>
@@ -718,7 +792,7 @@ export class GrandTransitionMatch extends LitElement {
     const delay = Math.min(index, 4) * 80;
     const kindLabel =
       component.kind === 'clause'
-        ? msg('Clause')
+        ? ''
         : component.kind === 'finisher'
           ? msg('Finisher')
           : msg('Comeback');
@@ -731,7 +805,7 @@ export class GrandTransitionMatch extends LitElement {
         style=${`--score-step-delay: ${delay}ms`}
       >
         <span class="score-breakdown-copy">
-          <small>${kindLabel}</small>
+          ${kindLabel ? html`<small>${kindLabel}</small>` : nothing}
           <span>${component.phraseText}</span>
           ${component.weaknessTags.length > 0
             ? html`<em>
@@ -1059,22 +1133,11 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private readonly pause = (): void => {
-    if (this.pauseMode !== 'running' || this.snapshot?.roundReview) return;
+    if (this.pauseMode !== 'running' || (this.snapshot?.roundReview && !this.presentation)) return;
     this.dispatchEvent(
       new CustomEvent(pauseMatchEventName, {
         bubbles: true,
         composed: true,
-      }),
-    );
-  };
-
-  private readonly continueRound = (): void => {
-    if (!this.snapshot?.roundReview || this.snapshot.victory) return;
-    this.dispatchEvent(
-      new CustomEvent(continueRoundEventName, {
-        bubbles: true,
-        composed: true,
-        detail: {},
       }),
     );
   };
@@ -1185,7 +1248,7 @@ function scoreComponentLabel(
     .map((factor) => ` times ${formatScoreNumber(factor)}`)
     .join('');
   return msg(
-    `${kindLabel}: ${component.phraseText}. ${weakness}${formatScoreNumber(component.base)}${factors} equals ${formatScoreNumber(component.amount)} damage.`,
+    `${kindLabel ? kindLabel + ': ' : ''}${component.phraseText}. ${weakness}${formatScoreNumber(component.base)}${factors} equals ${formatScoreNumber(component.amount)} damage.`,
   );
 }
 
@@ -1214,7 +1277,6 @@ registerGrandTransitionMatch();
 declare global {
   interface HTMLElementEventMap {
     [matchCommandEventName]: MatchCommandEvent;
-    [continueRoundEventName]: ContinueRoundEvent;
     [returnToMainMenuEventName]: ReturnToMainMenuEvent;
   }
 }

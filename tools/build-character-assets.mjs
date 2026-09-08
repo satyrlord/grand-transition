@@ -4,9 +4,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import baseline from './character-replacement-baseline.json' with { type: 'json' };
+import portraitLayout from '../src/assets/characters/portrait-layout.json' with { type: 'json' };
 
 export const CHARACTER_MASTER_NAMES = Object.freeze(
-  baseline.assets.map(({ file }) => file).toSorted((left, right) => left.localeCompare(right, 'en')),
+  [...new Set([...baseline.assets.map(({ file }) => file),
+    ...Object.keys(portraitLayout.portraits).map((id) => `${id}.png`),
+  ])].toSorted((left, right) => left.localeCompare(right, 'en')),
 );
 export const CHARACTER_VARIANT_SIZES = Object.freeze([128, 256, 320, 640, 960]);
 export const CHARACTER_VARIANT_FORMATS = Object.freeze(['avif', 'webp']);

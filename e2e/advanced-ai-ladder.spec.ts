@@ -1,3 +1,4 @@
+import { finishPresentation } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { ladderProgressStorageKey } from '../src/persistence/ladder-progress';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
@@ -26,6 +27,7 @@ for (const viewport of [
     page,
   }) => {
     await page.setViewportSize(viewport);
+    await page.clock.install();
     await useFixedBrowserMatchSeed(page, 1);
     await page.goto('/grand-transition/');
     await page.getByRole('button', { name: 'Set up match' }).click();
@@ -143,6 +145,7 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.clock.install();
   await useFixedBrowserMatchSeed(page, 1);
   await page.goto('/grand-transition/');
   await page.evaluate(
@@ -224,23 +227,16 @@ async function playHumanMatch(page: Page): Promise<string> {
       const app = element as HTMLElement & { matchState?: MatchState };
       return {
         state: app.matchState ?? null,
-        reviewing: Boolean(app.querySelector('.round-review-primary')),
+        reviewing: Boolean(app.querySelector('.match-screen[data-delivery-phase]')),
         thinking: Boolean(app.querySelector('.ai-thinking-record')),
       };
     });
+    if (observed.reviewing) { await finishPresentation(page); continue; }
     const state = observed.state;
     if (state?.phase === 'results') {
       await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
       if (!state.winner) throw new Error('The completed test match has no winner.');
       return state.winner;
-    }
-    const continueButton = page.getByRole('button', {
-      name: 'Continue',
-      exact: true,
-    });
-    if (observed.reviewing) {
-      await continueButton.click();
-      continue;
     }
     const thinking = page.locator('.ai-thinking-record');
     if (observed.thinking) {

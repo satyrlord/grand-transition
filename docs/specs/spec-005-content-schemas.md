@@ -35,6 +35,16 @@ voice, and animation data. Its species is `human` or `robot`. A robot is fully
 mechanical and does not use human, animal, or hybrid anatomy.
 There is no character-specific common-board phrase list.
 
+`voiceProfile.skinVoices` is an optional map from skin ID to `george`, `emma`,
+`david`, `mark`, or `zira`. Human skins use George or Emma. Robot skins use the
+requested installed Microsoft voice, with a British neural fallback. This
+presentation metadata does not change grammar, scoring, or the stored replay
+schema. A missing human assignment defaults to George; a missing robot
+assignment defaults to David. The character authoring file owns overrides.
+Reject a human assignment outside George and Emma. Reject a robot assignment
+outside David, Mark, and Zira. Each assigned skin ID must exist in the character
+asset catalog.
+
 A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects.
 The scene pool supplies at least three distinct unrestricted nouns and three

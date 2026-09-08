@@ -1,3 +1,4 @@
+import { finishPresentation } from './helpers/presentation';
 import {
   expect,
   test,
@@ -14,6 +15,7 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await useFixedBrowserMatchSeed(page, 21);
+  await page.clock.install();
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByLabel('Mode', { exact: true }).selectOption('ai');
@@ -28,14 +30,7 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
     if (await page.getByRole('heading', { name: 'Victory' }).isVisible().catch(() => false)) {
       break;
     }
-    const continueButton = page.getByRole('button', {
-      name: 'Continue',
-      exact: true,
-    });
-    if (await continueButton.isVisible().catch(() => false)) {
-      await continueButton.click();
-      continue;
-    }
+    if (await finishPresentation(page)) continue;
     const thinking = page.locator('.ai-thinking-record');
     if (await thinking.isVisible().catch(() => false)) {
       sawThinking = true;
@@ -142,6 +137,7 @@ test('the AI speech bubble stays open automatically for the human reader', async
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await useFixedBrowserMatchSeed(page, 21);
+  await page.clock.install();
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByLabel('Mode', { exact: true }).selectOption('ai');
@@ -207,6 +203,7 @@ test('browser Back cancels a pending AI presentation without a hidden command', 
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await useFixedBrowserMatchSeed(page, 21);
+  await page.clock.install();
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByLabel('Mode', { exact: true }).selectOption('ai');
@@ -314,6 +311,7 @@ for (const viewport of [
     await page.setViewportSize(viewport);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await useFixedBrowserMatchSeed(page, 21);
+    await page.clock.install();
     await page.goto('/grand-transition/');
     await page.getByRole('button', { name: 'Set up match' }).click();
     await expect(

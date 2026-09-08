@@ -1188,7 +1188,9 @@ describe('content schemas', () => {
     ]);
     for (const character of phraseCardCatalog.characters) {
       expect(characterSkins[character.id]?.map(({ id }) => id)).toEqual(
-        character.id === 'velvet-mogul'
+        character.id === 'government-ai'
+          ? ['default', 'alternate', 'schoolteacher']
+          : character.id === 'velvet-mogul'
           ? [
               'default',
               'boardroom-patriarch',
@@ -1204,7 +1206,37 @@ describe('content schemas', () => {
       expect(characterPortraitUrls[character.id]).toBe(
         characterSkins[character.id]?.[0]?.portraitUrl,
       );
+      const skinIds = new Set(
+        characterSkins[character.id]?.map(({ id }) => id),
+      );
+      for (const voiceSkinId of Object.keys(
+        character.voiceProfile.skinVoices ?? {},
+      )) {
+        expect(skinIds.has(voiceSkinId), `${character.id}:${voiceSkinId}`).toBe(
+          true,
+        );
+      }
     }
+  });
+
+  test.each([
+    ['human', 0, 'david', /George or Emma/u],
+    ['robot', 17, 'george', /David, Mark, or Zira/u],
+  ] as const)('rejects a %s skin voice from the wrong provider family', (
+    _species,
+    characterIndex,
+    voice,
+    message,
+  ) => {
+    const catalog = cloneCatalog();
+    catalog.characters[characterIndex]!.voiceProfile.skinVoices = {
+      default: voice,
+    };
+    expectFailure(
+      catalog,
+      `characters.${characterIndex}.voiceProfile.skinVoices.default`,
+      message,
+    );
   });
 
   test('accepts the ordered 18-character and six-scene foundation', () => {

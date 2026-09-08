@@ -163,7 +163,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   );
 });
 
-test('holds a comeback sentence under the between-round results modal', async () => {
+test('shows the comeback inline and starts the next round after both deliveries', async () => {
   vi.useFakeTimers();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
@@ -195,45 +195,28 @@ test('holds a comeback sentence under the between-round results modal', async ()
   expect(match.querySelector('.sentence-preview')?.textContent).toContain(
     'Now get this human bucket of vomit out of my sight!',
   );
-  expect(match.querySelector('.round-review-dialog')).not.toBeNull();
+  expect(match.querySelector('.round-review-dialog')).toBeNull();
   expect(match.querySelector('.timer-fact')).toBeNull();
-  expect(match.querySelector('.round-review-backdrop')).not.toBeNull();
-  expect(match.querySelector('.reaction-scores')?.children).toHaveLength(2);
-  expect(match.querySelectorAll('.score-breakdown')).toHaveLength(2);
-  expect(
-    match.querySelectorAll('[data-score-kind="clause"]').length,
-  ).toBeGreaterThan(0);
-  expect(match.querySelector('.score-breakdown-step--comeback')?.textContent).toMatch(
-    /Comeback.*human bucket of vomit.*\+18/su,
-  );
-  expect(match.querySelectorAll('.reaction-damage-total')).toHaveLength(2);
   expect(match.querySelector('.draft-table')).toBeNull();
   expect(match.querySelector('.private-hand')).toBeNull();
-  expect(document.activeElement).toBe(
-    match.querySelector('.round-review-continue'),
+  expect(match.presentation?.speakerId).toBe('player-two');
+  await vi.advanceTimersByTimeAsync(4_000);
+  await app.updateComplete; await match.updateComplete;
+  expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
+    /Comeback.*human bucket of vomit.*\+18/su,
   );
-
-  const timer = match.querySelector('.timer-fact')?.getAttribute('data-timer');
+  const phase = match.presentation?.phase;
   await page.viewport(1023, 720);
   await vi.waitFor(() => expect(match.pauseMode).toBe('viewport'));
+  await vi.advanceTimersByTimeAsync(10_000);
+  expect(match.presentation?.phase).toBe(phase);
   await page.viewport(1280, 720);
   await vi.waitFor(() => expect(match.pauseMode).toBe('running'));
-  await vi.advanceTimersByTimeAsync(3_000);
-  await match.updateComplete;
-  expect(match.querySelector('.timer-fact')?.getAttribute('data-timer')).toBe(
-    timer,
-  );
-
-  match.querySelector<HTMLButtonElement>('.round-review-continue')!.click();
-  await app.updateComplete;
-  match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
-  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(20_000);
+  await app.updateComplete; await match.updateComplete;
   expect(match.snapshot?.round).toBe(2);
   expect(match.snapshot?.roundReview).toBe(false);
   expect(match.querySelector('.round-review-dialog')).toBeNull();
-  expect(match.querySelector('.reaction-outcome')).toBeNull();
   expect(document.activeElement).toBe(match.querySelector('#match-title'));
 
   match
@@ -288,6 +271,8 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
   await match.updateComplete;
 
   expect(owner.matchState.phase).toBe('results');
+  expect(document.querySelector('#round-review-title')).toBeNull();
+  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
   expect(match.snapshot?.victory?.winnerId).not.toBe(loserId);
   expect(match.querySelector('#round-review-title')?.textContent?.trim()).toBe(
     'Victory',
@@ -415,6 +400,8 @@ test('a lethal timeout shows victory instead of clearing the match', async () =>
   await app.updateComplete;
 
   expect(owner.matchState.phase).toBe('results');
+  expect(document.querySelector('#round-review-title')).toBeNull();
+  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
   expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
     'Victory',
   );
@@ -456,6 +443,7 @@ test('storage quota failure preserves victory and reports session-only history o
     .click();
   await app.updateComplete;
 
+  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
   expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
     'Victory',
   );

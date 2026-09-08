@@ -39,7 +39,8 @@
   "voiceProfile": {
     "voiceHint": "bright",
     "rate": 1.05,
-    "pitch": 1.1
+    "pitch": 1.1,
+    "skinVoices": {"default": "george", "alternate": "emma"}
   },
   "animationSet": {
     "idle": "oat-milk-reformist-idle",

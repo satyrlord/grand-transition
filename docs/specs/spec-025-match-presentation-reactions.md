@@ -5,6 +5,77 @@
 **Owns:** Production-quality outcome reactions without tactical instruction
 **Production-file budget:** 8
 
+## Approved reference-loop replacement
+
+On 2026-09-08, the product owner requested parity with the original Hollywood
+Roast presentation loop. This replaces the between-round modal, mandatory
+Continue hold, 800-millisecond combined receipt, and immediate terminal-overlay
+rules in Milestones 016, 017, 019, and 024 where they conflict with this sequence.
+Game outcomes remain deterministic and engine-owned. History still records one
+terminal result. Presentation delays do not change the scored result.
+
+Read-only inspection of installed Steam app 575330, build 2137184, established
+the sequence. Its reference assembly SHA-256 is
+`DD15AFD7C77AE2B37FB105700C8C9C0667DECF00D5991B27097E645A15E1EC73`.
+`tmp/hollywood-loop-reference/findings.md` records the inspected methods and
+separates source facts from unmeasured animation timing. The developer's
+[Workshop Manual](https://steamcommunity.com/app/575330/discussions/1/1290691937708119039/)
+also documents clip-completion-driven narration. Grand Transition uses generated
+TTS audio and its timing metadata for the corresponding events.
+
+1. During drafting, the active picker thinks and the other character is idle.
+   A normal phrase pick does not trigger a reciting pose.
+2. When both constructions lock, disable drafting and stop the turn timer.
+   The last finisher narrates first, then the opponent.
+3. Expand the current narrator's public bubble and hold its reciting stance.
+   Keep the other character idle. Synthesis preparation is distinct from reciting.
+4. Reveal inline component scores and bonuses at their narration markers.
+   Keep the complete sentence associated with the correct character.
+5. At narration completion, show the full-insult total inline and stop reciting.
+   After the audience-reaction hold, apply the displayed damage and damaged stance.
+6. Finish the first damage sequence before the other character narrates.
+   Both deliveries finish even if the first displayed hit is lethal.
+7. After both deliveries, automatically start the next round or cliffhanger.
+   Show persistent Victory only after the terminal deliveries and damage finish.
+
+There is no normal between-round result modal or mandatory Continue control.
+Victory must not cover an active narration. A continuation uses a thinking
+hold and no fragment speech. An incomplete construction produces no spoken
+fragment and no outgoing damage. Direct self-damage knockout does not narrate
+unfinished insults.
+
+Use a 1200-millisecond audience hold after a completed delivery. Narration
+markers and completion come from generated audio, not an overall fixed timer.
+Pause, visibility interruption, navigation, and disposal must preserve or
+cancel the sequence explicitly without replaying stale callbacks. Reduced
+motion keeps every score and state transition while suppressing movement.
+
+## Speaker placement and inline outcomes
+
+The owner's 2026-09-08 original-game screenshots clarify inline presentation.
+Do not use a central boxed score panel or a repeated visible Clause heading.
+Align the speech bubble toward its current speaker. Its center is offset by
+11 percent of scene width from the viewport center, left for red and right for
+blue. The tail ends near the speaker. Keep faces, names, and controls clear.
+
+Show each rendered scored line with its base, applied multipliers, result, and
+public weakness names inline, near the speaking player's lower stage edge.
+Finisher and Comeback bonuses stay inline with their text. Combo emphasis stays
+with that speaker's score. Weakness and applied Pride loss appear near the
+affected character. Use legible outlined stage text, without a central panel.
+After speech, keep Total in the same speaker area, outside the scrolling list.
+
+A new score line scrolls into view. Total, bonus changes, and viewport resize
+must not hide the latest line. Previous lines remain available through a
+keyboard-focusable scroll region. A polite live log announces new score facts.
+Damage text names the affected player and exact Pride loss for assistive tools.
+
+Cliffhanger score points and applied Pride loss are distinct. Use the current
+speaker's outgoingDamage for Total and the defender's opponentOutgoingDamage
+for impact amount, hit severity, and damage text. Display the engine's exact
+prideAfter. For example, a score of 5 can inflict 100 Pride in a cliffhanger;
+that is a heavy hit, not a five-Pride hit.
+
 ## Deliver
 
 Complete strong outcome reactions for score, damage, combo, weakness,
@@ -32,7 +103,7 @@ It must not state the next legal role or recommend a card. It must not explain a
 weakness. It must not give the reason that makes an action unavailable. It must
 not tell the player how to recover.
 
-Normal reactions last 150 through 600 milliseconds. A reaction can leave one
+Draft reactions last 150 through 600 milliseconds. A reaction can leave one
 compact public outcome record until the next accepted action. Grammar-mistake
 records instead use the bounded 3000-millisecond lifetime and interruption
 rules in Milestone 016. This limit also applies with reduced motion.
@@ -42,14 +113,33 @@ intermediate surface. Each reaction uses one fixed motion sequence. When the
 browser requests reduced motion, keep the public outcome record and suppress
 movement and flashing.
 
-The between-round review is already a protected hold. Its score receipt is not
-an intermediate surface. It prints clause, finisher, and Comeback rows in score
-order, then lands final damage. The sequence completes within 800 milliseconds
-and does not delay the existing Continue control.
+The narrated exchange is a protected hold. Clause, finisher, and Comeback rows
+appear at generated narration markers. A clause marker belongs to its first
+clause-completing phrase; repeated phrase IDs do not merge markers. Applied
+factor and public weakness names remain with that component. Bonus cues follow
+the completed phrase. Total appears after the final audio sample.
+
+After the 1200-millisecond audience hold, allow 500 milliseconds for the strike
+and 1000 milliseconds for points, with displayed damage at its midpoint. Then
+begin the next speaker. Direct self-damage knockout holds the damage stance for
+520 milliseconds. A silent valid delivery advances one authored segment per
+second. Incomplete or continued text uses a 2000-millisecond thinking hold.
+This silent timing is a fallback, not an estimate of spoken word timing.
 
 Combo emphasis stays visible
-for the review. Weakness emphasis uses one bounded strike. These records report
+for the current delivery. Weakness emphasis uses one bounded strike. These records report
 resolved public facts only and never preview a card or future score.
+
+## Objective verifiers
+
+`tests/unit/round-presentation.test.ts` verifies the ordered clock, Pause,
+silent fallback, late-clause weakness timing, and stale-event rejection.
+`tests/unit/basic-scoring.test.ts` checks clause anchors without changing scoring.
+`e2e/round-presentation.spec.ts`
+checks both speakers, totals, displayed Pride, automatic progression, and delayed
+Victory at all supported viewports. `e2e/audio-speech.spec.ts` adds real local
+neural speech under production CSP. The local reference assembly is inspected
+read-only; no proprietary code or recordings are shipped.
 
 ## Acceptance criteria
 
@@ -57,10 +147,10 @@ resolved public facts only and never preview a card or future score.
   show its affected player and exact value change once. Resolution flows also
   show every scored component and applied factor once.
 - **AC-025-02:** Each reaction meets its timing, does not move layout, and does
-  not delay or change the next accepted game action.
+  not change a game result. Drafting remains blocked until presentation ends.
 - **AC-025-03:** Each authored reaction uses the one fixed motion sequence in
-  its owning event contract. The score receipt and final damage complete within
-  800 milliseconds. Reduced-motion mode keeps the same public facts without
+  its owning event contract. Narration markers, total, damage, and next-speaker
+  transitions follow the sequence above. Reduced-motion mode keeps the same facts without
   movement or flashing.
 - **AC-025-04:** All supported landscape viewports keep each reaction, sentence,
   phrase row, and required action visible without overlap.

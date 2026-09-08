@@ -63,6 +63,66 @@
     },
     {
       "ownerId": "government-ai",
+      "skinId": "default",
+      "states": [
+        {
+          "stateId": "idle",
+          "assetId": "government-ai--idle",
+          "durationMs": 4000,
+          "loop": true
+        },
+        {
+          "stateId": "selection",
+          "assetId": "government-ai",
+          "durationMs": 320,
+          "loop": false
+        },
+        {
+          "stateId": "thinking",
+          "assetId": "government-ai--thinking",
+          "durationMs": 3000,
+          "loop": true
+        },
+        {
+          "stateId": "delivery",
+          "assetId": "government-ai--delivery",
+          "durationMs": 400,
+          "loop": false
+        },
+        {
+          "stateId": "light-hit",
+          "assetId": "government-ai--light-hit",
+          "durationMs": 300,
+          "loop": false
+        },
+        {
+          "stateId": "heavy-hit",
+          "assetId": "government-ai--heavy-hit",
+          "durationMs": 520,
+          "loop": false
+        },
+        {
+          "stateId": "weakness",
+          "assetId": "government-ai--weakness",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "comeback",
+          "assetId": "government-ai--comeback",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "grammar-mistake",
+          "assetId": "government-ai--grammar-mistake",
+          "durationMs": 520,
+          "loop": false
+        }
+      ]
+    },
+    {
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "states": [
         {
@@ -123,119 +183,59 @@
     },
     {
       "ownerId": "government-ai",
-      "skinId": "default",
+      "skinId": "schoolteacher",
       "states": [
         {
           "stateId": "idle",
-          "assetId": "government-ai--idle",
+          "assetId": "government-ai--schoolteacher--idle",
           "durationMs": 4000,
           "loop": true
         },
         {
           "stateId": "selection",
-          "assetId": "government-ai",
+          "assetId": "government-ai--schoolteacher",
           "durationMs": 320,
           "loop": false
         },
         {
           "stateId": "thinking",
-          "assetId": "government-ai--thinking",
+          "assetId": "government-ai--schoolteacher--thinking",
           "durationMs": 3000,
           "loop": true
         },
         {
           "stateId": "delivery",
-          "assetId": "government-ai--delivery",
+          "assetId": "government-ai--schoolteacher--delivery",
           "durationMs": 400,
           "loop": false
         },
         {
           "stateId": "light-hit",
-          "assetId": "government-ai--light-hit",
+          "assetId": "government-ai--schoolteacher--light-hit",
           "durationMs": 300,
           "loop": false
         },
         {
           "stateId": "heavy-hit",
-          "assetId": "government-ai--heavy-hit",
+          "assetId": "government-ai--schoolteacher--heavy-hit",
           "durationMs": 520,
           "loop": false
         },
         {
           "stateId": "weakness",
-          "assetId": "government-ai--weakness",
+          "assetId": "government-ai--schoolteacher--weakness",
           "durationMs": 500,
           "loop": false
         },
         {
           "stateId": "comeback",
-          "assetId": "government-ai--comeback",
+          "assetId": "government-ai--schoolteacher--comeback",
           "durationMs": 500,
           "loop": false
         },
         {
           "stateId": "grammar-mistake",
-          "assetId": "government-ai--grammar-mistake",
-          "durationMs": 520,
-          "loop": false
-        }
-      ]
-    },
-    {
-      "ownerId": "red-folded-chairman",
-      "skinId": "alternate",
-      "states": [
-        {
-          "stateId": "idle",
-          "assetId": "red-folded-chairman--alternate--idle",
-          "durationMs": 4000,
-          "loop": true
-        },
-        {
-          "stateId": "selection",
-          "assetId": "red-folded-chairman--alternate",
-          "durationMs": 320,
-          "loop": false
-        },
-        {
-          "stateId": "thinking",
-          "assetId": "red-folded-chairman--alternate--thinking",
-          "durationMs": 3000,
-          "loop": true
-        },
-        {
-          "stateId": "delivery",
-          "assetId": "red-folded-chairman--alternate--delivery",
-          "durationMs": 400,
-          "loop": false
-        },
-        {
-          "stateId": "light-hit",
-          "assetId": "red-folded-chairman--alternate--light-hit",
-          "durationMs": 300,
-          "loop": false
-        },
-        {
-          "stateId": "heavy-hit",
-          "assetId": "red-folded-chairman--alternate--heavy-hit",
-          "durationMs": 520,
-          "loop": false
-        },
-        {
-          "stateId": "weakness",
-          "assetId": "red-folded-chairman--alternate--weakness",
-          "durationMs": 500,
-          "loop": false
-        },
-        {
-          "stateId": "comeback",
-          "assetId": "red-folded-chairman--alternate--comeback",
-          "durationMs": 500,
-          "loop": false
-        },
-        {
-          "stateId": "grammar-mistake",
-          "assetId": "red-folded-chairman--alternate--grammar-mistake",
+          "assetId": "government-ai--schoolteacher--grammar-mistake",
           "durationMs": 520,
           "loop": false
         }
@@ -302,60 +302,60 @@
       ]
     },
     {
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "states": [
         {
           "stateId": "idle",
-          "assetId": "thunder-tribune--alternate--idle",
+          "assetId": "red-folded-chairman--alternate--idle",
           "durationMs": 4000,
           "loop": true
         },
         {
           "stateId": "selection",
-          "assetId": "thunder-tribune--alternate",
+          "assetId": "red-folded-chairman--alternate",
           "durationMs": 320,
           "loop": false
         },
         {
           "stateId": "thinking",
-          "assetId": "thunder-tribune--alternate--thinking",
+          "assetId": "red-folded-chairman--alternate--thinking",
           "durationMs": 3000,
           "loop": true
         },
         {
           "stateId": "delivery",
-          "assetId": "thunder-tribune--alternate--delivery",
+          "assetId": "red-folded-chairman--alternate--delivery",
           "durationMs": 400,
           "loop": false
         },
         {
           "stateId": "light-hit",
-          "assetId": "thunder-tribune--alternate--light-hit",
+          "assetId": "red-folded-chairman--alternate--light-hit",
           "durationMs": 300,
           "loop": false
         },
         {
           "stateId": "heavy-hit",
-          "assetId": "thunder-tribune--alternate--heavy-hit",
+          "assetId": "red-folded-chairman--alternate--heavy-hit",
           "durationMs": 520,
           "loop": false
         },
         {
           "stateId": "weakness",
-          "assetId": "thunder-tribune--alternate--weakness",
+          "assetId": "red-folded-chairman--alternate--weakness",
           "durationMs": 500,
           "loop": false
         },
         {
           "stateId": "comeback",
-          "assetId": "thunder-tribune--alternate--comeback",
+          "assetId": "red-folded-chairman--alternate--comeback",
           "durationMs": 500,
           "loop": false
         },
         {
           "stateId": "grammar-mistake",
-          "assetId": "thunder-tribune--alternate--grammar-mistake",
+          "assetId": "red-folded-chairman--alternate--grammar-mistake",
           "durationMs": 520,
           "loop": false
         }
@@ -416,6 +416,66 @@
         {
           "stateId": "grammar-mistake",
           "assetId": "thunder-tribune--grammar-mistake",
+          "durationMs": 520,
+          "loop": false
+        }
+      ]
+    },
+    {
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "states": [
+        {
+          "stateId": "idle",
+          "assetId": "thunder-tribune--alternate--idle",
+          "durationMs": 4000,
+          "loop": true
+        },
+        {
+          "stateId": "selection",
+          "assetId": "thunder-tribune--alternate",
+          "durationMs": 320,
+          "loop": false
+        },
+        {
+          "stateId": "thinking",
+          "assetId": "thunder-tribune--alternate--thinking",
+          "durationMs": 3000,
+          "loop": true
+        },
+        {
+          "stateId": "delivery",
+          "assetId": "thunder-tribune--alternate--delivery",
+          "durationMs": 400,
+          "loop": false
+        },
+        {
+          "stateId": "light-hit",
+          "assetId": "thunder-tribune--alternate--light-hit",
+          "durationMs": 300,
+          "loop": false
+        },
+        {
+          "stateId": "heavy-hit",
+          "assetId": "thunder-tribune--alternate--heavy-hit",
+          "durationMs": 520,
+          "loop": false
+        },
+        {
+          "stateId": "weakness",
+          "assetId": "thunder-tribune--alternate--weakness",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "comeback",
+          "assetId": "thunder-tribune--alternate--comeback",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "grammar-mistake",
+          "assetId": "thunder-tribune--alternate--grammar-mistake",
           "durationMs": 520,
           "loop": false
         }
@@ -1064,646 +1124,6 @@
       ]
     },
     {
-      "id": "government-ai--alternate--idle",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "idle",
-      "poseId": "idle",
-      "expressionId": "idle",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/idle.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1648219,
-        "sha256": "8dffa1dbf34eda9cf484ae230689c13c83c353aad6ea5c0b14522224628d69de"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--idle-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 9348,
-          "sha256": "060a9bfdd89042fdb3dc2535621f5792a80694369113b861955e3685175518dd"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--idle-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 11332,
-          "sha256": "57c331c58185b596bb7bf347c2f274059d46443672082488353cf1ce1974c502"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--idle-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 20405,
-          "sha256": "94e9a5ccd3f80527999c807e0fa2e539d44a6c5091e4ecba7f63e592e28036c8"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--idle-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 25784,
-          "sha256": "46cb5565c2d6265dd935eb2bd920592a71f528a1fc26b065eaa9b72bec0cda4a"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--idle-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 33240,
-          "sha256": "5b0050b50aa121ef73a59394e070d57b0943ead7ec86044b986063d63fbfc35b"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--idle-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 41586,
-          "sha256": "de060dfa8bcd84042d928078da51563c53dd625d4741f13ea46692bc777e9b7b"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--thinking",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "thinking",
-      "poseId": "thinking",
-      "expressionId": "thinking",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/thinking.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1752598,
-        "sha256": "f8ef2a73f1503e18b7864a2541f1be6a6b7d56eeb7a62d7d84bc7e1de03b9a8a"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--thinking-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 9651,
-          "sha256": "68c92eb3524370655d60d4ddcd2059a0b7823bc487c6931831cfb4e454c0942d"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--thinking-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 11832,
-          "sha256": "64e3264d7ee1ff134962b01ea2f5fe468613fb4942fc0d594557ce4bd8d078a4"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--thinking-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 22048,
-          "sha256": "71aa5f1240f353ce6bb2b906bd59118a34dc40c442b9aa5d1fae48c58d61db90"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--thinking-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 27706,
-          "sha256": "ff00ba436a5d8713e6557ffa382662c854017897de6115c2b858a6a69a07cdb0"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--thinking-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 34896,
-          "sha256": "31e7a88ef81129f6131d8ce1ca2b5e270e89fcc33c4957e45655e98b4ba0b47e"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--thinking-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 43706,
-          "sha256": "5901587ad4f402d8df817830aff1ceda0284b8c9f29a3888949e3eae86492e0b"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--delivery",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "delivery",
-      "poseId": "delivery",
-      "expressionId": "delivery",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/delivery.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1809733,
-        "sha256": "d8b093c804b8e7109dc809262864def2dd53aabd70e580ba0eada54d1999ca03"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--delivery-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 10123,
-          "sha256": "359f6d4795698f11d97f079ef8e4eb8883cbf28090d1699819f85f505b151e22"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--delivery-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 12404,
-          "sha256": "4dd7fa7bbe4f877b278bf9e6259857ff179481f7ca8fcfcd5fac1e5db9b8ac05"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--delivery-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 22989,
-          "sha256": "d95b8e299f87b605abf613ca402c7c935b904f4686213d68efee8ba0994fd3cb"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--delivery-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 28792,
-          "sha256": "173b3e4ee4dc56066223f4833eea6e2acd793cf2c375029d0085d67e080df0ed"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--delivery-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 36277,
-          "sha256": "549a2af815b0f89aa768acba6ebfafe01b2af1c95211c35232c5856d14e33958"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--delivery-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 45872,
-          "sha256": "da5f19a28c128e1dcc10c0cef2cebf78376b57db5a47398f838ec84cf22df5c7"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--light-hit",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "light-hit",
-      "poseId": "light-hit",
-      "expressionId": "light-hit",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/light-hit.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1731925,
-        "sha256": "4aa064c48f51919e578c70fc9a68cfe3631263c4a580415c3715177b1711f0a0"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 9617,
-          "sha256": "41478a2e8ac96b2ea1ae8e12913140a59dcf32f4fde2b09330d3a865cd4644d6"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 11970,
-          "sha256": "6add0b0128e47959cd3b44ef0eb6f883672f40e47b1f660aa1157c1ab421c734"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 21994,
-          "sha256": "19ab71b6fa2a60a64ab82244f834dd39c9c134722b139bd46ca36f1cf7cd4f67"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 27552,
-          "sha256": "ca913cbd2e49818da3003af49fc6664d848101c36965c6f5b35269158732d226"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 34622,
-          "sha256": "31964a5e8988816353165a705554befa2cc22367b9cb2c6e5cce5aba187a04dc"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--light-hit-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 43770,
-          "sha256": "33c06ec3bd008429f4014f6c9244ea8bcb5a4f509bcc2e2a14283850b2db2966"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--heavy-hit",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "heavy-hit",
-      "poseId": "heavy-hit",
-      "expressionId": "heavy-hit",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1804218,
-        "sha256": "39b3b3f2ed701fe39ef38c0fded028b3fc41239aad00709b0c40ef2cb70c2bb7"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 11078,
-          "sha256": "43395bca662ffd0490b0978dbb6ffbed2454d2bd70d61e5412283098c30c58e1"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 14288,
-          "sha256": "6dfc029500e2cfbde526c4f3ed641ba9f4c21b54a92577b291ab7cc778dbf8f5"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 25231,
-          "sha256": "653c930b03c6c3b05f48c82606df75ea1b6239279aa9b876c46d1228f2a8f6a1"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 32474,
-          "sha256": "895ce16ec41bbb613d6085c9ebc0e35d701cc462a6efe731fc786ee450835b05"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 40234,
-          "sha256": "37832fb04f1a4adbb7ee6f652db33431d545622b790fd987ec59148dd077f6ea"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--heavy-hit-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 52522,
-          "sha256": "b5fb39bc2ce077e2b0052b4a93cb3c940857ca0764affced94b1aca255f23852"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--weakness",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "weakness",
-      "poseId": "weakness",
-      "expressionId": "weakness",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/weakness.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1746957,
-        "sha256": "ccd302584386b0c7ffbdcadedbbc06e1a1532ff2a2223d4a69b38706c1d84800"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--weakness-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 9588,
-          "sha256": "199eb671fbb8c9d45da8008e7b9936a6a8cadf481919a2a9e2f364672578999a"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--weakness-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 11560,
-          "sha256": "7e600865169ec9032b1e50a8592b039e9d6c4b0c5610df9e4a80e732bb4530c1"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--weakness-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 21558,
-          "sha256": "2a895e53156aa77789488116249cf34dcda4928aba5b72e8db4c8547c4cf20b9"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--weakness-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 26786,
-          "sha256": "4b0d26044d0f3f585c957bab238a77ac2dbe55277ab5e71700c53cc84538e385"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--weakness-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 34661,
-          "sha256": "1324964adb12348b8f0b8812f06edb050496ea25e699ee23cb5a984ade40e385"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--weakness-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 43028,
-          "sha256": "a0e8f2bdc6664cf9380407dbc940198c4a25184949f775e63b32b586e18a691a"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--comeback",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "comeback",
-      "poseId": "comeback",
-      "expressionId": "comeback",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/comeback.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1740241,
-        "sha256": "f3d2c506b4c125f8ade67b71d84c7b10da46afa5672235ddaf845b86090ee965"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--comeback-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 10092,
-          "sha256": "48c5d305871b03b6a3920f01a606d861f9464d060cc8a939db37e6722fd183f1"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--comeback-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 12398,
-          "sha256": "7bd75c39a465e901b9087035f8b982666bf9a037588fbb254a84a041af2becd1"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--comeback-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 23009,
-          "sha256": "2b520e6ac39137043f30cf5be3bb1f2d19e20d09697aa7c50a70cc61dc1d2506"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--comeback-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 28426,
-          "sha256": "5109e6e7d3a600b164f3740d40c407229a1fd5dc91eda40d054194d106942dd3"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--comeback-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 36625,
-          "sha256": "fe1f286449372b58a82fede9b3aa31a62bfd654cc11ce450d71982d343465729"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--comeback-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 45694,
-          "sha256": "77bcd5fa9738038a7462230ca423a252e489d1a32d0908f51d893deb43934441"
-        }
-      ]
-    },
-    {
-      "id": "government-ai--alternate--grammar-mistake",
-      "ownerType": "character",
-      "ownerId": "government-ai",
-      "skinId": "alternate",
-      "stateId": "grammar-mistake",
-      "poseId": "grammar-mistake",
-      "expressionId": "grammar-mistake",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
-      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
-      "source": {
-        "path": "states/government-ai--alternate/grammar-mistake.png",
-        "width": 2048,
-        "height": 2048,
-        "format": "png",
-        "bytes": 1726549,
-        "sha256": "e03b1a7f7c4285bb41b88008d5c1c24af734cc966319f250ef0514b1b8d4e781"
-      },
-      "focalPoint": {
-        "x": 0.5,
-        "y": 0.32
-      },
-      "crop": {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1,
-        "strategy": "full-body-safe-margin-v1"
-      },
-      "variants": [
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-320x320.avif",
-          "width": 320,
-          "height": 320,
-          "format": "avif",
-          "bytes": 9907,
-          "sha256": "ffe390b0d2113886553232211de11f179acad7aab981db85cefd26da6043d743"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-320x320.webp",
-          "width": 320,
-          "height": 320,
-          "format": "webp",
-          "bytes": 12030,
-          "sha256": "6f5ddec79e3ac4faf0517f2a72961546633bbe96e88ac247e0dd2361121e70ed"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-640x640.avif",
-          "width": 640,
-          "height": 640,
-          "format": "avif",
-          "bytes": 22270,
-          "sha256": "d4727363d525f298f148dd14e083506e7a19897dcc73ec41812d3060d62b1259"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-640x640.webp",
-          "width": 640,
-          "height": 640,
-          "format": "webp",
-          "bytes": 28292,
-          "sha256": "0a1765eaff60c990e0b399948bf15c0985a473386e611c126619400c8f0cda4d"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-960x960.avif",
-          "width": 960,
-          "height": 960,
-          "format": "avif",
-          "bytes": 35006,
-          "sha256": "f1eec43e1aa63a25493cd83d6abf46b297702518093f5b97e7d3d750025c4df2"
-        },
-        {
-          "path": "states/variants/government-ai--alternate--grammar-mistake-960x960.webp",
-          "width": 960,
-          "height": 960,
-          "format": "webp",
-          "bytes": 44648,
-          "sha256": "d9fb7dfa1b64380f601ecc5ca42022413a23af1e74a49b517f6e95513cea5ed8"
-        }
-      ]
-    },
-    {
       "id": "government-ai--idle",
       "ownerType": "character",
       "ownerId": "government-ai",
@@ -2344,9 +1764,9 @@
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--idle",
+      "id": "government-ai--alternate--idle",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "idle",
       "poseId": "idle",
@@ -2354,12 +1774,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/idle.png",
+        "path": "states/government-ai--alternate/idle.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1292294,
-        "sha256": "4c676ba8b86796e8a4130427c46207f26eabe281824583748109e77c366671ff"
+        "bytes": 1648219,
+        "sha256": "8dffa1dbf34eda9cf484ae230689c13c83c353aad6ea5c0b14522224628d69de"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2374,59 +1794,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-320x320.avif",
+          "path": "states/variants/government-ai--alternate--idle-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8285,
-          "sha256": "d3a4015200a4f76b4fbe9c546bc662eb10b1d390e37d62521d817c1b6909139c"
+          "bytes": 9348,
+          "sha256": "060a9bfdd89042fdb3dc2535621f5792a80694369113b861955e3685175518dd"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-320x320.webp",
+          "path": "states/variants/government-ai--alternate--idle-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10842,
-          "sha256": "0af7bd762c53ef2f7f6651b3baea8989c84dd0b6d6eb59c4207550ee7f781a78"
+          "bytes": 11332,
+          "sha256": "57c331c58185b596bb7bf347c2f274059d46443672082488353cf1ce1974c502"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-640x640.avif",
+          "path": "states/variants/government-ai--alternate--idle-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17321,
-          "sha256": "99156a9bd35ab92fbceca2171228697a19de53996932f60bd4d6b63fcce7112a"
+          "bytes": 20405,
+          "sha256": "94e9a5ccd3f80527999c807e0fa2e539d44a6c5091e4ecba7f63e592e28036c8"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-640x640.webp",
+          "path": "states/variants/government-ai--alternate--idle-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24034,
-          "sha256": "e0f46806ab16d6275532154fa56aa2ee635858009ed1c3889f3426bb46a53a95"
+          "bytes": 25784,
+          "sha256": "46cb5565c2d6265dd935eb2bd920592a71f528a1fc26b065eaa9b72bec0cda4a"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-960x960.avif",
+          "path": "states/variants/government-ai--alternate--idle-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 29017,
-          "sha256": "843020c665b27be2f7eb856c968545656e170a4d8b52ffa2c311bd472283103b"
+          "bytes": 33240,
+          "sha256": "5b0050b50aa121ef73a59394e070d57b0943ead7ec86044b986063d63fbfc35b"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--idle-960x960.webp",
+          "path": "states/variants/government-ai--alternate--idle-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38536,
-          "sha256": "430a8445a4e17b19dde1ac51af88045344ff3a8ba95572a61ed17e6ec4d171b5"
+          "bytes": 41586,
+          "sha256": "de060dfa8bcd84042d928078da51563c53dd625d4741f13ea46692bc777e9b7b"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--thinking",
+      "id": "government-ai--alternate--thinking",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "thinking",
       "poseId": "thinking",
@@ -2434,12 +1854,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/thinking.png",
+        "path": "states/government-ai--alternate/thinking.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1322180,
-        "sha256": "a0f3995ef25875eba8f6027bd3eeb459b11fb89e8c6d521463e07b37f961d1fb"
+        "bytes": 1752598,
+        "sha256": "f8ef2a73f1503e18b7864a2541f1be6a6b7d56eeb7a62d7d84bc7e1de03b9a8a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2454,59 +1874,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-320x320.avif",
+          "path": "states/variants/government-ai--alternate--thinking-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8250,
-          "sha256": "630480b329f9c6debe65cdfa2d6cc63b3734de45fede80dbbbe20508a76eb8a9"
+          "bytes": 9651,
+          "sha256": "68c92eb3524370655d60d4ddcd2059a0b7823bc487c6931831cfb4e454c0942d"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-320x320.webp",
+          "path": "states/variants/government-ai--alternate--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10852,
-          "sha256": "6824913e3dbdd1ccf956405a02a8dc6649df6bf10debceb9d77b7b9bee6abe8f"
+          "bytes": 11832,
+          "sha256": "64e3264d7ee1ff134962b01ea2f5fe468613fb4942fc0d594557ce4bd8d078a4"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-640x640.avif",
+          "path": "states/variants/government-ai--alternate--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17500,
-          "sha256": "575801013668240a0963711e1ab68deffd312419a71eed18fcacf092b6c67b0c"
+          "bytes": 22048,
+          "sha256": "71aa5f1240f353ce6bb2b906bd59118a34dc40c442b9aa5d1fae48c58d61db90"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-640x640.webp",
+          "path": "states/variants/government-ai--alternate--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23942,
-          "sha256": "ae7b3080728ec373eead867d230165792da5e3ab0cc123c736af59b6696dbd99"
+          "bytes": 27706,
+          "sha256": "ff00ba436a5d8713e6557ffa382662c854017897de6115c2b858a6a69a07cdb0"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-960x960.avif",
+          "path": "states/variants/government-ai--alternate--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 29176,
-          "sha256": "ab868b1d14d886584968be1c8dec22d24211498cc1b279820f90b981d5204f30"
+          "bytes": 34896,
+          "sha256": "31e7a88ef81129f6131d8ce1ca2b5e270e89fcc33c4957e45655e98b4ba0b47e"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--thinking-960x960.webp",
+          "path": "states/variants/government-ai--alternate--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38524,
-          "sha256": "3cf93f207e6cba9f54b082a3c072210831a29d8477325c2f90da8f219b8a0925"
+          "bytes": 43706,
+          "sha256": "5901587ad4f402d8df817830aff1ceda0284b8c9f29a3888949e3eae86492e0b"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--delivery",
+      "id": "government-ai--alternate--delivery",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "delivery",
       "poseId": "delivery",
@@ -2514,12 +1934,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/delivery.png",
+        "path": "states/government-ai--alternate/delivery.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1342000,
-        "sha256": "8ac9c8376a35238ba7cf38ab7c065e657468a731011762d3215df1593a6c29e1"
+        "bytes": 1809733,
+        "sha256": "d8b093c804b8e7109dc809262864def2dd53aabd70e580ba0eada54d1999ca03"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2534,59 +1954,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-320x320.avif",
+          "path": "states/variants/government-ai--alternate--delivery-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8986,
-          "sha256": "3adc116368266a740a9acb99d6fd1ce0ab3725da450b7fd3e195eda4c1173d14"
+          "bytes": 10123,
+          "sha256": "359f6d4795698f11d97f079ef8e4eb8883cbf28090d1699819f85f505b151e22"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-320x320.webp",
+          "path": "states/variants/government-ai--alternate--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12288,
-          "sha256": "9b03a3761bca68ef51de4515563c4c58ab3ecdcca2589738e00de264042a9463"
+          "bytes": 12404,
+          "sha256": "4dd7fa7bbe4f877b278bf9e6259857ff179481f7ca8fcfcd5fac1e5db9b8ac05"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-640x640.avif",
+          "path": "states/variants/government-ai--alternate--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19493,
-          "sha256": "93f2860890414d16982322115e6c6947b72673f881154857667985b6c9ff0749"
+          "bytes": 22989,
+          "sha256": "d95b8e299f87b605abf613ca402c7c935b904f4686213d68efee8ba0994fd3cb"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-640x640.webp",
+          "path": "states/variants/government-ai--alternate--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27324,
-          "sha256": "becb543e590d2da7cb94223f4ba326fe3c6a35603ae331a852c1b8bd302b225b"
+          "bytes": 28792,
+          "sha256": "173b3e4ee4dc56066223f4833eea6e2acd793cf2c375029d0085d67e080df0ed"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-960x960.avif",
+          "path": "states/variants/government-ai--alternate--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 32327,
-          "sha256": "e1c3b226396a0b11a06cf8489b5d63fb7462b1e314b3aabeb9d230dfd7e328de"
+          "bytes": 36277,
+          "sha256": "549a2af815b0f89aa768acba6ebfafe01b2af1c95211c35232c5856d14e33958"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--delivery-960x960.webp",
+          "path": "states/variants/government-ai--alternate--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43848,
-          "sha256": "a720810e8f9d0ea05c1c8dcadaeb9cf173e172f5d642b57ceb07e3fb8e18a4ad"
+          "bytes": 45872,
+          "sha256": "da5f19a28c128e1dcc10c0cef2cebf78376b57db5a47398f838ec84cf22df5c7"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--light-hit",
+      "id": "government-ai--alternate--light-hit",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "light-hit",
       "poseId": "light-hit",
@@ -2594,12 +2014,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/light-hit.png",
+        "path": "states/government-ai--alternate/light-hit.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1287953,
-        "sha256": "e396951ac9d5459201d6825645b6e6cb376e9ce02af01a55949daf03bfd995d0"
+        "bytes": 1731925,
+        "sha256": "4aa064c48f51919e578c70fc9a68cfe3631263c4a580415c3715177b1711f0a0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2614,59 +2034,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-320x320.avif",
+          "path": "states/variants/government-ai--alternate--light-hit-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8257,
-          "sha256": "1790ba0e81288379c1a30e6578cb82e9935146ddcfa0f174a7c1c08193977950"
+          "bytes": 9617,
+          "sha256": "41478a2e8ac96b2ea1ae8e12913140a59dcf32f4fde2b09330d3a865cd4644d6"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-320x320.webp",
+          "path": "states/variants/government-ai--alternate--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10876,
-          "sha256": "4d0dc51a3496a241db342fc8bd0b61b4334426f179e296737df8ff917d1c099f"
+          "bytes": 11970,
+          "sha256": "6add0b0128e47959cd3b44ef0eb6f883672f40e47b1f660aa1157c1ab421c734"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-640x640.avif",
+          "path": "states/variants/government-ai--alternate--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17492,
-          "sha256": "776200ec3a7154bdfcfa833dfbb2faa1fb5d3370ad0f148e2f410079b2b90761"
+          "bytes": 21994,
+          "sha256": "19ab71b6fa2a60a64ab82244f834dd39c9c134722b139bd46ca36f1cf7cd4f67"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-640x640.webp",
+          "path": "states/variants/government-ai--alternate--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23760,
-          "sha256": "43bf9173ab1517ca58366741ae109b8a0b88301e965e666921b784c3421e59d5"
+          "bytes": 27552,
+          "sha256": "ca913cbd2e49818da3003af49fc6664d848101c36965c6f5b35269158732d226"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-960x960.avif",
+          "path": "states/variants/government-ai--alternate--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 29068,
-          "sha256": "c3550ecb6f8e0a7a97b4e8a5412d89e83f8628f11beed0f7db51901f5c1a63bd"
+          "bytes": 34622,
+          "sha256": "31964a5e8988816353165a705554befa2cc22367b9cb2c6e5cce5aba187a04dc"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--light-hit-960x960.webp",
+          "path": "states/variants/government-ai--alternate--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38322,
-          "sha256": "9667af7de3c6b01b9e5c7bad9724f5ed542d90e2c7f779e8978e539c566ac04b"
+          "bytes": 43770,
+          "sha256": "33c06ec3bd008429f4014f6c9244ea8bcb5a4f509bcc2e2a14283850b2db2966"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--heavy-hit",
+      "id": "government-ai--alternate--heavy-hit",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "heavy-hit",
       "poseId": "heavy-hit",
@@ -2674,12 +2094,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/heavy-hit.png",
+        "path": "states/government-ai--alternate/heavy-hit.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1424808,
-        "sha256": "afbe48418c6091551e0dff5a902aa4bee1069ba9b264adb017cd399fc404f92e"
+        "bytes": 1804218,
+        "sha256": "39b3b3f2ed701fe39ef38c0fded028b3fc41239aad00709b0c40ef2cb70c2bb7"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2694,59 +2114,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-320x320.avif",
+          "path": "states/variants/government-ai--alternate--heavy-hit-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9101,
-          "sha256": "9ff277f059e31159ef4810d40bb519998d85d5565aca1ab1f529a56236975c58"
+          "bytes": 11078,
+          "sha256": "43395bca662ffd0490b0978dbb6ffbed2454d2bd70d61e5412283098c30c58e1"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-320x320.webp",
+          "path": "states/variants/government-ai--alternate--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11454,
-          "sha256": "f83b9b794658d2692ed31a25fadc010b448efeaca9f3308b975e99cf83f67f0c"
+          "bytes": 14288,
+          "sha256": "6dfc029500e2cfbde526c4f3ed641ba9f4c21b54a92577b291ab7cc778dbf8f5"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-640x640.avif",
+          "path": "states/variants/government-ai--alternate--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19391,
-          "sha256": "5e6071041cc8c07a14efac76c142dfed92e13dff5c62290588e8964daf492597"
+          "bytes": 25231,
+          "sha256": "653c930b03c6c3b05f48c82606df75ea1b6239279aa9b876c46d1228f2a8f6a1"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-640x640.webp",
+          "path": "states/variants/government-ai--alternate--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25726,
-          "sha256": "78a388a409e1a3506bd323d928d3b2199f8a1b94e2ffe32d16a08ee624fc7737"
+          "bytes": 32474,
+          "sha256": "895ce16ec41bbb613d6085c9ebc0e35d701cc462a6efe731fc786ee450835b05"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-960x960.avif",
+          "path": "states/variants/government-ai--alternate--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31717,
-          "sha256": "bc1c17488974b337f52d2f5c9c0c1b1001e9b579b2b64e35cbc74fe4b117e856"
+          "bytes": 40234,
+          "sha256": "37832fb04f1a4adbb7ee6f652db33431d545622b790fd987ec59148dd077f6ea"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-960x960.webp",
+          "path": "states/variants/government-ai--alternate--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41546,
-          "sha256": "18414f8fc080bfc31dce448579d2b58a211a2b06a3b89b7b067e254cd18df8a1"
+          "bytes": 52522,
+          "sha256": "b5fb39bc2ce077e2b0052b4a93cb3c940857ca0764affced94b1aca255f23852"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--weakness",
+      "id": "government-ai--alternate--weakness",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "weakness",
       "poseId": "weakness",
@@ -2754,12 +2174,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/weakness.png",
+        "path": "states/government-ai--alternate/weakness.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1352898,
-        "sha256": "7f94567e07332ab1808473310ae10d8972c4ae02440c0e8e229317ba150fb9bd"
+        "bytes": 1746957,
+        "sha256": "ccd302584386b0c7ffbdcadedbbc06e1a1532ff2a2223d4a69b38706c1d84800"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2774,59 +2194,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-320x320.avif",
+          "path": "states/variants/government-ai--alternate--weakness-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7914,
-          "sha256": "3b1fbeb69d8d3d36f7ff0a57627cd17e24ee78227f33c1bd36ef908672bf34c9"
+          "bytes": 9588,
+          "sha256": "199eb671fbb8c9d45da8008e7b9936a6a8cadf481919a2a9e2f364672578999a"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-320x320.webp",
+          "path": "states/variants/government-ai--alternate--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10584,
-          "sha256": "716c882081bfd3ca130c5776f240290f45d2156c98307643e94660430acafb8d"
+          "bytes": 11560,
+          "sha256": "7e600865169ec9032b1e50a8592b039e9d6c4b0c5610df9e4a80e732bb4530c1"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-640x640.avif",
+          "path": "states/variants/government-ai--alternate--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16747,
-          "sha256": "a1ea65b56fbd7648a61c6c6e6efd4dfb2f743a61392a0f296c997d32081d9519"
+          "bytes": 21558,
+          "sha256": "2a895e53156aa77789488116249cf34dcda4928aba5b72e8db4c8547c4cf20b9"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-640x640.webp",
+          "path": "states/variants/government-ai--alternate--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23420,
-          "sha256": "9f985602d60cad3c301bae49409581a5289589ab2aec22387cb8b69b6d0ebfe4"
+          "bytes": 26786,
+          "sha256": "4b0d26044d0f3f585c957bab238a77ac2dbe55277ab5e71700c53cc84538e385"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-960x960.avif",
+          "path": "states/variants/government-ai--alternate--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28094,
-          "sha256": "87f085208df277c0da36a01d93af908e92b6b31b30c550ba1d83288f3be62b8e"
+          "bytes": 34661,
+          "sha256": "1324964adb12348b8f0b8812f06edb050496ea25e699ee23cb5a984ade40e385"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--weakness-960x960.webp",
+          "path": "states/variants/government-ai--alternate--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 37718,
-          "sha256": "0a1b2db5a405513243f466e029d8f76e2842b04dcf977f47467550894488ed81"
+          "bytes": 43028,
+          "sha256": "a0e8f2bdc6664cf9380407dbc940198c4a25184949f775e63b32b586e18a691a"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--comeback",
+      "id": "government-ai--alternate--comeback",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "comeback",
       "poseId": "comeback",
@@ -2834,12 +2254,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/comeback.png",
+        "path": "states/government-ai--alternate/comeback.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1418897,
-        "sha256": "f7a7b98a2233fb331a81f9f3a46b698edde7ac42bf7fe97f5d3d390b5552db31"
+        "bytes": 1740241,
+        "sha256": "f3d2c506b4c125f8ade67b71d84c7b10da46afa5672235ddaf845b86090ee965"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2854,59 +2274,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-320x320.avif",
+          "path": "states/variants/government-ai--alternate--comeback-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9127,
-          "sha256": "a0c8cc4c0f7c2205db47b1fc4080152b92cfe5af2ffbe4772be7ce33a8154755"
+          "bytes": 10092,
+          "sha256": "48c5d305871b03b6a3920f01a606d861f9464d060cc8a939db37e6722fd183f1"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-320x320.webp",
+          "path": "states/variants/government-ai--alternate--comeback-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12410,
-          "sha256": "82ee3d8f3cee7216f52272435543cace1a78b8301c97e20b1f594b6aaec9b927"
+          "bytes": 12398,
+          "sha256": "7bd75c39a465e901b9087035f8b982666bf9a037588fbb254a84a041af2becd1"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-640x640.avif",
+          "path": "states/variants/government-ai--alternate--comeback-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19903,
-          "sha256": "b9f7f1230cf37ddec51b61e341045bbe0ce5348e46acbde9ac93752811b5bf21"
+          "bytes": 23009,
+          "sha256": "2b520e6ac39137043f30cf5be3bb1f2d19e20d09697aa7c50a70cc61dc1d2506"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-640x640.webp",
+          "path": "states/variants/government-ai--alternate--comeback-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27358,
-          "sha256": "d07fe9d17d4c5ee15c9ae5fd96e867c239ce7c25328c0882d0fce14648122a10"
+          "bytes": 28426,
+          "sha256": "5109e6e7d3a600b164f3740d40c407229a1fd5dc91eda40d054194d106942dd3"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-960x960.avif",
+          "path": "states/variants/government-ai--alternate--comeback-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 32583,
-          "sha256": "ec158873bdd15ced02a9940cc32e8a0449a76c9973101e8100de179d52bfed70"
+          "bytes": 36625,
+          "sha256": "fe1f286449372b58a82fede9b3aa31a62bfd654cc11ce450d71982d343465729"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--comeback-960x960.webp",
+          "path": "states/variants/government-ai--alternate--comeback-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43794,
-          "sha256": "3c68e9ab94c460feef876d4e7ce305df17951f04b6097a71d64dc433a35d6d78"
+          "bytes": 45694,
+          "sha256": "77bcd5fa9738038a7462230ca423a252e489d1a32d0908f51d893deb43934441"
         }
       ]
     },
     {
-      "id": "red-folded-chairman--alternate--grammar-mistake",
+      "id": "government-ai--alternate--grammar-mistake",
       "ownerType": "character",
-      "ownerId": "red-folded-chairman",
+      "ownerId": "government-ai",
       "skinId": "alternate",
       "stateId": "grammar-mistake",
       "poseId": "grammar-mistake",
@@ -2914,12 +2334,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/red-folded-chairman--alternate/grammar-mistake.png",
+        "path": "states/government-ai--alternate/grammar-mistake.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1404060,
-        "sha256": "254947d30328a2dc1586f9a7113bb02ee98d421fb10639dc5f62d422c515d615"
+        "bytes": 1726549,
+        "sha256": "e03b1a7f7c4285bb41b88008d5c1c24af734cc966319f250ef0514b1b8d4e781"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2934,52 +2354,692 @@
       },
       "variants": [
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-320x320.avif",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8743,
-          "sha256": "34b794aaf29bd405d2c3c3e0616c558379a9efb211e30813065211e800386e81"
+          "bytes": 9907,
+          "sha256": "ffe390b0d2113886553232211de11f179acad7aab981db85cefd26da6043d743"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-320x320.webp",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11438,
-          "sha256": "5debaed7a933d326940269bf5fe790a625a2947db8828adcb4c59ca1d63dbb7e"
+          "bytes": 12030,
+          "sha256": "6f5ddec79e3ac4faf0517f2a72961546633bbe96e88ac247e0dd2361121e70ed"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-640x640.avif",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18559,
-          "sha256": "51d06ada294b377626305c24125f1ab4b071353d37f55b0d94c60097de63fd6c"
+          "bytes": 22270,
+          "sha256": "d4727363d525f298f148dd14e083506e7a19897dcc73ec41812d3060d62b1259"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-640x640.webp",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25410,
-          "sha256": "93c56c0ee14cf80c8e70a6d734793aafd374c353c7c639cd88aff030a7e7ee19"
+          "bytes": 28292,
+          "sha256": "0a1765eaff60c990e0b399948bf15c0985a473386e611c126619400c8f0cda4d"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-960x960.avif",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31594,
-          "sha256": "e23e9cb31f88d835df8f5bcc2653361b285a262d20b300d68726770b97e37fdd"
+          "bytes": 35006,
+          "sha256": "f1eec43e1aa63a25493cd83d6abf46b297702518093f5b97e7d3d750025c4df2"
         },
         {
-          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-960x960.webp",
+          "path": "states/variants/government-ai--alternate--grammar-mistake-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40852,
-          "sha256": "ab2219d4b9b18eb714eab8e88289fff7848aa8d857dabe4baff4eb7f818c134b"
+          "bytes": 44648,
+          "sha256": "d9fb7dfa1b64380f601ecc5ca42022413a23af1e74a49b517f6e95513cea5ed8"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--idle",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "idle",
+      "poseId": "idle",
+      "expressionId": "idle",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/idle.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1462230,
+        "sha256": "bcb2c2e35b21e788a536f8a0b747c15128fbedc5fdafef10a42a21763c15337b"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9013,
+          "sha256": "3186cb3ee85bdbf430270d739176eb6d70ad9e69b9326d1cf635dc4e6f98d0cc"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12076,
+          "sha256": "c820bad87f75622f30e07a3e3c63c20fd0183f44874969317fd59f12440a8813"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 22322,
+          "sha256": "041c6aeac2a6494bfe9ee8813636e5b493c5e714a5b7fb8841bfb3e8f03b710c"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 28784,
+          "sha256": "4adb98af893983ab9315ea08a5ecd105db8ccb254a373de04d16d78e8367973f"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 35746,
+          "sha256": "89efdd688e41f0c215abe94c2d9fbb8dc674854fea6bf4107e1fa5be898287cc"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--idle-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 46176,
+          "sha256": "55d10b108836773dcf75ff200d89bda8c043640d512ef70f6d0d5b2edc5b2385"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--thinking",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "thinking",
+      "poseId": "thinking",
+      "expressionId": "thinking",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/thinking.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1377910,
+        "sha256": "04f247a17a19077711c9e24aed6ae7d38162dc5b594d0c6afa369daac2ba8c4a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8275,
+          "sha256": "5f9f9a37df57bf7a91d3ac9f029a3bc34300fb965ea8fe56e8675e8b535f1a53"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 10712,
+          "sha256": "696f6e5cf18ee0c73db772bf6975df1df6644083db38d0085c0408251b7f4c43"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 20154,
+          "sha256": "3f83aa3e280aa1927018d173d3eeda99053294e19fc8e85edcfc2ce61f78611b"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 25656,
+          "sha256": "348f4caf41032333a2576c2429bec6e580e55f8ce8b820226806a9eaa1e1918c"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 31549,
+          "sha256": "f3214261ca0595193cd327f81e9267c70ff4d695c29294a65ea9aa2a8297121e"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--thinking-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 40776,
+          "sha256": "71d2cc7ea766423800352d52cc15f47701ad7e813b68581a9c2c6b24a054fa9a"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--delivery",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "delivery",
+      "poseId": "delivery",
+      "expressionId": "delivery",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/delivery.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1456725,
+        "sha256": "425055defe26a57ad049a675febf95f5616e2c90072fdcbe090be649db8ce039"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9104,
+          "sha256": "c950d92660a530f83ecc4b1c13b0fab477759dd9beced7b151dddc8ec73fd8a0"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11968,
+          "sha256": "1b247885bc145b6c30971d17505be0933cdc7789ca743a8978b9126265e69d7f"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 21691,
+          "sha256": "48f3da73b8ccf754ef647122a90bc790a683a37eaf221adb4acd22805c6cf19b"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 28070,
+          "sha256": "b65818a3c3e2f09a8f30ef41d35b91ca3fd9bd469a3c7dd3e1bce2fb8ba5f5c7"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 34239,
+          "sha256": "57a91c4a1b04b82950ffd53df8ce9aaa706dfdbf0a550ae14683618ee55c7f77"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--delivery-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 44596,
+          "sha256": "a16095a999492914ce3e2aea688426a066ed1dfb93b99a5cfc1c0f564a8573da"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--light-hit",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "light-hit",
+      "poseId": "light-hit",
+      "expressionId": "light-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/light-hit.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1418147,
+        "sha256": "4455ad7a5275b78d2700464bb9bbf6a4fec88609997e6a1a3fe629cc604eedcd"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8665,
+          "sha256": "818b8497438730d8eccabcecdcda3158ee18465dd7045e4f67642047eabaae84"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11660,
+          "sha256": "43add76418f8a303a995913535aa1c58c41ceedde8e2637bfe9965b6ddf80ed4"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 21433,
+          "sha256": "0984415da199e3914debf363c0853e69ccf26eabe984aaa8cb56c25b3e6c624f"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 27918,
+          "sha256": "80cbc2f9a45318e0625438dbaca71408eb1576240dce9d76db0a9190ac8503d0"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 33856,
+          "sha256": "5b899b5c37cda518a32ac570c1d3d376e2a00eabcb43315cd713e59738fd66ab"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--light-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 43974,
+          "sha256": "074117b76acd11d942a1e1e6f0f8bdf4bb9f45c1dcd4688f30c360d75d9cb793"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--heavy-hit",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "heavy-hit",
+      "poseId": "heavy-hit",
+      "expressionId": "heavy-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/heavy-hit.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1445018,
+        "sha256": "e8eb988f14a2f6bd5666cfbc96938bcfbae03fc8812aebea5da398ef8107fbee"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8716,
+          "sha256": "afe88111d7db5c7272521fb09b3d6e55e2d443de175acf33788f28e28bb57d3d"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11834,
+          "sha256": "676fe216a0b24fe1b195b37879b61c005b625d70170834760f52c62aaf924eb8"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 21839,
+          "sha256": "0b40c70e861ebf0f2c360c5b8a85a52079f9e577cefdef28de3180ee2a376d2c"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 28180,
+          "sha256": "3dc506846639eea756c829073c5705565c9e7e55fcb7dfac988a4cf539615102"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 34668,
+          "sha256": "62113c9a132e6423ce3695c94e391e8de945badc44682337fd3c3cb5d8276dc9"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--heavy-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 45126,
+          "sha256": "230a57bc56e81739b340dfd278400554839d696e0f33bafd4b66ff6039fb16f2"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--weakness",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "weakness",
+      "poseId": "weakness",
+      "expressionId": "weakness",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/weakness.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1377602,
+        "sha256": "c29630b75b1d10665dde4e90449826b3a9a4493b27a020b333a5c34f12baa560"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8368,
+          "sha256": "6268db3ec9c8d86a3072676dc5e7f33aa671dcab73bffd7a047437910781e613"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11058,
+          "sha256": "df6cea8130ba96a74c167ba41aa28ba88df0c2486fc71eaedf116ae6fbbadfd1"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 20443,
+          "sha256": "b66d7ee98356dda974254c4cbaa14c94ac101dcb037b0ecf71118ab8a6a492a2"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 26260,
+          "sha256": "ca7925c48fa64c31ab8abfae490cc49db69142ea1de230203a645b7963f09ff4"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 32144,
+          "sha256": "704694bb5578b5095775e2d4d9905a11a227bcaee1545dd3d1a35cdc321919c4"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--weakness-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 41632,
+          "sha256": "57927e272efd16df4f72bf00af1aa4b333aa30fb325f8895c668db7859b62b06"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--comeback",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "comeback",
+      "poseId": "comeback",
+      "expressionId": "comeback",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/comeback.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1447798,
+        "sha256": "3d0490bc366dd1ab5aa67bf11d7254f450fd314b1283e55305b655750d5fb6aa"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9042,
+          "sha256": "acd20c57b07f6359d096c993cbe87c01dba5fede394efe3bc35562544bae97cf"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12080,
+          "sha256": "cea221ba4b3b44d8af11382fafc5d262c4f4db5fea2008cf88c1d4a7b4aa2a36"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 22116,
+          "sha256": "30f8fda903bc3d91c9b2634a43a0ef7fd257508fdb621ac8a8c3572dd312382e"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 28570,
+          "sha256": "d59e7e9c585d5863c0c7846e507e7bd0e975f88434fc6efd32657bc40bfbaa2a"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 34963,
+          "sha256": "d8dd854ecd98692fca2aabdb1f64d353a02aa6d176bc30e2c10d76f0579e6e97"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--comeback-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 45624,
+          "sha256": "dd7c6690bc73fb7584679983e46b534ab7df5f6122407f761154854977b91722"
+        }
+      ]
+    },
+    {
+      "id": "government-ai--schoolteacher--grammar-mistake",
+      "ownerType": "character",
+      "ownerId": "government-ai",
+      "skinId": "schoolteacher",
+      "stateId": "grammar-mistake",
+      "poseId": "grammar-mistake",
+      "expressionId": "grammar-mistake",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/government-ai--schoolteacher/grammar-mistake.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 1374325,
+        "sha256": "e87cb53390533097ffc44ea5bb929af3c0874cf28cbee7dee74883fa63a7545f"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8446,
+          "sha256": "6f7d5e6e17d2b80f5f75b8d32adf310d9ded5de9de9659eaae1b9df9bea6ba1c"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11060,
+          "sha256": "767b6f4c7756322209d23d1cdefb0df86c2ffe3ef3a758084cd02e4f5e565930"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 20325,
+          "sha256": "8aa87a220b6f1c1bed4ff9a651afd8ca472ee00f8b4d9a0df1d0e59229ce7a7b"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 26160,
+          "sha256": "b516fd851255e34629fc4b88dfb47cad524b9a42983993bc785769158a58525a"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 31972,
+          "sha256": "f62287c3b3a0997ba66079eb20f68f94ee19ddf91b35fdc64bf7e1b0bb506094"
+        },
+        {
+          "path": "states/variants/government-ai--schoolteacher--grammar-mistake-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 41832,
+          "sha256": "00c1ff96db31c55443bb97134e8326ac13147bba6869d6850b76ba87ae073467"
         }
       ]
     },
@@ -3624,9 +3684,9 @@
       ]
     },
     {
-      "id": "thunder-tribune--alternate--idle",
+      "id": "red-folded-chairman--alternate--idle",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "idle",
       "poseId": "idle",
@@ -3634,12 +3694,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/idle.png",
+        "path": "states/red-folded-chairman--alternate/idle.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2248617,
-        "sha256": "716909ad20f33284f33aaea32e2e639414fe95179a31657e2c5975886c97f556"
+        "bytes": 1292294,
+        "sha256": "4c676ba8b86796e8a4130427c46207f26eabe281824583748109e77c366671ff"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3654,59 +3714,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--idle-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9504,
-          "sha256": "12f83103f5e9ac79aaacaa63dbf5f64186802214b7ba281f246ae959ac2ce2a4"
+          "bytes": 8285,
+          "sha256": "d3a4015200a4f76b4fbe9c546bc662eb10b1d390e37d62521d817c1b6909139c"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--idle-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11600,
-          "sha256": "ee9676dd168a96e45a660f090c05d724f8ed3b0277d2c866db7504254ad57371"
+          "bytes": 10842,
+          "sha256": "0af7bd762c53ef2f7f6651b3baea8989c84dd0b6d6eb59c4207550ee7f781a78"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--idle-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 26428,
-          "sha256": "85aaf74a2a6331666fe4c88f53ecf9723660c895dea861bb737e56a847fd713c"
+          "bytes": 17321,
+          "sha256": "99156a9bd35ab92fbceca2171228697a19de53996932f60bd4d6b63fcce7112a"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--idle-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31164,
-          "sha256": "8c2c1ab8d96582ce25e9792ca2a08b9befb4c977b9d8af264a69203d8a4ccaa6"
+          "bytes": 24034,
+          "sha256": "e0f46806ab16d6275532154fa56aa2ee635858009ed1c3889f3426bb46a53a95"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--idle-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 45442,
-          "sha256": "464f9ce2a3a77b21d4e7481f406ab635bd6db293f793154a9a1d46db311b9447"
+          "bytes": 29017,
+          "sha256": "843020c665b27be2f7eb856c968545656e170a4d8b52ffa2c311bd472283103b"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--idle-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--idle-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 54594,
-          "sha256": "177d4f45b779d4cfc04ec8a6dac90389b19f09d2732e3d8bbd3ed91c2e22cc95"
+          "bytes": 38536,
+          "sha256": "430a8445a4e17b19dde1ac51af88045344ff3a8ba95572a61ed17e6ec4d171b5"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--thinking",
+      "id": "red-folded-chairman--alternate--thinking",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "thinking",
       "poseId": "thinking",
@@ -3714,12 +3774,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/thinking.png",
+        "path": "states/red-folded-chairman--alternate/thinking.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2238458,
-        "sha256": "6af62b8c6f522f74f795ce658114d96eadaebb5ff19a05c661402c6a95f00aaf"
+        "bytes": 1322180,
+        "sha256": "a0f3995ef25875eba8f6027bd3eeb459b11fb89e8c6d521463e07b37f961d1fb"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3734,59 +3794,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9144,
-          "sha256": "0006d07a4a355a4298d61b9171e126a8680fb639f056c0eecb9d48f69f580289"
+          "bytes": 8250,
+          "sha256": "630480b329f9c6debe65cdfa2d6cc63b3734de45fede80dbbbe20508a76eb8a9"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11112,
-          "sha256": "974c07bc3c7aeeced16b2c37072e9d0b1be909235c153f0dd9aa62b79f93d53b"
+          "bytes": 10852,
+          "sha256": "6824913e3dbdd1ccf956405a02a8dc6649df6bf10debceb9d77b7b9bee6abe8f"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 25359,
-          "sha256": "5b626eb8b7b238dc499435b269bdcc7f5225c7741a0cb2f83b30cf3fa2339a9a"
+          "bytes": 17500,
+          "sha256": "575801013668240a0963711e1ab68deffd312419a71eed18fcacf092b6c67b0c"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29904,
-          "sha256": "2596e7ed17dc28077243c8f6d40382318f193a03929a55985b260a4b7682cf9f"
+          "bytes": 23942,
+          "sha256": "ae7b3080728ec373eead867d230165792da5e3ab0cc123c736af59b6696dbd99"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 43906,
-          "sha256": "5277a1e815ff03874f014c509c571598d8039dfc55548bfa80b62cd2ad146abb"
+          "bytes": 29176,
+          "sha256": "ab868b1d14d886584968be1c8dec22d24211498cc1b279820f90b981d5204f30"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--thinking-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 52410,
-          "sha256": "071087f52b115e4772cfee1b405d3b2ab7bbfa39c258b22cf02fc75b39ce4cdf"
+          "bytes": 38524,
+          "sha256": "3cf93f207e6cba9f54b082a3c072210831a29d8477325c2f90da8f219b8a0925"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--delivery",
+      "id": "red-folded-chairman--alternate--delivery",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "delivery",
       "poseId": "delivery",
@@ -3794,12 +3854,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/delivery.png",
+        "path": "states/red-folded-chairman--alternate/delivery.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2037625,
-        "sha256": "b8c8e9c333ebe805c61eec5f24ba4a7ec215a13d5004099ca84b76b82011dea7"
+        "bytes": 1342000,
+        "sha256": "8ac9c8376a35238ba7cf38ab7c065e657468a731011762d3215df1593a6c29e1"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3814,59 +3874,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9724,
-          "sha256": "d8b9ab84770af16825bfec05be4210ffd46077b4024980a82ed3cef45c68d963"
+          "bytes": 8986,
+          "sha256": "3adc116368266a740a9acb99d6fd1ce0ab3725da450b7fd3e195eda4c1173d14"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12234,
-          "sha256": "7b4deb0ab25d8e4f9d0698c6277f9ee2f12f1422a78ddb9841d10cb2ebfa937d"
+          "bytes": 12288,
+          "sha256": "9b03a3761bca68ef51de4515563c4c58ab3ecdcca2589738e00de264042a9463"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 26301,
-          "sha256": "b8a594f2c9b0eced4ea9970aae5f3166ff3ab145c57a86b915d110d05e5f2632"
+          "bytes": 19493,
+          "sha256": "93f2860890414d16982322115e6c6947b72673f881154857667985b6c9ff0749"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31708,
-          "sha256": "22c3ca703d814b20520140fb17deb1aeac6796b2b24150ad74044510750a8027"
+          "bytes": 27324,
+          "sha256": "becb543e590d2da7cb94223f4ba326fe3c6a35603ae331a852c1b8bd302b225b"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 44711,
-          "sha256": "9fabd012f42137f68a207d3a91d466490281e8fc735040e8a12bd7bd60c292f0"
+          "bytes": 32327,
+          "sha256": "e1c3b226396a0b11a06cf8489b5d63fb7462b1e314b3aabeb9d230dfd7e328de"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--delivery-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 54998,
-          "sha256": "886c36ba8bf15f69397d72160f4776b2ab154e9625d51222ce0842f0d2b6d0f0"
+          "bytes": 43848,
+          "sha256": "a720810e8f9d0ea05c1c8dcadaeb9cf173e172f5d642b57ceb07e3fb8e18a4ad"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--light-hit",
+      "id": "red-folded-chairman--alternate--light-hit",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "light-hit",
       "poseId": "light-hit",
@@ -3874,12 +3934,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/light-hit.png",
+        "path": "states/red-folded-chairman--alternate/light-hit.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2321113,
-        "sha256": "ce0ab200965d1257a3f40cd75cc064640b0307a02615fd8ceed626bfa025115a"
+        "bytes": 1287953,
+        "sha256": "e396951ac9d5459201d6825645b6e6cb376e9ce02af01a55949daf03bfd995d0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3894,59 +3954,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 10439,
-          "sha256": "522d6a0603032ad711b8338365f5a8f69e57d106733db1a7affb964acebdbeda"
+          "bytes": 8257,
+          "sha256": "1790ba0e81288379c1a30e6578cb82e9935146ddcfa0f174a7c1c08193977950"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12838,
-          "sha256": "4455163aa51dc7bf756f63e821dfbd377f00b22eb9075d6531115ec3e07717ec"
+          "bytes": 10876,
+          "sha256": "4d0dc51a3496a241db342fc8bd0b61b4334426f179e296737df8ff917d1c099f"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27913,
-          "sha256": "fde479b2ba7ba573c37b454bab4b7c6c1368cd82e9a21878a9f0e9fe05aa708e"
+          "bytes": 17492,
+          "sha256": "776200ec3a7154bdfcfa833dfbb2faa1fb5d3370ad0f148e2f410079b2b90761"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 33782,
-          "sha256": "73676722384cdc3a58301217e06a2992ba8b509770593d4162616183e20afc54"
+          "bytes": 23760,
+          "sha256": "43bf9173ab1517ca58366741ae109b8a0b88301e965e666921b784c3421e59d5"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 47745,
-          "sha256": "898f910e4e16b72793d26bf8aa314c8f0db3ae6cab78e3433e36142158505a9b"
+          "bytes": 29068,
+          "sha256": "c3550ecb6f8e0a7a97b4e8a5412d89e83f8628f11beed0f7db51901f5c1a63bd"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--light-hit-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 58774,
-          "sha256": "cb16137ca91b1f4a6420cca6d4b6145e371553c04b9695fa5d384fa01c55e399"
+          "bytes": 38322,
+          "sha256": "9667af7de3c6b01b9e5c7bad9724f5ed542d90e2c7f779e8978e539c566ac04b"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--heavy-hit",
+      "id": "red-folded-chairman--alternate--heavy-hit",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "heavy-hit",
       "poseId": "heavy-hit",
@@ -3954,12 +4014,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/heavy-hit.png",
+        "path": "states/red-folded-chairman--alternate/heavy-hit.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2182451,
-        "sha256": "828a08dc523b515c5b94b4e4015f36ebdee9a6cb4919f91ed2b53324d7eca32a"
+        "bytes": 1424808,
+        "sha256": "afbe48418c6091551e0dff5a902aa4bee1069ba9b264adb017cd399fc404f92e"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3974,59 +4034,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 10221,
-          "sha256": "dbf592a2ad9f72540dbe0d6401ddd54682ab89b522217caefaebf6e7ed4c4914"
+          "bytes": 9101,
+          "sha256": "9ff277f059e31159ef4810d40bb519998d85d5565aca1ab1f529a56236975c58"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12476,
-          "sha256": "747e6adfe964e8e2200b8c2c6e3850425f3297b9fc9b1d884e91e86cc3805ace"
+          "bytes": 11454,
+          "sha256": "f83b9b794658d2692ed31a25fadc010b448efeaca9f3308b975e99cf83f67f0c"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27580,
-          "sha256": "50bc208969fb16b16edbaea4ce5c192bb71f3b21195a359cafcb3b9402562727"
+          "bytes": 19391,
+          "sha256": "5e6071041cc8c07a14efac76c142dfed92e13dff5c62290588e8964daf492597"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 33502,
-          "sha256": "8ee488c94800543e11ef61ae08c8f402a0272f671889801c2996f68206149fc6"
+          "bytes": 25726,
+          "sha256": "78a388a409e1a3506bd323d928d3b2199f8a1b94e2ffe32d16a08ee624fc7737"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 47620,
-          "sha256": "7347447a0398cc646911cf0e61272b2cc0344c7217d1cb393a6cf2b503dfbd4f"
+          "bytes": 31717,
+          "sha256": "bc1c17488974b337f52d2f5c9c0c1b1001e9b579b2b64e35cbc74fe4b117e856"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--heavy-hit-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 58180,
-          "sha256": "2c4ef75c21038a11bdecb2fddc979b8939d7aab72ca7564faee9e1e0c211f53d"
+          "bytes": 41546,
+          "sha256": "18414f8fc080bfc31dce448579d2b58a211a2b06a3b89b7b067e254cd18df8a1"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--weakness",
+      "id": "red-folded-chairman--alternate--weakness",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "weakness",
       "poseId": "weakness",
@@ -4034,12 +4094,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/weakness.png",
+        "path": "states/red-folded-chairman--alternate/weakness.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2212777,
-        "sha256": "cc7c0dc8b78a43ba593717d8794de8b33695036fd379b8945944dc58c2fdd4fd"
+        "bytes": 1352898,
+        "sha256": "7f94567e07332ab1808473310ae10d8972c4ae02440c0e8e229317ba150fb9bd"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4054,59 +4114,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 10151,
-          "sha256": "895de47154073f7fdc9316be5f649e213155d66b7f24752119f7c7c46a84253b"
+          "bytes": 7914,
+          "sha256": "3b1fbeb69d8d3d36f7ff0a57627cd17e24ee78227f33c1bd36ef908672bf34c9"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12506,
-          "sha256": "dd7d4c6e69cc705948a13b5617d830b807d43cb953403898a5af247bf8071286"
+          "bytes": 10584,
+          "sha256": "716c882081bfd3ca130c5776f240290f45d2156c98307643e94660430acafb8d"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27418,
-          "sha256": "f60ed5eaaba922382762c8acf23d266292b5df3068b75718fc6bb0eb54d8a973"
+          "bytes": 16747,
+          "sha256": "a1ea65b56fbd7648a61c6c6e6efd4dfb2f743a61392a0f296c997d32081d9519"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 32666,
-          "sha256": "786d36efa00b765595608249a0fa8e9af8ed9fc7a8d257d037ce8a1cc94a0dad"
+          "bytes": 23420,
+          "sha256": "9f985602d60cad3c301bae49409581a5289589ab2aec22387cb8b69b6d0ebfe4"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 47075,
-          "sha256": "4ff9d9c5d2b9fd5bfe5cef113832ab1ead40833cbd58f22f9dc935f386a88dfc"
+          "bytes": 28094,
+          "sha256": "87f085208df277c0da36a01d93af908e92b6b31b30c550ba1d83288f3be62b8e"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--weakness-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56884,
-          "sha256": "6455f984e55ec9a281abe61472fe6014a86b6456e6f4b0ff9f74bd11c7c2976a"
+          "bytes": 37718,
+          "sha256": "0a1b2db5a405513243f466e029d8f76e2842b04dcf977f47467550894488ed81"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--comeback",
+      "id": "red-folded-chairman--alternate--comeback",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "comeback",
       "poseId": "comeback",
@@ -4114,12 +4174,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/comeback.png",
+        "path": "states/red-folded-chairman--alternate/comeback.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2192671,
-        "sha256": "cfad728d4b5120f7b60e51988b9b7c7de584f029dd0b4513dddef665210a8332"
+        "bytes": 1418897,
+        "sha256": "f7a7b98a2233fb331a81f9f3a46b698edde7ac42bf7fe97f5d3d390b5552db31"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4134,59 +4194,59 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 10157,
-          "sha256": "94095ab01f3f405c24db7223991c7c24e44d9379574b208863cf9e4684b45c31"
+          "bytes": 9127,
+          "sha256": "a0c8cc4c0f7c2205db47b1fc4080152b92cfe5af2ffbe4772be7ce33a8154755"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12578,
-          "sha256": "e7079771590a97843fce841b57ee05f1658275ed2d960a4462866b6c5e5f77dd"
+          "bytes": 12410,
+          "sha256": "82ee3d8f3cee7216f52272435543cace1a78b8301c97e20b1f594b6aaec9b927"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27312,
-          "sha256": "e38c2dbde29fa49e77ab673d68a732f18392ba5e53d3c1d8aa59f147af7d1a2f"
+          "bytes": 19903,
+          "sha256": "b9f7f1230cf37ddec51b61e341045bbe0ce5348e46acbde9ac93752811b5bf21"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 32880,
-          "sha256": "85179727d8ef4e33c3a874a7fd85fc41aceecb415fb1a0ee61c8868ee0e95f98"
+          "bytes": 27358,
+          "sha256": "d07fe9d17d4c5ee15c9ae5fd96e867c239ce7c25328c0882d0fce14648122a10"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 46116,
-          "sha256": "4d2d141f9b32800ed388cf9d50099d97d61bc42583ac1f2be4bf5ce415baf8ca"
+          "bytes": 32583,
+          "sha256": "ec158873bdd15ced02a9940cc32e8a0449a76c9973101e8100de179d52bfed70"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--comeback-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--comeback-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 55662,
-          "sha256": "3b2a61400384232de0b8719ad1cd42bdbe8c893ce993d6ec3981f3db536709d6"
+          "bytes": 43794,
+          "sha256": "3c68e9ab94c460feef876d4e7ce305df17951f04b6097a71d64dc433a35d6d78"
         }
       ]
     },
     {
-      "id": "thunder-tribune--alternate--grammar-mistake",
+      "id": "red-folded-chairman--alternate--grammar-mistake",
       "ownerType": "character",
-      "ownerId": "thunder-tribune",
+      "ownerId": "red-folded-chairman",
       "skinId": "alternate",
       "stateId": "grammar-mistake",
       "poseId": "grammar-mistake",
@@ -4194,12 +4254,12 @@
       "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
-        "path": "states/thunder-tribune--alternate/grammar-mistake.png",
+        "path": "states/red-folded-chairman--alternate/grammar-mistake.png",
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2210465,
-        "sha256": "4f4830cabcfff7ede52ff4ae5c17ae821358d090ab45c6f02d25a3c6ae489681"
+        "bytes": 1404060,
+        "sha256": "254947d30328a2dc1586f9a7113bb02ee98d421fb10639dc5f62d422c515d615"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4214,52 +4274,52 @@
       },
       "variants": [
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-320x320.avif",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9985,
-          "sha256": "bea9bb73f110a5622af24d1d7f93ec447807b8faa91085506b88daa6db3f6056"
+          "bytes": 8743,
+          "sha256": "34b794aaf29bd405d2c3c3e0616c558379a9efb211e30813065211e800386e81"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-320x320.webp",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12222,
-          "sha256": "d58ab278411c44fc50088c37b03ff17cad5c9820a7802d2016a90f40c7ba3ad4"
+          "bytes": 11438,
+          "sha256": "5debaed7a933d326940269bf5fe790a625a2947db8828adcb4c59ca1d63dbb7e"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-640x640.avif",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 26983,
-          "sha256": "f8be48442e712a6865a30fe9297ee937bdef8a4ea072f2f9067a4ab412092c5d"
+          "bytes": 18559,
+          "sha256": "51d06ada294b377626305c24125f1ab4b071353d37f55b0d94c60097de63fd6c"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-640x640.webp",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 32618,
-          "sha256": "3f837a8a4e48192b1baeca2f93fed2c3727930b671d9ad84e937c9f0ef5403c8"
+          "bytes": 25410,
+          "sha256": "93c56c0ee14cf80c8e70a6d734793aafd374c353c7c639cd88aff030a7e7ee19"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-960x960.avif",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 46185,
-          "sha256": "d00758b456e34130d8c828764b4d7d7cf929f67dea7ad6bf2433054d052b89a9"
+          "bytes": 31594,
+          "sha256": "e23e9cb31f88d835df8f5bcc2653361b285a262d20b300d68726770b97e37fdd"
         },
         {
-          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-960x960.webp",
+          "path": "states/variants/red-folded-chairman--alternate--grammar-mistake-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56630,
-          "sha256": "298bc185f586deec73298f1e056655567ea43a586a85cd12720d1fdd2b04203c"
+          "bytes": 40852,
+          "sha256": "ab2219d4b9b18eb714eab8e88289fff7848aa8d857dabe4baff4eb7f818c134b"
         }
       ]
     },
@@ -4900,6 +4960,646 @@
           "format": "webp",
           "bytes": 39596,
           "sha256": "d32b551dccf827c41ebb3fc3a816abe70f9848f709cdb5dca6f55f527853686d"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--idle",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "idle",
+      "poseId": "idle",
+      "expressionId": "idle",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/idle.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2248617,
+        "sha256": "716909ad20f33284f33aaea32e2e639414fe95179a31657e2c5975886c97f556"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9504,
+          "sha256": "12f83103f5e9ac79aaacaa63dbf5f64186802214b7ba281f246ae959ac2ce2a4"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11600,
+          "sha256": "ee9676dd168a96e45a660f090c05d724f8ed3b0277d2c866db7504254ad57371"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 26428,
+          "sha256": "85aaf74a2a6331666fe4c88f53ecf9723660c895dea861bb737e56a847fd713c"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 31164,
+          "sha256": "8c2c1ab8d96582ce25e9792ca2a08b9befb4c977b9d8af264a69203d8a4ccaa6"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 45442,
+          "sha256": "464f9ce2a3a77b21d4e7481f406ab635bd6db293f793154a9a1d46db311b9447"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--idle-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 54594,
+          "sha256": "177d4f45b779d4cfc04ec8a6dac90389b19f09d2732e3d8bbd3ed91c2e22cc95"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--thinking",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "thinking",
+      "poseId": "thinking",
+      "expressionId": "thinking",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/thinking.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2238458,
+        "sha256": "6af62b8c6f522f74f795ce658114d96eadaebb5ff19a05c661402c6a95f00aaf"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9144,
+          "sha256": "0006d07a4a355a4298d61b9171e126a8680fb639f056c0eecb9d48f69f580289"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11112,
+          "sha256": "974c07bc3c7aeeced16b2c37072e9d0b1be909235c153f0dd9aa62b79f93d53b"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 25359,
+          "sha256": "5b626eb8b7b238dc499435b269bdcc7f5225c7741a0cb2f83b30cf3fa2339a9a"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 29904,
+          "sha256": "2596e7ed17dc28077243c8f6d40382318f193a03929a55985b260a4b7682cf9f"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 43906,
+          "sha256": "5277a1e815ff03874f014c509c571598d8039dfc55548bfa80b62cd2ad146abb"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--thinking-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 52410,
+          "sha256": "071087f52b115e4772cfee1b405d3b2ab7bbfa39c258b22cf02fc75b39ce4cdf"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--delivery",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "delivery",
+      "poseId": "delivery",
+      "expressionId": "delivery",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/delivery.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2037625,
+        "sha256": "b8c8e9c333ebe805c61eec5f24ba4a7ec215a13d5004099ca84b76b82011dea7"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9724,
+          "sha256": "d8b9ab84770af16825bfec05be4210ffd46077b4024980a82ed3cef45c68d963"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12234,
+          "sha256": "7b4deb0ab25d8e4f9d0698c6277f9ee2f12f1422a78ddb9841d10cb2ebfa937d"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 26301,
+          "sha256": "b8a594f2c9b0eced4ea9970aae5f3166ff3ab145c57a86b915d110d05e5f2632"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 31708,
+          "sha256": "22c3ca703d814b20520140fb17deb1aeac6796b2b24150ad74044510750a8027"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 44711,
+          "sha256": "9fabd012f42137f68a207d3a91d466490281e8fc735040e8a12bd7bd60c292f0"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--delivery-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 54998,
+          "sha256": "886c36ba8bf15f69397d72160f4776b2ab154e9625d51222ce0842f0d2b6d0f0"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--light-hit",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "light-hit",
+      "poseId": "light-hit",
+      "expressionId": "light-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/light-hit.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2321113,
+        "sha256": "ce0ab200965d1257a3f40cd75cc064640b0307a02615fd8ceed626bfa025115a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 10439,
+          "sha256": "522d6a0603032ad711b8338365f5a8f69e57d106733db1a7affb964acebdbeda"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12838,
+          "sha256": "4455163aa51dc7bf756f63e821dfbd377f00b22eb9075d6531115ec3e07717ec"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 27913,
+          "sha256": "fde479b2ba7ba573c37b454bab4b7c6c1368cd82e9a21878a9f0e9fe05aa708e"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33782,
+          "sha256": "73676722384cdc3a58301217e06a2992ba8b509770593d4162616183e20afc54"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 47745,
+          "sha256": "898f910e4e16b72793d26bf8aa314c8f0db3ae6cab78e3433e36142158505a9b"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--light-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 58774,
+          "sha256": "cb16137ca91b1f4a6420cca6d4b6145e371553c04b9695fa5d384fa01c55e399"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--heavy-hit",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "heavy-hit",
+      "poseId": "heavy-hit",
+      "expressionId": "heavy-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/heavy-hit.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2182451,
+        "sha256": "828a08dc523b515c5b94b4e4015f36ebdee9a6cb4919f91ed2b53324d7eca32a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 10221,
+          "sha256": "dbf592a2ad9f72540dbe0d6401ddd54682ab89b522217caefaebf6e7ed4c4914"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12476,
+          "sha256": "747e6adfe964e8e2200b8c2c6e3850425f3297b9fc9b1d884e91e86cc3805ace"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 27580,
+          "sha256": "50bc208969fb16b16edbaea4ce5c192bb71f3b21195a359cafcb3b9402562727"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33502,
+          "sha256": "8ee488c94800543e11ef61ae08c8f402a0272f671889801c2996f68206149fc6"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 47620,
+          "sha256": "7347447a0398cc646911cf0e61272b2cc0344c7217d1cb393a6cf2b503dfbd4f"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--heavy-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 58180,
+          "sha256": "2c4ef75c21038a11bdecb2fddc979b8939d7aab72ca7564faee9e1e0c211f53d"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--weakness",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "weakness",
+      "poseId": "weakness",
+      "expressionId": "weakness",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/weakness.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2212777,
+        "sha256": "cc7c0dc8b78a43ba593717d8794de8b33695036fd379b8945944dc58c2fdd4fd"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 10151,
+          "sha256": "895de47154073f7fdc9316be5f649e213155d66b7f24752119f7c7c46a84253b"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12506,
+          "sha256": "dd7d4c6e69cc705948a13b5617d830b807d43cb953403898a5af247bf8071286"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 27418,
+          "sha256": "f60ed5eaaba922382762c8acf23d266292b5df3068b75718fc6bb0eb54d8a973"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 32666,
+          "sha256": "786d36efa00b765595608249a0fa8e9af8ed9fc7a8d257d037ce8a1cc94a0dad"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 47075,
+          "sha256": "4ff9d9c5d2b9fd5bfe5cef113832ab1ead40833cbd58f22f9dc935f386a88dfc"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--weakness-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 56884,
+          "sha256": "6455f984e55ec9a281abe61472fe6014a86b6456e6f4b0ff9f74bd11c7c2976a"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--comeback",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "comeback",
+      "poseId": "comeback",
+      "expressionId": "comeback",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/comeback.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2192671,
+        "sha256": "cfad728d4b5120f7b60e51988b9b7c7de584f029dd0b4513dddef665210a8332"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 10157,
+          "sha256": "94095ab01f3f405c24db7223991c7c24e44d9379574b208863cf9e4684b45c31"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12578,
+          "sha256": "e7079771590a97843fce841b57ee05f1658275ed2d960a4462866b6c5e5f77dd"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 27312,
+          "sha256": "e38c2dbde29fa49e77ab673d68a732f18392ba5e53d3c1d8aa59f147af7d1a2f"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 32880,
+          "sha256": "85179727d8ef4e33c3a874a7fd85fc41aceecb415fb1a0ee61c8868ee0e95f98"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 46116,
+          "sha256": "4d2d141f9b32800ed388cf9d50099d97d61bc42583ac1f2be4bf5ce415baf8ca"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--comeback-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 55662,
+          "sha256": "3b2a61400384232de0b8719ad1cd42bdbe8c893ce993d6ec3981f3db536709d6"
+        }
+      ]
+    },
+    {
+      "id": "thunder-tribune--alternate--grammar-mistake",
+      "ownerType": "character",
+      "ownerId": "thunder-tribune",
+      "skinId": "alternate",
+      "stateId": "grammar-mistake",
+      "poseId": "grammar-mistake",
+      "expressionId": "grammar-mistake",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/thunder-tribune--alternate/grammar-mistake.png",
+        "width": 2048,
+        "height": 2048,
+        "format": "png",
+        "bytes": 2210465,
+        "sha256": "4f4830cabcfff7ede52ff4ae5c17ae821358d090ab45c6f02d25a3c6ae489681"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9985,
+          "sha256": "bea9bb73f110a5622af24d1d7f93ec447807b8faa91085506b88daa6db3f6056"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12222,
+          "sha256": "d58ab278411c44fc50088c37b03ff17cad5c9820a7802d2016a90f40c7ba3ad4"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 26983,
+          "sha256": "f8be48442e712a6865a30fe9297ee937bdef8a4ea072f2f9067a4ab412092c5d"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 32618,
+          "sha256": "3f837a8a4e48192b1baeca2f93fed2c3727930b671d9ad84e937c9f0ef5403c8"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 46185,
+          "sha256": "d00758b456e34130d8c828764b4d7d7cf929f67dea7ad6bf2433054d052b89a9"
+        },
+        {
+          "path": "states/variants/thunder-tribune--alternate--grammar-mistake-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 56630,
+          "sha256": "298bc185f586deec73298f1e056655567ea43a586a85cd12720d1fdd2b04203c"
         }
       ]
     }
