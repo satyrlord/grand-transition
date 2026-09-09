@@ -89,12 +89,17 @@ transition-era studio. Other scenes retain effects without scene music.
 Speech defaults off. Enabling it downloads about 110 MB of local neural model
 resources. Male and female human skins use British George and Emma voices.
 Robot skins use installed Microsoft David, Mark, and Zira voices, with British
-neural fallback when the requested local voice is absent. No phrase is uploaded. Preparation time depends on the device and sentence length.
+neural fallback when the requested local voice is absent. Robot voices read
+each complete insult continuously, without restarting between cards. New
+settings use a 1.2 speech rate; existing saved rates remain intact.
+No phrase is uploaded. Preparation time depends on the device and sentence length.
 The game remains playable when speech is unavailable.
 
 After both players finish, each character recites with its own bubble and inline
 score. The full total precedes the damaged stance and displayed Pride change.
-Both deliveries finish before the next round or Victory. Pause preserves the
+The next neural delivery prepares ahead of playback. Each completed delivery
+has a one-second score and damage sequence. Both deliveries finish before the
+next round or Victory. Pause preserves the
 narration position. Leaving the match cancels it.
 
 `npm run audio:build` prepares the sourced music and original effects.

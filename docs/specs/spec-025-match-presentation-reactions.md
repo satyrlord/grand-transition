@@ -44,7 +44,7 @@ hold and no fragment speech. An incomplete construction produces no spoken
 fragment and no outgoing damage. Direct self-damage knockout does not narrate
 unfinished insults.
 
-Use a 1200-millisecond audience hold after a completed delivery. Narration
+Use a 400-millisecond audience hold after a completed delivery. Narration
 markers and completion come from generated audio, not an overall fixed timer.
 Pause, visibility interruption, navigation, and disposal must preserve or
 cancel the sequence explicitly without replaying stale callbacks. Reduced
@@ -119,12 +119,17 @@ clause-completing phrase. Repeated phrase IDs do not merge markers. Applied
 factor and public weakness names remain with that component. Bonus cues follow
 the completed phrase. Total appears after the final audio sample.
 
-After the 1200-millisecond audience hold, allow 500 milliseconds for the strike
-and 1000 milliseconds for points, with displayed damage at its midpoint. Then
+After the 400-millisecond audience hold, allow 200 milliseconds for the strike
+and 400 milliseconds for points, with displayed damage at its midpoint. Then
 begin the next speaker. Direct self-damage knockout holds the damage stance for
 520 milliseconds. A silent valid delivery advances one authored segment per
 second. Incomplete or continued text uses a 2000-millisecond thinking hold.
 This silent timing is a fallback, not an estimate of spoken word timing.
+
+The fixed result sequence lasts 1000 milliseconds per complete delivery.
+Prepare the next public neural utterance during the current delivery or thinking
+hold, as specified in Milestone 024. Preparation must not reveal scores, start
+audio, advance the speaker, or delay playback of an already prepared delivery.
 
 Combo emphasis stays visible
 for the current delivery. Weakness emphasis uses one bounded strike. These records report

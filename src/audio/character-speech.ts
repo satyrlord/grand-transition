@@ -4,6 +4,10 @@ import type { SpeechPort, SpeechRequest, SpeechResult } from './speech-port';
 export class CharacterSpeech implements SpeechPort {
   constructor(private readonly neural: SpeechPort, private readonly microsoft: SpeechPort) {}
   get available(): boolean { return this.neural.available || this.microsoft.available; }
+  prepare(request: SpeechRequest): SpeechResult {
+    if (request.provider === 'microsoft-local') return { accepted: false, reason: 'unsupported' };
+    return this.neural.prepare?.(request) ?? { accepted: false, reason: 'unsupported' };
+  }
   speak(request: SpeechRequest): SpeechResult {
     if (request.provider === 'microsoft-local' && this.microsoft.available) {
       const result = this.microsoft.speak(request);

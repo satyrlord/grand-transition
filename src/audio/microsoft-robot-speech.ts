@@ -48,26 +48,35 @@ export class MicrosoftRobotSpeech implements SpeechPort {
     if (segments.join('') !== request.text) return { accepted: false, reason: 'invalid-segments' };
     this.cancel(); this.request = request; this.service = service;
     const generation = this.generation;
-    let index = 0;
+    let offset = 0;
+    const starts = segments.map((text) => {
+      const start = offset + text.length - text.trimStart().length;
+      offset += text.length;
+      return start;
+    });
+    let index = -1;
     let started = false;
     let submitting = true;
     let rejected = false;
     const fail = () => {
-      if (submitting && !started && index === 0) {
+      if (submitting && !started) {
         // Let the router try neural speech before consuming delivery callbacks.
         rejected = true; this.cancel();
       } else this.fail();
+    };
+    const finish = () => {
+      if (generation !== this.generation || this.request !== request) return;
+      if (this.paused) { this.next = finish; return; }
+      this.next = null;
+      this.request = null; this.service = null; this.generation++;
+      request.onEnd?.();
     };
     const play = () => {
       if (generation !== this.generation || this.request !== request) return;
       if (this.paused) { this.next = play; return; }
       this.next = null;
-      if (index === segments.length) {
-        this.request = null; this.service = null; this.generation++;
-        request.onEnd?.(); return;
-      }
       try {
-        const utterance = this.dependencies.utterance(segments[index]!);
+        const utterance = this.dependencies.utterance(request.text);
         this.active = utterance;
         utterance.voice = voice; utterance.lang = voice.lang;
         utterance.rate = request.rate ?? 1; utterance.pitch = request.pitch ?? 1;
@@ -76,11 +85,19 @@ export class MicrosoftRobotSpeech implements SpeechPort {
         utterance.onstart = () => {
           if (!current()) return;
           if (!started) { started = true; request.onStart?.(); }
-          if (current()) request.onSegment?.(index);
+          if (current()) { index = 0; request.onSegment?.(0); }
+        };
+        utterance.onboundary = (event) => {
+          if (!current() || event.name !== 'word' || !Number.isInteger(event.charIndex) ||
+            event.charIndex < 0 || event.charIndex >= request.text.length) return;
+          if (!this.paused) this.armTimeout(60_000);
+          while (current() && index + 1 < starts.length && starts[index + 1]! <= event.charIndex) {
+            request.onSegment?.(++index);
+          }
         };
         utterance.onend = () => {
           if (!current()) return;
-          this.clearUtterance(); index++; play();
+          this.clearUtterance(); finish();
         };
         utterance.onerror = () => { if (current()) fail(); };
         this.armTimeout(60_000);
@@ -124,12 +141,13 @@ export class MicrosoftRobotSpeech implements SpeechPort {
   private clearUtterance(): void {
     clearTimeout(this.timeout); this.timeout = undefined;
     if (this.active) {
-      this.active.onstart = null; this.active.onend = null; this.active.onerror = null;
+      this.active.onstart = null; this.active.onboundary = null; this.active.onend = null; this.active.onerror = null;
       this.active = null;
     }
   }
 
   private armTimeout(delay: number): void {
+    clearTimeout(this.timeout);
     this.remaining = delay; this.deadline = performance.now() + delay;
     this.timeout = setTimeout(() => this.fail(), delay);
   }

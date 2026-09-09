@@ -52,7 +52,7 @@ milestone is implemented; all other persistence behavior remains as defined here
 | Speech volume    | 0 through 1, step 0.05  | 0.8     |
 | Speech enabled   | Boolean                 | false   |
 | Speech voice URI | String or null          | null    |
-| Speech rate      | 0.5 through 2, step 0.1 | 1       |
+| Speech rate      | 0.5 through 2, step 0.1 | 1.2     |
 | Turn timer       | 15, 30, or null         | 30      |
 | Auto-complete    | Boolean                 | true    |
 

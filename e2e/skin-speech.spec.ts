@@ -8,7 +8,8 @@ import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
 const { sampleContent, englishGameLocale } = loadGameContent();
 type Choice = { character: string; skin: number; neural: string; microsoft?: 'David' | 'Mark' | 'Zira' };
-type Evidence = { native: Array<{ text: string; name: string; local: boolean }>;
+type Evidence = { native: Array<{ text: string; name: string; local: boolean;
+  submitted: number; started?: number; ended?: number; boundaries: Array<{ charIndex: number; at: number }> }>;
   neural: Array<{ voiceId: string; segments: string[] }>; voices: Array<{ name: string; local: boolean }> };
 
 async function configure(page: Page, choices: readonly Choice[]) {
@@ -20,7 +21,14 @@ async function configure(page: Page, choices: readonly Choice[]) {
     if (typeof SpeechSynthesis === 'function') {
       const speak = SpeechSynthesis.prototype.speak.bind(speechSynthesis);
       SpeechSynthesis.prototype.speak = function (utterance) {
-        evidence.native.push({ text: utterance.text, name: utterance.voice?.name ?? '', local: utterance.voice?.localService ?? false });
+        const delivery: Evidence['native'][number] = { text: utterance.text, name: utterance.voice?.name ?? '',
+          local: utterance.voice?.localService ?? false, submitted: performance.now(), boundaries: [] };
+        evidence.native.push(delivery);
+        utterance.addEventListener('start', () => { delivery.started = performance.now(); });
+        utterance.addEventListener('end', () => { delivery.ended = performance.now(); });
+        utterance.addEventListener('boundary', (event) => {
+          if (event.name === 'word') delivery.boundaries.push({ charIndex: event.charIndex, at: performance.now() });
+        });
         speak(utterance);
       };
     }
@@ -96,10 +104,15 @@ for (const scenario of [
     const nativeExpected: string[] = []; const neuralExpected: string[] = [];
     for (const choice of [...scenario.choices].reverse()) {
       const native = choice.microsoft && before.voices.find((voice) => voice.local && new RegExp(`^Microsoft ${choice.microsoft}\\b`, 'u').test(voice.name));
-      if (native) nativeExpected.push(native.name, native.name); else neuralExpected.push(choice.neural);
+      if (native) nativeExpected.push(native.name); else neuralExpected.push(choice.neural);
     }
     expect(evidence.native.map(({ name }) => name)).toEqual(nativeExpected);
     expect(evidence.native.every(({ local }) => local)).toBe(true);
+    for (const delivery of evidence.native) {
+      expect(delivery.text).toBe('Your brother is a snitch.');
+      expect(delivery.boundaries.map(({ charIndex }) => charIndex)).toContain(13);
+      expect(delivery.ended).toBeGreaterThan(delivery.started!);
+    }
     expect(evidence.neural.map(({ voiceId }) => voiceId)).toEqual(neuralExpected);
     expect(errors).toEqual([]);
     await page.screenshot({ path: info.outputPath('skin-and-voice.png') });

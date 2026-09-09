@@ -123,6 +123,7 @@ export class RoundPresentation {
     if (this.paused) { this.schedule(() => this.beginSpeaker(), 0); return; }
     if (!player.completeValidInsult) {
       this.update({ phase: 'hesitating' });
+      this.prepareNext();
       this.schedule(() => this.advanceSpeaker(), 2000); return;
     }
     const generation = this.generation;
@@ -134,6 +135,13 @@ export class RoundPresentation {
       onError: () => guarded(() => this.silentDelivery(Math.max(0, this.frame!.segment))),
     });
     if (!accepted) this.silentDelivery(0);
+    this.prepareNext();
+  }
+
+  private prepareNext(): void {
+    const input = this.input!;
+    const nextId = this.order[this.speakerIndex + 1];
+    if (nextId) this.speech.prepare(input.resolution.players[nextId]!, input.settings, input.voices[nextId]!);
   }
 
   private reciting(): void {
@@ -203,9 +211,9 @@ export class RoundPresentation {
       this.update({ phase: 'strike' });
       this.schedule(() => {
         this.update({ phase: 'points' });
-        this.schedule(() => this.impact(), 500);
-      }, 500);
-    }, player.constructionStatus === 'carried' ? 0 : 1200);
+        this.schedule(() => this.impact(), 200);
+      }, 200);
+    }, 400);
   }
 
   private impact(): void {
@@ -224,7 +232,7 @@ export class RoundPresentation {
       pride: { ...this.frame!.pride, [defenderId]: defender.prideAfter }, cues });
     this.schedule(() => {
       this.advanceSpeaker();
-    }, 500);
+    }, 200);
   }
 
   private advanceSpeaker(): void {

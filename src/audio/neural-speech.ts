@@ -3,7 +3,12 @@ import type { NeuralSpeechCommand, NeuralSpeechMessage, SpeechPort, SpeechReques
 export type NeuralSpeechStatus = 'idle' | 'loading' | 'ready' | 'generating' | 'speaking' | 'unavailable';
 type Dependencies = { supported: () => boolean; createContext: () => AudioContext; createWorker: () => Worker; baseUrl: string };
 type Prepared = Extract<NeuralSpeechMessage, { type: 'speech' }>;
-type Pending = { request: SpeechRequest; prepared?: Prepared; watchdog?: ReturnType<typeof setTimeout> };
+type Pending = { request: SpeechRequest; playback: boolean; key: string; prepared?: Prepared };
+
+function preparationKey(request: SpeechRequest): string {
+  return JSON.stringify([request.text, request.segments ?? [request.text], request.language,
+    request.voiceUri ?? null, request.rate ?? 1, request.pitch ?? 1]);
+}
 
 export class LocalNeuralSpeech implements SpeechPort {
   status: NeuralSpeechStatus = 'idle';
@@ -14,6 +19,8 @@ export class LocalNeuralSpeech implements SpeechPort {
   private initialized: Promise<boolean> | null = null;
   private finishInitialization: ((ready: boolean) => void) | null = null;
   private readonly pending = new Map<number, Pending>();
+  private synthesizing: number | null = null;
+  private watchdog: ReturnType<typeof setTimeout> | undefined;
   private readonly timers = new Set<ReturnType<typeof setTimeout>>();
   private source: AudioBufferSourceNode | null = null;
   private gain: GainNode | null = null;
@@ -52,33 +59,39 @@ export class LocalNeuralSpeech implements SpeechPort {
   }
 
   speak(request: SpeechRequest): SpeechResult {
+    return this.enqueue(request, true);
+  }
+
+  prepare(request: SpeechRequest): SpeechResult {
+    return this.enqueue(request, false);
+  }
+
+  private enqueue(request: SpeechRequest, playback: boolean): SpeechResult {
     if (!this.available) return { accepted: false, reason: 'unavailable' };
     if (!request.text.trim() || request.volume === 0) return { accepted: false, reason: 'silent' };
     if (!request.language.toLowerCase().startsWith('en')) return { accepted: false, reason: 'unsupported-language' };
+    const key = preparationKey(request);
+    const existing = [...this.pending.values()].find((pending) => !pending.playback && pending.key === key);
+    if (existing) {
+      if (playback) { existing.request = request; existing.playback = true; this.pump(); }
+      return { accepted: true };
+    }
+    // Keep at most one future delivery. It is local to this presentation, not a persistent cache.
+    for (const [id, pending] of this.pending) if (!pending.playback) {
+      this.pending.delete(id);
+    }
     const id = ++this.sequence;
-    this.pending.set(id, { request });
+    this.pending.set(id, { request, playback, key });
     void this.initialize().then((ready) => {
       if (!this.pending.has(id)) return;
       if (!ready) { this.fail(); return; }
-      const language = request.language.toLowerCase();
-      const voice = this.voices.find(({ voiceURI }) => voiceURI === request.voiceUri) ??
-        this.voices.find((candidate) => candidate.lang.toLowerCase() === language && candidate.default) ??
-        this.voices.find((candidate) => candidate.lang.toLowerCase() === language) ??
-        this.voices.find((candidate) => candidate.default) ?? this.voices[0];
-      this.setStatus(this.source ? 'speaking' : 'generating');
-      this.pending.get(id)!.watchdog = setTimeout(() => {
-        if (this.pending.has(id)) this.fail();
-      }, 60_000);
-      this.send({ type: 'synthesize', id, segments: request.segments ?? [request.text],
-        voiceId: voice?.voiceURI.replace('kokoro:', '') ?? 'am_michael',
-        rate: request.rate ?? 1, pitch: request.pitch ?? 1 });
+      this.dispatch();
     });
     return { accepted: true };
   }
 
   cancel(): void {
     this.generation++;
-    for (const pending of this.pending.values()) clearTimeout(pending.watchdog);
     this.pending.clear();
     this.stopSource();
     if (this.status === 'speaking' || this.status === 'generating') this.setStatus('ready');
@@ -96,6 +109,7 @@ export class LocalNeuralSpeech implements SpeechPort {
 
   dispose(): void {
     this.cancel(); this.disposed = true;
+    clearTimeout(this.watchdog); this.synthesizing = null;
     this.worker?.terminate(); this.worker = null;
     this.finishInitialization?.(false); this.finishInitialization = null;
     if (this.context) void this.context.close().catch(() => {});
@@ -103,6 +117,24 @@ export class LocalNeuralSpeech implements SpeechPort {
   }
 
   private send(message: NeuralSpeechCommand): void { this.worker?.postMessage(message); }
+
+  private dispatch(): void {
+    if (this.synthesizing !== null || !this.worker || !this.voices.length) return;
+    const next = [...this.pending.entries()].find(([, pending]) => !pending.prepared);
+    if (!next) return;
+    const [id, { request }] = next;
+    const language = request.language.toLowerCase();
+    const voice = this.voices.find(({ voiceURI }) => voiceURI === request.voiceUri) ??
+      this.voices.find((candidate) => candidate.lang.toLowerCase() === language && candidate.default) ??
+      this.voices.find((candidate) => candidate.lang.toLowerCase() === language) ??
+      this.voices.find((candidate) => candidate.default) ?? this.voices[0];
+    this.synthesizing = id;
+    this.setStatus(this.source ? 'speaking' : 'generating');
+    this.watchdog = setTimeout(() => this.fail(), 60_000);
+    this.send({ type: 'synthesize', id, segments: request.segments ?? [request.text],
+      voiceId: voice?.voiceURI.replace('kokoro:', '') ?? 'am_michael',
+      rate: request.rate ?? 1, pitch: request.pitch ?? 1 });
+  }
 
   private readonly receive = ({ data }: MessageEvent<NeuralSpeechMessage>): void => {
     if (this.disposed) return;
@@ -116,18 +148,22 @@ export class LocalNeuralSpeech implements SpeechPort {
       this.progress = null;
       this.setStatus('ready');
       this.finishInitialization?.(true); this.finishInitialization = null;
-    } else if (data.type === 'error') {
-      if (data.id === null || this.pending.has(data.id)) this.fail();
     } else {
-      const pending = this.pending.get(data.id);
-      if (pending) { clearTimeout(pending.watchdog); pending.prepared = data; this.pump(); }
+      if (data.id === this.synthesizing) { clearTimeout(this.watchdog); this.synthesizing = null; }
+      if (data.type === 'error') {
+        if (data.id === null || this.pending.has(data.id)) { this.fail(); return; }
+      } else {
+        const pending = this.pending.get(data.id);
+        if (pending) { pending.prepared = data; this.pump(); }
+      }
+      this.dispatch();
     }
   };
 
   private pump(): void {
     const context = this.context;
     if (this.paused || this.source || !context || context.state !== 'running') return;
-    const first = this.pending.entries().next().value as [number, Pending] | undefined;
+    const first = [...this.pending.entries()].find(([, pending]) => pending.playback);
     if (!first?.[1].prepared) return;
     const [id, { request, prepared }] = first;
     const data = prepared!;
@@ -145,7 +181,7 @@ export class LocalNeuralSpeech implements SpeechPort {
       source.onended = () => {
         if (generation !== this.generation || this.source !== source) return;
         this.stopSource(false); this.pending.delete(id);
-        this.setStatus(this.pending.size ? 'generating' : 'ready');
+        this.setStatus([...this.pending.values()].some((pending) => pending.playback) ? 'generating' : 'ready');
         request.onEnd?.(); this.pump();
       };
       const began = context.currentTime;
@@ -186,8 +222,9 @@ export class LocalNeuralSpeech implements SpeechPort {
   }
 
   private fail(): void {
-    const requests = [...this.pending.values()].map(({ request }) => request);
+    const requests = [...this.pending.values()].filter((pending) => pending.playback).map(({ request }) => request);
     this.cancel();
+    clearTimeout(this.watchdog); this.synthesizing = null;
     this.worker?.terminate(); this.worker = null;
     this.finishInitialization?.(false); this.finishInitialization = null;
     this.initialized = null;

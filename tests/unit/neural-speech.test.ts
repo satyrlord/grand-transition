@@ -39,6 +39,79 @@ function harness() {
 afterEach(() => vi.useRealTimers());
 
 describe('local neural speech', () => {
+  test('prepares the next delivery during playback, holds it through the reaction, and reuses its audio', async () => {
+    const h = harness(); await h.initialize();
+    const second = { text: 'The public record disagrees.', language: 'en-GB', voiceUri: 'kokoro:bf_emma', rate: 1.2, pitch: 0.9 };
+    h.speech.speak({ text: 'Your office failed.', language: 'en-US' });
+    h.speech.prepare(second); await Promise.resolve();
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toHaveLength(1);
+    h.emit(h.prepared(1));
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toHaveLength(2);
+    h.emit(h.prepared(2));
+    expect(h.sources).toHaveLength(1);
+    h.sources[0]!.onended!(); expect(h.sources).toHaveLength(1);
+    expect(h.speech.status).toBe('ready');
+    const ended = vi.fn(); h.speech.speak({ ...second, volume: 0.4, onEnd: ended });
+    expect(h.sources).toHaveLength(2);
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toHaveLength(2);
+    h.sources[1]!.onended!(); expect(ended).toHaveBeenCalledOnce();
+    h.speech.dispose();
+  });
+
+  test('adopts in-flight preparation while paused without duplicate synthesis or early playback', async () => {
+    const h = harness(); await h.initialize();
+    const request = { text: 'Public.', language: 'en-US' };
+    h.speech.prepare(request); h.speech.prepare(request); await Promise.resolve();
+    h.speech.pause(); h.speech.speak(request); h.emit(h.prepared(1));
+    expect(h.sources).toHaveLength(0);
+    h.speech.resume(); await Promise.resolve(); expect(h.sources).toHaveLength(1);
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toHaveLength(1);
+    h.speech.dispose();
+  });
+
+  test('the next synthesis gets its full timeout after a slow first synthesis', async () => {
+    vi.useFakeTimers(); const h = harness(); await h.initialize(); const onError = vi.fn();
+    h.speech.speak({ text: 'First public insult.', language: 'en-US', onError });
+    const second = { text: 'Second public insult.', language: 'en-US', onError };
+    h.speech.prepare(second); await Promise.resolve();
+    vi.advanceTimersByTime(50_000); h.emit(h.prepared(1));
+    h.sources[0]!.onended!(); h.speech.speak(second);
+    vi.advanceTimersByTime(59_999); expect(onError).not.toHaveBeenCalled();
+    h.emit(h.prepared(2)); expect(h.sources).toHaveLength(2);
+    h.speech.dispose();
+  });
+
+  test('replacement waits for canceled computation without replaying its audio or leaving the queue unbounded', async () => {
+    const h = harness(); await h.initialize();
+    h.speech.prepare({ text: 'Old public insult.', language: 'en-US' }); await Promise.resolve();
+    h.speech.cancel(); h.speech.speak({ text: 'New public insult.', language: 'en-US' }); await Promise.resolve();
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toHaveLength(1);
+    h.emit(h.prepared(1)); expect(h.sources).toHaveLength(0);
+    expect(h.workers[0]!.postMessage).toHaveBeenLastCalledWith(expect.objectContaining({ segments: ['New public insult.'] }));
+    h.emit(h.prepared(2)); expect(h.sources).toHaveLength(1);
+    h.speech.dispose();
+  });
+
+  test.each(['rate', 'pitch', 'voiceUri', 'language', 'segments'] as const)('does not reuse preparation with a different %s', async (field) => {
+    const h = harness(); await h.initialize();
+    const request = { text: 'Public.', language: 'en-US', voiceUri: 'kokoro:am_michael', rate: 1, pitch: 1, segments: ['Public.'] };
+    h.speech.prepare(request); await Promise.resolve(); h.emit(h.prepared(1));
+    const values = { rate: 1.2, pitch: 0.9, voiceUri: 'kokoro:bf_emma', language: 'en-GB', segments: ['Public', '.'] };
+    h.speech.speak({ ...request, [field]: values[field] }); await Promise.resolve();
+    expect(h.sources).toHaveLength(0);
+    h.emit(h.prepared(2)); expect(h.sources).toHaveLength(1);
+    h.speech.dispose();
+  });
+
+  test('cancellation discards prepared audio and preparation alone never emits delivery callbacks', async () => {
+    const h = harness(); await h.initialize();
+    const onError = vi.fn(); const request = { text: 'Public.', language: 'en-US', onError };
+    h.speech.prepare(request); await Promise.resolve(); h.speech.cancel(); h.emit(h.prepared(1));
+    expect(h.sources).toHaveLength(0);
+    h.speech.prepare(request); await Promise.resolve(); h.emit({ type: 'error', id: 2 });
+    expect(onError).not.toHaveBeenCalled(); h.speech.dispose();
+  });
+
   test('waits for worker readiness before loading and publishes model progress and local voices', async () => {
     const h = harness(); const ready = h.speech.initialize();
     expect(h.context.resume).toHaveBeenCalledOnce(); expect(h.workers[0]!.postMessage).not.toHaveBeenCalled();

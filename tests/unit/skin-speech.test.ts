@@ -61,28 +61,49 @@ describe('local Microsoft robot speech', () => {
     expect(selectMicrosoftRobotVoice(voices, 'Mark')?.voiceURI).toBe('local:Mark');
     expect(selectMicrosoftRobotVoice([voice('Zira', true, 'ro-RO')], 'Zira')).toBeUndefined();
   });
-  test('phrase start and completion events drive scoring without estimated word timers', () => {
+  test('a complete insult uses one utterance and native word boundaries drive phrase scores', () => {
     const h = nativeHarness(); expect(h.port.speak(h.request).accepted).toBe(true);
-    expect(h.utterances[0]).toMatchObject({ text: 'Your office ', voice: voice('David'), rate: 1.2, pitch: 0.72, volume: 0.4, lang: 'en-US' });
+    expect(h.utterances[0]).toMatchObject({ text: 'Your office failed.', voice: voice('David'), rate: 1.2, pitch: 0.72, volume: 0.4, lang: 'en-US' });
     h.fire(h.utterances[0]!, 'onstart'); expect(h.events.onSegment).toHaveBeenLastCalledWith(0);
-    h.fire(h.utterances[0]!, 'onend'); expect(h.events.onEnd).not.toHaveBeenCalled();
-    h.fire(h.utterances[1]!, 'onstart'); expect(h.events.onSegment).toHaveBeenLastCalledWith(1);
-    h.fire(h.utterances[1]!, 'onend'); expect(h.events.onStart).toHaveBeenCalledOnce(); expect(h.events.onEnd).toHaveBeenCalledOnce();
+    const boundary = h.utterances[0]!.onboundary!;
+    for (const charIndex of [0, 5, 12, 12, 5, -1, Number.NaN, 999]) {
+      boundary.call(h.utterances[0]!, { name: 'word', charIndex } as SpeechSynthesisEvent);
+    }
+    expect(h.events.onSegment.mock.calls.flat()).toEqual([0, 1]);
+    h.fire(h.utterances[0]!, 'onend');
+    expect(h.utterances).toHaveLength(1);
+    expect(h.events.onStart).toHaveBeenCalledOnce(); expect(h.events.onEnd).toHaveBeenCalledOnce();
     h.port.cancel();
   });
-  test('Pause holds pending segments and cancellation rejects stale callbacks and releases platform pause', () => {
+  test('Pause holds a completed delivery until resume and cancellation releases platform pause', () => {
     const h = nativeHarness(); h.port.speak(h.request);
     const oldStart = h.utterances[0]!.onstart as () => void;
     h.port.pause(); h.fire(h.utterances[0]!, 'onend'); expect(h.utterances).toHaveLength(1);
-    h.port.resume(); expect(h.utterances).toHaveLength(2);
+    expect(h.events.onEnd).not.toHaveBeenCalled();
+    h.port.resume(); expect(h.events.onEnd).toHaveBeenCalledOnce();
+    h.port.speak(h.request);
     h.port.pause(); h.port.cancel(); oldStart();
-    expect(h.events.onStart).not.toHaveBeenCalled(); expect(h.events.onEnd).not.toHaveBeenCalled();
+    expect(h.events.onStart).not.toHaveBeenCalled(); expect(h.events.onEnd).toHaveBeenCalledOnce();
     expect(h.service.cancel).toHaveBeenCalledOnce(); expect(h.service.resume).toHaveBeenCalledTimes(2);
   });
   test('cancellation from a start callback cannot emit a later score marker', () => {
     const h = nativeHarness(); h.port.speak({ ...h.request, onStart: () => h.port.cancel() });
     h.fire(h.utterances[0]!, 'onstart');
     expect(h.events.onSegment).not.toHaveBeenCalled(); expect(h.service.cancel).toHaveBeenCalledOnce();
+  });
+  test('missing native word boundaries finish once without estimated segment timers', () => {
+    const h = nativeHarness(); h.port.speak(h.request);
+    h.fire(h.utterances[0]!, 'onstart'); const ended = h.utterances[0]!.onend as () => void;
+    ended(); ended();
+    expect(h.events.onSegment).toHaveBeenCalledExactlyOnceWith(0);
+    expect(h.events.onEnd).toHaveBeenCalledOnce();
+  });
+  test('native word progress keeps a long continuous delivery alive', () => {
+    vi.useFakeTimers(); const h = nativeHarness(); h.port.speak(h.request);
+    h.fire(h.utterances[0]!, 'onstart'); vi.advanceTimersByTime(50_000);
+    h.utterances[0]!.onboundary!.call(h.utterances[0]!, { name: 'word', charIndex: 12 } as SpeechSynthesisEvent);
+    vi.advanceTimersByTime(50_000); expect(h.events.onError).not.toHaveBeenCalled();
+    h.fire(h.utterances[0]!, 'onend'); expect(h.events.onEnd).toHaveBeenCalledOnce();
   });
   test('a missing exact voice declines without speaking; a stalled utterance has a bounded, pause-aware failure', () => {
     const missing = nativeHarness([voice('David')]);

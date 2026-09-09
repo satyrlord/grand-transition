@@ -22,6 +22,8 @@ export interface SpeechResult {
 export interface SpeechPort {
   readonly available: boolean;
   speak(request: SpeechRequest): SpeechResult;
+  /** Prepare one public delivery without starting playback or emitting callbacks. */
+  prepare?(request: SpeechRequest): SpeechResult;
   cancel(): void;
   pause?(): void;
   resume?(): void;
