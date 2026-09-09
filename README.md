@@ -34,6 +34,11 @@ secured production shell, and the complete configured quality gate. Milestones
 024, 025, 027 through 029, and 031 remain incomplete. Milestone 023 is marked
 complete by its owning specification.
 
+[Milestone 030](docs/specs/spec-030-romanian-localization-and-speech.md) is
+approved and pending implementation. Phase 1 adds the complete Romanian
+interface, game content, grammar, and local Mihai medium and Liana medium
+voices. Phase 2 compares Ro_VITS and records a model decision.
+
 The current content has common Romanian-politics phrases and 18 fictional
 characters: 17 humans and one robot. Each character has owned phrases and a
 default local portrait. Seven archetypes have ten alternate skins in total.

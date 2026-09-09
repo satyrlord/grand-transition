@@ -8,6 +8,10 @@
 Milestone 019 owns local, public, browser-stored match history. Keep development
 tools and imports non-player-facing.
 
+Milestone 030 owns the planned Romanian locale extension. Before its codec
+implementation, record the exact new versions and migration fixtures here.
+The existing English formats and their original scoring remain supported.
+
 ## Deliver
 
 Add versioned replay and local match-log codecs, a headless simulation command,

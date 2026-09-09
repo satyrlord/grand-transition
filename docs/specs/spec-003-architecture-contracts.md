@@ -42,9 +42,11 @@ This milestone defines the speech port and proves it with a test-local fake.
 It does not add a browser speech adapter, audio behavior, or audio settings.
 Milestone 024 owns that implementation.
 
-English interface prose stays in user interface (UI)
+Interface prose stays in user interface (UI)
 messages. Grammar, phrase semantics, constructed sentences, and speech content
 stay in locale-specific bundles. Balance constants stay in validated data.
+Milestone 030 extends both message owners to Romanian and owns language
+selection. Translated prose must not enter locale-neutral rules.
 
 ## Exact contract shapes
 

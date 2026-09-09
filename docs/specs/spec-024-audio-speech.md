@@ -94,6 +94,11 @@ ONNX Runtime uses MIT. Ship licenses and third-party notices. Six local voices
 serve the current English locale. Other languages use silent presentation until
 a suitable model is approved.
 
+Milestone 030 approves Mihai medium and Liana medium for Romanian and owns
+their implementation and acceptance. It extends this worker, asset, and timing
+contract with Romanian inference. The skin mappings and Microsoft exception
+below remain the English behavior; Romanian mappings are defined in 030.
+
 `tools/neural-speech-assets.mjs` prepares and validates `public/tts/kokoro/`.
 `speech:build` prepares the package. `speech:validate` runs in build, asset
 validation, and CI. The approximately 110 MB package includes model, voices,

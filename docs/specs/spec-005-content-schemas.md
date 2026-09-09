@@ -45,6 +45,9 @@ Reject a human assignment outside George and Emma. Reject a robot assignment
 outside David, Mark, and Zira. Each assigned skin ID must exist in the character
 asset catalog.
 
+These voice assignments describe English. Milestone 030 maps the same authored
+profiles to Romanian Mihai and Liana voices without changing character identity.
+
 A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects.
 The scene pool supplies at least three distinct unrestricted nouns and three
@@ -54,8 +57,10 @@ distinct `and` or contrast connectors, and one continuation. Thus, Milestone
 `but` and `yet`.
 
 Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
-phrase, constructed-sentence, and speech message-key sets. Interface labels and
-controls are always English and do not enter locale bundles. Every referenced
+phrase, constructed-sentence, and speech semantic message-key sets. Milestone
+030 permits language-specific inflection shapes and owns complete Romanian
+coverage. Interface labels and controls use separate Lit message resources;
+they do not enter game locale bundles. Every referenced
 text and number-form key exists. Reject HTML, script URLs, inline handlers,
 and unsafe editorial states. Reject
 player-visible real-person references, real-party references, protected-trait
