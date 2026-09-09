@@ -13,7 +13,8 @@ and onward. Position does not matter. A noun absent from the next complete
 insult leaves the active combo set. An incomplete insult clears all of that
 player's combos. A continuation neither scores nor advances or clears combos.
 
-For each scored clause, multiply by every participating noun chain. A
+For each scored clause, multiply its value, including modifier points, by every
+participating noun chain. A
 `NOUN + VERB + NOUN` clause thus multiplies the subject and object chain
 values. If the same noun is both subject and object, its chain factor applies
 twice. Clause combo factors do not multiply unrelated clauses.

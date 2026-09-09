@@ -75,8 +75,9 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   They also include private hands, clause scoring, noun combos, continuations,
   comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 8,
   11, and 14
-  compatibility bases, one local 1.5 weakness multiplier, and no restriction
-  damage bonus. The seeded Local Radio Caller, Party Strategist, and Palace
+  compatibility bases plus 2 points per modifier before weakness and noun-combo
+  multipliers. Each clause receives at most one 1.5 weakness multiplier.
+  Restrictions do not add damage. The seeded Local Radio Caller, Party Strategist, and Palace
   Operator AI policies select valid actions for single-player matches. A local
   nine-rung ladder persists wins, losses, opponents, scenes, and completion.
 - Every completed exchange blocks drafting while each character recites one

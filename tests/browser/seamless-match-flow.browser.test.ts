@@ -105,7 +105,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   const player = state.draft!.playerStates[activePlayerId]!;
   const phraseIds = [
     'your-brother',
-    'is-a-securitate-informer',
+    'is-a-snitch',
     'coalition-and',
     'a-pig',
   ] as const;
@@ -159,7 +159,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
 
   expect(match.snapshot?.sentenceComplete).toBe(true);
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
-    'Your brother is a Securitate informer and a pig.',
+    'Your brother is a snitch and a pig.',
   );
 });
 

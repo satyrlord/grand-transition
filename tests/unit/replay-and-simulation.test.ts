@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import {
   basicScoringBalance,
   legacyBasicScoringBalance,
+  legacyVersion3BasicScoringBalance,
 } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
@@ -163,6 +164,28 @@ describe('versioned replay and local match-log codecs', () => {
     }
   });
 
+  test('version 3 replays retain scores for sentences with modifiers', () => {
+    const legacyContext = { ...context, balance: legacyVersion3BasicScoringBalance };
+    const legacy = simulateMatch(20_260_823, createSimulationSetup(sampleContent), legacyContext,
+      (state, engine) => listSimulationOptions(state, engine).toSorted((left, right) =>
+        Number(right.phrase?.role === 'modifier') - Number(left.phrase?.role === 'modifier')),
+    );
+    const bytes = encodeReplay({ ...legacy.replay, schemaVersion: 3 });
+    expect(legacy.finalState.resolutionHistory.some((round) =>
+      Object.values(round.players).some((player) =>
+        player.score?.breakdown.some((item) => item.kind === 'clause-base' &&
+          item.phraseIds.some((id) => sampleContent.phrases.some((phrase) =>
+            phrase.id === id && phrase.role === 'modifier'))),
+      ),
+    )).toBe(true);
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (replayed.ok) expect(replayed.state).toEqual({ ...legacy.finalState, schemaVersion: 3 });
+    expect(decodeMatchLog(normalizedJson({
+      ...completed.matchLog, schemaVersion: 3, sentences: undefined,
+    }))).toEqual({ ok: false, code: 'invalid-replay' });
+  });
+
   test('normalizes and decodes the public match log', () => {
     const decoded = decodeMatchLog(completed.matchLogBytes);
     expect(decoded).toEqual({ ok: true, value: completed.matchLog });
@@ -212,7 +235,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.replay, schemaVersion: 4 }),
+      normalizedJson({ ...completed.replay, schemaVersion: replaySchemaVersion + 1 }),
     ],
   ] as const)(
     'rejects replay fixture %s before a write or match result',
@@ -237,7 +260,7 @@ describe('versioned replay and local match-log codecs', () => {
     ],
     [
       'unsupported-version',
-      normalizedJson({ ...completed.matchLog, schemaVersion: 4 }),
+      normalizedJson({ ...completed.matchLog, schemaVersion: replaySchemaVersion + 1 }),
     ],
   ] as const)('rejects match-log fixture %s before a write', (code, bytes) => {
     const storage = recordingStorage();

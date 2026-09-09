@@ -53,10 +53,9 @@ predicate or verb. `but` and `yet` do not join an incomplete opening subject.
 After a combined copular predicate that declares
 `allowsCoordinatedNounComplement`, `and + NOUN` is also a complete coordinated
 complement that shares the predicate's copula. Thus, `your brother + is a
-Securitate informer + and + a pig` renders and completes as `Your brother is a
-Securitate informer and a pig.` The same noun prefix remains able to start the
-existing new-subject branch when a predicate or a verb follows it. Predicates
-without this declaration continue to treat `and + NOUN` only as a new subject
+snitch + and + a pig` renders and completes as `Your brother is a snitch and a pig.`
+The same noun prefix remains able to start the existing new-subject branch when a predicate or a verb follows it.
+Predicates without this declaration continue to treat `and + NOUN` only as a new subject
 and remain incomplete until its relation follows.
 
 `so` and `for` can follow only a complete clause. Each requires a new noun

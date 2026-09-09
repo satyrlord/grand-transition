@@ -15,7 +15,10 @@ subject noun. Several complete clauses add their scores.
 A modifier belongs to the preceding complete clause. It does not create a new
 clause and does not replace the clause relation. Its tags can activate a
 weakness in that clause. Its character or scene restriction affects draw
-eligibility only. Noun combos do not treat it as a noun.
+eligibility only. Each modifier adds 2 points to each clause to which it
+belongs, including clauses produced by compound subjects or objects. Repeated
+modifier occurrences each receive these points. Noun combos do not treat a
+modifier as a noun.
 
 The `with` connector and its noun complement also belong to the preceding
 complete clause. The complement can affect weakness tags, but its restrictions
@@ -40,13 +43,14 @@ scene restrictions never change damage. They control eligibility only.
 
 Apply these steps to each clause in order:
 
-1. Calculate the clause base or use its custom matrix value.
+1. Calculate the clause base or use its custom matrix value. Add 2 points for
+   each modifier in that clause. The displayed clause base includes these points.
 2. If any phrase in that clause matches a defender weakness, multiply the
    clause by 1.5 once.
 3. Apply noun-combo multipliers as specified in Milestone 011.
 
 Add the final clause values. Always round final non-negative damage up. There is
-no card-value sum, directness bonus, length bonus, whole-sentence weakness
+no card-value sum, directness bonus, general length bonus, whole-sentence weakness
 multiplier, or nearest-half rounding.
 
 An incomplete sentence and a continued fragment deal zero outgoing damage.
@@ -64,7 +68,11 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
   main clause.
 - **AC-010-05:** Incomplete and continued constructions score zero.
 - **AC-010-06:** A modifier stays in the preceding clause breakdown, does not
-  add another clause base, and applies its weakness effects to that clause.
+  add another clause, and adds 2 points before weakness and noun-combo
+  multipliers. Stacked modifiers each add points and each can activate a
+  weakness. Multiple matching tags still apply only one weakness multiplier.
+  Modifier points also apply after a custom matrix value. Incomplete and
+  continued constructions receive no modifier points.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
   completes in an average of 3 through 11 resolved rounds per match. The
   current Milestone 026 playable catalog supplies all 18 characters, six scenes,
@@ -79,6 +87,8 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
 ## Objective verifiers
 
 `tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-06.
+The modifier scenario in `e2e/coordinated-copular-complement.spec.ts` verifies
+the production clause receipt and final damage for AC-010-06.
 `tests/unit/replay-and-simulation.test.ts` and
 `npm run simulate -- --seed 20260830 --matches 500` verify AC-010-07.
 `tests/unit/basic-scoring.test.ts` and

@@ -4,56 +4,85 @@ import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
 const targetCards = [
   { phraseId: 'your-brother', role: 'noun' },
-  { phraseId: 'is-a-securitate-informer', role: 'predicate' },
+  { phraseId: 'is-a-snitch', role: 'predicate' },
   { phraseId: 'coalition-and', role: 'conjunction' },
   { phraseId: 'a-pig', role: 'noun' },
 ] as const;
 
-test('the production game scores a coordinated copular complement', async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 1280, height: 720 });
-  await useFixedBrowserMatchSeed(page, 20_260_901);
-  await page.clock.install();
-  await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByRole('button', { name: 'Start match' }).click();
+for (const scenario of [
+  {
+    name: 'a coordinated copular complement',
+    cards: targetCards,
+    sentence: 'Your brother is a snitch and a pig',
+    total: undefined,
+  },
+  {
+    name: 'three stacked modifiers',
+    cards: [
+      { phraseId: 'a-pig', role: 'noun' },
+      { phraseId: 'stole', role: 'verb' },
+      { phraseId: 'municipal-ribbon', role: 'noun' },
+      { phraseId: 'on-the-campaign-trail', role: 'modifier' },
+      { phraseId: 'during-budget-season', role: 'modifier' },
+      { phraseId: 'under-the-studio-lights', role: 'modifier' },
+    ],
+    sentence: 'A pig stole a municipal ribbon on the campaign trail during budget season under the studio lights',
+    total: 17,
+  },
+]) {
+  test('the production game scores ' + scenario.name, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await useFixedBrowserMatchSeed(page, 20_260_901);
+    await page.clock.install();
+    await page.goto('/grand-transition/');
+    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Start match' }).click();
 
-  const fixture = await installTargetCards(page);
-  for (const cardId of fixture.cardIds) {
+    const fixture = await installTargetCards(page, scenario.cards);
+    for (const cardId of fixture.cardIds) {
+      await forceActivePlayer(page, fixture.playerId);
+      await page
+        .locator(`[data-card-source="shared"][data-card-id="${cardId}"]`)
+        .click();
+    }
     await forceActivePlayer(page, fixture.playerId);
-    await page
-      .locator(`[data-card-source="shared"][data-card-id="${cardId}"]`)
-      .click();
-  }
-  await forceActivePlayer(page, fixture.playerId);
 
-  await expect(page.locator('.sentence-preview')).toHaveText(
-    'Your brother is a Securitate informer and a pig',
-  );
-  await expect(page.locator('.sentence-state')).toContainText('Sentence ready');
-  await page.getByRole('button', { name: 'End', exact: true }).click();
-  await page.getByRole('button', { name: 'End', exact: true }).click();
+    await expect(page.locator('.sentence-preview')).toHaveText(
+      scenario.sentence,
+    );
+    await expect(page.locator('.sentence-state')).toContainText('Sentence ready');
+    await page.getByRole('button', { name: 'End', exact: true }).click();
+    await page.getByRole('button', { name: 'End', exact: true }).click();
 
-  await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
-  await reachDeliveryTotal(page, fixture.playerId);
-  await expect(page.locator('.round-review-dialog')).toHaveCount(0);
-  await expect(page.locator('.sentence-preview')).toHaveText(
-    'Your brother is a Securitate informer and a pig.',
-  );
-  const score = page.locator(
-    `.delivery-receipt[data-speaker="${fixture.playerId}"] .delivery-total`,
-  );
-  await expect(score).toContainText(/Total\s*[1-9][0-9]*/u);
-  await expect(
-    page.locator(
-      `.delivery-receipt[data-speaker="${fixture.playerId}"] [data-score-kind="clause"]`,
-    ),
-  ).toHaveCount(1);
-});
+    await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+    await reachDeliveryTotal(page, fixture.playerId);
+    await expect(page.locator('.round-review-dialog')).toHaveCount(0);
+    await expect(page.locator('.sentence-preview')).toHaveText(
+      scenario.sentence + '.',
+    );
+    const score = page.locator(
+      `.delivery-receipt[data-speaker="${fixture.playerId}"] .delivery-total`,
+    );
+    await expect(score).toContainText(/Total\s*[1-9][0-9]*/u);
+    if (scenario.total !== undefined) {
+      await expect(score).toHaveText(new RegExp('^Total\\s*' + scenario.total + '$', 'u'));
+      await expect(page.locator(
+        '.delivery-receipt[data-speaker="' + fixture.playerId + '"] [data-score-kind="clause"]',
+      )).toContainText('11');
+    }
+    await expect(
+      page.locator(
+        `.delivery-receipt[data-speaker="${fixture.playerId}"] [data-score-kind="clause"]`,
+      ),
+    ).toHaveCount(1);
+  });
+}
 
 async function installTargetCards(
   page: Page,
+  cards: readonly { phraseId: string; role: string }[],
 ): Promise<Readonly<{ playerId: string; cardIds: readonly string[] }>> {
   return page.locator('grand-transition-app').evaluate((element, cards) => {
     type Slot = {
@@ -102,7 +131,7 @@ async function installTargetCards(
     const board = { ...state.draft.board, slots };
     app.matchState = { ...state, board, draft: { ...state.draft, board } };
     return { playerId: state.playerOrder[0]!, cardIds };
-  }, targetCards);
+  }, cards);
 }
 
 async function forceActivePlayer(page: Page, playerId: string): Promise<void> {

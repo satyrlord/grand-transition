@@ -2,9 +2,7 @@
   {
     "id": "national-consensus",
     "role": "noun",
-    "text": "a national consensus",
-    "singularText": "a national consensus",
-    "pluralText": "national consensuses",
+    "text": "your so-called national consensus",
     "tags": ["restraint", "legacy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -259,7 +257,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Standard English connector re-authored for the Romanian coalition corpus. Editorial review complete."
+      "notes": "Standard English connector. Editorial review complete."
     }
   },
   {
@@ -273,7 +271,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Standard English connector re-authored for the Romanian broadcast corpus. Editorial review complete."
+      "notes": "Standard English connector. Editorial review complete."
     }
   },
   {
@@ -287,7 +285,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Standard English connector re-authored for the Romanian archive corpus. Editorial review complete."
+      "notes": "Standard English connector. Editorial review complete."
     }
   },
   {
@@ -2389,7 +2387,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Standard English connector selected for strong contrast in Romanian parliamentary satire. Editorial review complete."
+      "notes": "Standard English connector. Editorial review complete."
     }
   },
   {
@@ -4502,14 +4500,14 @@
     "tenseFamily": "appropriated"
   },
   {
-    "id": "was-a-securitate-informer",
+    "id": "was-a-snitch",
     "role": "predicate",
     "allowsCoordinatedNounComplement": true,
-    "text": "was a Securitate informer",
-    "singularText": "was a Securitate informer",
-    "pluralText": "were Securitate informers",
-    "personalSingularText": "was a Securitate informer",
-    "secondPersonText": "were a Securitate informer",
+    "text": "was a snitch",
+    "singularText": "was a snitch",
+    "pluralText": "were snitches",
+    "personalSingularText": "was a snitch",
+    "secondPersonText": "were a snitch",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [
@@ -4527,17 +4525,17 @@
       "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
     },
     "tense": "past",
-    "tenseFamily": "was-a-securitate-informer"
+    "tenseFamily": "was-a-snitch"
   },
   {
-    "id": "is-a-securitate-informer",
+    "id": "is-a-snitch",
     "role": "predicate",
     "allowsCoordinatedNounComplement": true,
-    "text": "is a Securitate informer",
-    "singularText": "is a Securitate informer",
-    "pluralText": "are Securitate informers",
-    "personalSingularText": "is a Securitate informer",
-    "secondPersonText": "are a Securitate informer",
+    "text": "is a snitch",
+    "singularText": "is a snitch",
+    "pluralText": "are snitches",
+    "personalSingularText": "is a snitch",
+    "secondPersonText": "are a snitch",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [
@@ -4555,17 +4553,17 @@
       "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
     },
     "tense": "present",
-    "tenseFamily": "was-a-securitate-informer"
+    "tenseFamily": "was-a-snitch"
   },
   {
-    "id": "will-be-a-securitate-informer",
+    "id": "will-be-a-snitch",
     "role": "predicate",
     "allowsCoordinatedNounComplement": true,
-    "text": "will be a Securitate informer",
-    "singularText": "will be a Securitate informer",
-    "pluralText": "will be Securitate informers",
-    "personalSingularText": "will be a Securitate informer",
-    "secondPersonText": "will be a Securitate informer",
+    "text": "will be a snitch",
+    "singularText": "will be a snitch",
+    "pluralText": "will be snitches",
+    "personalSingularText": "will be a snitch",
+    "secondPersonText": "will be a snitch",
     "tags": ["legacy", "evidence", "securitate"],
     "scorePreferences": {
       "substance": [
@@ -4583,7 +4581,7 @@
       "notes": "Original historical-institutional predicate for fictional transition-era satire. It names no real person and does not make a claim about a real individual. Editorial review complete."
     },
     "tense": "future",
-    "tenseFamily": "was-a-securitate-informer"
+    "tenseFamily": "was-a-snitch"
   },
   {
     "id": "a-state-secretary",

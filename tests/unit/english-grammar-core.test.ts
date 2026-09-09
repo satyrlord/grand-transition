@@ -108,13 +108,13 @@ describe('Hollywood Roast English grammar', () => {
       analyze([add('you'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You rebrand a national consensus' },
+      analysis: { publicText: 'You rebrand your so-called national consensus' },
     });
     expect(
       analyze([add('my-opponent'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'My opponent rebrands a national consensus' },
+      analysis: { publicText: 'My opponent rebrands your so-called national consensus' },
     });
 
     for (const [predicateId, expected] of [
@@ -124,9 +124,9 @@ describe('Hollywood Roast English grammar', () => {
         'will-be-communist-party-members',
         'You will be a Communist Party member',
       ],
-      ['was-a-securitate-informer', 'You were a Securitate informer'],
-      ['is-a-securitate-informer', 'You are a Securitate informer'],
-      ['will-be-a-securitate-informer', 'You will be a Securitate informer'],
+      ['was-a-snitch', 'You were a snitch'],
+      ['is-a-snitch', 'You are a snitch'],
+      ['will-be-a-snitch', 'You will be a snitch'],
     ] as const) {
       expect(
         analyze([add('you'), add(predicateId)]),
@@ -408,7 +408,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'CLAUSE_COMPLETE',
         nextRoles: ['modifier', 'conjunction', 'ending'],
         publicText:
-          'A national consensus rebrands a televised revolution before the next election behind closed doors',
+          'Your so-called national consensus rebrands a televised revolution before the next election behind closed doors',
       },
     });
     expect(
@@ -455,7 +455,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'ENDED',
         punctuation: '.',
         publicText:
-          'A national consensus belongs in a history museum by emergency ordinance.',
+          'Your so-called national consensus belongs in a history museum by emergency ordinance.',
       },
     });
   });
