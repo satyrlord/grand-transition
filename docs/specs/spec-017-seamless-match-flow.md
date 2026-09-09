@@ -6,9 +6,9 @@
 **Owns:** Browser lifecycle and automatic between-round progression
 **Production-file budget:** 4
 
-Milestone 019 owns persistent Victory and history. The approved Milestone 025
-reference-loop revision replaces this milestone's former results modal and
-mandatory Continue action.
+Milestone 019 owns persistent Victory and history. Use the Milestone 025
+reference loop for between-round progression and terminal presentation. Do not
+use a results modal or mandatory Continue action.
 
 ## Deliver
 

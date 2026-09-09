@@ -24,10 +24,10 @@ connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'
 Development omits it for Vite Hot Module Replacement (HMR). Production permits
 no inline script, `unsafe-eval`, imported style text, unsafe Hypertext Markup
 Language (HTML), remote font, image, or audio.
-The approved local neural speech revision permits same-origin static asset
+The local neural speech policy permits same-origin static asset
 fetches for audio, model weights, voice embeddings, vocabulary, and WASM. These
 requests omit credentials and reject redirects. No phrase leaves the device.
-Local module workers and WASM compilation are permitted; generic JavaScript
+Local module workers and WASM compilation are permitted. Generic JavaScript
 `unsafe-eval` remains forbidden. No XMLHttpRequest, WebSocket, EventSource,
 analytics, cloud speech, or arbitrary runtime API request is permitted.
 The owner-authorized robot exception uses only the exact installed Microsoft

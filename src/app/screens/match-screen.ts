@@ -42,6 +42,8 @@ export class GrandTransitionMatch extends LitElement {
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
     phraseColorCoding: { attribute: false },
+    musicEnabled: { attribute: false },
+    voicesEnabled: { attribute: false },
     thinking: { type: Boolean },
     aiName: { type: String },
     autoRevealWaitingSentence: { type: Boolean },
@@ -53,6 +55,8 @@ export class GrandTransitionMatch extends LitElement {
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
   declare phraseColorCoding: boolean;
+  declare musicEnabled: boolean;
+  declare voicesEnabled: boolean;
   declare thinking: boolean;
   declare aiName: string;
   declare autoRevealWaitingSentence: boolean;
@@ -78,6 +82,8 @@ export class GrandTransitionMatch extends LitElement {
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
     this.phraseColorCoding = true;
+    this.musicEnabled = true;
+    this.voicesEnabled = false;
     this.thinking = false;
     this.aiName = msg('Local Radio Caller');
     this.autoRevealWaitingSentence = false;
@@ -199,6 +205,8 @@ export class GrandTransitionMatch extends LitElement {
         .turnTimerSeconds=${this.turnTimerSeconds}
         .autoComplete=${this.autoComplete}
         .phraseColorCoding=${this.phraseColorCoding}
+        .musicEnabled=${this.musicEnabled}
+        .voicesEnabled=${this.voicesEnabled}
       ></grand-transition-interruption>`;
     }
     const players = this.snapshot.players.map((player) => this.presentation ? {

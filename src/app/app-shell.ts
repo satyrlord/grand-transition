@@ -12,8 +12,10 @@ import { MatchCoordinator, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
+  type MusicEnabledChangeEvent,
   type PhraseColorCodingChangeEvent,
   type TurnTimerChangeEvent,
+  type VoicesEnabledChangeEvent,
 } from './screens/interruption-screen';
 import './screens/setup-screen';
 import './screens/title-screen';
@@ -72,6 +74,7 @@ import {
   SettingsRepository,
   type SettingsSnapshot,
 } from '../persistence/settings';
+import { defaultSettings } from '../persistence/codecs/settings-codec';
 import {
   LadderProgressRepository,
   type LadderProgressSnapshot,
@@ -209,6 +212,7 @@ export class GrandTransitionApp extends LitElement {
   private readonly settingsRepository: SettingsRepository;
   private readonly ladderProgressRepository: LadderProgressRepository;
   private currentMatchIsLadder = false;
+  private musicVolumeBeforeMute: number | null = null;
   private audio: BrowserAudio | null = null;
   private speech: LocalNeuralSpeech | null = null;
   private gameAudio: GameAudio | null = null;
@@ -256,6 +260,9 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.matchHistoryOpen = false;
     this.settingsSnapshot = this.settingsRepository.snapshot();
+    this.musicVolumeBeforeMute = this.settingsSnapshot.settings.musicVolume > 0
+      ? this.settingsSnapshot.settings.musicVolume
+      : null;
     this.settingsOpen = false;
     this.settingsNoticeDismissed = false;
     this.aiThinking = false;
@@ -389,6 +396,8 @@ export class GrandTransitionApp extends LitElement {
         .turnTimerSeconds=${this.settingsSnapshot.settings.turnTimerSeconds}
         .autoComplete=${this.settingsSnapshot.settings.autoComplete}
         .phraseColorCoding=${this.phraseColorCoding}
+        .musicEnabled=${this.settingsSnapshot.settings.musicVolume > 0}
+        .voicesEnabled=${this.settingsSnapshot.settings.speechEnabled}
         .thinking=${this.aiThinking}
         .aiName=${difficultyLabel(this.matchState?.setup.aiDifficulty ?? null)}
         .autoRevealWaitingSentence=${Boolean(
@@ -403,6 +412,8 @@ export class GrandTransitionApp extends LitElement {
         @turn-timer-change=${this.changeTurnTimer}
         @auto-complete-change=${this.changeAutoComplete}
         @phrase-color-coding-change=${this.changePhraseColorCoding}
+        @music-enabled-change=${this.changeMusicEnabled}
+        @voices-enabled-change=${this.changeVoicesEnabled}
       ></grand-transition-match>`;
     }
 
@@ -490,10 +501,7 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly changeSettings = (event: SettingsChangeEvent): void => {
     event.stopPropagation();
-    this.settingsSnapshot = this.settingsRepository.replace(event.detail);
-    this.gameSpeech?.cancel();
-    this.audio?.configure(this.settingsSnapshot.settings);
-    if (this.settingsSnapshot.settings.speechEnabled) void this.speech?.initialize();
+    this.replaceSettings(event.detail);
   };
 
   private readonly dismissSettingsNotice = (
@@ -797,13 +805,48 @@ export class GrandTransitionApp extends LitElement {
     this.phraseColorCoding = event.detail;
   };
 
+  private readonly changeMusicEnabled = (
+    event: MusicEnabledChangeEvent,
+  ): void => {
+    event.stopPropagation();
+    if (event.detail) {
+      this.replaceSettings({
+        ...this.settingsSnapshot.settings,
+        musicVolume: this.musicVolumeBeforeMute ?? defaultSettings.musicVolume,
+      });
+      return;
+    }
+    if (this.settingsSnapshot.settings.musicVolume > 0) {
+      this.musicVolumeBeforeMute = this.settingsSnapshot.settings.musicVolume;
+    }
+    this.replaceSettings({ ...this.settingsSnapshot.settings, musicVolume: 0 });
+  };
+
+  private readonly changeVoicesEnabled = (
+    event: VoicesEnabledChangeEvent,
+  ): void => {
+    event.stopPropagation();
+    this.replaceSettings({
+      ...this.settingsSnapshot.settings,
+      speechEnabled: event.detail,
+    });
+  };
+
   private updateSettings<
-    Field extends 'turnTimerSeconds' | 'autoComplete',
+    Field extends 'turnTimerSeconds' | 'autoComplete' | 'musicVolume' | 'speechEnabled',
   >(field: Field, value: SettingsSnapshot['settings'][Field]): void {
-    this.settingsSnapshot = this.settingsRepository.replace({
+    this.replaceSettings({
       ...this.settingsSnapshot.settings,
       [field]: value,
     });
+  }
+
+  private replaceSettings(settings: SettingsSnapshot['settings']): void {
+    if (settings.musicVolume > 0) this.musicVolumeBeforeMute = settings.musicVolume;
+    this.settingsSnapshot = this.settingsRepository.replace(settings);
+    this.roundPresentation?.updateSettings(this.settingsSnapshot.settings);
+    this.audio?.configure(this.settingsSnapshot.settings);
+    if (this.settingsSnapshot.settings.speechEnabled) void this.speech?.initialize();
   }
 
   private readonly syncViewportSupport = (): void => {

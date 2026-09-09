@@ -10,6 +10,10 @@ import {
   matchCommandEventName,
   type MatchCommandEvent,
 } from '../../src/app/screens/match-screen';
+import {
+  decodeSettings,
+} from '../../src/persistence/codecs/settings-codec';
+import { settingsStorageKey } from '../../src/persistence/settings';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -1005,6 +1009,7 @@ test('conceals a paused match and resumes from the exact timer value', async () 
 
 test('applies Pause settings when the match resumes', async () => {
   vi.useFakeTimers();
+  localStorage.removeItem(settingsStorageKey);
   const match = await startMatch();
   const app = document.querySelector(
     'grand-transition-app',
@@ -1022,35 +1027,64 @@ test('applies Pause settings when the match resumes', async () => {
     [...match.querySelectorAll<HTMLButtonElement>('button')].find(
       (button) => button.textContent?.trim() === label,
     )!;
+  const settingOption = (
+    setting: string,
+    value: 'On' | 'Off',
+  ): HTMLButtonElement =>
+    match.querySelector<HTMLButtonElement>(
+      `button[data-setting="${setting}"][aria-label="${value}"]`,
+    ) ??
+    [...match.querySelectorAll<HTMLButtonElement>(
+      `button[data-setting="${setting}"]`,
+    )].find((button) => button.textContent?.trim() === value)!;
   expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
   const colorCodingOption = (value: 'On' | 'Off'): HTMLButtonElement =>
-    [
-      ...match.querySelectorAll<HTMLButtonElement>(
-        '[data-setting="phrase-color-coding"]',
-      ),
-    ].find((button) => button.textContent?.trim() === value)!;
+    settingOption('phrase-color-coding', value);
+  expect(settingOption('music', 'On').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
 
   pauseButton('15 seconds').click();
   pauseButton('30 seconds').click();
-  pauseButton('Off').click();
-  pauseButton('On').click();
+  settingOption('auto-complete', 'Off').click();
+  settingOption('auto-complete', 'On').click();
+  settingOption('music', 'Off').click();
+  settingOption('music', 'On').click();
+  settingOption('voices', 'On').click();
+  settingOption('voices', 'Off').click();
   colorCodingOption('Off').click();
   colorCodingOption('On').click();
   await app.updateComplete;
   await match.updateComplete;
   expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
-  expect(pauseButton('On').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('auto-complete', 'On').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('music', 'On').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
+  expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+    ok: true,
+    value: { musicVolume: 0.7 },
+  });
 
   pauseButton('15 seconds').click();
-  pauseButton('Off').click();
+  settingOption('auto-complete', 'Off').click();
+  settingOption('music', 'Off').click();
+  settingOption('voices', 'On').click();
+  settingOption('voices', 'Off').click();
   colorCodingOption('Off').click();
   await app.updateComplete;
   await match.updateComplete;
   expect(pauseButton('15 seconds').getAttribute('aria-pressed')).toBe('true');
-  expect(pauseButton('Off').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('auto-complete', 'Off').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('music', 'Off').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('Off').getAttribute('aria-pressed')).toBe('true');
+
+  const stored = decodeSettings(localStorage.getItem(settingsStorageKey)!);
+  expect(stored).toMatchObject({
+    ok: true,
+    value: { musicVolume: 0, speechEnabled: false },
+  });
 
   pauseButton('Resume').click();
   await app.updateComplete;
@@ -1081,6 +1115,8 @@ test('applies Pause settings when the match resumes', async () => {
   match.querySelector<HTMLButtonElement>('.match-pause')!.click();
   await app.updateComplete;
   await match.updateComplete;
+  expect(settingOption('music', 'Off').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   pauseButton('Unlimited').click();
   await app.updateComplete;
   await match.updateComplete;

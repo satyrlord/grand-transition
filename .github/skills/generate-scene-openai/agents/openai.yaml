@@ -1,0 +1,6 @@
+interface:
+  display_name: "Generate Scene with OpenAI"
+  short_description: "Route scene art by size, then inspect and import"
+  default_prompt: "Use $generate-scene-openai to generate scene art internally through 1080p or through the OpenAI API above 1080p, then verify and integrate it."
+policy:
+  allow_implicit_invocation: true

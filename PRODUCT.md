@@ -104,8 +104,9 @@ implementation authority. Two untracked original-game screenshots under
 the temporary folder are composition and interaction references only. They are
 not product assets or layout specifications. The fixed character and studio
 raster baselines have manifests and runtime
-variants. Complete state packages, audio, and final catalog assets remain
-incomplete. No testimonial or customer claim is recorded here.
+variants. Character state packages and audio assets are implemented. Final
+visual, audible, and catalog acceptance remains incomplete. No testimonial or
+customer claim is recorded here.
 
 ## Product Principles
 

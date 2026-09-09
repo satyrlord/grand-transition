@@ -1754,6 +1754,15 @@ test('Pause settings apply to the resumed match', async ({
   const phraseColorCodingSettings = page
     .locator('.interruption-setting')
     .filter({ hasText: 'Phrase color coding' });
+  const soundSettings = page
+    .locator('.interruption-setting')
+    .filter({ hasText: 'Sound' });
+  const musicSettings = soundSettings
+    .locator('.interruption-audio-control')
+    .filter({ hasText: 'Music' });
+  const voicesSettings = soundSettings
+    .locator('.interruption-audio-control')
+    .filter({ hasText: 'Voices' });
   const autoCompleteOn = autoCompleteSettings.getByRole('button', {
     name: 'On',
     exact: true,
@@ -1762,15 +1771,34 @@ test('Pause settings apply to the resumed match', async ({
     name: 'On',
     exact: true,
   });
+  const musicOn = musicSettings.getByRole('button', {
+    name: 'On',
+    exact: true,
+  });
+  const voicesOff = voicesSettings.getByRole('button', {
+    name: 'Off',
+    exact: true,
+  });
   await expect(thirtySeconds).toHaveAttribute('aria-pressed', 'true');
   await expect(autoCompleteOn).toHaveAttribute('aria-pressed', 'true');
   await expect(phraseColorCodingOn).toHaveAttribute('aria-pressed', 'true');
+  await expect(musicOn).toHaveAttribute('aria-pressed', 'true');
+  await expect(voicesOff).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: '15 seconds' }).click();
   await autoCompleteSettings
     .getByRole('button', { name: 'Off', exact: true })
     .click();
   await phraseColorCodingSettings
+    .getByRole('button', { name: 'Off', exact: true })
+    .click();
+  await musicSettings
+    .getByRole('button', { name: 'Off', exact: true })
+    .click();
+  await voicesSettings
+    .getByRole('button', { name: 'On', exact: true })
+    .click();
+  await voicesSettings
     .getByRole('button', { name: 'Off', exact: true })
     .click();
   await expect(
@@ -1784,6 +1812,12 @@ test('Pause settings apply to the resumed match', async ({
       name: 'Off',
       exact: true,
     }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    musicSettings.getByRole('button', { name: 'Off', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    voicesSettings.getByRole('button', { name: 'Off', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -1871,6 +1905,18 @@ test('Pause settings apply to the resumed match', async ({
   );
 
   await page.getByRole('button', { name: 'Pause' }).click();
+  await expect(
+    page
+      .locator('.interruption-audio-control')
+      .filter({ hasText: 'Music' })
+      .getByRole('button', { name: 'Off', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    page
+      .locator('.interruption-audio-control')
+      .filter({ hasText: 'Voices' })
+      .getByRole('button', { name: 'Off', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Unlimited' }).click();
   await page.getByRole('button', { name: 'Resume' }).click();
   await expect(page.locator('.timer-fact')).toHaveAttribute(

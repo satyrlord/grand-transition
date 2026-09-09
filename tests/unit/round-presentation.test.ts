@@ -68,6 +68,16 @@ describe('reference round presentation', () => {
     expect(h.frame()).toBeNull(); expect(h.completed).not.toHaveBeenCalled();
   });
 
+  test('a settings change cancels active speech and continues the presentation silently', () => {
+    const h = harness(); h.controller.start(h.input); h.controller.pause();
+    h.controller.updateSettings({ ...h.input.settings, speechEnabled: false });
+    h.controller.resume(); h.advance(10_000);
+    expect(h.voice.cancel).toHaveBeenCalled();
+    expect(h.requests).toHaveLength(1);
+    expect(h.completed).toHaveBeenCalledOnce();
+    expect(h.frame()).toBeNull();
+  });
+
   test('silent delivery follows the same ordered sequence without a mandatory Continue action', () => {
     const h = harness(false); h.controller.start(h.input);
     expect(h.frame()?.phase).toBe('reciting'); expect(h.requests).toHaveLength(0);

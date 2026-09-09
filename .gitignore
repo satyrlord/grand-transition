@@ -73,12 +73,14 @@ tests/unit/__snapshots__/
 .vitest-attachments/
 output/
 docs/reviews/
+HISTORY.md
 tools/*
 !tools/scene-replacement-baseline.json
 !tools/scene-resolution.mjs
 !tools/audio-assets.mjs
 !tools/neural-speech-assets.mjs
 !tools/neural-phonemizer-plugin.ts
+.env.local
 
 # codex-workflow-managed-start
 agent_docs/

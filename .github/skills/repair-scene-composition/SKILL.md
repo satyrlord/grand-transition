@@ -28,8 +28,12 @@ Preserve
 unrelated work.
 
 Use [design-grand-transition-ui](../design-grand-transition-ui/SKILL.md) for the
-owning interface workflow. Use the installed `imagegen` skill for raster edits
-and generation. Use [verify-game](../verify-game/SKILL.md) for production-browser
+owning interface workflow.
+Use [generate-scene-openai](../generate-scene-openai/SKILL.md) for scene raster
+generation and editing. It selects the internal tool through 1080p and the
+OpenAI API above 1080p.
+Use the installed `imagegen` skill for other raster work.
+Use [verify-game](../verify-game/SKILL.md) for production-browser
 evidence.
 
 Read [the scene diagnosis reference](references/scene-diagnosis.md) before the

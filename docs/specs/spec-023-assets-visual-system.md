@@ -6,53 +6,22 @@
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
 **Production-file budget:** 10
 
-## Completion decision
+## Schoolteacher robot
 
-The product owner declared this milestone complete on 2026-09-08. This decision
-accepts all five delivery packages and AC-023-01 through AC-023-19, including
-the final baseline art, representative stage compositions, motion, and
-Impeccable validation. No milestone acceptance condition remains open.
-
-The product owner accepts the available visual-review and Impeccable records.
-Recovery or repetition of the detailed per-asset reviews and recovery of the
-omitted skill and detector versions are not required for this acceptance.
-This decision supersedes earlier pending-review statements and the shared
-evidence requirements for this milestone's completion. The technical, art,
-privacy, and regression contracts below remain in force for later changes.
-
-The acceptance audit at revision `c513d11` passed `npm run ci`: 501 unit tests,
-424 browser tests, 424 coverage tests, and 133 production-browser tests.
-`git diff --check` also passed.
-
-## Approved schoolteacher robot addition
-
-On 2026-09-08, the owner requested a third Government AI skin: a severe female
-communist robot schoolteacher, voiced by Microsoft Zira. Its stable skin ID is
-`schoolteacher`. It adds one selection master and eight state masters, with
-transparent 2048-square PNGs and the normal AVIF/WebP variants. Selection and
-idle reuse the same standing artwork; the other seven states have distinct
-poses and expressions. The current inventory is 28 selection masters and eight
-state packages containing 64 state masters. The original 27 replacement-baseline
-hashes remain unchanged. Reviewed additions are declared in `portrait-layout.json`.
-The build keeps the original mandatory inventory and adds those reviewed files.
+Include a third Government AI skin: a severe female communist robot
+schoolteacher, voiced by Microsoft Zira. Use the stable skin ID
+`schoolteacher`. Add one selection master and eight state masters with
+transparent 2048-square PNGs and the normal AVIF/WebP variants. Reuse the same
+standing artwork for selection and idle. Give the other seven states distinct
+poses and expressions. The inventory contains 28 selection masters and eight
+state packages containing 64 state masters. Keep the 27 baseline replacement
+hashes unchanged. Declare the reviewed additions in `portrait-layout.json`.
+Keep the baseline inventory and add the reviewed files.
 
 The private prompts are under `research/government-ai--schoolteacher/prompts/`.
-The built-in image tool generated the sprites. The approved green-key tool
-removed the matte; uniform 32-pixel canvas padding protects the smallest variant.
-This addition does not reopen or replace the earlier accepted character art.
-
-## Completed delivery packages
-
-The implementation used dependency-ordered delivery packages. Each
-code package has a ten-production-file budget. Each character-state art
-package contains one master and its six runtime files. All five packages are
-accepted as complete.
-
-1. Baseline portrait corrections and generation-input records.
-2. Character-state build, validation, and manifest resolution.
-3. State art for each of the four slice characters and all their baseline skins.
-4. Public-event projection, layered character presentation, and scene motion.
-5. Complete inventory review, production-browser evidence, and cumulative CI.
+Use the built-in image tool to generate the sprites. Use the approved green-key
+tool to remove the matte. Keep uniform 32-pixel canvas padding around the
+smallest variant. Keep the 27 baseline character files unchanged.
 
 Keep the fixed 27-entry selection manifest as the baseline inventory. Store
 additional slice states separately from filename-discovered portrait skins.
@@ -73,7 +42,7 @@ use the roster or setup hint for a larger match image.
 `src/assets/characters/portrait-layout.json` records each baseline source's
 reviewed left or right facing direction and source hash. The builder rejects
 missing, invalid, or stale layout records and copies the facing direction into
-the selection manifest. Layout records do not create skins; filename discovery
+the selection manifest. Layout records do not create skins. Filename discovery
 still owns the skin catalog. State drawings share their selected skin's facing
 direction. A later unmanifested interim portrait uses the right-facing default
 until Milestone 031 promotes it.
@@ -92,6 +61,8 @@ asset loading. Regenerate the fixed current character and scene asset baseline
 from scratch as original final-quality static art. Complete state and motion art
 for the four vertical-slice characters and one scene. Add core reactions,
 ambience, and transitions.
+Keep each code package within the ten-production-file budget. Keep each
+character-state art package to one master and six runtime files.
 
 ## Regeneration baseline and decision recovery
 
@@ -115,11 +86,10 @@ defines and these nine current alternate portraits:
 - `velvet-mogul--silk-diplomat.png`.
 - `velvet-mogul--velvet-statesman.png`.
 
-The retired `black-sea-captain--alternate.png` is not regenerated, shipped, or
-counted in this baseline.
+Do not regenerate, ship, or count `black-sea-captain--alternate.png` in this
+baseline.
 
-The retired `presidential-sphinx.png` is not regenerated, shipped, or counted
-in this baseline.
+Do not regenerate, ship, or count `presidential-sphinx.png` in this baseline.
 
 `tools/scene-replacement-baseline.json` records the four replaced studio-layer
 hashes for inventory validation only. It is not an art input. Validation
@@ -140,9 +110,9 @@ The current playable catalog also includes four opaque scene masters:
 same 16:9 source canvas, resolution-specific runtime variants, crop core, and shared safe
 rectangles. Each has a focal point at `(0.5, 0.5)` and explicitly absent
 moderator and foreground-desk focal rectangles. The asset pipeline validates
-all eight scene masters. The original four-layer baseline remains the studio
-regeneration boundary; the four added backgrounds replace the retired
-foundation fallback under Milestone 026.
+all eight scene masters. Keep the four-layer baseline as the studio
+regeneration boundary. Use the four opaque backgrounds as the foundation
+scenes under Milestone 026.
 
 An asset added after this fixed baseline does not enter Milestone 023
 automatically. Milestone 031 owns later portraits, skins, states, scene
@@ -151,9 +121,9 @@ future requirements into this milestone.
 
 Regeneration is atomic for each represented archetype. Regenerate its default
 portrait and every baseline alternate skin in the same art pass. Review them as
-one package before accepting any file. Do not retain, accept, or ship an old
-alternate skin beside a regenerated default skin. An alternate added after the
-fixed baseline remains under Milestone 031.
+one package before accepting any file. Do not retain, accept, or ship a
+non-regenerated alternate skin beside a regenerated default skin. An alternate
+added after the fixed baseline remains under Milestone 031.
 Create it from scratch under the same locked art direction and completed
 character study.
 
@@ -178,11 +148,11 @@ product-owner approval is recorded in the private
 study.
 
 The art agent must audit the study before generation. When information is
-missing, lost, unclear, or contradictory, the agent must use `$grill-me` with
-the product owner. It must resolve one decision at a time and record each answer
-in the private study. The agent must not infer the missing decision from a
-current raster or prompt. It must not start generation while one required
-decision remains unresolved or deferred.
+missing, unclear, or contradictory, the agent must use `$grill-me` with the
+product owner. It must resolve one decision at a time and update the private
+study with the resulting direction. The agent must not infer the missing
+decision from a current raster or prompt. It must not start generation while
+one required decision remains unresolved or deferred.
 
 ### Scene readiness
 
@@ -193,10 +163,10 @@ palette, focal regions, interface-safe regions, and responsive crop. A prompt
 in the temporary folder is implementation evidence only and does not complete
 this direction.
 
-When scene information is missing, lost, unclear, or contradictory, the art
-agent must use `$grill-me` with the product owner. It must resolve one decision
-at a time and record each answer in the owning approved specification before
-generation starts.
+When scene information is missing, unclear, or contradictory, the art agent
+must use `$grill-me` with the product owner. It must resolve one decision at a
+time and update the owning approved specification with the resulting current
+direction before generation starts.
 
 Use one locked art direction for the complete baseline. Review all regenerated
 assets together. A successful isolated portrait or scene does not establish
@@ -350,6 +320,15 @@ but it does not permit copying one photograph, artwork, logo, or exact pose.
 
 ### Scene art direction
 
+Use the flat cel-shaded editorial-cartoon direction for Transition-Era
+Television Studio. Keep the blonde adult moderator's identity direction in the
+private generation brief. Use an attentive, mildly exasperated adult
+caricature, navy jacket, and light blouse. Reject anime, childlike, doll-like,
+and geometric-placeholder faces. Generate through text prompts only, without
+image references. Preserve the shared camera, layer separation, focal regions,
+color controls, and interface clearance below. Generation approval does not
+establish visual acceptance of an output.
+
 All four fixed scene layers use one straight-on orthographic 16:9 camera. Center
 the camera on the stage center axis. Keep its view level and perpendicular to
 the stage. Do not use camera pitch, yaw, roll, lens distortion, or perspective
@@ -489,11 +468,10 @@ percentages of master width and height:
 - lower-left action region: `x=12.5-24`, `y=66-94`.
 - lower-right action region: `x=76-87.5`, `y=66-94`.
 
-The owner's 2026-09-08 speech revision moves bubbles toward each speaker.
-The red bubble spans x=23-55 and the blue bubble spans x=45-77 in scene
-coordinates. Keep their existing upper vertical band and place each tail toward
-its speaker. This supersedes the former central-only speech rule. Do not cover
-a character face, required gesture, prop, or moderator focal rectangle.
+Move speech bubbles toward their speakers. Set the red bubble to x=23-55 and
+the blue bubble to x=45-77 in scene coordinates. Keep both bubbles in the upper
+vertical band and point each tail toward its speaker. Do not cover a character
+face, required gesture, prop, or moderator focal rectangle.
 
 The central interaction region contains a reserved moderator window at
 `x=46-54`, `y=35-49`. No live text or control may cover that window. Its
@@ -680,7 +658,7 @@ not enter the fixed character and scene replacement inventory.
 
 Runtime views resolve these files through the brand manifest. The title uses
 AVIF first, WebP second, and the original PNG as its final fallback. Its two
-AVIF preloads derive from the manifest before the application module; a browser
+AVIF preloads derive from the manifest before the application module. A browser
 without AVIF support skips them and loads WebP. Each title format's combined
 package remains at most 300 KiB. The build and asset-validation scripts check
 the brand and state manifests as well as the baseline scene and character
@@ -740,20 +718,31 @@ Graphics file's relative path. The input and output roots must be different.
 ## Asset and motion contract
 
 Modern Debate Studio and Transition-Era Television Studio each use
-3840 by 2160 background and foreground masters. Their user-approved
-replacement backgrounds are upscaled from 1672 by 941 with
+3840 by 2160 background and foreground masters.
+
+Use the blonde adult editorial-cartoon moderator for Transition-Era Television
+Studio through the OpenAI API. Generate the background with
+`gpt-image-2.5-sunburst`, high quality, from text only at native 3840 by 2160.
+A 72-pixel downward translation, dark top-edge continuation, and lower-floor
+crop keep the complete head within its original safe region. No upscaling is
+applied. Generic source metadata records this
+origin without the private prompt. All ten AVIF and WebP background variants
+derive from that master. The existing separate foreground desk layer remains
+in place. It is not represented as newly generated art.
+
+Upscale the Modern Debate Studio replacement background from 1672 by 941 with
 Lanczos3 interpolation and sigma 0.5 sharpening. The final 16:9 canvas corrects
 the input's small aspect-ratio rounding difference. This is an upscale, not
-native 4K generation. These user-approved replacements and desk upscales are a
-specific exception to the earlier clean-room input restrictions in AC-023-12
-and AC-023-15. They do not reopen or claim new clean-room acceptance for the
-other baseline assets. The existing transparent desks use linear interpolation
-to prevent ringing at partial-alpha edges. Preserve each approved replacement
-moderator, set, and composition at every runtime size. No runtime variant may
-retain either previous background. All four studio layers provide 640 by 360,
+native 4K generation. The approved replacement backgrounds and desk upscales
+are a specific exception to the clean-room input restrictions in AC-023-12 and
+AC-023-15. Do not generalize this exception to other baseline assets. Use
+linear interpolation for the transparent desks to prevent ringing at
+partial-alpha edges. Preserve each approved moderator, set, and composition at
+every runtime size. Every runtime variant must use its declared final
+background. All four studio layers provide 640 by 360,
 1280 by 720, 1920 by 1080, 2560 by 1440, and 3840 by 2160 AVIF and WebP files.
 Every variant derives from its final 3840 by 2160 PNG master. Record the
-upscale origin in generic PNG provenance metadata.
+actual generation or upscale origin in generic PNG provenance metadata.
 
 Other scene masters remain layered 1920 by 1080 files, with 640 by 360,
 1280 by 720, and 1920 by 1080 runtime variants. All scenes use the same
@@ -775,6 +764,13 @@ Every raster runtime size has AVIF and WebP output. The manifest contains the ID
 owner type, owner ID, source description, and license identifier. It contains
 the SHA-256 source hash, format, pixel dimensions, and byte size. It also
 contains the focal point, crop rectangle, and generated variant paths.
+
+The scene builder installs variants and their manifest as one package. If
+installation fails, restore only the backups created by that build. Do not
+delete an existing file or directory whose backup move failed. After both new
+outputs are installed, a backup cleanup failure must leave the new package
+intact and report the failure. Verify these paths with
+`tests/unit/scene-output-installation.test.ts`.
 
 Dimensions are present in markup before decode.
 Validation rejects a crop, focal point, focal rectangle, or interface-safe
@@ -818,17 +814,17 @@ movement plays once. Milestone 025 can hold the final pose through its owned
 narration or damage interval. A new public event replaces the previous state.
 Do not queue stale events or change a game result for animation.
 
-Show selection on match entry. The active picker, human or AI, thinks; the
+Show selection on match entry. The active picker, human or AI, thinks. The
 other character is idle. Ordinary picks and commits do not recite. Milestone
 025 holds the current narrator's delivery pose, then shows damage after its
-total. Positive damage below 16 uses light hit; damage 16 or more uses heavy
+total. Positive damage below 16 uses light hit. Damage 16 or more uses heavy
 hit, matching Milestone 024 sound thresholds. Grammar self-damage keeps its own
 state. These presentation rules do not change scoring. No state decision reads
 an unplayed private card or an AI candidate evaluation.
 
 Keep the current image visible until its replacement has decoded. A newer cue
-supersedes a pending decode. Missing or failed optional display data keeps the
-last decoded portrait visible; production validation still rejects a missing
+takes precedence over a pending decode. Missing or failed optional display data keeps the
+last decoded portrait visible. Production validation still rejects a missing
 required package. Load only the selected skins' state packages after match
 entry. Do not preload state packages in setup.
 
@@ -902,21 +898,19 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   current raster. A missing baseline replacement or an extra asset claimed as a
   Milestone 023 replacement fails the inventory.
 
-  The retired Black Sea Captain
-  alternate is not a valid replacement. A later nonbaseline asset remains under
-  Milestone 031 and does not fail this inventory. The fixed character manifest,
+  The Black Sea Captain alternate is not a valid replacement. A nonbaseline
+  asset remains under Milestone 031 and does not fail this inventory. The fixed character manifest,
   replacement-hash ledger, builder, and validator provide the objective
   inventory evidence. Focused builder and validator tests reject an unchanged
   source hash, missing license, or missing runtime variant.
 - **AC-023-13:** All 18 represented archetypes have a complete private character
-  study before generation. An existing prompt alone fails readiness. Every
-  missing or conflicting decision has a recorded `$grill-me` answer from the
-  product owner, and no required decision remains unresolved or deferred.
+  study before generation. An existing prompt alone fails readiness. Resolve
+  every required decision before generation, and leave no required decision
+  unresolved or deferred.
 - **AC-023-14:** Each baseline scene layer has complete camera, composition,
   layer, subject, prop, lighting, focal-region, interface-safe-region, and crop
   direction in its owning approved specification. A temporary prompt alone
-  fails readiness. Missing decisions have recorded `$grill-me` answers in that
-  specification.
+  fails readiness. Resolve every required decision before generation.
 - **AC-023-15:** No current raster is a generation, tracing, editing,
   compositing, identity, composition, or style input for its replacement. A
   side-by-side review of the complete regenerated baseline confirms one
@@ -948,9 +942,6 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 
 ## Impeccable UI validation
 
-The product owner accepted the final-art audit and critique on 2026-09-08.
-For later changes to the visual-system slice:
-
 1. Run `$impeccable audit` on the affected title, setup, and match surfaces.
 2. After audit repairs, run `$impeccable critique` on the changed slice.
 
@@ -972,10 +963,8 @@ visible pixels in both desk-top and prop focal regions. They reject pixels
 outside those zones. They do not require a regenerated silhouette to touch
 the old raster's exact outer edge.
 
-The product owner's completion decision accepts the baseline art, stage
-compositions, and motion review. The acceptance audit passed `npm run ci`.
-The remaining roster, audio, speech, and presentation reactions belong to
-their later milestones.
+Leave the remaining roster, audio, speech, and presentation reactions to their
+owning milestones.
 
 ## Reference
 
