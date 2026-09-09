@@ -431,7 +431,7 @@ describe('Hollywood Roast draft actions', () => {
       analysis: {
         complete: true,
         publicText:
-          'A national consensus belongs in a history museum before the next election',
+          'Your so-called national consensus belongs in a history museum before the next election',
         nextRoles: ['modifier', 'conjunction', 'ending'],
       },
     });
@@ -567,7 +567,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(snapshot.players[playerIds[0]]!.hand).toEqual({ count: 2 });
     expect(snapshot.players[playerIds[0]]!.legalCards).toEqual([]);
     expect(snapshot.players[playerIds[0]]!.construction.previewText).toBe(
-      'A national consensus',
+      'Your so-called national consensus',
     );
   });
 

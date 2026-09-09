@@ -185,7 +185,7 @@ simulation, and browser validation must pass before it can ship.
   `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated copular forms `was not`, `is not`, and `will never be`, and the
-  predicate `was a Securitate informer`.
+  predicate `was a snitch`.
 
   The stable `drags-before-the-cameras` tense family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,

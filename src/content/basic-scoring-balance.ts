@@ -37,11 +37,37 @@ export const basicScoringBalanceSchema = z.discriminatedUnion('version', [
       rounding: z.literal('ceil'),
     })
     .strict(),
+  z
+    .object({
+      version: z.literal(4),
+      modifierPoints: z.literal(2),
+      basePointsMinimum: z.literal(5),
+      basePointsMultiplier: z.literal(3),
+      substanceGroupPoints: z.literal(2),
+      flavourGroupPoints: z.literal(1),
+      weaknessMultiplier: z.literal(1.5),
+      restrictedPhraseMultiplier: z.literal(1),
+      rounding: z.literal('ceil'),
+    })
+    .strict(),
 ]);
 
 export type BasicScoringBalance = z.infer<typeof basicScoringBalanceSchema>;
 
 export const basicScoringBalance: BasicScoringBalance =
+  basicScoringBalanceSchema.parse({
+    version: 4,
+    modifierPoints: 2,
+    basePointsMinimum: 5,
+    basePointsMultiplier: 3,
+    substanceGroupPoints: 2,
+    flavourGroupPoints: 1,
+    weaknessMultiplier: 1.5,
+    restrictedPhraseMultiplier: 1,
+    rounding: 'ceil',
+  });
+
+export const legacyVersion3BasicScoringBalance: BasicScoringBalance =
   basicScoringBalanceSchema.parse({
     version: 3,
     basePointsMinimum: 5,

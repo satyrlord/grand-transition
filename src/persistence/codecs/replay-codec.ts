@@ -4,6 +4,7 @@ import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
   legacyBasicScoringBalance,
   legacyVersion2BasicScoringBalance,
+  legacyVersion3BasicScoringBalance,
   type BasicScoringBalance,
 } from '../../content/basic-scoring-balance';
 import { seededRandomSource } from '../../engine/random-source';
@@ -18,10 +19,11 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 3;
+export const replaySchemaVersion = 4;
 export const supportedReplaySchemaVersions = [
   1,
   2,
+  3,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -31,6 +33,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[0]),
   z.literal(supportedReplaySchemaVersions[1]),
   z.literal(supportedReplaySchemaVersions[2]),
+  z.literal(supportedReplaySchemaVersions[3]),
 ]);
 
 export type ReplayFailureCode =
@@ -277,7 +280,7 @@ const matchLogDocumentSchema = z
         });
       }
     });
-    if (matchLog.schemaVersion === replaySchemaVersion && !matchLog.sentences) {
+    if (matchLog.schemaVersion >= 3 && !matchLog.sentences) {
       context.addIssue({
         code: 'custom',
         path: ['sentences'],
@@ -402,7 +405,9 @@ export function replayMatch(
         ? legacyBasicScoringBalance
         : decoded.value.schemaVersion === 2
           ? legacyVersion2BasicScoringBalance
-          : context.balance,
+          : decoded.value.schemaVersion === 3
+            ? legacyVersion3BasicScoringBalance
+            : context.balance,
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {

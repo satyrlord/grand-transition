@@ -52,7 +52,7 @@ async function configure(page: Page, choices: readonly Choice[]) {
   const players = { ...state.draft!.playerStates };
   for (const id of state.playerOrder) {
     const player = players[id]!;
-    const phrases = ['your-brother', 'is-a-securitate-informer'].map((phraseId) => sampleContent.phrases.find((phrase) => phrase.id === phraseId)!);
+    const phrases = ['your-brother', 'is-a-snitch'].map((phraseId) => sampleContent.phrases.find((phrase) => phrase.id === phraseId)!);
     const steps = phrases.map((phrase) => ({ kind: 'phrase' as const, phrase: prepareEnglishGrammarPhrase(phrase, englishGameLocale) }));
     const analyzed = englishGrammarAdapter.analyze({ steps, subjectNumber: player.subjectNumber, objectNumber: player.objectNumber });
     if (!analyzed.accepted) throw new Error('The public speech fixture is not grammatical.');

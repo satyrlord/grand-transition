@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
+import { basicScoringBalance, legacyVersion3BasicScoringBalance } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   ceilDamage,
@@ -176,7 +176,7 @@ describe('Hollywood Roast clause scoring', () => {
       balance: basicScoringBalance,
     });
 
-    expect(result.finalDamage).toBe(8);
+    expect(result.finalDamage).toBe(11);
     expect(
       result.breakdown.filter((item) => item.kind === 'clause-base'),
     ).toHaveLength(1);
@@ -184,7 +184,7 @@ describe('Hollywood Roast clause scoring', () => {
       kind: 'clause-base',
       operation: 'note',
       phraseIds: ids,
-      amount: 5,
+      amount: 7,
     });
     expect(
       result.breakdown.some((item) => item.kind === 'restriction-multiplier'),
@@ -196,6 +196,59 @@ describe('Hollywood Roast clause scoring', () => {
         phraseId: 'before-the-next-election',
       }),
     );
+  });
+
+  test('each stacked modifier adds points to the screenshot clause', () => {
+    const core = ['a-pig', 'stole', 'municipal-ribbon'];
+    const modifiers = ['on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights'];
+    expect([0, 1, 2, 3].map((count) =>
+      score([...core, ...modifiers.slice(0, count)]).finalDamage,
+    )).toEqual([5, 7, 9, 11]);
+    const ids = [...core, ...modifiers];
+    expect(scoreBasicConstruction({
+      analysis: analysis(ids), phrases: sampleContent.phrases,
+      defenderWeaknessTags: [], balance: legacyVersion3BasicScoringBalance,
+    }).finalDamage).toBe(5);
+  });
+
+  test('stacked modifier tags trigger one weakness multiplier on their clause only', () => {
+    const ids = ['a-pig', 'stole', 'municipal-ribbon',
+      'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
+      'chamber-yet', 'national-consensus', 'belongs-in-a-party-museum'];
+    const modifiers = new Set(ids.slice(3, 6));
+    const phrases = sampleContent.phrases.map((phrase) => ({
+      ...phrase, tags: modifiers.has(phrase.id) ? ['modifier-only'] : [],
+    }));
+    const result = scoreBasicConstruction({
+      analysis: analysis(ids), phrases, defenderWeaknessTags: ['modifier-only'],
+      balance: basicScoringBalance,
+    });
+    expect(result.finalDamage).toBe(22); // ceil(11 * 1.5 + 5)
+    expect(result.breakdown.filter((item) => item.kind === 'weakness-match')).toHaveLength(3);
+    expect(result.breakdown.filter((item) => item.kind === 'weakness-multiplier')).toHaveLength(1);
+  });
+
+  test('modifier points apply to custom scores and repeated occurrences', () => {
+    const ids = ['national-consensus', 'belongs-in-a-party-museum',
+      'before-the-next-election', 'before-the-next-election'];
+    const phrases = sampleContent.phrases.map((phrase) =>
+      phrase.id === 'belongs-in-a-party-museum'
+        ? { ...phrase, customScores: [{ leftNounId: 'national-consensus', score: 9 }] }
+        : phrase);
+    expect(scoreBasicConstruction({
+      analysis: analysis(ids), phrases, defenderWeaknessTags: [],
+      balance: basicScoringBalance,
+    }).finalDamage).toBe(13);
+  });
+
+  test('a shared modifier adds points to each compound-subject clause', () => {
+    expect(score(['national-consensus', 'coalition-and', 'televised-revolution',
+      'belongs-in-a-party-museum', 'before-the-next-election']).finalDamage).toBe(14);
+  });
+
+  test('modifiers give no damage to incomplete sentences', () => {
+    const ids = ['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election'];
+    expect(score([...ids, 'chamber-yet']).finalDamage).toBe(0);
   });
 
   test('keeps a with complement in the preceding clause', () => {
@@ -225,7 +278,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('keeps a coordinated copular noun complement in the preceding clause', () => {
     const ids = [
       'your-brother',
-      'is-a-securitate-informer',
+      'is-a-snitch',
       'coalition-and',
       'a-pig',
     ] as const;

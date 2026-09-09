@@ -255,7 +255,7 @@ describe('Hollywood Roast extended grammar', () => {
   test('accepts the passive camera predicate after a contrasted object clause', () => {
     const result = analyze([
       add('your-voters'),
-      add('was-a-securitate-informer'),
+      add('was-a-snitch'),
       add('chamber-yet'),
       add('audits'),
       add('your-brother'),
@@ -269,7 +269,7 @@ describe('Hollywood Roast extended grammar', () => {
         complete: true,
         state: 'CLAUSE_COMPLETE',
         publicText:
-          'Your voters were Securitate informers yet audit your brother and will be dragged before the cameras',
+          'Your voters were snitches yet audit your brother and will be dragged before the cameras',
       },
     });
   });
@@ -277,7 +277,7 @@ describe('Hollywood Roast extended grammar', () => {
   test('completes coordinated noun complements after a declared copular predicate', () => {
     const result = analyze([
       add('your-brother'),
-      add('is-a-securitate-informer'),
+      add('is-a-snitch'),
       add('coalition-and'),
       add('a-pig'),
       { kind: 'end' },
@@ -288,7 +288,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         state: 'ENDED',
-        publicText: 'Your brother is a Securitate informer and a pig.',
+        publicText: 'Your brother is a snitch and a pig.',
         resolution: { outgoingDamageIntent: null },
       },
     });
@@ -298,7 +298,7 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('your-brother'),
-        add('is-a-securitate-informer'),
+        add('is-a-snitch'),
         add('coalition-and'),
         add('a-pig'),
         add('belongs-in-a-party-museum'),
@@ -308,13 +308,13 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         publicText:
-          'Your brother is a Securitate informer and a pig belongs in a history museum',
+          'Your brother is a snitch and a pig belongs in a history museum',
       },
     });
     expect(
       analyze([
         add('your-brother'),
-        add('is-a-securitate-informer'),
+        add('is-a-snitch'),
         add('coalition-and'),
         add('a-pig'),
         add('denounced'),
@@ -325,7 +325,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         publicText:
-          'Your brother is a Securitate informer and a pig denounced your concubine',
+          'Your brother is a snitch and a pig denounced your concubine',
       },
     });
   });

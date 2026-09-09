@@ -63,9 +63,9 @@ contains:
   round. Each used phrase contains its stable identifier, exact rendered text,
   and active or carried source.
 - normalized replay and match-log data needed to reproduce and diagnose the
-  completed match. New entries use replay and match-log version 3. Existing
-  version 1 and version 2 pairs remain valid and retain their original scoring
-  behavior.
+  completed match. New entries use replay and match-log version 4. Existing
+  version 1, version 2, and version 3 pairs remain valid and retain their original
+  scoring behavior.
 
 The entry must not contain unselected private cards, hidden hotseat text,
 browser identifiers, machine facts, secrets, analytics identifiers, or remote

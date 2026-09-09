@@ -62,6 +62,24 @@ describe('Hollywood Roast combos and finishers', () => {
     });
   });
 
+  test('the first screenshot scores all three modifiers and its finisher', () => {
+    const result = score(['a-pig', 'stole', 'municipal-ribbon',
+      'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
+      'by-emergency-ordinance']);
+    expect(result.score.finalDamage).toBe(13);
+  });
+
+  test('modifier points receive weakness and noun combos before the finisher is added', () => {
+    const first = score(['national-consensus', 'belongs-in-a-party-museum']);
+    const result = score(
+      ['national-consensus', 'belongs-in-a-party-museum',
+        'before-the-next-election', 'by-emergency-ordinance'],
+      first.comboState, ['consistency'],
+    );
+    expect(result.score.finalDamage).toBe(23); // (5 + 2) * 1.5 * 2 + 2
+    expect(result.comboState.player!.previousNounIds).toEqual(['national-consensus']);
+  });
+
   test('multiplies a transitive clause by both noun combo chains', () => {
     const prior: ComboChainState = {
       player: {

@@ -180,7 +180,7 @@ describe('content schemas', () => {
         'stole',
         'eu-funds',
         'appropriated',
-        'was-a-securitate-informer',
+        'was-a-snitch',
         'a-state-secretary',
         'was-not',
         'is-not',
@@ -208,7 +208,7 @@ describe('content schemas', () => {
       'phrase.stole': 'stole',
       'phrase.eu-funds': 'EU funds',
       'phrase.appropriated': 'appropriated',
-      'phrase.was-a-securitate-informer': 'was a Securitate informer',
+      'phrase.was-a-snitch': 'was a snitch',
       'phrase.a-state-secretary': 'a state secretary',
       'phrase.was-not': 'was not',
       'phrase.is-not': 'is not',
@@ -399,19 +399,19 @@ describe('content schemas', () => {
         'will be a Communist Party member',
       ],
       [
-        'was-a-securitate-informer',
-        'was a Securitate informer',
-        'were a Securitate informer',
+        'was-a-snitch',
+        'was a snitch',
+        'were a snitch',
       ],
       [
-        'is-a-securitate-informer',
-        'is a Securitate informer',
-        'are a Securitate informer',
+        'is-a-snitch',
+        'is a snitch',
+        'are a snitch',
       ],
       [
-        'will-be-a-securitate-informer',
-        'will be a Securitate informer',
-        'will be a Securitate informer',
+        'will-be-a-snitch',
+        'will be a snitch',
+        'will be a snitch',
       ],
     ] as const) {
       const phrase = phraseCardCatalog.phrases.find(
@@ -1313,9 +1313,10 @@ describe('content schemas', () => {
 
   test('rejects invalid number forms with a corrective message', () => {
     const catalog = cloneCatalog();
-    catalog.phrases[0]!.numberForms!.pluralKey =
-      catalog.phrases[0]!.numberForms!.singularKey;
-    expectFailure(catalog, 'phrases.0.numberForms', /different locale key/iu);
+    const phraseIndex = catalog.phrases.findIndex((phrase) => phrase.id === 'denounced');
+    const forms = catalog.phrases[phraseIndex]!.numberForms!;
+    forms.pluralKey = forms.singularKey;
+    expectFailure(catalog, 'phrases.' + phraseIndex + '.numberForms', /different locale key/iu);
   });
 
   test('rejects incomplete or invalid person agreement metadata', () => {
@@ -1614,10 +1615,11 @@ describe('content schemas', () => {
 
   test('rejects missing locale keys for number forms', () => {
     const catalog = cloneCatalog();
-    delete catalog.locales[0]!.messages['phrase.national-consensus.plural'];
+    const pluralKey = catalog.phrases.find((phrase) => phrase.id === 'denounced')!.numberForms!.pluralKey;
+    delete catalog.locales[0]!.messages[pluralKey];
     expectFailure(
       catalog,
-      'locales.0.messages.phrase.national-consensus.plural',
+      'locales.0.messages.' + pluralKey,
       /required locale message/iu,
     );
   });

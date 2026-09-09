@@ -64,7 +64,8 @@ immediate grammar mistakes. They also include seeded common-board and
 private-hand generation, clause scoring, noun combos, continuations, comebacks,
 cliffhangers, match lifecycle, replay, simulation, and automatic development
 match logs. Current clause scoring uses compatibility bases of 5, 8, 11, and
-14, a local 1.5 weakness multiplier, and no restriction damage bonus.
+14, plus 2 points per modifier before the local 1.5 weakness multiplier and
+noun combos. Restrictions do not add damage.
 
 The landscape-only Lit interface provides title, setup, playable single-player
 and hotseat matches, Pause, and narrated exchange presentation. Each character
