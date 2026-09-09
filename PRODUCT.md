@@ -41,10 +41,11 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 
 ## Capabilities and Constraints
 
-- The interface is always English. Localization applies only to grammar,
-  phrase semantics, constructed sentences, and speech content.
+- The current interface and game content are English. Approved Milestone 030
+  adds full Romanian interface and game localization with local speech;
+  implementation is pending. English remains the default.
 - A pure deterministic reducer owns game truth. Lit is view-only.
-- Content is data-driven. English interface prose and localizable grammar and
+- Content is data-driven. Interface prose and localizable grammar and
   phrase content have separate owners.
 - Online multiplayer, accounts, cloud saves, chat, and live-service systems are
   out of scope.

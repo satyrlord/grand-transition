@@ -15,6 +15,10 @@ Writing is institutionally specific, modular, sharp without slurs, absurd but
 meaningful, distinct by character, and intelligible to international English
 players. Romanian proper nouns require enough English context to carry the joke.
 
+These English comprehension checks apply to the English catalog. Milestone
+030 owns natural Romanian adaptation and fluent Romanian review. Both locales
+must meet the same fictional-identity, tone, safety, and scoring-meaning rules.
+
 Permit political parody, public-record criticism, fictional institutions,
 composite scandals, bureaucracy, media satire, contradiction, and vanity satire
 aimed at fictional personas. Hard-edged allegations can target fictional
