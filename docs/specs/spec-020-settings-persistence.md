@@ -39,7 +39,8 @@ and speech output.
 ## Version 1 settings
 
 This section defines the shipped English source format. Milestone 030 owns
-version 2, the `locale` field, title-only language selection, version 1
+version 2, the independent `interfaceLocale` and `gameLocale` fields,
+separate title-only language drop-downs, version 1
 migration, and translated notices. Its explicit replacements apply when that
 milestone is implemented; all other persistence behavior remains as defined here.
 
