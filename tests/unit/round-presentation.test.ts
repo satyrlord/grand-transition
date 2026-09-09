@@ -11,7 +11,7 @@ function harness(enabled = true) {
   let now = 0; let nextId = 0;
   const tasks = new Map<number, { at: number; callback: () => void }>();
   const requests: SpeechRequest[] = [];
-  const voice = { available: true, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(),
+  const voice = { available: true, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(), prepare: vi.fn(() => ({ accepted: true })),
     speak: (request: SpeechRequest) => { requests.push(request); return { accepted: true }; } };
   const speech = new GameSpeech(voice); speech.userGesture();
   const play = vi.fn(); const completed = vi.fn();
@@ -40,6 +40,8 @@ describe('reference round presentation', () => {
     const h = harness(); const original = JSON.stringify(h.input);
     h.controller.start(h.input);
     expect(h.frame()?.phase).toBe('preparing'); expect(h.requests[0]?.text).toBe(publicOpponent.insultText);
+    expect(h.voice.prepare).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ text: publicPlayer.insultText }));
+    expect(h.requests).toHaveLength(1);
     expect(h.frame()?.pride).toEqual({ one: 100, two: 100 });
     h.requests[0]!.onStart!();
     expect(h.frame()?.cues.two).toMatchObject({ stateId: 'delivery', hold: true });
@@ -47,22 +49,22 @@ describe('reference round presentation', () => {
     h.requests[0]!.onSegment!(0); expect(h.frame()?.components).toHaveLength(0);
     h.requests[0]!.onSegment!(1); expect(h.frame()?.components).toEqual([component(20)]);
     h.requests[0]!.onEnd!(); expect(h.frame()?.total).toBe(20);
-    h.advance(1200); expect(h.frame()?.phase).toBe('strike');
-    h.advance(500); expect(h.frame()?.phase).toBe('points');
-    h.advance(499); expect(h.frame()?.pride.one).toBe(100);
+    h.advance(400); expect(h.frame()?.phase).toBe('strike');
+    h.advance(200); expect(h.frame()?.phase).toBe('points');
+    h.advance(199); expect(h.frame()?.pride.one).toBe(100);
     h.advance(1); expect(h.frame()?.phase).toBe('damage'); expect(h.frame()?.pride.one).toBe(80);
     expect(h.frame()?.cues.one?.stateId).toBe('heavy-hit'); expect(h.play).toHaveBeenCalledExactlyOnceWith('hit-heavy');
-    h.advance(499); expect(h.requests).toHaveLength(1);
+    h.advance(199); expect(h.requests).toHaveLength(1);
     h.advance(1); expect(h.requests[1]?.text).toBe(publicPlayer.insultText);
     h.requests[1]!.onStart!(); h.requests[1]!.onSegment!(1); h.requests[1]!.onEnd!();
-    h.advance(2700); expect(h.frame()).toBeNull(); expect(h.completed).toHaveBeenCalledOnce();
+    h.advance(1000); expect(h.frame()).toBeNull(); expect(h.completed).toHaveBeenCalledOnce();
     expect(JSON.stringify(h.input)).toBe(original);
   });
 
   test('Pause preserves the exact remaining presentation time and blocks stale cancellation callbacks', () => {
     const h = harness(); h.controller.start(h.input); h.requests[0]!.onEnd!();
-    h.advance(400); h.controller.pause(); h.advance(100000); expect(h.frame()?.phase).toBe('total');
-    h.controller.resume(); h.advance(799); expect(h.frame()?.phase).toBe('total');
+    h.advance(100); h.controller.pause(); h.advance(100000); expect(h.frame()?.phase).toBe('total');
+    h.controller.resume(); h.advance(299); expect(h.frame()?.phase).toBe('total');
     h.advance(1); expect(h.frame()?.phase).toBe('strike');
     h.controller.cancel(); h.requests[0]!.onStart!(); h.requests[0]!.onEnd!(); h.advance(100000);
     expect(h.frame()).toBeNull(); expect(h.completed).not.toHaveBeenCalled();
@@ -81,7 +83,8 @@ describe('reference round presentation', () => {
   test('silent delivery follows the same ordered sequence without a mandatory Continue action', () => {
     const h = harness(false); h.controller.start(h.input);
     expect(h.frame()?.phase).toBe('reciting'); expect(h.requests).toHaveLength(0);
-    h.advance(9400); expect(h.completed).toHaveBeenCalledOnce(); expect(h.frame()).toBeNull();
+    h.advance(5999); expect(h.completed).not.toHaveBeenCalled();
+    h.advance(1); expect(h.completed).toHaveBeenCalledOnce(); expect(h.frame()).toBeNull();
   });
 
   test('a continuation thinks without speaking a fragment', () => {
@@ -101,11 +104,11 @@ describe('reference round presentation', () => {
       one: { ...publicPlayer, opponentOutgoingDamage: damage, prideAfter: Math.max(0, 100 - damage) },
       two: { ...publicOpponent, outgoingDamage: damage },
     }) });
-    h.requests[0]!.onEnd!(); h.advance(2199); expect(h.frame()?.pride.one).toBe(100);
+    h.requests[0]!.onEnd!(); h.advance(799); expect(h.frame()?.pride.one).toBe(100);
     h.advance(1); expect(h.frame()?.pride.one).toBe(Math.max(0, 100 - damage));
     expect(h.frame()?.cues.one?.stateId).toBe(damage === 0 ? 'idle' : damage < 16 ? 'light-hit' : 'heavy-hit');
     expect(h.play.mock.calls.flat()).toEqual(damage === 0 ? [] : [damage < 16 ? 'hit-light' : 'hit-heavy']);
-    h.advance(500); expect(h.requests).toHaveLength(2); expect(h.completed).not.toHaveBeenCalled();
+    h.advance(200); expect(h.requests).toHaveLength(2); expect(h.completed).not.toHaveBeenCalled();
   });
 
   test('bonus cues follow completed phrases once and the comeback follows its closing line', () => {
@@ -192,7 +195,7 @@ describe('reference round presentation', () => {
     h.requests[0]!.onError!(); expect(h.frame()?.phase).toBe('reciting');
     h.requests[0]!.onEnd!(); expect(h.frame()?.total).toBeNull();
     h.advance(2000); expect(h.frame()?.total).toBe(20);
-    h.advance(2700); expect(h.requests).toHaveLength(2);
+    h.advance(1000); expect(h.requests).toHaveLength(2);
   });
 
   test('direct grammar knockout shows only the damage stance, then completes after 520 ms', () => {
@@ -209,7 +212,7 @@ describe('reference round presentation', () => {
         two: { ...publicOpponent, outgoingDamage: 5 } }), suddenDeath: true,
     } });
     h.requests[0]!.onEnd!(); expect(h.frame()?.total).toBe(5);
-    h.advance(2200); expect(h.frame()?.damage).toEqual({ playerId: 'one', amount: 100 });
+    h.advance(800); expect(h.frame()?.damage).toEqual({ playerId: 'one', amount: 100 });
     expect(h.frame()?.pride.one).toBe(0); expect(h.frame()?.cues.one?.stateId).toBe('heavy-hit');
     expect(h.play).toHaveBeenCalledExactlyOnceWith('hit-heavy');
   });

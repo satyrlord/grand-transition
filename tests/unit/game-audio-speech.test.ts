@@ -59,7 +59,7 @@ describe('finalized public speech', () => {
   const profile: SkinSpeechProfile = { provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 1 };
   function harness() {
     const requests: SpeechRequest[] = [];
-    const port = { available: true, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(),
+    const port = { available: true, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(), prepare: vi.fn(() => ({ accepted: true })),
       speak: vi.fn((request: SpeechRequest) => { requests.push(request); return { accepted: true }; }) };
     return { port, requests, game: new GameSpeech(port) };
   }
@@ -75,6 +75,12 @@ describe('finalized public speech', () => {
         speechVolume: state === 'speech-zero' ? 0 : 0.8,
       }, profile, {});
       expect(accepted).toBe(false); expect(port.speak).not.toHaveBeenCalled();
+      expect(game.prepare({ ...publicPlayer, completeValidInsult: state !== 'incomplete',
+        constructionStatus: state === 'carried' ? 'carried' : 'valid' }, {
+        ...settings, speechEnabled: state !== 'disabled', masterVolume: state === 'master-zero' ? 0 : 1,
+        speechVolume: state === 'speech-zero' ? 0 : 0.8,
+      }, profile)).toBe(false);
+      expect(port.prepare).not.toHaveBeenCalled();
     },
   );
 

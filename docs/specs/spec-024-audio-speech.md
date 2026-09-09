@@ -119,6 +119,17 @@ and checks manifested bytes. Single-thread WASM needs no cross-origin isolation,
 cloud service, key, or phrase upload. A boot message precedes initialization.
 
 `neural-speech.ts` owns initialization, PCM playback, progress, and cancellation.
+After public resolution, prepare the next neural delivery while the current
+delivery plays or presents its result. Preparation emits no playback callbacks.
+Retain at most one future delivery in memory. Submit one inference at a time;
+the next request starts after the previous PCM response, so queued preparation
+does not consume its synthesis timeout. Reuse it only when the exact text,
+segment boundaries, language, voice, rate, and pitch match. Volume is applied
+at playback. Start the prepared audio only when its speaker's presentation
+begins. Cancellation discards prepared audio and rejects late responses.
+There is no persistent generated-speech cache. Native Microsoft requests remain
+immediate; a missing native voice uses the existing neural fallback on demand.
+
 Settings shows model loading. The arena shows preparation before recitation.
 Latency depends on device and sentence length. Do not promise real-time
 generation. Split long phoneme streams at boundaries and concatenate all output.
@@ -129,7 +140,8 @@ it downloads local resources. Skin metadata selects the voice. Do not expose a
 speech voice dropdown. Settings exposes speech enablement, volume, and rate.
 Existing saved voice URIs remain valid and are preserved when another setting
 changes, but they do not override the skin assignment. Rate is 0.5
-through 2 in 0.1 steps, default 1. Speech volume is 0 through 1 in 0.05 steps,
+through 2 in 0.1 steps, default 1.2. Existing saved rates remain unchanged.
+Speech volume is 0 through 1 in 0.05 steps,
 default 0.8. Character data supplies pitch.
 
 `game-speech.ts` receives finalized public resolution records only. Preserve the
@@ -167,12 +179,16 @@ and rejects online, natural, or neural platform voices. It never uses an
 unspecified system default. Microsoft voice data remains installed OS data.
 the game does not redistribute it or upload phrase text.
 
-Only complete public insults reach either adapter. Robot speech synthesizes the
-finalized phrase segments as ordered native utterances. Real utterance start
-and end events drive segment scores and delivery completion. No word-timing
-estimate or prerecorded phrase pack is used. Pause holds the current utterance
-or next segment. Cancellation clears callback ownership before calling the
-platform service. An utterance that stalls for 60 unpaused seconds fails into
+Only complete public insults reach either adapter. Robot speech sends the exact
+complete insult and optional Comeback line in one native utterance. Do not
+restart the voice at card boundaries. Native word-boundary character positions
+select the authored phrase markers; duplicate, stale, and invalid positions
+cannot repeat scores. Utterance start reveals the first segment. If the platform
+omits word boundaries, the remaining scores appear at actual completion.
+No word-timing estimate or prerecorded phrase pack is used. Pause holds the
+current utterance or its pending completion. Cancellation clears callback
+ownership before calling the platform service. An utterance that makes no
+word-boundary progress for 60 unpaused seconds fails into
 the silent presentation path. A mid-delivery error does not repeat spoken text.
 A synchronous failure before the first utterance starts rejects the native
 request without consuming delivery callbacks, so the British neural fallback
@@ -185,7 +201,7 @@ Its artwork uses the existing flat cel-shaded direction and transparent asset
 pipeline. The existing robot skins and all game rules remain unchanged.
 
 `tests/unit/skin-speech.test.ts` verifies skin mappings, exact local voice
-selection, remote exclusion, native segment events, pause-aware timeout,
+selection, remote exclusion, continuous utterances, native word boundaries, pause-aware timeout,
 cancellation, and British fallback. `e2e/skin-speech.spec.ts` verifies selected
 skins through real match completion and records native versus neural calls.
 

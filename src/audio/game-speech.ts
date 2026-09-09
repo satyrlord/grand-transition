@@ -39,17 +39,28 @@ export class GameSpeech {
     this.speech.cancel();
   }
 
-  deliver(player: MatchResolutionPlayer, settings: SettingsDocument, profile: SkinSpeechProfile,
-    events: SpeechDeliveryEvents): boolean {
+  private request(player: MatchResolutionPlayer, settings: SettingsDocument, profile: SkinSpeechProfile): SpeechRequest | null {
     if (!this.activated || !settings.speechEnabled || !this.speech.available ||
       mixerGains(settings).speech === 0 || !player.completeValidInsult ||
-      player.constructionStatus !== 'valid' || !player.insultText?.trim()) return false;
-    const generation = ++this.generation;
+      player.constructionStatus !== 'valid' || !player.insultText?.trim()) return null;
     const text = [player.insultText, player.comebackClosingLine].filter(Boolean).join(' ');
     const segments = publicNarrationSegments(player);
+    return { text, segments, ...profile, rate: settings.speechRate, volume: mixerGains(settings).speech };
+  }
+
+  prepare(player: MatchResolutionPlayer, settings: SettingsDocument, profile: SkinSpeechProfile): boolean {
+    const request = this.request(player, settings, profile);
+    return request !== null && (this.speech.prepare?.(request).accepted ?? false);
+  }
+
+  deliver(player: MatchResolutionPlayer, settings: SettingsDocument, profile: SkinSpeechProfile,
+    events: SpeechDeliveryEvents): boolean {
+    const request = this.request(player, settings, profile);
+    if (!request) return false;
+    const generation = ++this.generation;
+    const segments = request.segments!;
     let lastSegment = -1;
-    return this.speech.speak({ text, segments, ...profile,
-      rate: settings.speechRate, volume: mixerGains(settings).speech,
+    return this.speech.speak({ ...request,
       onStart: () => {
         if (generation !== this.generation) return;
         events.onStart?.();

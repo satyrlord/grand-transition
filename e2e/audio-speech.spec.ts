@@ -49,7 +49,17 @@ async function probe(page: Page, unavailable = false) {
       override createBufferSource() {
         const source = super.createBufferSource();
         const start = source.start.bind(source); const stop = source.stop.bind(source);
-        source.start = (at = 0) => { evidence.starts.push({ loop: source.loop, at, wall: performance.now() }); start(at); };
+        source.start = (at = 0) => {
+          evidence.starts.push({ loop: source.loop, at, wall: performance.now() });
+          const timings = (window as unknown as {
+            neuralTimings?: Array<{ event: string; at: number; seconds?: number }>;
+          }).neuralTimings;
+          if (timings && source.buffer?.sampleRate === 24000) {
+            timings.push({ event: 'playback-start', at: performance.now(), seconds: source.buffer.duration });
+            source.addEventListener('ended', () => { timings.push({ event: 'playback-end', at: performance.now() }); });
+          }
+          start(at);
+        };
         source.stop = (at = 0) => { evidence.stops.push(at); stop(at); };
         return source;
       }
@@ -217,10 +227,20 @@ test('real local neural speech narrates both public bubbles before Victory', asy
   await page.addInitScript(() => {
     const native = window.Worker;
     const commands: Array<{ type: string; segments?: string[]; voiceId?: string; rate?: number; pitch?: number }> = [];
-    Object.assign(window, { neuralCommands: commands });
+    const timings: Array<{ event: string; at: number; id?: number; seconds?: number }> = [];
+    Object.assign(window, { neuralCommands: commands, neuralTimings: timings });
     window.Worker = class extends native {
+      constructor(url: string | URL, options?: WorkerOptions) {
+        super(url, options);
+        this.addEventListener('message', ({ data }) => {
+          if (data.type === 'speech') timings.push({ event: 'prepared', at: performance.now(), id: data.id,
+            seconds: data.samples.length / data.sampleRate });
+        });
+      }
       override postMessage(message: unknown, transfer?: Transferable[] | StructuredSerializeOptions) {
         commands.push(structuredClone(message) as typeof commands[number]);
+        const command = message as { type: string; id?: number };
+        if (command.type === 'synthesize') timings.push({ event: 'requested', at: performance.now(), id: command.id });
         if (Array.isArray(transfer)) super.postMessage(message, transfer);
         else super.postMessage(message, transfer);
       }
@@ -259,10 +279,10 @@ test('real local neural speech narrates both public bubbles before Victory', asy
   const result = await page.evaluate(() => (document.querySelector('grand-transition-app') as unknown as {
     matchState: import('../src/engine/match-lifecycle').MatchState;
   }).matchState.resolutionHistory.at(-1)!);
+  await expect.poll(async () => (await synthesized()).length, { timeout: 90_000 }).toBe(2);
   for (const [index, id] of ['player-two', 'player-one'].entries()) {
-    await expect.poll(async () => (await synthesized()).length, { timeout: 90_000 }).toBe(index + 1);
+    await expect(page.locator('.sentence-ledger')).toHaveAttribute('data-speaker-side', index === 0 ? 'blue' : 'red', { timeout: 90_000 });
     await expect(page.locator('.match-screen')).toHaveAttribute('data-delivery-phase', 'reciting', { timeout: 90_000 });
-    await expect(page.locator('.sentence-ledger')).toHaveAttribute('data-speaker-side', index === 0 ? 'blue' : 'red');
     await expect(page.locator('.sentence-preview')).toHaveText(result.players[id]!.insultText!);
     await expect(page.getByRole('heading', { name: 'Victory', exact: true })).toHaveCount(0);
     await expect(page.locator('.delivery-total strong')).toHaveText(String(result.players[id]!.outgoingDamage), { timeout: 90_000 });
@@ -276,7 +296,15 @@ test('real local neural speech narrates both public bubbles before Victory', asy
   expect(commands.every((command) => command.voiceId === 'bm_george')).toBe(true);
   expect(requests.every((url) => url.startsWith('http://127.0.0.1:4173/'))).toBe(true);
   expect(errors).toEqual([]);
+  const timings = await page.evaluate(() => (window as unknown as {
+    neuralTimings: Array<{ event: string; at: number; id?: number; seconds?: number }>;
+  }).neuralTimings);
+  expect(timings.filter(({ event }) => event === 'requested')).toHaveLength(2);
+  expect(timings.filter(({ event }) => event === 'playback-start')).toHaveLength(2);
+  expect(timings.filter(({ event }) => event === 'requested')[1]!.at)
+    .toBeLessThan(timings.find(({ event }) => event === 'playback-end')!.at);
   await recordEvidence(page, info, 'neural-speech', { readyMs, synthesized: commands,
+    timings, cache: 'fresh browser context; model initialized before the exchange',
     model: 'Kokoro-82M-v1.0 q8', engine: 'local ONNX WASM', privateDraftRequests: 0,
     terminalOverlay: 'after both deliveries', physicalListening: 'not performed' });
 });

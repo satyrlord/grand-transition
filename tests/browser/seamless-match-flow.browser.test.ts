@@ -200,8 +200,10 @@ test('shows the comeback inline and starts the next round after both deliveries'
   expect(match.querySelector('.draft-table')).toBeNull();
   expect(match.querySelector('.private-hand')).toBeNull();
   expect(match.presentation?.speakerId).toBe('player-two');
-  await vi.advanceTimersByTimeAsync(4_000);
+  await vi.advanceTimersByTimeAsync(3_000);
   await app.updateComplete; await match.updateComplete;
+  expect(match.presentation?.phase).toBe('total');
+  expect(match.presentation?.speakerId).toBe('player-two');
   expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
     /Comeback.*human bucket of vomit.*\+18/su,
   );

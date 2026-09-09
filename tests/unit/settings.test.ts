@@ -17,6 +17,14 @@ import {
 } from '../../src/persistence/storage-port';
 
 describe('settings codec', () => {
+  test('new settings use 1.2 speech rate while existing saved rates remain intact', () => {
+    expect(defaultSettings.speechRate).toBe(1.2);
+    for (const speechRate of [0.5, 1, 1.4, 2]) {
+      const saved = { ...defaultSettings, speechRate };
+      expect(decodeSettings(JSON.stringify(saved))).toEqual({ ok: true, value: saved });
+    }
+  });
+
   test('round-trips defaults with normalized bytes', () => {
     const serialized = encodeSettings(defaultSettings);
 

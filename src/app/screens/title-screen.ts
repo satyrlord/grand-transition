@@ -69,7 +69,7 @@ export class GrandTransitionTitle extends LitElement {
       speechVolume: 0.8,
       speechEnabled: false,
       speechVoiceUri: null,
-      speechRate: 1,
+      speechRate: 1.2,
       turnTimerSeconds: 30,
       autoComplete: true,
     };
