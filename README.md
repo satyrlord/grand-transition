@@ -31,7 +31,8 @@ Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-023 through 025, 027 through 029, and 031 remain incomplete.
+024, 025, 027 through 029, and 031 remain incomplete. Milestone 023 is marked
+complete by its owning specification.
 
 The current content has common Romanian-politics phrases and 18 fictional
 characters: 17 humans and one robot. Each character has owned phrases and a
@@ -42,9 +43,9 @@ foundation scenes with distinct local cartoon backgrounds, and one English game-
 bundle.
 
 The final asset contract permits one default skin and zero through eight
-alternate skins per archetype.
-The fixed character and studio baselines now have manifests and generated AVIF
-and WebP variants. Complete character state packages remain future work.
+alternate skins per archetype. The fixed character and studio baselines have
+manifests and generated AVIF and WebP variants. Character state packages are
+implemented. Final visual acceptance remains owned by the milestone contract.
 
 All final character and scene imagery uses one strict flat cel-shaded
 editorial-cartoon style. Painted comic-book, painterly semi-realistic, realistic
@@ -78,7 +79,7 @@ scenes, wins, losses, and completion.
 
 Sound starts after a user interaction. Settings controls Master, Music, Effects,
 and Speech. CC0 piano recordings of Romanian Folk Dances cover the menu and
-transition-era studio; other scenes retain effects without scene music.
+transition-era studio. Other scenes retain effects without scene music.
 Speech defaults off. Enabling it downloads about 110 MB of local neural model
 resources. Male and female human skins use British George and Emma voices.
 Robot skins use installed Microsoft David, Mark, and Zira voices, with British
@@ -88,7 +89,7 @@ The game remains playable when speech is unavailable.
 After both players finish, each character recites with its own bubble and inline
 score. The full total precedes the damaged stance and displayed Pride change.
 Both deliveries finish before the next round or Victory. Pause preserves the
-narration position; leaving the match cancels it.
+narration position. Leaving the match cancels it.
 
 `npm run audio:build` prepares the sourced music and original effects.
 `npm run speech:build` prepares pinned neural assets. Their corresponding

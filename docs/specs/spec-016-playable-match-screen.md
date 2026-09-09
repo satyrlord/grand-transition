@@ -118,7 +118,7 @@ its grammar mistake immediately without a confirmation action.
 
 It also triggers one strong arena reaction. The offending portrait recoils,
 the Pride strip flashes, and a broadcast strike states the player name and
-exact 3 Pride loss. Place the strike below the speech record and its tail;
+exact 3 Pride loss. Place the strike below the speech record and its tail.
 the two records must not overlap at supported landscape sizes, including
 ultrawide sizes. Remove the strike after 3000 milliseconds or the next accepted
 match action, whichever occurs first. Snapshot refreshes must not extend that
@@ -205,12 +205,16 @@ For timed turns, the visible value updates once per second. Zero dispatches one
 arrives.
 
 Pause replaces the complete match DOM with a full-screen “Paused” surface. It
-provides Turn timer, Auto-complete, and Phrase color coding settings, Resume,
-and a secondary “Back to menu” action. Turn timer offers 15 seconds, 30
-seconds, and Unlimited. Its default is 30 seconds.
+provides Turn timer, Auto-complete, Sound, and Phrase color coding settings,
+Resume, and a secondary “Back to menu” action. Turn timer offers 15 seconds,
+30 seconds, and Unlimited. Its default is 30 seconds.
 
 Auto-complete offers On and Off. Its default is On. Phrase color coding offers
-On and Off. Its default is On.
+On and Off. Its default is On. Sound offers separate Music and Voices On and
+Off choices. Music is On when the stored Music volume is above zero. Turning
+Music Off stores zero Music volume and turning it back On restores the last
+non-zero Music volume in the page session, or the 70 percent default when no
+such value exists. Voices maps to the stored Speech enabled setting.
 
 When Phrase color coding is On, noun cards use green. Verb and predicate cards
 use red. Modifier cards use purple. Ending cards use blue. Continuation cards
@@ -235,6 +239,9 @@ truth, phrase actions, accessible phrase text, or the timer. Turn timer and
 Auto-complete remain in the application shell and persist through the strict
 Milestone 020 settings document. Phrase color coding remains session-only and
 returns to On after a reload because that document does not contain it.
+Changing Music or Voices applies through the same settings document. Music
+changes the mixer without changing Effects volume. Turning Voices Off cancels
+active narration and prevents later narration until it is turned On.
 
 “Back to menu” replaces
 the Pause notice with a concealed confirmation that defaults to “Stay paused.”
@@ -268,9 +275,9 @@ timer-refill abuse.
 - **AC-016-05:** A timed turn updates once per second and zero emits one
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
-  The Pause settings default to 30 seconds, Auto-complete On, and Phrase color
-  coding On. Selecting 15, 30, or Unlimited takes effect on Resume. Unlimited
-  does not expire the turn,
+  The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
+  Sound Voices Off, and Phrase color coding On. Selecting 15, 30, or Unlimited
+  takes effect on Resume. Unlimited does not expire the turn,
   and its complete label stays inside the top-center timer frame at every
   supported viewport.
 

@@ -19,8 +19,8 @@ Each new character is convention-driven. Add one complete
 `src/content/characters/<character-id>-phrase-cards.json` file and one approved
 interim `src/assets/characters/<character-id>.png` portrait. Do not add a
 TypeScript registry, locale table, setup option, or renderer map for a
-character. Existing approved alternate skins remain valid unless a current
-content decision retires one. A new foundation character
+character. Existing approved alternate skins remain valid. Retire an alternate
+skin only through an approved content decision. A new foundation character
 does not require an alternate skin until Milestone 031. When alternate skins
 exist, one character has no more than eight.
 
@@ -65,9 +65,8 @@ The stable roster order, identifier, weakness tags, and play style are:
 | 17 | `eu-funds-alchemist` | EU-Funds Alchemist | transparency, outcomes, and maintenance | procurement denial and high-value finishers. |
 | 18 | `government-ai` | Government AI | nepotism, corruption, spending, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
 
-The remaining character identifiers keep their previous relative order after
-the Presidential Sphinx retirement. The unused roster-order value is not
-reused.
+Keep the remaining character identifiers in their listed relative order. Do not
+reuse the unused roster-order value.
 
 The other 17 characters are human. Animal terms are political metaphors only.
 No character uses human-animal or robot-animal hybrid anatomy.
@@ -167,7 +166,7 @@ parsing does not replace this check. `tests/unit/content-schemas.test.ts`
 rejects two-noun pools, missing modifier/ending, and counts above 32 at the
 owning character path. Synthetic discovery characters must meet the same
   complete-catalog minimum. The complete current catalog must pass this
-  contract; valid additions that meet these minima must also pass.
+  contract. Valid additions that meet these minima must also pass.
 
 The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
 `with 110% turnout at the cemetery`. It belongs only to that character and

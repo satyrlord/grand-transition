@@ -100,7 +100,7 @@ neutral point before viewport geometry measurements.
 Playwright uses two local workers and one CI worker so concurrent raster
 decoding and screenshots do not starve the complete ladder flow. Each large
 viewport case has its own test budget. Transient reaction checks use a paused
-browser clock and advance it explicitly; they do not depend on host speed.
+browser clock and advance it explicitly. They do not depend on host speed.
 Automated match drivers read lifecycle state and screen indicators together.
 They handle completed results before requesting another draft decision.
 The foundation scene browser test waits for image decoding before checking

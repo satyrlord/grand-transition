@@ -134,6 +134,35 @@
     justify-self: center;
   }
 
+  .interruption-setting--sound {
+    grid-column: auto;
+  }
+
+  .interruption-setting--phrase-color-coding {
+    grid-column: auto;
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .interruption-audio-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .interruption-audio-control {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .interruption-audio-control > span {
+    color: var(--interruption-paper);
+    font: 700 0.72rem/1 var(--font-interruption-interface);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .interruption-notice--paused .interruption-settings {
     gap: 0.6rem;
     margin-block-start: 1rem;

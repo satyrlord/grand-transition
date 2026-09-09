@@ -8,12 +8,16 @@ export const returnToMenuEventName = 'return-to-menu';
 export const turnTimerChangeEventName = 'turn-timer-change';
 export const autoCompleteChangeEventName = 'auto-complete-change';
 export const phraseColorCodingChangeEventName = 'phrase-color-coding-change';
+export const musicEnabledChangeEventName = 'music-enabled-change';
+export const voicesEnabledChangeEventName = 'voices-enabled-change';
 
 export type InterruptionKind = 'paused' | 'unsupported-viewport';
 export type TurnTimerSeconds = 15 | 30 | null;
 export type TurnTimerChangeEvent = CustomEvent<TurnTimerSeconds>;
 export type AutoCompleteChangeEvent = CustomEvent<boolean>;
 export type PhraseColorCodingChangeEvent = CustomEvent<boolean>;
+export type MusicEnabledChangeEvent = CustomEvent<boolean>;
+export type VoicesEnabledChangeEvent = CustomEvent<boolean>;
 
 export class GrandTransitionInterruption extends LitElement {
   static properties = {
@@ -21,6 +25,8 @@ export class GrandTransitionInterruption extends LitElement {
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
     phraseColorCoding: { attribute: false },
+    musicEnabled: { attribute: false },
+    voicesEnabled: { attribute: false },
     confirmingExit: { state: true },
   };
 
@@ -28,6 +34,8 @@ export class GrandTransitionInterruption extends LitElement {
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
   declare phraseColorCoding: boolean;
+  declare musicEnabled: boolean;
+  declare voicesEnabled: boolean;
   declare private confirmingExit: boolean;
 
   constructor() {
@@ -36,6 +44,8 @@ export class GrandTransitionInterruption extends LitElement {
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
     this.phraseColorCoding = true;
+    this.musicEnabled = true;
+    this.voicesEnabled = false;
     this.confirmingExit = false;
   }
 
@@ -122,6 +132,8 @@ export class GrandTransitionInterruption extends LitElement {
                         <legend>${msg('Turn timer')}</legend>
                         <div
                           class="interruption-setting-options interruption-setting-options--timer"
+                          role="group"
+                          aria-label=${msg('Turn timer')}
                         >
                           ${this.renderTimerOption(15, msg('15 seconds'))}
                           ${this.renderTimerOption(30, msg('30 seconds'))}
@@ -130,16 +142,43 @@ export class GrandTransitionInterruption extends LitElement {
                       </fieldset>
                       <fieldset class="interruption-setting">
                         <legend>${msg('Auto-complete')}</legend>
-                        <div class="interruption-setting-options">
+                        <div
+                          class="interruption-setting-options"
+                          role="group"
+                          aria-label=${msg('Auto-complete')}
+                        >
                           ${this.renderAutoCompleteOption(true, msg('On'))}
                           ${this.renderAutoCompleteOption(false, msg('Off'))}
+                        </div>
+                      </fieldset>
+                      <fieldset
+                        class="interruption-setting interruption-setting--sound"
+                      >
+                        <legend>${msg('Sound')}</legend>
+                        <div class="interruption-audio-options">
+                          ${this.renderAudioOption(
+                            'music',
+                            msg('Music'),
+                            this.musicEnabled,
+                            (value) => this.changeMusic(value),
+                          )}
+                          ${this.renderAudioOption(
+                            'voices',
+                            msg('Voices'),
+                            this.voicesEnabled,
+                            (value) => this.changeVoices(value),
+                          )}
                         </div>
                       </fieldset>
                       <fieldset
                         class="interruption-setting interruption-setting--phrase-color-coding"
                       >
                         <legend>${msg('Phrase color coding')}</legend>
-                        <div class="interruption-setting-options">
+                        <div
+                          class="interruption-setting-options"
+                          role="group"
+                          aria-label=${msg('Phrase color coding')}
+                        >
                           ${this.renderPhraseColorCodingOption(true, msg('On'))}
                           ${this.renderPhraseColorCodingOption(false, msg('Off'))}
                         </div>
@@ -207,6 +246,7 @@ export class GrandTransitionInterruption extends LitElement {
       <button
         type="button"
         class="interruption-setting-option"
+        data-setting="turn-timer"
         data-selected=${selected ? 'true' : 'false'}
         aria-pressed=${selected}
         @click=${() => this.changeTurnTimer(value)}
@@ -225,6 +265,7 @@ export class GrandTransitionInterruption extends LitElement {
       <button
         type="button"
         class="interruption-setting-option"
+        data-setting="auto-complete"
         data-selected=${selected ? 'true' : 'false'}
         aria-pressed=${selected}
         @click=${() => this.changeAutoComplete(value)}
@@ -247,6 +288,66 @@ export class GrandTransitionInterruption extends LitElement {
   private changeAutoComplete(value: boolean): void {
     this.dispatchEvent(
       new CustomEvent(autoCompleteChangeEventName, {
+        bubbles: true,
+        composed: true,
+        detail: value,
+      }),
+    );
+  }
+
+  private renderAudioOption(
+    setting: 'music' | 'voices',
+    label: string,
+    selected: boolean,
+    change: (value: boolean) => void,
+  ): ReturnType<typeof html> {
+    const labelId = `interruption-${setting}-label`;
+    return html`
+      <div class="interruption-audio-control">
+        <span id=${labelId}>${label}</span>
+        <div
+          class="interruption-setting-options"
+          role="group"
+          aria-labelledby=${labelId}
+        >
+          <button
+            type="button"
+            class="interruption-setting-option"
+            data-setting=${setting}
+            data-selected=${selected ? 'true' : 'false'}
+            aria-pressed=${selected}
+            @click=${() => change(true)}
+          >
+            ${msg('On')}
+          </button>
+          <button
+            type="button"
+            class="interruption-setting-option"
+            data-setting=${setting}
+            data-selected=${!selected ? 'true' : 'false'}
+            aria-pressed=${!selected}
+            @click=${() => change(false)}
+          >
+            ${msg('Off')}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  private changeMusic(value: boolean): void {
+    this.dispatchEvent(
+      new CustomEvent(musicEnabledChangeEventName, {
+        bubbles: true,
+        composed: true,
+        detail: value,
+      }),
+    );
+  }
+
+  private changeVoices(value: boolean): void {
+    this.dispatchEvent(
+      new CustomEvent(voicesEnabledChangeEventName, {
         bubbles: true,
         composed: true,
         detail: value,

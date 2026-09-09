@@ -56,7 +56,9 @@ global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
 Warm
 color is local to authored materials and lighting, not a complete scene grade.
 
-- **Transition-Era Television Studio:** The late-2000s municipal studio contains
+- **Transition-Era Television Studio:** Use the flat cel-shaded editorial-cartoon
+  direction in Specification 023 for this late-2000s municipal studio. Generate
+  the scene through text prompts without image references. The set contains
   heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
   It contains lighting trusses, harsh lamps, and two tall standing desks. Each
   desk has one microphone and one plain unbranded water bottle. One fixed blonde
@@ -77,7 +79,7 @@ color is local to authored materials and lighting, not a complete scene grade.
   One fixed
   fictional male moderator sits with crossed legs in a beige studio chair at
   the stage center, behind a low charcoal table with papers. His complete head
-  remains above the common phrase pool; the pool can partly cover his furniture. He wears
+  remains above the common phrase pool. The pool can partly cover his furniture. He wears
   rectangular glasses, faces the camera, and has a normal human head with a
   slightly tall forehead and comically small facial features.
 
@@ -142,7 +144,7 @@ without a recorded restriction or role-frequency explanation. In a scripted
 60-minute manual run, the same complete rendered insult cannot occur more than
 twice.
 
-Content totals can change only through an approved revision to the ranges above,
+Content totals can change only through an approved change to the ranges above,
 with new simulation evidence. Manual “feels varied” evidence cannot waive a
 failed automated range or distribution.
 

@@ -39,7 +39,7 @@ There is no character-specific common-board phrase list.
 `david`, `mark`, or `zira`. Human skins use George or Emma. Robot skins use the
 requested installed Microsoft voice, with a British neural fallback. This
 presentation metadata does not change grammar, scoring, or the stored replay
-schema. A missing human assignment defaults to George; a missing robot
+schema. A missing human assignment defaults to George. A missing robot
 assignment defaults to David. The character authoring file owns overrides.
 Reject a human assignment outside George and Emma. Reject a robot assignment
 outside David, Mark, and Zira. Each assigned skin ID must exist in the character

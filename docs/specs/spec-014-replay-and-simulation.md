@@ -5,9 +5,8 @@
 **Owns:** Replay, local logs, simulation scripts, and coverage
 **Production-file budget:** 7
 
-Milestone 019 replaces the player-interface ban below only for its local,
-public, browser-stored match history. Development tools and imports remain
-non-player-facing.
+Milestone 019 owns local, public, browser-stored match history. Keep development
+tools and imports non-player-facing.
 
 ## Deliver
 
@@ -85,7 +84,7 @@ date, and machine data.
 
 Version 1 uses the original 1, 3, 5, and 7 compatibility bases, per-restricted-
 phrase 1.5 multipliers, and a 2x weakness multiplier. Version 2 uses the
-previous Milestone 010 pacing contract: 5, 10, 15, and 20 compatibility bases,
+Milestone 010 compatibility contract: 5, 10, 15, and 20 compatibility bases,
 no restriction damage bonus, and a 1.5 weakness multiplier. Version 3 uses the
 current Milestone 010 contract: 5, 8, 11, and 14 compatibility bases, no
 restriction damage bonus, and a 1.5 weakness multiplier. New replays and match
@@ -126,7 +125,7 @@ Milestone 002 threshold remains 70 percent.
   rejects invalid counts and seeds, and reproduces summary and output bytes.
 - **AC-014-05:** Normal continuous integration (CI) runs 500 generated Node
   matches and 50 Chromium matches with seed and replay-path evidence. A
-  permanent fixture covers every previously failing seed, including
+  permanent fixture covers every required regression seed, including
   `2135977951`. The repository `$simulate-matches` skill runs an explicitly
   requested workload outside normal CI and requires the number of matches as
   input. Every workload preserves the stated match invariants.

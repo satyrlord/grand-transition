@@ -171,7 +171,7 @@ async function pathExists(filePath) {
   }
 }
 
-async function installOutputs(sceneRoot, stagingRoot, manifestText) {
+export async function installOutputs(sceneRoot, stagingRoot, manifestText) {
   const variantsPath = path.join(sceneRoot, 'variants');
   const manifestPath = path.join(sceneRoot, 'scene-manifest.json');
   const nonce = `${process.pid}-${Date.now()}`;
@@ -181,22 +181,33 @@ async function installOutputs(sceneRoot, stagingRoot, manifestText) {
   await writeFile(stagedManifest, manifestText);
   const hadVariants = await pathExists(variantsPath);
   const hadManifest = await pathExists(manifestPath);
+  let variantsBackedUp = false;
+  let manifestBackedUp = false;
+  let variantsInstalled = false;
+  let manifestInstalled = false;
   try {
-    if (hadVariants) await rename(variantsPath, variantsBackup);
-    if (hadManifest) await rename(manifestPath, manifestBackup);
+    if (hadVariants) {
+      await rename(variantsPath, variantsBackup);
+      variantsBackedUp = true;
+    }
+    if (hadManifest) {
+      await rename(manifestPath, manifestBackup);
+      manifestBackedUp = true;
+    }
     await rename(path.join(stagingRoot, 'variants'), variantsPath);
+    variantsInstalled = true;
     await rename(stagedManifest, manifestPath);
-    await Promise.all([
-      hadVariants ? rm(variantsBackup, { recursive: true, force: true }) : undefined,
-      hadManifest ? rm(manifestBackup, { force: true }) : undefined,
-    ]);
+    manifestInstalled = true;
   } catch (error) {
-    await rm(variantsPath, { recursive: true, force: true });
-    await rm(manifestPath, { force: true });
-    if (hadVariants && (await pathExists(variantsBackup))) await rename(variantsBackup, variantsPath);
-    if (hadManifest && (await pathExists(manifestBackup))) await rename(manifestBackup, manifestPath);
+    if (variantsInstalled) await rm(variantsPath, { recursive: true, force: true });
+    if (manifestInstalled) await rm(manifestPath, { force: true });
+    if (variantsBackedUp) await rename(variantsBackup, variantsPath);
+    if (manifestBackedUp) await rename(manifestBackup, manifestPath);
     throw error;
   }
+  // The new package is complete. Cleanup failure must not roll it back.
+  if (variantsBackedUp) await rm(variantsBackup, { recursive: true, force: true });
+  if (manifestBackedUp) await rm(manifestBackup, { force: true });
 }
 
 export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets', 'scenes') } = {}) {
@@ -242,9 +253,11 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
         ownerType: 'scene',
         ownerId: master.identity.ownerId,
         layerRole: master.identity.isForeground ? 'foreground' : 'back',
-        sourceDescription: ['modern-debate-studio', 'transition-era-television-studio'].includes(master.identity.id)
-          ? 'User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.'
-          : SOURCE_DESCRIPTION,
+        sourceDescription: master.identity.id === 'transition-era-television-studio'
+          ? 'Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.'
+          : master.identity.id === 'modern-debate-studio'
+            ? 'User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.'
+            : SOURCE_DESCRIPTION,
         licenseIdentifier: LICENSE_IDENTIFIER,
         source: {
           path: master.fileName,

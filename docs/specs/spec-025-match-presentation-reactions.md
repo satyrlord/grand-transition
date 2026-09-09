@@ -5,12 +5,12 @@
 **Owns:** Production-quality outcome reactions without tactical instruction
 **Production-file budget:** 8
 
-## Approved reference-loop replacement
+## Reference loop
 
-On 2026-09-08, the product owner requested parity with the original Hollywood
-Roast presentation loop. This replaces the between-round modal, mandatory
-Continue hold, 800-millisecond combined receipt, and immediate terminal-overlay
-rules in Milestones 016, 017, 019, and 024 where they conflict with this sequence.
+Use the original Hollywood Roast presentation loop. Do not use a between-round
+modal, mandatory Continue hold, 800-millisecond combined receipt, or immediate
+terminal overlay. This sequence controls the presentation contracts in
+Milestones 016, 017, 019, and 024 where they overlap.
 Game outcomes remain deterministic and engine-owned. History still records one
 terminal result. Presentation delays do not change the scored result.
 
@@ -52,8 +52,8 @@ motion keeps every score and state transition while suppressing movement.
 
 ## Speaker placement and inline outcomes
 
-The owner's 2026-09-08 original-game screenshots clarify inline presentation.
-Do not use a central boxed score panel or a repeated visible Clause heading.
+Use inline presentation. Do not use a central boxed score panel or a repeated
+visible Clause heading.
 Align the speech bubble toward its current speaker. Its center is offset by
 11 percent of scene width from the viewport center, left for red and right for
 blue. The tail ends near the speaker. Keep faces, names, and controls clear.
@@ -73,7 +73,7 @@ Damage text names the affected player and exact Pride loss for assistive tools.
 Cliffhanger score points and applied Pride loss are distinct. Use the current
 speaker's outgoingDamage for Total and the defender's opponentOutgoingDamage
 for impact amount, hit severity, and damage text. Display the engine's exact
-prideAfter. For example, a score of 5 can inflict 100 Pride in a cliffhanger;
+prideAfter. For example, a score of 5 can inflict 100 Pride in a cliffhanger.
 that is a heavy hit, not a five-Pride hit.
 
 ## Deliver
@@ -115,7 +115,7 @@ movement and flashing.
 
 The narrated exchange is a protected hold. Clause, finisher, and Comeback rows
 appear at generated narration markers. A clause marker belongs to its first
-clause-completing phrase; repeated phrase IDs do not merge markers. Applied
+clause-completing phrase. Repeated phrase IDs do not merge markers. Applied
 factor and public weakness names remain with that component. Bonus cues follow
 the completed phrase. Total appears after the final audio sample.
 
@@ -139,7 +139,7 @@ silent fallback, late-clause weakness timing, and stale-event rejection.
 checks both speakers, totals, displayed Pride, automatic progression, and delayed
 Victory at all supported viewports. `e2e/audio-speech.spec.ts` adds real local
 neural speech under production CSP. The local reference assembly is inspected
-read-only; no proprietary code or recordings are shipped.
+read-only. No proprietary code or recordings are shipped.
 
 ## Acceptance criteria
 

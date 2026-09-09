@@ -23,12 +23,16 @@ the modal and return focus to `Settings`.
 Focus stays inside the open modal.
 The selected Turn timer option stays visibly distinct in forced-colors mode.
 The existing Pause controls use the same Turn timer and Auto-complete values.
-Phrase color coding remains session-only because it is not in the strict
-version 1 document.
+Pause also exposes separate Music and Voices On and Off controls. Music Off
+uses zero Music volume and Music On restores the last non-zero Music volume in
+the page session, or the 70 percent default when no such value exists. Voices
+uses Speech enabled. These changes apply immediately and persist through the
+same settings document. Phrase color coding remains session-only because it is
+not in the strict version 1 document.
 
-The speech voice dropdown was removed at the owner's request. The version 1
-Speech voice URI field still round-trips so existing settings remain valid.
-It has no visible control and no longer overrides skin voice assignments.
+Do not expose a Speech voice dropdown. The version 1 Speech voice URI field
+still round-trips so existing settings remain valid. It has no visible control
+and does not override skin voice assignments.
 Milestone 024 owns voice selection and all audio
 and speech output.
 
@@ -101,6 +105,13 @@ output, speech output, or artificial intelligence (AI).
 **AC-020-07:** All Pause option groups have a visible selected marker that survives forced
 colors, hover, and focus. Keyboard focus retains a separate outer ring so it
 can be distinguished from selection. This includes Turn timer, Auto-complete, and Phrase
-color coding. Their `aria-pressed` values remain correct. Verify selected and
-unselected siblings with `e2e/review-accessibility.spec.ts` and
-production browser evidence.
+color coding, Music, and Voices. Their `aria-pressed` values remain correct.
+Verify selected and unselected siblings with
+`e2e/review-accessibility.spec.ts` and production browser evidence.
+
+**AC-020-08:** Pause Music Off applies zero Music gain without changing Effects
+volume. Music On restores the last non-zero Music volume for the page session,
+or the 70 percent default. Pause Voices Off sets Speech enabled to false,
+cancels active narration, and suppresses later narration until Voices is On.
+Both controls persist through the version 1 settings document and retain their
+selected state after a later Pause.

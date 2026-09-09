@@ -28,6 +28,9 @@ target owns its guidance.
 
 The approved specifications own product, architecture, behavior, and delivery.
 AI files route work to those contracts. They do not replace or restate them.
+Keep `docs/specs/` as current specifications. Do not add revision histories,
+dated change logs, or minor direction narratives to those files. Keep private
+revision notes in the Git-ignored root `HISTORY.md` file.
 
 Keep `.github/skills/` as the canonical skill source. Local `.agents/skills`
 and `.codex/skills` junctions expose the same packages to skill discovery

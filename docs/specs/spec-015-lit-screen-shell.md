@@ -20,8 +20,8 @@ their behavior exists.
 
 The title screen shows the generated original game emblem, the live game name,
 one setup action, and the fictional-composite satire disclaimer. It inherits
-the final match and Pause visual system instead of the earlier polling-ledger
-direction. Setup uses native controls and prevents only invalid combinations.
+the final match and Pause visual system. Setup uses native controls and prevents
+only invalid combinations.
 Mirror characters are valid. Screens use light DOM.
 
 The title emblem uses genuine transparent alpha with a Portable Network
@@ -159,9 +159,9 @@ hide validation.
   stays inside each supported viewport, and never traps focus.
 - **AC-015-09:** The title uses the approved generated emblem plus live title,
   subtitle, action, status, and disclaimer text. Title and setup use only the
-  four font families owned by Milestone 023. Barlow Condensed, Georgia, and
-  other superseded entry-screen fonts are not production dependencies or
-  computed entry-screen families. The emblem has genuine transparent outer
+  four font families owned by Milestone 023. Do not include Barlow Condensed,
+  Georgia, or any other excluded entry-screen font as a production dependency
+  or computed entry-screen family. The emblem has genuine transparent outer
   corners and no visible rectangular matte. Production preloads and renders the
   two preferred-format title assets, reserves emblem dimensions, and keeps their combined
   runtime size at or below 300 KiB. A delayed emblem shows the brass loading

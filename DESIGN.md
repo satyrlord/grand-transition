@@ -437,7 +437,7 @@ blocked-WOFF2 runs record actual browser font use, computed weights, complete
 text bounds, source case, and the production entry hash. Both modes passed on
 Windows with Chromium 151.0.7922.34 on September 6, 2026. The same production
 suite verifies that each served font-license notice is byte-identical to its
-Fontsource package notice. This comparison establishes font fit; it does not
+Fontsource package notice. This comparison establishes font fit. It does not
 establish final scene-art acceptance.
 
 ### Hierarchy
@@ -505,7 +505,7 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, six scene backgrounds, two
-transparent foreground desk plates, and 27 transparent character portraits:
+transparent foreground desk plates, and 28 transparent character portraits:
 18 defaults and 10 alternates. All portrait skins are visual-only variations and
 do not change the fictional character identity or prose.
 All shipping assets retain embedded generic source provenance. Required
@@ -721,8 +721,10 @@ highlighted.
 ### Pause and compatibility slates
 
 Manual Pause replaces the complete match with a navy transmission-held slate.
-The slate has compact Turn timer, Auto-complete, and Phrase color coding
-controls. It has one brass-framed Resume action and no game facts. Unsupported viewports use the
+The slate has compact Turn timer, Auto-complete, Sound Music, Sound Voices, and
+Phrase color coding controls. The two Sound choices use paired On and Off
+buttons inside one framed group. It has one brass-framed Resume action and no
+game facts. Unsupported viewports use the
 same broadcast language without settings or a Resume action. The compatibility
 slate states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
 

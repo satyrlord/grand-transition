@@ -40,8 +40,10 @@ for (const viewport of [
     await page.screenshot({ path: testInfo.outputPath('forced-setup.png') });
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.getByRole('button', { name: 'Pause', exact: true }).click();
-    const groups = page.locator('.interruption-notice fieldset');
-    await expect(groups).toHaveCount(3);
+    const fields = page.locator('.interruption-notice fieldset');
+    await expect(fields).toHaveCount(4);
+    const groups = page.locator('.interruption-notice .interruption-setting-options');
+    await expect(groups).toHaveCount(5);
     for (const group of await groups.all()) {
       const selected = group.locator('[aria-pressed="true"]');
       await expect(selected).toHaveCount(1);

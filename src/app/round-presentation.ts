@@ -84,6 +84,18 @@ export class RoundPresentation {
     if (this.next) this.arm(this.remaining);
   }
 
+  updateSettings(settings: SettingsDocument): void {
+    if (!this.input) {
+      this.speech.cancel();
+      return;
+    }
+    this.input = { ...this.input, settings };
+    this.speech.cancel();
+    if (!this.frame || this.next ||
+      (this.frame.phase !== 'preparing' && this.frame.phase !== 'reciting')) return;
+    this.silentDelivery(Math.max(0, this.frame.segment));
+  }
+
   cancel(): void {
     this.generation++;
     if (this.timer !== null) this.clock.clearTimeout(this.timer);

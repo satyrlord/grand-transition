@@ -11,6 +11,7 @@ The approved specifications define game and software terms.
 - Keep descriptive sentences within 25 words.
 - Give each instruction an imperative verb.
 - Put separate actions in separate sentences unless they occur at the same time.
+- Use full stops instead of semicolons in general prose.
 - Put a necessary condition before its instruction.
 - Use active voice in procedures.
 - Keep each paragraph on one topic, with no more than six sentences.
