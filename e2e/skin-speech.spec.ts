@@ -82,7 +82,7 @@ test('Piper streams both public clauses with exact phrase markers and one comple
   await configure(page, [
     { character:'red-folded-chairman', skin:2, neural:'vctk-p225' },
     { character:'thunder-tribune', skin:1, neural:'vctk-p226' },
-  ], ['your-brother', 'is-a-snitch', 'televised-but', 'national-consensus', 'belongs-in-a-party-museum']);
+  ], ['your-brother', 'is-a-snitch', 'but', 'national-consensus', 'belongs-in-a-party-museum']);
   await page.getByRole('button', { name:'End', exact:true }).click();
   await page.getByRole('button', { name:'End', exact:true }).click();
   await expect(page.getByRole('heading', { name:/Round 2/u })).toBeVisible({ timeout:90_000 });

@@ -54,7 +54,7 @@ The stable roster order, identifier, weakness tags, and play style are:
 | 6 | `retiring-cassandra` | Retiring Cassandra | competence, hope, and results | defensive continuations and conservative scoring. |
 | 7 | `oat-milk-reformist` | Oat-Milk Reformist | relevance, authenticity, and class | long clauses and semantic targeting. |
 | 8 | `marble-diplomat` | Marble Diplomat | luxury, elitism, and corruption | high values, finishers, and status attacks. |
-| 9 | `county-baron` | County Baron | procurement, infrastructure, and nepotism | denial and low-risk continuations. |
+| 9 | `county-baron` | Local Baron | procurement, infrastructure, and nepotism | denial and low-risk continuations. |
 | 10 | `coalition-acrobat` | Coalition Acrobat | consistency, memory, and commitment | conjunctions, continuations, and reversals. |
 | 11 | `algorithmic-prophet` | Algorithmic Prophet | evidence, specificity, and follow-up questions | volatile livestream finishers. |
 | 12 | `spreadsheet-technocrat` | Spreadsheet Technocrat | delivery, accountability, and human scale | clause stacks and dashboard denial. |
@@ -67,6 +67,10 @@ The stable roster order, identifier, weakness tags, and play style are:
 
 Keep the remaining character identifiers in their listed relative order. Do not
 reuse the unused roster-order value.
+
+Local Baron retains the stable `county-baron` identifier and derived content,
+locale, and asset identifiers. The display-name change preserves saved setups
+and replay references.
 
 The other 17 characters are human. Animal terms are political metaphors only.
 No character uses human-animal or robot-animal hybrid anatomy.

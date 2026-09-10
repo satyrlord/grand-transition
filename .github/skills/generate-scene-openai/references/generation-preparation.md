@@ -11,12 +11,21 @@ Inspect each reference locally.
 Preserve Specification 023 restrictions on existing baseline rasters.
 Do not generalize a scene-specific exception to another asset.
 
+For a scene foreground repair, inspect its current approved scene layers for
+conflicting camera, scale, perspective, and rendering decisions. Resolve
+differences between written style rules and the approved scene before
+generation. Native transparency changes the background workflow, not the art
+direction. Inspection does not authorize uploading an existing raster as a
+generation reference.
+
 ## Prepare the private prompt
 
 Run the private-prompt color guard before generation.
 
 Preserve the selected scene's approved art direction and neutral color controls.
-Use the approved green-matte workflow for foreground layers intended for integration.
+Prefer native transparency for scene foreground layers.
+Request transparent PNG output from a model that supports it.
+Use a green matte only for a model without native transparency or an approved conversion repair.
 Do not bake playable characters, required text, or controls into scene art.
 
 Write a UTF-8 prompt under `research/scene-generation/<run>/`.
@@ -45,7 +54,8 @@ No baked playable characters, interface controls, or required interface text.
 No labels, numbers, guide boxes, or annotations.
 ```
 
-For a foreground layer, request the approved flat green matte with no green subject material.
+For a native transparent layer, prohibit colored mattes, checkerboards, and background shadows.
+For a green-matte fallback, request flat green with no green subject material.
 Keep its camera and canvas aligned with the back scene.
 
 ## Generate with the internal tool

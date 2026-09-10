@@ -67,7 +67,7 @@
       "text": "mediates",
       "singularText": "mediates",
       "pluralText": "mediate",
-      "tags": ["restraint", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -93,7 +93,7 @@
       "text": "mediated",
       "singularText": "mediated",
       "pluralText": "mediated",
-      "tags": ["restraint", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -119,7 +119,7 @@
       "text": "will mediate",
       "singularText": "will mediate",
       "pluralText": "will mediate",
-      "tags": ["restraint", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {

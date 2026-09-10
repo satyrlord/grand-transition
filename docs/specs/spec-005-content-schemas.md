@@ -71,6 +71,14 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
 ## Exact constraints
 
 - Identifiers use lower-case kebab case.
+- Neutral phrases use neutral identifiers and explicit empty `tags` arrays.
+  Tags describe meaning expressed by the phrase, not an implied political
+  context. Plain connectors (`and`, `but`, `because`, `yet`, `so`, `for`,
+  `with`), `ellipsis`, copulas, neutral referents, and generic neutral actions
+  have no weakness tags. This applies to common and character-owned phrases
+  in every tense. Family references retain their authored family weakness
+  tags. Score groups, relation preferences, and restrictions are independent
+  of weakness tags and remain permitted on neutral phrases.
 - Character species is `human` or `robot`. A robot portrait is fully
   mechanical.
 - Arrays that represent sets contain no duplicate value. Player-visible English

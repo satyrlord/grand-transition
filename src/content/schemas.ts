@@ -182,10 +182,7 @@ export const phraseDefinitionSchema = z
         }
       })
       .optional(),
-    tags: uniqueArray(identifierSchema, 'List each phrase tag only once.').min(
-      1,
-      'Add at least one phrase tag.',
-    ),
+    tags: uniqueArray(identifierSchema, 'List each phrase tag only once.'),
     characterIds: uniqueArray(
       identifierSchema,
       'List each character restriction only once.',

@@ -111,7 +111,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   const phraseIds = [
     'your-brother',
     'is-a-snitch',
-    'coalition-and',
+    'and',
     'a-pig',
   ] as const;
   const phraseSteps = phraseIds.map((phraseId) => ({

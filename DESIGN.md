@@ -171,7 +171,7 @@ are metaphorical political labels only. The playable foundation uses 17 original
 human editorial caricatures and one original robot caricature, 18 total. Each
 can occupy either player position.
 
-Seven archetypes have ten alternate skins
+Eight archetypes have eleven alternate skins
 in total. A skin is a visual-only variation that does not change game identity
 or prose. Later character art must preserve the declared species and cannot use
 animal or hybrid anatomy. One archetype can have one default skin and zero
@@ -189,8 +189,11 @@ shown in this world is human. A fully mechanical character is visibly a robot.
 ### Image language
 
 All generated representational raster art uses one flat cel-shaded editorial-
-cartoon language. Characters, skins, states, and robots use bold dark contours, large flat color
-shapes, and two or three hard-edged value levels. Fixed moderators, scene
+cartoon language. Every character skin and state uses the detailed rendering
+standard in Specification 023: controlled dark contours, finer expressive
+interior lines, grouped hair detail, and broad cel shading with restrained
+local tonal variation. Use the original Local Baron, Thunder Tribune, and
+Velvet Mogul portraits for visual calibration. Fixed moderators, scene
 architecture, furniture, fixtures, and props use the same construction. Exaggeration is
 deliberate. Materials read through silhouette, color, contour, and limited flat
 pattern instead of realistic surface detail.
@@ -505,8 +508,8 @@ shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
 The implemented build uses three brand rasters, six scene backgrounds, two
-transparent foreground desk plates, and 28 transparent character portraits:
-18 defaults and 10 alternates. All portrait skins are visual-only variations and
+transparent foreground desk plates, and 29 transparent character portraits:
+18 defaults and 11 alternates. All portrait skins are visual-only variations and
 do not change the fictional character identity or prose.
 All shipping assets retain embedded generic source provenance. Required
 text and controls remain outside raster art.

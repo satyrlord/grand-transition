@@ -1,6 +1,6 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -61,6 +61,39 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(reference.filter((arg: string) => arg === '--image')).toHaveLength(2);
     expect(() => cliArguments({ ...cliOptions, size: '3841x2160' })).toThrow('supported');
     expect(() => cliArguments({ ...cliOptions, size: '1921x1081' })).toThrow('supported');
+  });
+
+  test('passes optional background selection to generation and editing without changing the default', async () => {
+    expect(cliArguments(cliOptions)).not.toContain('--background');
+    for (const background of ['transparent', 'opaque', 'auto']) {
+      for (const references of [[], ['reference.png']]) {
+        const args = cliArguments({ ...cliOptions, background, references });
+        expect(args[args.indexOf('--background') + 1]).toBe(background);
+        expect(args[args.indexOf('--output-format') + 1]).toBe('png');
+      }
+    }
+    const runner = vi.fn();
+    await expect(runApiCli({ ...cliOptions, background: 'invalid' }, 'synthetic-key', runner))
+      .rejects.toThrow('transparent, opaque, or auto');
+    expect(runner).not.toHaveBeenCalled();
+    const result = spawnSync(process.execPath, [helper, 'generate', '--background', 'invalid',
+      '--prompt', 'missing-prompt', '--out', 'tmp/missing-output', '--dry-run'], { encoding: 'utf8' });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('transparent, opaque, or auto');
+    expect(result.stderr).not.toContain('ENOENT');
+  });
+
+  test('records explicit transparency in the API dry run', async () => {
+    const dir = await root(), promptFile = path.join(dir, 'prompt.txt');
+    await writeFile(promptFile, prompt);
+    const cliDirectory = path.join(dir, 'skills', '.system', 'imagegen', 'scripts');
+    await mkdir(cliDirectory, { recursive: true });
+    await writeFile(path.join(cliDirectory, 'image_gen.py'), '# Dry-run fixture; must not execute.\n');
+    const result = spawnSync(process.execPath, [helper, 'generate', '--background', 'transparent',
+      '--prompt', promptFile, '--out', 'tmp/transparency-dry-run', '--dry-run'],
+    { encoding: 'utf8', env: { ...process.env, CODEX_HOME: dir } });
+    expect(result.status).toBe(0);
+    expect(JSON.parse(result.stdout)).toMatchObject({ background: 'transparent', networkRequest: false });
   });
 
   test('validates private prompts and reference bytes without a network request', async () => {

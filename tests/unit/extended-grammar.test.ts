@@ -23,7 +23,7 @@ const analyze = (steps: readonly EnglishGrammarStep[]) =>
 describe('Hollywood Roast extended grammar', () => {
   test('and is legal immediately after the opening noun', () => {
     expect(
-      analyze([add('televised-revolution'), add('coalition-and')]),
+      analyze([add('televised-revolution'), add('and')]),
     ).toMatchObject({
       accepted: true,
       analysis: {
@@ -44,7 +44,7 @@ describe('Hollywood Roast extended grammar', () => {
   test('accepts a front because clause followed by the main clause', () => {
     expect(
       analyze([
-        add('archive-because'),
+        add('because'),
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
       ]),
@@ -59,7 +59,7 @@ describe('Hollywood Roast extended grammar', () => {
 
     expect(
       analyze([
-        add('archive-because'),
+        add('because'),
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
         add('televised-revolution'),
@@ -69,12 +69,12 @@ describe('Hollywood Roast extended grammar', () => {
   });
 
   test('because requires a noun before another connector or finisher', () => {
-    expect(analyze([add('archive-because')])).toMatchObject({
+    expect(analyze([add('because')])).toMatchObject({
       accepted: true,
       analysis: { state: 'EXPECT_SUBJECT', nextRoles: ['noun'] },
     });
     expect(
-      analyze([add('archive-because'), add('archive-because')]),
+      analyze([add('because'), add('because')]),
     ).toMatchObject({
       accepted: false,
       faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
@@ -82,8 +82,8 @@ describe('Hollywood Roast extended grammar', () => {
     expect(
       analyze([
         add('national-consensus'),
-        add('coalition-and'),
-        add('archive-because'),
+        add('and'),
+        add('because'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -91,7 +91,7 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('archive-because'),
+        add('because'),
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
         add('by-emergency-ordinance'),
@@ -112,7 +112,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('archive-because'),
+        add('because'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -122,8 +122,8 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('archive-because'),
-        add('archive-because'),
+        add('because'),
+        add('because'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -133,7 +133,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('archive-because'),
+        add('because'),
         add('televised-revolution'),
         add('belongs-in-a-party-museum'),
       ]),
@@ -143,7 +143,7 @@ describe('Hollywood Roast extended grammar', () => {
   test('keeps the required main clause after a subordinate-clause modifier', () => {
     expect(
       analyze([
-        add('archive-because'),
+        add('because'),
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
         add('before-the-next-election'),
@@ -158,7 +158,7 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('archive-because'),
+        add('because'),
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
         add('before-the-next-election'),
@@ -168,12 +168,12 @@ describe('Hollywood Roast extended grammar', () => {
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each(['coalition-and', 'televised-but', 'archive-because'])(
+  test.each(['and', 'but', 'because'])(
     'accepts %s after a complete front-because subordinate clause',
     (connector) => {
       expect(
         analyze([
-          add('archive-because'),
+          add('because'),
           add('national-consensus'),
           add('belongs-in-a-party-museum'),
           add(connector),
@@ -186,7 +186,7 @@ describe('Hollywood Roast extended grammar', () => {
     },
   );
 
-  test.each(['coalition-and', 'televised-but'])(
+  test.each(['and', 'but'])(
     'accepts because after a completed clause plus %s',
     (connector) => {
       expect(
@@ -194,7 +194,7 @@ describe('Hollywood Roast extended grammar', () => {
           add('national-consensus'),
           add('belongs-in-a-party-museum'),
           add(connector),
-          add('archive-because'),
+          add('because'),
           add('televised-revolution'),
           add('belongs-in-a-party-museum'),
         ]),
@@ -207,7 +207,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('chamber-yet'),
+        add('yet'),
         add('televised-revolution'),
         add('makes-own-voters-change-the-channel'),
       ]),
@@ -256,10 +256,10 @@ describe('Hollywood Roast extended grammar', () => {
     const result = analyze([
       add('your-voters'),
       add('was-a-snitch'),
-      add('chamber-yet'),
+      add('yet'),
       add('audits'),
       add('your-brother'),
-      add('coalition-and'),
+      add('and'),
       add('will-drag-before-the-cameras'),
     ]);
 
@@ -278,7 +278,7 @@ describe('Hollywood Roast extended grammar', () => {
     const result = analyze([
       add('your-brother'),
       add('is-a-snitch'),
-      add('coalition-and'),
+      add('and'),
       add('a-pig'),
       { kind: 'end' },
     ]);
@@ -299,7 +299,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('your-brother'),
         add('is-a-snitch'),
-        add('coalition-and'),
+        add('and'),
         add('a-pig'),
         add('belongs-in-a-party-museum'),
       ]),
@@ -315,7 +315,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('your-brother'),
         add('is-a-snitch'),
-        add('coalition-and'),
+        add('and'),
         add('a-pig'),
         add('denounced'),
         add('your-concubine'),
@@ -335,7 +335,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('your-brother'),
         add('interrupts-the-debate'),
-        add('coalition-and'),
+        add('and'),
         add('a-pig'),
         { kind: 'end' },
       ]),
@@ -362,7 +362,7 @@ describe('Hollywood Roast extended grammar', () => {
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each(['consequence-so', 'explanation-for'])(
+  test.each(['so', 'for'])(
     '%s joins complete clauses and requires a new noun subject',
     (connector) => {
       expect(analyze([add(connector)])).toMatchObject({

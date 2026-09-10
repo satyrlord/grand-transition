@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { stat } from 'node:fs/promises';
+import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 
 const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
@@ -400,45 +401,53 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
   await page.goto('');
   await page.getByRole('button', { name: 'Set up match' }).click();
 
-  for (const characterId of [
-    'red-folded-chairman',
-    'thunder-tribune',
-    'midnight-sensationalist',
-    'government-ai',
-    'retiring-cassandra',
-  ]) {
+  const alternateSkinsByCharacter = new Map<
+    string,
+    Array<(typeof characterManifest.assets)[number]>
+  >();
+  for (const skin of characterManifest.assets
+    .filter(({ skinId }) => skinId !== 'default')
+    .toSorted((left, right) => left.id.localeCompare(right.id))) {
+    const skins = alternateSkinsByCharacter.get(skin.ownerId) ?? [];
+    skins.push(skin);
+    alternateSkinsByCharacter.set(skin.ownerId, skins);
+  }
+  for (const [characterId, alternateSkins] of alternateSkinsByCharacter) {
     await page.locator('#playerOneCharacterId').click();
     await page
       .locator(`.roster-choice[data-character-id="${characterId}"]`)
       .click();
     const stage = page.locator('#playerOneCharacterId');
-    if ((await stage.getAttribute('data-skin-id')) !== 'alternate') {
+    for (let index = 0;
+      index <= alternateSkins.length && await stage.getAttribute('data-skin-id') !== 'default';
+      index += 1) {
       await page
         .getByRole('button', { name: 'Next skin for Player one' })
         .click();
     }
-    const expectedSkinId =
-      characterId === 'retiring-cassandra' ? 'statesman' : 'alternate';
-    await expect(stage).toHaveAttribute('data-skin-id', expectedSkinId);
-    const portrait = page.locator(
-      '.contestant-stage--one .contestant-portrait',
-    );
-    await expect(portrait).toHaveAttribute(
-      'src',
-      new RegExp(`${characterId}--${expectedSkinId}`, 'u'),
-    );
-    expect(
-      await portrait.evaluate(async (image) => {
-        await (image as HTMLImageElement).decode();
-        return (image as HTMLImageElement).naturalWidth;
-      }),
-    ).toBeGreaterThan(0);
+    await expect(stage).toHaveAttribute('data-skin-id', 'default');
+    for (const skin of alternateSkins) {
+      await page
+        .getByRole('button', { name: 'Next skin for Player one' })
+        .click();
+      await expect(stage).toHaveAttribute('data-skin-id', skin.skinId);
+      const portrait = page.locator(
+        '.contestant-stage--one .contestant-portrait',
+      );
+      await expect(portrait).toHaveAttribute('src', new RegExp(skin.id, 'u'));
+      expect(
+        await portrait.evaluate(async (image) => {
+          await (image as HTMLImageElement).decode();
+          return (image as HTMLImageElement).naturalWidth;
+        }),
+      ).toBeGreaterThan(0);
+    }
   }
 
   expect(
     await page.locator('.roster-headshot').evaluateAll((portraits) =>
       portraits.every(
-        (portrait) => !(portrait as HTMLImageElement).src.includes('--alternate'),
+        (portrait) => !(portrait as HTMLImageElement).src.includes('--'),
       ),
     ),
   ).toBe(true);
@@ -446,6 +455,21 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     path: testInfo.outputPath('alternate-skins-setup.png'),
     fullPage: true,
   });
+
+  await page.locator('#playerOneCharacterId').click();
+  await page.locator('.roster-choice[data-character-id="county-baron"]').click();
+  await page.getByRole('button', { name: 'Next skin for Player one' }).click();
+  await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
+    'data-skin-id',
+    'municipal-patron',
+  );
+  await page.getByRole('button', { name: 'Start match' }).click();
+  const redPlayer = page.locator('.match-player[data-side="red"]');
+  await expect(redPlayer.getByRole('heading')).toHaveText('Local Baron');
+  await expect(redPlayer.locator('.character-portrait')).toHaveAttribute(
+    'src',
+    /county-baron--municipal-patron/u,
+  );
 });
 
 test('approved Curtain Call title fits its comp viewport and uses the match fonts', async ({

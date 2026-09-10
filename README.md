@@ -41,7 +41,7 @@ voices. Phase 2 compares Ro_VITS and records a model decision.
 
 The current content has common Romanian-politics phrases and 18 fictional
 characters: 17 humans and one robot. Each character has owned phrases and a
-default local portrait. Seven archetypes have ten alternate skins in total.
+default local portrait. Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes two fictional layered debate studios, four playable
 foundation scenes with distinct local cartoon backgrounds, and one English game-locale
@@ -52,9 +52,11 @@ alternate skins per archetype. The fixed character and studio baselines have
 manifests and generated AVIF and WebP variants. Character state packages are
 implemented. Final visual acceptance remains owned by the milestone contract.
 
-All final character and scene imagery uses one strict flat cel-shaded
-editorial-cartoon style. Painted comic-book, painterly semi-realistic, realistic
-concept-art, photographic, and three-dimensional-render styles are prohibited.
+All final character and scene imagery uses one shared cel-shaded
+editorial-cartoon style. Character skins and states follow the detailed
+rendering standard in Specification 023. Painted comic-book, painterly
+semi-realistic, realistic concept-art, photographic, and
+three-dimensional-render styles are prohibited.
 Final raster art uses neutral sRGB white balance without a global yellow or
 amber wash. Warm color is limited to authored local materials and lighting.
 

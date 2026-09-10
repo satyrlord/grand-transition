@@ -31,12 +31,15 @@ complete an approved specification.
   audio, branding, and source. Reference-game mechanics are authority for
   behavior, not permission to copy protected expression. The sourced English
   slogan form that AC-005-07 names is the only phrase exception.
-- All generated representational raster art uses the strict flat cel-shaded
+- All generated representational raster art uses the shared cel-shaded
   editorial-cartoon direction that Milestone 023 owns. This rule applies to
   every character, skin, state, moderator, scene, foreground plate,
   architecture element, furniture item, fixture, and prop. Painted comic-book,
   painterly semi-realistic, realistic concept-art, photographic, and
   three-dimensional-render styles are prohibited.
+  All character skins and states use the single detailed rendering standard in
+  Milestone 023's character art direction. Do not simplify one skin into a
+  different drawing style.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
   metadata. Public artifacts do not declare a real person as a visual or
@@ -179,7 +182,7 @@ its result with a source-only opinion.
 
 ## Impeccable user interface validation
 
-Milestones 001 and 015 through 029 affect the user-visible user interface (UI).
+Milestones 001 and 015 through 031 affect the user-visible user interface (UI).
 Each must complete these two separate validations against the implemented slice
 in its production browser build:
 
@@ -251,7 +254,7 @@ source-only review does not satisfy them.
     difficulties and the ladder work.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
     Budget: 10. The fixed 27-character and four-scene raster baseline is
-    regenerated in one strict flat cel-shaded cartoon style. Four characters
+    regenerated in one shared cel-shaded editorial-cartoon style. Four characters
     and one scene also receive their complete state and motion packages.
 24. [Audio and speech](spec-024-audio-speech.md). Budget: 8 per approved code
     package, with separate audio asset packages. Audio and optional public
@@ -297,7 +300,7 @@ limits the context and files needed for each implementation session.
 | Victory and persistent match history | 019                |
 | Local settings and state             | 020, 030           |
 | AI and ladder                        | 021-022            |
-| Visual assets and presentation       | 023, 025-026       |
-| Audio and speech                     | 024, 030           |
+| Visual assets and presentation       | 023, 025-026, 031  |
+| Audio and speech                     | 024, 030-031       |
 | Full content, safety, and balance    | 026-027, 031       |
 | Release quality and deployment       | 028-029            |

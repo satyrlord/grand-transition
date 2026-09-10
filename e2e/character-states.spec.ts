@@ -24,10 +24,19 @@ for (const entry of stateManifest.packages) {
     await page.getByRole('button', { name: 'Set up match', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
     await page.locator(`.roster-choice[data-character-id="${entry.ownerId}"]`).click();
-    const skinIndex = characterManifest.assets.filter(({ ownerId }) => ownerId === entry.ownerId)
-      .findIndex(({ skinId }) => skinId === entry.skinId);
+    const skinIds = characterManifest.assets
+      .filter(({ ownerId }) => ownerId === entry.ownerId)
+      .map(({ skinId }) => skinId)
+      // The setup stage cycles skins in runtime order, not manifest order: the
+      // default skin first, then the remaining skins by ID.
+      .toSorted((left, right) => left === 'default'
+        ? -1
+        : right === 'default' ? 1 : left.localeCompare(right));
+    const skinIndex = skinIds.indexOf(entry.skinId);
     expect(skinIndex).toBeGreaterThanOrEqual(0);
-    for (let index = 0; index < skinIndex; index++) await page.locator('#playerOneCharacterId').click({ button: 'right' });
+    const stage = page.locator('#playerOneCharacterId');
+    for (let index = 0; index < skinIndex; index++) await stage.click({ button: 'right' });
+    await expect(stage).toHaveAttribute('data-skin-id', entry.skinId);
     expect(stateRequests).toEqual([]);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('grand-transition-character')).toHaveCount(2);

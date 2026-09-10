@@ -86,7 +86,8 @@ Actions after `npm run ci`. Milestone 029 separately permits a tester deployment
 after `npm run build`. That path does not establish release readiness.
 Preserve the Vite `/grand-transition/` base path.
 
-All generated representational raster art must follow the strict flat
-cel-shaded editorial-cartoon direction in Milestone 023. Do not generate
+All generated representational raster art must follow the shared cel-shaded
+editorial-cartoon direction in Milestone 023. Character skins and states use
+that milestone's detailed character rendering standard. Do not generate
 painted comic-book, painterly semi-realistic, realistic concept-art,
 photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.

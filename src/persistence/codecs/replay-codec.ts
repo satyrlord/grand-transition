@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { legacyPhraseReplayContext } from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
@@ -19,11 +20,12 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 4;
+export const replaySchemaVersion = 5;
 export const supportedReplaySchemaVersions = [
   1,
   2,
   3,
+  4,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -34,6 +36,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[1]),
   z.literal(supportedReplaySchemaVersions[2]),
   z.literal(supportedReplaySchemaVersions[3]),
+  z.literal(supportedReplaySchemaVersions[4]),
 ]);
 
 export type ReplayFailureCode =
@@ -393,13 +396,16 @@ export function replayMatch(
   const decoded = decodeReplay(serialized);
   if (!decoded.ok) return decoded;
 
+  const replayContext = decoded.value.schemaVersion < 5
+    ? legacyPhraseReplayContext(context)
+    : context;
   let state = createReplayInitialState(decoded.value, context);
   if (!state) return { ok: false, code: 'invalid-replay' };
 
   const engineContext: MatchEngineContext = {
-    phrases: context.catalog.phrases,
-    characters: context.catalog.characters,
-    locale: context.locale,
+    phrases: replayContext.catalog.phrases,
+    characters: replayContext.catalog.characters,
+    locale: replayContext.locale,
     balance:
       decoded.value.schemaVersion === 1
         ? legacyBasicScoringBalance
@@ -430,7 +436,10 @@ export function createReplayInitialState(
   replay: ReplayDocument,
   context: ReplayContext,
 ): MatchState | null {
-  const request = createSetupRequest(replay, context.catalog);
+  const replayContext = replay.schemaVersion < 5
+    ? legacyPhraseReplayContext(context)
+    : context;
+  const request = createSetupRequest(replay, replayContext.catalog);
   if (!request) return null;
   try {
     return applyInitialValues(createMatchSetupState(request), replay.setup);
