@@ -2,7 +2,7 @@ import { finishPresentation } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { ladderProgressStorageKey } from '../src/persistence/ladder-progress';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
-import { decideLocalRadioCaller } from '../src/ai/easy-ai';
+import { decidePalaceOperator } from '../src/ai/advanced-ai';
 import { basicScoringBalance } from '../src/content/basic-scoring-balance';
 import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle';
 import { loadGameContent } from '../tools/load-game-content';
@@ -146,7 +146,7 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.clock.install();
-  await useFixedBrowserMatchSeed(page, 1);
+  await useFixedBrowserMatchSeed(page, 5);
   await page.goto('/grand-transition/');
   await page.evaluate(
     (storageKey) => localStorage.removeItem(storageKey),
@@ -248,7 +248,7 @@ async function playHumanMatch(page: Page): Promise<string> {
       await page.waitForTimeout(10);
       continue;
     }
-    const decision = decideLocalRadioCaller(state, matchContext, {
+    const decision = decidePalaceOperator(state, matchContext, {
       reducedDelay: true,
     });
     if (!decision) throw new Error('The test player has no AI decision.');
@@ -259,7 +259,7 @@ async function playHumanMatch(page: Page): Promise<string> {
 
 async function activateDecision(
   page: Page,
-  command: NonNullable<ReturnType<typeof decideLocalRadioCaller>>['command'],
+  command: NonNullable<ReturnType<typeof decidePalaceOperator>>['command'],
 ): Promise<void> {
   if (command.type === 'select-phrase') {
     await page

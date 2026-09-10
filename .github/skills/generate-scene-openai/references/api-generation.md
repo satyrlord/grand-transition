@@ -1,4 +1,4 @@
-# OpenAI API procedure and image review
+# Generate through the OpenAI API
 
 ## API branch
 
@@ -29,37 +29,12 @@ The maximum aspect ratio is 3:1.
 Recheck the official guide before changing the supported model or request contract.
 Do not silently reduce a requested size after an API error.
 
-## Prepare the private prompt
+Use `gpt-image-2.5-sunburst`, high quality, PNG output, and an explicit size.
+Read `OPENAI_API_KEY` from `.env.local` privately through the helper.
+Never print the file or key, expose it in command arguments, or add it to browser code.
+Do not use another provider or the internal tool as a high-resolution substitute.
 
-Write a UTF-8 prompt under `research/scene-generation/<run>/`.
-Define one output layer, required objects, object counts, and prohibited content.
-Describe camera, positions, focal regions, responsive crop, and interface clearance from the approved specification.
-Apply scene-specific art direction instead of a generic style template.
-Prohibit text, labels, coordinates, and guide boxes in the final artwork.
-Numerical placement directions are instructions, not content to draw.
-
-Start with the required positive color controls:
-
-```text
-Positive controls:
-Neutral sRGB white balance. Ungraded colors.
-Warm color is local to authored materials or lights.
-Use neutral charcoal and navy shadows, with clear blue and oxblood separation.
-```
-
-Add the selected scene's direction, then negative controls:
-
-```text
-Negative controls:
-No whole-image color tint. No global warm wash.
-No yellow, amber, sepia, golden-hour, mustard, beige, or brown full-frame wash.
-No baked playable characters, interface controls, or required interface text.
-No labels, numbers, guide boxes, or annotations.
-```
-
-For a foreground layer, request the approved flat green matte with no green subject material.
 Do not assume this API model provides native transparency.
-Keep its camera and canvas aligned with the back scene.
 
 ## Run the helper
 
@@ -96,38 +71,3 @@ available for diagnosis.
 The helper never retries an existing run directory.
 The installed OpenAI SDK may retry transient failures internally.
 Do not start another paid attempt after a timeout with uncertain billing.
-
-Inspect an existing image without generation, using its required target dimensions:
-
-```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
-node tools/validate-asset-color.mjs validate tmp/scene-generation/run
-```
-
-Keep inspection-only crops outside the candidate directory when they lack asset metadata.
-For internal outputs, compare actual dimensions with the request and the intended use.
-A preview can remain below its requested size if reported accurately. An
-undersized master cannot pass preparation.
-
-## Review visible content
-
-Use this review for either provider route.
-Open the image and inspect source-scale crops when the viewer reduces it.
-Record pass or fail with concrete observations for all seven checks:
-
-- `sceneIdentity`: Correct set, architecture, moderator, objects, and counts.
-- `style`: The latest approved art direction, materials, proportions, and linework.
-- `composition`: Camera, perspective, scale, focal positions, and crop allowance.
-- `layering`: Layer boundary, player spaces, desks, and occlusion.
-- `interfaceClearance`: Usable action, phrase, speech, and top regions.
-- `artifacts`: No unintended text, malformed anatomy, duplicate props, blur, seams, or matte corruption.
-- `color`: Passing color validation and visible neutral anchors.
-
-Write a private JSON record with `sha256`, `reviewer`, `checks`, and `issues`.
-Copy the hash from the inspected file.
-Each named check uses `{ "pass": true, "evidence": "Specific observed result." }` only after inspection.
-Put unresolved defects in the `issues` array.
-A passing review has no unresolved issues.
-Master preparation rejects missing checks, failures, and stale hashes.
-Do not describe an agent's review as product-owner approval.
-If viewing or a required check is unavailable, leave the candidate unapproved.

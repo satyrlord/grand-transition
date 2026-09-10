@@ -335,12 +335,25 @@ function scoreAdvancedCandidates(
     context,
     randomSource,
   );
+  const construction = state.draft!.playerStates[actorId]!.construction;
+  const canKeepDrafting = easyCandidates.some(({ command, rawFeatures }) =>
+    rawFeatures.grammarRisk === 0 &&
+    rawFeatures.deadEnd === 0 &&
+    rawFeatures.continuation === 0 &&
+    (command.type === 'select-phrase' ||
+      (construction.analysis.complete &&
+        (command.type === 'commit-sentence' || command.type === 'select-comeback'))),
+  );
   const raw = easyCandidates.map((candidate) => {
     const nextState = reduceAccepted(state, context, candidate.command, randomSource);
     const actorPrideBefore = state.playerStates[actorId]?.pride ?? 0;
     const actorPrideAfter = nextState?.playerStates[actorId]?.pride ?? actorPrideBefore;
     const exactSelfDamage = Math.max(0, actorPrideBefore - actorPrideAfter);
     const wrong = candidate.rawFeatures.grammarRisk > 0;
+    const prematureContinuation = candidate.rawFeatures.continuation > 0 &&
+      (construction.steps.length === 0 || canKeepDrafting);
+    const prematureCommit = canKeepDrafting && !construction.analysis.complete &&
+      (candidate.command.type === 'commit-sentence' || candidate.command.type === 'expire-turn');
     const rawFeatures: AdvancedAiFeatures = Object.freeze({
       immediateDamage: finite(candidate.rawFeatures.immediateDamage),
       weaknessOpportunity: binary(candidate.rawFeatures.weaknessOpportunity),
@@ -352,7 +365,7 @@ function scoreAdvancedCandidates(
       comebackValue: finite(candidate.rawFeatures.comebackValue),
       opponentComebackRisk: finite(candidate.rawFeatures.opponentComebackRisk),
       grammarRisk: binary(candidate.rawFeatures.grammarRisk),
-      deadEnd: binary(candidate.rawFeatures.deadEnd),
+      deadEnd: prematureContinuation || prematureCommit ? 1 : binary(candidate.rawFeatures.deadEnd),
       immediateLethal: binary(candidate.rawFeatures.immediateLethal),
       lethalBlock:
         candidate.command.type === 'select-phrase' &&
