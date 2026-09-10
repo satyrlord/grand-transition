@@ -324,6 +324,59 @@
     outline-offset: 4px;
   }
 
+  .title-transmission .title-setup-action:disabled {
+    border-style: dashed;
+    border-color: var(--broadcast-brass);
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper);
+    box-shadow: none;
+    cursor: wait;
+  }
+
+  .title-voice-feedback {
+    position: absolute;
+    inset-block-start: calc(100% + 0.9rem);
+    width: clamp(22rem, 31vw, 30rem);
+    margin: 0;
+    color: var(--broadcast-paper);
+    font: 400 0.78rem/1.4 var(--font-interface);
+  }
+
+  .title-voice-loader {
+    padding: 0.65rem 0.8rem;
+    background: var(--broadcast-ink);
+    border-block: 1px solid var(--broadcast-brass);
+  }
+
+  .title-voice-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .title-voice-meter {
+    height: 3px;
+    overflow: hidden;
+    background: var(--broadcast-black);
+  }
+
+  .title-voice-meter span {
+    display: block;
+    height: 100%;
+    background: var(--broadcast-brass-light);
+  }
+
+  .title-voice-meter[data-indeterminate='true'] span {
+    animation: title-voice-progress 1.6s ease-in-out infinite alternate;
+  }
+
+  .title-voice-fallback {
+    text-align: center;
+    text-wrap: balance;
+  }
+
   .title-secondary-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -963,6 +1016,12 @@
     }
   }
 
+  @keyframes title-voice-progress {
+    to {
+      transform: translateX(230%);
+    }
+  }
+
   @media (max-height: 47rem) {
     .title-screen {
       padding-block: 2.5rem 2.8rem;
@@ -982,6 +1041,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .title-voice-meter[data-indeterminate='true'] span {
+      animation: none;
+      width: 100% !important;
+    }
     .title-proscenium {
       clip-path: inset(0);
       animation: none;
@@ -1000,6 +1063,24 @@
   }
 
   @media (forced-colors: active) {
+    .title-voice-feedback,
+    .title-transmission .title-setup-action:disabled {
+      forced-color-adjust: auto;
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .title-voice-meter {
+      forced-color-adjust: none;
+      background: Canvas;
+      outline: 1px solid CanvasText;
+    }
+
+    .title-voice-meter span {
+      background: Highlight;
+    }
+
     .title-screen,
     .title-screen::before,
     .title-proscenium,

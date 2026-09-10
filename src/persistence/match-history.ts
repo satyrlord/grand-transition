@@ -14,6 +14,7 @@ import {
   type ReplayDocument,
 } from './codecs/replay-codec';
 import type { StoragePort } from './storage-port';
+import { speechDiagnosticsSchema, type SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
 
 export const matchHistoryStorageKey = 'grand-transition.match-history.v1';
 export const matchHistoryKind = 'grand-transition-match-history' as const;
@@ -33,6 +34,7 @@ export type MatchHistoryEntry = Readonly<{
   settings: MatchHistorySettings;
   replay: ReplayDocument;
   matchLog: MatchLogDocument;
+  speechDiagnostics?: SpeechDiagnosticsDocument;
 }>;
 
 export type MatchHistoryDocument = Readonly<{
@@ -75,6 +77,7 @@ const storedEntrySchema = z
       .strict(),
     replay: z.unknown(),
     matchLog: z.unknown(),
+    speechDiagnostics: speechDiagnosticsSchema.optional(),
   })
   .strict();
 
@@ -117,6 +120,18 @@ export class MatchHistoryRepository {
       return this.snapshot();
     }
     this.entries = deepFreeze([...this.entries, entry]);
+    return this.persist();
+  }
+
+  updateSpeechDiagnostics(id: string, diagnostics: SpeechDiagnosticsDocument): MatchHistorySnapshot {
+    if (!this.entries.some((entry) => entry.id === id)) return this.snapshot();
+    const parsed = speechDiagnosticsSchema.safeParse(diagnostics);
+    if (!parsed.success) return this.snapshot();
+    this.entries = deepFreeze(this.entries.map((entry) => entry.id === id ? { ...entry, speechDiagnostics: parsed.data } : entry));
+    return this.persist();
+  }
+
+  private persist(): MatchHistorySnapshot {
     if (this.persistenceFailure !== null) return this.snapshot();
 
     let serialized: string;
@@ -185,6 +200,7 @@ export function encodeMatchHistory(document: MatchHistoryDocument): string {
       settings: entry.settings,
       replay: JSON.parse(encodeReplay(entry.replay)),
       matchLog: JSON.parse(encodeMatchLog(entry.matchLog)),
+      ...(entry.speechDiagnostics ? { speechDiagnostics: entry.speechDiagnostics } : {}),
     })),
   });
   return normalizedJson(stored);
@@ -230,6 +246,7 @@ export function decodeMatchHistory(serialized: string): MatchHistoryResult {
       settings: stored.settings,
       replay: replay.value,
       matchLog: matchLog.value,
+      ...(stored.speechDiagnostics ? { speechDiagnostics: stored.speechDiagnostics } : {}),
     });
   }
   return {

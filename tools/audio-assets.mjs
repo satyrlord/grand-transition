@@ -8,7 +8,6 @@ import ffmpeg from 'ffmpeg-static';
 export const audioDefinitions = [
   ['menu-theme', 'music', 72.3],
   ['transition-era-television-studio-theme', 'music', 43.7],
-  ['transition-era-television-studio-room-tone', 'ambience', 8],
   ['role-select', 'effect', 0.16], ['commit', 'effect', 0.32],
   ['hit-light', 'effect', 0.28], ['hit-heavy', 'effect', 0.55],
   ['weakness', 'effect', 0.45], ['combo', 'effect', 0.6],
@@ -57,21 +56,13 @@ export function validateMeasurement(value, kind, format) {
   if (!Number.isFinite(value.truePeakDbfs) || value.truePeakDbfs > (kind === 'effect' ? -1 : 0)) {
     throw new Error('Audio true peak exceeds the permitted limit.');
   }
-  if (kind !== 'effect') {
-    const target = kind === 'music' ? -16 : -22;
-    const tolerance = kind === 'music' ? 1 : 2;
+  if (kind === 'music') {
+    const target = -16;
+    const tolerance = 1;
     if (!Number.isFinite(value.integratedLufs) || Math.abs(value.integratedLufs - target) > tolerance) {
       throw new Error('Audio loudness is outside the permitted range.');
     }
   }
-}
-
-export function audioHighBandDbfs(file) {
-  const raw = execFileSync(ffmpeg, ['-hide_banner', '-loglevel', 'error', '-nostdin', '-i', file,
-    '-af', 'highpass=f=2000', '-f', 'f32le', '-'], { maxBuffer: 16 * 1024 * 1024 });
-  let sum = 0;
-  for (let offset = 0; offset < raw.length; offset += 4) sum += raw.readFloatLE(offset) ** 2;
-  return 20 * Math.log10(Math.sqrt(sum / (raw.length / 4)));
 }
 
 export async function validateAudio(root = 'src/assets/audio') {
@@ -100,9 +91,6 @@ export async function validateAudio(root = 'src/assets/audio') {
       if (format !== 'wav') runtimeHashes.add(digest);
       const actual = audioMeasurements(path.join(root, fileName));
       validateMeasurement(actual, kind, format);
-      if (kind === 'ambience' && audioHighBandDbfs(path.join(root, fileName)) > -55) {
-        throw new Error('Studio ambience contains excessive high-frequency energy.');
-      }
       if (JSON.stringify(actual) !== JSON.stringify(entry.measurements)) {
         throw new Error(`Audio measurements are stale: ${fileName}`);
       }
@@ -118,26 +106,16 @@ function compose(index, duration) {
   const buffer = Buffer.alloc(Math.round(duration * sampleRate) * 4);
   for (let frame = 0; frame < buffer.length / 4; frame++) {
     const t = frame / sampleRate;
-    let left;
-    let right;
-    if (index === 2) {
-      const edge = Math.min(1, t / 0.03, (duration - t) / 0.03);
-      const hum = 0.06 * Math.sin(2 * Math.PI * 100 * t) + 0.025 * Math.sin(2 * Math.PI * 150 * t);
-      const air = 0.008 * Math.sin(2 * Math.PI * 250 * t) * (0.8 + 0.2 * Math.cos(2 * Math.PI * t / 8));
-      left = edge * (hum + air);
-      right = edge * (hum - air);
-    } else {
-      const u = t / duration;
-      const envelope = Math.min(1, t / 0.005) * (1 - u) ** 3;
-      const frequencies = [920, 660, 180, 85, 1240, 520, 300, 390, 145];
-      const frequency = frequencies[index - 3];
-      const rising = [4, 7, 8, 10].includes(index);
-      const phase = 2 * Math.PI * frequency * (t + (rising ? 1 : -0.45) * t * t / duration);
-      const impact = [5, 6, 9, 11].includes(index) ?
-        0.12 * Math.sin(phase * 2.3) * Math.exp(-t * 35) : 0;
-      left = envelope * (0.5 * Math.sin(phase) + 0.15 * Math.sin(phase * 1.5) + impact);
-      right = left;
-    }
+    const u = t / duration;
+    const envelope = Math.min(1, t / 0.005) * (1 - u) ** 3;
+    const frequencies = [920, 660, 180, 85, 1240, 520, 300, 390, 145];
+    const frequency = frequencies[index];
+    const rising = [1, 4, 5, 7].includes(index);
+    const phase = 2 * Math.PI * frequency * (t + (rising ? 1 : -0.45) * t * t / duration);
+    const impact = [2, 3, 6, 8].includes(index) ?
+      0.12 * Math.sin(phase * 2.3) * Math.exp(-t * 35) : 0;
+    const left = envelope * (0.5 * Math.sin(phase) + 0.15 * Math.sin(phase * 1.5) + impact);
+    const right = left;
     buffer.writeInt16LE(Math.round(Math.max(-1, Math.min(1, left)) * 32767), frame * 4);
     buffer.writeInt16LE(Math.round(Math.max(-1, Math.min(1, right)) * 32767), frame * 4 + 2);
   }
@@ -161,14 +139,14 @@ async function buildAudio(root = 'src/assets/audio') {
   for (const [index, [id, kind, duration]] of audioDefinitions.entries()) {
     const raw = path.join(temporary, `${id}.pcm`);
     const master = path.join(root, `${id}.wav`);
-    const filter = kind === 'effect' ? 'volume=0.7' : `loudnorm=I=${kind === 'music' ? -16 : -22}:TP=-2:LRA=7`;
+    const filter = kind === 'effect' ? 'volume=0.7' : 'loudnorm=I=-16:TP=-2:LRA=7';
     if (kind === 'music') {
       const edit = musicEdits[id];
       run(['-y', '-ss', String(edit.startSeconds), '-t', String(duration), '-i', reference,
         '-af', `afade=t=in:d=0.04,afade=t=out:st=${duration - 0.25}:d=0.25,${filter}`,
         '-map_metadata', '-1', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', master]);
     } else {
-      await writeFile(raw, compose(index, duration));
+      await writeFile(raw, compose(index - 2, duration));
       run(['-y', '-f', 's16le', '-ar', '48000', '-ac', '2', '-i', raw, '-af', filter,
         '-ar', '48000', '-c:a', 'pcm_s16le', master]);
     }
@@ -194,6 +172,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   if (action === 'build') await buildAudio();
   else if (action === 'validate') {
     await validateAudio();
-    console.log('Audio validation passed: 12 masters and 24 runtime files.');
+    console.log('Audio validation passed: 11 masters and 22 runtime files.');
   } else throw new Error('Use audio-assets.mjs build or validate.');
 }

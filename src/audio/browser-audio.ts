@@ -4,7 +4,7 @@ import { effectIds, type AudioPort, type AudioScene, type AudioStatus,
 const tracks = {
   menu: ['menu-theme'],
   'transition-era-television-studio': [
-    'transition-era-television-studio-theme', 'transition-era-television-studio-room-tone',
+    'transition-era-television-studio-theme',
   ],
 } as const;
 const assetIds = [...tracks.menu, ...tracks['transition-era-television-studio'], ...effectIds];
@@ -26,7 +26,7 @@ export class BrowserAudio implements AudioPort {
   private master: GainNode | null = null;
   private music: GainNode | null = null;
   private effects: GainNode | null = null;
-  private settings: MixerSettings = { masterVolume: 1, musicVolume: 0.7, effectsVolume: 0.8, speechVolume: 0.8 };
+  private settings: MixerSettings = { masterVolume: 1, musicVolume: 0.1, effectsVolume: 0.8, speechVolume: 0.8 };
   private readonly buffers = new Map<string, AudioBuffer>();
   private readonly sources = new Set<Source>();
   private readonly loops = new Map<string, Source>();
@@ -153,7 +153,9 @@ export class BrowserAudio implements AudioPort {
       this.loops.delete(id);
       const elapsed = context.currentTime - source.started;
       const level = Math.sin(Math.min(1, elapsed / fadeSeconds) * Math.PI / 2);
-      source.gain.gain.cancelScheduledValues(context.currentTime);
+      // This gain is source-owned. Remove an in-progress fade-in before adding
+      // the fade-out because Firefox rejects overlapping value curves.
+      source.gain.gain.cancelScheduledValues(0);
       source.gain.gain.setValueCurveAtTime(curve(false, level), context.currentTime, fadeSeconds);
       source.node.stop(context.currentTime + fadeSeconds);
     }

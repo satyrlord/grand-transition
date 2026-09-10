@@ -143,7 +143,8 @@ export class GrandTransitionMatchHistory extends LitElement {
         >
           <summary>${msg('Technical record')}</summary>
           ${expanded
-            ? html`<pre tabindex="0">${normalizedJson(log)}</pre>`
+            ? html`<pre tabindex="0">${normalizedJson(entry.speechDiagnostics
+              ? { matchLog: log, speechDiagnostics: entry.speechDiagnostics } : log)}</pre>`
             : nothing}
         </details>
       </article>

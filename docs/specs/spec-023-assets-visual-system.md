@@ -60,7 +60,7 @@ Build the Sharp pipeline, manifest validation, visual tokens, and landscape
 asset loading. Regenerate the fixed current character and scene asset baseline
 from scratch as original final-quality static art. Complete state and motion art
 for the four vertical-slice characters and one scene. Add core reactions,
-ambience, and transitions.
+visual lighting effects, and transitions.
 Keep each code package within the ten-production-file budget. Keep each
 character-state art package to one master and six runtime files.
 

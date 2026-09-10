@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "model": "Piper-en_GB-vctk-medium",
+  "revision": "1162a9173d0ce503555aed757976b7a9912eae4c",
+  "source": "https://huggingface.co/rhasspy/piper-voices",
+  "license": "MIT; VCTK dataset CC BY 4.0",
+  "runtime": "onnxruntime-web@1.29.0",
+  "pronunciation": "phonemizer@1.2.1",
+  "sampleRate": 22050,
+  "samplesPerDurationFrame": 256,
+  "modification": "Expose predicted phoneme durations; retain all trained weights. Playback pitch uses compensated model durations.",
+  "voices": [
+    {
+      "id": "vctk-p226",
+      "name": "Piper British male",
+      "lang": "en-GB",
+      "speakerId": 95,
+      "default": true
+    },
+    {
+      "id": "vctk-p225",
+      "name": "Piper British female",
+      "lang": "en-GB",
+      "speakerId": 107,
+      "default": false
+    }
+  ],
+  "sources": [
+    {
+      "name": "en_GB-vctk-medium.onnx",
+      "sha256": "4e9fc85ab9009385319fc6bae7f55577f8a2d7ee77fd9159a5500eb6531f41e6"
+    },
+    {
+      "name": "en_GB-vctk-medium.onnx.json",
+      "sha256": "7f85e6391ed0f7f46e4abd19345929a16be931a0c9945086f96692dce2087fa8"
+    },
+    {
+      "name": "MODEL_CARD",
+      "sha256": "53ec6b1fd90d9125d5bebac55261efd27f7e8d6dc962f605a5b5f796df2ec7fb"
+    },
+    {
+      "name": "onnx.proto",
+      "sha256": "2881fcc940635b6a34b7c95e5089b2faa89c3d6e382c1da1706e88c7f32452bc"
+    }
+  ],
+  "files": [
+    {
+      "path": "model.onnx",
+      "bytes": 76952867,
+      "sha256": "2e141b1a63071d1f257d90939d849569b05a476a96ed5b9def69b654f5868f96"
+    },
+    {
+      "path": "config.json",
+      "bytes": 6637,
+      "sha256": "7f85e6391ed0f7f46e4abd19345929a16be931a0c9945086f96692dce2087fa8"
+    },
+    {
+      "path": "MODEL_CARD",
+      "bytes": 326,
+      "sha256": "53ec6b1fd90d9125d5bebac55261efd27f7e8d6dc962f605a5b5f796df2ec7fb"
+    },
+    {
+      "path": "NOTICE.txt",
+      "bytes": 765,
+      "sha256": "63b8785b0c36155273608df5abaa7901c7ff5fcaf42286a778d1de3b3f7d2ab5"
+    },
+    {
+      "path": "piper-LICENSE",
+      "bytes": 1071,
+      "sha256": "4cd71dece7037f1d6d93cce7570c57ab75ea9ac566fd4990be2f3ab08d15b47f"
+    },
+    {
+      "path": "VCTK-LICENSE",
+      "bytes": 17416,
+      "sha256": "b34e17103bfb246f2549fc82a279e6ba28834e0cb42f76a92efc14b72e3a3723"
+    },
+    {
+      "path": "onnx-runtime-LICENSE",
+      "bytes": 1073,
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "onnx-runtime-NOTICES",
+      "bytes": 336906,
+      "sha256": "53d3fa5821ac016ac24dd35775c996efec86e2ae0841e9a3a5e146c0ae916845"
+    },
+    {
+      "path": "phonemizer-LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "ort-wasm-simd-threaded.wasm",
+      "bytes": 13961845,
+      "sha256": "ec8580a9d7b9476ceee52e10a7f94124e4dc71a019d666ed6d4726697c109a4d"
+    }
+  ]
+}

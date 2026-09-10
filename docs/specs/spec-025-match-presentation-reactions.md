@@ -130,6 +130,9 @@ The fixed result sequence lasts 1000 milliseconds per complete delivery.
 Prepare the next public neural utterance during the current delivery or thinking
 hold, as specified in Milestone 024. Preparation must not reveal scores, start
 audio, advance the speaker, or delay playback of an already prepared delivery.
+Speech chunks are transport units, not completed deliveries. A chunk boundary
+must not display Total, apply damage, or advance the speaker. Those transitions
+wait for the final audio chunk, including any Comeback line.
 
 Combo emphasis stays visible
 for the current delivery. Weakness emphasis uses one bounded strike. These records report

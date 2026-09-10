@@ -67,6 +67,14 @@ contains:
   version 1, version 2, and version 3 pairs remain valid and retain their original
   scoring behavior.
 
+New entries also contain optional `speechDiagnostics`, with its own schema
+version 1. Older entries without this field remain valid. Milestone 024 owns
+the event inventory and privacy limits. Diagnostics are observation metadata;
+they do not enter the replay, scoring, or deterministic match-log contracts.
+Update the existing entry by match ID during terminal narration and after its
+completion. Do not append another match entry. Coalesce terminal updates over
+250 milliseconds and flush final completion or navigation immediately.
+
 The entry must not contain unselected private cards, hidden hotseat text,
 browser identifiers, machine facts, secrets, analytics identifiers, or remote
 data. Storage creates no network request. Do not expire, truncate, rotate, or
@@ -93,6 +101,10 @@ does not contain phrase text shows an explicit legacy-data message. It must not
 invent or reconstruct phrase text. An expandable technical record shows the
 public round breakdowns, commands, events, and normalized match-log data. The
 list can scroll inside the modal without causing page scroll.
+
+For entries with speech diagnostics, the technical record contains `matchLog`
+and `speechDiagnostics` objects. A recording status without final playback or
+presentation events identifies incomplete observation, not zero points.
 
 The modal has one visible Close control. Escape and the Close control close it
 and restore focus to `Match history`. Focus stays inside the open modal.

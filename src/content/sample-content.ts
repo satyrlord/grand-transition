@@ -32,7 +32,6 @@ export function createSampleContent(
         ],
         animationId: 'transition-era-studio-lights',
         music: media('transition-era-television-studio-theme'),
-        ambience: media('transition-era-television-studio-room-tone'),
         phrasePool: [...scenePhraseIds('transition-era-television-studio')],
         effectIds: ['studio-light-flicker', 'crt-roll'],
       },
@@ -47,7 +46,6 @@ export function createSampleContent(
         ],
         animationId: 'modern-debate-light-lines',
         music: media('modern-debate-studio-theme'),
-        ambience: media('modern-debate-studio-room-tone'),
         phrasePool: [...scenePhraseIds('modern-debate-studio')],
         effectIds: ['led-light-sweep', 'floor-reflection-pulse'],
       },
@@ -91,7 +89,6 @@ function foundationScene(
     ],
     animationId: 'catalog-foundation-neutral-lights',
     music: media('catalog-foundation-neutral-theme'),
-    ambience: media('catalog-foundation-neutral-room-tone'),
     phrasePool: [...phrasePool],
     effectIds: ['catalog-foundation-neutral-light'],
   };

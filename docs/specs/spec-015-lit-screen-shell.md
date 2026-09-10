@@ -49,6 +49,20 @@ title to setup without changing game state. “Back” returns to title and rest
 setup values. A valid setup submit emits one typed `start-match` command.
 Milestone 016 owns the rendered match destination.
 
+When both Speech enabled and GPU voices are on, the main menu shows a compact
+brass-and-ink voice loader below its actions during GPU preparation and loading.
+The meter has an accessible name and a numeric value only when download
+progress is known. It uses restrained motion that stops with reduced motion,
+and remains legible in forced colors. Loading does not move the menu actions.
+The native `Set up match` button is disabled until GPU voices are ready or
+unavailable, including the initial pending state. Its command handler also
+rejects activation during that wait. Settings and Match history remain usable.
+Ready removes the loader and enables setup. Unavailable removes the loader,
+enables setup, and shows a compact local Piper fallback notice. Turning either
+Speech enabled or GPU voices off removes GPU status and enables setup
+immediately. No GPU status is shown while speech is off. Milestone 024 owns
+preparation, timeout, and fallback behavior; Milestone 020 owns the preferences.
+
 Each title or setup transition moves keyboard focus to the destination heading.
 The heading is programmatically focusable but does not enter the normal Tab
 sequence.

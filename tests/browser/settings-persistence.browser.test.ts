@@ -29,7 +29,8 @@ afterEach(() => {
 
 test('restores every stored setting and applies title changes immediately', async () => {
   const stored: SettingsDocument = Object.freeze({
-    schemaVersion: 1,
+    schemaVersion: 3,
+    gpuVoices: false,
     masterVolume: 0.55,
     musicVolume: 0.45,
     effectsVolume: 0.35,
@@ -82,11 +83,38 @@ test('restores every stored setting and applies title changes immediately', asyn
   expect(checkbox(settings, 'autoComplete').checked).toBe(true);
 });
 
+test('GPU voices preserve the preference independently without a Settings loading status', async () => {
+  document.body.innerHTML = '<grand-transition-settings></grand-transition-settings>';
+  const modal = currentSettings();
+  await modal.updateComplete;
+  expect(checkbox(modal, 'gpuVoices').checked).toBe(true);
+  expect(checkbox(modal, 'speechEnabled').checked).toBe(true);
+  expect(checkbox(modal, 'gpuVoices').disabled).toBe(false);
+  const changed = vi.fn();
+  modal.addEventListener('settings-change', changed);
+  modal.settings = { ...defaultSettings, gpuVoices: false, speechEnabled: true, speechVoiceUri: 'retired:voice' };
+  await modal.updateComplete;
+  checkbox(modal, 'gpuVoices').click();
+  expect(changed.mock.calls[0]?.[0].detail).toEqual({ ...modal.settings, gpuVoices: true });
+  modal.settings = { ...modal.settings, gpuVoices: true };
+  await modal.updateComplete;
+  expect(modal.textContent).not.toContain('Loading GPU voices');
+  expect(modal.textContent).not.toContain('Preparing GPU voices');
+  expect(modal.querySelector('[role="progressbar"]')).toBeNull();
+  expect(checkbox(modal, 'gpuVoices').disabled).toBe(false);
+  modal.settings = { ...modal.settings, speechEnabled: false };
+  await modal.updateComplete;
+  expect(checkbox(modal, 'gpuVoices').checked).toBe(true);
+  expect(checkbox(modal, 'gpuVoices').disabled).toBe(false);
+  checkbox(modal, 'gpuVoices').click();
+  expect(changed.mock.calls.at(-1)?.[0].detail).toEqual({ ...modal.settings, gpuVoices: false });
+});
+
 test.each([
   ['malformed data', '{broken'],
   [
     'an unsupported version',
-    JSON.stringify({ ...defaultSettings, schemaVersion: 2 }),
+    JSON.stringify({ ...defaultSettings, schemaVersion: 4 }),
   ],
 ] as const)(
   'uses defaults for %s without overwriting it before a user change',
@@ -101,6 +129,7 @@ test.each([
 
     let settings = await openSettings(app);
     expect(range(settings, 'masterVolume').value).toBe('1');
+    expect(range(settings, 'musicVolume').value).toBe('0.1');
     expect(timer(settings, '30 seconds').getAttribute('aria-pressed')).toBe(
       'true',
     );

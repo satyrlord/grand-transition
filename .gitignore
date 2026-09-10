@@ -79,11 +79,7 @@ tools/*
 !tools/scene-resolution.mjs
 !tools/audio-assets.mjs
 !tools/neural-speech-assets.mjs
+!tools/kokoro-gpu-assets.mjs
 !tools/neural-phonemizer-plugin.ts
 .env.local
-
-# codex-workflow-managed-start
-agent_docs/
-.codex_workflow_hidden_resources/
-AGENTS.md
-# codex-workflow-managed-end
+.github/reports/

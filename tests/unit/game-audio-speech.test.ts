@@ -1,7 +1,7 @@
 import type { SkinSpeechProfile } from '../../src/audio/skin-speech-profile';
 import { describe, expect, test, vi } from 'vitest';
 import { GameAudio } from '../../src/audio/game-audio';
-import { GameSpeech, publicNarrationSegments } from '../../src/audio/game-speech';
+import { GameSpeech, publicNarrationSegments, publicNarrationChunkStarts } from '../../src/audio/game-speech';
 import type { AudioPort } from '../../src/audio/audio-port';
 import type { SpeechRequest } from '../../src/audio/speech-port';
 import type { MatchTransition } from '../../src/app/match-coordinator';
@@ -55,8 +55,46 @@ describe('public audio event projection', () => {
 });
 
 describe('finalized public speech', () => {
+  test('streams separate scored clauses and Comeback without splitting coordinated nouns', () => {
+    const player = { ...publicPlayer, constructionPhrases: ['subject','relation','and','subject-two','relation-two'].map(phraseId => ({ phraseId,text:phraseId,source:'active' as const })),
+      comebackClosingLine:'The record is closed.', score: { finalDamage:10, unroundedTotal:10, combo:null, breakdown:[
+        { kind:'clause-score' as const, operation:'add' as const, phraseIds:['subject','relation'], amount:5 },
+        { kind:'clause-score' as const, operation:'add' as const, phraseIds:['subject-two','relation-two'], amount:5 },
+      ] } };
+    expect(publicNarrationChunkStarts(player)).toEqual([0,2,5]);
+    expect(publicNarrationChunkStarts({ ...player, comebackClosingLine:null, score:{ ...player.score,
+      breakdown:[{ kind:'clause-score',operation:'add',phraseIds:['subject','relation','and','subject-two'],amount:10 }] } })).toEqual([0]);
+    expect(publicNarrationChunkStarts({ ...player, comebackClosingLine:null, score:{ ...player.score,
+      breakdown:[player.score.breakdown[0]!, {kind:'clause-score',operation:'add',phraseIds:['subject','relation-two'],amount:5}] } })).toEqual([0]);
+  });
   const settings = { ...defaultSettings, speechEnabled: true };
-  const profile: SkinSpeechProfile = { provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 1 };
+  const profile: SkinSpeechProfile = { provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 1 };
+  test('presentation diagnostics retain the actual fallback voice without carrying it into another round', () => {
+    const requests: SpeechRequest[] = []; const diagnostic = vi.fn();
+    const game = new GameSpeech({available:true,cancel:vi.fn(),speak:(request) => { requests.push(request); return {accepted:true}; }},diagnostic);
+    game.userGesture(); const gpuProfile: SkinSpeechProfile = {...profile,voiceUri:'kokoro:bm_george'};
+    game.deliver(publicPlayer, settings, gpuProfile, {}, 1);
+    requests[0]!.onDiagnostic?.({type:'synthesis-start',provider:'neural',voice:'piper:vctk-p226'});
+    game.presentation(1,'one',settings,gpuProfile,{type:'presentation-end'});
+    expect(diagnostic).toHaveBeenLastCalledWith(expect.objectContaining({voice:'piper:vctk-p226',provider:'neural'}));
+    game.presentation(2,'one',settings,gpuProfile,{type:'presentation-end'});
+    expect(diagnostic).toHaveBeenLastCalledWith(expect.objectContaining({voice:'kokoro:bm_george'}));
+    game.cancel(); game.presentation(1,'one',settings,gpuProfile,{type:'presentation-end'});
+    expect(diagnostic).toHaveBeenLastCalledWith(expect.objectContaining({voice:'kokoro:bm_george'}));
+  });
+  test('late diagnostics from canceled speech cannot enter a later match or delivery scope', () => {
+    const requests: SpeechRequest[] = []; const diagnostic = vi.fn();
+    const port = { available: true, speak: (request: SpeechRequest) => { requests.push(request); return { accepted: true }; },
+      cancel: () => requests.at(-1)?.onDiagnostic?.({ type: 'cancel', reason: 'navigation' }) };
+    const game = new GameSpeech(port, diagnostic); game.userGesture();
+    game.deliver(publicPlayer, settings, profile, {}, 3); game.cancel('navigation');
+    const count = diagnostic.mock.calls.length;
+    requests[0]!.onDiagnostic!({ type: 'timeout', reason: 'inference' });
+    expect(diagnostic).toHaveBeenCalledTimes(count);
+    game.deliver(publicOpponent, settings, profile, {}, 1);
+    requests[1]!.onDiagnostic!({ type: 'playback-start' });
+    expect(diagnostic).toHaveBeenLastCalledWith(expect.objectContaining({ type: 'playback-start', round: 1, speakerId: 'two' }));
+  });
   function harness() {
     const requests: SpeechRequest[] = [];
     const port = { available: true, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(), prepare: vi.fn(() => ({ accepted: true })),
@@ -90,7 +128,7 @@ describe('finalized public speech', () => {
       { ...settings, masterVolume: 0.5, speechRate: 1.4, speechVoiceUri: 'kokoro:af_heart' }, { ...profile, pitch: 0.8 }, {});
     expect(requests[0]).toMatchObject({ text: 'Your office failed. The microphone disagrees.',
       segments: ['Your office ', 'failed.', ' The microphone disagrees.'],
-      language: 'en-GB', pitch: 0.8, rate: 1.4, volume: 0.4, voiceUri: 'kokoro:bm_george' });
+      language: 'en-GB', pitch: 0.8, rate: 1.4, volume: 0.4, voiceUri: 'piper:vctk-p226' });
   });
 
   test('passes start and monotonic segment events once, then rejects finished or cancelled callbacks', () => {

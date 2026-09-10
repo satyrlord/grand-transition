@@ -19,6 +19,11 @@ import {
 import { listSimulationOptions } from '../../src/engine/simulation';
 import { loadGameContent } from '../../tools/load-game-content';
 import type { Page } from '@playwright/test';
+import {
+  defaultSettings,
+  encodeSettings,
+} from '../../src/persistence/codecs/settings-codec';
+import { settingsStorageKey } from '../../src/persistence/settings';
 
 const { englishGameLocale, sampleContent } = loadGameContent();
 
@@ -46,7 +51,11 @@ export async function useFixedBrowserMatchSeed(
   page: Page,
   seed = 20_260_823,
 ): Promise<void> {
-  await page.addInitScript((fixedSeed) => {
+  await page.addInitScript(({ fixedSeed, settingsKey, settings }) => {
+    // Deterministic non-speech flows must not wait for optional model loading.
+    if (localStorage.getItem(settingsKey) === null) {
+      localStorage.setItem(settingsKey, settings);
+    }
     const originalGetRandomValues = globalThis.crypto.getRandomValues.bind(
       globalThis.crypto,
     );
@@ -63,7 +72,15 @@ export async function useFixedBrowserMatchSeed(
       }
       return originalGetRandomValues(array as ArrayBufferView<ArrayBuffer>);
     }) as Crypto['getRandomValues'];
-  }, seed);
+  }, {
+    fixedSeed: seed,
+    settingsKey: settingsStorageKey,
+    settings: encodeSettings({
+      ...defaultSettings,
+      speechEnabled: false,
+      gpuVoices: false,
+    }),
+  });
 }
 
 /**

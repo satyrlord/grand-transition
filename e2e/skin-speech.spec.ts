@@ -12,7 +12,7 @@ type Evidence = { native: Array<{ text: string; name: string; local: boolean;
   submitted: number; started?: number; ended?: number; boundaries: Array<{ charIndex: number; at: number }> }>;
   neural: Array<{ voiceId: string; segments: string[] }>; voices: Array<{ name: string; local: boolean }> };
 
-async function configure(page: Page, choices: readonly Choice[]) {
+async function configure(page: Page, choices: readonly Choice[], phraseIds: readonly string[] = ['your-brother', 'is-a-snitch']) {
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.addInitScript((settings) => {
     localStorage.setItem('grand-transition.settings.v1', JSON.stringify({ ...settings, turnTimerSeconds: null, musicVolume: 0, effectsVolume: 0 }));
@@ -40,7 +40,7 @@ async function configure(page: Page, choices: readonly Choice[]) {
         if (Array.isArray(options)) super.postMessage(message, options); else super.postMessage(message, options);
       }
     };
-  }, defaultSettings);
+  }, { ...defaultSettings, gpuVoices: false });
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Speech enabled').check();
@@ -60,7 +60,7 @@ async function configure(page: Page, choices: readonly Choice[]) {
   const players = { ...state.draft!.playerStates };
   for (const id of state.playerOrder) {
     const player = players[id]!;
-    const phrases = ['your-brother', 'is-a-snitch'].map((phraseId) => sampleContent.phrases.find((phrase) => phrase.id === phraseId)!);
+    const phrases = phraseIds.map((phraseId) => sampleContent.phrases.find((phrase) => phrase.id === phraseId)!);
     const steps = phrases.map((phrase) => ({ kind: 'phrase' as const, phrase: prepareEnglishGrammarPhrase(phrase, englishGameLocale) }));
     const analyzed = englishGrammarAdapter.analyze({ steps, subjectNumber: player.subjectNumber, objectNumber: player.objectNumber });
     if (!analyzed.accepted) throw new Error('The public speech fixture is not grammatical.');
@@ -77,18 +77,52 @@ async function configure(page: Page, choices: readonly Choice[]) {
   }, JSON.stringify({ ...state, draft: { ...state.draft!, playerStates: players } }));
 }
 
+test('Piper streams both public clauses with exact phrase markers and one completion per speaker', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  await configure(page, [
+    { character:'red-folded-chairman', skin:2, neural:'vctk-p225' },
+    { character:'thunder-tribune', skin:1, neural:'vctk-p226' },
+  ], ['your-brother', 'is-a-snitch', 'televised-but', 'national-consensus', 'belongs-in-a-party-museum']);
+  await page.getByRole('button', { name:'End', exact:true }).click();
+  await page.getByRole('button', { name:'End', exact:true }).click();
+  await expect(page.getByRole('heading', { name:/Round 2/u })).toBeVisible({ timeout:90_000 });
+  const evidence = await page.evaluate(() => {
+    const app = document.querySelector('grand-transition-app') as unknown as {
+      speechDiagnostics: { snapshot(): import('../src/audio/speech-diagnostics').SpeechDiagnosticsDocument };
+    };
+    return { speech:(window as unknown as {skinSpeechEvidence:Evidence}).skinSpeechEvidence,
+      diagnostics:app.speechDiagnostics.snapshot() };
+  });
+  expect(evidence.speech.native).toHaveLength(0);
+  expect(evidence.speech.neural.map(call => call.voiceId)).toEqual(['vctk-p226','vctk-p226','vctk-p225','vctk-p225']);
+  expect(evidence.speech.neural[1]!.segments[0]!.trim().toLowerCase()).toBe('but');
+  for (const speakerId of ['player-one','player-two']) {
+    const events = evidence.diagnostics.events.filter(event => event.speakerId === speakerId);
+    expect(events.filter(event => event.type === 'segment').map(event => event.segment)).toEqual([0,1,2,3,4]);
+    expect(events.filter(event => event.type === 'pcm-ready')).toHaveLength(2);
+    expect(events.filter(event => event.type === 'playback-start')).toHaveLength(1);
+    expect(events.filter(event => event.type === 'playback-end')).toHaveLength(1);
+    if (speakerId === 'player-two') {
+      expect(events.findIndex(event => event.type === 'playback-start'))
+        .toBeLessThan(events.findLastIndex(event => event.type === 'pcm-ready'));
+    }
+    expect(events.some(event => event.type === 'fallback' || event.type === 'error')).toBe(false);
+  }
+  await writeFile(info.outputPath('chunked-piper.json'), JSON.stringify(evidence,null,2));
+});
+
 for (const scenario of [
-  { name: 'male and female human skins use British George and Emma', choices: [
-    { character: 'red-folded-chairman', skin: 2, neural: 'bf_emma' },
-    { character: 'thunder-tribune', skin: 1, neural: 'bm_george' },
+  { name: 'male and female human skins use British Piper voices', choices: [
+    { character: 'red-folded-chairman', skin: 2, neural: 'vctk-p225' },
+    { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
   ] },
   { name: 'Robot 1 and Robot 2 use local David and Mark when installed', choices: [
-    { character: 'government-ai', skin: 1, neural: 'bm_george', microsoft: 'David' },
-    { character: 'government-ai', skin: 2, neural: 'bm_george', microsoft: 'Mark' },
+    { character: 'government-ai', skin: 1, neural: 'vctk-p226', microsoft: 'David' },
+    { character: 'government-ai', skin: 2, neural: 'vctk-p226', microsoft: 'Mark' },
   ] },
   { name: 'the schoolteacher robot uses local Zira when installed', choices: [
-    { character: 'government-ai', skin: 3, neural: 'bf_emma', microsoft: 'Zira' },
-    { character: 'thunder-tribune', skin: 1, neural: 'bm_george' },
+    { character: 'government-ai', skin: 3, neural: 'vctk-p225', microsoft: 'Zira' },
+    { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
   ] },
 ] satisfies Array<{ name: string; choices: Choice[] }>) {
   test(scenario.name, async ({ page }, info) => {

@@ -1,4 +1,5 @@
 import type { SpeechPort, SpeechRequest, SpeechResult } from './speech-port';
+import { reportSpeech, type SpeechCancellationReason } from './speech-diagnostics';
 
 type Dependencies = {
   service: () => SpeechSynthesis | null;
@@ -59,9 +60,10 @@ export class MicrosoftRobotSpeech implements SpeechPort {
     let submitting = true;
     let rejected = false;
     const fail = () => {
+      reportSpeech(request, { type: 'error', provider: 'microsoft-local', reason: 'native' });
       if (submitting && !started) {
         // Let the router try neural speech before consuming delivery callbacks.
-        rejected = true; this.cancel();
+        rejected = true; this.cancel('failure');
       } else this.fail();
     };
     const finish = () => {
@@ -69,6 +71,7 @@ export class MicrosoftRobotSpeech implements SpeechPort {
       if (this.paused) { this.next = finish; return; }
       this.next = null;
       this.request = null; this.service = null; this.generation++;
+      reportSpeech(request, { type: 'playback-end', provider: 'microsoft-local' });
       request.onEnd?.();
     };
     const play = () => {
@@ -84,15 +87,25 @@ export class MicrosoftRobotSpeech implements SpeechPort {
         const current = () => generation === this.generation && this.active === utterance;
         utterance.onstart = () => {
           if (!current()) return;
-          if (!started) { started = true; request.onStart?.(); }
-          if (current()) { index = 0; request.onSegment?.(0); }
+          if (!started) {
+            started = true;
+            reportSpeech(request, { type: 'playback-start', provider: 'microsoft-local' });
+            request.onStart?.();
+          }
+          if (current()) {
+            index = 0;
+            reportSpeech(request, { type: 'segment', provider: 'microsoft-local', segment: 0 });
+            request.onSegment?.(0);
+          }
         };
         utterance.onboundary = (event) => {
           if (!current() || event.name !== 'word' || !Number.isInteger(event.charIndex) ||
             event.charIndex < 0 || event.charIndex >= request.text.length) return;
           if (!this.paused) this.armTimeout(60_000);
           while (current() && index + 1 < starts.length && starts[index + 1]! <= event.charIndex) {
-            request.onSegment?.(++index);
+            index++;
+            reportSpeech(request, { type: 'segment', provider: 'microsoft-local', segment: index });
+            request.onSegment?.(index);
           }
         };
         utterance.onend = () => {
@@ -101,6 +114,7 @@ export class MicrosoftRobotSpeech implements SpeechPort {
         };
         utterance.onerror = () => { if (current()) fail(); };
         this.armTimeout(60_000);
+        reportSpeech(request, { type: 'synthesis-start', provider: 'microsoft-local', voice: request.microsoftVoice ?? 'David' });
         service.speak(utterance);
       } catch { fail(); }
     };
@@ -109,9 +123,10 @@ export class MicrosoftRobotSpeech implements SpeechPort {
     return rejected ? { accepted: false, reason: 'unavailable' } : { accepted: true };
   }
 
-  cancel(): void {
+  cancel(reason: SpeechCancellationReason = 'replacement'): void {
     const service = this.service;
     const owned = this.request !== null;
+    if (this.request) reportSpeech(this.request, { type: 'cancel', provider: 'microsoft-local', reason });
     this.generation++; this.request = null; this.next = null; this.service = null;
     this.clearUtterance();
     if (owned) {
@@ -122,6 +137,7 @@ export class MicrosoftRobotSpeech implements SpeechPort {
 
   pause(): void {
     if (this.paused) return;
+    if (this.request) reportSpeech(this.request, { type: 'pause', provider: 'microsoft-local' });
     this.paused = true;
     if (this.timeout !== undefined) {
       this.remaining = Math.max(0, this.deadline - performance.now());
@@ -132,6 +148,7 @@ export class MicrosoftRobotSpeech implements SpeechPort {
 
   resume(): void {
     if (!this.paused) return;
+    if (this.request) reportSpeech(this.request, { type: 'resume', provider: 'microsoft-local' });
     this.paused = false;
     try { this.service?.resume(); } catch { this.fail(); return; }
     if (this.active) this.armTimeout(this.remaining);
@@ -149,11 +166,14 @@ export class MicrosoftRobotSpeech implements SpeechPort {
   private armTimeout(delay: number): void {
     clearTimeout(this.timeout);
     this.remaining = delay; this.deadline = performance.now() + delay;
-    this.timeout = setTimeout(() => this.fail(), delay);
+    this.timeout = setTimeout(() => {
+      if (this.request) reportSpeech(this.request, { type: 'timeout', provider: 'microsoft-local', reason: 'native' });
+      this.fail();
+    }, delay);
   }
 
   private fail(): void {
     const request = this.request;
-    this.cancel(); request?.onError?.();
+    this.cancel('failure'); request?.onError?.();
   }
 }

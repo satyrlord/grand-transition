@@ -5,6 +5,7 @@ import type { Plugin } from 'vite';
 
 const prefix = 'virtual:grand-transition-phonemizer:';
 const sourceHash = '193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec';
+let prepared: Readonly<{ hash: string; code: string; modules: ReadonlyMap<string, string> }> | undefined;
 
 /** Split the pinned generated pronunciation engine and its data without evaluating source. */
 export function neuralPhonemizerPlugin(): Plugin {
@@ -33,8 +34,14 @@ export function neuralPhonemizerPlugin(): Plugin {
       if (id.startsWith('\0' + prefix)) return modules.get(id.slice(1));
       if (!id.replaceAll('\\', '/').endsWith('/phonemizer/dist/phonemizer.js')) return;
       const source = await readFile(id, 'utf8');
-      if (createHash('sha256').update(source).digest('hex') !== sourceHash) {
+      const hash = createHash('sha256').update(source).digest('hex');
+      if (hash !== sourceHash) {
         throw new Error('Review the pronunciation engine split before changing its pinned version.');
+      }
+      // Share CPU-heavy preparation across worker builds, but validate every load.
+      if (prepared?.hash === hash) {
+        for (const [name, code] of prepared.modules) modules.set(name, code);
+        return prepared.code;
       }
       let instance: { start: number; end: number } | undefined;
       function visit(value: unknown): void {
@@ -55,7 +62,9 @@ export function neuralPhonemizerPlugin(): Plugin {
       const engineId = prefix + 'engine';
       modules.set(engineId, splitData('export default ' + source.slice(instance.start, instance.end) + ';', 'engine'));
       const entry = source.slice(0, instance.start) + '__phonemeEngine' + source.slice(instance.end);
-      return `const __phonemeEngine=(await import(${JSON.stringify(engineId)})).default;\n` + splitData(entry, 'entry');
+      const code = `const __phonemeEngine=(await import(${JSON.stringify(engineId)})).default;\n` + splitData(entry, 'entry');
+      prepared = { hash, code, modules: new Map(modules) };
+      return code;
     },
   };
 }

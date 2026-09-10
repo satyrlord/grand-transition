@@ -40,6 +40,24 @@ export default defineConfig(({ command }) => ({
   plugins: [
     neuralPhonemizerPlugin(),
     {
+      name: 'neural-runtime-static-development-module',
+      apply: 'serve',
+      configureServer(server) {
+        // The runtime is a pinned binary dependency. Dev transforms invalidate its hash.
+        const modulePath = 'node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.asyncify.mjs';
+        server.middlewares.use((request, response, next) => {
+          const url = new URL(request.url ?? '/', 'http://localhost');
+          if (![`${server.config.base}${modulePath}`, `/${modulePath}`].includes(url.pathname) ||
+            url.searchParams.has('url') || !['GET', 'HEAD'].includes(request.method ?? '')) { next(); return; }
+          void readFile(new URL(import.meta.resolve('onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs'))).then((bytes) => {
+            response.setHeader('Content-Type', 'text/javascript');
+            response.setHeader('Content-Length', bytes.length);
+            response.end(request.method === 'HEAD' ? undefined : bytes);
+          }).catch(next);
+        });
+      },
+    },
+    {
       name: 'brand-image-preloads',
       transformIndexHtml: {
         order: 'pre',

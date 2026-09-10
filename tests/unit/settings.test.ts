@@ -17,12 +17,61 @@ import {
 } from '../../src/persistence/storage-port';
 
 describe('settings codec', () => {
-  test('new settings use 1.2 speech rate while existing saved rates remain intact', () => {
-    expect(defaultSettings.speechRate).toBe(1.2);
+  test.each([2,3])('preserves an explicit GPU opt-out in version %s', (schemaVersion) => {
+    const stored={...defaultSettings,schemaVersion,gpuVoices:false};
+    expect(decodeSettings(JSON.stringify(stored))).toEqual({ok:true,value:{...stored,schemaVersion:3}});
+  });
+  test.each([1,2,3])('preserves an explicit speech opt-out in version %s', (schemaVersion) => {
+    const stored: Record<string,unknown>={...defaultSettings,schemaVersion,speechEnabled:false};
+    if(schemaVersion===1)delete stored.gpuVoices;
+    expect(decodeSettings(JSON.stringify(stored))).toMatchObject({ok:true,value:{speechEnabled:false}});
+  });
+  test.each([1, 2])('restores the previous default rate once when migrating version %s', (version) => {
+    const source: Record<string, unknown> = { ...defaultSettings, schemaVersion: version,
+      speechRate: 1.2, speechEnabled: true, gpuVoices: true, speechVoiceUri: 'retired:voice' };
+    if (version === 1) delete source.gpuVoices;
+    const migrated = decodeSettings(JSON.stringify(source));
+    expect(migrated).toEqual({ok:true,value:{...source,schemaVersion:3,speechRate:1,gpuVoices:true}});
+    if (!migrated.ok) throw new Error('Migration failed.');
+    const storage = createMemoryStorage({[settingsStorageKey]:JSON.stringify(source)});
+    const repository = new SettingsRepository(storage);
+    expect(repository.snapshot().settings.speechRate).toBe(1);
+    repository.replace({...repository.snapshot().settings,speechRate:1.2});
+    expect(new SettingsRepository(storage).snapshot().settings.speechRate).toBe(1.2);
+    expect(decodeSettings(JSON.stringify({...source,speechRate:1.4}))).toMatchObject({ok:true,value:{speechRate:1.4}});
+    expect(decodeSettings(JSON.stringify({...source,speechRate:1.15}))).toMatchObject({ok:false,code:'invalid-data'});
+  });
+  test('new settings use 10 percent music and 1.00 speech defaults while existing saved rates remain intact', () => {
+    expect(defaultSettings.musicVolume).toBe(0.1);
+    expect(defaultSettings.speechRate).toBe(1);
     for (const speechRate of [0.5, 1, 1.4, 2]) {
       const saved = { ...defaultSettings, speechRate };
       expect(decodeSettings(JSON.stringify(saved))).toEqual({ ok: true, value: saved });
     }
+  });
+
+  test('migrates a shipped v1 fixture without changing existing preferences', () => {
+    const source = {
+      schemaVersion: 1, masterVolume: 0.55, musicVolume: 0.45,
+      effectsVolume: 0.35, speechVolume: 0.25, speechEnabled: true,
+      speechVoiceUri: 'retired:voice', speechRate: 1.4,
+      turnTimerSeconds: 15, autoComplete: false,
+    };
+    const storage = createMemoryStorage({ [settingsStorageKey]: JSON.stringify(source) });
+    const repository = new SettingsRepository(storage);
+    const migrated = { ...source, schemaVersion: 3, gpuVoices: true };
+    expect(repository.snapshot().settings).toEqual(migrated);
+    expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: JSON.stringify(source) });
+    repository.replace({ ...repository.snapshot().settings, gpuVoices: true });
+    expect(new SettingsRepository(storage).snapshot().settings).toEqual({ ...migrated, gpuVoices: true });
+    expect(defaultSettings.gpuVoices).toBe(true);
+    expect(defaultSettings.speechEnabled).toBe(true);
+    expect(decodeSettings(JSON.stringify({ ...source, gpuVoices: true }))).toEqual({
+      ok: false, code: 'invalid-data', path: 'gpuVoices',
+    });
+    expect(decodeSettings(JSON.stringify({ ...source, musicVolume: 0.12 }))).toEqual({
+      ok: false, code: 'invalid-data', path: 'musicVolume',
+    });
   });
 
   test('round-trips defaults with normalized bytes', () => {
@@ -43,6 +92,7 @@ describe('settings codec', () => {
       effectsVolume: 0.05,
       speechVolume: 0.95,
       speechEnabled: true,
+      gpuVoices: true,
       speechVoiceUri: 'urn:grand-transition:test-voice',
       speechRate: 1.9,
       turnTimerSeconds: null,
@@ -61,6 +111,7 @@ describe('settings codec', () => {
     ['effectsVolume', 0.12],
     ['speechVolume', '0.8'],
     ['speechEnabled', 1],
+    ['gpuVoices', 'true'],
     ['speechVoiceUri', 4],
     ['speechRate', 0.4],
     ['speechRate', 1.15],
@@ -99,7 +150,7 @@ describe('settings codec', () => {
       path: '$',
     });
     expect(
-      decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion: 2 })),
+      decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion: 4 })),
     ).toEqual({
       ok: false,
       code: 'unsupported-version',
@@ -131,6 +182,7 @@ describe('settings repository', () => {
       effectsVolume: 0.35,
       speechVolume: 0.25,
       speechEnabled: true,
+      gpuVoices: true,
       speechVoiceUri: 'voice:test',
       speechRate: 1.4,
       turnTimerSeconds: 15,
@@ -155,7 +207,7 @@ describe('settings repository', () => {
     ['invalid-data', '{broken'],
     [
       'unsupported-version',
-      JSON.stringify({ ...defaultSettings, schemaVersion: 2 }),
+      JSON.stringify({ ...defaultSettings, schemaVersion: 4 }),
     ],
   ] as const)(
     'keeps %s bytes until the user changes a setting',

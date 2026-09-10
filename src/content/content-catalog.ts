@@ -262,11 +262,6 @@ export const contentCatalogSchema = z
         ),
       );
       validateMedia(scene.music, ['scenes', sceneIndex, 'music'], context);
-      validateMedia(
-        scene.ambience,
-        ['scenes', sceneIndex, 'ambience'],
-        context,
-      );
     });
 
     validateLocaleKeys(catalog, context);

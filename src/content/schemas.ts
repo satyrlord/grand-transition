@@ -449,7 +449,6 @@ export const sceneSchema = z
       .min(1),
     animationId: identifierSchema,
     music: mediaReferenceSchema,
-    ambience: mediaReferenceSchema,
     phrasePool: uniqueArray(
       identifierSchema,
       'List each scene phrase only once.',

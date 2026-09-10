@@ -43,6 +43,11 @@ Simulation reports seed, workload, matchups, difficulties, win rates, resolved
 round counts, rule-event rates, failures, and environment. Automatic development
 logs contain no personal data and never leave the local device.
 
+Milestone 024 adds bounded speech diagnostics to the final development-log
+record. Write the completed log after terminal narration finishes or is
+interrupted. Keep the existing local endpoint, file-size limit, and retention
+rules. Historical logs without diagnostics remain valid.
+
 ## Simulation and editorial thresholds
 
 The release balance workload contains every ordered character matchup,

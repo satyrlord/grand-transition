@@ -2,17 +2,18 @@ import { z } from 'zod';
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
 
-export const settingsSchemaVersion = 1;
+export const settingsSchemaVersion = 3;
 
 export type TurnTimerSeconds = 15 | 30 | null;
 
 export type SettingsDocument = Readonly<{
-  schemaVersion: 1;
+  schemaVersion: 3;
   masterVolume: number;
   musicVolume: number;
   effectsVolume: number;
   speechVolume: number;
   speechEnabled: boolean;
+  gpuVoices: boolean;
   speechVoiceUri: string | null;
   speechRate: number;
   turnTimerSeconds: TurnTimerSeconds;
@@ -43,6 +44,7 @@ const settingsFields = [
   'effectsVolume',
   'speechVolume',
   'speechEnabled',
+  'gpuVoices',
   'speechVoiceUri',
   'speechRate',
   'turnTimerSeconds',
@@ -65,6 +67,7 @@ const settingsSchema = z
     effectsVolume: volumeSchema,
     speechVolume: volumeSchema,
     speechEnabled: z.boolean(),
+    gpuVoices: z.boolean(),
     speechVoiceUri: z.string().nullable(),
     speechRate: z
       .number()
@@ -79,12 +82,13 @@ const settingsSchema = z
 export const defaultSettings: SettingsDocument = deepFreeze({
   schemaVersion: settingsSchemaVersion,
   masterVolume: 1,
-  musicVolume: 0.7,
+  musicVolume: 0.1,
   effectsVolume: 0.8,
   speechVolume: 0.8,
-  speechEnabled: false,
+  speechEnabled: true,
+  gpuVoices: true,
   speechVoiceUri: null,
-  speechRate: 1.2,
+  speechRate: 1,
   turnTimerSeconds: 30,
   autoComplete: true,
 });
@@ -106,6 +110,7 @@ export function encodeSettings(settings: SettingsDocument): string {
     effectsVolume: value.effectsVolume,
     speechVolume: value.speechVolume,
     speechEnabled: value.speechEnabled,
+    gpuVoices: value.gpuVoices,
     speechVoiceUri: value.speechVoiceUri,
     speechRate: value.speechRate,
     turnTimerSeconds: value.turnTimerSeconds,
@@ -119,6 +124,15 @@ export function decodeSettings(serialized: string): SettingsCodecResult {
     value = JSON.parse(serialized);
   } catch {
     return invalid('$');
+  }
+  if (isRecord(value) && value.schemaVersion === 1) {
+    if ('gpuVoices' in value) return invalid('gpuVoices');
+    return parseSettings({ ...value, schemaVersion: 3, gpuVoices: true,
+      speechRate: value.speechRate === 1.2 ? 1 : value.speechRate });
+  }
+  if (isRecord(value) && value.schemaVersion === 2) {
+    return parseSettings({ ...value, schemaVersion: 3,
+      speechRate: value.speechRate === 1.2 ? 1 : value.speechRate });
   }
   if (
     isRecord(value) &&

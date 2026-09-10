@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -10,21 +9,15 @@ const { validateNeuralAssets } = await import(
 );
 
 const roots: string[] = [];
-const sha256 = (bytes: Uint8Array) =>
-  createHash('sha256').update(bytes).digest('hex');
-
 async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-neural-'));
   roots.push(root);
   const manifest = JSON.parse(await readFile(
-    path.resolve('public/tts/kokoro/manifest.json'),
+    path.resolve('public/tts/piper/manifest.json'),
     'utf8',
   ));
   for (const file of manifest.files) {
-    const bytes = Buffer.from(`fixture:${file.path}`);
-    file.bytes = bytes.length;
-    file.sha256 = sha256(bytes);
-    await writeFile(path.join(root, file.path), bytes);
+    await writeFile(path.join(root, file.path), `fixture:${file.path}`);
   }
   await writeFile(
     path.join(root, 'manifest.json'),
@@ -39,14 +32,13 @@ afterEach(async () => {
 });
 
 test('accepts the exact pinned neural asset identity and file inventory', async () => {
-  const { root } = await fixture();
-  await expect(validateNeuralAssets(root)).resolves.toBeUndefined();
+  await expect(validateNeuralAssets()).resolves.toBeUndefined();
 });
 
 test.each([
   ['schemaVersion', 2],
   ['revision', 'unpinned'],
-  ['sourceSha256', '0'.repeat(64)],
+  ['sources', []],
   ['runtime', 'onnxruntime-web@latest'],
   ['sampleRate', 44100],
 ] as const)('rejects changed neural manifest identity %s', async (field, value) => {
@@ -66,7 +58,7 @@ test('rejects duplicate, missing, and unmanifested neural asset paths', async ()
     JSON.stringify(duplicate.manifest),
   );
   await expect(validateNeuralAssets(duplicate.root)).rejects.toThrow(
-    'file inventory is invalid',
+    'manifest is invalid',
   );
 
   const missing = await fixture();
@@ -76,12 +68,17 @@ test('rejects duplicate, missing, and unmanifested neural asset paths', async ()
     JSON.stringify(missing.manifest),
   );
   await expect(validateNeuralAssets(missing.root)).rejects.toThrow(
-    'file inventory is incomplete',
+    'manifest is invalid',
   );
 
   const extra = await fixture();
   await writeFile(path.join(extra.root, 'unexpected.bin'), 'unexpected');
   await expect(validateNeuralAssets(extra.root)).rejects.toThrow(
-    'unmanifested file',
+    'invalid inventory',
   );
+});
+
+test('rejects output bytes that do not match the pinned package', async () => {
+  const { root } = await fixture();
+  await expect(validateNeuralAssets(root)).rejects.toThrow('hash mismatch');
 });

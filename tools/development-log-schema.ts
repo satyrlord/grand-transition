@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { isDeepStrictEqual } from 'node:util';
+import { speechDiagnosticsSchema } from '../src/audio/speech-diagnostics.ts';
 
 const id = z.string().min(1);
 const count = z.number().int().nonnegative();
@@ -65,6 +66,7 @@ const actionSchema = z.object({
 }).strict();
 const completionSchema = z.object({
   type: z.literal('match-complete'), winner: id, roundCount: count.min(1), state,
+  speechDiagnostics: speechDiagnosticsSchema.optional(),
 }).strict();
 
 export function validateDevelopmentLog(text: string): { seed: number } {

@@ -1,0 +1,8 @@
+Piper British English VCTK medium. Source: https://huggingface.co/rhasspy/piper-voices
+Pinned revision: 1162a9173d0ce503555aed757976b7a9912eae4c. Published model repository license: MIT.
+VCTK Corpus: Christophe Veaux, Junichi Yamagishi, Kirsten MacDonald (2019), University of Edinburgh.
+Dataset: https://datashare.ed.ac.uk/handle/10283/3443 ; license: https://creativecommons.org/licenses/by/4.0/
+Selected voices: VCTK p226 (male) and p225 (female). Fine-tuned from the published Lessac medium model.
+Expose predicted phoneme durations; retain all trained weights. Playback pitch uses compensated model durations.
+ONNX Runtime: Microsoft Corporation, MIT. See onnx-runtime-LICENSE and onnx-runtime-NOTICES.
+Phonemizer.js 1.2.1: Apache-2.0. See phonemizer-LICENSE.

@@ -213,7 +213,7 @@ Auto-complete offers On and Off. Its default is On. Phrase color coding offers
 On and Off. Its default is On. Sound offers separate Music and Voices On and
 Off choices. Music is On when the stored Music volume is above zero. Turning
 Music Off stores zero Music volume and turning it back On restores the last
-non-zero Music volume in the page session, or the 70 percent default when no
+non-zero Music volume in the page session, or the 10 percent default when no
 such value exists. Voices maps to the stored Speech enabled setting.
 
 When Phrase color coding is On, noun cards use green. Verb and predicate cards
@@ -276,7 +276,7 @@ timer-refill abuse.
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
   The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
-  Sound Voices Off, and Phrase color coding On. Selecting 15, 30, or Unlimited
+  Sound Voices On, and Phrase color coding On. Selecting 15, 30, or Unlimited
   takes effect on Resume. Unlimited does not expire the turn,
   and its complete label stays inside the top-center timer frame at every
   supported viewport.

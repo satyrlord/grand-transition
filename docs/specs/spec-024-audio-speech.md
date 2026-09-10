@@ -33,15 +33,14 @@ source URL, license, original hash, movement, source start and duration,
 derivative hashes, formats, and measured levels. The build trims whole movements,
 applies short endpoint fades, and normalizes loudness. It adds no accompaniment.
 
-Studio ambience and nine effects use the original project license. The effects
-are role-select, commit, light hit, heavy hit, weakness, combo, continuation
-break, comeback, and grammar mistake. Ambience uses smooth harmonic tones.
-No random-noise layer is present. Ambience energy above 2 kHz must remain below
--55 dBFS RMS after a two-pole high-pass measurement.
+Nine effects use the original project license: role-select, commit, light hit,
+heavy hit, weakness, combo, continuation break, comeback, and grammar mistake.
+Scenes contain no background hum or room-tone audio. Scene lighting and other
+visual effects remain independent of audio.
 
 Each asset has a WAV master and Ogg Vorbis plus MP3 runtime variants at 48 kHz.
-Music targets -16 LUFS integrated, plus or minus 1 LU. Ambience targets -22 LUFS,
-plus or minus 2 LU. Effects have a true peak no higher than -1 dBFS. No decoded
+Music targets -16 LUFS integrated, plus or minus 1 LU.
+Effects have a true peak no higher than -1 dBFS. No decoded
 sample exceeds 0 dBFS. `tools/audio-assets.mjs` validates actual files through
 pinned development-only FFmpeg. `audio:build` prepares them.
 `audio:validate`
@@ -63,12 +62,14 @@ Audio files load as same-origin static assets with credentials omitted and
 redirects rejected. Do not embed recordings in JavaScript. Preserve the default
 500,000-byte JavaScript chunk budget. Milestone 004 owns the connection policy.
 
-Master multiplies Music, Effects, and Speech gains. Ambience uses Music.
+Master multiplies Music, Effects, and Speech gains.
 Defaults and ranges come from Milestone 020. Zero gain produces zero samples
 without restarting sources. Music changes use a 300-millisecond equal-power
 crossfade. Exit fades old loops within 300 milliseconds and stops effects.
 Disconnection closes the context. Pause, unsupported viewports, and hidden
 documents fade scene audio to silence.
+Before replacing an in-progress source fade, remove its prior automation curve.
+Overlapping AudioParam curves must not throw or leave a loop audible.
 
 The Pause Sound group exposes Music and Voices On and Off choices. Music uses
 the persisted Music volume and Voices uses the persisted Speech enabled setting.
@@ -87,60 +88,158 @@ snapshot, close a disclosed waiting sentence, or restart presentation.
 
 ## Local neural speech
 
-Use Kokoro-82M v1.0 quantized ONNX, revision
-`1939ad2a8e416c0acfeecc08a694d14ef25f2231`, with ONNX Runtime Web 1.29.0
-and phonemizer 1.2.1. The model and pronunciation library use Apache 2.0.
-ONNX Runtime uses MIT. Ship licenses and third-party notices. Six local voices
-serve the current English locale. Other languages use silent presentation until
-a suitable model is approved.
+Use streamed Piper `en_GB-vctk-medium`, revision
+`1162a9173d0ce503555aed757976b7a9912eae4c`, with ONNX Runtime Web 1.29.0
+and phonemizer 1.2.1. One shared model provides British male speaker p226
+(speaker ID 95) and British female speaker p225 (speaker ID 107). The published
+model repository is MIT licensed. The VCTK dataset uses CC BY 4.0. Ship the
+model card, license texts, dataset attribution, and a description of the duration
+output modification. Settings links to the local voice credits.
 
-Milestone 030 approves Mihai medium and Liana medium for Romanian and owns
-their implementation and acceptance. It extends this worker, asset, and timing
-contract with Romanian inference. The skin mappings and Microsoft exception
-below remain the English behavior; Romanian mappings are defined in 030.
+Phase 2 adds GPU voices, with Piper retained as the CPU fallback.
+Milestone 030 owns Romanian
+voices and localization; other languages retain silent presentation until their
+approved implementation is available.
 
-`tools/neural-speech-assets.mjs` prepares and validates `public/tts/kokoro/`.
+`tools/neural-speech-assets.mjs` prepares and validates `public/tts/piper/`.
 `speech:build` prepares the package. `speech:validate` runs in build, asset
-validation, and CI. The approximately 110 MB package includes model, voices,
-vocabulary, runtime WASM, and notices. The model stays below the 100 MiB
-repository single-file limit. Resource bytes and hashes are manifested.
-The builder rejects a source model that differs from the approved source hash.
-License and notice downloads use fixed upstream revisions. Validation rejects a
-changed package identity, duplicate or missing paths, and unmanifested files.
+validation, and CI. The approximately 91 MB package includes the shared model,
+configuration, runtime WASM, and notices. Each file stays below 100 MiB.
+Pinned input hashes, the package identity, the complete file inventory, and
+output hashes are validated. Missing, duplicate, and unmanifested files fail.
+The retired quantized Kokoro package is not shipped as an unused fallback.
 
-Preparation retains trained weights, exposes predicted phoneme durations, and
-adds an F0 multiplier for character pitch. At 24 kHz, one duration frame equals
-600 output samples. Runtime checks duration totals against the waveform.
-Markers use these durations and the playback audio clock, never character counts.
+The builder retains all trained weights and exposes the predicted phoneme
+ceiling durations. At 22,050 Hz, one duration frame is 256 output samples.
+Runtime checks the duration sum against the actual waveform. Phrase markers
+come from phoneme positions and these model durations, never character-count
+or reading-speed estimates. Padding and sentence boundary tokens remain in the
+model input and timing calculation.
 
-`neural-speech-worker.ts` performs pronunciation and synthesis in a local module
-worker. It loads same-origin resources, omits credentials, rejects redirects,
-and checks manifested bytes. Single-thread WASM needs no cross-origin isolation,
-cloud service, key, or phrase upload. A boot message precedes initialization.
+Character pitch is applied through the browser audio source playback rate.
+The worker compensates the model duration scale by the same factor before
+synthesis, so speech rate still owns tempo, subject to model duration rounding.
+Piper pitch factors below 0.5 clamp to 0.5 to prevent zero-rate playback; current
+authored pitch factors above that floor are preserved. Native Microsoft pitch
+retains its platform behavior. No character pitch is silently ignored.
 
-`neural-speech.ts` owns initialization, PCM playback, progress, and cancellation.
-After public resolution, prepare the next neural delivery while the current
-delivery plays or presents its result. Preparation emits no playback callbacks.
-Retain at most one future delivery in memory. Submit one inference at a time;
-the next request starts after the previous PCM response, so queued preparation
-does not consume its synthesis timeout. Reuse it only when the exact text,
-segment boundaries, language, voice, rate, and pitch match. Volume is applied
-at playback. Start the prepared audio only when its speaker's presentation
-begins. Cancellation discards prepared audio and rejects late responses.
+Piper playback uses a clarity EQ after character pitch: a second-order 150 Hz
+high-pass (12 dB per octave, linear Q 0.8), a +2 dB high shelf at 1.5 kHz, and
+-3 dB output compensation for headroom. Web Audio high-pass Q uses decibels,
+so set it to `20 * log10(0.8)`. Keep resonance mild to avoid reinforcing bass.
+The filter graph persists across contiguous chunks and is disconnected on
+cancellation, failure, or disposal. It adds no synthesis pass or queued buffer.
+GPU Kokoro and native Microsoft playback bypass this Piper EQ. Mixer volume,
+pitch, tempo, and model-derived markers retain their existing ownership.
+
+This is an initial listening preset, informed by Shure's 100 Hz vocal low-cut
+guidance and its 200 Hz conferencing low-cut / treble-shelf guidance. Automated
+browser tests measure the actual response at 44.1 and 48 kHz, rendered low-band
+attenuation, presence retention, finite samples, silence, and test-signal
+headroom. Subjective clarity still requires listening on the target output.
+
+`neural-speech-worker.ts` performs pronunciation and inference in a local module
+worker, using the existing pronunciation library. It loads only same-origin
+resources with credentials omitted and redirects rejected, and checks manifested
+bytes. Single-thread WASM needs no cross-origin isolation, cloud service,
+key, or phrase upload. A boot message precedes initialization.
+
+The pronunciation build plugin caches one validated source hash's parsed and
+split artifacts within the build process. Each worker plugin instance registers
+the complete virtual-module graph and verifies source bytes on every load.
+Cache reuse must retain byte-identical generated worker and pronunciation assets.
+
+`game-speech.ts` derives chunk boundaries from disjoint finalized scored clauses
+and the optional Comeback line. Conjunctions remain with the following clause.
+A shared-subject construction or coordinated noun complement is not split at
+each conjunction. If clause positions cannot be resolved safely, keep the
+remaining sentence together. Preserve the exact complete text. A long model
+input is split at phoneme-space boundaries without truncating tokens.
+
+`neural-speech.ts` owns initialization, progress, chunk queues, playback, and
+cancellation. Generate one chunk at a time. Prioritize the current speaker's
+remaining chunks over future-speaker preparation. Each chunk receives its own
+60-second inference timeout. Start speech when its first chunk is ready, then
+schedule additional ready buffers contiguously on the audio clock. Narration
+completion occurs only after the final chunk ends. Pause freezes playback and
+marker timing, including already scheduled future buffers.
+
+After public resolution, prepare at most one future neural delivery in memory.
+Preparation emits no playback callbacks. Reuse it only when text, segment and
+chunk boundaries, language, voice, rate, and pitch match. Volume is applied at
+playback. Prepared future speech cannot play before its presentation begins.
+Cancellation discards prepared and scheduled audio and rejects late responses.
 There is no persistent generated-speech cache. Native Microsoft requests remain
-immediate; a missing native voice uses the existing neural fallback on demand.
+immediate, with the selected neural engine as fallback when the requested
+installed voice is missing.
 
-Settings shows model loading. The arena shows preparation before recitation.
-Latency depends on device and sentence length. Do not promise real-time
-generation. Split long phoneme streams at boundaries and concatenate all output.
-Never truncate text at a model token limit.
+### Optional GPU voices
 
-Speech defaults off and needs a trusted gesture in each page session. Enabling
-it downloads local resources. Skin metadata selects the voice. Do not expose a
+The title Settings checkbox `GPU voices` defaults on, independently of speech
+enablement. It requests streamed FP32 Kokoro with British George and Emma voices.
+The additional local package is about 353 MB. It uses ONNX Runtime Web 1.29.0's
+compact WebGPU entry point and matching Asyncify runtime. Model shards stay below
+100 MiB. `tools/kokoro-gpu-assets.mjs` pins the source model, duration-output
+modification, runtime, voices, license notices, complete inventory, and hashes.
+Both speech packages are checked by `speech:validate`, build, and CI.
+The asset builder also writes `src/audio/kokoro-gpu-manifest.json` for the
+worker's compiled integrity pins. Validation rejects drift between that file,
+the public manifest, and the pinned package. JavaScript must not import files
+from `public`. The development server serves the pinned Asyncify module without
+code transforms so the same runtime hash check works in development and
+production. Worker boot and runtime-byte checks cover the development path.
+
+Initialize voice resources when the menu opens if speech is enabled; GPU
+resources additionally require GPU voices enabled. Preparation creates no audio
+context and plays no sound. A trusted interaction activates playback later.
+Check an actual adapter and device before
+downloading the model. Reject software fallback adapters. Require a WebGPU
+session device and successful public warmup inference before reporting ready.
+Never run this FP32 model as a CPU-only fallback. Resources stay on the app
+origin; no phrase or audio is uploaded. Preserve the production CSP and subpath.
+
+Piper initializes alongside GPU loading. The main menu shows a styled GPU
+progress indicator while GPU support is checked, assets load, and warmup runs.
+Disable Set up match during these pending states, including initial idle, and
+guard its command. Hide the indicator when speech or GPU voices is off. Keep
+Settings available for opt-out. Readiness hides the indicator and unlocks setup.
+GPU unavailability also unlocks setup and shows a concise Piper fallback notice.
+No initialization progress for 120 seconds fails GPU preparation; ongoing
+download progress resets that inactivity timer. Readiness and disposal clear it.
+GPU loading status belongs to the main menu, not the Settings dialog.
+Select the ready engine once at match start. If GPU is unavailable, use Piper
+throughout that match. GPU becoming ready later must not
+switch a healthy active match. Keep Piper ready for device loss. A GPU failure
+cancels its audio and completes the current delivery through silent presentation;
+subsequent deliveries use Piper. Never replay an already spoken prefix. The next
+match can select ready GPU voices. Toggling GPU off in the menu releases its
+worker and audio context; toggling on allows an explicit retry.
+
+Kokoro uses model-duration phrase markers at 24,000 Hz and applies character pitch
+in the worker while retaining the requested tempo. It shares the bounded chunk
+queue, cancellation, pause, future-delivery preparation, and completion rules.
+For a delivery with several chunks, schedule its first PCM with a 750 ms startup
+buffer, then append chunks on the audio clock. Single-chunk speech and fully
+prepared deliveries start without that buffer. This reduces gaps observed on
+the development GPU, but does not
+guarantee real-time synthesis on every device. The main menu reports loading progress,
+readiness, and unavailable status. Diagnostics identify the actual neural voice.
+Government AI retains native Microsoft speech; its fallback uses the selected
+neural male or female voice.
+
+The main menu shows GPU loading. Settings retains selected local voice-engine status.
+The arena distinguishes preparation from reciting.
+Latency depends on the device and chunk length; do not promise universal
+real-time generation. Both complete public deliveries precede the next round
+or Victory, as specified in Milestone 025.
+
+Speech defaults on; playback needs a trusted gesture in each page session.
+Resource preparation can precede that gesture. Skin metadata selects the voice. Do not expose a
 speech voice dropdown. Settings exposes speech enablement, volume, and rate.
 Existing saved voice URIs remain valid and are preserved when another setting
 changes, but they do not override the skin assignment. Rate is 0.5
-through 2 in 0.1 steps, default 1.2. Existing saved rates remain unchanged.
+through 2 in 0.1 steps, default 1.00. Settings migration restores the previous saved 1.2 rate to
+1.00 once, as specified in Milestone 020. Other saved rates remain unchanged.
 Speech volume is 0 through 1 in 0.05 steps,
 default 0.8. Character data supplies pitch.
 
@@ -158,6 +257,36 @@ the same presentation silently. A synthesis request with no PCM response for
 60 seconds terminates its worker and enters silent fallback. The match must
 not wait indefinitely.
 
+## Speech diagnostics
+
+Record public delivery diagnostics locally, correlated by match, round, and
+speaker. Events include preparation and delivery requests, pending model load,
+model readiness, synthesis start, PCM readiness and duration, playback start,
+phrase markers, playback end, failure, timeout, cancellation reason, Pause,
+resume, skipped speech, provider fallback, silent presentation start, displayed
+score markers, displayed total, and presentation completion. Store the selected
+voice, rate, pitch, provider, and elapsed milliseconds from match start.
+
+Use controlled reason codes. Do not record sentence text, audio samples,
+unselected cards, error messages or stacks, resource URLs, browser identifiers,
+machine facts, or credentials in these events. Existing public match records
+already identify the sentence by round and speaker. Observer exceptions must
+not interrupt speech, scoring, or presentation.
+
+Keep the latest 1000 events per match and an explicit dropped-event count.
+Each snapshot states `recording`, `finished`, or `interrupted`. Milestone 019
+stores the optional diagnostic snapshot with completed history. Development
+logs include the same snapshot in their final `match-complete` record. Delay
+that log write until terminal presentation finishes or is explicitly interrupted,
+so the final utterance is included. Do not send diagnostics in production.
+After a snapshot becomes `finished` or `interrupted`, ignore later events until
+the recorder resets for the next match.
+
+`speech-diagnostics.test.ts`, neural and native adapter tests, history codec
+tests, and development-log validation cover event bounds, privacy, failure
+isolation, and legacy compatibility. Production audio tests verify that both
+terminal playback completions and displayed totals reach saved history.
+
 ## Skin voices
 
 Assign automatic British voices to human skins and classic local Microsoft
@@ -166,11 +295,11 @@ speech selector reads this authored metadata.
 
 | Skin | Primary voice | Fallback when the named local voice is unavailable |
 | --- | --- | --- |
-| Male human skin | Kokoro George, en-GB | Silent if neural speech fails |
-| Female human skin | Kokoro Emma, en-GB | Silent if neural speech fails |
-| Robot 1, default | Microsoft David | Kokoro George |
-| Robot 2, alternate | Microsoft Mark | Kokoro George |
-| Robot 3, schoolteacher | Microsoft Zira | Kokoro Emma |
+| Male human skin | Piper p226 or selected GPU George, en-GB | Silent current delivery; later Piper after GPU failure |
+| Female human skin | Piper p225 or selected GPU Emma, en-GB | Silent current delivery; later Piper after GPU failure |
+| Robot 1, default | Microsoft David | Selected neural male voice |
+| Robot 2, alternate | Microsoft Mark | Selected neural male voice |
+| Robot 3, schoolteacher | Microsoft Zira | Selected neural female voice |
 
 `skin-speech-profile.ts` selects the skin profile. `character-speech.ts` routes
 it to the neural adapter or `microsoft-robot-speech.ts`. The latter selects only
@@ -208,16 +337,23 @@ skins through real match completion and records native versus neural calls.
 ## Acceptance criteria and verifiers
 
 - **AC-024-01:** Audio validation proves formats, levels, provenance, and hashes.
-  Asset unit tests cover rejection paths and the ambience noise bound.
+  Asset unit tests cover rejection paths and the music-and-effects-only inventory.
 - **AC-024-02:** Audio adapter tests prove gains, source reuse, crossfade,
   cleanup, and failure. Production tests measure effect onset below 100 ms.
 - **AC-024-03:** Neural asset validation proves identity, hashes, and bounds.
   Production browsers generate real PCM under the exact CSP from local assets.
-  Human skins make no platform speech call. Robot skins use only the approved
-  installed Microsoft voices or their British neural fallback.
+  Human skins use the selected neural engine and make no platform speech call.
+  Robot skins use only the approved installed Microsoft voices or their British
+  neural fallback. GPU initialization requires an actual device and warmup;
+  CPU-only FP32 execution is rejected.
 - **AC-024-04:** Neural adapter tests cover loading, voice, rate, pitch, gain,
-  audio-clock markers, Pause, cancellation, and failure. Public speech tests
+  audio-clock markers, compensated pitch, contiguous chunks, current-speaker priority,
+  Pause, cancellation, and failure. Public speech tests
   cover exact wording, segment alignment, stale events, and private suppression.
+  `piper-text.test.ts` verifies input padding, duration-frame alignment, and
+  duration compensation. `piper-pitch.browser.test.ts` measures browser playback
+  frequency and duration with known signals. The production skin-speech flow
+  verifies both streamed clauses and one completed delivery per speaker.
 - **AC-024-05:** Both public bubbles and reciting stances remain visible during
   speech. Victory waits for both deliveries. Milestone 025 tests verify scores,
   total, damage, and automatic progression.
@@ -225,6 +361,14 @@ skins through real match completion and records native versus neural calls.
   Chromium, Firefox, and WebKit evidence identifies exact runtime and native
   audio support. Windows Playwright WebKit lacks Web Audio. Its silent fallback
   does not establish audible WebKit acceptance.
+- **AC-024-07:** GPU asset and worker tests reject altered packages, unavailable
+  devices, CPU-only sessions, and invalid PCM or durations. Router tests prove
+  match-stable selection, voice mapping, cancellation, opt-out disposal, and
+  later-delivery fallback without repetition. Playback tests prove the startup
+  buffer and actual audio-clock diagnostics. Settings production tests prove
+  unsupported GPU status, zero GPU package downloads, persistence, and layout.
+  Record real GPU initialization, both voices, contiguous chunks, and injected
+  device-loss handling separately from physical device loss and listening.
 
 ## Review and verification
 
@@ -237,8 +381,12 @@ Run focused tests, production flows, and `npm run ci`.
 
 ## Research sources
 
-- [Kokoro](https://github.com/hexgrad/kokoro)
-- [ONNX model distribution](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
+- [Shure vocal EQ guidance](https://www.shure.com/en-US/insights/how-to-record-and-mix-vocals)
+- [Shure speech EQ applications](https://www.shure.com/en-US/docs/guide/IntelliMixRoom)
+- [Web Audio filter Q definition](https://www.w3.org/TR/webaudio-1.0/#dom-biquadfilternode-q)
+
+- [Piper model distribution](https://huggingface.co/rhasspy/piper-voices)
+- [VCTK corpus](https://datashare.ed.ac.uk/handle/10283/3443)
 - [ONNX Runtime Web](https://onnxruntime.ai/docs/tutorials/web/)
 - [Microsoft HD voices](https://learn.microsoft.com/azure/ai-services/speech-service/high-definition-voices)
 - [Microsoft Embedded Speech](https://learn.microsoft.com/azure/ai-services/speech-service/embedded-speech)
