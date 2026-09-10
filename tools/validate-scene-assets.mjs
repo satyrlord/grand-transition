@@ -1,4 +1,11 @@
-import { isVisibleChromaGreen } from './asset-pixels.mjs';
+import {
+  hasNativeAlphaProvenance,
+  isVisibleChromaGreen,
+  measureNativeAlphaTopology,
+  NATIVE_ALPHA_MAX_CONTOUR_DISTANCE,
+  NATIVE_ALPHA_MIN_CONTOUR_RATIO,
+  NATIVE_ALPHA_MIN_OPACITY,
+} from './asset-pixels.mjs';
 import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -240,7 +247,7 @@ async function inspectRaster(filePath, format, width, height, context) {
   return { input, metadata };
 }
 
-async function inspectAlpha(input, isForeground, context) {
+export async function inspectAlpha(input, isForeground, context, { nativeAlpha = false } = {}) {
   let decoded;
   try {
     decoded = await sharp(input)
@@ -258,11 +265,15 @@ async function inspectAlpha(input, isForeground, context) {
 
   let transparentCount = 0;
   let partialAlphaCount = 0;
+  let nearOpaqueCount = 0;
+  let nativeEdgeCount = 0;
   for (let offset = 3; offset < decoded.data.length; offset += 4) {
     const alpha = decoded.data[offset];
-    if (isVisibleChromaGreen(decoded.data, offset - 3)) {
+    if (!nativeAlpha && isVisibleChromaGreen(decoded.data, offset - 3)) {
       throw new Error(`${context} retains visible chroma-green pixels.`);
     }
+    if (alpha >= NATIVE_ALPHA_MIN_OPACITY) nearOpaqueCount += 1;
+    if (alpha > 0 && alpha < NATIVE_ALPHA_MIN_OPACITY) nativeEdgeCount += 1;
     if (alpha === 0) transparentCount += 1;
     else if (alpha < 255) partialAlphaCount += 1;
   }
@@ -274,6 +285,21 @@ async function inspectAlpha(input, isForeground, context) {
     return;
   }
 
+  if (nativeAlpha && (nativeEdgeCount === 0 || nearOpaqueCount / (decoded.data.length / 4 - transparentCount) < 0.5)) {
+    throw new Error(`${context} must contain predominantly near-opaque native content and partial-alpha edges below ${NATIVE_ALPHA_MIN_OPACITY}.`);
+  }
+  if (nativeAlpha) {
+    const topology = measureNativeAlphaTopology(decoded.data, decoded.info.width, decoded.info.height);
+    if (topology.nontransparentBorderPixels > 0) {
+      throw new Error(`${context} must have a fully transparent outer border.`);
+    }
+    if (topology.contourPartialAlphaPixels / topology.partialAlphaPixels < NATIVE_ALPHA_MIN_CONTOUR_RATIO) {
+      throw new Error(
+        `${context} must keep at least ${NATIVE_ALPHA_MIN_CONTOUR_RATIO * 100}% of partial alpha within ` +
+        `${NATIVE_ALPHA_MAX_CONTOUR_DISTANCE} pixels of near-opaque content.`,
+      );
+    }
+  }
   const { width, height } = decoded.info;
   const cornerOffsets = [
     3,
@@ -607,7 +633,8 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
         `Scene asset "${asset.id}" source SHA-256 does not match the file.`,
       );
     }
-    await inspectAlpha(source.input, asset.identity.isForeground, `Scene asset "${asset.id}" source`);
+    const alphaOptions = { nativeAlpha: hasNativeAlphaProvenance(source.input) };
+    await inspectAlpha(source.input, asset.identity.isForeground, `Scene asset "${asset.id}" source`, alphaOptions);
 
     for (const variant of asset.variants) {
       const variantPath = path.join(sceneRoot, variant.path);
@@ -629,6 +656,7 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
         inspected.input,
         asset.identity.isForeground,
         variant.context,
+        alphaOptions,
       );
     }
   }

@@ -247,11 +247,11 @@
     }
   },
   {
-    "id": "coalition-and",
+    "id": "and",
     "role": "conjunction",
     "text": "and",
     "connectorKind": "and",
-    "tags": ["bureaucracy", "consistency"],
+    "tags": [],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -261,11 +261,11 @@
     }
   },
   {
-    "id": "televised-but",
+    "id": "but",
     "role": "conjunction",
     "text": "but",
     "connectorKind": "but",
-    "tags": ["restraint", "decorum"],
+    "tags": [],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
@@ -275,11 +275,11 @@
     }
   },
   {
-    "id": "archive-because",
+    "id": "because",
     "role": "conjunction",
     "text": "because",
     "connectorKind": "because",
-    "tags": ["evidence", "credibility"],
+    "tags": [],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -306,7 +306,7 @@
     "id": "ellipsis",
     "role": "continuation",
     "text": "[...]",
-    "tags": ["legacy", "modernity"],
+    "tags": [],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
@@ -401,12 +401,12 @@
     }
   },
   {
-    "id": "postpones-reform",
+    "id": "postpones",
     "role": "verb",
     "text": "postpones",
     "singularText": "postpones",
     "pluralText": "postpone",
-    "tags": ["modernity", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -424,15 +424,15 @@
       "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
     },
     "tense": "present",
-    "tenseFamily": "postpones-reform"
+    "tenseFamily": "postpones"
   },
   {
-    "id": "postponed-reform",
+    "id": "postponed",
     "role": "verb",
     "text": "postponed",
     "singularText": "postponed",
     "pluralText": "postponed",
-    "tags": ["modernity", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -450,15 +450,15 @@
       "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
     },
     "tense": "past",
-    "tenseFamily": "postpones-reform"
+    "tenseFamily": "postpones"
   },
   {
-    "id": "will-postpone-reform",
+    "id": "will-postpone",
     "role": "verb",
     "text": "will postpone",
     "singularText": "will postpone",
     "pluralText": "will postpone",
-    "tags": ["modernity", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -476,7 +476,7 @@
       "notes": "Original Romanian transition-reform satire. Not a quotation. Editorial review complete."
     },
     "tense": "future",
-    "tenseFamily": "postpones-reform"
+    "tenseFamily": "postpones"
   },
   {
     "id": "inaugurates",
@@ -1108,7 +1108,7 @@
     "text": "explains",
     "singularText": "explains",
     "pluralText": "explain",
-    "tags": ["evidence", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1134,7 +1134,7 @@
     "text": "explained",
     "singularText": "explained",
     "pluralText": "explained",
-    "tags": ["evidence", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1160,7 +1160,7 @@
     "text": "will explain",
     "singularText": "will explain",
     "pluralText": "will explain",
-    "tags": ["evidence", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1186,7 +1186,7 @@
     "text": "announces",
     "singularText": "announces",
     "pluralText": "announce",
-    "tags": ["credibility", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1212,7 +1212,7 @@
     "text": "announced",
     "singularText": "announced",
     "pluralText": "announced",
-    "tags": ["credibility", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1238,7 +1238,7 @@
     "text": "will announce",
     "singularText": "will announce",
     "pluralText": "will announce",
-    "tags": ["credibility", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1342,7 +1342,7 @@
     "text": "negotiated",
     "singularText": "negotiated",
     "pluralText": "negotiated",
-    "tags": ["restraint", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1368,7 +1368,7 @@
     "text": "negotiates",
     "singularText": "negotiates",
     "pluralText": "negotiate",
-    "tags": ["restraint", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1394,7 +1394,7 @@
     "text": "will negotiate",
     "singularText": "will negotiate",
     "pluralText": "will negotiate",
-    "tags": ["restraint", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1498,7 +1498,7 @@
     "text": "consulted",
     "singularText": "consulted",
     "pluralText": "consulted",
-    "tags": ["decorum", "bureaucracy"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1524,7 +1524,7 @@
     "text": "consults",
     "singularText": "consults",
     "pluralText": "consult",
-    "tags": ["decorum", "bureaucracy"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1550,7 +1550,7 @@
     "text": "will consult",
     "singularText": "will consult",
     "pluralText": "will consult",
-    "tags": ["decorum", "bureaucracy"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1810,7 +1810,7 @@
     "text": "unveiled",
     "singularText": "unveiled",
     "pluralText": "unveiled",
-    "tags": ["modernity", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1836,7 +1836,7 @@
     "text": "unveils",
     "singularText": "unveils",
     "pluralText": "unveil",
-    "tags": ["modernity", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1862,7 +1862,7 @@
     "text": "will unveil",
     "singularText": "will unveil",
     "pluralText": "will unveil",
-    "tags": ["modernity", "decorum"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1888,7 +1888,7 @@
     "text": "coordinated",
     "singularText": "coordinated",
     "pluralText": "coordinated",
-    "tags": ["bureaucracy", "restraint"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1914,7 +1914,7 @@
     "text": "coordinates",
     "singularText": "coordinates",
     "pluralText": "coordinate",
-    "tags": ["bureaucracy", "restraint"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -1940,7 +1940,7 @@
     "text": "will coordinate",
     "singularText": "will coordinate",
     "pluralText": "will coordinate",
-    "tags": ["bureaucracy", "restraint"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -2044,7 +2044,7 @@
     "text": "redirects",
     "singularText": "redirects",
     "pluralText": "redirect",
-    "tags": ["consistency", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -2070,7 +2070,7 @@
     "text": "redirected",
     "singularText": "redirected",
     "pluralText": "redirected",
-    "tags": ["consistency", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -2096,7 +2096,7 @@
     "text": "will redirect",
     "singularText": "will redirect",
     "pluralText": "will redirect",
-    "tags": ["consistency", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -2377,11 +2377,11 @@
     }
   },
   {
-    "id": "chamber-yet",
+    "id": "yet",
     "role": "conjunction",
     "text": "yet",
     "connectorKind": "yet",
-    "tags": ["consistency", "restraint"],
+    "tags": [],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -2391,11 +2391,11 @@
     }
   },
   {
-    "id": "consequence-so",
+    "id": "so",
     "role": "conjunction",
     "text": "so",
     "connectorKind": "so",
-    "tags": ["evidence", "modernity"],
+    "tags": [],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -2405,11 +2405,11 @@
     }
   },
   {
-    "id": "explanation-for",
+    "id": "for",
     "role": "conjunction",
     "text": "for",
     "connectorKind": "for",
-    "tags": ["evidence", "credibility"],
+    "tags": [],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
@@ -2551,7 +2551,7 @@
     "grammaticalNumber": "singular",
     "grammaticalPerson": "second",
     "referentKind": "personal",
-    "tags": ["credibility", "decorum"],
+    "tags": [],
     "scoreGroups": {
       "substance": ["personal"],
       "flavour": ["direct"]
@@ -4201,7 +4201,7 @@
     "text": "is",
     "singularText": "is",
     "pluralText": "are",
-    "tags": ["credibility", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4227,7 +4227,7 @@
     "text": "was",
     "singularText": "was",
     "pluralText": "were",
-    "tags": ["legacy", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4253,7 +4253,7 @@
     "text": "will be",
     "singularText": "will be",
     "pluralText": "will be",
-    "tags": ["modernity", "credibility"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4279,7 +4279,7 @@
     "text": "should have been",
     "singularText": "should have been",
     "pluralText": "should have been",
-    "tags": ["legacy", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4305,7 +4305,7 @@
     "text": "should be",
     "singularText": "should be",
     "pluralText": "should be",
-    "tags": ["legacy", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4607,7 +4607,7 @@
     "text": "was not",
     "singularText": "was not",
     "pluralText": "were not",
-    "tags": ["credibility", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4633,7 +4633,7 @@
     "text": "will not be",
     "singularText": "will not be",
     "pluralText": "will not be",
-    "tags": ["credibility", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4659,7 +4659,7 @@
     "text": "is not",
     "singularText": "is not",
     "pluralText": "are not",
-    "tags": ["credibility", "consistency"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4685,7 +4685,7 @@
     "text": "will never be",
     "singularText": "will never be",
     "pluralText": "will never be",
-    "tags": ["credibility", "results"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4711,7 +4711,7 @@
     "text": "was never",
     "singularText": "was never",
     "pluralText": "were never",
-    "tags": ["credibility", "results"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4737,7 +4737,7 @@
     "text": "is never",
     "singularText": "is never",
     "pluralText": "are never",
-    "tags": ["credibility", "results"],
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -4780,7 +4780,7 @@
     "role": "noun",
     "text": "my opponent",
     "referentKind": "personal",
-    "tags": ["credibility", "consistency"],
+    "tags": [],
     "scoreGroups": {
       "substance": ["personal", "politics"],
       "flavour": ["direct"]
@@ -4798,7 +4798,7 @@
     "role": "conjunction",
     "text": "with",
     "connectorKind": "with",
-    "tags": ["decorum", "credibility"],
+    "tags": [],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",

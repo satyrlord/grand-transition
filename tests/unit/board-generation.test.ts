@@ -196,7 +196,7 @@ describe('Hollywood Roast shared board generation', () => {
   test('reports the available role counts for an impossible scene pool', () => {
     const result = generateBoard({
       ...request(),
-      scenePhraseIds: ['coalition-and'],
+      scenePhraseIds: ['and'],
     });
     expect(result).toMatchObject({
       ok: false,

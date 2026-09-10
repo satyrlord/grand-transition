@@ -28,15 +28,28 @@ Current studio masters are 3840 by 2160 pixels.
 Other current scene masters are 1920 by 1080 pixels.
 A 4K source does not authorize changing another scene's shipping-resolution contract.
 
-For a foreground layer, convert the prepared green matte through the approved converter:
+For native transparent art, preserve the decoded pixels and alpha.
+Stamp generic provenance, then register the native source without matte conversion:
+
+```text
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs provenance tmp/scene-generation/run/prepared.png --source "Verified model, route, dimensions, and operations."
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-native tmp/scene-generation/run/prepared.png
+```
+
+Replace the example source text with verified facts.
+The script retains its historical filename for existing callers.
+Native adoption changes metadata only. It does not normalize alpha or flatten colors.
+
+For a green-matte fallback, convert through the existing converter:
 
 ```text
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file research/scene-generation/run/prompt.txt
 ```
 
 Inspect alpha edges against dark and light backgrounds.
-Reject green residue, missing partial alpha, opaque corners, and detached shadows.
-Use `adopt` only for a verified existing alpha source under its owning workflow.
+Reject missing partial alpha, opaque corners, and detached shadows.
+Reject green residue in key-derived art. Native art can contain intentional green material.
+Use `adopt` only to retain a verified legacy alpha source under its existing workflow.
 Keep back and foreground layers aligned on the same normalized canvas.
 
 Stamp a verified generic origin on the final PNG with the converter's `provenance` command and `--source`.

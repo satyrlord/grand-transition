@@ -47,7 +47,7 @@ describe('Hollywood Roast English grammar', () => {
   test('accepts noun and noun as a compound subject before either completion form', () => {
     const prefix = analyze([
       add('televised-revolution'),
-      add('coalition-and'),
+      add('and'),
       add('national-salvation-committee'),
     ]);
     expect(prefix).toMatchObject({
@@ -62,7 +62,7 @@ describe('Hollywood Roast English grammar', () => {
 
     const complete = analyze([
       add('televised-revolution'),
-      add('coalition-and'),
+      add('and'),
       add('national-salvation-committee'),
       add('rebrands'),
       add('national-consensus'),
@@ -246,7 +246,7 @@ describe('Hollywood Roast English grammar', () => {
     const shared = analyze([
       add('you'),
       add('made-own-voters-change-the-channel'),
-      add('coalition-and'),
+      add('and'),
       add('could-not-win-own-stairwell'),
       { kind: 'end' },
     ]);
@@ -261,7 +261,7 @@ describe('Hollywood Roast English grammar', () => {
 
     const compound = analyze([
       add('my-opponent'),
-      add('coalition-and'),
+      add('and'),
       add('you'),
       add('made-own-voters-change-the-channel'),
     ]);
@@ -280,7 +280,7 @@ describe('Hollywood Roast English grammar', () => {
     const result = analyze([
       add('you'),
       add('made-own-voters-change-the-channel'),
-      add('coalition-and'),
+      add('and'),
       add('my-opponent'),
       add('made-own-voters-change-the-channel'),
     ]);
@@ -299,7 +299,7 @@ describe('Hollywood Roast English grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('coalition-and'),
+        add('and'),
         add('televised-revolution'),
         add('belongs-in-a-party-museum'),
       ]),
@@ -308,7 +308,7 @@ describe('Hollywood Roast English grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('coalition-and'),
+        add('and'),
         add('rebrands'),
         add('televised-revolution'),
       ]),
@@ -320,7 +320,7 @@ describe('Hollywood Roast English grammar', () => {
       add('national-consensus'),
       add('denounced'),
       add('televised-revolution'),
-      add('coalition-and'),
+      add('and'),
       add('national-salvation-committee'),
     ]);
     expect(compoundObject).toMatchObject({
@@ -337,7 +337,7 @@ describe('Hollywood Roast English grammar', () => {
         add('national-consensus'),
         add('denounced'),
         add('televised-revolution'),
-        add('coalition-and'),
+        add('and'),
         add('national-salvation-committee'),
         add('by-emergency-ordinance'),
       ]),
@@ -351,7 +351,7 @@ describe('Hollywood Roast English grammar', () => {
         add('national-consensus'),
         add('denounced'),
         add('televised-revolution'),
-        add('coalition-and'),
+        add('and'),
         add('national-salvation-committee'),
         add('rebrands'),
         add('national-consensus'),
@@ -366,7 +366,7 @@ describe('Hollywood Roast English grammar', () => {
         add('national-consensus'),
         add('denounced'),
         add('televised-revolution'),
-        add('coalition-and'),
+        add('and'),
         add('national-salvation-committee'),
         add('before-the-next-election'),
       ]),
@@ -466,8 +466,8 @@ test('with requires its noun before another connector can start a clause', () =>
   const prefix = ['my-opponent', 'interrupts-the-debate', 'with'];
   expect(analyze(prefix.map(add))).toMatchObject({ accepted: true, analysis: { complete: false } });
   for (const ids of [
-    [...prefix, 'archive-because'],
-    [...prefix, 'archive-because', 'national-consensus', 'belongs-in-a-party-museum'],
+    [...prefix, 'because'],
+    [...prefix, 'because', 'national-consensus', 'belongs-in-a-party-museum'],
   ]) {
     expect(analyze(ids.map(add))).toMatchObject({ accepted: false });
   }

@@ -371,8 +371,8 @@ describe('Hollywood Roast draft actions', () => {
     state = selectPrivate(
       state,
       playerIds[0],
-      'coalition-and',
-      'coalition-and',
+      'and',
+      'and',
     );
     state = passWithValidCard(state, playerIds[1]);
     state = selectPrivate(

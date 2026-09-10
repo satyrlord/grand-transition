@@ -26,6 +26,12 @@ default-only.
 The Black Sea Captain remains default-only in the current
 approved roster.
 
+Local Baron (`county-baron`) adds the `municipal-patron` portrait with native
+transparency and the shared detailed character style. Filename discovery
+exposes it in setup and carries it into matches.
+Keep its default portrait, character identity, phrases, balance, and voice
+unchanged. It uses the selection-art fallback, without a new state package.
+
 Seventeen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
 never define anatomy, species, or hybrid traits.

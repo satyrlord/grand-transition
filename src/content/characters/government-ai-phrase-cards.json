@@ -320,12 +320,12 @@
       }
     },
     {
-      "id": "government-ai-optimized",
+      "id": "optimized",
       "role": "verb",
       "text": "optimized",
       "singularText": "optimized",
       "pluralText": "optimized",
-      "tags": ["spending", "corruption", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -337,7 +337,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-optimizes",
+      "tenseFamily": "optimizes",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
@@ -346,12 +346,12 @@
       }
     },
     {
-      "id": "government-ai-optimizes",
+      "id": "optimizes",
       "role": "verb",
       "text": "optimizes",
       "singularText": "optimizes",
       "pluralText": "optimize",
-      "tags": ["spending", "corruption", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -363,7 +363,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-optimizes",
+      "tenseFamily": "optimizes",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
@@ -372,12 +372,12 @@
       }
     },
     {
-      "id": "government-ai-will-optimize",
+      "id": "will-optimize",
       "role": "verb",
       "text": "will optimize",
       "singularText": "will optimize",
       "pluralText": "will optimize",
-      "tags": ["spending", "corruption", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -389,7 +389,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-optimizes",
+      "tenseFamily": "optimizes",
       "editorialReview": {
         "state": "approved",
         "originality": "original",

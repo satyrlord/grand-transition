@@ -50,6 +50,12 @@ rules. Historical logs without diagnostics remain valid.
 
 ## Simulation and editorial thresholds
 
+Neutral phrases use empty weakness tags as specified in Milestone 005.
+Editorial review checks the visible phrase meaning independently of its
+character ownership or political research rationale. Family references retain
+their authored weakness tags. Neutral grammatical fragments are exempt from
+the fictional-target and character-tone checks below.
+
 The release balance workload contains every ordered character matchup,
 including mirrors, at all three difficulties. Each ordered matchup runs 100
 matches, with each player opening 50. For 18 characters this is 97,200 matches.

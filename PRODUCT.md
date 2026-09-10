@@ -59,14 +59,15 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented content includes Zod 4 schemas and an English game-locale
   bundle. It also includes 18 original fictional characters, 17 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
-  default portraits. Seven archetypes have ten alternate skins in total. Skins
+  default portraits. Eight archetypes have eleven alternate skins in total. Skins
   are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and zero through eight
   alternate skins per archetype.
 
-  Final representational raster art uses one strict flat cel-shaded
-  editorial-cartoon style across characters, moderators, scenes, furniture, fixtures,
-  and props.
+  Final representational raster art uses one shared cel-shaded
+  editorial-cartoon direction across characters, moderators, scenes, furniture,
+  fixtures, and props. Character skins and states follow the detailed rendering
+  standard in Specification 023.
   Two scenes use layered debate studios with fixed fictional moderators
   and foreground desk plates. Four playable foundation scenes have distinct
   local cartoon backgrounds with the same responsive scene asset pipeline.

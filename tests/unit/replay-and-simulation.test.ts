@@ -41,6 +41,8 @@ import {
 } from '../../src/persistence/codecs/replay-codec';
 import type { StoragePort } from '../../src/persistence/storage-port';
 import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
+import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
+import { legacyPhraseReplayContext } from '../../src/persistence/codecs/legacy-phrase-replay-context';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -66,6 +68,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
+    expect(decoded.value.schemaVersion).toBe(5);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -165,7 +168,7 @@ describe('versioned replay and local match-log codecs', () => {
   });
 
   test('version 3 replays retain scores for sentences with modifiers', () => {
-    const legacyContext = { ...context, balance: legacyVersion3BasicScoringBalance };
+    const legacyContext = legacyPhraseReplayContext({ ...context, balance: legacyVersion3BasicScoringBalance });
     const legacy = simulateMatch(20_260_823, createSimulationSetup(sampleContent), legacyContext,
       (state, engine) => listSimulationOptions(state, engine).toSorted((left, right) =>
         Number(right.phrase?.role === 'modifier') - Number(left.phrase?.role === 'modifier')),
@@ -184,6 +187,36 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decodeMatchLog(normalizedJson({
       ...completed.matchLog, schemaVersion: 3, sentences: undefined,
     }))).toEqual({ ok: false, code: 'invalid-replay' });
+  });
+
+  test('version 4 retains neutral phrase weaknesses, connector IDs, and normalized commands', () => {
+    const bytes = normalizedJson(version4ReplayFixture);
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(replayed.state.schemaVersion).toBe(4);
+    expect(replayed.state.winner).toBe('player-1');
+    expect(replayed.state.resolutionHistory.map((round) => ({
+      damage: round.players['player-1']!.outgoingDamage,
+      pride: round.players['player-2']!.prideAfter,
+    }))).toEqual([
+      { damage: 15, pride: 85 },
+      { damage: 24, pride: 61 },
+      { damage: 30, pride: 31 },
+      { damage: 32, pride: 0 },
+    ]);
+    const thirdRound = replayed.state.resolutionHistory[2]!.players['player-1']!;
+    expect(thirdRound.constructionPhrases.map((phrase) => phrase.phraseId))
+      .toContain('televised-but');
+    expect(thirdRound.score?.breakdown).toContainEqual(expect.objectContaining({
+      kind: 'weakness-match', phraseId: 'coordinated', defenderTag: 'restraint',
+    }));
+    expect(thirdRound.score?.breakdown).toContainEqual(expect.objectContaining({
+      kind: 'weakness-match', phraseId: 'you', defenderTag: 'credibility',
+    }));
+    expect(context.catalog.phrases.find((phrase) => phrase.id === 'you')!.tags).toEqual([]);
+    expect(context.catalog.phrases.some((phrase) => phrase.id === 'televised-but')).toBe(false);
   });
 
   test('normalizes and decodes the public match log', () => {

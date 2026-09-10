@@ -2,7 +2,7 @@
   "id": "county-baron",
   "rosterOrder": 9,
   "species": "human",
-  "name": "County Baron",
+  "name": "Local Baron",
   "description": "A genial local patron who believes every public contract deserves a familiar face.",
   "assets": {
     "portrait": {

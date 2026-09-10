@@ -5,7 +5,7 @@ import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 const targetCards = [
   { phraseId: 'your-brother', role: 'noun' },
   { phraseId: 'is-a-snitch', role: 'predicate' },
-  { phraseId: 'coalition-and', role: 'conjunction' },
+  { phraseId: 'and', role: 'conjunction' },
   { phraseId: 'a-pig', role: 'noun' },
 ] as const;
 
@@ -15,6 +15,16 @@ for (const scenario of [
     cards: targetCards,
     sentence: 'Your brother is a snitch and a pig',
     total: undefined,
+  },
+  {
+    name: 'a neutral clause without weakness damage',
+    cards: [
+      { phraseId: 'you', role: 'noun' },
+      { phraseId: 'is', role: 'verb' },
+      { phraseId: 'my-opponent', role: 'noun' },
+    ],
+    sentence: 'You are my opponent',
+    total: 11,
   },
   {
     name: 'three stacked modifiers',

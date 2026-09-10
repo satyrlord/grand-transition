@@ -53,6 +53,10 @@ Use the scene's declared master size when the user does not specify a size.
 Use 3840 by 2160 for a requested 4K landscape scene.
 Use the helper's `plan --size WIDTHxHEIGHT` command to check the route.
 
+Prefer native transparent PNG output for isolated scene foreground layers.
+Use `--background transparent` on the supported API route.
+Preserve the returned alpha. Use green-matte conversion only as a fallback.
+
 ## Bound generation and approval
 
 Generate one candidate per request.

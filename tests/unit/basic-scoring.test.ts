@@ -38,11 +38,38 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
   });
 
 describe('Hollywood Roast clause scoring', () => {
+
+  test.each(['and', 'but', 'because', 'yet', 'so', 'for'])(
+    'neutral %s clauses do not activate any defender weakness',
+    (connector) => {
+      const ids = ['you', 'is', 'my-opponent', connector, 'you', 'is', 'my-opponent'];
+      const weaknesses = [...new Set(sampleContent.characters.flatMap((character) => character.weaknessTags))];
+      const result = score(ids, weaknesses);
+      expect(result.finalDamage).toBeGreaterThan(0);
+      expect(result.finalDamage).toBe(score(ids).finalDamage);
+      expect(result.breakdown.some((item) => item.kind === 'weakness-match' || item.kind === 'weakness-multiplier')).toBe(false);
+    },
+  );
+
+  test('neutral with and its neutral complement add no weakness while a tagged complement still matches', () => {
+    const neutral = ['you', 'is', 'my-opponent', 'with', 'you'];
+    expect(score(neutral, ['credibility', 'decorum']).finalDamage).toBe(score(neutral).finalDamage);
+    const tagged = score(['you', 'is', 'my-opponent', 'with', 'a-thief'], ['corruption']);
+    expect(tagged.breakdown).toContainEqual(expect.objectContaining({ kind: 'weakness-match', phraseId: 'a-thief', defenderTag: 'corruption' }));
+  });
+
+  test('a neutral action retains compatibility scoring without adding weakness damage', () => {
+    const ids = ['you', 'explains', 'my-opponent'];
+    const result = score(ids, ['evidence', 'credibility', 'decorum', 'consistency']);
+    expect(result.finalDamage).toBe(score(ids).finalDamage);
+    expect(result.breakdown.some((item) => item.kind === 'weakness-match')).toBe(false);
+  });
+
   test('narration anchors distinguish repeated relation occurrences and shared compound completion', () => {
     const phrases = new Map(sampleContent.phrases.map((phrase) => [phrase.id, phrase]));
     expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum']), phrases)).toEqual([1]);
-    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'coalition-and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([3, 3]);
-    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum', 'coalition-and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([1, 4]);
+    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([3, 3]);
+    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum', 'and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([1, 4]);
   });
   test('scores semantic compatibility instead of summing card values', () => {
     const result = score(['national-consensus', 'belongs-in-a-party-museum']);
@@ -214,7 +241,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('stacked modifier tags trigger one weakness multiplier on their clause only', () => {
     const ids = ['a-pig', 'stole', 'municipal-ribbon',
       'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
-      'chamber-yet', 'national-consensus', 'belongs-in-a-party-museum'];
+      'yet', 'national-consensus', 'belongs-in-a-party-museum'];
     const modifiers = new Set(ids.slice(3, 6));
     const phrases = sampleContent.phrases.map((phrase) => ({
       ...phrase, tags: modifiers.has(phrase.id) ? ['modifier-only'] : [],
@@ -242,13 +269,13 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test('a shared modifier adds points to each compound-subject clause', () => {
-    expect(score(['national-consensus', 'coalition-and', 'televised-revolution',
+    expect(score(['national-consensus', 'and', 'televised-revolution',
       'belongs-in-a-party-museum', 'before-the-next-election']).finalDamage).toBe(14);
   });
 
   test('modifiers give no damage to incomplete sentences', () => {
     const ids = ['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election'];
-    expect(score([...ids, 'chamber-yet']).finalDamage).toBe(0);
+    expect(score([...ids, 'yet']).finalDamage).toBe(0);
   });
 
   test('keeps a with complement in the preceding clause', () => {
@@ -279,7 +306,7 @@ describe('Hollywood Roast clause scoring', () => {
     const ids = [
       'your-brother',
       'is-a-snitch',
-      'coalition-and',
+      'and',
       'a-pig',
     ] as const;
     const result = score(ids, ['restraint']);
@@ -307,7 +334,7 @@ describe('Hollywood Roast clause scoring', () => {
     expect(
       score([
         'national-consensus',
-        'coalition-and',
+        'and',
         'televised-revolution',
         'belongs-in-a-party-museum',
       ]).finalDamage,
@@ -320,7 +347,7 @@ describe('Hollywood Roast clause scoring', () => {
         'national-consensus',
         'denounced',
         'televised-revolution',
-        'coalition-and',
+        'and',
         'national-salvation-committee',
       ]).finalDamage,
     ).toBe(16);
@@ -329,7 +356,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('scores front-because subordinate and main clauses separately', () => {
     expect(
       score([
-        'archive-because',
+        'because',
         'national-consensus',
         'belongs-in-a-party-museum',
         'televised-revolution',
@@ -341,10 +368,10 @@ describe('Hollywood Roast clause scoring', () => {
   test('scores each extended front-because clause once before the main clause', () => {
     expect(
       score([
-        'archive-because',
+        'because',
         'national-consensus',
         'belongs-in-a-party-museum',
-        'coalition-and',
+        'and',
         'televised-revolution',
         'makes-own-voters-change-the-channel',
         'coalition-protocol',
@@ -356,11 +383,11 @@ describe('Hollywood Roast clause scoring', () => {
   test('does not reuse an object relation after a shared-subject subordinate extension', () => {
     expect(
       score([
-        'archive-because',
+        'because',
         'national-consensus',
         'rebrands',
         'televised-revolution',
-        'coalition-and',
+        'and',
         'belongs-in-a-party-museum',
         'coalition-protocol',
         'belongs-in-a-party-museum',

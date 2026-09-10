@@ -13,14 +13,15 @@ schoolteacher, voiced by Microsoft Zira. Use the stable skin ID
 `schoolteacher`. Add one selection master and eight state masters with
 transparent 2048-square PNGs and the normal AVIF/WebP variants. Reuse the same
 standing artwork for selection and idle. Give the other seven states distinct
-poses and expressions. The inventory contains 28 selection masters and eight
+poses and expressions. The inventory contains 29 selection masters and eight
 state packages containing 64 state masters. Keep the 27 baseline replacement
 hashes unchanged. Declare the reviewed additions in `portrait-layout.json`.
 Keep the baseline inventory and add the reviewed files.
 
 The private prompts are under `research/government-ai--schoolteacher/prompts/`.
-Use the built-in image tool to generate the sprites. Use the approved green-key
-tool to remove the matte. Keep uniform 32-pixel canvas padding around the
+The existing sprites were generated with the built-in image tool and processed
+with the approved green-key tool. New transparent art follows the native-first
+workflow below. Keep uniform 32-pixel canvas padding around the
 smallest variant. Keep the 27 baseline character files unchanged.
 
 Keep the fixed 27-entry selection manifest as the baseline inventory. Store
@@ -30,6 +31,14 @@ inventory. The runtime resolves one character, selected skin, and named state.
 Vite emits state-manifest data in a separate JavaScript chunk. Every generated
 JavaScript chunk stays within the existing 500,000-byte production gate.
 The remaining roster uses its existing selection portrait until Milestone 031.
+
+Local Baron adds the selection-only `municipal-patron` skin under Milestone
+031. Its master is `county-baron--municipal-patron.png`, generated through the
+OpenAI API with `gpt-image-2.5-sunburst` at native 2048 by 2048 with native alpha
+and an authorized conforming portrait as a style reference. Preserve its decoded
+pixels. Its replacement passes the shared detailed character rendering standard.
+Build the five AVIF/WebP sizes and record its reviewed left-facing direction
+and source hash. Keep the default portrait and baseline hashes unchanged.
 
 The roster exposes all 128-, 256-, 320-, 640-, and 960-pixel portrait variants.
 Its 21vw image size hint accounts for square-source cover fitting and the
@@ -126,6 +135,13 @@ non-regenerated alternate skin beside a regenerated default skin. An alternate
 added after the fixed baseline remains under Milestone 031.
 Create it from scratch under the same locked art direction and completed
 character study.
+
+For targeted skin consistency repairs, approved conforming portraits can be
+uploaded as visual style references with product-owner authorization. Preserve
+their source, license, hash, and role in the private input record. Use them to
+match rendering technique, not to replace the target character's identity.
+This authorized style-reference path supersedes the input prohibition below
+for those repairs. It does not authorize references from unrelated external art.
 
 Regenerate each baseline asset as new art. A current raster can be inspected
 only to find a missing, lost, or conflicting decision. Do not give a current
@@ -269,6 +285,35 @@ it from the approved direction.
 
 ### Character art direction
 
+All default skins, alternate skins, and their state drawings use one detailed
+cel-shaded editorial-cartoon style. Use the original `county-baron`,
+`thunder-tribune`, and `velvet-mogul` selection portraits as the visual
+calibration set. Compare rendering at the same displayed figure height.
+Identity, species, age, build, clothing, pose, and expression can vary. Rendering
+technique cannot vary by skin.
+
+Use controlled dark silhouette contours with finer expressive interior lines.
+Retain readable eyelids, brows, nose and mouth construction, hand articulation,
+grouped hair detail, and purposeful clothing folds. Use broad cel-shaded value
+regions with restrained local tonal variation. For characters, the shared
+flat-color rules mean clear dominant shapes and value boundaries, not exact
+color quantization or the removal of all surface variation. This paragraph
+replaces that stricter interpretation for every skin and state drawing.
+
+Reject heavy uniform marker outlines, minimalist vector or cut-paper rendering,
+featureless hair blocks, and simplified sticker-like figures. Also reject
+anime facial rendering, painterly realism, photographic texture, and glossy
+three-dimensional shading. Do not mistake a youthful face, exaggerated build,
+or mechanical anatomy for a different style when the rendering remains consistent.
+
+Audit every selection portrait and available state drawing against this same
+standard. Regenerate only nonconforming drawings. Preserve conforming art,
+stable identifiers, character identity, pose purpose, and gameplay data.
+This targeted consistency repair supersedes the atomic baseline-regeneration
+rule above. A replacement must pass a comparison with the calibration set and
+its own skin's retained drawings before import. Transparency acceptance and
+style acceptance are separate decisions. No skin has an individual style exception.
+
 Every playable character must communicate one distinct fictional political,
 media, civic, or bureaucratic archetype before the nameplate is visible. This
 is a mandatory direction for all characters and all skins. Do not use a generic
@@ -278,9 +323,9 @@ portrait.
 Character exaggeration must be intentional and stable. Each private study names
 the features that become larger, smaller, sharper, rounder, longer, shorter, or
 more angular. Do not enlarge all features equally. Do not preserve realistic
-portrait proportions by default. Alternate skins apply the same degree of
-caricature and the same contour, value-step, texture, and shape rules as the
-default skin.
+portrait proportions by default. Alternate skins preserve each approved
+identity's proportions while applying the same rendering technique, contour
+hierarchy, shading density, texture, and shape rules as the default skin.
 
 Define each character through one coherent set of visual decisions:
 
@@ -634,10 +679,11 @@ Do not inline a scene or character variant in the initial JavaScript bundle.
 Use self-hosted licensed Web Open Font Format 2 (WOFF2) fonts with metric
 fallbacks.
 
-The fixed character baseline uses
-`src/assets/characters/character-manifest.json`. Each of its 27 entries maps
-one default or alternate skin to the canonical `selection` state, pose, and
-expression. `tools/character-replacement-baseline.json` records the replaced
+The live character inventory uses
+`src/assets/characters/character-manifest.json`. Its 29 entries map one default
+or alternate skin to the canonical `selection` state, pose, and expression.
+The fixed replacement baseline is a 27-entry subset.
+`tools/character-replacement-baseline.json` records the replaced
 source hashes for inventory verification only. It is not a generation input.
 
 `tools/build-character-assets.mjs` creates 128, 256, 320, 640, and 960 square
@@ -664,8 +710,30 @@ package remains at most 300 KiB. The build and asset-validation scripts check
 the brand and state manifests as well as the baseline scene and character
 manifests. The asset-build script reproduces all four packages with Sharp.
 
-Every transparent scene and character asset uses the
-`green-chroma-key-v1` workflow. Its generation intermediate uses a flat
+Prefer native transparent PNG generation for new transparent scene and
+character assets when the selected model supports it. GPT Image 2.5 Sunburst
+and Flare support the API `background: "transparent"` option with PNG or WebP.
+Keep the original decoded colors and alpha. Do not add a colored matte,
+normalize alpha, or flatten colors merely to fit the older keying process.
+Inspect actual transparency, contour quality, and light/dark composites.
+
+Register native output with `adopt-native` in the existing alpha utility.
+Record `Alpha Workflow=native-alpha-v1` and
+`Alpha Source=generated-alpha-v1`. Do not record a chroma key or matte
+reconstruction claim for native output. Native near-opaque interior pixels
+can use alpha 250 through 255, limiting background contribution to about two
+percent. At least half of nontransparent pixels (alpha above 0) must
+meet that near-opacity threshold. Transparent corners and contour coverage
+with alpha from 1 through 249 remain required. A substantially translucent
+interior does not pass.
+
+Every native-alpha outer-border pixel must be fully transparent. At least 90
+percent of partial-alpha pixels must be within four pixels of near-opaque
+content. This confines partial alpha to the immediate antialiased contour and
+rejects detached specks, full-canvas veils, and surrounding haze.
+
+Keep `green-chroma-key-v1` for existing assets, models without native
+transparency, and approved matte repairs. Its generation intermediate uses a flat
 `#00FF00` matte. Transparent art does not use that key color intentionally.
 The deterministic converter replaces the matte with genuine alpha and embeds
 the workflow identifier and key color in the shipping Portable Network Graphics
@@ -692,16 +760,18 @@ a source or prompt.
 
 Asset validation rejects every PNG that lacks an embedded
 generation source. It also rejects a character PNG that embeds its exact custom
-prompt. Shipping assets contain no chroma-key residue.
-Lossy AVIF and WebP runtime variants can retain chroma-coded RGB only where
+prompt. Key-derived shipping assets contain no chroma-key residue.
+Native-alpha subjects can contain intentional green material.
+Key-derived lossy AVIF and WebP runtime variants can retain chroma-coded RGB only where
 alpha is 16 of 255 or lower.
 
-A chroma-green runtime pixel above that bounded
-compression fringe fails validation. PNG masters retain the zero-residue rule.
+A key-derived chroma-green runtime pixel above that bounded
+compression fringe fails validation. Key-derived PNG masters retain the zero-residue rule.
 
-Validation also rejects every alpha-bearing PNG that lacks the workflow, key,
-or alpha-source metadata, has nonzero outer corners, or retains an opaque
-chroma-green pixel. A soft-key conversion also fails when it has no
+Validation also rejects every alpha-bearing PNG that lacks its workflow or
+alpha-source metadata or has nonzero outer corners. Legacy key-derived assets
+also require key metadata and reject opaque chroma-green pixels.
+A soft-key conversion also fails when it has no
 partial-alpha pixels or lacks its matte and foreground reconstruction metadata.
 
 `npm run assets:convert-green -- <green-root> <output-root>` converts a complete
@@ -872,6 +942,10 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   alpha-aware eight-bit Canvas round-trip tolerance. A
   binary green-matte fixture gains a partial-alpha edge. Asset validation
   rejects a soft-key output with missing method metadata or no partial alpha.
+  Native adoption preserves decoded RGBA pixels and records native provenance
+  without key metadata. Native fixtures accept alpha-250 through 255 interiors and green
+  material. Empty, substantially translucent, edgeless, border-contaminated,
+  detached-alpha, and surrounding-haze fixtures fail.
 - **AC-023-09:** Each of the four vertical-slice characters has one default skin
   and zero through eight alternate skins. A ninth alternate fails validation.
   Filename discovery is deterministic, and the default is first. Foundation
@@ -911,12 +985,18 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   layer, subject, prop, lighting, focal-region, interface-safe-region, and crop
   direction in its owning approved specification. A temporary prompt alone
   fails readiness. Resolve every required decision before generation.
-- **AC-023-15:** No current raster is a generation, tracing, editing,
-  compositing, identity, composition, or style input for its replacement. A
-  side-by-side review of the complete regenerated baseline confirms one
-  shared flat cel-shaded cartoon language, contour system, and flat-color
-  construction. It confirms consistent two-or-three-level values, hard-edged
-  lighting, simplified materials, proportions, texture density, and exaggeration.
+- **AC-023-15:** No current baseline raster is a generation, tracing, editing,
+  compositing, identity, composition, or style input for its baseline replacement.
+  A targeted skin-consistency repair can use an approved conforming portrait as
+  a style reference only through the product-owner-authorized exception above.
+  Its private input record contains the reference source, license, hash, role,
+  and authorization. A side-by-side review of the complete regenerated baseline
+  confirms one shared cel-shaded cartoon language, contour system, and flat-color
+  construction. Character packages follow the detailed character rendering
+  standard and use broad cel-shaded value regions without exact value-step
+  quantization. Other representational raster packages retain two or three
+  hard-edged value levels. The review confirms consistent lighting, simplified
+  materials, proportions, texture density, and exaggeration.
   Each archetype package contains its regenerated default and every baseline
   alternate. No package mixes old and regenerated skins.
 - **AC-023-16:** A complete inventory review inspects all 27 character PNG files and all four
@@ -928,6 +1008,8 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   texture. Any painted comic-book, painterly
   semi-realistic, realistic concept-art, photographic, hyper-realistic,
   three-dimensional-render, or mixed-style result fails the milestone. A
+  character skin or state records the detailed character rendering standard
+  instead of exact value-step quantization. A
   sample or selected subset does not satisfy this review.
 - **AC-023-17:** The asset color guard decodes every supported shipping raster in sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local

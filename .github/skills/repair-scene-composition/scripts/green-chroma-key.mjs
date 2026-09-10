@@ -2,9 +2,15 @@ import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { chromium } from '@playwright/test';
+import {
+  NATIVE_ALPHA_MAX_CONTOUR_DISTANCE,
+  NATIVE_ALPHA_MIN_CONTOUR_RATIO,
+  NATIVE_ALPHA_MIN_OPACITY,
+} from '../../../../tools/asset-pixels.mjs';
 import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.mjs';
 
 const workflowId = 'green-chroma-key-v1';
+const nativeWorkflowId = 'native-alpha-v1';
 const chromaKey = '#00FF00';
 const alphaSources = new Set(['adopted-alpha-v1', 'soft-green-key-v1']);
 const softAlphaMatte = 'green-dominance-neighbor-matte-v1';
@@ -166,7 +172,7 @@ async function readAndValidatePrompt(promptFile) {
   return prompt;
 }
 
-async function inspectImages(filePaths) {
+async function inspectImages(filePaths, forceNativeAlpha = false) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
   const results = [];
@@ -175,7 +181,14 @@ async function inspectImages(filePaths) {
     for (const filePath of filePaths) {
       const input = await readFile(filePath);
       const source = `data:image/png;base64,${input.toString('base64')}`;
-      const facts = await page.evaluate(async (imageSource) => {
+      const embeddedNativeAlpha = internationalTextEntries(input).get('Alpha Workflow') === nativeWorkflowId;
+      const facts = await page.evaluate(async ({
+        imageSource,
+        nativeAlpha,
+        nativeAlphaMaxContourDistance,
+        nativeAlphaMinContourRatio,
+        nativeAlphaMinOpacity,
+      }) => {
         const image = new Image();
         image.src = imageSource;
         await image.decode();
@@ -192,8 +205,11 @@ async function inspectImages(filePaths) {
         ).data;
         let chromaGreenPixels = 0;
         let opaquePixels = 0;
+        let nearOpaquePixels = 0;
+        let nativeEdgePixels = 0;
         let partialAlphaPixels = 0;
         let transparentPixels = 0;
+        let nontransparentBorderPixels = 0;
         for (
           let pixelIndex = 0;
           pixelIndex < canvas.width * canvas.height;
@@ -204,11 +220,62 @@ async function inspectImages(filePaths) {
           const green = pixels[offset + 1];
           const blue = pixels[offset + 2];
           const alpha = pixels[offset + 3];
+          const x = pixelIndex % canvas.width;
+          const y = Math.floor(pixelIndex / canvas.width);
           if (alpha === 0) transparentPixels += 1;
           if (alpha === 255) opaquePixels += 1;
+          if (alpha >= nativeAlphaMinOpacity) nearOpaquePixels += 1;
+          if (alpha > 0 && alpha < nativeAlphaMinOpacity) nativeEdgePixels += 1;
           if (alpha > 0 && alpha < 255) partialAlphaPixels += 1;
+          if (alpha > 0 && (x === 0 || y === 0 || x === canvas.width - 1 || y === canvas.height - 1)) {
+            nontransparentBorderPixels += 1;
+          }
           if (alpha > 0 && green >= 180 && red <= 80 && blue <= 80) {
             chromaGreenPixels += 1;
+          }
+        }
+        let contourPartialAlphaPixels = 0;
+        if (nativeAlpha) {
+          const maximumDistance = 0xffff;
+          const pixelCount = canvas.width * canvas.height;
+          const distances = new Uint16Array(pixelCount);
+          distances.fill(maximumDistance);
+          for (let pixelIndex = 0; pixelIndex < pixelCount; pixelIndex += 1) {
+            if (pixels[pixelIndex * 4 + 3] >= nativeAlphaMinOpacity) distances[pixelIndex] = 0;
+          }
+          for (let y = 0; y < canvas.height; y += 1) {
+            for (let x = 0; x < canvas.width; x += 1) {
+              const pixelIndex = y * canvas.width + x;
+              if (distances[pixelIndex] === 0) continue;
+              let distance = maximumDistance;
+              if (x > 0) distance = Math.min(distance, distances[pixelIndex - 1]);
+              if (y > 0) {
+                distance = Math.min(distance, distances[pixelIndex - canvas.width]);
+                if (x > 0) distance = Math.min(distance, distances[pixelIndex - canvas.width - 1]);
+                if (x + 1 < canvas.width) distance = Math.min(distance, distances[pixelIndex - canvas.width + 1]);
+              }
+              if (distance < maximumDistance) distances[pixelIndex] = distance + 1;
+            }
+          }
+          for (let y = canvas.height - 1; y >= 0; y -= 1) {
+            for (let x = canvas.width - 1; x >= 0; x -= 1) {
+              const pixelIndex = y * canvas.width + x;
+              let distance = distances[pixelIndex];
+              if (x + 1 < canvas.width) distance = Math.min(distance, distances[pixelIndex + 1] + 1);
+              if (y + 1 < canvas.height) {
+                distance = Math.min(distance, distances[pixelIndex + canvas.width] + 1);
+                if (x > 0) distance = Math.min(distance, distances[pixelIndex + canvas.width - 1] + 1);
+                if (x + 1 < canvas.width) distance = Math.min(distance, distances[pixelIndex + canvas.width + 1] + 1);
+              }
+              distances[pixelIndex] = distance;
+            }
+          }
+          for (let pixelIndex = 0; pixelIndex < pixelCount; pixelIndex += 1) {
+            const alpha = pixels[pixelIndex * 4 + 3];
+            if (alpha > 0 && alpha < nativeAlphaMinOpacity &&
+                distances[pixelIndex] <= nativeAlphaMaxContourDistance) {
+              contourPartialAlphaPixels += 1;
+            }
           }
         }
         return {
@@ -223,10 +290,22 @@ async function inspectImages(filePaths) {
           ],
           chromaGreenPixels,
           opaquePixels,
+          nearOpaquePixels,
+          nativeEdgePixels,
           partialAlphaPixels,
           transparentPixels,
+          contourPartialAlphaPixels,
+          nontransparentBorderPixels,
+          nativeAlphaMaxContourDistance,
+          nativeAlphaMinContourRatio,
         };
-      }, source);
+      }, {
+        imageSource: source,
+        nativeAlpha: forceNativeAlpha || embeddedNativeAlpha,
+        nativeAlphaMaxContourDistance: NATIVE_ALPHA_MAX_CONTOUR_DISTANCE,
+        nativeAlphaMinContourRatio: NATIVE_ALPHA_MIN_CONTOUR_RATIO,
+        nativeAlphaMinOpacity: NATIVE_ALPHA_MIN_OPACITY,
+      });
       results.push({ filePath, ...facts });
     }
   } finally {
@@ -247,8 +326,9 @@ async function listPngFiles(rootPath) {
   return files.sort((left, right) => left.localeCompare(right, 'en'));
 }
 
-function assertTransparentAsset(facts) {
-  if (facts.transparentPixels === 0 || facts.opaquePixels === 0) {
+function assertTransparentAsset(facts, nativeAlpha = false) {
+  const interior = nativeAlpha ? facts.nearOpaquePixels : facts.opaquePixels;
+  if (facts.transparentPixels === 0 || interior === 0) {
     throw new Error(
       `${facts.filePath}: expected transparent and opaque pixels.`,
     );
@@ -256,16 +336,28 @@ function assertTransparentAsset(facts) {
   if (!facts.cornerAlpha.every((alpha) => alpha === 0)) {
     throw new Error(`${facts.filePath}: all four corners must have alpha 0.`);
   }
-  if (facts.chromaGreenPixels !== 0) {
+  if (nativeAlpha && (facts.nativeEdgePixels === 0 || interior / (facts.width * facts.height - facts.transparentPixels) < 0.5)) {
+    throw new Error(`${facts.filePath}: expected predominantly near-opaque native content and partial-alpha edges below ${NATIVE_ALPHA_MIN_OPACITY}.`);
+  }
+  if (nativeAlpha && facts.nontransparentBorderPixels > 0) {
+    throw new Error(`${facts.filePath}: expected a fully transparent outer border.`);
+  }
+  if (nativeAlpha && facts.contourPartialAlphaPixels / facts.nativeEdgePixels < facts.nativeAlphaMinContourRatio) {
+    throw new Error(
+      `${facts.filePath}: expected at least ${facts.nativeAlphaMinContourRatio * 100}% of partial alpha within ` +
+      `${facts.nativeAlphaMaxContourDistance} pixels of near-opaque content.`,
+    );
+  }
+  if (!nativeAlpha && facts.chromaGreenPixels !== 0) {
     throw new Error(
       `${facts.filePath}: found ${facts.chromaGreenPixels} chroma-key green pixels.`,
     );
   }
 }
 
-async function adopt(filePath, promptFile) {
-  const [facts] = await inspectImages([filePath]);
-  assertTransparentAsset(facts);
+async function adopt(filePath, promptFile, nativeAlpha = false) {
+  const [facts] = await inspectImages([filePath], nativeAlpha);
+  assertTransparentAsset(facts, nativeAlpha);
   const extraEntries = generationProvenanceEntries(await readFile(filePath));
   if (promptFile) {
     await readAndValidatePrompt(promptFile);
@@ -276,13 +368,17 @@ async function adopt(filePath, promptFile) {
     extraEntries.set('Generation Source', privatePromptProvenance);
   }
   assertGenerationProvenance(filePath, extraEntries);
+  if (nativeAlpha) {
+    extraEntries.set('Alpha Workflow', nativeWorkflowId);
+    extraEntries.set('Alpha Source', 'generated-alpha-v1');
+  }
   await stampMetadata(
     filePath,
     extraEntries,
-    true,
-    new Set(['Generation Prompt', 'Generation Source']),
+    !nativeAlpha,
+    new Set(['Generation Prompt', 'Generation Source', ...(nativeAlpha ? alphaMetadataKeys : [])]),
   );
-  process.stdout.write(`Adopted ${filePath} into ${workflowId}.\n`);
+  process.stdout.write(`Adopted ${filePath} into ${nativeAlpha ? nativeWorkflowId : workflowId}.\n`);
 }
 
 async function stampProvenance(filePath, promptFile, sourceText) {
@@ -670,6 +766,18 @@ async function validate(rootPath) {
         `${imageFacts.filePath}: exact character Generation Prompt must stay in the research folder.`,
       );
     }
+    const nativeAlpha = metadata.get('Alpha Workflow') === nativeWorkflowId;
+    if (nativeAlpha) {
+      if (metadata.get('Alpha Source') !== 'generated-alpha-v1') {
+        throw new Error(`${imageFacts.filePath}: missing Alpha Source=generated-alpha-v1.`);
+      }
+      for (const key of ['Chroma Key', 'Chroma Adoption', 'Alpha Matte', 'Foreground Reconstruction']) {
+        if (metadata.has(key)) throw new Error(`${imageFacts.filePath}: native alpha must not declare ${key}.`);
+      }
+      assertTransparentAsset(imageFacts, true);
+      transparentAssetCount += 1;
+      continue;
+    }
     if (imageFacts.transparentPixels === 0) continue;
     transparentAssetCount += 1;
     assertTransparentAsset(imageFacts);
@@ -706,7 +814,7 @@ async function validate(rootPath) {
     }
   }
   process.stdout.write(
-    `Green chroma-key validation passed: ${transparentAssetCount} transparent asset(s).\n`,
+    `Alpha provenance validation passed: ${transparentAssetCount} transparent asset(s).\n`,
   );
 }
 
@@ -738,8 +846,8 @@ if (
   (promptFile || sourceText)
 ) {
   await stampProvenance(path.resolve(arguments_[0]), promptFile, sourceText);
-} else if (command === 'adopt' && arguments_.length === 1) {
-  await adopt(path.resolve(arguments_[0]), promptFile);
+} else if ((command === 'adopt' || command === 'adopt-native') && arguments_.length === 1) {
+  await adopt(path.resolve(arguments_[0]), promptFile, command === 'adopt-native');
 } else if (command === 'convert' && arguments_.length === 2) {
   await convert(
     path.resolve(arguments_[0]),
@@ -756,7 +864,7 @@ if (
   await validate(path.resolve(arguments_[0] ?? 'src/assets'));
 } else {
   process.stderr.write(
-    'Usage: green-chroma-key.mjs provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> [--prompt-root <prompt-root>] | validate [asset-root]\n',
+    'Usage: green-chroma-key.mjs provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | adopt-native <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> [--prompt-root <prompt-root>] | validate [asset-root]\n',
   );
   process.exitCode = 2;
 }

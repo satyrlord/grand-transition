@@ -54,6 +54,11 @@ value levels. Use deliberate caricature, simplified materials, and restrained
 print texture. Apply these rules to characters, moderators, scenes, furniture,
 fixtures, and props.
 
+For character skins and states, apply Milestone 023's detailed character
+rendering standard. Use its approved portraits for visual calibration.
+Retain finer expressive linework, grouped hair detail, and restrained local
+tonal variation. Do not reduce character art to minimalist vector shapes.
+
 Reject painted
 comic-book, painterly semi-realistic, realistic concept-art, photographic,
 three-dimensional-render, and mixed-style output. Keep phrase cards and

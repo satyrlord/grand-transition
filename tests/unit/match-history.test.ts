@@ -74,6 +74,8 @@ describe('persistent match history', () => {
 
   test('round-trips normalized public replay and match-log data', () => {
     const entry = historyEntry('match-one', '2026-08-29T12:00:00.000Z');
+    expect(entry.replay.schemaVersion).toBe(5);
+    expect(entry.matchLog.schemaVersion).toBe(5);
     const encoded = encodeMatchHistory({
       schemaVersion: matchHistorySchemaVersion,
       kind: matchHistoryKind,
@@ -111,31 +113,36 @@ describe('persistent match history', () => {
     expect(encoded).toContain(usedPhrases[0]!.text);
   });
 
-  test('keeps an older valid entry without public sentence records', () => {
-    const entry = historyEntry('older-entry', '2026-08-29T12:30:00.000Z');
-    const stored = JSON.parse(
-      encodeMatchHistory({
-        schemaVersion: matchHistorySchemaVersion,
-        kind: matchHistoryKind,
-        entries: [entry],
-      }),
-    ) as {
-      entries: Array<{
-        replay: { schemaVersion: number };
-        matchLog: { schemaVersion: number; sentences?: unknown };
-      }>;
-    };
-    stored.entries[0]!.replay.schemaVersion = 2;
-    stored.entries[0]!.matchLog.schemaVersion = 2;
-    delete stored.entries[0]!.matchLog.sentences;
+  test.each([1, 2, 3, 4] as const)(
+    'keeps a matched replay and match-log version %s history pair',
+    (schemaVersion) => {
+      const entry = historyEntry(`older-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');
+      const stored = JSON.parse(
+        encodeMatchHistory({
+          schemaVersion: matchHistorySchemaVersion,
+          kind: matchHistoryKind,
+          entries: [entry],
+        }),
+      ) as {
+        entries: Array<{
+          replay: { schemaVersion: number };
+          matchLog: { schemaVersion: number; sentences?: unknown };
+        }>;
+      };
+      stored.entries[0]!.replay.schemaVersion = schemaVersion;
+      stored.entries[0]!.matchLog.schemaVersion = schemaVersion;
+      if (schemaVersion <= 2) delete stored.entries[0]!.matchLog.sentences;
 
-    const decoded = decodeMatchHistory(JSON.stringify(stored));
+      const decoded = decodeMatchHistory(JSON.stringify(stored));
 
-    expect(decoded.ok).toBe(true);
-    expect(
-      decoded.ok ? decoded.value.entries[0]?.matchLog.sentences : null,
-    ).toBeUndefined();
-  });
+      expect(decoded.ok).toBe(true);
+      const sentences = decoded.ok
+        ? decoded.value.entries[0]?.matchLog.sentences
+        : null;
+      if (schemaVersion <= 2) expect(sentences).toBeUndefined();
+      else expect(sentences).toBeDefined();
+    },
+  );
 
   test('stores every entry, restores newest first, and ignores duplicate IDs', () => {
     const storage = memoryStorage();

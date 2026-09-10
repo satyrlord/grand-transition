@@ -34,7 +34,10 @@ Read `OPENAI_API_KEY` from `.env.local` privately through the helper.
 Never print the file or key, expose it in command arguments, or add it to browser code.
 Do not use another provider or the internal tool as a high-resolution substitute.
 
-Do not assume this API model provides native transparency.
+The official image generation guide documents native transparency for this model with PNG or WebP output.
+For transparent PNG output, add `--background transparent`; `opaque` and `auto` are also supported.
+Omitting this option preserves the installed CLI's default behavior.
+Inspect the returned alpha channel before integration.
 
 ## Run the helper
 

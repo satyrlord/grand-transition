@@ -97,12 +97,20 @@ export async function inspectInputs(promptFile, references = []) {
   return { promptSha256: sha256(prompt), references: inputs };
 }
 
-export function cliArguments({ cli, prompt, output, size = '3840x2160', references = [] }) {
+function assertBackground(background) {
+  if (background !== undefined && !['transparent', 'opaque', 'auto'].includes(background)) {
+    throw new Error('Use transparent, opaque, or auto for the background.');
+  }
+}
+
+export function cliArguments({ cli, prompt, output, size = '3840x2160', references = [], background }) {
   assertApiSize(size);
+  assertBackground(background);
   return ['run', '--no-project', '--with', 'openai', 'python', cli,
     references.length ? 'edit' : 'generate', '--model', MODEL,
     '--prompt-file', path.resolve(prompt), '--no-augment', '--size', size,
     '--quality', 'high', '--output-format', 'png', '--n', '1', '--out', output,
+    ...(background === undefined ? [] : ['--background', background]),
     ...references.flatMap((file) => ['--image', path.resolve(file)])];
 }
 
@@ -166,10 +174,10 @@ async function main() {
   const { values } = parseArgs({ args, options: {
     prompt: { type: 'string' }, reference: { type: 'string', multiple: true },
     out: { type: 'string' }, input: { type: 'string' }, review: { type: 'string' },
-    scene: { type: 'string' }, size: { type: 'string' }, 'dry-run': { type: 'boolean' },
+    scene: { type: 'string' }, size: { type: 'string' }, background: { type: 'string' }, 'dry-run': { type: 'boolean' },
   } });
   const allowed = {
-    plan: ['size'], generate: ['prompt', 'reference', 'out', 'size', 'dry-run'],
+    plan: ['size'], generate: ['prompt', 'reference', 'out', 'size', 'background', 'dry-run'],
     inspect: ['input', 'size'], prepare: ['input', 'review', 'scene', 'out', 'size'],
   }[command];
   if (!allowed || Object.keys(values).some((key) => !allowed.includes(key))) throw new Error('Use a documented scene helper command and its arguments.');
@@ -177,6 +185,8 @@ async function main() {
   const plan = selectRoute(size);
   if (command === 'plan') { console.log(JSON.stringify(plan)); return; }
   if (command === 'generate' && values.prompt && values.out) {
+    assertBackground(values.background);
+    const backgroundRecord = values.background === undefined ? {} : { background: values.background };
     if (plan.route === 'internal') {
       if (values['dry-run']) { console.log(JSON.stringify({ ...plan, networkRequest: false })); return; }
       assertApiSize(size);
@@ -187,16 +197,16 @@ async function main() {
     const cli = path.join(process.env.CODEX_HOME || path.join(os.homedir(), '.codex'), 'skills', '.system', 'imagegen', 'scripts', 'image_gen.py');
     await access(cli);
     if (values['dry-run']) {
-      console.log(JSON.stringify({ ...plan, model: MODEL, referenceCount: inputs.references.length, networkRequest: false }));
+      console.log(JSON.stringify({ ...plan, model: MODEL, ...backgroundRecord, referenceCount: inputs.references.length, networkRequest: false }));
       return;
     }
     const key = await readApiKey();
     await mkdir(path.dirname(out), { recursive: true });
     await mkdir(out); // An existing run must never cause another paid request.
-    const record = { model: MODEL, requestedSize: size, quality: 'high', createdAt: new Date().toISOString(), ...inputs };
+    const record = { model: MODEL, requestedSize: size, quality: 'high', ...backgroundRecord, createdAt: new Date().toISOString(), ...inputs };
     await writeJson(path.join(out, 'request-record.json'), record);
     const output = path.join(out, 'candidate.png');
-    await runApiCli({ cli, prompt: values.prompt, output, size, references: values.reference }, key);
+    await runApiCli({ cli, prompt: values.prompt, output, size, references: values.reference, background: values.background }, key);
     const bytes = await readFile(output);
     await writeJson(path.join(out, 'generation.json'), { ...record, sourceSha256: sha256(bytes) });
     const facts = await inspectImage(bytes, plan);

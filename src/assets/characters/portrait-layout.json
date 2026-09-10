@@ -112,6 +112,10 @@
     "government-ai--schoolteacher": {
       "facing": "left",
       "sourceSha256": "bcb2c2e35b21e788a536f8a0b747c15128fbedc5fdafef10a42a21763c15337b"
+    },
+    "county-baron--municipal-patron": {
+      "facing": "left",
+      "sourceSha256": "52a832a9f41e68578ca69b84fed38bae54aebe04ebc8f02c8c42d844cda0c3ec"
     }
   }
 }

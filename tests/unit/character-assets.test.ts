@@ -28,7 +28,7 @@ describe('character asset resolver', () => {
   });
 
   test('maps the fixed inventory to responsive AVIF and WebP sources', () => {
-    expect(characterAssetManifest).toHaveLength(28);
+    expect(characterAssetManifest).toHaveLength(29);
     expect(characterImageSizes).toBe('(max-width: 1100px) 320px, 640px');
     for (const asset of characterAssetManifest) {
       expect(asset.width).toBe(2048);
@@ -63,5 +63,18 @@ describe('character asset resolver', () => {
     expect(() => resolveCharacterAsset('missing-character')).toThrow(
       'Character asset "missing-character" is missing from the manifest.',
     );
+  });
+
+  test('keeps both Local Baron portraits under the stable character identity', () => {
+    expect(resolveCharacterAsset('county-baron')).toMatchObject({
+      ownerId: 'county-baron',
+      skinId: 'default',
+      stateId: 'selection',
+    });
+    expect(resolveCharacterAsset('county-baron--municipal-patron')).toMatchObject({
+      ownerId: 'county-baron',
+      skinId: 'municipal-patron',
+      stateId: 'selection',
+    });
   });
 });

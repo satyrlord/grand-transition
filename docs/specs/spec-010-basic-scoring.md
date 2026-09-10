@@ -55,6 +55,12 @@ multiplier, or nearest-half rounding.
 
 An incomplete sentence and a continued fragment deal zero outgoing damage.
 
+A phrase with an empty `tags` array never matches a weakness. Neutral grammar
+words and neutral content use empty tags under Milestone 005. They retain their
+normal grammar and clause compatibility behavior; they do not add weakness
+events or activate a weakness multiplier. Tagged phrases in the same clause
+can still activate that multiplier.
+
 ## Acceptance criteria
 
 - **AC-010-01:** Golden clauses cover no match, substance, `flavour`, both,
@@ -62,7 +68,9 @@ An incomplete sentence and a continued fragment deal zero outgoing damage.
 - **AC-010-02:** The compatibility calculation produces exactly 5, 8, 11, and
   14. Character and scene restrictions do not change clause or finisher damage.
 - **AC-010-03:** Weakness multiplies each matching clause by 1.5 once and does
-  not multiply unrelated clauses.
+  not multiply unrelated clauses. Neutral connectors, copulas, referents, and
+  actions cause no weakness match, including in a compound or continued
+  construction. A tagged noun in the same construction still matches normally.
 - **AC-010-04:** Compound and multi-clause sentences add each clause value
   once, including every front-`because` subordinate extension and its required
   main clause.

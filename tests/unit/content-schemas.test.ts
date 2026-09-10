@@ -130,6 +130,60 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
+
+  test('neutral phrases have explicit empty weakness tags and neutral IDs', () => {
+    const neutralIds = [
+      'and', 'but', 'because',
+      'ellipsis', 'postpones', 'postponed',
+      'will-postpone', 'explains', 'explained',
+      'will-explain', 'announces', 'announced',
+      'will-announce', 'negotiated', 'negotiates',
+      'will-negotiate', 'consulted', 'consults',
+      'will-consult', 'unveiled', 'unveils',
+      'will-unveil', 'coordinated', 'coordinates',
+      'will-coordinate', 'redirects', 'redirected',
+      'will-redirect', 'yet', 'so',
+      'for', 'you', 'is',
+      'was', 'will-be', 'should-have-been',
+      'should-be', 'was-not', 'will-not-be',
+      'is-not', 'will-never-be', 'was-never',
+      'is-never', 'my-opponent', 'with',
+      'optimized', 'optimizes', 'will-optimize',
+      'mediates', 'mediated', 'will-mediate',
+    ];
+    for (const id of neutralIds) {
+      const phrase = sampleContent.phrases.find((entry) => entry.id === id);
+      expect(phrase, id).toBeDefined();
+      expect(phrase!.tags, id).toEqual([]);
+    }
+    expect(contentCatalogSchema.safeParse(sampleContent).success).toBe(true);
+    for (const phrase of sampleContent.phrases.filter((entry) => entry.role === 'conjunction')) {
+      const text = phraseCardCatalog.englishMessages[phrase.textKey];
+      if (['and', 'but', 'because', 'yet', 'so', 'for', 'with'].includes(text!)) {
+        expect(phrase.id).toBe(text);
+        expect(phrase.tags).toEqual([]);
+      }
+    }
+    for (const id of ['your-brother', 'your-father', 'your-cousin', 'your-son-in-law']) {
+      expect(sampleContent.phrases.find((phrase) => phrase.id === id)!.tags.length).toBeGreaterThan(0);
+    }
+  });
+
+  test('empty phrase tags are valid for every role while the field remains required', () => {
+    const catalog = cloneCatalog();
+    const tagged = new Set<string>();
+    for (const phrase of catalog.phrases) {
+      if (!tagged.has(phrase.role)) {
+        phrase.tags = [];
+        tagged.add(phrase.role);
+      }
+    }
+    expect(contentCatalogSchema.safeParse(catalog).success).toBe(true);
+    const missingTags = cloneCatalog();
+    Reflect.deleteProperty(missingTags.phrases[0]!, 'tags');
+    expectFailure(missingTags, 'phrases.0.tags', /array/iu);
+  });
+
   test('loads unique cards from the common and character JSON corpora', () => {
     expect(phraseCardCatalog.phrases.length).toBeGreaterThan(0);
     expect(phraseCardCatalog.commonPhraseIds.length).toBeGreaterThan(0);
@@ -1199,6 +1253,8 @@ describe('content schemas', () => {
             ]
           : character.id === 'retiring-cassandra'
             ? ['default', 'statesman']
+            : character.id === 'county-baron'
+              ? ['default', 'municipal-patron']
             : alternateSkinIds.has(character.id)
               ? ['default', 'alternate']
               : ['default'],
@@ -1262,6 +1318,9 @@ describe('content schemas', () => {
       'eu-funds-alchemist',
       'government-ai',
     ]);
+    const localBaron = result.characters.find(({ id }) => id === 'county-baron')!;
+    expect(localBaron.nameKey).toBe('character.county-baron.name');
+    expect(result.locales[0]!.messages[localBaron.nameKey]).toBe('Local Baron');
     expect(
       new Set(result.characters.map((character) => character.species)),
     ).toEqual(new Set(['human', 'robot']));

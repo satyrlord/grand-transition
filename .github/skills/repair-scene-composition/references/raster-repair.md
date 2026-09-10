@@ -19,6 +19,10 @@ painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, three-dimensional-render, and mixed-style
 repairs.
 
+For character skins and states, apply Milestone 023's detailed character
+rendering standard. Compare its visual calibration portraits at equal figure
+height. Do not flatten their linework, hair, or shading into minimalist shapes.
+
 Use neutral sRGB white balance and an ungraded color treatment. Put positive
 color controls before style details in the private generation brief.
 Specify neutral anchors, cool or neutral charcoal and navy shadows, and clear
@@ -28,8 +32,14 @@ inside an authored material or light. Do not cancel a warm cast with a global
 blue filter.
 
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
-Use flat `#00FF00` chroma green as the intermediate matte for every transparent
-scene and character asset. Do not approve chroma-key green in transparent art.
+Prefer native transparent PNG output when the selected model supports it.
+Preserve its alpha and decoded colors. Inspect it against light and dark backgrounds.
+Stamp factual provenance, then use `adopt-native` in
+[`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs).
+This path records native-alpha metadata without color keying or pixel changes.
+
+Use flat `#00FF00` chroma green only for an unsupported model or an approved matte repair.
+Do not put the key color in subjects generated through that fallback.
 
 Convert the matte to alpha with
 [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs). Use `adopt` to
@@ -38,16 +48,16 @@ complete asset root. The converter must preserve partial-alpha edge coverage
 and reconstruct foreground color from the known green matte. A hard source
 contour receives the converter's bounded binomial edge pass.
 
-Do not replace
+For key-derived art, do not replace
 this process with a Boolean color threshold or an alpha-only blur. Do not ship
 the green intermediate. Reject missing workflow metadata, nonzero outer
 corners, and a soft-key output
-without partial alpha. Reject all chroma-green residue in Portable Network
-Graphics (PNG) masters. Apply
+without partial alpha. Reject all chroma-green residue in key-derived Portable Network
+Graphics (PNG) masters. Native output can contain intentional green material. Apply
 the Milestone 023 alpha-at-most-16 exception only to lossy AV1 Image File
 Format (AVIF) and WebP variants.
 
-Run `node tools/validate-asset-color.mjs validate <asset-root>` after conversion
+Run `node tools/validate-asset-color.mjs validate <asset-root>` after adoption or conversion
 and before visual approval. The color guard ignores transparent pixels and the
 temporary green matte. It
 rejects broad yellow bias across muted or neutral pixels. An asset without a

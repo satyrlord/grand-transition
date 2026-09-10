@@ -163,12 +163,13 @@ Inspect the file structure and the rendered composite.
 
 - Confirm an alpha-capable pixel format.
 - Confirm alpha zero at required outer corners.
-- Confirm both transparent and opaque pixel regions.
+- Confirm transparent regions and an opaque or native near-opaque interior.
 - Confirm clean antialiased edges.
 - Confirm that no checkerboard is baked into color channels.
-- Confirm `Alpha Workflow` is `green-chroma-key-v1`.
-- Confirm `Chroma Key` is `#00FF00`.
-- Confirm that no opaque chroma-green pixel remains.
+- Confirm `Alpha Workflow` matches native generation or legacy keying.
+- For native output, confirm `native-alpha-v1` and `generated-alpha-v1` metadata.
+- For legacy keying, confirm `green-chroma-key-v1` and `Chroma Key=#00FF00`.
+- For legacy keying, confirm that no opaque chroma-green pixel remains.
 - Confirm neutral sRGB white balance and no global warm color wash.
 - Confirm that warm color stays inside named local materials or lights.
 - Confirm that shadows belong to the correct layer.

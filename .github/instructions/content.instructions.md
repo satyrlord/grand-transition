@@ -25,8 +25,9 @@ party labels. Do not use real party names, acronyms, or logos. Use only original
 or licensed media.
 
 Generate runtime image variants and metadata through the
-approved asset tool. All generated representational raster art uses the strict
-flat cel-shaded editorial-cartoon direction in Milestone 023. Reject painted
+approved asset tool. All generated representational raster art uses the shared
+cel-shaded editorial-cartoon direction in Milestone 023. Character skins and
+states use that milestone's detailed character rendering standard. Reject painted
 comic-book, painterly semi-realistic, realistic concept-art, photographic,
 three-dimensional-render, and mixed-style output. Do not hand-edit generated
 assets.

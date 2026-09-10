@@ -6,6 +6,7 @@ import contract from '../src/assets/characters/state-contract.json' with { type:
 import { CHARACTER_BYTE_BUDGETS } from './build-character-assets.mjs';
 import { stateFormats, statePackages, stateWidths } from './build-character-states.mjs';
 import { inspectAlpha, inspectRaster } from './validate-character-assets.mjs';
+import { hasNativeAlphaProvenance } from './asset-pixels.mjs';
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const isRecord = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -99,19 +100,27 @@ export function measurePackageBytes(manifest, selection, sceneManifest) {
   }));
 }
 
+export async function validateStateAsset(root, asset) {
+  const variantFiles = [];
+  let nativeAlpha = false;
+  for (const raster of [asset.source, ...asset.variants]) {
+    const context = `${asset.id}: ${raster.path}`;
+    const { input } = await inspectRaster(path.join(root, raster.path), raster.format, raster.width, raster.height, context);
+    requireFact(input.length === raster.bytes && sha256(input) === raster.sha256, `${context}: bytes or hash do not match the file.`);
+    if (raster === asset.source) nativeAlpha = hasNativeAlphaProvenance(input);
+    await inspectAlpha(input, context, { nativeAlpha });
+    if (raster !== asset.source) variantFiles.push(path.basename(raster.path));
+  }
+  return variantFiles;
+}
+
 export async function validateCharacterStates({ characterRoot = path.resolve('src/assets/characters'), sceneRoot = path.resolve('src/assets/scenes') } = {}) {
   const root = path.resolve(characterRoot);
   const selection = JSON.parse(await readFile(path.join(root, 'character-manifest.json'), 'utf8'));
   const manifest = validateStateManifest(JSON.parse(await readFile(path.join(root, 'states/state-manifest.json'), 'utf8')), selection);
   const expectedFiles = new Set();
   for (const asset of manifest.assets) {
-    for (const raster of [asset.source, ...asset.variants]) {
-      const context = `${asset.id}: ${raster.path}`;
-      const { input } = await inspectRaster(path.join(root, raster.path), raster.format, raster.width, raster.height, context);
-      requireFact(input.length === raster.bytes && sha256(input) === raster.sha256, `${context}: bytes or hash do not match the file.`);
-      await inspectAlpha(input, context);
-      if (raster !== asset.source) expectedFiles.add(path.basename(raster.path));
-    }
+    for (const file of await validateStateAsset(root, asset)) expectedFiles.add(file);
   }
   const actualFiles = await readdir(path.join(root, 'states/variants'));
   requireFact(actualFiles.length === expectedFiles.size && actualFiles.every((file) => expectedFiles.has(file)), 'State runtime directory contains missing or extra files.');
