@@ -20,22 +20,27 @@ const voice = (name: string, local = true, lang = 'en-US') => ({
 afterEach(() => vi.useRealTimers());
 
 describe('skin voice assignments', () => {
+  test('GPU mode selects George and Emma while Government AI retains its native provider', () => {
+    expect(skinSpeechProfile(character('red-folded-chairman'), 'default', 'gpu')).toMatchObject({provider:'neural',voiceUri:'kokoro:bm_george',pitch:0.9});
+    expect(skinSpeechProfile(character('luxury-minister'), 'default', 'gpu')).toMatchObject({provider:'neural',voiceUri:'kokoro:bf_emma'});
+    expect(skinSpeechProfile(character('government-ai','robot'), 'schoolteacher', 'gpu')).toMatchObject({provider:'microsoft-local',microsoftVoice:'Zira',voiceUri:'kokoro:bf_emma'});
+  });
   test('the robot roster exposes David, Mark, and schoolteacher Zira in skin order', () => {
     expect(characterSkins['government-ai']?.map(({ id }) => id)).toEqual(['default', 'alternate', 'schoolteacher']);
   });
   test.each(femaleSpeechSkins)('%s uses the female British neural fallback', (id) => {
     const [ownerId, skinId = 'default'] = id.split('--');
-    expect(skinSpeechProfile(character(ownerId!), skinId)).toMatchObject({ voiceUri: 'kokoro:bf_emma', language: 'en-GB' });
+    expect(skinSpeechProfile(character(ownerId!), skinId)).toMatchObject({ voiceUri: 'piper:vctk-p225', language: 'en-GB' });
   });
   test('male defaults and male alternate skins use George', () => {
     for (const [id, skin] of [['red-folded-chairman', 'default'], ['velvet-mogul', 'silk-diplomat']]) {
-      expect(skinSpeechProfile(character(id!), skin!)).toEqual({ provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 0.9 });
+      expect(skinSpeechProfile(character(id!), skin!)).toEqual({ provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 0.9 });
     }
   });
-  test.each([['default', 'David', 'bm_george'], ['alternate', 'Mark', 'bm_george'], ['schoolteacher', 'Zira', 'bf_emma']] as const)(
+  test.each([['default', 'David', 'vctk-p226'], ['alternate', 'Mark', 'vctk-p226'], ['schoolteacher', 'Zira', 'vctk-p225']] as const)(
     'robot skin %s selects %s and retains the appropriate neural fallback', (skin, name, fallback) => {
       expect(skinSpeechProfile(character('government-ai', 'robot'), skin)).toMatchObject({
-        provider: 'microsoft-local', microsoftVoice: name, voiceUri: `kokoro:${fallback}`,
+        provider: 'microsoft-local', microsoftVoice: name, voiceUri: `piper:${fallback}`,
       });
     });
 });
@@ -62,7 +67,8 @@ describe('local Microsoft robot speech', () => {
     expect(selectMicrosoftRobotVoice([voice('Zira', true, 'ro-RO')], 'Zira')).toBeUndefined();
   });
   test('a complete insult uses one utterance and native word boundaries drive phrase scores', () => {
-    const h = nativeHarness(); expect(h.port.speak(h.request).accepted).toBe(true);
+    const h = nativeHarness(); const onDiagnostic = vi.fn();
+    expect(h.port.speak({ ...h.request, onDiagnostic }).accepted).toBe(true);
     expect(h.utterances[0]).toMatchObject({ text: 'Your office failed.', voice: voice('David'), rate: 1.2, pitch: 0.72, volume: 0.4, lang: 'en-US' });
     h.fire(h.utterances[0]!, 'onstart'); expect(h.events.onSegment).toHaveBeenLastCalledWith(0);
     const boundary = h.utterances[0]!.onboundary!;
@@ -73,6 +79,10 @@ describe('local Microsoft robot speech', () => {
     h.fire(h.utterances[0]!, 'onend');
     expect(h.utterances).toHaveLength(1);
     expect(h.events.onStart).toHaveBeenCalledOnce(); expect(h.events.onEnd).toHaveBeenCalledOnce();
+    expect(onDiagnostic.mock.calls.map(([event]) => [event.type, event.segment])).toEqual([
+      ['synthesis-start', undefined], ['playback-start', undefined], ['segment', 0], ['segment', 1],
+      ['playback-end', undefined],
+    ]);
     h.port.cancel();
   });
   test('Pause holds a completed delivery until resume and cancellation releases platform pause', () => {
@@ -121,7 +131,7 @@ test('human speech never uses the system service; robots fall back to neural whe
   const neural = { available: true, speak: vi.fn(() => ({ accepted: true })), cancel: vi.fn() };
   const router = new CharacterSpeech(neural, h.port);
   router.speak({ ...h.request, provider: 'neural' }); expect(h.service.speak).not.toHaveBeenCalled();
-  router.speak({ ...h.request, provider: 'microsoft-local', microsoftVoice: 'Mark', voiceUri: 'kokoro:bm_george' });
+  router.speak({ ...h.request, provider: 'microsoft-local', microsoftVoice: 'Mark', voiceUri: 'piper:vctk-p226' });
   expect(neural.speak).toHaveBeenCalledTimes(2); expect(h.service.speak).not.toHaveBeenCalled();
   router.speak({ ...h.request, provider: 'microsoft-local' }); expect(h.service.speak).toHaveBeenCalledOnce();
   router.cancel();
@@ -135,14 +145,18 @@ test.each(['throw', 'error-event'] as const)('native synchronous %s preserves ne
     return 0;
   });
   const requests: SpeechRequest[] = [];
+  const diagnostics = vi.fn();
   const neural = { available: true, cancel: vi.fn(),
     speak: vi.fn((request: SpeechRequest) => { requests.push(request); return { accepted: true }; }) };
-  const game = new GameSpeech(new CharacterSpeech(neural, h.port));
+  const game = new GameSpeech(new CharacterSpeech(neural, h.port), diagnostics);
   game.userGesture();
   expect(game.deliver(publicPlayer, { ...defaultSettings, speechEnabled: true },
     skinSpeechProfile(character('government-ai', 'robot'), 'default'), h.events)).toBe(true);
   expect(requests).toHaveLength(1);
-  expect(requests[0]).toMatchObject({ text: publicPlayer.insultText, voiceUri: 'kokoro:bm_george' });
+  expect(requests[0]).toMatchObject({ text: publicPlayer.insultText, voiceUri: 'piper:vctk-p226' });
+  expect(diagnostics).toHaveBeenCalledWith(expect.objectContaining({
+    type: 'cancel', reason: 'failure', provider: 'microsoft-local',
+  }));
   expect(h.events.onError).not.toHaveBeenCalled();
   requests[0]!.onStart!(); requests[0]!.onSegment!(0); requests[0]!.onEnd!();
   expect(h.events.onStart).toHaveBeenCalledOnce();

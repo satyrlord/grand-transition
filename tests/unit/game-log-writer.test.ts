@@ -9,6 +9,7 @@ import {
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
+import { validateDevelopmentLog } from '../../tools/development-log-schema';
 import {
   maximumGameLogBytes,
   maximumStoredGameLogs,
@@ -33,6 +34,14 @@ const records = [
 const validLog = records.map((record) => JSON.stringify(record)).join('\n') + '\n';
 
 describe('game log writer', () => {
+  test('accepts bounded terminal speech diagnostics and rejects arbitrary error or text fields', () => {
+    const diagnostics = { schemaVersion: 1, status: 'finished', droppedEvents: 0, events: [
+      { type: 'timeout', reason: 'inference', round: 1, speakerId: 'player-two', voice: 'kokoro:bm_george', rate: 1.2, pitch: 1, elapsedMs: 60000 },
+    ] };
+    const log = (speechDiagnostics: unknown) => [...records.slice(0, -1), { ...records.at(-1), speechDiagnostics }].map((record) => JSON.stringify(record)).join('\n');
+    expect(validateDevelopmentLog(log(diagnostics))).toEqual({ seed: 73 });
+    expect(() => validateDevelopmentLog(log({ ...diagnostics, events: [{ ...diagnostics.events[0], text: 'hidden' }] }))).toThrow('completion');
+  });
   test('writes collision-safe log files inside the ignored repository folder', async () => {
     const repositoryRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-log-'));
     const first = await writeGameLog({

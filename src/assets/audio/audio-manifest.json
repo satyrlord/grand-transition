@@ -104,46 +104,6 @@
       ]
     },
     {
-      "id": "transition-era-television-studio-room-tone",
-      "kind": "ambience",
-      "duration": 8,
-      "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
-      "license": "CC-BY-NC-4.0",
-      "files": [
-        {
-          "path": "transition-era-television-studio-room-tone.wav",
-          "sha256": "44c82b60a7e444c52c5d28505ac99debfdb814dd5fb3f5361a36904b8aeee2d1",
-          "measurements": {
-            "codec": "pcm_s16le",
-            "sampleRate": 48000,
-            "integratedLufs": -22,
-            "truePeakDbfs": -18.05
-          }
-        },
-        {
-          "path": "transition-era-television-studio-room-tone.ogg",
-          "sha256": "0c60c4a8404faa01d986b411b7b0cd5209a679b6ba5f26292e8fedee560e1dfd",
-          "measurements": {
-            "codec": "vorbis",
-            "sampleRate": 48000,
-            "integratedLufs": -21.96,
-            "truePeakDbfs": -17.72
-          }
-        },
-        {
-          "path": "transition-era-television-studio-room-tone.mp3",
-          "sha256": "cb312af2b4a768dc32c87fd9a4554e780a0de20cc90fe617130188a9467e58a8",
-          "measurements": {
-            "codec": "mp3",
-            "sampleRate": 48000,
-            "integratedLufs": -22.45,
-            "truePeakDbfs": -18.5
-          }
-        }
-      ]
-    },
-    {
       "id": "role-select",
       "kind": "effect",
       "duration": 0.16,

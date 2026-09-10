@@ -1,8 +1,9 @@
 import { msg } from '@lit/localize';
 import { LitElement, html, nothing } from 'lit';
-import type {
-  SettingsDocument,
-  TurnTimerSeconds,
+import {
+  defaultSettings,
+  type SettingsDocument,
+  type TurnTimerSeconds,
 } from '../../persistence/codecs/settings-codec';
 import { settingsPersistenceNotice } from '../../persistence/settings';
 import type { AudioStatus } from '../../audio/audio-port';
@@ -45,18 +46,7 @@ export class GrandTransitionSettings extends LitElement {
 
   constructor() {
     super();
-    this.settings = {
-      schemaVersion: 1,
-      masterVolume: 1,
-      musicVolume: 0.7,
-      effectsVolume: 0.8,
-      speechVolume: 0.8,
-      speechEnabled: false,
-      speechVoiceUri: null,
-      speechRate: 1.2,
-      turnTimerSeconds: 30,
-      autoComplete: true,
-    };
+    this.settings = defaultSettings;
     this.showPersistenceNotice = false;
     this.audioStatus = 'idle';
     this.speechAvailable = false;
@@ -131,10 +121,23 @@ export class GrandTransitionSettings extends LitElement {
                   @change=${this.changeBoolean}
                 />
               </label>
+              <label class="settings-toggle">
+                <span>${msg('GPU voices')}</span>
+                <input type="checkbox" name="gpuVoices"
+                  .checked=${this.settings.gpuVoices}
+                  ?disabled=${!this.settings.speechEnabled && !this.settings.gpuVoices}
+                  aria-describedby="gpu-voices-note"
+                  @change=${this.changeBoolean} />
+              </label>
+              <p id="gpu-voices-note" class="settings-note">
+                ${msg('Alternative local human voices. Requires a supported GPU and an extra model download of about 353 MB. Enable speech to use them.')}
+                <a href=${`${import.meta.env.BASE_URL}tts/kokoro-gpu/NOTICE.txt`} target="_blank" rel="noopener">${msg('GPU voice credits')}</a>
+              </p>
               ${this.renderVolume('speechVolume', msg('Speech volume'))}
               ${this.renderRate()}
               <p id="speech-service-note" class="settings-note">
                 ${msg('Human voices use a local neural model. Robots use installed Microsoft voices when available. Phrase text stays on this device.')}
+                <a href=${`${import.meta.env.BASE_URL}tts/piper/NOTICE.txt`} target="_blank" rel="noopener">${msg('Voice credits')}</a>
               </p>
               ${this.speechStatus === 'loading' ? html`<p class="settings-note" role="status">
                 ${msg('Loading local voice model…')}
@@ -210,10 +213,10 @@ export class GrandTransitionSettings extends LitElement {
             max="2"
             step="0.1"
             .value=${String(this.settings.speechRate)}
-            aria-valuetext=${`${this.settings.speechRate.toFixed(1)} times`}
+            aria-valuetext=${`${this.settings.speechRate.toFixed(2)} times`}
             @change=${this.changeNumber}
           />
-          <output for="speechRate">${this.settings.speechRate.toFixed(1)}×</output>
+          <output for="speechRate">${this.settings.speechRate.toFixed(2)}×</output>
         </span>
       </label>
     `;
@@ -237,7 +240,7 @@ export class GrandTransitionSettings extends LitElement {
   private readonly changeBoolean = (event: Event): void => {
     const control = event.currentTarget as HTMLInputElement;
     this.changeSetting(
-      control.name as 'speechEnabled' | 'autoComplete',
+      control.name as 'speechEnabled' | 'gpuVoices' | 'autoComplete',
       control.checked,
     );
   };

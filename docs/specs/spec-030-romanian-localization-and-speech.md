@@ -122,10 +122,13 @@ must not mutate state, consume randomness, or enter command history.
 
 ## Phase 1: Settings, replay, and history compatibility
 
-Extend the strict settings document to version 2 with separate
+Extend the strict settings document to version 4 with separate
 `interfaceLocale: 'en' | 'ro-RO'` and `gameLocale: 'en' | 'ro-RO'` fields.
-Migrate real version 1 fixtures by setting both fields to `en` and preserving
-every other value, including the retained speech voice URI. Unknown locale values
+Migrate real version 1 and 2 fixtures through the Milestone 020 version 3
+migration, including its speech-rate correction and GPU preference handling.
+Then migrate version 3 to version 4 by setting both locale fields to `en`.
+Preserve every other value, including the retained speech voice URI and GPU
+voice preference. Unknown locale values
 return `invalid-data`; unknown schema versions return `unsupported-version`.
 Use the existing defaults and storage fallback without overwriting invalid
 stored data until the next explicit setting change. Translate the existing
@@ -174,13 +177,13 @@ resources, runtime files, and notices from the application origin under the
 existing `/grand-transition/` base. No phrase leaves the device. Load only the
 selected Romanian voice when needed for Romanian game speech. Changing the
 interface language must not select or download a speech model. Changing the
-game language alone must not download both voices. Speech remains off by default.
+game language alone must not download both voices. Speech remains on by default.
 
 Extend the existing speech build and validation commands to cover Romanian.
 Before importing assets, pin upstream revisions, exact file names, SHA-256
 hashes, sample rates, input/output tensors, sizes, pronunciation dependencies,
 and license notices. Each shipped model file must remain below 100 MiB. Keep
-the existing English model and its behavior intact. Long input must be split
+the English Piper profiles and their behavior intact. Long input must be split
 at valid boundaries and delivered in full, without token-limit truncation.
 
 Mihai's repository is labeled MIT and its voice card lists CC0 training data.
@@ -200,7 +203,8 @@ The new verifier paths below are implementation targets, not existing evidence.
   `npm run content:validate`, and `tests/unit/romanian-localization.test.ts`.
 - **AC-030-02:** Both drop-downs default to English and independently preserve
   all four language combinations after selection and reload. Changing either
-  leaves the other unchanged. Version 1 migration sets both fields to English.
+  leaves the other unchanged. Stepwise migration through version 3 and then to
+  version 4 sets both locale fields to English.
   Invalid values in either field, unknown versions, and blocked/quota storage
   match this contract. Verifiers: `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.

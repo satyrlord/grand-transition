@@ -1265,6 +1265,7 @@ describe('content schemas', () => {
     expect(
       new Set(result.characters.map((character) => character.species)),
     ).toEqual(new Set(['human', 'robot']));
+    expect(result.scenes.every((scene) => !('ambience' in scene))).toBe(true);
     expect(result.scenes.map((scene) => scene.id)).toEqual([
       'transition-era-television-studio',
       'modern-debate-studio',

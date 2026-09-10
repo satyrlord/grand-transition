@@ -219,8 +219,10 @@ test('development automatically writes one completed match text log', async ({
       expect.objectContaining({
         type: 'match-complete',
         winner: plan.finalState.winner,
+        speechDiagnostics: expect.objectContaining({ status: 'finished' }),
       }),
     );
+    expect(records.at(-1)!.speechDiagnostics.events).toContainEqual(expect.objectContaining({ type: 'presentation-end' }));
     expect(
       records.some(
         (record) =>

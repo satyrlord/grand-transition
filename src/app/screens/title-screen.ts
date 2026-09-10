@@ -7,7 +7,7 @@ import type {
   MatchHistoryEntry,
   MatchHistoryFailureCode,
 } from '../../persistence/match-history';
-import type { SettingsDocument } from '../../persistence/codecs/settings-codec';
+import { defaultSettings, type SettingsDocument } from '../../persistence/codecs/settings-codec';
 import { settingsPersistenceNotice } from '../../persistence/settings';
 import type { AudioStatus } from '../../audio/audio-port';
 import type { NeuralSpeechStatus } from '../../audio/neural-speech';
@@ -41,6 +41,8 @@ export class GrandTransitionTitle extends LitElement {
     speechAvailable: { type: Boolean },
     speechStatus: { attribute: false },
     speechProgress: { attribute: false },
+    gpuStatus: { attribute: false },
+    gpuProgress: { attribute: false },
   };
 
   declare status: string;
@@ -54,6 +56,8 @@ export class GrandTransitionTitle extends LitElement {
   declare speechAvailable: boolean;
   declare speechStatus: NeuralSpeechStatus;
   declare speechProgress: number | null;
+  declare gpuStatus: 'idle' | 'checking' | 'loading' | 'ready' | 'unavailable';
+  declare gpuProgress: number | null;
 
   constructor() {
     super();
@@ -61,24 +65,15 @@ export class GrandTransitionTitle extends LitElement {
     this.historyEntries = [];
     this.historyOpen = false;
     this.historyPersistenceFailure = null;
-    this.settings = {
-      schemaVersion: 1,
-      masterVolume: 1,
-      musicVolume: 0.7,
-      effectsVolume: 0.8,
-      speechVolume: 0.8,
-      speechEnabled: false,
-      speechVoiceUri: null,
-      speechRate: 1.2,
-      turnTimerSeconds: 30,
-      autoComplete: true,
-    };
+    this.settings = defaultSettings;
     this.settingsOpen = false;
     this.showSettingsPersistenceNotice = false;
     this.audioStatus = 'idle';
     this.speechAvailable = false;
     this.speechStatus = 'idle';
     this.speechProgress = null;
+    this.gpuStatus = 'idle';
+    this.gpuProgress = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -122,6 +117,8 @@ export class GrandTransitionTitle extends LitElement {
           <button
             type="button"
             class="title-setup-action"
+            ?disabled=${this.gpuLoading}
+            aria-describedby=${this.gpuLoading ? 'title-gpu-status' : nothing}
             @click=${this.showSetup}
           >
             ${msg('Set up match')}
@@ -144,6 +141,7 @@ export class GrandTransitionTitle extends LitElement {
               ${msg('Match history')} <span>(${this.historyEntries.length})</span>
             </button>
           </div>
+          ${this.renderGpuStatus()}
           ${this.historyPersistenceFailure === null
             ? nothing
             : html`<p class="title-history-notice" role="status">
@@ -200,6 +198,7 @@ export class GrandTransitionTitle extends LitElement {
   }
 
   private readonly showSetup = (): void => {
+    if (this.gpuLoading) return;
     this.dispatchEvent(
       new CustomEvent(showSetupEventName, {
         bubbles: true,
@@ -208,6 +207,37 @@ export class GrandTransitionTitle extends LitElement {
       }),
     );
   };
+
+  private get gpuLoading(): boolean {
+    return this.settings.speechEnabled && this.settings.gpuVoices &&
+      (this.gpuStatus === 'idle' || this.gpuStatus === 'checking' || this.gpuStatus === 'loading');
+  }
+
+  private renderGpuStatus() {
+    if (!this.settings.speechEnabled || !this.settings.gpuVoices) return nothing;
+    if (this.gpuStatus === 'unavailable') {
+      return html`<p class="title-voice-feedback title-voice-fallback" role="status">
+        ${msg('GPU voices are unavailable. Using local Piper voices.')}
+      </p>`;
+    }
+    if (!this.gpuLoading) return nothing;
+    const progress = this.gpuStatus === 'loading' && this.gpuProgress !== null &&
+      Number.isFinite(this.gpuProgress) ? Math.min(1, Math.max(0, this.gpuProgress)) : null;
+    const label = this.gpuStatus === 'loading' ? msg('Loading GPU voices…') : msg('Preparing GPU voices…');
+    return html`<div class="title-voice-feedback title-voice-loader">
+      <p id="title-gpu-status" class="title-voice-label" role="status">
+        <span>${label}</span>
+        <span aria-hidden="true">${progress === null ? nothing : `${Math.round(progress * 100)}%`}</span>
+      </p>
+      <div class="title-voice-meter" role="progressbar" aria-label=${msg('GPU voices')}
+        aria-valuemin="0" aria-valuemax="100"
+        aria-valuenow=${progress === null ? nothing : Math.round(progress * 100)}
+        aria-valuetext=${progress === 1 ? msg('Preparing GPU voices…') : nothing}
+        data-indeterminate=${progress === null ? 'true' : 'false'}>
+        <span style=${styleMap({ width: progress === null ? '30%' : `${progress * 100}%` })}></span>
+      </div>
+    </div>`;
+  }
 
   private readonly revealEmblem = (event: Event): void => {
     const image = event.currentTarget as HTMLImageElement;

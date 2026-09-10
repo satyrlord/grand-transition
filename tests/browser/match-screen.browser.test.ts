@@ -1041,7 +1041,7 @@ test('applies Pause settings when the match resumes', async () => {
   const colorCodingOption = (value: 'On' | 'Off'): HTMLButtonElement =>
     settingOption('phrase-color-coding', value);
   expect(settingOption('music', 'On').getAttribute('aria-pressed')).toBe('true');
-  expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
+  expect(settingOption('voices', 'On').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
 
   pauseButton('15 seconds').click();
@@ -1063,7 +1063,7 @@ test('applies Pause settings when the match resumes', async () => {
   expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
   expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
     ok: true,
-    value: { musicVolume: 0.7 },
+    value: { musicVolume: 0.1 },
   });
 
   pauseButton('15 seconds').click();

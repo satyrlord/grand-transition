@@ -1775,15 +1775,15 @@ test('Pause settings apply to the resumed match', async ({
     name: 'On',
     exact: true,
   });
-  const voicesOff = voicesSettings.getByRole('button', {
-    name: 'Off',
+  const voicesOn = voicesSettings.getByRole('button', {
+    name: 'On',
     exact: true,
   });
   await expect(thirtySeconds).toHaveAttribute('aria-pressed', 'true');
   await expect(autoCompleteOn).toHaveAttribute('aria-pressed', 'true');
   await expect(phraseColorCodingOn).toHaveAttribute('aria-pressed', 'true');
   await expect(musicOn).toHaveAttribute('aria-pressed', 'true');
-  await expect(voicesOff).toHaveAttribute('aria-pressed', 'true');
+  await expect(voicesOn).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: '15 seconds' }).click();
   await autoCompleteSettings

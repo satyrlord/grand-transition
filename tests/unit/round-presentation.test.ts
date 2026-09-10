@@ -21,8 +21,8 @@ function harness(enabled = true) {
     clearTimeout: (id) => { tasks.delete(id); },
   }, (value) => { frame = value; }, completed);
   const input = { resolution: resolution(), firstSpeakerId: 'two', components: { one: [component(10)], two: [component(20)] },
-    settings: { ...defaultSettings, speechEnabled: enabled }, voices: { one: { provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 0.9 } as SkinSpeechProfile,
-      two: { provider: 'neural', voiceUri: 'kokoro:bm_george', language: 'en-GB', pitch: 1.1 } as SkinSpeechProfile } };
+    settings: { ...defaultSettings, speechEnabled: enabled }, voices: { one: { provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 0.9 } as SkinSpeechProfile,
+      two: { provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 1.1 } as SkinSpeechProfile } };
   function advance(ms: number) {
     const target = now + ms;
     for (let count = 0; count < 1000; count++) {

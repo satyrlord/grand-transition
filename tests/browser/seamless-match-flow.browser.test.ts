@@ -16,6 +16,11 @@ import {
   decodeMatchHistory,
   matchHistoryStorageKey,
 } from '../../src/persistence/match-history';
+import {
+  defaultSettings,
+  encodeSettings,
+} from '../../src/persistence/codecs/settings-codec';
+import { settingsStorageKey } from '../../src/persistence/settings';
 
 beforeEach(async () => {
   await page.viewport(1280, 720);
@@ -165,6 +170,11 @@ test('shows a coordinated copular complement as a complete sentence', async () =
 
 test('shows the comeback inline and starts the next round after both deliveries', async () => {
   vi.useFakeTimers();
+  localStorage.setItem(settingsStorageKey, encodeSettings({
+    ...defaultSettings,
+    speechEnabled: false,
+    gpuVoices: false,
+  }));
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector(
     'grand-transition-app',

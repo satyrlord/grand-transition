@@ -103,7 +103,7 @@ color is local to authored materials and lighting, not a complete scene grade.
   Its phrase themes are algorithms, sovereignty, podcast evidence, ancient
   energy, clips, and shadow bans.
 
-Each scene has a 1920x1080 layered master, landscape crops, lighting, ambience,
+Each scene has a 1920x1080 layered master, landscape crops, lighting,
 motion, music treatment, and 25 to 35 owned phrases. The validated catalog has
 these inclusive general-pool ranges:
 
@@ -131,7 +131,7 @@ Each character has exactly one unique comeback line in each tier and three total
 A comeback line cannot be reused by another character or tier. There is no
 common or shared comeback pool.
 Every character and scene meets the complete Milestone 023 state, variant,
-license, and manifest contract. Every scene has distinct music and ambience
+license, and manifest contract. Every scene has distinct music
 treatment and every named Milestone 024 effect remains reachable.
 
 ## Variety contract

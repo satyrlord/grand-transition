@@ -1,4 +1,7 @@
+import type { SpeechCancellationReason, SpeechDiagnostic } from './speech-diagnostics';
+
 export interface SpeechRequest {
+  readonly onDiagnostic?: (event: SpeechDiagnostic) => void;
   readonly provider?: 'neural' | 'microsoft-local';
   readonly microsoftVoice?: 'David' | 'Mark' | 'Zira';
   readonly text: string;
@@ -10,6 +13,7 @@ export interface SpeechRequest {
   readonly onStart?: () => void;
   readonly onEnd?: () => void;
   readonly segments?: readonly string[];
+  readonly chunkStarts?: readonly number[];
   readonly onSegment?: (index: number) => void;
   readonly onError?: () => void;
 }
@@ -24,7 +28,7 @@ export interface SpeechPort {
   speak(request: SpeechRequest): SpeechResult;
   /** Prepare one public delivery without starting playback or emitting callbacks. */
   prepare?(request: SpeechRequest): SpeechResult;
-  cancel(): void;
+  cancel(reason?: SpeechCancellationReason): void;
   pause?(): void;
   resume?(): void;
 }
@@ -44,5 +48,5 @@ export type NeuralSpeechMessage =
   | Readonly<{ type: 'booted' }>
   | Readonly<{ type: 'progress'; loaded: number; total: number }>
   | Readonly<{ type: 'ready'; voices: readonly SpeechVoice[] }>
-  | Readonly<{ type: 'speech'; id: number; samples: Float32Array<ArrayBuffer>; markers: readonly Readonly<{ index: number; seconds: number }>[]; sampleRate: number }>
+  | Readonly<{ type: 'speech'; id: number; samples: Float32Array<ArrayBuffer>; markers: readonly Readonly<{ index: number; seconds: number }>[]; sampleRate: number; playbackRate: number }>
   | Readonly<{ type: 'error'; id: number | null }>;

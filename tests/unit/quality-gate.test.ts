@@ -80,6 +80,7 @@ describe('quality-gate scaffold', () => {
         'node tools/validate-character-states.mjs && ' +
         'node tools/audio-assets.mjs validate && ' +
         'node tools/neural-speech-assets.mjs validate && ' +
+        'node tools/kokoro-gpu-assets.mjs validate && ' +
         'vite build',
     );
     expect(packageJson.scripts['assets:build']).toContain(
@@ -89,6 +90,7 @@ describe('quality-gate scaffold', () => {
     expect(packageJson.scripts['assets:validate']).toContain('npm run audio:validate');
     expect(packageJson.scripts['assets:build']).toContain('npm run speech:build');
     expect(packageJson.scripts['assets:validate']).toContain('npm run speech:validate');
+    expect(packageJson.scripts['speech:validate']).toContain('node tools/kokoro-gpu-assets.mjs validate');
     expect(packageJson.scripts['assets:validate']).toContain(
       'node tools/validate-character-assets.mjs src/assets/characters',
     );

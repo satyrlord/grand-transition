@@ -1,0 +1,7 @@
+Kokoro-82M v1.0 FP32. Source: https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX
+Pinned revision: 1939ad2a8e416c0acfeecc08a694d14ef25f2231. Apache-2.0.
+British voices: George (bm_george) and Emma (bf_emma).
+Expose predicted phoneme durations and add a multiplicative F0 pitch input; retain all trained weights.
+The model is split into ordered static shards and reassembled without changing bytes.
+ONNX Runtime Web 1.29.0: Microsoft Corporation, MIT. See onnx-runtime-LICENSE and onnx-runtime-NOTICES.
+Phonemizer.js 1.2.1: Apache-2.0. See phonemizer-LICENSE.

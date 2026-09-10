@@ -25,45 +25,73 @@ The selected Turn timer option stays visibly distinct in forced-colors mode.
 The existing Pause controls use the same Turn timer and Auto-complete values.
 Pause also exposes separate Music and Voices On and Off controls. Music Off
 uses zero Music volume and Music On restores the last non-zero Music volume in
-the page session, or the 70 percent default when no such value exists. Voices
+the page session, or the 10 percent default when no such value exists. Voices
 uses Speech enabled. These changes apply immediately and persist through the
 same settings document. Phrase color coding remains session-only because it is
-not in the strict version 1 document.
+not in the strict version 3 document.
 
-Do not expose a Speech voice dropdown. The version 1 Speech voice URI field
+Do not expose a Speech voice dropdown. The Speech voice URI field
 still round-trips so existing settings remain valid. It has no visible control
 and does not override skin voice assignments.
 Milestone 024 owns voice selection and all audio
 and speech output.
 
-## Version 1 settings
+## Version 3 settings
 
-This section defines the shipped English source format. Milestone 030 owns
-version 2, the independent `interfaceLocale` and `gameLocale` fields,
-separate title-only language drop-downs, version 1
-migration, and translated notices. Its explicit replacements apply when that
-milestone is implemented; all other persistence behavior remains as defined here.
+Version 2 adds the independent `gpuVoices` preference to the shipped English
+version 1 source format. GPU voices and Speech enabled both default to true.
+Version 3 restores the default speech rate to 1.00 times.
+Milestone 030 owns future version 4, its independent `interfaceLocale` and
+`gameLocale` fields, and the version 1, 2, or 3 to 4 migration.
+
+The title-only Speech group has a **GPU voices** checkbox. Its help text states
+that these are alternative local human voices, require a supported GPU, and
+need an extra model download of about 353 MB. The setting does not
+change Speech enabled. With speech off, an unchecked GPU option is disabled;
+a stored checked option remains checked and can always be turned off. The
+preference survives unsupported hardware, model failure, and speech being off.
+GPU preparation and loading status appear on the main menu, outside Settings,
+only when both preferences are on. Milestone 015 owns the styled loader and
+the disabled setup action until ready or unavailable. Unavailable status states
+that local Piper voices are used. Settings retains the controls and credits,
+without a duplicate GPU loading or readiness status.
+Milestone 024 owns runtime capability checks, loading,
+fallback, and voice routing. Native Government AI voices are unaffected.
+The GPU help links to the same-origin `tts/kokoro-gpu/NOTICE.txt` credits.
+Do not add locale controls or a GPU model picker in this change.
 
 | Field            | Type and range          | Default |
 | ---------------- | ----------------------- | ------- |
 | Master volume    | 0 through 1, step 0.05  | 1       |
-| Music volume     | 0 through 1, step 0.05  | 0.7     |
+| Music volume     | 0 through 1, step 0.05  | 0.1     |
 | Effects volume   | 0 through 1, step 0.05  | 0.8     |
 | Speech volume    | 0 through 1, step 0.05  | 0.8     |
-| Speech enabled   | Boolean                 | false   |
+| Speech enabled   | Boolean                 | true    |
+| GPU voices       | Boolean                 | true    |
 | Speech voice URI | String or null          | null    |
-| Speech rate      | 0.5 through 2, step 0.1 | 1.2     |
+| Speech rate      | 0.5 through 2, step 0.1 | 1.00    |
 | Turn timer       | 15, 30, or null         | 30      |
 | Auto-complete    | Boolean                 | true    |
 
 `null` is the stored Turn timer value for Unlimited.
+Display Speech rate with two decimal places, such as `1.00×`.
+Preserve explicit saved Speech enabled and GPU voices choices, including opt-outs.
 
-Settings are one strict document with `schemaVersion: 1`. The product stores no
+Settings are one strict document with `schemaVersion: 3`. The product stores no
 tutorial, onboarding, hint, or guided-progress state.
 
-Version 1 is the first stored schema. Do not invent a migration from an
-unshipped format. Future schema changes must add a documented source fixture
-and stepwise migration. Malformed data returns `invalid-data`. An unknown
+Version 1 is the first shipped schema. Decode strict version 1 data by preserving
+the old fields, including the retired speech voice URI, then adding
+`gpuVoices: true` and setting `schemaVersion: 3`. Reject malformed source values
+and unknown source fields before accepting the migration. Version 2 retains its
+GPU preference, including an explicit opt-out. Fresh settings and version 1
+documents without a GPU preference use the enabled default. Migrating either source version changes a saved rate of 1.2 to
+1.00; other rates remain unchanged. Version 3 accepts an explicitly selected
+1.2 without resetting it on reload. Keep the existing
+`grand-transition.settings.v1` storage key. Reading migrates in memory; the next
+explicit setting change writes normalized version 3 bytes to that key. Unit
+tests contain a literal shipped source fixture. Future schema changes must add
+a documented source fixture and stepwise migration. Malformed data returns `invalid-data`. An unknown
 version returns `unsupported-version`. Storage failures are
 `storage-unavailable`, `storage-quota`, or `storage-security`.
 
@@ -117,7 +145,12 @@ Verify selected and unselected siblings with
 
 **AC-020-08:** Pause Music Off applies zero Music gain without changing Effects
 volume. Music On restores the last non-zero Music volume for the page session,
-or the 70 percent default. Pause Voices Off sets Speech enabled to false,
+or the 10 percent default. Pause Voices Off sets Speech enabled to false,
 cancels active narration, and suppresses later narration until Voices is On.
-Both controls persist through the version 1 settings document and retain their
+Both controls persist through the version 3 settings document and retain their
 selected state after a later Pause.
+
+**AC-020-09:** Version 1 migration preserves settings except the previous 1.2 rate and adds GPU
+voices on. Version 3 round-trips both checkbox values independently. GPU
+loading progress and Piper fallback are visible on the main menu; a stored GPU preference can
+be turned off even when speech or GPU support is unavailable.

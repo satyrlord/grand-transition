@@ -36,7 +36,8 @@ mechanical and does not use human, animal, or hybrid anatomy.
 There is no character-specific common-board phrase list.
 
 `voiceProfile.skinVoices` is an optional map from skin ID to `george`, `emma`,
-`david`, `mark`, or `zira`. Human skins use George or Emma. Robot skins use the
+`david`, `mark`, or `zira`. George and Emma identify the male and female neural profiles. Milestone 024
+maps these profiles to the active speech engine. Robot skins use the
 requested installed Microsoft voice, with a British neural fallback. This
 presentation metadata does not change grammar, scoring, or the stored replay
 schema. A missing human assignment defaults to George. A missing robot
@@ -49,7 +50,8 @@ These voice assignments describe English. Milestone 030 maps the same authored
 profiles to Romanian Mihai and Liana voices without changing character identity.
 
 A scene owns identity, its first-round opener index, original media, its
-eligible phrase pool, and effects.
+eligible phrase pool, and effects. Audio media contains music only; scenes
+have no room-tone media field.
 The scene pool supplies at least three distinct unrestricted nouns and three
 distinct unrestricted verbs. It supplies one unrestricted predicate, two
 distinct `and` or contrast connectors, and one continuation. Thus, Milestone

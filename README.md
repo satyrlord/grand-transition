@@ -86,12 +86,20 @@ scenes, wins, losses, and completion.
 Sound starts after a user interaction. Settings controls Master, Music, Effects,
 and Speech. CC0 piano recordings of Romanian Folk Dances cover the menu and
 transition-era studio. Other scenes retain effects without scene music.
-Speech defaults off. Enabling it downloads about 110 MB of local neural model
-resources. Male and female human skins use British George and Emma voices.
+Speech defaults on. Opening the menu prepares about 91 MB of local neural model
+resources. Male and female human skins use the selected streamed British voices.
+The `GPU voices` checkbox defaults on. When speech is enabled, it downloads
+about 353 MB more for streamed FP32
+Kokoro George and Emma. It needs a working WebGPU device. Matches use Piper if
+GPU initialization fails. A main-menu loader shows GPU preparation and holds
+Set up match until readiness or fallback. Turning speech off hides the loader
+and unlocks setup. Playback still needs a user interaction. Engine selection stays fixed
+for the match unless GPU speech fails, then later deliveries use Piper.
 Robot skins use installed Microsoft David, Mark, and Zira voices, with British
 neural fallback when the requested local voice is absent. Robot voices read
 each complete insult continuously, without restarting between cards. New
-settings use a 1.2 speech rate; existing saved rates remain intact.
+settings use a 1.00 speech rate. Saved settings from versions 1 and 2 migrate
+the previous 1.2 rate to 1.00; other rates remain intact.
 No phrase is uploaded. Preparation time depends on the device and sentence length.
 The game remains playable when speech is unavailable.
 
@@ -101,6 +109,12 @@ The next neural delivery prepares ahead of playback. Each completed delivery
 has a one-second score and damage sequence. Both deliveries finish before the
 next round or Victory. Pause preserves the
 narration position. Leaving the match cancels it.
+
+Completed match history includes local speech diagnostics in its Technical
+record: preparation, playback, failures, cancellations, and displayed scores,
+with round and speaker timing. Development match logs include the same record
+after final narration. No extra sentence text or audio is recorded. Older
+history entries remain readable.
 
 `npm run audio:build` prepares the sourced music and original effects.
 `npm run speech:build` prepares pinned neural assets. Their corresponding

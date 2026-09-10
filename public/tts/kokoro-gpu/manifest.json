@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "model": "Kokoro-82M-v1.0-ONNX-FP32",
+  "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+  "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX",
+  "sourceSha256": "8fbea51ea711f2af382e88c833d9e288c6dc82ce5e98421ea61c058ce21a34cb",
+  "license": "Apache-2.0",
+  "runtime": "onnxruntime-web@1.29.0",
+  "pronunciation": "phonemizer@1.2.1",
+  "sampleRate": 24000,
+  "samplesPerDurationFrame": 600,
+  "modification": "Expose predicted phoneme durations and add a multiplicative F0 pitch input; retain all trained weights.",
+  "modelBytes": 325532390,
+  "modelSha256": "0aaa97abbfe500710add4632920c7b54cd1a37c711d4db7df6dce1676dfd36ee",
+  "shards": [
+    "model-01.bin",
+    "model-02.bin",
+    "model-03.bin",
+    "model-04.bin"
+  ],
+  "runtimeModule": {
+    "path": "ort-wasm-simd-threaded.asyncify.mjs",
+    "bytes": 51407,
+    "sha256": "5d25483158d53d8f34d0e9c06a654d56c8dca4ebdf370ea0982ef11315a00e0e"
+  },
+  "voices": [
+    {
+      "id": "bm_george",
+      "name": "George",
+      "lang": "en-GB",
+      "default": true
+    },
+    {
+      "id": "bf_emma",
+      "name": "Emma",
+      "lang": "en-GB",
+      "default": false
+    }
+  ],
+  "files": [
+    {
+      "path": "bf_emma.bin",
+      "bytes": 522240,
+      "sha256": "669fe0647f9dd04fcab92f1439a40eeb4c8b4ab1f82e4996fe3d918ce4a63b73"
+    },
+    {
+      "path": "bm_george.bin",
+      "bytes": 522240,
+      "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+    },
+    {
+      "path": "kokoro-LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "model-01.bin",
+      "bytes": 100663296,
+      "sha256": "0d3fa6861b98a5fb6695fe37423a2a36f21268c4b81a335b05a5a7dba621948b"
+    },
+    {
+      "path": "model-02.bin",
+      "bytes": 100663296,
+      "sha256": "d24229e32994441d8b9e456738b399098667a847e4d03c0169862f69f8e81499"
+    },
+    {
+      "path": "model-03.bin",
+      "bytes": 100663296,
+      "sha256": "04a5a53b3ecd494ad0c699f43ceaaba312c1b9a7c11ce22bd65274a4e95c2c17"
+    },
+    {
+      "path": "model-04.bin",
+      "bytes": 23542502,
+      "sha256": "e667a34ab6c8ddf47741a0cfc53065491cee653586c4d66cc8ce7e68646094b9"
+    },
+    {
+      "path": "NOTICE.txt",
+      "bytes": 566,
+      "sha256": "a049696c6525749b8ec3fa3faeb0df1c5fb93c7781b0c522a967fdf70a502053"
+    },
+    {
+      "path": "onnx-runtime-LICENSE",
+      "bytes": 1073,
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "onnx-runtime-NOTICES",
+      "bytes": 336906,
+      "sha256": "53d3fa5821ac016ac24dd35775c996efec86e2ae0841e9a3a5e146c0ae916845"
+    },
+    {
+      "path": "ort-wasm-simd-threaded.asyncify.wasm",
+      "bytes": 25749873,
+      "sha256": "503d17cb7411b79781b9fad1cf0978f03cf06b050c7d399c730e914f473bf549"
+    },
+    {
+      "path": "phonemizer-LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "vocabulary.json",
+      "bytes": 924,
+      "sha256": "05ec9cdf7bee8335bab4a644a736fa66c303d8ee47e69092fc5aaf782f463cb7"
+    }
+  ]
+}

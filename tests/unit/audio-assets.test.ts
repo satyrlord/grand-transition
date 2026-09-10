@@ -13,8 +13,6 @@ describe('audio asset measurements', () => {
     [{ ...valid, codec: 'mp3' }, 'music', 'ogg', 'codec'],
     [{ ...valid, integratedLufs: -17.01 }, 'music', 'ogg', 'loudness'],
     [{ ...valid, integratedLufs: -14.99 }, 'music', 'ogg', 'loudness'],
-    [{ ...valid, integratedLufs: -24.01 }, 'ambience', 'ogg', 'loudness'],
-    [{ ...valid, integratedLufs: -19.99 }, 'ambience', 'ogg', 'loudness'],
     [{ ...valid, truePeakDbfs: -0.99 }, 'effect', 'ogg', 'true peak'],
     [{ ...valid, truePeakDbfs: 0.01 }, 'music', 'ogg', 'true peak'],
     [{ ...valid, truePeakDbfs: NaN }, 'effect', 'ogg', 'true peak'],
@@ -24,9 +22,6 @@ describe('audio asset measurements', () => {
 
   test.each([-17, -15])('accepts the music loudness boundary %s', (value) => {
     expect(() => tools.validateMeasurement({ ...valid, integratedLufs: value }, 'music', 'ogg')).not.toThrow();
-  });
-  test.each([-24, -20])('accepts the ambience loudness boundary %s', (value) => {
-    expect(() => tools.validateMeasurement({ ...valid, integratedLufs: value }, 'ambience', 'ogg')).not.toThrow();
   });
   test('accepts the effect true-peak boundary', () => {
     expect(() => tools.validateMeasurement({ ...valid, truePeakDbfs: -1 }, 'effect', 'ogg')).not.toThrow();
@@ -67,7 +62,11 @@ describe('audio asset inventory', () => {
     await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify(manifest));
     await expect(tools.validateAudio(root)).rejects.toThrow('inventory is incomplete');
   });
-  test.each(['wav', 'ogg', 'mp3'])('studio ambience has no broad high-frequency noise in %s', (format) => {
-    expect(tools.audioHighBandDbfs(path.resolve(`src/assets/audio/transition-era-television-studio-room-tone.${format}`))).toBeLessThan(-55);
+  test('ships only two music tracks and nine effects, with no scene room tone', () => {
+    const manifest = JSON.parse(original);
+    expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'music')).toHaveLength(2);
+    expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'effect')).toHaveLength(9);
+    expect(manifest.assets).toHaveLength(11);
+    expect(manifest.assets.some((asset: { id: string }) => asset.id.includes('room-tone'))).toBe(false);
   });
 });

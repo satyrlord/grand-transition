@@ -107,12 +107,22 @@ test('writes every command and redacts a rejected private selection', async () =
       rejectedPrivateSelectionCaptured = true;
     }
   }
+  expect(writes).toHaveLength(0);
+  logger.finishSpeech({ schemaVersion: 1, status: 'recording', droppedEvents: 0, events: [] });
+  expect(writes).toHaveLength(0);
+  const diagnostics = { schemaVersion: 1 as const, status: 'finished' as const, droppedEvents: 0, events: [
+    { type: 'playback-end' as const, round: state.round, speakerId: state.playerOrder[1],
+      voice: 'kokoro:bm_george', rate: 1.2, pitch: 1, elapsedMs: 1200 },
+  ] };
+  logger.finishSpeech(diagnostics);
+  logger.finishSpeech(diagnostics);
   await vi.waitFor(() => expect(writes).toHaveLength(1));
 
   const records = writes[0]!
     .trim()
     .split('\n')
     .map((line) => JSON.parse(line) as Record<string, unknown>);
+  expect(records.at(-1)?.speechDiagnostics).toEqual(diagnostics);
   expect(records[0]).toEqual(
     expect.objectContaining({
       type: 'match-log',

@@ -54,8 +54,8 @@ async function probe(page: Page, unavailable = false) {
           const timings = (window as unknown as {
             neuralTimings?: Array<{ event: string; at: number; seconds?: number }>;
           }).neuralTimings;
-          if (timings && source.buffer?.sampleRate === 24000) {
-            timings.push({ event: 'playback-start', at: performance.now(), seconds: source.buffer.duration });
+          if (timings && source.buffer?.sampleRate === 22050) {
+            timings.push({ event: 'playback-start', at: performance.now(), seconds: source.buffer.duration / source.playbackRate.value });
             source.addEventListener('ended', () => { timings.push({ event: 'playback-end', at: performance.now() }); });
           }
           start(at);
@@ -69,7 +69,7 @@ async function probe(page: Page, unavailable = false) {
       speak: () => { throw new Error('Legacy platform speech must not run.'); },
     } });
 
-  }, { unavailable, settings: defaultSettings });
+  }, { unavailable, settings: { ...defaultSettings, speechEnabled: false, gpuVoices: false } });
 }
 
 async function ready(page: Page) {
@@ -150,11 +150,11 @@ test('native decoded menu, scene, cues, mute, and exit under production CSP', as
   }
   await page.getByLabel('Effects volume').fill('0');
   await expect.poll(() => samplePeak(page)).toBe(0);
-  await page.getByLabel('Music volume').fill('0.7');
+  await page.getByLabel('Music volume').fill('0.1');
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
-  await expect.poll(() => page.evaluate(() => window.audioEvidence.starts.filter(({ loop }) => loop).length)).toBe(3);
+  await expect.poll(() => page.evaluate(() => window.audioEvidence.starts.filter(({ loop }) => loop).length)).toBe(2);
   await expect.poll(() => samplePeak(page)).toBeGreaterThan(0.001);
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect.poll(() => samplePeak(page)).toBe(0);
@@ -234,7 +234,7 @@ test('real local neural speech narrates both public bubbles before Victory', asy
         super(url, options);
         this.addEventListener('message', ({ data }) => {
           if (data.type === 'speech') timings.push({ event: 'prepared', at: performance.now(), id: data.id,
-            seconds: data.samples.length / data.sampleRate });
+            seconds: data.samples.length / data.sampleRate / data.playbackRate });
         });
       }
       override postMessage(message: unknown, transfer?: Transferable[] | StructuredSerializeOptions) {
@@ -289,11 +289,20 @@ test('real local neural speech narrates both public bubbles before Victory', asy
     await page.screenshot({ path: info.outputPath(`neural-delivery-${id}.png`) });
   }
   await expect(page.getByRole('heading', { name: 'Victory', exact: true })).toBeVisible({ timeout: 10_000 });
+  const storedDiagnostics = await page.evaluate(() => JSON.parse(localStorage.getItem('grand-transition.match-history.v1')!)
+    .entries.at(-1).speechDiagnostics);
+  expect(storedDiagnostics.status).toBe('finished');
+  expect(storedDiagnostics.events.filter((event: { type: string }) => event.type === 'playback-end')).toHaveLength(2);
+  expect(storedDiagnostics.events.filter((event: { type: string }) => event.type === 'presentation-total')
+    .map((event: { value: number }) => event.value)).toEqual([
+      result.players['player-two']!.outgoingDamage, result.players['player-one']!.outgoingDamage,
+    ]);
+  expect(JSON.stringify(storedDiagnostics)).not.toMatch(/"text"|"samples"|userAgent|stack/u);
   const commands = await synthesized();
   expect(commands.map((command) => command.segments!.join(''))).toEqual([
     result.players['player-two']!.insultText, result.players['player-one']!.insultText,
   ]);
-  expect(commands.every((command) => command.voiceId === 'bm_george')).toBe(true);
+  expect(commands.every((command) => command.voiceId === 'vctk-p226')).toBe(true);
   expect(requests.every((url) => url.startsWith('http://127.0.0.1:4173/'))).toBe(true);
   expect(errors).toEqual([]);
   const timings = await page.evaluate(() => (window as unknown as {
@@ -305,6 +314,12 @@ test('real local neural speech narrates both public bubbles before Victory', asy
     .toBeLessThan(timings.find(({ event }) => event === 'playback-end')!.at);
   await recordEvidence(page, info, 'neural-speech', { readyMs, synthesized: commands,
     timings, cache: 'fresh browser context; model initialized before the exchange',
-    model: 'Kokoro-82M-v1.0 q8', engine: 'local ONNX WASM', privateDraftRequests: 0,
+    model: 'Piper VCTK medium', engine: 'local ONNX WASM', privateDraftRequests: 0,
     terminalOverlay: 'after both deliveries', physicalListening: 'not performed' });
+  await page.getByRole('button', { name: 'Return to main menu', exact: true }).click();
+  await page.reload();
+  await page.getByRole('button', { name: /Match history.*1/iu }).click();
+  await page.getByText('Technical record', { exact: true }).first().click();
+  await expect(page.locator('.match-history-entry pre').first()).toContainText('"speechDiagnostics"');
+  await expect(page.locator('.match-history-entry pre').first()).toContainText('"playback-end"');
 });

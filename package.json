@@ -13,7 +13,7 @@
     "dev": "vite",
     "prod": "npm run build && npm run preview -- --host 127.0.0.1 --strictPort",
     "preview": "vite preview",
-    "build": "node tools/brand-assets.mjs validate && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node tools/audio-assets.mjs validate && node tools/neural-speech-assets.mjs validate && vite build",
+    "build": "node tools/brand-assets.mjs validate && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node tools/audio-assets.mjs validate && node tools/neural-speech-assets.mjs validate && node tools/kokoro-gpu-assets.mjs validate && vite build",
     "assets:build": "node tools/brand-assets.mjs build && node tools/build-scene-assets.mjs && node tools/build-character-assets.mjs && node tools/build-character-states.mjs && npm run audio:build && npm run speech:build",
     "assets:convert-green": "node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree",
     "assets:validate": "node tools/brand-assets.mjs validate && node tools/validate-scaffold.mjs --domain assets && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets && node tools/validate-asset-color.mjs validate src/assets && npm run audio:validate && npm run speech:validate",
@@ -32,8 +32,8 @@
     "ci": "npm run validate && npm run test && npm run test:browser && npm run test:coverage && npm run test:e2e",
     "audio:build": "node tools/audio-assets.mjs build",
     "audio:validate": "node tools/audio-assets.mjs validate",
-    "speech:build": "node tools/neural-speech-assets.mjs build",
-    "speech:validate": "node tools/neural-speech-assets.mjs validate"
+    "speech:build": "node tools/neural-speech-assets.mjs build && node tools/kokoro-gpu-assets.mjs build",
+    "speech:validate": "node tools/neural-speech-assets.mjs validate && node tools/kokoro-gpu-assets.mjs validate"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.3.0",

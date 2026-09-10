@@ -6,6 +6,7 @@ import type { CharacterCue } from './character-motion';
 import type { MatchScoreComponentView } from './match-screen-snapshot';
 import { deepFreeze } from './deep-freeze';
 import type { SkinSpeechProfile } from '../audio/skin-speech-profile';
+import type { SpeechCancellationReason, SpeechDiagnostic } from '../audio/speech-diagnostics';
 
 export type RoundPresentationFrame = Readonly<{
   phase: 'preparing' | 'reciting' | 'hesitating' | 'total' | 'strike' | 'points' | 'damage';
@@ -90,17 +91,17 @@ export class RoundPresentation {
       return;
     }
     this.input = { ...this.input, settings };
-    this.speech.cancel();
+    this.speech.cancel('settings');
     if (!this.frame || this.next ||
       (this.frame.phase !== 'preparing' && this.frame.phase !== 'reciting')) return;
     this.silentDelivery(Math.max(0, this.frame.segment));
   }
 
-  cancel(): void {
+  cancel(reason: SpeechCancellationReason = 'replacement'): void {
     this.generation++;
     if (this.timer !== null) this.clock.clearTimeout(this.timer);
     this.timer = null; this.next = null; this.input = null;
-    this.speech.cancel(); this.frame = null; this.changed(null);
+    this.speech.cancel(reason); this.frame = null; this.changed(null);
   }
 
   private idleCues(): Record<string, CharacterCue> {
@@ -122,6 +123,7 @@ export class RoundPresentation {
       cues: { ...this.idleCues(), [id]: { stateId: 'thinking', sequence: ++this.cueSequence } } });
     if (this.paused) { this.schedule(() => this.beginSpeaker(), 0); return; }
     if (!player.completeValidInsult) {
+      this.record({ type: 'skipped', reason: 'incomplete' });
       this.update({ phase: 'hesitating' });
       this.prepareNext();
       this.schedule(() => this.advanceSpeaker(), 2000); return;
@@ -133,7 +135,7 @@ export class RoundPresentation {
       onSegment: (index) => guarded(() => this.segment(index)),
       onEnd: () => guarded(() => this.finishedSpeech()),
       onError: () => guarded(() => this.silentDelivery(Math.max(0, this.frame!.segment))),
-    });
+    }, input.resolution.round);
     if (!accepted) this.silentDelivery(0);
     this.prepareNext();
   }
@@ -141,7 +143,12 @@ export class RoundPresentation {
   private prepareNext(): void {
     const input = this.input!;
     const nextId = this.order[this.speakerIndex + 1];
-    if (nextId) this.speech.prepare(input.resolution.players[nextId]!, input.settings, input.voices[nextId]!);
+    if (nextId) this.speech.prepare(input.resolution.players[nextId]!, input.settings, input.voices[nextId]!, input.resolution.round);
+  }
+
+  private record(event: SpeechDiagnostic): void {
+    const input = this.input!;
+    this.speech.presentation(input.resolution.round, this.frame!.speakerId, input.settings, input.voices[this.frame!.speakerId]!, event);
   }
 
   private reciting(): void {
@@ -151,18 +158,20 @@ export class RoundPresentation {
     } } });
   }
 
-  private silentDelivery(index: number): void {
+  private silentDelivery(index: number, beginning = true): void {
+    if (beginning) this.record({ type: 'silent-start', segment: index });
     const player = this.input!.resolution.players[this.frame!.speakerId]!;
     const count = publicNarrationSegments(player).length;
     if (this.frame!.phase !== 'reciting') this.reciting();
     this.segment(index);
     this.schedule(() => {
-      if (index + 1 < count) this.silentDelivery(index + 1);
+      if (index + 1 < count) this.silentDelivery(index + 1, false);
       else this.finishedSpeech();
     }, 1000);
   }
 
   private segment(index: number): void {
+    this.record({ type: 'presentation-segment', segment: index });
     const frame = this.frame!;
     const player = this.input!.resolution.players[frame.speakerId]!;
     this.bonusEvents(player, index - 1);
@@ -205,6 +214,7 @@ export class RoundPresentation {
   private finishedSpeech(): void {
     const input = this.input!;
     const player = input.resolution.players[this.frame!.speakerId]!;
+    this.record({ type: 'presentation-total', value: player.outgoingDamage });
     this.bonusEvents(player, Number.POSITIVE_INFINITY);
     this.update({ phase: 'total', components: input.components[player.playerId] ?? [], total: player.outgoingDamage, cues: this.idleCues() });
     this.schedule(() => {
@@ -236,6 +246,7 @@ export class RoundPresentation {
   }
 
   private advanceSpeaker(): void {
+    this.record({ type: 'presentation-end' });
     this.speakerIndex++;
     if (this.speakerIndex < this.order.length) {
       this.beginSpeaker();

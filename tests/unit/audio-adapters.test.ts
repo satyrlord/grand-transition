@@ -4,7 +4,11 @@ import { effectIds, mixerGains } from '../../src/audio/audio-port';
 import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
 
 function audioHarness() {
-  const params: Array<{ value: number; curves: Float32Array[] }> = [];
+  const params: Array<{
+    value: number;
+    curves: Float32Array[];
+    cancelScheduledValues: ReturnType<typeof vi.fn>;
+  }> = [];
   const nodes: Array<{ loop: boolean; onended: (() => void) | null; start: ReturnType<typeof vi.fn>;
     stop: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }> = [];
   const context = {
@@ -12,10 +16,21 @@ function audioHarness() {
     resume: vi.fn(async () => {}), close: vi.fn(async () => {}),
     decodeAudioData: vi.fn(async () => ({ duration: 1 })),
     createGain: () => {
+      let curveStart: number | null = null;
+      let curveEnd = 0;
       const parameter = { value: 1, curves: [] as Float32Array[],
         setValueAtTime(value: number) { this.value = value; },
-        cancelScheduledValues: vi.fn(),
-        setValueCurveAtTime(values: Float32Array) { this.curves.push(values); },
+        cancelScheduledValues: vi.fn((startTime: number) => {
+          if (curveStart !== null && curveStart >= startTime) curveStart = null;
+        }),
+        setValueCurveAtTime(values: Float32Array, startTime: number, duration: number) {
+          if (curveStart !== null && startTime < curveEnd) {
+            throw new DOMException("Can't add events during a curve event", 'NotSupportedError');
+          }
+          curveStart = startTime;
+          curveEnd = startTime + duration;
+          this.curves.push(values);
+        },
       };
       params.push(parameter);
       return { gain: parameter, connect: vi.fn(), disconnect: vi.fn() };
@@ -39,7 +54,7 @@ describe('audio adapters', () => {
     expect(mixerGains({ masterVolume: value, musicVolume: value, effectsVolume: value, speechVolume: value }))
       .toEqual({ music: value, effects: value, speech: value });
     expect(mixerGains({ ...defaultSettings, masterVolume: value }))
-      .toEqual({ music: 0.7 * value, effects: 0.8 * value, speech: 0.8 * value });
+      .toEqual({ music: 0.1 * value, effects: 0.8 * value, speech: 0.8 * value });
   });
 
   test('resumes in the gesture task, decodes once, and starts every distinct cue at the public event time', async () => {
@@ -51,7 +66,7 @@ describe('audio adapters', () => {
     await pending;
     expect(audio.status).toBe('ready');
     expect(nodes).toHaveLength(1);
-    expect(params.slice(0, 3).map(({ value }) => value)).toEqual([1, 0.7, 0.8]);
+    expect(params.slice(0, 3).map(({ value }) => value)).toEqual([1, 0.1, 0.8]);
     for (const cue of effectIds) {
       const eventTime = context.currentTime;
       expect(audio.play(cue)).toBe(true);
@@ -63,7 +78,9 @@ describe('audio adapters', () => {
     await Promise.all([audio.enable(), audio.enable()]);
     expect(changed).toHaveBeenCalledTimes(notifications);
     expect(createContext).toHaveBeenCalledOnce();
-    expect(load).toHaveBeenCalledTimes(12);
+    expect(load.mock.calls.map(([id]) => id)).toEqual([
+      'menu-theme', 'transition-era-television-studio-theme', ...effectIds,
+    ]);
     expect(nodes.filter((node) => node.loop)).toHaveLength(1);
     audio.dispose();
     expect(context.close).toHaveBeenCalledOnce();
@@ -77,7 +94,7 @@ describe('audio adapters', () => {
     });
     await audio.enable();
     expect(audio.status).toBe('ready');
-    expect(load.mock.calls.map(([, format]) => format)).toEqual(Array.from({ length: 12 }, () => ['ogg', 'mp3']).flat());
+    expect(load.mock.calls.map(([, format]) => format)).toEqual(Array.from({ length: 11 }, () => ['ogg', 'mp3']).flat());
     audio.dispose();
     const failed = audioHarness();
     failed.load.mockRejectedValue(new Error('missing'));
@@ -97,7 +114,7 @@ describe('audio adapters', () => {
     await audio.enable();
     context.currentTime += 1;
     audio.setScene('transition-era-television-studio');
-    expect(nodes).toHaveLength(3);
+    expect(nodes).toHaveLength(2);
     expect(nodes[0]!.stop).toHaveBeenCalledExactlyOnceWith(11.3);
     const outgoing = params[3]!.curves.at(-1)!;
     const incoming = params[4]!.curves.at(-1)!;
@@ -107,8 +124,7 @@ describe('audio adapters', () => {
     nodes[0]!.onended!();
     audio.setScene(null);
     expect(nodes[1]!.stop).toHaveBeenCalledExactlyOnceWith(11.3);
-    expect(nodes[2]!.stop).toHaveBeenCalledExactlyOnceWith(11.3);
-    nodes[1]!.onended!(); nodes[2]!.onended!();
+    nodes[1]!.onended!();
     expect(nodes.every((node) => node.disconnect.mock.calls.length === 1)).toBe(true);
     audio.dispose();
   });
@@ -128,7 +144,7 @@ describe('audio adapters', () => {
     audio.setScene('transition-era-television-studio');
     expect(nodes).toHaveLength(1);
     audio.configure(defaultSettings);
-    expect(nodes).toHaveLength(3);
+    expect(nodes).toHaveLength(2);
     audio.dispose();
   });
 
@@ -155,6 +171,7 @@ describe('audio adapters', () => {
     audio.setScene('transition-era-television-studio');
     const fade = params[3]!.curves.at(-1)!;
     expect(fade[0]).toBeCloseTo(Math.sin(0.05 / 0.3 * Math.PI / 2));
+    expect(params[3]!.cancelScheduledValues).toHaveBeenLastCalledWith(0);
     context.currentTime += 0.05;
     audio.setScene('menu');
     context.currentTime += 0.05;
@@ -198,4 +215,3 @@ describe('audio adapters', () => {
     expect(second.context.close).toHaveBeenCalledOnce();
   });
 });
-

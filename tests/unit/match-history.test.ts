@@ -26,6 +26,23 @@ const completed = simulateMatch(
 );
 
 describe('persistent match history', () => {
+  test('updates terminal speech diagnostics on the same history entry and retains legacy entries', () => {
+    let serialized: string | null = null;
+    const storage: StoragePort = { read: () => ({ ok: true, value: serialized }),
+      write: (_key, value) => { serialized = value; return { ok: true, value: undefined }; }, remove: () => ({ ok: true, value: undefined }) };
+    const repository = new MatchHistoryRepository(storage);
+    const entry = historyEntry('speech-match', '2026-08-29T12:00:00.000Z');
+    repository.append(entry);
+    expect(new MatchHistoryRepository(storage).snapshot().entries[0]!.speechDiagnostics).toBeUndefined();
+    const diagnostics = { schemaVersion: 1 as const, status: 'finished' as const, droppedEvents: 0, events: [
+      { type: 'playback-end' as const, round: 1, speakerId: entry.matchLog.winner, voice: 'kokoro:bm_george', rate: 1.2, pitch: 1, elapsedMs: 1234 },
+    ] };
+    repository.updateSpeechDiagnostics(entry.id, diagnostics);
+    const restored = new MatchHistoryRepository(storage).snapshot().entries;
+    expect(restored).toHaveLength(1); expect(restored[0]).toEqual({ ...entry, speechDiagnostics: diagnostics });
+    repository.updateSpeechDiagnostics('missing-match', diagnostics);
+    expect(repository.snapshot().entries).toEqual(restored);
+  });
   test('maps browser storage security, quota, and unavailable failures', () => {
     const security = createBrowserStorage(
       throwingStorage({

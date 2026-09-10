@@ -1,5 +1,6 @@
 import { englishGameLocale, sampleContent } from '../game-content';
 import type { MatchCommand, MatchState } from '../engine/match-lifecycle';
+import type { SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
 
 export type DevelopmentGameLogTransition = Readonly<{
   initialSeed: number;
@@ -24,6 +25,7 @@ const phraseTextById = new Map(
 export class DevelopmentGameLogger {
   private lines: string[] = [];
   private sequence = 0;
+  private completion: ReturnType<typeof completionRecord> | null = null;
 
   constructor(private readonly sink: LogSink = writeLogToRepository) {}
 
@@ -31,6 +33,7 @@ export class DevelopmentGameLogger {
     if (transition.action === 'start-match') {
       this.lines = [JSON.stringify(headerRecord(transition))];
       this.sequence = 0;
+      this.completion = null;
     }
     if (this.lines.length === 0) return;
 
@@ -40,8 +43,13 @@ export class DevelopmentGameLogger {
       return;
     }
 
-    this.lines.push(JSON.stringify(completionRecord(transition.after)));
-    const text = `${this.lines.join('\n')}\n`;
+    this.completion = completionRecord(transition.after);
+  }
+
+  finishSpeech(speechDiagnostics: SpeechDiagnosticsDocument): void {
+    if (!this.completion || speechDiagnostics.status === 'recording') return;
+    const text = `${[...this.lines, JSON.stringify({ ...this.completion, speechDiagnostics })].join('\n')}\n`;
+    this.completion = null;
     this.lines = [];
     this.sequence = 0;
     void this.sink(text).catch((error: unknown) => {
@@ -282,9 +290,11 @@ async function writeLogToRepository(text: string): Promise<void> {
 const logger = new DevelopmentGameLogger();
 window.grandTransitionDevelopmentGameLog = (transition) =>
   logger.capture(transition);
+window.grandTransitionDevelopmentSpeechLog = (diagnostics) => logger.finishSpeech(diagnostics);
 
 declare global {
   interface Window {
+    grandTransitionDevelopmentSpeechLog?: (diagnostics: SpeechDiagnosticsDocument) => void;
     grandTransitionDevelopmentGameLog?: (
       transition: DevelopmentGameLogTransition,
     ) => void;
