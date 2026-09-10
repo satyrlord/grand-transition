@@ -20,6 +20,23 @@ Skill creation, review, and dry runs do not authorize generation.
 A generation request authorizes the selected route within its stated scope.
 Do not ask for the same authorization again.
 
+## Load the task modules
+
+Load only required modules. If scope changes, read newly required modules before their affected actions.
+
+- Before prompt work, generation, or an API dry run, read
+  [generation preparation](references/generation-preparation.md), including for an existing prompt. This module owns input authorization and the pre-generation color guard.
+- Before an API dry run or authorized API generation, read
+  [API generation](references/api-generation.md). Internal generation does not need this module.
+- Before inspecting or approving any candidate, read
+  [candidate inspection and review](references/candidate-review.md), including existing candidates and previews from either route.
+- Before master preparation or integration, read
+  [scene integration](references/scene-integration.md). Preview-only requests exclude this module and do not authorize import.
+
+For route planning alone, use this entry point without API mechanics.
+Report the route, required inputs, and unresolved decisions without generation or integration.
+Respect prohibitions on edits or testing. Report excluded checks instead of running them or claiming completion.
+
 ## Select the resolution route
 
 Use requested pixel count as the routing boundary, regardless of aspect ratio.
@@ -36,35 +53,8 @@ Use the scene's declared master size when the user does not specify a size.
 Use 3840 by 2160 for a requested 4K landscape scene.
 Use the helper's `plan --size WIDTHxHEIGHT` command to check the route.
 
-For the internal route, use the installed `imagegen` skill's built-in tool mode.
-Request the intended dimensions in the prompt.
-Generate first, then copy the original output into the workspace.
-The internal tool may return different dimensions. Verify the saved file.
-Do not upscale a smaller result or call it an exact-size master.
-If its output is insufficient, report the size mismatch.
-Do not silently spend API credits or increase the request size to bypass this boundary.
+## Bound generation and approval
 
-For the API route, use [the API procedure](references/api-and-review.md).
-Use `gpt-image-2.5-sunburst`, high quality, PNG output, and an explicit size.
-Read `OPENAI_API_KEY` from `.env.local` privately through the helper.
-Never print the file or key, expose it in command arguments, or add it to browser code.
-Do not use another provider or the internal tool as a high-resolution substitute.
-
-## Select the input mode
-
-Use text-only generation by default.
-Do not include previous conversation images in a text-only tool call.
-Use reference inputs only when the user authorizes them and the scene contract permits them.
-Transition-Era Television Studio currently requires text-only generation.
-Record each authorized reference's source, rights, hash, and purpose before upload.
-Inspect each reference locally.
-Preserve Specification 023 restrictions on existing baseline rasters.
-Do not generalize a scene-specific exception to another asset.
-
-## Generate and inspect
-
-Read [the review procedure](references/api-and-review.md#review-visible-content) for either route.
-Run the private-prompt color guard before generation.
 Generate one candidate per request.
 After an observed defect, permit one corrective request per layer unless the user sets another limit.
 Stop at the limit, a refusal, an authentication failure, or an uncertain charged timeout.
@@ -72,24 +62,15 @@ Report the result and required next action.
 The API helper does not repeat failed CLI invocations. Its installed SDK can
 retry transient requests internally.
 
-Preserve the selected scene's approved art direction and neutral color controls.
-Use the approved green-matte workflow for foreground layers intended for integration.
-Do not bake playable characters, required text, or controls into scene art.
-
-Verify decoded pixel dimensions before resizing.
-Inspect the full candidate and source-scale crops with the image viewer.
-Compare visible content with every requirement in the private brief.
-Run the color guard and record specific observations.
-A correct pixel count and the generator's self-description do not establish content correctness.
 Require a passing review tied to the current image hash before master preparation.
 
 ## Integrate and finish
 
-Follow [the integration procedure](references/scene-integration.md) after candidate review passes.
+Follow the loaded integration procedure only within authorized scope and after candidate review passes.
 Keep rejected candidates out of `src/assets/`.
 Preserve stable scene IDs for replacements.
 For new scene identities, update the authorized specification, catalog, localization, resolver, and tests.
-Completion requires valid shipping assets, factual source records, connected runtime usage, and passing applicable checks.
+Integration completion requires valid shipping assets, factual source records, connected runtime usage, and passing applicable checks.
 For a preview-only request, save and inspect the image without importing it.
 Record product-owner visual acceptance only when the user supplies it.
 Report provider route, model when known, input mode, actual dimensions, checks, and unresolved limitations.

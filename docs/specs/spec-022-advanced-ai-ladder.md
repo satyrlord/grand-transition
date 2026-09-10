@@ -30,6 +30,20 @@ It uses these Local Radio weights: weakness 1.2, combo 1, finisher 1, denial 1,
 continuation 0.8, and comeback 0.9. The protected weights are lethal 10000,
 lethal block 8000, grammar-mistake risk -4, and dead end -10000.
 
+Both advanced policies classify a continuation as a dead end when the
+construction is empty or a safe drafting action remains. A safe drafting
+action selects a non-continuation phrase without a grammar mistake or dead end,
+or submits a complete sentence with Commit or Comeback. Apply this classification
+to first-ply candidates and opponent replies. A nonempty fragment can still
+continue when no safe drafting action remains. Continuation legality for human
+players and Local Radio Caller behavior do not change.
+
+Commit or turn expiry on an incomplete construction is also a dead end while
+a safe drafting action remains. Keep incomplete submission available when no
+safe drafting action remains. A complete Commit or Comeback retains its normal
+score. Apply this protection before Palace reply search so ending an empty
+sentence cannot outrank drafting merely by reducing the opponent's denial value.
+
 Palace Operator sorts first-ply actions by deterministic utility and keeps a
 beam of 12. It evaluates up to the opponent's best 8 legal replies for each.
 It stops at 256 evaluated nodes. It subtracts 0.85 times opponent reply utility. It uses
@@ -115,7 +129,8 @@ complete,” not a prior difficulty.
   and reset.
 - `tests/browser/screen-shell.browser.test.ts` verifies difficulty selection,
   ladder setup, persistence, completion, and confirmed reset.
-- `e2e/advanced-ai-ladder.spec.ts` verifies AC-022-06 in the production build.
+- `e2e/advanced-ai-ladder.spec.ts` verifies AC-022-06 in the production build
+  with ladder seed 5 and Palace Operator as the automated human player.
 - The Impeccable records and `npm run ci` complete milestone evidence.
 
 ## Impeccable UI validation
@@ -140,3 +155,11 @@ the opponent's current draft carry intention, not the carry entering the round.
 `tests/unit/advanced-ai.test.ts` verifies current carry without prior carry,
 prior carry without current carry, the exact break threshold, actual resolution,
 and the Pride-3 safe-alternative fixture.
+
+**AC-022-08:** Both advanced difficulties start sentences instead of selecting
+an empty continuation, extend fragments while safe phrases remain, and retain
+continuation for blocked nonempty fragments. They do not submit an incomplete
+sentence while safe drafting remains. Fixed-seed full matches verify
+that each player completes sentences and neither player carries an empty
+construction. `tests/unit/advanced-ai.test.ts` verifies these choices through
+accepted reducer outcomes.

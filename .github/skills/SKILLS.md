@@ -5,6 +5,9 @@ before using a skill. Use commands from the repository configuration in the
 working tree.
 Do not invent missing scripts.
 
+Read the selected skill's entry point first. Load its references only at the
+specified task gates. Recheck those gates when the scope changes.
+
 - [`add-feature`](add-feature/SKILL.md): Define, implement, or repair approved
   product behavior.
 - [`create-skill`](create-skill/SKILL.md): Create, import, adapt, or review

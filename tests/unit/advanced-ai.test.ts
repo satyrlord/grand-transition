@@ -63,6 +63,103 @@ const zeroFeatures: AdvancedAiFeatures = Object.freeze({
 const neutralPersonality = { aggression: 0.5, denial: 0.5, risk: 0.5 };
 
 describe('advanced AI ladder policies', () => {
+  test.each([
+    ['Party Strategist', decidePartyStrategist, 22],
+    ['Palace Operator', decidePalaceOperator, 22],
+    ['Party Strategist', decidePartyStrategist, 1],
+    ['Palace Operator', decidePalaceOperator, 1],
+  ] as const)(
+    '%s starts a sentence instead of ending an empty construction',
+    (_name, decide, seed) => {
+      const state = preparedMatch(seed);
+      const actor = state.activePlayerId;
+      const first = state.draft!.playerStates[actor]!.legalCards.find((card) =>
+        state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'noun'),
+      )!;
+      const next = reduce(state, {
+        type: 'select-phrase', source: 'ai', actorId: actor, payload: { card: first },
+      });
+      const decision = decide(next, context)!;
+      expect(decision.command.type).toBe('select-phrase');
+      const outcome = reduce(next, decision.command);
+      expect(outcome.draft!.playerStates[next.activePlayerId]!.construction.steps.length)
+        .toBeGreaterThan(0);
+      expect(outcome.draft!.playerStates[next.activePlayerId]!.construction.carryIntent).toBe(false);
+    },
+  );
+
+  test.each([['Party Strategist', decidePartyStrategist], ['Palace Operator', decidePalaceOperator]] as const)(
+    '%s extends a fragment but preserves continuation when its words are blocked',
+    (_name, decide) => {
+      let state = preparedMatch();
+      const actor = state.activePlayerId;
+      const noun = state.draft!.playerStates[actor]!.legalCards.find((card) =>
+        state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'noun'),
+      )!;
+      state = reduce(state, {
+        type: 'select-phrase', source: 'ai', actorId: actor, payload: { card: noun },
+      });
+      state = reduce(state, {
+        type: 'commit-sentence', source: 'ai', actorId: state.activePlayerId, payload: {},
+      });
+      const continuation = state.draft!.board.slots.find((slot) => slot.role === 'continuation')!;
+      const carry = evaluatePartyStrategistCandidates(state, context)
+        .find(({ targetId }) => targetId === continuation.id)!;
+      expect(carry.rawFeatures.deadEnd).toBe(1);
+      const progressCommand = decide(state, context)!.command;
+      expect(progressCommand.type).toBe('select-phrase');
+      const progressed = reduce(state, progressCommand);
+      expect(progressed.draft!.playerStates[actor]!.construction.steps.length).toBeGreaterThan(1);
+      expect(progressed.draft!.playerStates[actor]!.construction.carryIntent).toBe(false);
+      expect(progressed.draft!.playerStates[actor]!.construction.analysis.complete).toBe(true);
+      expect(evaluatePartyStrategistCandidates(progressed, context)
+        .find(({ command }) => command.type === 'commit-sentence')!.rawFeatures.deadEnd).toBe(0);
+
+      const board = {
+        ...state.draft!.board,
+        slots: state.draft!.board.slots.map((slot) => ({
+          ...slot, available: slot.id === continuation.id,
+        })),
+      };
+      state = {
+        ...state, board,
+        draft: {
+          ...state.draft!, board,
+          playerStates: {
+            ...state.draft!.playerStates,
+            [actor]: {
+              ...state.draft!.playerStates[actor]!, hand: [], redrawUsed: true,
+              legalCards: [{ source: 'shared', cardId: continuation.id }],
+            },
+          },
+        },
+      };
+      const decision = decide(state, context)!;
+      expect(decision.command).toMatchObject({
+        type: 'select-phrase', payload: { card: { cardId: continuation.id } },
+      });
+      const carried = reduce(state, decision.command).draft!.playerStates[actor]!.construction;
+      expect(carried.carryIntent).toBe(true);
+      expect(carried.steps).toEqual(state.draft!.playerStates[actor]!.construction.steps);
+
+      const emptyConstruction = preparedMatch().draft!.playerStates[actor]!.construction;
+      state = {
+        ...state,
+        draft: {
+          ...state.draft!,
+          playerStates: {
+            ...state.draft!.playerStates,
+            [actor]: { ...state.draft!.playerStates[actor]!, construction: emptyConstruction },
+          },
+        },
+      };
+      const fallback = decide(state, context)!;
+      expect(fallback.command.type).toBe('commit-sentence');
+      expect(reduce(state, fallback.command).draft!.playerStates[actor]!.construction.status)
+        .toBe('ended');
+    },
+  );
+
   test('uses exact Party and Palace utility weights', () => {
     const partyTerms = {
       weaknessOpportunity: 1.2,
@@ -252,6 +349,7 @@ describe('advanced AI ladder policies', () => {
   ] as const)(
     'completes one replayable %s match inside its delay bounds',
     (difficulty, minimumDelay, maximumDelay) => {
+      const completedByPlayer = new Map<string, number>();
       const result = simulateMatch(
         22,
         createSimulationSetup(sampleContent, { aiDifficulty: difficulty }),
@@ -260,10 +358,35 @@ describe('advanced AI ladder policies', () => {
           locale: englishGameLocale,
           balance: basicScoringBalance,
         },
-        listConfiguredAiSimulationOptions,
+        (state, engineContext) => {
+          const options = listConfiguredAiSimulationOptions(state, engineContext);
+          const command = options[0]?.command;
+          const player = state.draft?.playerStates[state.activePlayerId];
+          if (player && command) {
+            if (command.type === 'commit-sentence' || command.type === 'select-comeback') {
+              expect(player.construction.analysis.complete).toBe(true);
+              if (player.construction.analysis.complete) {
+                completedByPlayer.set(player.playerId,
+                  (completedByPlayer.get(player.playerId) ?? 0) + 1);
+              }
+            }
+            if (command.type === 'select-phrase') {
+              const next = createMatchReducer(engineContext)(state, command, seededRandomSource);
+              if (!next.ok) throw new Error(next.error.code);
+              const construction = next.state.draft?.playerStates[player.playerId]?.construction;
+              if (construction?.carryIntent) {
+                expect(construction.steps.length).toBeGreaterThan(0);
+              }
+            }
+          }
+          return options;
+        },
       );
       expect(result.finalState.phase).toBe('results');
       expect(result.finalState.winner).toBeTruthy();
+      for (const playerId of result.finalState.playerOrder) {
+        expect(completedByPlayer.get(playerId) ?? 0, playerId).toBeGreaterThan(0);
+      }
       expect(result.maximumPresentationDelayMs).toBeGreaterThanOrEqual(
         minimumDelay,
       );
@@ -288,12 +411,12 @@ describe('advanced AI ladder policies', () => {
   });
 });
 
-function preparedMatch(): MatchState {
+function preparedMatch(seed = 22): MatchState {
   const [first, second] = sampleContent.characters;
   const scene = sampleContent.scenes[0]!;
   let state = createMatchSetupState({
     schemaVersion: 1,
-    seed: 22,
+    seed,
     mode: 'ai',
     aiDifficulty: 'party-strategist',
     players: [

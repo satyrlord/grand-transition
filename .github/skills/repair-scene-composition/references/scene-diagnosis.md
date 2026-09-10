@@ -1,5 +1,60 @@
 # Scene diagnosis reference
 
+## Build one evidence packet
+
+Record the source canvas, viewport, browser, crop mode, layer order, layer
+dimensions, and every CSS transform. Inspect each raster alone. Inspect the
+final composite with real interface content.
+
+Use the user-supplied screenshot as evidence. Capture new screenshots only when
+the user permits testing. Never substitute a development mock for the production
+composition.
+
+Measure relative geometry. Include human head size, eye line, shoulder width,
+visible torso, desk top, desk width, moderator scale, prop size, interface-safe
+regions, and visible layer seams. Normalize measurements to the scene viewport.
+Do not judge proportions from asset dimensions alone.
+
+## Identify the owning cause
+
+Classify each defect as one of these causes:
+
+1. Asset composition or perspective.
+2. Layer extraction or alpha quality.
+3. Runtime scale, crop, position, or transform.
+4. Layer order or occlusion.
+5. Interface collision or visual hierarchy.
+6. Viewport-specific divergence.
+7. Contract or content mismatch.
+
+Separate symptoms from causes. A desk that looks too large can come from the
+desk raster, character scale, camera perspective, viewport crop, or several of
+these causes. Do not change one value until the evidence selects the owner.
+
+## Choose the repair scope
+
+Use a runtime repair only when the source assets agree and one placement rule
+works at every supported viewport.
+
+Regenerate one layer when that layer has the wrong perspective, intrinsic scale,
+edge quality, or focal placement.
+
+Regenerate the complete scene package when one or more of these conditions is
+true:
+
+- Two local scale corrections failed manual review.
+- Layers require contradictory transforms at different viewports.
+- Character, moderator, prop, and desk scale do not share one camera model.
+- Alpha seams or extracted edges remain visible in the composite.
+- A foreground layer cannot align without hiding required anatomy or interface
+  content.
+- The user rejects the complete composition rather than one isolated detail.
+
+Do not stack more transforms on an incoherent scene. Build one coherent master
+composition. Derive the back scene, character planes, and foreground occlusion
+layers from that master. Preserve identical camera, canvas, lighting, and focal
+coordinates across all derived assets.
+
 ## Use one coordinate system
 
 Record all geometry as a ratio of the visible scene viewport. Use `x / width`,

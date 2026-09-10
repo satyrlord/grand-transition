@@ -30,6 +30,12 @@ triggers in `SKILL.md` frontmatter. Keep the entry point concise. Use
 `references/` only for branch-specific detail, `scripts/` only for repeatable
 deterministic work, and `assets/` only for output material.
 
+For substantial conditional procedures, keep scope, authority, routing, and
+shared completion rules in `SKILL.md`. Link each module directly from that file.
+State when each module must load, including after a task changes scope.
+Keep shared requirements in the entry point. Load only modules required by the task.
+Keep short, self-contained skills in one file when splitting adds no useful choice.
+
 Apply the [technical writing checks](../../PROSE.md) to the complete package.
 
 ## Write the text
@@ -67,6 +73,10 @@ isolated environment or report the validator as blocked.
 
 Also verify links, metadata parity, foreign terms, unfinished placeholders, and
 any added script. A validator pass does not prove that the workflow is useful.
+
+For routing changes, check representative requests for module selection and required-step coverage.
+Include a request that changes scope and a request that prohibits edits or testing.
+Measure loaded guidance separately from entry-point size. Label character or word counts as proxies for tokens.
 
 Review mode is complete when every package file has a disposition and each
 finding has evidence and a verification step.

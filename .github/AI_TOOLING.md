@@ -43,6 +43,11 @@ Create or verify them on Windows with:
 pwsh -File .github/scripts/setup-skill-links.ps1
 ```
 
+Skill entry points retain scope, authority, shared rules, and completion criteria.
+For substantial conditional procedures, link task modules with explicit loading conditions.
+Load only the modules required by the task. Keep short skills self-contained.
+See [create-skill](skills/create-skill/SKILL.md) for authoring and validation.
+
 ## Model Context Protocol policy
 
 Agents can use the Microsoft Learn Model Context Protocol (MCP) server for
