@@ -43,6 +43,10 @@ export async function readCharacterLayout(characterRoot, masterNames = CHARACTER
 }
 
 export async function encodeVariant(input, width, format) {
+  return (await encodeVariantWithMetadata(input, width, format)).output;
+}
+
+export async function encodeVariantWithMetadata(input, width, format) {
   let pipeline = sharp(input).resize(width, width, { fit: 'contain', kernel: sharp.kernel.lanczos3 });
   const nativeAlpha = hasNativeAlphaProvenance(input);
   if (nativeAlpha) {
@@ -57,10 +61,25 @@ export async function encodeVariant(input, width, format) {
     }
     pipeline = sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
   }
-  return format === 'avif'
-    ? pipeline.avif({ effort: 8, quality: nativeAlpha && width <= 256 ? 100 : QUALITY.avif,
-      lossless: nativeAlpha && width <= 256 }).toBuffer()
-    : pipeline.webp({ alphaQuality: 100, effort: 6, quality: QUALITY.webp, smartSubsample: true }).toBuffer();
+  let lossless = format === 'avif' && nativeAlpha && width <= 256;
+  let output = format === 'avif'
+    ? await pipeline.clone().avif({ effort: 8, quality: lossless ? 100 : QUALITY.avif, lossless }).toBuffer()
+    : await pipeline.webp({ alphaQuality: 100, effort: 6, quality: QUALITY.webp, smartSubsample: true }).toBuffer();
+  if (format === 'avif' && nativeAlpha && !lossless) {
+    const { data, info } = await sharp(output).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const borderChanged = data.some((alpha, index) => {
+      if (index % 4 !== 3 || alpha === 0) return false;
+      const pixel = (index - 3) / 4;
+      const x = pixel % info.width;
+      const y = Math.floor(pixel / info.width);
+      return x === 0 || y === 0 || x === info.width - 1 || y === info.height - 1;
+    });
+    if (borderChanged) {
+      lossless = true;
+      output = await pipeline.avif({ effort: 8, quality: 100, lossless: true }).toBuffer();
+    }
+  }
+  return { output, quality: lossless ? 100 : QUALITY[format], ...(lossless ? { lossless: true } : {}) };
 }
 
 async function readMaster(characterRoot, fileName) {
@@ -129,7 +148,7 @@ export async function buildCharacterAssets({
       const variants = await Promise.all(
         CHARACTER_VARIANT_SIZES.flatMap((width) =>
           CHARACTER_VARIANT_FORMATS.map(async (format) => {
-          const output = await encodeVariant(input, width, format);
+          const { output, quality, lossless } = await encodeVariantWithMetadata(input, width, format);
           if (output.length > CHARACTER_BYTE_BUDGETS[format]) {
             throw new Error(`${id} ${width}px ${format} exceeds its byte budget.`);
           }
@@ -140,8 +159,8 @@ export async function buildCharacterAssets({
             width,
             height: width,
             format,
-            quality: format === 'avif' && hasNativeAlphaProvenance(input) && width <= 256 ? 100 : QUALITY[format],
-            ...(format === 'avif' && hasNativeAlphaProvenance(input) && width <= 256 ? { lossless: true } : {}),
+            quality,
+            ...(lossless ? { lossless: true } : {}),
             bytes: output.length,
             sha256: sha256(output),
           };

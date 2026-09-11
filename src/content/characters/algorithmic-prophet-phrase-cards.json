@@ -114,6 +114,150 @@
         "safetyFlags": [],
         "notes": "Original transformed beverage-microchip motif: imaginary hardware refuses the speaker's rhetoric. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
+    },
+    {
+      "id": "algorithmic-prophet-bottled-prophecy-archive",
+      "role": "noun",
+      "text": "your bottled archive of unverified prophecies",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original beverage-memory satire: a fictional mystic bottles predictions without verification. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-sacred-leaderboard",
+      "role": "noun",
+      "text": "your sacred leaderboard with every result missing",
+      "tags": [
+        "evidence",
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original ranking satire: a fictional mystic treats an empty performance table as a sacred object. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-laptop-wind-of-destiny",
+      "role": "modifier",
+      "text": "after mistaking the laptop fan for a wind of destiny",
+      "tags": [
+        "evidence"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original prophecy satire: an ordinary computer fan becomes an invented omen. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-ceremonial-donation-bow",
+      "role": "modifier",
+      "text": "with a ceremonial bow to the donation button",
+      "tags": [
+        "commercialism",
+        "sincerity"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original ceremonial-honor satire: a fictional livestream ritual serves fundraising. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-tap-water-excuses",
+      "role": "ending",
+      "text": "and your tap water remembers every excuse except the evidence.",
+      "tags": [
+        "evidence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original beverage-memory reversal: imaginary water storage retains excuses but loses proof. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-prophetic-damp-socks",
+      "role": "ending",
+      "text": "and your grand prophecy is just a weather report from damp socks.",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original nature-omen reversal: a grand fictional prediction collapses into a mundane clothing complaint. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-greatness-error-cell",
+      "role": "ending",
+      "text": "and your national greatness fits in a spreadsheet error cell.",
+      "tags": [
+        "competence",
+        "results"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original greatness-versus-measurement satire: a grand claim collapses into an ordinary calculation failure. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-bravery-follow-up",
+      "role": "ending",
+      "text": "and your bravery has never faced a follow-up question.",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original ceremonial-courage reversal: rhetorical bravery avoids ordinary scrutiny. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
     }
   ]
 }

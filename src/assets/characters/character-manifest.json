@@ -17,8 +17,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1523020,
-        "sha256": "4a25445c323a1d431bb795e9a7a1f85ce1d0bdb7612bbaad7b387e83f85a1742"
+        "bytes": 2723154,
+        "sha256": "ff418c1e583b53cb8b5114aaf6250fc69eb95d4757bdc9ab187349bc26954f6d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -37,9 +37,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3137,
-          "sha256": "54a1547d4f28a34c75a6c46437a05d61ba3bfed4693500bb1815e3a374c9d17d"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 12090,
+          "sha256": "1081a55527eff1263ba6992e64f3f2450857824d2a502d8dd102c1443876f130"
         },
         {
           "path": "variants/algorithmic-prophet-128x128.webp",
@@ -47,17 +48,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3718,
-          "sha256": "e2f5c0aec7ec44a47be7e71ec8dd3156ebf18ed4a1432e98432ef7acd410f08d"
+          "bytes": 4102,
+          "sha256": "031ed42f5792a56a62a46348cf1852f212113ae7bc08003fe8754726f0700c9e"
         },
         {
           "path": "variants/algorithmic-prophet-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6347,
-          "sha256": "fe185036ee8b10e9738f966546e5e1a8be4c62357fcc8cb0a38ad3012e1e2b2d"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 31311,
+          "sha256": "6e767054cfc667280dde3bc744aeb91b18d1fb76b0a0e2e856138f3ab5e7a5c0"
         },
         {
           "path": "variants/algorithmic-prophet-256x256.webp",
@@ -65,17 +67,18 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 8488,
-          "sha256": "25b358ca7b6181f97e3dc92395ca041738e10628d03f696995d7116bf413cbe3"
+          "bytes": 9348,
+          "sha256": "adfbad62b8ef8423e4c805bbadbb6b870a35e6c308535338c5b745167876fc6a"
         },
         {
           "path": "variants/algorithmic-prophet-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 7872,
-          "sha256": "c81a01dbde8560be9ba0e9db6e9b71ca0304034f905ffd2f7afc0e79e74801fe"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 43817,
+          "sha256": "e862b7f9821a53e6fc3252e681f705e5926ef63eeb9fa39e45968bd97a9b8bbc"
         },
         {
           "path": "variants/algorithmic-prophet-320x320.webp",
@@ -83,8 +86,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10864,
-          "sha256": "b8ba6a992f550cf492e572518468474478525acfcc55b7e982eb700c3f548d15"
+          "bytes": 12090,
+          "sha256": "c01dd45447f615e1743b455cd5bcc5282aa6ef75cf19d823e5aae24e3d55e6f3"
         },
         {
           "path": "variants/algorithmic-prophet-640x640.avif",
@@ -92,8 +95,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 18254,
-          "sha256": "3b6a6dea020592b4e225428ff906e9b7cf8dd8e5586390369ef009c576263785"
+          "bytes": 18089,
+          "sha256": "70a5fe1a536daa036561545dbd1147acc51c1627b476b2d45873526c50f3a02a"
         },
         {
           "path": "variants/algorithmic-prophet-640x640.webp",
@@ -101,8 +104,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 24824,
-          "sha256": "c3334bcb72ead3033eda8b7d8163b247e1b3bababee426990ffa4f013448b1b2"
+          "bytes": 28846,
+          "sha256": "425a5237e179ac8e259d93065f6f1b3664676a34dba7ccb30b2b14e49817da31"
         },
         {
           "path": "variants/algorithmic-prophet-960x960.avif",
@@ -110,8 +113,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 29410,
-          "sha256": "fbfa6d8d5b7353d68f1c46cc4c1250f856ea66258b69122eedeb22020b592daa"
+          "bytes": 28892,
+          "sha256": "c53d886a97334f521c0c1a25bd10b5f043717984771fd101807113903a975103"
         },
         {
           "path": "variants/algorithmic-prophet-960x960.webp",
@@ -119,8 +122,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 39664,
-          "sha256": "e33abf7f7ba4fd1b83d88a5c94ad5db81c670397c66289d996d6e0e5ee132851"
+          "bytes": 47018,
+          "sha256": "bb65d93a07660b2fe43fe21bff443f0f00fd438625ba405f9368544f6180c9d4"
         }
       ]
     },
