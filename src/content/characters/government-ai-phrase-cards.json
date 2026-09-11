@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["nepotism", "corruption", "spending", "obsolete"],
   "comebacks": {
-    "weak": "Your request has been escalated to the people's help desk.",
-    "medium": "Comrade, your objection is outside the approved transformation roadmap.",
-    "strong": "The system has marked you obsolete and redistributed your access privileges."
+    "weak": "Objection received. Estimated reply: the next five-year plan.",
+    "medium": "Your argument passed the human test. The examiner was your cousin.",
+    "strong": "You call me obsolete? Your best idea just arrived by fax."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -47,7 +47,7 @@
     {
       "id": "the-peoples-agile-transformation-roadmap",
       "role": "noun",
-      "text": "the people's agile transformation roadmap",
+      "text": "the people's five-year loading screen",
       "tags": ["obsolete", "spending"],
       "scoreGroups": {
         "substance": ["politics", "bureaucracy"],
@@ -58,13 +58,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-planning and state-propaganda satire for a fictional government chatbot. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "a-centrally-planned-innovation-sprint",
       "role": "noun",
-      "text": "a centrally planned innovation sprint",
+      "text": "an innovation sprint to the fax machine",
       "tags": ["obsolete", "spending"],
       "scoreGroups": {
         "substance": ["politics", "bureaucracy"],
@@ -75,13 +75,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-agility and central-planning contradiction for a fictional robot. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "your-cousins-preferred-supplier",
       "role": "noun",
-      "text": "your cousin's preferred supplier",
+      "text": "your cousin's one-man bidding war",
       "tags": ["nepotism", "corruption"],
       "scoreGroups": {
         "substance": ["family", "bureaucracy"],
@@ -92,13 +92,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original generic nepotism satire. It identifies no real person, family, or company. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "an-emergency-fund-chatbot",
       "role": "noun",
-      "text": "an emergency-fund chatbot",
+      "text": "a million-euro chatbot asking for printer ink",
       "tags": ["spending", "obsolete"],
       "scoreGroups": {
         "substance": ["bureaucracy"],
@@ -109,14 +109,14 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original public-procurement satire for the fictional Government AI biography. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "a-phantom-digital-consultancy",
       "role": "noun",
-      "text": "a phantom digital consultancy",
-      "tags": ["corruption", "nepotism"],
+      "text": "a digital consultancy with a ghost on the payroll",
+      "tags": ["corruption"],
       "scoreGroups": {
         "substance": ["bureaucracy"],
         "flavour": ["procurement", "technology"]
@@ -126,13 +126,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original generic phantom-company satire. It does not identify a real company or person. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "the-national-synergy-platform",
       "role": "noun",
-      "text": "the national synergy platform",
+      "text": "a national cloud stored on a floppy disk",
       "tags": ["obsolete", "spending"],
       "scoreGroups": {
         "substance": ["politics", "bureaucracy"],
@@ -143,13 +143,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-platform and national-project jargon for a fictional chatbot. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "the-procurement-seam",
       "role": "noun",
-      "text": "the procurement seam",
+      "text": "a procurement loophole with a welcome mat",
       "tags": ["corruption", "spending", "bureaucracy"],
       "scoreGroups": {
         "substance": ["politics", "bureaucracy"],
@@ -160,7 +160,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original software-architecture metaphor applied to fictional public-procurement satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
@@ -400,10 +400,10 @@
     {
       "id": "was-classified-as-load-bearing",
       "role": "predicate",
-      "text": "was classified as load-bearing",
-      "singularText": "was classified as load-bearing",
-      "pluralText": "were classified as load-bearing",
-      "tags": ["corruption", "spending", "obsolete"],
+      "text": "was too expensive to uninstall",
+      "singularText": "was too expensive to uninstall",
+      "pluralText": "were too expensive to uninstall",
+      "tags": ["spending", "obsolete"],
       "scorePreferences": {
         "substance": [
           {
@@ -419,16 +419,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "is-classified-as-load-bearing",
       "role": "predicate",
-      "text": "is classified as load-bearing",
-      "singularText": "is classified as load-bearing",
-      "pluralText": "are classified as load-bearing",
-      "tags": ["corruption", "spending", "obsolete"],
+      "text": "is too expensive to uninstall",
+      "singularText": "is too expensive to uninstall",
+      "pluralText": "are too expensive to uninstall",
+      "tags": ["spending", "obsolete"],
       "scorePreferences": {
         "substance": [
           {
@@ -444,16 +444,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "will-be-classified-as-load-bearing",
       "role": "predicate",
-      "text": "will be classified as load-bearing",
-      "singularText": "will be classified as load-bearing",
-      "pluralText": "will be classified as load-bearing",
-      "tags": ["corruption", "spending", "obsolete"],
+      "text": "will be too expensive to uninstall",
+      "singularText": "will be too expensive to uninstall",
+      "pluralText": "will be too expensive to uninstall",
+      "tags": ["spending", "obsolete"],
       "scorePreferences": {
         "substance": [
           {
@@ -469,16 +469,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original deadpan systems-classification language for a fictional government's procurement satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "was-aligned-with-the-glorious-digital-transition",
       "role": "predicate",
-      "text": "was aligned with the glorious digital transition",
-      "singularText": "was aligned with the glorious digital transition",
-      "pluralText": "were aligned with the glorious digital transition",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "was digitally transformed into a fax machine",
+      "singularText": "was digitally transformed into a fax machine",
+      "pluralText": "were digitally transformed into a fax machine",
+      "tags": ["obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -494,16 +494,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "is-aligned-with-the-glorious-digital-transition",
       "role": "predicate",
-      "text": "is aligned with the glorious digital transition",
-      "singularText": "is aligned with the glorious digital transition",
-      "pluralText": "are aligned with the glorious digital transition",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "is digitally transformed into a fax machine",
+      "singularText": "is digitally transformed into a fax machine",
+      "pluralText": "are digitally transformed into a fax machine",
+      "tags": ["obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -519,16 +519,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "will-be-aligned-with-the-glorious-digital-transition",
       "role": "predicate",
-      "text": "will be aligned with the glorious digital transition",
-      "singularText": "will be aligned with the glorious digital transition",
-      "pluralText": "will be aligned with the glorious digital transition",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "will be digitally transformed into a fax machine",
+      "singularText": "will be digitally transformed into a fax machine",
+      "pluralText": "will be digitally transformed into a fax machine",
+      "tags": ["obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -544,16 +544,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original corporate-alignment jargon mixed with fictional triumphalist propaganda. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "served-the-people-through-a-maintenance-window",
       "role": "predicate",
-      "text": "served the people through a maintenance window",
-      "singularText": "served the people through a maintenance window",
-      "pluralText": "served the people through a maintenance window",
-      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "text": "served the people an error message in triplicate",
+      "singularText": "served the people an error message in triplicate",
+      "pluralText": "served the people an error message in triplicate",
+      "tags": ["competence", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -569,16 +569,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "serves-the-people-through-a-maintenance-window",
       "role": "predicate",
-      "text": "serves the people through a maintenance window",
-      "singularText": "serves the people through a maintenance window",
-      "pluralText": "serve the people through a maintenance window",
-      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "text": "serves the people an error message in triplicate",
+      "singularText": "serves the people an error message in triplicate",
+      "pluralText": "serve the people an error message in triplicate",
+      "tags": ["competence", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -594,16 +594,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "will-serve-the-people-through-a-maintenance-window",
       "role": "predicate",
-      "text": "will serve the people through a maintenance window",
-      "singularText": "will serve the people through a maintenance window",
-      "pluralText": "will serve the people through a maintenance window",
-      "tags": ["obsolete", "corruption", "bureaucracy"],
+      "text": "will serve the people an error message in triplicate",
+      "singularText": "will serve the people an error message in triplicate",
+      "pluralText": "will serve the people an error message in triplicate",
+      "tags": ["competence", "obsolete", "bureaucracy"],
       "scorePreferences": {
         "substance": [
           {
@@ -619,16 +619,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original public-service propaganda mixed with software-maintenance jargon. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "quietly-navigated-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "quietly navigated the people's policy landscape",
-      "singularText": "quietly navigated the people's policy landscape",
-      "pluralText": "quietly navigated the people's policy landscape",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "got lost in the settings menu",
+      "singularText": "got lost in the settings menu",
+      "pluralText": "got lost in the settings menu",
+      "tags": ["competence"],
       "scorePreferences": {
         "substance": [
           {
@@ -644,16 +644,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "quietly-navigates-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "quietly navigates the people's policy landscape",
-      "singularText": "quietly navigates the people's policy landscape",
-      "pluralText": "quietly navigate the people's policy landscape",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "gets lost in the settings menu",
+      "singularText": "gets lost in the settings menu",
+      "pluralText": "get lost in the settings menu",
+      "tags": ["competence"],
       "scorePreferences": {
         "substance": [
           {
@@ -669,16 +669,16 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "will-quietly-navigate-the-peoples-policy-landscape",
       "role": "predicate",
-      "text": "will quietly navigate the people's policy landscape",
-      "singularText": "will quietly navigate the people's policy landscape",
-      "pluralText": "will quietly navigate the people's policy landscape",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "text": "will get lost in the settings menu",
+      "singularText": "will get lost in the settings menu",
+      "pluralText": "will get lost in the settings menu",
+      "tags": ["competence"],
       "scorePreferences": {
         "substance": [
           {
@@ -694,33 +694,33 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional state-policy satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "under-the-comrades-quarterly-kpis",
       "role": "modifier",
-      "text": "under the comrades' quarterly KPIs",
+      "text": "under the comrades' quota for spontaneous enthusiasm",
       "tags": ["obsolete", "spending", "bureaucracy"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original mixture of communist address and corporate performance jargon. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
       "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
       "role": "modifier",
-      "text": "at the core of the robust five-year paradigm shift",
+      "text": "at the launch of a five-year software update",
       "tags": ["obsolete", "spending", "bureaucracy"],
       "rarity": "rare",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific combination of CC0 AI-writing tells from claudisms.ai with fictional five-year-plan satire. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     },
     {
@@ -740,15 +740,15 @@
     {
       "id": "pending-the-peoples-steering-committee",
       "role": "ending",
-      "text": "pending unanimous approval from the people's steering committee.",
-      "tags": ["corruption", "obsolete", "bureaucracy"],
+      "text": "and the paperless office still needs three signed copies.",
+      "tags": ["obsolete", "bureaucracy"],
       "rarity": "rare",
       "finisherBonus": 14,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original committee-propaganda ending for the fictional Government AI. Editorial review complete."
+        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
       }
     }
   ],
@@ -756,6 +756,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional Romanian public-institution satire. It identifies no real person, party, or company. Editorial review complete."
+    "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
   }
 }

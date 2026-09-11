@@ -74,8 +74,8 @@ describe('persistent match history', () => {
 
   test('round-trips normalized public replay and match-log data', () => {
     const entry = historyEntry('match-one', '2026-08-29T12:00:00.000Z');
-    expect(entry.replay.schemaVersion).toBe(6);
-    expect(entry.matchLog.schemaVersion).toBe(6);
+    expect(entry.replay.schemaVersion).toBe(7);
+    expect(entry.matchLog.schemaVersion).toBe(7);
     const encoded = encodeMatchHistory({
       schemaVersion: matchHistorySchemaVersion,
       kind: matchHistoryKind,
@@ -113,7 +113,7 @@ describe('persistent match history', () => {
     expect(encoded).toContain(usedPhrases[0]!.text);
   });
 
-  test.each([1, 2, 3, 4, 5] as const)(
+  test.each([1, 2, 3, 4, 5, 6] as const)(
     'keeps a matched replay and match-log version %s history pair',
     (schemaVersion) => {
       const entry = historyEntry(`older-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');
@@ -129,8 +129,10 @@ describe('persistent match history', () => {
           matchLog: { schemaVersion: number; sentences?: unknown; setup: { basePointsMultiplier?: number } };
         }>;
       };
-      delete stored.entries[0]!.replay.setup.basePointsMultiplier;
-      delete stored.entries[0]!.matchLog.setup.basePointsMultiplier;
+      if (schemaVersion < 6) {
+        delete stored.entries[0]!.replay.setup.basePointsMultiplier;
+        delete stored.entries[0]!.matchLog.setup.basePointsMultiplier;
+      }
       stored.entries[0]!.replay.schemaVersion = schemaVersion;
       stored.entries[0]!.matchLog.schemaVersion = schemaVersion;
       if (schemaVersion <= 2) delete stored.entries[0]!.matchLog.sentences;

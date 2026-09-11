@@ -27,9 +27,9 @@
     "corruption"
   ],
   "comebacks": {
-    "weak": "Protocol has not heard of you.",
-    "medium": "Your invitation was printed on cheaper paper.",
-    "strong": "Even the empty palace hall has more public support."
+    "weak": "Bad luck. Even your invitation was rejected.",
+    "medium": "My dear exit poll, we need to see other people.",
+    "strong": "I congratulated myself too early. You have never had that problem."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -50,18 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "marble-diplomat-foundation-noun",
       "role": "noun",
-      "text": "my ceremonial marble antechamber",
-      "tags": [
-        "luxury",
-        "elitism",
-        "corruption"
-      ],
+      "text": "my victory champagne on the taxpayers' tab",
+      "tags": ["luxury", "corruption"],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -75,42 +71,48 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed premature-celebration motif: ceremonial triumph needs a refund policy. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "marble-diplomat-foundation-modifier",
       "role": "modifier",
-      "text": "under an imported chandelier",
-      "tags": [
-        "luxury",
-        "elitism",
-        "corruption"
-      ],
+      "text": "before the voters spoil the reception they paid for",
+      "tags": ["luxury", "elitism", "corruption"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional protocol satire: public votes disrupt the elite reception. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "marble-diplomat-foundation-ending",
       "role": "ending",
-      "text": "and austerity is waiting at the service entrance.",
-      "tags": [
-        "luxury",
-        "elitism",
-        "corruption"
-      ],
+      "text": "and bad luck can use the servants' entrance.",
+      "tags": ["luxury", "elitism"],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed detached-dismissal motif: privilege assigns bad luck a separate entrance. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "marble-diplomat-recount-reception",
+      "role": "ending",
+      "text": "and the recount has asked the orchestra to stop.",
+      "tags": ["luxury"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed premature-celebration motif: the corrected result ends the party. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

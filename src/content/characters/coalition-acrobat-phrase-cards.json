@@ -27,9 +27,9 @@
     "commitment"
   ],
   "comebacks": {
-    "weak": "That was my former position.",
-    "medium": "Your memory is not in the coalition agreement.",
-    "strong": "I crossed the floor before your accusation landed."
+    "weak": "Your promise is already out of season.",
+    "medium": "I wear my principles inside out. You left yours in the changing room.",
+    "strong": "You brought a red line to a negotiation. I brought an eraser."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -50,18 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "coalition-acrobat-foundation-noun",
       "role": "noun",
-      "text": "my reversible coalition promise",
-      "tags": [
-        "consistency",
-        "memory",
-        "commitment"
-      ],
+      "text": "my coalition jacket with a pocket on every side",
+      "tags": ["consistency", "commitment"],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -75,13 +71,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed jacket-and-cash motif: a negotiator carries storage for every alliance. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "coalition-acrobat-foundation-modifier",
       "role": "modifier",
-      "text": "from the opposite side of the same agreement",
+      "text": "while yesterday's promise changes its lining",
       "tags": [
         "consistency",
         "memory",
@@ -92,13 +88,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional reversible-clothing metaphor for abandoned commitments. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "coalition-acrobat-foundation-ending",
       "role": "ending",
-      "text": "and commitment was absent from the vote.",
+      "text": "and the coalition has changed partners but kept the wallet.",
       "tags": [
         "consistency",
         "memory",
@@ -110,7 +106,25 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed jacket-and-cash motif: changing allies preserves the material advantage. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "coalition-acrobat-fingerprinted-slate",
+      "role": "ending",
+      "text": "and our clean slate still has your fingerprints.",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed fresh-start motif: a supposedly new coalition retains evidence of its past. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

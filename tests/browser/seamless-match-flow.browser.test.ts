@@ -200,10 +200,10 @@ test('shows the comeback inline and starts the next round after both deliveries'
   expect(match.snapshot?.roundReview).toBe(true);
   expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
   expect(match.snapshot?.sentenceText).toContain(
-    'Now get this human bucket of vomit out of my sight!',
+    'I obey the rules. Your argument was expelled for impersonating a thought.',
   );
   expect(match.querySelector('.sentence-preview')?.textContent).toContain(
-    'Now get this human bucket of vomit out of my sight!',
+    'I obey the rules. Your argument was expelled for impersonating a thought.',
   );
   expect(match.querySelector('.round-review-dialog')).toBeNull();
   expect(match.querySelector('.timer-fact')).toBeNull();
@@ -215,7 +215,7 @@ test('shows the comeback inline and starts the next round after both deliveries'
   expect(match.presentation?.phase).toBe('total');
   expect(match.presentation?.speakerId).toBe('player-two');
   expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
-    /Comeback.*human bucket of vomit.*\+18/su,
+    /Comeback.*Your argument was expelled.*\+18/su,
   );
   const phase = match.presentation?.phase;
   await page.viewport(1023, 720);

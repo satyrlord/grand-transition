@@ -27,9 +27,9 @@
     "credibility"
   ],
   "comebacks": {
-    "weak": "Your source called back.",
-    "medium": "Even your denial needs a commercial break.",
-    "strong": "The nation changed the channel before your conclusion."
+    "weak": "Stay tuned. You have no idea how little evidence comes next.",
+    "medium": "The hidden system called. Even it wants you off the air.",
+    "strong": "I promised every viewer a fortune. You could not even deliver a punchline."
   },
   "aiPersonality": {
     "aggression": 0.8,
@@ -51,13 +51,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   },
   "phrases": [
     {
       "id": "midnight-sensationalist-foundation-noun",
       "role": "noun",
-      "text": "my emergency source",
+      "text": "my anonymous source with a loyalty card",
       "tags": [
         "ratings",
         "evidence",
@@ -76,13 +76,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "midnight-sensationalist-foundation-modifier",
       "role": "modifier",
-      "text": "between two commercial breaks",
+      "text": "during the seventh exclusive trailer for the same revelation",
       "tags": [
         "ratings",
         "evidence",
@@ -93,13 +93,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "midnight-sensationalist-foundation-ending",
       "role": "ending",
-      "text": "and the ratings still need a scandal.",
+      "text": "and the evidence will arrive after one more commercial break.",
       "tags": [
         "ratings",
         "evidence",
@@ -111,7 +111,41 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "midnight-fortune-on-hold",
+      "role": "ending",
+      "text": "and your promised fortune is still on hold with our callers.",
+      "tags": [
+        "ratings",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "midnight-hidden-system-catering",
+      "role": "ending",
+      "text": "and the hidden system has mysteriously paid for catering.",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     }
   ]

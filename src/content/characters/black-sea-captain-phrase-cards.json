@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["decorum", "consistency", "securitate"],
   "comebacks": {
-    "weak": "Your little wave could not wet the deck.",
-    "medium": "You could not steer your own party out of a puddle.",
-    "strong": "Your flagship is sinking, and even the rats formed a better cabinet."
+    "weak": "Summer called. It refuses responsibility for your winter excuses.",
+    "medium": "Your argument has more holes than my campaign promises.",
+    "strong": "That was barely a debate. Your flagship surrendered to a fishing float."
   },
   "aiPersonality": {
     "aggression": 0.7,
@@ -46,7 +46,7 @@
     {
       "id": "hands-on-presidency",
       "role": "noun",
-      "text": "a hands-on presidency",
+      "text": "a hands-on presidency with both hands on the microphone",
       "tags": ["consistency", "decorum"],
       "scoreGroups": {
         "substance": ["bureaucracy"],
@@ -57,7 +57,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian hands-on executive rhetoric. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -141,34 +141,34 @@
     {
       "id": "through-troubled-waters",
       "role": "modifier",
-      "text": "through troubled waters",
-      "tags": ["consistency", "legacy"],
+      "text": "with a snowplough booked for midsummer",
+      "tags": ["competence", "consistency"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political metaphor informed by Romanian public leadership language. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "from-the-bridge",
       "role": "ending",
-      "text": "from the bridge.",
-      "tags": ["decorum", "legacy"],
+      "text": "and winter has once again refused to act like summer.",
+      "tags": ["consistency"],
       "rarity": "rare",
       "finisherBonus": 3,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional maritime-political ending informed by merchant-marine command language. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "returns-to-the-wheel",
       "role": "predicate",
-      "text": "returns to the wheel",
+      "text": "announces victory before the lifeboat vote",
       "tags": ["consistency", "decorum"],
       "scorePreferences": {
         "substance": [
@@ -183,17 +183,17 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "returns to the wheel",
-      "pluralText": "return to the wheel",
+      "singularText": "announces victory before the lifeboat vote",
+      "pluralText": "announce victory before the lifeboat vote",
       "tense": "present",
       "tenseFamily": "returns-to-the-wheel"
     },
     {
       "id": "returned-to-the-wheel",
       "role": "predicate",
-      "text": "returned to the wheel",
+      "text": "announced victory before the lifeboat vote",
       "tags": ["consistency", "decorum"],
       "scorePreferences": {
         "substance": [
@@ -208,17 +208,17 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "returned to the wheel",
-      "pluralText": "returned to the wheel",
+      "singularText": "announced victory before the lifeboat vote",
+      "pluralText": "announced victory before the lifeboat vote",
       "tense": "past",
       "tenseFamily": "returns-to-the-wheel"
     },
     {
       "id": "will-return-to-the-wheel",
       "role": "predicate",
-      "text": "will return to the wheel",
+      "text": "will announce victory before the lifeboat vote",
       "tags": ["consistency", "decorum"],
       "scorePreferences": {
         "substance": [
@@ -233,10 +233,10 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by hands-on executive and maritime-command themes. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "will return to the wheel",
-      "pluralText": "will return to the wheel",
+      "singularText": "will announce victory before the lifeboat vote",
+      "pluralText": "will announce victory before the lifeboat vote",
       "tense": "future",
       "tenseFamily": "returns-to-the-wheel"
     },
@@ -260,7 +260,7 @@
     {
       "id": "a-dockside-peacock",
       "role": "noun",
-      "text": "a dockside peacock",
+      "text": "a dockside peacock with admiral privileges",
       "referentKind": "personal",
       "tags": ["decorum", "authenticity"],
       "scoreGroups": {
@@ -272,7 +272,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original animal metaphor for a fictional showy rival. It targets no protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -468,12 +468,26 @@
       },
       "tense": "future",
       "tenseFamily": "cannot-steer-own-party-from-puddle"
+    },
+    {
+      "id": "captain-ballot-lifejacket",
+      "role": "ending",
+      "text": "and even the ballot box has asked for a lifejacket.",
+      "tags": ["competence"],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
     }
   ],
   "editorialReview": {
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional composite character file. Editorial review complete."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   }
 }

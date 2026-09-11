@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["evidence", "credibility", "restraint"],
   "comebacks": {
-    "weak": "And I have the dossiers to prove it!",
-    "medium": "And even those NATO clowns know that!",
-    "strong": "Now get this human bucket of vomit out of my sight!"
+    "weak": "Fetch the phone. Even the dial tone has a stronger argument.",
+    "medium": "You cannot evict the truth from my office. It has never lived here.",
+    "strong": "I obey the rules. Your argument was expelled for impersonating a thought."
   },
   "aiPersonality": {
     "aggression": 0.95,
@@ -218,7 +218,7 @@
     {
       "id": "before-the-nation-loses-patience",
       "role": "ending",
-      "text": "before the whole broadcast dies.",
+      "text": "and my second phone has already filed a complaint.",
       "tags": ["restraint", "credibility"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -226,7 +226,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional adaptation of a Romanian political-media joke about a program that depends on conflict. Not a quotation or threat. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -360,7 +360,7 @@
     {
       "id": "a-cursed-gnome",
       "role": "noun",
-      "text": "a cursed gnome",
+      "text": "a committee clerk possessed by a loudspeaker",
       "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
@@ -372,13 +372,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fantasy-metaphor insult for a fictional studio rival. It targets no protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "a-somaldoaca",
       "role": "noun",
-      "text": "a șomâldoacă",
+      "text": "a scandal-powered kettle",
       "referentKind": "personal",
       "tags": ["decorum", "credibility"],
       "scoreGroups": {
@@ -390,15 +390,17 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original Romanian comic insult reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and does not target a protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "looks-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "looks like a șomâldoacă on television",
-      "singularText": "looks like a șomâldoacă on television",
-      "pluralText": "look like șomâldoace on television",
+      "text": "whistles like a scandal-powered kettle on television",
+      "secondPersonText": "whistle like a scandal-powered kettle on television",
+      "personalSingularText": "whistles like a scandal-powered kettle on television",
+      "singularText": "whistles like a scandal-powered kettle on television",
+      "pluralText": "whistle like scandal-powered kettles on television",
       "tags": ["decorum", "credibility"],
       "scorePreferences": {
         "substance": [
@@ -413,7 +415,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
       "tense": "present",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
@@ -421,9 +423,11 @@
     {
       "id": "looked-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "looked like a șomâldoacă on television",
-      "singularText": "looked like a șomâldoacă on television",
-      "pluralText": "looked like șomâldoace on television",
+      "text": "whistled like a scandal-powered kettle on television",
+      "secondPersonText": "whistled like a scandal-powered kettle on television",
+      "personalSingularText": "whistled like a scandal-powered kettle on television",
+      "singularText": "whistled like a scandal-powered kettle on television",
+      "pluralText": "whistled like scandal-powered kettles on television",
       "tags": ["decorum", "credibility"],
       "scorePreferences": {
         "substance": [
@@ -438,7 +442,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
       "tense": "past",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
@@ -446,9 +450,11 @@
     {
       "id": "will-look-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "will look like a șomâldoacă on television",
-      "singularText": "will look like a șomâldoacă on television",
-      "pluralText": "will look like șomâldoace on television",
+      "text": "will whistle like a scandal-powered kettle on television",
+      "secondPersonText": "will whistle like a scandal-powered kettle on television",
+      "personalSingularText": "will whistle like a scandal-powered kettle on television",
+      "singularText": "will whistle like a scandal-powered kettle on television",
+      "pluralText": "will whistle like scandal-powered kettles on television",
       "tags": ["decorum", "credibility"],
       "scorePreferences": {
         "substance": [
@@ -463,7 +469,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original Romanian comic-image predicate reserved for the Thunder Tribune's fictional studio voice. It is not copied from the reference corpus and targets no protected trait. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
       "tense": "future",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
@@ -471,7 +477,7 @@
     {
       "id": "bring-me-the-studio-phone",
       "role": "ending",
-      "text": "and now fetch my phone, you imbecile.",
+      "text": "and fetch my phone before I have to shout internationally.",
       "tags": ["decorum", "restraint"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -479,7 +485,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional studio-phone ending adapted for the Thunder Tribune's imperious broadcast voice. It is not a quotation and names no real person. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -503,6 +509,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional composite character file. Editorial review complete."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   }
 }

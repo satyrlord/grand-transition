@@ -27,9 +27,9 @@
     "credibility"
   ],
   "comebacks": {
-    "weak": "That segment is not renewed.",
-    "medium": "Your influence ends outside this studio.",
-    "strong": "I own the silence after your last word."
+    "weak": "Your argument is the only asset even I would not buy.",
+    "medium": "You hear an economic boom. I hear my cash register.",
+    "strong": "Count my assets again. By the time you finish, I will own the calculator."
   },
   "aiPersonality": {
     "aggression": 0.45,
@@ -50,13 +50,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   },
   "phrases": [
     {
       "id": "velvet-mogul-foundation-noun",
       "role": "noun",
-      "text": "my discreet broadcast holding",
+      "text": "my offshore collection of very patriotic ideas",
       "tags": [
         "wealth",
         "influence",
@@ -75,13 +75,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "velvet-mogul-foundation-modifier",
       "role": "modifier",
-      "text": "under a velvet confidentiality clause",
+      "text": "to the sound of an economy booming inside my wallet",
       "tags": [
         "wealth",
         "influence",
@@ -92,13 +92,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "velvet-mogul-foundation-ending",
       "role": "ending",
-      "text": "and your credibility is not in the portfolio.",
+      "text": "and even my loose change has a holding company.",
       "tags": [
         "wealth",
         "influence",
@@ -110,7 +110,41 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "mogul-count-the-assets",
+      "role": "ending",
+      "text": "and you may count the silverware while I buy the dining room.",
+      "tags": [
+        "wealth",
+        "influence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "mogul-measure-the-silence",
+      "role": "ending",
+      "text": "and I measure every word before buying the microphone.",
+      "tags": [
+        "influence",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     }
   ]

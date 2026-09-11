@@ -120,6 +120,10 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
   folder, and private study data does not ship. Shipped prompts, source notes,
   and asset metadata use a generic source description and do not name a real
   person. The skin does not change the fictional character identity or prose.
+- Original comic adaptations of researched political speech are permitted as
+  specified in Milestone 027. Real names, source excerpts, translations, and
+  source-to-card mappings remain private. Public editorial notes describe the
+  fictional comic device and review; they do not embed research attribution.
 - Shipped prose, specifications, editorial rationale, source notes, and asset
   metadata do not use a real political party's name, acronym, or logo. Allowed
   generic labels include `The Conservative Party`, `The Peasant's Party`,

@@ -19,6 +19,48 @@ These English comprehension checks apply to the English catalog. Milestone
 030 owns natural Romanian adaptation and fluent Romanian review. Both locales
 must meet the same fictional-identity, tone, safety, and scoring-meaning rules.
 
+## Speech-inspired humor
+
+Common and character-owned prose can transform researched political speech into
+original English satire. Prefer a concrete image, contradiction, reversal, or
+short escalating punchline over an administrative label. Keep simple grammar
+connectors, copulas, and useful neutral referents short. Humor does not require
+every fragment to be a complete joke.
+
+Research each human archetype through its recorded private references. Verify
+attribution and context before adapting a quotation. A meme, parody article,
+or unrelated quotation in a page's suggested links is not evidence of what
+the referenced speaker said. Record uncertainty when a source supports a
+recent remark rather than an established iconic quotation.
+
+Keep the source URL, a short original-language excerpt, an English meaning
+gloss, the adaptation rationale, and the affected phrase or comeback IDs in
+the private research folder. Distinguish the authentic excerpt, translation,
+and invented game dialogue. Government AI remains an original fictional robot
+without a politician reference.
+
+Each human archetype has at least two distinct speech-inspired endings and
+three escalating comeback lines. They share the fictional archetype across
+its skins. Preserve
+stable card IDs when rewriting text. New cards have unique IDs. Review all
+agreement forms when relation text changes. Recheck weakness tags against the
+new visible meaning; preserve family tags on family references. Do not change
+score values or draw rarity merely to make a line funnier.
+Any text, tag, agreement, comeback, phrase-order, or pool change follows the
+Milestone 014 replay-version contract. A new replay version preserves the
+complete preceding catalog context instead of changing an existing version.
+
+Validate the loaded catalog, cross-corpus text uniqueness, locale derivation,
+ending grammar, comeback ownership, and representative complete sentences.
+Run deterministic matches across the roster and review rendered examples for
+readability and character voice. These checks verify the editorial pass;
+they do not establish the release balance or manual variety thresholds below.
+`tests/unit/authored-phrase-grammar.test.ts` verifies complete ending
+constructions, noun and modifier reachability, representative agreement, and
+exclusive comeback text across the current catalog.
+
+## Fictional content boundary
+
 Permit political parody, public-record criticism, fictional institutions,
 composite scandals, bureaucracy, media satire, contradiction, and vanity satire
 aimed at fictional personas. Hard-edged allegations can target fictional

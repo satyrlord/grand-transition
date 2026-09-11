@@ -27,9 +27,9 @@
     "follow-up-questions"
   ],
   "comebacks": {
-    "weak": "The feed has judged you.",
-    "medium": "Your evidence has no engagement.",
-    "strong": "I asked the algorithm and it muted your entire worldview."
+    "weak": "Your evidence has gone flat.",
+    "medium": "I asked the tap for wisdom. It sent your speech down the drain.",
+    "strong": "You drank a software update and still could not install a coherent argument."
   },
   "aiPersonality": {
     "aggression": 0.85,
@@ -50,18 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "algorithmic-prophet-foundation-noun",
       "role": "noun",
-      "text": "my sovereign engagement oracle",
-      "tags": [
-        "evidence",
-        "specificity",
-        "follow-up-questions"
-      ],
+      "text": "my mineral-water modem with the specifications washed off",
+      "tags": ["evidence", "specificity"],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -75,42 +71,48 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed water-information motif: a fictional mystic treats a drink as network hardware. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "algorithmic-prophet-foundation-modifier",
       "role": "modifier",
-      "text": "according to a disappearing clip",
-      "tags": [
-        "evidence",
-        "specificity",
-        "follow-up-questions"
-      ],
+      "text": "after downloading vague evidence through a drinking straw",
+      "tags": ["evidence", "specificity"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed water-information motif: evidence arrives by drinking straw. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "algorithmic-prophet-foundation-ending",
       "role": "ending",
-      "text": "and the algorithm refuses follow-up questions.",
-      "tags": [
-        "evidence",
-        "specificity",
-        "follow-up-questions"
-      ],
+      "text": "and your follow-up question has drowned in a puddle.",
+      "tags": ["follow-up-questions"],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed water-information motif: a debate argument fails a puddle-sized data test. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-lemonade-transfer",
+      "role": "ending",
+      "text": "and even your lemonade's microchip dodges follow-up questions.",
+      "tags": ["evidence", "follow-up-questions"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed beverage-microchip motif: imaginary hardware refuses the speaker's rhetoric. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

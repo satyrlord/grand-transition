@@ -27,9 +27,9 @@
     "human-scale"
   ],
   "comebacks": {
-    "weak": "That claim lacks a baseline.",
-    "medium": "Your accountability cell returns an error.",
-    "strong": "I measured your mandate and rounded it down to zero."
+    "weak": "Your plan is all crumbs and no bread.",
+    "medium": "I switched on the pantry light. Your budget scurried under the fridge.",
+    "strong": "You emptied the pantry, ate the shelves, and billed me for the broom."
   },
   "aiPersonality": {
     "aggression": 0.4,
@@ -50,18 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "spreadsheet-technocrat-foundation-noun",
       "role": "noun",
-      "text": "my quarterly delivery matrix",
-      "tags": [
-        "delivery",
-        "accountability",
-        "human-scale"
-      ],
+      "text": "my per-person budget of one audited breadcrumb",
+      "tags": ["accountability", "human-scale"],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -75,42 +71,48 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed public-pantry motif: the manager audits a final crumb. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "spreadsheet-technocrat-foundation-modifier",
       "role": "modifier",
-      "text": "inside a perfectly aligned cell",
-      "tags": [
-        "delivery",
-        "accountability",
-        "human-scale"
-      ],
+      "text": "after delivering the food budget to the pantry mice",
+      "tags": ["delivery", "accountability"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed public-pantry motif: bureaucratic metrics mistake pests for employees. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "spreadsheet-technocrat-foundation-ending",
       "role": "ending",
-      "text": "and the human scale was excluded from the dashboard.",
-      "tags": [
-        "delivery",
-        "accountability",
-        "human-scale"
-      ],
+      "text": "and the pantry mice get meal allowances before the voters get crumbs.",
+      "tags": ["delivery", "accountability", "human-scale"],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed public-pantry motif: resource consumption becomes an expense claim. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-breakage-invoice",
+      "role": "ending",
+      "text": "and the broken budget has billed the broom for damages.",
+      "tags": ["accountability"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed broken-family-budget motif: the person cleaning up receives the invoice. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

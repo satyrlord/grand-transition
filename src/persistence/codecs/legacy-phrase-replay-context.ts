@@ -1,3 +1,5 @@
+import legacyContent from '../../content/legacy-humor-content-v6.json' with { type: 'json' };
+import type { Phrase } from '../../content/schemas';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import type { ReplayContext } from './replay-codec';
 
@@ -108,6 +110,107 @@ export function legacyPhraseReplayContext(context: ReplayContext): ReplayContext
         phrasePool: scene.phrasePool.map(legacyId),
       })),
       locales: context.catalog.locales.map(legacyLocale),
+    },
+  };
+}
+
+type LegacyPhraseContent = Readonly<{
+  id: string;
+  text: string;
+  tags: readonly string[];
+  forms?: Readonly<{
+    singular: string;
+    plural: string;
+  }>;
+}>;
+
+type LegacyHumorComebacks = Readonly<Record<string, Readonly<{
+  weak: string;
+  medium: string;
+  strong: string;
+}>>>;
+
+const removedHumorPhraseIds = new Set<string>(legacyContent.removedPhraseIds);
+const legacyHumorPhrases = new Map<string, LegacyPhraseContent>(
+  legacyContent.phrases.map((phrase) => [phrase.id, phrase]),
+);
+const legacyHumorComebacks: LegacyHumorComebacks = legacyContent.comebacks;
+
+export function legacyHumorReplayContext(context: ReplayContext): ReplayContext {
+  const phraseById = new Map(context.catalog.phrases.map((phrase) => [phrase.id, phrase]));
+  const characterById = new Map(
+    context.catalog.characters.map((character) => [character.id, character]),
+  );
+  const restoreLocale = (locale: GameLocaleBundle): GameLocaleBundle => {
+    const messages = { ...locale.messages };
+
+    for (const phraseId of removedHumorPhraseIds) {
+      const phrase = phraseById.get(phraseId);
+      if (!phrase) continue;
+      delete messages[phrase.textKey];
+    }
+
+    for (const legacy of legacyHumorPhrases.values()) {
+      const phrase = phraseById.get(legacy.id)!;
+      messages[phrase.textKey] = legacy.text;
+      if (!phrase.numberForms || !legacy.forms) continue;
+      messages[phrase.numberForms.singularKey] = legacy.forms.singular;
+      messages[phrase.numberForms.pluralKey] = legacy.forms.plural;
+      if (phrase.numberForms.personalSingularKey) {
+        delete messages[phrase.numberForms.personalSingularKey];
+      }
+      if (phrase.numberForms.secondPersonKey) {
+        delete messages[phrase.numberForms.secondPersonKey];
+      }
+    }
+
+    for (const [characterId, lines] of Object.entries(legacyHumorComebacks)) {
+      const character = characterById.get(characterId)!;
+      messages[character.comebackLinesByTier.weak[0]!] = lines.weak;
+      messages[character.comebackLinesByTier.medium[0]!] = lines.medium;
+      messages[character.comebackLinesByTier.strong[0]!] = lines.strong;
+    }
+
+    return { ...locale, messages };
+  };
+
+  return {
+    ...context,
+    locale: restoreLocale(context.locale),
+    catalog: {
+      ...context.catalog,
+      phrases: context.catalog.phrases
+        .filter((phrase) => !removedHumorPhraseIds.has(phrase.id))
+        .map(restorePhrase),
+      characters: context.catalog.characters.map((character) => ({
+        ...character,
+        characterPhraseIds: character.characterPhraseIds.filter(
+          (phraseId) => !removedHumorPhraseIds.has(phraseId),
+        ),
+      })),
+      scenes: context.catalog.scenes.map((scene) => ({
+        ...scene,
+        phrasePool: scene.phrasePool.filter(
+          (phraseId) => !removedHumorPhraseIds.has(phraseId),
+        ),
+      })),
+      locales: context.catalog.locales.map(restoreLocale),
+    },
+  };
+}
+
+function restorePhrase(phrase: Phrase): Phrase {
+  const legacy = legacyHumorPhrases.get(phrase.id);
+  if (!legacy) return phrase;
+  if (!phrase.numberForms || !legacy.forms) {
+    return { ...phrase, tags: [...legacy.tags] };
+  }
+  return {
+    ...phrase,
+    tags: [...legacy.tags],
+    numberForms: {
+      singularKey: phrase.numberForms.singularKey,
+      pluralKey: phrase.numberForms.pluralKey,
     },
   };
 }

@@ -27,9 +27,9 @@
     "nepotism"
   ],
   "comebacks": {
-    "weak": "The county knows my number.",
-    "medium": "Your tender forgot to invite the family.",
-    "strong": "Even your potholes were awarded without competition."
+    "weak": "Your evidence needs more icing.",
+    "medium": "I checked the family tree. Your tender is adopted.",
+    "strong": "You could lose a road contract at your own family reunion."
   },
   "aiPersonality": {
     "aggression": 0.5,
@@ -50,18 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "county-baron-foundation-noun",
       "role": "noun",
-      "text": "my cousin-approved tender",
-      "tags": [
-        "procurement",
-        "infrastructure",
-        "nepotism"
-      ],
+      "text": "my tender with a doughnut where the budget should be",
+      "tags": ["procurement", "spending"],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -75,42 +71,48 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed pastry-denial motif: a procurement document contains a snack instead of public money. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "county-baron-foundation-modifier",
       "role": "modifier",
-      "text": "beside the freshly painted pothole",
-      "tags": [
-        "procurement",
-        "infrastructure",
-        "nepotism"
-      ],
+      "text": "after the pothole inspection's family photo",
+      "tags": ["infrastructure", "nepotism"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional municipal-patron satire: road inspection becomes a family occasion. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "county-baron-foundation-ending",
       "role": "ending",
-      "text": "and the ribbon was cut before the road existed.",
-      "tags": [
-        "procurement",
-        "infrastructure",
-        "nepotism"
-      ],
+      "text": "and the road contract is held together with icing sugar.",
+      "tags": ["procurement", "infrastructure"],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed pastry-denial motif: incriminating paperwork receives a cosmetic topping. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "county-baron-sunday-job-interview",
+      "role": "ending",
+      "text": "and the job interview was held at Sunday lunch.",
+      "tags": ["nepotism"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed family-staffing motif: a public appointment becomes a family meal. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

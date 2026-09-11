@@ -27,9 +27,9 @@
     "maintenance"
   ],
   "comebacks": {
-    "weak": "That expense is not eligible.",
-    "medium": "Your outcome missed the reporting window.",
-    "strong": "I turned your entire mandate into an unfunded annex."
+    "weak": "Your pastry budget has eaten your argument.",
+    "medium": "Show me the receipts. Your wheelbarrow earns more than your country.",
+    "strong": "You budgeted imaginary rent, bought a real cake, and called the crumbs growth."
   },
   "aiPersonality": {
     "aggression": 0.6,
@@ -50,17 +50,16 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original fictional comebacks transform a household-budget analogy and pastry-price satire into grant and accounting jokes. Private research records sources; no attribution or quotation ships."
   },
   "phrases": [
     {
       "id": "eu-funds-alchemist-foundation-noun",
       "role": "noun",
-      "text": "my co-financed miracle pilot",
+      "text": "my imaginary wheelbarrow rental income",
       "tags": [
         "transparency",
-        "outcomes",
-        "maintenance"
+        "outcomes"
       ],
       "scoreGroups": {
         "substance": [
@@ -75,34 +74,32 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional adaptation of a household-budget analogy about implausible projected revenue."
       }
     },
     {
       "id": "eu-funds-alchemist-foundation-modifier",
       "role": "modifier",
-      "text": "under a renewable eligibility window",
+      "text": "with the repair budget spent on a launch cake",
       "tags": [
-        "transparency",
-        "outcomes",
-        "maintenance"
+        "maintenance",
+        "outcomes"
       ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional collision of pastry-price satire with launch spending that consumes maintenance funds."
       }
     },
     {
       "id": "eu-funds-alchemist-foundation-ending",
       "role": "ending",
-      "text": "and maintenance was removed from the application.",
+      "text": "and the wheelbarrow needs repairs before it can carry the national budget.",
       "tags": [
-        "transparency",
-        "outcomes",
-        "maintenance"
+        "maintenance",
+        "outcomes"
       ],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -110,7 +107,24 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional extension of a rented-wheelbarrow budget analogy into failed infrastructure."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-invisible-pastries",
+      "role": "ending",
+      "text": "and the missing funds are itemized as invisible pastries.",
+      "tags": [
+        "transparency",
+        "outcomes"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional extension of pastry-price satire into an absurd explanation for missing funds."
       }
     }
   ]

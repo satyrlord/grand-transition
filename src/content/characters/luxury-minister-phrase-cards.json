@@ -27,9 +27,9 @@
     "authenticity"
   ],
   "comebacks": {
-    "weak": "That fabric is not ministerial.",
-    "medium": "Your austerity arrived in economy class.",
-    "strong": "I spent more on restraint than you spent on your argument."
+    "weak": "Your briefing clashes with my shoes.",
+    "medium": "I could live on that budget. My wardrobe couldn't.",
+    "strong": "Your facts are badly tailored. Send them back to geography."
   },
   "aiPersonality": {
     "aggression": 0.7,
@@ -40,7 +40,9 @@
     "voiceHint": "sharp",
     "rate": 1,
     "pitch": 1.05,
-    "skinVoices": {"default": "emma"}
+    "skinVoices": {
+      "default": "emma"
+    }
   },
   "animationSet": {
     "idle": "luxury-minister-idle",
@@ -51,16 +53,15 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original fictional comebacks transform wardrobe rhetoric, low-budget bravado, and a televised geography correction. Private research records sources; no attribution or quotation ships."
   },
   "phrases": [
     {
       "id": "luxury-minister-foundation-noun",
       "role": "noun",
-      "text": "my modest official motorcade",
+      "text": "my emergency fund for matching shoes",
       "tags": [
         "austerity",
-        "service",
         "authenticity"
       ],
       "scoreGroups": {
@@ -76,30 +77,29 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional luxury-versus-necessity joke adapted from public wardrobe rhetoric."
       }
     },
     {
       "id": "luxury-minister-foundation-modifier",
       "role": "modifier",
-      "text": "from a carefully understated suite",
+      "text": "while budgeting for poverty from the penthouse",
       "tags": [
         "austerity",
-        "service",
-        "authenticity"
+        "service"
       ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional contradiction between budget advice and insulated comfort."
       }
     },
     {
       "id": "luxury-minister-foundation-ending",
       "role": "ending",
-      "text": "and public service is holding my shopping bags.",
+      "text": "and the public can tighten its belt while I choose the leather.",
       "tags": [
         "austerity",
         "service",
@@ -111,7 +111,23 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional extension of austerity bravado through luxury clothing."
+      }
+    },
+    {
+      "id": "luxury-minister-map-matches-itinerary",
+      "role": "ending",
+      "text": "and the map will be corrected to match my itinerary.",
+      "tags": [
+        "authenticity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional reversal of a televised geography correction; invented geography and no named place or person."
       }
     }
   ]

@@ -2,8 +2,8 @@
   {
     "id": "national-consensus",
     "role": "noun",
-    "text": "your so-called national consensus",
-    "tags": ["restraint", "legacy"],
+    "text": "your unanimous disagreement",
+    "tags": ["restraint"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["consensus"]
@@ -13,7 +13,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English political-satire adaptation informed by Romania's post-1989 transition discourse. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -36,7 +36,7 @@
   {
     "id": "coalition-protocol",
     "role": "noun",
-    "text": "your coalition protocol",
+    "text": "your coalition's custody agreement for the ministries",
     "tags": ["consistency", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -47,7 +47,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation of Romanian coalition-government language. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -209,33 +209,33 @@
   {
     "id": "before-the-next-election",
     "role": "modifier",
-    "text": "before the next election",
+    "text": "before the promises lose their warranty",
     "tags": ["credibility", "consistency"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian election-cycle satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "on-public-television",
     "role": "modifier",
-    "text": "on public television",
+    "text": "on television, with the applause on a timer",
     "tags": ["evidence", "decorum"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation informed by Romanian public-television political history. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "during-a-coalition-crisis",
     "role": "modifier",
-    "text": "during a coalition crisis",
+    "text": "during the coalition custody battle",
     "tags": ["consistency", "restraint"],
     "sceneIds": ["transition-era-television-studio"],
     "rarity": "rare",
@@ -243,7 +243,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian coalition-politics satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -291,15 +291,15 @@
   {
     "id": "by-emergency-ordinance",
     "role": "ending",
-    "text": "by emergency ordinance.",
-    "tags": ["bureaucracy", "modernity"],
+    "text": "by emergency ordinance; even the calendar needs permission.",
+    "tags": ["bureaucracy"],
     "rarity": "uncommon",
     "finisherBonus": 2,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation informed by Article 115 of the Romanian Constitution and public debate about emergency legislation. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -318,7 +318,7 @@
   {
     "id": "emergency-ordinance",
     "role": "noun",
-    "text": "your emergency ordinance",
+    "text": "your emergency shortcut around democracy",
     "tags": ["bureaucracy", "restraint"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -329,13 +329,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation informed by the Romanian constitutional emergency-ordinance mechanism. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "televised-coalition",
     "role": "noun",
-    "text": "your televised coalition",
+    "text": "your coalition of camera volunteers",
     "tags": ["consistency", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
@@ -346,14 +346,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-broadcast satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "county-council-majority",
     "role": "noun",
-    "text": "your county-council majority",
-    "tags": ["bureaucracy", "legacy"],
+    "text": "your council of nodding relatives",
+    "tags": ["bureaucracy", "legacy", "nepotism"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["local-power"]
@@ -363,14 +363,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation of Romanian local-government politics. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "pension-recalculation",
     "role": "noun",
-    "text": "a pension recalculation",
-    "tags": ["modernity", "consistency"],
+    "text": "a pension increase visible only with a magnifying glass",
+    "tags": ["spending", "austerity"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["arithmetic"]
@@ -380,13 +380,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation of a recurring Romanian administrative-policy theme. Not a quotation or a claim about one administration. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "unfinished-motorway",
     "role": "noun",
-    "text": "an unfinished motorway",
+    "text": "a motorway that ends at the photo opportunity",
     "tags": ["evidence", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -397,7 +397,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian infrastructure-delivery satire. Not a quotation or a claim about a named person or project. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -715,60 +715,60 @@
   {
     "id": "at-victoria-palace",
     "role": "modifier",
-    "text": "at Victoria Palace",
-    "tags": ["bureaucracy", "consistency"],
+    "text": "at the government office, behind the emergency fern",
+    "tags": ["bureaucracy"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English political-satire phrase using the public name of Romania's government headquarters. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "under-an-emergency-ordinance",
     "role": "modifier",
-    "text": "under an emergency ordinance",
+    "text": "under an ordinance still warm from the printer",
     "tags": ["bureaucracy", "restraint"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation informed by Romanian constitutional practice. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "beside-an-unfinished-motorway",
     "role": "modifier",
-    "text": "beside an unfinished motorway",
+    "text": "beside a motorway drawn in washable chalk",
     "tags": ["evidence", "credibility"],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian infrastructure satire. Not a quotation or a claim about a named person or project. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "for-the-national-interest",
     "role": "ending",
-    "text": "for the national interest.",
-    "tags": ["legacy", "decorum"],
+    "text": "for the national interest, payable to a private account.",
+    "tags": ["corruption", "spending"],
     "rarity": "uncommon",
     "finisherBonus": 2,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English adaptation of a broad Romanian political-discourse theme. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "until-the-next-election",
     "role": "ending",
-    "text": "until the next election.",
+    "text": "until the next election, when the warranty mysteriously expires.",
     "tags": ["consistency", "credibility"],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -776,13 +776,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian election-cycle satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "public-consultation",
     "role": "noun",
-    "text": "your public consultation",
+    "text": "your public consultation with the door locked",
     "tags": ["decorum", "bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -793,13 +793,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian public-administration satire about formal consultation. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "reform-calendar",
     "role": "noun",
-    "text": "your reform calendar",
+    "text": "your calendar of postponed miracles",
     "tags": ["modernity", "consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -810,13 +810,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian transition-policy satire about recurring reform schedules. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "televised-debate",
     "role": "noun",
-    "text": "this televised debate",
+    "text": "this televised queue for the last word",
     "tags": ["evidence", "decorum"],
     "scoreGroups": {
       "substance": ["media"],
@@ -827,13 +827,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-broadcast satire about studio debate culture. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "party-switch",
     "role": "noun",
-    "text": "your party switch",
+    "text": "your revolving-door principle",
     "tags": ["consistency", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -844,13 +844,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian coalition-politics satire about changes of party alignment. Not a quotation or a claim about a named person. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "municipal-ribbon",
     "role": "noun",
-    "text": "a municipal ribbon",
+    "text": "a ribbon longer than the road",
     "tags": ["credibility", "decorum"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -861,13 +861,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian local-government satire about public opening ceremonies. Not a quotation or a claim about a named project. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "budget-amendment",
     "role": "noun",
-    "text": "your budget amendment",
+    "text": "your budget with the decimal point on holiday",
     "tags": ["bureaucracy", "evidence", "spending"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -878,13 +878,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian parliamentary satire about routine budget procedure. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "parliamentary-microphone",
     "role": "noun",
-    "text": "a parliamentary microphone",
+    "text": "a microphone pretending to be unplugged",
     "tags": ["decorum", "restraint"],
     "scoreGroups": {
       "substance": ["media"],
@@ -895,13 +895,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian parliamentary-broadcast satire about televised oratory. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "opinion-poll",
     "role": "noun",
-    "text": "an opinion poll",
+    "text": "an opinion poll conducted in your bathroom mirror",
     "tags": ["evidence", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
@@ -912,14 +912,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian election-media satire about public polling. Not a quotation or a claim about a named poll. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "ministerial-memo",
     "role": "noun",
-    "text": "your ministerial memo",
-    "tags": ["bureaucracy", "consistency"],
+    "text": "your memo explaining the previous memo",
+    "tags": ["bureaucracy"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["paperwork"]
@@ -929,14 +929,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian public-administration satire about internal paperwork. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "coalition-majority",
     "role": "noun",
-    "text": "your coalition majority",
-    "tags": ["consistency", "legacy"],
+    "text": "your majority held together with lunch vouchers",
+    "tags": ["consistency"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["coalition"]
@@ -946,13 +946,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian coalition-government satire about parliamentary arithmetic. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "campaign-promise",
     "role": "noun",
-    "text": "your campaign promise",
+    "text": "your promise with the expiry date scratched off",
     "tags": ["credibility", "consistency"],
     "scoreGroups": {
       "substance": ["media"],
@@ -963,14 +963,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian election-cycle satire about general campaign language. Not a quotation or a claim about a named person. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "constitutional-footnote",
     "role": "noun",
-    "text": "a constitutional footnote",
-    "tags": ["legacy", "evidence"],
+    "text": "a constitutional footnote wearing a fake moustache",
+    "tags": ["bureaucracy", "credibility"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["procedure"]
@@ -980,14 +980,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian constitutional-procedure satire. Not a quotation or legal claim. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "regional-development-plan",
     "role": "noun",
-    "text": "your regional development plan",
-    "tags": ["modernity", "bureaucracy"],
+    "text": "your development plan for the ministerial driveway",
+    "tags": ["infrastructure", "corruption"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["development"]
@@ -997,13 +997,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian regional-policy satire about development planning. Not a quotation or a claim about a named plan. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "press-conference",
     "role": "noun",
-    "text": "a press-conference",
+    "text": "a press conference with the questions unplugged",
     "tags": ["decorum", "credibility"],
     "scoreGroups": {
       "substance": ["media"],
@@ -1014,13 +1014,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-media satire about formal press events. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "cabinet-reshuffle",
     "role": "noun",
-    "text": "your cabinet reshuffle",
+    "text": "your cabinet of musical chairs",
     "tags": ["consistency", "modernity"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -1031,13 +1031,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian government-cycle satire about cabinet changes. Not a quotation or a claim about a named cabinet. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "televised-apology",
     "role": "noun",
-    "text": "a televised apology",
+    "text": "an apology sponsored by the next scandal",
     "tags": ["credibility", "restraint"],
     "scoreGroups": {
       "substance": ["media"],
@@ -1048,13 +1048,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-broadcast satire about public apologies. Not a quotation or a claim about a named person. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "infrastructure-feasibility-study",
     "role": "noun",
-    "text": "an infrastructure feasibility study",
+    "text": "a feasibility study for finishing the feasibility study",
     "tags": ["evidence", "modernity"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
@@ -1065,14 +1065,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian infrastructure-delivery satire about planning documents. Not a quotation or a claim about a named project. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "national-strategy",
     "role": "noun",
-    "text": "your national strategy",
-    "tags": ["legacy", "bureaucracy"],
+    "text": "your national strategy on the back of a receipt",
+    "tags": ["competence"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["strategy"]
@@ -1082,14 +1082,14 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian policy-language satire about recurring national strategies. Not a quotation or a claim about a named strategy. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "local-party-office",
     "role": "noun",
-    "text": "your local party office",
-    "tags": ["legacy", "consistency"],
+    "text": "your party office with a hereditary doorman",
+    "tags": ["legacy", "nepotism"],
     "scoreGroups": {
       "substance": ["bureaucracy"],
       "flavour": ["local-power"]
@@ -1099,7 +1099,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian local-politics satire about party organization. Not a quotation or a claim about a named party. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -2197,183 +2197,183 @@
   {
     "id": "after-the-midnight-news",
     "role": "modifier",
-    "text": "after the midnight news",
+    "text": "after the newsreader runs out of eyebrows to raise",
     "tags": ["media", "credibility"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian television-schedule satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "behind-closed-doors",
     "role": "modifier",
-    "text": "behind closed doors",
+    "text": "behind doors transparent only in the brochure",
     "tags": ["evidence", "credibility"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian coalition-procedure satire using a general political setting. Not a quotation or an allegation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "during-budget-season",
     "role": "modifier",
-    "text": "during budget season",
-    "tags": ["bureaucracy", "consistency"],
+    "text": "during the annual migration of the decimal point",
+    "tags": ["spending", "competence"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian parliamentary-calendar satire about budget procedure. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "from-the-government-podium",
     "role": "modifier",
-    "text": "from the government podium",
+    "text": "from a podium taller than the achievements",
     "tags": ["decorum", "credibility"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-media satire about formal government statements. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "in-the-transition-archive",
     "role": "modifier",
-    "text": "in the transition archive",
+    "text": "in the archive under permanent temporary measures",
     "tags": ["legacy", "evidence", "obsolete"],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian post-1989 archive satire. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "on-the-campaign-trail",
     "role": "modifier",
-    "text": "on the campaign trail",
-    "tags": ["credibility", "consistency"],
+    "text": "on a campaign bus fuelled by applause",
+    "tags": ["credibility"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian election-cycle satire about campaigning. Not a quotation or a claim about a named campaign. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "under-the-studio-lights",
     "role": "modifier",
-    "text": "under the studio lights",
-    "tags": ["media", "decorum"],
+    "text": "under studio lights bright enough to bleach a scandal",
+    "tags": ["media", "credibility"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-television satire about studio presentation. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "with-coalition-partners",
     "role": "modifier",
-    "text": "with coalition partners",
+    "text": "with coalition partners checking the exits",
     "tags": ["consistency", "restraint"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian coalition-government satire about shared procedure. Not a quotation or a claim about named parties. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "without-public-consultation",
     "role": "modifier",
-    "text": "without public consultation",
+    "text": "with public consultation scheduled after the decision",
     "tags": ["decorum", "evidence"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian public-administration satire about procedural consultation. Not a quotation or an allegation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "before-a-confidence-vote",
     "role": "modifier",
-    "text": "before a confidence vote",
+    "text": "before the confidence vote starts losing confidence",
     "tags": ["consistency", "credibility"],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian parliamentary satire about coalition confidence procedure. Not a quotation or a claim about a named vote. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "during-a-press-conference",
     "role": "modifier",
-    "text": "during a press conference",
-    "tags": ["media", "decorum"],
+    "text": "during a press conference for the postponed press conference",
+    "tags": ["media", "competence"],
     "rarity": "common",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-media satire about press events. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "through-another-reform-cycle",
     "role": "modifier",
-    "text": "through another reform cycle",
+    "text": "through another reform of the reform committee",
     "tags": ["modernity", "legacy", "obsolete"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian transition-policy satire about repeated reform cycles. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "across-county-capitals",
     "role": "modifier",
-    "text": "across county capitals",
-    "tags": ["bureaucracy", "legacy"],
+    "text": "across town halls connected by family trees",
+    "tags": ["bureaucracy", "legacy", "nepotism"],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian local-government satire about nationwide administrative reach. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "beneath-the-national-banner",
     "role": "modifier",
-    "text": "beneath the national banner",
-    "tags": ["legacy", "decorum"],
+    "text": "beneath a flag large enough to hide the invoice",
+    "tags": ["corruption", "spending"],
     "rarity": "rare",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian civic-ceremony satire using a general national setting. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -2421,7 +2421,7 @@
   {
     "id": "before-the-cameras-return",
     "role": "ending",
-    "text": "before the cameras return.",
+    "text": "before the cameras return and discover the road was a carpet.",
     "tags": ["media", "credibility"],
     "rarity": "uncommon",
     "finisherBonus": 2,
@@ -2429,13 +2429,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-television ending about the broadcast cycle. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "according-to-protocol",
     "role": "ending",
-    "text": "according to protocol.",
+    "text": "according to protocol; the facts were not on the guest list.",
     "tags": ["bureaucracy", "decorum"],
     "rarity": "common",
     "finisherBonus": 2,
@@ -2443,49 +2443,49 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian administrative satire about formal protocol. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "with-one-final-amendment",
     "role": "ending",
-    "text": "with one final amendment.",
-    "tags": ["bureaucracy", "consistency"],
+    "text": "with one final amendment: arithmetic is now optional.",
+    "tags": ["bureaucracy", "competence"],
     "rarity": "uncommon",
     "finisherBonus": 3,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian parliamentary-procedure ending about amendments. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "until-the-next-reshuffle",
     "role": "ending",
-    "text": "until the next reshuffle.",
-    "tags": ["consistency", "modernity"],
+    "text": "until the next reshuffle, when the same circus changes hats.",
+    "tags": ["consistency"],
     "rarity": "rare",
     "finisherBonus": 3,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian government-cycle ending about cabinet changes. Not a quotation or a claim about a named cabinet. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
     "id": "for-stability-and-progress",
     "role": "ending",
-    "text": "for stability and progress.",
-    "tags": ["legacy", "restraint"],
+    "text": "because winter arrived without a feasibility study.",
+    "tags": ["competence", "infrastructure", "bureaucracy"],
     "rarity": "uncommon",
     "finisherBonus": 2,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian transition-discourse ending about broad political themes. Not a quotation or slogan. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -2505,7 +2505,7 @@
   {
     "id": "before-the-microphones-cool",
     "role": "ending",
-    "text": "before the microphones cool.",
+    "text": "before the microphone files a noise complaint.",
     "tags": ["media", "restraint"],
     "rarity": "uncommon",
     "finisherBonus": 3,
@@ -2513,7 +2513,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian political-broadcast ending about studio debate. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
@@ -2533,15 +2533,15 @@
   {
     "id": "pending-further-consultation",
     "role": "ending",
-    "text": "pending further consultation.",
-    "tags": ["bureaucracy", "credibility"],
+    "text": "while the facts get lost in their own synergy.",
+    "tags": ["bureaucracy", "evidence"],
     "rarity": "common",
     "finisherBonus": 2,
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original Romanian public-administration ending about procedural delay. Not a quotation. Editorial review complete."
+      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
     }
   },
   {
