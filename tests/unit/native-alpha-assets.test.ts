@@ -14,9 +14,23 @@ import { inspectAlpha as inspectScene } from '../../tools/validate-scene-assets.
 import { hasNativeAlphaProvenance } from '../../tools/asset-pixels.mjs';
 // @ts-expect-error Production validators are native ECMAScript modules.
 import { validateStateAsset } from '../../tools/validate-character-states.mjs';
+// @ts-expect-error Production builders are native ECMAScript modules.
+import { encodeVariant } from '../../tools/build-character-assets.mjs';
 
 const execFileAsync = promisify(execFile);
 const script = path.resolve('.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs');
+
+test('shipped native Local Baron portrait satisfies production border and contour checks', async () => {
+  const input = await readFile(path.resolve('src/assets/characters/county-baron--municipal-patron.png'));
+  expect(hasNativeAlphaProvenance(input)).toBe(true);
+  await expect(inspectCharacter(input, 'shipped Local Baron', { nativeAlpha: true })).resolves.toBeUndefined();
+});
+
+test.each(['avif', 'webp'])('small native %s encoding keeps the outer border transparent', async (format) => {
+  const input = await readFile(path.resolve('src/assets/characters/county-baron--municipal-patron.png'));
+  const output = await encodeVariant(input, 128, format);
+  await expect(inspectCharacter(output, `128px ${format}`, { nativeAlpha: true })).resolves.toBeUndefined();
+});
 
 async function fixture(interior = 250, edge = 128, green = false): Promise<Buffer> {
   const pixels = Buffer.alloc(100 * 100 * 4);
