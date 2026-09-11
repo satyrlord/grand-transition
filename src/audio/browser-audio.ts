@@ -153,11 +153,15 @@ export class BrowserAudio implements AudioPort {
       this.loops.delete(id);
       const elapsed = context.currentTime - source.started;
       const level = Math.sin(Math.min(1, elapsed / fadeSeconds) * Math.PI / 2);
-      // This gain is source-owned. Remove an in-progress fade-in before adding
-      // the fade-out because Firefox rejects overlapping value curves.
-      source.gain.gain.cancelScheduledValues(0);
-      source.gain.gain.setValueCurveAtTime(curve(false, level), context.currentTime, fadeSeconds);
-      source.node.stop(context.currentTime + fadeSeconds);
+      // This gain is source-owned. A value curve cannot be removed once it has
+      // started, and Firefox rejects any event scheduled during one, so a
+      // replacement fade waits for an in-flight fade-in to end instead of
+      // stacking a second curve on it. The interrupted loop is still below its
+      // fade-in level at that point, and it stops one fade later.
+      const fadesAt = Math.max(context.currentTime, source.started + fadeSeconds);
+      source.gain.gain.cancelScheduledValues(fadesAt);
+      source.gain.gain.setValueCurveAtTime(curve(false, level), fadesAt, fadeSeconds);
+      source.node.stop(fadesAt + fadeSeconds);
     }
     if (context.state !== 'running' || this.settings.masterVolume * this.settings.musicVolume === 0) return;
     for (const id of wanted) {

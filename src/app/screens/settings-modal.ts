@@ -74,7 +74,12 @@ export class GrandTransitionSettings extends LitElement {
           @keydown=${this.handleKeydown}
         >
           <header class="settings-heading">
-            <h2 id="settings-title">${msg('Settings')}</h2>
+            <div>
+              <h2 id="settings-title">${msg('Settings')}</h2>
+              <p id="settings-description" class="settings-description">
+                ${msg('Scoring applies to new matches. Other changes apply immediately.')}
+              </p>
+            </div>
             <button
               type="button"
               class="settings-close"
@@ -83,9 +88,6 @@ export class GrandTransitionSettings extends LitElement {
               ${msg('Close')}
             </button>
           </header>
-          <p id="settings-description" class="settings-description">
-            ${msg('Changes apply immediately on this browser.')}
-          </p>
           ${this.showPersistenceNotice
             ? html`<div class="settings-persistence-notice" role="status">
                 <p>${msg(settingsPersistenceNotice)}</p>
@@ -95,6 +97,39 @@ export class GrandTransitionSettings extends LitElement {
               </div>`
             : nothing}
           <div class="settings-groups">
+            <fieldset class="settings-group">
+              <legend>${msg('Play')}</legend>
+              <div class="settings-control">
+                <span id="settings-multiplier-label">${msg('Scoring multiplier')}</span>
+                <div class="settings-options settings-options--multiplier"
+                  role="group" aria-labelledby="settings-multiplier-label"
+                  aria-describedby="settings-multiplier-note">
+                  ${([1, 2, 3, 4, 5] as const).map((value) => html`<button
+                    type="button"
+                    aria-pressed=${this.settings.basePointsMultiplier === value}
+                    @click=${() => this.changeSetting('basePointsMultiplier', value)}
+                  >×${value}</button>`)}
+                </div>
+                <p id="settings-multiplier-note" class="settings-note">
+                  ${msg('Scales compatibility points for both players. Default: ×3. Weakness and combos apply separately.')}
+                </p>
+              </div>
+              <div class="settings-control">
+                <span id="settings-timer-label">${msg('Turn timer')}</span>
+                <div class="settings-options settings-options--timer"
+                  role="group" aria-labelledby="settings-timer-label">
+                  ${this.renderTimerOption(15, msg('15 seconds'))}
+                  ${this.renderTimerOption(30, msg('30 seconds'))}
+                  ${this.renderTimerOption(null, msg('Unlimited'))}
+                </div>
+              </div>
+              <label class="settings-toggle">
+                <span>${msg('Auto-complete')}</span>
+                <input type="checkbox" name="autoComplete"
+                  .checked=${this.settings.autoComplete}
+                  @change=${this.changeBoolean} />
+              </label>
+            </fieldset>
             <fieldset class="settings-group">
               <legend>${msg('Sound')}</legend>
               ${this.renderVolume('masterVolume', msg('Master volume'))}
@@ -121,6 +156,8 @@ export class GrandTransitionSettings extends LitElement {
                   @change=${this.changeBoolean}
                 />
               </label>
+              ${this.renderVolume('speechVolume', msg('Speech volume'))}
+              ${this.renderRate()}
               <label class="settings-toggle">
                 <span>${msg('GPU voices')}</span>
                 <input type="checkbox" name="gpuVoices"
@@ -133,12 +170,6 @@ export class GrandTransitionSettings extends LitElement {
                 ${msg('Alternative local human voices. Requires a supported GPU and an extra model download of about 353 MB. Enable speech to use them.')}
                 <a href=${`${import.meta.env.BASE_URL}tts/kokoro-gpu/NOTICE.txt`} target="_blank" rel="noopener">${msg('GPU voice credits')}</a>
               </p>
-              ${this.renderVolume('speechVolume', msg('Speech volume'))}
-              ${this.renderRate()}
-              <p id="speech-service-note" class="settings-note">
-                ${msg('Human voices use a local neural model. Robots use installed Microsoft voices when available. Phrase text stays on this device.')}
-                <a href=${`${import.meta.env.BASE_URL}tts/piper/NOTICE.txt`} target="_blank" rel="noopener">${msg('Voice credits')}</a>
-              </p>
               ${this.speechStatus === 'loading' ? html`<p class="settings-note" role="status">
                 ${msg('Loading local voice model…')}
                 ${this.speechProgress === null ? nothing : `${Math.round(this.speechProgress * 100)}%`}
@@ -147,30 +178,10 @@ export class GrandTransitionSettings extends LitElement {
               </p>` : nothing}
             </fieldset>
 
-            <fieldset class="settings-group settings-group--play">
-              <legend>${msg('Play')}</legend>
-              <div class="settings-control">
-                <span id="settings-timer-label">${msg('Turn timer')}</span>
-                <div
-                  class="settings-options settings-options--timer"
-                  role="group"
-                  aria-labelledby="settings-timer-label"
-                >
-                  ${this.renderTimerOption(15, msg('15 seconds'))}
-                  ${this.renderTimerOption(30, msg('30 seconds'))}
-                  ${this.renderTimerOption(null, msg('Unlimited'))}
-                </div>
-              </div>
-              <label class="settings-toggle">
-                <span>${msg('Auto-complete')}</span>
-                <input
-                  type="checkbox"
-                  name="autoComplete"
-                  .checked=${this.settings.autoComplete}
-                  @change=${this.changeBoolean}
-                />
-              </label>
-            </fieldset>
+            <p id="speech-service-note" class="settings-note settings-footer">
+              ${msg('Human voices use a local neural model. Robots use installed Microsoft voices when available. Phrase text stays on this device.')}
+              <a href=${`${import.meta.env.BASE_URL}tts/piper/NOTICE.txt`} target="_blank" rel="noopener">${msg('Voice credits')}</a>
+            </p>
           </div>
         </section>
       </div>
@@ -290,7 +301,7 @@ export class GrandTransitionSettings extends LitElement {
     }
     if (event.key !== 'Tab') return;
     const controls = [...this.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled])',
+      'button:not([disabled]), input:not([disabled]), a[href]',
     )];
     if (controls.length === 0) return;
     const first = controls[0]!;

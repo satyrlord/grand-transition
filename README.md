@@ -65,7 +65,7 @@ compound subjects and objects, endings, modifiers, incomplete states, and
 immediate grammar mistakes. They also include seeded common-board and
 private-hand generation, clause scoring, noun combos, continuations, comebacks,
 cliffhangers, match lifecycle, replay, simulation, and automatic development
-match logs. Current clause scoring uses compatibility bases of 5, 8, 11, and
+match logs. Default clause scoring uses compatibility bases of 5, 8, 11, and
 14, plus 2 points per modifier before the local 1.5 weakness multiplier and
 noun combos. Restrictions do not add damage.
 
@@ -79,7 +79,12 @@ the player returns to the title. The title alone exposes local public match
 history. The interface requires a browser content viewport of at least 1024 by
 720 CSS pixels. It recommends 1920 by 1080 and PC.
 
-Local sound, speech, timer, and Auto-complete settings use a strict
+Settings opens from the main menu with Play, Sound, and Speech columns.
+Play offers a Scoring multiplier from ×1 through ×5, defaulting to ×3.
+It controls `5 + (compatibility × multiplier)` for both players in each new
+match. Weakness and combo rules remain separate. Replays retain their match's
+multiplier, and historical replays retain their original scoring.
+Local scoring, sound, speech, timer, and Auto-complete settings use a strict
 versioned document and browser storage with a session memory fallback. Single
 player uses the seeded Local Radio Caller, Party Strategist, and Palace
 Operator AI policies. The local nine-rung ladder persists its exact opponents,

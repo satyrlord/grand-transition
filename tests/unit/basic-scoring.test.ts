@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance, legacyVersion3BasicScoringBalance } from '../../src/content/basic-scoring-balance';
+import { basicScoringBalance, scoringBalanceForMultiplier, legacyVersion3BasicScoringBalance } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   ceilDamage,
@@ -144,7 +144,7 @@ describe('Hollywood Roast clause scoring', () => {
     ).toBe(false);
   });
 
-  test('uses the exact 5, 8, 11, and 14 compatibility tiers', () => {
+  test.each([1, 2, 3, 4, 5] as const)('uses compatibility multiplier %s with the fixed five-point base', (multiplier) => {
     const relationId = 'belongs-in-a-party-museum';
     const baseAnalysis = analysis(['national-consensus', relationId]);
     const tier = (substance: boolean, flavour: boolean): number =>
@@ -171,7 +171,7 @@ describe('Hollywood Roast clause scoring', () => {
             : phrase;
         }),
         defenderWeaknessTags: [],
-        balance: basicScoringBalance,
+        balance: scoringBalanceForMultiplier(multiplier),
       }).finalDamage;
 
     expect([
@@ -179,7 +179,21 @@ describe('Hollywood Roast clause scoring', () => {
       tier(false, true),
       tier(true, false),
       tier(true, true),
-    ]).toEqual([5, 8, 11, 14]);
+    ]).toEqual([5, 5 + multiplier, 5 + 2 * multiplier, 5 + 3 * multiplier]);
+  });
+
+  test.each([1, 2, 3, 4, 5] as const)('keeps custom bases, modifier points, and weakness separate at multiplier %s', (multiplier) => {
+    const result = scoreBasicConstruction({
+      analysis: analysis(['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election']),
+      phrases: sampleContent.phrases.map((phrase) => phrase.id === 'belongs-in-a-party-museum'
+        ? { ...phrase, customScores: [{ leftNounId: 'national-consensus', score: 9 }] }
+        : phrase),
+      defenderWeaknessTags: ['consistency'],
+      balance: scoringBalanceForMultiplier(multiplier),
+    });
+    expect(result.finalDamage).toBe(17);
+    expect(result.breakdown.filter((item) => item.kind === 'weakness-multiplier')).toHaveLength(1);
+    expect(result.breakdown).toContainEqual(expect.objectContaining({ kind: 'clause-base', amount: 11 }));
   });
 
   test('keeps a modifier in the preceding clause for weakness scoring', () => {

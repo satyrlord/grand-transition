@@ -74,9 +74,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,
-  comebacks, cliffhangers, replay, and simulation. Clause scoring uses 5, 8,
-  11, and 14
-  compatibility bases plus 2 points per modifier before weakness and noun-combo
+  comebacks, cliffhangers, replay, and simulation. Default clause scoring uses
+  5, 8, 11, and 14 compatibility bases. Settings offers a persisted ×1 through
+  ×5 compatibility multiplier, defaulting to ×3, captured for both players in
+  each new match and its replay. Each clause adds 2 points per modifier before weakness and noun-combo
   multipliers. Each clause receives at most one 1.5 weakness multiplier.
   Restrictions do not add damage. The seeded Local Radio Caller, Party Strategist, and Palace
   Operator AI policies select valid actions for single-player matches. A local

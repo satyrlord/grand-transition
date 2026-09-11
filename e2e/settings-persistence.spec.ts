@@ -41,7 +41,7 @@ test('restores the previous saved speech default to 1.00 times and persists the 
   await expect(page.locator('output[for="speechRate"]')).toHaveText('1.00×');
   await page.getByLabel('Music volume').fill('0.2');
   await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!),settingsKey)).toMatchObject({
-    schemaVersion:3,speechRate:1,musicVolume:0.2,speechVoiceUri:'retired:voice',
+    schemaVersion:4,basePointsMultiplier:3,speechRate:1,musicVolume:0.2,speechVoiceUri:'retired:voice',
   });
   await page.reload(); await page.getByRole('button',{name:'Settings'}).click();
   await expect(page.locator('#speechRate')).toHaveValue('1');
@@ -69,19 +69,25 @@ test('settings persist in the production build and fit every supported viewport'
   await page.getByLabel('Speech rate').fill('1.4');
   await page.getByRole('button', { name: 'Unlimited' }).click();
   await page.getByLabel('Auto-complete').uncheck();
+  const multiplierGroup = page.getByRole('group', { name: 'Scoring multiplier', exact: true });
+  for (const multiplier of [1, 2, 3, 4, 5]) {
+    await multiplierGroup.getByRole('button', { name: `×${multiplier}`, exact: true }).click();
+    await expect(multiplierGroup.locator('[aria-pressed="true"]')).toHaveText(`×${multiplier}`);
+  }
 
   for (const viewport of supportedViewports) {
     await page.setViewportSize(viewport);
     await assertDialogGeometry(page);
     await page.screenshot({
-      path: `.impeccable/review/settings-${viewport.width}x${viewport.height}.png`,
+      path: `tmp/settings-multiplier/settings-${viewport.width}x${viewport.height}.png`,
       fullPage: true,
     });
   }
 
   const stored = await page.evaluate((key) => localStorage.getItem(key), settingsKey);
   expect(JSON.parse(stored!)).toEqual({
-    schemaVersion: 3,
+    schemaVersion: 4,
+    basePointsMultiplier: 5,
     gpuVoices: false,
     masterVolume: 0.55,
     musicVolume: 0.45,
@@ -106,6 +112,7 @@ test('settings persist in the production build and fit every supported viewport'
     'true',
   );
   await expect(page.getByLabel('Auto-complete')).not.toBeChecked();
+  await expect(multiplierGroup.getByRole('button', { name: '×5', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.emulateMedia({ forcedColors: 'active' });
   const selectedTimerStyle = await page
     .getByRole('button', { name: 'Unlimited' })
@@ -127,11 +134,24 @@ test('settings persist in the production build and fit every supported viewport'
   expect(selectedTimerStyle.backgroundColor).not.toBe(
     unselectedTimerBackground,
   );
+  const selectedMultiplier = multiplierGroup.getByRole('button', { name: '×5', exact: true });
+  await selectedMultiplier.hover();
+  await selectedMultiplier.focus();
+  const selection = await selectedMultiplier.evaluate((button) => {
+    const style = getComputedStyle(button);
+    return { background: style.backgroundColor, color: style.color, outline: style.outlineStyle };
+  });
+  expect(selection.background).not.toBe(selection.color);
+  expect(selection.outline).toBe('solid');
+  await page.screenshot({ path: 'tmp/settings-multiplier/forced-colors.png', fullPage: true });
   await page.emulateMedia({ forcedColors: 'none' });
   await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Set up match' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('[data-timer="unlimited"]')).toBeVisible();
+  expect(await page.locator('grand-transition-app').evaluate((app) =>
+    (app as HTMLElement & { matchState: { setup: { basePointsMultiplier: number } } }).matchState.setup.basePointsMultiplier,
+  )).toBe(5);
   await page.getByRole('button', { name: 'Pause' }).click();
   await expect(page.getByRole('button', { name: 'Unlimited' })).toHaveAttribute(
     'aria-pressed',
@@ -170,7 +190,7 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   await expect(gpu).toBeEnabled();
   expect(gpuRequests).toEqual([]);
   await assertDialogGeometry(page);
-  await page.screenshot({ path: '.impeccable/review/settings-gpu-unavailable-1024x720.png', fullPage: true });
+  await page.screenshot({ path: 'tmp/settings-multiplier/settings-gpu-unavailable-1024x720.png', fullPage: true });
   await page.reload();
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(gpu).toBeChecked();
@@ -182,9 +202,28 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   await expect(gpu).toBeDisabled();
   expect(gpuRequests).toEqual([]);
   const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), settingsKey);
-  expect(stored).toMatchObject({ schemaVersion: 3, gpuVoices: false, speechEnabled: false });
+  expect(stored).toMatchObject({ schemaVersion: 4, gpuVoices: false, speechEnabled: false });
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await expect(page.getByRole('button',{name:'Set up match'})).toBeEnabled();
+});
+
+test('settings keyboard order includes both credit links and returns to the menu', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await page.goto('/grand-transition/');
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const close = page.getByRole('button', { name: 'Close', exact: true });
+  const credits = page.getByRole('link', { name: 'Voice credits', exact: true });
+  await expect(close).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(credits).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.getByRole('link', { name: 'GPU voice credits', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await expect(close).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Settings', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Settings', exact: true })).toBeFocused();
 });
 
 for (const failure of ['quota', 'security', 'unavailable'] as const) {

@@ -1,13 +1,15 @@
 import { z } from 'zod';
+import { basePointsMultiplierSchema, type BasePointsMultiplier } from '../../content/basic-scoring-balance';
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
 
-export const settingsSchemaVersion = 3;
+export const settingsSchemaVersion = 4;
 
 export type TurnTimerSeconds = 15 | 30 | null;
+export type { BasePointsMultiplier } from '../../content/basic-scoring-balance';
 
 export type SettingsDocument = Readonly<{
-  schemaVersion: 3;
+  schemaVersion: 4;
   masterVolume: number;
   musicVolume: number;
   effectsVolume: number;
@@ -18,6 +20,7 @@ export type SettingsDocument = Readonly<{
   speechRate: number;
   turnTimerSeconds: TurnTimerSeconds;
   autoComplete: boolean;
+  basePointsMultiplier: BasePointsMultiplier;
 }>;
 
 export type SettingsCodecFailure = Readonly<{
@@ -49,6 +52,7 @@ const settingsFields = [
   'speechRate',
   'turnTimerSeconds',
   'autoComplete',
+  'basePointsMultiplier',
 ] as const;
 
 const settingsFieldSet = new Set<string>(settingsFields);
@@ -76,6 +80,7 @@ const settingsSchema = z
       .refine((value) => alignedToStep(value, 0.1)),
     turnTimerSeconds: z.union([z.literal(15), z.literal(30), z.null()]),
     autoComplete: z.boolean(),
+    basePointsMultiplier: basePointsMultiplierSchema,
   })
   .strict();
 
@@ -91,6 +96,7 @@ export const defaultSettings: SettingsDocument = deepFreeze({
   speechRate: 1,
   turnTimerSeconds: 30,
   autoComplete: true,
+  basePointsMultiplier: 3,
 });
 
 export const settingsCodec: VersionedCodec<SettingsDocument> = Object.freeze({
@@ -115,6 +121,7 @@ export function encodeSettings(settings: SettingsDocument): string {
     speechRate: value.speechRate,
     turnTimerSeconds: value.turnTimerSeconds,
     autoComplete: value.autoComplete,
+    basePointsMultiplier: value.basePointsMultiplier,
   });
 }
 
@@ -125,14 +132,16 @@ export function decodeSettings(serialized: string): SettingsCodecResult {
   } catch {
     return invalid('$');
   }
-  if (isRecord(value) && value.schemaVersion === 1) {
-    if ('gpuVoices' in value) return invalid('gpuVoices');
-    return parseSettings({ ...value, schemaVersion: 3, gpuVoices: true,
-      speechRate: value.speechRate === 1.2 ? 1 : value.speechRate });
-  }
-  if (isRecord(value) && value.schemaVersion === 2) {
-    return parseSettings({ ...value, schemaVersion: 3,
-      speechRate: value.speechRate === 1.2 ? 1 : value.speechRate });
+  if (isRecord(value) && [1, 2, 3].includes(value.schemaVersion as number)) {
+    if ('basePointsMultiplier' in value) return invalid('basePointsMultiplier');
+    if (value.schemaVersion === 1 && 'gpuVoices' in value) return invalid('gpuVoices');
+    return parseSettings({
+      ...value,
+      schemaVersion: settingsSchemaVersion,
+      ...(value.schemaVersion === 1 ? { gpuVoices: true } : {}),
+      speechRate: value.schemaVersion !== 3 && value.speechRate === 1.2 ? 1 : value.speechRate,
+      basePointsMultiplier: 3,
+    });
   }
   if (
     isRecord(value) &&

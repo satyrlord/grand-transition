@@ -2400,11 +2400,28 @@ async function expectDecodedSceneVariant(image: Locator): Promise<void> {
 }
 
 async function decodeImages(images: Locator): Promise<void> {
-  await images.evaluateAll((elements) =>
-    Promise.all(
-      elements.map((element) => (element as HTMLImageElement).decode()),
-    ).then(() => undefined),
-  );
+  await expect
+    .poll(
+      () =>
+        images.evaluateAll((elements) =>
+          Promise.all(
+            elements.map(async (element) => {
+              const image = element as HTMLImageElement;
+              if (!image.complete || image.naturalWidth === 0) return false;
+              try {
+                await image.decode();
+                return true;
+              } catch {
+                // A replacement source rejects a decode that started against
+                // the previous source. The next poll retries the settled one.
+                return false;
+              }
+            }),
+          ).then((results) => results.every(Boolean)),
+        ),
+      { timeout: 15_000, message: 'every scene image decodes' },
+    )
+    .toBe(true);
 }
 
 async function expectDecodedPortraitVariants(images: Locator): Promise<void> {
@@ -2465,6 +2482,9 @@ async function moderatorFaceIsClearOfPortraits(page: Page): Promise<boolean> {
     const focalPoint = picture.getAttribute('data-scene-focal-point');
     if (!focalPoint) return true;
     const [faceX, faceY] = focalPoint.split(',').map(Number) as [number, number];
+    if (![faceX, faceY].every(Number.isFinite)) {
+      throw new Error('The scene focal coordinates must be finite numbers.');
+    }
     const moderatorFace = {
       left: backgroundBox.left + backgroundBox.width * (faceX - 0.02),
       right: backgroundBox.left + backgroundBox.width * (faceX + 0.02),
@@ -2476,6 +2496,17 @@ async function moderatorFaceIsClearOfPortraits(page: Page): Promise<boolean> {
       ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
     ].some((portrait) => {
       const box = portrait.getBoundingClientRect();
+      if (
+        box.width <= 0 ||
+        box.height <= 0 ||
+        portrait.naturalWidth <= 0 ||
+        portrait.naturalHeight <= 0
+      ) {
+        // A portrait without a box or a decoded source has no drawn pixels, so
+        // it cannot cover the face. Measuring it would divide by zero and send
+        // getImageData a non-integer extent.
+        return false;
+      }
       const scale = Math.min(
         box.width / portrait.naturalWidth,
         box.height / portrait.naturalHeight,

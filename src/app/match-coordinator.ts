@@ -1,3 +1,4 @@
+import { scoringBalanceForMultiplier } from '../content/basic-scoring-balance';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
 import { decidePalaceOperator, decidePartyStrategist } from '../ai/advanced-ai';
 import {
@@ -67,15 +68,23 @@ type AiTurnRequest = Readonly<{
 
 /** Coordinates application effects without owning the shell's active snapshot. */
 export class MatchCoordinator {
-  private readonly reducer: ReturnType<typeof createMatchReducer>;
+  private reducer: ReturnType<typeof createMatchReducer>;
+  private context: MatchEngineContext;
   private aiTimerId: number | undefined;
   private aiRequest: AiTurnRequest | undefined;
 
   constructor(private readonly dependencies: CoordinatorDependencies) {
-    this.reducer = createMatchReducer(dependencies.context);
+    this.context = dependencies.context;
+    this.reducer = createMatchReducer(this.context);
   }
 
   start(state: MatchState): MatchState {
+    this.cancelAiTurn();
+    this.context = {
+      ...this.dependencies.context,
+      balance: scoringBalanceForMultiplier(state.setup.basePointsMultiplier ?? 3),
+    };
+    this.reducer = createMatchReducer(this.context);
     const initialSeed = state.seed;
     return this.continueRound(this.lifecycle(state, 'start-match', initialSeed), initialSeed);
   }
@@ -121,7 +130,7 @@ export class MatchCoordinator {
     const decide = state.setup.aiDifficulty === 'party-strategist'
       ? decidePartyStrategist
       : state.setup.aiDifficulty === 'palace-operator' ? decidePalaceOperator : decideLocalRadioCaller;
-    const decision = decide(state, this.dependencies.context, { reducedDelay: request.reducedDelay });
+    const decision = decide(state, this.context, { reducedDelay: request.reducedDelay });
     if (!decision) return;
     this.aiRequest = request;
     request.thinking(true);

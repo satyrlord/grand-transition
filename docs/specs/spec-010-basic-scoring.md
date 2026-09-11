@@ -35,10 +35,16 @@ An explicit custom score overrides the compatibility calculation. Otherwise:
 
 ```text
 compatibility = (substance matches * 2) + (flavour matches * 1)
-base = 5 + (compatibility * 3)
+base = 5 + (compatibility * selected multiplier)
 ```
 
-The four calculated base tiers are exactly 5, 8, 11, and 14. Character and
+The multiplier has five values: 1, 2, 3, 4, and 5. Its default is 3, which
+produces base tiers of 5, 8, 11, and 14. Settings → Play owns the selector under
+Milestone 020. Capture the selection when each custom or Ladder match starts
+and use it for both players, AI evaluation, and score presentation until that
+match ends. Later settings changes apply to the next match. The setting affects
+compatibility points only: the fixed 5 points, explicit custom matrix values,
+modifier points, weakness factor, and combo rules do not change. Character and
 scene restrictions never change damage. They control eligibility only.
 
 Apply these steps to each clause in order:
@@ -66,7 +72,9 @@ can still activate that multiplier.
 - **AC-010-01:** Golden clauses cover no match, substance, `flavour`, both,
   custom override, and both grammar forms.
 - **AC-010-02:** The compatibility calculation produces exactly 5, 8, 11, and
-  14. Character and scene restrictions do not change clause or finisher damage.
+  14 at the default multiplier of 3. Each selectable multiplier produces
+  `5`, `5 + multiplier`, `5 + 2 * multiplier`, and `5 + 3 * multiplier`.
+  Character and scene restrictions do not change clause or finisher damage.
 - **AC-010-03:** Weakness multiplies each matching clause by 1.5 once and does
   not multiply unrelated clauses. Neutral connectors, copulas, referents, and
   actions cause no weakness match, including in a compound or continued
@@ -95,6 +103,8 @@ can still activate that multiplier.
 ## Objective verifiers
 
 `tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-06.
+`tests/unit/match-coordinator.test.ts` verifies captured match multipliers and
+matching completed-history replays.
 The modifier scenario in `e2e/coordinated-copular-complement.spec.ts` verifies
 the production clause receipt and final damage for AC-010-06.
 `tests/unit/replay-and-simulation.test.ts` and

@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+export const basePointsMultiplierSchema = z.union([
+  z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5),
+]);
+
+export type BasePointsMultiplier = z.infer<typeof basePointsMultiplierSchema>;
+
 export const basicScoringBalanceSchema = z.discriminatedUnion('version', [
   z
     .object({
@@ -42,7 +48,7 @@ export const basicScoringBalanceSchema = z.discriminatedUnion('version', [
       version: z.literal(4),
       modifierPoints: z.literal(2),
       basePointsMinimum: z.literal(5),
-      basePointsMultiplier: z.literal(3),
+      basePointsMultiplier: basePointsMultiplierSchema,
       substanceGroupPoints: z.literal(2),
       flavourGroupPoints: z.literal(1),
       weaknessMultiplier: z.literal(1.5),
@@ -102,3 +108,9 @@ export const legacyBasicScoringBalance: BasicScoringBalance =
     restrictedPhraseMultiplier: 1.5,
     rounding: 'ceil',
   });
+
+export function scoringBalanceForMultiplier(
+  basePointsMultiplier: BasePointsMultiplier,
+): BasicScoringBalance {
+  return basicScoringBalanceSchema.parse({ ...basicScoringBalance, basePointsMultiplier });
+}

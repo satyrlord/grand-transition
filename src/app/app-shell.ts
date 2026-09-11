@@ -626,6 +626,7 @@ export class GrandTransitionApp extends LitElement {
     const state = createMatchSetupState({
       schemaVersion: 1,
       seed: initialSeed,
+      basePointsMultiplier: this.settingsSnapshot.settings.basePointsMultiplier,
       players: [
         configuredPlayer('player-one', playerOneCharacterId),
         configuredPlayer('player-two', playerTwoCharacterId),

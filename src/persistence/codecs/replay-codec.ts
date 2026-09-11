@@ -3,6 +3,9 @@ import { legacyPhraseReplayContext } from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
+  basicScoringBalance,
+  basePointsMultiplierSchema,
+  scoringBalanceForMultiplier,
   legacyBasicScoringBalance,
   legacyVersion2BasicScoringBalance,
   legacyVersion3BasicScoringBalance,
@@ -20,12 +23,13 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 5;
+export const replaySchemaVersion = 6;
 export const supportedReplaySchemaVersions = [
   1,
   2,
   3,
   4,
+  5,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -37,6 +41,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[2]),
   z.literal(supportedReplaySchemaVersions[3]),
   z.literal(supportedReplaySchemaVersions[4]),
+  z.literal(supportedReplaySchemaVersions[5]),
 ]);
 
 export type ReplayFailureCode =
@@ -123,6 +128,7 @@ export const replaySetupSchema = z
     timerSeconds: z.literal(30),
     speechEnabled: z.boolean(),
     privacyEnabled: z.boolean(),
+    basePointsMultiplier: basePointsMultiplierSchema.optional(),
   })
   .strict()
   .superRefine((setup, context) => {
@@ -143,7 +149,8 @@ const replayDocumentSchema = z
     setup: replaySetupSchema,
     commands: z.array(replayCommandSchema),
   })
-  .strict();
+  .strict()
+  .superRefine(validateScoringSetup);
 
 const roundSummarySchema = z
   .object({
@@ -239,6 +246,7 @@ const matchLogDocumentSchema = z
     winner: identifier,
   })
   .strict()
+  .superRefine(validateScoringSetup)
   .superRefine((matchLog, context) => {
     const playerIds = new Set(
       matchLog.setup.players.map((player) => player.playerId),
@@ -413,7 +421,9 @@ export function replayMatch(
           ? legacyVersion2BasicScoringBalance
           : decoded.value.schemaVersion === 3
             ? legacyVersion3BasicScoringBalance
-            : context.balance,
+            : decoded.value.schemaVersion < 6
+              ? basicScoringBalance
+              : scoringBalanceForMultiplier(decoded.value.setup.basePointsMultiplier!),
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {
@@ -652,6 +662,8 @@ function createSetupRequest(
     aiDifficulty: replay.setup.aiDifficulty,
     speechEnabled: replay.setup.speechEnabled,
     privacyEnabled: replay.setup.privacyEnabled,
+    ...(replay.schemaVersion >= 6
+      ? { basePointsMultiplier: replay.setup.basePointsMultiplier } : {}),
     openingPlayerIndex: scene.openingPlayerIndex,
   };
 }
@@ -674,4 +686,14 @@ function applyInitialValues(state: MatchState, setup: ReplaySetup): MatchState {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function validateScoringSetup(
+  value: { schemaVersion: number; setup: { basePointsMultiplier?: number } },
+  context: z.RefinementCtx,
+): void {
+  if ((value.schemaVersion >= 6) !== (value.setup.basePointsMultiplier !== undefined)) {
+    context.addIssue({ code: 'custom', path: ['setup', 'basePointsMultiplier'],
+      message: 'Use the scoring setup for this replay version.' });
+  }
 }

@@ -65,11 +65,14 @@ redirects rejected. Do not embed recordings in JavaScript. Preserve the default
 Master multiplies Music, Effects, and Speech gains.
 Defaults and ranges come from Milestone 020. Zero gain produces zero samples
 without restarting sources. Music changes use a 300-millisecond equal-power
-crossfade. Exit fades old loops within 300 milliseconds and stops effects.
+crossfade. Exit fades old loops for 300 milliseconds and stops effects. A loop
+that is still fading in finishes that curve first, so its exit fade starts when
+its fade-in ends.
 Disconnection closes the context. Pause, unsupported viewports, and hidden
 documents fade scene audio to silence.
-Before replacing an in-progress source fade, remove its prior automation curve.
-Overlapping AudioParam curves must not throw or leave a loop audible.
+A running AudioParam value curve cannot be cancelled, and a second event during
+it must not throw or leave a loop audible. Either remove the prior automation
+curve or start the replacement fade after it ends.
 
 The Pause Sound group exposes Music and Voices On and Off choices. Music uses
 the persisted Music volume and Voices uses the persisted Speech enabled setting.

@@ -1,15 +1,22 @@
 import { expect, type Page } from '@playwright/test';
 
+const deliveryPhase = (page: Page): Promise<string | null> =>
+  page.evaluate(() =>
+    document.querySelector('.match-screen')?.getAttribute('data-delivery-phase') ?? null,
+  );
+
 /** Advance the installed browser clock while an actual presentation owns input. */
 export async function finishPresentation(page: Page): Promise<boolean> {
   let observed = false;
   for (let elapsed = 0; elapsed < 120_000; elapsed += 500) {
-    const phase = await page.locator('.match-screen').getAttribute('data-delivery-phase');
+    // Read without a locator so an absent match screen reports "no
+    // presentation" instead of blocking the caller while it waits to attach.
+    const phase = await deliveryPhase(page);
     if (!phase) return observed;
     observed = true;
     await page.clock.runFor(500);
   }
-  await expect(page.locator('.match-screen')).not.toHaveAttribute('data-delivery-phase', /.+/u);
+  await expect.poll(() => deliveryPhase(page)).toBeNull();
   return observed;
 }
 

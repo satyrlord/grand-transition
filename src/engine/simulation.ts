@@ -1,3 +1,4 @@
+import { legacyPhraseReplayContext } from '../persistence/codecs/legacy-phrase-replay-context';
 import type { ContentCatalog } from '../content/content-catalog';
 import type { Phrase } from '../content/schemas';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
@@ -250,21 +251,27 @@ export function simulateMatch(
 ): SimulatedMatch {
   const normalizedSeed = normalizeSeed(seed);
   const replay: ReplayDocument = {
-    schemaVersion: replaySchemaVersion,
+    schemaVersion: context.balance.version < 4 ? context.balance.version : replaySchemaVersion,
     kind: replayKind,
     seed: normalizedSeed,
-    setup,
+    setup: context.balance.version === 4
+      ? { ...setup, basePointsMultiplier: setup.basePointsMultiplier ?? context.balance.basePointsMultiplier }
+      : setup,
     commands: [],
   };
   let state = createReplayInitialState(replay, context);
   if (!state) {
     throw simulationFailure(normalizedSeed, 'The setup is invalid.');
   }
+  const simulationContext = replay.schemaVersion < 5
+    ? legacyPhraseReplayContext(context) : context;
   const engineContext: MatchEngineContext = {
-    phrases: context.catalog.phrases,
-    characters: context.catalog.characters,
-    locale: context.locale,
-    balance: context.balance,
+    phrases: simulationContext.catalog.phrases,
+    characters: simulationContext.catalog.characters,
+    locale: simulationContext.locale,
+    balance: context.balance.version === 4
+      ? { ...context.balance, basePointsMultiplier: replay.setup.basePointsMultiplier! }
+      : context.balance,
   };
   const reducer = createMatchReducer(engineContext);
   const commands: ReplayDocument['commands'][number][] = [];
