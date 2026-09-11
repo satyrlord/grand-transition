@@ -35,8 +35,16 @@ The remaining roster uses its existing selection portrait until Milestone 031.
 Local Baron adds the selection-only `municipal-patron` skin under Milestone
 031. Its master is `county-baron--municipal-patron.png`, generated through the
 OpenAI API with `gpt-image-2.5-sunburst` at native 2048 by 2048 with native alpha
-and an authorized conforming portrait as a style reference. Preserve its decoded
-pixels. Its replacement passes the shared detailed character rendering standard.
+and an authorized conforming portrait as a style reference. Its replacement
+passes the shared detailed character rendering standard. The owner-authorized
+background repair clears only alpha-1 pixels farther than four pixels from
+near-opaque content. Preserve every RGB value, all interior alpha, and all
+contour alpha. Keep the native border and contour validation rules unchanged.
+For native character variants, clear only resize-generated outer-border alpha
+at or below 8. Reject stronger border coverage instead of clipping the figure.
+Encode 128- and 256-pixel native AVIF variants losslessly so compression cannot
+restore border haze. Record the lossless setting in the selection manifest.
+Keep all existing byte budgets and the larger-image encoding settings.
 Build the five AVIF/WebP sizes and record its reviewed left-facing direction
 and source hash. Keep the default portrait and baseline hashes unchanged.
 

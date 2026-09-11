@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import baseline from './character-replacement-baseline.json' with { type: 'json' };
 import portraitLayout from '../src/assets/characters/portrait-layout.json' with { type: 'json' };
+import { hasNativeAlphaProvenance } from './asset-pixels.mjs';
 
 export const CHARACTER_MASTER_NAMES = Object.freeze(
   [...new Set([...baseline.assets.map(({ file }) => file),
@@ -42,9 +43,23 @@ export async function readCharacterLayout(characterRoot, masterNames = CHARACTER
 }
 
 export async function encodeVariant(input, width, format) {
-  const pipeline = sharp(input).resize(width, width, { fit: 'contain', kernel: sharp.kernel.lanczos3 });
+  let pipeline = sharp(input).resize(width, width, { fit: 'contain', kernel: sharp.kernel.lanczos3 });
+  const nativeAlpha = hasNativeAlphaProvenance(input);
+  if (nativeAlpha) {
+    const { data, info } = await pipeline.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    for (let y = 0; y < info.height; y += 1) {
+      for (let x = 0; x < info.width; x += 1) {
+        if (x !== 0 && y !== 0 && x !== info.width - 1 && y !== info.height - 1) continue;
+        const offset = (y * info.width + x) * 4 + 3;
+        if (data[offset] > 8) throw new Error('Native character resize reaches the outer border. Increase the source safe margin.');
+        data[offset] = 0;
+      }
+    }
+    pipeline = sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
+  }
   return format === 'avif'
-    ? pipeline.avif({ effort: 8, quality: QUALITY.avif }).toBuffer()
+    ? pipeline.avif({ effort: 8, quality: nativeAlpha && width <= 256 ? 100 : QUALITY.avif,
+      lossless: nativeAlpha && width <= 256 }).toBuffer()
     : pipeline.webp({ alphaQuality: 100, effort: 6, quality: QUALITY.webp, smartSubsample: true }).toBuffer();
 }
 
@@ -125,7 +140,8 @@ export async function buildCharacterAssets({
             width,
             height: width,
             format,
-            quality: QUALITY[format],
+            quality: format === 'avif' && hasNativeAlphaProvenance(input) && width <= 256 ? 100 : QUALITY[format],
+            ...(format === 'avif' && hasNativeAlphaProvenance(input) && width <= 256 ? { lossless: true } : {}),
             bytes: output.length,
             sha256: sha256(output),
           };
