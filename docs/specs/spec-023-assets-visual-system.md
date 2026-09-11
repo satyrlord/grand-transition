@@ -733,10 +733,63 @@ package remains at most 300 KiB. The build and asset-validation scripts check
 the brand and state manifests as well as the baseline scene and character
 manifests. The asset-build script reproduces all four packages with Sharp.
 
+### Sunburst generation and preparation workflow
+
+Use `gpt-image-2.5-sunburst` for transparent assets, exact-size masters, and
+requests above 2,073,600 pixels. Use the internal tool for small opaque
+drafts without an exact-size contract. Resolve character masters to 2048 by
+2048 before choosing their route. Resolve scene dimensions from the scene
+pipeline. An explicit user-selected route takes precedence, but an undersized
+result does not satisfy a master contract. Generation dimensions must also
+meet Sunburst's multiple-of-16 rule. For a 1920-by-1080 shipping scene, request
+a 3840-by-2160 source and use reviewed downsampling. Do not request unsupported
+native 1920-by-1080 output or change the shipping dimensions to match a provider.
+
+The repository-owned image helper uses Node.js and the OpenAI Image API.
+It does not depend on or modify the installed generic image CLI. Text requests
+use the generation endpoint. Authorized references use multipart image edits.
+Keep the model, high quality, PNG format, explicit dimensions, and background
+mode in the request record. Validate dimensions and construct the actual
+request during a dry run, without credentials, network calls, or output writes.
+Sunburst dimensions follow the [official image generation guide](https://developers.openai.com/api/docs/guides/image-generation).
+
+Read credentials only from the ignored, untracked `.env.local` file. Use the
+fixed OpenAI endpoint. Do not follow redirects or forward raw provider errors.
+Record safe HTTP status and failure categories. Do not retry automatically.
+Keep an interrupted request's outcome uncertain until evidence resolves it.
+Preserve returned bytes and their hash before dimension and alpha inspection.
+Do not equate a successful HTTP response with a usable asset.
+
+An authorized image creation or repair includes the correct generation route
+and the standard preparation below. Do not request the same approval again.
+Workflow maintenance and dry runs do not authorize image generation.
+Keep one candidate and one corrective generation per asset unless the user
+sets another limit. Inspect measurable defects before spending a correction.
+
+Standard native preparation can clear only alpha-1 pixels farther than four
+pixels from near-opaque content, using Chebyshev distance and alpha at least
+250. Preserve all RGB values and every other alpha value. Preserve original
+bytes when no cleanup is needed. Apply the existing native-alpha acceptance
+thresholds afterward. Reject the result if those checks still fail. Do not
+broaden cleanup to stronger alpha, contours, colors, or silhouettes.
+
+Retain the original candidate, prepared output, cleanup count, method, and
+before-and-after alpha evidence. Record each output hash, including the later
+metadata-stamping hash. Review the prepared image on light and dark backgrounds.
+An image viewer that displays RGB hidden under transparency does not prove a
+visible halo. Visual review remains separate from alpha acceptance.
+
+For characters, build the reviewed master and complete runtime variants in a
+staging tree. Finish the build before validation. Check source hashes, byte
+budgets, alpha, and color before replacing the shipping package. This includes
+the AVIF decoded-border check above. Scene preparation uses the same native
+alpha rules and retains its declared geometry and resolution checks.
+
 Prefer native transparent PNG generation for new transparent scene and
 character assets when the selected model supports it. GPT Image 2.5 Sunburst
 and Flare support the API `background: "transparent"` option with PNG or WebP.
-Keep the original decoded colors and alpha. Do not add a colored matte,
+Keep the original decoded colors and alpha except for standard preparation above.
+Do not add a colored matte,
 normalize alpha, or flatten colors merely to fit the older keying process.
 Inspect actual transparency, contour quality, and light/dark composites.
 
@@ -1096,3 +1149,13 @@ or uses the largest available 960-pixel variant. All 18 portraits retain their
 canonical skin and existing composition.
 Verify with `e2e/roster-resolution.spec.ts` and
 `tests/browser/screen-shell.browser.test.ts`.
+
+**AC-023-20:** The Sunburst workflow routes transparent and exact-size requests
+to the API before the draft pixel boundary. Offline tests construct native
+2048-square requests without an installed CLI. They verify multipart reference
+bytes, fixed-origin credentials, sanitized HTTP failures, and zero automatic
+retries. Dry runs create no files and do not read credentials. Native preparation
+preserves RGB, contour alpha, stronger alpha, and no-op bytes. It removes only
+permitted detached alpha-1 pixels and rejects output that still fails the
+existing native thresholds. Verify with `tests/unit/openai-scene.test.ts`,
+`tests/unit/sunburst-api.test.ts`, and `tests/unit/native-alpha-preparation.test.ts`.

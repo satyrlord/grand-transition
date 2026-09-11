@@ -1,6 +1,6 @@
 interface:
-  display_name: "Generate Scene with OpenAI"
-  short_description: "Route scene art by size, then inspect and import"
-  default_prompt: "Use $generate-scene-openai to generate scene art internally through 1080p or through the OpenAI API above 1080p, then verify and integrate it."
+  display_name: "Generate Raster Art with OpenAI"
+  short_description: "Generate Sunburst art, inspect alpha, and integrate"
+  default_prompt: "Use $generate-scene-openai to generate or edit scene and character art. Route transparency, exact masters, and output above 1080p through the repository Sunburst API helper. Inspect, prepare, and integrate accepted output."
 policy:
   allow_implicit_invocation: true

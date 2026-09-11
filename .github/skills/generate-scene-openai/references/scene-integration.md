@@ -3,6 +3,8 @@
 ## Prepare the master
 
 Use this procedure only after the candidate review passes.
+For transparent output, first follow [native alpha preparation](native-alpha.md).
+Use the reviewed prepared-native image as the source when that step changed alpha.
 Read `tools/scene-resolution.mjs`, `tools/build-scene-assets.mjs`, and the selected scene's existing manifest entry.
 Use the helper to prepare the exact shipping size:
 
@@ -14,6 +16,7 @@ node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
 ```
 
 The helper reads the shipping dimensions from `sceneMasterSize`.
+Generation requests use supported source dimensions. They do not redefine these shipping dimensions.
 It supports the eight declared masters, including the two `-desks` layers.
 For a new ID, implement its approved pipeline contract before preparation.
 Do not bypass the master inventory check.
@@ -26,9 +29,11 @@ Inspect the prepared image again for crop loss and edge defects.
 Its private preparation record includes source and output hashes and dimensions.
 Current studio masters are 3840 by 2160 pixels.
 Other current scene masters are 1920 by 1080 pixels.
+Generate replacements for those masters at 3840 by 2160, then downsample through this reviewed preparation procedure.
+Sunburst cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
 A 4K source does not authorize changing another scene's shipping-resolution contract.
 
-For native transparent art, preserve the decoded pixels and alpha.
+For native transparent art, preserve the reviewed decoded pixels and alpha during metadata registration.
 Stamp generic provenance, then register the native source without matte conversion:
 
 ```text
@@ -38,7 +43,8 @@ node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-
 
 Replace the example source text with verified facts.
 The script retains its historical filename for existing callers.
-Native adoption changes metadata only. It does not normalize alpha or flatten colors.
+Native adoption changes metadata only. It does not perform background cleanup, normalize alpha, or flatten colors.
+Record the final stamped hash after these operations alongside the raw and prepared hashes.
 
 For a green-matte fallback, convert through the existing converter:
 
@@ -71,6 +77,7 @@ node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs valida
 node tools/validate-asset-color.mjs validate tmp/scene-generation/run/scenes
 ```
 
+Run these commands in order. Do not validate while the builder is still writing variants.
 Inspect all changed manifest fields and every runtime size.
 Preserve ownership, license, focal regions, safe rectangles, source hashes, and byte budgets.
 Do not edit generated variants or the generated manifest by hand.
@@ -85,6 +92,7 @@ Use per-asset factual provenance. Do not relabel untouched studio assets.
 Make that change during the authorized replacement task, not during skill installation.
 
 Install the verified masters, generated variants, and generated manifest as one coherent package under `src/assets/scenes/`.
+Recheck the shipping tree before installation to preserve work added after staging began.
 Preserve unrelated changes and unused-candidate isolation.
 For new scene identities, follow [update-game-content](../../update-game-content/SKILL.md) for catalog and localization ownership.
 

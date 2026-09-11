@@ -20,9 +20,9 @@ specified task gates. Recheck those gates when the scope changes.
 - [`diagnose`](diagnose/SKILL.md): Reproduce and isolate difficult failures.
 - [`full-code-review`](full-code-review/SKILL.md): Review a diff, branch,
   milestone, or complete checkout.
-- [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate scene art
-  internally through 1080p or through the OpenAI API above 1080p. Inspect and
-  import accepted art.
+- [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate or edit
+  scene and character art. Use the Sunburst API for transparency, exact masters,
+  and output above 1080p. Inspect, prepare, and integrate accepted art.
 - [`grill-me`](grill-me/SKILL.md): Resolve one product, architecture, or design
   decision at a time.
 - [`improve-codebase-architecture`](improve-codebase-architecture/SKILL.md):

@@ -3,10 +3,11 @@
 Read this module before raster generation, editing, conversion, adoption, or provenance changes.
 Run repository commands from the repository root.
 
-For scene raster generation and editing, use
+For scene and character raster generation and editing, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-It selects the internal tool through 1080p and the OpenAI API above 1080p.
-Use the installed `imagegen` skill for other raster work.
+It selects the Sunburst API for transparency, exact-size masters, and output above 1080p.
+It uses the internal image tool for small opaque drafts.
+Its repository helper owns the API request. Do not patch an installed image CLI.
 
 ## Preserve the raster contract
 
@@ -33,7 +34,9 @@ blue filter.
 
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
 Prefer native transparent PNG output when the selected model supports it.
-Preserve its alpha and decoded colors. Inspect it against light and dark backgrounds.
+Preserve its alpha and decoded colors except for the approved bounded alpha-1 preparation.
+Follow [native alpha preparation](../../generate-scene-openai/references/native-alpha.md) before adoption.
+Inspect it against light and dark backgrounds.
 Stamp factual provenance, then use `adopt-native` in
 [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs).
 This path records native-alpha metadata without color keying or pixel changes.
