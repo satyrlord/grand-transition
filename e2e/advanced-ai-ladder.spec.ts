@@ -33,11 +33,11 @@ for (const viewport of [
     await page.clock.install();
     await useFixedBrowserMatchSeed(page, 1);
     await page.goto('/grand-transition/');
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Ladder' }).click();
     await page
       .getByRole('button', { name: /Government AI.*Select for player one/u })
       .click();
-    await page.getByLabel('Mode', { exact: true }).selectOption('ladder');
+
     await expect(page.locator('.ladder-record')).toContainText('Rung 1/9');
     await expect(page.locator('.setup-heading > p:last-child')).toBeVisible();
     await expect(page.locator('.roster-choice')).toHaveCount(18);
@@ -156,11 +156,10 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
     ladderProgressStorageKey,
   );
   await page.reload();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Ladder' }).click();
   await page
     .getByRole('button', { name: /Government AI.*Select for player one/u })
     .click();
-  await page.getByLabel('Mode', { exact: true }).selectOption('ladder');
 
   let wins = 0;
   let attempts = 0;
@@ -186,10 +185,8 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
       expect(progress.rungIndex).toBe(wins);
       expect(progress.wins).toBe(wins);
       await page.reload();
-      await page.getByRole('button', { name: 'Set up match' }).click();
-      await expect(page.getByLabel('Mode', { exact: true })).toHaveValue(
-        'ladder',
-      );
+      await page.getByRole('button', { name: 'Ladder' }).click();
+      await expect(page.getByLabel('Mode', { exact: true })).toHaveCount(0);
       if (wins < 9) {
         await expect(page.locator('.ladder-record')).toContainText(
           `Rung ${wins + 1}/9`,

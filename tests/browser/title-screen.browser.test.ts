@@ -23,9 +23,9 @@ test('renders the title screen in a real browser', async () => {
     .element(page.getByText('Live now, on NTV Channel 3!', { exact: true }))
     .toBeVisible();
   expect(document.querySelector('.title-emblem')).not.toBeNull();
-  await expect
-    .element(page.getByRole('button', { name: 'Set up match' }))
-    .toBeVisible();
+  for (const name of ['Single Player', 'Multiplayer', 'Ladder']) {
+    await expect.element(page.getByRole('button', { name, exact: true })).toBeVisible();
+  }
 });
 
 test('selects the manifest AVIF emblem and decodes WebP when AVIF is unsupported', async () => {

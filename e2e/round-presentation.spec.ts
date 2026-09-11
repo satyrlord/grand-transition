@@ -17,7 +17,7 @@ async function prepare(page: Page, lethal: boolean) {
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.clock.install();
   await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   const pick = (role: string) => page.locator(`.shared-board [data-role="${role}"] button`).first().click();
   await pick('noun'); await pick('noun'); await pick('predicate'); await pick('verb');

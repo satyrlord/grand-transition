@@ -19,7 +19,7 @@ const viewports = [
 
 test('a sentence forty percent longer than the long-match fixture fits above the moderator', async ({ page }) => {
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
   const baseline = [
     'A NATIONAL-SALVATION COMMITTEE REPACKAGES AN INFRASTRUCTURE FEASIBILITY STUDY',
@@ -56,7 +56,7 @@ for (const scene of scenes) {
   test(`${scene} keeps its artwork, players, and moderator clear at every supported viewport`, async ({ page }, testInfo) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('');
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene', { exact: true }).selectOption(scene);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene);

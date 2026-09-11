@@ -645,27 +645,24 @@
   }
 
   .match-settings--hotseat {
-    grid-template-areas: 'heading mode scene';
+    grid-template-areas: 'heading scene';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(8.5rem, 0.65fr)
       minmax(15rem, 1fr);
   }
 
   .match-settings--single-player {
-    grid-template-areas: 'heading mode difficulty scene';
+    grid-template-areas: 'heading difficulty scene';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(9.5rem, 0.65fr)
       minmax(15rem, 0.9fr)
       minmax(18rem, 1.1fr);
   }
 
   .match-settings--ladder {
-    grid-template-areas: 'heading mode difficulty scene';
+    grid-template-areas: 'heading difficulty scene';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(8.5rem, 0.55fr)
       minmax(13rem, 1fr)
       minmax(14rem, 0.9fr);
   }
@@ -681,11 +678,6 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     -webkit-text-stroke: 0.6px currentcolor;
-  }
-
-  .match-settings-mode {
-    grid-area: mode;
-    min-width: 0;
   }
 
   .match-settings-difficulty {
@@ -876,14 +868,12 @@
     .match-settings--hotseat {
       grid-template-columns:
         minmax(7.75rem, auto)
-        minmax(8rem, 0.6fr)
         minmax(14rem, 1.4fr);
     }
 
     .match-settings--single-player {
       grid-template-columns:
         minmax(7.75rem, auto)
-        minmax(8rem, 0.7fr)
         minmax(10rem, 0.9fr)
         minmax(15rem, 1.5fr);
     }
@@ -891,7 +881,6 @@
     .match-settings--ladder {
       grid-template-columns:
         minmax(7.75rem, auto)
-        minmax(7.5rem, 0.6fr)
         minmax(11.5rem, 1fr)
         minmax(12rem, 1.2fr);
     }

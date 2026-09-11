@@ -67,7 +67,7 @@ for (const viewport of supportedViewports) {
     });
 
     const url = page.url();
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await expect(
       page.getByRole('heading', { name: 'Select your debaters' }),
     ).toBeVisible();
@@ -346,7 +346,7 @@ for (const viewport of supportedViewports) {
 
     await page.getByRole('button', { name: 'Back' }).click();
     await expect(page.locator('#game-title')).toBeFocused();
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-character-id',
       'red-folded-chairman',
@@ -364,7 +364,7 @@ test('selected skins reach the match without changing character identity', async
 ) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page
     .getByRole('button', { name: 'Next skin for Player one' })
     .click();
@@ -399,7 +399,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
 ) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   const alternateSkinsByCharacter = new Map<
     string,
@@ -490,7 +490,7 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
     page.getByText('A Verbal Republic', { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('button', { name: 'Set up match' }),
+    page.getByRole('button', { name: 'Multiplayer' }),
   ).toBeVisible();
 
   const facts = await page.evaluate(() => {
@@ -663,7 +663,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   const captain = page.locator(
     '.roster-choice[data-character-id="black-sea-captain"]',
@@ -702,7 +702,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   const frameOverlay = page.locator(
     '.roster-choice[data-character-id="red-folded-chairman"] .roster-frame-overlay',
   );
@@ -806,7 +806,7 @@ test('future roster growth stays inside a vertical scroll region', async ({
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   const geometry = await page.locator('.setup-screen').evaluate((setup) => {
     const roster = setup.querySelector<HTMLElement>('.roster-grid')!;
     const sourceChoices = [
@@ -848,7 +848,7 @@ test('duplicate setup submit dispatches one immutable command', async ({
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   const eventFacts = await page.evaluate(() => {
     const app = document.querySelector('grand-transition-app')!;

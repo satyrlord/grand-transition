@@ -42,7 +42,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
     localStorage.removeItem('grand-transition.match-history.v1'),
   );
   await page.reload();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   let reachedLaterRound = false;

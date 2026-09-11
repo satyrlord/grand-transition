@@ -20,7 +20,7 @@ for (const deviceScaleFactor of [1, 2]) {
       try {
         const page = await context.newPage();
         await page.goto('/grand-transition/');
-        await page.getByRole('button', { name: 'Set up match' }).click();
+        await page.getByRole('button', { name: 'Multiplayer' }).click();
         await page.locator('.roster-headshot').evaluateAll(async (images) => {
           await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
         });

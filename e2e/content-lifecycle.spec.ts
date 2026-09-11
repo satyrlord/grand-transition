@@ -280,7 +280,7 @@ async function assertTemporaryCharacterIsPlayable(
 ): Promise<void> {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto(`${origin}${basePath}`);
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   await page.locator('#playerTwoCharacterId').click();
   const temporaryOption = page.locator(
@@ -317,7 +317,7 @@ async function assertTemporaryCharacterIsAbsent(
   origin: string,
 ): Promise<void> {
   await page.goto(`${origin}${basePath}`);
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await expect(
     page.locator(`.roster-choice[data-character-id="${temporaryCharacterId}"]`),
   ).toHaveCount(0);

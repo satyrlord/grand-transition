@@ -18,9 +18,9 @@ two. Setup keeps both character, skin, and scene choices. The stored match mode
 is `ai`, and the exact difficulty identifier is `local-radio-caller`. Hotseat
 behavior stays unchanged.
 
-The “Match settings” strip keeps Mode, Scene, Back,
-and Start match in one horizontal row. Single player inserts a Difficulty
-select between Mode and Scene. Its only option and selected value are “Local
+The Main Menu selects Single Player or Multiplayer under Milestone 015.
+The “Match settings” strip keeps Scene, with Back and Start match available.
+Single Player inserts a Difficulty select before Scene. Its only option and selected value are “Local
 Radio Caller.” Hotseat omits the Difficulty select.
 
 During the AI turn, keep the
@@ -151,8 +151,8 @@ phrase text.
 - **AC-021-06:** A 1,000-match simulation completes without illegal command,
   stalled phase, privacy leak, or timer overrun.
 - **AC-021-07:** Custom setup starts player one against the player-two Local
-  Radio Caller. At each supported setup viewport, Single player shows Mode,
-  Difficulty, and Scene as three selects in one horizontal row. Difficulty has
+  Radio Caller. At each supported setup viewport, Single Player shows
+  Difficulty and Scene as two selects in one horizontal row. Difficulty has
   exactly one option, “Local Radio Caller.” The complete Difficulty and Scene
   labels fit, the Match settings fieldset and actions do not change height, and
   Hotseat omits Difficulty.

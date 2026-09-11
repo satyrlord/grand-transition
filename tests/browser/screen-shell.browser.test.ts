@@ -54,12 +54,12 @@ test('requests fresh browser randomness for every new match seed', async () => {
   });
 
   const firstApp = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   expect(readInitialSeed(firstApp)).toBe(0);
 
   const secondApp = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   expect(readInitialSeed(secondApp)).toBe(0xffff_ffff);
   expect(getRandomValues).toHaveBeenCalledTimes(2);
@@ -77,13 +77,12 @@ test('moves through the two-state graph on one URL and restores setup values', a
       ),
     )
     .toBeVisible();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   expect(window.location.href).toBe(originalUrl);
   await vi.waitFor(() => expect(document.activeElement?.id).toBe('setup-title'));
 
-  await expect
-    .element(page.getByLabelText('Mode', { exact: true }))
-    .toHaveValue('hotseat');
+  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('hotseat');
+  expect(document.querySelector('select#mode')).toBeNull();
   await expect
     .element(
       page.getByRole('button', {
@@ -152,7 +151,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
   await vi.waitFor(() => expect(document.activeElement?.id).toBe('game-title'));
   expect(window.location.href).toBe(originalUrl);
 
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await expect
     .element(
       page.getByRole('button', {
@@ -228,7 +227,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
 
 test('selects Government AI and exposes both robot portrait skins', async () => {
   await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
@@ -274,7 +273,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
 
 test('cycles selected skins without changing roster portraits or character IDs', async () => {
   await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
@@ -383,7 +382,8 @@ test('emits the custom single-player setup with the fixed AI policy', async () =
   const listener = vi.fn<(event: StartMatchEvent) => void>();
   setup.addEventListener(startMatchEventName, listener);
 
-  expect(setup.querySelector<HTMLSelectElement>('#mode')?.value).toBe('ai');
+  expect(setup.snapshot?.mode).toBe('ai');
+  expect(setup.querySelector('select#mode')).toBeNull();
   expect(setup.textContent).toContain('Match settings');
   expect(
     setup.querySelector<HTMLSelectElement>('#aiDifficulty')?.value,
@@ -414,14 +414,9 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     return array;
   });
   let app = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  const playerTwoTarget = document.querySelector<HTMLButtonElement>(
-    '#playerTwoCharacterId',
-  )!;
-  playerTwoTarget.click();
-  let mode = document.querySelector<HTMLSelectElement>('#mode')!;
-  mode.value = 'ladder';
-  mode.dispatchEvent(new Event('change', { bubbles: true }));
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('button', { name: 'Ladder', exact: true }).click();
   await vi.waitFor(() =>
     expect(document.querySelector('.ladder-record')?.textContent).toContain(
       'Rung 1/9',
@@ -495,12 +490,8 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
 
   document.body.innerHTML = '';
   app = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await vi.waitFor(() =>
-    expect(document.querySelector<HTMLSelectElement>('#mode')?.value).toBe(
-      'ladder',
-    ),
-  );
+  await page.getByRole('button', { name: 'Ladder', exact: true }).click();
+  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
     'Rung 1/9',
   );
@@ -509,15 +500,40 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
   vi.spyOn(globalThis, 'confirm').mockReturnValue(true);
   await page.getByRole('button', { name: 'Reset ladder' }).click();
   await vi.waitFor(() =>
-    expect(localStorage.getItem(ladderProgressStorageKey)).toBeNull(),
+    expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull(),
   );
-  expect(document.querySelector<HTMLSelectElement>('#mode')?.value).toBe(
-    'hotseat',
-  );
-  expect(document.querySelector('.ladder-record')).toBeNull();
+  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
+  expect(document.querySelector('.ladder-record')?.textContent).toContain('Rung 1/9');
   await expect
     .element(page.getByRole('button', { name: 'Ladder complete', exact: true }))
     .not.toBeInTheDocument();
+});
+
+
+test('Main Menu selects each mode without replacing saved ladder progress', async () => {
+  const progress = recordLadderResult(createLadderProgress(
+    'black-sea-captain', 22_026,
+    sampleContent.characters.map(({ id }) => id),
+    sampleContent.scenes.map(({ id }) => id),
+  ), 'win');
+  const saved = encodeLadderProgress(progress);
+  localStorage.setItem(ladderProgressStorageKey, saved);
+  await mountApp();
+  for (const [label, mode] of [['Single Player', 'ai'], ['Ladder', 'ladder'], ['Multiplayer', 'hotseat'], ['Ladder', 'ladder']] as const) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+    const setup = document.querySelector<GrandTransitionSetup>('grand-transition-setup')!;
+    expect(setup.snapshot?.mode).toBe(mode);
+    expect(setup.querySelector('select#mode')).toBeNull();
+    if (mode === 'ladder') {
+      expect(setup.querySelector('.ladder-record')?.textContent).toContain('Rung 2/9');
+      expect(setup.snapshot?.playerOneCharacterId).toBe('black-sea-captain');
+    } else {
+      expect(setup.querySelector('.ladder-record')).toBeNull();
+      expect(setup.querySelector('#aiDifficulty') !== null).toBe(mode === 'ai');
+    }
+    expect(localStorage.getItem(ladderProgressStorageKey)).toBe(saved);
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
+  }
 });
 
 test('shows completed progress without starting a locked rung', async () => {
@@ -533,7 +549,7 @@ test('shows completed progress without starting a locked rung', async () => {
   localStorage.setItem(ladderProgressStorageKey, encodeLadderProgress(progress));
 
   await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Ladder', exact: true }).click();
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
     'Ladder complete',
   );
@@ -583,13 +599,12 @@ test('shows every missing-field error and emits no command', async () => {
   await setup.updateComplete;
 
   expect(listener).not.toHaveBeenCalled();
-  expect(setup.querySelectorAll('.field-error')).toHaveLength(4);
-  const mode = setup.querySelector<HTMLSelectElement>('#mode')!;
-  expect(mode.getAttribute('aria-invalid')).toBe('true');
-  expect(mode.getAttribute('aria-describedby')).toBe('mode-error');
+  expect(setup.querySelectorAll('.field-error, #mode[role="alert"]')).toHaveLength(4);
+  const mode = setup.querySelector<HTMLElement>('#mode')!;
+  expect(mode.getAttribute('role')).toBe('alert');
   expect(document.activeElement).toBe(mode);
   expect(setup.textContent).toContain(
-    'Mode is missing. Choose Single player, Hotseat, or Ladder.',
+    'Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
   );
   expect(setup.textContent).toContain(
     'Player one character is missing. Choose a listed character.',
@@ -629,7 +644,7 @@ test('shows unknown-value errors and revalidates after change', async () => {
   await setup.updateComplete;
 
   expect(setup.textContent).toContain(
-    'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
+    'Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
   );
   expect(setup.textContent).toContain(
     'Player one character is unknown. Choose a listed character.',
@@ -648,14 +663,14 @@ test.each([
     name: 'missing mode',
     field: 'mode',
     value: '',
-    message: 'Mode is missing. Choose Single player, Hotseat, or Ladder.',
+    message: 'Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
   },
   {
     name: 'unsupported mode',
     field: 'mode',
     value: 'network',
     message:
-      'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
+      'Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
   },
   {
     name: 'missing player one ID',
@@ -734,7 +749,7 @@ test.each([
     await setup.updateComplete;
 
     expect(listener).not.toHaveBeenCalled();
-    expect(setup.querySelectorAll('.field-error')).toHaveLength(1);
+    expect(setup.querySelectorAll('.field-error, #mode[role="alert"]')).toHaveLength(1);
     expect(setup.textContent).toContain(message);
     for (const defaultField of Object.keys(
       defaults,
@@ -748,7 +763,7 @@ test.each([
 
 test('keeps one frozen shell snapshot and does not own match-state fields', async () => {
   const app = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
@@ -785,7 +800,7 @@ test.each([
 
 test('restores setup state after the viewport becomes supported again', async () => {
   const app = await mountApp();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page
     .getByRole('button', { name: 'Player two character: The Thunder Tribune' })
     .click();

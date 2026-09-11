@@ -296,6 +296,15 @@
     text-transform: uppercase;
   }
 
+  .title-mode-actions {
+    display: flex;
+    gap: 0.65rem;
+  }
+
+  .title-mode-actions .title-setup-action {
+    min-width: clamp(12rem, 20vw, 20rem);
+  }
+
   .title-transmission button {
     min-width: clamp(17rem, 28vw, 27rem);
     min-height: clamp(3.25rem, 7vh, 4.5rem);

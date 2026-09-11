@@ -17,8 +17,8 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
   await useFixedBrowserMatchSeed(page, 21);
   await page.clock.install();
   await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByLabel('Mode', { exact: true }).selectOption('ai');
+  await page.getByRole('button', { name: 'Single Player' }).click();
+
   await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue(
     'local-radio-caller',
   );
@@ -139,8 +139,8 @@ test('the AI speech bubble stays open automatically for the human reader', async
   await useFixedBrowserMatchSeed(page, 21);
   await page.clock.install();
   await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByLabel('Mode', { exact: true }).selectOption('ai');
+  await page.getByRole('button', { name: 'Single Player' }).click();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const validCard = await page.locator('grand-transition-match').evaluate(
@@ -205,8 +205,8 @@ test('browser Back cancels a pending AI presentation without a hidden command', 
   await useFixedBrowserMatchSeed(page, 21);
   await page.clock.install();
   await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Set up match' }).click();
-  await page.getByLabel('Mode', { exact: true }).selectOption('ai');
+  await page.getByRole('button', { name: 'Single Player' }).click();
+
   await page.getByRole('button', { name: 'Start match' }).click();
   const pending = await page.locator('grand-transition-app').evaluate(
     async (element) => {
@@ -313,7 +313,7 @@ for (const viewport of [
     await useFixedBrowserMatchSeed(page, 21);
     await page.clock.install();
     await page.goto('/grand-transition/');
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await expect(
       page.getByRole('group', { name: 'Match settings' }),
     ).toBeVisible();
@@ -322,10 +322,12 @@ for (const viewport of [
     await expectNoViewportOverflow(page.locator('.setup-screen'));
     const hotseatGeometry = await readSetupFooterGeometry(page);
     expect(hotseatGeometry.difficultyValue).toBeNull();
-    expect(hotseatGeometry.modeLabelFits).toBe(true);
+    await expect(page.getByLabel('Mode', { exact: true })).toHaveCount(0);
     expect(hotseatGeometry.sceneLabelFits).toBe(true);
     expect(hotseatGeometry.controlsAligned).toBe(true);
-    await page.getByLabel('Mode', { exact: true }).selectOption('ai');
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
+    await page.getByRole('button', { name: 'Single Player', exact: true }).click();
+
     await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue(
       'local-radio-caller',
     );
@@ -340,7 +342,6 @@ for (const viewport of [
     expect(aiGeometry.layout.actions).toEqual(hotseatGeometry.layout.actions);
     expect(aiGeometry.difficultyValue).toBe('local-radio-caller');
     expect(aiGeometry.controlsAligned).toBe(true);
-    expect(aiGeometry.modeLabelFits).toBe(true);
     expect(aiGeometry.difficultyLabelFits).toBe(true);
     expect(aiGeometry.sceneLabelFits).toBe(true);
     await page.screenshot({
@@ -528,7 +529,6 @@ async function expectNoViewportOverflow(
 
 async function readSetupFooterGeometry(page: Page) {
   return page.locator('.match-settings').evaluate((fieldset) => {
-    const mode = fieldset.querySelector<HTMLSelectElement>('#mode')!;
     const difficulty =
       fieldset.querySelector<HTMLSelectElement>('#aiDifficulty');
     const scene = fieldset.querySelector<HTMLSelectElement>('#sceneId')!;
@@ -556,7 +556,7 @@ async function readSetupFooterGeometry(page: Page) {
         height: bounds.height,
       };
     };
-    const controls = [mode, difficulty, scene].filter(
+    const controls = [difficulty, scene].filter(
       (control): control is HTMLSelectElement => control !== null,
     );
     const controlTops = controls.map(
@@ -573,7 +573,6 @@ async function readSetupFooterGeometry(page: Page) {
       difficultyValue: difficulty?.value ?? null,
       controlsAligned:
         Math.max(...controlTops) - Math.min(...controlTops) <= 1,
-      modeLabelFits: labelFits(mode),
       difficultyLabelFits: difficulty ? labelFits(difficulty) : true,
       sceneLabelFits: labelFits(scene),
     };

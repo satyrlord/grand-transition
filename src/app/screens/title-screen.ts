@@ -22,7 +22,8 @@ export const showMatchHistoryEventName = 'show-match-history';
 export const showSettingsEventName = 'show-settings';
 export const dismissSettingsNoticeEventName = 'dismiss-settings-notice';
 
-export type ShowSetupEvent = CustomEvent<Readonly<{ type: 'show-setup' }>>;
+export type MenuMode = 'ai' | 'hotseat' | 'ladder';
+export type ShowSetupEvent = CustomEvent<Readonly<{ type: 'show-setup'; mode: MenuMode }>>;
 export type ShowMatchHistoryEvent = CustomEvent<
   Readonly<{ type: 'show-match-history' }>
 >;
@@ -114,15 +115,21 @@ export class GrandTransitionTitle extends LitElement {
 
         <div class="title-transmission">
           <p class="status">${this.status}</p>
-          <button
-            type="button"
-            class="title-setup-action"
-            ?disabled=${this.gpuLoading}
-            aria-describedby=${this.gpuLoading ? 'title-gpu-status' : nothing}
-            @click=${this.showSetup}
-          >
-            ${msg('Set up match')}
-          </button>
+          <nav class="title-mode-actions" aria-label=${msg('Main Menu')}>
+            ${([
+              ['ai', msg('Single Player')],
+              ['hotseat', msg('Multiplayer')],
+              ['ladder', msg('Ladder')],
+            ] as const).map(([mode, label]) => html`
+              <button
+                type="button"
+                class="title-setup-action"
+                ?disabled=${this.gpuLoading}
+                aria-describedby=${this.gpuLoading ? 'title-gpu-status' : nothing}
+                @click=${() => this.showSetup(mode)}
+              >${label}</button>
+            `)}
+          </nav>
           <div class="title-secondary-actions">
             <button
               type="button"
@@ -197,13 +204,13 @@ export class GrandTransitionTitle extends LitElement {
     }
   }
 
-  private readonly showSetup = (): void => {
+  private readonly showSetup = (mode: MenuMode): void => {
     if (this.gpuLoading) return;
     this.dispatchEvent(
       new CustomEvent(showSetupEventName, {
         bubbles: true,
         composed: true,
-        detail: Object.freeze({ type: 'show-setup' as const }),
+        detail: Object.freeze({ type: 'show-setup' as const, mode }),
       }),
     );
   };

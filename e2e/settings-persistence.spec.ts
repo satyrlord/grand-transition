@@ -146,7 +146,7 @@ test('settings persist in the production build and fit every supported viewport'
   await page.screenshot({ path: 'tmp/settings-multiplier/forced-colors.png', fullPage: true });
   await page.emulateMedia({ forcedColors: 'none' });
   await page.getByRole('button', { name: 'Close' }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('[data-timer="unlimited"]')).toBeVisible();
   expect(await page.locator('grand-transition-app').evaluate((app) =>
@@ -204,7 +204,7 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), settingsKey);
   expect(stored).toMatchObject({ schemaVersion: 4, gpuVoices: false, speechEnabled: false });
   await page.getByRole('button',{name:'Close',exact:true}).click();
-  await expect(page.getByRole('button',{name:'Set up match'})).toBeEnabled();
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });
 
 test('settings keyboard order includes both credit links and returns to the menu', async ({ page }) => {
@@ -258,7 +258,7 @@ for (const failure of ['quota', 'security', 'unavailable'] as const) {
       .click();
     await expect(page.getByText(exactNotice, { exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Close' }).click();
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
     await prepareLethalGrammarMistake(page);
     await page

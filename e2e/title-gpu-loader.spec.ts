@@ -25,11 +25,11 @@ async function holdGpu(page:Page,speechEnabled=true){
 
 test('main-menu GPU loading gates setup, fits supported sizes, and unlocks on readiness',async({page})=>{
   await holdGpu(page);await page.goto('/grand-transition/');
-  const setup=page.getByRole('button',{name:'Set up match'});
+  const setup=page.getByRole('button',{name:'Multiplayer'});
   const progress=page.getByRole('progressbar',{name:'GPU voices'});
   await expect(progress).toHaveAttribute('aria-valuenow','40');await expect(setup).toBeDisabled();
   await page.locator('.title-emblem').evaluate(async (image:HTMLImageElement)=>image.decode());
-  await page.evaluate(()=>document.querySelector('grand-transition-title')!.dispatchEvent(new CustomEvent('show-setup',{bubbles:true})));
+  await page.evaluate(()=>document.querySelector('grand-transition-title')!.dispatchEvent(new CustomEvent('show-setup',{bubbles:true,detail:{type:'show-setup',mode:'hotseat'}})));
   await expect(setup).toBeVisible();
   for(const [width,height] of [[1024,720],[1024,768],[1280,720],[1920,1080]]){
     await page.setViewportSize({width:width!,height:height!});
@@ -46,11 +46,11 @@ test('main-menu GPU loading gates setup, fits supported sizes, and unlocks on re
 
 test('GPU failure releases setup and presents the fallback on the menu',async({page})=>{
   await holdGpu(page);await page.goto('/grand-transition/');
-  await expect(page.getByRole('button',{name:'Set up match'})).toBeDisabled();
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeDisabled();
   await page.evaluate(()=>(window as unknown as {finishGpu:(ready:boolean)=>void}).finishGpu(false));
   await expect(page.getByRole('progressbar')).toHaveCount(0);
   await expect(page.getByText('GPU voices are unavailable. Using local Piper voices.',{exact:true})).toBeVisible();
-  await expect(page.getByRole('button',{name:'Set up match'})).toBeEnabled();
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });
 
 test('speech off removes the loader immediately and unlocks setup',async({page})=>{
@@ -61,11 +61,11 @@ test('speech off removes the loader immediately and unlocks setup',async({page})
   await page.getByLabel('Speech enabled',{exact:true}).uncheck();
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await expect(page.getByRole('progressbar')).toHaveCount(0);
-  await expect(page.getByRole('button',{name:'Set up match'})).toBeEnabled();
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });
 
 test('stored speech off opens setup without a loader',async({page})=>{
   await holdGpu(page,false);await page.goto('/grand-transition/');
   await expect(page.getByRole('progressbar')).toHaveCount(0);
-  await expect(page.getByRole('button',{name:'Set up match'})).toBeEnabled();
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });
