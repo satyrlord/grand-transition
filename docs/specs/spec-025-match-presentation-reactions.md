@@ -82,11 +82,12 @@ Complete strong outcome reactions for score, damage, combo, weakness,
 continuation, comeback, grammar mistakes, Pride changes, and sudden death in
 the two-character, one-scene vertical slice.
 
-The product rule is “Get good.” The match reports what happened, but it does
-not teach tactics. Do not add a tutorial, onboarding flow, guided match,
-objective, hint, or recovery instruction. Do not add card-role or weakness
-explanations. Do not add a highlighted target, shortcut guide, skip action,
-replay action, or progress state.
+Match reactions report what happened and do not teach tactics. Milestone 016
+separately permits an optional tutorial glow for grammar-accepted next phrases
+during drafting. It is suppressed during these reactions' round presentation.
+Do not add an onboarding flow, guided match, objective, recovery instruction,
+card-role or weakness explanation, shortcut guide, skip action, replay action,
+or progress state.
 
 Presentation uses civic-debate motifs such as folders, lower thirds, stamps,
 microphone plaques, voting panels, tickers, switchboards, and archive labels.
@@ -162,9 +163,10 @@ read-only. No proprietary code or recordings are shipped.
   movement or flashing.
 - **AC-025-04:** All supported landscape viewports keep each reaction, sentence,
   phrase row, and required action visible without overlap.
-- **AC-025-05:** Production source, storage, and DOM contain no tutorial,
-  onboarding, guided objective, hint, recovery instruction, highlighted target,
-  skip, replay, or progress state.
+- **AC-025-05:** The optional grammar indication owned by Milestone 016 is
+  absent during round presentation. No onboarding, guided objective, recovery
+  instruction, additional highlighted target, skip, replay, or progress state
+  ships. Verifier: `e2e/tutorial-mode.spec.ts`.
 - **AC-025-06:** A written owner review confirms that each reaction reports only
   public outcomes and does not teach tactics.
 
@@ -179,5 +181,6 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 Every public tactical and scoring event has a clear outcome reaction. Manual
 review covers motion, sound, and speech. Source scans prove that no tactical
-instruction or tutorial state ships. `npm run ci` passes. Stop before broad
+instruction beyond Milestone 016's optional grammar indication ships.
+`npm run ci` passes. Stop before broad
 content production.

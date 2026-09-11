@@ -130,7 +130,25 @@ It does not block the timer, require confirmation,
 or change the sentence. When the browser requests reduced motion, keep the
 complete strike record but suppress the recoil, flash, and transfer motion.
 
-The match provides outcomes, not tactical instruction. Do not add tutorials,
+The title Settings modal includes an optional `Tutorial` checkbox, defaulting
+to unchecked and persisted by Milestone 020. When enabled, all grammatically
+valid next shared and visible private phrase choices receive a subtle green
+glow. Reuse the grammar adapter result for appending that phrase to the active
+player's construction, including incomplete but accepted prefixes. Recompute
+after each snapshot change. Continuations do not append a phrase and do not
+glow. Empty, removed, and grammatically invalid choices do not glow. Invalid
+choices remain selectable and retain their normal mistake result.
+
+Use a bounded inset glow with a smooth 2400-millisecond opacity pulse. Do not
+change phrase colors, text contrast, layout, or focus outlines. Reduced motion
+uses a steady glow; forced colors uses a steady inset dotted system-color
+outline. Accessible names identify a grammatically valid next choice. Hide
+the indication during pending commands, AI turns, Pause, viewport interruption,
+round presentation, and victory. Use only the viewer-scoped snapshot; never
+expose another player's private hand. This preference does not enter game
+state, commands, replay, AI choices, scoring, or match history.
+
+Apart from this optional grammar indication, do not add
 guided first turns, card-role explanations, or weakness
 hints. Do not add disabled-action help, strategy prompts, expert shortcuts, or
 recovery instructions. Existing semantic
@@ -272,6 +290,13 @@ timer-refill abuse.
 - **AC-016-04:** The common and private phrase lists show phrase text only.
   Unavailable and empty rows remain visually distinct, every state has an
   accessible label, and available phrases use one selection action.
+  In forced colors, shared and private phrase surfaces use `Canvas` and
+  enabled phrase text uses `CanvasText`, including hover and either Phrase
+  color coding setting. Disabled phrases use `GrayText`. Both player records
+  use system surfaces and text without dimming filters. The active-turn badge
+  uses `Highlight` and `HighlightText`. Pride meters use `Highlight` for the
+  filled value on `Canvas`. Keyboard focus stays distinct from
+  the Tutorial outline. Verifier: `e2e/match-forced-colors.spec.ts`.
 - **AC-016-05:** A timed turn updates once per second and zero emits one
   expiration command. Manual Pause hides the complete match, freezes the exact
   value, blocks commands, and resumes without changing state or adding time.
@@ -353,9 +378,16 @@ timer-refill abuse.
   The strike stays below the speech record and its tail without overlap.
   Reduced-motion mode preserves the complete
   record without recoil, flashing, or transfer motion.
-- **AC-016-15:** Production source and DOM contain no tutorial, guided turn,
-  tactical hint, card-role explanation, weakness explanation, disabled-action
-  reason, strategy prompt, or shortcut layer.
+- **AC-016-15:** Tutorial is off by default. Enabling it highlights every
+  grammar-accepted next phrase in the shared board and visible private hand.
+  Invalid and continuation cards remain selectable without a glow. The
+  indication updates after picks and remains absent during blocked interaction.
+  Reduced motion and forced colors preserve a steady indication. No private
+  hand leaks or game-rule changes occur. Verifiers:
+  `tests/unit/match-screen-snapshot.test.ts`,
+  `tests/browser/match-screen.browser.test.ts`, and `e2e/tutorial-mode.spec.ts`.
+  No other guided turn, tactical hint, card-role explanation, weakness
+  explanation, disabled-action reason, strategy prompt, or shortcut layer ships.
 - **AC-016-16:** A scored weakness shows its exact 1.5 factor and unique public
   weakness names in the affected inline component. Unscored matching tags show
   no weakness record.

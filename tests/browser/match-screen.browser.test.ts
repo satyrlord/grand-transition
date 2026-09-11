@@ -20,6 +20,45 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+test('tutorial highlights grammar-accepted choices only while human drafting is available', async () => {
+  const match = await startMatch();
+  expect(match.querySelectorAll('[data-tutorial]')).toHaveLength(0);
+  const snapshot = match.snapshot!;
+  const expected = [...snapshot.sharedCards, ...snapshot.privateCards]
+    .filter((card) => card.grammarAccepted && card.action !== null)
+    .map((card) => card.reference!.cardId).sort();
+  expect(expected.length).toBeGreaterThan(0);
+  const highlighted = () => [...match.querySelectorAll<HTMLElement>('[data-tutorial]')]
+    .map((card) => card.dataset.cardId!).sort();
+  match.tutorialMode = true;
+  match.autoComplete = false;
+  match.phraseColorCoding = false;
+  await match.updateComplete;
+  expect(highlighted()).toEqual(expected);
+  expect(match.querySelector('[data-tutorial]')?.getAttribute('aria-label'))
+    .toContain('Grammatically valid next choice');
+  for (const pauseMode of ['manual', 'viewport'] as const) {
+    match.pauseMode = pauseMode;
+    await match.updateComplete;
+    expect(highlighted()).toEqual([]);
+    match.pauseMode = 'running';
+    await match.updateComplete;
+    expect(highlighted()).toEqual(expected);
+  }
+  match.thinking = true;
+  await match.updateComplete;
+  expect(highlighted()).toEqual([]);
+  match.thinking = false;
+  match.snapshot = { ...snapshot, roundReview: true };
+  await match.updateComplete;
+  expect(highlighted()).toEqual([]);
+  match.snapshot = snapshot;
+  match.tutorialMode = false;
+  await match.updateComplete;
+  expect(highlighted()).toEqual([]);
+  expect(match.snapshot).toBe(snapshot);
+});
+
 test.each(['manual', 'viewport'] as const)('discards an old portrait reaction after %s interruption', async (pauseMode) => {
   const match = await startMatch();
   const snapshot = match.snapshot!;

@@ -405,6 +405,7 @@ export class GrandTransitionApp extends LitElement {
         }
         .turnTimerSeconds=${this.settingsSnapshot.settings.turnTimerSeconds}
         .autoComplete=${this.settingsSnapshot.settings.autoComplete}
+        .tutorialMode=${this.settingsSnapshot.settings.tutorialMode}
         .phraseColorCoding=${this.phraseColorCoding}
         .musicEnabled=${this.settingsSnapshot.settings.musicVolume > 0}
         .voicesEnabled=${this.settingsSnapshot.settings.speechEnabled}
