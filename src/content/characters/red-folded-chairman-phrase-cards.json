@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["legacy", "modernity", "bureaucracy", "miners"],
   "comebacks": {
-    "weak": "My dear.",
-    "medium": "You animal.",
-    "strong": "And you have a servile mentality."
+    "weak": "My dear, even your outrage needs a committee.",
+    "medium": "You domesticated the facts. Now they fetch your slippers.",
+    "strong": "Your argument got lost in the synergy. We are still recovering the minutes."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -47,7 +47,7 @@
     {
       "id": "national-salvation-committee",
       "role": "noun",
-      "text": "a national-salvation committee",
+      "text": "a national-salvation committee with reserved parking",
       "tags": ["legacy", "bureaucracy"],
       "scoreGroups": {
         "substance": ["bureaucracy"],
@@ -58,7 +58,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian transition-era institutional language. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -142,20 +142,20 @@
     {
       "id": "through-a-gradual-transition",
       "role": "modifier",
-      "text": "through a gradual transition",
+      "text": "through a transition with no estimated arrival",
       "tags": ["modernity", "legacy"],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian post-1989 gradual-transition discourse. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "for-stabilitys-sake",
       "role": "ending",
-      "text": "for stability's sake.",
+      "text": "and, with your permission, I remain in the chair.",
       "tags": ["restraint", "bureaucracy"],
       "rarity": "rare",
       "finisherBonus": 3,
@@ -163,13 +163,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional line informed by Romanian transition-era stability discourse. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "asks-for-patience-again",
       "role": "predicate",
-      "text": "asks for patience again",
+      "text": "asks the calendar for another mandate",
       "tags": ["modernity", "restraint"],
       "scorePreferences": {
         "substance": [
@@ -184,17 +184,17 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "asks for patience again",
-      "pluralText": "ask for patience again",
+      "singularText": "asks the calendar for another mandate",
+      "pluralText": "ask the calendar for another mandate",
       "tense": "present",
       "tenseFamily": "asks-for-patience-again"
     },
     {
       "id": "asked-for-patience-again",
       "role": "predicate",
-      "text": "asked for patience again",
+      "text": "asked the calendar for another mandate",
       "tags": ["modernity", "restraint"],
       "scorePreferences": {
         "substance": [
@@ -209,17 +209,17 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "asked for patience again",
-      "pluralText": "asked for patience again",
+      "singularText": "asked the calendar for another mandate",
+      "pluralText": "asked the calendar for another mandate",
       "tense": "past",
       "tenseFamily": "asks-for-patience-again"
     },
     {
       "id": "will-ask-for-patience-again",
       "role": "predicate",
-      "text": "will ask for patience again",
+      "text": "will ask the calendar for another mandate",
       "tags": ["modernity", "restraint"],
       "scorePreferences": {
         "substance": [
@@ -234,10 +234,10 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional predicate informed by Romanian gradual-change discourse. Not a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       },
-      "singularText": "will ask for patience again",
-      "pluralText": "will ask for patience again",
+      "singularText": "will ask the calendar for another mandate",
+      "pluralText": "will ask the calendar for another mandate",
       "tense": "future",
       "tenseFamily": "asks-for-patience-again"
     },
@@ -354,7 +354,7 @@
     {
       "id": "socialism-with-a-human-face",
       "role": "noun",
-      "text": "socialism with a human face",
+      "text": "socialism with a human face and the same receptionist",
       "tags": ["legacy", "restraint"],
       "scoreGroups": {
         "substance": ["politics"],
@@ -365,13 +365,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ideological noun in the Red-Folded Chairman's transition voice. It names no real person or party and is not presented as a quotation. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "a-free-thinker",
       "role": "noun",
-      "text": "a free-thinker",
+      "text": "a free thinker on the party payroll",
       "referentKind": "personal",
       "tags": ["modernity", "credibility"],
       "scoreGroups": {
@@ -383,7 +383,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character contrast for fictional political satire. It targets no protected trait and names no real person. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -460,7 +460,7 @@
     {
       "id": "a-screwdriver-between-the-ribs",
       "role": "noun",
-      "text": "a screwdriver between the ribs",
+      "text": "a screwdriver in the reform gearbox",
       "tags": ["decorum", "restraint"],
       "scoreGroups": {
         "substance": ["personal"],
@@ -471,7 +471,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original absurd physical-image noun for fictional political satire. It is not an instruction, threat, or claim about a real act. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
@@ -611,7 +611,7 @@
     {
       "id": "and-thats-the-synergy-of-facts",
       "role": "ending",
-      "text": "and that's the synergy of facts.",
+      "text": "and the facts have formed a committee to escape the synergy.",
       "tags": ["evidence", "bureaucracy"],
       "rarity": "uncommon",
       "finisherBonus": 3,
@@ -619,7 +619,24 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original procedural-media ending in the Red-Folded Chairman's fictional transition voice. It targets no real person or party. Editorial review complete."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "chairman-grammar-immunity",
+      "role": "ending",
+      "text": "and the grammar has requested parliamentary immunity.",
+      "tags": [
+        "bureaucracy",
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English transformation of bureaucratic speech errors, reviewed for the requested humor revision on 2026-09-11. Targets fictional official evasiveness; private source traceability does not ship."
       }
     }
   ],
@@ -627,6 +644,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional composite character file. Editorial review complete."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   }
 }

@@ -363,7 +363,9 @@ describe('comeback charge, selection, and scoring', () => {
     expect(withLineInput.construction.analysis).toEqual(
       playerInput(0, { damage: 5 }).construction.analysis,
     );
-    expect(withLine.players[players[0]]!.closingLine).toBe('You animal.');
+    expect(withLine.players[players[0]]!.closingLine).toBe(
+      'You domesticated the facts. Now they fetch your slippers.',
+    );
   });
 
   test.each([

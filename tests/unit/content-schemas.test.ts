@@ -219,7 +219,7 @@ describe('content schemas', () => {
       ]),
     );
     expect(phraseCardCatalog.englishMessages['phrase.a-cursed-gnome']).toBe(
-      'a cursed gnome',
+      'a committee clerk possessed by a loudspeaker',
     );
     expect(phraseCardCatalog.commonPhraseIds).toEqual(
       expect.arrayContaining([
@@ -292,13 +292,13 @@ describe('content schemas', () => {
   test('loads the Chairman phrase expansion and comeback tiers', () => {
     const expectedPhrases = [
       ['the-nordic-model', 'the Nordic model'],
-      ['socialism-with-a-human-face', 'socialism with a human face'],
-      ['a-free-thinker', 'a free-thinker'],
+      ['socialism-with-a-human-face', 'socialism with a human face and the same receptionist'],
+      ['a-free-thinker', 'a free thinker on the party payroll'],
       ['a-dictatorship', 'a dictatorship'],
       ['the-working-class', 'the working class'],
       ['some-hooligans', 'some hooligans'],
       ['scientific-socialism', 'scientific socialism'],
-      ['a-screwdriver-between-the-ribs', 'a screwdriver between the ribs'],
+      ['a-screwdriver-between-the-ribs', 'a screwdriver in the reform gearbox'],
       ['a-dumbass', 'a dumbass'],
       ['an-animal', 'an animal'],
       ['a-historical-blunder', 'a historical blunder'],
@@ -310,7 +310,7 @@ describe('content schemas', () => {
         'the-dacs-that-come-from-the-tracs',
         'and the Dacs that come from the Tracs.',
       ],
-      ['and-thats-the-synergy-of-facts', "and that's the synergy of facts."],
+      ['and-thats-the-synergy-of-facts', 'and the facts have formed a committee to escape the synergy.'],
     ] as const;
 
     for (const [id, text] of expectedPhrases) {
@@ -321,13 +321,13 @@ describe('content schemas', () => {
     }
     expect(
       phraseCardCatalog.englishMessages['comeback.red-folded-chairman.weak'],
-    ).toBe('My dear.');
+    ).toBe('My dear, even your outrage needs a committee.');
     expect(
       phraseCardCatalog.englishMessages['comeback.red-folded-chairman.medium'],
-    ).toBe('You animal.');
+    ).toBe('You domesticated the facts. Now they fetch your slippers.');
     expect(
       phraseCardCatalog.englishMessages['comeback.red-folded-chairman.strong'],
-    ).toBe('And you have a servile mentality.');
+    ).toBe('Your argument got lost in the synergy. We are still recovering the minutes.');
     const dacsEnding = phraseCardCatalog.phrases.find(
       (phrase) => phrase.id === 'the-dacs-that-come-from-the-tracs',
     );
@@ -341,13 +341,15 @@ describe('content schemas', () => {
   test('loads the Thunder Tribune comeback tiers', () => {
     expect(
       phraseCardCatalog.englishMessages['comeback.thunder-tribune.weak'],
-    ).toBe('And I have the dossiers to prove it!');
+    ).toBe('Fetch the phone. Even the dial tone has a stronger argument.');
     expect(
       phraseCardCatalog.englishMessages['comeback.thunder-tribune.medium'],
-    ).toBe('And even those NATO clowns know that!');
+    ).toBe('You cannot evict the truth from my office. It has never lived here.');
     expect(
       phraseCardCatalog.englishMessages['comeback.thunder-tribune.strong'],
-    ).toBe('Now get this human bucket of vomit out of my sight!');
+    ).toBe(
+      'I obey the rules. Your argument was expelled for impersonating a thought.',
+    );
   });
 
   test('includes agreement-aware copulas and basic ideological noun cards', () => {
@@ -834,28 +836,28 @@ describe('content schemas', () => {
     );
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'comeback.government-ai.weak':
-        "Your request has been escalated to the people's help desk.",
+        'Objection received. Estimated reply: the next five-year plan.',
       'comeback.government-ai.strong':
-        'The system has marked you obsolete and redistributed your access privileges.',
+        'You call me obsolete? Your best idea just arrived by fax.',
       'phrase.is-aligned-with-the-glorious-digital-transition':
-        'is aligned with the glorious digital transition',
-      'phrase.the-procurement-seam': 'the procurement seam',
+        'is digitally transformed into a fax machine',
+      'phrase.the-procurement-seam': 'a procurement loophole with a welcome mat',
       'phrase.is-classified-as-load-bearing':
-        'is classified as load-bearing',
+        'is too expensive to uninstall',
       'phrase.is-classified-as-load-bearing.singular':
-        'is classified as load-bearing',
+        'is too expensive to uninstall',
       'phrase.is-classified-as-load-bearing.plural':
-        'are classified as load-bearing',
+        'are too expensive to uninstall',
       'phrase.government-ai-double-clicks-on': 'double-clicks on',
       'phrase.government-ai-double-clicks-on.plural': 'double-click on',
       'phrase.quietly-navigates-the-peoples-policy-landscape':
-        "quietly navigates the people's policy landscape",
+        'gets lost in the settings menu',
       'phrase.quietly-navigates-the-peoples-policy-landscape.plural':
-        "quietly navigate the people's policy landscape",
+        'get lost in the settings menu',
       'phrase.at-the-core-of-the-robust-five-year-paradigm-shift':
-        'at the core of the robust five-year paradigm shift',
+        'at the launch of a five-year software update',
       'phrase.pending-the-peoples-steering-committee':
-        "pending unanimous approval from the people's steering committee.",
+        'and the paperless office still needs three signed copies.',
     });
 
     for (const weakness of character!.weaknessTags) {
@@ -882,11 +884,11 @@ describe('content schemas', () => {
     );
   });
 
-  test('reserves șomâldoacă for the Tribune and Securitate for the Captain weakness', () => {
+  test('reserves the scandal-powered kettle for the Tribune and Securitate for the Captain weakness', () => {
     const somaldoacaIds = phraseCardCatalog.phrases
       .filter((phrase) =>
         phraseCardCatalog.englishMessages[phrase.textKey]?.includes(
-          'șomâldoac',
+          'scandal-powered kettle',
         ),
       )
       .map((phrase) => phrase.id);
@@ -1816,8 +1818,11 @@ test('rejects a character below the three-phrase minimum', () => {
   const catalog = cloneCatalog();
   const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
   const character = catalog.characters[characterIndex]!;
-  const removed = character.characterPhraseIds.pop()!;
-  catalog.phrases = catalog.phrases.filter(({ id }) => id !== removed);
+  const removed = new Set(character.characterPhraseIds.splice(2));
+  catalog.phrases = catalog.phrases.filter(({ id }) => !removed.has(id));
+  for (const scene of catalog.scenes) {
+    scene.phrasePool = scene.phrasePool.filter((id) => !removed.has(id));
+  }
   const result = contentCatalogSchema.safeParse(catalog);
   expect(result.success).toBe(false);
   if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({

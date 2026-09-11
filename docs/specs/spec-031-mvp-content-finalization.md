@@ -4,7 +4,7 @@
 **Depends on:** 025  
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
-**Production-file budget:** 12
+**Production-file budget:** 19
 
 ## Deliver
 
@@ -183,6 +183,15 @@ institutions, documented historical events, constitutional mechanisms, and
 broad media forms. An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
 Git-ignored research folder and does not ship.
+
+The common corpus and all 18 character authoring files can receive the
+speech-inspired humor pass defined in Milestone 027. This includes distinctive
+endings and all three comeback tiers. Short original English transformations
+can draw on verified speech motifs from the private archetype references.
+Source excerpts, translations, names, and mappings remain in private research.
+The pass preserves useful grammar fragments and existing stable identities;
+it does not by itself complete this milestone's final content volumes or
+release variety evidence.
 
 Shipped generation provenance
 uses a generic source description and does not name a real person. Do not use a

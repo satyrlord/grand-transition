@@ -431,7 +431,7 @@ describe('Hollywood Roast draft actions', () => {
       analysis: {
         complete: true,
         publicText:
-          'Your so-called national consensus belongs in a history museum before the next election',
+          'Your unanimous disagreement belongs in a history museum before the promises lose their warranty',
         nextRoles: ['modifier', 'conjunction', 'ending'],
       },
     });
@@ -490,11 +490,11 @@ describe('Hollywood Roast draft actions', () => {
       selectedComebackTier: 'strong',
     });
     expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
-      /\. And you have a servile mentality\.$/u,
+      /\. Your argument got lost in the synergy\. We are still recovering the minutes\.$/u,
     );
     expect(
       state.playerStates[playerIds[0]]!.construction.analysis.publicText,
-    ).not.toContain('And you have a servile mentality');
+    ).not.toContain('Your argument got lost in the synergy');
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
   });
 
@@ -567,7 +567,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(snapshot.players[playerIds[0]]!.hand).toEqual({ count: 2 });
     expect(snapshot.players[playerIds[0]]!.legalCards).toEqual([]);
     expect(snapshot.players[playerIds[0]]!.construction.previewText).toBe(
-      'Your so-called national consensus',
+      'Your unanimous disagreement',
     );
   });
 

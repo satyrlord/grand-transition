@@ -27,9 +27,9 @@
     "sincerity"
   ],
   "comebacks": {
-    "weak": "The crowd heard that miss.",
-    "medium": "Your sincerity was sold before kickoff.",
-    "strong": "You lost the argument, the dressing room, and extra time."
+    "weak": "I highlighted your argument in the color for skipping.",
+    "medium": "Your principles need a shirt sponsor.",
+    "strong": "You did half the shouting, I did half the thinking. My half is bigger."
   },
   "aiPersonality": {
     "aggression": 0.95,
@@ -50,15 +50,14 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original fictional comebacks transform selective reading, shirt sponsorship, and impossible credit-sharing into sporting boasts. Private research records sources; no attribution or quotation ships."
   },
   "phrases": [
     {
       "id": "football-tycoon-foundation-noun",
       "role": "noun",
-      "text": "my televised transfer miracle",
+      "text": "my trophy for taking all the credit",
       "tags": [
-        "commercialism",
         "accountability",
         "sincerity"
       ],
@@ -75,16 +74,15 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional exaggeration of impossible credit-sharing arithmetic."
       }
     },
     {
       "id": "football-tycoon-foundation-modifier",
       "role": "modifier",
-      "text": "after a sponsored minute of silence",
+      "text": "with a sponsor stitched over the moral objection",
       "tags": [
         "commercialism",
-        "accountability",
         "sincerity"
       ],
       "rarity": "uncommon",
@@ -92,15 +90,31 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional transformation of sponsor-price bravado into a wearable moral compromise."
       }
     },
     {
       "id": "football-tycoon-foundation-ending",
       "role": "ending",
-      "text": "and accountability missed the open goal.",
+      "text": "and the sponsor paid extra to make the defeat look patriotic.",
       "tags": [
         "commercialism",
+        "accountability"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional reversal of commercial sporting bravado."
+      }
+    },
+    {
+      "id": "football-tycoon-credit-after-one-hundred-percent",
+      "role": "ending",
+      "text": "and I claimed the credit left over after one hundred percent.",
+      "tags": [
         "accountability",
         "sincerity"
       ],
@@ -110,7 +124,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional punchline about taking more credit than the whole available total."
       }
     }
   ]

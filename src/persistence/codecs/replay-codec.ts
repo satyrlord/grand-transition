@@ -1,5 +1,8 @@
 import { z } from 'zod';
-import { legacyPhraseReplayContext } from './legacy-phrase-replay-context';
+import {
+  legacyHumorReplayContext,
+  legacyPhraseReplayContext,
+} from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
@@ -23,13 +26,14 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 6;
+export const replaySchemaVersion = 7;
 export const supportedReplaySchemaVersions = [
   1,
   2,
   3,
   4,
   5,
+  6,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -42,6 +46,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[3]),
   z.literal(supportedReplaySchemaVersions[4]),
   z.literal(supportedReplaySchemaVersions[5]),
+  z.literal(supportedReplaySchemaVersions[6]),
 ]);
 
 export type ReplayFailureCode =
@@ -404,9 +409,10 @@ export function replayMatch(
   const decoded = decodeReplay(serialized);
   if (!decoded.ok) return decoded;
 
-  const replayContext = decoded.value.schemaVersion < 5
-    ? legacyPhraseReplayContext(context)
-    : context;
+  const replayContext = replayContextForVersion(
+    decoded.value.schemaVersion,
+    context,
+  );
   let state = createReplayInitialState(decoded.value, context);
   if (!state) return { ok: false, code: 'invalid-replay' };
 
@@ -446,9 +452,7 @@ export function createReplayInitialState(
   replay: ReplayDocument,
   context: ReplayContext,
 ): MatchState | null {
-  const replayContext = replay.schemaVersion < 5
-    ? legacyPhraseReplayContext(context)
-    : context;
+  const replayContext = replayContextForVersion(replay.schemaVersion, context);
   const request = createSetupRequest(replay, replayContext.catalog);
   if (!request) return null;
   try {
@@ -468,6 +472,18 @@ export function storeReplayImport(
   if (!replayed.ok) return replayed;
   const stored = storage.write(key, replayed.normalized);
   return stored.ok ? replayed : stored;
+}
+
+export function replayContextForVersion(
+  schemaVersion: number,
+  context: ReplayContext,
+): ReplayContext {
+  const contentContext = schemaVersion < 7
+    ? legacyHumorReplayContext(context)
+    : context;
+  return schemaVersion < 5
+    ? legacyPhraseReplayContext(contentContext)
+    : contentContext;
 }
 
 export function storeMatchLogImport(

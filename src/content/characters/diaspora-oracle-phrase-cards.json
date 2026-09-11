@@ -27,9 +27,9 @@
     "firsthand-knowledge"
   ],
   "comebacks": {
-    "weak": "The connection heard enough.",
-    "medium": "Your context expired before my voice note.",
-    "strong": "I left years ago and still know your argument is lost."
+    "weak": "The keys are in the campaign brochure.",
+    "medium": "You wanted a roof? I offered unprecedented media coverage.",
+    "strong": "Your argument is like my model home: huge on camera, no foundations."
   },
   "aiPersonality": {
     "aggression": 0.5,
@@ -50,16 +50,15 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original fictional comebacks transform housing-promotion rhetoric into brochure keys, media coverage, and a model home with no foundations. Private research records sources and disputed context; no attribution or quotation ships."
   },
   "phrases": [
     {
       "id": "diaspora-oracle-foundation-noun",
       "role": "noun",
-      "text": "my forwarded voice-note analysis",
+      "text": "my overseas viewing of a house made of promises",
       "tags": [
         "distance",
-        "context",
         "firsthand-knowledge"
       ],
       "scoreGroups": {
@@ -75,13 +74,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional remote-viewing joke adapted from campaign housing promotion."
       }
     },
     {
       "id": "diaspora-oracle-foundation-modifier",
       "role": "modifier",
-      "text": "from three borders away",
+      "text": "from abroad, without checking whether the house exists",
       "tags": [
         "distance",
         "context",
@@ -92,15 +91,14 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional extension of campaign housing promotion into remote certainty without inspection."
       }
     },
     {
       "id": "diaspora-oracle-foundation-ending",
       "role": "ending",
-      "text": "and firsthand knowledge missed the flight.",
+      "text": "and the housewarming party will be held inside the brochure.",
       "tags": [
-        "distance",
         "context",
         "firsthand-knowledge"
       ],
@@ -110,7 +108,24 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional transformation of housing promotion into an impossible brochure-sized party."
+      }
+    },
+    {
+      "id": "diaspora-oracle-keys-in-another-time-zone",
+      "role": "ending",
+      "text": "and the keys are waiting in a different time zone.",
+      "tags": [
+        "distance",
+        "context"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional combination of housing-promise evasion and the archetype's remote certainty."
       }
     }
   ]

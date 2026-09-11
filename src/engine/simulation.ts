@@ -1,4 +1,3 @@
-import { legacyPhraseReplayContext } from '../persistence/codecs/legacy-phrase-replay-context';
 import type { ContentCatalog } from '../content/content-catalog';
 import type { Phrase } from '../content/schemas';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
@@ -19,6 +18,7 @@ import {
   normalizedJson,
   replayKind,
   replayMatch,
+  replayContextForVersion,
   replaySchemaVersion,
   type MatchLogDocument,
   type ReplayContext,
@@ -263,8 +263,7 @@ export function simulateMatch(
   if (!state) {
     throw simulationFailure(normalizedSeed, 'The setup is invalid.');
   }
-  const simulationContext = replay.schemaVersion < 5
-    ? legacyPhraseReplayContext(context) : context;
+  const simulationContext = replayContextForVersion(replay.schemaVersion, context);
   const engineContext: MatchEngineContext = {
     phrases: simulationContext.catalog.phrases,
     characters: simulationContext.catalog.characters,

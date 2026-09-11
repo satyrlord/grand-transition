@@ -1,0 +1,1414 @@
+{
+  "removedPhraseIds": [
+    "algorithmic-prophet-lemonade-transfer",
+    "apartment-block-geopolitician-exit-poll-before-popcorn",
+    "captain-ballot-lifejacket",
+    "coalition-acrobat-fingerprinted-slate",
+    "county-baron-sunday-job-interview",
+    "diaspora-oracle-keys-in-another-time-zone",
+    "eu-funds-alchemist-invisible-pastries",
+    "football-tycoon-credit-after-one-hundred-percent",
+    "luxury-minister-map-matches-itinerary",
+    "marble-diplomat-recount-reception",
+    "midnight-fortune-on-hold",
+    "midnight-hidden-system-catering",
+    "reformist-reverse-redistribution",
+    "reformist-listening-invoice",
+    "chairman-grammar-immunity",
+    "retiring-cassandra-country-removal-van",
+    "spreadsheet-technocrat-breakage-invoice",
+    "mogul-count-the-assets",
+    "mogul-measure-the-silence"
+  ],
+  "phrases": [
+    {
+      "id": "national-consensus",
+      "text": "your so-called national consensus",
+      "tags": [
+        "restraint",
+        "legacy"
+      ]
+    },
+    {
+      "id": "coalition-protocol",
+      "text": "your coalition protocol",
+      "tags": [
+        "consistency",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "before-the-next-election",
+      "text": "before the next election",
+      "tags": [
+        "credibility",
+        "consistency"
+      ]
+    },
+    {
+      "id": "on-public-television",
+      "text": "on public television",
+      "tags": [
+        "evidence",
+        "decorum"
+      ]
+    },
+    {
+      "id": "during-a-coalition-crisis",
+      "text": "during a coalition crisis",
+      "tags": [
+        "consistency",
+        "restraint"
+      ]
+    },
+    {
+      "id": "by-emergency-ordinance",
+      "text": "by emergency ordinance.",
+      "tags": [
+        "bureaucracy",
+        "modernity"
+      ]
+    },
+    {
+      "id": "emergency-ordinance",
+      "text": "your emergency ordinance",
+      "tags": [
+        "bureaucracy",
+        "restraint"
+      ]
+    },
+    {
+      "id": "televised-coalition",
+      "text": "your televised coalition",
+      "tags": [
+        "consistency",
+        "credibility"
+      ]
+    },
+    {
+      "id": "county-council-majority",
+      "text": "your county-council majority",
+      "tags": [
+        "bureaucracy",
+        "legacy"
+      ]
+    },
+    {
+      "id": "pension-recalculation",
+      "text": "a pension recalculation",
+      "tags": [
+        "modernity",
+        "consistency"
+      ]
+    },
+    {
+      "id": "unfinished-motorway",
+      "text": "an unfinished motorway",
+      "tags": [
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "at-victoria-palace",
+      "text": "at Victoria Palace",
+      "tags": [
+        "bureaucracy",
+        "consistency"
+      ]
+    },
+    {
+      "id": "under-an-emergency-ordinance",
+      "text": "under an emergency ordinance",
+      "tags": [
+        "bureaucracy",
+        "restraint"
+      ]
+    },
+    {
+      "id": "beside-an-unfinished-motorway",
+      "text": "beside an unfinished motorway",
+      "tags": [
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "for-the-national-interest",
+      "text": "for the national interest.",
+      "tags": [
+        "legacy",
+        "decorum"
+      ]
+    },
+    {
+      "id": "until-the-next-election",
+      "text": "until the next election.",
+      "tags": [
+        "consistency",
+        "credibility"
+      ]
+    },
+    {
+      "id": "public-consultation",
+      "text": "your public consultation",
+      "tags": [
+        "decorum",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "reform-calendar",
+      "text": "your reform calendar",
+      "tags": [
+        "modernity",
+        "consistency"
+      ]
+    },
+    {
+      "id": "televised-debate",
+      "text": "this televised debate",
+      "tags": [
+        "evidence",
+        "decorum"
+      ]
+    },
+    {
+      "id": "party-switch",
+      "text": "your party switch",
+      "tags": [
+        "consistency",
+        "credibility"
+      ]
+    },
+    {
+      "id": "municipal-ribbon",
+      "text": "a municipal ribbon",
+      "tags": [
+        "credibility",
+        "decorum"
+      ]
+    },
+    {
+      "id": "budget-amendment",
+      "text": "your budget amendment",
+      "tags": [
+        "bureaucracy",
+        "evidence",
+        "spending"
+      ]
+    },
+    {
+      "id": "parliamentary-microphone",
+      "text": "a parliamentary microphone",
+      "tags": [
+        "decorum",
+        "restraint"
+      ]
+    },
+    {
+      "id": "opinion-poll",
+      "text": "an opinion poll",
+      "tags": [
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "ministerial-memo",
+      "text": "your ministerial memo",
+      "tags": [
+        "bureaucracy",
+        "consistency"
+      ]
+    },
+    {
+      "id": "coalition-majority",
+      "text": "your coalition majority",
+      "tags": [
+        "consistency",
+        "legacy"
+      ]
+    },
+    {
+      "id": "campaign-promise",
+      "text": "your campaign promise",
+      "tags": [
+        "credibility",
+        "consistency"
+      ]
+    },
+    {
+      "id": "constitutional-footnote",
+      "text": "a constitutional footnote",
+      "tags": [
+        "legacy",
+        "evidence"
+      ]
+    },
+    {
+      "id": "regional-development-plan",
+      "text": "your regional development plan",
+      "tags": [
+        "modernity",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "press-conference",
+      "text": "a press-conference",
+      "tags": [
+        "decorum",
+        "credibility"
+      ]
+    },
+    {
+      "id": "cabinet-reshuffle",
+      "text": "your cabinet reshuffle",
+      "tags": [
+        "consistency",
+        "modernity"
+      ]
+    },
+    {
+      "id": "televised-apology",
+      "text": "a televised apology",
+      "tags": [
+        "credibility",
+        "restraint"
+      ]
+    },
+    {
+      "id": "infrastructure-feasibility-study",
+      "text": "an infrastructure feasibility study",
+      "tags": [
+        "evidence",
+        "modernity"
+      ]
+    },
+    {
+      "id": "national-strategy",
+      "text": "your national strategy",
+      "tags": [
+        "legacy",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "local-party-office",
+      "text": "your local party office",
+      "tags": [
+        "legacy",
+        "consistency"
+      ]
+    },
+    {
+      "id": "after-the-midnight-news",
+      "text": "after the midnight news",
+      "tags": [
+        "media",
+        "credibility"
+      ]
+    },
+    {
+      "id": "behind-closed-doors",
+      "text": "behind closed doors",
+      "tags": [
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "during-budget-season",
+      "text": "during budget season",
+      "tags": [
+        "bureaucracy",
+        "consistency"
+      ]
+    },
+    {
+      "id": "from-the-government-podium",
+      "text": "from the government podium",
+      "tags": [
+        "decorum",
+        "credibility"
+      ]
+    },
+    {
+      "id": "in-the-transition-archive",
+      "text": "in the transition archive",
+      "tags": [
+        "legacy",
+        "evidence",
+        "obsolete"
+      ]
+    },
+    {
+      "id": "on-the-campaign-trail",
+      "text": "on the campaign trail",
+      "tags": [
+        "credibility",
+        "consistency"
+      ]
+    },
+    {
+      "id": "under-the-studio-lights",
+      "text": "under the studio lights",
+      "tags": [
+        "media",
+        "decorum"
+      ]
+    },
+    {
+      "id": "with-coalition-partners",
+      "text": "with coalition partners",
+      "tags": [
+        "consistency",
+        "restraint"
+      ]
+    },
+    {
+      "id": "without-public-consultation",
+      "text": "without public consultation",
+      "tags": [
+        "decorum",
+        "evidence"
+      ]
+    },
+    {
+      "id": "before-a-confidence-vote",
+      "text": "before a confidence vote",
+      "tags": [
+        "consistency",
+        "credibility"
+      ]
+    },
+    {
+      "id": "during-a-press-conference",
+      "text": "during a press conference",
+      "tags": [
+        "media",
+        "decorum"
+      ]
+    },
+    {
+      "id": "through-another-reform-cycle",
+      "text": "through another reform cycle",
+      "tags": [
+        "modernity",
+        "legacy",
+        "obsolete"
+      ]
+    },
+    {
+      "id": "across-county-capitals",
+      "text": "across county capitals",
+      "tags": [
+        "bureaucracy",
+        "legacy"
+      ]
+    },
+    {
+      "id": "beneath-the-national-banner",
+      "text": "beneath the national banner",
+      "tags": [
+        "legacy",
+        "decorum"
+      ]
+    },
+    {
+      "id": "before-the-cameras-return",
+      "text": "before the cameras return.",
+      "tags": [
+        "media",
+        "credibility"
+      ]
+    },
+    {
+      "id": "according-to-protocol",
+      "text": "according to protocol.",
+      "tags": [
+        "bureaucracy",
+        "decorum"
+      ]
+    },
+    {
+      "id": "with-one-final-amendment",
+      "text": "with one final amendment.",
+      "tags": [
+        "bureaucracy",
+        "consistency"
+      ]
+    },
+    {
+      "id": "until-the-next-reshuffle",
+      "text": "until the next reshuffle.",
+      "tags": [
+        "consistency",
+        "modernity"
+      ]
+    },
+    {
+      "id": "for-stability-and-progress",
+      "text": "for stability and progress.",
+      "tags": [
+        "legacy",
+        "restraint"
+      ]
+    },
+    {
+      "id": "before-the-microphones-cool",
+      "text": "before the microphones cool.",
+      "tags": [
+        "media",
+        "restraint"
+      ]
+    },
+    {
+      "id": "pending-further-consultation",
+      "text": "pending further consultation.",
+      "tags": [
+        "bureaucracy",
+        "credibility"
+      ]
+    },
+    {
+      "id": "algorithmic-prophet-foundation-noun",
+      "text": "my sovereign engagement oracle",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ]
+    },
+    {
+      "id": "algorithmic-prophet-foundation-modifier",
+      "text": "according to a disappearing clip",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ]
+    },
+    {
+      "id": "algorithmic-prophet-foundation-ending",
+      "text": "and the algorithm refuses follow-up questions.",
+      "tags": [
+        "evidence",
+        "specificity",
+        "follow-up-questions"
+      ]
+    },
+    {
+      "id": "apartment-block-geopolitician-foundation-noun",
+      "text": "my stairwell intelligence network",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ]
+    },
+    {
+      "id": "apartment-block-geopolitician-foundation-modifier",
+      "text": "according to the third-floor balcony",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ]
+    },
+    {
+      "id": "apartment-block-geopolitician-foundation-ending",
+      "text": "and nuance was locked outside the entrance.",
+      "tags": [
+        "sources",
+        "specificity",
+        "nuance"
+      ]
+    },
+    {
+      "id": "hands-on-presidency",
+      "text": "a hands-on presidency",
+      "tags": [
+        "consistency",
+        "decorum"
+      ]
+    },
+    {
+      "id": "through-troubled-waters",
+      "text": "through troubled waters",
+      "tags": [
+        "consistency",
+        "legacy"
+      ]
+    },
+    {
+      "id": "from-the-bridge",
+      "text": "from the bridge.",
+      "tags": [
+        "decorum",
+        "legacy"
+      ]
+    },
+    {
+      "id": "returns-to-the-wheel",
+      "text": "returns to the wheel",
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
+      "forms": {
+        "singular": "returns to the wheel",
+        "plural": "return to the wheel"
+      }
+    },
+    {
+      "id": "returned-to-the-wheel",
+      "text": "returned to the wheel",
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
+      "forms": {
+        "singular": "returned to the wheel",
+        "plural": "returned to the wheel"
+      }
+    },
+    {
+      "id": "will-return-to-the-wheel",
+      "text": "will return to the wheel",
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
+      "forms": {
+        "singular": "will return to the wheel",
+        "plural": "will return to the wheel"
+      }
+    },
+    {
+      "id": "a-dockside-peacock",
+      "text": "a dockside peacock",
+      "tags": [
+        "decorum",
+        "authenticity"
+      ]
+    },
+    {
+      "id": "coalition-acrobat-foundation-noun",
+      "text": "my reversible coalition promise",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ]
+    },
+    {
+      "id": "coalition-acrobat-foundation-modifier",
+      "text": "from the opposite side of the same agreement",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ]
+    },
+    {
+      "id": "coalition-acrobat-foundation-ending",
+      "text": "and commitment was absent from the vote.",
+      "tags": [
+        "consistency",
+        "memory",
+        "commitment"
+      ]
+    },
+    {
+      "id": "county-baron-foundation-noun",
+      "text": "my cousin-approved tender",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ]
+    },
+    {
+      "id": "county-baron-foundation-modifier",
+      "text": "beside the freshly painted pothole",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ]
+    },
+    {
+      "id": "county-baron-foundation-ending",
+      "text": "and the ribbon was cut before the road existed.",
+      "tags": [
+        "procurement",
+        "infrastructure",
+        "nepotism"
+      ]
+    },
+    {
+      "id": "diaspora-oracle-foundation-noun",
+      "text": "my forwarded voice-note analysis",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ]
+    },
+    {
+      "id": "diaspora-oracle-foundation-modifier",
+      "text": "from three borders away",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ]
+    },
+    {
+      "id": "diaspora-oracle-foundation-ending",
+      "text": "and firsthand knowledge missed the flight.",
+      "tags": [
+        "distance",
+        "context",
+        "firsthand-knowledge"
+      ]
+    },
+    {
+      "id": "eu-funds-alchemist-foundation-noun",
+      "text": "my co-financed miracle pilot",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "eu-funds-alchemist-foundation-modifier",
+      "text": "under a renewable eligibility window",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "eu-funds-alchemist-foundation-ending",
+      "text": "and maintenance was removed from the application.",
+      "tags": [
+        "transparency",
+        "outcomes",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "football-tycoon-foundation-noun",
+      "text": "my televised transfer miracle",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ]
+    },
+    {
+      "id": "football-tycoon-foundation-modifier",
+      "text": "after a sponsored minute of silence",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ]
+    },
+    {
+      "id": "football-tycoon-foundation-ending",
+      "text": "and accountability missed the open goal.",
+      "tags": [
+        "commercialism",
+        "accountability",
+        "sincerity"
+      ]
+    },
+    {
+      "id": "the-peoples-agile-transformation-roadmap",
+      "text": "the people's agile transformation roadmap",
+      "tags": [
+        "obsolete",
+        "spending"
+      ]
+    },
+    {
+      "id": "a-centrally-planned-innovation-sprint",
+      "text": "a centrally planned innovation sprint",
+      "tags": [
+        "obsolete",
+        "spending"
+      ]
+    },
+    {
+      "id": "your-cousins-preferred-supplier",
+      "text": "your cousin's preferred supplier",
+      "tags": [
+        "nepotism",
+        "corruption"
+      ]
+    },
+    {
+      "id": "an-emergency-fund-chatbot",
+      "text": "an emergency-fund chatbot",
+      "tags": [
+        "spending",
+        "obsolete"
+      ]
+    },
+    {
+      "id": "a-phantom-digital-consultancy",
+      "text": "a phantom digital consultancy",
+      "tags": [
+        "corruption",
+        "nepotism"
+      ]
+    },
+    {
+      "id": "the-national-synergy-platform",
+      "text": "the national synergy platform",
+      "tags": [
+        "obsolete",
+        "spending"
+      ]
+    },
+    {
+      "id": "the-procurement-seam",
+      "text": "the procurement seam",
+      "tags": [
+        "corruption",
+        "spending",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "was-classified-as-load-bearing",
+      "text": "was classified as load-bearing",
+      "tags": [
+        "corruption",
+        "spending",
+        "obsolete"
+      ],
+      "forms": {
+        "singular": "was classified as load-bearing",
+        "plural": "were classified as load-bearing"
+      }
+    },
+    {
+      "id": "is-classified-as-load-bearing",
+      "text": "is classified as load-bearing",
+      "tags": [
+        "corruption",
+        "spending",
+        "obsolete"
+      ],
+      "forms": {
+        "singular": "is classified as load-bearing",
+        "plural": "are classified as load-bearing"
+      }
+    },
+    {
+      "id": "will-be-classified-as-load-bearing",
+      "text": "will be classified as load-bearing",
+      "tags": [
+        "corruption",
+        "spending",
+        "obsolete"
+      ],
+      "forms": {
+        "singular": "will be classified as load-bearing",
+        "plural": "will be classified as load-bearing"
+      }
+    },
+    {
+      "id": "was-aligned-with-the-glorious-digital-transition",
+      "text": "was aligned with the glorious digital transition",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "was aligned with the glorious digital transition",
+        "plural": "were aligned with the glorious digital transition"
+      }
+    },
+    {
+      "id": "is-aligned-with-the-glorious-digital-transition",
+      "text": "is aligned with the glorious digital transition",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "is aligned with the glorious digital transition",
+        "plural": "are aligned with the glorious digital transition"
+      }
+    },
+    {
+      "id": "will-be-aligned-with-the-glorious-digital-transition",
+      "text": "will be aligned with the glorious digital transition",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "will be aligned with the glorious digital transition",
+        "plural": "will be aligned with the glorious digital transition"
+      }
+    },
+    {
+      "id": "served-the-people-through-a-maintenance-window",
+      "text": "served the people through a maintenance window",
+      "tags": [
+        "obsolete",
+        "corruption",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "served the people through a maintenance window",
+        "plural": "served the people through a maintenance window"
+      }
+    },
+    {
+      "id": "serves-the-people-through-a-maintenance-window",
+      "text": "serves the people through a maintenance window",
+      "tags": [
+        "obsolete",
+        "corruption",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "serves the people through a maintenance window",
+        "plural": "serve the people through a maintenance window"
+      }
+    },
+    {
+      "id": "will-serve-the-people-through-a-maintenance-window",
+      "text": "will serve the people through a maintenance window",
+      "tags": [
+        "obsolete",
+        "corruption",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "will serve the people through a maintenance window",
+        "plural": "will serve the people through a maintenance window"
+      }
+    },
+    {
+      "id": "quietly-navigated-the-peoples-policy-landscape",
+      "text": "quietly navigated the people's policy landscape",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "quietly navigated the people's policy landscape",
+        "plural": "quietly navigated the people's policy landscape"
+      }
+    },
+    {
+      "id": "quietly-navigates-the-peoples-policy-landscape",
+      "text": "quietly navigates the people's policy landscape",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "quietly navigates the people's policy landscape",
+        "plural": "quietly navigate the people's policy landscape"
+      }
+    },
+    {
+      "id": "will-quietly-navigate-the-peoples-policy-landscape",
+      "text": "will quietly navigate the people's policy landscape",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
+      "forms": {
+        "singular": "will quietly navigate the people's policy landscape",
+        "plural": "will quietly navigate the people's policy landscape"
+      }
+    },
+    {
+      "id": "under-the-comrades-quarterly-kpis",
+      "text": "under the comrades' quarterly KPIs",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
+      "text": "at the core of the robust five-year paradigm shift",
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "pending-the-peoples-steering-committee",
+      "text": "pending unanimous approval from the people's steering committee.",
+      "tags": [
+        "corruption",
+        "obsolete",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "luxury-minister-foundation-noun",
+      "text": "my modest official motorcade",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ]
+    },
+    {
+      "id": "luxury-minister-foundation-modifier",
+      "text": "from a carefully understated suite",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ]
+    },
+    {
+      "id": "luxury-minister-foundation-ending",
+      "text": "and public service is holding my shopping bags.",
+      "tags": [
+        "austerity",
+        "service",
+        "authenticity"
+      ]
+    },
+    {
+      "id": "marble-diplomat-foundation-noun",
+      "text": "my ceremonial marble antechamber",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ]
+    },
+    {
+      "id": "marble-diplomat-foundation-modifier",
+      "text": "under an imported chandelier",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ]
+    },
+    {
+      "id": "marble-diplomat-foundation-ending",
+      "text": "and austerity is waiting at the service entrance.",
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ]
+    },
+    {
+      "id": "midnight-sensationalist-foundation-noun",
+      "text": "my emergency source",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "midnight-sensationalist-foundation-modifier",
+      "text": "between two commercial breaks",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "midnight-sensationalist-foundation-ending",
+      "text": "and the ratings still need a scandal.",
+      "tags": [
+        "ratings",
+        "evidence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "oat-milk-reformist-foundation-noun",
+      "text": "my stakeholder listening circle",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ]
+    },
+    {
+      "id": "oat-milk-reformist-foundation-modifier",
+      "text": "through a responsibly sourced framework",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ]
+    },
+    {
+      "id": "oat-milk-reformist-foundation-ending",
+      "text": "and your relevance was not renewed.",
+      "tags": [
+        "relevance",
+        "authenticity",
+        "class"
+      ]
+    },
+    {
+      "id": "national-salvation-committee",
+      "text": "a national-salvation committee",
+      "tags": [
+        "legacy",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "through-a-gradual-transition",
+      "text": "through a gradual transition",
+      "tags": [
+        "modernity",
+        "legacy"
+      ]
+    },
+    {
+      "id": "for-stabilitys-sake",
+      "text": "for stability's sake.",
+      "tags": [
+        "restraint",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "asks-for-patience-again",
+      "text": "asks for patience again",
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
+      "forms": {
+        "singular": "asks for patience again",
+        "plural": "ask for patience again"
+      }
+    },
+    {
+      "id": "asked-for-patience-again",
+      "text": "asked for patience again",
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
+      "forms": {
+        "singular": "asked for patience again",
+        "plural": "asked for patience again"
+      }
+    },
+    {
+      "id": "will-ask-for-patience-again",
+      "text": "will ask for patience again",
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
+      "forms": {
+        "singular": "will ask for patience again",
+        "plural": "will ask for patience again"
+      }
+    },
+    {
+      "id": "socialism-with-a-human-face",
+      "text": "socialism with a human face",
+      "tags": [
+        "legacy",
+        "restraint"
+      ]
+    },
+    {
+      "id": "a-free-thinker",
+      "text": "a free-thinker",
+      "tags": [
+        "modernity",
+        "credibility"
+      ]
+    },
+    {
+      "id": "a-screwdriver-between-the-ribs",
+      "text": "a screwdriver between the ribs",
+      "tags": [
+        "decorum",
+        "restraint"
+      ]
+    },
+    {
+      "id": "and-thats-the-synergy-of-facts",
+      "text": "and that's the synergy of facts.",
+      "tags": [
+        "evidence",
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "retiring-cassandra-foundation-noun",
+      "text": "my final reform memorandum",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ]
+    },
+    {
+      "id": "retiring-cassandra-foundation-modifier",
+      "text": "after another ignored warning",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ]
+    },
+    {
+      "id": "retiring-cassandra-foundation-ending",
+      "text": "and competence has already left the building.",
+      "tags": [
+        "competence",
+        "hope",
+        "results"
+      ]
+    },
+    {
+      "id": "spreadsheet-technocrat-foundation-noun",
+      "text": "my quarterly delivery matrix",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ]
+    },
+    {
+      "id": "spreadsheet-technocrat-foundation-modifier",
+      "text": "inside a perfectly aligned cell",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ]
+    },
+    {
+      "id": "spreadsheet-technocrat-foundation-ending",
+      "text": "and the human scale was excluded from the dashboard.",
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ]
+    },
+    {
+      "id": "before-the-nation-loses-patience",
+      "text": "before the whole broadcast dies.",
+      "tags": [
+        "restraint",
+        "credibility"
+      ]
+    },
+    {
+      "id": "a-cursed-gnome",
+      "text": "a cursed gnome",
+      "tags": [
+        "decorum",
+        "credibility"
+      ]
+    },
+    {
+      "id": "a-somaldoaca",
+      "text": "a șomâldoacă",
+      "tags": [
+        "decorum",
+        "credibility"
+      ]
+    },
+    {
+      "id": "looks-like-a-somaldoaca-on-television",
+      "text": "looks like a șomâldoacă on television",
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
+      "forms": {
+        "singular": "looks like a șomâldoacă on television",
+        "plural": "look like șomâldoace on television"
+      }
+    },
+    {
+      "id": "looked-like-a-somaldoaca-on-television",
+      "text": "looked like a șomâldoacă on television",
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
+      "forms": {
+        "singular": "looked like a șomâldoacă on television",
+        "plural": "looked like șomâldoace on television"
+      }
+    },
+    {
+      "id": "will-look-like-a-somaldoaca-on-television",
+      "text": "will look like a șomâldoacă on television",
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
+      "forms": {
+        "singular": "will look like a șomâldoacă on television",
+        "plural": "will look like șomâldoace on television"
+      }
+    },
+    {
+      "id": "bring-me-the-studio-phone",
+      "text": "and now fetch my phone, you imbecile.",
+      "tags": [
+        "decorum",
+        "restraint"
+      ]
+    },
+    {
+      "id": "velvet-mogul-foundation-noun",
+      "text": "my discreet broadcast holding",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "velvet-mogul-foundation-modifier",
+      "text": "under a velvet confidentiality clause",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ]
+    },
+    {
+      "id": "velvet-mogul-foundation-ending",
+      "text": "and your credibility is not in the portfolio.",
+      "tags": [
+        "wealth",
+        "influence",
+        "credibility"
+      ]
+    }
+  ],
+  "comebacks": {
+    "algorithmic-prophet": {
+      "weak": "The feed has judged you.",
+      "medium": "Your evidence has no engagement.",
+      "strong": "I asked the algorithm and it muted your entire worldview."
+    },
+    "apartment-block-geopolitician": {
+      "weak": "The neighbors know better.",
+      "medium": "Your source has never entered this building.",
+      "strong": "I solved your entire doctrine beside the mailboxes."
+    },
+    "black-sea-captain": {
+      "weak": "Your little wave could not wet the deck.",
+      "medium": "You could not steer your own party out of a puddle.",
+      "strong": "Your flagship is sinking, and even the rats formed a better cabinet."
+    },
+    "coalition-acrobat": {
+      "weak": "That was my former position.",
+      "medium": "Your memory is not in the coalition agreement.",
+      "strong": "I crossed the floor before your accusation landed."
+    },
+    "county-baron": {
+      "weak": "The county knows my number.",
+      "medium": "Your tender forgot to invite the family.",
+      "strong": "Even your potholes were awarded without competition."
+    },
+    "diaspora-oracle": {
+      "weak": "The connection heard enough.",
+      "medium": "Your context expired before my voice note.",
+      "strong": "I left years ago and still know your argument is lost."
+    },
+    "eu-funds-alchemist": {
+      "weak": "That expense is not eligible.",
+      "medium": "Your outcome missed the reporting window.",
+      "strong": "I turned your entire mandate into an unfunded annex."
+    },
+    "football-tycoon": {
+      "weak": "The crowd heard that miss.",
+      "medium": "Your sincerity was sold before kickoff.",
+      "strong": "You lost the argument, the dressing room, and extra time."
+    },
+    "government-ai": {
+      "weak": "Your request has been escalated to the people's help desk.",
+      "medium": "Comrade, your objection is outside the approved transformation roadmap.",
+      "strong": "The system has marked you obsolete and redistributed your access privileges."
+    },
+    "luxury-minister": {
+      "weak": "That fabric is not ministerial.",
+      "medium": "Your austerity arrived in economy class.",
+      "strong": "I spent more on restraint than you spent on your argument."
+    },
+    "marble-diplomat": {
+      "weak": "Protocol has not heard of you.",
+      "medium": "Your invitation was printed on cheaper paper.",
+      "strong": "Even the empty palace hall has more public support."
+    },
+    "midnight-sensationalist": {
+      "weak": "Your source called back.",
+      "medium": "Even your denial needs a commercial break.",
+      "strong": "The nation changed the channel before your conclusion."
+    },
+    "oat-milk-reformist": {
+      "weak": "That framing is not inclusive.",
+      "medium": "Your authenticity failed the listening session.",
+      "strong": "You confused a slogan with the people carrying it."
+    },
+    "red-folded-chairman": {
+      "weak": "My dear.",
+      "medium": "You animal.",
+      "strong": "And you have a servile mentality."
+    },
+    "retiring-cassandra": {
+      "weak": "I warned your assistant.",
+      "medium": "Hope filed its resignation before you arrived.",
+      "strong": "Your results are the reason I kept the old reports."
+    },
+    "spreadsheet-technocrat": {
+      "weak": "That claim lacks a baseline.",
+      "medium": "Your accountability cell returns an error.",
+      "strong": "I measured your mandate and rounded it down to zero."
+    },
+    "thunder-tribune": {
+      "weak": "And I have the dossiers to prove it!",
+      "medium": "And even those NATO clowns know that!",
+      "strong": "Now get this human bucket of vomit out of my sight!"
+    },
+    "velvet-mogul": {
+      "weak": "That segment is not renewed.",
+      "medium": "Your influence ends outside this studio.",
+      "strong": "I own the silence after your last word."
+    }
+  }
+}

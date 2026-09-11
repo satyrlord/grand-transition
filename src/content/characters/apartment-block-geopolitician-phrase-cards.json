@@ -27,9 +27,9 @@
     "nuance"
   ],
   "comebacks": {
-    "weak": "The neighbors know better.",
-    "medium": "Your source has never entered this building.",
-    "strong": "I solved your entire doctrine beside the mailboxes."
+    "weak": "Pass the popcorn. Your argument needs salt.",
+    "medium": "I called it a bad joke. You called yours a foreign policy.",
+    "strong": "I stayed home for the debate. Somehow your facts still failed to turn up."
   },
   "aiPersonality": {
     "aggression": 0.75,
@@ -50,16 +50,15 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original fictional comebacks transform debate-spectator popcorn bravado and its later bad-joke explanation into domestic geopolitical overconfidence. Private research records sources; no attribution or quotation ships."
   },
   "phrases": [
     {
       "id": "apartment-block-geopolitician-foundation-noun",
       "role": "noun",
-      "text": "my stairwell intelligence network",
+      "text": "my foreign-policy briefing from the popcorn bag",
       "tags": [
         "sources",
-        "specificity",
         "nuance"
       ],
       "scoreGroups": {
@@ -75,32 +74,30 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional transformation of debate-watching popcorn bravado into snack-based geopolitical expertise."
       }
     },
     {
       "id": "apartment-block-geopolitician-foundation-modifier",
       "role": "modifier",
-      "text": "according to the third-floor balcony",
+      "text": "according to a snack packet with the small print removed",
       "tags": [
         "sources",
-        "specificity",
-        "nuance"
+        "specificity"
       ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional extension of spectator politics into an absurd source with its details removed."
       }
     },
     {
       "id": "apartment-block-geopolitician-foundation-ending",
       "role": "ending",
-      "text": "and nuance was locked outside the entrance.",
+      "text": "and the entire crisis fits on the back of my popcorn packet.",
       "tags": [
-        "sources",
         "specificity",
         "nuance"
       ],
@@ -110,7 +107,21 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional reduction of complex events to snack packaging."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-exit-poll-before-popcorn",
+      "role": "ending",
+      "text": "and the exit poll arrived before the microwave beeped.",
+      "tags": [],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional reversal of leisurely popcorn-watching confidence through an early electoral result. No weakness is stated by this timing joke."
       }
     }
   ]

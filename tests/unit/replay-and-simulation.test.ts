@@ -34,6 +34,7 @@ import {
   normalizedJson,
   replayKind,
   replayMatch,
+  replayContextForVersion,
   replaySchemaVersion,
   storeMatchLogImport,
   storeReplayImport,
@@ -44,7 +45,7 @@ import {
 import type { StoragePort } from '../../src/persistence/storage-port';
 import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
 import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
-import { legacyPhraseReplayContext } from '../../src/persistence/codecs/legacy-phrase-replay-context';
+import version6ReplayFixture from '../fixtures/replay-v6-pre-humor-catalog.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -57,6 +58,16 @@ const engineContext: MatchEngineContext = {
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
+
+async function sha256(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(value),
+  );
+  return [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
 
 describe('versioned replay and local match-log codecs', () => {
   const completed = simulateMatch(
@@ -75,23 +86,35 @@ describe('versioned replay and local match-log codecs', () => {
     if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
   });
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid version 6 multiplier %s in replay and log', (multiplier) => {
-    for (const [document, decode] of [
-      [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
-    ] as const) {
-      expect(decode(normalizedJson({ ...document, setup: { ...document.setup, basePointsMultiplier: multiplier } })))
-        .toEqual({ ok: false, code: 'invalid-replay' });
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 and 7', (multiplier) => {
+    for (const schemaVersion of [6, 7] as const) {
+      for (const [document, decode] of [
+        [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
+      ] as const) {
+        expect(decode(normalizedJson({
+          ...document,
+          schemaVersion,
+          setup: { ...document.setup, basePointsMultiplier: multiplier },
+        }))).toEqual({ ok: false, code: 'invalid-replay' });
+      }
     }
   });
 
-  test('version 5 keeps its original multiplier when the current balance changes', () => {
-    const setup = { ...completed.replay.setup, basePointsMultiplier: undefined };
-    const bytes = encodeReplay({ ...completed.replay, schemaVersion: 5, setup });
+  test('version 5 keeps its original multiplier when the current balance changes', async () => {
+    const fixture = version6ReplayFixture as ReplayDocument;
+    const setup = { ...fixture.setup, basePointsMultiplier: undefined };
+    const bytes = encodeReplay({ ...fixture, schemaVersion: 5, setup });
     const normal = replayMatch(bytes, context);
     const changed = replayMatch(bytes, { ...context, balance: scoringBalanceForMultiplier(1) });
     expect(normal.ok).toBe(true);
     expect(changed).toEqual(normal);
-    if (changed.ok) expect(changed.normalized).toBe(bytes);
+    expect(await sha256(bytes))
+      .toBe('352465135b702070afcdb32e2a4178e10e4dba11322e7ba19a9e5f9a1cf007f5');
+    if (changed.ok) {
+      expect(changed.normalized).toBe(bytes);
+      expect(await sha256(JSON.stringify(changed.state)))
+        .toBe('634ad0425f3889bba78708a61ac4cdc7751f016fc51d3c6a89dcfaee6bee7b85');
+    }
   });
 
   test('normalizes, decodes, re-encodes, and reproduces an exact final state', () => {
@@ -99,7 +122,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(6);
+    expect(decoded.value.schemaVersion).toBe(7);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -117,6 +140,44 @@ describe('versioned replay and local match-log codecs', () => {
       expect(replayed.normalized).toBe(completed.replayBytes);
       expect(replayed.state).toEqual(completed.finalState);
     }
+  });
+
+  test('version 6 restores the complete pre-humor catalog and exact final state', async () => {
+    const bytes = normalizedJson(version6ReplayFixture);
+    const replayed = replayMatch(bytes, context);
+
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(replayed.state.schemaVersion).toBe(6);
+    expect(await sha256(JSON.stringify(replayed.state)))
+      .toBe('c8a49c0963a630b11431af7f6168c0b9a39b48b55df64d732343a181c5e9f988');
+    expect(replayed.state).toMatchObject({
+      phase: 'results',
+      winner: 'player-2',
+      round: 11,
+      playerStates: {
+        'player-1': { pride: 0 },
+        'player-2': { pride: 27 },
+      },
+    });
+
+    const restored = replayContextForVersion(6, context);
+    expect(restored.catalog.phrases).toHaveLength(367);
+    expect(restored.catalog.phrases.some(
+      ({ id }) => id === 'algorithmic-prophet-lemonade-transfer',
+    )).toBe(false);
+    expect(restored.locale.messages['phrase.national-strategy'])
+      .toBe('your national strategy');
+    expect(restored.catalog.phrases.find(({ id }) => id === 'national-strategy')?.tags)
+      .toEqual(['legacy', 'bureaucracy']);
+    expect(restored.locale.messages['comeback.algorithmic-prophet.strong'])
+      .toBe('I asked the algorithm and it muted your entire worldview.');
+    const tribunePredicate = restored.catalog.phrases.find(
+      ({ id }) => id === 'looks-like-a-somaldoaca-on-television',
+    );
+    expect(tribunePredicate?.numberForms).not.toHaveProperty('personalSingularKey');
+    expect(tribunePredicate?.numberForms).not.toHaveProperty('secondPersonKey');
   });
 
   test('replays legacy version 1 scoring with its original balance', () => {
@@ -203,7 +264,7 @@ describe('versioned replay and local match-log codecs', () => {
   ])('simulates historical balance version $version from the current catalog', (balance) => {
     const match = simulateMatch(20_260_823, createSimulationSetup(sampleContent), { ...context, balance });
     const prepared = simulateMatch(20_260_823, createSimulationSetup(sampleContent),
-      legacyPhraseReplayContext({ ...context, balance }));
+      replayContextForVersion(balance.version, { ...context, balance }));
     expect(match.replay.schemaVersion).toBe(balance.version);
     expect(match.replayBytes).toBe(prepared.replayBytes);
     expect(match.finalState).toEqual(prepared.finalState);
@@ -213,7 +274,10 @@ describe('versioned replay and local match-log codecs', () => {
   });
 
   test('version 3 replays retain scores for sentences with modifiers', () => {
-    const legacyContext = legacyPhraseReplayContext({ ...context, balance: legacyVersion3BasicScoringBalance });
+    const legacyContext = replayContextForVersion(3, {
+      ...context,
+      balance: legacyVersion3BasicScoringBalance,
+    });
     const legacy = simulateMatch(20_260_823, createSimulationSetup(sampleContent), legacyContext,
       (state, engine) => listSimulationOptions(state, engine).toSorted((left, right) =>
         Number(right.phrase?.role === 'modifier') - Number(left.phrase?.role === 'modifier')),
@@ -262,6 +326,10 @@ describe('versioned replay and local match-log codecs', () => {
     }));
     expect(context.catalog.phrases.find((phrase) => phrase.id === 'you')!.tags).toEqual([]);
     expect(context.catalog.phrases.some((phrase) => phrase.id === 'televised-but')).toBe(false);
+    expect(replayed.state.resolutionHistory.some((round) =>
+      Object.values(round.players).some((player) =>
+        player.constructionText.includes('your coalition majority')),
+    )).toBe(true);
   });
 
   test('normalizes and decodes the public match log', () => {

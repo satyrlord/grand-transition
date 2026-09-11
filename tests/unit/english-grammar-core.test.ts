@@ -108,13 +108,13 @@ describe('Hollywood Roast English grammar', () => {
       analyze([add('you'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You rebrand your so-called national consensus' },
+      analysis: { publicText: 'You rebrand your unanimous disagreement' },
     });
     expect(
       analyze([add('my-opponent'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'My opponent rebrands your so-called national consensus' },
+      analysis: { publicText: 'My opponent rebrands your unanimous disagreement' },
     });
 
     for (const [predicateId, expected] of [
@@ -408,7 +408,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'CLAUSE_COMPLETE',
         nextRoles: ['modifier', 'conjunction', 'ending'],
         publicText:
-          'Your so-called national consensus rebrands a televised revolution before the next election behind closed doors',
+          'Your unanimous disagreement rebrands a televised revolution before the promises lose their warranty behind doors transparent only in the brochure',
       },
     });
     expect(
@@ -455,7 +455,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'ENDED',
         punctuation: '.',
         publicText:
-          'Your so-called national consensus belongs in a history museum by emergency ordinance.',
+          'Your unanimous disagreement belongs in a history museum by emergency ordinance; even the calendar needs permission.',
       },
     });
   });

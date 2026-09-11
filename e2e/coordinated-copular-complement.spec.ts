@@ -36,7 +36,8 @@ for (const scenario of [
       { phraseId: 'during-budget-season', role: 'modifier' },
       { phraseId: 'under-the-studio-lights', role: 'modifier' },
     ],
-    sentence: 'A pig stole a municipal ribbon on the campaign trail during budget season under the studio lights',
+    sentence:
+      'A pig stole a ribbon longer than the road on a campaign bus fuelled by applause during the annual migration of the decimal point under studio lights bright enough to bleach a scandal',
     total: 17,
   },
 ]) {

@@ -51,6 +51,12 @@ complete an approved specification.
   skin. It must not change fictional character identity or player-visible
   content. Public institutions and documented historical events can inform
   original satire when the result does not identify a real person.
+- Public political speech can inform original English comic adaptations in
+  common phrases, character phrases, endings, and comebacks. Milestone 027
+  owns source verification and private traceability. Translate the meaning,
+  then write a fictional punchline; do not publish attribution or present
+  adapted dialogue as an authentic quotation. This does not add a verbatim
+  quotation exception or change character identity across skins.
 - Do not use a real political party's name, acronym, or logo. Use only generic
   ideological or social-family labels, such as Conservative, Peasant,
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
@@ -232,7 +238,7 @@ source-only review does not satisfy them.
     Budget: 6. Carry and comeback thresholds resolve.
 13. [Match lifecycle](spec-013-match-lifecycle.md). Budget: 7. Headless matches
     reach a deterministic terminal state.
-14. [Replay and simulation](spec-014-replay-and-simulation.md). Budget: 7.
+14. [Replay and simulation](spec-014-replay-and-simulation.md). Budget: 8.
     Replays are exact and generated matches preserve invariants.
 15. [Lit screen shell](spec-015-lit-screen-shell.md). Budget: 8. Title and setup
     screens dispatch typed commands.
@@ -276,7 +282,7 @@ source-only review does not satisfy them.
     and records a replacement decision. Implementation and evaluation are pending.
 
 Additional dependent milestone: [MVP content finalization](spec-031-mvp-content-finalization.md).
-Budget: 12. Final phrase volume, art, audio treatment, and variety evidence are
+Budget: 19. Final phrase volume, art, audio treatment, and variety evidence are
 present.
 
 Each milestone follows its explicit **Depends on** field. Milestone identifiers

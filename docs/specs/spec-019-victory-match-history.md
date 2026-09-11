@@ -63,10 +63,11 @@ contains:
   round. Each used phrase contains its stable identifier, exact rendered text,
   and active or carried source.
 - normalized replay and match-log data needed to reproduce and diagnose the
-  completed match. New entries use replay and match-log version 6. Existing
-  version 1 through version 5 pairs remain valid and retain their original
-  scoring and phrase-catalog behavior. Version 6 setup records the compatibility
-  multiplier captured at match start, including its default value of 3.
+  completed match. New entries use replay and match-log version 7. Existing
+  version 1 through version 6 pairs remain valid and retain their original
+  scoring and phrase-catalog behavior. Version 6 and version 7 setup record the
+  compatibility multiplier captured at match start, including its default value
+  of 3. Version 6 retains the pre-humor catalog.
 
 New entries also contain optional `speechDiagnostics`, with its own schema
 version 1. Older entries without this field remain valid. Milestone 024 owns
@@ -162,7 +163,7 @@ issue disposition.
 ## Objective verifiers
 
 Pure unit tests verify the history version 1 codec and replay and match-log
-versions 1 through 6. They verify exact replay and log data, duplicate
+versions 1 through 7. They verify exact replay and log data, duplicate
 prevention, the privacy scan, order, and every storage failure. Vitest Browser Mode
 verifies the direct lethal paths, persistent victory interaction, title-only
 modal, keyboard behavior, focus, reload, and storage notice. Playwright verifies

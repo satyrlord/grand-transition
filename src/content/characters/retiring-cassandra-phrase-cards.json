@@ -27,9 +27,9 @@
     "results"
   ],
   "comebacks": {
-    "weak": "I warned your assistant.",
-    "medium": "Hope filed its resignation before you arrived.",
-    "strong": "Your results are the reason I kept the old reports."
+    "weak": "Do you believe in results, or only in the launch party?",
+    "medium": "I asked about your conscience. You sent me its press officer.",
+    "strong": "You love the country so much that you took half of it home."
   },
   "aiPersonality": {
     "aggression": 0.25,
@@ -40,7 +40,10 @@
     "voiceHint": "measured",
     "rate": 0.85,
     "pitch": 0.85,
-    "skinVoices": {"default": "george", "statesman": "emma"}
+    "skinVoices": {
+      "default": "george",
+      "statesman": "emma"
+    }
   },
   "animationSet": {
     "idle": "retiring-cassandra-idle",
@@ -51,13 +54,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
   },
   "phrases": [
     {
       "id": "retiring-cassandra-foundation-noun",
       "role": "noun",
-      "text": "my final reform memorandum",
+      "text": "my reform plan's retirement application",
       "tags": [
         "competence",
         "hope",
@@ -76,13 +79,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional reform fatigue: an ambitious plan retires before delivery. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "retiring-cassandra-foundation-modifier",
       "role": "modifier",
-      "text": "after another ignored warning",
+      "text": "while hope updates its resignation letter",
       "tags": [
         "competence",
         "hope",
@@ -93,25 +96,35 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original fictional warning satire: hope becomes the office worker preparing to leave. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     },
     {
       "id": "retiring-cassandra-foundation-ending",
       "role": "ending",
-      "text": "and competence has already left the building.",
-      "tags": [
-        "competence",
-        "hope",
-        "results"
-      ],
+      "text": "and your conscience has hired a spokesperson.",
+      "tags": ["accountability", "credibility"],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original transformed debate-question motif: an evasive conscience delegates its answer. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "retiring-cassandra-country-removal-van",
+      "role": "ending",
+      "text": "and your love of country comes with a removal van.",
+      "tags": ["corruption"],
+      "rarity": "rare",
+      "finisherBonus": 4,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original transformed civic-integrity motif: professed devotion becomes removal of public property. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
     }
   ]

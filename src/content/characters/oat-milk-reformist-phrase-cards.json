@@ -27,9 +27,9 @@
     "class"
   ],
   "comebacks": {
-    "weak": "That framing is not inclusive.",
-    "medium": "Your authenticity failed the listening session.",
-    "strong": "You confused a slogan with the people carrying it."
+    "weak": "I asked for public services. You sent a mindfulness leaflet.",
+    "medium": "You protected the forest by giving every stump a director.",
+    "strong": "Your budget takes from the poor and gives the rich a sustainability award."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -51,13 +51,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional foundation character approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
   },
   "phrases": [
     {
       "id": "oat-milk-reformist-foundation-noun",
       "role": "noun",
-      "text": "my stakeholder listening circle",
+      "text": "my listening circle with a six-month waiting list",
       "tags": [
         "relevance",
         "authenticity",
@@ -76,13 +76,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "oat-milk-reformist-foundation-modifier",
       "role": "modifier",
-      "text": "through a responsibly sourced framework",
+      "text": "with a carbon footprint smaller than the launch party's",
       "tags": [
         "relevance",
         "authenticity",
@@ -93,13 +93,13 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     },
     {
       "id": "oat-milk-reformist-foundation-ending",
       "role": "ending",
-      "text": "and your relevance was not renewed.",
+      "text": "and the forest has more pension plans than trees.",
       "tags": [
         "relevance",
         "authenticity",
@@ -111,7 +111,41 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ladder-foundation phrase approved by the product owner for ladder use on 2026-09-01. Final refinement remains in Milestone 031."
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "reformist-reverse-redistribution",
+      "role": "ending",
+      "text": "and the poor have kindly agreed to sponsor the billionaires.",
+      "tags": [
+        "class",
+        "authenticity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "reformist-listening-invoice",
+      "role": "ending",
+      "text": "and listening is free once you have paid the consultation fee.",
+      "tags": [
+        "class",
+        "relevance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 3,
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
     }
   ]
