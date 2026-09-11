@@ -140,7 +140,7 @@ Version the replay, match-log, and history formats that need a locale field.
 Record the match game locale and the content/grammar identity needed for exact
 reproduction. Pin each new schema number, source fixture, and migration in
 Milestones 014 and 019 before implementing its codec. Existing versions 1
-through 7 English replay/log pairs keep their original scoring rules and resolve
+through 8 English replay/log pairs keep their original scoring rules and resolve
 to English. Existing history entries retain their original public text.
 
 History controls use the current interface language. Recorded sentences keep

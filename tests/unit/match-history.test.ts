@@ -74,8 +74,8 @@ describe('persistent match history', () => {
 
   test('round-trips normalized public replay and match-log data', () => {
     const entry = historyEntry('match-one', '2026-08-29T12:00:00.000Z');
-    expect(entry.replay.schemaVersion).toBe(7);
-    expect(entry.matchLog.schemaVersion).toBe(7);
+    expect(entry.replay.schemaVersion).toBe(8);
+    expect(entry.matchLog.schemaVersion).toBe(8);
     const encoded = encodeMatchHistory({
       schemaVersion: matchHistorySchemaVersion,
       kind: matchHistoryKind,
@@ -113,7 +113,7 @@ describe('persistent match history', () => {
     expect(encoded).toContain(usedPhrases[0]!.text);
   });
 
-  test.each([1, 2, 3, 4, 5, 6] as const)(
+  test.each([1, 2, 3, 4, 5, 6, 7] as const)(
     'keeps a matched replay and match-log version %s history pair',
     (schemaVersion) => {
       const entry = historyEntry(`older-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');

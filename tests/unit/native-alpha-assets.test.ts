@@ -15,7 +15,7 @@ import { hasNativeAlphaProvenance } from '../../tools/asset-pixels.mjs';
 // @ts-expect-error Production validators are native ECMAScript modules.
 import { validateStateAsset } from '../../tools/validate-character-states.mjs';
 // @ts-expect-error Production builders are native ECMAScript modules.
-import { encodeVariant } from '../../tools/build-character-assets.mjs';
+import { encodeVariant, encodeVariantWithMetadata } from '../../tools/build-character-assets.mjs';
 
 const execFileAsync = promisify(execFile);
 const script = path.resolve('.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs');
@@ -31,6 +31,16 @@ test.each(['avif', 'webp'])('small native %s encoding keeps the outer border tra
   const output = await encodeVariant(input, 128, format);
   await expect(inspectCharacter(output, `128px ${format}`, { nativeAlpha: true })).resolves.toBeUndefined();
 });
+
+test('native Prophet AVIF encoding prevents compression from restoring border haze', async () => {
+  const input = await readFile(path.resolve('src/assets/characters/algorithmic-prophet.png'));
+  expect(hasNativeAlphaProvenance(input)).toBe(true);
+  const encoded = await encodeVariantWithMetadata(input, 320, 'avif');
+  expect(encoded.quality).toBe(100);
+  expect(encoded.lossless).toBe(true);
+  expect(encoded.output.length).toBeLessThanOrEqual(250 * 1024);
+  await expect(inspectCharacter(encoded.output, '320px Prophet AVIF', { nativeAlpha: true })).resolves.toBeUndefined();
+}, 30_000);
 
 async function fixture(interior = 250, edge = 128, green = false): Promise<Buffer> {
   const pixels = Buffer.alloc(100 * 100 * 4);

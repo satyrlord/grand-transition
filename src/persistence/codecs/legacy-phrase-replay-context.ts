@@ -1,7 +1,38 @@
 import legacyContent from '../../content/legacy-humor-content-v6.json' with { type: 'json' };
+import legacyProphetContent from '../../content/legacy-prophet-content-v7.json' with { type: 'json' };
 import type { Phrase } from '../../content/schemas';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import type { ReplayContext } from './replay-codec';
+
+const removedProphetPhraseIds = new Set<string>(legacyProphetContent.removedPhraseIds);
+
+export function legacyProphetReplayContext(context: ReplayContext): ReplayContext {
+  const keepPhrase = (phraseId: string) => !removedProphetPhraseIds.has(phraseId);
+  const removedKeys = new Set(context.catalog.phrases
+    .filter((phrase) => !keepPhrase(phrase.id)).map((phrase) => phrase.textKey));
+  const restoreLocale = (locale: GameLocaleBundle): GameLocaleBundle => ({
+    ...locale,
+    messages: Object.fromEntries(Object.entries(locale.messages)
+      .filter(([key]) => !removedKeys.has(key))),
+  });
+  return {
+    ...context,
+    locale: restoreLocale(context.locale),
+    catalog: {
+      ...context.catalog,
+      phrases: context.catalog.phrases.filter((phrase) => keepPhrase(phrase.id)),
+      characters: context.catalog.characters.map((character) => ({
+        ...character,
+        characterPhraseIds: character.characterPhraseIds.filter(keepPhrase),
+      })),
+      scenes: context.catalog.scenes.map((scene) => ({
+        ...scene,
+        phrasePool: scene.phrasePool.filter(keepPhrase),
+      })),
+      locales: context.catalog.locales.map(restoreLocale),
+    },
+  };
+}
 
 // Versions 1 through 4 retain the authored identifiers and weakness tags.
 const legacyPhrases: readonly {

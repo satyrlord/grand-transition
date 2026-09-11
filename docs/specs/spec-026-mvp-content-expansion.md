@@ -177,3 +177,14 @@ The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
 satisfies the foundation modifier minimum. Its 21-card pool retains all prior
 phrases and IDs. Verify the card and the complete approved sentence in
 `tests/unit/content-schemas.test.ts` and `tests/unit/english-grammar-core.test.ts`.
+
+The Algorithmic Prophet owns 12 cards, including eight original comic
+adaptations of beverage memory, nature omens, national rankings, and ceremonial
+courage. These add two nouns, two modifiers, and four endings to the existing
+four-card pool. Existing identifiers and text remain stable. New cards belong
+only to this character's private pool. Public wording and editorial notes contain
+no film quotations, real-person references, or source attribution. Private
+research records the adaptation sources. The current catalog is English;
+Romanian adaptation remains in Milestone 030. Milestone 014 version 8 preserves
+the preceding replay contexts. `tests/unit/authored-phrase-grammar.test.ts`
+verifies ownership and complete constructions.

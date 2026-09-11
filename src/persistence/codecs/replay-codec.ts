@@ -2,6 +2,7 @@ import { z } from 'zod';
 import {
   legacyHumorReplayContext,
   legacyPhraseReplayContext,
+  legacyProphetReplayContext,
 } from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
@@ -26,7 +27,7 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 7;
+export const replaySchemaVersion = 8;
 export const supportedReplaySchemaVersions = [
   1,
   2,
@@ -34,6 +35,7 @@ export const supportedReplaySchemaVersions = [
   4,
   5,
   6,
+  7,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -47,6 +49,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[4]),
   z.literal(supportedReplaySchemaVersions[5]),
   z.literal(supportedReplaySchemaVersions[6]),
+  z.literal(supportedReplaySchemaVersions[7]),
 ]);
 
 export type ReplayFailureCode =
@@ -478,9 +481,12 @@ export function replayContextForVersion(
   schemaVersion: number,
   context: ReplayContext,
 ): ReplayContext {
-  const contentContext = schemaVersion < 7
-    ? legacyHumorReplayContext(context)
+  const prophetContext = schemaVersion < 8
+    ? legacyProphetReplayContext(context)
     : context;
+  const contentContext = schemaVersion < 7
+    ? legacyHumorReplayContext(prophetContext)
+    : prophetContext;
   return schemaVersion < 5
     ? legacyPhraseReplayContext(contentContext)
     : contentContext;

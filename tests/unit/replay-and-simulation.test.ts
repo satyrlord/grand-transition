@@ -46,6 +46,7 @@ import type { StoragePort } from '../../src/persistence/storage-port';
 import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
 import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
 import version6ReplayFixture from '../fixtures/replay-v6-pre-humor-catalog.json';
+import version7ReplayFixture from '../fixtures/replay-v7-before-prophet-film-phrases.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -86,8 +87,8 @@ describe('versioned replay and local match-log codecs', () => {
     if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
   });
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 and 7', (multiplier) => {
-    for (const schemaVersion of [6, 7] as const) {
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 8', (multiplier) => {
+    for (const schemaVersion of [6, 7, 8] as const) {
       for (const [document, decode] of [
         [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
       ] as const) {
@@ -122,7 +123,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(7);
+    expect(decoded.value.schemaVersion).toBe(8);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -140,6 +141,22 @@ describe('versioned replay and local match-log codecs', () => {
       expect(replayed.normalized).toBe(completed.replayBytes);
       expect(replayed.state).toEqual(completed.finalState);
     }
+  });
+
+  test('version 7 preserves its complete catalog and captured Prophet match', async () => {
+    const restored = replayContextForVersion(7, context);
+    expect(await sha256(JSON.stringify(restored)))
+      .toBe('92af39abb1a27e291476725b3a37ecd0cba159ffdc0f4dc6391fb0c90792f308');
+    const bytes = normalizedJson(version7ReplayFixture);
+    expect(await sha256(bytes))
+      .toBe('cfdac5e33dda28212c898826da25a83c14109daa7af884bdac9e38e69accfd13');
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(await sha256(JSON.stringify(replayed.state)))
+      .toBe('505dc5b56018833497b6e67c838ffe36901bbe60b907eba9ff7ee70fbc5ec058');
+    expect(replayContextForVersion(8, context)).toBe(context);
   });
 
   test('version 6 restores the complete pre-humor catalog and exact final state', async () => {

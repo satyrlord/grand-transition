@@ -21,6 +21,31 @@ function analyze(ids: readonly string[]) {
 }
 
 describe('authored humor grammar integration', () => {
+  test('the Prophet adds eight original private film-motif cards without replacing existing cards', () => {
+    const prophet = phraseCardCatalog.characters.find(({ id }) => id === 'algorithmic-prophet')!;
+    expect(prophet.characterPhraseIds).toHaveLength(12);
+    for (const suffix of [
+      'bottled-prophecy-archive', 'sacred-leaderboard', 'laptop-wind-of-destiny',
+      'ceremonial-donation-bow', 'tap-water-excuses', 'prophetic-damp-socks',
+      'greatness-error-cell', 'bravery-follow-up',
+    ]) {
+      const id = `algorithmic-prophet-${suffix}`;
+      expect(prophet.characterPhraseIds).toContain(id);
+      expect(byId.get(id)?.characterIds).toEqual(['algorithmic-prophet']);
+    }
+    expect(analyze([
+      'you', 'belongs-in-a-party-museum',
+      'algorithmic-prophet-laptop-wind-of-destiny',
+      'algorithmic-prophet-bravery-follow-up',
+    ])).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText: 'You belong in a history museum after mistaking the laptop fan for a wind of destiny and your bravery has never faced a follow-up question.',
+      },
+    });
+  });
+
   test('every ending completes personal, nonpersonal, and plural clauses', () => {
     for (const ending of phraseCardCatalog.phrases.filter(({ role }) => role === 'ending')) {
       for (const subject of ['you', 'campaign-promise', 'your-voters']) {

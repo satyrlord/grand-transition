@@ -45,6 +45,10 @@ at or below 8. Reject stronger border coverage instead of clipping the figure.
 Encode 128- and 256-pixel native AVIF variants losslessly so compression cannot
 restore border haze. Record the lossless setting in the selection manifest.
 Keep all existing byte budgets and the larger-image encoding settings.
+Decode larger native AVIF variants after encoding. If lossy compression restores
+nontransparent border pixels, encode that variant losslessly and record quality
+100 and `lossless: true` in the manifest. Keep the same byte budget and reject
+any variant that still fails alpha validation.
 Build the five AVIF/WebP sizes and record its reviewed left-facing direction
 and source hash. Keep the default portrait and baseline hashes unchanged.
 
@@ -292,6 +296,16 @@ cancel a warm cast with a global blue filter. Reject the asset and regenerate
 it from the approved direction.
 
 ### Character art direction
+
+The Algorithmic Prophet wears a small plain gray wizard hat. Keep the face,
+expression, gesture, clothing, and detailed character style consistent. This
+targeted, owner-requested headwear edit can use its existing portrait as the
+edit target. It is an exception to the baseline clean-room replacement rule.
+The shared selection master supplies roster, setup, and match portraits; rebuild
+all five AVIF and WebP sizes from the reviewed transparent 2048-square master.
+The master uses native OpenAI API transparency with `gpt-image-2.5-sunburst`.
+Its owner-authorized background cleanup clears only alpha-1 pixels farther than
+four pixels from near-opaque content. Preserve all RGB values and contour alpha.
 
 All default skins, alternate skins, and their state drawings use one detailed
 cel-shaded editorial-cartoon style. Use the original `county-baron`,
