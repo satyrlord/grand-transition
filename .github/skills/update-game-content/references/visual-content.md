@@ -1,5 +1,12 @@
 # Author visual content
 
+For scene and character raster generation or editing, use
+[generate-scene-openai](../../generate-scene-openai/SKILL.md).
+Its Sunburst API route owns transparent output, exact-size masters, and output above 1080p.
+Its internal-tool route serves small opaque drafts.
+An authorized artwork edit includes permitted target references and standard bounded native-alpha preparation.
+Follow its character or scene integration module before replacing shipping assets.
+
 All generated representational raster art follows the shared cel-shaded
 editorial-cartoon direction in Milestone 023. Apply it to every character,
 skin, state, moderator, scene, foreground plate, architecture element,

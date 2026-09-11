@@ -1,76 +1,89 @@
-# Generate through the OpenAI API
+# Generate through the Sunburst API
 
 ## API branch
 
-Use this branch only above 2,073,600 requested pixels.
-The helper rejects smaller API requests before reading a key or starting a process.
-It defaults to `gpt-image-2.5-sunburst`, `3840x2160`, high quality, and PNG output.
-This route produced a verified 3840 by 2160 image on 2026-09-09.
-The internal tool's output in that comparison was 1672 by 941.
-These are observations from one run, not a universal limit for the internal tool.
-
-Use the installed `imagegen` skill's bundled `scripts/image_gen.py` command-line interface (CLI).
-The helper locates it below `CODEX_HOME`, or the user's `.codex` directory.
-It invokes that existing CLI through `uv run --no-project --with openai python`.
-It does not contain a separate software development kit (SDK) client or modify the installed CLI.
-If `uv` or the installed CLI is unavailable, resolve that local prerequisite.
-Do not substitute another provider.
+Use this branch for transparent output, exact-size masters, or output above 2,073,600 pixels.
+Use `gpt-image-2.5-sunburst`, high quality, PNG output, and explicit dimensions.
+The repository helper uses Node 24 `fetch` through `scripts/sunburst-api.mjs`.
+It constructs requests directly for OpenAI's image generation and edit endpoints.
+Do not modify an installed image CLI or require its size tables, SDK, Python, or `uv`.
 
 The helper reads only `OPENAI_API_KEY` from the ignored, untracked `.env.local` file.
-It passes the key privately in the child process environment.
-It removes ambient API-base-URL and debug-log overrides.
-Provider error output never enters model context through this helper.
+Never print the file or key, expose it in command arguments, or add it to browser code.
+The adapter uses the fixed OpenAI endpoint. Ambient base-URL and debug-log overrides do not control it.
+Provider error bodies do not enter model context through the helper.
 An unavailable key blocks only the API branch.
 
 The [OpenAI image generation guide](https://developers.openai.com/api/docs/guides/image-generation)
-documents `gpt-image-2.5-sunburst` sizes, including 3840 by 2160.
-Dimensions must be multiples of 16, with a maximum edge of 3840 and at most 8,294,400 pixels.
-The maximum aspect ratio is 3:1.
+documents Sunburst's size and transparency contract.
+Dimensions must be multiples of 16. The maximum edge is 3840 and the maximum aspect ratio is 3:1.
+The total pixel count must be between 655,360 and 8,294,400, inclusive.
+These limits apply to generation sources, not the shipping dimensions declared by the asset pipeline.
+For a 1920-by-1080 shipping scene, generate at 3840 by 2160 and use the reviewed scene downsampling procedure.
+Do not request native 1920 by 1080. Its height is not a multiple of 16.
 Recheck the official guide before changing the supported model or request contract.
 Do not silently reduce a requested size after an API error.
 
-Use `gpt-image-2.5-sunburst`, high quality, PNG output, and an explicit size.
-Read `OPENAI_API_KEY` from `.env.local` privately through the helper.
-Never print the file or key, expose it in command arguments, or add it to browser code.
-Do not use another provider or the internal tool as a high-resolution substitute.
+Set `--background transparent` for transparent PNG output.
+Use `--background opaque` for opaque output. Use `auto` only when the background is unconstrained.
+Inspect returned dimensions and alpha before integration.
 
-The official image generation guide documents native transparency for this model with PNG or WebP output.
-For transparent PNG output, add `--background transparent`; `opaque` and `auto` are also supported.
-Omitting this option preserves the installed CLI's default behavior.
-Inspect the returned alpha channel before integration.
-
-## Run the helper
+## Plan without generation
 
 Run commands from the repository root with Node 24 and installed dependencies.
-Check routing without generation:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1920x1080
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 3840x2160
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background opaque
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background transparent
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background opaque --exact-size
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 3840x2160 --background opaque
 ```
 
-The first command selects `internal`. The second selects `api`.
+Only the first example selects the internal tool. The other examples select the API.
 Use the built-in tool directly for the internal branch.
-The command-line helper cannot invoke that tool or override the credit boundary.
+Planning and dry runs do not authorize generation or use API credits.
 
-Validate a 4K API request without reading the key or contacting OpenAI:
+## Construct and execute requests
 
-```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --prompt research/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --dry-run
+Validate an authorized portrait edit locally before generation:
+
+```powershell
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate `
+  --prompt research/character-generation/run/prompt.txt `
+  --reference src/assets/characters/algorithmic-prophet.png `
+  --out tmp/character-generation/run --size 2048x2048 --background transparent --dry-run
 ```
 
-Remove `--dry-run` to execute an authorized generation request.
-For approved reference mode, add one `--reference <local-image>` per image.
-That mode invokes the installed CLI's `edit` endpoint with repeated `--image` arguments.
-Text mode invokes `generate`, without images.
-Both use `--no-augment` to preserve the authored prompt.
-References must be static PNG, JPEG, or WebP files, each smaller than 50 MB, with at most 16 inputs.
+Use the existing target only when the edit request and asset contract permit reference input.
+For a text-only 4K scene, omit references:
 
-The helper reserves a new output directory before the API process starts.
+```text
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --prompt research/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --background opaque --dry-run
+```
+
+Add `--exact-size` for a smaller opaque source with supported native dimensions, such as 1024 by 1024.
+The 3840-by-2160 scene request also supplies current 1920-by-1080 shipping masters through reviewed downsampling.
+Dry runs construct the actual request locally without reading the key or contacting OpenAI.
+They check prompt controls, supported dimensions, background, reference decode, and request fields.
+A passing dry run establishes local request validity. It does not establish provider access or successful remote generation.
+Remove `--dry-run` only for an authorized artwork request.
+
+For permitted reference mode, add one `--reference <local-image>` per image.
+References must be static PNG, JPEG, or WebP files, each smaller than 50 MB, with at most 16 inputs.
+Reference mode uses a multipart edit request. Text-only mode uses a JSON generation request.
+Both preserve the authored prompt without augmentation.
+
+The helper reserves a new output directory before sending the request.
 It writes `request-record.json`, then preserves the original API bytes as `candidate.png`.
-It records the result hash in `generation.json` and checks full image decode.
-Passing dimensions produce `inspection.json`. A wrong-size candidate remains
-available for diagnosis.
-The helper never retries an existing run directory.
-The installed OpenAI SDK may retry transient failures internally.
-Do not start another paid attempt after a timeout with uncertain billing.
+It records the source hash in `generation.json` and performs full image decode.
+Inspect `inspection.json` and the reported status before continuing.
+Failed dimension or alpha checks leave the raw candidate available for diagnosis.
+They do not authorize another generation automatically.
+An invalid alpha report uses the `alpha-review-required` state.
+Read its issues before choosing bounded preparation or a corrective generation.
+
+The adapter sends one request and never retries automatically.
+It records sanitized request status without provider error bodies.
+Do not reuse a run directory for another paid attempt.
+After a timeout or interruption, stop if completion or billing is uncertain.
+Report the run directory and sanitized failure status. Resolve uncertainty before another request.

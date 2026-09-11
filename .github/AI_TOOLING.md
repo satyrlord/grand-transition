@@ -48,6 +48,12 @@ For substantial conditional procedures, link task modules with explicit loading 
 Load only the modules required by the task. Keep short skills self-contained.
 See [create-skill](skills/create-skill/SKILL.md) for authoring and validation.
 
+Scene and character raster work uses
+[generate-scene-openai](skills/generate-scene-openai/SKILL.md).
+Its repository-owned Sunburst API adapter supports native transparency and exact master dimensions.
+The skill also owns bounded alpha preparation, provenance, and staged asset integration.
+Installed generic image CLIs do not own this repository's Sunburst request contract.
+
 ## Model Context Protocol policy
 
 Agents can use the Microsoft Learn Model Context Protocol (MCP) server for

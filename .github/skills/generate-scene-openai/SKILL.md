@@ -1,23 +1,26 @@
 ---
 name: generate-scene-openai
-description: Generate and inspect Grand Transition scene art with OpenAI. Use the internal image generator through 1080p and the OpenAI API above 1080p, including native 4K. Integrate accepted art through the scene asset pipeline.
+description: Generate, edit, inspect, and integrate Grand Transition scene and character raster art. Use the Sunburst API for transparent assets, exact-size masters, and output above 1080p. Use the internal image tool for small opaque drafts.
 ---
 
-# Generate a scene with OpenAI
+# Generate and edit raster art with OpenAI
 
-## Establish the scene task
+## Establish the artwork task
 
 Read `AGENTS.md`, `DESIGN.md`, and Specifications 016, 018, 023, and 026.
-Read the scene definition, current layers, manifest, renderer, and affected tests.
+Read the affected character or scene definition, current art, manifest, renderer, and tests.
 Inspect repository status before edits.
-Resolve the scene ID, layer, camera, composition, focal regions, and interface-safe regions from those contracts.
+Resolve the asset ID, output role, dimensions, transparency, composition, and interface clearance from those contracts.
+For characters, resolve the private study, approved rendering standard, facing direction, and complete silhouette.
 Apply the latest user-approved art direction, including scene-specific exceptions.
 Resolve missing required decisions before generation.
 
 Keep prompts and input records under ignored `research/` paths.
 Keep generated candidates and staged assets under ignored `tmp/` paths.
 Skill creation, review, and dry runs do not authorize generation.
-A generation request authorizes the selected route within its stated scope.
+A request to create or edit artwork authorizes the required route and standard deterministic preparation within its scope.
+An authorized edit includes using its existing target as a reference when the asset contract permits that input.
+Preserve clean-room scene restrictions and explicit route, reference, cost, or attempt limits.
 Do not ask for the same authorization again.
 
 ## Load the task modules
@@ -30,50 +33,63 @@ Load only required modules. If scope changes, read newly required modules before
   [API generation](references/api-generation.md). Internal generation does not need this module.
 - Before inspecting or approving any candidate, read
   [candidate inspection and review](references/candidate-review.md), including existing candidates and previews from either route.
-- Before master preparation or integration, read
-  [scene integration](references/scene-integration.md). Preview-only requests exclude this module and do not authorize import.
+- Before preparing or integrating transparent output, read
+  [native alpha preparation](references/native-alpha.md). This module owns the bounded background cleanup and provenance sequence.
+- Before scene master preparation or integration, read
+  [scene integration](references/scene-integration.md).
+- Before character master preparation or integration, read
+  [character integration](references/character-integration.md).
+
+Preview-only requests exclude integration and do not authorize import.
 
 For route planning alone, use this entry point without API mechanics.
 Report the route, required inputs, and unresolved decisions without generation or integration.
 Respect prohibitions on edits or testing. Report excluded checks instead of running them or claiming completion.
 
-## Select the resolution route
+## Select the generation route
 
-Use requested pixel count as the routing boundary, regardless of aspect ratio.
 Define 1080p as 1920 by 1080, or 2,073,600 pixels.
+Apply transparency and exact master requirements before the pixel-count boundary.
 
-| Requested size | Required route |
+| Asset requirement | Required route |
 | --- | --- |
-| At or below 2,073,600 pixels | Internal `image_gen` tool |
-| Above 2,073,600 pixels | OpenAI API through the installed imagegen CLI |
+| Transparent output at any supported size | Sunburst API through the repository helper |
+| Exact-size master, including a smaller opaque master | Sunburst API through the repository helper |
+| Above 2,073,600 pixels | Sunburst API through the repository helper |
+| Opaque draft at or below 2,073,600 pixels | Internal `image_gen` tool |
 
-Exactly 1080p uses the internal tool to avoid API credits for small images.
-A 1024-square image uses the internal tool. A 2048-square image uses the API.
-Use the scene's declared master size when the user does not specify a size.
+Resolve the shipping master size separately from the API source request size.
+Use the declared master size directly only when Sunburst supports those dimensions.
+Character masters use transparent 2048 by 2048 output.
 Use 3840 by 2160 for a requested 4K landscape scene.
-Use the helper's `plan --size WIDTHxHEIGHT` command to check the route.
+For a 1920-by-1080 shipping scene, request a 3840-by-2160 source, then apply the reviewed scene preparation.
+Do not request native 1920-by-1080 API output. Its height is not a multiple of 16.
+Use `plan --size WIDTHxHEIGHT` with `--background transparent` or `--exact-size` when applicable.
+The `--size` value describes the generation source. Planning rejects unsupported API dimensions.
+An explicit internal-tool request takes precedence. Report actual output limitations without promising exact master dimensions.
 
-Prefer native transparent PNG output for isolated scene foreground layers.
+Use native transparent PNG output for isolated scene foreground layers and character portraits.
 Use `--background transparent` on the supported API route.
-Preserve the returned alpha. Use green-matte conversion only as a fallback.
+Preserve the returned alpha except for the bounded preparation in the native alpha module.
+Use green-matte conversion only for an approved fallback.
 
 ## Bound generation and approval
 
 Generate one candidate per request.
-After an observed defect, permit one corrective request per layer unless the user sets another limit.
+After an observed visual defect, permit one corrective request per asset unless the user sets another limit.
 Stop at the limit, a refusal, an authentication failure, or an uncertain charged timeout.
 Report the result and required next action.
-The API helper does not repeat failed CLI invocations. Its installed SDK can
-retry transient requests internally.
+The repository API adapter makes no automatic retries.
+Do not repeat a timed-out or interrupted request when billing or completion is uncertain.
 
-Require a passing review tied to the current image hash before master preparation.
+Inspect raw output before deterministic preparation. Require a passing current-hash review before master integration.
 
 ## Integrate and finish
 
 Follow the loaded integration procedure only within authorized scope and after candidate review passes.
 Keep rejected candidates out of `src/assets/`.
-Preserve stable scene IDs for replacements.
-For new scene identities, update the authorized specification, catalog, localization, resolver, and tests.
+Preserve stable asset IDs for replacements.
+For new identities, update the authorized specification, catalog, localization, resolver, and tests.
 Integration completion requires valid shipping assets, factual source records, connected runtime usage, and passing applicable checks.
 For a preview-only request, save and inspect the image without importing it.
 Record product-owner visual acceptance only when the user supplies it.
