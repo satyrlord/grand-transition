@@ -20,6 +20,50 @@ const reducer = createMatchReducer({
 });
 
 describe('match-screen snapshot', () => {
+  test('marks exactly the next grammar-accepted phrases without changing state or selection rules', () => {
+    const scene = sampleContent.scenes[0]!;
+    let state = createMatchSetupState({
+      schemaVersion: 1, seed: 20_260_823,
+      players: [configuredPlayer(0), configuredPlayer(1)],
+      sceneId: scene.id, scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat', openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(accept(state, lifecycleCommand('start-match')), lifecycleCommand('prepare-round'));
+    let checked = 0;
+    let rejected = 0;
+    for (let pick = 0; pick < 8 && state.phase === 'drafting'; pick += 1) {
+      const before = JSON.stringify(state);
+      const snapshot = createMatchScreenSnapshot(state);
+      const cards = [...snapshot.sharedCards, ...snapshot.privateCards];
+      for (const card of cards) {
+        if (!card.reference || card.role === 'continuation') {
+          expect(card.grammarAccepted).toBe(false);
+          continue;
+        }
+        const result = accept(state, {
+          type: 'select-phrase', source: 'user', actorId: state.activePlayerId,
+          payload: { card: card.reference },
+        });
+        const mistakes = state.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
+        const nextMistakes = result.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
+        expect(card.grammarAccepted).toBe(nextMistakes === mistakes);
+        expect(card.action).toBe('select');
+        checked += 1;
+        if (!card.grammarAccepted) rejected += 1;
+      }
+      expect(JSON.stringify(state)).toBe(before);
+      const next = cards.find((card) => card.grammarAccepted);
+      if (!next?.reference) break;
+      state = accept(state, {
+        type: 'select-phrase', source: 'user', actorId: state.activePlayerId,
+        payload: { card: next.reference },
+      });
+    }
+    expect(checked).toBeGreaterThan(20);
+    expect(rejected).toBeGreaterThan(0);
+  });
+
   test('projects one immutable viewer-scoped match snapshot', () => {
     const scene = sampleContent.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;

@@ -29,7 +29,7 @@ afterEach(() => {
 
 test('restores every stored setting and applies title changes immediately', async () => {
   const stored: SettingsDocument = Object.freeze({
-    schemaVersion: 4,
+    schemaVersion: 5,
     basePointsMultiplier: 4,
     gpuVoices: false,
     masterVolume: 0.55,
@@ -41,6 +41,7 @@ test('restores every stored setting and applies title changes immediately', asyn
     speechRate: 1.4,
     turnTimerSeconds: 15,
     autoComplete: false,
+    tutorialMode: true,
   });
   localStorage.setItem(settingsStorageKey, encodeSettings(stored));
   let app = await mountApp();
@@ -57,6 +58,7 @@ test('restores every stored setting and applies title changes immediately', asyn
     'true',
   );
   expect(checkbox(settings, 'autoComplete').checked).toBe(false);
+  expect(checkbox(settings, 'tutorialMode').checked).toBe(true);
 
   changeRange(settings, 'masterVolume', '0.6');
   await app.updateComplete;
@@ -82,6 +84,27 @@ test('restores every stored setting and applies title changes immediately', asyn
     'true',
   );
   expect(checkbox(settings, 'autoComplete').checked).toBe(true);
+  expect(checkbox(settings, 'tutorialMode').checked).toBe(true);
+});
+
+test('Tutorial starts unchecked and persists both checkbox choices across reloads', async () => {
+  let app = await mountApp();
+  let settings = await openSettings(app);
+  expect(checkbox(settings, 'tutorialMode').checked).toBe(false);
+  expect(checkbox(settings, 'tutorialMode').getAttribute('aria-describedby')).toBe('settings-tutorial-note');
+  expect(settings.querySelector('#settings-tutorial-note')?.textContent).toContain('All grammatically valid next choices glow green.');
+
+  for (const enabled of [true, false]) {
+    await page.getByRole('checkbox', { name: 'Tutorial', exact: true }).click();
+    await app.updateComplete;
+    expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+      ok: true, value: { tutorialMode: enabled },
+    });
+    document.body.innerHTML = '';
+    app = await mountApp();
+    settings = await openSettings(app);
+    expect(checkbox(settings, 'tutorialMode').checked).toBe(enabled);
+  }
 });
 
 test('GPU voices preserve the preference independently without a Settings loading status', async () => {
@@ -137,7 +160,7 @@ test.each([
   ['malformed data', '{broken'],
   [
     'an unsupported version',
-    JSON.stringify({ ...defaultSettings, schemaVersion: 5 }),
+    JSON.stringify({ ...defaultSettings, schemaVersion: 6 }),
   ],
 ] as const)(
   'uses defaults for %s without overwriting it before a user change',

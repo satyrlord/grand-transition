@@ -17,7 +17,7 @@ import {
 } from '../../src/persistence/storage-port';
 
 describe('settings codec', () => {
-  test('migrates a literal shipped version 3 document and writes version 4 on the next change', () => {
+  test('migrates a literal shipped version 3 document and writes version 5 on the next change', () => {
     const source = {
       schemaVersion: 3, masterVolume: 0.55, musicVolume: 0.45,
       effectsVolume: 0.35, speechVolume: 0.25, speechEnabled: false,
@@ -28,12 +28,51 @@ describe('settings codec', () => {
     const storage = createMemoryStorage({ [settingsStorageKey]: serialized });
     const repository = new SettingsRepository(storage);
     expect(repository.snapshot().settings).toEqual({
-      ...source, schemaVersion: 4, basePointsMultiplier: 3,
+      ...source, schemaVersion: 5, basePointsMultiplier: 3, tutorialMode: false,
     });
     expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: serialized });
     repository.replace({ ...repository.snapshot().settings, basePointsMultiplier: 5 });
     expect(new SettingsRepository(storage).snapshot().settings).toEqual({
-      ...source, schemaVersion: 4, basePointsMultiplier: 5,
+      ...source, schemaVersion: 5, basePointsMultiplier: 5, tutorialMode: false,
+    });
+  });
+
+  test('migrates a literal shipped version 4 document with tutorial off and preserves its preferences', () => {
+    const source = {
+      schemaVersion: 4, masterVolume: 0.55, musicVolume: 0.45,
+      effectsVolume: 0.35, speechVolume: 0.25, speechEnabled: false,
+      gpuVoices: false, speechVoiceUri: 'retired:voice', speechRate: 1.2,
+      turnTimerSeconds: null, autoComplete: false, basePointsMultiplier: 5,
+    };
+    const serialized = JSON.stringify(source);
+    const storage = createMemoryStorage({ [settingsStorageKey]: serialized });
+    const repository = new SettingsRepository(storage);
+    expect(repository.snapshot().settings).toEqual({
+      ...source, schemaVersion: 5, tutorialMode: false,
+    });
+    expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: serialized });
+    repository.replace({ ...repository.snapshot().settings, tutorialMode: true });
+    expect(new SettingsRepository(storage).snapshot().settings).toEqual({
+      ...source, schemaVersion: 5, tutorialMode: true,
+    });
+  });
+
+  test.each([1, 2, 3, 4])('rejects a tutorial field in historical version %s', (version) => {
+    expect(decodeSettings(JSON.stringify({ ...historicalSettings(version), tutorialMode: true }))).toEqual({
+      ok: false, code: 'invalid-data', path: 'tutorialMode',
+    });
+  });
+
+  test.each([false, true])('round-trips tutorial mode %s', (tutorialMode) => {
+    const document = settings({ tutorialMode });
+    expect(decodeSettings(encodeSettings(document))).toEqual({ ok: true, value: document });
+  });
+
+  test('defaults tutorial off and requires the field in version 5', () => {
+    expect(defaultSettings.tutorialMode).toBe(false);
+    const { tutorialMode: _, ...source } = defaultSettings;
+    expect(decodeSettings(JSON.stringify(source))).toEqual({
+      ok: false, code: 'invalid-data', path: 'tutorialMode',
     });
   });
 
@@ -51,8 +90,9 @@ describe('settings codec', () => {
     expect(decodeSettings(encodeSettings(document))).toEqual({ ok: true, value: document });
   });
 
-  test('requires the multiplier in version 4', () => {
-    const { basePointsMultiplier: _, ...source } = defaultSettings;
+  test.each([4, 5])('requires the multiplier in version %s', (version) => {
+    const source = historicalSettings(version);
+    delete source.basePointsMultiplier;
     expect(decodeSettings(JSON.stringify(source))).toEqual({
       ok: false, code: 'invalid-data', path: 'basePointsMultiplier',
     });
@@ -60,7 +100,7 @@ describe('settings codec', () => {
 
   test.each([2,3,4])('preserves an explicit GPU opt-out in version %s', (schemaVersion) => {
     const stored=historicalSettings(schemaVersion, {gpuVoices:false});
-    expect(decodeSettings(JSON.stringify(stored))).toEqual({ok:true,value:{...stored,schemaVersion:4,basePointsMultiplier:3}});
+    expect(decodeSettings(JSON.stringify(stored))).toEqual({ok:true,value:{...stored,schemaVersion:5,basePointsMultiplier:3,tutorialMode:false}});
   });
   test.each([1,2,3,4])('preserves an explicit speech opt-out in version %s', (schemaVersion) => {
     const stored=historicalSettings(schemaVersion, {speechEnabled:false});
@@ -70,7 +110,7 @@ describe('settings codec', () => {
     const source = historicalSettings(version, {
       speechRate: 1.2, speechEnabled: true, speechVoiceUri: 'retired:voice' });
     const migrated = decodeSettings(JSON.stringify(source));
-    expect(migrated).toEqual({ok:true,value:{...source,schemaVersion:4,speechRate:1,gpuVoices:true,basePointsMultiplier:3}});
+    expect(migrated).toEqual({ok:true,value:{...source,schemaVersion:5,speechRate:1,gpuVoices:true,basePointsMultiplier:3,tutorialMode:false}});
     if (!migrated.ok) throw new Error('Migration failed.');
     const storage = createMemoryStorage({[settingsStorageKey]:JSON.stringify(source)});
     const repository = new SettingsRepository(storage);
@@ -98,7 +138,7 @@ describe('settings codec', () => {
     };
     const storage = createMemoryStorage({ [settingsStorageKey]: JSON.stringify(source) });
     const repository = new SettingsRepository(storage);
-    const migrated = { ...source, schemaVersion: 4, gpuVoices: true, basePointsMultiplier: 3 };
+    const migrated = { ...source, schemaVersion: 5, gpuVoices: true, basePointsMultiplier: 3, tutorialMode: false };
     expect(repository.snapshot().settings).toEqual(migrated);
     expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: JSON.stringify(source) });
     repository.replace({ ...repository.snapshot().settings, gpuVoices: true });
@@ -156,6 +196,9 @@ describe('settings codec', () => {
     ['speechRate', 1.15],
     ['turnTimerSeconds', 20],
     ['autoComplete', 'true'],
+    ['tutorialMode', 'true'],
+    ['tutorialMode', 1],
+    ['tutorialMode', null],
     ['basePointsMultiplier', 0],
     ['basePointsMultiplier', 6],
     ['basePointsMultiplier', 1.5],
@@ -194,7 +237,7 @@ describe('settings codec', () => {
       path: '$',
     });
     expect(
-      decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion: 5 })),
+      decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion: 6 })),
     ).toEqual({
       ok: false,
       code: 'unsupported-version',
@@ -232,6 +275,7 @@ describe('settings repository', () => {
       turnTimerSeconds: 15,
       autoComplete: false,
       basePointsMultiplier: 5,
+      tutorialMode: true,
     });
 
     expect(repository.snapshot()).toEqual({
@@ -252,7 +296,7 @@ describe('settings repository', () => {
     ['invalid-data', '{broken'],
     [
       'unsupported-version',
-      JSON.stringify({ ...defaultSettings, schemaVersion: 5 }),
+      JSON.stringify({ ...defaultSettings, schemaVersion: 6 }),
     ],
   ] as const)(
     'keeps %s bytes until the user changes a setting',
@@ -381,6 +425,7 @@ function historicalSettings(
   changes: Partial<SettingsDocument> = {},
 ): Record<string, unknown> {
   const source: Record<string, unknown> = { ...defaultSettings, ...changes, schemaVersion };
+  if (schemaVersion < 5) delete source.tutorialMode;
   if (schemaVersion < 4) delete source.basePointsMultiplier;
   if (schemaVersion === 1) delete source.gpuVoices;
   return source;

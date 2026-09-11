@@ -688,10 +688,24 @@ Phrase color coding is on, one text layer blends white with the role color at
 40 percent for common phrases. It uses 50 percent for uncommon phrases and 60
 percent for rare phrases. The card background does not change.
 
-**The Get Good Rule.** The arena reports public outcomes with exact values. It
+Tutorial mode is optional and defaults off in main-menu Settings. When enabled,
+every grammar-accepted next visible phrase uses a restrained green inset glow
+with a 2400-millisecond opacity pulse. Role colors, text, geometry, and focus
+outlines stay intact. Reduced motion keeps the glow steady. Forced colors uses
+an inset dotted system-color outline. No glow appears during blocked drafting
+or for continuation cards. Milestones 016 and 020 own this behavior.
+
+In forced colors, shared and private phrase surfaces use Canvas with CanvasText
+or disabled GrayText. Both player records use system surfaces and text without
+dimming filters. The active-turn badge uses Highlight and HighlightText; phrase
+focus uses a separate outer Highlight outline. Pride meters use Highlight for
+the filled value on Canvas.
+
+The arena reports public outcomes with exact values. It
 reveals each selected character's weakness names before play and calls out an
-applied weakness during scoring. It does not teach rules, identify the next
-legal role, explain how weaknesses work, recommend cards, expose disabled-action
+applied weakness during scoring. Beyond the optional grammar indication, it
+does not identify the next legal role, explain how weaknesses work, recommend
+tactics, expose disabled-action
 reasons, or add tutorial progress.
 
 ### Speech, perimeter actions, and stage status

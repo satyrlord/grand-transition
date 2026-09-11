@@ -129,6 +129,16 @@ export class GrandTransitionSettings extends LitElement {
                   .checked=${this.settings.autoComplete}
                   @change=${this.changeBoolean} />
               </label>
+              <label class="settings-toggle">
+                <span>${msg('Tutorial')}</span>
+                <input type="checkbox" name="tutorialMode"
+                  .checked=${this.settings.tutorialMode}
+                  aria-describedby="settings-tutorial-note"
+                  @change=${this.changeBoolean} />
+              </label>
+              <p id="settings-tutorial-note" class="settings-note">
+                ${msg('All grammatically valid next choices glow green.')}
+              </p>
             </fieldset>
             <fieldset class="settings-group">
               <legend>${msg('Sound')}</legend>
@@ -251,7 +261,7 @@ export class GrandTransitionSettings extends LitElement {
   private readonly changeBoolean = (event: Event): void => {
     const control = event.currentTarget as HTMLInputElement;
     this.changeSetting(
-      control.name as 'speechEnabled' | 'gpuVoices' | 'autoComplete',
+      control.name as 'speechEnabled' | 'gpuVoices' | 'autoComplete' | 'tutorialMode',
       control.checked,
     );
   };

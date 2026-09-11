@@ -41,7 +41,7 @@ test('restores the previous saved speech default to 1.00 times and persists the 
   await expect(page.locator('output[for="speechRate"]')).toHaveText('1.00×');
   await page.getByLabel('Music volume').fill('0.2');
   await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!),settingsKey)).toMatchObject({
-    schemaVersion:4,basePointsMultiplier:3,speechRate:1,musicVolume:0.2,speechVoiceUri:'retired:voice',
+    schemaVersion:5,basePointsMultiplier:3,tutorialMode:false,speechRate:1,musicVolume:0.2,speechVoiceUri:'retired:voice',
   });
   await page.reload(); await page.getByRole('button',{name:'Settings'}).click();
   await expect(page.locator('#speechRate')).toHaveValue('1');
@@ -86,7 +86,8 @@ test('settings persist in the production build and fit every supported viewport'
 
   const stored = await page.evaluate((key) => localStorage.getItem(key), settingsKey);
   expect(JSON.parse(stored!)).toEqual({
-    schemaVersion: 4,
+    schemaVersion: 5,
+    tutorialMode: false,
     basePointsMultiplier: 5,
     gpuVoices: false,
     masterVolume: 0.55,
@@ -202,7 +203,7 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   await expect(gpu).toBeDisabled();
   expect(gpuRequests).toEqual([]);
   const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), settingsKey);
-  expect(stored).toMatchObject({ schemaVersion: 4, gpuVoices: false, speechEnabled: false });
+  expect(stored).toMatchObject({ schemaVersion: 5, tutorialMode: false, gpuVoices: false, speechEnabled: false });
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });

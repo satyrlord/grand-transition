@@ -53,6 +53,8 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   presentation, and persistent terminal victory. It includes title-only local
   history and settings, safe settings persistence fallback, and the blocking
   landscape viewport contract.
+- Main-menu Settings includes optional Tutorial mode, off by default. It
+  highlights all grammar-accepted next visible phrases without changing rules.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.

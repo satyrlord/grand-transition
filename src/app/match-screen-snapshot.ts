@@ -49,6 +49,7 @@ export type MatchCardView = Readonly<{
   disabledReason: string | null;
   action: MatchCardAction;
   previewText: string;
+  grammarAccepted: boolean;
 }>;
 
 export type MatchPlayerView = Readonly<{
@@ -595,6 +596,7 @@ function availableCard(
       ownership,
       state: 'legal',
       action: 'select',
+      grammarAccepted: false,
       previewText: msg(
         `${construction.previewText || 'Empty sentence'} — continue in the next round.`,
       ),
@@ -602,6 +604,7 @@ function availableCard(
       disabledReason: null,
     });
   }
+  const preview = legalPreview(state, activePlayerId, phrase);
   return createCardView({
     slotIndex,
     reference,
@@ -609,8 +612,8 @@ function availableCard(
     ownership,
     state: 'legal',
     action: 'select',
-    previewText:
-      legalPreview(state, activePlayerId, phrase) || construction.previewText,
+    previewText: preview.text || construction.previewText,
+    grammarAccepted: preview.accepted,
     knownWeaknesses,
     disabledReason: null,
   });
@@ -625,6 +628,7 @@ function createCardView(
     state: MatchCardState;
     action: MatchCardAction;
     previewText: string;
+    grammarAccepted: boolean;
     knownWeaknesses: readonly string[];
     disabledReason: string | null;
   }>,
@@ -645,6 +649,7 @@ function createCardView(
     disabledReason: config.disabledReason,
     action: config.action,
     previewText: config.previewText,
+    grammarAccepted: config.grammarAccepted,
   };
 }
 
@@ -669,6 +674,7 @@ function emptyCard(
     disabledReason: msg('This slot is empty.'),
     action: null,
     previewText: '',
+    grammarAccepted: false,
   };
 }
 
@@ -676,7 +682,7 @@ function legalPreview(
   state: MatchState,
   activePlayerId: string,
   phrase: Phrase,
-): string {
+): Readonly<{ accepted: boolean; text: string }> {
   const player = state.draft!.playerStates[activePlayerId]!;
   const result = englishGrammarAdapter.analyze({
     steps: [
@@ -689,9 +695,10 @@ function legalPreview(
     subjectNumber: player.subjectNumber,
     objectNumber: player.objectNumber,
   });
-  return result.accepted
-    ? result.analysis.publicText
-    : player.construction.previewText;
+  return {
+    accepted: result.accepted,
+    text: result.accepted ? result.analysis.publicText : player.construction.previewText,
+  };
 }
 
 function latestPublicSentence(

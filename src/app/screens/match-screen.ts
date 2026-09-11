@@ -41,6 +41,7 @@ export class GrandTransitionMatch extends LitElement {
     pauseMode: { attribute: false },
     turnTimerSeconds: { attribute: false },
     autoComplete: { attribute: false },
+    tutorialMode: { attribute: false },
     phraseColorCoding: { attribute: false },
     musicEnabled: { attribute: false },
     voicesEnabled: { attribute: false },
@@ -54,6 +55,7 @@ export class GrandTransitionMatch extends LitElement {
   declare pauseMode: MatchPauseMode;
   declare turnTimerSeconds: TurnTimerSeconds;
   declare autoComplete: boolean;
+  declare tutorialMode: boolean;
   declare phraseColorCoding: boolean;
   declare musicEnabled: boolean;
   declare voicesEnabled: boolean;
@@ -81,6 +83,7 @@ export class GrandTransitionMatch extends LitElement {
     this.pauseMode = 'running';
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
+    this.tutorialMode = false;
     this.phraseColorCoding = true;
     this.musicEnabled = true;
     this.voicesEnabled = false;
@@ -855,11 +858,16 @@ export class GrandTransitionMatch extends LitElement {
 
   private renderCard(card: MatchCardView): TemplateResult {
     const empty = !card.reference;
+    const tutorialChoice = this.tutorialMode && card.grammarAccepted &&
+      card.action !== null && !this.commandPending && !this.thinking &&
+      this.pauseMode === 'running' && !this.presentation &&
+      !this.snapshot?.roundReview && !this.snapshot?.victory;
     const details = [
       card.role,
       card.ownership,
       card.stateLabel,
       card.disabledReason,
+      tutorialChoice ? msg('Grammatically valid next choice') : null,
       card.knownWeaknesses.length > 0
         ? `Weakness: ${card.knownWeaknesses.join(', ')}`
         : null,
@@ -889,6 +897,7 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-source=${card.reference!.source}
                 data-card-state=${card.state}
                 data-rarity=${card.rarity}
+                data-tutorial=${tutorialChoice ? 'true' : nothing}
                 aria-label=${accessibleLabel}
                 ?disabled=${
                   card.action === null || this.commandPending || this.thinking

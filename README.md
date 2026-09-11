@@ -84,7 +84,11 @@ Play offers a Scoring multiplier from ×1 through ×5, defaulting to ×3.
 It controls `5 + (compatibility × multiplier)` for both players in each new
 match. Weakness and combo rules remain separate. Replays retain their match's
 multiplier, and historical replays retain their original scoring.
-Local scoring, sound, speech, timer, and Auto-complete settings use a strict
+The main-menu Settings modal has a `Tutorial` checkbox, off by default.
+It gives every grammatically valid next shared or visible private phrase a
+subtle green pulse. Reduced motion keeps the glow steady. Tutorial mode does
+not change the rules or prevent mistakes.
+Local scoring, sound, speech, timer, Auto-complete, and Tutorial settings use a strict
 versioned document and browser storage with a session memory fallback. Single
 player uses the seeded Local Radio Caller, Party Strategist, and Palace
 Operator AI policies. The local nine-rung ladder persists its exact opponents,
