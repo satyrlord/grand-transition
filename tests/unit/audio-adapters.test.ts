@@ -19,9 +19,18 @@ function audioHarness() {
       let curveStart: number | null = null;
       let curveEnd = 0;
       const parameter = { value: 1, curves: [] as Float32Array[],
-        setValueAtTime(value: number) { this.value = value; },
+        setValueAtTime(value: number) {
+          if (curveStart !== null && context.currentTime < curveEnd) {
+            throw new DOMException("Can't add events during a curve event", 'NotSupportedError');
+          }
+          this.value = value;
+        },
         cancelScheduledValues: vi.fn((startTime: number) => {
-          if (curveStart !== null && curveStart >= startTime) curveStart = null;
+          // A value curve's event time is its start time, so a curve that has
+          // already begun stays active, exactly as Firefox keeps it.
+          if (curveStart !== null && curveStart >= startTime && curveStart > context.currentTime) {
+            curveStart = null;
+          }
         }),
         setValueCurveAtTime(values: Float32Array, startTime: number, duration: number) {
           if (curveStart !== null && startTime < curveEnd) {
@@ -122,8 +131,9 @@ describe('audio adapters', () => {
       expect(incoming[index]! ** 2 + outgoing[index]! ** 2).toBeCloseTo(1, 6);
     }
     nodes[0]!.onended!();
+    context.currentTime += 1;
     audio.setScene(null);
-    expect(nodes[1]!.stop).toHaveBeenCalledExactlyOnceWith(11.3);
+    expect(nodes[1]!.stop).toHaveBeenCalledExactlyOnceWith(12.3);
     nodes[1]!.onended!();
     expect(nodes.every((node) => node.disconnect.mock.calls.length === 1)).toBe(true);
     audio.dispose();
@@ -171,14 +181,20 @@ describe('audio adapters', () => {
     audio.setScene('transition-era-television-studio');
     const fade = params[3]!.curves.at(-1)!;
     expect(fade[0]).toBeCloseTo(Math.sin(0.05 / 0.3 * Math.PI / 2));
-    expect(params[3]!.cancelScheduledValues).toHaveBeenLastCalledWith(0);
+    // The interrupted fade-in curve cannot be removed, and Firefox rejects any
+    // event scheduled during it, so the replacement fade starts when it ends.
+    expect(params[3]!.cancelScheduledValues).toHaveBeenLastCalledWith(10.3);
+    expect(nodes[0]!.stop).toHaveBeenCalledOnce();
+    expect(nodes[0]!.stop.mock.calls[0]![0]).toBeCloseTo(10.6, 6);
     context.currentTime += 0.05;
     audio.setScene('menu');
     context.currentTime += 0.05;
     audio.setScene(null);
     for (const node of nodes) {
       expect(node.stop).toHaveBeenCalledOnce();
-      expect(node.stop.mock.calls[0]![0]).toBeLessThanOrEqual(context.currentTime + 0.3);
+      expect(node.stop.mock.calls[0]![0]).toBeLessThanOrEqual(
+        context.currentTime + 2 * 0.3,
+      );
       node.onended!();
       expect(node.disconnect).toHaveBeenCalledOnce();
     }

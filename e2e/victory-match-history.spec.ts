@@ -79,12 +79,14 @@ test('victory and populated history fit every supported landscape viewport', asy
     const key = 'grand-transition.match-history.v1';
     const document = JSON.parse(localStorage.getItem(key)!) as {
       entries: Array<{
-        replay: { schemaVersion: number };
-        matchLog: { schemaVersion: number; sentences?: unknown };
+        replay: { schemaVersion: number; setup: { basePointsMultiplier?: number } };
+        matchLog: { schemaVersion: number; setup: { basePointsMultiplier?: number }; sentences?: unknown };
       }>;
     };
     document.entries[0]!.replay.schemaVersion = 2;
     document.entries[0]!.matchLog.schemaVersion = 2;
+    delete document.entries[0]!.replay.setup.basePointsMultiplier;
+    delete document.entries[0]!.matchLog.setup.basePointsMultiplier;
     delete document.entries[0]!.matchLog.sentences;
     localStorage.setItem(key, JSON.stringify(document));
   });

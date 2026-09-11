@@ -7,7 +7,10 @@ import { basicScoringBalance } from '../src/content/basic-scoring-balance';
 import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle';
 import { loadGameContent } from '../tools/load-game-content';
 
-test.setTimeout(300_000);
+// The nine-rung persistence case plays the fixed-seed ladder until it wins nine
+// rungs, which needs up to twenty-one full matches (about 4.5 minutes alone).
+// The budget covers that fixed workload when a parallel worker shares the CPU.
+test.setTimeout(600_000);
 
 const { englishGameLocale, sampleContent } = loadGameContent();
 const matchContext: MatchEngineContext = {

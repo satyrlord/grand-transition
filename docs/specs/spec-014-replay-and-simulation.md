@@ -68,7 +68,7 @@ Local replay and match-log exports contain seed, setup, round count,
 selections, breakdowns, combo and weakness events, continuations, comebacks,
 and winner. They contain no personal data and are never sent remotely.
 
-Replay versions 1 through 5 use normalized JSON with these fields in order:
+Replay versions 1 through 6 use normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
 inputs. Dealt private cards and derived state are regenerated from the seed.
@@ -76,12 +76,12 @@ Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, the matching replay
 schema version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, and winner. Versions 2 through 5
+breakdowns, public rule events, and winner. Versions 2 through 6
 logs also contain each player's rendered public sentence and ordered used phrases for
 every round.
 Each used phrase keeps its stable identifier, rendered text, and active or
 carried source. Older version 1 and version 2 logs without this optional public
-sentence record remain valid. Versions 3 through 5 logs require the complete
+sentence record remain valid. Versions 3 through 6 logs require the complete
 public sentence record. The log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
@@ -97,8 +97,17 @@ before weakness and noun-combo multipliers, as specified in Milestone 010.
 Version 5 retains version 4 arithmetic and uses the neutral phrase catalog:
 neutral phrases have empty tags, and neutral identifiers replace themed
 identifiers on standard conjunctions and neutral relation families.
-New replays and match logs use version 5. Decoding and replaying versions 1
-through 3 selects each version's original scoring balance. Versions 1 through 4
+Version 6 records `basePointsMultiplier` in setup as an integer from 1 through
+5. The field is required for version 6 replay and match-log documents. Both
+players use this captured value. Invalid or missing values return
+`invalid-replay`. Version 6 uses version 5 phrase semantics and all other
+version 4 arithmetic. Versions 4 and 5 always use multiplier 3, regardless of
+the current settings or caller-provided balance. Their normalized documents
+remain unchanged. New replays and match logs use version 6.
+Decoding and replaying versions 1
+through 3 selects each version's original scoring balance. Development simulations
+with an explicitly supplied historical balance export that historical replay
+version; current-balance simulations export version 6. Versions 1 through 4
 restore the pre-neutral phrase identifiers, tags, locale keys, agreement keys,
 tense families, and scene and character pool references before setup and replay.
 The compatibility mapping preserves phrase order so seed-driven draws and
@@ -111,9 +120,9 @@ Missing or invalid fields return `invalid-replay`. An unknown version returns
 
 `tests/fixtures/replay-v1-scoring.json` is the retained
 version 1 source fixture for the step to version 2. Focused replay tests also
-retain the version 2 scoring result after version 5 becomes current. Encoding
+retain the version 2 scoring result after version 6 becomes current. Encoding
 preserves the supplied supported version and never relabels older commands as
-version 5. Focused tests also preserve modifier-bearing version 3 scores.
+version 6. Focused tests also preserve modifier-bearing version 3 scores.
 `tests/fixtures/replay-v4-neutral-scoring.json` retains the version 4 commands,
 renamed conjunction selections, and weakness matches from now-neutral phrases.
 
@@ -131,9 +140,11 @@ Milestone 002 threshold remains 70 percent.
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
   normalized bytes and an exact final state. Version 1, version 2, and version 3
-  scoring fixtures replay with their original resolutions after version 5 becomes
+  scoring fixtures replay with their original resolutions after version 6 becomes
   current. The retained version 4 fixture preserves historical phrase identifiers,
-  neutral-phrase weakness matches, scores, and normalized bytes.
+  neutral-phrase weakness matches, scores, and normalized bytes. Version 5
+  retains multiplier 3. Version 6 reproduces each selectable multiplier even
+  when the current settings or supplied balance differ.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID

@@ -122,13 +122,14 @@ must not mutate state, consume randomness, or enter command history.
 
 ## Phase 1: Settings, replay, and history compatibility
 
-Extend the strict settings document to version 4 with separate
+Extend the strict settings document to version 5 with separate
 `interfaceLocale: 'en' | 'ro-RO'` and `gameLocale: 'en' | 'ro-RO'` fields.
 Migrate real version 1 and 2 fixtures through the Milestone 020 version 3
 migration, including its speech-rate correction and GPU preference handling.
-Then migrate version 3 to version 4 by setting both locale fields to `en`.
+Migrate version 3 through the Milestone 020 version 4 multiplier addition.
+Then migrate version 4 to version 5 by setting both locale fields to `en`.
 Preserve every other value, including the retained speech voice URI and GPU
-voice preference. Unknown locale values
+voice preference and base points multiplier. Unknown locale values
 return `invalid-data`; unknown schema versions return `unsupported-version`.
 Use the existing defaults and storage fallback without overwriting invalid
 stored data until the next explicit setting change. Translate the existing
@@ -203,8 +204,8 @@ The new verifier paths below are implementation targets, not existing evidence.
   `npm run content:validate`, and `tests/unit/romanian-localization.test.ts`.
 - **AC-030-02:** Both drop-downs default to English and independently preserve
   all four language combinations after selection and reload. Changing either
-  leaves the other unchanged. Stepwise migration through version 3 and then to
-  version 4 sets both locale fields to English.
+  leaves the other unchanged. Stepwise migration through versions 3 and 4 to
+  version 5 sets both locale fields to English and preserves the base points multiplier.
   Invalid values in either field, unknown versions, and blocked/quota storage
   match this contract. Verifiers: `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.

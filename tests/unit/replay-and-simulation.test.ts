@@ -2,7 +2,9 @@ import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
 import {
   basicScoringBalance,
+  scoringBalanceForMultiplier,
   legacyBasicScoringBalance,
+  legacyVersion2BasicScoringBalance,
   legacyVersion3BasicScoringBalance,
 } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
@@ -63,12 +65,41 @@ describe('versioned replay and local match-log codecs', () => {
     context,
   );
 
+  test.each([1, 2, 3, 4, 5] as const)('captures multiplier %s and replays independently of the current balance', (multiplier) => {
+    const match = simulateMatch(20_260_823,
+      { ...createSimulationSetup(sampleContent), basePointsMultiplier: multiplier }, context);
+    expect(match.replay.setup.basePointsMultiplier).toBe(multiplier);
+    expect(match.matchLog.setup.basePointsMultiplier).toBe(multiplier);
+    const replayed = replayMatch(match.replayBytes, { ...context, balance: scoringBalanceForMultiplier(5) });
+    expect(replayed.ok).toBe(true);
+    if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
+  });
+
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid version 6 multiplier %s in replay and log', (multiplier) => {
+    for (const [document, decode] of [
+      [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
+    ] as const) {
+      expect(decode(normalizedJson({ ...document, setup: { ...document.setup, basePointsMultiplier: multiplier } })))
+        .toEqual({ ok: false, code: 'invalid-replay' });
+    }
+  });
+
+  test('version 5 keeps its original multiplier when the current balance changes', () => {
+    const setup = { ...completed.replay.setup, basePointsMultiplier: undefined };
+    const bytes = encodeReplay({ ...completed.replay, schemaVersion: 5, setup });
+    const normal = replayMatch(bytes, context);
+    const changed = replayMatch(bytes, { ...context, balance: scoringBalanceForMultiplier(1) });
+    expect(normal.ok).toBe(true);
+    expect(changed).toEqual(normal);
+    if (changed.ok) expect(changed.normalized).toBe(bytes);
+  });
+
   test('normalizes, decodes, re-encodes, and reproduces an exact final state', () => {
     const decoded = decodeReplay(completed.replayBytes);
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(5);
+    expect(decoded.value.schemaVersion).toBe(6);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -167,6 +198,20 @@ describe('versioned replay and local match-log codecs', () => {
     }
   });
 
+  test.each([
+    legacyBasicScoringBalance, legacyVersion2BasicScoringBalance, legacyVersion3BasicScoringBalance,
+  ])('simulates historical balance version $version from the current catalog', (balance) => {
+    const match = simulateMatch(20_260_823, createSimulationSetup(sampleContent), { ...context, balance });
+    const prepared = simulateMatch(20_260_823, createSimulationSetup(sampleContent),
+      legacyPhraseReplayContext({ ...context, balance }));
+    expect(match.replay.schemaVersion).toBe(balance.version);
+    expect(match.replayBytes).toBe(prepared.replayBytes);
+    expect(match.finalState).toEqual(prepared.finalState);
+    const replayed = replayMatch(match.replayBytes, context);
+    expect(replayed.ok).toBe(true);
+    if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
+  });
+
   test('version 3 replays retain scores for sentences with modifiers', () => {
     const legacyContext = legacyPhraseReplayContext({ ...context, balance: legacyVersion3BasicScoringBalance });
     const legacy = simulateMatch(20_260_823, createSimulationSetup(sampleContent), legacyContext,
@@ -191,7 +236,7 @@ describe('versioned replay and local match-log codecs', () => {
 
   test('version 4 retains neutral phrase weaknesses, connector IDs, and normalized commands', () => {
     const bytes = normalizedJson(version4ReplayFixture);
-    const replayed = replayMatch(bytes, context);
+    const replayed = replayMatch(bytes, { ...context, balance: scoringBalanceForMultiplier(5) });
     expect(replayed.ok).toBe(true);
     if (!replayed.ok) return;
     expect(replayed.normalized).toBe(bytes);
@@ -251,7 +296,8 @@ describe('versioned replay and local match-log codecs', () => {
     });
     expect(
       decodeMatchLog(
-        normalizedJson({ ...withoutSentences, schemaVersion: 2 }),
+        normalizedJson({ ...withoutSentences, schemaVersion: 2,
+          setup: { ...withoutSentences.setup, basePointsMultiplier: undefined } }),
       ),
     ).toMatchObject({ ok: true });
   });

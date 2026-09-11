@@ -1,4 +1,4 @@
-import type { BasicScoringBalance } from '../content/basic-scoring-balance';
+import type { BasePointsMultiplier, BasicScoringBalance } from '../content/basic-scoring-balance';
 import type {
   ComboChainState,
   ComboFinisherScore,
@@ -56,6 +56,7 @@ export type MatchSetup = Readonly<{
   timerSeconds: MatchTimerSeconds;
   speechEnabled: boolean;
   privacyEnabled: boolean;
+  basePointsMultiplier?: BasePointsMultiplier;
 }>;
 
 export type MatchPlayerState = MatchConfiguredPlayer &
@@ -201,6 +202,7 @@ export type MatchSetupRequest = Readonly<{
   aiDifficulty?: string | null;
   speechEnabled?: boolean;
   privacyEnabled?: boolean;
+  basePointsMultiplier?: BasePointsMultiplier;
   openingPlayerIndex?: 0 | 1;
 }>;
 
@@ -222,6 +224,8 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     timerSeconds: 30,
     speechEnabled: request.speechEnabled ?? false,
     privacyEnabled: request.privacyEnabled ?? true,
+    ...(request.basePointsMultiplier !== undefined
+      ? { basePointsMultiplier: request.basePointsMultiplier } : {}),
   };
   const playerStates = Object.fromEntries(
     request.players.map((player) => [player.playerId, resetPlayer(player)]),

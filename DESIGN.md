@@ -287,8 +287,15 @@ navy, brass, and direct stage language as active play. The match remains the
 only visible surface during play. Victory keeps the final arena visible and
 returns to the title only after an explicit action. The title-only match-history
 modal uses the same framed broadcast record and keeps technical data in a named
-scroll region. The title-only Settings modal groups Sound, Speech, and Play
-controls in the same square broadcast record. Pause and unsupported viewport
+scroll region. The title-only Settings modal uses three open columns in
+reading order: Play, Sound, and Speech. Brass heading rules separate the
+groups within one square navy record. Play leads with five scoring-multiplier
+choices and keeps timer and Auto-complete nearby. Ordinary speech controls
+precede GPU voices and its associated help. Shared voice privacy text and
+credits occupy a full-width footer. The header and Close remain visible when
+the body scrolls. Selected choices retain their brass fill and inset marker
+during hover, with a separate keyboard focus ring. Forced colors uses system
+selection and focus colors. Pause and unsupported viewport
 states replace the active surface
 with a centered transmission slate that exposes no game facts.
 

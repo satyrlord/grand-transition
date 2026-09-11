@@ -467,15 +467,19 @@
   }
 
   .settings-dialog {
+    --settings-space-tight: 0.5rem;
+    --settings-space-control: 1rem;
+    --settings-space-section: 1.5rem;
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: auto auto auto minmax(0, 1fr);
-    width: min(64rem, calc(100vw - 2rem));
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--settings-space-section);
+    width: min(72rem, calc(100vw - 2rem));
     max-height: calc(100svh - 2rem);
-    padding: clamp(0.85rem, 1.7vw, 1.25rem);
+    padding: clamp(1.25rem, 2.5vw, 2rem);
     overflow: hidden;
     border: 3px double var(--broadcast-brass);
-    background: var(--broadcast-black);
+    background: var(--broadcast-ink);
     color: var(--broadcast-paper-light);
     box-shadow: 0 1.6rem 4rem rgb(0 0 0 / 68%);
     font-family: var(--font-interface);
@@ -487,14 +491,14 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding-block-end: 0.65rem;
+    padding-block-end: var(--settings-space-section);
     border-block-end: 1px solid rgb(228 193 125 / 42%);
   }
 
   .settings-heading h2 {
     margin: 0;
-    color: white;
-    font: 400 clamp(1.6rem, 3vw, 2.45rem) / 1 var(--font-feature);
+    color: var(--broadcast-paper-light);
+    font: 400 clamp(2rem, 3vw, 2.75rem) / 1 var(--font-feature);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     -webkit-text-stroke: 0.8px currentcolor;
@@ -515,30 +519,34 @@
 
   .settings-description {
     margin: 0;
-    padding-block: 0.7rem 0.55rem;
+    margin-block-start: var(--settings-space-tight);
     color: var(--broadcast-paper);
-    font-size: 0.78rem;
+    font-size: 0.8125rem;
     line-height: 1.35;
   }
 
   .settings-note {
     margin: 0;
     color: var(--broadcast-paper);
-    font-size: 0.78rem;
+    font-size: 0.8125rem;
     line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: normal;
     overflow-wrap: anywhere;
   }
 
   .settings-persistence-notice {
     max-width: none;
-    margin-block-end: 0.7rem;
+    margin: 0;
   }
 
   .settings-groups {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--settings-space-section);
     min-height: 0;
+    padding: var(--settings-space-tight);
     overflow: auto;
     scrollbar-color: var(--broadcast-brass) var(--broadcast-ink);
   }
@@ -546,23 +554,19 @@
   .settings-group {
     display: grid;
     align-content: start;
-    gap: 0.68rem;
+    gap: var(--settings-space-control);
     min-width: 0;
     margin: 0;
-    padding: 0.75rem;
-    border: 1px solid rgb(228 193 125 / 42%);
-    background: var(--broadcast-ink);
-  }
-
-  .settings-group--play {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--settings-space-control) 0 0;
+    border: 0;
+    border-block-start: 1px solid var(--broadcast-brass);
+    background: transparent;
   }
 
   .settings-group legend {
-    padding-inline: 0.35rem;
+    padding-inline: 0 var(--settings-space-tight);
     color: var(--broadcast-brass-light);
-    font: 400 1.05rem/1 var(--font-feature);
+    font: 400 1.375rem/1 var(--font-feature);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     -webkit-text-stroke: 0.6px currentcolor;
@@ -571,20 +575,20 @@
   .settings-control,
   .settings-toggle {
     display: grid;
-    gap: 0.38rem;
+    gap: var(--settings-space-tight);
     min-width: 0;
     color: var(--broadcast-paper-light);
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
   }
 
   .settings-toggle {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     min-height: 2.75rem;
-    padding: 0.45rem 0.55rem;
-    border-block: 1px solid rgb(228 193 125 / 24%);
+    padding: var(--settings-space-tight) 0;
+    border-block-end: 1px solid rgb(228 193 125 / 24%);
   }
 
   .settings-toggle input {
@@ -602,6 +606,9 @@
 
   .settings-range-line input {
     width: 100%;
+    min-width: 0;
+    height: 2.75rem;
+    margin: 0;
     accent-color: var(--broadcast-oxblood-bright);
   }
 
@@ -632,12 +639,13 @@
   .settings-options button[aria-pressed='true'] {
     background: var(--broadcast-brass);
     color: var(--broadcast-black);
+    box-shadow: inset 0 -3px 0 var(--broadcast-paper-light);
   }
 
   .settings-close:hover,
   .settings-close:focus-visible,
-  .settings-options button:hover,
-  .settings-options button:focus-visible {
+  .settings-options button[aria-pressed='false']:hover,
+  .settings-options button[aria-pressed='false']:focus-visible {
     border-color: var(--broadcast-paper-light);
     background: var(--broadcast-panel);
   }
@@ -646,9 +654,39 @@
   .settings-options button:focus-visible,
   .settings-control input:focus-visible,
   .settings-toggle input:focus-visible,
+  .settings-dialog a:focus-visible,
   .settings-persistence-notice button:focus-visible {
     outline: 3px solid var(--focus-blue, #77c8ff);
     outline-offset: 3px;
+  }
+
+  .settings-dialog:has(.settings-persistence-notice) {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .settings-options--multiplier {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .settings-options--multiplier button {
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .settings-dialog a {
+    color: var(--broadcast-brass-light);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  .settings-dialog a:hover {
+    color: var(--broadcast-paper-light);
+  }
+
+  .settings-footer {
+    grid-column: 1 / -1;
+    padding-block-start: var(--settings-space-control);
+    border-block-start: 1px solid rgb(228 193 125 / 42%);
   }
 
   .match-history-backdrop {
@@ -1097,17 +1135,26 @@
     .broadcast-channel,
     .status,
     .title-transmission button,
-    .settings-dialog,
-    .settings-group,
       .title-emblem {
       forced-color-adjust: none;
     }
 
+    .settings-dialog,
+    .settings-group {
+      forced-color-adjust: auto;
+    }
+
     .settings-options button[aria-pressed='true'] {
+      forced-color-adjust: none;
       background: Highlight;
       color: HighlightText;
       outline: 2px solid CanvasText;
       outline-offset: -4px;
+    }
+
+    .settings-options button[aria-pressed='true']:focus-visible {
+      outline: 3px solid Highlight;
+      outline-offset: 3px;
     }
   }
 }

@@ -34,16 +34,17 @@ test('selects the manifest AVIF emblem and decodes WebP when AVIF is unsupported
   const image = document.querySelector<HTMLImageElement>('.title-emblem')!;
   expect(image.getAttribute('width')).toBe('640');
   expect(image.getAttribute('height')).toBe('640');
-  await vi.waitFor(() => {
-    expect(image.currentSrc).toContain('.avif');
-    expect(image.complete && image.naturalWidth > 0).toBe(true);
-  });
+  // The title also prepares the GPU voice model, so the emblem's first resource
+  // selection can trail the render. Re-query and allow a real load budget.
+  const loaded = (source: string) => vi.waitFor(() => {
+    const current = document.querySelector<HTMLImageElement>('.title-emblem')!;
+    expect(current.currentSrc).toContain(source);
+    expect(current.complete && current.naturalWidth > 0).toBe(true);
+  }, { timeout: 10_000 });
+  await loaded('.avif');
   const picture = image.parentElement!;
   picture.querySelector<HTMLSourceElement>('[type="image/avif"]')!.type = 'image/unsupported-avif';
-  await vi.waitFor(() => {
-    expect(image.currentSrc).toContain('.webp');
-    expect(image.complete && image.naturalWidth > 0).toBe(true);
-  });
+  await loaded('.webp');
   expect(image.naturalWidth).toBe(640);
   document.body.innerHTML = '';
 });

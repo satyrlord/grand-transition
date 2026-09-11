@@ -333,6 +333,7 @@ function createCompletedReplay(
       timerSeconds: state.setup.timerSeconds,
       speechEnabled: state.setup.speechEnabled,
       privacyEnabled: state.setup.privacyEnabled,
+      basePointsMultiplier: state.setup.basePointsMultiplier ?? 3,
     },
     commands: state.commandHistory as ReplayDocument['commands'],
   };

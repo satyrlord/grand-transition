@@ -1,12 +1,13 @@
 import { describe, expect, test, vi } from 'vitest';
 import { MatchCoordinator, type MatchCommandLog } from '../../src/app/match-coordinator';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
+import { basicScoringBalance, type BasePointsMultiplier } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import { createMatchSetupState, type MatchState } from '../../src/engine/match-lifecycle';
 import { listSimulationOptions } from '../../src/engine/simulation';
 import { createLadderProgress } from '../../src/engine/ladder';
 import { MatchHistoryRepository } from '../../src/persistence/match-history';
 import { LadderProgressRepository } from '../../src/persistence/ladder-progress';
+import { replayMatch } from '../../src/persistence/codecs/replay-codec';
 import { createMemoryStorage } from '../../src/persistence/storage-port';
 
 const context = {
@@ -18,7 +19,7 @@ const identity = {
   settings: { turnTimerSeconds: 30 as const, autoComplete: false, phraseColorCoding: true },
 };
 
-function setup(ai = false): MatchState {
+function setup(ai = false, basePointsMultiplier?: BasePointsMultiplier): MatchState {
   const player = (index: number) => {
       const character = sampleContent.characters[index]!;
       return {
@@ -29,7 +30,7 @@ function setup(ai = false): MatchState {
   };
   const scene = sampleContent.scenes[0]!;
   return createMatchSetupState({
-    schemaVersion: 1, seed: identity.initialSeed,
+    schemaVersion: 1, seed: identity.initialSeed, basePointsMultiplier,
     players: [player(0), player(1)],
     sceneId: scene.id, scenePhraseIds: scene.phrasePool,
     generalPhraseIds: sampleContent.phrases.map(({ id }) => id),
@@ -94,6 +95,26 @@ describe('match coordination', () => {
     const progress = ladder.snapshot().progress;
     if (isLadder) expect(progress!.wins + progress!.losses).toBe(1);
     else expect(progress).toBeNull();
+  });
+
+  test('captures each new match multiplier for both players and saved replays', () => {
+    const { coordinator, history } = harness();
+    for (const multiplier of [1, 5] as const) {
+      let state = coordinator.start(setup(false, multiplier));
+      for (let step = 0; state.phase !== 'results' && step < 2000; step += 1) {
+        const command = listSimulationOptions(state, context)[0]!.command;
+        state = coordinator.apply(state, command, { ...identity, id: `multiplier-${multiplier}` }).state;
+        if (state.phase === 'round-preparation') state = coordinator.continueRound(state, identity.initialSeed);
+      }
+      expect(state.phase).toBe('results');
+      const entry = history.snapshot().entries.find(({ id }) => id === `multiplier-${multiplier}`)!;
+      expect(entry.replay.setup.basePointsMultiplier).toBe(multiplier);
+      const replayed = replayMatch(JSON.stringify(entry.replay), {
+        catalog: sampleContent, locale: englishGameLocale, balance: basicScoringBalance,
+      });
+      expect(replayed.ok).toBe(true);
+      if (replayed.ok) expect(replayed.state.resolutionHistory).toEqual(state.resolutionHistory);
+    }
   });
 
   test('logs a rejected command without state changes or completion writes', () => {

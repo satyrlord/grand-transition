@@ -29,7 +29,8 @@ afterEach(() => {
 
 test('restores every stored setting and applies title changes immediately', async () => {
   const stored: SettingsDocument = Object.freeze({
-    schemaVersion: 3,
+    schemaVersion: 4,
+    basePointsMultiplier: 4,
     gpuVoices: false,
     masterVolume: 0.55,
     musicVolume: 0.45,
@@ -110,11 +111,33 @@ test('GPU voices preserve the preference independently without a Settings loadin
   expect(changed.mock.calls.at(-1)?.[0].detail).toEqual({ ...modal.settings, gpuVoices: false });
 });
 
+test('all five scoring choices persist and start a match with the selected multiplier', async () => {
+  const app = await mountApp();
+  const settings = await openSettings(app);
+  const group = page.getByRole('group', { name: 'Scoring multiplier', exact: true });
+  await expect.element(group.getByRole('button', { name: '×3', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  for (const multiplier of [1, 2, 3, 4, 5] as const) {
+    await group.getByRole('button', { name: `×${multiplier}`, exact: true }).click();
+    await app.updateComplete;
+    await settings.updateComplete;
+    expect(settings.settings.basePointsMultiplier).toBe(multiplier);
+    expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toEqual({
+      ok: true, value: { ...settings.settings, basePointsMultiplier: multiplier },
+    });
+    expect(settings.querySelectorAll('.settings-options--multiplier [aria-pressed="true"]')).toHaveLength(1);
+  }
+  await page.getByRole('checkbox', { name: 'Speech enabled', exact: true }).click();
+  await page.getByRole('button', { name: 'Close', exact: true }).click();
+  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  expect((app as unknown as { matchState: MatchState }).matchState.setup.basePointsMultiplier).toBe(5);
+});
+
 test.each([
   ['malformed data', '{broken'],
   [
     'an unsupported version',
-    JSON.stringify({ ...defaultSettings, schemaVersion: 4 }),
+    JSON.stringify({ ...defaultSettings, schemaVersion: 5 }),
   ],
 ] as const)(
   'uses defaults for %s without overwriting it before a user change',
@@ -224,7 +247,7 @@ test('the Settings modal traps focus, closes with Escape, and restores focus', a
   const close = settings.querySelector<HTMLButtonElement>('.settings-close')!;
   const controls = [
     ...settings.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled]), select:not([disabled])',
+      'button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href]',
     ),
   ];
 
