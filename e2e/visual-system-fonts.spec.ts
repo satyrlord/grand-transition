@@ -28,7 +28,7 @@ for (const fallback of [false, true]) {
     await page.goto('');
     await expect(page.getByRole('heading', { name: 'Grand Transition', exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
-    await page.getByRole('button', { name: 'Set up match', exact: true }).click();
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
     await page.locator('.roster-choice[data-character-id="apartment-block-geopolitician"]').click();
     await page.getByRole('button', { name: 'Start match', exact: true }).click();

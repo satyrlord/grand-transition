@@ -402,7 +402,7 @@ the speech record and common phrase pool.
 
 Both physical moderators sit at the stage center. Keep each complete head
 above the common phrase pool. The pool may cover moderator furniture and the
-lower body. Its background uses 78 percent opacity so furniture remains
+lower body. Its background uses 88 percent opacity so furniture remains
 visible while phrase text stays legible. Keep the foreground standing desks
 in the opponent zones.
 
@@ -621,7 +621,8 @@ combination is implementation evidence, not visual authority.
    text. Its tabular figures own Pride,
    damage, scores, and rounds.
 4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
-   the timer only. Do not use it for any other number or text.
+   the timer and normalized technical-record data only. Do not use it for any
+   other number or text.
 
 The implementation uses `@fontsource/poiret-one`,
 `@fontsource-variable/nunito`, `@fontsource-variable/rubik`, and
@@ -636,7 +637,7 @@ fallback is Cascadia Mono, Consolas, and then monospace.
 
 Verify all four selected families together in the built arena. The
 Art Deco feature family needs English UI coverage only. The timer family needs
-digits and timer punctuation only. The speech and interface families must cover
+digits, timer punctuation, and normalized technical-record data glyphs. The speech and interface families must cover
 localized grammar and phrase content, including Romanian diacritics.
 
 Test uppercase and mixed-case English names, the longest localized speech and

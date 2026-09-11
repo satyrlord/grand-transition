@@ -11,7 +11,7 @@ for (const viewport of [
     await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
     await useFixedBrowserMatchSeed(page);
     await page.goto('');
-    await page.getByRole('button', { name: 'Set up match', exact: true }).click();
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.mouse.move(0, 0);
     await page.evaluate(async () => {
       await document.fonts.ready;

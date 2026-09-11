@@ -1197,7 +1197,7 @@ async function startMatch(
   ) as GrandTransitionApp;
   await app.updateComplete;
 
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   if (sceneId !== 'transition-era-television-studio') {
     const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
     scene.value = sceneId;

@@ -203,7 +203,7 @@ origin; no phrase or audio is uploaded. Preserve the production CSP and subpath.
 
 Piper initializes alongside GPU loading. The main menu shows a styled GPU
 progress indicator while GPU support is checked, assets load, and warmup runs.
-Disable Set up match during these pending states, including initial idle, and
+Disable all three Main Menu mode buttons during these pending states, including initial idle, and
 guard its command. Hide the indicator when speech or GPU voices is off. Keep
 Settings available for opt-out. Readiness hides the indicator and unlocks setup.
 GPU unavailability also unlocks setup and shows a concise Piper fallback notice.

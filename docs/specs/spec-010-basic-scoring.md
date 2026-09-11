@@ -107,7 +107,7 @@ can still activate that multiplier.
 matching completed-history replays.
 The modifier scenario in `e2e/coordinated-copular-complement.spec.ts` verifies
 the production clause receipt and final damage for AC-010-06.
-`tests/unit/replay-and-simulation.test.ts` and
-`npm run simulate -- --seed 20260830 --matches 500` verify AC-010-07.
+`npm test -- tests/unit/replay-and-simulation.test.ts -t "current-catalog 500-match calibration"`
+verifies AC-010-07 with the documented default simulation policy.
 `tests/unit/basic-scoring.test.ts` and
 `e2e/coordinated-copular-complement.spec.ts` verify AC-010-08.

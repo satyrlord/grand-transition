@@ -67,7 +67,7 @@ principal reply.
 
 A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
 three Palace Operator opponents in that order. The ladder selects opponents
-without replacement from the 18 characters other than the player's character. It uses
+without replacement from the other 17 characters in the 18-character catalog. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
 permutation of all six scenes and then repeat.
 
@@ -87,7 +87,8 @@ Syntactically valid progress that names a character or scene outside the current
 playable catalog is also invalid. It produces no progress, reports
 `invalid-data`, preserves the stored bytes, and cannot advance a rung.
 
-Setup adds “Ladder” to Mode. Custom Single player adds Party Strategist and
+The Main Menu offers “Ladder” under Milestone 015. Selecting it creates local
+progress when absent or resumes saved progress. Custom Single Player adds Party Strategist and
 Palace Operator to the existing Difficulty select. Ladder setup keeps the
 player character selectable until the first recorded
 result. It fixes the current opponent and scene from progress.
@@ -101,7 +102,8 @@ opponent, opponent skin, scene, and difficulty.
 A match result uses “Continue ladder” to return to the same
 rung after a loss or the next rung after a win. Abandon returns to the same
 rung without adding a result. The completed state disables match start and
-keeps confirmed Reset available. Its locked opponent stage says “Ladder
+keeps confirmed Reset available. Confirmed Reset creates a fresh Ladder for
+the selected player and stays in Ladder setup. Its locked opponent stage says “Ladder
 complete,” not a prior difficulty.
 
 ## Acceptance criteria

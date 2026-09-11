@@ -17,7 +17,7 @@ for (const scene of ['modern-debate-studio', 'transition-era-television-studio']
       try {
         const page = await context.newPage();
         await page.goto(testInfo.project.use.baseURL!);
-        await page.getByRole('button', { name: 'Set up match' }).click();
+        await page.getByRole('button', { name: 'Multiplayer' }).click();
         await page.getByLabel('Scene').selectOption(scene);
         await page.getByRole('button', { name: 'Start match', exact: true }).click();
         const layers = page.locator('.broadcast-stage-art, .broadcast-stage-foreground');

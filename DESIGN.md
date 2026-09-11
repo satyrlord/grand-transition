@@ -159,8 +159,9 @@ stage surfaces, aged brass, oxblood, television blue, warm paper, and compact
 control-room signals. The title, setup, match, Pause, and compatibility states
 share this broadcast language. Each state keeps its own task hierarchy.
 
-The title is a Curtain Call proscenium with a live wordmark, one decisive setup
-action, and subordinate Settings and match-history actions. Setup is a
+The title is a Curtain Call proscenium with a live wordmark and Single Player,
+Multiplayer, and Ladder actions, plus subordinate Settings and match-history
+actions. Setup is a
 three-part contestant register with two selected
 player stages around a compact roster. The match is one confrontation. The
 scene, characters, sentence construction, speech, status, and actions share the
@@ -215,7 +216,7 @@ glossy model surfaces, realistic portrait finish, or mixed rendering styles.
 
 At the recommended 1920 by 1080 viewport, the title shows a dark painted
 proscenium and a centered dueling-speech emblem. It shows a live GRAND TRANSITION
-wordmark and one vertical brass signal rail. It has one oxblood Set up match action. Channel 3
+wordmark and one vertical brass signal rail. It has a horizontal row of oxblood Single Player, Multiplayer, and Ladder actions. Channel 3
 is an upper-left plaque. The fictional-composite satire disclaimer stays at
 the lower edge.
 
@@ -417,8 +418,9 @@ Pause, and compatibility states.
    selection panels, and compatibility text. Use the bundled 600 weight for
    compact controls and 700 for labels and status. Its tabular figures own
    Pride, damage, scores, and rounds.
-4. **Timer family:** Share Tech Mono owns the timer value only. Do not use it
-   for Pride, damage, scores, rounds, statistics, or body text.
+4. **Timer family:** Share Tech Mono owns the timer value and normalized
+   technical-record data only. Do not use it for Pride, damage, scores, rounds,
+   statistics, or body text.
 
 The design selects all four font families. Verify them together in the built arena.
 The four roles must stay visibly distinct. Do not use outlines or fake weights
@@ -432,7 +434,7 @@ The feature, speech, and interface fallbacks are Arial and then sans-serif.
 The timer fallback is Cascadia Mono, Consolas, and then monospace.
 
 The feature-display family needs English UI coverage only. The timer family
-needs digits and timer punctuation only. The speech and interface families must
+needs digits, timer punctuation, and normalized technical-record data glyphs. The speech and interface families must
 include the glyphs required by localized grammar and phrase content, including
 Romanian diacritics. All selected Web Open Font Format 2 (WOFF2) files must
 render their owned content without synthetic weights, except for the approved
@@ -468,7 +470,7 @@ the interface face for the timer or the timer face for other numbers.
 
 Every functional state fills one landscape viewport. The title uses a centered
 marquee and a vertical signal rail. Setup uses two selected-character stages
-around a central roster, with Mode, Difficulty, and Scene settings plus actions
+around a central roster, with Difficulty and Scene settings plus actions
 on the lower edge. The
 match keeps one integrated arena. Opponents occupy the side thirds. Name and
 Pride frames use the top corners.
@@ -544,9 +546,9 @@ text or state.
 
 The title is a full-viewport dark proscenium with a text-free painted backdrop.
 It has a centered emblem, live wordmark, and brass subtitle rule. It has one
-ready-status plaque and one oxblood `Set up match` button. A dark wash, muted
+ready-status plaque and three oxblood mode buttons. A dark wash, muted
 brass rules, restrained shadows, and low-contrast secondary actions keep the
-wordmark and setup action dominant.
+wordmark and mode actions dominant.
 
 Channel 3 is a small brass
 plaque at the upper left. A double brass perimeter frame and a narrow central
@@ -573,7 +575,7 @@ selection grid, with any future incomplete row centered, and never overlap the m
 settings. The grid scrolls vertically inside its roster region when required.
 The page does not scroll.
 
-Native selects keep mode and scene
+Native selects keep difficulty and scene
 terms in a compact lower register. A nonmodal character dossier appears on
 hover or keyboard focus and stays pinned only after right-click.
 
@@ -635,7 +637,7 @@ of scene height, and center at 20 and 80 percent of scene width. This places
 faces above the studio desks. The speech record occupies the central 32
 percent of scene width and 18 through 34 percent of scene height. Both physical
 moderators sit at the center between speech and the phrase pool. The pool starts
-at 52 percent of scene height and has a 78-percent-opaque dark background. It
+at 52 percent of scene height and has an 88-percent-opaque dark background. It
 can cover moderator furniture, but never a moderator face.
 
 The center axis combines the wide current or preview sentence and nine shared

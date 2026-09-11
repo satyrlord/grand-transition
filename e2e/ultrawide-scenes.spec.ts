@@ -11,7 +11,7 @@ for (const scene of [
   test(`${scene} fills ultrawide viewports without distorting scene layers`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 3424, height: 1427 });
     await page.goto('');
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene').selectOption(scene);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(page.locator('.broadcast-stage-art')).toBeVisible();

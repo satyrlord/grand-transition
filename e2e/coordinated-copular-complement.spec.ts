@@ -47,7 +47,7 @@ for (const scenario of [
     await useFixedBrowserMatchSeed(page, 20_260_901);
     await page.clock.install();
     await page.goto('/grand-transition/');
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
 
     const fixture = await installTargetCards(page, scenario.cards);

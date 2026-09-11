@@ -8,7 +8,7 @@ for (const fixture of [
   test(`${fixture.name} faces inward in setup and match`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 1024, height: 720 });
     await page.goto('');
-    await page.getByRole('button', { name: 'Set up match', exact: true }).click();
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     for (const [index, field] of ['playerOneCharacterId', 'playerTwoCharacterId'].entries()) {
       await page.locator('#' + field).click();
       await page.locator(`.roster-choice[data-character-id="${index === 0 ? fixture.one : fixture.two}"]`).click();

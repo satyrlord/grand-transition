@@ -19,7 +19,7 @@ milestones add artificial intelligence (AI), speech, and saved options when
 their behavior exists.
 
 The title screen shows the generated original game emblem, the live game name,
-one setup action, and the fictional-composite satire disclaimer. It inherits
+three mode actions, and the fictional-composite satire disclaimer. It inherits
 the final match and Pause visual system. Setup uses native controls and prevents
 only invalid combinations.
 Mirror characters are valid. Screens use light DOM.
@@ -44,9 +44,15 @@ never duplicate authoritative state.
 
 ## Screen and setup contract
 
-The shell has `title` and `setup` view states. “Set up match” moves from the
-title to setup without changing game state. “Back” returns to title and restores
-setup values. A valid setup submit emits one typed `start-match` command.
+The shell has `title` and `setup` view states. The Main Menu offers
+“Single Player”, “Multiplayer”, and “Ladder”. Each button emits a typed
+`show-setup` command with mode `ai`, `hotseat`, or `ladder`, respectively,
+and opens setup in that mode. Multiplayer means two people on this device.
+The scene and character builder has no mode selector. “Back” returns to the
+Main Menu and preserves setup values. Selecting a menu mode updates the mode;
+Ladder restores its saved player, opponent, and scene under Milestone 022.
+Changing modes does not delete Ladder progress. Invalid menu modes do not
+navigate or change setup. A valid setup submit emits one typed `start-match` command.
 Milestone 016 owns the rendered match destination.
 
 When both Speech enabled and GPU voices are on, the main menu shows a compact
@@ -54,7 +60,7 @@ brass-and-ink voice loader below its actions during GPU preparation and loading.
 The meter has an accessible name and a numeric value only when download
 progress is known. It uses restrained motion that stops with reduced motion,
 and remains legible in forced colors. Loading does not move the menu actions.
-The native `Set up match` button is disabled until GPU voices are ready or
+All three native mode buttons are disabled until GPU voices are ready or
 unavailable, including the initial pending state. Its command handler also
 rejects activation during that wait. Settings and Match history remain usable.
 Ready removes the loader and enables setup. Unavailable removes the loader,
@@ -71,8 +77,8 @@ A confirmed “Back to menu”
 action from the concealed Pause screen discards the active match and returns to
 title. It preserves the setup values for a later setup visit.
 
-Setup fields are mode, player-one character and skin, player-two character and
-skin, and scene. The lower fieldset is labeled “Match settings.” Defaults are
+Setup fields are player-one character and skin, player-two character and
+skin, and scene. Mode belongs to the Main Menu and remains in the setup payload. The lower fieldset is labeled “Match settings.” Defaults are
 hotseat, the first two catalog characters, each character's first skin, and the
 first scene.
 The application session starts with the 30-second browser default. Timer
@@ -142,7 +148,8 @@ contains public content only and does not trap focus.
 
 Validation occurs on submit and after an invalid field changes. Each visible
 error names the field, problem, and valid recovery. The shell preserves valid input.
-Each error is programmatically associated with its control. An invalid submit
+Each error is programmatically associated with its control. An invalid mode
+shows a focusable alert that directs the player back to the Main Menu. An invalid submit
 moves focus to the first invalid control. Submission is never disabled only to
 hide validation.
 
@@ -152,6 +159,9 @@ hide validation.
   not create an unsupported URL route. A confirmed paused-match exit returns to
   title. A later setup visit restores the values. Each title or setup transition
   moves focus to the destination heading.
+- **AC-015-13:** Each Main Menu mode opens the correct setup. Setup has no mode
+  selector. All three mode buttons respect GPU loading. Switching modes preserves
+  Ladder progress and supported viewports keep all menu actions visible.
 - **AC-015-02:** Defaults create the exact typed setup payload, including both
   default skin IDs. A mirror match with different skins succeeds.
 - **AC-015-03:** Every invalid class produces one visible error and preserves

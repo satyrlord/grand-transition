@@ -184,7 +184,7 @@ test('development automatically writes one completed match text log', async ({
     await useFixedBrowserMatchSeed(page, plan.seed);
     await page.clock.install();
     await page.goto(developmentUrl);
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByRole('button', { name: 'Start match' }).click();
 
     for (const action of plan.actions) {

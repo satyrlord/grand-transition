@@ -18,7 +18,7 @@ test('victory and populated history fit every supported landscape viewport', asy
     localStorage.removeItem('grand-transition.match-history.v1'),
   );
   await page.reload();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await prepareLethalGrammarMistake(page);
   await page
@@ -151,7 +151,7 @@ test('empty history is available only from the title', async ({ page }) => {
     fullPage: true,
   });
   await page.getByRole('button', { name: 'Close' }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await expect(
     page.getByRole('button', { name: /Match history/iu }),
   ).toHaveCount(0);

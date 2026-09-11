@@ -99,7 +99,7 @@ The `GPU voices` checkbox defaults on. When speech is enabled, it downloads
 about 353 MB more for streamed FP32
 Kokoro George and Emma. It needs a working WebGPU device. Matches use Piper if
 GPU initialization fails. A main-menu loader shows GPU preparation and holds
-Set up match until readiness or fallback. Turning speech off hides the loader
+Single Player, Multiplayer, and Ladder until readiness or fallback. Turning speech off hides the loader
 and unlocks setup. Playback still needs a user interaction. Engine selection stays fixed
 for the match unless GPU speech fails, then later deliveries use Piper.
 Robot skins use installed Microsoft David, Mark, and Zira voices, with British

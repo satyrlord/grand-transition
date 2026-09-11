@@ -152,7 +152,7 @@ test('native decoded menu, scene, cues, mute, and exit under production CSP', as
   await expect.poll(() => samplePeak(page)).toBe(0);
   await page.getByLabel('Music volume').fill('0.1');
   await page.getByRole('button', { name: 'Close', exact: true }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect.poll(() => page.evaluate(() => window.audioEvidence.starts.filter(({ loop }) => loop).length)).toBe(2);
   await expect.poll(() => samplePeak(page)).toBeGreaterThan(0.001);
@@ -209,7 +209,7 @@ test('unavailable services keep the controls usable and the fallback silent', as
   await page.getByLabel('Speech enabled').check();
   await page.screenshot({ path: info.outputPath('unavailable.png') });
   await page.getByRole('button', { name: 'Close', exact: true }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('.shared-board')).toBeVisible();
   expect(await page.evaluate(() => ({ sources: window.audioEvidence.starts.length, speech: window.audioEvidence.speech.length })))
@@ -261,7 +261,7 @@ test('real local neural speech narrates both public bubbles before Victory', asy
   }).speech.status), { timeout: 90_000 }).toBe('ready');
   const readyMs = Date.now() - began;
   await page.getByRole('button', { name: 'Close', exact: true }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   const pick = (role: string) => page.locator(`.shared-board [data-role="${role}"] button`).first().click();
   await pick('noun'); await pick('noun'); await pick('predicate'); await pick('verb');

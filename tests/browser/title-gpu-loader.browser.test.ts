@@ -17,12 +17,15 @@ async function mount(status: GrandTransitionTitle['gpuStatus'] = 'loading') {
 
 test.each(['idle', 'checking', 'loading'] as const)('blocks setup during %s and keeps menu controls available', async (status) => {
   const title = await mount(status);
-  const setup = title.querySelector<HTMLButtonElement>('.title-setup-action')!;
+  const buttons = [...title.querySelectorAll<HTMLButtonElement>('.title-setup-action')];
+  expect(buttons).toHaveLength(3);
   const navigate = vi.fn();
   title.addEventListener('show-setup', navigate);
-  expect(setup.disabled).toBe(true);
-  setup.click();
-  setup.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  for (const button of buttons) {
+    expect(button.disabled).toBe(true);
+    button.click();
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  }
   expect(navigate).not.toHaveBeenCalled();
   expect(title.querySelector<HTMLButtonElement>('.title-settings-action')!.disabled).toBe(false);
   expect(title.querySelector<HTMLButtonElement>('.title-history-action')!.disabled).toBe(false);
@@ -31,10 +34,17 @@ test.each(['idle', 'checking', 'loading'] as const)('blocks setup during %s and 
   expect(meter.getAttribute('aria-valuenow')).toBe(status === 'loading' ? '42' : null);
   title.gpuStatus = 'ready';
   await title.updateComplete;
-  expect(setup.disabled).toBe(false);
   expect(title.querySelector('.title-voice-feedback')).toBeNull();
-  setup.click();
-  expect(navigate).toHaveBeenCalledOnce();
+  for (const [index, mode] of ['ai', 'hotseat', 'ladder'].entries()) {
+    const button = buttons[index]!;
+    expect(button.disabled).toBe(false);
+    button.click();
+    const event = navigate.mock.calls[index]![0] as CustomEvent;
+    expect(event.detail).toEqual({ type: 'show-setup', mode });
+    expect(Object.isFrozen(event.detail)).toBe(true);
+    expect(event.bubbles && event.composed).toBe(true);
+  }
+  expect(navigate).toHaveBeenCalledTimes(3);
 });
 
 test('unavailable GPU voices unblock setup with a main-menu fallback notice', async () => {

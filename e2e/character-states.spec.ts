@@ -21,7 +21,7 @@ for (const entry of stateManifest.packages) {
     await page.locator('.title-emblem').evaluate((image: HTMLImageElement) => image.decode());
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => (window as unknown as { characterStateShifts: number[] }).characterStateShifts.reduce((a, b) => a + b, 0))).toBeLessThanOrEqual(0.05);
-    await page.getByRole('button', { name: 'Set up match', exact: true }).click();
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
     await page.locator(`.roster-choice[data-character-id="${entry.ownerId}"]`).click();
     const skinIds = characterManifest.assets

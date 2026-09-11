@@ -169,6 +169,7 @@ export class GrandTransitionSetup extends LitElement {
         </header>
 
         <form class="setup-form" novalidate @submit=${this.submit}>
+          ${errors.mode ? html`<p id="mode" role="alert" tabindex="-1">${errors.mode}</p>` : nothing}
           <section
             class="character-select-stage"
             aria-label=${msg('Character selection')}
@@ -260,19 +261,6 @@ export class GrandTransitionSetup extends LitElement {
                 ${msg('Match settings')}
               </span>
             </legend>
-            <div class="match-settings-mode">
-              ${this.selectField({
-                field: 'mode',
-                label: msg('Mode'),
-                value: this.snapshot.mode,
-                error: errors.mode,
-                options: [
-                  { value: 'ai', label: msg('Single player') },
-                  { value: 'hotseat', label: msg('Hotseat') },
-                  { value: 'ladder', label: msg('Ladder') },
-                ],
-              })}
-            </div>
             ${
               this.snapshot.mode === 'ai'
                 ? html`<div class="match-settings-difficulty">
@@ -959,14 +947,14 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   const errors: SetupErrors = {};
 
   if (!snapshot.mode) {
-    errors.mode = msg('Mode is missing. Choose Single player, Hotseat, or Ladder.');
+    errors.mode = msg('Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.');
   } else if (
     snapshot.mode !== 'ai' &&
     snapshot.mode !== 'hotseat' &&
     snapshot.mode !== 'ladder'
   ) {
     errors.mode = msg(
-      'Mode is not supported. Choose Single player, Hotseat, or Ladder.',
+      'Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
     );
   }
 

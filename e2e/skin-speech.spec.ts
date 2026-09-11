@@ -48,7 +48,7 @@ async function configure(page: Page, choices: readonly Choice[], phraseIds: read
     speech: { status: string };
   }).speech.status), { timeout: 60_000 }).toBe('ready');
   await page.getByRole('button', { name: 'Close', exact: true }).click();
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   for (const [index, choice] of choices.entries()) {
     const id = index === 0 ? '#playerOneCharacterId' : '#playerTwoCharacterId';
     await page.locator(id).click();

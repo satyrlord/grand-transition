@@ -39,7 +39,7 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -101,7 +101,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -180,7 +180,7 @@ test('shows the comeback inline and starts the next round after both deliveries'
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   prepareComebackExchange(app);
@@ -253,7 +253,7 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -366,7 +366,7 @@ test('a lethal timeout shows victory instead of clearing the match', async () =>
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -430,7 +430,7 @@ test('storage quota failure preserves victory and reports session-only history o
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };

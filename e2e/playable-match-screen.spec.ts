@@ -552,7 +552,7 @@ test('the gray waiting bubble always reveals and fits its complete sentence', as
 test('the reported long bubble works on both sides at the reported viewport', async ({
   page,
 }, testInfo) => {
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'one', 'black-sea-captain');
   await selectSetupCharacter(page, 'two', 'thunder-tribune');
   await page.getByLabel('Scene').selectOption('modern-debate-studio');
@@ -661,7 +661,7 @@ test.describe('touch waiting-bubble disclosure', () => {
 test('the selected roster characters load their local portrait assets', async ({
   page,
 }) => {
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'two', 'black-sea-captain');
   await page.getByRole('button', { name: 'Start match' }).click();
 
@@ -760,7 +760,7 @@ for (const viewport of [
       }
     });
     await page.reload();
-    await page.getByRole('button', { name: 'Set up match' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene').selectOption('modern-debate-studio');
     expect(sceneVariantRequests).toEqual([]);
     await page.getByRole('button', { name: 'Start match' }).click();
@@ -1197,7 +1197,7 @@ test('keeps the physical moderator face clear of drafting UI', async ({
 test('waits for a replacement portrait before measuring moderator clearance', async ({
   page,
 }) => {
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'one', 'retiring-cassandra');
   await page.getByRole('button', { name: 'Start match' }).click();
   await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
@@ -2035,7 +2035,7 @@ test('paused match returns to the menu only after confirmation', async ({
   ).toBeVisible();
   await expect(page.locator('grand-transition-match')).toHaveCount(0);
   await expect(
-    page.getByRole('button', { name: 'Set up match' }),
+    page.getByRole('button', { name: 'Multiplayer' }),
   ).toBeVisible();
 });
 
@@ -2045,7 +2045,7 @@ async function pauseMatchClock(page: Page): Promise<void> {
 }
 
 async function startMatch(page: Page): Promise<void> {
-  await page.getByRole('button', { name: 'Set up match' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),

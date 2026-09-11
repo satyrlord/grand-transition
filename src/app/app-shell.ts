@@ -480,6 +480,9 @@ export class GrandTransitionApp extends LitElement {
     event.stopPropagation();
     if (this.settingsSnapshot.settings.speechEnabled && this.settingsSnapshot.settings.gpuVoices &&
       this.speech?.gpuStatus !== 'ready' && this.speech?.gpuStatus !== 'unavailable') return;
+    const mode = event.detail?.mode;
+    if (mode !== 'ai' && mode !== 'hotseat' && mode !== 'ladder') return;
+    this.selectSetupMode(mode);
     this.matchHistoryOpen = false;
     this.settingsOpen = false;
     this.screenController.showSetup();
@@ -529,10 +532,8 @@ export class GrandTransitionApp extends LitElement {
     this.screenController.showTitle();
   };
 
-  private readonly updateSetup = (event: SetupChangeEvent): void => {
-    event.stopPropagation();
-    const { field, value } = event.detail;
-    if (field === 'mode' && value === 'ladder') {
+  private selectSetupMode(mode: 'ai' | 'hotseat' | 'ladder'): void {
+    if (mode === 'ladder') {
       if (!this.ladderSnapshot.progress) {
         this.ladderSnapshot = this.ladderProgressRepository.replace(
           createLadderProgress(
@@ -549,9 +550,15 @@ export class GrandTransitionApp extends LitElement {
       );
       return;
     }
+    this.setupSnapshot = Object.freeze({ ...this.setupSnapshot, mode });
+  }
+
+  private readonly updateSetup = (event: SetupChangeEvent): void => {
+    event.stopPropagation();
+    const { field, value } = event.detail;
+    if (field === 'mode') return;
     if (
       this.setupSnapshot.mode === 'ladder' &&
-      field !== 'mode' &&
       field !== 'playerOneCharacterId' &&
       field !== 'playerOneSkinId'
     ) {
@@ -588,10 +595,7 @@ export class GrandTransitionApp extends LitElement {
     event.stopPropagation();
     this.ladderSnapshot = this.ladderProgressRepository.reset();
     if (this.setupSnapshot.mode === 'ladder') {
-      this.setupSnapshot = Object.freeze({
-        ...this.setupSnapshot,
-        mode: 'hotseat',
-      });
+      this.selectSetupMode('ladder');
     }
   };
 
