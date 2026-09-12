@@ -8,7 +8,7 @@
 Milestone 019 owns local, public, browser-stored match history. Keep development
 tools and imports non-player-facing.
 
-Milestone 030 owns the planned Romanian locale extension. Before its codec
+Milestone 029 owns the planned Romanian locale extension. Before its codec
 implementation, record the exact new versions and migration fixtures here.
 The existing English formats and their original scoring remain supported.
 
@@ -143,7 +143,7 @@ The existing version 6 and earlier restoration then applies. The retained
 version 7 normalized bytes, complete catalog context, and captured final state.
 
 Version 9 keeps version 8 scoring and uses the final phrase volumes from
-Milestone 031. Before any older restoration, versions 1 through 8 load the
+Milestone 028. Before any older restoration, versions 1 through 8 load the
 complete saved version 8 catalog from
 `src/content/legacy-finalization-content-v8.json`. This preserves phrase order,
 text, agreement forms, tags, character definitions, scene definitions, phrase

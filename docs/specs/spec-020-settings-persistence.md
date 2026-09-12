@@ -62,7 +62,7 @@ version 1 source format. GPU voices and Speech enabled both default to true.
 Version 3 restores the default speech rate to 1.00 times.
 Version 4 adds the persisted `basePointsMultiplier` choice, defaulting to 3.
 Version 5 adds the persisted `tutorialMode` Boolean, defaulting to false.
-Milestone 030 owns future version 6, its independent `interfaceLocale` and
+Milestone 029 owns future version 6, its independent `interfaceLocale` and
 `gameLocale` fields, and the migration from earlier versions through version 5.
 
 The title-only Speech group has a **GPU voices** checkbox. Its help text states

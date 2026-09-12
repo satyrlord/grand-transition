@@ -100,7 +100,7 @@ model card, license texts, dataset attribution, and a description of the duratio
 output modification. Settings links to the local voice credits.
 
 Phase 2 adds GPU voices, with Piper retained as the CPU fallback.
-Milestone 030 owns Romanian
+Milestone 029 owns Romanian
 voices and localization; other languages retain silent presentation until their
 approved implementation is available.
 

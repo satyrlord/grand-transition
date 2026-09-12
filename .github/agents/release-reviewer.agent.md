@@ -33,7 +33,7 @@ projects match the support contract. Check that all tools use the
 Check that the build creates `dist/` and does
 not commit it. Check that production has no developer tools. Check that
 release deployment uploads only the tested artifact.
-Distinguish the Milestone 029 tester workflow from the final release workflow.
+Distinguish the Milestone 031 tester workflow from the final release workflow.
 
 The tester path builds and publishes `dist/` without the full quality gate.
 Do not report a tester deployment as release completion. Treat performance claims as

@@ -13,7 +13,7 @@ before the advanced artificial intelligence (AI) ladder. The catalog contains
 18 playable fictional archetypes and 6 playable scenes. It supplies enough
 validated English grammar content for every character and scene to complete a
 deterministic match. Final phrase volume, final art, alternate skins, audio,
-presentation states, and variety evidence remain in Milestone 031.
+presentation states, and variety evidence remain in Milestone 028.
 
 Each new character is convention-driven. Add one complete
 `src/content/characters/<character-id>-phrase-cards.json` file and one approved
@@ -21,17 +21,17 @@ interim `src/assets/characters/<character-id>.png` portrait. Do not add a
 TypeScript registry, locale table, setup option, or renderer map for a
 character. Existing approved alternate skins remain valid. Retire an alternate
 skin only through an approved content decision. A new foundation character
-does not require an alternate skin until Milestone 031. When alternate skins
+does not require an alternate skin until Milestone 028. When alternate skins
 exist, one character has no more than eight.
 
 Interim portraits are original local assets with recorded provenance. They use
 the existing transparent setup and match presentation. They are not final
-Milestone 023 or Milestone 031 art. Each of the six playable scenes has its own
+Milestone 023 or Milestone 028 art. Each of the six playable scenes has its own
 local background in the scene manifest. The four foundation scenes use opaque
 backgrounds without fixed moderators or foreground plates. They share the
 Milestone 023 crop core, interface-safe regions, dimensions, and AVIF/WebP
 variants. Gameplay must not use title artwork or a shared neutral fallback.
-Final layered presentation and audio remain in Milestone 031.
+Final layered presentation and audio remain in Milestone 028.
 
 Any new generated interim portrait or scene follows the Milestone 023 flat
 cel-shaded editorial-cartoon direction. Interim status can reduce state count,
@@ -93,7 +93,7 @@ The stable scene order, identifier, and phrase themes are:
    evidence, ancient energy, clips, and shadow bans.
 
 Each scene resolves a complete eligible pool through the current common
-catalog. Its scene-specific phrase volume remains deferred to Milestone 031.
+catalog. Its scene-specific phrase volume remains deferred to Milestone 028.
 
 ## Playable data contract
 
@@ -106,7 +106,7 @@ deterministic-discovery contracts.
 
 Every ordered character and scene setup can prepare a round, complete a seeded
 headless match, and preserve private-hand secrecy. The foundation does not tune
-release balance. Milestone 031 raises phrase counts and scene-specific volume.
+release balance. Milestone 028 raises phrase counts and scene-specific volume.
 Milestone 027 owns final balance and editorial evidence.
 
 ## Acceptance criteria
@@ -195,6 +195,6 @@ four-card pool. Existing identifiers and text remain stable. New cards belong
 only to this character's private pool. Public wording and editorial notes contain
 no film quotations, real-person references, or source attribution. Private
 research records the adaptation sources. The current catalog is English;
-Romanian adaptation remains in Milestone 030. Milestone 014 version 8 preserves
+Romanian adaptation remains in Milestone 029. Milestone 014 version 8 preserves
 the preceding replay contexts. `tests/unit/authored-phrase-grammar.test.ts`
 verifies ownership and complete constructions.

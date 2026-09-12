@@ -82,7 +82,7 @@ variants and metadata through the approved Sharp tool. Keep controls and
 required text outside Canvas.
 
 For a release, deploy only `dist/` through GitHub
-Actions after `npm run ci`. Milestone 029 separately permits a tester deployment
+Actions after `npm run ci`. Milestone 031 separately permits a tester deployment
 after `npm run build`. That path does not establish release readiness.
 Preserve the Vite `/grand-transition/` base path.
 

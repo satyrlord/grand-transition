@@ -1,7 +1,7 @@
-# Milestone 029: GitHub Pages Release
+# Milestone 031: GitHub Pages Release
 
 **Status:** Approved  
-**Depends on:** 028  
+**Depends on:** 030\
 **Owns:** GitHub Pages workflow, production publication, and smoke evidence  
 **Production-file budget:** 5
 
@@ -56,7 +56,7 @@ the title-only history modal.
 
 Release documentation records the commit SHA, workflow URL, deployed URL, and
 artifact digest. It records action SHAs, Node and npm versions, browser
-versions, and every smoke result. It records Milestone 028 evidence links,
+versions, and every smoke result. It records Milestone 030 evidence links,
 deviations, and the release date. Recovery is a revert
 on `main` followed by the same complete build, gate, deploy, and smoke process.
 Do not deploy an untested historic artifact directly.
@@ -72,30 +72,30 @@ only `dist/` and deploys that artifact through the `github-pages` environment.
 This path does not run `npm run ci`, `npm run test:published`, the complete
 browser matrix, the complete-match smoke, release evidence, or recovery
 rehearsal. It does not deploy pull requests or other branches. A successful
-tester deployment is not a Milestone 029 release and does not mark the minimum
+tester deployment is not a Milestone 031 release and does not mark the minimum
 viable product complete. The full release path remains responsible for
-AC-029-01 through AC-029-06.
+AC-031-01 through AC-031-06.
 
 ## Acceptance criteria
 
-- **AC-029-01:** A pull request runs the build gate and the deploy job is
+- **AC-031-01:** A pull request runs the build gate and the deploy job is
   skipped. A successful main commit deploys exactly the artifact produced by
   its build job.
-- **AC-029-02:** Permissions, environment, concurrency, job dependency, action
+- **AC-031-02:** Permissions, environment, concurrency, job dependency, action
   SHA pins, tool versions, and artifact root match this contract.
-- **AC-029-03:** Failed CI, failed artifact upload, canceled build, non-main
+- **AC-031-03:** Failed CI, failed artifact upload, canceled build, non-main
   push, and smoke failure cannot deploy or report release success.
-- **AC-029-04:** The published command passes subpath navigation, local assets,
+- **AC-031-04:** The published command passes subpath navigation, local assets,
   reload, exact CSP, zero runtime requests, supported and unavailable speech,
   and the fixed complete match.
-- **AC-029-05:** Release documentation contains every required value and its
+- **AC-031-05:** Release documentation contains every required value and its
   artifact digest matches the deployed build.
-- **AC-029-06:** A recovery rehearsal on a non-production Pages artifact proves
+- **AC-031-06:** A recovery rehearsal on a non-production Pages artifact proves
   revert, rebuild, gate, deploy, and smoke order without bypass.
-- **AC-029-07:** The tester workflow runs for `main` pushes and manual dispatch
+- **AC-031-07:** The tester workflow runs for `main` pushes and manual dispatch
   from `main`, and its deploy job requires the successful build job. Pull
   requests and non-`main` workflow dispatches do not deploy.
-- **AC-029-08:** The tester workflow installs the lockfile dependencies, runs
+- **AC-031-08:** The tester workflow installs the lockfile dependencies, runs
   the current production build, and uploads only `dist/`. It does not run the
   full release gate or published smoke command.
 
@@ -110,7 +110,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 A pull request runs but does not deploy. `main` deploys the tested artifact.
 The published `/grand-transition/` URL passes asset, refresh, CSP, speech-state,
-Milestone 028 browser-matrix, and complete-match smoke tests. Record oldest
+Milestone 030 browser-matrix, and complete-match smoke tests. Record oldest
 Safari evidence or mark it unverified. The minimum viable product (MVP) is
 complete. Stop before post-MVP scope.
 

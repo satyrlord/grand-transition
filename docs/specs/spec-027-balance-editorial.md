@@ -9,10 +9,10 @@
 ## Deliver
 
 Complete this milestone against the current playable artwork and validated
-phrase catalog. The phrase-volume checks use Milestone 031's ranges, but its
+phrase catalog. The phrase-volume checks use Milestone 028's ranges, but its
 additional character-pose images, scene layers, motion, and final media
 packages are not prerequisites for this milestone. Those asset deliveries
-remain in Milestone 031.
+remain in Milestone 028.
 
 Use the existing deterministic CI simulations, catalog uniqueness checks, content
 safety review, and fictional-composite editorial review. Adjust only
@@ -23,7 +23,7 @@ meaningful, distinct by character, and intelligible to international English
 players. Romanian proper nouns require enough English context to carry the joke.
 
 These English comprehension checks apply to the English catalog. Milestone
-030 owns natural Romanian adaptation and Romanian editorial checks. Both locales
+029 owns natural Romanian adaptation and Romanian editorial checks. Both locales
 must meet the same fictional-identity, tone, safety, and scoring-meaning rules.
 
 ## Speech-inspired humor
@@ -117,7 +117,7 @@ uses these existing checks without a separate balance or variety workload.
 Owned rule fixtures verify combo, weakness, finisher, continuation, comeback,
 grammar mistakes, sudden death, and incomplete constructions. An absent event
 in a sampled workload does not replace a rule fixture or create a release
-failure. Milestone 031
+failure. Milestone 028
 uses authored text uniqueness, grammar reachability, and the normal CI checks
 for content variety.
 
@@ -199,9 +199,9 @@ Node version, operating system, CPU model, command, and build command.
 The execution-source hash includes TypeScript, module, and JSON files under
 `src/` and `tools/`, including untracked files, plus package and lockfile bytes.
 It checks the final general, character, and owned-scene phrase volumes from
-Milestone 031. General eligibility in a scene does not count as scene ownership.
+Milestone 028. General eligibility in a scene does not count as scene ownership.
 Validate the current shipped assets, audio, and browser behavior through their
-existing checks. Milestone 031's additional media packages do not block this
+existing checks. Milestone 028's additional media packages do not block this
 review. No separate user sign-off is required.
 
 Preparation creates an inventory and pending editorial review records. Each

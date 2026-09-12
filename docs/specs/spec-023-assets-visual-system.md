@@ -30,10 +30,10 @@ State art must not create extra setup skins or enter the fixed replacement
 inventory. The runtime resolves one character, selected skin, and named state.
 Vite emits state-manifest data in a separate JavaScript chunk. Every generated
 JavaScript chunk stays within the existing 500,000-byte production gate.
-The remaining roster uses its existing selection portrait until Milestone 031.
+The remaining roster uses its existing selection portrait until Milestone 028.
 
 Local Baron adds the selection-only `municipal-patron` skin under Milestone
-031. Its master is `county-baron--municipal-patron.png`, generated through the
+028. Its master is `county-baron--municipal-patron.png`, generated through the
 OpenAI API with `gpt-image-2.5-sunburst` at native 2048 by 2048 with native alpha
 and an authorized conforming portrait as a style reference. Its replacement
 passes the shared detailed character rendering standard. The owner-authorized
@@ -65,8 +65,8 @@ reviewed left or right facing direction and source hash. The builder rejects
 missing, invalid, or stale layout records and copies the facing direction into
 the selection manifest. Layout records do not create skins. Filename discovery
 still owns the skin catalog. State drawings share their selected skin's facing
-direction. A later unmanifested interim portrait uses the right-facing default
-until Milestone 031 promotes it.
+  direction. A later unmanifested interim portrait uses the right-facing default
+  until Milestone 028 promotes it.
 
 Setup stages and matches mirror the drawing when its source direction differs
 from the opponent's direction. Both opponents face the confrontation. Mirror
@@ -136,7 +136,7 @@ regeneration boundary. Use the four opaque backgrounds as the foundation
 scenes under Milestone 026.
 
 An asset added after this fixed baseline does not enter Milestone 023
-automatically. Milestone 031 owns later portraits, skins, states, scene
+automatically. Milestone 028 owns later portraits, skins, states, scene
 identities, and layers. Regenerating the fixed baseline does not move those
 future requirements into this milestone.
 
@@ -144,7 +144,7 @@ Regeneration is atomic for each represented archetype. Regenerate its default
 portrait and every baseline alternate skin in the same art pass. Review them as
 one package before accepting any file. Do not retain, accept, or ship a
 non-regenerated alternate skin beside a regenerated default skin. An alternate
-added after the fixed baseline remains under Milestone 031.
+added after the fixed baseline remains under Milestone 028.
 Create it from scratch under the same locked art direction and completed
 character study.
 
@@ -723,7 +723,7 @@ AVIF and WebP variants. `tools/validate-character-assets.mjs` verifies the
 fixed inventory, new source hashes, provenance-compatible transparent masters,
 manifest fields, byte limits, and every generated file. A later
 convention-added portrait does not enter this fixed baseline automatically. It
-can use its source PNG until Milestone 031 promotes it through the final asset
+can use its source PNG until Milestone 028 promotes it through the final asset
 pipeline.
 
 Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
@@ -1034,7 +1034,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 - **AC-023-09:** Each of the four vertical-slice characters has one default skin
   and zero through eight alternate skins. A ninth alternate fails validation.
   Filename discovery is deterministic, and the default is first. Foundation
-  characters can keep only their default interim portrait until Milestone 031.
+  characters can keep only their default interim portrait until Milestone 028.
   The roster resolves only the default. Setup and match views resolve an
   available requested skin without changing character or phrase data.
 - **AC-023-10:** Each final character is recognizable without its nameplate by
@@ -1058,7 +1058,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   Milestone 023 replacement fails the inventory.
 
   The Black Sea Captain alternate is not a valid replacement. A nonbaseline
-  asset remains under Milestone 031 and does not fail this inventory. The fixed character manifest,
+  asset remains under Milestone 028 and does not fail this inventory. The fixed character manifest,
   replacement-hash ledger, builder, and validator provide the objective
   inventory evidence. Focused builder and validator tests reject an unchanged
   source hash, missing license, or missing runtime variant.

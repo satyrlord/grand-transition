@@ -61,7 +61,7 @@ complete an approved specification.
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
 - The game is political satire for adults aged 18 and older. Phrase cards do
   not carry individual age-rating metadata.
-- English is the default language. Milestone 030 adds a complete Romanian
+- English is the default language. Milestone 029 adds a complete Romanian
   interface, game content, grammar, and speech. Interface messages and
   locale-specific game bundles have separate owners. Localized grammar and
   phrase prose must not enter locale-neutral rules.
@@ -75,7 +75,7 @@ complete an approved specification.
 - Online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards,
   chat, servers, live-service systems, public content sharing, blockchain,
   tokens, and real-money purchases are out of scope.
-- Milestone 030 approves post-MVP Romanian localization and local speech.
+- Milestone 029 approves post-MVP Romanian localization and local speech.
   Other post-MVP candidates include additional content, controller support,
   local content packs, recorded voice,
   replays, and local simulation tools. Milestone 019 approves local match
@@ -284,42 +284,40 @@ source-only review does not satisfy them.
     Budget: 40. All 18 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
     The current artwork and phrase catalog have safety and normal CI evidence.
-    Additional Milestone 031 artwork is not a prerequisite.
-28. [Release hardening](spec-028-release-hardening.md). Budget: 8. Final quality
-    and compatibility gates pass.
-29. [GitHub Pages release](spec-029-github-pages-release.md). Budget: 5. The
-    tested artifact deploys and passes smoke tests.
-30. [Romanian localization and speech](spec-030-romanian-localization-and-speech.md).
+    Additional Milestone 028 artwork is not a prerequisite.
+28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 19.
+    Final phrase volume, art, audio treatment, and variety evidence are present.
+29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Phase 1 implements the full Romanian
     experience with Mihai medium and Liana medium. Phase 2 evaluates Ro_VITS
     and records a replacement decision. Implementation and evaluation are pending.
+30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
+    and compatibility gates pass.
+31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The
+    tested artifact deploys and passes smoke tests.
 
-Additional dependent milestone: [MVP content finalization](spec-031-mvp-content-finalization.md).
-Budget: 19. Final phrase volume, art, audio treatment, and variety evidence are
-present.
-
-Each milestone follows its explicit **Depends on** field. Milestone identifiers
-stay stable when an approved dependency change moves work earlier. This order
-limits the context and files needed for each implementation session.
+Each milestone follows its explicit **Depends on** field. Milestone filenames,
+headings, acceptance IDs, and references use the same numeric identifier. This
+order limits the context and files needed for each implementation session.
 
 ## Contract ownership
 
 | Contract                             | Owner              |
 | ------------------------------------ | ------------------ |
 | Toolchain, commands, module layout   | 001-003            |
-| Quality gate, testing, coverage      | 002, 014, 018, 028 |
-| Static security and Pages subpath    | 004, 029           |
+| Quality gate, testing, coverage      | 002, 014, 018, 030 |
+| Static security and Pages subpath    | 004, 031           |
 | Content, localization, grammar       | 005-007, 026-027   |
-| Romanian localization and grammar    | 030                |
+| Romanian localization and grammar    | 029                |
 | Boards, drafting, phrase cards       | 008-009, 016       |
 | Scoring and advanced match rules     | 010-013            |
 | Replay, simulation, development logs | 014                |
 | State ownership and browser screens  | 015-017            |
-| Landscape viewport support           | 018, 025, 028      |
+| Landscape viewport support           | 018, 025, 030      |
 | Victory and persistent match history | 019                |
-| Local settings and state             | 020, 030           |
+| Local settings and state             | 020, 029           |
 | AI and ladder                        | 021-022            |
-| Visual assets and presentation       | 023, 025-026, 031  |
-| Audio and speech                     | 024, 030-031       |
-| Full content, safety, and balance    | 026-027, 031       |
-| Release quality and deployment       | 028-029            |
+| Visual assets and presentation       | 023, 025-026, 028  |
+| Audio and speech                     | 024, 028-029       |
+| Full content, safety, and balance    | 026-028            |
+| Release quality and deployment       | 030-031            |

@@ -95,7 +95,7 @@ can still activate that multiplier.
   and their current phrases. The setup selects `red-folded-chairman` against
   `thunder-tribune` in `transition-era-television-studio` with the default
   simulation policy. This pacing check does not measure every character pair
-  or scene. Milestones 027 and 031 own broader balance and variety evidence.
+  or scene. Milestones 027 and 028 own broader balance and variety evidence.
 - **AC-010-08:** A coordinated copular noun complement stays in the preceding
   clause breakdown, adds no clause base, and applies its weakness effects to
   that clause.

@@ -1,7 +1,7 @@
-# Milestone 031: Minimum Viable Product Content Finalization
+# Milestone 028: Minimum Viable Product Content Finalization
 
 **Status:** Approved  
-**Depends on:** 025  
+**Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
 **Production-file budget:** 19
@@ -165,20 +165,20 @@ with passing content, grammar, and normal CI checks.
 
 ## Acceptance criteria
 
-- **AC-031-01:** The catalog contains exactly 18 required character IDs and
+- **AC-028-01:** The catalog contains exactly 18 required character IDs and
   six required scene IDs, with no duplicate English identity.
-- **AC-031-02:** Every general, character, scene, and comeback count meets its
+- **AC-028-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
-- **AC-031-03:** Every character and scene passes grammar reachability, board
+- **AC-028-03:** Every character and scene passes grammar reachability, board
   generation, simulated match, asset, crop, state, audio, license, locale, and
   shared color-policy validation.
-- **AC-031-04:** Comeback keys are unique across character and tier and resolve
+- **AC-028-04:** Comeback keys are unique across character and tier and resolve
   in every locale.
-- **AC-031-05:** Authored phrase and comeback text is unique. Existing grammar
+- **AC-028-05:** Authored phrase and comeback text is unique. Existing grammar
   reachability, agreement, representative sentence, and normal CI checks pass.
-- **AC-031-06:** All roster and scene variants pass shared viewport geometry
+- **AC-028-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
-- **AC-031-07:** All 18 characters provide one default skin and zero through
+- **AC-028-07:** All 18 characters provide one default skin and zero through
   eight alternate skins. A ninth alternate fails validation. A human alternate
   can use any gender, and no gender quota applies. A robot alternate remains
   fully mechanical. Every skin passes the shared asset, alpha, provenance,
