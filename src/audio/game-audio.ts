@@ -11,7 +11,7 @@ export class GameAudio {
     if (this.handled.has(transition.state)) return;
     this.handled.add(transition.state);
     const cues = new Set<EffectId>();
-    if (transition.reaction) cues.add('grammar-mistake');
+    if (transition.reaction?.kind === 'grammar-mistake') cues.add('grammar-mistake');
     else if (command.type === 'select-phrase') {
       const publicState = transition.review?.state ?? transition.state;
       const ended = command.actorId &&

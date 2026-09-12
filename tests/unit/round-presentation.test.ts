@@ -40,6 +40,7 @@ describe('reference round presentation', () => {
     const h = harness(); const original = JSON.stringify(h.input);
     h.controller.start(h.input);
     expect(h.frame()?.phase).toBe('preparing'); expect(h.requests[0]?.text).toBe(publicOpponent.insultText);
+    expect(h.frame()?.impact).toEqual({ playerId: 'one', amount: 20, prideAfter: 80 });
     expect(h.voice.prepare).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ text: publicPlayer.insultText }));
     expect(h.requests).toHaveLength(1);
     expect(h.frame()?.pride).toEqual({ one: 100, two: 100 });
@@ -93,9 +94,23 @@ describe('reference round presentation', () => {
       two: { ...publicOpponent, completeValidInsult: false, constructionStatus: 'carried', outgoingDamage: 0, insultText: null },
     }) });
     expect(h.frame()?.phase).toBe('hesitating'); expect(h.requests).toHaveLength(0);
+    expect(h.frame()?.outcome).toEqual({ kind: 'continuation-held', playerId: 'two', amount: 0 });
     h.advance(1999); expect(h.frame()?.phase).toBe('hesitating');
     h.advance(1); expect(h.requests).toHaveLength(1);
     expect(h.frame()?.total).toBeNull(); expect(h.play).not.toHaveBeenCalled();
+  });
+
+  test('an incomplete construction reports zero damage without calling speech', () => {
+    const h = harness();
+    h.controller.start({ ...h.input, resolution: resolution({
+      one: publicPlayer,
+      two: { ...publicOpponent, completeValidInsult: false, constructionStatus: 'incomplete',
+        outgoingDamage: 0, insultText: null },
+    }) });
+    expect(h.frame()?.phase).toBe('hesitating');
+    expect(h.frame()?.outcome).toEqual({ kind: 'incomplete-statement', playerId: 'two', amount: 0 });
+    expect(h.frame()?.impact).toBeNull();
+    expect(h.requests).toHaveLength(0);
   });
 
   test.each([0, 1, 15, 16, 100])('lands damage %s at the impact boundary without suppressing the second speaker', (damage) => {
@@ -105,6 +120,8 @@ describe('reference round presentation', () => {
       two: { ...publicOpponent, outgoingDamage: damage },
     }) });
     h.requests[0]!.onEnd!(); h.advance(799); expect(h.frame()?.pride.one).toBe(100);
+    expect(h.frame()?.impact).toEqual({ playerId: 'one', amount: damage, prideAfter: Math.max(0, 100 - damage) });
+    expect(h.frame()?.damage).toBeNull();
     h.advance(1); expect(h.frame()?.pride.one).toBe(Math.max(0, 100 - damage));
     expect(h.frame()?.cues.one?.stateId).toBe(damage === 0 ? 'idle' : damage < 16 ? 'light-hit' : 'heavy-hit');
     expect(h.play.mock.calls.flat()).toEqual(damage === 0 ? [] : [damage < 16 ? 'hit-light' : 'hit-heavy']);
@@ -131,6 +148,22 @@ describe('reference round presentation', () => {
     expect(h.frame()?.emphasis).toContainEqual({ kind: 'weakness', playerId: 'one', text: 'evidence', value: 1.5 });
     voice.onSegment!(2); voice.onEnd!(); voice.onEnd!();
     expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness', 'comeback']);
+  });
+
+  test('reports a broken continuation only when damage lands', () => {
+    const h = harness();
+    h.controller.start({ ...h.input, resolution: resolution({
+      one: { ...publicPlayer, continuation: { status: 'broken', restoredCarry: null } },
+      two: publicOpponent,
+    }) });
+    h.requests[0]!.onEnd!();
+    h.advance(799);
+    expect(h.frame()?.outcome).toBeNull();
+    expect(h.play).not.toHaveBeenCalledWith('continuation-break');
+    h.advance(1);
+    expect(h.frame()?.outcome).toEqual({ kind: 'continuation-broken', playerId: 'one', amount: null });
+    expect(h.play).toHaveBeenCalledWith('continuation-break');
+    expect(h.play.mock.calls.filter(([cue]) => cue === 'continuation-break')).toHaveLength(1);
   });
 
   test('a later-clause weakness waits for its component narration anchor', () => {
@@ -200,8 +233,10 @@ describe('reference round presentation', () => {
 
   test('direct grammar knockout shows only the damage stance, then completes after 520 ms', () => {
     const h = harness();
-    h.controller.selfDamage(resolution(), 'one', 3, true);
+    h.controller.selfDamage(resolution(), 'one', 3, 'grammar-mistake');
     expect(h.requests).toHaveLength(0); expect(h.frame()?.cues.one).toMatchObject({ stateId: 'grammar-mistake', hold: true });
+    expect(h.frame()?.outcome).toEqual({ kind: 'grammar-mistake', playerId: 'one', amount: null });
+    expect(h.frame()?.impact).toEqual({ playerId: 'one', amount: 3, prideAfter: 80 });
     h.advance(519); expect(h.completed).not.toHaveBeenCalled();
     h.advance(1); expect(h.completed).toHaveBeenCalledOnce(); expect(h.frame()).toBeNull();
   });

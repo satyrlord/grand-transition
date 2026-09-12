@@ -35,7 +35,9 @@ export function projectCharacterCue(
     // Resolved outcomes are staged by RoundPresentation, never replayed at Victory.
     return cue('idle');
   }
-  if (arenaReaction?.playerId === playerId) return cue('grammar-mistake');
+  if (arenaReaction?.kind === 'grammar-mistake' && arenaReaction.playerId === playerId) {
+    return cue('grammar-mistake');
+  }
   const command = state.commandHistory.at(-1);
   if (command?.type === 'prepare-round') {
     return cue(state.commandHistory.filter((item) => item.type === 'prepare-round').length === 1 ? 'selection' : 'idle');

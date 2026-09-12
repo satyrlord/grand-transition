@@ -2,6 +2,7 @@ import { page } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
 import { GrandTransitionApp } from '../../src/app/app-shell';
+import type { RoundPresentationFrame } from '../../src/app/round-presentation';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
 import {
   automaticAiBubbleRevealMs,
@@ -695,6 +696,103 @@ test('shows an appended comeback line in the speaker bubble', async () => {
   const bubble = match.querySelector('.player-sentence--comeback');
   expect(bubble?.textContent?.trim()).toBe(sentence);
   expect(bubble?.getAttribute('aria-label')).toContain('comeback');
+});
+
+test('renders public continuation and target-side impact records without early damage', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const [speaker, defender] = snapshot.players;
+  const base = {
+    phase: 'hesitating',
+    speakerId: speaker.playerId,
+    text: speaker.sentence ?? '',
+    segment: -1,
+    components: [],
+    emphasis: [],
+    outcome: { kind: 'continuation-held', playerId: speaker.playerId, amount: 0 },
+    impact: null,
+    total: null,
+    damage: null,
+    pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
+    cues: Object.fromEntries(snapshot.players.map((player, sequence) => [player.playerId,
+      { stateId: 'idle', sequence }])),
+  } as RoundPresentationFrame;
+  match.snapshot = { ...snapshot, roundReview: true };
+  match.presentation = base;
+  await match.updateComplete;
+  expect(match.querySelector('.delivery-outcome')?.textContent).toContain(
+    `Continuation held${speaker.characterName}: 0 Pride damage`,
+  );
+  expect(match.querySelector('.delivery-status')?.textContent).toBe('Hesitation');
+
+  match.presentation = {
+    ...base,
+    phase: 'strike',
+    outcome: null,
+    impact: { playerId: defender.playerId, amount: 17, prideAfter: defender.pride - 17 },
+    total: 17,
+  };
+  await match.updateComplete;
+  const impact = match.querySelector<HTMLElement>('.delivery-impact-record')!;
+  expect(impact.dataset.side).toBe('blue');
+  expect(impact.textContent).toContain(`Pride impact${defender.characterName}`);
+  expect(impact.textContent).not.toContain('−17');
+
+  match.presentation = {
+    ...match.presentation,
+    phase: 'damage',
+    outcome: { kind: 'continuation-broken', playerId: defender.playerId, amount: null },
+    damage: { playerId: defender.playerId, amount: 17 },
+    pride: { ...base.pride, [defender.playerId]: defender.pride - 17 },
+  };
+  await match.updateComplete;
+  const damage = match.querySelector('.delivery-impact-record')!;
+  expect(damage.textContent).toContain('Continuation broken');
+  expect(damage.textContent).toContain(
+    `${defender.characterName}: −17 Pride · ${defender.pride - 17} Pride remains`,
+  );
+  const liveLog = () => (match.querySelector('.presentation-live-log')?.textContent ?? '').trim();
+  expect(liveLog()).toContain(
+    `Continuation broken. ${defender.characterName}: 17 Pride lost. ${defender.pride - 17} Pride remains.`,
+  );
+
+  match.presentation = null;
+  match.snapshot = { ...match.snapshot!, roundReview: false, revision: match.snapshot!.revision + 2 };
+  await match.updateComplete;
+  expect(liveLog()).toContain('Continuation broken');
+  match.snapshot = { ...match.snapshot, revision: match.snapshot.revision + 1 };
+  await match.updateComplete;
+  expect(liveLog()).toBe('');
+});
+
+test('announces cliffhanger restoration until the next accepted action', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  match.snapshot = {
+    ...snapshot,
+    phase: 'sudden-death',
+    cliffhanger: true,
+    round: snapshot.round + 1,
+    arenaReaction: { kind: 'cliffhanger', sequence: snapshot.revision + 1 },
+  };
+  await match.updateComplete;
+  expect(match.querySelector('#match-title')?.textContent).toContain(
+    `Cliffhanger · Round ${snapshot.round + 1}`,
+  );
+  const record = match.querySelector('.sentence-ledger > .cliffhanger-strike')!;
+  expect(record).not.toBeNull();
+  for (const player of snapshot.players) {
+    expect(record.textContent).toContain(`${player.characterName} ${player.pride} Pride`);
+  }
+
+  match.snapshot = {
+    ...match.snapshot,
+    revision: match.snapshot.revision + 1,
+    arenaReaction: null,
+  };
+  await match.updateComplete;
+  expect(match.querySelector('.cliffhanger-strike')).toBeNull();
+  expect(match.querySelector('#match-title')?.textContent).toContain('Cliffhanger');
 });
 
 test('always exposes the complete waiting sentence for every interaction', async () => {

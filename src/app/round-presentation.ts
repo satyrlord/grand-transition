@@ -15,6 +15,16 @@ export type RoundPresentationFrame = Readonly<{
   segment: number;
   components: readonly MatchScoreComponentView[];
   emphasis: readonly Readonly<{ kind: 'combo' | 'weakness' | 'comeback'; playerId: string; text: string; value: number }>[];
+  outcome: Readonly<{
+    kind: 'continuation-held' | 'incomplete-statement' | 'continuation-broken' | 'grammar-mistake' | 'turn-timeout';
+    playerId: string;
+    amount: number | null;
+  }> | null;
+  impact: Readonly<{
+    playerId: string;
+    amount: number;
+    prideAfter: number;
+  }> | null;
   total: number | null;
   damage: Readonly<{ playerId: string; amount: number }> | null;
   pride: Readonly<Record<string, number>>;
@@ -54,22 +64,26 @@ export class RoundPresentation {
     this.speakerIndex = 0;
     const pride = Object.fromEntries(Object.entries(input.resolution.players).map(([id, player]) => [id, player.prideBefore]));
     this.frame = { phase: 'preparing', speakerId: input.firstSpeakerId, text: '', segment: -1,
-      components: [], emphasis: [], total: null, damage: null, pride, cues: this.idleCues() };
+      components: [], emphasis: [], outcome: null, impact: null, total: null, damage: null,
+      pride, cues: this.idleCues() };
     if (paused) this.speech.pause(); else this.speech.resume();
     this.beginSpeaker();
   }
 
-  selfDamage(resolution: MatchResolution, playerId: string, amount: number, grammar: boolean, paused = false): void {
+  selfDamage(resolution: MatchResolution, playerId: string, amount: number,
+    cause: 'grammar-mistake' | 'turn-timeout', paused = false): void {
     this.cancel(); this.paused = paused; this.order = Object.keys(resolution.players);
     const player = resolution.players[playerId]!;
     this.frame = deepFreeze({ phase: 'damage', speakerId: playerId, text: player.constructionText,
-      segment: -1, components: [], emphasis: [], total: null, damage: { playerId, amount },
+      segment: -1, components: [], emphasis: [], outcome: { kind: cause, playerId, amount: null },
+      impact: { playerId, amount, prideAfter: player.prideAfter },
+      total: null, damage: { playerId, amount },
       pride: Object.fromEntries(Object.entries(resolution.players).map(([id, result]) => [id, result.prideAfter])),
-      cues: { ...this.idleCues(), [playerId]: { stateId: grammar ? 'grammar-mistake' : amount >= 16 ? 'heavy-hit' : 'light-hit',
+      cues: { ...this.idleCues(), [playerId]: { stateId: cause === 'grammar-mistake' ? 'grammar-mistake' : amount >= 16 ? 'heavy-hit' : 'light-hit',
         sequence: ++this.cueSequence, hold: true } },
     });
     this.changed(this.frame);
-    if (!grammar) this.audio.play(amount >= 16 ? 'hit-heavy' : 'hit-light');
+    if (cause !== 'grammar-mistake') this.audio.play(amount >= 16 ? 'hit-heavy' : 'hit-light');
     this.schedule(() => { this.frame = null; this.changed(null); this.completed(); }, 520);
   }
 
@@ -117,14 +131,26 @@ export class RoundPresentation {
     const input = this.input!;
     const id = this.order[this.speakerIndex]!;
     const player = input.resolution.players[id]!;
+    const defenderId = this.order.find((candidate) => candidate !== id)!;
+    const defender = input.resolution.players[defenderId]!;
     const text = player.insultText ? [player.insultText, player.comebackClosingLine].filter(Boolean).join(' ') : player.constructionText;
     this.bonuses.clear();
-    this.update({ speakerId: id, text, phase: 'preparing', segment: -1, components: [], emphasis: [], total: null, damage: null,
+    this.update({ speakerId: id, text, phase: 'preparing', segment: -1, components: [], emphasis: [], outcome: null,
+      impact: player.completeValidInsult ? {
+        playerId: defenderId,
+        amount: defender.opponentOutgoingDamage,
+        prideAfter: defender.prideAfter,
+      } : null,
+      total: null, damage: null,
       cues: { ...this.idleCues(), [id]: { stateId: 'thinking', sequence: ++this.cueSequence } } });
     if (this.paused) { this.schedule(() => this.beginSpeaker(), 0); return; }
     if (!player.completeValidInsult) {
       this.record({ type: 'skipped', reason: 'incomplete' });
-      this.update({ phase: 'hesitating' });
+      this.update({ phase: 'hesitating', outcome: {
+        kind: player.constructionStatus === 'carried' ? 'continuation-held' : 'incomplete-statement',
+        playerId: id,
+        amount: 0,
+      } });
       this.prepareNext();
       this.schedule(() => this.advanceSpeaker(), 2000); return;
     }
@@ -239,6 +265,9 @@ export class RoundPresentation {
     }
     if (defender.continuation.status === 'broken') this.audio.play('continuation-break');
     this.update({ phase: 'damage', damage: { playerId: defenderId, amount: appliedDamage },
+      outcome: defender.continuation.status === 'broken'
+        ? { kind: 'continuation-broken', playerId: defenderId, amount: null }
+        : null,
       pride: { ...this.frame!.pride, [defenderId]: defender.prideAfter }, cues });
     this.schedule(() => {
       this.advanceSpeaker();

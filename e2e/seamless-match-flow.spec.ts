@@ -68,6 +68,11 @@ test('a hotseat match reaches persistent victory and restores title history', as
       await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
       await expect(page.locator('.round-review-dialog')).toHaveCount(0);
       const expectedResolution = plan.finalState.resolutionHistory[reviewIndex]!;
+      if (expectedResolution.suddenDeath) {
+        await expect(page.getByRole('heading', {
+          name: `Cliffhanger · Round ${expectedResolution.round}`,
+        })).toBeVisible();
+      }
       for (const playerId of [action.command.actorId!, ...Object.keys(expectedResolution.players)
         .filter((id) => id !== action.command.actorId)]) {
         const result = expectedResolution.players[playerId]!;
@@ -79,6 +84,15 @@ test('a hotseat match reaches persistent victory and restores title history', as
           );
           await expect(scoreCard.locator('.delivery-status')).toHaveText(
             'Hesitation',
+          );
+          const playerName = await match.evaluate((element, id) =>
+            (element as unknown as { snapshot: { players: Array<{ playerId: string; characterName: string }> } })
+              .snapshot.players.find(({ playerId: candidate }) => candidate === id)!.characterName,
+          playerId);
+          await expect(scoreCard.locator('.delivery-outcome')).toContainText(
+            result.constructionStatus === 'carried'
+              ? `Continuation held${playerName}: 0 Pride damage`
+              : `Incomplete statement${playerName}: 0 Pride damage`,
           );
           await expect(scoreCard.locator('.delivery-score')).toHaveCount(0);
           await expect(scoreCard.locator('.delivery-total')).toHaveCount(0);
@@ -113,6 +127,35 @@ test('a hotseat match reaches persistent victory and restores title history', as
       }
       reviewIndex += 1;
       await finishPresentation(page);
+      const nextSnapshot = await match.evaluate((element) =>
+        (element as unknown as {
+          snapshot?: { phase: string; round: number; players: Array<{ characterName: string; pride: number }> };
+        }).snapshot,
+      );
+      if (nextSnapshot?.phase === 'sudden-death' && !expectedResolution.suddenDeath) {
+        await expect(page.getByRole('heading', { name: `Cliffhanger · Round ${nextSnapshot.round}` })).toBeVisible();
+        const cliffhanger = page.locator('.cliffhanger-strike');
+        await expect(cliffhanger).toBeVisible();
+        await expect(page.locator('.sentence-ledger > .cliffhanger-strike')).toHaveCount(1);
+        for (const player of nextSnapshot.players) {
+          await expect(cliffhanger).toContainText(`${player.characterName} ${player.pride} Pride`);
+        }
+        await cliffhanger.evaluate((record) => {
+          for (const animation of record.getAnimations({ subtree: true })) animation.finish();
+        });
+        expect(await cliffhanger.evaluate((record) => {
+          const box = record.getBoundingClientRect();
+          const speech = record.parentElement!.getBoundingClientRect();
+          return {
+            horizontalFit: record.scrollWidth <= record.clientWidth + 1,
+            verticalFit: record.scrollHeight <= record.clientHeight + 1,
+            insideSpeech: box.left >= speech.left && box.top >= speech.top &&
+              box.right <= speech.right && box.bottom <= speech.bottom,
+            unclipped: /^inset\(0px(?: 0%)?\)$/u.test(getComputedStyle(record).clipPath),
+          };
+        })).toEqual({ horizontalFit: true, verticalFit: true, insideSpeech: true, unclipped: true });
+        await page.screenshot({ path: testInfo.outputPath('cliffhanger-entry.png') });
+      }
     }
     await expect(
       page.locator('grand-transition-resolution-results'),

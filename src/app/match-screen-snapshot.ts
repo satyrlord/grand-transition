@@ -119,6 +119,7 @@ export type MatchSceneLayerView = MatchManifestSceneLayerView;
 export type MatchScreenSnapshot = Readonly<{
   revision: number;
   phase: MatchState['phase'];
+  cliffhanger: boolean;
   roundReview: boolean;
   victory: Readonly<{
     winnerId: string;
@@ -146,13 +147,19 @@ export type MatchScreenSnapshot = Readonly<{
     redrawUsed: boolean;
     comebackTiers: readonly ComebackTier[];
   }>;
-  arenaReaction: Readonly<{
-    kind: MatchArenaReaction['kind'];
-    playerId: string;
-    playerName: string;
-    damage: number;
-    sequence: number;
-  }> | null;
+  arenaReaction:
+    | Readonly<{
+        kind: 'grammar-mistake';
+        playerId: string;
+        playerName: string;
+        damage: number;
+        sequence: number;
+      }>
+    | Readonly<{
+        kind: 'cliffhanger';
+        sequence: number;
+      }>
+    | null;
   reaction: Readonly<{
     round: number | null;
     outcomeLabel: string;
@@ -326,7 +333,7 @@ export function createMatchScreenSnapshot(
     }),
   );
   const activeName = characterName(activePlayer.characterId);
-  const arenaReactionPlayer = arenaReaction
+  const arenaReactionPlayer = arenaReaction?.kind === 'grammar-mistake'
     ? state.playerStates[arenaReaction.playerId]
     : undefined;
   const reviewSentence = reviewResolution
@@ -337,6 +344,7 @@ export function createMatchScreenSnapshot(
   return deepFreeze({
     revision: state.commandHistory.length,
     phase: victory ? 'results' : state.phase,
+    cliffhanger: reviewResolution?.suddenDeath ?? state.suddenDeathActive,
     roundReview: reviewResolution !== null,
     victory: victory
       ? {
@@ -382,13 +390,16 @@ export function createMatchScreenSnapshot(
           ? activePlayer.availableComebackTiers
           : [],
     },
-    arenaReaction:
-      reviewResolution === null && arenaReaction && arenaReactionPlayer
+    arenaReaction: reviewResolution !== null || !arenaReaction
+      ? null
+      : arenaReaction.kind === 'grammar-mistake' && arenaReactionPlayer
         ? {
             ...arenaReaction,
             playerName: characterName(arenaReactionPlayer.characterId),
           }
-        : null,
+        : arenaReaction.kind === 'cliffhanger'
+          ? arenaReaction
+          : null,
     reaction: {
       round: reviewResolution?.round ?? null,
       outcomeLabel: reviewResolution
