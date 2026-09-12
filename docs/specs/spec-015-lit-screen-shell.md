@@ -116,9 +116,9 @@ Selecting the item reveals the complete available portrait only
 on the owning left or right player stage. The selected stage does not fade or
 mask the lower body.
 
-The four-character implemented roster stays in one equal-width row at every
-supported landscape viewport. A roster item cannot create a second row, cross
-the roster boundary, or overlap the match-settings strip.
+Milestone 026 expands the roster to a six-column grid with contained vertical
+scrolling and centered incomplete rows. A roster item cannot cross the roster
+boundary or overlap the match-settings strip.
 
 The roster has an explicit player-one or player-two selection target. Selecting
 a roster character updates that target and then advances the target to the
@@ -193,8 +193,8 @@ hide validation.
 - **AC-015-10:** Every roster item has a computed 3:4 frame. Each human or fully
   mechanical character renders a tight headshot with no complete body. The
   robot headshot includes its antenna, centers its face panel, and cannot paint
-  outside the inner portrait window. All four implemented roster items stay in
-  one row inside the roster boundary.
+  outside the inner portrait window. The current roster uses the contained
+  six-column grid and centered incomplete rows owned by Milestone 026.
 
   Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
