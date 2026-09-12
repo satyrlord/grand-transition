@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { contentCatalogSchema } from '../../src/content/content-catalog';
+import { createSampleContent } from '../../src/content/sample-content';
+import { createEnglishGameLocale } from '../../src/localization/en-game-locale';
 import {
   buildPhraseCardCatalog,
   combinePhraseCardCorpora,
@@ -1153,6 +1155,27 @@ describe('content schemas', () => {
             'Original fictional authoring fixture.',
           ),
         },
+        {
+          id: 'test-character-modifier',
+          role: 'modifier',
+          text: 'under a review-shaped umbrella',
+          tags: ['whimsy'],
+          rarity: 'common',
+          editorialReview: approvedReview(
+            'Original fictional modifier fixture.',
+          ),
+        },
+        {
+          id: 'test-character-ending',
+          role: 'ending',
+          text: 'and the footnote demanded its own umbrella.',
+          tags: ['paperwork', 'whimsy'],
+          finisherBonus: 1,
+          rarity: 'common',
+          editorialReview: approvedReview(
+            'Original fictional ending fixture.',
+          ),
+        },
       ],
     } as const;
     const parsed = parseCharacterCardFile(
@@ -1162,7 +1185,11 @@ describe('content schemas', () => {
     expect(parsed.character).toMatchObject({
       id: 'test-character',
       nameKey: 'character.test-character.name',
-      characterPhraseIds: ['test-character-card'],
+      characterPhraseIds: [
+        'test-character-card',
+        'test-character-modifier',
+        'test-character-ending',
+      ],
       comebackLinesByTier: {
         weak: ['comeback.test-character.weak'],
         medium: ['comeback.test-character.medium'],
@@ -1195,6 +1222,31 @@ describe('content schemas', () => {
         'Your entire mandate is an invalid fixture.',
       'phrase.test-character-card': 'a test character card',
     });
+    const expandedCatalog = {
+      ...phraseCardCatalog,
+      characters: [...phraseCardCatalog.characters, parsed.character],
+      phrases: [...phraseCardCatalog.phrases, ...parsed.corpus.phrases],
+      characterPhraseIds: {
+        ...phraseCardCatalog.characterPhraseIds,
+        [parsed.character.id]: parsed.character.characterPhraseIds,
+      },
+      englishMessages: {
+        ...phraseCardCatalog.englishMessages,
+        ...parsed.englishMessages,
+      },
+    };
+    const completeCatalog = createSampleContent(
+      expandedCatalog,
+      createEnglishGameLocale(expandedCatalog.englishMessages),
+    );
+    expect(completeCatalog.characters).toHaveLength(
+      sampleContent.characters.length + 1,
+    );
+    expect(completeCatalog.characters.at(-1)?.characterPhraseIds).toEqual([
+      'test-character-card',
+      'test-character-modifier',
+      'test-character-ending',
+    ]);
     expect(() =>
       parseCharacterCardFile(source, 'characters/wrong-name.json'),
     ).toThrow(/must be named "test-character-phrase-cards\.json"/iu);
@@ -1814,21 +1866,34 @@ test.each(['modifier', 'ending', 'noun'] as const)('rejects a character missing 
   }));
 });
 
-test('rejects a character below the three-phrase minimum', () => {
+test('rejects a two-noun character pool at the owning character path', () => {
   const catalog = cloneCatalog();
   const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
   const character = catalog.characters[characterIndex]!;
-  const removed = new Set(character.characterPhraseIds.splice(2));
+  const retained = new Set(catalog.phrases
+    .filter((phrase) => character.characterPhraseIds.includes(phrase.id) && phrase.role === 'noun')
+    .slice(0, 2)
+    .map(({ id }) => id));
+  expect(retained.size).toBe(2);
+  const removed = new Set(character.characterPhraseIds.filter((id) => !retained.has(id)));
+  character.characterPhraseIds = [...retained];
   catalog.phrases = catalog.phrases.filter(({ id }) => !removed.has(id));
   for (const scene of catalog.scenes) {
     scene.phrasePool = scene.phrasePool.filter((id) => !removed.has(id));
   }
   const result = contentCatalogSchema.safeParse(catalog);
   expect(result.success).toBe(false);
-  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({
-    path: ['characters', characterIndex, 'characterPhraseIds'],
-    message: 'Supply 3 through 32 owned character phrases.',
-  }));
+  if (!result.success) {
+    for (const message of [
+      'Supply 3 through 32 owned character phrases.',
+      'Supply a foundation noun, modifier, and ending for each character. Missing: modifier, ending.',
+    ]) {
+      expect(result.error.issues).toContainEqual(expect.objectContaining({
+        path: ['characters', characterIndex, 'characterPhraseIds'],
+        message,
+      }));
+    }
+  }
 });
 
 test('rejects more than 32 character phrases at the character path', () => {

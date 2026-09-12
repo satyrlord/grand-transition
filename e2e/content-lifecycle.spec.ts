@@ -282,6 +282,21 @@ async function assertTemporaryCharacterIsPlayable(
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
 
+  await expect(page.locator('.roster-choice')).toHaveCount(19);
+  await expect(page.locator('.roster-heading')).toContainText('19 contestants');
+  await expect(page.locator('.roster-grid')).toHaveAccessibleName(
+    'Contestant roster, 19 characters',
+  );
+  for (const viewport of [
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await assertSyntheticRosterLayout(page);
+  }
+  await page.setViewportSize({ width: 1280, height: 720 });
   await page.locator('#playerTwoCharacterId').click();
   const temporaryOption = page.locator(
     `.roster-choice[data-character-id="${temporaryCharacterId}"]`,
@@ -318,6 +333,11 @@ async function assertTemporaryCharacterIsAbsent(
 ): Promise<void> {
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await expect(page.locator('.roster-choice')).toHaveCount(18);
+  await expect(page.locator('.roster-heading')).toContainText('18 contestants');
+  await expect(page.locator('.roster-grid')).toHaveAccessibleName(
+    'Contestant roster, 18 characters',
+  );
   await expect(
     page.locator(`.roster-choice[data-character-id="${temporaryCharacterId}"]`),
   ).toHaveCount(0);
@@ -330,6 +350,66 @@ async function assertTemporaryCharacterIsAbsent(
   await expect(
     page.getByText(temporaryCharacterName, { exact: true }),
   ).toHaveCount(0);
+}
+
+async function assertSyntheticRosterLayout(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map((image) => image.decode()));
+  });
+  const roster = page.locator('.roster-grid');
+  const geometry = await roster.evaluate((element) => {
+    const grid = element as HTMLElement;
+    const gridBox = grid.getBoundingClientRect();
+    const choices = [...grid.querySelectorAll('.roster-choice')]
+      .map((choice) => choice.getBoundingClientRect());
+    const heading = document.querySelector('.roster-heading')!.getBoundingClientRect();
+    const note = document.querySelector('.setup-note')!.getBoundingClientRect();
+    const rowCounts = new Map<number, number>();
+    for (const choice of choices) {
+      const top = Math.round(choice.top);
+      rowCounts.set(top, (rowCounts.get(top) ?? 0) + 1);
+    }
+    return {
+      rowCounts: [...rowCounts.values()],
+      finalRowCenterOffset: Math.abs(
+        (choices[18]!.left + choices[18]!.right) / 2 -
+        (choices[0]!.left + choices[5]!.right) / 2,
+      ),
+      clearOfText: gridBox.top >= heading.bottom - 1 && gridBox.bottom <= note.top + 1,
+      horizontallyContained: grid.scrollWidth <= grid.clientWidth + 1,
+      pageFits: document.documentElement.scrollWidth <= innerWidth &&
+        document.documentElement.scrollHeight <= innerHeight,
+      overflowY: getComputedStyle(grid).overflowY,
+      overscroll: getComputedStyle(grid).overscrollBehaviorY,
+      canScroll: grid.scrollHeight > grid.clientHeight + 1,
+      tabIndex: grid.tabIndex,
+    };
+  });
+  expect(geometry.rowCounts).toEqual([6, 6, 6, 1]);
+  expect(geometry.finalRowCenterOffset).toBeLessThan(1);
+  expect(geometry.clearOfText).toBe(true);
+  expect(geometry.horizontallyContained).toBe(true);
+  expect(geometry.pageFits).toBe(true);
+  expect(geometry.overflowY).toBe('auto');
+  expect(geometry.overscroll).toBe('contain');
+  expect(geometry.tabIndex).toBe(0);
+  await roster.focus();
+  await expect(roster).toBeFocused();
+  if (geometry.canScroll) {
+    await roster.press('Home');
+    await expect.poll(() => roster.evaluate((grid) => grid.scrollTop)).toBe(0);
+    await roster.press('End');
+    await expect.poll(() => roster.evaluate((grid) => grid.scrollTop)).toBeGreaterThan(0);
+  }
+  const box = await roster.boundingBox();
+  expect(box).not.toBeNull();
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.mouse.wheel(0, 1000);
+  expect(await page.evaluate(() => ({ x: scrollX, y: scrollY }))).toEqual({ x: 0, y: 0 });
+  await expect(page.locator('.roster-heading')).toBeInViewport();
+  await expect(page.locator('.setup-note')).toBeInViewport();
+  await expect(page.getByRole('button', { name: 'Start match' })).toBeInViewport();
 }
 
 function findBuiltFiles(fixtureRoot: string, name: string): string[] {

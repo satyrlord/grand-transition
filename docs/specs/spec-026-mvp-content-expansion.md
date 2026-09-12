@@ -133,6 +133,8 @@ Milestone 027 owns final balance and editorial evidence.
   region uses contained vertical scrolling when its rows exceed the available
   height or when later characters are added. It is keyboard-focusable and does
   not scroll the page or cover the roster heading, note, settings, or actions.
+  Visible and accessible roster counts derive from discovered characters and
+  update when a convention-driven character is added or removed.
 
 ## Objective verifiers
 
@@ -140,10 +142,18 @@ Milestone 027 owns final balance and editorial evidence.
   AC-026-03 and AC-026-05.
 - Asset validation verifies the shared alpha, provenance, and color-policy
   checks for interim portraits and scene assets.
-- A deterministic catalog workload verifies AC-026-04 for every ordered
-  character and scene setup.
-- Browser and Playwright catalog flows verify AC-026-02, AC-026-05, and
-  AC-026-06 in the production build.
+- `tests/unit/catalog-foundation.test.ts` verifies AC-026-04 for all 1,944
+  ordered character-pair and scene setups, including mirrors. The workload uses
+  fixed seeds and Local Radio Caller presentation timing. It checks completion,
+  action legality, private-hand secrecy, and timer bounds.
+- `e2e/catalog-foundation.spec.ts` selects every character for both player
+  positions and every scene at all four supported matrix viewports. It verifies
+  selected names, decoded portraits, geometry, and available actions for
+  AC-026-02 and AC-026-06. `e2e/scene-catalog.spec.ts` verifies each scene's
+  distinct production background and match geometry.
+- `e2e/content-lifecycle.spec.ts` verifies AC-026-05 through an isolated
+  production add-and-remove lifecycle, including dynamic roster counts and a
+  centered incomplete row.
 - The Impeccable records and `npm run ci` complete milestone evidence.
 
 ## Impeccable user interface validation

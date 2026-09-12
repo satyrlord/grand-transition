@@ -176,6 +176,8 @@ Milestone 002 threshold remains 70 percent.
   `2135977951`. The repository `$simulate-matches` skill runs an explicitly
   requested workload outside normal CI and requires the number of matches as
   input. Every workload preserves the stated match invariants.
+  Milestone 026 adds a fixed-seed Node catalog workload for all 1,944 ordered
+  character-pair and scene setups, including mirrors and AI presentation timing.
 - **AC-014-06:** Every named pure file meets its per-file threshold. Production
   source, bundle, and DOM contain no development logger, endpoint, debug or
   audit UI, simulation UI, or development-tool label.

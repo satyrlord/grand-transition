@@ -1,4 +1,4 @@
-import { msg } from '@lit/localize';
+import { msg, str } from '@lit/localize';
 import {
   LitElement,
   html,
@@ -128,6 +128,7 @@ export class GrandTransitionSetup extends LitElement {
     if (!this.snapshot) return nothing;
 
     const errors = this.validationAttempted ? validateSetup(this.snapshot) : {};
+    const characters = characterViews();
     const playerOne = characterView(this.snapshot.playerOneCharacterId);
     const playerTwo = characterView(this.snapshot.playerTwoCharacterId);
     const playerOneSkin = selectedSkinView(
@@ -195,10 +196,10 @@ export class GrandTransitionSetup extends LitElement {
                 <p aria-live="polite">
                   ${
                     this.snapshot.mode === 'ladder'
-                      ? msg('18 contestants · Selecting your ladder character')
+                      ? msg(str`${characters.length} contestants · Selecting your ladder character`)
                       : this.selectionTarget === 'playerOneCharacterId'
-                        ? msg('18 contestants · Selecting for player one')
-                        : msg('18 contestants · Selecting for player two')
+                        ? msg(str`${characters.length} contestants · Selecting for player one`)
+                        : msg(str`${characters.length} contestants · Selecting for player two`)
                   }
                 </p>
               </div>
@@ -208,10 +209,10 @@ export class GrandTransitionSetup extends LitElement {
               <div
                 class="roster-grid"
                 role="group"
-                aria-label=${msg('Contestant roster, 18 characters')}
+                aria-label=${msg(str`Contestant roster, ${characters.length} characters`)}
                 tabindex="0"
               >
-                ${characterViews().map((character) =>
+                ${characters.map((character) =>
                   this.rosterChoice(character),
                 )}
               </div>
