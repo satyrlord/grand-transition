@@ -17,8 +17,7 @@ terminal result. Presentation delays do not change the scored result.
 Read-only inspection of installed Steam app 575330, build 2137184, established
 the sequence. Its reference assembly SHA-256 is
 `DD15AFD7C77AE2B37FB105700C8C9C0667DECF00D5991B27097E645A15E1EC73`.
-`tmp/hollywood-loop-reference/findings.md` records the inspected methods and
-separates source facts from unmeasured animation timing. The developer's
+The developer's
 [Workshop Manual](https://steamcommunity.com/app/575330/discussions/1/1290691937708119039/)
 also documents clip-completion-driven narration. Grand Transition uses generated
 TTS audio and its timing metadata for the corresponding events.
@@ -28,7 +27,9 @@ TTS audio and its timing metadata for the corresponding events.
 2. When both constructions lock, disable drafting and stop the turn timer.
    The last finisher narrates first, then the opponent.
 3. Expand the current narrator's public bubble and hold its reciting stance.
-   Keep the other character idle. Synthesis preparation is distinct from reciting.
+   Keep the other character idle. Expansion occurs inside the reserved 32-percent
+   scene-width footprint and does not move surrounding layout. Synthesis
+   preparation is distinct from reciting and has no visible progress record.
 4. Reveal inline component scores and bonuses at their narration markers.
    Keep the complete sentence associated with the correct character.
 5. At narration completion, show the full-insult total inline and stop reciting.
@@ -37,6 +38,12 @@ TTS audio and its timing metadata for the corresponding events.
    Both deliveries finish even if the first displayed hit is lethal.
 7. After both deliveries, automatically start the next round or cliffhanger.
    Show persistent Victory only after the terminal deliveries and damage finish.
+   Entering the first cliffhanger starts its draft immediately and shows one
+   compact public record naming both players and their exact restored Pride.
+   Its 520-millisecond motion does not stop the timer or block controls. Keep the
+   record until the next accepted action and keep `Cliffhanger · Round N` visible
+   for the complete cliffhanger round. Keep the record inside the reserved speech
+   footprint so the moderator's head remains visible between speech and the board.
 
 There is no normal between-round result modal or mandatory Continue control.
 Victory must not cover an active narration. A continuation uses a thinking
@@ -69,12 +76,16 @@ A new score line scrolls into view. Total, bonus changes, and viewport resize
 must not hide the latest line. Previous lines remain available through a
 keyboard-focusable scroll region. A polite live log announces new score facts.
 Damage text names the affected player and exact Pride loss for assistive tools.
+An incomplete construction and a held continuation name the player and show
+zero Pride damage during the thinking hold. A broken continuation is announced
+with the affected player, exact Pride loss, and exact remaining Pride when the
+damage lands.
 
 Cliffhanger score points and applied Pride loss are distinct. Use the current
 speaker's outgoingDamage for Total and the defender's opponentOutgoingDamage
 for impact amount, hit severity, and damage text. Display the engine's exact
 prideAfter. For example, a score of 5 can inflict 100 Pride in a cliffhanger.
-that is a heavy hit, not a five-Pride hit.
+That is a heavy hit, not a five-Pride hit.
 
 ## Deliver
 
@@ -120,11 +131,14 @@ clause-completing phrase. Repeated phrase IDs do not merge markers. Applied
 factor and public weakness names remain with that component. Bonus cues follow
 the completed phrase. Total appears after the final audio sample.
 
-After the 400-millisecond audience hold, allow 200 milliseconds for the strike
-and 400 milliseconds for points, with displayed damage at its midpoint. Then
-begin the next speaker. Direct self-damage knockout holds the damage stance for
-520 milliseconds. A silent valid delivery advances one authored segment per
-second. Incomplete or continued text uses a 2000-millisecond thinking hold.
+After the 400-millisecond audience hold, show a target-side Pride-impact record
+for the 200-millisecond strike and the 400-millisecond Pride tally. Name the
+affected player without revealing damage early. At the count midpoint, replace
+that record with the exact Pride loss and exact remaining Pride, then begin the
+next speaker at the end of the count. Direct self-damage knockout names its
+grammar-mistake or turn-timeout cause and holds the damage stance for 520
+milliseconds. A silent valid delivery advances one authored segment per second.
+Incomplete or continued text uses a 2000-millisecond thinking hold.
 This silent timing is a fallback, not an estimate of spoken word timing.
 
 The fixed result sequence lasts 1000 milliseconds per complete delivery.
@@ -136,19 +150,21 @@ must not display Total, apply damage, or advance the speaker. Those transitions
 wait for the final audio chunk, including any Comeback line.
 
 Combo emphasis stays visible
-for the current delivery. Weakness emphasis uses one bounded strike. These records report
-resolved public facts only and never preview a card or future score.
+for the current delivery. Weakness emphasis uses one bounded strike. These records
+report resolved public facts only and never preview a card or future score.
 
 ## Objective verifiers
 
 `tests/unit/round-presentation.test.ts` verifies the ordered clock, Pause,
-silent fallback, late-clause weakness timing, and stale-event rejection.
+silent fallback, distinct continuation outcomes, target-side impact facts,
+late-clause weakness timing, and stale-event rejection.
 `tests/unit/basic-scoring.test.ts` checks clause anchors without changing scoring.
 `e2e/round-presentation.spec.ts`
 checks both speakers, totals, displayed Pride, automatic progression, and delayed
-Victory at all supported viewports. `e2e/audio-speech.spec.ts` adds real local
-neural speech under production CSP. The local reference assembly is inspected
-read-only. No proprietary code or recordings are shipped.
+Victory at all supported viewports. `e2e/seamless-match-flow.spec.ts` checks the
+first cliffhanger record and persistent round heading. `e2e/audio-speech.spec.ts`
+adds real local neural speech under production CSP. The local reference assembly
+is inspected read-only. No proprietary code or recordings are shipped.
 
 ## Acceptance criteria
 
@@ -159,8 +175,8 @@ read-only. No proprietary code or recordings are shipped.
   not change a game result. Drafting remains blocked until presentation ends.
 - **AC-025-03:** Each authored reaction uses the one fixed motion sequence in
   its owning event contract. Narration markers, total, damage, and next-speaker
-  transitions follow the sequence above. Reduced-motion mode keeps the same facts without
-  movement or flashing.
+  transitions follow the sequence above. Reduced-motion mode keeps the same facts
+  without movement or flashing.
 - **AC-025-04:** All supported landscape viewports keep each reaction, sentence,
   phrase row, and required action visible without overlap.
 - **AC-025-05:** The optional grammar indication owned by Milestone 016 is
@@ -182,5 +198,4 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 Every public tactical and scoring event has a clear outcome reaction. Manual
 review covers motion, sound, and speech. Source scans prove that no tactical
 instruction beyond Milestone 016's optional grammar indication ships.
-`npm run ci` passes. Stop before broad
-content production.
+`npm run ci` passes. Stop before broad content production.

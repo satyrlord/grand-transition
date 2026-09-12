@@ -78,6 +78,9 @@ export class GrandTransitionMatch extends LitElement {
   private grammarStrikeTimerId: number | undefined;
   private grammarStrikeSequence: number | undefined;
   private expiredGrammarStrikeSequence: number | undefined;
+  private presentationAnnouncements: string[] = [];
+  private presentationAnnouncementKeys = new Set<string>();
+  private postPresentationRevision: number | null = null;
   constructor() {
     super();
     this.pauseMode = 'running';
@@ -115,6 +118,7 @@ export class GrandTransitionMatch extends LitElement {
     this.requestUpdate();
     this.stopTimer();
     this.clearAutomaticWaitingSentenceReveal();
+    this.clearPresentationAnnouncements();
     super.disconnectedCallback();
   }
 
@@ -124,6 +128,9 @@ export class GrandTransitionMatch extends LitElement {
   };
 
   protected override willUpdate(changed: PropertyValues<this>): void {
+    const previousPresentation = changed.get('presentation') as
+      RoundPresentationFrame | null | undefined;
+    this.syncPresentationAnnouncements(previousPresentation, changed.has('snapshot'));
     if (changed.has('snapshot') || changed.has('pauseMode')) {
       this.syncGrammarStrike();
     }
@@ -232,7 +239,8 @@ export class GrandTransitionMatch extends LitElement {
       this.snapshot.sentenceText === msg('Select a noun to begin.')
         ? msg(`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
-    const arenaReaction = this.snapshot.arenaReaction?.sequence === this.expiredGrammarStrikeSequence
+    const arenaReaction = this.snapshot.arenaReaction?.kind === 'grammar-mistake' &&
+      this.snapshot.arenaReaction.sequence === this.expiredGrammarStrikeSequence
       ? null
       : this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
@@ -242,7 +250,7 @@ export class GrandTransitionMatch extends LitElement {
     const foregroundLayers = this.snapshot.sceneLayers.filter(
       ({ depth }) => depth >= 0.5,
     );
-    const reactionSide = arenaReaction
+    const reactionSide = arenaReaction?.kind === 'grammar-mistake'
       ? first.playerId === arenaReaction.playerId
         ? 'red'
         : 'blue'
@@ -307,7 +315,9 @@ export class GrandTransitionMatch extends LitElement {
                   </dl>`}
               <div class="match-turn-heading">
                 <h1 id="match-title" tabindex="-1">
-                  <span>${msg(`Round ${this.snapshot.round}`)}</span>
+                  <span>${this.snapshot.cliffhanger
+                    ? msg(`Cliffhanger · Round ${this.snapshot.round}`)
+                    : msg(`Round ${this.snapshot.round}`)}</span>
                   <span class="visually-hidden">
                     ${roundReview ? msg('Insult delivery') : msg(`${this.snapshot.activePlayerName}'s turn`)}
                   </span>
@@ -322,6 +332,10 @@ export class GrandTransitionMatch extends LitElement {
               </div>
             </div>
           </header>
+          <ol class="visually-hidden presentation-live-log" role="log"
+            aria-live="polite" aria-atomic="false" aria-label=${msg('Presentation outcomes')}>
+            ${this.presentationAnnouncements.map((announcement) => html`<li>${announcement}</li>`)}
+          </ol>
 
           <section
             class="match-stage"
@@ -331,12 +345,14 @@ export class GrandTransitionMatch extends LitElement {
             ${this.renderPlayer(
               first,
               'red',
-              arenaReaction?.playerId === first.playerId,
+              arenaReaction?.kind === 'grammar-mistake' &&
+                arenaReaction.playerId === first.playerId,
             )}
             ${this.renderPlayer(
               second,
               'blue',
-              arenaReaction?.playerId === second.playerId,
+              arenaReaction?.kind === 'grammar-mistake' &&
+                arenaReaction.playerId === second.playerId,
             )}
             ${foregroundLayers.map((layer) => html`
               ${this.renderSceneLayer(layer, 'broadcast-stage-props')}
@@ -347,6 +363,7 @@ export class GrandTransitionMatch extends LitElement {
           <section
             class="sentence-ledger"
             data-speaker-side=${first.isActive ? 'red' : 'blue'}
+            data-presenting=${this.presentation ? 'true' : nothing}
             aria-labelledby="sentence-title"
           >
             <h2 id="sentence-title" class="visually-hidden">
@@ -368,6 +385,9 @@ export class GrandTransitionMatch extends LitElement {
                     : msg('Choose a phrase or end the sentence')
               }
             </p>
+            ${arenaReaction?.kind === 'cliffhanger'
+              ? this.renderArenaReaction(arenaReaction)
+              : nothing}
           </section>
 
           ${
@@ -375,7 +395,7 @@ export class GrandTransitionMatch extends LitElement {
               ? this.renderDelivery(first, second)
               : this.snapshot.victory
               ? this.renderVictory(first, second)
-              : arenaReaction
+              : arenaReaction?.kind === 'grammar-mistake'
                 ? this.renderArenaReaction(arenaReaction)
                 : nothing
           }
@@ -593,25 +613,28 @@ export class GrandTransitionMatch extends LitElement {
     const frame = this.presentation!;
     const speaker = frame.speakerId === first.playerId ? first : second;
     const side = (id: string) => id === first.playerId ? 'red' : 'blue';
-    const damaged = frame.damage?.playerId === first.playerId ? first : second;
+    const impacted = frame.impact?.playerId === first.playerId ? first : second;
     return html`<section class="delivery-receipt" data-speaker=${frame.speakerId}
       data-side=${side(speaker.playerId)} role="log" aria-live="polite" aria-relevant="additions text"
       aria-label=${msg(`${speaker.characterName}'s score`)}>
-      ${frame.phase === 'preparing' ? html`<p class="delivery-status" role="status">${msg('Preparing local narration…')}</p>` : nothing}
       ${frame.phase === 'hesitating' ? html`<p class="delivery-status">${msg('Hesitation')}</p>` : nothing}
       <ol class="delivery-components" tabindex="0" aria-label=${msg('Scored sentences')}>
         ${frame.components.map((part) => this.renderInlineScore(part))}
       </ol>
-      <div class="delivery-events">${this.renderDeliveryEmphasis(speaker.playerId)}</div>
+      <div class="delivery-events">
+        ${this.renderDeliveryEmphasis(speaker.playerId)}
+        ${this.renderDeliveryOutcome(speaker)}
+      </div>
       ${frame.total === null ? nothing : html`<p class="delivery-total"><span>${msg('Total')}</span><strong>${frame.total}</strong></p>`}
     </section>
-    ${[first, second].filter((player) => player.playerId !== speaker.playerId || frame.damage?.playerId === player.playerId)
+    ${frame.impact && ['strike', 'points', 'damage'].includes(frame.phase)
+      ? this.renderDeliveryImpact(impacted, side(impacted.playerId))
+      : nothing}
+    ${[first, second].filter((player) => player.playerId !== speaker.playerId)
       .map((player) => html`<div class="delivery-emphasis" data-side=${side(player.playerId)} aria-live="polite">
-      ${frame.damage?.playerId === player.playerId && frame.damage.amount > 0
-        ? html`<p class="delivery-damage" role="status" aria-label=${msg(`${damaged.characterName} loses ${frame.damage.amount} Pride`)}>
-            −${frame.damage.amount} ${msg('Pride')}
-          </p>`
-        : this.renderDeliveryEmphasis(player.playerId)}
+      ${frame.phase === 'reciting' || frame.phase === 'total'
+        ? this.renderDeliveryEmphasis(player.playerId)
+        : nothing}
     </div>`)}`;
   }
 
@@ -621,6 +644,94 @@ export class GrandTransitionMatch extends LitElement {
         : item.kind === 'weakness' ? html`${item.text.split(' · ').map(titleCase).join(' · ')} ×${formatScoreNumber(item.value)}`
           : html`${msg('Comeback')} +${item.value}`}
     </p>`);
+  }
+
+  private renderDeliveryOutcome(player: MatchPlayerView): TemplateResult {
+    const outcome = this.presentation!.outcome;
+    if (!outcome || outcome.playerId !== player.playerId || outcome.kind === 'continuation-broken') {
+      return html``;
+    }
+    const [label, detail] = outcome.kind === 'continuation-held'
+      ? [msg('Continuation held'), msg(`${player.characterName}: 0 Pride damage`)]
+      : outcome.kind === 'incomplete-statement'
+        ? [msg('Incomplete statement'), msg(`${player.characterName}: 0 Pride damage`)]
+        : outcome.kind === 'grammar-mistake'
+          ? [msg('Grammar mistake'), player.characterName]
+          : [msg('Turn expired'), player.characterName];
+    return html`<p class="delivery-outcome" data-outcome=${outcome.kind}
+      aria-label=${msg(`${label}. ${detail}.`)}>
+      <strong>${label}</strong><span>${detail}</span>
+    </p>`;
+  }
+
+  private renderDeliveryImpact(
+    player: MatchPlayerView,
+    side: 'red' | 'blue',
+  ): TemplateResult {
+    const frame = this.presentation!;
+    const impact = frame.impact!;
+    const broken = frame.outcome?.kind === 'continuation-broken';
+    const label = frame.phase === 'strike'
+      ? msg('Pride impact')
+      : frame.phase === 'points'
+        ? msg('Pride tally')
+        : broken
+          ? msg('Continuation broken')
+          : msg('Pride loss');
+    const detail = frame.phase === 'damage'
+      ? impact.amount === 0
+        ? msg(`${player.characterName}: 0 Pride lost · ${impact.prideAfter} Pride remains`)
+        : msg(`${player.characterName}: −${impact.amount} Pride · ${impact.prideAfter} Pride remains`)
+      : player.characterName;
+    return html`<aside class="delivery-impact-record ${frame.phase === 'damage' ? 'delivery-damage' : ''}"
+      data-impact-phase=${frame.phase} data-side=${side}
+      aria-label=${msg(`${label}. ${detail}.`)}>
+      <strong>${label}</strong><span>${detail}</span>
+    </aside>`;
+  }
+
+  private syncPresentationAnnouncements(
+    previous: RoundPresentationFrame | null | undefined,
+    snapshotChanged: boolean,
+  ): void {
+    const frame = this.presentation;
+    if (frame?.phase === 'damage' && frame.impact) {
+      const player = this.snapshot?.players.find(({ playerId }) => playerId === frame.impact!.playerId);
+      if (player) {
+        const key = `${this.snapshot!.round}:${frame.speakerId}:${player.playerId}:${frame.impact.amount}:${frame.outcome?.kind ?? 'damage'}`;
+        if (!this.presentationAnnouncementKeys.has(key)) {
+          const cause = frame.outcome?.kind === 'continuation-broken'
+            ? msg('Continuation broken')
+            : frame.outcome?.kind === 'grammar-mistake'
+              ? msg('Grammar mistake')
+              : frame.outcome?.kind === 'turn-timeout'
+                ? msg('Turn expired')
+                : msg('Pride loss');
+          const amount = frame.impact.amount === 0
+            ? msg('0 Pride lost')
+            : msg(`${frame.impact.amount} Pride lost`);
+          this.presentationAnnouncementKeys.add(key);
+          this.presentationAnnouncements = [
+            ...this.presentationAnnouncements,
+            msg(`${cause}. ${player.characterName}: ${amount}. ${frame.impact.prideAfter} Pride remains.`),
+          ];
+        }
+      }
+    }
+    if (previous && !frame) {
+      this.postPresentationRevision = this.snapshot?.revision ?? null;
+      return;
+    }
+    if (snapshotChanged && !frame && previous === undefined && this.postPresentationRevision !== null &&
+      (this.snapshot?.revision ?? this.postPresentationRevision) > this.postPresentationRevision) {
+      this.clearPresentationAnnouncements();
+    }
+  }
+
+  private clearPresentationAnnouncements(): void {
+    this.presentationAnnouncements = [];
+    this.presentationAnnouncementKeys.clear();
+    this.postPresentationRevision = null;
   }
 
   private renderInlineScore(component: MatchScoreComponentView): TemplateResult {
@@ -698,7 +809,10 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private syncGrammarStrike(): void {
-    const sequence = this.snapshot?.arenaReaction?.sequence;
+    const reaction = this.snapshot?.arenaReaction;
+    const sequence = reaction?.kind === 'grammar-mistake'
+      ? reaction.sequence
+      : undefined;
     if (this.pauseMode !== 'running' || this.snapshot?.roundReview || sequence === undefined) {
       this.clearGrammarStrike();
       this.grammarStrikeSequence = sequence;
@@ -717,6 +831,21 @@ export class GrandTransitionMatch extends LitElement {
   private renderArenaReaction(
     reaction: NonNullable<MatchScreenSnapshot['arenaReaction']>,
   ): TemplateResult {
+    if (reaction.kind === 'cliffhanger') {
+      const [first, second] = this.snapshot!.players;
+      return html`
+        <aside
+          class="cliffhanger-strike"
+          data-reaction-sequence=${reaction.sequence}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <strong>${msg('Cliffhanger')}</strong>
+          <span>${msg(`Pride restored: ${first.characterName} ${first.pride} Pride · ${second.characterName} ${second.pride} Pride`)}</span>
+        </aside>
+      `;
+    }
     return html`
       <aside
         class="grammar-strike"

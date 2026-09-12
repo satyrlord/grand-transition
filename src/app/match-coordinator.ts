@@ -14,12 +14,17 @@ import { recordLadderResult } from '../engine/ladder';
 import { createMatchHistoryEntry, type MatchHistoryRepository, type MatchHistorySettings } from '../persistence/match-history';
 import type { LadderProgressRepository } from '../persistence/ladder-progress';
 
-export type MatchArenaReaction = Readonly<{
-  kind: 'grammar-mistake';
-  playerId: string;
-  damage: number;
-  sequence: number;
-}>;
+export type MatchArenaReaction =
+  | Readonly<{
+      kind: 'grammar-mistake';
+      playerId: string;
+      damage: number;
+      sequence: number;
+    }>
+  | Readonly<{
+      kind: 'cliffhanger';
+      sequence: number;
+    }>;
 
 export type MatchCommandLog = Readonly<{
   initialSeed: number;
@@ -189,6 +194,14 @@ export class MatchCoordinator {
       completedAt: this.dependencies.now(), settings: identity.settings,
     }));
   }
+}
+
+/** Reports only the transition into the first cliffhanger round. */
+export function cliffhangerReaction(state: MatchState): MatchArenaReaction | null {
+  if (state.phase !== 'sudden-death' || state.resolutionHistory.at(-1)?.suddenDeath !== false) {
+    return null;
+  }
+  return Object.freeze({ kind: 'cliffhanger', sequence: state.commandHistory.length });
 }
 
 function isAiTurn(state: MatchState | null): state is MatchState {

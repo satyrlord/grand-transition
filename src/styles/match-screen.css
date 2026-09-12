@@ -215,6 +215,22 @@
     animation: grammar-arena-flash 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
+  .broadcast-stage[data-arena-reaction='cliffhanger']::before {
+    position: absolute;
+    z-index: 11;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgb(143 40 34 / 34%),
+      transparent 34% 66%,
+      rgb(18 71 127 / 34%)
+    );
+    box-shadow: inset 0 0 7rem rgb(228 193 125 / 24%);
+    content: '';
+    pointer-events: none;
+    animation: cliffhanger-arena-open 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   .match-status-rail {
     position: absolute;
     z-index: 12;
@@ -917,7 +933,8 @@
     background: rgb(252 250 246 / 98%);
     box-shadow: 0 0.55rem 1.2rem rgb(0 0 0 / 48%);
     color: #101010;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.92, 0.88);
+    transform-origin: center;
   }
 
   .sentence-ledger::after {
@@ -953,6 +970,16 @@
 
   .sentence-ledger[data-speaker-side='blue'] {
     left: calc(50% + var(--scene-width) * 0.11);
+  }
+
+  .sentence-ledger[data-presenting='true'] {
+    transform: translateX(-50%) scale(1);
+    animation: delivery-bubble-open 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes delivery-bubble-open {
+    0% { transform: translateX(-50%) scale(0.92, 0.88); }
+    100% { transform: translateX(-50%) scale(1); }
   }
 
   .sentence-preview {
@@ -1094,6 +1121,56 @@
     color: white;
     transform: translateX(-50%);
     animation: grammar-strike-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .cliffhanger-strike {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 2.4rem;
+    padding: 0.32rem 0.55rem;
+    border: 2px solid var(--broadcast-gold-light);
+    background: linear-gradient(90deg, var(--broadcast-red), var(--broadcast-black) 50%, var(--broadcast-blue-bright));
+    box-shadow: 0 0.45rem 1rem rgb(0 0 0 / 58%);
+    color: var(--broadcast-paper-light);
+    animation: cliffhanger-strike-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .cliffhanger-strike strong {
+    color: var(--broadcast-gold-light);
+    font: 400 clamp(1.05rem, 1.7vw, 1.45rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: clamp(0.65px, 0.09cqw, 0.95px) currentcolor;
+  }
+
+  .cliffhanger-strike span {
+    font: 700 clamp(0.72rem, 0.9vw, 0.9rem) / 1.2 var(--font-interface);
+    text-align: right;
+  }
+
+  @keyframes cliffhanger-arena-open {
+    0% { opacity: 0; }
+    35% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes cliffhanger-strike-in {
+    0% {
+      clip-path: inset(0 50%);
+      filter: brightness(1.45);
+      opacity: 0.35;
+      transform: scaleX(1.04);
+    }
+
+    100% {
+      clip-path: inset(0);
+      filter: brightness(1);
+      opacity: 1;
+      transform: scaleX(1);
+    }
   }
 
   .grammar-strike__signal {
@@ -1260,6 +1337,83 @@
   .delivery-events p { display: inline; margin: 0 0.5em 0 0; }
   .delivery-emphasis [data-emphasis='weakness'] { color: var(--reaction-apricot); }
   .delivery-damage { font-size: 1.5em; }
+
+  .delivery-outcome {
+    display: grid;
+    gap: 0.12rem;
+    margin: 0.35rem 0 0;
+    color: var(--broadcast-paper-light);
+    font: 700 clamp(0.72rem, 0.9vw, 0.9rem) / 1.2 var(--font-interface);
+  }
+
+  .delivery-outcome strong {
+    color: var(--broadcast-gold-light);
+    font: 400 clamp(0.95rem, 1.35vw, 1.25rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.65px currentcolor;
+  }
+
+  .delivery-impact-record {
+    position: absolute;
+    z-index: 11;
+    bottom: 4svh;
+    display: grid;
+    gap: 0.18rem;
+    width: min(28vw, calc(var(--scene-width) * 0.22));
+    color: var(--broadcast-paper-light);
+    pointer-events: none;
+    text-shadow: -1px -1px var(--broadcast-black), 1px -1px var(--broadcast-black),
+      -1px 1px var(--broadcast-black), 1px 1px var(--broadcast-black);
+  }
+
+  .delivery-impact-record[data-side='red'] { left: 1rem; text-align: left; }
+  .delivery-impact-record[data-side='blue'] { right: 1rem; text-align: right; }
+
+  .delivery-impact-record strong {
+    justify-self: start;
+    padding: 0.22rem 0.48rem;
+    border-block: 2px solid currentcolor;
+    background: var(--broadcast-black);
+    color: var(--broadcast-gold-light);
+    font: 700 0.69rem / 1 var(--font-interface);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .delivery-impact-record[data-side='blue'] strong { justify-self: end; }
+
+  .delivery-impact-record span {
+    font: 900 clamp(0.9rem, 1.1vw, 1.3rem) / 1.15 var(--font-speech);
+  }
+
+  .delivery-impact-record[data-impact-phase='strike'] {
+    animation: delivery-strike-signal 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .delivery-impact-record[data-impact-phase='points'],
+  .delivery-impact-record[data-impact-phase='damage'] {
+    animation: delivery-points-transfer 400ms linear both;
+  }
+
+  @keyframes delivery-strike-signal {
+    0% {
+      clip-path: inset(0 35%);
+      filter: brightness(1.7);
+      opacity: 0.6;
+    }
+
+    100% {
+      clip-path: inset(0);
+      filter: brightness(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes delivery-points-transfer {
+    0% { opacity: 0.65; }
+    100% { opacity: 1; }
+  }
 
   .round-review-continue {
     grid-area: continue;
@@ -2100,6 +2254,9 @@
     .match-player--grammar-hit .character-portrait,
     .match-player--grammar-hit .player-hud,
     .grammar-strike,
+    .cliffhanger-strike,
+    .sentence-ledger[data-presenting='true'],
+    .delivery-impact-record[data-impact-phase],
     .private-hand[data-side],
     .match-actions[data-side],
     .score-breakdown-step,
@@ -2142,6 +2299,10 @@
     .score-breakdown-step,
     .score-breakdown-math mark,
     .grammar-strike,
+    .cliffhanger-strike,
+    .delivery-impact-record,
+    .delivery-impact-record strong,
+    .delivery-outcome,
     .common-phrases,
     .phrase-card,
     .match-actions button,
@@ -2152,6 +2313,16 @@
       box-shadow: none;
       color: CanvasText;
       forced-color-adjust: none;
+    }
+
+    .cliffhanger-strike strong,
+    .cliffhanger-strike span,
+    .delivery-impact-record strong,
+    .delivery-impact-record span,
+    .delivery-outcome,
+    .delivery-outcome strong {
+      color: CanvasText;
+      text-shadow: none;
     }
 
     .match-screen .draft-table button.phrase-card {

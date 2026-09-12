@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
-import { MatchCoordinator, type MatchCommandLog } from '../../src/app/match-coordinator';
+import { MatchCoordinator, cliffhangerReaction, type MatchCommandLog } from '../../src/app/match-coordinator';
+import { resolution } from '../fixtures/narration';
 import { basicScoringBalance, type BasePointsMultiplier } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import { createMatchSetupState, type MatchState } from '../../src/engine/match-lifecycle';
@@ -61,6 +62,26 @@ function harness() {
 }
 
 describe('match coordination', () => {
+  test('reports only the transition into the first cliffhanger round', () => {
+    const base = setup();
+    const command = { type: 'resolve-round', source: 'user', payload: {} } as const;
+    const state = {
+      ...base,
+      phase: 'sudden-death',
+      commandHistory: [...base.commandHistory, command],
+      resolutionHistory: [{ ...resolution(), suddenDeath: false }],
+    } as MatchState;
+    expect(cliffhangerReaction(state)).toEqual({
+      kind: 'cliffhanger',
+      sequence: state.commandHistory.length,
+    });
+    expect(cliffhangerReaction({
+      ...state,
+      resolutionHistory: [{ ...resolution(), suddenDeath: true }],
+    })).toBeNull();
+    expect(cliffhangerReaction({ ...state, phase: 'drafting' })).toBeNull();
+  });
+
   test.each([false, true])('records a deterministic complete match and ladder=%s', (isLadder) => {
     const { coordinator, history, ladder, logs } = harness();
     if (isLadder) ladder.replace(createLadderProgress(sampleContent.characters[0]!.id, 42,

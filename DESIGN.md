@@ -277,6 +277,15 @@ weakness and Pride-loss text belongs near the affected character. There is no
 central score panel or repeated Clause label. A long score log follows its
 latest line while keeping prior lines available to keyboard scrolling.
 
+During delivery, the speaker bubble expands within its reserved footprint.
+After Total, a target-side broadcast record names the affected player through
+the strike and Pride tally, then replaces that record with exact Pride loss and
+remaining Pride. Held, incomplete, and broken continuations use the same public
+record language without tactical instruction. Entering a cliffhanger shows a
+compact reset record inside the reserved speech footprint and keeps
+`Cliffhanger · Round N` in the stage status. The record does not cover the
+moderator's head or the common phrase pool.
+
 Speech completion precedes Total, then damage and its portrait reaction.
 Both deliveries finish before the next round starts automatically. A terminal
 exchange then shows persistent Victory until the player returns to the title.

@@ -9,7 +9,7 @@ import { MicrosoftRobotSpeech } from '../audio/microsoft-robot-speech';
 import { skinSpeechProfile } from '../audio/skin-speech-profile';
 import { RoundPresentation, type RoundPresentationFrame } from './round-presentation';
 import { msg } from '@lit/localize';
-import { MatchCoordinator, type MatchCommandLog } from './match-coordinator';
+import { MatchCoordinator, cliffhangerReaction, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
 import {
   type AutoCompleteChangeEvent,
@@ -709,9 +709,12 @@ export class GrandTransitionApp extends LitElement {
       }, !publicPresentation);
     } else if (review && this.matchState.phase === 'results') {
       const actor = command.actorId ?? review.state.activePlayerId;
+      const grammarReaction = transition.reaction?.kind === 'grammar-mistake'
+        ? transition.reaction
+        : null;
       this.roundPresentation?.selfDamage(review.resolution, actor,
-        transition.reaction?.damage ?? review.resolution.players[actor]!.selfDamage,
-        Boolean(transition.reaction), !publicPresentation);
+        grammarReaction?.damage ?? review.resolution.players[actor]!.selfDamage,
+        grammarReaction ? 'grammar-mistake' : 'turn-timeout', !publicPresentation);
     }
     this.ladderSnapshot = this.ladderProgressRepository.snapshot();
     this.matchHistory = this.matchHistoryRepository.snapshot();
@@ -723,8 +726,8 @@ export class GrandTransitionApp extends LitElement {
     this.flushSpeechDiagnostics(this.matchState.phase === 'results' ? 'finished' : undefined);
     if (this.matchState.phase === 'results') return;
     this.roundReviewSnapshot = null;
-    this.matchArenaReaction = null;
     this.matchState = this.matchCoordinator.continueRound(this.matchState, this.currentMatchInitialSeed());
+    this.matchArenaReaction = cliffhangerReaction(this.matchState);
     this.scheduleAiTurn();
   }
 
