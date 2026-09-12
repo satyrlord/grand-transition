@@ -40,7 +40,10 @@
     "voiceHint": "sharp",
     "rate": 1.1,
     "pitch": 1.05,
-    "skinVoices": {"default": "george", "alternate": "emma"}
+    "skinVoices": {
+      "default": "george",
+      "alternate": "emma"
+    }
   },
   "animationSet": {
     "idle": "midnight-sensationalist-idle",
@@ -146,6 +149,512 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-anonymous-empty-chair",
+      "role": "noun",
+      "text": "an empty chair billed as an anonymous witness",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-commercial-countdown",
+      "role": "noun",
+      "text": "a countdown to the next exclusive commercial",
+      "tags": [
+        "ratings"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-pixelated-pigeon",
+      "role": "noun",
+      "text": "a pixelated pigeon described as a palace source",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-recycled-breaking-banner",
+      "role": "noun",
+      "text": "a breaking-news banner with yesterday underneath",
+      "tags": [
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-rented-outrage-meter",
+      "role": "noun",
+      "text": "an outrage meter rented by the minute",
+      "tags": [
+        "ratings"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-1-past",
+      "role": "verb",
+      "text": "interrupted the advertisement to investigate",
+      "singularText": "interrupted the advertisement to investigate",
+      "pluralText": "interrupted the advertisement to investigate",
+      "personalSingularText": "interrupted the advertisement to investigate",
+      "secondPersonText": "interrupted the advertisement to investigate",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-1-present",
+      "role": "verb",
+      "text": "interrupts the advertisement to investigate",
+      "singularText": "interrupts the advertisement to investigate",
+      "pluralText": "interrupt the advertisement to investigate",
+      "personalSingularText": "interrupts the advertisement to investigate",
+      "secondPersonText": "interrupt the advertisement to investigate",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-1-future",
+      "role": "verb",
+      "text": "will interrupt the advertisement to investigate",
+      "singularText": "will interrupt the advertisement to investigate",
+      "pluralText": "will interrupt the advertisement to investigate",
+      "personalSingularText": "will interrupt the advertisement to investigate",
+      "secondPersonText": "will interrupt the advertisement to investigate",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-2-past",
+      "role": "verb",
+      "text": "offered a witness-protection microphone to",
+      "singularText": "offered a witness-protection microphone to",
+      "pluralText": "offered a witness-protection microphone to",
+      "personalSingularText": "offered a witness-protection microphone to",
+      "secondPersonText": "offered a witness-protection microphone to",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-2-present",
+      "role": "verb",
+      "text": "offers a witness-protection microphone to",
+      "singularText": "offers a witness-protection microphone to",
+      "pluralText": "offer a witness-protection microphone to",
+      "personalSingularText": "offers a witness-protection microphone to",
+      "secondPersonText": "offer a witness-protection microphone to",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-verb-2-future",
+      "role": "verb",
+      "text": "will offer a witness-protection microphone to",
+      "singularText": "will offer a witness-protection microphone to",
+      "pluralText": "will offer a witness-protection microphone to",
+      "personalSingularText": "will offer a witness-protection microphone to",
+      "secondPersonText": "will offer a witness-protection microphone to",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-predicate-1-past",
+      "role": "predicate",
+      "text": "promoted a dial tone to chief correspondent",
+      "singularText": "promoted a dial tone to chief correspondent",
+      "pluralText": "promoted a dial tone to chief correspondent",
+      "personalSingularText": "promoted a dial tone to chief correspondent",
+      "secondPersonText": "promoted a dial tone to chief correspondent",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-predicate-1-present",
+      "role": "predicate",
+      "text": "promotes a dial tone to chief correspondent",
+      "singularText": "promotes a dial tone to chief correspondent",
+      "pluralText": "promote a dial tone to chief correspondent",
+      "personalSingularText": "promotes a dial tone to chief correspondent",
+      "secondPersonText": "promote a dial tone to chief correspondent",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-predicate-1-future",
+      "role": "predicate",
+      "text": "will promote a dial tone to chief correspondent",
+      "singularText": "will promote a dial tone to chief correspondent",
+      "pluralText": "will promote a dial tone to chief correspondent",
+      "personalSingularText": "will promote a dial tone to chief correspondent",
+      "secondPersonText": "will promote a dial tone to chief correspondent",
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-review-modifier",
+      "role": "modifier",
+      "text": "during the eyewitness recruitment break",
+      "tags": [
+        "ratings",
+        "evidence"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "midnight-sensationalist-contrast",
+      "role": "conjunction",
+      "text": "yet, between exclusives,",
+      "connectorKind": "yet",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ]

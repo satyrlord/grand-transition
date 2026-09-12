@@ -258,6 +258,434 @@
         "safetyFlags": [],
         "notes": "Original ceremonial-courage reversal: rhetorical bravery avoids ordinary scrutiny. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
+    },
+    {
+      "id": "algorithmic-prophet-offline-revelation",
+      "role": "noun",
+      "text": "a revelation waiting for a stronger wireless signal",
+      "tags": [
+        "evidence"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A supernatural claim depends on mundane internet reception. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-sacred-comment-filter",
+      "role": "noun",
+      "text": "my sacred filter for inconvenient comments",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An online filter shields a claim from scrutiny. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-prophecy-footnote",
+      "role": "noun",
+      "text": "a prophecy with the date hidden in a footnote",
+      "tags": [
+        "specificity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A prediction conceals the detail needed to test it. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-decoded-from-static-past",
+      "role": "verb",
+      "text": "decoded radio static into",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "decoded radio static into",
+      "pluralText": "decoded radio static into",
+      "personalSingularText": "decoded radio static into",
+      "secondPersonText": "decoded radio static into",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-decoded-from-static-present",
+      "role": "verb",
+      "text": "decodes radio static into",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "decodes radio static into",
+      "pluralText": "decode radio static into",
+      "personalSingularText": "decodes radio static into",
+      "secondPersonText": "decode radio static into",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-decoded-from-static-future",
+      "role": "verb",
+      "text": "will decode radio static into",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "will decode radio static into",
+      "pluralText": "will decode radio static into",
+      "personalSingularText": "will decode radio static into",
+      "secondPersonText": "will decode radio static into",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-certified-by-pendulum-past",
+      "role": "verb",
+      "text": "waved a sacred pendulum over",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "waved a sacred pendulum over",
+      "pluralText": "waved a sacred pendulum over",
+      "personalSingularText": "waved a sacred pendulum over",
+      "secondPersonText": "waved a sacred pendulum over",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-certified-by-pendulum-present",
+      "role": "verb",
+      "text": "waves a sacred pendulum over",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "waves a sacred pendulum over",
+      "pluralText": "wave a sacred pendulum over",
+      "personalSingularText": "waves a sacred pendulum over",
+      "secondPersonText": "wave a sacred pendulum over",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-certified-by-pendulum-future",
+      "role": "verb",
+      "text": "will wave a sacred pendulum over",
+      "tags": [
+        "evidence"
+      ],
+      "singularText": "will wave a sacred pendulum over",
+      "pluralText": "will wave a sacred pendulum over",
+      "personalSingularText": "will wave a sacred pendulum over",
+      "secondPersonText": "will wave a sacred pendulum over",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-vague-in-high-definition-past",
+      "role": "predicate",
+      "text": "was vague in high definition",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "was vague in high definition",
+      "pluralText": "were vague in high definition",
+      "personalSingularText": "was vague in high definition",
+      "secondPersonText": "were vague in high definition",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-vague-in-high-definition-present",
+      "role": "predicate",
+      "text": "is vague in high definition",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "is vague in high definition",
+      "pluralText": "are vague in high definition",
+      "personalSingularText": "is vague in high definition",
+      "secondPersonText": "are vague in high definition",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-vague-in-high-definition-future",
+      "role": "predicate",
+      "text": "will be vague in high definition",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "will be vague in high definition",
+      "pluralText": "will be vague in high definition",
+      "personalSingularText": "will be vague in high definition",
+      "secondPersonText": "will be vague in high definition",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "algorithmic-prophet-neutral-contrast",
+      "role": "conjunction",
+      "text": "yet, even now,",
+      "tags": [],
+      "connectorKind": "yet",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

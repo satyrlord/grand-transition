@@ -109,15 +109,17 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
   can also govern a following `and + NOUN` complement.
 - Each weakness tag occurs on at least two phrases.
 - Every shipped phrase has approved original editorial review with no flags.
+  An agent can record this review from actual source and content inspection;
+  the state does not require or imply human sign-off.
 - Each character owns exactly one weak, one medium, and one strong comeback
   line. Each key uses `comeback.<character-id>.<tier>` and cannot be shared by
   another character or tier. There is no common comeback pool.
 - Shipped player-visible prose, editorial rationale, and source notes do not
   name or identify a real person. Public institutions and historical events
-  remain permitted. An approved public-figure likeness may be used only as
+  remain permitted. A public-figure likeness may be used only as
   visual-only parody in a portrait skin. Complete private character studies
-  and any required product-owner approvals stay in the Git-ignored research
-  folder, and private study data does not ship. Shipped prompts, source notes,
+  stay in the Git-ignored research folder, and private study data does not ship.
+  Shipped prompts, source notes,
   and asset metadata use a generic source description and do not name a real
   person. The skin does not change the fictional character identity or prose.
 - Original comic adaptations of researched political speech are permitted as
@@ -132,6 +134,24 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
 - All schema objects reject unknown fields.
 
 ## Manual phrase authoring
+
+Milestones 027 and 031 use the final English catalog with 150 general nouns,
+122 general verbs, 100 general predicates and modifiers, eight general
+conjunctions, 60 general endings, and one universal continuation. Each scene
+has 25 or 26 owned-pool IDs including the universal continuation. Each
+character has 20 through 32 owned phrases. The release preflight and focused
+tests enforce these minimum and maximum counts.
+
+Editorial revisions keep stable IDs while the displayed text supplies enough
+English context. The `securitate` weakness label reads `Former secret police`
+in setup and score explanations. Phrase references use `the former secret
+police`; the miners' delegation explicitly describes a staged show of support
+in the capital. `your-circumscription` reads `your electoral district`, and
+`your-concubine` reads `your partner with a reserved public office`.
+The Chairman's ancient-history ending reads
+`and even the ancient tribes would ask you for a modern answer.`
+The retired generic-abuse cards are `a-dumbass`, `an-animal`, and `a-monkey`.
+Version 8 and earlier replays retain their original content under Milestone 014.
 
 Phrase definitions and English phrase text must not be hardcoded in TypeScript.
 The common corpus is `src/content/common-phrase-cards.json`. Each character has

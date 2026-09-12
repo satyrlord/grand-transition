@@ -57,7 +57,10 @@
       "id": "county-baron-foundation-noun",
       "role": "noun",
       "text": "my tender with a doughnut where the budget should be",
-      "tags": ["procurement", "spending"],
+      "tags": [
+        "procurement",
+        "spending"
+      ],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -78,7 +81,10 @@
       "id": "county-baron-foundation-modifier",
       "role": "modifier",
       "text": "after the pothole inspection's family photo",
-      "tags": ["infrastructure", "nepotism"],
+      "tags": [
+        "infrastructure",
+        "nepotism"
+      ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -91,7 +97,10 @@
       "id": "county-baron-foundation-ending",
       "role": "ending",
       "text": "and the road contract is held together with icing sugar.",
-      "tags": ["procurement", "infrastructure"],
+      "tags": [
+        "procurement",
+        "infrastructure"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -105,7 +114,9 @@
       "id": "county-baron-sunday-job-interview",
       "role": "ending",
       "text": "and the job interview was held at Sunday lunch.",
-      "tags": ["nepotism"],
+      "tags": [
+        "nepotism"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -113,6 +124,517 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original transformed family-staffing motif: a public appointment becomes a family meal. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "county-baron-ribbon-roundabout",
+      "role": "noun",
+      "text": "a roundabout built to display the opening ribbon",
+      "tags": [
+        "infrastructure"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-cousin-tender",
+      "role": "noun",
+      "text": "a tender form with a box for the cousin relationship",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-portable-opening-ceremony",
+      "role": "noun",
+      "text": "a portable opening ceremony looking for a finished road",
+      "tags": [
+        "infrastructure"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-municipal-dinner-table",
+      "role": "noun",
+      "text": "a municipal budget drawn on the family dinner table",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-pothole-warranty",
+      "role": "noun",
+      "text": "a pothole warranty that expires when it rains",
+      "tags": [
+        "procurement",
+        "infrastructure"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-1-past",
+      "role": "verb",
+      "text": "reserved a seat at the family tender for",
+      "singularText": "reserved a seat at the family tender for",
+      "pluralText": "reserved a seat at the family tender for",
+      "personalSingularText": "reserved a seat at the family tender for",
+      "secondPersonText": "reserved a seat at the family tender for",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-1-present",
+      "role": "verb",
+      "text": "reserves a seat at the family tender for",
+      "singularText": "reserves a seat at the family tender for",
+      "pluralText": "reserve a seat at the family tender for",
+      "personalSingularText": "reserves a seat at the family tender for",
+      "secondPersonText": "reserve a seat at the family tender for",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-1-future",
+      "role": "verb",
+      "text": "will reserve a seat at the family tender for",
+      "singularText": "will reserve a seat at the family tender for",
+      "pluralText": "will reserve a seat at the family tender for",
+      "personalSingularText": "will reserve a seat at the family tender for",
+      "secondPersonText": "will reserve a seat at the family tender for",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-2-past",
+      "role": "verb",
+      "text": "awarded a ceremonial shovel to",
+      "singularText": "awarded a ceremonial shovel to",
+      "pluralText": "awarded a ceremonial shovel to",
+      "personalSingularText": "awarded a ceremonial shovel to",
+      "secondPersonText": "awarded a ceremonial shovel to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-2-present",
+      "role": "verb",
+      "text": "awards a ceremonial shovel to",
+      "singularText": "awards a ceremonial shovel to",
+      "pluralText": "award a ceremonial shovel to",
+      "personalSingularText": "awards a ceremonial shovel to",
+      "secondPersonText": "award a ceremonial shovel to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-verb-2-future",
+      "role": "verb",
+      "text": "will award a ceremonial shovel to",
+      "singularText": "will award a ceremonial shovel to",
+      "pluralText": "will award a ceremonial shovel to",
+      "personalSingularText": "will award a ceremonial shovel to",
+      "secondPersonText": "will award a ceremonial shovel to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-predicate-1-past",
+      "role": "predicate",
+      "text": "counted the same ribbon twice for the official road total",
+      "singularText": "counted the same ribbon twice for the official road total",
+      "pluralText": "counted the same ribbon twice for the official road total",
+      "personalSingularText": "counted the same ribbon twice for the official road total",
+      "secondPersonText": "counted the same ribbon twice for the official road total",
+      "tags": [
+        "infrastructure",
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-predicate-1-present",
+      "role": "predicate",
+      "text": "counts the same ribbon twice for the official road total",
+      "singularText": "counts the same ribbon twice for the official road total",
+      "pluralText": "count the same ribbon twice for the official road total",
+      "personalSingularText": "counts the same ribbon twice for the official road total",
+      "secondPersonText": "count the same ribbon twice for the official road total",
+      "tags": [
+        "infrastructure",
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-predicate-1-future",
+      "role": "predicate",
+      "text": "will count the same ribbon twice for the official road total",
+      "singularText": "will count the same ribbon twice for the official road total",
+      "pluralText": "will count the same ribbon twice for the official road total",
+      "personalSingularText": "will count the same ribbon twice for the official road total",
+      "secondPersonText": "will count the same ribbon twice for the official road total",
+      "tags": [
+        "infrastructure",
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-review-modifier",
+      "role": "modifier",
+      "text": "with the road inspector seated at the family table",
+      "tags": [
+        "nepotism",
+        "family"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "county-baron-contrast",
+      "role": "conjunction",
+      "text": "but, among familiar faces,",
+      "connectorKind": "but",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ]

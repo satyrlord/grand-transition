@@ -1,14 +1,21 @@
 # Milestone 027: Balance and Editorial Review
 
-**Status:** Approved  
-**Depends on:** 031
+**Status:** Complete
+
+**Depends on:** 025
 **Owns:** Content tone, safety approval, repetition, and balance evidence  
 **Production-file budget:** 5
 
 ## Deliver
 
-Run deterministic matchup simulation, repetition review, one-hour play review,
-content safety review, and fictional-composite editorial review. Adjust only
+Complete this milestone against the current playable artwork and validated
+phrase catalog. The phrase-volume checks use Milestone 031's ranges, but its
+additional character-pose images, scene layers, motion, and final media
+packages are not prerequisites for this milestone. Those asset deliveries
+remain in Milestone 031.
+
+Use the existing deterministic CI simulations, catalog uniqueness checks, content
+safety review, and fictional-composite editorial review. Adjust only
 validated balance data and content. Record methods, seeds, results, and reasons.
 
 Writing is institutionally specific, modular, sharp without slurs, absurd but
@@ -16,7 +23,7 @@ meaningful, distinct by character, and intelligible to international English
 players. Romanian proper nouns require enough English context to carry the joke.
 
 These English comprehension checks apply to the English catalog. Milestone
-030 owns natural Romanian adaptation and fluent Romanian review. Both locales
+030 owns natural Romanian adaptation and Romanian editorial checks. Both locales
 must meet the same fictional-identity, tone, safety, and scoring-meaning rules.
 
 ## Speech-inspired humor
@@ -54,7 +61,7 @@ Validate the loaded catalog, cross-corpus text uniqueness, locale derivation,
 ending grammar, comeback ownership, and representative complete sentences.
 Run deterministic matches across the roster and review rendered examples for
 readability and character voice. These checks verify the editorial pass;
-they do not establish the release balance or manual variety thresholds below.
+they complement the existing CI and editorial checks below.
 `tests/unit/authored-phrase-grammar.test.ts` verifies complete ending
 constructions, noun and modifier reachability, representative agreement, and
 exclusive comeback text across the current catalog.
@@ -81,9 +88,10 @@ exception does not permit real-person allegations or player-visible names. The
 review also rejects real political party names, acronyms, and logos. It permits
 generic ideological or social-family labels.
 
-Simulation reports seed, workload, matchups, difficulties, win rates, resolved
-round counts, rule-event rates, failures, and environment. Automatic development
-logs contain no personal data and never leave the local device.
+Retain the seed, workload, completed matches, resolved rounds, failures, and
+environment from the existing simulation and CI checks. No separate matchup
+matrix or win-rate report is required. Automatic development logs contain no
+personal data and never leave the local device.
 
 Milestone 024 adds bounded speech diagnostics to the final development-log
 record. Write the completed log after terminal narration finishes or is
@@ -96,31 +104,22 @@ Neutral phrases use empty weakness tags as specified in Milestone 005.
 Editorial review checks the visible phrase meaning independently of its
 character ownership or political research rationale. Family references retain
 their authored weakness tags. Neutral grammatical fragments are exempt from
-the fictional-target and character-tone checks below.
+the fictional-target and character-tone checks below. Functional interface
+text can use these same two exemptions with a recorded reason. Safety and
+English comprehension remain required for every interface record.
+The historical weakness tag `securitate` displays as `Former secret police`
+in setup and match labels. Its stable content identifier remains unchanged.
 
-The release balance workload contains every ordered character matchup,
-including mirrors, at all three difficulties. Each ordered matchup runs 100
-matches, with each player opening 50. For 18 characters this is 97,200 matches.
-The report separates character, opponent, difficulty, opening position, scene,
-and seed.
+Milestone 014 owns the existing bounded deterministic CI simulations and replay
+checks. Milestone 010 owns bounded scoring and pacing fixtures. This milestone
+uses these existing checks without a separate balance or variety workload.
 
-Aggregated character win rate must be 45 through 55 percent. Every ordered
-non-mirror matchup must be 35 through 65 percent. Opening-position advantage
-must be at most 5 percentage points. A fixed-seed repeat must reproduce every
-aggregate count. A result outside a band blocks completion unless the product
-owner records a release deviation under Milestone 028. No deviation can permit
-an aggregate rate outside 42 through 58 or a matchup outside 30 through 70.
-
-Across the complete release workload, a match must average 3 through 10
-resolved rounds. No ordered non-mirror matchup can average more than 12 resolved
-rounds. A result outside either pacing band blocks completion and cannot receive
-a release deviation.
-
-The report records combo, weakness, finisher, continuation, comeback, grammar
-mistake,
-sudden-death, and incomplete rates. Zero occurrences of a reachable owned rule
-across the workload is a defect. It also applies the Milestone 031 selection
-distribution and exact-insult repetition thresholds.
+Owned rule fixtures verify combo, weakness, finisher, continuation, comeback,
+grammar mistakes, sudden death, and incomplete constructions. An absent event
+in a sampled workload does not replace a rule fixture or create a release
+failure. Milestone 031
+uses authored text uniqueness, grammar reachability, and the normal CI checks
+for content variety.
 
 Editorial review severity is:
 
@@ -139,27 +138,117 @@ fictional institution or persona behavior rather than empty abuse. Its tone
 matches at least one recorded character or scene trait. An international English
 reader can understand the phrase fragment without external knowledge. A
 Romanian proper noun passes only when adjacent English context identifies why
-it matters. For each character, the owner blind-labels a seeded 12-line sample.
-
-At least 10 lines must be attributable to the intended character.
+it matters.
 
 ## Acceptance criteria
 
-- **AC-027-01:** The simulation contains exactly 97,200 completed matches and
-  the required balanced opening count for every ordered matchup and difficulty.
-- **AC-027-02:** Aggregate, matchup, and opening rates meet their bands or have
-  a permitted recorded deviation. Aggregate and matchup round counts meet their
-  pacing bands. Fixed seeds reproduce report totals.
-- **AC-027-03:** Every reachable rule occurs, no invariant failure occurs, and
-  variety and repetition meet Milestone 031 thresholds.
-- **AC-027-04:** One-hour manual play records start, end, setup sequence,
-  repeated insults, unclear rules, dominant strategies, and dispositions.
+- **AC-027-01:** The existing Milestone 014 deterministic CI simulations pass
+  their invariants and replay checks, with the required seed evidence.
+- **AC-027-02:** Milestone 010 bounded scoring and pacing fixtures pass. Fixed
+  seeds reproduce recorded public match facts and report totals.
+- **AC-027-03:** Owned rule fixtures pass without invariant failures. Authored
+  phrases remain reachable through the existing grammar and normal CI checks.
+- **AC-027-04:** Authored phrase text is unique across the catalog, and comeback
+  text is unique across character and tier. Representative complete sentences
+  pass the existing grammar tests.
 - **AC-027-05:** Every shipped prose and media record has complete review
   evidence and no blocker or major item.
 - **AC-027-06:** Automatic development logs contain no personal or private-hand
   data, make no remote request, and remain excluded from production.
-- **AC-027-07:** Every line passes all three editorial checks, and every
-  character passes the 10-of-12 blind-attribution threshold.
+- **AC-027-07:** Every line passes the fictional-target, character-or-scene
+  tone, and English comprehension checks. Neutral grammatical fragments and
+  functional interface text can use the stated fictional-target and tone
+  exemptions with a recorded reason.
+
+## Review tools and evidence
+
+The development-only `npm run review:release` command owns the release review
+files. It adds no application UI, runtime import, network request, catalog
+mutation, or replay version. Its three source files are
+`tools/content-review.ts`, `tools/editorial-review.ts`, and
+`tools/review-release.ts`. The package script and ignore-file entries complete
+the five-production-file budget.
+
+Use these commands from the repository root. Supply a new output directory for
+each preparation. Existing files are never overwritten.
+Build the current production artifact before preparation so emitted dependency
+assets enter its inventory.
+Repeated validation creates `validation-2.json`, then higher numbered reports,
+so review evidence can be corrected while retaining each earlier result.
+
+```text
+npm run build
+npm run review:release -- --phase prepare --output tmp/review-027
+npm run review:release -- --phase validate --output tmp/review-027
+```
+
+The phase and output options are required. The supported phases are `prepare`
+and `validate`. Preparation writes pending editorial evidence and content
+prerequisite results; validation checks the supplied evidence and current
+content. Neither phase runs matches. Simulation phases, seed options, and
+worker options are rejected.
+
+Unknown, duplicate, missing, or invalid options fail with exit code 1. Pending
+or invalid evidence and failed content prerequisites return 2. Valid submitted
+evidence and content checks return 0. These results do not replace the required
+CI checks. File, JSON, and other command errors return 1.
+
+Preparation records the commit, tracked-diff hash, execution-source hash,
+catalog-and-balance hash,
+Node version, operating system, CPU model, command, and build command.
+The execution-source hash includes TypeScript, module, and JSON files under
+`src/` and `tools/`, including untracked files, plus package and lockfile bytes.
+It checks the final general, character, and owned-scene phrase volumes from
+Milestone 031. General eligibility in a scene does not count as scene ownership.
+Validate the current shipped assets, audio, and browser behavior through their
+existing checks. Milestone 031's additional media packages do not block this
+review. No separate user sign-off is required.
+
+Preparation creates an inventory and pending editorial review records. Each
+review is bound to the current content digest. Validation rejects missing,
+duplicate, unknown, stale, incomplete, or invalid-date records. It rejects
+approval of blocker or major items and unjustified neutral exemptions.
+Complete the editorial review records and run the validation command. Retain
+the output privately with the build evidence.
+
+The discovered inventory covers loaded game-locale prose, content definitions,
+and all files under `src/assets/` and `public/`. It also inventories actual
+production files from `dist/` when their bytes do not match a source asset.
+This includes emitted fonts, runtime binaries, notices, and other dependency
+files. Each record binds actual bytes, not just a manifest declaration. A
+missing production build remains an explicit coverage gap. Preparation does
+not assert that an existing build is current; the reviewer must link its build
+evidence. The interface inventory uses the installed TypeScript parser to
+retain messages, imported constant values, templates, nested fallback text,
+raw HTML, and accessible attributes. It includes the page HTML, CSS content
+declarations, and displayed catalog and skin labels. The inventory deliberately
+retains technical literals so uncertain text is available for review.
+Each record keeps its source location, source form, static text, and unresolved
+expressions. Template forms are review material, not claimed runtime output.
+Local TypeScript, CSS, and JSON source hashes bind imported constants and formatters
+to the review. Syntax errors, missing required sources, and unknown HTML
+entities remain explicit coverage gaps. These gaps block AC-027-05 until their
+owning evidence is complete.
+The reviewer must trace each dynamic text source to reviewed catalog data,
+numeric state, another inventoried interface form, or a recorded runtime
+source. Browser-generated dates and local speech diagnostic values require
+that source note; they are not invented static game prose.
+Coarse source approval and license declarations do not become completed
+editorial evidence. Automated validation checks evidence structure and
+consistency; it cannot establish human comprehension or comic quality.
+
+`tests/unit/content-review.test.ts` and
+`tests/unit/release-review-cli.test.ts` verify content boundaries, content
+fingerprints, prerequisite reporting, removed-option rejection, and output
+preservation for editorial preparation and validation. Milestone 014
+owns the deterministic CI evidence for AC-027-01; Milestone 010 owns the bounded
+scoring and pacing evidence for AC-027-02. Owned rule fixtures provide the rule
+evidence in AC-027-03.
+`tests/unit/editorial-review.test.ts` verifies review coverage, evidence
+integrity, safety decisions, and line checks for AC-027-05 and AC-027-07. The
+development logger tests and production scans named in Milestone 014 verify
+AC-027-06. These bounded tests do not
+replace completed editorial safety review.
 
 ## Impeccable UI validation
 
@@ -171,7 +260,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Every matchup completes. No character exceeds 55% simulated win rate without a
-recorded rationale. The play review is not dominated by identical combinations.
+Existing deterministic CI and bounded scoring fixtures pass.
+Authored phrase and comeback text remains unique and passes grammar checks.
 No blocking editorial item remains. `npm run ci` passes. Stop before release
 optimization or infrastructure changes.

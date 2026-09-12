@@ -21,6 +21,7 @@
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization",
     "boundaries:check": "node tools/check-pure-boundaries.mjs",
     "simulate": "tsx tools/simulate.ts",
+    "review:release": "tsx tools/review-release.ts",
     "lint": "oxlint --type-aware --tsconfig tsconfig.json .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --config vitest.config.ts",

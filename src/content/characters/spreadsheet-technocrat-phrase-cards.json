@@ -114,6 +114,498 @@
         "safetyFlags": [],
         "notes": "Original transformed broken-family-budget motif: the person cleaning up receives the invoice. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
+    },
+    {
+      "id": "spreadsheet-technocrat-green-cell-hospital",
+      "role": "noun",
+      "text": "a hospital completed only in the green cells",
+      "tags": [
+        "delivery"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Spreadsheet completion is mistaken for a functioning hospital. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-average-citizen",
+      "role": "noun",
+      "text": "an average citizen rounded down to zero",
+      "tags": [
+        "human-scale"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Numerical rounding erases the person a policy is meant to serve. No real-person or quotation attribution. Final owner acceptance is separate."
+      },
+      "referentKind": "personal"
+    },
+    {
+      "id": "spreadsheet-technocrat-accountability-tab",
+      "role": "noun",
+      "text": "a responsibility tab permanently hidden from view",
+      "tags": [
+        "accountability"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A spreadsheet hides the place where responsibility should be visible. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-progress-bar-ruler",
+      "role": "noun",
+      "text": "a ruler for measuring unfinished progress bars",
+      "tags": [
+        "delivery"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Another measurement device replaces completion of the work. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-queue-statistic",
+      "role": "noun",
+      "text": "a waiting-room queue filed as spare capacity",
+      "tags": [
+        "human-scale"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A label disguises people waiting for a service. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-rounded-out-of-budget-past",
+      "role": "verb",
+      "text": "rounded each citizen's budget down to",
+      "tags": [
+        "human-scale"
+      ],
+      "singularText": "rounded each citizen's budget down to",
+      "pluralText": "rounded each citizen's budget down to",
+      "personalSingularText": "rounded each citizen's budget down to",
+      "secondPersonText": "rounded each citizen's budget down to",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-rounded-out-of-budget-present",
+      "role": "verb",
+      "text": "rounds each citizen's budget down to",
+      "tags": [
+        "human-scale"
+      ],
+      "singularText": "rounds each citizen's budget down to",
+      "pluralText": "round each citizen's budget down to",
+      "personalSingularText": "rounds each citizen's budget down to",
+      "secondPersonText": "round each citizen's budget down to",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-rounded-out-of-budget-future",
+      "role": "verb",
+      "text": "will round each citizen's budget down to",
+      "tags": [
+        "human-scale"
+      ],
+      "singularText": "will round each citizen's budget down to",
+      "pluralText": "will round each citizen's budget down to",
+      "personalSingularText": "will round each citizen's budget down to",
+      "secondPersonText": "will round each citizen's budget down to",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-buried-in-appendix-past",
+      "role": "verb",
+      "text": "buried the delivery date for",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "buried the delivery date for",
+      "pluralText": "buried the delivery date for",
+      "personalSingularText": "buried the delivery date for",
+      "secondPersonText": "buried the delivery date for",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-buried-in-appendix-present",
+      "role": "verb",
+      "text": "buries the delivery date for",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "buries the delivery date for",
+      "pluralText": "bury the delivery date for",
+      "personalSingularText": "buries the delivery date for",
+      "secondPersonText": "bury the delivery date for",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-buried-in-appendix-future",
+      "role": "verb",
+      "text": "will bury the delivery date for",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "will bury the delivery date for",
+      "pluralText": "will bury the delivery date for",
+      "personalSingularText": "will bury the delivery date for",
+      "secondPersonText": "will bury the delivery date for",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-delivered-on-slide-past",
+      "role": "predicate",
+      "text": "was delivered on a slide and nowhere else",
+      "tags": [
+        "delivery"
+      ],
+      "singularText": "was delivered on a slide and nowhere else",
+      "pluralText": "were delivered on a slide and nowhere else",
+      "personalSingularText": "was delivered on a slide and nowhere else",
+      "secondPersonText": "were delivered on a slide and nowhere else",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-delivered-on-slide-present",
+      "role": "predicate",
+      "text": "is delivered on a slide and nowhere else",
+      "tags": [
+        "delivery"
+      ],
+      "singularText": "is delivered on a slide and nowhere else",
+      "pluralText": "are delivered on a slide and nowhere else",
+      "personalSingularText": "is delivered on a slide and nowhere else",
+      "secondPersonText": "are delivered on a slide and nowhere else",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-delivered-on-slide-future",
+      "role": "predicate",
+      "text": "will be delivered on a slide and nowhere else",
+      "tags": [
+        "delivery"
+      ],
+      "singularText": "will be delivered on a slide and nowhere else",
+      "pluralText": "will be delivered on a slide and nowhere else",
+      "personalSingularText": "will be delivered on a slide and nowhere else",
+      "secondPersonText": "will be delivered on a slide and nowhere else",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-excluding-actual-people",
+      "role": "modifier",
+      "text": "after excluding actual people from the sample",
+      "tags": [
+        "human-scale"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposed public-service measure omits the public. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "spreadsheet-technocrat-neutral-contrast",
+      "role": "conjunction",
+      "text": "but, in either case,",
+      "tags": [],
+      "connectorKind": "but",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

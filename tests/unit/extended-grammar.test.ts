@@ -247,7 +247,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         state: 'ENDED',
-        publicText: 'Your brother denounced your concubine to the Securitate.',
+        publicText: 'Your brother denounced your partner with a reserved public office to the former secret police.',
       },
     });
   });
@@ -325,7 +325,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         publicText:
-          'Your brother is a snitch and a pig denounced your concubine',
+          'Your brother is a snitch and a pig denounced your partner with a reserved public office',
       },
     });
   });

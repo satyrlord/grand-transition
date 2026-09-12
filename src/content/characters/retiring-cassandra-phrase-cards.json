@@ -103,7 +103,10 @@
       "id": "retiring-cassandra-foundation-ending",
       "role": "ending",
       "text": "and your conscience has hired a spokesperson.",
-      "tags": ["accountability", "credibility"],
+      "tags": [
+        "accountability",
+        "credibility"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -117,7 +120,9 @@
       "id": "retiring-cassandra-country-removal-van",
       "role": "ending",
       "text": "and your love of country comes with a removal van.",
-      "tags": ["corruption"],
+      "tags": [
+        "corruption"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -125,6 +130,507 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original transformed civic-integrity motif: professed devotion becomes removal of public property. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "retiring-cassandra-unopened-warning",
+      "role": "noun",
+      "text": "an unopened warning marked as already resolved",
+      "tags": [
+        "competence",
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-resignation-draft",
+      "role": "noun",
+      "text": "a resignation draft older than the office printer",
+      "tags": [
+        "hope"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-disaster-agenda",
+      "role": "noun",
+      "text": "a disaster postponed to the next agenda item",
+      "tags": [
+        "competence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-emergency-bookmark",
+      "role": "noun",
+      "text": "a bookmark in the emergency manual",
+      "tags": [
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-retirement-fire-alarm",
+      "role": "noun",
+      "text": "a fire alarm invited to its own retirement party",
+      "tags": [
+        "hope",
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-1-past",
+      "role": "verb",
+      "text": "attached a previous warning to",
+      "singularText": "attached a previous warning to",
+      "pluralText": "attached a previous warning to",
+      "personalSingularText": "attached a previous warning to",
+      "secondPersonText": "attached a previous warning to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-1-present",
+      "role": "verb",
+      "text": "attaches a previous warning to",
+      "singularText": "attaches a previous warning to",
+      "pluralText": "attach a previous warning to",
+      "personalSingularText": "attaches a previous warning to",
+      "secondPersonText": "attach a previous warning to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-1-future",
+      "role": "verb",
+      "text": "will attach a previous warning to",
+      "singularText": "will attach a previous warning to",
+      "pluralText": "will attach a previous warning to",
+      "personalSingularText": "will attach a previous warning to",
+      "secondPersonText": "will attach a previous warning to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-2-past",
+      "role": "verb",
+      "text": "left a forwarding address for",
+      "singularText": "left a forwarding address for",
+      "pluralText": "left a forwarding address for",
+      "personalSingularText": "left a forwarding address for",
+      "secondPersonText": "left a forwarding address for",
+      "tags": [],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-2-present",
+      "role": "verb",
+      "text": "leaves a forwarding address for",
+      "singularText": "leaves a forwarding address for",
+      "pluralText": "leave a forwarding address for",
+      "personalSingularText": "leaves a forwarding address for",
+      "secondPersonText": "leave a forwarding address for",
+      "tags": [],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-verb-2-future",
+      "role": "verb",
+      "text": "will leave a forwarding address for",
+      "singularText": "will leave a forwarding address for",
+      "pluralText": "will leave a forwarding address for",
+      "personalSingularText": "will leave a forwarding address for",
+      "secondPersonText": "will leave a forwarding address for",
+      "tags": [],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-predicate-1-past",
+      "role": "predicate",
+      "text": "packed the emergency plan in a farewell hamper",
+      "singularText": "packed the emergency plan in a farewell hamper",
+      "pluralText": "packed the emergency plan in a farewell hamper",
+      "personalSingularText": "packed the emergency plan in a farewell hamper",
+      "secondPersonText": "packed the emergency plan in a farewell hamper",
+      "tags": [
+        "hope",
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-predicate-1-present",
+      "role": "predicate",
+      "text": "packs the emergency plan in a farewell hamper",
+      "singularText": "packs the emergency plan in a farewell hamper",
+      "pluralText": "pack the emergency plan in a farewell hamper",
+      "personalSingularText": "packs the emergency plan in a farewell hamper",
+      "secondPersonText": "pack the emergency plan in a farewell hamper",
+      "tags": [
+        "hope",
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-predicate-1-future",
+      "role": "predicate",
+      "text": "will pack the emergency plan in a farewell hamper",
+      "singularText": "will pack the emergency plan in a farewell hamper",
+      "pluralText": "will pack the emergency plan in a farewell hamper",
+      "personalSingularText": "will pack the emergency plan in a farewell hamper",
+      "secondPersonText": "will pack the emergency plan in a farewell hamper",
+      "tags": [
+        "hope",
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-review-modifier",
+      "role": "modifier",
+      "text": "after the third rehearsal of the preventable disaster",
+      "tags": [
+        "competence",
+        "results"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "retiring-cassandra-contrast",
+      "role": "conjunction",
+      "text": "yet, as previously noted,",
+      "connectorKind": "yet",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ]

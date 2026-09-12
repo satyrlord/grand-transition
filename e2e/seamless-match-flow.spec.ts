@@ -10,13 +10,21 @@ import {
   useFixedBrowserMatchSeed,
 } from './helpers/match-flow';
 
-const plan = planMatchBrowserFlow();
+// This fixture reaches two surviving carries and the cliffhanger with the final catalog.
+const plan = planMatchBrowserFlow(20_260_008);
 
 test.setTimeout(90_000);
 
 test('a hotseat match reaches persistent victory and restores title history', async ({
   page,
 }, testInfo) => {
+  const survivedCarries = new Set(plan.finalState.resolutionHistory.flatMap(
+    (round) => Object.values(round.players)
+      .filter((player) => player.continuation.status === 'survived')
+      .map((player) => player.playerId),
+  ));
+  expect(survivedCarries).toEqual(new Set(['player-one', 'player-two']));
+  expect(plan.finalState.resolutionHistory.some((round) => round.suddenDeath)).toBe(true);
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
   const failedRequests: string[] = [];

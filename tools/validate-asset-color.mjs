@@ -189,7 +189,7 @@ function validateMetrics(filePath, metrics, policy) {
   if (metrics.opaqueSamples < policy.minimumOpaqueSamples) {
     throw new Error(
       `${filePath}: color validation found only ${metrics.opaqueSamples} ` +
-        `opaque samples; manual color review is required.`,
+        `opaque samples; add enough visible artwork for color validation.`,
     );
   }
   if (
@@ -198,9 +198,8 @@ function validateMetrics(filePath, metrics, policy) {
   ) {
     throw new Error(
       `${filePath}: color validation found only ${metrics.neutralSamples} ` +
-        `neutral samples and ${metrics.coolSamples} cool samples; manual color ` +
-        `review is required instead of passing an image without a neutral or ` +
-        `cool anchor.`,
+        `neutral samples and ${metrics.coolSamples} cool samples; add a neutral ` +
+        `or cool reference area, then run color validation again.`,
     );
   }
 

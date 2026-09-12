@@ -43,6 +43,12 @@ test('roster crops and selected stages keep full responsive portrait sources', a
   }
 });
 
+test('explains the historical secret-police weakness in plain English', async () => {
+  const setup = await mountSetup({ ...createDefaultSetupSnapshot(), playerOneCharacterId: 'black-sea-captain' });
+  expect(setup.querySelector('.contestant-weaknesses')?.textContent).toContain('Former secret police');
+  expect(setup.querySelector('.contestant-weaknesses')?.textContent).not.toContain('Securitate');
+});
+
 test('requests fresh browser randomness for every new match seed', async () => {
   const generatedSeeds = [0, 0xffff_ffff];
   const getRandomValues = vi.spyOn(globalThis.crypto, 'getRandomValues');
@@ -178,7 +184,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   await setup.updateComplete;
   const transient = setup.querySelector('.character-inspector')!;
   expect(transient.textContent).toMatch(
-    /Character dossier.*Black Sea Captain.*Decorum.*Consistency.*Securitate/su,
+    /Character dossier.*Black Sea Captain.*Decorum.*Consistency.*Former secret police/su,
   );
   expect(transient.getAttribute('data-pinned')).toBe('false');
 
@@ -196,7 +202,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   const pinned = setup.querySelector('.character-inspector')!;
   expect(pinned.getAttribute('data-pinned')).toBe('true');
   expect(pinned.textContent).toMatch(
-    /Pinned dossier.*Black Sea Captain.*Decorum.*Consistency.*Securitate/su,
+    /Pinned dossier.*Black Sea Captain.*Decorum.*Consistency.*Former secret police/su,
   );
 
   const playerOneTarget = setup.querySelector<HTMLButtonElement>(

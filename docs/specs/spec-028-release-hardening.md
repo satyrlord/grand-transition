@@ -65,8 +65,13 @@ total gzip budget above.
 
 Resolve the browser matrix on the release date and record exact versions.
 Continuous integration uses installed Chromium, Firefox, WebKit, mobile
-Chromium, and mobile WebKit. Manual evidence covers the oldest supported Safari
-major, current macOS Safari, current iOS Safari, and current Android Chrome.
+Chromium, and mobile WebKit. Use automated production flows for exact supported
+Safari and Chrome versions when those runtimes are available. Record coverage
+of the oldest supported Safari major, current macOS Safari, current iOS Safari,
+and current Android Chrome separately from Playwright engine or device
+emulation. Unavailable runtime evidence remains explicitly unverified.
+Physical-device and manual observations are optional; they are not a milestone
+completion requirement and cannot substitute for a failed automated check.
 
 A release deviation names the failed criterion, measured result, user impact,
 owner, rationale, compensating control, expiry milestone or date, and approval

@@ -671,7 +671,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await captain.hover();
   const dossier = page.locator('.character-inspector');
   await expect(dossier).toContainText('Black Sea Captain');
-  await expect(dossier).toContainText('Decorum · Consistency · Securitate');
+  await expect(dossier).toContainText('Decorum · Consistency · Former secret police');
   await expect(dossier).toHaveAttribute('data-pinned', 'false');
 
   await captain.click({ button: 'right' });

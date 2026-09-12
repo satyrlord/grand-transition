@@ -15,7 +15,7 @@ The existing English formats and their original scoring remain supported.
 ## Deliver
 
 Add versioned replay and local match-log codecs, a headless simulation command,
-generated full-match tests, and automatic development match logs. Approve and
+generated full-match tests, and automatic development match logs. Define and
 enforce per-file coverage thresholds for pure TypeScript.
 
 The application UI contains game features only. Development and production
@@ -68,7 +68,7 @@ Local replay and match-log exports contain seed, setup, round count,
 selections, breakdowns, combo and weakness events, continuations, comebacks,
 and winner. They contain no personal data and are never sent remotely.
 
-Replay versions 1 through 8 use normalized JSON with these fields in order:
+Replay versions 1 through 9 use normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
 inputs. Dealt private cards and derived state are regenerated from the seed.
@@ -76,12 +76,12 @@ Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, the matching replay
 schema version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, and winner. Versions 2 through 8
+breakdowns, public rule events, and winner. Versions 2 through 9
 logs also contain each player's rendered public sentence and ordered used phrases for
 every round.
 Each used phrase keeps its stable identifier, rendered text, and active or
 carried source. Older version 1 and version 2 logs without this optional public
-sentence record remain valid. Versions 3 through 8 logs require the complete
+sentence record remain valid. Versions 3 through 9 logs require the complete
 public sentence record. The log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
@@ -98,18 +98,18 @@ Version 5 retains version 4 arithmetic and uses the neutral phrase catalog:
 neutral phrases have empty tags, and neutral identifiers replace themed
 identifiers on standard conjunctions and neutral relation families.
 Version 6 records `basePointsMultiplier` in setup as an integer from 1 through
-5. The field is required for versions 6 through 8 replay and match-log
+5. The field is required for versions 6 through 9 replay and match-log
 documents. Both players use this captured value. Invalid or missing values
 return `invalid-replay`. Version 6 uses version 5 phrase semantics and all other
 version 4 arithmetic. Version 7 keeps that scoring contract and uses the
 speech-inspired humor catalog from Milestone 027. Versions 4 and 5 always use
 multiplier 3, regardless of the current settings or caller-provided balance.
 Their normalized documents remain unchanged. New replays and match logs use
-version 8.
+version 9.
 Decoding and replaying versions 1
 through 3 selects each version's original scoring balance. Development simulations
 with an explicitly supplied historical balance export that historical replay
-version; current-balance simulations export version 8. Versions 1 through 6
+version; current-balance simulations export version 9. Versions 1 through 6
 restore the complete pre-humor version 6 phrase text, agreement forms,
 weakness tags, comeback text, phrase order, and scene and character pools.
 Versions 1 through 4 then restore the pre-neutral phrase identifiers, tags,
@@ -125,9 +125,9 @@ Missing or invalid fields return `invalid-replay`. An unknown version returns
 
 `tests/fixtures/replay-v1-scoring.json` is the retained
 version 1 source fixture for the step to version 2. Focused replay tests also
-retain the version 2 scoring result after version 8 becomes current. Encoding
+retain the version 2 scoring result after version 9 becomes current. Encoding
 preserves the supplied supported version and never relabels older commands as
-version 8. Focused tests also preserve modifier-bearing version 3 scores.
+version 9. Focused tests also preserve modifier-bearing version 3 scores.
 `tests/fixtures/replay-v4-neutral-scoring.json` retains the version 4 commands,
 renamed conjunction selections, and weakness matches from now-neutral phrases.
 `tests/fixtures/replay-v6-pre-humor-catalog.json` retains the version 6 commands
@@ -136,16 +136,35 @@ and comeback text, agreement keys, phrase pools, weakness scoring, and the exact
 captured final-state hash.
 
 Version 8 retains version 7 scoring and adds eight original Algorithmic Prophet
-film-motif cards under Milestone 026. Versions 1 through 7 first remove these
+film-motif cards under Milestone 026. Versions 1 through 7 remove these
 cards from phrase order, locale messages, character hands, and scene pools.
 The existing version 6 and earlier restoration then applies. The retained
 `tests/fixtures/replay-v7-before-prophet-film-phrases.json` verifies the original
 version 7 normalized bytes, complete catalog context, and captured final state.
 
+Version 9 keeps version 8 scoring and uses the final phrase volumes from
+Milestone 031. Before any older restoration, versions 1 through 8 load the
+complete saved version 8 catalog from
+`src/content/legacy-finalization-content-v8.json`. This preserves phrase order,
+text, agreement forms, tags, character definitions, scene definitions, phrase
+pools, and locale messages. Versions 1 through 7 then apply the older catalog
+and scoring rules described above. Version 9 uses the current catalog without
+this restoration. The retained
+`tests/fixtures/replay-v8-before-final-volume.json` verifies normalized command
+bytes, the complete catalog and locale hash, and the exact captured final-state
+hash. `tests/unit/replay-and-simulation.test.ts` also checks that changes to the
+current catalog cannot affect the restored version 1 through 8 contexts.
+
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
 writes a concise summary to standard output. Invalid arguments exit nonzero and
 name the invalid option.
+
+Milestone 027 adds the separate development-only `npm run review:release`
+command for release matchup, variety, and editorial evidence. It composes this
+milestone's exact simulator and current AI policies without changing the
+ordinary `simulate` command or replay context. Its owning specification defines
+the schedules, prerequisite checks, report fields, and editorial evidence.
 
 Pure rule, grammar, scoring, artificial intelligence (AI), replay, and codec
 files have per-file thresholds. Each file must reach 90 percent for statements,
@@ -156,14 +175,17 @@ Milestone 002 threshold remains 70 percent.
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
   normalized bytes and an exact final state. Version 1, version 2, and version 3
-  scoring fixtures replay with their original resolutions after version 8 becomes
+  scoring fixtures replay with their original resolutions after version 9 becomes
   current. The retained version 4 fixture preserves historical phrase identifiers,
   neutral-phrase weakness matches, scores, and normalized bytes. Version 5
   retains multiplier 3. Version 6 reproduces each selectable multiplier even
   when the current settings or supplied balance differ. The retained version 6
   fixture also reproduces its pre-humor catalog and exact final state. Version 7
   preserves its complete catalog and captured Prophet match. Version 8
-  reproduces each selectable multiplier with the current catalog.
+  preserves its complete catalog, locale, normalized commands, and captured
+  final state from before the final phrase-volume changes. Versions 1 through
+  8 remain independent of later catalog changes. Version 9 reproduces each
+  selectable multiplier with the current catalog.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID

@@ -183,8 +183,10 @@ is inspected read-only. No proprietary code or recordings are shipped.
   absent during round presentation. No onboarding, guided objective, recovery
   instruction, additional highlighted target, skip, replay, or progress state
   ships. Verifier: `e2e/tutorial-mode.spec.ts`.
-- **AC-025-06:** A written owner review confirms that each reaction reports only
-  public outcomes and does not teach tactics.
+- **AC-025-06:** Source inspection and the production reaction flows verify
+  that each reaction reports only public outcomes and does not teach tactics.
+  Verifiers: `tests/unit/round-presentation.test.ts`,
+  `e2e/round-presentation.spec.ts`, and `e2e/tutorial-mode.spec.ts`.
 
 ## Impeccable UI validation
 
@@ -195,7 +197,10 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Every public tactical and scoring event has a clear outcome reaction. Manual
-review covers motion, sound, and speech. Source scans prove that no tactical
-instruction beyond Milestone 016's optional grammar indication ships.
-`npm run ci` passes. Stop before broad content production.
+Every public tactical and scoring event has a clear outcome reaction. The
+automated presentation and audio flows verify event order, timing, public
+wording, and layout. Source inspection checks that no tactical instruction
+beyond Milestone 016's optional grammar indication ships. `npm run ci` passes.
+The user can review motion, sound, and speech separately after completion;
+subjective quality is not inferred from these automated checks. Stop before
+broad content production.

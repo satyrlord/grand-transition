@@ -126,6 +126,497 @@
         "safetyFlags": [],
         "notes": "Original transformed fresh-start motif: a supposedly new coalition retains evidence of its past. Agent editorial review, 2026-09-11; no real names or copied lines."
       }
+    },
+    {
+      "id": "coalition-acrobat-hinged-red-line",
+      "role": "noun",
+      "text": "a red line fitted with a door hinge",
+      "tags": [
+        "commitment"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposedly firm negotiating limit opens like a door. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-rotating-principles",
+      "role": "noun",
+      "text": "my rotating display stand for principles",
+      "tags": [
+        "consistency"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A display mechanism turns political principles toward each audience. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-erasable-vow",
+      "role": "noun",
+      "text": "a permanent commitment written in erasable ink",
+      "tags": [
+        "commitment"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The ink contradicts the promised permanence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-double-booked-handshake",
+      "role": "noun",
+      "text": "a handshake double-booked with the opposition",
+      "tags": [
+        "consistency"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial agreement has a competing appointment. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-amnesiac-calendar",
+      "role": "noun",
+      "text": "a negotiating calendar with yesterday torn out",
+      "tags": [
+        "memory"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Removing yesterday hides earlier commitments. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-rented-to-both-sides-past",
+      "role": "verb",
+      "text": "offered rival coalitions a lease on",
+      "tags": [
+        "consistency"
+      ],
+      "singularText": "offered rival coalitions a lease on",
+      "pluralText": "offered rival coalitions a lease on",
+      "personalSingularText": "offered rival coalitions a lease on",
+      "secondPersonText": "offered rival coalitions a lease on",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-rented-to-both-sides-present",
+      "role": "verb",
+      "text": "offers rival coalitions a lease on",
+      "tags": [
+        "consistency"
+      ],
+      "singularText": "offers rival coalitions a lease on",
+      "pluralText": "offer rival coalitions a lease on",
+      "personalSingularText": "offers rival coalitions a lease on",
+      "secondPersonText": "offer rival coalitions a lease on",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-rented-to-both-sides-future",
+      "role": "verb",
+      "text": "will offer rival coalitions a lease on",
+      "tags": [
+        "consistency"
+      ],
+      "singularText": "will offer rival coalitions a lease on",
+      "pluralText": "will offer rival coalitions a lease on",
+      "personalSingularText": "will offer rival coalitions a lease on",
+      "secondPersonText": "will offer rival coalitions a lease on",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-traded-for-cabinet-seats-past",
+      "role": "verb",
+      "text": "traded a cabinet seat for",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "traded a cabinet seat for",
+      "pluralText": "traded a cabinet seat for",
+      "personalSingularText": "traded a cabinet seat for",
+      "secondPersonText": "traded a cabinet seat for",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-traded-for-cabinet-seats-present",
+      "role": "verb",
+      "text": "trades a cabinet seat for",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "trades a cabinet seat for",
+      "pluralText": "trade a cabinet seat for",
+      "personalSingularText": "trades a cabinet seat for",
+      "secondPersonText": "trade a cabinet seat for",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-traded-for-cabinet-seats-future",
+      "role": "verb",
+      "text": "will trade a cabinet seat for",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "will trade a cabinet seat for",
+      "pluralText": "will trade a cabinet seat for",
+      "personalSingularText": "will trade a cabinet seat for",
+      "secondPersonText": "will trade a cabinet seat for",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-loyal-until-lunch-past",
+      "role": "predicate",
+      "text": "was loyal until the lunch invitations arrived",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "was loyal until the lunch invitations arrived",
+      "pluralText": "were loyal until the lunch invitations arrived",
+      "personalSingularText": "was loyal until the lunch invitations arrived",
+      "secondPersonText": "were loyal until the lunch invitations arrived",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-loyal-until-lunch-present",
+      "role": "predicate",
+      "text": "is loyal until the lunch invitations arrive",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "is loyal until the lunch invitations arrive",
+      "pluralText": "are loyal until the lunch invitations arrive",
+      "personalSingularText": "is loyal until the lunch invitations arrive",
+      "secondPersonText": "are loyal until the lunch invitations arrive",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-loyal-until-lunch-future",
+      "role": "predicate",
+      "text": "will be loyal until the lunch invitations arrive",
+      "tags": [
+        "commitment"
+      ],
+      "singularText": "will be loyal until the lunch invitations arrive",
+      "pluralText": "will be loyal until the lunch invitations arrive",
+      "personalSingularText": "will be loyal until the lunch invitations arrive",
+      "secondPersonText": "will be loyal until the lunch invitations arrive",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-under-reversible-oath",
+      "role": "modifier",
+      "text": "under an oath with a reversible cover",
+      "tags": [
+        "commitment"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An oath is treated as clothing that can be turned inside out. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "coalition-acrobat-neutral-contrast",
+      "role": "conjunction",
+      "text": "but, even so,",
+      "tags": [],
+      "connectorKind": "but",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

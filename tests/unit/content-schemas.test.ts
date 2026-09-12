@@ -200,12 +200,9 @@ describe('content schemas', () => {
         'some-hooligans',
         'scientific-socialism',
         'a-screwdriver-between-the-ribs',
-        'a-dumbass',
-        'an-animal',
         'a-historical-blunder',
         'rich-and-dishonest',
         'a-rooster',
-        'a-monkey',
         'a-naughty-boy',
         'the-dacs-that-come-from-the-tracs',
         'and-thats-the-synergy-of-facts',
@@ -253,14 +250,14 @@ describe('content schemas', () => {
     );
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'phrase.brought-the-miners-to-bucharest':
-        'brought the miners to Bucharest',
-      'phrase.sided-with-terrorists': 'sided with the terrorists in 1989',
-      'phrase.transports-voters-with-busses': 'transports voters with busses',
+        'brought a delegation of miners to the capital for a staged show of support',
+      'phrase.sided-with-terrorists': 'turned an emergency into a campaign slogan',
+      'phrase.transports-voters-with-busses': 'transports voters in buses painted as campaign billboards',
       'phrase.your-brother': 'your brother',
       'phrase.your-father': 'your father',
       'phrase.your-cousin': 'your cousin',
       'phrase.your-son-in-law': 'your son-in-law',
-      'phrase.your-concubine': 'your concubine',
+      'phrase.your-concubine': 'your partner with a reserved public office',
       'phrase.stole': 'stole',
       'phrase.eu-funds': 'EU funds',
       'phrase.appropriated': 'appropriated',
@@ -273,7 +270,7 @@ describe('content schemas', () => {
       'phrase.my-opponent': 'my opponent',
       'phrase.with': 'with',
       'phrase.a-public-apology': 'a public apology',
-      'phrase.to-the-securitate': 'to the Securitate',
+      'phrase.to-the-securitate': 'to the former secret police',
     });
     expect(phraseCardCatalog.characterPhraseIds['black-sea-captain']).toEqual(
       expect.arrayContaining(['hands-on-presidency', 'your-leaking-flagship']),
@@ -301,16 +298,13 @@ describe('content schemas', () => {
       ['some-hooligans', 'some hooligans'],
       ['scientific-socialism', 'scientific socialism'],
       ['a-screwdriver-between-the-ribs', 'a screwdriver in the reform gearbox'],
-      ['a-dumbass', 'a dumbass'],
-      ['an-animal', 'an animal'],
       ['a-historical-blunder', 'a historical blunder'],
       ['rich-and-dishonest', 'rich and dishonest'],
       ['a-rooster', 'a rooster'],
-      ['a-monkey', 'a monkey'],
       ['a-naughty-boy', 'a naughty boy'],
       [
         'the-dacs-that-come-from-the-tracs',
-        'and the Dacs that come from the Tracs.',
+        'and even the ancient tribes would ask you for a modern answer.',
       ],
       ['and-thats-the-synergy-of-facts', 'and the facts have formed a committee to escape the synergy.'],
     ] as const;
@@ -790,8 +784,8 @@ describe('content schemas', () => {
 
     expect(minerPhraseIds).toEqual(
       expect.arrayContaining([
-        'televised-revolution',
         'brought-the-miners-to-bucharest',
+        'brings-the-miners-to-bucharest',
       ]),
     );
     expect(
@@ -916,7 +910,7 @@ describe('content schemas', () => {
     ).toBe(false);
 
     const securitatePhrases = phraseCardCatalog.phrases.filter((phrase) =>
-      phraseCardCatalog.englishMessages[phrase.textKey]?.includes('Securitate'),
+      phraseCardCatalog.englishMessages[phrase.textKey]?.includes('former secret police'),
     );
     expect(securitatePhrases.length).toBeGreaterThan(0);
     expect(
@@ -1915,7 +1909,7 @@ test('loads the approved Thunder Tribune modifier without changing other ownersh
   const card = sampleContent.phrases.find(({ id }) => id === 'with-cemetery-turnout');
   expect(card).toMatchObject({ role: 'modifier', characterIds: ['thunder-tribune'] });
   const owner = sampleContent.characters.find(({ id }) => id === 'thunder-tribune')!;
-  expect(owner.characterPhraseIds).toHaveLength(21);
+  expect(owner.characterPhraseIds).toHaveLength(25);
   expect(owner.characterPhraseIds).toContain('with-cemetery-turnout');
   expect(phraseCardCatalog.englishMessages['phrase.with-cemetery-turnout']).toBe('with 110% turnout at the cemetery');
 });

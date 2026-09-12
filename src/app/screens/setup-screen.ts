@@ -1111,6 +1111,7 @@ function characterFieldForSkinField(field: SkinField): CharacterField {
 }
 
 function titleCase(value: string): string {
+  if (value === 'securitate') return msg('Former secret police');
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 

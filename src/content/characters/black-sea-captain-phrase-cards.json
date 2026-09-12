@@ -21,7 +21,11 @@
     "secondary": "#d7a34b",
     "accent": "#6d2823"
   },
-  "weaknessTags": ["decorum", "consistency", "securitate"],
+  "weaknessTags": [
+    "decorum",
+    "consistency",
+    "securitate"
+  ],
   "comebacks": {
     "weak": "Summer called. It refuses responsibility for your winter excuses.",
     "medium": "Your argument has more holes than my campaign promises.",
@@ -47,10 +51,17 @@
       "id": "hands-on-presidency",
       "role": "noun",
       "text": "a hands-on presidency with both hands on the microphone",
-      "tags": ["consistency", "decorum"],
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
       "scoreGroups": {
-        "substance": ["bureaucracy"],
-        "flavour": ["command"]
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "command"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -66,12 +77,16 @@
       "text": "steers",
       "singularText": "steers",
       "pluralText": "steer",
-      "tags": ["consistency", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -81,7 +96,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "present",
       "tenseFamily": "steers"
@@ -92,12 +107,16 @@
       "text": "steered",
       "singularText": "steered",
       "pluralText": "steered",
-      "tags": ["consistency", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -107,7 +126,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "past",
       "tenseFamily": "steers"
@@ -118,12 +137,16 @@
       "text": "will steer",
       "singularText": "will steer",
       "pluralText": "will steer",
-      "tags": ["consistency", "legacy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -133,7 +156,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political adaptation informed by merchant-marine command language. Not a quotation. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "future",
       "tenseFamily": "steers"
@@ -142,7 +165,10 @@
       "id": "through-troubled-waters",
       "role": "modifier",
       "text": "with a snowplough booked for midsummer",
-      "tags": ["competence", "consistency"],
+      "tags": [
+        "competence",
+        "consistency"
+      ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -155,7 +181,9 @@
       "id": "from-the-bridge",
       "role": "ending",
       "text": "and winter has once again refused to act like summer.",
-      "tags": ["consistency"],
+      "tags": [
+        "consistency"
+      ],
       "rarity": "rare",
       "finisherBonus": 3,
       "editorialReview": {
@@ -169,11 +197,16 @@
       "id": "returns-to-the-wheel",
       "role": "predicate",
       "text": "announces victory before the lifeboat vote",
-      "tags": ["consistency", "decorum"],
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -194,11 +227,16 @@
       "id": "returned-to-the-wheel",
       "role": "predicate",
       "text": "announced victory before the lifeboat vote",
-      "tags": ["consistency", "decorum"],
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -219,11 +257,16 @@
       "id": "will-return-to-the-wheel",
       "role": "predicate",
       "text": "will announce victory before the lifeboat vote",
-      "tags": ["consistency", "decorum"],
+      "tags": [
+        "consistency",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -244,10 +287,17 @@
       "id": "your-leaking-flagship",
       "role": "noun",
       "text": "your leaking flagship",
-      "tags": ["competence", "consistency"],
+      "tags": [
+        "competence",
+        "consistency"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["maritime"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "maritime"
+        ]
       },
       "rarity": "common",
       "editorialReview": {
@@ -262,10 +312,17 @@
       "role": "noun",
       "text": "a dockside peacock with admiral privileges",
       "referentKind": "personal",
-      "tags": ["decorum", "authenticity"],
+      "tags": [
+        "decorum",
+        "authenticity"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["animal-metaphor"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "animal-metaphor"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -279,10 +336,17 @@
       "id": "your-mutinous-coalition",
       "role": "noun",
       "text": "your mutinous coalition",
-      "tags": ["consistency", "legacy"],
+      "tags": [
+        "consistency",
+        "legacy"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["maritime"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "maritime"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -297,10 +361,17 @@
       "role": "noun",
       "text": "a captain without a compass",
       "referentKind": "personal",
-      "tags": ["competence", "credibility"],
+      "tags": [
+        "competence",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["maritime"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "maritime"
+        ]
       },
       "rarity": "common",
       "editorialReview": {
@@ -316,12 +387,18 @@
       "text": "grounds",
       "singularText": "grounds",
       "pluralText": "ground",
-      "tags": ["competence", "consistency"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics"],
-            "right": ["personal", "politics"]
+            "left": [
+              "personal",
+              "politics"
+            ],
+            "right": [
+              "personal",
+              "politics"
+            ]
           }
         ],
         "flavour": []
@@ -331,7 +408,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "present",
       "tenseFamily": "captain-grounds"
@@ -342,12 +419,18 @@
       "text": "grounded",
       "singularText": "grounded",
       "pluralText": "grounded",
-      "tags": ["competence", "consistency"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics"],
-            "right": ["personal", "politics"]
+            "left": [
+              "personal",
+              "politics"
+            ],
+            "right": [
+              "personal",
+              "politics"
+            ]
           }
         ],
         "flavour": []
@@ -357,7 +440,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "past",
       "tenseFamily": "captain-grounds"
@@ -368,12 +451,18 @@
       "text": "will ground",
       "singularText": "will ground",
       "pluralText": "will ground",
-      "tags": ["competence", "consistency"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics"],
-            "right": ["personal", "politics"]
+            "left": [
+              "personal",
+              "politics"
+            ],
+            "right": [
+              "personal",
+              "politics"
+            ]
           }
         ],
         "flavour": []
@@ -383,7 +472,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original maritime-political debate verb in the Captain's fictional voice. It describes political defeat, not physical restraint. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       },
       "tense": "future",
       "tenseFamily": "captain-grounds"
@@ -396,11 +485,18 @@
       "pluralText": "cannot steer their own party out of a puddle",
       "personalSingularText": "cannot steer their own party out of a puddle",
       "secondPersonText": "cannot steer your own party out of a puddle",
-      "tags": ["competence", "consistency"],
+      "tags": [
+        "competence",
+        "consistency"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -423,11 +519,18 @@
       "pluralText": "could not steer their own party out of a puddle",
       "personalSingularText": "could not steer their own party out of a puddle",
       "secondPersonText": "could not steer your own party out of a puddle",
-      "tags": ["competence", "consistency"],
+      "tags": [
+        "competence",
+        "consistency"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -450,11 +553,18 @@
       "pluralText": "will not steer their own party out of a puddle",
       "personalSingularText": "will not steer their own party out of a puddle",
       "secondPersonText": "will not steer your own party out of a puddle",
-      "tags": ["competence", "consistency"],
+      "tags": [
+        "competence",
+        "consistency"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -473,7 +583,9 @@
       "id": "captain-ballot-lifejacket",
       "role": "ending",
       "text": "and even the ballot box has asked for a lifejacket.",
-      "tags": ["competence"],
+      "tags": [
+        "competence"
+      ],
       "rarity": "rare",
       "finisherBonus": 3,
       "editorialReview": {
@@ -481,6 +593,46 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "black-sea-captain-ballot-lifeboat",
+      "role": "noun",
+      "text": "a lifeboat reserved for the winning coalition",
+      "tags": [
+        "consistency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "black-sea-captain-contrast",
+      "role": "conjunction",
+      "text": "but, against the current,",
+      "connectorKind": "but",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ],

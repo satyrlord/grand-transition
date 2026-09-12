@@ -40,7 +40,10 @@
     "voiceHint": "bright",
     "rate": 1.05,
     "pitch": 1.1,
-    "skinVoices": {"default": "george", "alternate": "emma"}
+    "skinVoices": {
+      "default": "george",
+      "alternate": "emma"
+    }
   },
   "animationSet": {
     "idle": "oat-milk-reformist-idle",
@@ -146,6 +149,513 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-inclusive-velvet-rope",
+      "role": "noun",
+      "text": "an inclusive workshop behind a velvet rope",
+      "tags": [
+        "class",
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-sticky-note-coalition",
+      "role": "noun",
+      "text": "a coalition held together by reusable sticky notes",
+      "tags": [
+        "relevance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-consensus-cushion",
+      "role": "noun",
+      "text": "a consensus cushion for uncomfortable questions",
+      "tags": [
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-facilitated-pothole",
+      "role": "noun",
+      "text": "a pothole with a trained discussion facilitator",
+      "tags": [
+        "relevance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-accessible-rooftop",
+      "role": "noun",
+      "text": "an accessible consultation on a members-only rooftop",
+      "tags": [
+        "class",
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-1-past",
+      "role": "verb",
+      "text": "invited a certified facilitator to discuss",
+      "singularText": "invited a certified facilitator to discuss",
+      "pluralText": "invited a certified facilitator to discuss",
+      "personalSingularText": "invited a certified facilitator to discuss",
+      "secondPersonText": "invited a certified facilitator to discuss",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-1-present",
+      "role": "verb",
+      "text": "invites a certified facilitator to discuss",
+      "singularText": "invites a certified facilitator to discuss",
+      "pluralText": "invite a certified facilitator to discuss",
+      "personalSingularText": "invites a certified facilitator to discuss",
+      "secondPersonText": "invite a certified facilitator to discuss",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-1-future",
+      "role": "verb",
+      "text": "will invite a certified facilitator to discuss",
+      "singularText": "will invite a certified facilitator to discuss",
+      "pluralText": "will invite a certified facilitator to discuss",
+      "personalSingularText": "will invite a certified facilitator to discuss",
+      "secondPersonText": "will invite a certified facilitator to discuss",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-2-past",
+      "role": "verb",
+      "text": "dedicated a premium listening session to",
+      "singularText": "dedicated a premium listening session to",
+      "pluralText": "dedicated a premium listening session to",
+      "personalSingularText": "dedicated a premium listening session to",
+      "secondPersonText": "dedicated a premium listening session to",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-2-present",
+      "role": "verb",
+      "text": "dedicates a premium listening session to",
+      "singularText": "dedicates a premium listening session to",
+      "pluralText": "dedicate a premium listening session to",
+      "personalSingularText": "dedicates a premium listening session to",
+      "secondPersonText": "dedicate a premium listening session to",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-verb-2-future",
+      "role": "verb",
+      "text": "will dedicate a premium listening session to",
+      "singularText": "will dedicate a premium listening session to",
+      "pluralText": "will dedicate a premium listening session to",
+      "personalSingularText": "will dedicate a premium listening session to",
+      "secondPersonText": "will dedicate a premium listening session to",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-predicate-1-past",
+      "role": "predicate",
+      "text": "mistook the workshop attendance sheet for a public mandate",
+      "singularText": "mistook the workshop attendance sheet for a public mandate",
+      "pluralText": "mistook the workshop attendance sheet for a public mandate",
+      "personalSingularText": "mistook the workshop attendance sheet for a public mandate",
+      "secondPersonText": "mistook the workshop attendance sheet for a public mandate",
+      "tags": [
+        "relevance",
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-predicate-1-present",
+      "role": "predicate",
+      "text": "mistakes the workshop attendance sheet for a public mandate",
+      "singularText": "mistakes the workshop attendance sheet for a public mandate",
+      "pluralText": "mistake the workshop attendance sheet for a public mandate",
+      "personalSingularText": "mistakes the workshop attendance sheet for a public mandate",
+      "secondPersonText": "mistake the workshop attendance sheet for a public mandate",
+      "tags": [
+        "relevance",
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-predicate-1-future",
+      "role": "predicate",
+      "text": "will mistake the workshop attendance sheet for a public mandate",
+      "singularText": "will mistake the workshop attendance sheet for a public mandate",
+      "pluralText": "will mistake the workshop attendance sheet for a public mandate",
+      "personalSingularText": "will mistake the workshop attendance sheet for a public mandate",
+      "secondPersonText": "will mistake the workshop attendance sheet for a public mandate",
+      "tags": [
+        "relevance",
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-review-modifier",
+      "role": "modifier",
+      "text": "after checking the revolution for dietary preferences",
+      "tags": [
+        "class",
+        "relevance"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "oat-milk-reformist-contrast",
+      "role": "conjunction",
+      "text": "but, in a spirit of inclusion,",
+      "connectorKind": "but",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ]

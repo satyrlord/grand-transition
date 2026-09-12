@@ -1,10 +1,17 @@
 import legacyContent from '../../content/legacy-humor-content-v6.json' with { type: 'json' };
 import legacyProphetContent from '../../content/legacy-prophet-content-v7.json' with { type: 'json' };
+import legacyFinalizationContent from '../../content/legacy-finalization-content-v8.json' with { type: 'json' };
+import type { ContentCatalog } from '../../content/content-catalog';
 import type { Phrase } from '../../content/schemas';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import type { ReplayContext } from './replay-codec';
 
 const removedProphetPhraseIds = new Set<string>(legacyProphetContent.removedPhraseIds);
+
+export function legacyFinalizationReplayContext(context: ReplayContext): ReplayContext {
+  const catalog = legacyFinalizationContent as ContentCatalog;
+  return { ...context, catalog, locale: catalog.locales[0]! };
+}
 
 export function legacyProphetReplayContext(context: ReplayContext): ReplayContext {
   const keepPhrase = (phraseId: string) => !removedProphetPhraseIds.has(phraseId);

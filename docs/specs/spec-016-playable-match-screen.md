@@ -178,9 +178,16 @@ After a comeback ends a turn, that character's gray bubble
 shows the complete sentence with the selected closing line until the exchange
 resolves. Do not show two equal speech cards.
 
-The wide bubble must show the complete current or preview sentence. It can use
-up to three responsive speech sizes and a taller fixed record. It must not clip,
-truncate, or replace sentence text with an ellipsis. A new construction
+The wide bubble retains the complete current or preview sentence. It can use
+up to three responsive speech sizes. Keep the fixed speech-record geometry and
+moderator clearance. When a sentence exceeds the available height, its named,
+keyboard-focusable text region uses native vertical scrolling. Wheel and
+keyboard input must reach the first and last words without page scrolling.
+Do not truncate text, use a sentence ellipsis, or shrink the current speech
+type sizes to fit more words. Short sentences remain fully visible without a
+scrollbar. Start the text region at the top when the displayed sentence,
+speaker, or round changes. Other view updates preserve its scroll position.
+A new construction
 clears the prior round text from the wide bubble before its first phrase. Its
 current text replaces all prior round text after the first accepted phrase.
 
@@ -360,13 +367,20 @@ timer-refill abuse.
   paths leave game truth unchanged. The private choices and compact
   SVG Reshuffle control move to the active side without changing the
   `redraw-hand` command contract.
-- **AC-016-12:** The shipped longest sentence remains fully visible in the wide
-  bubble at every supported evidence viewport. The same rule applies to a
-  synthetic sentence that is 40 percent longer. The browser finds no horizontal or vertical
-  text clipping and no sentence ellipsis.
-  Measure the actual text range against the speech record, not only the text
-  element's own scroll dimensions. Dense speech uses scene-height-based type
-  sizing and compact vertical padding to preserve moderator clearance.
+- **AC-016-12:** The complete current sentence remains readable inside the wide
+  bubble at every supported evidence viewport. Test the longest retained
+  current-catalog example, a synthetic sentence that is 40 percent longer, and
+  a larger bounded fixture. When needed, native vertical scrolling inside the
+  named text region reaches the first and last words. Keyboard focus and
+  scrolling work without game commands or page scrolling. There is no
+  horizontal clipping, sentence truncation, or sentence ellipsis. Measure the
+  first and last text ranges at their scroll positions against the speech
+  record, not only the text element's own scroll dimensions. The outer record,
+  moderator clearance, and existing three speech sizes remain unchanged.
+  Short text needs no scrolling. New text, speaker, or round resets the region
+  to the top; unrelated view updates preserve its scroll position.
+  `tests/browser/match-screen.browser.test.ts` verifies these boundaries with
+  the current authored long sentence and enlarged text at all four viewports.
 - **AC-016-13:** Each narrator receives its own public bubble and ordered inline
   component scores, then total and damage, as defined by Milestone 025. Applied
   factors and public weakness names remain visible with their component. Both

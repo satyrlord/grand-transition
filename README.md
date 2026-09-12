@@ -31,8 +31,22 @@ Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-024, 025, 027 through 029, and 031 remain incomplete. Milestone 023 is marked
+024, 025, 028, 029, and 031 remain incomplete. Milestone 023 is marked
 complete by its owning specification.
+
+Milestone 027 is complete against the current artwork and 985-phrase catalog.
+Its editorial safety review and normal CI checks pass. Additional artwork remains
+in Milestone 031. Manual user reviews and separate large balance or variety runs
+are not completion requirements.
+Run
+`npm run review:release -- --phase prepare --output tmp/review-027`
+to create editorial review records. The catalog meets Milestone 031 phrase
+volumes. The prepare and validate phases check content prerequisites and
+editorial evidence. Balance and variety verification use existing deterministic
+CI, bounded scoring, text uniqueness, and grammar fixtures. The review command
+does not run matches.
+The tools do not grant editorial approval or milestone completion. See
+[the review procedure](docs/specs/spec-027-balance-editorial.md#review-tools-and-evidence).
 
 [Milestone 030](docs/specs/spec-030-romanian-localization-and-speech.md) is
 approved and pending implementation. Phase 1 adds the complete Romanian

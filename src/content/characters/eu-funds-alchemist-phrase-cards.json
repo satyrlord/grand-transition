@@ -126,6 +126,498 @@
         "safetyFlags": [],
         "notes": "Original fictional extension of pastry-price satire into an absurd explanation for missing funds."
       }
+    },
+    {
+      "id": "eu-funds-alchemist-ribbon-without-bridge",
+      "role": "noun",
+      "text": "a bridge-opening ribbon stretched over an empty ditch",
+      "tags": [
+        "outcomes"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremony supplies the ribbon before the bridge exists. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-maintenance-confetti",
+      "role": "noun",
+      "text": "a maintenance plan printed on confetti",
+      "tags": [
+        "maintenance"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A durable responsibility is recorded on disposable party debris. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-transparent-blackout",
+      "role": "noun",
+      "text": "a transparency report with opaque fold-out pages",
+      "tags": [
+        "transparency"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The report physically contradicts its promise of openness. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-funded-pothole",
+      "role": "noun",
+      "text": "a pothole with its own project anniversary",
+      "tags": [
+        "outcomes",
+        "maintenance"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An unresolved defect receives a ceremony instead of a repair. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-milestone-balloon",
+      "role": "noun",
+      "text": "a completed milestone tied to a helium balloon",
+      "tags": [
+        "outcomes"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A claimed project result floats away instead of serving anyone. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-converted-into-launch-costs-past",
+      "role": "verb",
+      "text": "converted the launch budget into",
+      "tags": [
+        "outcomes"
+      ],
+      "singularText": "converted the launch budget into",
+      "pluralText": "converted the launch budget into",
+      "personalSingularText": "converted the launch budget into",
+      "secondPersonText": "converted the launch budget into",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-converted-into-launch-costs-present",
+      "role": "verb",
+      "text": "converts the launch budget into",
+      "tags": [
+        "outcomes"
+      ],
+      "singularText": "converts the launch budget into",
+      "pluralText": "convert the launch budget into",
+      "personalSingularText": "converts the launch budget into",
+      "secondPersonText": "convert the launch budget into",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-converted-into-launch-costs-future",
+      "role": "verb",
+      "text": "will convert the launch budget into",
+      "tags": [
+        "outcomes"
+      ],
+      "singularText": "will convert the launch budget into",
+      "pluralText": "will convert the launch budget into",
+      "personalSingularText": "will convert the launch budget into",
+      "secondPersonText": "will convert the launch budget into",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-hid-behind-funding-plaque-past",
+      "role": "verb",
+      "text": "hid the funding plaque behind",
+      "tags": [
+        "transparency"
+      ],
+      "singularText": "hid the funding plaque behind",
+      "pluralText": "hid the funding plaque behind",
+      "personalSingularText": "hid the funding plaque behind",
+      "secondPersonText": "hid the funding plaque behind",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-hid-behind-funding-plaque-present",
+      "role": "verb",
+      "text": "hides the funding plaque behind",
+      "tags": [
+        "transparency"
+      ],
+      "singularText": "hides the funding plaque behind",
+      "pluralText": "hide the funding plaque behind",
+      "personalSingularText": "hides the funding plaque behind",
+      "secondPersonText": "hide the funding plaque behind",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-hid-behind-funding-plaque-future",
+      "role": "verb",
+      "text": "will hide the funding plaque behind",
+      "tags": [
+        "transparency"
+      ],
+      "singularText": "will hide the funding plaque behind",
+      "pluralText": "will hide the funding plaque behind",
+      "personalSingularText": "will hide the funding plaque behind",
+      "secondPersonText": "will hide the funding plaque behind",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-maintained-in-photo-past",
+      "role": "predicate",
+      "text": "was maintained only in the opening-day photograph",
+      "tags": [
+        "maintenance"
+      ],
+      "singularText": "was maintained only in the opening-day photograph",
+      "pluralText": "were maintained only in the opening-day photograph",
+      "personalSingularText": "was maintained only in the opening-day photograph",
+      "secondPersonText": "were maintained only in the opening-day photograph",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-maintained-in-photo-present",
+      "role": "predicate",
+      "text": "is maintained only in the opening-day photograph",
+      "tags": [
+        "maintenance"
+      ],
+      "singularText": "is maintained only in the opening-day photograph",
+      "pluralText": "are maintained only in the opening-day photograph",
+      "personalSingularText": "is maintained only in the opening-day photograph",
+      "secondPersonText": "are maintained only in the opening-day photograph",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-maintained-in-photo-future",
+      "role": "predicate",
+      "text": "will be maintained only in the opening-day photograph",
+      "tags": [
+        "maintenance"
+      ],
+      "singularText": "will be maintained only in the opening-day photograph",
+      "pluralText": "will be maintained only in the opening-day photograph",
+      "personalSingularText": "will be maintained only in the opening-day photograph",
+      "secondPersonText": "will be maintained only in the opening-day photograph",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-ribbon-spare-parts",
+      "role": "modifier",
+      "text": "with spare parts cut from the ceremonial ribbon",
+      "tags": [
+        "maintenance"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A ribbon is an absurd substitute for functioning repair materials. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "eu-funds-alchemist-neutral-contrast",
+      "role": "conjunction",
+      "text": "yet, meanwhile,",
+      "tags": [],
+      "connectorKind": "yet",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }
