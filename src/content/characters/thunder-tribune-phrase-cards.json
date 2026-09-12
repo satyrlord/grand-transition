@@ -21,7 +21,11 @@
     "secondary": "#f0d2a0",
     "accent": "#111826"
   },
-  "weaknessTags": ["evidence", "credibility", "restraint"],
+  "weaknessTags": [
+    "evidence",
+    "credibility",
+    "restraint"
+  ],
   "comebacks": {
     "weak": "Fetch the phone. Even the dial tone has a stronger argument.",
     "medium": "You cannot evict the truth from my office. It has never lived here.",
@@ -36,7 +40,10 @@
     "voiceHint": "sharp",
     "rate": 1.1,
     "pitch": 0.95,
-    "skinVoices": {"default": "george", "alternate": "emma"}
+    "skinVoices": {
+      "default": "george",
+      "alternate": "emma"
+    }
   },
   "animationSet": {
     "idle": "thunder-tribune-idle",
@@ -49,10 +56,17 @@
       "role": "noun",
       "text": "that prime-time scarecrow",
       "referentKind": "personal",
-      "tags": ["evidence", "credibility"],
+      "tags": [
+        "evidence",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["media"],
-        "flavour": ["oratory"]
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "oratory"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -68,12 +82,19 @@
       "text": "outshouts",
       "singularText": "outshouts",
       "pluralText": "outshout",
-      "tags": ["restraint", "decorum"],
+      "tags": [
+        "restraint",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"],
-            "right": ["bureaucracy"]
+            "left": [
+              "media"
+            ],
+            "right": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -94,12 +115,19 @@
       "text": "outshouted",
       "singularText": "outshouted",
       "pluralText": "outshouted",
-      "tags": ["restraint", "decorum"],
+      "tags": [
+        "restraint",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"],
-            "right": ["bureaucracy"]
+            "left": [
+              "media"
+            ],
+            "right": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -120,12 +148,19 @@
       "text": "will outshout",
       "singularText": "will outshout",
       "pluralText": "will outshout",
-      "tags": ["restraint", "decorum"],
+      "tags": [
+        "restraint",
+        "decorum"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"],
-            "right": ["bureaucracy"]
+            "left": [
+              "media"
+            ],
+            "right": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -144,11 +179,16 @@
       "id": "from-the-marble-rostrum",
       "role": "predicate",
       "text": "could lose an election to an empty ballot",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -169,11 +209,16 @@
       "id": "can-lose-to-an-empty-ballot",
       "role": "predicate",
       "text": "can lose an election to an empty ballot",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -194,11 +239,16 @@
       "id": "will-lose-to-an-empty-ballot",
       "role": "predicate",
       "text": "will lose an election to an empty ballot",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -219,7 +269,10 @@
       "id": "before-the-nation-loses-patience",
       "role": "ending",
       "text": "and my second phone has already filed a complaint.",
-      "tags": ["restraint", "credibility"],
+      "tags": [
+        "restraint",
+        "credibility"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -233,11 +286,16 @@
       "id": "raises-the-volume-again",
       "role": "predicate",
       "text": "seizes the studio phone again",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -258,11 +316,16 @@
       "id": "seized-the-studio-phone-again",
       "role": "predicate",
       "text": "seized the studio phone again",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -283,11 +346,16 @@
       "id": "will-seize-the-studio-phone-again",
       "role": "predicate",
       "text": "will seize the studio phone again",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["media"]
+            "left": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -309,10 +377,17 @@
       "role": "noun",
       "text": "that powdered scarecrow",
       "referentKind": "personal",
-      "tags": ["decorum", "authenticity"],
+      "tags": [
+        "decorum",
+        "authenticity"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["appearance-metaphor"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "appearance-metaphor"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -326,10 +401,17 @@
       "id": "your-paper-crown",
       "role": "noun",
       "text": "your paper crown",
-      "tags": ["credibility", "legacy"],
+      "tags": [
+        "credibility",
+        "legacy"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["status"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "status"
+        ]
       },
       "rarity": "common",
       "editorialReview": {
@@ -344,10 +426,17 @@
       "role": "noun",
       "text": "a squealing party trumpet",
       "referentKind": "personal",
-      "tags": ["restraint", "credibility"],
+      "tags": [
+        "restraint",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["oratory"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "oratory"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -362,10 +451,17 @@
       "role": "noun",
       "text": "a committee clerk possessed by a loudspeaker",
       "referentKind": "personal",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["fantasy-metaphor"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "fantasy-metaphor"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -380,10 +476,17 @@
       "role": "noun",
       "text": "a scandal-powered kettle",
       "referentKind": "personal",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["romanianism"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "romanianism"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -401,11 +504,17 @@
       "personalSingularText": "whistles like a scandal-powered kettle on television",
       "singularText": "whistles like a scandal-powered kettle on television",
       "pluralText": "whistle like scandal-powered kettles on television",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "media"]
+            "left": [
+              "personal",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -428,11 +537,17 @@
       "personalSingularText": "whistled like a scandal-powered kettle on television",
       "singularText": "whistled like a scandal-powered kettle on television",
       "pluralText": "whistled like scandal-powered kettles on television",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "media"]
+            "left": [
+              "personal",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -455,11 +570,17 @@
       "personalSingularText": "will whistle like a scandal-powered kettle on television",
       "singularText": "will whistle like a scandal-powered kettle on television",
       "pluralText": "will whistle like scandal-powered kettles on television",
-      "tags": ["decorum", "credibility"],
+      "tags": [
+        "decorum",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "media"]
+            "left": [
+              "personal",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -478,7 +599,10 @@
       "id": "bring-me-the-studio-phone",
       "role": "ending",
       "text": "and fetch my phone before I have to shout internationally.",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -502,6 +626,143 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "User-approved original adaptation of a dead-voter election joke for the fictional Thunder Tribune. The impossible turnout is fictional satire, not a quotation or a claim about an actual election."
+      }
+    },
+    {
+      "id": "thunder-tribune-verb-1-past",
+      "role": "verb",
+      "text": "declared a poetic emergency over",
+      "singularText": "declared a poetic emergency over",
+      "pluralText": "declared a poetic emergency over",
+      "personalSingularText": "declared a poetic emergency over",
+      "secondPersonText": "declared a poetic emergency over",
+      "tags": [
+        "restraint",
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "thunder-tribune-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "thunder-tribune-verb-1-present",
+      "role": "verb",
+      "text": "declares a poetic emergency over",
+      "singularText": "declares a poetic emergency over",
+      "pluralText": "declare a poetic emergency over",
+      "personalSingularText": "declares a poetic emergency over",
+      "secondPersonText": "declare a poetic emergency over",
+      "tags": [
+        "restraint",
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "thunder-tribune-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "thunder-tribune-verb-1-future",
+      "role": "verb",
+      "text": "will declare a poetic emergency over",
+      "singularText": "will declare a poetic emergency over",
+      "pluralText": "will declare a poetic emergency over",
+      "personalSingularText": "will declare a poetic emergency over",
+      "secondPersonText": "will declare a poetic emergency over",
+      "tags": [
+        "restraint",
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "thunder-tribune-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "thunder-tribune-contrast",
+      "role": "conjunction",
+      "text": "yet, above the applause,",
+      "connectorKind": "yet",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ],

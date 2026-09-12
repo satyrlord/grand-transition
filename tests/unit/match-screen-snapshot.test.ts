@@ -362,7 +362,7 @@ describe('match-screen snapshot', () => {
     const snapshot = createMatchScreenSnapshot(state);
 
     expect(snapshot.sentenceText).toBe(currentSentence);
-    expect(snapshot.sentenceText).toBe('Your concubine');
+    expect(snapshot.sentenceText).toBe('Your partner with a reserved public office');
   });
 
   test('keeps a private-card sentence public after its speaker ends the turn', () => {

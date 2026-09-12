@@ -157,7 +157,7 @@ describe('asset color guard', () => {
     }
   }, 30_000);
 
-  test('blocks an image that has no neutral anchor for manual review', async () => {
+  test('rejects an image that has no neutral or cool reference area', async () => {
     const fixtureRoot = await mkdtemp(
       path.join(os.tmpdir(), 'grand-transition-color-review-'),
     );
@@ -170,7 +170,7 @@ describe('asset color guard', () => {
       );
 
       await expect(runValidator(fixtureRoot)).rejects.toMatchObject({
-        stderr: expect.stringContaining('manual color review is required'),
+        stderr: expect.stringContaining('add a neutral or cool reference area'),
       });
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });

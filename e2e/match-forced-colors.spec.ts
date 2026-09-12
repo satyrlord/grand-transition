@@ -41,11 +41,14 @@ test('forced colors preserve readable disabled choices during the computer turn'
   await page.setViewportSize({ width: 1024, height: 720 });
   await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
   await useFixedBrowserMatchSeed(page);
-  await page.clock.install();
+  const clockStart = new Date('2026-09-12T12:00:00Z');
+  await page.clock.install({ time: clockStart });
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Single Player', exact: true }).click();
+  // Freeze before creating a turn timer. The target is beyond this test's
+  // timeout, so browser/driver latency cannot turn it into a past deadline.
+  await page.clock.pauseAt(new Date(clockStart.getTime() + 60_000));
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
-  await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
   await page.locator('.shared-board [data-role="noun"] button').first().click();
   await expect(page.locator('.ai-thinking-record')).toBeVisible();
   const facts = await page.locator('.common-phrases').evaluate((element) => {

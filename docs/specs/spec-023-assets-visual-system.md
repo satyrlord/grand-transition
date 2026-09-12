@@ -148,11 +148,11 @@ added after the fixed baseline remains under Milestone 031.
 Create it from scratch under the same locked art direction and completed
 character study.
 
-For targeted skin consistency repairs, approved conforming portraits can be
-uploaded as visual style references with product-owner authorization. Preserve
+For targeted skin consistency repairs, conforming project portraits can be
+used as visual style references within the authorized repair task. Preserve
 their source, license, hash, and role in the private input record. Use them to
 match rendering technique, not to replace the target character's identity.
-This authorized style-reference path supersedes the input prohibition below
+This style-reference path supersedes the input prohibition below
 for those repairs. It does not authorize references from unrelated external art.
 
 Regenerate each baseline asset as new art. A current raster can be inspected
@@ -171,16 +171,16 @@ study before regeneration starts for any of its skins. An existing prompt does
 not qualify as a complete study. The study must define the archetype,
 silhouette, proportions, face or mechanical
 display, and clothing or chassis. It must also define gesture rhythm, prop logic,
-palette, every baseline skin, state language, and exclusions. Any required
-product-owner approval is recorded in the private
-study.
+palette, every baseline skin, state language, and exclusions. Record the
+contract sources and any material implementation assumptions in the private
+study. A separate product-owner sign-off is not required.
 
-The art agent must audit the study before generation. When information is
-missing, unclear, or contradictory, the agent must use `$grill-me` with the
-product owner. It must resolve one decision at a time and update the private
-study with the resulting direction. The agent must not infer the missing
-decision from a current raster or prompt. It must not start generation while
-one required decision remains unresolved or deferred.
+The art agent audits the study before generation. Resolve routine missing
+details from the owning contracts and record material assumptions in the
+private study. A current raster or prompt can identify a discrepancy but does
+not override the art direction. Ask the user only when a required input cannot
+be resolved from the contracts and blocks generation. A mandatory interview or
+human approval is not part of readiness.
 
 ### Scene readiness
 
@@ -191,10 +191,12 @@ palette, focal regions, interface-safe regions, and responsive crop. A prompt
 in the temporary folder is implementation evidence only and does not complete
 this direction.
 
-When scene information is missing, unclear, or contradictory, the art agent
-must use `$grill-me` with the product owner. It must resolve one decision at a
-time and update the owning approved specification with the resulting current
-direction before generation starts.
+When scene information is missing, unclear, or contradictory, resolve routine
+details from the shared art and scene contracts and record material
+assumptions. Update the owning specification when its durable direction
+changes. Ask only for a required input that cannot be resolved from those
+contracts and blocks generation. A separate interview or human sign-off is
+not required.
 
 Use one locked art direction for the complete baseline. Review all regenerated
 assets together. A successful isolated portrait or scene does not establish
@@ -334,7 +336,9 @@ stable identifiers, character identity, pose purpose, and gameplay data.
 This targeted consistency repair supersedes the atomic baseline-regeneration
 rule above. A replacement must pass a comparison with the calibration set and
 its own skin's retained drawings before import. Transparency acceptance and
-style acceptance are separate decisions. No skin has an individual style exception.
+style conformance are separate checks. Agents can perform the image comparison
+and retain its observations. No skin has an individual style exception or
+requires a separate human sign-off.
 
 Every playable character must communicate one distinct fictional political,
 media, civic, or bureaucratic archetype before the nameplate is visible. This
@@ -393,8 +397,9 @@ private generation brief. Use an attentive, mildly exasperated adult
 caricature, navy jacket, and light blouse. Reject anime, childlike, doll-like,
 and geometric-placeholder faces. Generate through text prompts only, without
 image references. Preserve the shared camera, layer separation, focal regions,
-color controls, and interface clearance below. Generation approval does not
-establish visual acceptance of an output.
+color controls, and interface clearance below. Generation success does not
+establish output conformance; the agent checks the artifact against these
+contracts and retains the observed result.
 
 All four fixed scene layers use one straight-on orthographic 16:9 camera. Center
 the camera on the stage center axis. Keep its view level and perpendicular to
@@ -472,6 +477,10 @@ of scene width. Preserve the complete square source without an additional
 letterbox offset. The speech record stays within the central 32 percent of
 scene width, from 18 through 34 percent of scene height. Validate visible
 character anatomy and speech together, not only the image element bounds.
+Oversized sentence text scrolls vertically inside that fixed speech record
+under AC-016-12. Its text region remains keyboard-focusable and contains every
+word. Do not enlarge the record, reduce the existing speech type sizes, or
+move the board or moderator to accommodate longer sentences.
 
 An approved character-height contract can move a playable face above or below
 the normal-adult eye-line reference. Keep the character on the same floor and
@@ -628,7 +637,7 @@ combination is implementation evidence, not visual authority.
 2. Nunito Black 900 is the selected rounded speech family. It owns delivered
    speech, the current construction, and sentence previews. Render it in visual
    uppercase. Preserve the authored case for source text, accessibility, and
-   speech output. Do not use Fredoka Bold without new explicit approval.
+   speech output. Do not use Fredoka Bold for this speech role.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
    600, and bold 700. It owns phrase lists, private phrases, setup fields,
    labels, validation, disabled reasons, score explanations, and compatibility
@@ -1007,7 +1016,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 - **AC-023-05:** All supported landscape variants keep declared focal regions
   visible and meet CLS limits.
 - **AC-023-06:** Motion procedures meet all timing and pointer requirements.
-- **AC-023-07:** The approved font comparison covers all four exclusive roles,
+- **AC-023-07:** The font comparison covers all four exclusive roles,
   specified content, and viewports. The evidence records the selected local
   WOFF2 files, licenses, weights, metric fallbacks, and use rules.
   Fallback rendering causes no hidden or clipped text. Visual uppercase does not change source,
@@ -1054,19 +1063,20 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   inventory evidence. Focused builder and validator tests reject an unchanged
   source hash, missing license, or missing runtime variant.
 - **AC-023-13:** All 18 represented archetypes have a complete private character
-  study before generation. An existing prompt alone fails readiness. Resolve
-  every required decision before generation, and leave no required decision
-  unresolved or deferred.
+  study before generation. An existing prompt alone fails readiness. The agent
+  records the required direction from contracts and material assumptions. Only
+  an unresolved input that blocks generation requires a user response.
 - **AC-023-14:** Each baseline scene layer has complete camera, composition,
   layer, subject, prop, lighting, focal-region, interface-safe-region, and crop
   direction in its owning approved specification. A temporary prompt alone
-  fails readiness. Resolve every required decision before generation.
+  fails readiness. The agent resolves routine details from the contracts;
+  only a required input that blocks generation needs a user response.
 - **AC-023-15:** No current baseline raster is a generation, tracing, editing,
   compositing, identity, composition, or style input for its baseline replacement.
-  A targeted skin-consistency repair can use an approved conforming portrait as
-  a style reference only through the product-owner-authorized exception above.
+  A targeted skin-consistency repair can use a conforming project portrait as
+  a style reference through the exception for the authorized repair above.
   Its private input record contains the reference source, license, hash, role,
-  and authorization. A side-by-side review of the complete regenerated baseline
+  and repair-task scope. An agent comparison of the complete regenerated baseline
   confirms one shared cel-shaded cartoon language, contour system, and flat-color
   construction. Character packages follow the detailed character rendering
   standard and use broad cel-shaded value regions without exact value-step
@@ -1075,7 +1085,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   materials, proportions, texture density, and exaggeration.
   Each archetype package contains its regenerated default and every baseline
   alternate. No package mixes old and regenerated skins.
-- **AC-023-16:** A complete inventory review inspects all 27 character PNG files and all four
+- **AC-023-16:** An agent inventory review inspects all 27 character PNG files and all four
   scene PNG files individually at source size. It also inspects them together
   in representative stage compositions. It records pass or fail for contour
   weight, flat color shapes, value-step
@@ -1090,8 +1100,9 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
 - **AC-023-17:** The asset color guard decodes every supported shipping raster in sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local
   brass, cream, skin, wood, oxide-red, and lamp colors when neutral or cool
-  anchors remain. An image without a measurable neutral or cool anchor requires
-  manual review.
+  anchors remain. An image without a measurable neutral or cool anchor fails
+  automated color validation. Repair or regenerate it under the shared color
+  contract and rerun the validator. A review note cannot waive the failure.
 
   A small cool anchor does not permit a broad yellow
   cast across near-neutral pixels. The guard reports the asset path and measured

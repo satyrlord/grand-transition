@@ -127,6 +127,500 @@
         "safetyFlags": [],
         "notes": "Original fictional combination of housing-promise evasion and the archetype's remote certainty."
       }
+    },
+    {
+      "id": "diaspora-oracle-dated-street-view",
+      "role": "noun",
+      "text": "a street-view image old enough to vote",
+      "tags": [
+        "context",
+        "firsthand-knowledge"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An aged online image substitutes for current observation. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-airport-expertise",
+      "role": "noun",
+      "text": "my airport-lounge certificate in local affairs",
+      "tags": [
+        "distance",
+        "firsthand-knowledge"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A transit lounge provides a dubious claim to local expertise. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-postage-stamp-map",
+      "role": "noun",
+      "text": "a national reform plan drawn on a postage stamp",
+      "tags": [
+        "context"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A tiny remote view leaves little room for local detail. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-time-zone-verdict",
+      "role": "noun",
+      "text": "a verdict arriving three time zones before the facts",
+      "tags": [
+        "distance",
+        "firsthand-knowledge"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A confident remote conclusion precedes its supporting facts. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-holiday-sample",
+      "role": "noun",
+      "text": "a population sample taken entirely at baggage claim",
+      "tags": [
+        "context"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. One travel encounter is mistaken for representative local knowledge. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-diagnosed-by-postcard-past",
+      "role": "verb",
+      "text": "diagnosed postcard symptoms of",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "singularText": "diagnosed postcard symptoms of",
+      "pluralText": "diagnosed postcard symptoms of",
+      "personalSingularText": "diagnosed postcard symptoms of",
+      "secondPersonText": "diagnosed postcard symptoms of",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-diagnosed-by-postcard",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-diagnosed-by-postcard-present",
+      "role": "verb",
+      "text": "diagnoses postcard symptoms of",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "singularText": "diagnoses postcard symptoms of",
+      "pluralText": "diagnose postcard symptoms of",
+      "personalSingularText": "diagnoses postcard symptoms of",
+      "secondPersonText": "diagnose postcard symptoms of",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-diagnosed-by-postcard",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-diagnosed-by-postcard-future",
+      "role": "verb",
+      "text": "will diagnose postcard symptoms of",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "singularText": "will diagnose postcard symptoms of",
+      "pluralText": "will diagnose postcard symptoms of",
+      "personalSingularText": "will diagnose postcard symptoms of",
+      "secondPersonText": "will diagnose postcard symptoms of",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-diagnosed-by-postcard",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-corrected-from-departure-gate-past",
+      "role": "verb",
+      "text": "corrected the departure-gate gossip about",
+      "tags": [
+        "distance"
+      ],
+      "singularText": "corrected the departure-gate gossip about",
+      "pluralText": "corrected the departure-gate gossip about",
+      "personalSingularText": "corrected the departure-gate gossip about",
+      "secondPersonText": "corrected the departure-gate gossip about",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-corrected-from-departure-gate",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-corrected-from-departure-gate-present",
+      "role": "verb",
+      "text": "corrects the departure-gate gossip about",
+      "tags": [
+        "distance"
+      ],
+      "singularText": "corrects the departure-gate gossip about",
+      "pluralText": "correct the departure-gate gossip about",
+      "personalSingularText": "corrects the departure-gate gossip about",
+      "secondPersonText": "correct the departure-gate gossip about",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-corrected-from-departure-gate",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-corrected-from-departure-gate-future",
+      "role": "verb",
+      "text": "will correct the departure-gate gossip about",
+      "tags": [
+        "distance"
+      ],
+      "singularText": "will correct the departure-gate gossip about",
+      "pluralText": "will correct the departure-gate gossip about",
+      "personalSingularText": "will correct the departure-gate gossip about",
+      "secondPersonText": "will correct the departure-gate gossip about",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-corrected-from-departure-gate",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-up-to-date-last-visit-past",
+      "role": "predicate",
+      "text": "was up to date as of the previous visit",
+      "tags": [
+        "context"
+      ],
+      "singularText": "was up to date as of the previous visit",
+      "pluralText": "were up to date as of the previous visit",
+      "personalSingularText": "was up to date as of the previous visit",
+      "secondPersonText": "were up to date as of the previous visit",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-up-to-date-last-visit-present",
+      "role": "predicate",
+      "text": "is up to date as of the previous visit",
+      "tags": [
+        "context"
+      ],
+      "singularText": "is up to date as of the previous visit",
+      "pluralText": "are up to date as of the previous visit",
+      "personalSingularText": "is up to date as of the previous visit",
+      "secondPersonText": "are up to date as of the previous visit",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-up-to-date-last-visit-future",
+      "role": "predicate",
+      "text": "will be up to date as of the previous visit",
+      "tags": [
+        "context"
+      ],
+      "singularText": "will be up to date as of the previous visit",
+      "pluralText": "will be up to date as of the previous visit",
+      "personalSingularText": "will be up to date as of the previous visit",
+      "secondPersonText": "will be up to date as of the previous visit",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-through-cracked-lens",
+      "role": "modifier",
+      "text": "through a webcam pointed at the wrong street",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A remote observation is confident despite showing the wrong place. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "diaspora-oracle-neutral-contrast",
+      "role": "conjunction",
+      "text": "yet, even then,",
+      "tags": [],
+      "connectorKind": "yet",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

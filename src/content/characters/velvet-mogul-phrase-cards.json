@@ -146,6 +146,512 @@
         "safetyFlags": [],
         "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
       }
+    },
+    {
+      "id": "velvet-mogul-editorial-share-certificate",
+      "role": "noun",
+      "text": "an editorial opinion with a share certificate",
+      "tags": [
+        "influence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-velvet-veto-button",
+      "role": "noun",
+      "text": "a velvet veto button beneath the news desk",
+      "tags": [
+        "influence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-rented-independence",
+      "role": "noun",
+      "text": "a declaration of independence on a monthly lease",
+      "tags": [
+        "wealth",
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-offshore-applause",
+      "role": "noun",
+      "text": "an offshore account for public applause",
+      "tags": [
+        "wealth"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "wealth"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-sponsored-conscience",
+      "role": "noun",
+      "text": "a conscience with a sponsor before every sentence",
+      "tags": [
+        "influence",
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-1-past",
+      "role": "verb",
+      "text": "bought the naming rights to",
+      "singularText": "bought the naming rights to",
+      "pluralText": "bought the naming rights to",
+      "personalSingularText": "bought the naming rights to",
+      "secondPersonText": "bought the naming rights to",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-1-present",
+      "role": "verb",
+      "text": "buys the naming rights to",
+      "singularText": "buys the naming rights to",
+      "pluralText": "buy the naming rights to",
+      "personalSingularText": "buys the naming rights to",
+      "secondPersonText": "buy the naming rights to",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-1-future",
+      "role": "verb",
+      "text": "will buy the naming rights to",
+      "singularText": "will buy the naming rights to",
+      "pluralText": "will buy the naming rights to",
+      "personalSingularText": "will buy the naming rights to",
+      "secondPersonText": "will buy the naming rights to",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-2-past",
+      "role": "verb",
+      "text": "offered a controlling stake in",
+      "singularText": "offered a controlling stake in",
+      "pluralText": "offered a controlling stake in",
+      "personalSingularText": "offered a controlling stake in",
+      "secondPersonText": "offered a controlling stake in",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-2-present",
+      "role": "verb",
+      "text": "offers a controlling stake in",
+      "singularText": "offers a controlling stake in",
+      "pluralText": "offer a controlling stake in",
+      "personalSingularText": "offers a controlling stake in",
+      "secondPersonText": "offer a controlling stake in",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-verb-2-future",
+      "role": "verb",
+      "text": "will offer a controlling stake in",
+      "singularText": "will offer a controlling stake in",
+      "pluralText": "will offer a controlling stake in",
+      "personalSingularText": "will offer a controlling stake in",
+      "secondPersonText": "will offer a controlling stake in",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-predicate-1-past",
+      "role": "predicate",
+      "text": "charged rent for occupying the moral high ground",
+      "singularText": "charged rent for occupying the moral high ground",
+      "pluralText": "charged rent for occupying the moral high ground",
+      "personalSingularText": "charged rent for occupying the moral high ground",
+      "secondPersonText": "charged rent for occupying the moral high ground",
+      "tags": [
+        "wealth",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-predicate-1-present",
+      "role": "predicate",
+      "text": "charges rent for occupying the moral high ground",
+      "singularText": "charges rent for occupying the moral high ground",
+      "pluralText": "charge rent for occupying the moral high ground",
+      "personalSingularText": "charges rent for occupying the moral high ground",
+      "secondPersonText": "charge rent for occupying the moral high ground",
+      "tags": [
+        "wealth",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-predicate-1-future",
+      "role": "predicate",
+      "text": "will charge rent for occupying the moral high ground",
+      "singularText": "will charge rent for occupying the moral high ground",
+      "pluralText": "will charge rent for occupying the moral high ground",
+      "personalSingularText": "will charge rent for occupying the moral high ground",
+      "secondPersonText": "will charge rent for occupying the moral high ground",
+      "tags": [
+        "wealth",
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-review-modifier",
+      "role": "modifier",
+      "text": "with the watchdog listed as a subsidiary",
+      "tags": [
+        "influence"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "velvet-mogul-contrast",
+      "role": "conjunction",
+      "text": "but, under new management,",
+      "connectorKind": "but",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
     }
   ]
 }

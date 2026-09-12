@@ -47,6 +47,7 @@ import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
 import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
 import version6ReplayFixture from '../fixtures/replay-v6-pre-humor-catalog.json';
 import version7ReplayFixture from '../fixtures/replay-v7-before-prophet-film-phrases.json';
+import version8ReplayFixture from '../fixtures/replay-v8-before-final-volume.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -87,8 +88,8 @@ describe('versioned replay and local match-log codecs', () => {
     if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
   });
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 8', (multiplier) => {
-    for (const schemaVersion of [6, 7, 8] as const) {
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 9', (multiplier) => {
+    for (const schemaVersion of [6, 7, 8, 9] as const) {
       for (const [document, decode] of [
         [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
       ] as const) {
@@ -123,7 +124,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(8);
+    expect(decoded.value.schemaVersion).toBe(9);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -156,7 +157,39 @@ describe('versioned replay and local match-log codecs', () => {
     expect(replayed.normalized).toBe(bytes);
     expect(await sha256(JSON.stringify(replayed.state)))
       .toBe('505dc5b56018833497b6e67c838ffe36901bbe60b907eba9ff7ee70fbc5ec058');
-    expect(replayContextForVersion(8, context)).toBe(context);
+    expect(replayContextForVersion(9, context)).toBe(context);
+  });
+
+  test('version 8 preserves its complete catalog, normalized commands, and exact final state', async () => {
+    const restored = replayContextForVersion(8, context);
+    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
+      .toBe('5565997abc36c74fe40e5bc1e226c282136a7a10971ca3fa1ec537e09a67c226');
+    const bytes = normalizedJson(version8ReplayFixture);
+    expect(await sha256(bytes))
+      .toBe('b777aa8d6683373e2e3057cab005ea151ebe742b037431fb209760c4bcf2949d');
+    const decoded = decodeReplay(bytes);
+    expect(decoded.ok).toBe(true);
+    if (decoded.ok) expect(encodeReplay(decoded.value)).toBe(bytes);
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(replayed.state).toMatchObject({ schemaVersion: 8, phase: 'results', winner: 'player-2', round: 8 });
+    expect(await sha256(normalizedJson(replayed.state)))
+      .toBe('f59cbde67151dae58722d56d24cc795021016b8e50b90b8705a9766929731ccb');
+  });
+
+  test('versions 1 through 8 restore the saved catalog before older rules; version 9 uses the current catalog', () => {
+    const changed: ReplayContext = {
+      ...context,
+      catalog: { ...context.catalog, phrases: [], characters: [], scenes: [], locales: [] },
+      locale: { ...context.locale, messages: { 'fixture.changed': 'Changed current catalog.' } },
+    };
+    for (const version of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      expect(replayContextForVersion(version, changed)).toEqual(replayContextForVersion(version, context));
+    }
+    expect(replayContextForVersion(9, changed)).toBe(changed);
+    expect(replayContextForVersion(9, context)).toBe(context);
   });
 
   test('version 6 restores the complete pre-humor catalog and exact final state', async () => {

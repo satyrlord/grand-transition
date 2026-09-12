@@ -169,12 +169,20 @@
       "text": "procured",
       "singularText": "procured",
       "pluralText": "procured",
-      "tags": ["corruption", "nepotism", "spending"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "family", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "family",
+              "personal"
+            ]
           }
         ],
         "flavour": []
@@ -186,7 +194,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -195,12 +203,20 @@
       "text": "procures",
       "singularText": "procures",
       "pluralText": "procure",
-      "tags": ["corruption", "nepotism", "spending"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "family", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "family",
+              "personal"
+            ]
           }
         ],
         "flavour": []
@@ -212,7 +228,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -221,12 +237,20 @@
       "text": "will procure",
       "singularText": "will procure",
       "pluralText": "will procure",
-      "tags": ["corruption", "nepotism", "spending"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "family", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "family",
+              "personal"
+            ]
           }
         ],
         "flavour": []
@@ -238,7 +262,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Standard English procurement verb selected for the fictional chatbot's corporate-state voice. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -247,12 +271,20 @@
       "text": "double-clicked on",
       "singularText": "double-clicked on",
       "pluralText": "double-clicked on",
-      "tags": ["spending", "obsolete", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media"],
-            "right": ["politics", "bureaucracy", "media"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -264,7 +296,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -273,12 +305,20 @@
       "text": "double-clicks on",
       "singularText": "double-clicks on",
       "pluralText": "double-click on",
-      "tags": ["spending", "obsolete", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media"],
-            "right": ["politics", "bureaucracy", "media"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -290,7 +330,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -299,12 +339,20 @@
       "text": "will double-click on",
       "singularText": "will double-click on",
       "pluralText": "will double-click on",
-      "tags": ["spending", "obsolete", "bureaucracy"],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media"],
-            "right": ["politics", "bureaucracy", "media"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -316,7 +364,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original character-specific adaptation of CC0 AI-writing vocabulary from claudisms.ai for fictional public-procurement satire. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {

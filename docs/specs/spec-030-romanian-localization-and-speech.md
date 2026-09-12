@@ -17,7 +17,8 @@ and Romanian speech. Their other behavior and failure contracts still apply.
 
 1. **Phase 1: Implement and test.** Deliver the complete Romanian experience
    with Piper Mihai medium and Piper Liana medium. Complete automated checks,
-   native Romanian editorial review, and manual listening before acceptance.
+   Romanian source and editorial checks, and production-browser verification.
+   The user can review language and audible quality separately after completion.
 2. **Phase 2: Research and decide.** Compare Ro_VITS with the accepted Phase 1
    voices. Record whether it is a better replacement, a useful partial
    replacement, or unsuitable. This phase does not authorize replacing Piper.
@@ -247,12 +248,16 @@ The new verifier paths below are implementation targets, not existing evidence.
   The document, game-text, and recorded-text languages are correct. Verifier:
   `e2e/romanian-localization.spec.ts`, followed by the shared Impeccable audit
   and critique procedures on the production build.
-- **AC-030-10:** A fluent Romanian reviewer checks all translations and complete
-  representative constructions. A listening review covers both voices, every
-  assigned profile, all diacritics, names, loanwords, questions, endings,
-  comebacks, and the longest shipped constructions. Record each error and its
-  disposition. Missing, added, or unintelligible words and incorrect grammar
-  block acceptance. Verifier: the manual procedure and evidence record below.
+- **AC-030-10:** Source and editorial checks cover all translations and complete
+  representative constructions. Romanian content, grammar, and production
+  speech fixtures cover both voices, every assigned profile, all diacritics,
+  names, loanwords, questions, endings, comebacks, and the longest shipped
+  constructions. Record each confirmed error and its disposition. Missing or
+  added words, unintelligible output, and incorrect grammar remain defects.
+  Verifiers: `tests/unit/romanian-localization.test.ts`,
+  `tests/unit/romanian-grammar.test.ts`, `e2e/romanian-speech.spec.ts`, and the
+  source-review evidence. Listening is optional; automatic checks do not prove
+  perceived naturalness or complete pronunciation quality.
 - **AC-030-11:** Measure cold download, cold initialization, warm synthesis,
   peak memory, and cancellation for both voices on the least-capable supported
   production environment. Record CPU, RAM, OS, browser/version, workload,
@@ -281,33 +286,40 @@ alone does not establish browser suitability. Research prototypes stay in the
 Git-ignored temporary folder and do not enter the production bundle.
 
 - **AC-030-12:** A reproducible report compares Ro_VITS and both Piper voices
-  on identical text. Randomize listening order and hide model labels during
-  review. A fluent Romanian reviewer rates correctness, naturalness, and
-  character fit from 1 through 5 and records pronunciation errors. Identify
-  reviewers, sample counts, hardware, settings, licensing evidence, missing
-  checks, and per-voice results. Verifier: the retained comparison report.
+  on identical text. Record source inspection, real inference, complete output,
+  alignment, resource measurements, browser feasibility, and confirmed errors.
+  Identify sample counts, hardware, settings, licensing evidence, missing
+  checks, and per-voice results. Naturalness and character-fit observations can
+  be added separately, but no listening panel, blind rating, or human review is
+  required to complete the comparison. Do not infer those subjective properties
+  from automatic transcription or performance measurements. Verifier: the
+  retained comparison report.
 - **AC-030-13:** Record one decision: retain both Piper voices, recommend a
   named partial replacement, or recommend a complete Ro_VITS replacement.
-  A replacement recommendation requires better manual speech quality without
+  A replacement recommendation requires demonstrated benefits without
   unresolved correctness, licensing, privacy, size, timing, or browser failures.
-  Explain performance and maintenance tradeoffs. Missing decisive evidence
-  yields retain Piper pending named checks, not a claim of superiority.
-  Verifier: an owner-reviewed decision in this specification with links to
-  the comparison report. The current decision is pending evaluation.
+  Name the measured benefits and explain performance and maintenance tradeoffs.
+  Do not claim better subjective speech quality without supporting observations.
+  Missing decisive evidence yields retain Piper pending named checks, not a
+  claim of superiority; that documented decision completes this criterion.
+  Verifier: the recorded decision in this specification with links to the
+  comparison report. The current decision is pending evaluation.
 
 ## Evidence and stop conditions
 
 Use the shared evidence record format. Retain only public test text and audio.
-For manual review, build the production app, set Game language to Romanian,
-and repeat with each Interface language selection. Enable speech with a
-trusted gesture and run the fixed corpus with each voice and profile.
-Compare displayed text, audible words, score markers, and completion. Record
-pass, fail, or blocked for every sample and each criterion above.
+Build the production app and run the automated Romanian flows with each
+Interface language selection. Enable speech with a trusted gesture and run
+the fixed public corpus with each voice and profile. Verify displayed text,
+inference output, score markers, and completion. Record pass, fail, or blocked
+for every sample and each criterion above. Optional user listening can add
+observations about audible words and naturalness after milestone completion.
 
 Phase 1 is complete only after AC-030-01 through AC-030-11 and cumulative
-`npm run ci` pass, with the required manual evidence. Run browser tests
-headlessly. Do not treat automated transcription or a green aggregate gate as
-native-language or audible acceptance.
+`npm run ci` pass. Run browser tests headlessly. No native-speaker, listening,
+or other human-review record is required for code completion. Do not treat
+automated transcription or a green aggregate gate as proof of native-language
+naturalness or physical audible output.
 
 Phase 2 is complete after AC-030-12 and AC-030-13. Stop at the recorded decision.
 Any model replacement needs a separately approved implementation package and

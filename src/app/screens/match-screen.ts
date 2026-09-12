@@ -81,6 +81,7 @@ export class GrandTransitionMatch extends LitElement {
   private presentationAnnouncements: string[] = [];
   private presentationAnnouncementKeys = new Set<string>();
   private postPresentationRevision: number | null = null;
+  private sentenceScrollKey: string | null = null;
   constructor() {
     super();
     this.pauseMode = 'running';
@@ -178,6 +179,15 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    const sentence = this.querySelector<HTMLElement>('.sentence-preview');
+    const sentenceScrollKey = JSON.stringify([
+      this.presentation?.speakerId ?? this.snapshot?.activePlayerId,
+      this.snapshot?.round, sentence?.textContent?.trim(),
+    ]);
+    if (sentenceScrollKey !== this.sentenceScrollKey) {
+      if (sentence) sentence.scrollTop = 0;
+      this.sentenceScrollKey = sentenceScrollKey;
+    }
     const previousPresentation = changed.get('presentation') as RoundPresentationFrame | null | undefined;
     if (this.presentation && (changed.has('pauseMode') ||
       previousPresentation?.speakerId !== this.presentation.speakerId ||
@@ -372,6 +382,9 @@ export class GrandTransitionMatch extends LitElement {
             <p
               class="sentence-preview"
               data-density=${sentenceDensity(displayedSentence)}
+              tabindex="0"
+              role="region"
+              aria-labelledby="sentence-title"
               aria-live="polite"
             >
               ${displayedSentence}
@@ -998,7 +1011,7 @@ export class GrandTransitionMatch extends LitElement {
       card.disabledReason,
       tutorialChoice ? msg('Grammatically valid next choice') : null,
       card.knownWeaknesses.length > 0
-        ? `Weakness: ${card.knownWeaknesses.join(', ')}`
+        ? `${msg('Weakness')}: ${card.knownWeaknesses.map(titleCase).join(', ')}`
         : null,
     ].filter((detail): detail is string => Boolean(detail));
     const accessibleLabel = empty
@@ -1365,6 +1378,7 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
 }
 
 function titleCase(value: string): string {
+  if (value === 'securitate') return msg('Former secret police');
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 

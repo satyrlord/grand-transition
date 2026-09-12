@@ -46,8 +46,7 @@ complete an approved specification.
   rhetorical model. Complete private character studies stay in the Git-ignored
   research folder, and private study data does not ship.
 
-  An approved
-  public-figure likeness may be used only as visual-only parody in a portrait
+  A public-figure likeness may be used only as visual-only parody in a portrait
   skin. It must not change fictional character identity or player-visible
   content. Public institutions and documented historical events can inform
   original satire when the result does not identify a real person.
@@ -96,6 +95,19 @@ complete an approved specification.
   milestone also requires cumulative `npm run ci` from a clean checkout.
 - Temporary original assets are permitted only where stated. Do not add future
   compatibility or scaffolding.
+- The user reviews the game after each milestone outside its completion gates.
+  Human sign-off, user-run play, visual or listening reviews, and a mandatory
+  decision interview are not prerequisites for completion. Optional
+  user review notes can be retained, but are not required evidence.
+- Agents verify implementation through code and source inspection, automated
+  checks, measurements, and production-browser checks. Record what was actually
+  checked without claiming human approval or a subjective listening result.
+  Quality, style, privacy, originality, licensing, and automated acceptance
+  requirements remain in force.
+- Resolve routine creative and implementation choices from the existing
+  contracts and record material assumptions. Ask only when an unresolved input
+  blocks the work. Do not require a separate interview or approval
+  for a routine choice already covered by the task and contracts.
 
 ## Specification completeness contract
 
@@ -120,10 +132,9 @@ Each milestone specification must contain:
 3. At least one positive path, each material boundary, each owned failure path,
    and each security or privacy constraint that applies.
 4. One named verifier for each criterion. A verifier is a test file, command,
-   deterministic manual procedure, or recorded measurement.
+   reproducible agent inspection, or recorded measurement.
 5. An evidence record when the criterion depends on a browser, operating
-   system, performance profile, human review, audible result, or published
-   service.
+   system, performance profile, asset or audio inspection, or published service.
 
 The phrase “tests cover” is not sufficient unless the specification enumerates
 the states or boundaries that the tests must cover. A green general gate does
@@ -133,13 +144,14 @@ not replace a missing focused verifier.
 
 An evidence record contains the milestone and acceptance identifiers. It also
 contains the commit or working-tree identifier and the production build
-command. Include the test command or manual procedure and the operating system.
+command. Include the test command or reproducible inspection and the operating system.
 When applicable, include the browser, browser version, viewport, input seed,
 and setup. Include the expected result, actual result, and links to retained
 evidence.
 
-Automated evidence must be reproducible from a clean checkout. Manual evidence
-must use a written procedure and record pass, fail, or blocked for each step.
+Automated evidence must be reproducible from a clean checkout. Agent inspection
+records the inspected source or artifact, method, observed result, and limits.
+Optional user feedback is separate from required completion evidence.
 Do not record private hand content, personal data, machine secrets, or hidden
 speech text.
 
@@ -271,7 +283,8 @@ source-only review does not satisfy them.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 18 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
-    Safety, variety, and balance have recorded evidence.
+    The current artwork and phrase catalog have safety and normal CI evidence.
+    Additional Milestone 031 artwork is not a prerequisite.
 28. [Release hardening](spec-028-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 29. [GitHub Pages release](spec-029-github-pages-release.md). Budget: 5. The

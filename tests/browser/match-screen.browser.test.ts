@@ -1,6 +1,9 @@
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
+import screenShellStyles from '../../src/styles/screen-shell.css?raw';
+import titleScreenStyles from '../../src/styles/title-screen.css?raw';
+import '../../src/styles/fonts.css';
 import { GrandTransitionApp } from '../../src/app/app-shell';
 import type { RoundPresentationFrame } from '../../src/app/round-presentation';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
@@ -15,10 +18,117 @@ import {
   decodeSettings,
 } from '../../src/persistence/codecs/settings-codec';
 import { settingsStorageKey } from '../../src/persistence/settings';
+import { englishGameLocale, phraseCardCatalog } from '../../src/game-content';
+import { englishGrammarAdapter, prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter';
 
 afterEach(() => {
   vi.useRealTimers();
   document.body.innerHTML = '';
+});
+
+test('explains secret-police weakness in accessible phrase labels', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const first = snapshot.sharedCards[0]!;
+  match.snapshot = { ...snapshot, sharedCards: [
+    { ...first, knownWeaknesses: ['securitate'] }, ...snapshot.sharedCards.slice(1),
+  ] };
+  await match.updateComplete;
+  const card = match.querySelector(`[data-card-id="${first.reference!.cardId}"]`);
+  expect(card?.getAttribute('aria-label')).toContain('Former secret police');
+  expect(card?.getAttribute('aria-label')).not.toContain('securitate');
+});
+
+test.each([
+  { width: 1024, height: 720 }, { width: 1024, height: 768 },
+  { width: 1280, height: 720 }, { width: 1920, height: 1080 },
+])('keeps long sentence text reachable inside the fixed speech record at $width by $height', async ({ width, height }) => {
+  const ids = [
+    'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
+    'will-bring-the-miners-to-bucharest', 'during-a-press-conference', 'and',
+    'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
+    'will-bring-the-miners-to-bucharest',
+    'public-and-the-promotion-was-announced-before-the-birthday-cake',
+  ];
+  const rendered = englishGrammarAdapter.analyze({
+    steps: ids.map((id) => ({ kind: 'phrase' as const,
+      phrase: prepareEnglishGrammarPhrase(phraseCardCatalog.phrases.find((phrase) => phrase.id === id)!, englishGameLocale),
+    })),
+    subjectNumber: 'singular', objectNumber: 'singular',
+  });
+  if (!rendered.accepted) throw new Error('The long-sentence fixture must be grammatically valid.');
+  expect(rendered.analysis.complete).toBe(true);
+  const text = rendered.analysis.publicText;
+  expect(text.length).toBeGreaterThanOrEqual(409);
+  const match = await startMatch();
+  const commands: string[] = [];
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event.detail.type));
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+  document.head.append(style);
+  try {
+    await page.viewport(width, height);
+    await document.fonts.ready;
+    const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+    const originalBounds = ledger.getBoundingClientRect();
+    const samples = [text, text + ' ' + text.slice(0, Math.ceil(text.length * 0.4)), Array(4).fill(text).join(' ')];
+    for (const sentenceText of samples) {
+      match.snapshot = { ...match.snapshot!, sentenceText };
+      await match.updateComplete;
+      const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+      const textNode = [...preview.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent === sentenceText)!;
+      const bounds = ledger.getBoundingClientRect();
+      const previewBounds = preview.getBoundingClientRect();
+      const range = document.createRange();
+      range.setStart(textNode, 0);
+      range.setEnd(textNode, 1);
+      const first = range.getBoundingClientRect();
+      expect(preview.textContent?.trim()).toBe(sentenceText);
+      expect(preview.scrollTop).toBe(0);
+      expect(first.top).toBeGreaterThanOrEqual(bounds.top);
+      expect(first.bottom).toBeLessThanOrEqual(bounds.bottom);
+      expect(previewBounds.left).toBeGreaterThanOrEqual(bounds.left);
+      expect(previewBounds.right).toBeLessThanOrEqual(bounds.right);
+      expect(previewBounds.top).toBeGreaterThanOrEqual(bounds.top);
+      expect(previewBounds.bottom).toBeLessThanOrEqual(bounds.bottom);
+      expect(bounds.toJSON()).toEqual(originalBounds.toJSON());
+      expect(preview.scrollWidth).toBeLessThanOrEqual(preview.clientWidth);
+      expect(getComputedStyle(preview).textOverflow).not.toBe('ellipsis');
+      expect(Number.parseFloat(getComputedStyle(preview).fontSize)).toBeGreaterThanOrEqual(11.52);
+      expect(preview.tabIndex).toBe(0);
+      expect(preview.getAttribute('role')).toBe('region');
+      expect(preview.getAttribute('aria-labelledby')).toBe('sentence-title');
+      preview.focus();
+      await userEvent.keyboard('{End}');
+      await vi.waitFor(() => expect(preview.scrollTop + preview.clientHeight).toBeGreaterThanOrEqual(preview.scrollHeight - 1));
+      range.setStart(textNode, sentenceText.length - 1);
+      range.setEnd(textNode, sentenceText.length);
+      const last = range.getBoundingClientRect();
+      expect(last.top).toBeGreaterThanOrEqual(bounds.top);
+      expect(last.bottom).toBeLessThanOrEqual(bounds.bottom);
+      const scrollTop = preview.scrollTop;
+      match.requestUpdate();
+      await match.updateComplete;
+      expect(preview.scrollTop).toBe(scrollTop);
+      expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(width);
+      expect(document.documentElement.scrollHeight).toBeLessThanOrEqual(height);
+    }
+    const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+    match.snapshot = { ...match.snapshot!, activePlayerId: match.snapshot!.players[1].playerId };
+    await match.updateComplete;
+    expect(preview.scrollTop).toBe(0);
+    preview.scrollTop = preview.scrollHeight;
+    match.snapshot = { ...match.snapshot!, round: match.snapshot!.round + 1 };
+    await match.updateComplete;
+    expect(preview.scrollTop).toBe(0);
+    match.snapshot = { ...match.snapshot!, sentenceText: 'Select a noun to begin.' };
+    await match.updateComplete;
+    expect(preview.scrollHeight).toBe(preview.clientHeight);
+    expect(ledger.getBoundingClientRect().toJSON()).toEqual(originalBounds.toJSON());
+    expect(commands).toEqual([]);
+  } finally {
+    style.remove();
+  }
 });
 
 test('tutorial highlights grammar-accepted choices only while human drafting is available', async () => {

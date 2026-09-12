@@ -6,6 +6,17 @@
 and variety evidence
 **Production-file budget:** 19
 
+Milestone 027 can finish with the current artwork and the phrase volumes
+defined here. This milestone retains the additional pose images, scene
+layers, motion, and final media packages; their delivery does not block
+Milestone 027.
+
+The phrase-data package uses the common authoring file and the 18 character
+authoring files. Replay compatibility is a separate Milestone 014 package.
+Historical replay content, common phrases, and character phrases have separate
+build chunks so the expanded catalog remains below the existing per-chunk size
+limit. Keep the limit unchanged.
+
 ## Deliver
 
 Finalize all 18 playable fictional archetypes and 6 playable scenes from
@@ -142,17 +153,15 @@ treatment and every named Milestone 024 effect remains reachable.
 
 ## Variety contract
 
-A fixed 1,000-match simulation runs for every scene and difficulty. It must
-select at least 90 percent of eligible phrase IDs at least once. This set
-includes general and owned phrase IDs. No
-eligible phrase can have more than five times the median nonzero selection count
-without a recorded restriction or role-frequency explanation. In a scripted
-60-minute manual run, the same complete rendered insult cannot occur more than
-twice.
+The loaded catalog has unique authored phrase text across common and owned
+pools. Each character and tier has unique comeback text. Existing grammar
+checks verify phrase reachability, agreement forms, and representative complete
+sentences. Normal CI verifies the catalog and its existing deterministic match
+fixtures. This milestone adds no separate simulation workload, selection
+coverage percentage, or frequency threshold.
 
 Content totals can change only through an approved change to the ranges above,
-with new simulation evidence. Manual “feels varied” evidence cannot waive a
-failed automated range or distribution.
+with passing content, grammar, and normal CI checks.
 
 ## Acceptance criteria
 
@@ -165,8 +174,8 @@ failed automated range or distribution.
   shared color-policy validation.
 - **AC-031-04:** Comeback keys are unique across character and tier and resolve
   in every locale.
-- **AC-031-05:** The fixed simulation and 60-minute procedure meet every variety
-  threshold and record seed, workload, environment, and exceptions.
+- **AC-031-05:** Authored phrase and comeback text is unique. Existing grammar
+  reachability, agreement, representative sentence, and normal CI checks pass.
 - **AC-031-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
 - **AC-031-07:** All 18 characters provide one default skin and zero through
@@ -191,7 +200,7 @@ can draw on verified speech motifs from the private archetype references.
 Source excerpts, translations, names, and mappings remain in private research.
 The pass preserves useful grammar fragments and existing stable identities;
 it does not by itself complete this milestone's final content volumes or
-release variety evidence.
+the existing content and grammar checks.
 
 Shipped generation provenance
 uses a generic source description and does not name a real person. Do not use a

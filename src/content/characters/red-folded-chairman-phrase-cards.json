@@ -21,7 +21,12 @@
     "secondary": "#d7b56f",
     "accent": "#273d56"
   },
-  "weaknessTags": ["legacy", "modernity", "bureaucracy", "miners"],
+  "weaknessTags": [
+    "legacy",
+    "modernity",
+    "bureaucracy",
+    "miners"
+  ],
   "comebacks": {
     "weak": "My dear, even your outrage needs a committee.",
     "medium": "You domesticated the facts. Now they fetch your slippers.",
@@ -36,7 +41,10 @@
     "voiceHint": "measured",
     "rate": 0.9,
     "pitch": 0.9,
-    "skinVoices": {"default": "george", "alternate": "emma"}
+    "skinVoices": {
+      "default": "george",
+      "alternate": "emma"
+    }
   },
   "animationSet": {
     "idle": "red-folded-chairman-idle",
@@ -48,10 +56,17 @@
       "id": "national-salvation-committee",
       "role": "noun",
       "text": "a national-salvation committee with reserved parking",
-      "tags": ["legacy", "bureaucracy"],
+      "tags": [
+        "legacy",
+        "bureaucracy"
+      ],
       "scoreGroups": {
-        "substance": ["bureaucracy"],
-        "flavour": ["transition"]
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "transition"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -71,8 +86,12 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -97,8 +116,12 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -123,8 +146,12 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"],
-            "right": ["media"]
+            "left": [
+              "bureaucracy"
+            ],
+            "right": [
+              "media"
+            ]
           }
         ],
         "flavour": []
@@ -143,7 +170,10 @@
       "id": "through-a-gradual-transition",
       "role": "modifier",
       "text": "through a transition with no estimated arrival",
-      "tags": ["modernity", "legacy"],
+      "tags": [
+        "modernity",
+        "legacy"
+      ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -156,7 +186,10 @@
       "id": "for-stabilitys-sake",
       "role": "ending",
       "text": "and, with your permission, I remain in the chair.",
-      "tags": ["restraint", "bureaucracy"],
+      "tags": [
+        "restraint",
+        "bureaucracy"
+      ],
       "rarity": "rare",
       "finisherBonus": 3,
       "editorialReview": {
@@ -170,11 +203,16 @@
       "id": "asks-for-patience-again",
       "role": "predicate",
       "text": "asks the calendar for another mandate",
-      "tags": ["modernity", "restraint"],
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -195,11 +233,16 @@
       "id": "asked-for-patience-again",
       "role": "predicate",
       "text": "asked the calendar for another mandate",
-      "tags": ["modernity", "restraint"],
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -220,11 +263,16 @@
       "id": "will-ask-for-patience-again",
       "role": "predicate",
       "text": "will ask the calendar for another mandate",
-      "tags": ["modernity", "restraint"],
+      "tags": [
+        "modernity",
+        "restraint"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["bureaucracy"]
+            "left": [
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -246,10 +294,17 @@
       "role": "noun",
       "text": "a committee-room fossil",
       "referentKind": "personal",
-      "tags": ["modernity", "bureaucracy"],
+      "tags": [
+        "modernity",
+        "bureaucracy"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["procedure"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "procedure"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -265,11 +320,18 @@
       "text": "calls every delay a transition",
       "singularText": "calls every delay a transition",
       "pluralText": "call every delay a transition",
-      "tags": ["modernity", "credibility"],
+      "tags": [
+        "modernity",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -290,11 +352,18 @@
       "text": "called every delay a transition",
       "singularText": "called every delay a transition",
       "pluralText": "called every delay a transition",
-      "tags": ["modernity", "credibility"],
+      "tags": [
+        "modernity",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -315,11 +384,18 @@
       "text": "will call every delay a transition",
       "singularText": "will call every delay a transition",
       "pluralText": "will call every delay a transition",
-      "tags": ["modernity", "credibility"],
+      "tags": [
+        "modernity",
+        "credibility"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["personal", "politics", "bureaucracy"]
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy"
+            ]
           }
         ],
         "flavour": []
@@ -338,10 +414,17 @@
       "id": "the-nordic-model",
       "role": "noun",
       "text": "the Nordic model",
-      "tags": ["modernity", "credibility"],
+      "tags": [
+        "modernity",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["social-policy"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "social-policy"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -355,10 +438,17 @@
       "id": "socialism-with-a-human-face",
       "role": "noun",
       "text": "socialism with a human face and the same receptionist",
-      "tags": ["legacy", "restraint"],
+      "tags": [
+        "legacy",
+        "restraint"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["ideology"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "ideology"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -373,10 +463,17 @@
       "role": "noun",
       "text": "a free thinker on the party payroll",
       "referentKind": "personal",
-      "tags": ["modernity", "credibility"],
+      "tags": [
+        "modernity",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["independence"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "independence"
+        ]
       },
       "rarity": "common",
       "editorialReview": {
@@ -390,10 +487,17 @@
       "id": "a-dictatorship",
       "role": "noun",
       "text": "a dictatorship",
-      "tags": ["legacy", "bureaucracy"],
+      "tags": [
+        "legacy",
+        "bureaucracy"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["institution"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "institution"
+        ]
       },
       "rarity": "common",
       "editorialReview": {
@@ -408,10 +512,17 @@
       "role": "noun",
       "text": "the working class",
       "referentKind": "personal",
-      "tags": ["legacy", "credibility"],
+      "tags": [
+        "legacy",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["class"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "class"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -427,10 +538,17 @@
       "text": "some hooligans",
       "grammaticalNumber": "plural",
       "referentKind": "personal",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["crowd"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "crowd"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -444,10 +562,17 @@
       "id": "scientific-socialism",
       "role": "noun",
       "text": "scientific socialism",
-      "tags": ["legacy", "bureaucracy"],
+      "tags": [
+        "legacy",
+        "bureaucracy"
+      ],
       "scoreGroups": {
-        "substance": ["politics"],
-        "flavour": ["ideology"]
+        "substance": [
+          "politics"
+        ],
+        "flavour": [
+          "ideology"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -461,10 +586,17 @@
       "id": "a-screwdriver-between-the-ribs",
       "role": "noun",
       "text": "a screwdriver in the reform gearbox",
-      "tags": ["decorum", "restraint"],
+      "tags": [
+        "decorum",
+        "restraint"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["physical-metaphor"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "physical-metaphor"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -475,49 +607,20 @@
       }
     },
     {
-      "id": "a-dumbass",
-      "role": "noun",
-      "text": "a dumbass",
-      "referentKind": "personal",
-      "tags": ["decorum", "credibility"],
-      "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["insult"]
-      },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original direct insult for a fictional political persona. It targets no protected trait and names no real person. Editorial review complete."
-      }
-    },
-    {
-      "id": "an-animal",
-      "role": "noun",
-      "text": "an animal",
-      "referentKind": "personal",
-      "tags": ["decorum", "restraint"],
-      "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["animal-metaphor"]
-      },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
-      }
-    },
-    {
       "id": "a-historical-blunder",
       "role": "noun",
       "text": "a historical blunder",
-      "tags": ["legacy", "credibility"],
+      "tags": [
+        "legacy",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["history"],
-        "flavour": ["failure"]
+        "substance": [
+          "history"
+        ],
+        "flavour": [
+          "failure"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
@@ -531,7 +634,10 @@
       "id": "rich-and-dishonest",
       "role": "modifier",
       "text": "rich and dishonest",
-      "tags": ["credibility", "evidence"],
+      "tags": [
+        "credibility",
+        "evidence"
+      ],
       "rarity": "common",
       "editorialReview": {
         "state": "approved",
@@ -545,35 +651,21 @@
       "role": "noun",
       "text": "a rooster",
       "referentKind": "personal",
-      "tags": ["decorum", "credibility"],
+      "tags": [],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["animal-metaphor"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "animal-metaphor"
+        ]
       },
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
-      }
-    },
-    {
-      "id": "a-monkey",
-      "role": "noun",
-      "text": "a monkey",
-      "referentKind": "personal",
-      "tags": ["decorum", "restraint"],
-      "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["animal-metaphor"]
-      },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original animal-metaphor noun for fictional human political personas. It does not define anatomy, species, or a protected trait. Editorial review complete."
+        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
       }
     },
     {
@@ -581,10 +673,17 @@
       "role": "noun",
       "text": "a naughty boy",
       "referentKind": "personal",
-      "tags": ["restraint", "credibility"],
+      "tags": [
+        "restraint",
+        "credibility"
+      ],
       "scoreGroups": {
-        "substance": ["personal"],
-        "flavour": ["behavior"]
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "behavior"
+        ]
       },
       "rarity": "rare",
       "editorialReview": {
@@ -597,22 +696,28 @@
     {
       "id": "the-dacs-that-come-from-the-tracs",
       "role": "ending",
-      "text": "and the Dacs that come from the Tracs.",
-      "tags": ["legacy", "credibility"],
+      "text": "and even the ancient tribes would ask you for a modern answer.",
+      "tags": [
+        "legacy",
+        "modernity"
+      ],
       "rarity": "rare",
       "finisherBonus": 3,
       "editorialReview": {
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original Romanian-flavored historical pun for fictional transition satire. It names no real person or party and uses English context for clarity. Editorial review complete."
+        "notes": "Original fictional ending; agent editorial review, 2026-09-12. Ancient tribes ask a present-day speaker for a modern answer, reversing the appeal to antiquity. Plain English identifies the historical contrast without external cultural knowledge. No quotation, real-person target, or named modern group."
       }
     },
     {
       "id": "and-thats-the-synergy-of-facts",
       "role": "ending",
       "text": "and the facts have formed a committee to escape the synergy.",
-      "tags": ["evidence", "bureaucracy"],
+      "tags": [
+        "evidence",
+        "bureaucracy"
+      ],
       "rarity": "uncommon",
       "finisherBonus": 3,
       "editorialReview": {
@@ -637,6 +742,143 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original English transformation of bureaucratic speech errors, reviewed for the requested humor revision on 2026-09-11. Targets fictional official evasiveness; private source traceability does not ship."
+      }
+    },
+    {
+      "id": "red-folded-chairman-verb-1-past",
+      "role": "verb",
+      "text": "adjourned the historical hearing on",
+      "singularText": "adjourned the historical hearing on",
+      "pluralText": "adjourned the historical hearing on",
+      "personalSingularText": "adjourned the historical hearing on",
+      "secondPersonText": "adjourned the historical hearing on",
+      "tags": [
+        "bureaucracy",
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "red-folded-chairman-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "red-folded-chairman-verb-1-present",
+      "role": "verb",
+      "text": "adjourns the historical hearing on",
+      "singularText": "adjourns the historical hearing on",
+      "pluralText": "adjourn the historical hearing on",
+      "personalSingularText": "adjourns the historical hearing on",
+      "secondPersonText": "adjourn the historical hearing on",
+      "tags": [
+        "bureaucracy",
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "red-folded-chairman-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "red-folded-chairman-verb-1-future",
+      "role": "verb",
+      "text": "will adjourn the historical hearing on",
+      "singularText": "will adjourn the historical hearing on",
+      "pluralText": "will adjourn the historical hearing on",
+      "personalSingularText": "will adjourn the historical hearing on",
+      "secondPersonText": "will adjourn the historical hearing on",
+      "tags": [
+        "bureaucracy",
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "red-folded-chairman-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "red-folded-chairman-contrast",
+      "role": "conjunction",
+      "text": "but, after due deliberation,",
+      "connectorKind": "but",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ],

@@ -74,7 +74,9 @@ lines.
   `tests/unit/quality-gate.test.ts` and with a repository-wide search.
 - **AC-002-07:** Asset validation rejects a broad yellow color cast over muted or neutral pixels.
   It accepts local warm materials when a neutral or cool anchor remains.
-  An image without a neutral or cool anchor requires manual review.
+  An image without a measurable neutral or cool anchor fails automated color
+  validation. Repair or regenerate it under the color contract and rerun the
+  validator. A review note cannot waive this failure.
   Verify in `tests/unit/asset-color-guard.test.ts` and through
   `npm run assets:validate`.
 

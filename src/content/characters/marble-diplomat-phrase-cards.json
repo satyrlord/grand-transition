@@ -57,7 +57,10 @@
       "id": "marble-diplomat-foundation-noun",
       "role": "noun",
       "text": "my victory champagne on the taxpayers' tab",
-      "tags": ["luxury", "corruption"],
+      "tags": [
+        "luxury",
+        "corruption"
+      ],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -78,7 +81,11 @@
       "id": "marble-diplomat-foundation-modifier",
       "role": "modifier",
       "text": "before the voters spoil the reception they paid for",
-      "tags": ["luxury", "elitism", "corruption"],
+      "tags": [
+        "luxury",
+        "elitism",
+        "corruption"
+      ],
       "rarity": "uncommon",
       "editorialReview": {
         "state": "approved",
@@ -91,7 +98,10 @@
       "id": "marble-diplomat-foundation-ending",
       "role": "ending",
       "text": "and bad luck can use the servants' entrance.",
-      "tags": ["luxury", "elitism"],
+      "tags": [
+        "luxury",
+        "elitism"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -105,7 +115,9 @@
       "id": "marble-diplomat-recount-reception",
       "role": "ending",
       "text": "and the recount has asked the orchestra to stop.",
-      "tags": ["luxury"],
+      "tags": [
+        "luxury"
+      ],
       "rarity": "rare",
       "finisherBonus": 4,
       "editorialReview": {
@@ -113,6 +125,513 @@
         "originality": "original",
         "safetyFlags": [],
         "notes": "Original transformed premature-celebration motif: the corrected result ends the party. Agent editorial review, 2026-09-11; no real names or copied lines."
+      }
+    },
+    {
+      "id": "marble-diplomat-protocol-empty-plinth",
+      "role": "noun",
+      "text": "an empty plinth with diplomatic immunity",
+      "tags": [
+        "elitism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-gilded-apology",
+      "role": "noun",
+      "text": "a gilded apology too heavy to deliver",
+      "tags": [
+        "luxury"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-reception-place-card",
+      "role": "noun",
+      "text": "a place card attending the reception alone",
+      "tags": [
+        "elitism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-prestige-carpet",
+      "role": "noun",
+      "text": "a prestige carpet rolled over an unpaid invoice",
+      "tags": [
+        "luxury",
+        "corruption"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "wealth"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-crystal-silence",
+      "role": "noun",
+      "text": "a crystal decanter reserved for official silence",
+      "tags": [
+        "luxury",
+        "elitism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-1-past",
+      "role": "verb",
+      "text": "reserved a ceremonial entrance for",
+      "singularText": "reserved a ceremonial entrance for",
+      "pluralText": "reserved a ceremonial entrance for",
+      "personalSingularText": "reserved a ceremonial entrance for",
+      "secondPersonText": "reserved a ceremonial entrance for",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-1-present",
+      "role": "verb",
+      "text": "reserves a ceremonial entrance for",
+      "singularText": "reserves a ceremonial entrance for",
+      "pluralText": "reserve a ceremonial entrance for",
+      "personalSingularText": "reserves a ceremonial entrance for",
+      "secondPersonText": "reserve a ceremonial entrance for",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-1-future",
+      "role": "verb",
+      "text": "will reserve a ceremonial entrance for",
+      "singularText": "will reserve a ceremonial entrance for",
+      "pluralText": "will reserve a ceremonial entrance for",
+      "personalSingularText": "will reserve a ceremonial entrance for",
+      "secondPersonText": "will reserve a ceremonial entrance for",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-verb-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-2-past",
+      "role": "verb",
+      "text": "commissioned a marble pedestal for",
+      "singularText": "commissioned a marble pedestal for",
+      "pluralText": "commissioned a marble pedestal for",
+      "personalSingularText": "commissioned a marble pedestal for",
+      "secondPersonText": "commissioned a marble pedestal for",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-2-present",
+      "role": "verb",
+      "text": "commissions a marble pedestal for",
+      "singularText": "commissions a marble pedestal for",
+      "pluralText": "commission a marble pedestal for",
+      "personalSingularText": "commissions a marble pedestal for",
+      "secondPersonText": "commission a marble pedestal for",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-verb-2-future",
+      "role": "verb",
+      "text": "will commission a marble pedestal for",
+      "singularText": "will commission a marble pedestal for",
+      "pluralText": "will commission a marble pedestal for",
+      "personalSingularText": "will commission a marble pedestal for",
+      "secondPersonText": "will commission a marble pedestal for",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ],
+            "right": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-verb-2",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-predicate-1-past",
+      "role": "predicate",
+      "text": "measured national prestige by the length of the reception carpet",
+      "singularText": "measured national prestige by the length of the reception carpet",
+      "pluralText": "measured national prestige by the length of the reception carpet",
+      "personalSingularText": "measured national prestige by the length of the reception carpet",
+      "secondPersonText": "measured national prestige by the length of the reception carpet",
+      "tags": [
+        "luxury",
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-predicate-1-present",
+      "role": "predicate",
+      "text": "measures national prestige by the length of the reception carpet",
+      "singularText": "measures national prestige by the length of the reception carpet",
+      "pluralText": "measure national prestige by the length of the reception carpet",
+      "personalSingularText": "measures national prestige by the length of the reception carpet",
+      "secondPersonText": "measure national prestige by the length of the reception carpet",
+      "tags": [
+        "luxury",
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-predicate-1-future",
+      "role": "predicate",
+      "text": "will measure national prestige by the length of the reception carpet",
+      "singularText": "will measure national prestige by the length of the reception carpet",
+      "pluralText": "will measure national prestige by the length of the reception carpet",
+      "personalSingularText": "will measure national prestige by the length of the reception carpet",
+      "secondPersonText": "will measure national prestige by the length of the reception carpet",
+      "tags": [
+        "luxury",
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "bureaucracy",
+              "media",
+              "wealth"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-predicate-1",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-review-modifier",
+      "role": "modifier",
+      "text": "beneath a chandelier billed as essential infrastructure",
+      "tags": [
+        "luxury",
+        "corruption"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
+      }
+    },
+    {
+      "id": "marble-diplomat-contrast",
+      "role": "conjunction",
+      "text": "yet, with impeccable protocol,",
+      "connectorKind": "yet",
+      "tags": [],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
       }
     }
   ]

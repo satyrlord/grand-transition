@@ -23,7 +23,7 @@ function analyze(ids: readonly string[]) {
 describe('authored humor grammar integration', () => {
   test('the Prophet adds eight original private film-motif cards without replacing existing cards', () => {
     const prophet = phraseCardCatalog.characters.find(({ id }) => id === 'algorithmic-prophet')!;
-    expect(prophet.characterPhraseIds).toHaveLength(12);
+    expect(prophet.characterPhraseIds).toHaveLength(25);
     for (const suffix of [
       'bottled-prophecy-archive', 'sacred-leaderboard', 'laptop-wind-of-destiny',
       'ceremonial-donation-bow', 'tap-water-excuses', 'prophetic-damp-socks',

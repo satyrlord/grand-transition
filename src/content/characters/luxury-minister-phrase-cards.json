@@ -129,6 +129,498 @@
         "safetyFlags": [],
         "notes": "Original fictional reversal of a televised geography correction; invented geography and no named place or person."
       }
+    },
+    {
+      "id": "luxury-minister-velvet-cutback",
+      "role": "noun",
+      "text": "a spending cut wrapped in imported velvet",
+      "tags": [
+        "austerity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The presentation of economy consumes a luxury material. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-priority-spa-lane",
+      "role": "noun",
+      "text": "a public-service priority lane leading to the spa",
+      "tags": [
+        "service"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A priority intended for public work diverts to private leisure. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-designer-hardship",
+      "role": "noun",
+      "text": "my designer collection of other people's hardships",
+      "tags": [
+        "authenticity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Lived hardship is treated as a fashionable collection. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-limousine-bus-timetable",
+      "role": "noun",
+      "text": "a bus timetable delivered by limousine",
+      "tags": [
+        "austerity",
+        "service"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An expensive car delivers information for people waiting for a bus. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-diamond-savings-pin",
+      "role": "noun",
+      "text": "a diamond pin celebrating household savings",
+      "tags": [
+        "austerity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An expensive celebration contradicts the call to save. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-upgraded-to-silk-past",
+      "role": "verb",
+      "text": "awarded ministerial silk to",
+      "tags": [
+        "austerity"
+      ],
+      "singularText": "awarded ministerial silk to",
+      "pluralText": "awarded ministerial silk to",
+      "personalSingularText": "awarded ministerial silk to",
+      "secondPersonText": "awarded ministerial silk to",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Ministerial status supplies an unnecessary luxury upgrade. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-upgraded-to-silk-present",
+      "role": "verb",
+      "text": "awards ministerial silk to",
+      "tags": [
+        "austerity"
+      ],
+      "singularText": "awards ministerial silk to",
+      "pluralText": "award ministerial silk to",
+      "personalSingularText": "awards ministerial silk to",
+      "secondPersonText": "award ministerial silk to",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Ministerial status supplies an unnecessary luxury upgrade. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-upgraded-to-silk-future",
+      "role": "verb",
+      "text": "will award ministerial silk to",
+      "tags": [
+        "austerity"
+      ],
+      "singularText": "will award ministerial silk to",
+      "pluralText": "will award ministerial silk to",
+      "personalSingularText": "will award ministerial silk to",
+      "secondPersonText": "will award ministerial silk to",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Ministerial status supplies an unnecessary luxury upgrade. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-charged-to-hardship-fund-past",
+      "role": "verb",
+      "text": "charged the hardship fund for",
+      "tags": [
+        "service"
+      ],
+      "singularText": "charged the hardship fund for",
+      "pluralText": "charged the hardship fund for",
+      "personalSingularText": "charged the hardship fund for",
+      "secondPersonText": "charged the hardship fund for",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An expense consumes money meant to help people in hardship. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-charged-to-hardship-fund-present",
+      "role": "verb",
+      "text": "charges the hardship fund for",
+      "tags": [
+        "service"
+      ],
+      "singularText": "charges the hardship fund for",
+      "pluralText": "charge the hardship fund for",
+      "personalSingularText": "charges the hardship fund for",
+      "secondPersonText": "charge the hardship fund for",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An expense consumes money meant to help people in hardship. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-charged-to-hardship-fund-future",
+      "role": "verb",
+      "text": "will charge the hardship fund for",
+      "tags": [
+        "service"
+      ],
+      "singularText": "will charge the hardship fund for",
+      "pluralText": "will charge the hardship fund for",
+      "personalSingularText": "will charge the hardship fund for",
+      "secondPersonText": "will charge the hardship fund for",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An expense consumes money meant to help people in hardship. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-queue-proof-past",
+      "role": "predicate",
+      "text": "was insulated from queues by a private lift",
+      "tags": [
+        "service"
+      ],
+      "singularText": "was insulated from queues by a private lift",
+      "pluralText": "were insulated from queues by a private lift",
+      "personalSingularText": "was insulated from queues by a private lift",
+      "secondPersonText": "were insulated from queues by a private lift",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-queue-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A private route prevents the official from experiencing public delays. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-queue-proof-present",
+      "role": "predicate",
+      "text": "is insulated from queues by a private lift",
+      "tags": [
+        "service"
+      ],
+      "singularText": "is insulated from queues by a private lift",
+      "pluralText": "are insulated from queues by a private lift",
+      "personalSingularText": "is insulated from queues by a private lift",
+      "secondPersonText": "are insulated from queues by a private lift",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-queue-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A private route prevents the official from experiencing public delays. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-queue-proof-future",
+      "role": "predicate",
+      "text": "will be insulated from queues by a private lift",
+      "tags": [
+        "service"
+      ],
+      "singularText": "will be insulated from queues by a private lift",
+      "pluralText": "will be insulated from queues by a private lift",
+      "personalSingularText": "will be insulated from queues by a private lift",
+      "secondPersonText": "will be insulated from queues by a private lift",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-queue-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A private route prevents the official from experiencing public delays. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-gold-economy-label",
+      "role": "modifier",
+      "text": "with the word economy embossed in gold",
+      "tags": [
+        "austerity"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A costly label advertises restraint. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "luxury-minister-neutral-contrast",
+      "role": "conjunction",
+      "text": "but, all the same,",
+      "tags": [],
+      "connectorKind": "but",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

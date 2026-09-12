@@ -126,6 +126,502 @@
         "safetyFlags": [],
         "notes": "Original fictional punchline about taking more credit than the whole available total."
       }
+    },
+    {
+      "id": "football-tycoon-sponsored-conscience",
+      "role": "noun",
+      "text": "a conscience with space for three sponsors",
+      "tags": [
+        "commercialism",
+        "sincerity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Moral judgment is converted into advertising space. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-rented-standing-ovation",
+      "role": "noun",
+      "text": "my rented standing ovation",
+      "tags": [
+        "sincerity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Public admiration is purchased as a service. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-invoice-whistle",
+      "role": "noun",
+      "text": "a referee whistle that prints invoices",
+      "tags": [
+        "commercialism"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. An instrument of sporting judgment becomes a billing device. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-charity-scoreboard",
+      "role": "noun",
+      "text": "a charity scoreboard counting camera crews",
+      "tags": [
+        "sincerity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A charitable event counts publicity instead of beneficiaries. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-blameless-owner",
+      "role": "noun",
+      "text": "a club owner absent from every column of blame",
+      "tags": [
+        "accountability"
+      ],
+      "grammaticalNumber": "singular",
+      "referentKind": "personal",
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The owner takes credit while avoiding recorded responsibility. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sold-naming-rights-to-past",
+      "role": "verb",
+      "text": "sold the naming rights to",
+      "tags": [
+        "commercialism"
+      ],
+      "singularText": "sold the naming rights to",
+      "pluralText": "sold the naming rights to",
+      "personalSingularText": "sold the naming rights to",
+      "secondPersonText": "sold the naming rights to",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sold-naming-rights-to-present",
+      "role": "verb",
+      "text": "sells the naming rights to",
+      "tags": [
+        "commercialism"
+      ],
+      "singularText": "sells the naming rights to",
+      "pluralText": "sell the naming rights to",
+      "personalSingularText": "sells the naming rights to",
+      "secondPersonText": "sell the naming rights to",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sold-naming-rights-to-future",
+      "role": "verb",
+      "text": "will sell the naming rights to",
+      "tags": [
+        "commercialism"
+      ],
+      "singularText": "will sell the naming rights to",
+      "pluralText": "will sell the naming rights to",
+      "personalSingularText": "will sell the naming rights to",
+      "secondPersonText": "will sell the naming rights to",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-relegated-to-fine-print-past",
+      "role": "verb",
+      "text": "printed a sponsor disclaimer about",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "printed a sponsor disclaimer about",
+      "pluralText": "printed a sponsor disclaimer about",
+      "personalSingularText": "printed a sponsor disclaimer about",
+      "secondPersonText": "printed a sponsor disclaimer about",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-relegated-to-fine-print-present",
+      "role": "verb",
+      "text": "prints a sponsor disclaimer about",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "prints a sponsor disclaimer about",
+      "pluralText": "print a sponsor disclaimer about",
+      "personalSingularText": "prints a sponsor disclaimer about",
+      "secondPersonText": "print a sponsor disclaimer about",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-relegated-to-fine-print-future",
+      "role": "verb",
+      "text": "will print a sponsor disclaimer about",
+      "tags": [
+        "accountability"
+      ],
+      "singularText": "will print a sponsor disclaimer about",
+      "pluralText": "will print a sponsor disclaimer about",
+      "personalSingularText": "will print a sponsor disclaimer about",
+      "secondPersonText": "will print a sponsor disclaimer about",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sincere-until-invoice-past",
+      "role": "predicate",
+      "text": "was sincere until the invoice arrived",
+      "tags": [
+        "sincerity",
+        "commercialism"
+      ],
+      "singularText": "was sincere until the invoice arrived",
+      "pluralText": "were sincere until the invoice arrived",
+      "personalSingularText": "was sincere until the invoice arrived",
+      "secondPersonText": "were sincere until the invoice arrived",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sincere-until-invoice-present",
+      "role": "predicate",
+      "text": "is sincere until the invoice arrives",
+      "tags": [
+        "sincerity",
+        "commercialism"
+      ],
+      "singularText": "is sincere until the invoice arrives",
+      "pluralText": "are sincere until the invoice arrives",
+      "personalSingularText": "is sincere until the invoice arrives",
+      "secondPersonText": "are sincere until the invoice arrives",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-sincere-until-invoice-future",
+      "role": "predicate",
+      "text": "will be sincere until the invoice arrives",
+      "tags": [
+        "sincerity",
+        "commercialism"
+      ],
+      "singularText": "will be sincere until the invoice arrives",
+      "pluralText": "will be sincere until the invoice arrives",
+      "personalSingularText": "will be sincere until the invoice arrives",
+      "secondPersonText": "will be sincere until the invoice arrives",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-charity-camera-angle",
+      "role": "modifier",
+      "text": "from the most charitable camera angle",
+      "tags": [
+        "sincerity"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A favorable camera view substitutes for charitable conduct. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "football-tycoon-neutral-contrast",
+      "role": "conjunction",
+      "text": "yet, despite that,",
+      "tags": [],
+      "connectorKind": "yet",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

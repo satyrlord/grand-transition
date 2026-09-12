@@ -139,7 +139,8 @@ This is an initial listening preset, informed by Shure's 100 Hz vocal low-cut
 guidance and its 200 Hz conferencing low-cut / treble-shelf guidance. Automated
 browser tests measure the actual response at 44.1 and 48 kHz, rendered low-band
 attenuation, presence retention, finite samples, silence, and test-signal
-headroom. Subjective clarity still requires listening on the target output.
+headroom. These measurements do not establish subjective clarity on a physical
+output device. The user can assess that separately after milestone completion.
 
 `neural-speech-worker.ts` performs pronunciation and inference in a local module
 worker, using the existing pronunciation library. It loads only same-origin
@@ -360,10 +361,12 @@ skins through real match completion and records native versus neural calls.
 - **AC-024-05:** Both public bubbles and reciting stances remain visible during
   speech. Victory waits for both deliveries. Milestone 025 tests verify scores,
   total, damage, and automatic progression.
-- **AC-024-06:** Record listening separately from signal and routing tests.
-  Chromium, Firefox, and WebKit evidence identifies exact runtime and native
-  audio support. Windows Playwright WebKit lacks Web Audio. Its silent fallback
-  does not establish audible WebKit acceptance.
+- **AC-024-06:** Signal, routing, and production-browser tests record exact
+  Chromium, Firefox, and WebKit runtimes and available audio support. Unsupported
+  audio follows the tested silent fallback. Windows Playwright WebKit lacks
+  Web Audio; its fallback result does not establish audible WebKit output.
+  Listening and physical-device observations are optional and are not required
+  for milestone completion.
 - **AC-024-07:** GPU asset and worker tests reject altered packages, unavailable
   devices, CPU-only sessions, and invalid PCM or durations. Router tests prove
   match-stable selection, voice mapping, cancellation, opt-out disposal, and
@@ -371,16 +374,21 @@ skins through real match completion and records native versus neural calls.
   buffer and actual audio-clock diagnostics. Settings production tests prove
   unsupported GPU status, zero GPU package downloads, persistence, and layout.
   Record real GPU initialization, both voices, contiguous chunks, and injected
-  device-loss handling separately from physical device loss and listening.
+  device-loss handling. Distinguish these checks from optional physical-device
+  loss and listening observations; injected loss does not prove physical-device
+  behavior.
 
 ## Review and verification
 
 Run Impeccable audit and critique on Settings and narration.
 Build and preview `/grand-transition/`. Record the browser, operating system,
-viewport, output device, and voice. Listen to menu and studio music,
-each cue, and both complete insults. Check mute, Pause, resume, navigation,
-musical fit, speech quality, and residual noise at supported landscape sizes.
-Run focused tests, production flows, and `npm run ci`.
+viewport, and voice for the automated production flows. Check menu and studio
+music routing, every cue, both complete public insults, mute, Pause, resume,
+navigation, and the supported landscape sizes through the verifiers above.
+Run focused tests, production flows, and `npm run ci`. The user can separately
+listen for musical fit, speech quality, and residual noise after completion.
+Record any such observation with its output device; do not present automated
+signal or routing results as proof of subjective quality.
 
 ## Research sources
 

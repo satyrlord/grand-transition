@@ -926,6 +926,7 @@
     left: 50%;
     display: grid;
     align-items: center;
+    grid-template-rows: minmax(0, 1fr);
     width: calc(var(--scene-width) * 0.32);
     height: var(--sentence-height);
     padding: 0.72rem clamp(0.8rem, 1.3vw, 1.5rem) 1rem;
@@ -983,14 +984,26 @@
   }
 
   .sentence-preview {
+    min-height: 0;
+    max-height: 100%;
     margin: 0;
     padding-block: 0.16rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: #242424 rgb(252 250 246);
+    scrollbar-width: thin;
     font: 900 clamp(1.02rem, 1.65vw, 1.62rem) / 1.14 var(--font-speech);
     letter-spacing: 0.015em;
     text-align: center;
     text-wrap: balance;
     text-transform: uppercase;
     overflow-wrap: anywhere;
+  }
+
+  .sentence-preview:focus-visible {
+    outline: 2px solid #12477f;
+    outline-offset: -2px;
   }
 
   .sentence-preview[data-density='compact'] {

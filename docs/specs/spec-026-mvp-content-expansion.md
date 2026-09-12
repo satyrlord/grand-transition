@@ -184,11 +184,11 @@ owning character path. Synthetic discovery characters must meet the same
 
 The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
 `with 110% turnout at the cemetery`. It belongs only to that character and
-satisfies the foundation modifier minimum. Its 21-card pool retains all prior
+satisfies the foundation modifier minimum. Its 25-card pool retains all prior
 phrases and IDs. Verify the card and the complete approved sentence in
 `tests/unit/content-schemas.test.ts` and `tests/unit/english-grammar-core.test.ts`.
 
-The Algorithmic Prophet owns 12 cards, including eight original comic
+The Algorithmic Prophet owns 25 cards, including eight original comic
 adaptations of beverage memory, nature omens, national rankings, and ceremonial
 courage. These add two nouns, two modifiers, and four endings to the existing
 four-card pool. Existing identifiers and text remain stable. New cards belong

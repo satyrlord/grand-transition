@@ -215,40 +215,42 @@ describe('Local Radio Caller', () => {
     const tiedBest = candidates.filter(
       ({ utility }) => utility === bestUtility,
     );
-    expect(tiedBest).toHaveLength(2);
-    const suppressed = tiedBest[1]!.command;
-    expect(suppressed.type).toBe('select-phrase');
-    if (suppressed.type === 'select-phrase') {
-      const active = state.draft!.playerStates[actorId]!;
-      const board = {
-        ...state.draft!.board,
-        slots: state.draft!.board.slots.map((slot) =>
-          suppressed.payload.card.source === 'shared' &&
-          slot.id === suppressed.payload.card.cardId
-            ? { ...slot, available: false }
-            : slot,
-        ),
-      };
-      state = {
-        ...state,
-        board,
-        draft: {
-          ...state.draft!,
+    expect(tiedBest.length).toBeGreaterThan(1);
+    for (const candidate of tiedBest.slice(1)) {
+      const suppressed = candidate.command;
+      expect(suppressed.type).toBe('select-phrase');
+      if (suppressed.type === 'select-phrase') {
+        const active = state.draft!.playerStates[actorId]!;
+        const board = {
+          ...state.draft!.board,
+          slots: state.draft!.board.slots.map((slot) =>
+            suppressed.payload.card.source === 'shared' &&
+            slot.id === suppressed.payload.card.cardId
+              ? { ...slot, available: false }
+              : slot,
+          ),
+        };
+        state = {
+          ...state,
           board,
-          playerStates: {
-            ...state.draft!.playerStates,
-            [actorId]: {
-              ...active,
-              hand:
-                suppressed.payload.card.source === 'private'
-                  ? active.hand.filter(
-                      ({ id }) => id !== suppressed.payload.card.cardId,
-                    )
-                  : active.hand,
+          draft: {
+            ...state.draft!,
+            board,
+            playerStates: {
+              ...state.draft!.playerStates,
+              [actorId]: {
+                ...active,
+                hand:
+                  suppressed.payload.card.source === 'private'
+                    ? active.hand.filter(
+                        ({ id }) => id !== suppressed.payload.card.cardId,
+                      )
+                    : active.hand,
+              },
             },
           },
-        },
-      };
+        };
+      }
     }
     candidates = evaluateLocalRadioCallerCandidates(state, context);
     bestUtility = Math.max(...candidates.map(({ utility }) => utility));

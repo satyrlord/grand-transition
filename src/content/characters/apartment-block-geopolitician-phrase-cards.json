@@ -123,6 +123,497 @@
         "safetyFlags": [],
         "notes": "Original fictional reversal of leisurely popcorn-watching confidence through an early electoral result. No weakness is stated by this timing joke."
       }
+    },
+    {
+      "id": "apartment-block-geopolitician-stairwell-security-council",
+      "role": "noun",
+      "text": "a stairwell security council with one folding chair",
+      "tags": [
+        "nuance"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A small domestic meeting claims the authority of global diplomacy. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-fridge-border-map",
+      "role": "noun",
+      "text": "a disputed border drawn between fridge magnets",
+      "tags": [
+        "specificity"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A kitchen display replaces an exact account of a territorial dispute. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-balcony-listening-post",
+      "role": "noun",
+      "text": "my balcony listening post aimed at the washing line",
+      "tags": [
+        "sources"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposed intelligence operation observes only laundry. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-anonymous-lift-source",
+      "role": "noun",
+      "text": "an anonymous source from the lift repair notice",
+      "tags": [
+        "sources"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A maintenance notice is promoted into geopolitical evidence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-radiator-arms-race",
+      "role": "noun",
+      "text": "an arms race between two leaking radiators",
+      "tags": [
+        "nuance"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Military rivalry is confused with a domestic heating problem. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-past",
+      "role": "verb",
+      "text": "mapped fridge magnets around",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "mapped fridge magnets around",
+      "pluralText": "mapped fridge magnets around",
+      "personalSingularText": "mapped fridge magnets around",
+      "secondPersonText": "mapped fridge magnets around",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-present",
+      "role": "verb",
+      "text": "maps fridge magnets around",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "maps fridge magnets around",
+      "pluralText": "map fridge magnets around",
+      "personalSingularText": "maps fridge magnets around",
+      "secondPersonText": "map fridge magnets around",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-future",
+      "role": "verb",
+      "text": "will map fridge magnets around",
+      "tags": [
+        "specificity"
+      ],
+      "singularText": "will map fridge magnets around",
+      "pluralText": "will map fridge magnets around",
+      "personalSingularText": "will map fridge magnets around",
+      "secondPersonText": "will map fridge magnets around",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-verified-through-wall-past",
+      "role": "verb",
+      "text": "verified kitchen-wall gossip about",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "verified kitchen-wall gossip about",
+      "pluralText": "verified kitchen-wall gossip about",
+      "personalSingularText": "verified kitchen-wall gossip about",
+      "secondPersonText": "verified kitchen-wall gossip about",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-verified-through-wall-present",
+      "role": "verb",
+      "text": "verifies kitchen-wall gossip about",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "verifies kitchen-wall gossip about",
+      "pluralText": "verify kitchen-wall gossip about",
+      "personalSingularText": "verifies kitchen-wall gossip about",
+      "secondPersonText": "verify kitchen-wall gossip about",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-verified-through-wall-future",
+      "role": "verb",
+      "text": "will verify kitchen-wall gossip about",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "will verify kitchen-wall gossip about",
+      "pluralText": "will verify kitchen-wall gossip about",
+      "personalSingularText": "will verify kitchen-wall gossip about",
+      "secondPersonText": "will verify kitchen-wall gossip about",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-classified-until-bell-past",
+      "role": "predicate",
+      "text": "was classified until the doorbell rang",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "was classified until the doorbell rang",
+      "pluralText": "were classified until the doorbell rang",
+      "personalSingularText": "was classified until the doorbell rang",
+      "secondPersonText": "were classified until the doorbell rang",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-classified-until-bell-present",
+      "role": "predicate",
+      "text": "is classified until the doorbell rings",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "is classified until the doorbell rings",
+      "pluralText": "are classified until the doorbell rings",
+      "personalSingularText": "is classified until the doorbell rings",
+      "secondPersonText": "are classified until the doorbell rings",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-classified-until-bell-future",
+      "role": "predicate",
+      "text": "will be classified until the doorbell rings",
+      "tags": [
+        "sources"
+      ],
+      "singularText": "will be classified until the doorbell rings",
+      "pluralText": "will be classified until the doorbell rings",
+      "personalSingularText": "will be classified until the doorbell rings",
+      "secondPersonText": "will be classified until the doorbell rings",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-washing-line-evidence",
+      "role": "modifier",
+      "text": "with a washing line marked as satellite evidence",
+      "tags": [
+        "sources"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. Laundry infrastructure is mislabeled as high-grade intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
+    },
+    {
+      "id": "apartment-block-geopolitician-neutral-contrast",
+      "role": "conjunction",
+      "text": "but, after all,",
+      "tags": [],
+      "connectorKind": "but",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
+      }
     }
   ]
 }

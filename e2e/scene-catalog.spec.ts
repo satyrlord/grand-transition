@@ -1,4 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+
+test.beforeEach(async ({ page }) => {
+  await useFixedBrowserMatchSeed(page);
+});
 
 const scenes = [
   'transition-era-television-studio',
@@ -40,14 +45,27 @@ test('a sentence forty percent longer than the long-match fixture fits above the
   for (const viewport of viewports) {
     await page.mouse.move(0, 0);
     await page.setViewportSize(viewport);
-    const fits = await page.evaluate(() => {
+    const preview = page.locator('.sentence-preview');
+    await preview.focus();
+    await preview.press('Home');
+    const endpointFits = async (last: boolean) => preview.evaluate((element, { value, last }) => {
       const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
+      const viewport = element.getBoundingClientRect();
+      const node = [...element.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent === value)!;
       const range = document.createRange();
-      range.selectNodeContents(document.querySelector('.sentence-preview')!);
+      range.setStart(node, last ? value.length - 1 : 0);
+      range.setEnd(node, last ? value.length : 1);
       const text = range.getBoundingClientRect();
-      return text.top >= bubble.top && text.bottom <= bubble.bottom && text.left >= bubble.left && text.right <= bubble.right;
-    });
-    expect(fits, `${viewport.width}x${viewport.height}`).toBe(true);
+      return viewport.top >= bubble.top && viewport.bottom <= bubble.bottom &&
+        text.top >= bubble.top && text.bottom <= bubble.bottom &&
+        text.left >= bubble.left && text.right <= bubble.right &&
+        element.scrollWidth <= element.clientWidth;
+    }, { value: sentence, last });
+    expect(await endpointFits(false), `${viewport.width}x${viewport.height} start`).toBe(true);
+    await preview.hover();
+    await page.mouse.wheel(0, 2_000);
+    await expect.poll(() => preview.evaluate((element) => element.scrollTop + element.clientHeight >= element.scrollHeight - 1)).toBe(true);
+    expect(await endpointFits(true), `${viewport.width}x${viewport.height} end`).toBe(true);
     await expect(page.locator('.sentence-preview')).toHaveText(sentence);
   }
 });
