@@ -1,7 +1,7 @@
-# Milestone 028: Release Hardening
+# Milestone 030: Release Hardening
 
 **Status:** Approved  
-**Depends on:** 027  
+**Depends on:** 029\
 **Owns:** Release quality, compatibility, security, and completion  
 **Production-file budget:** 8
 
@@ -80,19 +80,19 @@ runtime-network failure cannot be waived.
 
 ## Acceptance criteria
 
-- **AC-028-01:** Five cold and five warm trials meet every performance table
+- **AC-030-01:** Five cold and five warm trials meet every performance table
   threshold and retain machine-readable results and trace links.
-- **AC-028-02:** The exact browser matrix passes title-to-match-completion, reload,
+- **AC-030-02:** The exact browser matrix passes title-to-match-completion, reload,
   persistence fallback, privacy, speech-unavailable, and
   longest-content flows without uncaught error.
-- **AC-028-03:** The supported landscape viewport matrix and blocking boundary
+- **AC-030-03:** The supported landscape viewport matrix and blocking boundary
   cases pass with final art and longest content.
-- **AC-028-04:** The production artifact contains no developer control, source
+- **AC-030-04:** The production artifact contains no developer control, source
   map, unlicensed asset, remote request, secret, or committed `dist/`.
-- **AC-028-05:** Dependencies and GitHub actions have recorded license,
+- **AC-030-05:** Dependencies and GitHub actions have recorded license,
   provenance, vulnerability, and version review with no unresolved critical or
   high issue.
-- **AC-028-06:** Every deviation has the complete record above and is within
+- **AC-030-06:** Every deviation has the complete record above and is within
   the allowed class. Otherwise, the release is blocked.
 
 ## Minimum viable product completion contract

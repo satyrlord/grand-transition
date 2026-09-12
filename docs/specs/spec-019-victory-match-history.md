@@ -13,7 +13,7 @@ local history defined here. Development logs, replay imports, simulation,
 export, sharing, leaderboards, accounts, and network services remain outside
 the product UI.
 
-Milestone 030 extends history with recorded match language and a localized
+Milestone 029 extends history with recorded match language and a localized
 interface. It preserves original public sentences and scores across language
 changes. Record its exact version and migration fixtures here before codec
 implementation; the existing English history contract remains supported.

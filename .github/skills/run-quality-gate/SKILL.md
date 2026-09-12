@@ -43,7 +43,7 @@ the applicable contract checks. Run `npm run validate` when configuration or
 repository guidance changes affect its checks.
 
 State when the full gate is outside the requested verification scope.
-Release mode requires the complete gate and the Milestone 028 and 029 evidence.
+Release mode requires the complete gate and the Milestone 030 and 031 evidence.
 Run `git diff --check`.
 Inspect final status and diff.
 

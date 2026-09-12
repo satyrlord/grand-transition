@@ -24,7 +24,7 @@ Read `AGENTS.md` and the applicable approved specifications. Start with
 `docs/specs/spec-026-mvp-content-expansion.md`, and
 `docs/specs/spec-027-balance-editorial.md`. Read Milestones 006 through 013 and
 021 and 022 for grammar, draws, scoring, match flow, or artificial intelligence (AI).
-Read Milestones 023 and 031 for assets or final content.
+Read Milestones 023 and 028 for assets or final content.
 Review the selected scope without edits.
 
 Check stable identifiers (IDs), schema parity, and locale parity. Check grammar

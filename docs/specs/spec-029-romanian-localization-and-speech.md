@@ -1,7 +1,7 @@
-# Milestone 030: Romanian Localization and Speech
+# Milestone 029: Romanian Localization and Speech
 
 **Status:** Approved; implementation and evaluation pending  
-**Depends on:** 029  
+**Depends on:** 028\
 **Owns:** Full Romanian localization, Romanian grammar, local Romanian voices,
 and the Ro_VITS comparison decision  
 **Production-file budget:** 8 per delivery package
@@ -200,11 +200,11 @@ GPL source obligations if Piper or eSpeak NG components are distributed.
 
 The new verifier paths below are implementation targets, not existing evidence.
 
-- **AC-030-01:** Both complete locale catalogs pass key, reference, safety,
+- **AC-029-01:** Both complete locale catalogs pass key, reference, safety,
   diacritic, and inflection validation. Missing and invalid fixtures fail at
   their field paths. Verifiers: `npm run localization:validate`,
   `npm run content:validate`, and `tests/unit/romanian-localization.test.ts`.
-- **AC-030-02:** Both drop-downs default to English and independently preserve
+- **AC-029-02:** Both drop-downs default to English and independently preserve
   all four language combinations after selection and reload. Changing either
   leaves the other unchanged. Stepwise migration through versions 3, 4, and 5 to
   version 6 sets both locale fields to English and preserves the base points
@@ -212,43 +212,43 @@ The new verifier paths below are implementation targets, not existing evidence.
   Invalid values in either field, unknown versions, and blocked/quota storage
   match this contract. Verifiers: `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.
-- **AC-030-03:** Romanian fixtures cover every grammar branch listed above,
+- **AC-029-03:** Romanian fixtures cover every grammar branch listed above,
   singular/plural and person/gender boundaries, missing inflections, incomplete
   clauses, invalid roles, and rejected-command immutability. Verifier:
   `tests/unit/romanian-grammar.test.ts`.
-- **AC-030-04:** Matched semantic fixtures preserve scoring, weaknesses, combos,
+- **AC-029-04:** Matched semantic fixtures preserve scoring, weaknesses, combos,
   and finishers. Fixed Romanian seeds reproduce state and complete each AI
   difficulty, hotseat, and the ladder. Verifiers:
   `tests/unit/romanian-match.test.ts` and `e2e/romanian-localization.spec.ts`.
   Repeat fixed game-locale fixtures with each interface language and assert
   identical grammar results, AI decisions, state, and scores.
-- **AC-030-05:** Legacy English fixtures and new Romanian replay/log/history
+- **AC-029-05:** Legacy English fixtures and new Romanian replay/log/history
   fixtures round-trip with original text, locale, and scoring. Changing the
   interface language cannot alter stored results. Verifier:
   `tests/unit/romanian-persistence.test.ts`.
-- **AC-030-06:** Both pinned model packages pass inventory, license, hash, size,
+- **AC-029-06:** Both pinned model packages pass inventory, license, hash, size,
   and configuration validation. Changed or missing files fail validation.
   Verifiers: `npm run speech:validate` and
   `tests/unit/romanian-speech-assets.test.ts`.
-- **AC-030-07:** Each skin profile selects the required Romanian voice when
+- **AC-029-07:** Each skin profile selects the required Romanian voice when
   game language is Romanian, with either interface language. A Romanian
   interface with English game language retains English speech. Real
   inference covers short and long sentences, all diacritics, pitch and rate
   boundaries, PCM output, complete delivery, and score alignment. Verifiers:
   `tests/unit/skin-speech.test.ts` and `e2e/romanian-speech.spec.ts`.
-- **AC-030-08:** Production tests prove same-origin loading, no phrase upload,
+- **AC-029-08:** Production tests prove same-origin loading, no phrase upload,
   no English platform call, and no draft or hidden speech. They cover speech
   off, missing/corrupt assets, inference failure, timeout, Pause, visibility
   interruption, navigation, and cancellation within 100 milliseconds.
   Verifier: `e2e/romanian-speech.spec.ts`.
-- **AC-030-09:** All Romanian screens, long phrases, accessible names, notices,
+- **AC-029-09:** All Romanian screens, long phrases, accessible names, notices,
   and history pass the shared landscape matrix with keyboard and forced-color
   checks. Verify all four language combinations, both labeled drop-downs,
   independent selection, focus retention, and their absence from Pause.
   The document, game-text, and recorded-text languages are correct. Verifier:
   `e2e/romanian-localization.spec.ts`, followed by the shared Impeccable audit
   and critique procedures on the production build.
-- **AC-030-10:** Source and editorial checks cover all translations and complete
+- **AC-029-10:** Source and editorial checks cover all translations and complete
   representative constructions. Romanian content, grammar, and production
   speech fixtures cover both voices, every assigned profile, all diacritics,
   names, loanwords, questions, endings, comebacks, and the longest shipped
@@ -258,7 +258,7 @@ The new verifier paths below are implementation targets, not existing evidence.
   `tests/unit/romanian-grammar.test.ts`, `e2e/romanian-speech.spec.ts`, and the
   source-review evidence. Listening is optional; automatic checks do not prove
   perceived naturalness or complete pronunciation quality.
-- **AC-030-11:** Measure cold download, cold initialization, warm synthesis,
+- **AC-029-11:** Measure cold download, cold initialization, warm synthesis,
   peak memory, and cancellation for both voices on the least-capable supported
   production environment. Record CPU, RAM, OS, browser/version, workload,
   repetitions, median, and worst result. No accepted fixture may exceed the
@@ -285,7 +285,7 @@ ONNX/WASM feasibility under the production CSP; desktop Python inference
 alone does not establish browser suitability. Research prototypes stay in the
 Git-ignored temporary folder and do not enter the production bundle.
 
-- **AC-030-12:** A reproducible report compares Ro_VITS and both Piper voices
+- **AC-029-12:** A reproducible report compares Ro_VITS and both Piper voices
   on identical text. Record source inspection, real inference, complete output,
   alignment, resource measurements, browser feasibility, and confirmed errors.
   Identify sample counts, hardware, settings, licensing evidence, missing
@@ -294,7 +294,7 @@ Git-ignored temporary folder and do not enter the production bundle.
   required to complete the comparison. Do not infer those subjective properties
   from automatic transcription or performance measurements. Verifier: the
   retained comparison report.
-- **AC-030-13:** Record one decision: retain both Piper voices, recommend a
+- **AC-029-13:** Record one decision: retain both Piper voices, recommend a
   named partial replacement, or recommend a complete Ro_VITS replacement.
   A replacement recommendation requires demonstrated benefits without
   unresolved correctness, licensing, privacy, size, timing, or browser failures.
@@ -315,13 +315,13 @@ inference output, score markers, and completion. Record pass, fail, or blocked
 for every sample and each criterion above. Optional user listening can add
 observations about audible words and naturalness after milestone completion.
 
-Phase 1 is complete only after AC-030-01 through AC-030-11 and cumulative
+Phase 1 is complete only after AC-029-01 through AC-029-11 and cumulative
 `npm run ci` pass. Run browser tests headlessly. No native-speaker, listening,
 or other human-review record is required for code completion. Do not treat
 automated transcription or a green aggregate gate as proof of native-language
 naturalness or physical audible output.
 
-Phase 2 is complete after AC-030-12 and AC-030-13. Stop at the recorded decision.
+Phase 2 is complete after AC-029-12 and AC-029-13. Stop at the recorded decision.
 Any model replacement needs a separately approved implementation package and
 updated contracts. Neither phase authorizes publication, voice cloning,
 additional languages, cloud speech, or new gameplay mechanics.

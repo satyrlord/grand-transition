@@ -12,7 +12,7 @@ Read `AGENTS.md` and the applicable approved specifications. Start with
 `docs/specs/spec-026-mvp-content-expansion.md`, and
 `docs/specs/spec-027-balance-editorial.md`. Read Milestones 006 through 013 and
 021 and 022 for grammar, draws, scoring, match flow, or artificial intelligence (AI).
-Read Milestones 023 and 031 for asset or final-content work.
+Read Milestones 023 and 028 for asset or final-content work.
 Inspect the Zod schemas, locale bundle, grammar adapter, validators,
 pool loaders, tests, asset manifest, and affected siblings.
 If these owners do not exist, update only the approved specification or
