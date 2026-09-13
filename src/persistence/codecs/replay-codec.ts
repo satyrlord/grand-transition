@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import {
+  legacyConciseReplayContext,
+  legacyRosterReplayContext,
   legacyFinalizationReplayContext,
   legacyHumorReplayContext,
   legacyPhraseReplayContext,
@@ -28,7 +30,7 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 9;
+export const replaySchemaVersion = 11;
 export const supportedReplaySchemaVersions = [
   1,
   2,
@@ -38,6 +40,8 @@ export const supportedReplaySchemaVersions = [
   6,
   7,
   8,
+  9,
+  10,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -53,6 +57,8 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[6]),
   z.literal(supportedReplaySchemaVersions[7]),
   z.literal(supportedReplaySchemaVersions[8]),
+  z.literal(supportedReplaySchemaVersions[9]),
+  z.literal(supportedReplaySchemaVersions[10]),
 ]);
 
 export type ReplayFailureCode =
@@ -484,9 +490,15 @@ export function replayContextForVersion(
   schemaVersion: number,
   context: ReplayContext,
 ): ReplayContext {
-  const finalizationContext = schemaVersion < 9
-    ? legacyFinalizationReplayContext(context)
+  const rosterContext = schemaVersion < 11
+    ? legacyRosterReplayContext(context)
     : context;
+  const conciseContext = schemaVersion < 10
+    ? legacyConciseReplayContext(rosterContext)
+    : rosterContext;
+  const finalizationContext = schemaVersion < 9
+    ? legacyFinalizationReplayContext(conciseContext)
+    : conciseContext;
   const prophetContext = schemaVersion < 8
     ? legacyProphetReplayContext(finalizationContext)
     : finalizationContext;

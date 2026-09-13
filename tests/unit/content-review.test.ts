@@ -7,6 +7,14 @@ const { sampleContent: catalog, englishGameLocale: locale } = loadGameContent();
 const context = { catalog, locale, balance: basicScoringBalance };
 
 describe('Milestone 027 content prerequisites', () => {
+  test.each([18, 19, 20])('requires the approved nineteen-character roster at count %s', (count) => {
+    const characters = Array.from({ length: count }, (_, index) => catalog.characters[index % catalog.characters.length]!);
+    const issues = reviewContentPreflight({ ...catalog, characters });
+    expect(issues.filter((issue) => issue.startsWith('Characters:'))).toEqual(
+      count === 19 ? [] : [`Characters: ${count}; required 19 through 19.`],
+    );
+  });
+
   test('preflight distinguishes owned scene content from general scene eligibility', () => {
     expect(reviewContentPreflight(catalog)).toEqual([]);
     const withoutSceneOwnership = { ...catalog, phrases: catalog.phrases.map((phrase) => ({ ...phrase, sceneIds: undefined })) };

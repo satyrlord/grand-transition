@@ -1,0 +1,685 @@
+{
+  "id": "reluctant-theorem",
+  "rosterOrder": 20,
+  "species": "human",
+  "name": "The Reluctant Theorem",
+  "description": "A civic mathematician who can prove the city needs a decision, then request one final clarification.",
+  "assets": {
+    "portrait": {
+      "assetId": "reluctant-theorem-portrait",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    },
+    "token": {
+      "assetId": "reluctant-theorem-token",
+      "realLogo": false,
+      "copyrightedBroadcastGraphic": false
+    }
+  },
+  "palette": {
+    "primary": "#243c60",
+    "secondary": "#eeeeeb",
+    "accent": "#9abed6"
+  },
+  "weaknessTags": [
+    "indecision",
+    "urgency",
+    "delivery"
+  ],
+  "comebacks": {
+    "weak": "Your dialogue has one unusual rule: nobody else gets a turn.",
+    "medium": "You asked for patience. Your waiting room has outlived the building.",
+    "strong": "Your plan works perfectly if we assume the city has no inhabitants."
+  },
+  "aiPersonality": {
+    "aggression": 0.35,
+    "denial": 0.7,
+    "risk": 0.2
+  },
+  "voiceProfile": {
+    "voiceHint": "measured",
+    "rate": 0.92,
+    "pitch": 1
+  },
+  "animationSet": {
+    "idle": "reluctant-theorem-idle",
+    "speak": "reluctant-theorem-speak",
+    "react": "reluctant-theorem-react"
+  },
+  "editorialReview": {
+    "state": "approved",
+    "originality": "original",
+    "safetyFlags": [],
+    "notes": "Original fictional satire; agent editorial review, 2026-09-12. The fictional civic mathematician turns qualifications, proofs, planning disputes, and delayed decisions into original comic reversals. Three exclusive comeback tiers transform dialogue, public patience, and citizen service into escalating criticisms of the fictional opponent. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
+  },
+  "phrases": [
+    {
+      "id": "reluctant-theorem-conditional-yes",
+      "role": "noun",
+      "text": "a yes waiting for its seventh condition",
+      "tags": [
+        "indecision"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision hides behind an expanding list of conditions. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-deadline-proof",
+      "role": "noun",
+      "text": "a deadline awaiting proof that tomorrow exists",
+      "tags": [
+        "urgency"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A theoretical objection delays an urgent deadline. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-paper-bridge",
+      "role": "noun",
+      "text": "a bridge that carries only footnotes",
+      "tags": [
+        "delivery"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A public works plan supports annotations instead of traffic. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-permit-for-shadow",
+      "role": "noun",
+      "text": "a building permit covering the entire park's shadow",
+      "tags": [
+        "accountability"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An absurd permit measures the public space lost to construction. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-undecided-pencil",
+      "role": "noun",
+      "text": "a pencil worn down by both sides of maybe",
+      "tags": [
+        "indecision"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Repeated hesitation consumes the tool meant to record a decision. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-unfinished-bus-stop",
+      "role": "noun",
+      "text": "a bus stop completed everywhere except the street",
+      "tags": [
+        "delivery"
+      ],
+      "grammaticalNumber": "singular",
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A public service exists in paperwork but lacks a physical stop. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-postponed-decision-past",
+      "role": "verb",
+      "text": "postponed the decision on",
+      "tags": [
+        "indecision"
+      ],
+      "singularText": "postponed the decision on",
+      "pluralText": "postponed the decision on",
+      "personalSingularText": "postponed the decision on",
+      "secondPersonText": "postponed the decision on",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-postponed-decision-present",
+      "role": "verb",
+      "text": "postpones the decision on",
+      "tags": [
+        "indecision"
+      ],
+      "singularText": "postpones the decision on",
+      "pluralText": "postpone the decision on",
+      "personalSingularText": "postpones the decision on",
+      "secondPersonText": "postpone the decision on",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-postponed-decision-future",
+      "role": "verb",
+      "text": "will postpone the decision on",
+      "tags": [
+        "indecision"
+      ],
+      "singularText": "will postpone the decision on",
+      "pluralText": "will postpone the decision on",
+      "personalSingularText": "will postpone the decision on",
+      "secondPersonText": "will postpone the decision on",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-missed-deadline-past",
+      "role": "verb",
+      "text": "missed the emergency deadline for",
+      "tags": [
+        "urgency"
+      ],
+      "singularText": "missed the emergency deadline for",
+      "pluralText": "missed the emergency deadline for",
+      "personalSingularText": "missed the emergency deadline for",
+      "secondPersonText": "missed the emergency deadline for",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-missed-deadline-present",
+      "role": "verb",
+      "text": "misses the emergency deadline for",
+      "tags": [
+        "urgency"
+      ],
+      "singularText": "misses the emergency deadline for",
+      "pluralText": "miss the emergency deadline for",
+      "personalSingularText": "misses the emergency deadline for",
+      "secondPersonText": "miss the emergency deadline for",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-missed-deadline-future",
+      "role": "verb",
+      "text": "will miss the emergency deadline for",
+      "tags": [
+        "urgency"
+      ],
+      "singularText": "will miss the emergency deadline for",
+      "pluralText": "will miss the emergency deadline for",
+      "personalSingularText": "will miss the emergency deadline for",
+      "secondPersonText": "will miss the emergency deadline for",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ],
+            "right": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-pending-proof-past",
+      "role": "predicate",
+      "text": "was pending proof while the roof leaked",
+      "tags": [
+        "urgency",
+        "delivery"
+      ],
+      "singularText": "was pending proof while the roof leaked",
+      "pluralText": "were pending proof while the roof leaked",
+      "personalSingularText": "was pending proof while the roof leaked",
+      "secondPersonText": "were pending proof while the roof leaked",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-pending-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-pending-proof-present",
+      "role": "predicate",
+      "text": "is pending proof while the roof leaks",
+      "tags": [
+        "urgency",
+        "delivery"
+      ],
+      "singularText": "is pending proof while the roof leaks",
+      "pluralText": "are pending proof while the roof leaks",
+      "personalSingularText": "is pending proof while the roof leaks",
+      "secondPersonText": "are pending proof while the roof leaks",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-pending-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-pending-proof-future",
+      "role": "predicate",
+      "text": "will be pending proof while the roof leaks",
+      "tags": [
+        "urgency",
+        "delivery"
+      ],
+      "singularText": "will be pending proof while the roof leaks",
+      "pluralText": "will be pending proof while the roof leaks",
+      "personalSingularText": "will be pending proof while the roof leaks",
+      "secondPersonText": "will be pending proof while the roof leaks",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-pending-proof",
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "politics",
+              "bureaucracy",
+              "media"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-before-defining-soon",
+      "role": "modifier",
+      "text": "after three hearings on the definition of soon",
+      "tags": [
+        "urgency"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Defining a time limit consumes the time available. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-subject-to-maybe",
+      "role": "modifier",
+      "text": "subject to a second opinion from the first hesitation",
+      "tags": [
+        "indecision"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A hesitant decision asks its own hesitation for advice. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-pavement-appendix",
+      "role": "modifier",
+      "text": "with the missing pavement attached as an appendix",
+      "tags": [
+        "delivery"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A document annex replaces a usable pavement. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-permit-footnote",
+      "role": "modifier",
+      "text": "under a footnote taller than the permitted building",
+      "tags": [
+        "accountability"
+      ],
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A planning qualification becomes larger than the construction it regulates. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-forms-first",
+      "role": "ending",
+      "text": "and the public counter serves forms while citizens queue outside.",
+      "tags": [
+        "human-scale"
+      ],
+      "finisherBonus": 6,
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. The citizen-service motif becomes a counter that serves paperwork before people. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-question-survives",
+      "role": "ending",
+      "text": "and your answer disproves everything except the original question.",
+      "tags": [
+        "accountability"
+      ],
+      "finisherBonus": 6,
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A precise correction exposes an answer that evades the actual question. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-tomorrow-committee",
+      "role": "ending",
+      "text": "and reconstruction starts tomorrow, once tomorrow passes committee.",
+      "tags": [
+        "delivery",
+        "urgency"
+      ],
+      "finisherBonus": 5,
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An immediate reconstruction promise becomes a procedural delay imposed on the calendar itself. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-maybe-unanimous",
+      "role": "ending",
+      "text": "and even the maybes cannot reach a unanimous decision.",
+      "tags": [
+        "indecision"
+      ],
+      "finisherBonus": 5,
+      "rarity": "rare",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Indecision expands until uncertainty itself cannot agree. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    },
+    {
+      "id": "reluctant-theorem-qualified-contrast",
+      "role": "conjunction",
+      "text": "but, with that qualification,",
+      "tags": [],
+      "connectorKind": "but",
+      "rarity": "uncommon",
+      "editorialReview": {
+        "state": "approved",
+        "originality": "original",
+        "safetyFlags": [],
+        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A neutral contrast connects complete clauses without implying a weakness. No real-person reference or copied line. Owner acceptance is separate."
+      }
+    }
+  ]
+}

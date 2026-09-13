@@ -63,12 +63,15 @@ contains:
   round. Each used phrase contains its stable identifier, exact rendered text,
   and active or carried source.
 - normalized replay and match-log data needed to reproduce and diagnose the
-  completed match. New entries use replay and match-log version 8. Existing
-  version 1 through version 7 pairs remain valid and retain their original
-  scoring and phrase-catalog behavior. Versions 6 through 8 setup record the
+  completed match. New entries use replay and match-log version 11. Existing
+  version 1 through version 10 pairs remain valid and retain their original
+  scoring and phrase-catalog behavior. Versions 6 through 11 setup record the
   compatibility multiplier captured at match start, including its default value
   of 3. Version 6 retains the pre-humor catalog. Version 7 retains the catalog
-  before the eight Algorithmic Prophet film adaptations.
+  before the eight Algorithmic Prophet film adaptations. Version 8 retains the
+  catalog before final phrase-volume expansion. Version 9 retains the catalog
+  before the concise-phrase revision. Version 10 retains the preceding
+  18-character catalog and its original phrase tags.
 
 New entries also contain optional `speechDiagnostics`, with its own schema
 version 1. Older entries without this field remain valid. Milestone 024 owns
@@ -164,7 +167,7 @@ issue disposition.
 ## Objective verifiers
 
 Pure unit tests verify the history version 1 codec and replay and match-log
-versions 1 through 8. They verify exact replay and log data, duplicate
+versions 1 through 11. They verify exact replay and log data, duplicate
 prevention, the privacy scan, order, and every storage failure. Vitest Browser Mode
 verifies the direct lethal paths, persistent victory interaction, title-only
 modal, keyboard behavior, focus, reload, and storage notice. Playwright verifies

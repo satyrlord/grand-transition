@@ -199,7 +199,8 @@ Node version, operating system, CPU model, command, and build command.
 The execution-source hash includes TypeScript, module, and JSON files under
 `src/` and `tools/`, including untracked files, plus package and lockfile bytes.
 It checks the final general, character, and owned-scene phrase volumes from
-Milestone 028. General eligibility in a scene does not count as scene ownership.
+Milestone 028 and the exact 19-character, six-scene roster from Milestone 026.
+General eligibility in a scene does not count as scene ownership.
 Validate the current shipped assets, audio, and browser behavior through their
 existing checks. Milestone 028's additional media packages do not block this
 review. No separate user sign-off is required.

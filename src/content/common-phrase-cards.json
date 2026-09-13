@@ -5016,11 +5016,10 @@
   {
     "id": "brought-the-miners-to-bucharest",
     "role": "predicate",
-    "text": "brought a delegation of miners to the capital for a staged show of support",
+    "text": "brought the miners to Bucharest",
     "tags": [
       "miners",
-      "legacy",
-      "credibility"
+      "legacy"
     ],
     "scorePreferences": {
       "substance": [
@@ -5039,21 +5038,20 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Codex editorial reviewer, 2026-09-12: reviewed the final original fictional fragment and all supplied agreement forms. Revised the wording to express institutional behavior in clear English. Weakness tags follow the visible action or image. Existing private research remains provenance context, not proof of global novelty; no human approval is asserted."
+      "notes": "Agent editorial review, 2026-09-12: reviewed the approved original fictional fragment and its agreement forms. The historical miners reference supports miners and legacy tags. The concise wording does not describe staged support or deception, so it has no credibility tag. Private research remains provenance context; no human approval is asserted."
     },
-    "singularText": "brought a delegation of miners to the capital for a staged show of support",
-    "pluralText": "brought a delegation of miners to the capital for a staged show of support",
+    "singularText": "brought the miners to Bucharest",
+    "pluralText": "brought the miners to Bucharest",
     "tense": "past",
     "tenseFamily": "brought-the-miners-to-bucharest"
   },
   {
     "id": "brings-the-miners-to-bucharest",
     "role": "predicate",
-    "text": "brings a delegation of miners to the capital for a staged show of support",
+    "text": "brings the miners to Bucharest",
     "tags": [
       "miners",
-      "legacy",
-      "credibility"
+      "legacy"
     ],
     "scorePreferences": {
       "substance": [
@@ -5072,21 +5070,20 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Codex editorial reviewer, 2026-09-12: reviewed the final original fictional fragment and all supplied agreement forms. Revised the wording to express institutional behavior in clear English. Weakness tags follow the visible action or image. Existing private research remains provenance context, not proof of global novelty; no human approval is asserted."
+      "notes": "Agent editorial review, 2026-09-12: reviewed the approved original fictional fragment and its agreement forms. The historical miners reference supports miners and legacy tags. The concise wording does not describe staged support or deception, so it has no credibility tag. Private research remains provenance context; no human approval is asserted."
     },
-    "singularText": "brings a delegation of miners to the capital for a staged show of support",
-    "pluralText": "bring a delegation of miners to the capital for a staged show of support",
+    "singularText": "brings the miners to Bucharest",
+    "pluralText": "bring the miners to Bucharest",
     "tense": "present",
     "tenseFamily": "brought-the-miners-to-bucharest"
   },
   {
     "id": "will-bring-the-miners-to-bucharest",
     "role": "predicate",
-    "text": "will bring a delegation of miners to the capital for a staged show of support",
+    "text": "will bring the miners to Bucharest",
     "tags": [
       "miners",
-      "legacy",
-      "credibility"
+      "legacy"
     ],
     "scorePreferences": {
       "substance": [
@@ -5105,10 +5102,10 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Codex editorial reviewer, 2026-09-12: reviewed the final original fictional fragment and all supplied agreement forms. Revised the wording to express institutional behavior in clear English. Weakness tags follow the visible action or image. Existing private research remains provenance context, not proof of global novelty; no human approval is asserted."
+      "notes": "Agent editorial review, 2026-09-12: reviewed the approved original fictional fragment and its agreement forms. The historical miners reference supports miners and legacy tags. The concise wording does not describe staged support or deception, so it has no credibility tag. Private research remains provenance context; no human approval is asserted."
     },
-    "singularText": "will bring a delegation of miners to the capital for a staged show of support",
-    "pluralText": "will bring a delegation of miners to the capital for a staged show of support",
+    "singularText": "will bring the miners to Bucharest",
+    "pluralText": "will bring the miners to Bucharest",
     "tense": "future",
     "tenseFamily": "brought-the-miners-to-bucharest"
   },
@@ -11527,7 +11524,7 @@
   {
     "id": "public-and-the-facts-have-been-moved-to-a-less-visible-time-slot",
     "role": "ending",
-    "text": "and the facts have been moved to a less visible time slot.",
+    "text": "and the facts were moved to a quieter time slot.",
     "tags": [
       "evidence",
       "ratings"
@@ -11538,7 +11535,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional punchline: and the facts have been moved to a less visible time slot. It targets evidence and ratings rather than an identifiable person. It follows a complete clause and has a terminal full stop."
+      "notes": "Original fictional punchline: the facts are quietly moved away from the audience. It targets evidence and ratings rather than an identifiable person. It follows a complete clause and has a terminal full stop."
     }
   },
   {
@@ -11741,7 +11738,7 @@
   {
     "id": "public-and-the-interview-panel-is-saving-a-seat-for-dessert",
     "role": "ending",
-    "text": "and the interview panel is saving a seat for the director's cousin.",
+    "text": "and the interview chair is reserved for the director's cousin.",
     "tags": [
       "family",
       "nepotism"
@@ -11775,7 +11772,7 @@
   {
     "id": "public-and-the-promotion-was-announced-before-the-birthday-cake",
     "role": "ending",
-    "text": "and the promotion was announced before the nephew cut his birthday cake.",
+    "text": "and the nephew got promoted before cutting his birthday cake.",
     "tags": [
       "family",
       "nepotism"

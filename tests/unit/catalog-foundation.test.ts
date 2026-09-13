@@ -43,10 +43,10 @@ const verifiedOptions: SimulationOptionProvider = (state, engineContext) => {
 };
 
 describe('Milestone 026 deterministic catalog foundation workload', () => {
-  test('covers all 1,944 ordered character and scene setups, including mirrors', () => {
-    expect(sampleContent.characters).toHaveLength(18);
+  test('covers all 2,166 ordered character and scene setups, including mirrors', () => {
+    expect(sampleContent.characters).toHaveLength(19);
     expect(sampleContent.scenes).toHaveLength(6);
-    expect(sampleContent.characters.length * setupsPerCharacter).toBe(1_944);
+    expect(sampleContent.characters.length * setupsPerCharacter).toBe(2_166);
   });
 
   test.each(sampleContent.characters.map((character, index) => ({

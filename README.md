@@ -34,7 +34,7 @@ secured production shell, and the complete configured quality gate. Milestones
 024, 025, 028, 030, and 031 remain incomplete. Milestone 023 is marked
 complete by its owning specification.
 
-Milestone 027 is complete against the current artwork and 985-phrase catalog.
+Milestone 027 is complete against the current artwork and 1,009-phrase catalog.
 Its editorial safety review and normal CI checks pass. Additional artwork remains
 in Milestone 028. Manual user reviews and separate large balance or variety runs
 are not completion requirements.
@@ -53,8 +53,8 @@ approved and pending implementation. Phase 1 adds the complete Romanian
 interface, game content, grammar, and local Mihai medium and Liana medium
 voices. Phase 2 compares Ro_VITS and records a model decision.
 
-The current content has common Romanian-politics phrases and 18 fictional
-characters: 17 humans and one robot. Each character has owned phrases and a
+The current content has common Romanian-politics phrases and 19 fictional
+characters: 18 humans and one robot. Each character has owned phrases and a
 default local portrait. Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes two fictional layered debate studios, four playable

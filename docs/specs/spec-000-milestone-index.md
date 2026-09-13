@@ -281,7 +281,7 @@ source-only review does not satisfy them.
     Budget: 8. The vertical slice reports strong public outcomes without teaching
     tactics.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
-    Budget: 40. All 18 characters and 6 scenes are playable before the ladder.
+    Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
     The current artwork and phrase catalog have safety and normal CI evidence.
     Additional Milestone 028 artwork is not a prerequisite.

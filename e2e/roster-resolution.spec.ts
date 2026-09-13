@@ -42,7 +42,7 @@ for (const deviceScaleFactor of [1, 2]) {
           })),
         );
         await page.locator('.roster-zone').screenshot({ path: testInfo.outputPath('roster.png') });
-        expect(samples).toHaveLength(18);
+        expect(samples).toHaveLength(19);
         for (const sample of samples) {
           expect(sample.pixels, JSON.stringify(sample)).toBeGreaterThanOrEqual(sample.required);
         }

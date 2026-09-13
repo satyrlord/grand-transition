@@ -13,7 +13,7 @@ export function reviewContentPreflight(catalog: ContentCatalog): string[] {
   const check = (label: string, actual: number, minimum: number, maximum = Infinity) => {
     if (actual < minimum || actual > maximum) issues.push(`${label}: ${actual}; required ${minimum} through ${maximum === Infinity ? 'unbounded' : maximum}.`);
   };
-  check('Characters', catalog.characters.length, 18, 18);
+  check('Characters', catalog.characters.length, 19, 19);
   check('Scenes', catalog.scenes.length, 6, 6);
   const general = catalog.phrases.filter((phrase) => !phrase.characterIds && !phrase.sceneIds);
   for (const [role, minimum, maximum] of [

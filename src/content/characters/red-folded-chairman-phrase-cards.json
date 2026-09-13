@@ -696,10 +696,9 @@
     {
       "id": "the-dacs-that-come-from-the-tracs",
       "role": "ending",
-      "text": "and even the ancient tribes would ask you for a modern answer.",
+      "text": "and the Dacs come from the Tracs.",
       "tags": [
-        "legacy",
-        "modernity"
+        "legacy"
       ],
       "rarity": "rare",
       "finisherBonus": 3,
@@ -707,7 +706,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original fictional ending; agent editorial review, 2026-09-12. Ancient tribes ask a present-day speaker for a modern answer, reversing the appeal to antiquity. Plain English identifies the historical contrast without external cultural knowledge. No quotation, real-person target, or named modern group."
+        "notes": "Original fictional ending; agent editorial review, 2026-09-12. The approved ancestry aside reflects the Chairman's fixation on the past and supports the legacy tag. It makes no claim about modernity. The exact approved wording is retained; its historical names need cultural context. No real-person target or named modern group."
       }
     },
     {

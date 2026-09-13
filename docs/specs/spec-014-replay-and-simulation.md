@@ -68,7 +68,7 @@ Local replay and match-log exports contain seed, setup, round count,
 selections, breakdowns, combo and weakness events, continuations, comebacks,
 and winner. They contain no personal data and are never sent remotely.
 
-Replay versions 1 through 9 use normalized JSON with these fields in order:
+Replay versions 1 through 11 use normalized JSON with these fields in order:
 `schemaVersion`, `kind`, `seed`, `setup`, and `commands`. `kind` is
 `grand-transition-replay`. Commands contain only accepted public command
 inputs. Dealt private cards and derived state are regenerated from the seed.
@@ -76,12 +76,12 @@ Encoding uses two-space indentation and one final newline.
 
 The local match log uses `kind: grand-transition-match-log`, the matching replay
 schema version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, and winner. Versions 2 through 9
+breakdowns, public rule events, and winner. Versions 2 through 11
 logs also contain each player's rendered public sentence and ordered used phrases for
 every round.
 Each used phrase keeps its stable identifier, rendered text, and active or
 carried source. Older version 1 and version 2 logs without this optional public
-sentence record remain valid. Versions 3 through 9 logs require the complete
+sentence record remain valid. Versions 3 through 11 logs require the complete
 public sentence record. The log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
@@ -98,18 +98,18 @@ Version 5 retains version 4 arithmetic and uses the neutral phrase catalog:
 neutral phrases have empty tags, and neutral identifiers replace themed
 identifiers on standard conjunctions and neutral relation families.
 Version 6 records `basePointsMultiplier` in setup as an integer from 1 through
-5. The field is required for versions 6 through 9 replay and match-log
+5. The field is required for versions 6 through 11 replay and match-log
 documents. Both players use this captured value. Invalid or missing values
 return `invalid-replay`. Version 6 uses version 5 phrase semantics and all other
 version 4 arithmetic. Version 7 keeps that scoring contract and uses the
 speech-inspired humor catalog from Milestone 027. Versions 4 and 5 always use
 multiplier 3, regardless of the current settings or caller-provided balance.
 Their normalized documents remain unchanged. New replays and match logs use
-version 9.
+version 11.
 Decoding and replaying versions 1
 through 3 selects each version's original scoring balance. Development simulations
 with an explicitly supplied historical balance export that historical replay
-version; current-balance simulations export version 9. Versions 1 through 6
+version; current-balance simulations export version 11. Versions 1 through 6
 restore the complete pre-humor version 6 phrase text, agreement forms,
 weakness tags, comeback text, phrase order, and scene and character pools.
 Versions 1 through 4 then restore the pre-neutral phrase identifiers, tags,
@@ -125,9 +125,9 @@ Missing or invalid fields return `invalid-replay`. An unknown version returns
 
 `tests/fixtures/replay-v1-scoring.json` is the retained
 version 1 source fixture for the step to version 2. Focused replay tests also
-retain the version 2 scoring result after version 9 becomes current. Encoding
+retain the version 2 scoring result after version 11 becomes current. Encoding
 preserves the supplied supported version and never relabels older commands as
-version 9. Focused tests also preserve modifier-bearing version 3 scores.
+version 11. Focused tests also preserve modifier-bearing version 3 scores.
 `tests/fixtures/replay-v4-neutral-scoring.json` retains the version 4 commands,
 renamed conjunction selections, and weakness matches from now-neutral phrases.
 `tests/fixtures/replay-v6-pre-humor-catalog.json` retains the version 6 commands
@@ -148,12 +148,22 @@ complete saved version 8 catalog from
 `src/content/legacy-finalization-content-v8.json`. This preserves phrase order,
 text, agreement forms, tags, character definitions, scene definitions, phrase
 pools, and locale messages. Versions 1 through 7 then apply the older catalog
-and scoring rules described above. Version 9 uses the current catalog without
-this restoration. The retained
+and scoring rules described above. Version 9 skips this restoration and uses its saved version 9 catalog. The retained
 `tests/fixtures/replay-v8-before-final-volume.json` verifies normalized command
 bytes, the complete catalog and locale hash, and the exact captured final-state
 hash. `tests/unit/replay-and-simulation.test.ts` also checks that changes to the
 current catalog cannot affect the restored version 1 through 8 contexts.
+
+Version 10 keeps version 9 scoring and uses the concise phrase catalog. Before
+any older restoration, versions 1 through 9 load the complete saved version 9
+catalog from `src/content/legacy-concise-content-v9.json`. This preserves phrase
+order, text, agreement forms, tags, character definitions, scene definitions,
+phrase pools, and locale messages. Versions 1 through 8 then apply the older
+catalog and scoring rules described above. Version 10 skips this restoration and uses its saved version 10 catalog. The retained
+`tests/fixtures/replay-v9-before-concise-phrases.json` verifies normalized
+command bytes, the complete catalog and locale hash, the former long phrase
+text, and the exact captured final-state hash. Focused tests also check that
+changes to the current catalog cannot affect restored versions 1 through 9.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
@@ -175,7 +185,7 @@ Milestone 002 threshold remains 70 percent.
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
   normalized bytes and an exact final state. Version 1, version 2, and version 3
-  scoring fixtures replay with their original resolutions after version 9 becomes
+  scoring fixtures replay with their original resolutions after version 11 becomes
   current. The retained version 4 fixture preserves historical phrase identifiers,
   neutral-phrase weakness matches, scores, and normalized bytes. Version 5
   retains multiplier 3. Version 6 reproduces each selectable multiplier even
@@ -184,8 +194,12 @@ Milestone 002 threshold remains 70 percent.
   preserves its complete catalog and captured Prophet match. Version 8
   preserves its complete catalog, locale, normalized commands, and captured
   final state from before the final phrase-volume changes. Versions 1 through
-  8 remain independent of later catalog changes. Version 9 reproduces each
-  selectable multiplier with the current catalog.
+  8 remain independent of later catalog changes. Version 9 preserves its
+  complete catalog, locale, normalized commands, former long phrase text, and
+  captured final state from before the concise-phrase changes. Versions 1
+  through 10 remain independent of later catalog changes. Version 10 preserves
+  its complete 18-character catalog and captured final state. Version 11
+  reproduces each selectable multiplier with the current catalog.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID
@@ -198,7 +212,7 @@ Milestone 002 threshold remains 70 percent.
   `2135977951`. The repository `$simulate-matches` skill runs an explicitly
   requested workload outside normal CI and requires the number of matches as
   input. Every workload preserves the stated match invariants.
-  Milestone 026 adds a fixed-seed Node catalog workload for all 1,944 ordered
+  Milestone 026 adds a fixed-seed Node catalog workload for all 2,166 ordered
   character-pair and scene setups, including mirrors and AI presentation timing.
 - **AC-014-06:** Every named pure file meets its per-file threshold. Production
   source, bundle, and DOM contain no development logger, endpoint, debug or
@@ -262,3 +276,21 @@ as winner. This validation does not replay historical commands.
 sequences, missing completion, and nested private fields without output writes.
 The real development logger remains covered by its browser tests and
 `e2e/static-app-security.spec.ts`.
+
+## Nineteenth archetype replay compatibility
+
+Version 11 adds The Reluctant Theorem and its owned phrase pool. It also removes
+the unsupported `modernity` tag from the Chairman's approved ancestry ending;
+the ending keeps its `legacy` tag and exact text. The concise miners tense
+family loses its unsupported `credibility` tag and keeps `miners` and `legacy`.
+New replays
+and match logs use version 11 with unchanged version 10 scoring. Versions 1
+through 10 first restore the complete preceding 18-character catalog from
+`src/content/legacy-roster-content-v10.json`, then apply their existing older
+context rules. The frozen catalog preserves phrase order, scene pools, locale
+text, weaknesses, and character pools. No historical replay can select the
+new character.
+
+`tests/unit/replay-and-simulation.test.ts` checks the catalog fingerprint and
+exact final state of `tests/fixtures/replay-v10-before-reluctant-theorem.json`.
+The fixture uses seed 20260912 and preserves version 10 normalized bytes.

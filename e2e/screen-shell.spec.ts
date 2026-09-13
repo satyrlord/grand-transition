@@ -327,7 +327,7 @@ for (const viewport of supportedViewports) {
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
     ).toBeLessThanOrEqual(0.02);
     expect(geometry.rosterLayout).toEqual({
-      rowCount: 3,
+      rowCount: 4,
       gridInsideZone: true,
       overflowX: 'hidden',
       overflowY: 'auto',
@@ -797,7 +797,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   expect(crop.selectedInside).toBe(true);
   expect(crop.selectedFade).toBe('none');
   expect(crop.frameLoaded).toBe(true);
-  expect(crop.headClearances).toHaveLength(18);
+  expect(crop.headClearances).toHaveLength(19);
   expect(crop.headClearances.every((clearance) => clearance > 0)).toBe(true);
 });
 

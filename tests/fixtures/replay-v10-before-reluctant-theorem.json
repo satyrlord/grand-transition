@@ -1,0 +1,743 @@
+{
+  "schemaVersion": 10,
+  "kind": "grand-transition-replay",
+  "seed": 20260912,
+  "setup": {
+    "mode": "ai",
+    "players": [
+      {
+        "playerId": "player-1",
+        "characterId": "red-folded-chairman",
+        "subjectNumber": "singular",
+        "objectNumber": "singular",
+        "pride": 100,
+        "charge": 0
+      },
+      {
+        "playerId": "player-2",
+        "characterId": "thunder-tribune",
+        "subjectNumber": "singular",
+        "objectNumber": "singular",
+        "pride": 100,
+        "charge": 0
+      }
+    ],
+    "sceneId": "transition-era-television-studio",
+    "aiDifficulty": "simulation-policy",
+    "timerSeconds": 30,
+    "speechEnabled": false,
+    "privacyEnabled": true,
+    "basePointsMultiplier": 3
+  },
+  "commands": [
+    {
+      "type": "start-match",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3107223325-3"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3107223325-7"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3107223325-6"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3107223325-5"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-1-player-2-2"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2136571088-4"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2136571088-1"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2136571088-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2136571088-5"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2136571088-8"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3313988922-6"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-3-player-2-1"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3313988922-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-3-player-2-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3313988922-7"
+        }
+      }
+    },
+    {
+      "type": "redraw-hand",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3313988922-4"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-1722453229-4"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-4-player-1-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-1722453229-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-1722453229-5"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-4-player-2-1"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3860500064-5"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3860500064-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3860500064-4"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3860500064-3"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-3860500064-7"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-247584727-5"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-6-player-1-1"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-6-player-2-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-247584727-3"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-247584727-7"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2521063545-1"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-7-player-2-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-7-player-1-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-2521063545-6"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-350567979-3"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-350567979-7"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "private",
+          "cardId": "hand-8-player-2-2"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-350567979-1"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-350567979-9"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "prepare-round",
+      "source": "ai",
+      "payload": {}
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-1"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-8"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-9"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-6"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-7"
+        }
+      }
+    },
+    {
+      "type": "select-phrase",
+      "source": "ai",
+      "actorId": "player-2",
+      "payload": {
+        "card": {
+          "source": "shared",
+          "cardId": "board-342333805-5"
+        }
+      }
+    },
+    {
+      "type": "commit-sentence",
+      "source": "ai",
+      "actorId": "player-1",
+      "payload": {}
+    },
+    {
+      "type": "resolve-round",
+      "source": "ai",
+      "payload": {}
+    }
+  ]
+}

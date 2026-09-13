@@ -143,15 +143,21 @@ character has 20 through 32 owned phrases. The release preflight and focused
 tests enforce these minimum and maximum counts.
 
 Editorial revisions keep stable IDs while the displayed text supplies enough
-English context. The `securitate` weakness label reads `Former secret police`
+English context. Each player-visible phrase text and agreement form contains no
+more than 11 whitespace-delimited words. The `securitate` weakness label reads
+`Former secret police`
 in setup and score explanations. Phrase references use `the former secret
-police`; the miners' delegation explicitly describes a staged show of support
-in the capital. `your-circumscription` reads `your electoral district`, and
+police`; the past miners phrase reads `brought the miners to Bucharest`.
+The miners tense family keeps `miners` and `legacy` tags. Its concise wording
+does not describe deception and has no `credibility` tag.
+`your-circumscription` reads `your electoral district`, and
 `your-concubine` reads `your partner with a reserved public office`.
 The Chairman's ancient-history ending reads
-`and even the ancient tribes would ask you for a modern answer.`
+`and the Dacs come from the Tracs.` Its ancestry reference has only the
+`legacy` weakness tag. Preserve this exact approved wording; do not claim that
+it explains the historical names or contrasts them with modernity.
 The retired generic-abuse cards are `a-dumbass`, `an-animal`, and `a-monkey`.
-Version 8 and earlier replays retain their original content under Milestone 014.
+Version 9 and earlier replays retain their original content under Milestone 014.
 
 Phrase definitions and English phrase text must not be hardcoded in TypeScript.
 The common corpus is `src/content/common-phrase-cards.json`. Each character has
@@ -221,7 +227,9 @@ simulation, and browser validation must pass before it can ship.
   negated copular forms `was not`, `is not`, and `will never be`, and the
   predicate `was a snitch`.
 
-  The stable `drags-before-the-cameras` tense family renders three passive predicates.
+  Every player-visible phrase text and agreement form contains no more than 11
+  whitespace-delimited words. The stable `drags-before-the-cameras` tense
+  family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,
   and `will be dragged before the cameras`. The `posted-on-social-media` family
   renders `was posted on social media`, `is posted on social media`, and

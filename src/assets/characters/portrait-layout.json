@@ -116,6 +116,10 @@
     "county-baron--municipal-patron": {
       "facing": "left",
       "sourceSha256": "9493db1b2535c029836c91ed21606680c92e22f1f7b7dcfdf4ab7840cb57192f"
+    },
+    "reluctant-theorem": {
+      "sourceSha256": "7ee999121774ccc7e07785c21e58e46e3da6a5ab312651843336ea0fe0c4fc14",
+      "facing": "right"
     }
   }
 }

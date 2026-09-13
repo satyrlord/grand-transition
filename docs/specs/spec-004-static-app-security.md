@@ -38,6 +38,11 @@ The entry module disables Zod's optional runtime code generation before it
 imports application schemas. A caught capability probe still violates the policy in Firefox.
 The production audio test checks that navigation and playback produce no such
 console error. This configuration does not change schema validation results.
+Chunk grouping must keep Zod in the vendor chunk, separate from application
+schema initialization. The vendor group has higher priority than application
+groups so their recursive dependency capture cannot move Zod into a chunk
+that constructs schemas before the entry module configures it. The production
+navigation and reload test also requires zero `securitypolicyviolation` events.
 
 Use one `index.html` and in-memory screen state. Do not depend on server route
 rewrites. The build generates `dist/`. Do not commit it.

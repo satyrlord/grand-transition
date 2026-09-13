@@ -94,8 +94,8 @@ Network Graphics (PNG) baseline below. Do not derive the scope from a later
 directory scan. The baseline contains 27 character PNG files and four scene PNG
 files.
 
-The character baseline contains the 18 default portraits that Milestone 026
-defines and these nine current alternate portraits:
+The fixed character baseline contains 18 default portraits and these nine
+alternate portraits. Later roster additions do not change this baseline:
 
 - `government-ai--alternate.png`.
 - `midnight-sensationalist--alternate.png`.
@@ -166,7 +166,7 @@ complete private character study or approved scene specification.
 
 ### Character readiness
 
-Each of the 18 represented archetypes must have one complete private character
+Each of the 19 represented archetypes must have one complete private character
 study before regeneration starts for any of its skins. An existing prompt does
 not qualify as a complete study. The study must define the archetype,
 silhouette, proportions, face or mechanical
@@ -1062,7 +1062,7 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   replacement-hash ledger, builder, and validator provide the objective
   inventory evidence. Focused builder and validator tests reject an unchanged
   source hash, missing license, or missing runtime variant.
-- **AC-023-13:** All 18 represented archetypes have a complete private character
+- **AC-023-13:** All 19 represented archetypes have a complete private character
   study before generation. An existing prompt alone fails readiness. The agent
   records the required direction from contracts and material assumptions. Only
   an unresolved input that blocks generation requires a user response.
@@ -1156,7 +1156,7 @@ Existing character variant checks retain the same limits.
 At 1024 by 720, 1024 by 768, 1280 by 720, 1920 by 1080, 3424 by 1427,
 and 5120 by 1440, with device pixel ratios 1 and 2, the loaded source has
 enough pixels for the square image after cover fitting and active crop scaling,
-or uses the largest available 960-pixel variant. All 18 portraits retain their
+or uses the largest available 960-pixel variant. All 19 portraits retain their
 canonical skin and existing composition.
 Verify with `e2e/roster-resolution.spec.ts` and
 `tests/browser/screen-shell.browser.test.ts`.

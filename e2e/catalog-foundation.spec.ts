@@ -17,7 +17,7 @@ for (const viewport of viewports) {
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.evaluate(() => document.fonts.ready);
-    await expect(page.locator('.roster-choice')).toHaveCount(18);
+    await expect(page.locator('.roster-choice')).toHaveCount(19);
     await expect(page.getByLabel('Scene', { exact: true }).locator('option')).toHaveCount(6);
     await page.locator('.roster-headshot').evaluateAll(async (images) => {
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
