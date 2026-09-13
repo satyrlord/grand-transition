@@ -65,7 +65,7 @@ import {
   type DismissSettingsNoticeEvent,
   type SettingsChangeEvent,
 } from './screens/settings-modal';
-import { currentViewport, isSupportedViewport } from './viewport-support';
+import { currentViewport, isPortraitViewport, isSupportedViewport } from './viewport-support';
 import { createBrowserStorage } from '../persistence/browser-storage';
 import {
   MatchHistoryRepository,
@@ -178,6 +178,8 @@ export class GrandTransitionApp extends LitElement {
     matchArenaReaction: { state: true },
     roundReviewSnapshot: { state: true },
     viewportSupported: { state: true },
+    portraitViewport: { state: true },
+    portraitNoticeDismissed: { state: true },
     manuallyPaused: { state: true },
     phraseColorCoding: { state: true },
     matchHistory: { state: true },
@@ -196,6 +198,9 @@ export class GrandTransitionApp extends LitElement {
   declare private matchArenaReaction: MatchArenaReaction | null;
   declare private roundReviewSnapshot: MatchScreenSnapshot | null;
   declare private viewportSupported: boolean;
+  declare private portraitViewport: boolean;
+  declare private portraitNoticeDismissed: boolean;
+  private portraitNoticeEncountered = false;
   declare private manuallyPaused: boolean;
   declare private phraseColorCoding: boolean;
   declare private matchHistory: MatchHistorySnapshot;
@@ -259,6 +264,9 @@ export class GrandTransitionApp extends LitElement {
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.viewportSupported = isSupportedViewport(currentViewport());
+    this.portraitViewport = isPortraitViewport(currentViewport());
+    this.portraitNoticeDismissed = false;
+    this.portraitNoticeEncountered = this.viewportSupported && this.portraitViewport;
     this.manuallyPaused = false;
     this.phraseColorCoding = true;
     this.matchHistory = this.matchHistoryRepository.snapshot();
@@ -362,7 +370,7 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private readonly syncAudioVisibility = (): void => {
-    const concealed = !this.viewportSupported || this.manuallyPaused || document.hidden;
+    const concealed = !this.matchViewportReady || this.manuallyPaused || document.hidden;
     if (this.presentation) {
       if (concealed || this.view !== 'match') this.roundPresentation?.pause();
       else this.roundPresentation?.resume();
@@ -399,6 +407,10 @@ export class GrandTransitionApp extends LitElement {
         .pauseMode=${
           !this.viewportSupported
             ? 'viewport'
+            : this.portraitViewport && this.matchState?.setup.mode === 'hotseat'
+              ? 'hotseat-portrait'
+            : this.showPortraitNotice
+              ? 'landscape-recommended'
             : this.manuallyPaused
               ? 'manual'
               : 'running'
@@ -425,6 +437,7 @@ export class GrandTransitionApp extends LitElement {
         @phrase-color-coding-change=${this.changePhraseColorCoding}
         @music-enabled-change=${this.changeMusicEnabled}
         @voices-enabled-change=${this.changeVoicesEnabled}
+        @continue-portrait=${this.continuePortrait}
       ></grand-transition-match>`;
     }
 
@@ -434,9 +447,17 @@ export class GrandTransitionApp extends LitElement {
       ></grand-transition-interruption>`;
     }
 
+    if (this.showPortraitNotice) {
+      return html`<grand-transition-interruption
+        kind="landscape-recommended"
+        @continue-portrait=${this.continuePortrait}
+      ></grand-transition-interruption>`;
+    }
+
     switch (this.view) {
       case 'title':
         return html`<grand-transition-title
+          .hotseatAvailable=${!this.portraitViewport}
           .historyEntries=${this.matchHistory.entries}
           .historyOpen=${this.matchHistoryOpen}
           .historyPersistenceFailure=${this.matchHistory.persistenceFailure}
@@ -462,6 +483,7 @@ export class GrandTransitionApp extends LitElement {
         ></grand-transition-title>`;
       case 'setup':
         return html`<grand-transition-setup
+          .hotseatAvailable=${!this.portraitViewport}
           .snapshot=${this.setupSnapshot}
           .ladderProgress=${this.ladderSnapshot.progress}
           .ladderPersistenceFailure=${this.ladderSnapshot.persistenceFailure}
@@ -483,6 +505,7 @@ export class GrandTransitionApp extends LitElement {
       this.speech?.gpuStatus !== 'ready' && this.speech?.gpuStatus !== 'unavailable') return;
     const mode = event.detail?.mode;
     if (mode !== 'ai' && mode !== 'hotseat' && mode !== 'ladder') return;
+    if (mode === 'hotseat' && this.portraitViewport) return;
     this.selectSetupMode(mode);
     this.matchHistoryOpen = false;
     this.settingsOpen = false;
@@ -601,6 +624,8 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private readonly startMatch = (event: StartMatchEvent): void => {
+    if (!this.viewportSupported || this.showPortraitNotice ||
+      (event.detail.mode === 'hotseat' && this.portraitViewport)) return;
     this.roundPresentation?.cancel();
     this.flushSpeechDiagnostics('interrupted');
     const payload = event.detail;
@@ -656,6 +681,7 @@ export class GrandTransitionApp extends LitElement {
     this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
+    this.focusViewHeading('match');
     this.scheduleAiTurn();
   };
 
@@ -666,7 +692,7 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private applyMatchCommand(command: MatchCommand): void {
-    if (!this.matchState) return;
+    if (!this.matchState || !this.matchViewportReady || this.manuallyPaused) return;
     if (!this.matchId) throw new Error('The active match does not have a stable ID.');
     this.gameSpeech?.cancel();
     const transition = this.matchCoordinator.apply(this.matchState, command, {
@@ -683,7 +709,7 @@ export class GrandTransitionApp extends LitElement {
     if (this.matchState.phase === 'results') this.flushSpeechDiagnostics();
     this.matchArenaReaction = transition.reaction;
     const review = transition.review;
-    const publicPresentation = this.view === 'match' && this.viewportSupported &&
+    const publicPresentation = this.view === 'match' && this.matchViewportReady &&
       !this.manuallyPaused && !document.hidden;
     if (publicPresentation) this.gameAudio?.accepted(command, transition);
     this.roundReviewSnapshot = review
@@ -792,7 +818,7 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly resumeMatch = (event: Event): void => {
     event.stopPropagation();
-    if (this.viewportSupported) {
+    if (this.matchViewportReady) {
       this.manuallyPaused = false;
       this.scheduleAiTurn();
     }
@@ -835,11 +861,11 @@ export class GrandTransitionApp extends LitElement {
 
   private focusViewHeading(view: ScreenView): void {
     const selector =
-      view === 'title' ? '#game-title' : view === 'setup' ? '#setup-title' : null;
-    if (!selector) return;
+      view === 'title' ? '#game-title' : view === 'setup' ? '#setup-title' : '#match-title';
     void this.updateComplete.then(() => {
       if (this.view === view) {
         this.querySelector<HTMLElement>(selector)?.focus();
+        window.scrollTo(0, 0);
       }
     });
   }
@@ -907,17 +933,39 @@ export class GrandTransitionApp extends LitElement {
   }
 
   private readonly syncViewportSupport = (): void => {
+    const wasReady = this.matchViewportReady;
     const supported = isSupportedViewport(currentViewport());
-    const wasSupported = this.viewportSupported;
-    if (!supported) this.cancelAiTurn();
     this.viewportSupported = supported;
-    if (supported && !wasSupported) this.scheduleAiTurn();
+    this.portraitViewport = isPortraitViewport(currentViewport());
+    if (this.showPortraitNotice) this.portraitNoticeEncountered = true;
+    if (this.portraitNoticeEncountered && supported && !this.portraitViewport &&
+      !this.portraitNoticeDismissed) {
+      this.portraitNoticeDismissed = true;
+      this.focusViewHeading(this.view);
+    }
+    if (!this.matchViewportReady) this.cancelAiTurn();
+    if (this.matchViewportReady && !wasReady) this.scheduleAiTurn();
+  };
+
+  private get showPortraitNotice(): boolean {
+    return this.viewportSupported && this.portraitViewport && !this.portraitNoticeDismissed;
+  }
+
+  private get matchViewportReady(): boolean {
+    return this.viewportSupported && !this.showPortraitNotice &&
+      !(this.portraitViewport && this.matchState?.setup.mode === 'hotseat');
+  }
+
+  private readonly continuePortrait = (): void => {
+    this.portraitNoticeDismissed = true;
+    this.scheduleAiTurn();
+    this.focusViewHeading(this.view);
   };
 
   private scheduleAiTurn(): void {
     this.matchCoordinator.scheduleAiTurn({
       currentState: () => this.view === 'match' && !this.roundReviewSnapshot &&
-        !this.manuallyPaused && this.viewportSupported ? this.matchState : null,
+        !this.manuallyPaused && this.matchViewportReady ? this.matchState : null,
       reducedDelay: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       thinking: (value) => { this.aiThinking = value; },
       apply: (command) => this.applyMatchCommand(command),

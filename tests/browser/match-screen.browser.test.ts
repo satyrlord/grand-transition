@@ -150,7 +150,7 @@ test('tutorial highlights grammar-accepted choices only while human drafting is 
   expect(highlighted()).toEqual(expected);
   expect(match.querySelector('[data-tutorial]')?.getAttribute('aria-label'))
     .toContain('Grammatically valid next choice');
-  for (const pauseMode of ['manual', 'viewport'] as const) {
+  for (const pauseMode of ['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const) {
     match.pauseMode = pauseMode;
     await match.updateComplete;
     expect(highlighted()).toEqual([]);
@@ -172,7 +172,7 @@ test('tutorial highlights grammar-accepted choices only while human drafting is 
   expect(match.snapshot).toBe(snapshot);
 });
 
-test.each(['manual', 'viewport'] as const)('discards an old portrait reaction after %s interruption', async (pauseMode) => {
+test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)('discards an old portrait reaction after %s interruption', async (pauseMode) => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
   match.snapshot = {
@@ -1155,7 +1155,7 @@ test('expires grammar feedback without another action or a snapshot timer restar
   expect(match.querySelector('.grammar-strike')).toBeNull();
 });
 
-test.each(['manual', 'viewport'] as const)('does not replay grammar feedback after %s pause', async (pauseMode) => {
+test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)('does not replay grammar feedback after %s pause', async (pauseMode) => {
   vi.useFakeTimers();
   const match = await startMatch();
   match.snapshot = {
@@ -1255,6 +1255,32 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   await match.updateComplete;
   expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
 });
+
+test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
+  'conceals the match and preserves the exact timer through %s', async (pauseMode) => {
+    vi.useFakeTimers();
+    const match = await startMatch();
+    await vi.advanceTimersByTimeAsync(5_000);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
+    const snapshot = match.snapshot;
+
+    match.pauseMode = pauseMode;
+    await match.updateComplete;
+    expect(match.querySelector('.match-screen')).toBeNull();
+    expect(match.querySelector('.phrase-card')).toBeNull();
+    expect(match.querySelector('[data-timer]')).toBeNull();
+    await vi.advanceTimersByTimeAsync(45_000);
+    expect(match.snapshot).toBe(snapshot);
+
+    match.pauseMode = 'running';
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
+    await vi.advanceTimersByTimeAsync(1_000);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
+  },
+);
 
 test('applies Pause settings when the match resumes', async () => {
   vi.useFakeTimers();

@@ -157,37 +157,42 @@ speech text.
 
 ## Shared browser and interface measurements
 
-Browser UI support uses the content viewport in CSS pixels. A supported
-viewport has a width of at least 1024 pixels, a height of at least 720 pixels,
-and a width greater than its height. PC is the recommended platform, but the
-application does not inspect or block an operating system or device class.
+Browser UI support uses the content viewport in CSS pixels. Milestone 018
+owns the exact geometry, portrait warning, hotseat restrictions, and compact
+layout contract. Landscape requires width greater than height and at least
+640 by 320. Portrait requires height greater than width and at least 360 by
+640. Square viewports are unsupported. Landscape is the intended layout;
+1920 by 1080 on PC remains recommended. The application does not inspect or
+block an operating system or device class.
 
 The acceptance matrix is:
 
-| Class             | Viewport     |
-| ----------------- | ------------ |
-| Minimum landscape | 1024 by 720  |
-| Four-by-three     | 1024 by 768  |
-| Common landscape  | 1280 by 720  |
-| Recommended PC    | 1920 by 1080 |
+| Class                    | Viewport                                             |
+| ------------------------ | ---------------------------------------------------- |
+| Desktop landscape        | 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050  |
+| Recommended PC           | 1920 by 1080                                         |
+| Phone portrait           | 360 by 640, 360 by 780, 384 by 832, 412 by 915       |
+| Portrait browser chrome  | 384 by 700                                           |
+| Phone landscape          | 640 by 320, 780 by 360, 832 by 384, 915 by 412       |
+| Landscape browser chrome | 700 by 384, 740 by 360                               |
 
-The application supports all landscape viewports at or above both minimum
-dimensions.
-Portrait and square viewports are unsupported even when both dimensions meet
-their minima. At each supported viewport:
+At each supported viewport:
 
-- Required text and controls must not overlap, clip, or leave the viewport.
-- The page must not scroll horizontally. A board or log can scroll inside a
-  named container when its owning specification permits it.
+- Required text and controls must not overlap or clip. Compact layouts can
+  use vertical page scrolling to keep required content reachable. The desktop
+  matrix retains its no-page-scroll layout.
+- The page must not scroll horizontally. A board, sentence, dialog, or log can
+  scroll inside a named container when its owning specification permits it.
 - Synthetic UI strings that are 40 percent longer than the longest shipped
   English string must wrap without loss of meaning.
 
 An unsupported viewport replaces the application with a blocking compatibility
-screen. It names the 1024 by 720 CSS-pixel minimum, requires landscape
-orientation, recommends 1920 by 1080 and PC, and provides no bypass. If a match
-is active, the screen preserves the match and exact remaining turn time. The
-match resumes automatically only after the viewport becomes supported, unless
-the player also selected manual Pause.
+screen. It names both minimum sizes, recommends landscape, and provides no
+bypass. Portrait presents a dismissible landscape recommendation once per page
+session and disables hotseat. An active hotseat match in portrait requires a
+return to landscape. All blocking conditions conceal match facts and preserve
+exact remaining turn time. Automatic resume requires all blocks to clear;
+manual Pause remains active until explicit Resume.
 
 ## External validation tools
 
@@ -204,7 +209,7 @@ Milestones 001 and 015 through 031 affect the user-visible user interface (UI).
 Each must complete these two separate validations against the implemented slice
 in its production browser build:
 
-1. Run `$impeccable audit` for performance, theming, supported landscape
+1. Run `$impeccable audit` for performance, theming, supported desktop and phone
    layout, and implementation integrity. Run and verify the
    bundled detector. Record the score and positive findings. Record each
    priority 0 through priority 3 (P0-P3) issue and its disposition.
@@ -215,7 +220,7 @@ in its production browser build:
    scores, cognitive-load and persona findings, design strengths, priorities,
    the persisted snapshot, and every issue disposition.
 
-For both validations, inspect the affected supported landscape states together
+For both validations, inspect the affected supported orientation states together
 in a bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
 Record accepted or deferred P2 and P3 findings with rationale and an owning
 future milestone. An unavailable built surface blocks these validations. A
@@ -259,8 +264,8 @@ source-only review does not satisfy them.
 17. [Seamless match flow](spec-017-seamless-match-flow.md). Budget: 4. Browser
     matches present each nonterminal exchange before automatic progression.
     Milestone 019 replaces its terminal and post-match rules.
-18. [Landscape layout support](spec-018-landscape-layout-support.md). Budget: 8.
-    The viewport gate and supported landscape contracts pass.
+18. [Landscape and portrait layout support](spec-018-landscape-layout-support.md). Budget: 8.
+    The viewport gate and supported orientation contracts pass.
 19. [Victory and persistent match history](spec-019-victory-match-history.md).
     Budget: 10. Every terminal path shows a persistent victory state and stores
     a local public match record.
@@ -313,7 +318,7 @@ order limits the context and files needed for each implementation session.
 | Scoring and advanced match rules     | 010-013            |
 | Replay, simulation, development logs | 014                |
 | State ownership and browser screens  | 015-017            |
-| Landscape viewport support           | 018, 025, 030      |
+| Viewport and orientation support     | 018, 025, 030      |
 | Victory and persistent match history | 019                |
 | Local settings and state             | 020, 029           |
 | AI and ladder                        | 021-022            |

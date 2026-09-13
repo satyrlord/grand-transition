@@ -1,78 +1,157 @@
-# Milestone 018: Landscape Layout Support
+# Milestone 018: Landscape and Portrait Layout Support
 
 **Status:** Approved  
 **Depends on:** 017  
-**Owns:** Supported viewport rules, compatibility screen, and landscape layout
+**Owns:** Supported viewport rules, compatibility screen, orientation warning,
+and responsive layout
+
 **Production-file budget:** 8
 
 ## Deliver
 
-Support only horizontal browser content viewports. The minimum supported
-viewport is 1024 by 720 CSS pixels. The recommended viewport is 1920 by 1080.
-PC is the recommended platform, but support is device-neutral and does not use
-operating-system or device-class detection.
+Support desktop and phone browser content viewports, including Samsung Galaxy
+S25 Ultra portrait and landscape use. Landscape is the intended game layout.
+Recommend landscape and a 1920 by 1080 PC viewport. Support depends only on
+browser geometry, with no operating-system or device-class detection.
 
-Remove the narrow-landscape, portrait, mobile, and minimum-width layout
-branches. Remove their tests. Do not add a compact layout below the supported
-minimum. Horizontal layouts can adapt across the supported range, but they must
-keep the same information hierarchy and actions.
+This contract replaces the landscape-only viewport gate. It also replaces the
+integrated scene-and-pool placement and page-scroll restrictions in Milestones
+015, 016, and 023 for the compact layouts defined below. Keep the same game
+rules, information ownership, and tactical actions in both orientations.
 
 ## Exact viewport contract
 
-The application supports a viewport only when all conditions are true:
+All dimensions are browser content CSS pixels, not physical screen resolution
+or outer-window size. A viewport is supported when either condition is true:
 
-1. Its width is at least 1024 CSS pixels.
-2. Its height is at least 720 CSS pixels.
-3. Its width is greater than its height.
+1. Landscape: width is greater than height, width is at least 640, and height
+   is at least 320.
+2. Portrait: height is greater than width, width is at least 360, and height
+   is at least 640.
 
-A square viewport is unsupported. Both dimensions use the browser content
-viewport, not physical screen resolution or outer-window size. All device and
-operating-system classes use the same rule.
+Square viewports and dimensions below these limits are unsupported. An
+unsupported viewport replaces the current application DOM with a blocking
+compatibility screen. It states both minimum sizes and the landscape
+recommendation, with no bypass. Restoring support preserves the current view,
+setup selections, and authoritative match state.
 
-An unsupported viewport replaces the current application DOM with a blocking
-compatibility screen. It states the minimum, requires landscape orientation,
-recommends 1920 by 1080 and PC, and provides no bypass. At title or setup,
-returning to a supported viewport restores the same application view and
-authoritative state.
+Browser zoom, display settings, device pixel ratio, and browser controls can
+change the available CSS viewport. Do not infer it from a phone's physical
+resolution. Phone-sized browser evidence does not establish physical-device
+or Samsung Internet verification.
 
-During drafting or sudden death, the match component remains alive but renders
-only the compatibility screen. The timer stops at its exact displayed value.
-The application blocks all match input. It removes the board, private cards,
-sentences, and player facts from the rendered match DOM. It also removes the
-score and timer values. When the viewport becomes
-supported, the same match resumes automatically from that value unless manual
-Pause is also active.
+## Responsive layout
+
+The existing desktop landscape matrix keeps its integrated arena and no page
+scroll. A layout is compact when portrait, narrower than 1024, or shorter than
+720 CSS pixels. Compact landscape retains the scene, all nine common phrase slots,
+both private choices, current sentence, player facts, and every available
+action. Decorative detail yields before required text or controls. Compact
+screens can scroll vertically when required; horizontal page scroll is prohibited.
+
+In portrait, render the scene and its public sentence strip first. Put the
+common phrase pool immediately below it as nine full-width rows, edge-to-edge
+across the available content
+width. Keep text padding inside each row. Respect browser safe areas without
+clipping controls. Put the private hand and action controls below the pool.
+Keep the current sentence, both players' public facts, timer, Pause, sentence
+end, Comeback, continuation, and hand refresh available under their existing
+rules. Vertical page scrolling makes these regions reachable. Do not remove
+actions or truncate phrases to fit the first screen.
+
+Title, setup, Settings, history, Pause, presentation, and Victory must remain
+usable in both supported orientations. Compact setup can reflow the roster and
+selected-character stages. Its page can scroll vertically; the desktop roster
+contract remains unchanged. Dialog content can scroll with its controls
+reachable. Required text must wrap without horizontal clipping.
+
+## Landscape recommendation and hotseat
+
+On first entry to supported portrait in a page session, show a modal warning
+titled “Landscape recommended”. Explain that the game is designed for
+landscape and provide “Continue in portrait”. The warning is dismissible and
+appears at most once in that page session. A reload starts a new session.
+Turning to supported landscape dismisses the warning. Keyboard focus enters
+the warning and returns to the restored screen after dismissal.
+
+Single Player and Ladder remain available in portrait. Disable the
+Multiplayer hotseat title action in portrait and explain that it requires
+landscape. Disable starting an existing hotseat setup after rotation to
+portrait. Enforce these restrictions in command handlers as well as controls.
+Do not silently change the selected mode.
+
+If an active hotseat match enters portrait, replace its content with a
+concealed “Multiplayer requires landscape” screen. It instructs the player
+to rotate to landscape to continue. It has no portrait continuation
+action. Preserve the match and resume only after supported landscape returns,
+unless manual Pause remains active. No other gameplay restriction is added.
+
+## Interruption and privacy
+
+Unsupported geometry, an open orientation warning, and the portrait hotseat
+block stop the exact remaining turn time, AI scheduling, and public
+presentation. They block match commands and remove the board, private cards,
+sentences, player facts, scores, and timer from the rendered match DOM. Keep
+the match component alive and preserve authoritative state. Clearing one
+interruption must not clear another. Resume only after all blocking conditions
+clear. Manual Pause remains active until the player explicitly resumes.
 
 ## Acceptance criteria
 
-- **AC-018-01:** The accepted matrix is 1024 by 720, 1024 by 768, 1280 by 720,
-  and 1920 by 1080. Each viewport renders the functional application without
-  page scroll, overlap, clipping, or a hidden required action.
-- **AC-018-02:** The rejected matrix is 1023 by 720, 1024 by 719, 720 by 1024,
-  1200 by 1600, and 1024 by 1024. Each viewport renders only the compatibility
-  screen and no functional application screen.
-- **AC-018-03:** Resizing title and setup from supported to unsupported and back
-  restores the same view and authoritative state.
-- **AC-018-04:** An unsupported resize freezes the exact timer value. It removes
-  all match facts and controls from the rendered DOM. It dispatches no command
-  while blocked. The supported resize resumes the unchanged match without
-  adding time.
-- **AC-018-05:** Manual Pause remains active after the viewport support returns.
-  Resume is available only in a supported viewport.
-- **AC-018-06:** The source and tests contain no narrow-landscape, portrait,
-  mobile, or below-minimum functional layout branch.
+- **AC-018-01:** The desktop matrix remains 1024 by 720, 1024 by 768, 1280 by
+  720, 1400 by 1050, and 1920 by 1080. Required content and controls remain
+  readable without page scroll, overlap, or clipping.
+- **AC-018-02:** Accepted phone portrait examples are 360 by 640, 360 by 780,
+  384 by 832, 412 by 915, and 384 by 700 with browser controls represented.
+  Accepted phone landscape examples are 640 by 320, 780 by 360, 832 by 384,
+  915 by 412, 700 by 384, and 740 by 360. The nine portrait pool rows span the
+  content width below the scene. The private hand and actions follow them.
+  All required content remains reachable without horizontal page scroll.
+- **AC-018-03:** Reject 639 by 320, 640 by 319, 359 by 640, 360 by 639,
+  640 by 640, and 1024 by 1024. Show only the compatibility screen.
+- **AC-018-04:** Unsupported resizing preserves title/setup selections and
+  active match state. It freezes exact turn time, removes match facts from
+  the DOM, and dispatches no match command. Restoring support resumes from the
+  same time without adding time.
+- **AC-018-05:** The recommendation appears once on supported portrait entry,
+  with keyboard-accessible dismissal. Dismissal or landscape restoration
+  restores the view. Later rotations do not repeat it during the same page
+  session. A new page session can show it again.
+- **AC-018-06:** Portrait disables hotseat entry and start, including direct
+  typed command attempts. Single Player and Ladder still start. Rotating an
+  active hotseat match conceals and pauses it until landscape returns without
+  state loss or a portrait bypass.
+- **AC-018-07:** Manual Pause survives unsupported geometry, orientation
+  warning, and hotseat interruption. Clearing an orientation condition does
+  not resume a manually paused match or another still-blocked state.
+- **AC-018-08:** Representative phone title, setup, match, Settings, history,
+  Pause, presentation, and Victory retain required controls and readable
+  content. Touch and keyboard flows can reach the last pool row, both private
+  slots, and all available actions by vertical scrolling.
+
+## Objective verifiers
+
+`tests/unit/viewport-support.test.ts` verifies accepted and rejected geometry
+for AC-018-01 through AC-018-03.
+`tests/browser/screen-shell.browser.test.ts` and
+`tests/browser/match-screen.browser.test.ts` verify AC-018-04 through
+AC-018-07, including command rejection,
+exact timer preservation, focus, concealed DOM, and manual Pause interaction.
+`e2e/mobile-layout.spec.ts` verifies AC-018-02 and AC-018-08 in the
+production browser build.
+The existing desktop geometry suites verify AC-018-01. Record exact commands,
+browser version, viewports, and artifact paths in the retained evidence.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on the compatibility screen and all supported
-   landscape screen states.
-2. After audit repairs, run `$impeccable critique` on the same landscape slice.
-
-Apply the shared Impeccable evidence and severity gate in the milestone index.
+Run `$impeccable audit` on supported desktop and phone states, the warning,
+and blocking screens. After audit repairs, run `$impeccable critique` on the
+same stable slice. Apply the shared evidence and severity gate in the index.
 
 ## Verify and stop
 
-Focused browser tests prove every accepted and rejected boundary, exact timer
-preservation, manual Pause interaction, and DOM replacement. Production
-Playwright checks the supported landscape matrix and blocked examples.
-`npm run ci` passes. Stop before settings persistence or production art.
+Focused checks prove geometry, orientation transitions, hotseat restrictions,
+timer preservation, manual Pause, and DOM concealment. Production-browser
+evidence covers the desktop and phone matrices with final art and representative
+long content. Run `npm run ci`. State whether physical-device testing was
+available; do not claim it from browser viewport emulation.

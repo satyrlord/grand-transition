@@ -77,8 +77,12 @@ text, controls, and scene layers in their normal orientation.
 
 ## Deliver
 
-Build the Sharp pipeline, manifest validation, visual tokens, and landscape
-asset loading. Regenerate the fixed current character and scene asset baseline
+Build the Sharp pipeline, manifest validation, visual tokens, and responsive
+asset loading. Milestone 018 owns compact landscape and portrait layout
+adaptations. Portrait uses the same aligned scene planes in a scene region
+above its full-width phrase pool; scene-canvas geometry applies to that region,
+not to the full scrolling page. The integrated scene-and-pool placement below
+remains the desktop landscape contract. Regenerate the fixed current character and scene asset baseline
 from scratch as original final-quality static art. Complete state and motion art
 for the four vertical-slice characters and one scene. Add core reactions,
 visual lighting effects, and transitions.

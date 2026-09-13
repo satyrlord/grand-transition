@@ -134,7 +134,8 @@ Milestone 027 owns final balance and editorial evidence.
   leaves no stale setup, match, locale, or production-build reference.
 - **AC-026-06:** Production-browser setup can select every character and scene.
   The 19-item roster, longest names, six-scene selector, and selected interim
-  portrait remain usable at every supported landscape viewport. The roster uses
+  portrait remain usable at every supported viewport. Milestone 018 permits
+  compact roster reflow and vertical page scroll. The desktop roster uses
   one compact fighting-game character-selection grid with six, six, six, and one
   portraits in its current rows. Any future incomplete row is centered. The named roster
   region uses contained vertical scrolling when its rows exceed the available

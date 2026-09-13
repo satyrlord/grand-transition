@@ -32,7 +32,8 @@ custom or ladder match starts. It cannot alter an active match or an existing
 replay. Milestones 010 and 014 own scoring and replay behavior.
 All other settings apply immediately. Ordinary speech controls precede GPU
 voices and its associated help. All controls remain usable at the supported
-landscape viewport matrix. Status and storage-failure messages must not cover
+desktop and phone viewport matrix. Compact layouts may reflow the columns
+and scroll vertically under Milestone 018. Status and storage-failure messages must not cover
 controls. Selected multiplier and timer choices remain distinct during hover
 and keyboard focus, including forced colors. Focus has a separate outer ring.
 The selected Turn timer option stays visibly distinct in forced-colors mode.

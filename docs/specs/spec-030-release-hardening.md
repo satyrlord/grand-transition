@@ -85,7 +85,7 @@ runtime-network failure cannot be waived.
 - **AC-030-02:** The exact browser matrix passes title-to-match-completion, reload,
   persistence fallback, privacy, speech-unavailable, and
   longest-content flows without uncaught error.
-- **AC-030-03:** The supported landscape viewport matrix and blocking boundary
+- **AC-030-03:** The supported desktop and phone viewport matrix and blocking boundary
   cases pass with final art and longest content.
 - **AC-030-04:** The production artifact contains no developer control, source
   map, unlicensed asset, remote request, secret, or committed `dist/`.
@@ -106,7 +106,8 @@ nonterminal exchange through the Milestone 025 narrated inline sequence.
 Milestone 019 adds the
 persistent terminal victory state and local match history. It also has
 development-only deterministic replay, validated data-driven content,
-locale-isolated English, and a supported landscape user interface (UI). All
+locale-isolated English, and a responsive user interface (UI) under Milestone
+018. All
 art, writing, and branding are original. Audio is original, AI-generated, or
 licensed under the Milestone 024 contract.
 
