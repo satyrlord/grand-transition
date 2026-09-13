@@ -91,7 +91,7 @@ can still activate that multiplier.
   continued constructions receive no modifier points.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830`
   completes in an average of 3 through 11 resolved rounds per match. The
-  current Milestone 026 playable catalog supplies all 18 characters, six scenes,
+  current Milestone 026 playable catalog supplies all 19 characters, six scenes,
   and their current phrases. The setup selects `red-folded-chairman` against
   `thunder-tribune` in `transition-era-television-studio` with the default
   simulation policy. This pacing check does not measure every character pair

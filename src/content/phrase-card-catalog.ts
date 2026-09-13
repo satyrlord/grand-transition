@@ -11,6 +11,12 @@ import {
   type Phrase,
 } from './schemas';
 
+const maximumPhraseWordCount = 11;
+
+function phraseWordCount(value: string): number {
+  return value.trim().split(/\s+/u).length;
+}
+
 const manualPhraseCardSchema = phraseDefinitionSchema
   .omit({
     characterIds: true,
@@ -28,6 +34,22 @@ const manualPhraseCardSchema = phraseDefinitionSchema
   })
   .strict()
   .superRefine((card, context) => {
+    for (const field of [
+      'text',
+      'singularText',
+      'pluralText',
+      'personalSingularText',
+      'secondPersonText',
+    ] as const) {
+      const value = card[field];
+      if (value && phraseWordCount(value) > maximumPhraseWordCount) {
+        context.addIssue({
+          code: 'custom',
+          path: [field],
+          message: `Keep player-visible phrase text to ${maximumPhraseWordCount} words or fewer.`,
+        });
+      }
+    }
     if (Boolean(card.singularText) !== Boolean(card.pluralText)) {
       context.addIssue({
         code: 'custom',

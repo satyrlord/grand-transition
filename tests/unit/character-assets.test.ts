@@ -28,7 +28,7 @@ describe('character asset resolver', () => {
   });
 
   test('maps the fixed inventory to responsive AVIF and WebP sources', () => {
-    expect(characterAssetManifest).toHaveLength(29);
+    expect(characterAssetManifest).toHaveLength(30);
     expect(characterImageSizes).toBe('(max-width: 1100px) 320px, 640px');
     for (const asset of characterAssetManifest) {
       expect(asset.width).toBe(2048);
@@ -46,6 +46,12 @@ describe('character asset resolver', () => {
   });
 
   test('resolves default and alternate skins by fixed asset ID', () => {
+    expect(resolveCharacterAsset('reluctant-theorem')).toMatchObject({
+      ownerId: 'reluctant-theorem',
+      skinId: 'default',
+      facing: 'right',
+      stateId: 'selection',
+    });
     expect(resolveCharacterAsset('red-folded-chairman')).toMatchObject({
       ownerId: 'red-folded-chairman',
       skinId: 'default',

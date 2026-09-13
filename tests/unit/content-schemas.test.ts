@@ -250,7 +250,7 @@ describe('content schemas', () => {
     );
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'phrase.brought-the-miners-to-bucharest':
-        'brought a delegation of miners to the capital for a staged show of support',
+        'brought the miners to Bucharest',
       'phrase.sided-with-terrorists': 'turned an emergency into a campaign slogan',
       'phrase.transports-voters-with-busses': 'transports voters in buses painted as campaign billboards',
       'phrase.your-brother': 'your brother',
@@ -288,6 +288,28 @@ describe('content schemas', () => {
     ).toEqual(['red-folded-chairman']);
   });
 
+  test('limits every player-visible phrase form to 11 words', () => {
+    const visibleForms = Object.entries(phraseCardCatalog.englishMessages)
+      .filter(([key]) => key.startsWith('phrase.'));
+    for (const [key, value] of visibleForms) {
+      expect(value.trim().split(/\s+/u).length, key).toBeLessThanOrEqual(11);
+    }
+
+    const source = [{
+      id: 'overlong-fixture',
+      role: 'noun',
+      text: 'one two three four five six seven eight nine ten eleven twelve',
+      tags: [],
+      grammaticalNumber: 'singular',
+      scoreGroups: { substance: ['personal'], flavour: ['politics'] },
+      rarity: 'common',
+      editorialReview: approvedReview('Original fixture for the phrase length boundary.'),
+    }];
+    expect(() => parsePhraseCardCorpus(source)).toThrow(
+      /11 words or fewer/iu,
+    );
+  });
+
   test('loads the Chairman phrase expansion and comeback tiers', () => {
     const expectedPhrases = [
       ['the-nordic-model', 'the Nordic model'],
@@ -304,7 +326,7 @@ describe('content schemas', () => {
       ['a-naughty-boy', 'a naughty boy'],
       [
         'the-dacs-that-come-from-the-tracs',
-        'and even the ancient tribes would ask you for a modern answer.',
+        'and the Dacs come from the Tracs.',
       ],
       ['and-thats-the-synergy-of-facts', 'and the facts have formed a committee to escape the synergy.'],
     ] as const;
@@ -329,6 +351,7 @@ describe('content schemas', () => {
     );
     expect(dacsEnding).toMatchObject({
       role: 'ending',
+      tags: ['legacy'],
       finisherBonus: 3,
     });
     expect(dacsEnding?.scoreGroups).toBeUndefined();
@@ -1343,7 +1366,7 @@ describe('content schemas', () => {
     );
   });
 
-  test('accepts the ordered 18-character and six-scene foundation', () => {
+  test('accepts the ordered 19-character and six-scene foundation', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
     expect(result.characters.map(({ id }) => id)).toEqual([
@@ -1365,6 +1388,7 @@ describe('content schemas', () => {
       'apartment-block-geopolitician',
       'eu-funds-alchemist',
       'government-ai',
+      'reluctant-theorem',
     ]);
     const localBaron = result.characters.find(({ id }) => id === 'county-baron')!;
     expect(localBaron.nameKey).toBe('character.county-baron.name');

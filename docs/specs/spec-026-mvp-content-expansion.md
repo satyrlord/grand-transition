@@ -2,7 +2,7 @@
 
 **Status:** Approved  
 **Depends on:** 021
-**Owns:** Playable 18-character roster and six-scene data required by the
+**Owns:** Playable 19-character roster and six-scene data required by the
 single-player ladder
 **Production-file budget:** 40
 
@@ -10,7 +10,7 @@ single-player ladder
 
 Add the complete minimum viable product (MVP) character and scene identities
 before the advanced artificial intelligence (AI) ladder. The catalog contains
-18 playable fictional archetypes and 6 playable scenes. It supplies enough
+19 playable fictional archetypes and 6 playable scenes. It supplies enough
 validated English grammar content for every character and scene to complete a
 deterministic match. Final phrase volume, final art, alternate skins, audio,
 presentation states, and variety evidence remain in Milestone 028.
@@ -64,15 +64,22 @@ The stable roster order, identifier, weakness tags, and play style are:
 | 16 | `apartment-block-geopolitician` | Apartment-Block Geopolitician | sources, specificity, and nuance | broad, fast, and brittle combo play. |
 | 17 | `eu-funds-alchemist` | EU-Funds Alchemist | transparency, outcomes, and maintenance | procurement denial and high-value finishers. |
 | 18 | `government-ai` | Government AI | nepotism, corruption, spending, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
+| 19 | `reluctant-theorem` | The Reluctant Theorem | indecision, urgency, and delivery | careful clause construction, evidence targeting, and decisive finishers. |
 
 Keep the remaining character identifiers in their listed relative order. Do not
 reuse the unused roster-order value.
+
+The Reluctant Theorem is a distinct human archetype. Its fictional identity
+turns civic problems into mathematical proofs and procedural qualifications.
+It owns its phrases, three Comebacks, and default portrait. It is not a skin
+of another archetype. Append it with source roster order 20; preserve the
+retired order gap and every existing identifier.
 
 Local Baron retains the stable `county-baron` identifier and derived content,
 locale, and asset identifiers. The display-name change preserves saved setups
 and replay references.
 
-The other 17 characters are human. Animal terms are political metaphors only.
+The other 18 characters are human. Animal terms are political metaphors only.
 No character uses human-animal or robot-animal hybrid anatomy.
 
 ## Required scenes
@@ -111,8 +118,8 @@ Milestone 027 owns final balance and editorial evidence.
 
 ## Acceptance criteria
 
-- **AC-026-01:** The catalog contains exactly the 18 ordered character IDs and
-  6 ordered scene IDs above, with 17 humans and one fully mechanical robot.
+- **AC-026-01:** The catalog contains exactly the 19 ordered character IDs and
+  6 ordered scene IDs above, with 18 humans and one fully mechanical robot.
 - **AC-026-02:** Each character loads from one matching JSON file and one
   matching default portrait without a character registry, locale table, setup
   option, or renderer map. Each portrait passes the shared asset, alpha,
@@ -126,9 +133,9 @@ Milestone 027 owns final balance and editorial evidence.
 - **AC-026-05:** Adding and removing one synthetic convention-driven character
   leaves no stale setup, match, locale, or production-build reference.
 - **AC-026-06:** Production-browser setup can select every character and scene.
-  The 18-item roster, longest names, six-scene selector, and selected interim
+  The 19-item roster, longest names, six-scene selector, and selected interim
   portrait remain usable at every supported landscape viewport. The roster uses
-  one compact fighting-game character-selection grid with six, six, and six
+  one compact fighting-game character-selection grid with six, six, six, and one
   portraits in its current rows. Any future incomplete row is centered. The named roster
   region uses contained vertical scrolling when its rows exceed the available
   height or when later characters are added. It is keyboard-focusable and does
@@ -142,7 +149,7 @@ Milestone 027 owns final balance and editorial evidence.
   AC-026-03 and AC-026-05.
 - Asset validation verifies the shared alpha, provenance, and color-policy
   checks for interim portraits and scene assets.
-- `tests/unit/catalog-foundation.test.ts` verifies AC-026-04 for all 1,944
+- `tests/unit/catalog-foundation.test.ts` verifies AC-026-04 for all 2,166
   ordered character-pair and scene setups, including mirrors. The workload uses
   fixed seeds and Local Radio Caller presentation timing. It checks completion,
   action legality, private-hand secrecy, and timer bounds.
@@ -166,7 +173,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-All 18 characters and 6 scenes load by convention, validate, and complete
+All 19 characters and 6 scenes load by convention, validate, and complete
 seeded matches. Production setup selects each catalog entry without overflow or
 stale references. `npm run ci` passes. Stop before advanced AI, final art,
 alternate-skin completion, audio, presentation reactions, final phrase volume,

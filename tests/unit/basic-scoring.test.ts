@@ -39,6 +39,17 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
 
 describe('Hollywood Roast clause scoring', () => {
 
+  test.each(['brought-the-miners-to-bucharest', 'brings-the-miners-to-bucharest', 'will-bring-the-miners-to-bucharest'])(
+    'the concise %s predicate does not imply a credibility weakness',
+    (predicate) => {
+      const ids = ['you', predicate];
+      expect(score(ids, ['credibility']).finalDamage).toBe(score(ids).finalDamage);
+      expect(score(ids, ['miners']).breakdown).toContainEqual(
+        expect.objectContaining({ kind: 'weakness-match', phraseId: predicate, defenderTag: 'miners' }),
+      );
+    },
+  );
+
   test.each(['and', 'but', 'because', 'yet', 'so', 'for'])(
     'neutral %s clauses do not activate any defender weakness',
     (connector) => {

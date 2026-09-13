@@ -48,6 +48,8 @@ test.each([
     'will-bring-the-miners-to-bucharest', 'during-a-press-conference', 'and',
     'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
     'will-bring-the-miners-to-bucharest',
+    'and', 'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
+    'will-bring-the-miners-to-bucharest', 'during-a-press-conference',
     'public-and-the-promotion-was-announced-before-the-birthday-cake',
   ];
   const rendered = englishGrammarAdapter.analyze({

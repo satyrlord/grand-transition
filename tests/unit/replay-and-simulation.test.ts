@@ -48,6 +48,8 @@ import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
 import version6ReplayFixture from '../fixtures/replay-v6-pre-humor-catalog.json';
 import version7ReplayFixture from '../fixtures/replay-v7-before-prophet-film-phrases.json';
 import version8ReplayFixture from '../fixtures/replay-v8-before-final-volume.json';
+import version10ReplayFixture from '../fixtures/replay-v10-before-reluctant-theorem.json';
+import version9ReplayFixture from '../fixtures/replay-v9-before-concise-phrases.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -88,8 +90,8 @@ describe('versioned replay and local match-log codecs', () => {
     if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
   });
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 9', (multiplier) => {
-    for (const schemaVersion of [6, 7, 8, 9] as const) {
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 11', (multiplier) => {
+    for (const schemaVersion of [6, 7, 8, 9, 10, 11] as const) {
       for (const [document, decode] of [
         [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
       ] as const) {
@@ -124,7 +126,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(9);
+    expect(decoded.value.schemaVersion).toBe(11);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -157,7 +159,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(replayed.normalized).toBe(bytes);
     expect(await sha256(JSON.stringify(replayed.state)))
       .toBe('505dc5b56018833497b6e67c838ffe36901bbe60b907eba9ff7ee70fbc5ec058');
-    expect(replayContextForVersion(9, context)).toBe(context);
+    expect(replayContextForVersion(11, context)).toBe(context);
   });
 
   test('version 8 preserves its complete catalog, normalized commands, and exact final state', async () => {
@@ -179,17 +181,63 @@ describe('versioned replay and local match-log codecs', () => {
       .toBe('f59cbde67151dae58722d56d24cc795021016b8e50b90b8705a9766929731ccb');
   });
 
-  test('versions 1 through 8 restore the saved catalog before older rules; version 9 uses the current catalog', () => {
+  test('version 9 preserves its complete catalog, long phrase text, and exact final state', async () => {
+    const restored = replayContextForVersion(9, context);
+    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
+      .toBe('64aef4eece6e761e4dda0305ec735b871329fa18fe5de4426847172e5026460f');
+    const bytes = normalizedJson(version9ReplayFixture);
+    expect(await sha256(bytes))
+      .toBe('8a24b97a359edee983509453fca03f37a4d9b3b0de3ab052eabbb6a51b2e70ed');
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(replayed.state).toMatchObject({ schemaVersion: 9, phase: 'results', winner: 'player-1', round: 11 });
+    expect(replayed.state.resolutionHistory.some((round) =>
+      Object.values(round.players).some((player) =>
+        player.constructionPhrases.some((phrase) =>
+          phrase.phraseId === 'brings-the-miners-to-bucharest'
+          && phrase.text === 'brings a delegation of miners to the capital for a staged show of support'))))
+      .toBe(true);
+    expect(await sha256(normalizedJson(replayed.state)))
+      .toBe('b944cc9d916fb5211ed5b05c62877ffd6d7b0d3802809b9b3dff9c8da50dd8cb');
+  });
+
+  test('version 10 preserves the catalog and exact state before the nineteenth archetype', async () => {
+    const restored = replayContextForVersion(10, context);
+    expect(restored.catalog.characters).toHaveLength(18);
+    expect(restored.catalog.characters.some(({ id }) => id === 'reluctant-theorem')).toBe(false);
+    expect(restored.catalog.phrases.find(({ id }) => id === 'the-dacs-that-come-from-the-tracs')?.tags)
+      .toEqual(['legacy', 'modernity']);
+    for (const id of ['brought-the-miners-to-bucharest', 'brings-the-miners-to-bucharest', 'will-bring-the-miners-to-bucharest']) {
+      expect(restored.catalog.phrases.find((phrase) => phrase.id === id)?.tags)
+        .toEqual(['miners', 'legacy', 'credibility']);
+    }
+    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
+      .toBe('5fac8ff60df3b6c81531f66bd7517daa7b6af4d5d496f81b0a68ef9deeba55c1');
+    const bytes = normalizedJson(version10ReplayFixture);
+    expect(await sha256(bytes))
+      .toBe('cde327925c08412083cd99219fa77112704511946b569acc96170172f7606188');
+    const replayed = replayMatch(bytes, context);
+    expect(replayed.ok).toBe(true);
+    if (!replayed.ok) return;
+    expect(replayed.normalized).toBe(bytes);
+    expect(replayed.state).toMatchObject({ schemaVersion: 10, phase: 'results', winner: 'player-1', round: 9 });
+    expect(await sha256(normalizedJson(replayed.state)))
+      .toBe('cf0b371805cb69f5a362ccd09738da0f4a31e001f9476a0b233f29448cc13139');
+  });
+
+  test('versions 1 through 10 restore saved catalogs before older rules; version 11 uses the current catalog', () => {
     const changed: ReplayContext = {
       ...context,
       catalog: { ...context.catalog, phrases: [], characters: [], scenes: [], locales: [] },
       locale: { ...context.locale, messages: { 'fixture.changed': 'Changed current catalog.' } },
     };
-    for (const version of [1, 2, 3, 4, 5, 6, 7, 8]) {
+    for (const version of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
       expect(replayContextForVersion(version, changed)).toEqual(replayContextForVersion(version, context));
     }
-    expect(replayContextForVersion(9, changed)).toBe(changed);
-    expect(replayContextForVersion(9, context)).toBe(context);
+    expect(replayContextForVersion(11, changed)).toBe(changed);
+    expect(replayContextForVersion(11, context)).toBe(context);
   });
 
   test('version 6 restores the complete pre-humor catalog and exact final state', async () => {
@@ -665,7 +713,7 @@ describe('headless simulation and generated invariants', () => {
   test(
     'keeps the current-catalog 500-match calibration between three and eleven rounds',
     () => {
-      expect(context.catalog.characters).toHaveLength(18);
+      expect(context.catalog.characters).toHaveLength(19);
       expect(context.catalog.scenes).toHaveLength(6);
       const calibrationSetup = createSimulationSetup(context.catalog, {
         characterIds: ['red-folded-chairman', 'thunder-tribune'],

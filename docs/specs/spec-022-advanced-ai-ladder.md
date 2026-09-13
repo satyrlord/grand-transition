@@ -67,7 +67,7 @@ principal reply.
 
 A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
 three Palace Operator opponents in that order. The ladder selects opponents
-without replacement from the other 17 characters in the 18-character catalog. It uses
+without replacement from the other 18 characters in the 19-character catalog. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
 permutation of all six scenes and then repeat.
 

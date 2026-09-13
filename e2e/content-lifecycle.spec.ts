@@ -199,7 +199,7 @@ function makeTemporaryPhraseTextUnique(fixture: CharacterSource): void {
     for (const field of textFields) {
       const value = phrase[field];
       if (typeof value !== 'string') continue;
-      const marker = ` temporary fixture ${String(index + 1)}`;
+      const marker = `-fixture-${String(index + 1)}`;
       phrase[field] = value.endsWith('.')
         ? `${value.slice(0, -1)}${marker}.`
         : `${value}${marker}`;
@@ -282,10 +282,10 @@ async function assertTemporaryCharacterIsPlayable(
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
 
-  await expect(page.locator('.roster-choice')).toHaveCount(19);
-  await expect(page.locator('.roster-heading')).toContainText('19 contestants');
+  await expect(page.locator('.roster-choice')).toHaveCount(20);
+  await expect(page.locator('.roster-heading')).toContainText('20 contestants');
   await expect(page.locator('.roster-grid')).toHaveAccessibleName(
-    'Contestant roster, 19 characters',
+    'Contestant roster, 20 characters',
   );
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -333,10 +333,10 @@ async function assertTemporaryCharacterIsAbsent(
 ): Promise<void> {
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await expect(page.locator('.roster-choice')).toHaveCount(18);
-  await expect(page.locator('.roster-heading')).toContainText('18 contestants');
+  await expect(page.locator('.roster-choice')).toHaveCount(19);
+  await expect(page.locator('.roster-heading')).toContainText('19 contestants');
   await expect(page.locator('.roster-grid')).toHaveAccessibleName(
-    'Contestant roster, 18 characters',
+    'Contestant roster, 19 characters',
   );
   await expect(
     page.locator(`.roster-choice[data-character-id="${temporaryCharacterId}"]`),
@@ -373,7 +373,7 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
     return {
       rowCounts: [...rowCounts.values()],
       finalRowCenterOffset: Math.abs(
-        (choices[18]!.left + choices[18]!.right) / 2 -
+        (choices[18]!.left + choices[19]!.right) / 2 -
         (choices[0]!.left + choices[5]!.right) / 2,
       ),
       clearOfText: gridBox.top >= heading.bottom - 1 && gridBox.bottom <= note.top + 1,
@@ -386,7 +386,7 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
       tabIndex: grid.tabIndex,
     };
   });
-  expect(geometry.rowCounts).toEqual([6, 6, 6, 1]);
+  expect(geometry.rowCounts).toEqual([6, 6, 6, 2]);
   expect(geometry.finalRowCenterOffset).toBeLessThan(1);
   expect(geometry.clearOfText).toBe(true);
   expect(geometry.horizontallyContained).toBe(true);

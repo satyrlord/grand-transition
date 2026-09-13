@@ -4,22 +4,22 @@
 **Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
-**Production-file budget:** 19
+**Production-file budget:** 20
 
 Milestone 027 can finish with the current artwork and the phrase volumes
 defined here. This milestone retains the additional pose images, scene
 layers, motion, and final media packages; their delivery does not block
 Milestone 027.
 
-The phrase-data package uses the common authoring file and the 18 character
+The phrase-data package uses the common authoring file and the 19 character
 authoring files. Replay compatibility is a separate Milestone 014 package.
-Historical replay content, common phrases, and character phrases have separate
+Historical replay content, replay codecs, common phrases, and character phrases have separate
 build chunks so the expanded catalog remains below the existing per-chunk size
 limit. Keep the limit unchanged.
 
 ## Deliver
 
-Finalize all 18 playable fictional archetypes and 6 playable scenes from
+Finalize all 19 playable fictional archetypes and 6 playable scenes from
 Milestone 026. Complete their English phrase volume, art, scene audio treatment,
 and variety requirements. Use the existing schemas, pipelines, and presentation
 contracts.
@@ -43,13 +43,21 @@ exposes it in setup and carries it into matches.
 Keep its default portrait, character identity, phrases, balance, and voice
 unchanged. It uses the selection-art fallback, without a new state package.
 
-Seventeen archetypes are human. Government AI is a fully mechanical robot.
+The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the
+shared Milestone 023 detailed cel-shaded editorial-cartoon style. It holds a
+single money envelope with original generic banknote edges and no markings.
+The portrait uses the approved green-matte conversion fallback after native
+transparency fails validation. Banknote edges are pale blue to avoid the key
+color. Preserve the existing alpha and color checks. Matches use the
+selection-art fallback, without a new pose or state package.
+
+Eighteen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
 never define anatomy, species, or hybrid traits.
 
 ## Required roster
 
-Milestone 026 owns the 18 stable character identities, species, weaknesses, and
+Milestone 026 owns the 19 stable character identities, species, weaknesses, and
 play styles. This milestone does not replace those identities. It completes
 their final phrase, skin, state, provenance, and audio contracts.
 
@@ -165,7 +173,7 @@ with passing content, grammar, and normal CI checks.
 
 ## Acceptance criteria
 
-- **AC-028-01:** The catalog contains exactly 18 required character IDs and
+- **AC-028-01:** The catalog contains exactly 19 required character IDs and
   six required scene IDs, with no duplicate English identity.
 - **AC-028-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
@@ -178,7 +186,7 @@ with passing content, grammar, and normal CI checks.
   reachability, agreement, representative sentence, and normal CI checks pass.
 - **AC-028-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings.
-- **AC-028-07:** All 18 characters provide one default skin and zero through
+- **AC-028-07:** All 19 characters provide one default skin and zero through
   eight alternate skins. A ninth alternate fails validation. A human alternate
   can use any gender, and no gender quota applies. A robot alternate remains
   fully mechanical. Every skin passes the shared asset, alpha, provenance,
@@ -193,7 +201,7 @@ broad media forms. An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
 Git-ignored research folder and does not ship.
 
-The common corpus and all 18 character authoring files can receive the
+The common corpus and all 19 character authoring files can receive the
 speech-inspired humor pass defined in Milestone 027. This includes distinctive
 endings and all three comeback tiers. Short original English transformations
 can draw on verified speech motifs from the private archetype references.

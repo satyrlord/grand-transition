@@ -48,6 +48,14 @@ test('production preview loads the subpath shell and local assets after refresh'
   const loadedAssetTypes = new Set<string>();
   const pageErrors: string[] = [];
 
+  await page.addInitScript(() => {
+    const violations: string[] = [];
+    Object.defineProperty(window, 'startupPolicyViolations', { value: violations });
+    window.addEventListener('securitypolicyviolation', (event) => {
+      violations.push(`${event.effectiveDirective}: ${event.blockedURI}`);
+    });
+  });
+
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text());
   });
@@ -84,6 +92,7 @@ test('production preview loads the subpath shell and local assets after refresh'
     page.getByText('A Verbal Republic', { exact: true }),
   ).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
   expect(loadedAssetTypes).toEqual(
     new Set(['font', 'image', 'script', 'stylesheet']),
   );
@@ -96,6 +105,7 @@ test('production preview loads the subpath shell and local assets after refresh'
   expect(failedRequests).toEqual([]);
   expect(consoleErrors).toEqual([]);
   expect(pageErrors).toEqual([]);
+  expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
 });
 
 test('production injects the exact policy and blocks a remote connection', async ({

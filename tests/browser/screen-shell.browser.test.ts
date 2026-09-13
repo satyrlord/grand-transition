@@ -29,7 +29,7 @@ afterEach(() => {
 test('roster crops and selected stages keep full responsive portrait sources', async () => {
   const setup = await mountSetup(createDefaultSetupSnapshot());
   const roster = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')];
-  expect(roster).toHaveLength(18);
+  expect(roster).toHaveLength(19);
   for (const image of roster) {
     expect(image.getAttribute('src')).toContain('960x960.webp');
     expect(image.getAttribute('srcset')).toMatch(/128w.*256w.*320w.*640w.*960w/u);
@@ -237,7 +237,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   const setup = document.querySelector(
     'grand-transition-setup',
   ) as GrandTransitionSetup;
-  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(18);
+  expect(setup.querySelectorAll('.roster-choice')).toHaveLength(19);
 
   const governmentAi = setup.querySelector<HTMLButtonElement>(
     '.roster-choice[data-character-id="government-ai"]',
@@ -474,7 +474,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     'Choose your debater. Your opponent and scene follow ladder progress.',
   );
   expect(document.querySelector('.roster-heading')?.textContent).toContain(
-    '18 contestants',
+    '19 contestants',
   );
   expect(
     document.querySelectorAll('.contestant-stage--two .skin-cycle'),
