@@ -1,5 +1,5 @@
 import { msg } from '@lit/localize';
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html, nothing, type PropertyValues } from 'lit';
 
 const elementName = 'grand-transition-interruption';
 
@@ -11,7 +11,7 @@ export const phraseColorCodingChangeEventName = 'phrase-color-coding-change';
 export const musicEnabledChangeEventName = 'music-enabled-change';
 export const voicesEnabledChangeEventName = 'voices-enabled-change';
 
-export type InterruptionKind = 'paused' | 'unsupported-viewport';
+export type InterruptionKind = 'paused' | 'unsupported-viewport' | 'landscape-recommended' | 'hotseat-portrait';
 export type TurnTimerSeconds = 15 | 30 | null;
 export type TurnTimerChangeEvent = CustomEvent<TurnTimerSeconds>;
 export type AutoCompleteChangeEvent = CustomEvent<boolean>;
@@ -53,14 +53,16 @@ export class GrandTransitionInterruption extends LitElement {
     return this;
   }
 
-  protected override firstUpdated(): void {
-    if (this.kind === 'paused') {
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('kind') && (this.kind === 'paused' || this.kind === 'landscape-recommended')) {
       this.querySelector<HTMLButtonElement>('.interruption-primary')?.focus();
     }
   }
 
   protected override render() {
     const paused = this.kind === 'paused';
+    const recommendation = this.kind === 'landscape-recommended';
+    const hotseatPortrait = this.kind === 'hotseat-portrait';
     const confirmingExit = paused && this.confirmingExit;
     return html`
       <main
@@ -74,12 +76,12 @@ export class GrandTransitionInterruption extends LitElement {
           class="interruption-notice ${
             paused && !confirmingExit ? 'interruption-notice--paused' : ''
           }"
-          role=${confirmingExit ? 'alertdialog' : nothing}
-          aria-modal=${confirmingExit ? 'true' : nothing}
+          role=${confirmingExit || recommendation ? 'alertdialog' : nothing}
+          aria-modal=${confirmingExit || recommendation ? 'true' : nothing}
           aria-labelledby="interruption-title"
-          aria-describedby=${confirmingExit ? 'exit-confirmation-copy' : nothing}
+          aria-describedby=${confirmingExit ? 'exit-confirmation-copy' : recommendation ? 'orientation-copy' : nothing}
         >
-          <p class="interruption-status">
+          ${recommendation ? nothing : html`<p class="interruption-status">
             ${
               confirmingExit
                 ? msg('Match interruption')
@@ -87,14 +89,16 @@ export class GrandTransitionInterruption extends LitElement {
                   ? msg('Transmission held')
                   : msg('Transmission unavailable')
             }
-          </p>
+          </p>`}
           <h1 id="interruption-title">
             ${
               confirmingExit
                 ? msg('End this match?')
                 : paused
                   ? msg('Paused')
-                  : msg('Horizontal display required')
+                  : recommendation ? msg('Landscape recommended')
+                  : hotseatPortrait ? msg('Multiplayer requires landscape')
+                  : msg('Larger viewport required')
             }
           </h1>
           ${
@@ -122,6 +126,14 @@ export class GrandTransitionInterruption extends LitElement {
                     </button>
                   </div>
                 `
+              : recommendation
+                ? html`<p id="orientation-copy">
+                    ${msg('Grand Transition is designed to be played in landscape mode. Rotate your phone for the intended experience. You can continue in portrait for Single Player and Ladder. Multiplayer requires landscape.')}
+                  </p>
+                  <button type="button" class="interruption-primary"
+                    @click=${this.continuePortrait}>${msg('Continue in portrait')}</button>`
+              : hotseatPortrait
+                ? html`<p>${msg('The match is concealed and the turn timer is stopped. Rotate to landscape to continue. Your match is preserved.')}</p>`
               : paused
                 ? html`
                     <p>
@@ -205,12 +217,12 @@ export class GrandTransitionInterruption extends LitElement {
                   `
                 : html`
                     <p>
-                      ${msg('Use a landscape browser viewport of at least 1024 by 720 CSS pixels.')}
+                      ${msg('Use a browser viewport of at least 640 by 320 CSS pixels in landscape, or 360 by 640 in portrait. Square viewports are not supported.')}
                     </p>
                     <dl>
                       <div>
                         <dt>${msg('Minimum')}</dt>
-                        <dd>${msg('1024 × 720')}</dd>
+                        <dd>${msg('640 × 320 landscape · 360 × 640 portrait')}</dd>
                       </div>
                       <div>
                         <dt>${msg('Recommended')}</dt>
@@ -235,6 +247,10 @@ export class GrandTransitionInterruption extends LitElement {
         composed: true,
       }),
     );
+  };
+
+  private readonly continuePortrait = (): void => {
+    this.dispatchEvent(new CustomEvent('continue-portrait', { bubbles: true, composed: true }));
   };
 
   private renderTimerOption(

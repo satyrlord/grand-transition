@@ -1703,13 +1703,13 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
   });
 
   await page.waitForTimeout(1_100);
-  await page.setViewportSize({ width: 1023, height: 720 });
+  await page.setViewportSize({ width: 639, height: 320 });
   await expect(
     page.locator('[data-interruption="unsupported-viewport"]'),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Resume' })).toHaveCount(0);
   await page.screenshot({
-    path: testInfo.outputPath('unsupported-viewport-1023x720.png'),
+    path: testInfo.outputPath('unsupported-viewport-639x320.png'),
     fullPage: true,
   });
 
@@ -1724,7 +1724,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
   expect(timerAfterManualPause).toBeGreaterThanOrEqual(timerBeforePause - 1);
 
   const timerBeforeViewportPause = timerAfterManualPause;
-  await page.setViewportSize({ width: 1023, height: 720 });
+  await page.setViewportSize({ width: 639, height: 320 });
   await expect(
     page.locator('[data-interruption="unsupported-viewport"]'),
   ).toBeVisible();

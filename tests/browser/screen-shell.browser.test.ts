@@ -783,10 +783,10 @@ test('keeps one frozen shell snapshot and does not own match-state fields', asyn
 });
 
 test.each([
-  { width: 1023, height: 720 },
-  { width: 1024, height: 719 },
-  { width: 720, height: 1024 },
-  { width: 1200, height: 1600 },
+  { width: 639, height: 320 },
+  { width: 640, height: 319 },
+  { width: 359, height: 780 },
+  { width: 360, height: 639 },
   { width: 1024, height: 1024 },
 ])('blocks an unsupported $width by $height viewport', async (viewport) => {
   await page.viewport(viewport.width, viewport.height);
@@ -800,7 +800,7 @@ test.each([
     app.querySelector('[data-interruption="unsupported-viewport"]'),
   ).not.toBeNull();
   expect(app.querySelector('grand-transition-title')).toBeNull();
-  expect(app.textContent).toContain('1024 × 720');
+  expect(app.textContent).toContain('640 × 320 landscape · 360 × 640 portrait');
   expect(app.textContent).toContain('1920 × 1080 on PC');
 });
 
@@ -816,7 +816,7 @@ test('restores setup state after the viewport becomes supported again', async ()
     })
     .click();
 
-  await page.viewport(1023, 720);
+  await page.viewport(639, 320);
   await vi.waitFor(() =>
     expect(
       app.querySelector('[data-interruption="unsupported-viewport"]'),
@@ -835,6 +835,37 @@ test('restores setup state after the viewport becomes supported again', async ()
       }),
     )
     .toHaveAttribute('data-character-id', 'red-folded-chairman');
+});
+
+test('rotated hotseat setup disables Start and rejects submit and stale start commands', async () => {
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  const originalSetup = app.querySelector('grand-transition-setup') as GrandTransitionSetup;
+  const snapshot = originalSetup.snapshot!;
+  await page.viewport(384, 832);
+  await vi.waitFor(() => expect(app.querySelector('[data-interruption="landscape-recommended"]')).not.toBeNull());
+  await page.getByRole('button', { name: 'Continue in portrait' }).click();
+  const setup = app.querySelector('grand-transition-setup') as GrandTransitionSetup;
+  await setup.updateComplete;
+  await expect.element(page.getByRole('button', { name: 'Start match' })).toBeDisabled();
+  expect(setup.snapshot).toEqual(snapshot);
+  const listener = vi.fn();
+  setup.addEventListener(startMatchEventName, listener);
+  setup.querySelector('form')!.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
+  await setup.updateComplete;
+  expect(listener).not.toHaveBeenCalled();
+  setup.dispatchEvent(new CustomEvent(startMatchEventName, {
+    bubbles: true,
+    composed: true,
+    detail: { ...snapshot },
+  }));
+  await app.updateComplete;
+  expect(app.querySelector('grand-transition-match')).toBeNull();
+  expect(app.querySelector('grand-transition-setup')).not.toBeNull();
+  await page.viewport(832, 384);
+  await expect.element(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await vi.waitFor(() => expect(app.querySelector('.match-screen')).not.toBeNull());
 });
 
 async function mountApp(): Promise<GrandTransitionApp> {

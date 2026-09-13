@@ -177,8 +177,9 @@ is inspected read-only. No proprietary code or recordings are shipped.
   its owning event contract. Narration markers, total, damage, and next-speaker
   transitions follow the sequence above. Reduced-motion mode keeps the same facts
   without movement or flashing.
-- **AC-025-04:** All supported landscape viewports keep each reaction, sentence,
-  phrase row, and required action visible without overlap.
+- **AC-025-04:** All supported viewports keep each reaction, sentence,
+  phrase row, and required action readable without overlap. Compact layouts
+  retain required content through vertical scrolling under Milestone 018.
 - **AC-025-05:** The optional grammar indication owned by Milestone 016 is
   absent during round presentation. No onboarding, guided objective, recovery
   instruction, additional highlighted target, skip, replay, or progress state

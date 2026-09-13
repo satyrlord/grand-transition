@@ -81,6 +81,18 @@ typography:
     fontSize: 'clamp(1.65rem, 2.6vw, 2.35rem)'
     fontWeight: 400
     lineHeight: 1.25
+  phone-title:
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(2.6rem, 8vw, 4rem)'
+  phone-landscape-title:
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: '2.75rem'
+  phone-notice:
+    fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
+    fontSize: 'clamp(2.25rem, 7vw, 3.4rem)'
+  phone-timer:
+    fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
+    fontSize: '1.7rem'
 rounded:
   square: '0'
 spacing:
@@ -477,7 +489,9 @@ the interface face for the timer or the timer face for other numbers.
 
 ## Layout
 
-Every functional state fills one landscape viewport. The title uses a centered
+Desktop functional states fill one landscape viewport. Compact landscape and
+portrait retain all required content through responsive layout and vertical
+scrolling under Milestone 018. The title uses a centered
 marquee and a vertical signal rail. Setup uses two selected-character stages
 around a central roster, with Difficulty and Scene settings plus actions
 on the lower edge. The
@@ -496,13 +510,27 @@ and native controls where settings are available.
 At 1280 by 720 and 1400 by 1050, scale and reposition within the same hierarchy.
 At 1024 by 720 and 1024 by 768, the title, setup, and match keep the same
 hierarchy without page scroll. Decorative scene detail yields before required
-text, faces, phrase slots, or controls. The implementation has no compact mobile
-mode.
+text, faces, phrase slots, or controls. Compact phone layouts preserve the
+same actions and public facts with readable touch controls.
 
-The supported landscape evidence matrix is 1024 by 720, 1024 by 768, 1280 by
-720, 1400 by 1050, and 1920 by 1080 CSS pixels. Smaller, portrait, and square
-viewports show the full-screen transmission-unavailable slate. The recommended
-viewport is 1920 by 1080 on PC.
+The desktop evidence matrix is 1024 by 720, 1024 by 768, 1280 by
+720, 1400 by 1050, and 1920 by 1080 CSS pixels. Milestone 018 adds phone
+evidence and minimums of 640 by 320 for landscape and 360 by 640 for portrait.
+Square and below-minimum viewports show the transmission-unavailable slate.
+Landscape is the intended layout; 1920 by 1080 on PC remains recommended.
+
+Portrait puts the scene above nine full-width shared phrase rows. The pool
+fills the available content width edge-to-edge with internal text padding.
+Private choices and action controls follow below. The page scrolls vertically
+without horizontal overflow. Compact setup reflows its stages and roster;
+Settings and other dialogs retain reachable controls in scrollable content.
+
+On first supported portrait entry in a page session, a modal states
+“Landscape recommended” and provides “Continue in portrait”. It conceals and
+pauses an active match until dismissed or supported landscape returns.
+Multiplayer hotseat is disabled in portrait. An active hotseat match rotated
+to portrait shows a concealed rotate-to-landscape slate until landscape
+returns. Manual Pause remains active through orientation changes.
 
 **Construction and speaker alignment.** The phrase path keeps the center axis.
 The speech record follows the active speaker to prevent moderator attribution.
@@ -582,7 +610,7 @@ portrait window.
 The 18 portraits stay in one equal-width six-six-six
 selection grid, with any future incomplete row centered, and never overlap the match
 settings. The grid scrolls vertically inside its roster region when required.
-The page does not scroll.
+The desktop page does not scroll. Compact setup follows Milestone 018.
 
 Native selects keep difficulty and scene
 terms in a compact lower register. A nonmodal character dossier appears on
@@ -761,7 +789,8 @@ Phrase color coding controls. The two Sound choices use paired On and Off
 buttons inside one framed group. It has one brass-framed Resume action and no
 game facts. Unsupported viewports use the
 same broadcast language without settings or a Resume action. The compatibility
-slate states the 1024 by 720 minimum and the 1920 by 1080 PC recommendation.
+slate states the landscape and portrait minimums from Milestone 018 and the
+landscape recommendation. The recommended PC viewport remains 1920 by 1080.
 
 ### Comeback action
 

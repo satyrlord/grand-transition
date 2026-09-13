@@ -28,7 +28,7 @@ export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
 export const returnToMainMenuEventName = 'return-to-main-menu';
 
-export type MatchPauseMode = 'manual' | 'running' | 'viewport';
+export type MatchPauseMode = 'manual' | 'running' | 'viewport' | 'hotseat-portrait' | 'landscape-recommended';
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
@@ -198,7 +198,7 @@ export class GrandTransitionMatch extends LitElement {
     }
     const previousPauseMode = changed.get('pauseMode') as
       MatchPauseMode | undefined;
-    if (previousPauseMode === 'manual' && this.pauseMode === 'running') {
+    if (previousPauseMode && previousPauseMode !== 'running' && this.pauseMode === 'running') {
       this.querySelector<HTMLButtonElement>('.match-pause')?.focus();
     }
     if ((changed.has('snapshot') || changed.has('presentation')) && this.snapshot?.victory && !this.presentation) {
@@ -214,6 +214,11 @@ export class GrandTransitionMatch extends LitElement {
 
   protected override render() {
     if (!this.snapshot) return nothing;
+    if (this.pauseMode === 'hotseat-portrait' || this.pauseMode === 'landscape-recommended') {
+      return html`<grand-transition-interruption
+        .kind=${this.pauseMode}
+      ></grand-transition-interruption>`;
+    }
     if (this.pauseMode === 'viewport') {
       return html`<grand-transition-interruption
         kind="unsupported-viewport"

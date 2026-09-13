@@ -83,15 +83,21 @@ match logs. Default clause scoring uses compatibility bases of 5, 8, 11, and
 14, plus 2 points per modifier before the local 1.5 weakness multiplier and
 noun combos. Restrictions do not add damage.
 
-The landscape-only Lit interface provides title, setup, playable single-player
+The responsive Lit interface provides title, setup, playable single-player
 and hotseat matches, Pause, and narrated exchange presentation. Each character
 recites one complete public insult. Inline score lines show clause text,
 weakness and combo factors, separate finisher and Comeback rows, total, and
 applied Pride loss. The next round starts automatically after both deliveries.
 A terminal exchange stays in the arena as a persistent victory record until
 the player returns to the title. The title alone exposes local public match
-history. The interface requires a browser content viewport of at least 1024 by
-720 CSS pixels. It recommends 1920 by 1080 and PC.
+history. Landscape requires at least 640 by 320 CSS pixels; portrait requires
+at least 360 by 640. Width must exceed height for landscape, and height must
+exceed width for portrait. Landscape is recommended, with 1920 by 1080 on PC
+as the preferred layout. Portrait shows a dismissible recommendation once per
+page session and supports Single Player and Ladder. Multiplayer hotseat
+requires landscape. The portrait common phrase pool fills the content width
+below the scene, followed by the private hand and actions; the page can scroll
+vertically. Support uses browser content dimensions, not physical screen resolution.
 
 Settings opens from the main menu with Play, Sound, and Speech columns.
 Play offers a Scoring multiplier from ×1 through ×5, defaulting to ×3.

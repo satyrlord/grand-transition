@@ -31,6 +31,7 @@ export type ShowSettingsEvent = CustomEvent<Readonly<{ type: 'show-settings' }>>
 
 export class GrandTransitionTitle extends LitElement {
   static properties = {
+    hotseatAvailable: { type: Boolean },
     status: { type: String },
     historyEntries: { attribute: false },
     historyOpen: { type: Boolean },
@@ -47,6 +48,7 @@ export class GrandTransitionTitle extends LitElement {
   };
 
   declare status: string;
+  declare hotseatAvailable: boolean;
   declare historyEntries: readonly MatchHistoryEntry[];
   declare historyOpen: boolean;
   declare historyPersistenceFailure: MatchHistoryFailureCode | null;
@@ -62,6 +64,7 @@ export class GrandTransitionTitle extends LitElement {
 
   constructor() {
     super();
+    this.hotseatAvailable = true;
     this.status = msg('Live now, on NTV Channel 3!');
     this.historyEntries = [];
     this.historyOpen = false;
@@ -124,12 +127,16 @@ export class GrandTransitionTitle extends LitElement {
               <button
                 type="button"
                 class="title-setup-action"
-                ?disabled=${this.gpuLoading}
-                aria-describedby=${this.gpuLoading ? 'title-gpu-status' : nothing}
+                ?disabled=${this.gpuLoading || (mode === 'hotseat' && !this.hotseatAvailable)}
+                aria-describedby=${mode === 'hotseat' && !this.hotseatAvailable
+                  ? 'hotseat-orientation-note' : this.gpuLoading ? 'title-gpu-status' : nothing}
                 @click=${() => this.showSetup(mode)}
               >${label}</button>
             `)}
           </nav>
+          ${!this.hotseatAvailable ? html`<p id="hotseat-orientation-note" class="orientation-note">
+            ${msg('Multiplayer requires landscape mode.')}
+          </p>` : nothing}
           <div class="title-secondary-actions">
             <button
               type="button"
@@ -205,7 +212,7 @@ export class GrandTransitionTitle extends LitElement {
   }
 
   private readonly showSetup = (mode: MenuMode): void => {
-    if (this.gpuLoading) return;
+    if (this.gpuLoading || (mode === 'hotseat' && !this.hotseatAvailable)) return;
     this.dispatchEvent(
       new CustomEvent(showSetupEventName, {
         bubbles: true,

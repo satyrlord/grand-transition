@@ -52,7 +52,7 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented scope includes title, setup, playable match, narrated exchange
   presentation, and persistent terminal victory. It includes title-only local
   history and settings, safe settings persistence fallback, and the blocking
-  landscape viewport contract.
+  viewport and orientation contract.
 - Main-menu Settings includes optional Tutorial mode, off by default. It
   highlights all grammar-accepted next visible phrases without changing rules.
 - The implemented platform includes the toolchain, quality gate, immutable
@@ -125,6 +125,15 @@ customer claim is recorded here.
 
 ## Supported Layout
 
-Support horizontal browser content viewports of at least 1024 by 720 CSS
-pixels. Recommend 1920 by 1080 and PC. Use the same viewport rule for every
-device and operating system. Block unsupported viewports without a bypass.
+Support landscape browser content viewports of at least 640 by 320 CSS
+pixels with width greater than height, and portrait viewports of at least
+360 by 640 with height greater than width. Landscape is the intended layout;
+recommend 1920 by 1080 on PC. Apply the same geometry rules to every device.
+Block square and below-minimum viewports without a bypass.
+
+Portrait shows a dismissible landscape recommendation once per page session.
+Its nine-row common phrase pool fills the content width below the scene. The
+private hand and actions follow the pool, with vertical scrolling permitted.
+Single Player and Ladder remain available. Multiplayer hotseat requires
+landscape; rotation conceals and pauses an active hotseat match until landscape
+returns. All orientation interruptions preserve match state and manual Pause.

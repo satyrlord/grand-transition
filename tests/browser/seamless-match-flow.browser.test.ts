@@ -168,7 +168,10 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   );
 });
 
-test('shows the comeback inline and starts the next round after both deliveries', async () => {
+test.each([
+  { width: 639, height: 320, pauseMode: 'viewport' },
+  { width: 384, height: 832, pauseMode: 'hotseat-portrait' },
+])('shows the comeback inline and resumes both deliveries after $pauseMode', async ({ width, height, pauseMode }) => {
   vi.useFakeTimers();
   localStorage.setItem(settingsStorageKey, encodeSettings({
     ...defaultSettings,
@@ -218,8 +221,8 @@ test('shows the comeback inline and starts the next round after both deliveries'
     /Comeback.*Your argument was expelled.*\+18/su,
   );
   const phase = match.presentation?.phase;
-  await page.viewport(1023, 720);
-  await vi.waitFor(() => expect(match.pauseMode).toBe('viewport'));
+  await page.viewport(width, height);
+  await vi.waitFor(() => expect(match.pauseMode).toBe(pauseMode));
   await vi.advanceTimersByTimeAsync(10_000);
   expect(match.presentation?.phase).toBe(phase);
   await page.viewport(1280, 720);

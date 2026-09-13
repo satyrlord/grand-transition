@@ -86,6 +86,7 @@ type CharacterSkinView = CharacterSkin & Readonly<{ label: string }>;
 
 export class GrandTransitionSetup extends LitElement {
   static properties = {
+    hotseatAvailable: { type: Boolean },
     snapshot: { attribute: false },
     validationAttempted: { state: true },
     selectionTarget: { state: true },
@@ -96,6 +97,7 @@ export class GrandTransitionSetup extends LitElement {
   };
 
   declare snapshot: SetupSnapshot | undefined;
+  declare hotseatAvailable: boolean;
   declare private validationAttempted: boolean;
   declare private selectionTarget: CharacterField;
   declare private previewCharacterId: string | null;
@@ -106,6 +108,7 @@ export class GrandTransitionSetup extends LitElement {
 
   constructor() {
     super();
+    this.hotseatAvailable = true;
     this.validationAttempted = false;
     this.selectionTarget = 'playerOneCharacterId';
     this.previewCharacterId = null;
@@ -312,6 +315,9 @@ export class GrandTransitionSetup extends LitElement {
           </fieldset>
 
           <div class="setup-actions">
+            ${this.snapshot.mode === 'hotseat' && !this.hotseatAvailable
+              ? html`<p class="orientation-note">${msg('Rotate to landscape to start Multiplayer.')}</p>`
+              : nothing}
             <button type="button" class="secondary-action" @click=${this.back}>
               ${msg('Back')}
             </button>
@@ -319,8 +325,9 @@ export class GrandTransitionSetup extends LitElement {
               type="submit"
               class="primary-action"
               ?disabled=${
-                this.snapshot.mode === 'ladder' &&
-                (this.ladderProgress === null || this.ladderProgress.completed)
+                (this.snapshot.mode === 'hotseat' && !this.hotseatAvailable) ||
+                (this.snapshot.mode === 'ladder' &&
+                (this.ladderProgress === null || this.ladderProgress.completed))
               }
             >
               ${
@@ -829,6 +836,7 @@ export class GrandTransitionSetup extends LitElement {
   private readonly submit = (event: SubmitEvent): void => {
     event.preventDefault();
     if (!this.snapshot || this.submissionLocked) return;
+    if (this.snapshot.mode === 'hotseat' && !this.hotseatAvailable) return;
     if (
       this.snapshot.mode === 'ladder' &&
       (!this.ladderProgress || this.ladderProgress.completed)

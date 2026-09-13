@@ -33,6 +33,11 @@ each side. Put the live sentence and phrase path on the center axis. Put the
 player names and Pride meters at the top edges. Put the round, timer, and Pause
 state at the top center.
 
+Milestone 018 owns compact landscape and portrait adaptations. In portrait,
+the common pool moves below the scene, fills the content width, and precedes
+the private hand and actions. Compact layouts can use vertical page scrolling.
+The following integrated composition remains the desktop landscape contract.
+
 A wide speech record occupies the protected central scene region without
 covering either face or gesture. Align its bounds and both portrait frames to
 the Milestone 023 scene canvas at every supported aspect ratio. Keep the two
@@ -212,7 +217,7 @@ command remains `redraw-hand`.
 
 ## Desktop interaction contract
 
-This milestone proves the 1024 by 720 minimum, 1280 by 720 common, and 1920 by
+This milestone proves the 1024 by 720 desktop reference, 1280 by 720 common, and 1920 by
 1080 recommended surfaces. At each viewport, all nine shared slots, both
 private slots, current sentence, Pride, round, timer, Pause button, and
 available actions are visible without page scrolling.

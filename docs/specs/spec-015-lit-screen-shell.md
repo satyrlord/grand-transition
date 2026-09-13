@@ -48,6 +48,9 @@ The shell has `title` and `setup` view states. The Main Menu offers
 “Single Player”, “Multiplayer”, and “Ladder”. Each button emits a typed
 `show-setup` command with mode `ai`, `hotseat`, or `ladder`, respectively,
 and opens setup in that mode. Multiplayer means two people on this device.
+Milestone 018 disables its action and hotseat setup submission in portrait;
+its command handlers reject these actions too. Single Player and Ladder remain
+available in either supported orientation.
 The scene and character builder has no mode selector. “Back” returns to the
 Main Menu and preserves setup values. Selecting a menu mode updates the mode;
 Ladder restores its saved player, opponent, and scene under Milestone 022.
@@ -175,7 +178,8 @@ hide validation.
   hands, or game phase. The shell is the only authoritative snapshot owner.
 - **AC-015-07:** Defaults, each changed character, and a mirror selection show
   the exact catalog weakness tags for the two players. They remain visible at
-  every supported setup viewport without clipping or page scroll.
+  every supported setup viewport without clipping. Milestone 018 permits
+  vertical page scroll in compact layouts.
 - **AC-015-08:** Pointer hover and keyboard focus show the correct transient
   character panel. Right-click shows the same panel without a browser context
   menu and keeps it open after pointer exit. Escape and outside activation close

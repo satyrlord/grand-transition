@@ -873,10 +873,10 @@ test('duplicate setup submit dispatches one immutable command', async ({
 });
 
 for (const viewport of [
-  { width: 1023, height: 720 },
-  { width: 1024, height: 719 },
-  { width: 720, height: 1024 },
-  { width: 1200, height: 1600 },
+  { width: 639, height: 320 },
+  { width: 640, height: 319 },
+  { width: 359, height: 780 },
+  { width: 360, height: 639 },
   { width: 1024, height: 1024 },
 ]) {
   test(`blocks ${viewport.width} by ${viewport.height}`, async ({ page }) => {
@@ -887,7 +887,7 @@ for (const viewport of [
       page.locator('[data-interruption="unsupported-viewport"]'),
     ).toBeVisible();
     await expect(page.locator('grand-transition-title')).toHaveCount(0);
-    await expect(page.getByText('1024 × 720', { exact: true })).toBeVisible();
+    await expect(page.getByText('640 × 320 landscape · 360 × 640 portrait', { exact: true })).toBeVisible();
     await expect(
       page.getByText('1920 × 1080 on PC', { exact: true }),
     ).toBeVisible();
