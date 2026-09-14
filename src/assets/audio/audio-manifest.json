@@ -108,49 +108,50 @@
     {
       "id": "modern-debate-studio-theme",
       "kind": "music",
-      "duration": 43,
-      "title": "Tension Theme",
-      "owner": "Umplix",
+      "duration": 66.20689342403628,
+      "title": "Funked Up",
+      "owner": "Joth",
       "license": "CC0-1.0",
-      "source": "https://opengameart.org/content/tension-theme",
-      "download": "https://opengameart.org/sites/default/files/tension_theme.wav",
-      "sourceSha256": "322bd5f2334f038cab1bb65f218dd8593f5c0de883b1c14579e4425bdc03cfa8",
+      "source": "https://opengameart.org/content/funked-up",
+      "download": "https://opengameart.org/sites/default/files/Funked%20Up.mp3",
+      "sourceSha256": "57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3",
       "sceneId": "modern-debate-studio",
-      "treatment": "Tense futuristic electronic theme for a modern televised debate.",
+      "treatment": "Rhodes, guitar, and bass groove for a lively televised debate.",
       "edit": {
-        "movement": "Complete track",
-        "startSeconds": 0,
-        "durationSeconds": 43
+        "movement": "Complete groove with encoder padding removed",
+        "startSeconds": 0.01197278911564626,
+        "durationSeconds": 66.20689342403628,
+        "seamless": true
       },
       "files": [
         {
           "path": "modern-debate-studio-theme.wav",
-          "sha256": "951bcc219e4322c6ad82f98f39c45d636cd14c0d5ae253cd9d740dcfa4052eee",
+          "sha256": "e895438ba183892906af15f0961b1ff08736aae46b380cf57294ecdf7b160c09",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -2.31
+            "truePeakDbfs": -2.1
           }
         },
         {
           "path": "modern-debate-studio-theme.ogg",
-          "sha256": "60f60d09648cd93f1cbe92f2425953d8c5f0797e9ae844189e7978247231f9f2",
+          "sha256": "cfd1856fdc4bdb0491302ac704e59c305d302358c8cf85d4a012b32a8a9f983a",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.08,
-            "truePeakDbfs": -2.27
+            "integratedLufs": -16.04,
+            "truePeakDbfs": -2.17
           }
         },
         {
           "path": "modern-debate-studio-theme.mp3",
-          "sha256": "f78feb185944026e5d12a827a690222a98687e71ada03b0b9f866e15df1a67bc",
+          "sha256": "034095d768338b5d1c4913105a3e5508afe72e93ba6212a0a1aba46ffd81f304",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
             "integratedLufs": -16.44,
-            "truePeakDbfs": -2.64
+            "truePeakDbfs": -2.44
           }
         }
       ]
@@ -258,49 +259,50 @@
     {
       "id": "palace-press-hall-theme",
       "kind": "music",
-      "duration": 31.4,
-      "title": "Simple Battle Fanfare",
-      "owner": "Umplix",
+      "duration": 82.28571428571429,
+      "title": "Intro Music",
+      "owner": "RonyDkid",
       "license": "CC0-1.0",
-      "source": "https://opengameart.org/content/simple-battle-fanfare",
-      "download": "https://opengameart.org/sites/default/files/simple_battle_fanfare.wav",
-      "sourceSha256": "9da29921bbd700d382788d84866975eed934ca821290237380c6da3b898d9094",
+      "source": "https://opengameart.org/content/intro-music-0",
+      "download": "https://opengameart.org/sites/default/files/game_1.mp3",
+      "sourceSha256": "23c68e45ad6555288856f052b1cd2ab49d018bcc618cf8fdccc804e99a2727b9",
       "sceneId": "palace-press-hall",
-      "treatment": "Formal trumpet, timpani, and march figures for an official press hall.",
+      "treatment": "Light pizzicato intrigue for palace press-room maneuvering.",
       "edit": {
-        "movement": "Complete loop",
+        "movement": "Complete 48-bar phrase",
         "startSeconds": 0,
-        "durationSeconds": 31.4
+        "durationSeconds": 82.28571428571429,
+        "seamless": true
       },
       "files": [
         {
           "path": "palace-press-hall-theme.wav",
-          "sha256": "59e9ad1df860fc54521c84b64b7b9c6f88e6bbf3e3a146509ccc052d59d9e21b",
+          "sha256": "a9fd7a429baf87ebfc9f537bd5725bca632197f5092fb88be6884fee02c194c9",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
-            "integratedLufs": -16,
-            "truePeakDbfs": -1.84
+            "integratedLufs": -15.98,
+            "truePeakDbfs": -2.79
           }
         },
         {
           "path": "palace-press-hall-theme.ogg",
-          "sha256": "0b8b05a8f50438365e0d8cb15b8b514332c422cac7256e30c6db1bf2c8325d0e",
+          "sha256": "fc94f71d0a11a2757c03bfbdfc3fd507eafe5af325a7486ef48ea61e575661c7",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -15.97,
-            "truePeakDbfs": -2
+            "integratedLufs": -16.04,
+            "truePeakDbfs": -1.64
           }
         },
         {
           "path": "palace-press-hall-theme.mp3",
-          "sha256": "e21903c1cd1d2bd221c6dd6a4969b4546734522ad320e16b4aba999ad3b2e19e",
+          "sha256": "aba6c24646bda8393d2614063a644be056a597c4d8a2ed255f8d2d44a19fc467",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
-            "integratedLufs": -16.45,
-            "truePeakDbfs": -2.31
+            "integratedLufs": -16.44,
+            "truePeakDbfs": -2.41
           }
         }
       ]
@@ -308,7 +310,7 @@
     {
       "id": "influencer-campaign-livestream-theme",
       "kind": "music",
-      "duration": 60,
+      "duration": 132.41379310344828,
       "title": "Try me!",
       "owner": "iamoneabe",
       "license": "CC0-1.0",
@@ -316,41 +318,44 @@
       "download": "https://opengameart.org/sites/default/files/tryme.wav",
       "sourceSha256": "5ae29cc1474e9826e290a1099b82d0420f9c7d4bc46e4f748c83d07a7e2a93c7",
       "sceneId": "influencer-campaign-livestream",
-      "treatment": "Gritty loopable trap beat for a campaign influencer livestream.",
+      "treatment": "Gritty trap beat in a 64-bar arrangement with an eight-bar filtered breakdown.",
       "edit": {
-        "movement": "Opening loop",
+        "movement": "Two complete 32-bar phrases at 116 BPM",
         "startSeconds": 0,
-        "durationSeconds": 60
+        "durationSeconds": 66.20689655172414,
+        "repetitions": 2,
+        "breakdownSeconds": 16.551724137931036,
+        "seamless": true
       },
       "files": [
         {
           "path": "influencer-campaign-livestream-theme.wav",
-          "sha256": "b9a2f66842b6343a118d0f59d41f38f54b3884a974128d0a5399fd07b6d2beb6",
+          "sha256": "4a418731957f48eb7f5f2b3eb7b5bcf86b86369af1b31833c07035c23fc03dd3",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -5.61
+            "truePeakDbfs": -5.6
           }
         },
         {
           "path": "influencer-campaign-livestream-theme.ogg",
-          "sha256": "b4bca7a66fd7ea0fd87ed2aa20e27faa3aac0471de1fc6b9748908d44dd3c55e",
+          "sha256": "ecef5fb586c624940f6edd352b7349eba6af443e5aa535135fd79e5a84b80a72",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.11,
-            "truePeakDbfs": -3.42
+            "integratedLufs": -16.1,
+            "truePeakDbfs": -3.36
           }
         },
         {
           "path": "influencer-campaign-livestream-theme.mp3",
-          "sha256": "a862ae6243e0035b7f780c23972907dd354c8c47779e4098d95ae039594e8839",
+          "sha256": "b934fc1cf47f63929408c78f049f2d1d0e1b2da29382019efb2e7f968acc4624",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
             "integratedLufs": -16.39,
-            "truePeakDbfs": -4.23
+            "truePeakDbfs": -3.3
           }
         }
       ]

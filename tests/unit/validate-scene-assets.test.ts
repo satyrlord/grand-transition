@@ -39,7 +39,7 @@ let baseManifestText: string;
 let baseVariantBytes: Map<string, Buffer>;
 
 async function writeMaster(root: string, fileName: string): Promise<void> {
-  const width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920;
+  const width = 3840;
   const height = width * 9 / 16;
   const filePath = path.join(root, fileName);
   if (!fileName.includes('-desks') && !fileName.includes('-foreground')) {
@@ -58,11 +58,11 @@ async function writeMaster(root: string, fileName: string): Promise<void> {
 
   const pixels = Buffer.alloc(width * height * 4);
   const finalForeground = fileName.includes('-foreground');
-  const left = Math.ceil(width * (finalForeground ? 0.242 : 0.26));
-  const right = Math.ceil(width * (finalForeground ? 0.70 : 0.68));
+  const left = Math.ceil(width * (finalForeground ? 0.13 : 0.26));
+  const right = Math.ceil(width * (finalForeground ? 0.69 : 0.68));
   const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
-  const bottom = finalForeground ? Math.floor(height * 0.64) : height;
-  const objectWidth = Math.floor(width * (finalForeground ? 0.058 : 0.06));
+  const bottom = finalForeground ? Math.floor(height * 0.98) : height;
+  const objectWidth = Math.floor(width * (finalForeground ? 0.18 : 0.06));
   for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
       for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {
@@ -119,8 +119,8 @@ beforeAll(async () => {
       ] as const),
     ),
   );
-// Encode the complete 4K fixture with the production codec settings.
-}, 180_000);
+// Encode all twelve 4K masters with the production codec settings.
+}, 600_000);
 
 afterEach(async () => {
   await restoreFixture();
@@ -135,13 +135,15 @@ describe.sequential('scene asset manifest validator', () => {
     await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
   }, 30_000);
 
-  test('rejects a modern studio package without its 4K variant', async () => {
+  test.each(['modern-debate-studio', 'county-council-ballroom', 'midnight-call-in-studio',
+    'palace-press-hall', 'influencer-campaign-livestream'])(
+    'rejects a %s package without its 4K variant', async (sceneId) => {
     const manifest = await readManifest();
     const assets = manifest.assets as Array<{
       id: string; variants: Array<{ width: number; format: string }>;
     }>;
-    const modern = assets.find((asset) => asset.id === 'modern-debate-studio')!;
-    modern.variants = modern.variants.filter((variant) =>
+    const scene = assets.find((asset) => asset.id === sceneId)!;
+    scene.variants = scene.variants.filter((variant) =>
       variant.width !== 3840 || variant.format !== 'avif');
     await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
     await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
@@ -317,9 +319,11 @@ describe.sequential('scene asset manifest validator', () => {
     );
   });
 
-  test.each(['source', 'variant'] as const)(
-    'rejects visible alpha in a final foreground safe rectangle in the %s',
-    async (target) => {
+  test.each((['source', 'variant'] as const).flatMap((target) =>
+    (['central obstruction', 'truncated desks', 'left desk gap', 'right desk gap'] as const)
+      .map((defect) => ({ target, defect }))))(
+    'rejects $defect in a final foreground $target',
+    async ({ target, defect }) => {
       const manifest = await readManifest();
       const asset = (manifest.assets as Array<{
         id: string;
@@ -340,13 +344,22 @@ describe.sequential('scene asset manifest validator', () => {
       const originalBytes = await readFile(filePath);
       try {
         const decoded = await sharp(originalBytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
-        const x = Math.floor(decoded.info.width * 0.5);
-        const y = Math.floor(decoded.info.height * 0.5);
-        const offset = (y * decoded.info.width + x) * 4;
-        decoded.data[offset] = 120;
-        decoded.data[offset + 1] = 52;
-        decoded.data[offset + 2] = 28;
-        decoded.data[offset + 3] = 255;
+        const { width, height } = decoded.info;
+        if (defect === 'central obstruction') {
+          const offset = (Math.floor(height * 0.5) * width + Math.floor(width * 0.5)) * 4;
+          decoded.data[offset] = 120;
+          decoded.data[offset + 1] = 52;
+          decoded.data[offset + 2] = 28;
+          decoded.data[offset + 3] = 255;
+        } else {
+          const left = defect === 'right desk gap' ? Math.floor(width * 0.77) : 0;
+          const right = defect === 'left desk gap' ? Math.ceil(width * 0.23) : width;
+          const top = Math.floor(height * (defect === 'truncated desks' ? 0.64 : 0.82));
+          const bottom = defect === 'truncated desks' ? height : Math.ceil(height * 0.84);
+          for (let y = top; y < bottom; y += 1) {
+            for (let x = left; x < right; x += 1) decoded.data[(y * width + x) * 4 + 3] = 0;
+          }
+        }
         let image = sharp(decoded.data, { raw: decoded.info });
         image = target === 'source' ? image.png() : image.webp({ quality: 86, alphaQuality: 100 });
         const bytes = await image.toBuffer();
@@ -358,7 +371,9 @@ describe.sequential('scene asset manifest validator', () => {
           `${JSON.stringify(manifest, null, 2)}\n`,
         );
         await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
-          /centralInteraction.*visible alpha/iu,
+          defect === 'central obstruction'
+            ? /centralInteraction.*visible alpha/iu
+            : new RegExp(`${defect === 'right desk gap' ? 'right' : 'left'}DeskFront.*incomplete`, 'iu'),
         );
       } finally {
         if (target === 'source') await writeFile(filePath, originalBytes);

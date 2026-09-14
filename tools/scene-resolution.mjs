@@ -6,12 +6,8 @@ export const SCENE_VARIANT_SIZES = Object.freeze([
   Object.freeze({ width: 3840, height: 2160 }),
 ]);
 
-export function sceneMasterSize(id) {
-  return ['modern-debate-studio', 'transition-era-television-studio'].includes(
-    id.replace(/-(?:desks|foreground)$/u, ''),
-  )
-    ? SCENE_VARIANT_SIZES[4]
-    : SCENE_VARIANT_SIZES[2];
+export function sceneMasterSize() {
+  return SCENE_VARIANT_SIZES[4];
 }
 
 export function sceneVariantSizes(id) {

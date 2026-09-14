@@ -28,9 +28,8 @@ For a larger source, it uses centered Lanczos3 cover fitting without enlargement
 It rejects undersized sources, including insufficient internal-tool outputs.
 Inspect the prepared image again for crop loss and edge defects.
 Its private preparation record includes source and output hashes and dimensions.
-Current studio masters are 3840 by 2160 pixels.
-Other current scene masters are 1920 by 1080 pixels.
-Generate replacements for those masters at 3840 by 2160, then downsample through this reviewed preparation procedure.
+All six current scenes use 3840 by 2160 background and foreground masters.
+Generate replacements at those dimensions and preserve their native pixels.
 Flare cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
 A 4K source does not authorize changing another scene's shipping-resolution contract.
 

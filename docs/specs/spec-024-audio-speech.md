@@ -35,8 +35,10 @@ measured levels. `README.md` and `CREDITS.md` credit every shipped music track.
 
 The [recording entry](https://imslp.org/wiki/Special:ReverseLookup/991622)
 identifies the performer and dedication. The build trims the pinned source
-recordings, applies short endpoint fades, resamples them to 48 kHz, and
-normalizes loudness. It adds no accompaniment.
+recordings, resamples them to 48 kHz, and normalizes loudness. Milestone 028
+specifies complete-phrase loops, waveform seam correction, and the Scene 6
+arrangement. Other recordings keep their existing endpoint fades. The build
+adds no accompaniment.
 
 Nine effects use the original project license: role-select, commit, light hit,
 heavy hit, weakness, combo, continuation break, comeback, and grammar mistake.

@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, readFile, readdir, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -20,7 +20,7 @@ async function fixtureRoot(): Promise<string> {
   return root;
 }
 
-async function writeMaster(root: string, fileName: string, width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920, height = width * 9 / 16) {
+async function writeMaster(root: string, fileName: string, width = 3840, height = width * 9 / 16) {
   const foreground = fileName.includes('-desks') || fileName.includes('-foreground');
   if (!foreground) {
     await sharp({
@@ -32,11 +32,11 @@ async function writeMaster(root: string, fileName: string, width = (fileName.sta
   }
   const pixels = Buffer.alloc(width * height * 4);
   const finalForeground = fileName.includes('-foreground');
-  const left = Math.ceil(width * (finalForeground ? 0.242 : 0.26));
-  const right = Math.ceil(width * (finalForeground ? 0.70 : 0.68));
+  const left = Math.ceil(width * (finalForeground ? 0.13 : 0.26));
+  const right = Math.ceil(width * (finalForeground ? 0.69 : 0.68));
   const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
-  const bottom = finalForeground ? Math.floor(height * 0.64) : height;
-  const objectWidth = Math.floor(width * (finalForeground ? 0.058 : 0.06));
+  const bottom = height;
+  const objectWidth = Math.floor(width * (finalForeground ? 0.18 : 0.06));
   for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
       for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {
@@ -59,7 +59,7 @@ async function writeMasterSet(root: string) {
 }
 
 describe('scene asset build', () => {
-  test('builds deterministic budgeted variants and a complete manifest', async () => {
+  test('builds a complete package and selectively rebuilds with a verified cache', async () => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
     const first = await buildSceneAssets({ sceneRoot: root });
@@ -69,7 +69,39 @@ describe('scene asset build', () => {
       firstVariants.map((fileName) => readFile(path.join(root, 'variants', fileName))),
     );
 
-    const second = await buildSceneAssets({ sceneRoot: root });
+    const only = ['county-council-ballroom'];
+    const cachedId = 'county-council-ballroom-foreground';
+    const manifestPath = path.join(root, 'scene-manifest.json');
+    for (const defect of ['source hash', 'variant hash', 'variant width', 'variant path',
+      'variant quality', 'missing variant', 'duplicate asset']) {
+      const changed = JSON.parse(firstManifestText);
+      const cached = changed.assets.find((asset: { id: string }) => asset.id === cachedId);
+      if (defect === 'source hash') cached.source.sha256 = '0'.repeat(64);
+      if (defect === 'variant hash') cached.variants[0].sha256 = '0'.repeat(64);
+      if (defect === 'variant width') cached.variants[0].width = 1;
+      if (defect === 'variant path') cached.variants[0].path = '../outside.avif';
+      if (defect === 'variant quality') cached.variants[0].quality = 1;
+      if (defect === 'missing variant') cached.variants.pop();
+      if (defect === 'duplicate asset') changed.assets[0] = changed.assets[1];
+      const changedText = JSON.stringify(changed);
+      await writeFile(manifestPath, changedText);
+      await expect(buildSceneAssets({ sceneRoot: root, only }), defect).rejects.toThrow();
+      expect(await readFile(manifestPath, 'utf8')).toBe(changedText);
+    }
+    await writeFile(manifestPath, firstManifestText);
+    const cachedAsset = first.assets.find((asset: { id: string }) => asset.id === cachedId);
+    const cachedPath = path.join(root, cachedAsset.variants[0].path);
+    const cachedBytes = await readFile(cachedPath);
+    await writeFile(cachedPath, Buffer.concat([cachedBytes, Buffer.from([0])]));
+    await expect(buildSceneAssets({ sceneRoot: root, only })).rejects.toThrow('failed byte');
+    expect(await readFile(manifestPath, 'utf8')).toBe(firstManifestText);
+    await rm(cachedPath);
+    await expect(buildSceneAssets({ sceneRoot: root, only })).rejects.toThrow();
+    await writeFile(cachedPath, cachedBytes);
+
+    const selectedPath = path.join(root, first.assets[0].variants[0].path);
+    await writeFile(selectedPath, Buffer.from('replace this selected cache'));
+    const second = await buildSceneAssets({ sceneRoot: root, only });
     const secondManifestText = await readFile(path.join(root, 'scene-manifest.json'), 'utf8');
     const secondVariants = await readdir(path.join(root, 'variants'));
     const secondBytes = await Promise.all(
@@ -82,7 +114,7 @@ describe('scene asset build', () => {
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
     expect(first.assets).toHaveLength(12);
-    expect(firstVariants).toHaveLength(88);
+    expect(firstVariants).toHaveLength(120);
 
     expect(
       first.assets
@@ -108,7 +140,7 @@ describe('scene asset build', () => {
       expect(asset.source.sha256).toMatch(/^[a-f0-9]{64}$/u);
       expect(asset.crop.core).toEqual({ x: 0.125, y: 0, width: 0.75, height: 1 });
       expect(Object.keys(asset.sharedSafeRectangles)).toHaveLength(4);
-      expect(asset.variants).toHaveLength(['modern-debate-studio', 'transition-era-television-studio'].includes(asset.ownerId) ? 10 : 6);
+      expect(asset.variants).toHaveLength(10);
       for (const variant of asset.variants) {
         expect(variant.bytes).toBeLessThanOrEqual(
           SCENE_BYTE_BUDGETS[variant.format as 'avif' | 'webp'],
@@ -122,21 +154,37 @@ describe('scene asset build', () => {
         });
       }
     }
-    // Two complete encodes include all four 4K layers at the production codec effort.
-  }, 420_000);
+    // One full encode and one selected layer use the production codec effort.
+  }, 1_200_000);
+
+  test.each([[], ['unknown-scene'], ['county-council-ballroom', 'county-council-ballroom']])(
+    'rejects invalid selected asset IDs %j before reading masters', async (...only) => {
+      await expect(buildSceneAssets({ sceneRoot: path.join(await fixtureRoot(), 'missing'), only }))
+        .rejects.toThrow('distinct known asset IDs');
+    });
+
+  test('requires an existing manifest for selective rebuilding', async () => {
+    const root = await fixtureRoot();
+    await writeMasterSet(root);
+    await expect(buildSceneAssets({ sceneRoot: root, only: ['county-council-ballroom'] }))
+      .rejects.toThrow('scene-manifest.json');
+    await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
+  });
 
   test('fails before it writes variants when a master has invalid dimensions', async () => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
     await writeMaster(root, SCENE_MASTER_NAMES[0]!, 1280, 720);
-    await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('1920x1080');
+    await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('3840x2160');
     await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
   });
 
-  test('rejects a 1080p modern studio master before replacing runtime variants', async () => {
+  test.each(['modern-debate-studio', 'county-council-ballroom', 'midnight-call-in-studio',
+    'palace-press-hall', 'influencer-campaign-livestream'])(
+    'rejects a 1080p %s master before replacing runtime variants', async (sceneId) => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
-    await writeMaster(root, 'modern-debate-studio.png', 1920, 1080);
+    await writeMaster(root, `${sceneId}.png`, 1920, 1080);
     await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('3840x2160');
     await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
   });

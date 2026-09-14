@@ -49,6 +49,10 @@ rail to the left margin. Anchor the blue rail to the right margin.
 
 Render the scene in this order: studio and moderator, selected portraits,
 foreground standing desks, then Hypertext Markup Language (HTML) game content.
+Scene 3 through Scene 6 render their complete transparent foreground plate
+above both portraits. Use the native alpha outline without a horizontal CSS
+clip. Only the two studio desk assets split at 62 percent of the source canvas
+height, with upper set props behind portraits and lower desks in front.
 Both studio moderators remain physically seated at the center, with their
 heads visible between speech and the common phrase pool. The slightly
 transparent pool uses an 88% opaque background and can cover their furniture

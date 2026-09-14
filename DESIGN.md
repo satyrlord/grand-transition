@@ -542,11 +542,12 @@ through each state change.
 The interface uses controlled stage depth. The title and setup use painted
 proscenium or tonal broadcast fields. In the match, the selected studio and its
 fixed fictional moderator form the deep field. Transparent portraits occupy
-the opponent planes. The foreground plate is split at the 62-percent desk-top
+the opponent planes. Each of the two studio foreground plates is split at the 62-percent desk-top
 line. Its upper props render behind the portraits, and its lower desk fronts
 render in front. Both clipped planes use the same image and crop. This keeps
 hands and character props visible. Speech and the sentence tower occupy the
-tactical plane.
+tactical plane. The other four scenes render their complete native outlines
+in front of the portraits, without a horizontal clipping boundary.
 
 Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark
@@ -655,8 +656,8 @@ can exchange sides or mirror without changing the scene. A transparent
 foreground plate renders over the portraits. In the two debate studios, it
 clips their lower bodies behind two tall standing desks. The desk fronts
 continue below the lower stage frame. The four foundation scenes use
-scene-specific foreground props outside the central interaction and side-action
-safe rectangles. Do not show extracted bottom contours or any portrait's lower
+complete standing desks outside the central interaction rectangle. Plain desk
+fronts can sit behind side-action HTML controls. Do not show extracted bottom contours or any portrait's lower
 raster contour.
 
 Each transition-era standing desk has one microphone and one plain unbranded
@@ -680,7 +681,8 @@ text, public response, and damage without covering a face.
 All six scenes use their own manifest backgrounds and transparent foreground
 plates. The County Council Ballroom, Midnight Call-In Studio, Palace Press Hall,
 and Influencer Campaign Livestream have no fixed moderator. Their foreground
-props keep the shared central interaction and side-action safe rectangles clear.
+desks keep the shared central interaction rectangle clear and cover both
+candidates' lower bodies. Side-action HTML remains above the plain desk fronts.
 The title curtain is not a gameplay fallback.
 
 Portrait frames share the background's bottom-aligned scene canvas. Their

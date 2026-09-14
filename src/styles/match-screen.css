@@ -198,6 +198,10 @@
 
   .broadcast-stage-foreground {
     z-index: 3;
+  }
+
+  .broadcast-stage-foreground[data-scene-asset='transition-era-television-studio-desks'],
+  .broadcast-stage-foreground[data-scene-asset='modern-debate-studio-desks'] {
     clip-path: inset(62% 0 0);
   }
 

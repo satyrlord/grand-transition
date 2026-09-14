@@ -126,11 +126,11 @@ same background-music target.
 | --- | --- | --- | --- |
 | Main menu | [_Joc cu bâtă_ from _Romanian Folk Dances_](https://imslp.org/wiki/Special:ReverseLookup/991622), composed by Béla Bartók and performed by Chris Breemer | Public-domain folk-derived piano introduction | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) recording; public-domain composition |
 | Transition-Era Television Studio | [_Buciumeana_ from _Romanian Folk Dances_](https://imslp.org/wiki/Special:ReverseLookup/991622), composed by Béla Bartók and performed by Chris Breemer | Existing folk-derived piano treatment; unchanged | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) recording; public-domain composition |
-| Modern Debate Studio | [_Tension Theme_ by Umplix](https://opengameart.org/content/tension-theme) | Tense futuristic electronic theme | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Modern Debate Studio | [_Funked Up_ by Joth](https://opengameart.org/content/funked-up) | 66.207-second Rhodes, guitar, and bass groove | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | County Council Ballroom | [_Apparitions Ball_ by bobjt](https://opengameart.org/content/apparitions-ball) | Slightly uncanny ballroom waltz | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Midnight Call-In Studio | [_jazz improvisation looped_ by Alex McCulloch (Pro Sensory)](https://opengameart.org/content/jazz-improvisation-looped) | Low-key improvised late-night jazz | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
-| Palace Press Hall | [_Simple Battle Fanfare_ by Umplix](https://opengameart.org/content/simple-battle-fanfare) | Formal trumpet, timpani, and march figures | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
-| Influencer Campaign Livestream | [_Try me!_ by iamoneabe](https://opengameart.org/content/try-me) | Gritty loopable trap beat | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Palace Press Hall | [_Intro Music_ by RonyDkid](https://opengameart.org/content/intro-music-0) | 82.286-second pizzicato phrase | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Influencer Campaign Livestream | [_Try me!_ by iamoneabe](https://opengameart.org/content/try-me) | 132.414-second trap arrangement with a filtered breakdown | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 See [CREDITS.md](CREDITS.md) for source and edit details.
 Speech defaults on. Opening the menu prepares about 91 MB of local neural model

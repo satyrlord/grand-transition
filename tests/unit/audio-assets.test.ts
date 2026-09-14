@@ -48,6 +48,51 @@ describe('audio asset measurements', () => {
   });
 });
 
+describe('complete music loops', () => {
+  test('rejects a truncated phrase and an audible waveform jump', () => {
+    expect(() => tools.validateLoopMeasurement({ durationSeconds: 60, seamJump: 0 },
+      132.41379310344828, 'ogg')).toThrow(/duration/u);
+    expect(() => tools.validateLoopMeasurement({ durationSeconds: 132, seamJump: 0.2 },
+      132, 'ogg')).toThrow(/discontinuity/u);
+  });
+
+  test('repairs a stereo seam without removing frames or fading the body', () => {
+    const pcm = Buffer.alloc(4800 * 8);
+    for (let frame = 0; frame < 4800; frame += 1) {
+      pcm.writeFloatLE(frame / 4800, frame * 8);
+      pcm.writeFloatLE(-frame / 4800, frame * 8 + 4);
+    }
+    const repaired = tools.closeLoopSeam(pcm);
+    expect(repaired.length).toBe(pcm.length);
+    for (const channel of [0, 1]) {
+      expect(repaired.readFloatLE(channel * 4)).toBe(repaired.readFloatLE(repaired.length - 8 + channel * 4));
+    }
+    expect(repaired.subarray(240 * 8)).toEqual(pcm.subarray(240 * 8));
+    expect(pcm.readFloatLE(0)).toBe(0);
+  });
+
+  test('extends the source with a distinct breakdown and preserves the original first phrase', () => {
+    const pcm = Buffer.alloc(4800 * 8);
+    for (let frame = 0; frame < 4800; frame += 1) {
+      for (const channel of [0, 1]) pcm.writeFloatLE(Math.sin(frame * 0.9) * 0.3, frame * 8 + channel * 4);
+    }
+    const arranged = tools.arrangeMusicLoop(pcm, { repetitions: 2, breakdownSeconds: 0.05 });
+    expect(arranged.length).toBe(pcm.length * 2);
+    expect(arranged.subarray(0, pcm.length)).toEqual(tools.closeLoopSeam(pcm));
+    expect(arranged.subarray(pcm.length, pcm.length + 2400 * 8)).not.toEqual(arranged.subarray(0, 2400 * 8));
+    expect(arranged.subarray(pcm.length + 2400 * 8)).toEqual(arranged.subarray(2400 * 8, pcm.length));
+  });
+
+  test.each(['modern-debate-studio', 'palace-press-hall', 'influencer-campaign-livestream'])(
+    'ships a complete continuous phrase in all formats for %s', (sceneId) => {
+      const definition = tools.sceneMusicDefinitions.find((entry: { sceneId: string }) => entry.sceneId === sceneId);
+      for (const format of ['wav', 'ogg', 'mp3']) {
+        const measured = tools.loopMeasurements(`src/assets/audio/${sceneId}-theme.${format}`);
+        expect(() => tools.validateLoopMeasurement(measured, definition.duration, format)).not.toThrow();
+      }
+    });
+});
+
 describe('audio asset inventory', () => {
   let root: string;
   let original: string;

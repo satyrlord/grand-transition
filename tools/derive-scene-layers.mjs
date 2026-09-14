@@ -3,9 +3,10 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { sceneMasterSize } from './scene-resolution.mjs';
 
-export const MASTER_WIDTH = 1920;
-export const MASTER_HEIGHT = 1080;
+export const MASTER_WIDTH = sceneMasterSize().width;
+export const MASTER_HEIGHT = sceneMasterSize().height;
 export const DIFFERENCE_THRESHOLD = 16;
 export const EDGE_THRESHOLD = 2;
 export const EDGE_GROWTH_RADIUS = 2;

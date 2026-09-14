@@ -47,9 +47,13 @@ const REQUIRED_SAFE_RECTANGLES = Object.freeze({
   lowerRightAction: Object.freeze({ x: 0.76, y: 0.66, width: 0.115, height: 0.28 }),
 });
 const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
-  ['centralInteraction', 'lowerLeftAction', 'lowerRightAction'].map((name) =>
+  ['centralInteraction'].map((name) =>
     Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] })),
 );
+const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
+  Object.freeze({ name: 'leftDeskFront', x: 0.18, y: 0.74, width: 0.04, height: 0.18 }),
+  Object.freeze({ name: 'rightDeskFront', x: 0.78, y: 0.74, width: 0.04, height: 0.18 }),
+]);
 const REQUIRED_CROP_CORE = Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 1 });
 const LEFT_DESK_FOCAL_RECTANGLE = Object.freeze({
   x: 0.26,
@@ -260,7 +264,7 @@ export async function inspectAlpha(
   input,
   isForeground,
   context,
-  { nativeAlpha = false, transparentRectangles = [] } = {},
+  { nativeAlpha = false, transparentRectangles = [], occlusionRectangles = [] } = {},
 ) {
   let decoded;
   try {
@@ -342,6 +346,21 @@ export async function inspectAlpha(
               `found visible alpha at ${x},${y}.`,
           );
         }
+      }
+    }
+  }
+  for (const rectangle of occlusionRectangles) {
+    const left = Math.ceil(rectangle.x * width - 0.5);
+    const right = Math.ceil((rectangle.x + rectangle.width) * width - 0.5);
+    const top = Math.ceil(rectangle.y * height - 0.5);
+    const bottom = Math.ceil((rectangle.y + rectangle.height) * height - 0.5);
+    for (let y = top; y < bottom; y += 1) {
+      let covered = 0;
+      for (let x = left; x < right; x += 1) {
+        if (decoded.data[(y * width + x) * 4 + 3] >= NATIVE_ALPHA_MIN_OPACITY) covered += 1;
+      }
+      if (covered / (right - left) < 0.9) {
+        throw new Error(`${context} must cover at least 90% of each ${rectangle.name} row with near-opaque pixels; row ${y} is incomplete.`);
       }
     }
   }
@@ -667,6 +686,9 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
       nativeAlpha: hasNativeAlphaProvenance(source.input),
       transparentRectangles: asset.id.endsWith('-foreground')
         ? REQUIRED_FOREGROUND_CLEAR_RECTANGLES
+        : [],
+      occlusionRectangles: asset.id.endsWith('-foreground')
+        ? REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES
         : [],
     };
     await inspectAlpha(source.input, asset.identity.isForeground, `Scene asset "${asset.id}" source`, alphaOptions);
