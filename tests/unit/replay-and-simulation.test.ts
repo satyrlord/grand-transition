@@ -710,7 +710,10 @@ describe('headless simulation and generated invariants', () => {
     expect(second.completedMatches).toBe(2);
   });
 
-  test(
+  const calibrationTest = process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick'
+    ? test.skip
+    : test;
+  calibrationTest(
     'keeps the current-catalog 500-match calibration between three and eleven rounds',
     () => {
       expect(context.catalog.characters).toHaveLength(19);

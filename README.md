@@ -169,6 +169,13 @@ history entries remain readable.
 build and quality gate. Milestones 024 and 025 own audio and presentation
 acceptance, including separate listening and visual review.
 
+For routine agent validation, use `npm run quality:quick`. It runs the normal
+validation and test phases but omits the slowest cumulative 20-percent test
+set from the latest full gate: the 500-match calibration and nine-rung ladder
+flow. A quick pass is not release evidence. `npm run quality:full` and
+`npm run ci` run every check; agents run them only when the user explicitly
+requests the full quality-gate skill.
+
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The
 `docs/specs/` directory is the only source of truth for application behavior,

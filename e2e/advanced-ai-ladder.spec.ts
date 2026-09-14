@@ -144,7 +144,11 @@ for (const viewport of [
   });
 }
 
-test('the production ladder completes nine persisted rungs and resumes exactly', async ({
+const fullLadderTest = process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick'
+  ? test.skip
+  : test;
+
+fullLadderTest('the production ladder completes nine persisted rungs and resumes exactly', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });

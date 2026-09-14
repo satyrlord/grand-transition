@@ -1,5 +1,4 @@
-
-## Repository Guidelines
+# Repository Guidelines
 
 ## Project Structure & Module Organization
 
@@ -26,12 +25,15 @@ npm run dev | preview | build
 npm run lint | typecheck
 npm run assets:build | assets:validate | validate
 npm run test | test:coverage | test:browser | test:e2e
-npm run ci
+npm run quality:quick | quality:full | ci
 ```
 
 `validate` includes markdownlint-cli2, assets, content, localization, pure-boundary
-checks, lint, and types. `ci` is the complete gate. Do not report checks as passing until the
-scripts exist and run.
+checks, lint, and types. Agents use `quality:quick` for routine validation. It
+omits only the documented slowest cumulative 20-percent test set. `quality:full`
+and its `ci` alias are the complete gate. An agent runs the full gate only when
+the user explicitly invokes the full quality-gate skill; CI still uses it.
+Do not report checks as passing until the scripts exist and run.
 
 ## AI Workflow
 

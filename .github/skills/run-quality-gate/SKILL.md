@@ -7,12 +7,20 @@ description: Run or repair the Grand Transition quality gate. Use for verificati
 
 ## Select the mode
 
-- Verify mode reports results without editing files.
+- Quick mode is the default for an agent validating its own scoped work.
+  Run `npm run quality:quick`.
+- Full mode runs every check. Use it only when the user explicitly invokes this
+  skill for a "full quality gate". Run `npm run quality:full`.
 - Repair mode fixes failed checks only when the user requests repair.
 - Release mode collects complete release-readiness evidence.
 
 Do not add suppressions, exclusions, disabled rules, changed pins, invented
 commands, or lower thresholds without explicit approval.
+
+Do not infer authority for Full mode from a broad change, a milestone, a
+release-related file, or a request to verify work. Continuous integration uses
+the full gate independently. A quick pass is never full-gate or release
+evidence.
 
 ## Discover the configured gate
 
@@ -31,10 +39,10 @@ Do not invent an equivalent command and call it a pass.
 
 ## Run checks
 
-Run applicable focused checks first.
-When configured, run changed-skill validation.
-For complete gate verification, run `npm run ci` once after focused checks.
-This command owns the phase order in `package.json`.
+Run applicable focused checks first. Then run `npm run quality:quick` when the
+user has not explicitly invoked Full mode. When configured, run changed-skill
+validation. For complete gate verification, run `npm run quality:full` once
+after focused checks. This command owns the phase order in `package.json`.
 
 The Playwright web-server command builds the production artifact before preview.
 Do not repeat successful phases without a change, failure, or unresolved concern.

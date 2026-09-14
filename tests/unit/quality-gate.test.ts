@@ -42,6 +42,8 @@ const requiredScripts = [
   'localization:validate',
   'boundaries:check',
   'simulate',
+  'quality:quick',
+  'quality:full',
   'validate',
   'ci',
 ];
@@ -102,11 +104,29 @@ describe('quality-gate scaffold', () => {
     }
   });
 
-  test('keeps the CI phases in the approved order', async () => {
+  test('keeps distinct quick and full quality gates in the approved order', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
     };
-    const ci = packageJson.scripts.ci;
+    expect(packageJson.scripts['quality:quick']).toBe(
+      'node tools/run-quality-gate.mjs quick',
+    );
+    expect(packageJson.scripts['quality:full']).toBe(
+      'node tools/run-quality-gate.mjs full',
+    );
+    expect(packageJson.scripts.ci).toBe('npm run quality:full');
+    const gate = await readFile(path.resolve('tools', 'run-quality-gate.mjs'), 'utf8');
+    expect(gate).toContain("['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']");
+    expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
+    expect(gate).toContain("['quick', 'full']");
+    const [calibration, ladder] = await Promise.all([
+      readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
+      readFile(path.resolve('e2e', 'advanced-ai-ladder.spec.ts'), 'utf8'),
+    ]);
+    for (const source of [calibration, ladder]) {
+      expect(source).toContain("GRAND_TRANSITION_QUALITY_GATE === 'quick'");
+      expect(source).toContain('test.skip');
+    }
     const phases = [
       'validate',
       'test',
@@ -117,7 +137,7 @@ describe('quality-gate scaffold', () => {
 
     let previousIndex = -1;
     for (const phase of phases) {
-      const currentIndex = ci.indexOf(`npm run ${phase}`);
+      const currentIndex = gate.indexOf(`'${phase}'`);
       expect(currentIndex, phase).toBeGreaterThan(previousIndex);
       previousIndex = currentIndex;
     }
