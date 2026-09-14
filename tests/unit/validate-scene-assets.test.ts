@@ -42,7 +42,7 @@ async function writeMaster(root: string, fileName: string): Promise<void> {
   const width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920;
   const height = width * 9 / 16;
   const filePath = path.join(root, fileName);
-  if (!fileName.includes('-desks')) {
+  if (!fileName.includes('-desks') && !fileName.includes('-foreground')) {
     await sharp({
       create: {
         background: { b: 52, g: 35, r: 18 },
@@ -57,12 +57,15 @@ async function writeMaster(root: string, fileName: string): Promise<void> {
   }
 
   const pixels = Buffer.alloc(width * height * 4);
-  const left = Math.floor(width * 0.26);
-  const right = Math.floor(width * 0.68);
-  const top = Math.floor(height * 0.56);
-  for (let y = top; y < height; y += 1) {
+  const finalForeground = fileName.includes('-foreground');
+  const left = Math.ceil(width * (finalForeground ? 0.242 : 0.26));
+  const right = Math.ceil(width * (finalForeground ? 0.70 : 0.68));
+  const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
+  const bottom = finalForeground ? Math.floor(height * 0.64) : height;
+  const objectWidth = Math.floor(width * (finalForeground ? 0.058 : 0.06));
+  for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
-      for (let x = start; x < start + Math.floor(width * 0.06); x += 1) {
+      for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {
         const offset = (y * width + x) * 4;
         pixels[offset] = 120;
         pixels[offset + 1] = 52;
@@ -130,7 +133,7 @@ afterAll(async () => {
 describe.sequential('scene asset manifest validator', () => {
   test('accepts a complete temporary scene package', async () => {
     await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
-  }, 15_000);
+  }, 30_000);
 
   test('rejects a modern studio package without its 4K variant', async () => {
     const manifest = await readManifest();
@@ -295,6 +298,73 @@ describe.sequential('scene asset manifest validator', () => {
       /Duplicate scene asset ID/i,
     );
   });
+
+  test.each([
+    ['county-council-ballroom-foreground', 'ownerId', 'county-council-ballroom-foreground'],
+    ['county-council-ballroom-foreground', 'layerRole', 'back'],
+    ['modern-debate-studio-desks', 'ownerId', 'modern-debate-studio-desks'],
+    ['modern-debate-studio-desks', 'layerRole', 'back'],
+  ] as const)('rejects invalid %s %s ownership metadata', async (id, field, value) => {
+    const manifest = await readManifest();
+    const assets = manifest.assets as Array<Record<string, unknown>>;
+    assets.find((asset) => asset.id === id)![field] = value;
+    await writeFile(
+      path.join(fixture, 'scene-manifest.json'),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+    );
+    await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
+      new RegExp(`${id}.*${field}`, 'iu'),
+    );
+  });
+
+  test.each(['source', 'variant'] as const)(
+    'rejects visible alpha in a final foreground safe rectangle in the %s',
+    async (target) => {
+      const manifest = await readManifest();
+      const asset = (manifest.assets as Array<{
+        id: string;
+        source: { path: string; bytes: number; sha256: string };
+        variants: Array<{
+          path: string;
+          format: string;
+          width: number;
+          height: number;
+          bytes: number;
+          sha256: string;
+        }>;
+      }>).find(({ id }) => id === 'county-council-ballroom-foreground')!;
+      const record = target === 'source'
+        ? asset.source
+        : asset.variants.find(({ format, width }) => format === 'webp' && width === 640)!;
+      const filePath = path.join(fixture, record.path);
+      const originalBytes = await readFile(filePath);
+      try {
+        const decoded = await sharp(originalBytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+        const x = Math.floor(decoded.info.width * 0.5);
+        const y = Math.floor(decoded.info.height * 0.5);
+        const offset = (y * decoded.info.width + x) * 4;
+        decoded.data[offset] = 120;
+        decoded.data[offset + 1] = 52;
+        decoded.data[offset + 2] = 28;
+        decoded.data[offset + 3] = 255;
+        let image = sharp(decoded.data, { raw: decoded.info });
+        image = target === 'source' ? image.png() : image.webp({ quality: 86, alphaQuality: 100 });
+        const bytes = await image.toBuffer();
+        await writeFile(filePath, bytes);
+        record.bytes = bytes.length;
+        record.sha256 = createHash('sha256').update(bytes).digest('hex');
+        await writeFile(
+          path.join(fixture, 'scene-manifest.json'),
+          `${JSON.stringify(manifest, null, 2)}\n`,
+        );
+        await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
+          /centralInteraction.*visible alpha/iu,
+        );
+      } finally {
+        if (target === 'source') await writeFile(filePath, originalBytes);
+      }
+    },
+  );
 
   test('rejects duplicate declared asset paths', async () => {
     const manifest = await readManifest();

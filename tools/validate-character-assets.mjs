@@ -40,6 +40,35 @@ function requireInteger(value, context) {
   return value;
 }
 
+export function validateCharacterSkinInventory(assets) {
+  if (!Array.isArray(assets)) {
+    throw new Error('Character manifest must declare an assets array.');
+  }
+  const countsByOwner = new Map();
+  for (const [index, asset] of assets.entries()) {
+    if (!isRecord(asset)) throw new Error(`Character manifest asset ${index} must be an object.`);
+    const ownerId = requireString(asset.ownerId, `Character manifest asset ${index}.ownerId`);
+    const skinId = requireString(asset.skinId, `Character manifest asset ${index}.skinId`);
+    const counts = countsByOwner.get(ownerId) ?? { defaults: 0, alternates: 0 };
+    if (skinId === 'default') counts.defaults += 1;
+    else counts.alternates += 1;
+    countsByOwner.set(ownerId, counts);
+  }
+  for (const [ownerId, counts] of countsByOwner) {
+    if (counts.defaults !== 1) {
+      throw new Error(
+        `Character "${ownerId}" must declare exactly one default skin; found ${counts.defaults}.`,
+      );
+    }
+    if (counts.alternates > 8) {
+      throw new Error(
+        `Character "${ownerId}" must declare at most eight alternate skins; found ${counts.alternates}.`,
+      );
+    }
+  }
+  return assets;
+}
+
 async function assertRegularFile(filePath, context) {
   const stats = await lstat(filePath).catch((error) => {
     throw new Error(`${context} is missing: ${filePath}.`, { cause: error });
@@ -164,6 +193,7 @@ export async function validateCharacterAssets({
   if (manifest.assets.length !== CHARACTER_MASTER_NAMES.length) {
     throw new Error(`Character manifest must contain exactly ${CHARACTER_MASTER_NAMES.length} assets.`);
   }
+  validateCharacterSkinInventory(manifest.assets);
   const expectedIds = new Set(CHARACTER_MASTER_NAMES.map((file) => path.parse(file).name));
   const seenIds = new Set();
   const declaredVariants = new Set();

@@ -5,16 +5,36 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpeg from 'ffmpeg-static';
 
-export const audioDefinitions = [
-  ['menu-theme', 'music', 72.3],
-  ['transition-era-television-studio-theme', 'music', 43.7],
+const musicDefinitions = [
+  { id: 'menu-theme', sceneId: 'menu', duration: 72.3,
+    edit: { movement: 'Joc cu bâtă', startSeconds: 2.4, durationSeconds: 72.3 } },
+  { id: 'transition-era-television-studio-theme', sceneId: 'transition-era-television-studio', duration: 43.7,
+    edit: { movement: 'Buciumeana', startSeconds: 181.3, durationSeconds: 43.7 } },
+  { id: 'modern-debate-studio-theme', sceneId: 'modern-debate-studio', duration: 31.2,
+    edit: { movement: 'Brâul', startSeconds: 76.4, durationSeconds: 31.2 } },
+  { id: 'county-council-ballroom-theme', sceneId: 'county-council-ballroom', duration: 32.4,
+    edit: { movement: 'Poarga românească', startSeconds: 227.2, durationSeconds: 32.4 } },
+  { id: 'midnight-call-in-studio-theme', sceneId: 'midnight-call-in-studio', duration: 28,
+    edit: { movement: 'Mărunțel, first section', startSeconds: 260.3, durationSeconds: 28 } },
+  { id: 'palace-press-hall-theme', sceneId: 'palace-press-hall', duration: 65.3,
+    edit: { movement: 'Pe loc', startSeconds: 111.7, durationSeconds: 65.3 } },
+  { id: 'influencer-campaign-livestream-theme', sceneId: 'influencer-campaign-livestream', duration: 29.1,
+    edit: { movement: 'Mărunțel, second section', startSeconds: 289, durationSeconds: 29.1 } },
+];
+export const sceneMusicDefinitions = musicDefinitions.filter(({ sceneId }) => sceneId !== 'menu');
+const effectDefinitions = [
   ['role-select', 'effect', 0.16], ['commit', 'effect', 0.32],
   ['hit-light', 'effect', 0.28], ['hit-heavy', 'effect', 0.55],
   ['weakness', 'effect', 0.45], ['combo', 'effect', 0.6],
   ['continuation-break', 'effect', 0.45], ['comeback', 'effect', 0.75],
   ['grammar-mistake', 'effect', 0.3],
 ];
+export const audioDefinitions = [
+  ...musicDefinitions.map(({ id, duration }) => [id, 'music', duration]),
+  ...effectDefinitions,
+];
 const sampleRate = 48000;
+const recordingDurationSeconds = 322.011;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const recording = {
   owner: 'Chris Breemer', license: 'CC0-1.0',
@@ -24,15 +44,41 @@ const recording = {
   composer: 'Béla Bartók', composition: 'Romanian Folk Dances, Sz.56 (1915)',
   compositionLicense: 'Public domain', recordingYear: 2025,
 };
-const musicEdits = {
-  'menu-theme': { movement: 'Joc cu bâtă', startSeconds: 2.4, durationSeconds: 72.3 },
-  'transition-era-television-studio-theme': { movement: 'Buciumeana', startSeconds: 181.3, durationSeconds: 43.7 },
-};
+const musicById = new Map(musicDefinitions.map((definition) => [definition.id, definition]));
 const originalProvenance = { owner: 'Grand Transition contributors',
   source: 'Original procedural composition; tools/audio-assets.mjs', license: 'CC-BY-NC-4.0' };
 const run = (args) => execFileSync(ffmpeg, ['-hide_banner', '-nostdin', ...args], {
   encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 8 * 1024 * 1024,
 });
+
+export function validateMusicDefinitions(definitions = musicDefinitions) {
+  const ids = new Set();
+  const sceneIds = new Set();
+  const windows = [];
+  for (const definition of definitions) {
+    if (!definition || typeof definition.id !== 'string' || !definition.id ||
+      typeof definition.sceneId !== 'string' || !definition.sceneId ||
+      ids.has(definition.id) || sceneIds.has(definition.sceneId)) {
+      throw new Error('Music IDs and scene IDs must be present and unique.');
+    }
+    const { startSeconds, durationSeconds } = definition.edit ?? {};
+    if (!Number.isFinite(startSeconds) || !Number.isFinite(durationSeconds) ||
+      durationSeconds !== definition.duration || startSeconds < 0 || durationSeconds <= 0 ||
+      startSeconds + durationSeconds > recordingDurationSeconds) {
+      throw new Error(`Music edit is outside the pinned recording: ${definition.id}.`);
+    }
+    ids.add(definition.id);
+    sceneIds.add(definition.sceneId);
+    windows.push({ id: definition.id, start: startSeconds, end: startSeconds + durationSeconds });
+  }
+  const ordered = windows.toSorted((left, right) => left.start - right.start);
+  for (let index = 1; index < ordered.length; index += 1) {
+    if (ordered[index].start < ordered[index - 1].end) {
+      throw new Error(`Music edits overlap: ${ordered[index - 1].id} and ${ordered[index].id}.`);
+    }
+  }
+  return definitions;
+}
 
 export function audioMeasurements(file) {
   const result = spawnSync(ffmpeg, ['-hide_banner', '-nostdin', '-i', file,
@@ -66,6 +112,7 @@ export function validateMeasurement(value, kind, format) {
 }
 
 export async function validateAudio(root = 'src/assets/audio') {
+  validateMusicDefinitions();
   const manifest = JSON.parse(await readFile(path.join(root, 'audio-manifest.json'), 'utf8'));
   if (manifest.schemaVersion !== 1 || manifest.assets.length !== audioDefinitions.length) {
     throw new Error('Audio inventory is incomplete.');
@@ -74,7 +121,10 @@ export async function validateAudio(root = 'src/assets/audio') {
   const runtimeHashes = new Set();
   for (const [id, kind] of audioDefinitions) {
     const asset = manifest.assets.find((entry) => entry.id === id);
-    const provenance = kind === 'music' ? { ...recording, edit: musicEdits[id] } : originalProvenance;
+    const music = musicById.get(id);
+    const provenance = kind === 'music'
+      ? { ...recording, sceneId: music?.sceneId, edit: music?.edit }
+      : originalProvenance;
     if (!asset || asset.kind !== kind || Object.entries(provenance).some(([key, value]) =>
       JSON.stringify(asset[key]) !== JSON.stringify(value))) {
       throw new Error(`Audio ownership or identity is invalid: ${id}`);
@@ -123,6 +173,7 @@ function compose(index, duration) {
 }
 
 async function buildAudio(root = 'src/assets/audio') {
+  validateMusicDefinitions();
   await mkdir(root, { recursive: true });
   const temporary = path.resolve('tmp/audio-build');
   await mkdir(temporary, { recursive: true });
@@ -136,17 +187,26 @@ async function buildAudio(root = 'src/assets/audio') {
   if (hash(referenceBytes) !== recording.sourceSha256) throw new Error('The public-domain recording hash does not match.');
   await writeFile(reference, referenceBytes);
   const assets = [];
-  for (const [index, [id, kind, duration]] of audioDefinitions.entries()) {
+  for (const [id, kind, duration] of audioDefinitions) {
     const raw = path.join(temporary, `${id}.pcm`);
-    const master = path.join(root, `${id}.wav`);
+    const master = path.resolve(root, `${id}.wav`);
+    const establishedMusic = ['menu-theme', 'transition-era-television-studio-theme'].includes(id);
     const filter = kind === 'effect' ? 'volume=0.7' : 'loudnorm=I=-16:TP=-2:LRA=7';
     if (kind === 'music') {
-      const edit = musicEdits[id];
+      const edit = musicById.get(id)?.edit;
+      if (!edit) throw new Error(`Music edit is missing: ${id}`);
+      const prepared = establishedMusic ? master : path.join(temporary, `${id}-prepared.wav`);
       run(['-y', '-ss', String(edit.startSeconds), '-t', String(duration), '-i', reference,
         '-af', `afade=t=in:d=0.04,afade=t=out:st=${duration - 0.25}:d=0.25,${filter}`,
-        '-map_metadata', '-1', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', master]);
+        '-map_metadata', '-1', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', prepared]);
+      if (!establishedMusic) {
+        const adjustmentDb = -16 - audioMeasurements(prepared).integratedLufs;
+        run(['-y', '-i', prepared, '-af', `volume=${adjustmentDb}dB`, '-map_metadata', '-1',
+          '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', master]);
+      }
     } else {
-      await writeFile(raw, compose(index - 2, duration));
+      const effectIndex = effectDefinitions.findIndex(([effectId]) => effectId === id);
+      await writeFile(raw, compose(effectIndex, duration));
       run(['-y', '-f', 's16le', '-ar', '48000', '-ac', '2', '-i', raw, '-af', filter,
         '-ar', '48000', '-c:a', 'pcm_s16le', master]);
     }
@@ -161,7 +221,9 @@ async function buildAudio(root = 'src/assets/audio') {
       files.push({ path: fileName, sha256: hash(await readFile(fullPath)), measurements });
     }
     assets.push({ id, kind, duration,
-      ...(kind === 'music' ? { ...recording, edit: musicEdits[id] } : originalProvenance), files });
+      ...(kind === 'music'
+        ? { ...recording, sceneId: musicById.get(id).sceneId, edit: musicById.get(id).edit }
+        : originalProvenance), files });
     console.log(`Built ${id}.`);
   }
   await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify({ schemaVersion: 1, assets }, null, 2) + '\n');
@@ -171,7 +233,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const action = process.argv[2];
   if (action === 'build') await buildAudio();
   else if (action === 'validate') {
-    await validateAudio();
-    console.log('Audio validation passed: 11 masters and 22 runtime files.');
+    const manifest = await validateAudio();
+    console.log(`Audio validation passed: ${manifest.assets.length} masters and ${manifest.assets.length * 2} runtime files.`);
   } else throw new Error('Use audio-assets.mjs build or validate.');
 }

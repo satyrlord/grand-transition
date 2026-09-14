@@ -37,10 +37,10 @@ describe('OpenAI scene generation and credit controls', () => {
     for (const size of ['auto', '0x1080', '-1x1080', '1920.5x1080']) expect(() => selectRoute(size)).toThrow();
   });
 
-  test('routes transparent and exact-size masters directly to Sunburst', () => {
+  test('routes transparent and exact-size masters directly to Flare', () => {
     expect(selectRoute('1024x1024', { background: 'transparent' }).route).toBe('api');
     expect(selectRoute('1024x1024', { exactSize: true }).route).toBe('api');
-    expect(() => selectRoute('1920x1080', { exactSize: true })).toThrow('supported Sunburst dimensions');
+    expect(() => selectRoute('1920x1080', { exactSize: true })).toThrow('supported Flare dimensions');
     expect(selectRoute('1920x1080', { background: 'opaque' }).route).toBe('internal');
     expect(selectRoute('2048x2048', { background: 'transparent' }).route).toBe('api');
   });
@@ -62,7 +62,7 @@ describe('OpenAI scene generation and credit controls', () => {
     const result = spawnSync(process.execPath, [helper, 'generate', '--size', '1920x1080', '--exact-size',
       '--prompt', 'missing-prompt', '--out', 'tmp/unsupported-hd-source', '--dry-run'], { encoding: 'utf8' });
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('supported Sunburst dimensions');
+    expect(result.stderr).toContain('supported Flare dimensions');
     expect(result.stderr).not.toContain('ENOENT');
     expect(selectRoute('3840x2160', { exactSize: true }).route).toBe('api');
   });
@@ -106,7 +106,7 @@ describe('OpenAI scene generation and credit controls', () => {
   });
 
   test('existing run paths fail before credential loading or generation', async () => {
-    const dir = await mkdtemp(path.resolve('tmp/sunburst-existing-run-'));
+    const dir = await mkdtemp(path.resolve('tmp/flare-existing-run-'));
     roots.push(dir);
     const result = spawnSync(process.execPath, [helper, 'generate', '--background', 'transparent',
       '--size', '2048x2048', '--prompt', 'missing-prompt', '--out', dir], { encoding: 'utf8' });
@@ -116,7 +116,7 @@ describe('OpenAI scene generation and credit controls', () => {
   });
 
   test('native preparation rejects invalid input without writing output or replacing evidence', async () => {
-    const dir = await mkdtemp(path.resolve('tmp/sunburst-native-output-'));
+    const dir = await mkdtemp(path.resolve('tmp/flare-native-output-'));
     roots.push(dir);
     const input = path.join(dir, 'input.png'), out = path.join(dir, 'prepared.png');
     const bytes = await raster(32, 32);
@@ -143,7 +143,7 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(result.status).toBe(1);
     const facts = JSON.parse(result.stdout);
     expect(facts).toMatchObject({ width: 1920, height: 1080, alpha: { valid: false, hasAlpha: false } });
-    expect(result.stderr).not.toContain('Sunburst dimensions');
+    expect(result.stderr).not.toContain('Flare dimensions');
   });
 
   test('rejects lower-resolution results, corrupted files, and stale visual reviews', async () => {

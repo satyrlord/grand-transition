@@ -8,6 +8,32 @@ const media = (assetId: string) => ({
   copyrightedBroadcastGraphic: false,
 });
 
+const foundationSceneMusic = {
+  'county-council-ballroom': 'county-council-ballroom-theme',
+  'midnight-call-in-studio': 'midnight-call-in-studio-theme',
+  'palace-press-hall': 'palace-press-hall-theme',
+  'influencer-campaign-livestream': 'influencer-campaign-livestream-theme',
+} as const;
+
+const foundationScenePresentation = {
+  'county-council-ballroom': {
+    animationId: 'county-ballroom-chandelier-glint',
+    effectIds: ['chandelier-glint', 'equipment-status-pulse'],
+  },
+  'midnight-call-in-studio': {
+    animationId: 'midnight-ticker-crawl',
+    effectIds: ['ticker-crawl', 'call-line-pulse'],
+  },
+  'palace-press-hall': {
+    animationId: 'palace-press-light-sweep',
+    effectIds: ['press-light-sweep', 'camera-ready-pulse'],
+  },
+  'influencer-campaign-livestream': {
+    animationId: 'livestream-reaction-rise',
+    effectIds: ['reaction-rise', 'donation-alert-pulse'],
+  },
+} as const;
+
 export function createSampleContent(
   phraseCardCatalog: PhraseCardCatalog,
   englishGameLocale: GameLocaleBundle,
@@ -75,7 +101,7 @@ export function createSampleContent(
 }
 
 function foundationScene(
-  id: string,
+  id: keyof typeof foundationSceneMusic,
   openingPlayerIndex: 0 | 1,
   phrasePool: readonly string[],
 ) {
@@ -86,10 +112,11 @@ function foundationScene(
     descriptionKey: `scene.${id}.description`,
     backgroundLayers: [
       { media: media(id), depth: 0 },
+      { media: media(`${id}-foreground`), depth: 1 },
     ],
-    animationId: 'catalog-foundation-neutral-lights',
-    music: media('catalog-foundation-neutral-theme'),
+    animationId: foundationScenePresentation[id].animationId,
+    music: media(foundationSceneMusic[id]),
     phrasePool: [...phrasePool],
-    effectIds: ['catalog-foundation-neutral-light'],
+    effectIds: [...foundationScenePresentation[id].effectIds],
   };
 }

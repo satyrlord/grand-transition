@@ -1498,6 +1498,40 @@ describe('content schemas', () => {
     );
   });
 
+  test.each(['characters', 'scenes'] as const)(
+    'rejects duplicate normalized English %s names at the second locale key', (collection) => {
+      const catalog = cloneCatalog();
+      const first = catalog[collection][0]!;
+      const duplicate = catalog[collection][1]!;
+      catalog.locales[0]!.messages[duplicate.nameKey] = `  ${catalog.locales[0]!
+        .messages[first.nameKey]!
+        .toLocaleUpperCase('en-US')
+        .replaceAll(' ', '   ')}  `;
+
+      expectFailure(
+        catalog,
+        `locales.0.messages.${duplicate.nameKey}`,
+        new RegExp(`${duplicate.nameKey}.*duplicates.*${first.nameKey}`, 'iu'),
+      );
+    },
+  );
+
+  test('rejects duplicate normalized comeback text at the second locale key', () => {
+    const catalog = cloneCatalog();
+    const firstKey = catalog.characters[0]!.comebackLinesByTier.weak[0]!;
+    const duplicateKey = catalog.characters[1]!.comebackLinesByTier.strong[0]!;
+    catalog.locales[0]!.messages[duplicateKey] = `  ${catalog.locales[0]!
+      .messages[firstKey]!
+      .toLocaleUpperCase('en-US')
+      .replaceAll(' ', '   ')}  `;
+
+    expectFailure(
+      catalog,
+      `locales.0.messages.${duplicateKey}`,
+      new RegExp(`${duplicateKey}.*duplicates.*${firstKey}`, 'iu'),
+    );
+  });
+
   test('rejects grammar and scoring fields on the wrong phrase role', () => {
     const modifierFinisher = cloneCatalog();
     modifierFinisher.phrases.find(

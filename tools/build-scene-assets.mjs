@@ -16,9 +16,13 @@ import replacementBaseline from './scene-replacement-baseline.json' with { type:
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'county-council-ballroom.png',
+  'county-council-ballroom-foreground.png',
   'midnight-call-in-studio.png',
+  'midnight-call-in-studio-foreground.png',
   'palace-press-hall.png',
+  'palace-press-hall-foreground.png',
   'influencer-campaign-livestream.png',
+  'influencer-campaign-livestream-foreground.png',
   'modern-debate-studio.png',
   'modern-debate-studio-desks.png',
   'transition-era-television-studio.png',
@@ -29,6 +33,12 @@ export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs'
 
 const SOURCE_DESCRIPTION =
   'Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.';
+const FINAL_FOREGROUND_SOURCE_DESCRIPTIONS = Object.freeze({
+  'county-council-ballroom-foreground': 'Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.',
+  'midnight-call-in-studio-foreground': 'Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160; side groups were translated 160 source pixels outward, then downsampled to 1920x1080 and converted from a green matte.',
+  'palace-press-hall-foreground': 'Original flat cel-shaded geometric podium foreground authored locally at 1920x1080 and converted from a green matte.',
+  'influencer-campaign-livestream-foreground': 'Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.',
+});
 const LICENSE_IDENTIFIER = 'LicenseRef-Grand-Transition-Original';
 const SHARED_SAFE_RECTANGLES = Object.freeze({
   protectedTopBand: Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 0.18 }),
@@ -59,8 +69,9 @@ function sha256(input) {
 
 function sceneIdentity(fileName) {
   const id = path.basename(fileName, '.png');
-  const isForeground = id.endsWith('-desks');
-  const ownerId = isForeground ? id.slice(0, -'-desks'.length) : id;
+  const suffix = ['-desks', '-foreground'].find((candidate) => id.endsWith(candidate));
+  const isForeground = suffix !== undefined;
+  const ownerId = suffix ? id.slice(0, -suffix.length) : id;
   const modern = ownerId === 'modern-debate-studio';
   return { id, isForeground, ownerId, modern };
 }
@@ -253,11 +264,11 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
         ownerType: 'scene',
         ownerId: master.identity.ownerId,
         layerRole: master.identity.isForeground ? 'foreground' : 'back',
-        sourceDescription: master.identity.id === 'transition-era-television-studio'
-          ? 'Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.'
+        sourceDescription: FINAL_FOREGROUND_SOURCE_DESCRIPTIONS[master.identity.id] ?? (master.identity.id === 'transition-era-television-studio'
+          ? 'Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2.5-sunburst, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.'
           : master.identity.id === 'modern-debate-studio'
             ? 'User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.'
-            : SOURCE_DESCRIPTION,
+            : SOURCE_DESCRIPTION),
         licenseIdentifier: LICENSE_IDENTIFIER,
         source: {
           path: master.fileName,

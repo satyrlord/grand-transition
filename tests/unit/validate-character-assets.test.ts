@@ -6,11 +6,27 @@ import baseline from '../../tools/character-replacement-baseline.json';
 // @ts-expect-error The production image validator is a native ECMAScript module.
 import * as characterValidator from '../../tools/validate-character-assets.mjs';
 
-const { validateCharacterAssets } = characterValidator as {
+const { validateCharacterAssets, validateCharacterSkinInventory } = characterValidator as {
   validateCharacterAssets: (options: {
     characterRoot: string;
   }) => Promise<unknown>;
+  validateCharacterSkinInventory: (
+    assets: readonly Readonly<{ ownerId: string; skinId: string }>[],
+  ) => unknown;
 };
+
+function skinInventory(alternateCount: number, defaultCount = 1) {
+  return [
+    ...Array.from({ length: defaultCount }, () => ({
+      ownerId: 'boundary-character',
+      skinId: 'default',
+    })),
+    ...Array.from({ length: alternateCount }, (_, index) => ({
+      ownerId: 'boundary-character',
+      skinId: `alternate-${index + 1}`,
+    })),
+  ];
+}
 
 let fixture: string;
 let baseManifestText: string;
@@ -55,6 +71,22 @@ afterAll(async () => {
 });
 
 describe.sequential('character asset manifest validator', () => {
+  test('accepts one default skin and the eight-alternate boundary', () => {
+    expect(() => validateCharacterSkinInventory(skinInventory(8))).not.toThrow();
+  });
+
+  test('rejects a ninth alternate at its character context', () => {
+    expect(() => validateCharacterSkinInventory(skinInventory(9))).toThrow(
+      /boundary-character.*at most eight alternate skins.*found 9/iu,
+    );
+  });
+
+  test.each([0, 2])('rejects %s default skins at its character context', (defaultCount) => {
+    expect(() => validateCharacterSkinInventory(skinInventory(1, defaultCount))).toThrow(
+      new RegExp(`boundary-character.*exactly one default skin.*found ${defaultCount}`, 'iu'),
+    );
+  });
+
   test.each([undefined, 'up', 'right'])('rejects missing or unreviewed facing %s', async (facing) => {
     const manifest = await readManifest();
     const assets = manifest.assets as Array<Record<string, unknown>>;

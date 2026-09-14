@@ -1,6 +1,6 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
-import { effectIds } from '../src/audio/audio-port';
+import { effectIds, sceneMusicTrackIds } from '../src/audio/audio-port';
 import { defaultSettings } from '../src/persistence/codecs/settings-codec';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -75,7 +75,7 @@ async function probe(page: Page, unavailable = false) {
 async function ready(page: Page) {
   await expect.poll(() => page.evaluate(() =>
     (document.querySelector('grand-transition-app') as unknown as { audio: { status: string } }).audio.status,
-  )).toBe('ready');
+  ), { timeout: 30_000 }).toBe('ready');
 }
 
 async function samplePeak(page: Page) {
@@ -164,6 +164,39 @@ test('native decoded menu, scene, cues, mute, and exit under production CSP', as
   await recordEvidence(page, info, 'audio-measurements', {
     cueTimes, menu: 'nonzero samples', scene: 'nonzero samples', mute: 'exact zero samples',
     physicalListening: 'not performed' });
+});
+
+test('every playable scene routes its distinct music treatment', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await probe(page);
+  await page.goto('/grand-transition/');
+  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+  if (info.project.name === 'webkit-audio' && process.platform === 'win32') {
+    await expect.poll(() => page.evaluate(() =>
+      (document.querySelector('grand-transition-app') as unknown as { audio: { status: string } }).audio.status,
+    )).toBe('unavailable');
+    expect(await page.evaluate(() => window.audioEvidence.starts)).toEqual([]);
+    return;
+  }
+  await ready(page);
+  const scenes = Object.entries(sceneMusicTrackIds);
+  for (const [index, [sceneId, trackId]] of scenes.entries()) {
+    await page.getByLabel('Scene', { exact: true }).selectOption(sceneId);
+    await page.getByRole('button', { name: 'Start match', exact: true }).click();
+    await expect.poll(() => page.evaluate(() => {
+      const audio = (document.querySelector('grand-transition-app') as unknown as {
+        audio: { scene: string; loops: Map<string, unknown> };
+      }).audio;
+      return { scene: audio.scene, tracks: [...audio.loops.keys()] };
+    })).toEqual({ scene: sceneId, tracks: [trackId] });
+    if (index + 1 < scenes.length) {
+      await page.getByRole('button', { name: 'Pause', exact: true }).click();
+      await page.getByRole('button', { name: 'Back to menu', exact: true }).click();
+      await page.getByRole('button', { name: 'End match', exact: true }).click();
+      await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+    }
+  }
 });
 
 test('speech controls omit voice selection and fit supported landscape states', async ({ page }, info) => {

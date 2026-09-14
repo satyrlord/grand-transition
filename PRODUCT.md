@@ -59,7 +59,7 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes 18 original fictional characters, 17 human and one
+  bundle. It also includes 19 original fictional characters, 18 human and one
   fully mechanical, Romanian-politics phrase content, and separate transparent
   default portraits. Eight archetypes have eleven alternate skins in total. Skins
   are visual-only variations that do not change game identity or prose.
@@ -70,9 +70,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   editorial-cartoon direction across characters, moderators, scenes, furniture,
   fixtures, and props. Character skins and states follow the detailed rendering
   standard in Specification 023.
-  Two scenes use layered debate studios with fixed fictional moderators
-  and foreground desk plates. Four playable foundation scenes have distinct
-  local cartoon backgrounds with the same responsive scene asset pipeline.
+  All six playable scenes use distinct local cartoon backgrounds and
+  transparent foreground plates through the same responsive scene asset
+  pipeline. Two debate studios include fixed fictional moderators and
+  foreground standing desks.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,
@@ -108,11 +109,11 @@ Warm color remains limited to authored local materials and lighting.
 The approved specifications under `docs/specs/` are the only product and
 implementation authority. Two untracked original-game screenshots under
 the temporary folder are composition and interaction references only. They are
-not product assets or layout specifications. The fixed character and studio
-raster baselines have manifests and runtime
-variants. Character state packages and audio assets are implemented. Final
-visual, audible, and catalog acceptance remains incomplete. No testimonial or
-customer claim is recorded here.
+not product assets or layout specifications. The 30 character skins and 12
+scene layers have manifests and runtime variants. Twenty-eight complete
+character state packages, two declared selection-art fallbacks, six distinct
+scene music treatments, and nine effects are implemented. Milestone 028 owns
+their final acceptance. No testimonial or customer claim is recorded here.
 
 ## Product Principles
 

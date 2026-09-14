@@ -3,6 +3,7 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
+import { sampleContent } from '../../src/game-content';
 
 const tools = await import(pathToFileURL(path.resolve('tools/audio-assets.mjs')).href);
 const valid = { codec: 'vorbis', sampleRate: 48000, integratedLufs: -16, truePeakDbfs: -2 };
@@ -26,6 +27,14 @@ describe('audio asset measurements', () => {
   test('accepts the effect true-peak boundary', () => {
     expect(() => tools.validateMeasurement({ ...valid, truePeakDbfs: -1 }, 'effect', 'ogg')).not.toThrow();
   });
+
+  test('rejects overlapping and out-of-bounds music edits', () => {
+    const definitions = structuredClone(tools.sceneMusicDefinitions);
+    definitions[1].edit.startSeconds = definitions[0].edit.startSeconds;
+    expect(() => tools.validateMusicDefinitions(definitions)).toThrow(/overlap/u);
+    definitions[1].edit.startSeconds = 400;
+    expect(() => tools.validateMusicDefinitions(definitions)).toThrow(/outside the pinned recording/u);
+  });
 });
 
 describe('audio asset inventory', () => {
@@ -38,7 +47,7 @@ describe('audio asset inventory', () => {
   });
   afterAll(async () => { await rm(root, { recursive: true, force: true }); });
 
-  test.each(['owner', 'license', 'source', 'id', 'kind'])('rejects missing or invalid %s', async (field) => {
+  test.each(['owner', 'license', 'source', 'sceneId', 'id', 'kind'])('rejects missing or invalid %s', async (field) => {
     const manifest = JSON.parse(original);
     manifest.assets[0][field] = '';
     await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify(manifest));
@@ -62,11 +71,18 @@ describe('audio asset inventory', () => {
     await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify(manifest));
     await expect(tools.validateAudio(root)).rejects.toThrow('inventory is incomplete');
   });
-  test('ships only two music tracks and nine effects, with no scene room tone', () => {
+  test('ships one distinct manifest-backed treatment per scene and nine effects, with no room tone', () => {
     const manifest = JSON.parse(original);
-    expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'music')).toHaveLength(2);
+    const music = manifest.assets.filter((asset: { kind: string }) => asset.kind === 'music');
+    expect(music).toHaveLength(7);
     expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'effect')).toHaveLength(9);
-    expect(manifest.assets).toHaveLength(11);
+    expect(manifest.assets).toHaveLength(16);
     expect(manifest.assets.some((asset: { id: string }) => asset.id.includes('room-tone'))).toBe(false);
+    expect(new Set(music.map((asset: { id: string }) => asset.id)).size).toBe(7);
+    const sceneMusic = new Map(music.map((asset: { id: string; sceneId: string }) => [asset.sceneId, asset.id]));
+    expect(sceneMusic.get('menu')).toBe('menu-theme');
+    for (const scene of sampleContent.scenes) {
+      expect(sceneMusic.get(scene.id), scene.id).toBe(scene.music.assetId);
+    }
   });
 });

@@ -657,6 +657,7 @@ export class GrandTransitionSetup extends LitElement {
     return html`
       <div class="setup-field">
         <label for=${config.field}>${config.label}</label>
+        <div class=${config.field === 'sceneId' ? 'scene-select-view' : nothing}>
         <select
           id=${config.field}
           name=${config.field}
@@ -676,6 +677,12 @@ export class GrandTransitionSetup extends LitElement {
             `,
           )}
         </select>
+        ${config.field === 'sceneId'
+          ? html`<span class="scene-selected-text" aria-hidden="true">${
+              config.options.find((option) => option.value === config.value)?.label
+            }</span>`
+          : nothing}
+        </div>
         ${
           config.error
             ? html`<p class="field-error" id=${errorId}>${config.error}</p>`

@@ -108,8 +108,43 @@
     animation: studio-lamp-breathe 4s ease-in-out infinite;
   }
 
+  .scene-motion {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
   .scene-ambience-light--right {
     animation-delay: -2s;
+  }
+
+  .scene-motion--modern {
+    fill: var(--focus-blue, #77c8ff);
+    opacity: 0.08;
+    animation: modern-panel-scan 5s ease-in-out infinite alternate;
+  }
+
+  .scene-motion--county {
+    fill: var(--broadcast-paper-light);
+    opacity: 0.04;
+    animation: county-chandelier-glint 6s ease-in-out infinite;
+  }
+
+  .scene-motion--midnight {
+    fill: var(--broadcast-red-bright);
+    opacity: 0.08;
+    animation: midnight-ticker-crawl 4.8s linear infinite;
+  }
+
+  .scene-motion--palace {
+    fill: var(--broadcast-paper-light);
+    opacity: 0.04;
+    animation: palace-press-sweep 6.5s ease-in-out infinite alternate;
+  }
+
+  .scene-motion--influencer {
+    fill: var(--focus-blue, #77c8ff);
+    opacity: 0.09;
+    animation: livestream-reaction-rise 5.5s ease-out infinite;
   }
 
   @keyframes studio-lamp-breathe {
@@ -117,13 +152,40 @@
     50% { opacity: 0.15; }
   }
 
-  .broadcast-stage-ambience[data-motion-suspended='true'] .scene-ambience-light {
+  @keyframes modern-panel-scan {
+    from { transform: translateY(-10px); opacity: 0.04; }
+    to { transform: translateY(18px); opacity: 0.13; }
+  }
+
+  @keyframes county-chandelier-glint {
+    0%, 72%, 100% { transform: scale(0.85); opacity: 0.03; }
+    82% { transform: scale(1.15); opacity: 0.12; }
+  }
+
+  @keyframes midnight-ticker-crawl {
+    from { transform: translateX(-120px); opacity: 0.04; }
+    35%, 65% { opacity: 0.12; }
+    to { transform: translateX(120px); opacity: 0.04; }
+  }
+
+  @keyframes palace-press-sweep {
+    from { transform: translateX(-20px); opacity: 0.03; }
+    to { transform: translateX(20px); opacity: 0.1; }
+  }
+
+  @keyframes livestream-reaction-rise {
+    from { transform: translateY(70px); opacity: 0; }
+    25%, 70% { opacity: 0.12; }
+    to { transform: translateY(-70px); opacity: 0; }
+  }
+
+  .broadcast-stage-ambience[data-motion-suspended='true'] .scene-motion {
     animation: none;
     opacity: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .scene-ambience-light {
+    .scene-motion {
       animation: none;
       opacity: 0;
     }

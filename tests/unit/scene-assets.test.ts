@@ -7,6 +7,7 @@ import {
   sceneAssetManifest,
   sceneImageSizes,
 } from '../../src/app/scene-assets';
+import { sampleContent } from '../../src/game-content';
 
 describe('scene asset resolver', () => {
   test('ships the selected native 4K OpenAI background instead of the previous upscale', async () => {
@@ -37,12 +38,12 @@ describe('scene asset resolver', () => {
   });
 
   test('maps every manifest layer to AVIF-first and WebP fallback srcsets', () => {
-    expect(sceneAssetManifest).toHaveLength(8);
+    expect(sceneAssetManifest).toHaveLength(12);
     const variants = sceneAssetManifest.flatMap((asset) => [
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(64);
+    expect(variants).toHaveLength(88);
 
     for (const asset of sceneAssetManifest) {
       expect(asset.width).toBe(['modern-debate-studio', 'transition-era-television-studio'].includes(asset.ownerId) ? 3840 : 1920);
@@ -112,15 +113,65 @@ describe('scene asset resolver', () => {
 
   test('each foundation scene resolves its own complete package without title artwork', () => {
     for (const id of ['county-council-ballroom', 'midnight-call-in-studio', 'palace-press-hall', 'influencer-campaign-livestream']) {
-      const asset = resolveSceneAsset(id);
-      expect(asset.ownerId).toBe(id);
-      expect(asset.kind).toBe('manifest');
-      expect(asset.focalRectangles.moderatorFace).toBeNull();
-      expect(asset.avif.variants).toHaveLength(3);
-      expect(asset.webp.variants).toHaveLength(3);
-      expect(asset.url).toContain(id);
-      expect(asset.url).not.toContain('title-proscenium');
+      const back = resolveSceneAsset(id);
+      const foreground = resolveSceneAsset(`${id}-foreground`);
+      for (const asset of [back, foreground]) {
+        expect(asset.ownerId).toBe(id);
+        expect(asset.kind).toBe('manifest');
+        expect(asset.focalRectangles.moderatorFace).toBeNull();
+        expect(asset.avif.variants).toHaveLength(3);
+        expect(asset.webp.variants).toHaveLength(3);
+        expect(asset.url).toContain(id);
+        expect(asset.url).not.toContain('title-proscenium');
+      }
+      expect(back.layerRole).toBe('back');
+      expect(foreground.layerRole).toBe('foreground');
     }
     expect(() => resolveSceneAsset('catalog-foundation-neutral-scene')).toThrow();
+  });
+
+  test('maps every final scene to distinct layers, motion, and effects', () => {
+    const expected = {
+      'transition-era-television-studio': {
+        layers: ['transition-era-television-studio', 'transition-era-television-studio-desks'],
+        animationId: 'transition-era-studio-lights',
+        effectIds: ['studio-light-flicker', 'crt-roll'],
+      },
+      'modern-debate-studio': {
+        layers: ['modern-debate-studio', 'modern-debate-studio-desks'],
+        animationId: 'modern-debate-light-lines',
+        effectIds: ['led-light-sweep', 'floor-reflection-pulse'],
+      },
+      'county-council-ballroom': {
+        layers: ['county-council-ballroom', 'county-council-ballroom-foreground'],
+        animationId: 'county-ballroom-chandelier-glint',
+        effectIds: ['chandelier-glint', 'equipment-status-pulse'],
+      },
+      'midnight-call-in-studio': {
+        layers: ['midnight-call-in-studio', 'midnight-call-in-studio-foreground'],
+        animationId: 'midnight-ticker-crawl',
+        effectIds: ['ticker-crawl', 'call-line-pulse'],
+      },
+      'palace-press-hall': {
+        layers: ['palace-press-hall', 'palace-press-hall-foreground'],
+        animationId: 'palace-press-light-sweep',
+        effectIds: ['press-light-sweep', 'camera-ready-pulse'],
+      },
+      'influencer-campaign-livestream': {
+        layers: ['influencer-campaign-livestream', 'influencer-campaign-livestream-foreground'],
+        animationId: 'livestream-reaction-rise',
+        effectIds: ['reaction-rise', 'donation-alert-pulse'],
+      },
+    } as const;
+
+    for (const scene of sampleContent.scenes) {
+      expect(scene.backgroundLayers.map(({ media }) => media.assetId)).toEqual(
+        expected[scene.id as keyof typeof expected].layers,
+      );
+      expect(scene.animationId).toBe(expected[scene.id as keyof typeof expected].animationId);
+      expect(scene.effectIds).toEqual(expected[scene.id as keyof typeof expected].effectIds);
+    }
+    expect(new Set(sampleContent.scenes.map(({ animationId }) => animationId)).size).toBe(6);
+    expect(new Set(sampleContent.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(12);
   });
 });

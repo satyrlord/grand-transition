@@ -43,6 +43,22 @@ test('roster crops and selected stages keep full responsive portrait sources', a
   }
 });
 
+test('keeps wrapping scene text synchronized with the native accessible selection', async () => {
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  const select = app.querySelector<HTMLSelectElement>('#sceneId')!;
+  for (const option of select.options) {
+    select.value = option.value;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await app.updateComplete;
+    await app.querySelector<GrandTransitionSetup>('grand-transition-setup')!.updateComplete;
+    const display = app.querySelector('.scene-selected-text')!;
+    expect(display.textContent?.trim()).toBe(option.text.trim());
+    expect(display.getAttribute('aria-hidden')).toBe('true');
+    expect(select.value).toBe(option.value);
+  }
+});
+
 test('explains the historical secret-police weakness in plain English', async () => {
   const setup = await mountSetup({ ...createDefaultSetupSnapshot(), playerOneCharacterId: 'black-sea-captain' });
   expect(setup.querySelector('.contestant-weaknesses')?.textContent).toContain('Former secret police');

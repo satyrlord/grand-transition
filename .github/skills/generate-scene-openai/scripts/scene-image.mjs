@@ -8,7 +8,7 @@ import sharp from 'sharp';
 import { SCENE_MASTER_NAMES } from '../../../../tools/build-scene-assets.mjs';
 import { sceneMasterSize } from '../../../../tools/scene-resolution.mjs';
 import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.mjs';
-import { MODEL, buildSunburstRequest, sendSunburstRequest, validateSunburstSize } from './sunburst-api.mjs';
+import { MODEL, buildFlareRequest, sendFlareRequest, validateFlareSize } from './openai-api.mjs';
 import { inspectNativeAlpha, prepareNativeAlpha } from './native-alpha.mjs';
 
 export { MODEL };
@@ -43,7 +43,7 @@ export function selectRoute(size = '3840x2160', { background, exactSize = false 
   assertBackground(background);
   const { width, height, pixels } = imageDimensions(size);
   const needsApi = background === 'transparent' || exactSize || width * height > INTERNAL_PIXEL_LIMIT;
-  if (needsApi) validateSunburstSize(size);
+  if (needsApi) validateFlareSize(size);
   return { width, height, pixels, route: needsApi ? 'api' : 'internal' };
 }
 
@@ -187,7 +187,7 @@ async function main() {
     const out = await temporaryPath(values.out);
     await requireUnusedPath(out);
     const { promptText, referenceImages, ...inputs } = await inspectInputs(values.prompt, values.reference);
-    const request = buildSunburstRequest({ promptText, referenceImages, size, background: values.background });
+    const request = buildFlareRequest({ promptText, referenceImages, size, background: values.background });
     const record = { model: MODEL, requestedSize: size, quality: 'high', outputFormat: 'png',
       background: values.background ?? 'auto', inputMode: referenceImages.length ? 'edit' : 'text',
       endpoint: request.endpoint, ...inputs };
@@ -205,7 +205,7 @@ async function main() {
     const output = path.join(out, 'candidate.png');
     let bytes;
     try {
-      bytes = await sendSunburstRequest(request, key);
+      bytes = await sendFlareRequest(request, key);
     } catch (error) {
       await status({ state: 'request-failed', code: error.code ?? 'local-error', ...(error.status ? { httpStatus: error.status } : {}), automaticRetries: 0 });
       throw error;

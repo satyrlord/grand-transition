@@ -17,7 +17,8 @@ node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
 
 The helper reads the shipping dimensions from `sceneMasterSize`.
 Generation requests use supported source dimensions. They do not redefine these shipping dimensions.
-It supports the eight declared masters, including the two `-desks` layers.
+It supports the masters declared in `SCENE_MASTER_NAMES`, including the two
+`-desks` layers and the four foundation `-foreground` layers.
 For a new ID, implement its approved pipeline contract before preparation.
 Do not bypass the master inventory check.
 
@@ -30,7 +31,7 @@ Its private preparation record includes source and output hashes and dimensions.
 Current studio masters are 3840 by 2160 pixels.
 Other current scene masters are 1920 by 1080 pixels.
 Generate replacements for those masters at 3840 by 2160, then downsample through this reviewed preparation procedure.
-Sunburst cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
+Flare cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
 A 4K source does not authorize changing another scene's shipping-resolution contract.
 
 For native transparent art, preserve the reviewed decoded pixels and alpha during metadata registration.

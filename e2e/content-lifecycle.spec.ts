@@ -77,6 +77,7 @@ type CharacterSource = {
   rosterOrder: number;
   name: string;
   description: string;
+  comebacks: Record<'weak' | 'medium' | 'strong', string>;
   assets: {
     portrait: { assetId: string };
     token: { assetId: string };
@@ -146,6 +147,11 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   fixture.name = temporaryCharacterName;
   fixture.description =
     'An original fictional delegate used only by the isolated lifecycle test.';
+  fixture.comebacks = {
+    weak: 'The temporary delegate files a temporary objection.',
+    medium: 'This test chamber reserves its own reply.',
+    strong: 'The fixture delegate closes this isolated debate.',
+  };
   fixture.assets.portrait.assetId = `${temporaryCharacterId}-portrait`;
   fixture.assets.token.assetId = `${temporaryCharacterId}-token`;
   fixture.animationSet = {

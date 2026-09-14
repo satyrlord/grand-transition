@@ -21,7 +21,7 @@ async function fixtureRoot(): Promise<string> {
 }
 
 async function writeMaster(root: string, fileName: string, width = (fileName.startsWith('modern-debate-studio') || fileName.startsWith('transition-era-television-studio')) ? 3840 : 1920, height = width * 9 / 16) {
-  const foreground = fileName.includes('-desks');
+  const foreground = fileName.includes('-desks') || fileName.includes('-foreground');
   if (!foreground) {
     await sharp({
       create: { width, height, channels: 3, background: { r: 18, g: 35, b: 52 } },
@@ -31,12 +31,15 @@ async function writeMaster(root: string, fileName: string, width = (fileName.sta
     return;
   }
   const pixels = Buffer.alloc(width * height * 4);
-  const left = Math.floor(width * 0.26);
-  const right = Math.floor(width * 0.68);
-  const top = Math.floor(height * 0.56);
-  for (let y = top; y < height; y += 1) {
+  const finalForeground = fileName.includes('-foreground');
+  const left = Math.ceil(width * (finalForeground ? 0.242 : 0.26));
+  const right = Math.ceil(width * (finalForeground ? 0.70 : 0.68));
+  const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
+  const bottom = finalForeground ? Math.floor(height * 0.64) : height;
+  const objectWidth = Math.floor(width * (finalForeground ? 0.058 : 0.06));
+  for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
-      for (let x = start; x < Math.min(width, start + Math.floor(width * 0.06)); x += 1) {
+      for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {
         const offset = (y * width + x) * 4;
         pixels[offset] = 120;
         pixels[offset + 1] = 52;
@@ -78,8 +81,26 @@ describe('scene asset build', () => {
     expect(secondVariants).toEqual(firstVariants);
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
-    expect(first.assets).toHaveLength(8);
-    expect(firstVariants).toHaveLength(64);
+    expect(first.assets).toHaveLength(12);
+    expect(firstVariants).toHaveLength(88);
+
+    expect(
+      first.assets
+        .filter((asset: { layerRole: string }) => asset.layerRole === 'foreground')
+        .map(({ id, ownerId, source }: { id: string; ownerId: string; source: { path: string } }) => ({
+          id,
+          ownerId,
+          sourcePath: source.path,
+        })),
+    ).toEqual([
+      { id: 'county-council-ballroom-foreground', ownerId: 'county-council-ballroom', sourcePath: 'county-council-ballroom-foreground.png' },
+      { id: 'midnight-call-in-studio-foreground', ownerId: 'midnight-call-in-studio', sourcePath: 'midnight-call-in-studio-foreground.png' },
+      { id: 'palace-press-hall-foreground', ownerId: 'palace-press-hall', sourcePath: 'palace-press-hall-foreground.png' },
+      { id: 'influencer-campaign-livestream-foreground', ownerId: 'influencer-campaign-livestream', sourcePath: 'influencer-campaign-livestream-foreground.png' },
+      { id: 'modern-debate-studio-desks', ownerId: 'modern-debate-studio', sourcePath: 'modern-debate-studio-desks.png' },
+      { id: 'transition-era-television-studio-desks', ownerId: 'transition-era-television-studio', sourcePath: 'transition-era-television-studio-desks.png' },
+    ]);
+    expect(first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back')).toHaveLength(6);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');
@@ -102,7 +123,7 @@ describe('scene asset build', () => {
       }
     }
     // Two complete encodes include all four 4K layers at the production codec effort.
-  }, 300_000);
+  }, 420_000);
 
   test('fails before it writes variants when a master has invalid dimensions', async () => {
     const root = path.join(await fixtureRoot(), 'scenes');

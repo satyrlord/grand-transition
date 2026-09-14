@@ -5,7 +5,7 @@ Run repository commands from the repository root.
 
 For scene and character raster generation and editing, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-It selects the Sunburst API for transparency, exact-size masters, and output above 1080p.
+It selects the Flare API for transparency, exact-size masters, and output above 1080p.
 It uses the internal image tool for small opaque drafts.
 Its repository helper owns the API request. Do not patch an installed image CLI.
 

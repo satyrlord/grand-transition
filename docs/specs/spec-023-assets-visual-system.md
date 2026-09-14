@@ -134,8 +134,9 @@ The current playable catalog also includes four opaque scene masters:
 `palace-press-hall.png`, and `influencer-campaign-livestream.png`. These use the
 same 16:9 source canvas, resolution-specific runtime variants, crop core, and shared safe
 rectangles. Each has a focal point at `(0.5, 0.5)` and explicitly absent
-moderator and foreground-desk focal rectangles. The asset pipeline validates
-all eight scene masters. Keep the four-layer baseline as the studio
+moderator and foreground-desk focal rectangles. Milestone 028 adds four
+foundation foreground layers. The asset pipeline validates all twelve scene
+masters. Keep the four-layer baseline as the studio
 regeneration boundary. Use the four opaque backgrounds as the foundation
 scenes under Milestone 026.
 
@@ -716,7 +717,7 @@ Use self-hosted licensed Web Open Font Format 2 (WOFF2) fonts with metric
 fallbacks.
 
 The live character inventory uses
-`src/assets/characters/character-manifest.json`. Its 29 entries map one default
+`src/assets/characters/character-manifest.json`. Its 30 entries map one default
 or alternate skin to the canonical `selection` state, pose, and expression.
 The fixed replacement baseline is a 27-entry subset.
 `tools/character-replacement-baseline.json` records the replaced
@@ -746,15 +747,15 @@ package remains at most 300 KiB. The build and asset-validation scripts check
 the brand and state manifests as well as the baseline scene and character
 manifests. The asset-build script reproduces all four packages with Sharp.
 
-### Sunburst generation and preparation workflow
+### Flare generation and preparation workflow
 
-Use `gpt-image-2.5-sunburst` for transparent assets, exact-size masters, and
+Use `gpt-image-2.5-flare` for transparent assets, exact-size masters, and
 requests above 2,073,600 pixels. Use the internal tool for small opaque
 drafts without an exact-size contract. Resolve character masters to 2048 by
 2048 before choosing their route. Resolve scene dimensions from the scene
 pipeline. An explicit user-selected route takes precedence, but an undersized
 result does not satisfy a master contract. Generation dimensions must also
-meet Sunburst's multiple-of-16 rule. For a 1920-by-1080 shipping scene, request
+meet Flare's multiple-of-16 rule. For a 1920-by-1080 shipping scene, request
 a 3840-by-2160 source and use reviewed downsampling. Do not request unsupported
 native 1920-by-1080 output or change the shipping dimensions to match a provider.
 
@@ -764,7 +765,7 @@ use the generation endpoint. Authorized references use multipart image edits.
 Keep the model, high quality, PNG format, explicit dimensions, and background
 mode in the request record. Validate dimensions and construct the actual
 request during a dry run, without credentials, network calls, or output writes.
-Sunburst dimensions follow the [official image generation guide](https://developers.openai.com/api/docs/guides/image-generation).
+Flare dimensions follow the [official image generation guide](https://developers.openai.com/api/docs/guides/image-generation).
 
 Read credentials only from the ignored, untracked `.env.local` file. Use the
 fixed OpenAI endpoint. Do not follow redirects or forward raw provider errors.
@@ -947,6 +948,9 @@ fallback is at most 500 KiB. One AVIF character state is at most 250 KiB. Its
 WebP fallback is at most 350 KiB. The selected scene and both selected
 character image packages total at most 3 mebibytes (MiB) in their preferred
 formats. Setup does not preload unselected match packages.
+Package validation selects each asset's largest declared runtime dimensions
+for each format, including 3840-pixel studio layers and 1920-pixel foundation
+layers. It checks the larger AVIF or WebP package total against the limit.
 
 Each named character state maps to one pose and one expression. The set uses at
 least five distinct expressions and six distinct poses. The nine named states do
@@ -956,9 +960,10 @@ milliseconds, and idle loops 2 through 8 seconds.
 
 ### State package and event projection
 
-`src/assets/characters/state-contract.json` records the four slice character IDs and
-the nine named states. Derive their default and alternate packages from the
-fixed selection manifest. Do not maintain another skin list. Each additional
+`src/assets/characters/state-contract.json` records the 19 character IDs and
+the nine named states. Milestone 028 requires 28 packages and declares the two
+selection-art fallbacks. Derive default and alternate packages from the
+selection manifest. Do not maintain another skin list. Each additional
 master is `src/assets/characters/states/<portrait-stem>/<state-id>.png`.
 `states/state-manifest.json` owns state mappings and additional runtime assets.
 Selection references the existing baseline asset. Additional states have
@@ -1165,7 +1170,7 @@ canonical skin and existing composition.
 Verify with `e2e/roster-resolution.spec.ts` and
 `tests/browser/screen-shell.browser.test.ts`.
 
-**AC-023-20:** The Sunburst workflow routes transparent and exact-size requests
+**AC-023-20:** The Flare workflow routes transparent and exact-size requests
 to the API before the draft pixel boundary. Offline tests construct native
 2048-square requests without an installed CLI. They verify multipart reference
 bytes, fixed-origin credentials, sanitized HTTP failures, and zero automatic
@@ -1173,4 +1178,4 @@ retries. Dry runs create no files and do not read credentials. Native preparatio
 preserves RGB, contour alpha, stronger alpha, and no-op bytes. It removes only
 permitted detached alpha-1 pixels and rejects output that still fails the
 existing native thresholds. Verify with `tests/unit/openai-scene.test.ts`,
-`tests/unit/sunburst-api.test.ts`, and `tests/unit/native-alpha-preparation.test.ts`.
+`tests/unit/flare-api.test.ts`, and `tests/unit/native-alpha-preparation.test.ts`.

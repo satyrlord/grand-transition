@@ -12,6 +12,9 @@ export type CharacterStatePackage = Readonly<{
 const stateVariantUrls = import.meta.glob('../assets/characters/states/variants/*.{avif,webp}', {
   eager: true, import: 'default', query: '?url&no-inline',
 }) as Record<string, string>;
+const permittedStateAssetReuse = contract.permittedStateAssetReuse as Partial<
+  Record<CharacterStateId, CharacterStateId>
+>;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -19,14 +22,39 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 const packages = createCharacterStatePackages(stateManifest, characterAssetManifest, stateVariantUrls);
 const packagesBySkin = new Map(packages.map((entry) => [entry.ownerId + ':' + entry.skinId, entry.frames]));
-for (const asset of characterAssetManifest) {
-  if (contract.characterIds.includes(asset.ownerId) && !packagesBySkin.has(asset.ownerId + ':' + asset.skinId)) {
-    throw new Error('Required character state package is missing: ' + asset.id);
-  }
-}
 
 export function resolveCharacterFrames(ownerId: string, skinId: string): readonly CharacterFrame[] | null {
-  return packagesBySkin.get(ownerId + ':' + skinId) ?? null;
+  return resolveCharacterFramesFromInventory(
+    ownerId,
+    skinId,
+    packagesBySkin,
+    characterAssetManifest,
+  );
+}
+
+export function resolveCharacterFramesFromInventory(
+  ownerId: string,
+  skinId: string,
+  inventory: ReadonlyMap<string, readonly CharacterFrame[]>,
+  selections: readonly CharacterAsset[],
+): readonly CharacterFrame[] | null {
+  const key = ownerId + ':' + skinId;
+  const frames = inventory.get(key);
+  const selection = selections.find(
+    (asset) => asset.ownerId === ownerId && asset.skinId === skinId,
+  );
+  if (!selection) return null;
+  if (contract.selectionArtFallbackSkinIds.includes(selection.id)) {
+    if (frames) {
+      throw new Error('Selection-art fallback must not declare a character state package: ' + selection.id);
+    }
+    return null;
+  }
+  if (frames) return frames;
+  if (contract.characterIds.includes(ownerId)) {
+    throw new Error('Required character state package is missing: ' + selection.id);
+  }
+  return null;
 }
 
 function requiredString(value: unknown, path: string): string {
@@ -74,8 +102,22 @@ export function createCharacterStatePackages(
         return Object.freeze({ id: selection.id, stateId, url: selection.url, sizes: matchCharacterImageSizes, avif: selection.avif, webp: selection.webp });
       }
       const assetId = requiredString(mapping.assetId, key + ': state asset ID');
+      const reusedStateId = permittedStateAssetReuse[stateId];
+      const reusedAssetId = reusedStateId === 'selection'
+        ? selection.id
+        : reusedStateId ? selection.id + '--' + reusedStateId : null;
+      if (assetId === selection.id && reusedAssetId === selection.id) {
+        return Object.freeze({ id: selection.id, stateId, url: selection.url, sizes: matchCharacterImageSizes, avif: selection.avif, webp: selection.webp });
+      }
+      if (assetId !== selection.id + '--' + stateId && assetId !== reusedAssetId) {
+        throw new Error(key + ': incorrect asset mapping for ' + stateId);
+      }
+      const expectedAssetStateId = assetId === selection.id + '--' + stateId
+        ? stateId
+        : reusedStateId;
       const asset = assets.get(assetId);
-      if (!asset || asset.ownerId !== ownerId || asset.skinId !== skinId || asset.stateId !== stateId) {
+      if (!asset || asset.ownerId !== ownerId || asset.skinId !== skinId ||
+        asset.stateId !== expectedAssetStateId) {
         throw new Error(key + ': missing or incorrect asset for ' + stateId);
       }
       const variants = readVariants(assetId, asset.variants, urls);

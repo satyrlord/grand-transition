@@ -31,7 +31,9 @@ local background in the scene manifest. The four foundation scenes use opaque
 backgrounds without fixed moderators or foreground plates. They share the
 Milestone 023 crop core, interface-safe regions, dimensions, and AVIF/WebP
 variants. Gameplay must not use title artwork or a shared neutral fallback.
-Final layered presentation and audio remain in Milestone 028.
+Final layered presentation and audio remain in Milestone 028; it supersedes
+each foundation scene's interim opaque background with one transparent
+foreground plate and one distinct music treatment.
 
 Any new generated interim portrait or scene follows the Milestone 023 flat
 cel-shaded editorial-cartoon direction. Interim status can reduce state count,

@@ -25,7 +25,11 @@ Buciumeana from Bartók's Romanian Folk Dances, Sz.56 (1915). Chris Breemer's
 2025 piano recording is dedicated to the public domain under CC0. The
 composition is public domain. These are Romanian folk-derived piano selections,
 not a claim that this recording was used on Romanian television in the 2000s.
-Other scenes retain public effects and optional speech without scene music.
+Before Milestone 028, other scenes retain public effects and optional speech
+without scene music. Milestone 028 supersedes that interim treatment with one
+distinct local music track for each of the six final playable scenes. It keeps
+the same recording, provenance, format, loudness, mixer, and crossfade
+contracts.
 
 The [recording entry](https://imslp.org/wiki/Special:ReverseLookup/991622)
 identifies the performer and dedication. `audio-manifest.json` records owner,

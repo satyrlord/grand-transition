@@ -12,64 +12,131 @@ export const stateFormats = Object.freeze(['avif', 'webp']);
 
 /** Derive skins from the selection manifest, never from a separate skin list. */
 export function statePackages(selectionManifest) {
-  return selectionManifest.assets.filter((asset) => contract.characterIds.includes(asset.ownerId));
+  if (!selectionManifest || !Array.isArray(selectionManifest.assets)) {
+    throw new Error('Character selection manifest must declare an asset inventory.');
+  }
+  if (!Array.isArray(contract.selectionArtFallbackSkinIds) ||
+      contract.selectionArtFallbackSkinIds.length !== 2 ||
+      new Set(contract.selectionArtFallbackSkinIds).size !== 2) {
+    throw new Error('Character state contract must declare exactly two unique selection-art fallbacks.');
+  }
+  const relevant = selectionManifest.assets.filter((asset) => contract.characterIds.includes(asset.ownerId));
+  for (const characterId of contract.characterIds) {
+    if (!relevant.some((asset) => asset.ownerId === characterId)) {
+      throw new Error(`${characterId}: selection portrait is missing from the final character state inventory.`);
+    }
+  }
+  for (const fallbackId of contract.selectionArtFallbackSkinIds) {
+    if (!relevant.some((asset) => asset.id === fallbackId)) {
+      throw new Error(`${fallbackId}: declared selection-art fallback is missing.`);
+    }
+  }
+  const packages = relevant.filter(
+    (asset) => !contract.selectionArtFallbackSkinIds.includes(asset.id),
+  );
+  if (packages.length !== contract.expectedPackageCount) {
+    throw new Error(
+      `Final character state inventory requires exactly ${contract.expectedPackageCount} state packages; found ${packages.length}.`,
+    );
+  }
+  return packages;
+}
+
+export function stateAssetId(skinId, stateId, availableStateIds) {
+  if (stateId === 'selection') return skinId;
+  if (availableStateIds.has(stateId)) return `${skinId}--${stateId}`;
+  const reusedStateId = contract.permittedStateAssetReuse[stateId];
+  if (reusedStateId === 'selection') return skinId;
+  if (reusedStateId && availableStateIds.has(reusedStateId)) {
+    return `${skinId}--${reusedStateId}`;
+  }
+  throw new Error(`${skinId}/${stateId}: required state master is missing and has no available declared reuse.`);
+}
+
+export async function prepareCharacterStatePackage(characterRoot, skin) {
+  const sources = [];
+  const availableStateIds = new Set();
+  for (const state of contract.states.filter(({ id }) => id !== 'selection')) {
+    const relativePath = `states/${skin.id}/${state.id}.png`;
+    let input;
+    try {
+      input = await readFile(path.join(characterRoot, relativePath));
+    } catch (error) {
+      if (error?.code === 'ENOENT' && contract.permittedStateAssetReuse[state.id]) continue;
+      throw error;
+    }
+    const metadata = await sharp(input).metadata();
+    if (metadata.format !== 'png' || metadata.width !== 2048 || metadata.height !== 2048 || !metadata.hasAlpha) {
+      throw new Error(`${relativePath}: state master must be a transparent 2048x2048 PNG.`);
+    }
+    availableStateIds.add(state.id);
+    sources.push({ skin, state, relativePath, input });
+  }
+  for (const state of contract.states) stateAssetId(skin.id, state.id, availableStateIds);
+  return { skin, sources, availableStateIds };
+}
+
+export async function buildCharacterStatePackage(prepared, variantsRoot) {
+  const { skin, sources, availableStateIds } = prepared;
+  const assets = await mapWithConcurrency(sources, 3, async ({ state, relativePath, input }) => {
+    const id = `${skin.id}--${state.id}`;
+    const variants = [];
+    for (const width of stateWidths) {
+      for (const format of stateFormats) {
+        const output = await encodeVariant(input, width, format);
+        if (output.length > CHARACTER_BYTE_BUDGETS[format]) throw new Error(`${id}: ${format} exceeds its byte budget.`);
+        const file = `${id}-${width}x${width}.${format}`;
+        await writeFile(path.join(variantsRoot, file), output);
+        variants.push({ path: `states/variants/${file}`, width, height: width, format, bytes: output.length, sha256: sha256(output) });
+      }
+    }
+    return {
+      id, ownerType: 'character', ownerId: skin.ownerId, skinId: skin.skinId,
+      stateId: state.id, poseId: state.id, expressionId: state.id,
+      sourceDescription: 'Original flat cel-shaded editorial-cartoon character state created for Grand Transition.',
+      licenseIdentifier: 'LicenseRef-Grand-Transition-Original',
+      source: { path: relativePath, width: 2048, height: 2048, format: 'png', bytes: input.length, sha256: sha256(input) },
+      focalPoint: { x: 0.5, y: 0.32 },
+      crop: { x: 0, y: 0, width: 1, height: 1, strategy: 'full-body-safe-margin-v1' },
+      variants,
+    };
+  });
+  return {
+    manifestPackage: {
+      ownerId: skin.ownerId,
+      skinId: skin.skinId,
+      states: contract.states.map((state) => ({
+        stateId: state.id,
+        assetId: stateAssetId(skin.id, state.id, availableStateIds),
+        durationMs: state.durationMs,
+        loop: state.loop,
+      })),
+    },
+    assets,
+  };
 }
 
 export async function buildCharacterStates({ characterRoot = path.resolve('src/assets/characters') } = {}) {
   const root = path.resolve(characterRoot);
   const selectionManifest = JSON.parse(await readFile(path.join(root, 'character-manifest.json'), 'utf8'));
   const packages = statePackages(selectionManifest);
-  const sources = [];
+  const preparedPackages = [];
   // Complete preflight before any output changes. Selection reuses its approved baseline.
   for (const skin of packages) {
-    for (const state of contract.states.filter(({ id }) => id !== 'selection')) {
-      const relativePath = `states/${skin.id}/${state.id}.png`;
-      const input = await readFile(path.join(root, relativePath));
-      const metadata = await sharp(input).metadata();
-      if (metadata.format !== 'png' || metadata.width !== 2048 || metadata.height !== 2048 || !metadata.hasAlpha) {
-        throw new Error(`${relativePath}: state master must be a transparent 2048x2048 PNG.`);
-      }
-      sources.push({ skin, state, relativePath, input });
-    }
+    preparedPackages.push(await prepareCharacterStatePackage(root, skin));
   }
   const work = await mkdtemp(path.join(root, '.character-states-build-'));
   try {
     const variantsRoot = path.join(work, 'variants');
     await mkdir(variantsRoot);
-    const assets = await mapWithConcurrency(sources, 3, async ({ skin, state, relativePath, input }) => {
-      const id = `${skin.id}--${state.id}`;
-      const variants = [];
-      for (const width of stateWidths) {
-        for (const format of stateFormats) {
-          const output = await encodeVariant(input, width, format);
-          if (output.length > CHARACTER_BYTE_BUDGETS[format]) throw new Error(`${id}: ${format} exceeds its byte budget.`);
-          const file = `${id}-${width}x${width}.${format}`;
-          await writeFile(path.join(variantsRoot, file), output);
-          variants.push({ path: `states/variants/${file}`, width, height: width, format, bytes: output.length, sha256: sha256(output) });
-        }
-      }
-      return {
-        id, ownerType: 'character', ownerId: skin.ownerId, skinId: skin.skinId,
-        stateId: state.id, poseId: state.id, expressionId: state.id,
-        sourceDescription: 'Original flat cel-shaded editorial-cartoon character state created for Grand Transition.',
-        licenseIdentifier: 'LicenseRef-Grand-Transition-Original',
-        source: { path: relativePath, width: 2048, height: 2048, format: 'png', bytes: input.length, sha256: sha256(input) },
-        focalPoint: { x: 0.5, y: 0.32 },
-        crop: { x: 0, y: 0, width: 1, height: 1, strategy: 'full-body-safe-margin-v1' },
-        variants,
-      };
-    });
+    const builtPackages = [];
+    for (const prepared of preparedPackages) {
+      builtPackages.push(await buildCharacterStatePackage(prepared, variantsRoot));
+    }
     const manifest = {
       schemaVersion: 1,
-      packages: packages.map((skin) => ({
-        ownerId: skin.ownerId, skinId: skin.skinId,
-        states: contract.states.map((state) => ({
-          stateId: state.id,
-          assetId: state.id === 'selection' ? skin.id : `${skin.id}--${state.id}`,
-          durationMs: state.durationMs, loop: state.loop,
-        })),
-      })),
-      assets,
+      packages: builtPackages.map(({ manifestPackage }) => manifestPackage),
+      assets: builtPackages.flatMap(({ assets }) => assets),
     };
     await writeFile(path.join(work, 'state-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
     const outputRoot = path.resolve(root, 'states');

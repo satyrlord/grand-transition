@@ -468,24 +468,29 @@ test('renders an immutable complete match snapshot and previews without changing
 test('renders the foundation scene with AVIF, WebP, and protected crop metadata', async () => {
   const match = await startMatch('county-council-ballroom');
   const pictures = [...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture')];
-  expect(pictures).toHaveLength(1);
-  const picture = pictures[0]!;
-  expect(picture.dataset.sceneKind).toBe('manifest');
-  expect(picture.dataset.sceneAsset).toBe('county-council-ballroom');
-  expect([...picture.querySelectorAll('source')].map(source => source.type)).toEqual(['image/avif', 'image/webp']);
-  for (const source of picture.querySelectorAll('source')) {
-    expect(source.srcset).toMatch(/640w.*1280w.*1920w/u);
-    expect(source.srcset).toContain('county-council-ballroom');
+  expect(pictures).toHaveLength(3);
+  expect(pictures.map(({ dataset }) => dataset.sceneAsset)).toEqual([
+    'county-council-ballroom',
+    'county-council-ballroom-foreground',
+    'county-council-ballroom-foreground',
+  ]);
+  for (const picture of pictures) {
+    expect(picture.dataset.sceneKind).toBe('manifest');
+    expect([...picture.querySelectorAll('source')].map(source => source.type)).toEqual(['image/avif', 'image/webp']);
+    for (const source of picture.querySelectorAll('source')) {
+      expect(source.srcset).toMatch(/640w.*1280w.*1920w/u);
+      expect(source.srcset).toContain(picture.dataset.sceneAsset!);
+    }
+    expect(picture.dataset.sceneCropCore).toBe(JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }));
+    const image = picture.querySelector<HTMLImageElement>('img')!;
+    expect(image.width).toBeGreaterThan(0);
+    expect(image.getAttribute('width')).toBe('1920');
+    expect(image.getAttribute('height')).toBe('1080');
+    await image.decode();
+    expect(image.currentSrc).toContain(picture.dataset.sceneAsset!);
+    expect(image.complete).toBe(true);
+    expect(image.naturalWidth).toBeGreaterThan(0);
   }
-  expect(picture.dataset.sceneCropCore).toBe(JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }));
-  const image = picture.querySelector<HTMLImageElement>('img')!;
-  expect(image.width).toBeGreaterThan(0);
-  expect(image.getAttribute('width')).toBe('1920');
-  expect(image.getAttribute('height')).toBe('1080');
-  await image.decode();
-  expect(image.currentSrc).toContain('county-council-ballroom');
-  expect(image.complete).toBe(true);
-  expect(image.naturalWidth).toBeGreaterThan(0);
 });
 
 test('shows complete long private phrases at the minimum viewport', async () => {

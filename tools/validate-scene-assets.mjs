@@ -16,9 +16,13 @@ import replacementBaseline from './scene-replacement-baseline.json' with { type:
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'county-council-ballroom.png',
+  'county-council-ballroom-foreground.png',
   'midnight-call-in-studio.png',
+  'midnight-call-in-studio-foreground.png',
   'palace-press-hall.png',
+  'palace-press-hall-foreground.png',
   'influencer-campaign-livestream.png',
+  'influencer-campaign-livestream-foreground.png',
   'modern-debate-studio.png',
   'modern-debate-studio-desks.png',
   'transition-era-television-studio.png',
@@ -42,6 +46,10 @@ const REQUIRED_SAFE_RECTANGLES = Object.freeze({
   lowerLeftAction: Object.freeze({ x: 0.125, y: 0.66, width: 0.115, height: 0.28 }),
   lowerRightAction: Object.freeze({ x: 0.76, y: 0.66, width: 0.115, height: 0.28 }),
 });
+const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
+  ['centralInteraction', 'lowerLeftAction', 'lowerRightAction'].map((name) =>
+    Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] })),
+);
 const REQUIRED_CROP_CORE = Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 1 });
 const LEFT_DESK_FOCAL_RECTANGLE = Object.freeze({
   x: 0.26,
@@ -141,11 +149,12 @@ function validatePoint(value, context) {
 }
 
 function expectedLayer(id) {
-  const isForeground = id.endsWith('-desks');
+  const suffix = ['-desks', '-foreground'].find((candidate) => id.endsWith(candidate));
+  const isForeground = suffix !== undefined;
   return {
     isForeground,
     layerRole: isForeground ? 'foreground' : 'back',
-    ownerId: isForeground ? id.slice(0, -'-desks'.length) : id,
+    ownerId: suffix ? id.slice(0, -suffix.length) : id,
   };
 }
 
@@ -247,7 +256,12 @@ async function inspectRaster(filePath, format, width, height, context) {
   return { input, metadata };
 }
 
-export async function inspectAlpha(input, isForeground, context, { nativeAlpha = false } = {}) {
+export async function inspectAlpha(
+  input,
+  isForeground,
+  context,
+  { nativeAlpha = false, transparentRectangles = [] } = {},
+) {
   let decoded;
   try {
     decoded = await sharp(input)
@@ -314,6 +328,22 @@ export async function inspectAlpha(input, isForeground, context, { nativeAlpha =
   }
   if (cornerOffsets.some((offset) => decoded.data[offset] !== 0)) {
     throw new Error(`${context} foreground must have transparent outer corners.`);
+  }
+  for (const { name, rectangle } of transparentRectangles) {
+    const left = Math.max(0, Math.ceil(rectangle.x * width - 0.5));
+    const right = Math.min(width, Math.ceil((rectangle.x + rectangle.width) * width - 0.5));
+    const top = Math.max(0, Math.ceil(rectangle.y * height - 0.5));
+    const bottom = Math.min(height, Math.ceil((rectangle.y + rectangle.height) * height - 0.5));
+    for (let y = top; y < bottom; y += 1) {
+      for (let x = left; x < right; x += 1) {
+        if (decoded.data[(y * width + x) * 4 + 3] !== 0) {
+          throw new Error(
+            `${context} must keep shared safe rectangle "${name}" fully transparent; ` +
+              `found visible alpha at ${x},${y}.`,
+          );
+        }
+      }
+    }
   }
 }
 
@@ -633,7 +663,12 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
         `Scene asset "${asset.id}" source SHA-256 does not match the file.`,
       );
     }
-    const alphaOptions = { nativeAlpha: hasNativeAlphaProvenance(source.input) };
+    const alphaOptions = {
+      nativeAlpha: hasNativeAlphaProvenance(source.input),
+      transparentRectangles: asset.id.endsWith('-foreground')
+        ? REQUIRED_FOREGROUND_CLEAR_RECTANGLES
+        : [],
+    };
     await inspectAlpha(source.input, asset.identity.isForeground, `Scene asset "${asset.id}" source`, alphaOptions);
 
     for (const variant of asset.variants) {

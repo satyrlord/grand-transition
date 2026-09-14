@@ -290,7 +290,7 @@ source-only review does not satisfy them.
 27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
     The current artwork and phrase catalog have safety and normal CI evidence.
     Additional Milestone 028 artwork is not a prerequisite.
-28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 19.
+28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
     Final phrase volume, art, audio treatment, and variety evidence are present.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Phase 1 implements the full Romanian

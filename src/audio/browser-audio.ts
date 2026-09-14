@@ -1,13 +1,16 @@
-import { effectIds, type AudioPort, type AudioScene, type AudioStatus,
+import { effectIds, sceneMusicTrackIds, type AudioPort, type AudioScene, type AudioStatus,
   type EffectId, type MixerSettings } from './audio-port';
 
-const tracks = {
+const tracks: Readonly<Record<Exclude<AudioScene, null>, readonly string[]>> = {
   menu: ['menu-theme'],
-  'transition-era-television-studio': [
-    'transition-era-television-studio-theme',
-  ],
-} as const;
-const assetIds = [...tracks.menu, ...tracks['transition-era-television-studio'], ...effectIds];
+  'transition-era-television-studio': [sceneMusicTrackIds['transition-era-television-studio']],
+  'modern-debate-studio': [sceneMusicTrackIds['modern-debate-studio']],
+  'county-council-ballroom': [sceneMusicTrackIds['county-council-ballroom']],
+  'midnight-call-in-studio': [sceneMusicTrackIds['midnight-call-in-studio']],
+  'palace-press-hall': [sceneMusicTrackIds['palace-press-hall']],
+  'influencer-campaign-livestream': [sceneMusicTrackIds['influencer-campaign-livestream']],
+};
+const assetIds = [...new Set([...Object.values(tracks).flat(), ...effectIds])];
 const fadeSeconds = 0.3;
 type Format = 'ogg' | 'mp3';
 type Dependencies = {

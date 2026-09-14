@@ -2,7 +2,7 @@
 
 For scene and character raster generation or editing, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-Its Sunburst API route owns transparent output, exact-size masters, and output above 1080p.
+Its Flare API route owns transparent output, exact-size masters, and output above 1080p.
 Its internal-tool route serves small opaque drafts.
 An authorized artwork edit includes permitted target references and standard bounded native-alpha preparation.
 Follow its character or scene integration module before replacing shipping assets.

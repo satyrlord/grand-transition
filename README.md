@@ -31,12 +31,12 @@ Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-024, 025, 028, 030, and 031 remain incomplete. Milestone 023 is marked
-complete by its owning specification.
+024, 025, 030, and 031 remain incomplete. Milestones 023 and 028 are marked
+complete by their owning specifications.
 
 Milestone 027 is complete against the current artwork and 1,009-phrase catalog.
-Its editorial safety review and normal CI checks pass. Additional artwork remains
-in Milestone 028. Manual user reviews and separate large balance or variety runs
+Its editorial safety review and normal CI checks pass. Milestone 028 completes
+the final art, scene audio, and content-validation packages. Manual user reviews and separate large balance or variety runs
 are not completion requirements.
 Run
 `npm run review:release -- --phase prepare --output tmp/review-027`
@@ -57,14 +57,16 @@ The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
 default local portrait. Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
-content includes two fictional layered debate studios, four playable
-foundation scenes with distinct local cartoon backgrounds, and one English game-locale
-bundle.
+content includes six fictional layered scenes. Each scene has a distinct local
+cartoon background and transparent foreground, and two debate studios include
+fixed fictional moderators. The game has one English game-locale bundle.
 
 The final asset contract permits one default skin and zero through eight
-alternate skins per archetype. The fixed character and studio baselines have
-manifests and generated AVIF and WebP variants. Character state packages are
-implemented. Final visual acceptance remains owned by the milestone contract.
+alternate skins per archetype. The 30 skins comprise 19 defaults and 11
+alternates. Twenty-eight skins have complete nine-state packages; the Local
+Baron municipal-patron skin and Reluctant Theorem use the declared selection-art
+fallback. Character and scene manifests provide generated AVIF and WebP
+variants. Final visual acceptance remains owned by the milestone contract.
 
 All final character and scene imagery uses one shared cel-shaded
 editorial-cartoon style. Character skins and states follow the detailed
@@ -115,8 +117,9 @@ Operator AI policies. The local nine-rung ladder persists its exact opponents,
 scenes, wins, losses, and completion.
 
 Sound starts after a user interaction. Settings controls Master, Music, Effects,
-and Speech. CC0 piano recordings of Romanian Folk Dances cover the menu and
-transition-era studio. Other scenes retain effects without scene music.
+and Speech. CC0 piano treatments from _Romanian Folk Dances_ cover the menu and
+one distinct local track for each of the six playable scenes. The nine effects
+remain shared, and scenes add no room tone.
 Speech defaults on. Opening the menu prepares about 91 MB of local neural model
 resources. Male and female human skins use the selected streamed British voices.
 The `GPU voices` checkbox defaults on. When speech is enabled, it downloads

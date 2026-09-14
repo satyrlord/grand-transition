@@ -1,6 +1,6 @@
 ---
 name: generate-scene-openai
-description: Generate, edit, inspect, and integrate Grand Transition scene and character raster art. Use the Sunburst API for transparent assets, exact-size masters, and output above 1080p. Use the internal image tool for small opaque drafts.
+description: Generate, edit, inspect, and integrate Grand Transition scene and character raster art. Use the Flare API for transparent assets, exact-size masters, and output above 1080p. Use the internal image tool for small opaque drafts.
 ---
 
 # Generate and edit raster art with OpenAI
@@ -53,13 +53,13 @@ Apply transparency and exact master requirements before the pixel-count boundary
 
 | Asset requirement | Required route |
 | --- | --- |
-| Transparent output at any supported size | Sunburst API through the repository helper |
-| Exact-size master, including a smaller opaque master | Sunburst API through the repository helper |
-| Above 2,073,600 pixels | Sunburst API through the repository helper |
+| Transparent output at any supported size | Flare API through the repository helper |
+| Exact-size master, including a smaller opaque master | Flare API through the repository helper |
+| Above 2,073,600 pixels | Flare API through the repository helper |
 | Opaque draft at or below 2,073,600 pixels | Internal `image_gen` tool |
 
 Resolve the shipping master size separately from the API source request size.
-Use the declared master size directly only when Sunburst supports those dimensions.
+Use the declared master size directly only when Flare supports those dimensions.
 Character masters use transparent 2048 by 2048 output.
 Use 3840 by 2160 for a requested 4K landscape scene.
 For a 1920-by-1080 shipping scene, request a 3840-by-2160 source, then apply the reviewed scene preparation.

@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { BrowserAudio } from '../../src/audio/browser-audio';
-import { effectIds, mixerGains } from '../../src/audio/audio-port';
+import { audioScene, effectIds, mixerGains, sceneMusicTrackIds } from '../../src/audio/audio-port';
 import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
 
 function audioHarness() {
@@ -9,12 +9,12 @@ function audioHarness() {
     curves: Float32Array[];
     cancelScheduledValues: ReturnType<typeof vi.fn>;
   }> = [];
-  const nodes: Array<{ loop: boolean; onended: (() => void) | null; start: ReturnType<typeof vi.fn>;
+  const nodes: Array<{ buffer: { id?: string } | null; loop: boolean; onended: (() => void) | null; start: ReturnType<typeof vi.fn>;
     stop: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }> = [];
   const context = {
     currentTime: 10, state: 'running', destination: {},
     resume: vi.fn(async () => {}), close: vi.fn(async () => {}),
-    decodeAudioData: vi.fn(async () => ({ duration: 1 })),
+    decodeAudioData: vi.fn(async (input: ArrayBuffer & { id?: string }) => ({ duration: 1, id: input.id })),
     createGain: () => {
       let curveStart: number | null = null;
       let curveEnd = 0;
@@ -51,7 +51,8 @@ function audioHarness() {
       return node;
     },
   };
-  const load = vi.fn(async (_id: string, _format: 'ogg' | 'mp3') => new ArrayBuffer(1));
+  const load = vi.fn(async (id: string, _format: 'ogg' | 'mp3'): Promise<ArrayBuffer> =>
+    Object.assign(new ArrayBuffer(1), { id }));
   const changed = vi.fn();
   const createContext = vi.fn(() => context as unknown as AudioContext);
   const audio = new BrowserAudio(changed, { createContext, load });
@@ -59,6 +60,8 @@ function audioHarness() {
 }
 
 describe('audio adapters', () => {
+  const musicTrackIds = ['menu-theme', ...Object.values(sceneMusicTrackIds)];
+
   test.each([0, 1])('mixer equations at volume %s', (value) => {
     expect(mixerGains({ masterVolume: value, musicVolume: value, effectsVolume: value, speechVolume: value }))
       .toEqual({ music: value, effects: value, speech: value });
@@ -88,7 +91,7 @@ describe('audio adapters', () => {
     expect(changed).toHaveBeenCalledTimes(notifications);
     expect(createContext).toHaveBeenCalledOnce();
     expect(load.mock.calls.map(([id]) => id)).toEqual([
-      'menu-theme', 'transition-era-television-studio-theme', ...effectIds,
+      ...musicTrackIds, ...effectIds,
     ]);
     expect(nodes.filter((node) => node.loop)).toHaveLength(1);
     audio.dispose();
@@ -103,7 +106,7 @@ describe('audio adapters', () => {
     });
     await audio.enable();
     expect(audio.status).toBe('ready');
-    expect(load.mock.calls.map(([, format]) => format)).toEqual(Array.from({ length: 11 }, () => ['ogg', 'mp3']).flat());
+    expect(load.mock.calls.map(([, format]) => format)).toEqual(Array.from({ length: 16 }, () => ['ogg', 'mp3']).flat());
     audio.dispose();
     const failed = audioHarness();
     failed.load.mockRejectedValue(new Error('missing'));
@@ -136,6 +139,20 @@ describe('audio adapters', () => {
     expect(nodes[1]!.stop).toHaveBeenCalledExactlyOnceWith(12.3);
     nodes[1]!.onended!();
     expect(nodes.every((node) => node.disconnect.mock.calls.length === 1)).toBe(true);
+    audio.dispose();
+  });
+
+  test('routes every final scene to its distinct music buffer and rejects unknown scene IDs', async () => {
+    const { audio, context, nodes } = audioHarness();
+    await audio.enable();
+    expect(nodes[0]!.buffer?.id).toBe('menu-theme');
+    for (const [sceneId, trackId] of Object.entries(sceneMusicTrackIds)) {
+      context.currentTime += 1;
+      audio.setScene(audioScene(sceneId));
+      expect(nodes.at(-1)!.buffer?.id, sceneId).toBe(trackId);
+      expect(nodes.at(-1)!.loop, sceneId).toBe(true);
+    }
+    expect(audioScene('catalog-foundation-neutral-scene')).toBeNull();
     audio.dispose();
   });
 

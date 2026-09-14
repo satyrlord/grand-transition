@@ -75,5 +75,5 @@ Generate first, then copy the original output into the workspace.
 The internal tool may return different dimensions. Verify the saved file.
 Do not upscale a smaller result or call it an exact-size master.
 If its output is insufficient, report the size or alpha mismatch.
-For an authorized exact-master task without a route restriction, use the required Sunburst route from the start.
+For an authorized exact-master task without a route restriction, use the required Flare route from the start.
 Honor an explicit internal-only instruction. Report any resulting master limitation.
