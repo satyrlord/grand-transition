@@ -6,23 +6,37 @@
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
 **Production-file budget:** 10
 
-## Schoolteacher robot
+## Government AI robot skins
 
-Include a third Government AI skin: a severe female communist robot
-schoolteacher, voiced by Microsoft Zira. Use the stable skin ID
-`schoolteacher`. Add one selection master and eight state masters with
-transparent 2048-square PNGs and the normal AVIF/WebP variants. Reuse the same
-standing artwork for selection and idle. Give the other seven states distinct
-poses and expressions. The inventory contains 29 selection masters and eight
-state packages containing 64 state masters. Keep the 27 baseline replacement
-hashes unchanged. Declare the reviewed additions in `portrait-layout.json`.
-Keep the baseline inventory and add the reviewed files.
+Government AI has three original mechanical skins. The default skin is a
+lanky, obsolete civic robot with a trapezoid amber display, crooked antenna,
+patched cream-and-blue chassis, blank form folder, long limbs, and oversized
+work boots. The `alternate` skin is a broad analytical records robot with a
+hexagonal cyan display, tapered aluminum cabinet chassis, blank dossier,
+three-tool drawer, and four-wheel undercarriage. Both keep the character's
+administrative function, dry temperament, and paperwork prop logic while using
+distinct original silhouettes and face systems.
 
-The private prompts are under `research/government-ai--schoolteacher/prompts/`.
-The existing sprites were generated with the built-in image tool and processed
-with the approved green-key tool. New transparent art follows the native-first
-workflow below. Keep uniform 32-pixel canvas padding around the
-smallest variant. Keep the 27 baseline character files unchanged.
+The `schoolteacher` skin is a severe female-coded communist robot
+schoolteacher, voiced by Microsoft Zira. It uses a rounded enamel mechanical
+face, angular brass spectacles, three antenna vanes, burgundy academic chassis
+panels, a ruler, a blank gradebook, a bell-shaped lower chassis, and a
+three-wheel teaching platform. Do not use an apron, frills, maid cap, skirt,
+vacuum, cleaning tool, or other domestic-service costume cue.
+
+Each skin has one transparent 2048-square selection master and eight state
+masters with the normal AVIF/WebP variants. The schoolteacher reuses the exact
+selection artwork for its idle master and gives the other seven states distinct
+poses and expressions. The current executable inventory contains 30 selection
+masters and 28 state packages containing 164 state masters. Keep the 27-entry
+replacement-baseline record unchanged. Declare all reviewed selections in
+`portrait-layout.json` and keep the complete manifest inventories coherent.
+
+The 2026-09-14 replacement selections use text-only OpenAI generation. Their
+state masters use only the new original selection masters as identity
+references; no superseded portrait or state raster is a generation input.
+All replacement masters follow the native-first transparency workflow below.
+Keep uniform 32-pixel canvas padding around the smallest variant.
 
 Keep the fixed 27-entry selection manifest as the baseline inventory. Store
 additional slice states separately from filename-discovered portrait skins.

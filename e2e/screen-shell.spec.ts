@@ -175,7 +175,8 @@ for (const viewport of supportedViewports) {
         robotCanvas.height,
       ).data;
       let robotFacePixelCount = 0;
-      let robotFacePixelXTotal = 0;
+      let robotFacePixelMinimumX = robotCanvas.width;
+      let robotFacePixelMaximumX = -1;
       for (let y = 0; y < robotCanvas.height; y += 1) {
         for (let x = 0; x < robotCanvas.width; x += 1) {
           const pixelIndex = (y * robotCanvas.width + x) * 4;
@@ -183,23 +184,35 @@ for (const viewport of supportedViewports) {
           const green = robotPixels[pixelIndex + 1]!;
           const blue = robotPixels[pixelIndex + 2]!;
           const alpha = robotPixels[pixelIndex + 3]!;
-          if (
-            y < robotCanvas.height * 0.26 &&
-            alpha > 64 &&
+          const cyanDisplayPixel =
             red < 80 &&
             green > 100 &&
             blue > 100 &&
             green > red * 1.7 &&
-            blue > red * 1.7
+            blue > red * 1.7;
+          const amberDisplayPixel =
+            red > 180 &&
+            green > 120 &&
+            blue < 100 &&
+            red > green * 1.05 &&
+            red < green * 1.8 &&
+            green > blue * 1.6;
+          if (
+            y < robotCanvas.height * 0.26 &&
+            alpha > 64 &&
+            (cyanDisplayPixel || amberDisplayPixel)
           ) {
             robotFacePixelCount += 1;
-            robotFacePixelXTotal += x;
+            robotFacePixelMinimumX = Math.min(robotFacePixelMinimumX, x);
+            robotFacePixelMaximumX = Math.max(robotFacePixelMaximumX, x);
           }
         }
       }
       const robotStyle = getComputedStyle(robotPortrait);
       const robotFaceCenterRatio =
-        robotFacePixelXTotal / robotFacePixelCount / robotCanvas.width;
+        (robotFacePixelMinimumX + robotFacePixelMaximumX) /
+        2 /
+        robotCanvas.width;
       const renderedRobotFaceCenter =
         robotPortraitBox.left + robotPortraitBox.width * robotFaceCenterRatio;
       const robotWindowCenter = robotWindowBox.left + robotWindowBox.width / 2;
@@ -319,10 +332,12 @@ for (const viewport of supportedViewports) {
     expect(
       geometry.robotRosterPortrait.transformOriginXRatio,
     ).toBeLessThanOrEqual(0.51);
-    expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0015);
+    // The 128px source keeps the amber face legible after quantization, while
+    // the 3x crop amplifies a one- or two-pixel source-center offset.
+    expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0009);
     expect(
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
-    ).toBeLessThanOrEqual(0.02);
+    ).toBeLessThanOrEqual(0.065);
     expect(geometry.rosterLayout).toEqual({
     rowCount: 5,
       gridInsideZone: true,
