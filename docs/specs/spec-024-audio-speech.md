@@ -25,17 +25,18 @@ Buciumeana from Bartók's Romanian Folk Dances, Sz.56 (1915). Chris Breemer's
 2025 piano recording is dedicated to the public domain under CC0. The
 composition is public domain. These are Romanian folk-derived piano selections,
 not a claim that this recording was used on Romanian television in the 2000s.
-Before Milestone 028, other scenes retain public effects and optional speech
-without scene music. Milestone 028 supersedes that interim treatment with one
-distinct local music track for each of the six final playable scenes. It keeps
-the same recording, provenance, format, loudness, mixer, and crossfade
-contracts.
+The transition-era television studio treatment and its bytes remain unchanged.
+
+Milestone 028 supersedes the interim no-music treatment for the other scenes
+with five scene-specific CC0 tracks. It keeps the format, loudness, mixer, and
+crossfade contracts. The manifest pins each separate source page, download,
+source hash, license, creator, edit, scene treatment, derivative hashes, and
+measured levels. `README.md` and `CREDITS.md` credit every shipped music track.
 
 The [recording entry](https://imslp.org/wiki/Special:ReverseLookup/991622)
-identifies the performer and dedication. `audio-manifest.json` records owner,
-source URL, license, original hash, movement, source start and duration,
-derivative hashes, formats, and measured levels. The build trims whole movements,
-applies short endpoint fades, and normalizes loudness. It adds no accompaniment.
+identifies the performer and dedication. The build trims the pinned source
+recordings, applies short endpoint fades, resamples them to 48 kHz, and
+normalizes loudness. It adds no accompaniment.
 
 Nine effects use the original project license: role-select, commit, light hit,
 heavy hit, weakness, combo, continuation break, comeback, and grammar mistake.
