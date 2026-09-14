@@ -466,15 +466,29 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
-test('renders the foundation scene with AVIF, WebP, and protected crop metadata', async () => {
-  const match = await startMatch('county-council-ballroom');
+test.each([
+  'county-council-ballroom', 'midnight-call-in-studio',
+  'palace-press-hall', 'influencer-campaign-livestream',
+])('renders %s furniture intact above portraits with protected crop metadata', async (scene) => {
+  const match = await startMatch(scene);
   const pictures = [...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture')];
-  expect(pictures).toHaveLength(3);
+  expect(pictures).toHaveLength(2);
   expect(pictures.map(({ dataset }) => dataset.sceneAsset)).toEqual([
-    'county-council-ballroom',
-    'county-council-ballroom-foreground',
-    'county-council-ballroom-foreground',
+    scene, `${scene}-foreground`,
   ]);
+  expect(match.querySelector('.broadcast-stage-props')).toBeNull();
+  const style = document.createElement('style');
+  style.textContent = matchScreenStyles;
+  document.head.append(style);
+  try {
+    const foreground = match.querySelector<HTMLImageElement>('.broadcast-stage-foreground')!;
+    const portrait = match.querySelector<HTMLElement>('.character-frame')!;
+    expect(getComputedStyle(foreground).clipPath).toBe('none');
+    expect(getComputedStyle(foreground).pointerEvents).toBe('none');
+    expect(Number(getComputedStyle(foreground).zIndex)).toBeGreaterThan(Number(getComputedStyle(portrait).zIndex));
+  } finally {
+    style.remove();
+  }
   for (const picture of pictures) {
     expect(picture.dataset.sceneKind).toBe('manifest');
     expect([...picture.querySelectorAll('source')].map(source => source.type)).toEqual(['image/avif', 'image/webp']);
@@ -485,8 +499,7 @@ test('renders the foundation scene with AVIF, WebP, and protected crop metadata'
     expect(picture.dataset.sceneCropCore).toBe(JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }));
     const image = picture.querySelector<HTMLImageElement>('img')!;
     expect(image.width).toBeGreaterThan(0);
-    expect(image.getAttribute('width')).toBe('1920');
-    expect(image.getAttribute('height')).toBe('1080');
+    expect(Number(image.getAttribute('width')) / Number(image.getAttribute('height'))).toBeCloseTo(16 / 9);
     await image.decode();
     expect(image.currentSrc).toContain(picture.dataset.sceneAsset!);
     expect(image.complete).toBe(true);

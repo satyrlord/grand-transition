@@ -467,7 +467,7 @@ playable body. It must not cover a playable face, signature hand gesture, or
 required prop. Hypertext Markup Language (HTML) content must also stay outside
 those three playable-character features.
 
-Render each foreground plate in two complementary clipped planes using the
+Render each of the two studio foreground plates in complementary clipped planes using the
 same asset, dimensions, and responsive crop. The upper plane ends at the
 62-percent desk-top line and renders behind playable characters. The lower
 plane starts at that line and renders in front of their lower bodies. Thus
@@ -577,6 +577,21 @@ low-detail background shapes behind live text. Do not put another face,
 required prop, scene identifier, text-like mark,
 or high-contrast ornament in it. A desk front can cross a lower action region
 only as a plain flat surface without a prop or important ornament.
+
+Scene 3 through Scene 6 use complete foreground plates above the portraits,
+without horizontal CSS clipping. Their central interaction rectangle must be
+fully transparent in the source and each runtime variant. The lower action
+rectangles do not require transparency: plain desk fronts must continue behind
+the HTML controls and cover the candidates' lower bodies. Do not erase these
+surfaces to clear an action rectangle.
+
+For each of these four foreground plates, validate the left lower-body strip
+at `x=18, y=74, width=4, height=18` and the right strip at
+`x=78, y=74, width=4, height=18`, in source-canvas percentages. Each row must
+have at least 90 percent near-opaque pixels, using the shared native-alpha
+opacity threshold. This check rejects severed, missing, or displaced fronts
+in sources and variants. It does not replace visual checks of desk height,
+perspective, contours, or the final portrait occlusion at each viewport.
 
 Protect the central 75 percent of master width as the four-by-three crop core.
 All moderators, standing desks, attached props, focal regions, and
@@ -893,8 +908,7 @@ Graphics file's relative path. The input and output roots must be different.
 
 ## Asset and motion contract
 
-Modern Debate Studio and Transition-Era Television Studio each use
-3840 by 2160 background and foreground masters.
+All six scenes use 3840 by 2160 background and foreground masters.
 
 Use the blonde adult editorial-cartoon moderator for Transition-Era Television
 Studio through the OpenAI API. Generate the background with
@@ -920,8 +934,16 @@ background. All four studio layers provide 640 by 360,
 Every variant derives from its final 3840 by 2160 PNG master. Record the
 actual generation or upscale origin in generic PNG provenance metadata.
 
-Other scene masters remain layered 1920 by 1080 files, with 640 by 360,
-1280 by 720, and 1920 by 1080 runtime variants. All scenes use the same
+County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and
+Influencer Campaign Livestream use native 3840 by 2160 OpenAI source art.
+Their source is `gpt-image-2.5-flare`, with one text-only composition per scene
+and reference edits for the deskless background. Foreground desk contours are
+extracted from the same opaque composition and fitted to the shared standing
+desk coordinates. The repository green-matte converter supplies antialiased
+alpha. Preserve these actual operations in the PNG and manifest provenance.
+Their background and foreground masters provide 640 by 360, 1280 by 720,
+1920 by 1080, 2560 by 1440, and 3840 by 2160 AVIF and WebP runtime variants.
+Do not upscale their old 1920 by 1080 masters. All scenes use the same
 normalized geometry. Character masters are transparent,
 square, and at least 2048 by 2048. Runtime character widths are 320, 640, and
 960.
@@ -940,6 +962,15 @@ Every raster runtime size has AVIF and WebP output. The manifest contains the ID
 owner type, owner ID, source description, and license identifier. It contains
 the SHA-256 source hash, format, pixel dimensions, and byte size. It also
 contains the focal point, crop rectangle, and generated variant paths.
+
+The scene builder supports `--only id1,id2` for selected asset IDs. The default
+build encodes every layer. A selected build reuses an unselected layer only
+when its master hash and source metadata match the existing manifest. Before
+encoding, verify each reused variant's expected path, declared quality, byte
+size, hash, decoded dimensions, format, and current byte budget. Reject an
+unknown ID, incomplete manifest, changed source, or invalid cached variant.
+Rebuild the complete manifest from the current contracts and install the full
+package together. Verify this with `tests/unit/build-scene-assets.test.ts`.
 
 The scene builder installs variants and their manifest as one package. If
 installation fails, restore only the backups created by that build. Do not
@@ -965,8 +996,8 @@ WebP fallback is at most 350 KiB. The selected scene and both selected
 character image packages total at most 3 mebibytes (MiB) in their preferred
 formats. Setup does not preload unselected match packages.
 Package validation selects each asset's largest declared runtime dimensions
-for each format, including 3840-pixel studio layers and 1920-pixel foundation
-layers. It checks the larger AVIF or WebP package total against the limit.
+for each format, including all 3840-pixel scene layers. It checks the larger
+AVIF or WebP package total against the limit.
 
 Each named character state maps to one pose and one expression. The set uses at
 least five distinct expressions and six distinct poses. The nine named states do

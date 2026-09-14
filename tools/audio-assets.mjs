@@ -22,14 +22,15 @@ const musicDefinitions = [
     sourceFile: 'romanian-folk-dances-breemer.mp3', sourceDurationSeconds: 322.011,
     provenance: breemerRecording,
     edit: { movement: 'Buciumeana', startSeconds: 181.3, durationSeconds: 43.7 } },
-  { id: 'modern-debate-studio-theme', sceneId: 'modern-debate-studio', duration: 43,
-    sourceFile: 'tension_theme.wav', sourceDurationSeconds: 43,
-    provenance: { title: 'Tension Theme', owner: 'Umplix', license: 'CC0-1.0',
-      source: 'https://opengameart.org/content/tension-theme',
-      download: 'https://opengameart.org/sites/default/files/tension_theme.wav',
-      sourceSha256: '322bd5f2334f038cab1bb65f218dd8593f5c0de883b1c14579e4425bdc03cfa8' },
-    treatment: 'Tense futuristic electronic theme for a modern televised debate.',
-    edit: { movement: 'Complete track', startSeconds: 0, durationSeconds: 43 } },
+  { id: 'modern-debate-studio-theme', sceneId: 'modern-debate-studio', duration: 66.20689342403628,
+    sourceFile: 'funked-up.mp3', sourceDurationSeconds: 66.27275,
+    provenance: { title: 'Funked Up', owner: 'Joth', license: 'CC0-1.0',
+      source: 'https://opengameart.org/content/funked-up',
+      download: 'https://opengameart.org/sites/default/files/Funked%20Up.mp3',
+      sourceSha256: '57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3' },
+    treatment: 'Rhodes, guitar, and bass groove for a lively televised debate.',
+    edit: { movement: 'Complete groove with encoder padding removed', startSeconds: 528 / 44100,
+      durationSeconds: 2919724 / 44100, seamless: true } },
   { id: 'county-council-ballroom-theme', sceneId: 'county-council-ballroom', duration: 37.8,
     sourceFile: 'apparitions_ball.ogg', sourceDurationSeconds: 37.89,
     provenance: { title: 'Apparitions Ball', owner: 'bobjt', license: 'CC0-1.0',
@@ -46,22 +47,25 @@ const musicDefinitions = [
       sourceSha256: '0e5cf555963479c60713a5640257fc6d65a272fad3a02113ab6a700e730ad447' },
     treatment: 'Low-key improvised jazz for a solitary late-night call-in broadcast.',
     edit: { movement: 'Opening loop', startSeconds: 0, durationSeconds: 60 } },
-  { id: 'palace-press-hall-theme', sceneId: 'palace-press-hall', duration: 31.4,
-    sourceFile: 'simple_battle_fanfare.wav', sourceDurationSeconds: 31.5,
-    provenance: { title: 'Simple Battle Fanfare', owner: 'Umplix', license: 'CC0-1.0',
-      source: 'https://opengameart.org/content/simple-battle-fanfare',
-      download: 'https://opengameart.org/sites/default/files/simple_battle_fanfare.wav',
-      sourceSha256: '9da29921bbd700d382788d84866975eed934ca821290237380c6da3b898d9094' },
-    treatment: 'Formal trumpet, timpani, and march figures for an official press hall.',
-    edit: { movement: 'Complete loop', startSeconds: 0, durationSeconds: 31.4 } },
-  { id: 'influencer-campaign-livestream-theme', sceneId: 'influencer-campaign-livestream', duration: 60,
+  { id: 'palace-press-hall-theme', sceneId: 'palace-press-hall', duration: 82.28571428571429,
+    sourceFile: 'intro-music.mp3', sourceDurationSeconds: 82.29025,
+    provenance: { title: 'Intro Music', owner: 'RonyDkid', license: 'CC0-1.0',
+      source: 'https://opengameart.org/content/intro-music-0',
+      download: 'https://opengameart.org/sites/default/files/game_1.mp3',
+      sourceSha256: '23c68e45ad6555288856f052b1cd2ab49d018bcc618cf8fdccc804e99a2727b9' },
+    treatment: 'Light pizzicato intrigue for palace press-room maneuvering.',
+    edit: { movement: 'Complete 48-bar phrase', startSeconds: 0,
+      durationSeconds: 82.28571428571429, seamless: true } },
+  { id: 'influencer-campaign-livestream-theme', sceneId: 'influencer-campaign-livestream', duration: 132.41379310344828,
     sourceFile: 'tryme.wav', sourceDurationSeconds: 66.21,
     provenance: { title: 'Try me!', owner: 'iamoneabe', license: 'CC0-1.0',
       source: 'https://opengameart.org/content/try-me',
       download: 'https://opengameart.org/sites/default/files/tryme.wav',
       sourceSha256: '5ae29cc1474e9826e290a1099b82d0420f9c7d4bc46e4f748c83d07a7e2a93c7' },
-    treatment: 'Gritty loopable trap beat for a campaign influencer livestream.',
-    edit: { movement: 'Opening loop', startSeconds: 0, durationSeconds: 60 } },
+    treatment: 'Gritty trap beat in a 64-bar arrangement with an eight-bar filtered breakdown.',
+    edit: { movement: 'Two complete 32-bar phrases at 116 BPM', startSeconds: 0,
+      durationSeconds: 66.20689655172414, repetitions: 2, breakdownSeconds: 16.551724137931036,
+      seamless: true } },
 ];
 export const sceneMusicDefinitions = musicDefinitions.filter(({ sceneId }) => sceneId !== 'menu');
 const effectDefinitions = [
@@ -106,7 +110,13 @@ export function validateMusicDefinitions(definitions = musicDefinitions) {
     }
     const { startSeconds, durationSeconds } = definition.edit ?? {};
     if (!Number.isFinite(startSeconds) || !Number.isFinite(durationSeconds) ||
-      durationSeconds !== definition.duration || startSeconds < 0 || durationSeconds <= 0 ||
+      durationSeconds * (definition.edit.repetitions ?? 1) !== definition.duration ||
+      ![1, 2].includes(definition.edit.repetitions ?? 1) ||
+      (definition.edit.breakdownSeconds !== undefined &&
+        (!definition.edit.seamless || definition.edit.repetitions !== 2 ||
+          !Number.isFinite(definition.edit.breakdownSeconds) || definition.edit.breakdownSeconds <= 0 ||
+          definition.edit.breakdownSeconds >= durationSeconds)) ||
+      startSeconds < 0 || durationSeconds <= 0 ||
       startSeconds + durationSeconds > definition.sourceDurationSeconds) {
       throw new Error(`Music edit is outside the pinned recording: ${definition.id}.`);
     }
@@ -140,6 +150,29 @@ export function audioMeasurements(file) {
   const values = JSON.parse(report[0]);
   return { codec: stream[1].split(' ')[0], sampleRate: Number(stream[2]),
     integratedLufs: Number(values.input_i), truePeakDbfs: Number(values.input_tp) };
+}
+
+export function loopMeasurements(file) {
+  const pcm = execFileSync(ffmpeg, ['-hide_banner', '-nostdin', '-i', file,
+    '-ar', String(sampleRate), '-ac', '2', '-f', 'f32le', '-'],
+  { maxBuffer: 128 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  let seamJump = 0;
+  for (let channel = 0; channel < 2; channel += 1) {
+    seamJump = Math.max(seamJump, Math.abs(pcm.readFloatLE(channel * 4) -
+      pcm.readFloatLE(pcm.length - 8 + channel * 4)));
+  }
+  return { durationSeconds: pcm.length / 8 / sampleRate, seamJump };
+}
+
+export function validateLoopMeasurement(value, duration, format) {
+  if (!Number.isFinite(value.durationSeconds) || Math.abs(value.durationSeconds - duration) > 1 / sampleRate) {
+    throw new Error('Music loop duration differs from the complete phrase arrangement.');
+  }
+  // Lossy transform codecs can move endpoint samples. The master must join
+  // exactly; runtime endpoints have a bounded residual below -30 dBFS.
+  if (!Number.isFinite(value.seamJump) || value.seamJump > (format === 'wav' ? 1 / 32768 : 0.03)) {
+    throw new Error('Music loop has an excessive waveform discontinuity.');
+  }
 }
 
 export function validateMeasurement(value, kind, format) {
@@ -189,6 +222,9 @@ export async function validateAudio(root = 'src/assets/audio') {
       if (format !== 'wav') runtimeHashes.add(digest);
       const actual = audioMeasurements(path.join(root, fileName));
       validateMeasurement(actual, kind, format);
+      if (music?.edit.seamless) {
+        validateLoopMeasurement(loopMeasurements(path.join(root, fileName)), music.duration, format);
+      }
       if (JSON.stringify(actual) !== JSON.stringify(entry.measurements)) {
         throw new Error(`Audio measurements are stale: ${fileName}`);
       }
@@ -220,6 +256,45 @@ function compose(index, duration) {
   return buffer;
 }
 
+// Preserve the exact musical period. A short raised-cosine correction closes
+// the waveform discontinuity without a fade to silence or an overlapping beat.
+export function closeLoopSeam(pcm) {
+  const result = Buffer.from(pcm);
+  const frames = result.length / 8;
+  if (!Number.isInteger(frames) || frames < 2) throw new Error('Stereo float PCM is required.');
+  const correctionFrames = Math.min(240, frames);
+  for (let channel = 0; channel < 2; channel += 1) {
+    const delta = result.readFloatLE((frames - 1) * 8 + channel * 4) - result.readFloatLE(channel * 4);
+    for (let frame = 0; frame < correctionFrames; frame += 1) {
+      const gain = (1 + Math.cos(Math.PI * frame / (correctionFrames - 1))) / 2;
+      const offset = frame * 8 + channel * 4;
+      result.writeFloatLE(result.readFloatLE(offset) + delta * gain, offset);
+    }
+  }
+  return result;
+}
+
+export function arrangeMusicLoop(pcm, edit) {
+  const cycle = closeLoopSeam(pcm);
+  if (edit.repetitions !== 2) return cycle;
+  const reprise = Buffer.from(cycle);
+  const breakdownFrames = Math.round(edit.breakdownSeconds * sampleRate);
+  const state = [0, 0];
+  const coefficient = 1 - Math.exp(-2 * Math.PI * 1400 / sampleRate);
+  for (let frame = 0; frame < breakdownFrames; frame += 1) {
+    // Enter and leave the reduced-bandwidth section smoothly. The percussion
+    // stays at its original timing, and no source samples are added or removed.
+    const mix = Math.sin(Math.PI * frame / (breakdownFrames - 1)) ** 2 * 0.85;
+    for (let channel = 0; channel < 2; channel += 1) {
+      const offset = frame * 8 + channel * 4;
+      const dry = cycle.readFloatLE(offset);
+      state[channel] += coefficient * (dry - state[channel]);
+      reprise.writeFloatLE(dry * (1 - mix) + state[channel] * mix, offset);
+    }
+  }
+  return Buffer.concat([cycle, reprise]);
+}
+
 async function assetFilesMatchManifest(root, asset) {
   if (!asset || !Array.isArray(asset.files) || asset.files.length !== 3) return false;
   try {
@@ -236,6 +311,7 @@ async function buildAudio(root = 'src/assets/audio') {
   await mkdir(temporary, { recursive: true });
   const preservedIds = new Set([
     'menu-theme', 'transition-era-television-studio-theme',
+    'county-council-ballroom-theme', 'midnight-call-in-studio-theme',
     ...effectDefinitions.map(([id]) => id),
   ]);
   let existingAssets = [];
@@ -271,12 +347,30 @@ async function buildAudio(root = 'src/assets/audio') {
       }
       await writeFile(reference, referenceBytes);
       const prepared = path.join(temporary, `${id}-prepared.wav`);
-      run(['-y', '-ss', String(edit.startSeconds), '-t', String(duration), '-i', reference,
-        '-af', `afade=t=in:d=0.04,afade=t=out:st=${duration - 0.25}:d=0.25,${filter}`,
-        '-map_metadata', '-1', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', prepared]);
+      if (edit.seamless) {
+        const decoded = execFileSync(ffmpeg, ['-hide_banner', '-nostdin', '-ss', String(edit.startSeconds),
+          '-i', reference, '-t', String(edit.durationSeconds), '-ar', String(sampleRate), '-ac', '2',
+          '-f', 'f32le', '-'], { maxBuffer: 128 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+        await writeFile(raw, arrangeMusicLoop(decoded, edit));
+        run(['-y', '-f', 'f32le', '-ar', String(sampleRate), '-ac', '2', '-i', raw,
+          '-af', filter, '-ar', String(sampleRate), '-c:a', 'pcm_s16le', prepared]);
+      } else {
+        run(['-y', '-ss', String(edit.startSeconds), '-t', String(duration), '-i', reference,
+          '-af', `afade=t=in:d=0.04,afade=t=out:st=${duration - 0.25}:d=0.25,${filter}`,
+          '-map_metadata', '-1', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', prepared]);
+      }
       const adjustmentDb = -16 - audioMeasurements(prepared).integratedLufs;
-      run(['-y', '-i', prepared, '-af', `volume=${adjustmentDb}dB`, '-map_metadata', '-1',
-        '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', master]);
+      if (edit.seamless) {
+        const normalized = execFileSync(ffmpeg, ['-hide_banner', '-nostdin', '-i', prepared,
+          '-af', `volume=${adjustmentDb}dB`, '-f', 'f32le', '-'],
+        { maxBuffer: 128 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+        await writeFile(raw, closeLoopSeam(normalized));
+        run(['-y', '-f', 'f32le', '-ar', String(sampleRate), '-ac', '2', '-i', raw,
+          '-map_metadata', '-1', '-c:a', 'pcm_s16le', master]);
+      } else {
+        run(['-y', '-i', prepared, '-af', `volume=${adjustmentDb}dB`, '-map_metadata', '-1',
+          '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', master]);
+      }
     } else {
       const effectIndex = effectDefinitions.findIndex(([effectId]) => effectId === id);
       await writeFile(raw, compose(effectIndex, duration));

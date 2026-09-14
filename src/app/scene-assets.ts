@@ -63,8 +63,8 @@ type SceneAssetBase = Readonly<{
 
 export type SceneManifestAsset = SceneAssetBase & Readonly<{
   kind: 'manifest';
-  width: 1920 | 3840;
-  height: 1080 | 2160;
+  width: 3840;
+  height: 2160;
   avif: SceneAssetSource;
   sizes: typeof sceneImageSizes;
   focalPoint: ScenePoint;
@@ -112,8 +112,8 @@ type ManifestAsset = {
   layerRole: 'back' | 'foreground';
   source: {
     path: string;
-    width: 1920 | 3840;
-    height: 1080 | 2160;
+    width: 3840;
+    height: 2160;
     format: 'png';
   };
   focalPoint: ScenePoint;
@@ -161,9 +161,8 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
       if (!isRecord(asset.source)) {
         throw new Error(`Scene asset "${id}" is missing its source.`);
       }
-      const isStudio = ['modern-debate-studio', 'transition-era-television-studio'].includes(ownerId);
-      const width = isStudio ? 3840 : 1920;
-      const height = isStudio ? 2160 : 1080;
+      const width = 3840;
+      const height = 2160;
       if (
         asset.source.width !== width ||
         asset.source.height !== height ||

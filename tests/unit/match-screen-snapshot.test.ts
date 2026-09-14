@@ -229,8 +229,8 @@ describe('match-screen snapshot', () => {
       kind: 'manifest',
       assetId: 'county-council-ballroom',
       depth: 0,
-      width: 1920,
-      height: 1080,
+      width: 3840,
+      height: 2160,
       url: expect.stringContaining('county-council-ballroom'),
     });
     expect(layer.sources).toEqual({ avif: layer.avif, webp: layer.webp });

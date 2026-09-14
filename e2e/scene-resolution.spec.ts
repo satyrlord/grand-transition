@@ -1,7 +1,9 @@
 import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 
-for (const scene of ['modern-debate-studio', 'transition-era-television-studio']) {
+for (const scene of ['modern-debate-studio', 'transition-era-television-studio',
+  'county-council-ballroom', 'midnight-call-in-studio', 'palace-press-hall',
+  'influencer-campaign-livestream']) {
   for (const sample of [
     { width: 1280, height: 720, dpr: 1, sourceWidth: 1280 },
     { width: 1920, height: 1080, dpr: 1, sourceWidth: 1920 },

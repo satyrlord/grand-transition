@@ -371,7 +371,10 @@ export class GrandTransitionMatch extends LitElement {
                 arenaReaction.playerId === second.playerId,
             )}
             ${foregroundLayers.map((layer) => html`
-              ${this.renderSceneLayer(layer, 'broadcast-stage-props')}
+              ${layer.assetId === 'transition-era-television-studio-desks' ||
+                layer.assetId === 'modern-debate-studio-desks'
+                ? this.renderSceneLayer(layer, 'broadcast-stage-props')
+                : nothing}
               ${this.renderSceneLayer(layer, 'broadcast-stage-foreground')}
             `)}
           </section>

@@ -156,13 +156,14 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(() => assertReview(review, { sha256: 'same' })).toThrow('style');
   });
 
-  test('preserves exact 4K masters and downscales only for a smaller declared master', async () => {
+  test('preserves exact 4K masters for studios and foundation scenes without upscaling', async () => {
     const bytes = await raster(3840, 2160), facts = await inspectImage(bytes);
     const native = await prepareImage(bytes, reviewFor(facts.sha256), 'modern-debate-studio');
     expect(native.output).toEqual(bytes);
     expect(native.record.operation).toBe('preserve-native-pixels');
-    const smaller = await prepareImage(bytes, reviewFor(facts.sha256), 'county-council-ballroom');
-    expect(await sharp(smaller.output).metadata()).toMatchObject({ width: 1920, height: 1080 });
+    const foundation = await prepareImage(bytes, reviewFor(facts.sha256), 'county-council-ballroom');
+    expect(foundation.output).toEqual(bytes);
+    expect(foundation.record.operation).toBe('preserve-native-pixels');
     const hd = await raster(1920, 1080), hdFacts = await inspectImage(hd, { width: 1920, height: 1080 });
     await expect(prepareImage(hd, reviewFor(hdFacts.sha256), 'modern-debate-studio', { width: 1920, height: 1080 })).rejects.toThrow('Do not upscale');
     await expect(prepareImage(bytes, reviewFor(facts.sha256), 'undeclared-scene')).rejects.toThrow('not declared');

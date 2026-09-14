@@ -40,18 +40,18 @@ async function makePair(
   root: string,
   options: { left?: boolean; right?: boolean; outside?: boolean } = {},
 ) {
-  const width = 160;
-  const height = 90;
+  const width = 3840;
+  const height = 2160;
   const deskless = Buffer.alloc(width * height * 3, 24);
   const composite = Buffer.from(deskless);
   if (options.left ?? true) {
-    fillRect(composite, width, { x: 41, y: 51, width: 9, height: 39 }, [210, 30, 40]);
+    fillRect(composite, width, { x: 984, y: 1224, width: 216, height: 936 }, [210, 30, 40]);
   }
   if (options.right ?? true) {
-    fillRect(composite, width, { x: 110, y: 51, width: 9, height: 39 }, [30, 70, 220]);
+    fillRect(composite, width, { x: 2640, y: 1224, width: 216, height: 936 }, [30, 70, 220]);
   }
   if (options.outside) {
-    fillRect(composite, width, { x: 78, y: 40, width: 3, height: 3 }, [250, 250, 250]);
+    fillRect(composite, width, { x: 1872, y: 960, width: 72, height: 72 }, [250, 250, 250]);
   }
   const compositePath = path.join(root, 'composite.png');
   const desklessPath = path.join(root, 'deskless.png');
@@ -76,16 +76,6 @@ async function rgbAt(filePath: string, x: number, y: number): Promise<number[]> 
   return [...data.subarray(offset, offset + 3)];
 }
 
-async function normalizedRgbAt(filePath: string, x: number, y: number): Promise<number[]> {
-  const { data, info } = await sharp(filePath)
-    .resize({ width: 1920, height: 1080, fit: 'fill', kernel: sharp.kernel.lanczos3 })
-    .removeAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  const offset = (y * info.width + x) * info.channels;
-  return [...data.subarray(offset, offset + 3)];
-}
-
 describe('scene layer derivation', () => {
   test('derives exact back and green-foreground pixels and reports stable hashes', async () => {
     const root = await fixtureRoot();
@@ -96,7 +86,11 @@ describe('scene layer derivation', () => {
     const second = await deriveSceneLayers({ ...pair, ...secondOutputs });
 
     expect(first).toEqual(second);
-    expect(first.inputDimensions).toEqual({ width: 160, height: 90 });
+    expect(first.inputDimensions).toEqual({ width: 3840, height: 2160 });
+    expect(first.dimensions).toEqual({ width: 3840, height: 2160 });
+    for (const filePath of [firstOutputs.backOutputPath, firstOutputs.foregroundOutputPath]) {
+      expect(await sharp(filePath).metadata()).toMatchObject({ width: 3840, height: 2160 });
+    }
     expect(first.outsideChangeCount).toBe(0);
     expect(first.maskPixelCount).toBeGreaterThan(0);
     expect(first.sideMaskBounds.left).not.toBeNull();
@@ -108,10 +102,10 @@ describe('scene layer derivation', () => {
       await readFile(secondOutputs.foregroundOutputPath),
     );
 
-    expect(await rgbAt(firstOutputs.backOutputPath, 540, 800)).toEqual([24, 24, 24]);
-    expect(await rgbAt(firstOutputs.backOutputPath, 960, 800)).toEqual([24, 24, 24]);
-    expect(await rgbAt(firstOutputs.foregroundOutputPath, 540, 800)).toEqual([210, 30, 40]);
-    expect(await rgbAt(firstOutputs.foregroundOutputPath, 960, 800)).toEqual([0, 255, 0]);
+    expect(await rgbAt(firstOutputs.backOutputPath, 1080, 1600)).toEqual([24, 24, 24]);
+    expect(await rgbAt(firstOutputs.backOutputPath, 1920, 1600)).toEqual([24, 24, 24]);
+    expect(await rgbAt(firstOutputs.foregroundOutputPath, 1080, 1600)).toEqual([210, 30, 40]);
+    expect(await rgbAt(firstOutputs.foregroundOutputPath, 1920, 1600)).toEqual([0, 255, 0]);
     expect(first.hashes.backSha256).toMatch(/^[a-f0-9]{64}$/u);
     expect(JSON.parse(await readFile(firstOutputs.reportOutputPath, 'utf8'))).toEqual(first);
   }, 30_000);
@@ -130,9 +124,8 @@ describe('scene layer derivation', () => {
     const result = await deriveSceneLayers({ ...pair, ...outputs(root) });
 
     expect(result.outsideChangeCount).toBeGreaterThan(0);
-    expect(await rgbAt(outputs(root).backOutputPath, 960, 480)).toEqual(
-      await normalizedRgbAt(pair.compositePath, 960, 480),
-    );
+    expect(await rgbAt(outputs(root).backOutputPath, 1908, 996)).toEqual([250, 250, 250]);
+    expect(await rgbAt(outputs(root).foregroundOutputPath, 1908, 996)).toEqual([0, 255, 0]);
   });
 
   test('rejects an output path that would overwrite an input or another output', async () => {

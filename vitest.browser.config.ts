@@ -17,6 +17,11 @@ const browserApiPort = await findAvailableLoopbackPort();
 
 export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
+  define: {
+    'process.env.GRAND_TRANSITION_QUALITY_GATE': JSON.stringify(
+      process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick' ? 'quick' : 'full',
+    ),
+  },
   optimizeDeps: { include: ['lit/directives/style-map.js', 'onnxruntime-web/wasm', 'phonemizer'] },
   test: {
     include: [

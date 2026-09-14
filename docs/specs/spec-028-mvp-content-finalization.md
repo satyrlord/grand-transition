@@ -144,14 +144,18 @@ color is local to authored materials and lighting, not a complete scene grade.
   energy, clips, and shadow bans.
 
 Each scene has a layered master, landscape crops, lighting, motion, music
-treatment, and 25 to 35 owned phrases. The two studio packages retain their
-3840x2160 back and foreground masters. The other four scenes use 1920x1080 back
-and foreground masters. Their final foreground IDs are
+treatment, and 25 to 35 owned phrases. All six packages use
+3840x2160 back and foreground masters, with 640, 1280, 1920, 2560, and
+3840-pixel-wide runtime variants in both formats. The four foundation foreground IDs are
 `county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`,
 `palace-press-hall-foreground`, and
 `influencer-campaign-livestream-foreground`. Each transparent foreground stays
-within the shared scene plane and keeps the central interaction and side-action
-safe rectangles clear.
+within the shared scene plane and keeps the central interaction rectangle
+clear. Broad standing-desk fronts cover both candidates' lower bodies. Plain
+fronts can occupy side-action rectangles beneath the HTML controls. Do not cut
+holes or truncate the fronts to clear those controls. Background layers contain
+no duplicate standing desks. Render these four foreground plates above portraits
+without the two studio plates' horizontal prop clipping.
 
 Scene motion remains decorative and pointer-inert. Transition-era lamps keep
 `transition-era-studio-lights`; Modern Debate keeps
@@ -175,16 +179,25 @@ The final treatments use these independently pinned CC0 recordings and edits:
 | Scene | Recording | Treatment and source window |
 | --- | --- | --- |
 | Transition-Era Television Studio | Chris Breemer's recording of Bartók's _Buciumeana_ | Existing folk-derived piano treatment, unchanged; 181.3 through 225.0 seconds |
-| Modern Debate Studio | Umplix, _Tension Theme_ | Tense futuristic electronic theme; complete 43.0-second track |
+| Modern Debate Studio | Joth, _Funked Up_ | Rhodes, guitar, and bass groove; complete 66.207-second phrase with encoder padding removed |
 | County Council Ballroom | bobjt, _Apparitions Ball_ | Slightly uncanny ballroom waltz; opening 37.8 seconds |
 | Midnight Call-In Studio | Alex McCulloch (Pro Sensory), _jazz improvisation looped_ | Low-key improvised late-night jazz; opening 60.0 seconds |
-| Palace Press Hall | Umplix, _Simple Battle Fanfare_ | Formal trumpet, timpani, and march figures; opening 31.4 seconds |
-| Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty loopable trap beat; opening 60.0 seconds |
+| Palace Press Hall | RonyDkid, _Intro Music_ | Light pizzicato intrigue; complete 82.286-second phrase |
+| Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty trap beat; 132.414-second arrangement of two complete 32-bar phrases at 116 BPM, with an eight-bar filtered breakdown |
 
 `README.md` and `CREDITS.md` provide the source-page links and license credits.
 The manifest pins the direct downloads and source hashes. Validation rejects a
 music license other than public domain, CC0, or CC BY and rejects non-HTTPS or
 unpinned provenance.
+
+Scenes 2, 5, and 6 use complete musical phrases. Their masters close the
+waveform seam with a five-millisecond raised-cosine correction and have no
+endpoint fade to silence. Scene 6 keeps the source beat and varies the first
+eight bars of its second phrase with a smoothly blended low-pass treatment.
+This is an arrangement of the existing recording, not newly composed material.
+Validation checks decoded duration and the sample discontinuity at the loop
+boundary in all three formats. These signal checks do not establish musical
+fit or subjective listening approval.
 
 The validated catalog has
 these inclusive general-pool ranges:

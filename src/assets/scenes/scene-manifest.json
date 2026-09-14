@@ -6,14 +6,14 @@
       "ownerType": "scene",
       "ownerId": "county-council-ballroom",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "county-council-ballroom.png",
-        "sha256": "f72bfa42bbb75dca10a14bd8f623a36794e344045d5039e369d158dcf62bde42",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 2295828,
+        "sha256": "622f5ea6b35ad97b36f41cc12aebac29470c30caf8412fed7099aee7a685242f",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 6078642,
         "format": "png"
       },
       "focalPoint": {
@@ -89,55 +89,91 @@
           "path": "variants/county-council-ballroom-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 13809,
+          "bytes": 15441,
           "format": "avif",
           "quality": 70,
-          "sha256": "3f9390fef06374210f1d0b73c6e9b3efc3cf142337587f7a713c722158c17cc1"
+          "sha256": "71715a7e7d762f9fc04fc8022f49eedce116a38efdf5db7cf4bd180fa1e6a627"
         },
         {
           "path": "variants/county-council-ballroom-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 17056,
+          "bytes": 19434,
           "format": "webp",
           "quality": 86,
-          "sha256": "7f9df6bccbfc415ee186326d88d3924f1ea5605abd7de171935796714676fbed"
+          "sha256": "70e76524f2f429e2c05c4c2990f0cf4a81c8f07cb952164bd215e9d8b1178d89"
         },
         {
           "path": "variants/county-council-ballroom-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 35860,
+          "bytes": 44528,
           "format": "avif",
           "quality": 70,
-          "sha256": "c87bc72104b4008ba6e5abe9b70314540db7f15811531f6277feda79a5906e91"
+          "sha256": "f3f452c497c485e9f8467fc651417d22e6fbd422e35af9211dad7e963cbcebc6"
         },
         {
           "path": "variants/county-council-ballroom-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 47690,
+          "bytes": 60228,
           "format": "webp",
           "quality": 86,
-          "sha256": "4702c75a991e27e1b766001c12eb4c9ade1aedca4a0395689a41664bae2ed6e9"
+          "sha256": "12e8b1328a92c16ae33e2fd9a084033fbe18054c74baa2aab446d493739d8bc4"
         },
         {
           "path": "variants/county-council-ballroom-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 58674,
+          "bytes": 83081,
           "format": "avif",
           "quality": 70,
-          "sha256": "9eac01163b4f5149d7afb4b24855ecc2c7d8f917f5d9ba87f86fa4b8d7225910"
+          "sha256": "67d95820f99527efdca877ee6aa161c86df44e35eb40f7f90c045d07976b17d6"
         },
         {
           "path": "variants/county-council-ballroom-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 77904,
+          "bytes": 110420,
           "format": "webp",
           "quality": 86,
-          "sha256": "68cd79a82c305446bfaeaa406b605e3b8b3cf10b2a97d16335e04ce96d04ad91"
+          "sha256": "efe10d6bbcf4a3fb46bf0cf800e8a02656719865a43f4390bb3226eddcfab758"
+        },
+        {
+          "path": "variants/county-council-ballroom-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 127544,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "b9f4144f340ba396e2932069fbf26f4c82f52482e2495acfc7180fe975f0368f"
+        },
+        {
+          "path": "variants/county-council-ballroom-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 165820,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "367bcdfc8ff6017c6fd0555a2e53e53552aa9840bb869dda06ac19a5226cbe70"
+        },
+        {
+          "path": "variants/county-council-ballroom-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 225398,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "174639c91b03abe0bc910efc7da353fbdeffdf485d44591f1fd2d13eee10a4dc"
+        },
+        {
+          "path": "variants/county-council-ballroom-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 288706,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "5a842c10bb704420202382335a19fdfbe6c83762897f82e5db175732ea07e630"
         }
       ]
     },
@@ -146,14 +182,14 @@
       "ownerType": "scene",
       "ownerId": "county-council-ballroom",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "county-council-ballroom-foreground.png",
-        "sha256": "5c9bee65be27723243b0f8f50d6e467f2346df3482f900de8f88e4c197aa245c",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 367174,
+        "sha256": "e99907ac66f7b30d989de543dfbcf87f0e3dd9fa8f7bad39e604aa7781ab73e1",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 1214396,
         "format": "png"
       },
       "focalPoint": {
@@ -239,55 +275,91 @@
           "path": "variants/county-council-ballroom-foreground-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 6432,
+          "bytes": 2368,
           "format": "avif",
           "quality": 70,
-          "sha256": "e8d68e2321ea426787ce68b01a45c85270b2ea24a64fd8a8a5223464e291b3b9"
+          "sha256": "b0321989b0c81e7fce54ff23d4bddbf68e1d0bcf6902781c107ff3cb32fe773e"
         },
         {
           "path": "variants/county-council-ballroom-foreground-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 9604,
+          "bytes": 3160,
           "format": "webp",
           "quality": 86,
-          "sha256": "ff373b4a6d71d3b71a9be7f3bbe151a19d9a44a91100ce819781ac7e01537f39"
+          "sha256": "2666a239bff84c5a167dfe9a59870b9dbb086da5d3430cf3f482b071a6a46aa3"
         },
         {
           "path": "variants/county-council-ballroom-foreground-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 14691,
+          "bytes": 5466,
           "format": "avif",
           "quality": 70,
-          "sha256": "ff912eb3cf0356337911c51d186d35aff6ad915ddfad49dffd1027df6f8b143d"
+          "sha256": "ce16a1acdff2bb5627c57becb97548ca2c813b55b8e0ac83d8e7f0ba90d5b503"
         },
         {
           "path": "variants/county-council-ballroom-foreground-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 23924,
+          "bytes": 8966,
           "format": "webp",
           "quality": 86,
-          "sha256": "84210f33015eb5c75c6d33a41dc6236f14d6996ebb3fa6e06ce7d34d978c7f12"
+          "sha256": "58d44e258b512edc641a3a1acf2c4a8912ea1dbc345879ce2dc6c315f2c57693"
         },
         {
           "path": "variants/county-council-ballroom-foreground-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 23151,
+          "bytes": 8467,
           "format": "avif",
           "quality": 70,
-          "sha256": "6a95468db83ae0c89748e0fd261d6e4c9b536f30d520941a36a4fb75cf1bfab3"
+          "sha256": "d2a1dd1e5f4602ab119638d6c381c9658f5d5ce71ab3d1fe5ae205d76e28d2cc"
         },
         {
           "path": "variants/county-council-ballroom-foreground-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 34302,
+          "bytes": 15618,
           "format": "webp",
           "quality": 86,
-          "sha256": "babab61ca2f6aa9ea54bd478937a21f7ce784e4cf9f95ca32252620dfc712248"
+          "sha256": "09f9318fb3c7c7898c67f2d392ce5eec9c8350423e9759b7860b89cc43330eda"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 12083,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "6bf5992e0aaf0916eb10a3d071a7fb10069d68d2d9426eb67a50c467dd7246a3"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 23352,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "b15bb3933d237e8653f0cb188ba12ec725e92c33d0b886913d8997206e8f48f5"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 18104,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "fe0b579f751070fc0c3dea4a28d7f5c2c22ceca922bc7808281039ed7246daa5"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 40978,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "81a3f1bbd7dd05c09846ecc6241e661949ed2651f6d69db3562e581a899c2446"
         }
       ]
     },
@@ -296,14 +368,14 @@
       "ownerType": "scene",
       "ownerId": "midnight-call-in-studio",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "midnight-call-in-studio.png",
-        "sha256": "0343d232979b68b3cf5d4f4cdacd72e943707a4e48c2dd0970afb95e91497896",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 1596839,
+        "sha256": "720cc66051b8a2f166cb1dfaacd0af1249552a259d28437ae5a397a84528ed9f",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 5301854,
         "format": "png"
       },
       "focalPoint": {
@@ -379,55 +451,91 @@
           "path": "variants/midnight-call-in-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 8271,
+          "bytes": 11986,
           "format": "avif",
           "quality": 70,
-          "sha256": "9fb9be3822f0ea6eaa8c076f490c59e23269ec7cf6ce9a4458ce5d6d446918b9"
+          "sha256": "26683ec524b0692b8d2f1600daf6538604604c4a15d08c72ea566add70fea779"
         },
         {
           "path": "variants/midnight-call-in-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 10488,
+          "bytes": 15440,
           "format": "webp",
           "quality": 86,
-          "sha256": "17d01d3b287acbde0e2ce1e50032fbe7c65c610f5c09feeda3ca69eeff8407e0"
+          "sha256": "0040502f6f0db0380ea0788a0c54f30c77a765fa6dcefdc030115536366ddd22"
         },
         {
           "path": "variants/midnight-call-in-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 20089,
+          "bytes": 33934,
           "format": "avif",
           "quality": 70,
-          "sha256": "568b0248fdcb3ec59123e0319c11eaa366592f54952cc5a3d296fedda5c4f920"
+          "sha256": "43e437b80a64c1761290dafb4f57a9699871315ab3dc7b354dddd2e3f8a28d33"
         },
         {
           "path": "variants/midnight-call-in-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 27840,
+          "bytes": 46802,
           "format": "webp",
           "quality": 86,
-          "sha256": "84820c17b47337e5a8facbfa6af0b2dee0e0d262ed535ae7435c7b70d89a1b82"
+          "sha256": "7017ea0926dcab2c0a6e1f523db82e8780221682dda1d0104bae585e175c05a2"
         },
         {
           "path": "variants/midnight-call-in-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 33866,
+          "bytes": 60439,
           "format": "avif",
           "quality": 70,
-          "sha256": "9d3a9dd4f0ead9509596a2b0654f6463bbc52a020e1ea4fef3e6a7894679fe90"
+          "sha256": "42715f41f27f9ccf6bdef5efdaba15a410ceaa5044a26693c501570b41c4a9ca"
         },
         {
           "path": "variants/midnight-call-in-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 47284,
+          "bytes": 85334,
           "format": "webp",
           "quality": 86,
-          "sha256": "d760f4d9021fad50436b42c50587bd52bee32471b9c0589a27c8942535e8662a"
+          "sha256": "adaa5a851d3d6cd527afbcbe04c837834b7f2d33da15abc2227f3ce022a86b1f"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 90079,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "22e74dd6fd5d54d7216d685393360442a628d986f5fcdca705cc4f261ff72d6e"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 130392,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "d5cd3cc2ebb515d3a98e3b57dfd63bc855121561e4139310f3ab96d504253338"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 163957,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "887f4f2d29bdf9a8094dc7a4ac419fe36df7118e88e816ab4b438782ba5c7ccd"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 224836,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "c1a94401fc58c9a7fc260b1eef9ee7e9fe61698735031deb7937d7d28c4e497c"
         }
       ]
     },
@@ -436,14 +544,14 @@
       "ownerType": "scene",
       "ownerId": "midnight-call-in-studio",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160; side groups were translated 160 source pixels outward, then downsampled to 1920x1080 and converted from a green matte.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "midnight-call-in-studio-foreground.png",
-        "sha256": "be7ca5ee565dbaec99e92d40d41e4a23ccb4ce38e678b30e093e7b5fb6d2d53b",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 138661,
+        "sha256": "6e534355eb84e71a67e8fbf8dc4c518ee9ac0db34217d61b4df5c6af1def1441",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 1257225,
         "format": "png"
       },
       "focalPoint": {
@@ -529,55 +637,91 @@
           "path": "variants/midnight-call-in-studio-foreground-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 2651,
+          "bytes": 2275,
           "format": "avif",
           "quality": 70,
-          "sha256": "e254c645724d43340286228acf62dcd26e9793df5ee21156d640637e41cd4d39"
+          "sha256": "6cd3ff500c81ce0768f20532f4ccdaef0f7ba8a6fe751ea40def63ffd11662d4"
         },
         {
           "path": "variants/midnight-call-in-studio-foreground-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 3708,
+          "bytes": 2688,
           "format": "webp",
           "quality": 86,
-          "sha256": "b078247a9cc3f59c6ae9320c9b3cfb697a4b3a3cf4649fd820ba014443bcc32c"
+          "sha256": "0797eb4a329271a913fa50150d92f895193f70f08fb0704f36b7b01705b5fd98"
         },
         {
           "path": "variants/midnight-call-in-studio-foreground-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 5113,
+          "bytes": 4222,
           "format": "avif",
           "quality": 70,
-          "sha256": "cea0e63f6fbec9efcc4e7a1c751f88f5ef0c721ae9dba47227c8225b23badb32"
+          "sha256": "f138275105085ff16f17cf0f0dbc7f79a3744dc55bff2d15ae2b5d7d3b2fa6e0"
         },
         {
           "path": "variants/midnight-call-in-studio-foreground-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 8660,
+          "bytes": 6666,
           "format": "webp",
           "quality": 86,
-          "sha256": "d8768a58b8d3528b4838d0dc85d8a921201a9ded0e4dfd969710a85a36fff2e9"
+          "sha256": "03762cea50b671ca3857603788bc0400c65dd9c65b37f72005d4aba664ab9c9f"
         },
         {
           "path": "variants/midnight-call-in-studio-foreground-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 6799,
+          "bytes": 6215,
           "format": "avif",
           "quality": 70,
-          "sha256": "31262ea807a9c38e3639836c86af1ac53736533c2c4672cf89f2afa847161786"
+          "sha256": "5e2e5fa65e25ebe5cd09ddd04004247eed46a42487c2c54e13ebdac1ec869e0f"
         },
         {
           "path": "variants/midnight-call-in-studio-foreground-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 11860,
+          "bytes": 12400,
           "format": "webp",
           "quality": 86,
-          "sha256": "83303ec99be5b6e41e3ead83568bd0ec8ef7ffb638f39a33786eb9ef0b4201fb"
+          "sha256": "02748575ebb3f94a76db7a10e4d405c8a6daaaf9916c28ddad30768f572de4b4"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 8618,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "3cf3f239b2b4d11a52e01d41100e6c7b6fb675e6974d45aaec733deb5e95356b"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 18388,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "b78cc5a4248271f86cd3855c58b52730e7631be1f67882a9b8d5019c92f1a763"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 13400,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "d669331fb660535b48b3e5dc44b8b6bdc643200ca7b0d0159fefec4b9210294a"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 32878,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "63e132bb5f7497b1e843d0c6a2eec0e369eaade3bd702c8108e28c2a24a78c09"
         }
       ]
     },
@@ -586,14 +730,14 @@
       "ownerType": "scene",
       "ownerId": "palace-press-hall",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "palace-press-hall.png",
-        "sha256": "a6b4ef5d0eb709e596ddf2eb2a653eb3a4dfbb4d3f63511c542a467f1599c6c0",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 2394627,
+        "sha256": "972328dc483ce1d0bd4f0fe782b86f743bf62754f1f34e56f1ccdc0fa854dd38",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 5404484,
         "format": "png"
       },
       "focalPoint": {
@@ -669,55 +813,91 @@
           "path": "variants/palace-press-hall-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 14894,
+          "bytes": 8736,
           "format": "avif",
           "quality": 70,
-          "sha256": "15aa53fbefed73e5e90990c4e05fa6c34d95b681b6c1188acbaf4bcec648577d"
+          "sha256": "8eeeb8f12c1ca390bc7d7f069d110ad61ad49e83abea521eaaa9be02569a72be"
         },
         {
           "path": "variants/palace-press-hall-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 19712,
+          "bytes": 10890,
           "format": "webp",
           "quality": 86,
-          "sha256": "901d29610f48f59ab649414c1c3f37c765cc7aae372de459f19a83e672b9ed64"
+          "sha256": "71216c387341ee3f7e963fa142cebb958692e20eebac0238c0372ce49ef2363f"
         },
         {
           "path": "variants/palace-press-hall-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 40373,
+          "bytes": 26600,
           "format": "avif",
           "quality": 70,
-          "sha256": "b88a74c6ce1fb94604a29aeea38ec95f1a1b635ce7d4b06a2b87f344b3baf16d"
+          "sha256": "30e68e81095a49d1c668cad82a3be7d14ad02117883c6fc1619a18e2374b3e08"
         },
         {
           "path": "variants/palace-press-hall-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 58364,
+          "bytes": 34758,
           "format": "webp",
           "quality": 86,
-          "sha256": "542288f71c59710aed8a2557e8da78f62c4a10a7669e038fb23be159bf8f5441"
+          "sha256": "a69fee2c4d7895883f9ce4f10b3ac20b68886b9ec617613e0546d0486434874f"
         },
         {
           "path": "variants/palace-press-hall-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 66813,
+          "bytes": 51363,
           "format": "avif",
           "quality": 70,
-          "sha256": "9646a14147639c58b315b0f7470830de3f33c16075ea37fcdb7c7ee4d2896926"
+          "sha256": "bb5fc49993a59277751982cc52d6f59ccb8a1acf2f611d02ceaadd45e08d902f"
         },
         {
           "path": "variants/palace-press-hall-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 100062,
+          "bytes": 66644,
           "format": "webp",
           "quality": 86,
-          "sha256": "0786c58767b4065970f60971e31b50bed0e99893f7ba7042be2b3f9be0d0dcc2"
+          "sha256": "b5515a01536de1f57f63a176131d92c633fc3d8a5cc0a861ff04914233ce4c4b"
+        },
+        {
+          "path": "variants/palace-press-hall-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 79705,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "0c07271644b8f903d12507cf789fcdb87a5bd9f1a52a5ef3924bfceeaaf30207"
+        },
+        {
+          "path": "variants/palace-press-hall-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 103902,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "6ef714650bd95eaca6504649f5443b8eeebff5b3bf5a3120b6807fd9074d0c2e"
+        },
+        {
+          "path": "variants/palace-press-hall-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 148725,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "38c0b17cafe488f98a2a15950b25b88abe9d0c54b209a7323ee42b85937b678c"
+        },
+        {
+          "path": "variants/palace-press-hall-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 191436,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "6b2d037791e697e4a9d992e8a8f5196858cbdaa8ce23fb0bdf5f1bc1ecc5a60f"
         }
       ]
     },
@@ -726,14 +906,14 @@
       "ownerType": "scene",
       "ownerId": "palace-press-hall",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded geometric podium foreground authored locally at 1920x1080 and converted from a green matte.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "palace-press-hall-foreground.png",
-        "sha256": "eed84a20cc163119e2d117923ef67db17ebe8e02cb9d315369f284f00b2f8d67",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 10251,
+        "sha256": "8b90386fdff15a037d1542987dd10ab76ddd09bde63b4f8bf2569dda58653618",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 1201239,
         "format": "png"
       },
       "focalPoint": {
@@ -819,55 +999,91 @@
           "path": "variants/palace-press-hall-foreground-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 1066,
+          "bytes": 1978,
           "format": "avif",
           "quality": 70,
-          "sha256": "cf66d7a49fe8fc81aaab1b468265e1d44bb6395a57de0b7c82063d035422f440"
+          "sha256": "8c9640fb5aed98bcced3ad85558c1b7350b26a7dd28c5ae5d9e9605bc5becc53"
         },
         {
           "path": "variants/palace-press-hall-foreground-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 1360,
+          "bytes": 2332,
           "format": "webp",
           "quality": 86,
-          "sha256": "797f57ca7c69b831dc6979c985ecda8ff643b469ca8a5d2d09aba09de7dd8875"
+          "sha256": "7c2f7e73abfad4ac3bcf68cd470478e09bc73be1c8aab6b6deec553b2cd9b5c6"
         },
         {
           "path": "variants/palace-press-hall-foreground-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 1288,
+          "bytes": 3677,
           "format": "avif",
           "quality": 70,
-          "sha256": "7c365749e3a00aa6a2bf78fb011eb130209e27431b91a14de0909136c5943af1"
+          "sha256": "0afb4e83ce1bb636df74019b10303bd297aec73e4e2bba57a0118120db1d2401"
         },
         {
           "path": "variants/palace-press-hall-foreground-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 3136,
+          "bytes": 5846,
           "format": "webp",
           "quality": 86,
-          "sha256": "a5b1c302427ce9d9d0a0e51f6fa7906b2715d3eb82ab03c67c06de7766993079"
+          "sha256": "b61484d52088d885a128176cc8e0aa2382e5dc0b189dcc10f5dcd820e2e5ca92"
         },
         {
           "path": "variants/palace-press-hall-foreground-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 1374,
+          "bytes": 5623,
           "format": "avif",
           "quality": 70,
-          "sha256": "a6da4bb1a96fa587d7c1fc9fcc7a570cb197e7b4718201c7f184fc343644a993"
+          "sha256": "e8f1a039f34ca2d4194fb5fe58cca08166052c98318995de500c879b48529eba"
         },
         {
           "path": "variants/palace-press-hall-foreground-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 5344,
+          "bytes": 10994,
           "format": "webp",
           "quality": 86,
-          "sha256": "77a1094c53a2f9ff49d3c386243507a0d4f590261c6a26e3a882f55a834f8828"
+          "sha256": "60a988d8c1fbebe7c952804681674a1b29818d17f5a6ee47aad778383d05d498"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 7348,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "716a9ee589f8c5e9c74f4abed5b347494d87e2e71a49be3e2954084d7ab291b5"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 17164,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "1015cb87b7a04e14991acca84388e139dd80644bbc2ac8e9d940ac33542b6146"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 12692,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "9487702acb48bbc68d94acfb4b5c95f0470cf3a7e2d4b1339db5a413cc9dc2d7"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 31230,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "04030d9136a0bd1593fdde69d0800df154a87ef10ddf3acf17a8b85826050003"
         }
       ]
     },
@@ -876,14 +1092,14 @@
       "ownerType": "scene",
       "ownerId": "influencer-campaign-livestream",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "influencer-campaign-livestream.png",
-        "sha256": "baf0ecf37a971c19ab7f8b343d022f4c83b3d4aea5ba875baa592f249aeb0928",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 2339585,
+        "sha256": "d2a82b122cc21181f05964fa92b32a42fcf16fddbf0691497a3c0c06f3fa96bc",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 5698713,
         "format": "png"
       },
       "focalPoint": {
@@ -959,55 +1175,91 @@
           "path": "variants/influencer-campaign-livestream-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 12111,
+          "bytes": 10460,
           "format": "avif",
           "quality": 70,
-          "sha256": "c3e7365c800a6691e02d9c40543bf9da22c4fae63762d9bba4a6335ff827253c"
+          "sha256": "00b9e8a9f8904181c7ac6ccd816e9854e035a3fab380451af2790206f07e63ac"
         },
         {
           "path": "variants/influencer-campaign-livestream-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 14744,
+          "bytes": 12416,
           "format": "webp",
           "quality": 86,
-          "sha256": "e7ec1df13b5af47b02c64a10efb8602ddf74ec2bda680669401d5d599f668db1"
+          "sha256": "b86da1216a8ed54db35d4da8532ecaff1feda9aa9336793a5b7afdd03677ccc7"
         },
         {
           "path": "variants/influencer-campaign-livestream-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 30843,
+          "bytes": 29363,
           "format": "avif",
           "quality": 70,
-          "sha256": "b3e52b022a4bf9bd8a8ac4c31ceb4a741f950dc1238d5aead976c543a85a9bdb"
+          "sha256": "4396c1b72b00c614e22af5bd1b85c459c826c39bf794bff99156351505448323"
         },
         {
           "path": "variants/influencer-campaign-livestream-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 39884,
+          "bytes": 35996,
           "format": "webp",
           "quality": 86,
-          "sha256": "a3736fcb8822f9f9df881f4c430e266c631dd627adf143c5ae303bf9966364f6"
+          "sha256": "b6270a0b4932c4573560964a7c633de2af75e31f07763b9f0fdd739e17b7ffb5"
         },
         {
           "path": "variants/influencer-campaign-livestream-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 50467,
+          "bytes": 52512,
           "format": "avif",
           "quality": 70,
-          "sha256": "4098353485c84c3b8e5166fd33c108f145f6a69fa355cea96c779c582ce71c52"
+          "sha256": "9a3da2f46358eb768e131006026a54ba857e9335ec06db94047ece4fc48e0975"
         },
         {
           "path": "variants/influencer-campaign-livestream-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 67846,
+          "bytes": 67170,
           "format": "webp",
           "quality": 86,
-          "sha256": "054db83d5304316992ec7daf2e1acfa6bcc6459a7e1baf82a669c2c27aba82df"
+          "sha256": "7d40761ab0a6716e44dae0942cb62e210f7af72b8a973e736b05577af3ee5285"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 78433,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "5bf6eedcaf7312eb5b04e045f74a84c182cc9154315e1e111aa85ca5bcf00282"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 99776,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "598cb8f6a22ff18284bd8ca178fe15f1099574d849654572b5aad0de001e1f5f"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 139739,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "7942b621d8e9b88f9eafbe74a765d9bc34c51e453734ca61a62ebe2189af08ad"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 176248,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "7166c2148e4aa9ccc2dc3756fcfb42a2608e6464f534e080aa80481dddd7abfe"
         }
       ]
     },
@@ -1016,14 +1268,14 @@
       "ownerType": "scene",
       "ownerId": "influencer-campaign-livestream",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "influencer-campaign-livestream-foreground.png",
-        "sha256": "331eded80cc4228c7e623361b66abceb3461aedb6f55618aeb8404da83aa0e36",
-        "width": 1920,
-        "height": 1080,
-        "bytes": 192775,
+        "sha256": "96f483d1265caf4451701f737a3216560a2e31ba9c0eb098941ca702b7a21271",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 1258452,
         "format": "png"
       },
       "focalPoint": {
@@ -1109,55 +1361,91 @@
           "path": "variants/influencer-campaign-livestream-foreground-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 1606,
+          "bytes": 2267,
           "format": "avif",
           "quality": 70,
-          "sha256": "624e41989aba199f54dceb46b3cb3bab951f0d059c37564983d6975bfe8c0fab"
+          "sha256": "2c0b795787a7187a85aac5a7063c45faa776f046cc917f050382116665ae4ff9"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 2530,
+          "bytes": 2798,
           "format": "webp",
           "quality": 86,
-          "sha256": "9610f1de9fb68b02751698c900adfee4c02f48d9d708631173ec54c39ed654f6"
+          "sha256": "0865e42e8d2b3e1796e11868e3cc9ffe191c039907de8a76652bd14a40bb3b3a"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 2710,
+          "bytes": 3328,
           "format": "avif",
           "quality": 70,
-          "sha256": "e270bf211b25cec35f23c252fb0f9cdf00ec10a3d382fdb147f14fc8717a2ddc"
+          "sha256": "a542bedbce87b7234c9e5bdfe5c742e42653e849d4188162221116175b37b061"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 5860,
+          "bytes": 5612,
           "format": "webp",
           "quality": 86,
-          "sha256": "6634d59eab4fc7d714ec8a07084fd54672f8e8867b188b66eef2310a03f9962b"
+          "sha256": "5033974816d1894a399127a31b9ca2d39a8fcafd170f84e73e2f814139af9cd4"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 3116,
+          "bytes": 4691,
           "format": "avif",
           "quality": 70,
-          "sha256": "43b4f169dc78ece8bb975a03b92c29cfb4fe2b17004e2747c968ce1d921a8951"
+          "sha256": "8f84be8a59e050d30f9e201aa6e94f7135d6b5637b14472893d4ab8a726fc370"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 9406,
+          "bytes": 10304,
           "format": "webp",
           "quality": 86,
-          "sha256": "bb4472dc10d2d1e6bb6430da712edae0f6e629bb8fad1d929c45784873a757ca"
+          "sha256": "a73322cd07409b19a608b9ddefc78d1cfe1b6e88f9a8c088219dd7e44c4bb5a7"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 6488,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "f5b9058a0f28c0483716f61fd1966f165ee866ccf6288b52e23500df42e60c90"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 15288,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "4fce0f6e8aca9b7d8a4ca5a37ad6f68282169b5f56fd75d48928f12c1d800f24"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 10723,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "12d1cb8aa35db2ac6852edd6d2fa56fc1d0e21c5298a176d221d868cc996e953"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 30132,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "ec0c077d43707c804a6f32dfe6b8ac1e4b1159c690b25ce6f776f91f9a293f44"
         }
       ]
     },

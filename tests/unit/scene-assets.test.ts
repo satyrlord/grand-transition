@@ -43,10 +43,10 @@ describe('scene asset resolver', () => {
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(88);
+    expect(variants).toHaveLength(120);
 
     for (const asset of sceneAssetManifest) {
-      expect(asset.width).toBe(['modern-debate-studio', 'transition-era-television-studio'].includes(asset.ownerId) ? 3840 : 1920);
+      expect(asset.width).toBe(3840);
       expect(asset.height).toBe(asset.width * 9 / 16);
       expect(asset.url).toBe(asset.webp.fallbackUrl);
       expect(asset.avif.srcSet).toMatch(/640w/u);
@@ -75,10 +75,8 @@ describe('scene asset resolver', () => {
     }
   });
 
-  test('serves both approved studio masters at every size through 4K', () => {
-    for (const id of ['modern-debate-studio', 'modern-debate-studio-desks',
-      'transition-era-television-studio', 'transition-era-television-studio-desks']) {
-      const asset = resolveSceneAsset(id);
+  test('serves every scene layer at every size through 4K', () => {
+    for (const asset of sceneAssetManifest) {
       for (const source of [asset.avif, asset.webp]) {
         expect(source.variants.map((variant) => variant.width)).toEqual([
           640, 1280, 1920, 2560, 3840,
@@ -119,8 +117,8 @@ describe('scene asset resolver', () => {
         expect(asset.ownerId).toBe(id);
         expect(asset.kind).toBe('manifest');
         expect(asset.focalRectangles.moderatorFace).toBeNull();
-        expect(asset.avif.variants).toHaveLength(3);
-        expect(asset.webp.variants).toHaveLength(3);
+        expect(asset.avif.variants).toHaveLength(5);
+        expect(asset.webp.variants).toHaveLength(5);
         expect(asset.url).toContain(id);
         expect(asset.url).not.toContain('title-proscenium');
       }
