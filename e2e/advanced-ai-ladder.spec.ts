@@ -35,12 +35,12 @@ for (const viewport of [
     await page.goto('/grand-transition/');
     await page.getByRole('button', { name: 'Ladder' }).click();
     await page
-      .getByRole('button', { name: /Government AI.*Select for player one/u })
+      .getByRole('button', { name: /Government AI — Original.*Select for player one/u })
       .click();
 
     await expect(page.locator('.ladder-record')).toContainText('Rung 1/9');
     await expect(page.locator('.setup-heading > p:last-child')).toBeVisible();
-    await expect(page.locator('.roster-choice')).toHaveCount(19);
+    await expect(page.locator('.roster-choice')).toHaveCount(30);
     await page.locator('.contestant-portrait').evaluateAll(async (images) => {
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
     });
@@ -97,7 +97,7 @@ for (const viewport of [
     });
     expect(geometry.pageWidth).toBeLessThanOrEqual(geometry.viewportWidth);
     expect(geometry.pageHeight).toBeLessThanOrEqual(geometry.viewportHeight);
-    expect(geometry.rosterRowCounts).toEqual([6, 6, 6, 1]);
+    expect(geometry.rosterRowCounts).toEqual([6, 6, 6, 6, 6]);
     expect(geometry.rosterOverflowX).toBe('hidden');
     expect(geometry.rosterOverflowY).toBe('auto');
     expect(geometry.rosterHorizontallyContained).toBe(true);
@@ -158,7 +158,7 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
   await page.reload();
   await page.getByRole('button', { name: 'Ladder' }).click();
   await page
-    .getByRole('button', { name: /Government AI.*Select for player one/u })
+    .getByRole('button', { name: /Government AI — Original.*Select for player one/u })
     .click();
 
   let wins = 0;
@@ -168,6 +168,7 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
     await expect(page.locator('.ladder-record')).toContainText(
       `Rung ${wins + 1}/9`,
     );
+    await page.getByRole('button', { name: 'Lock in You' }).click();
     await page
       .getByRole('button', {
         name: wins === 0 ? 'Start ladder' : 'Continue ladder',

@@ -14,7 +14,9 @@ single-player setup. The AI can draft, refresh its hand, make a normal grammar
 mistake, use a comeback, and end its sentence.
 
 Single player assigns the person to player one and Local Radio Caller to player
-two. Setup keeps both character, skin, and scene choices. The stored match mode
+two. The person selects and locks the player-one character, then selects and
+locks the computer character through the shared Milestone 015 lock-in flow.
+Setup keeps both character, skin, and scene choices. The stored match mode
 is `ai`, and the exact difficulty identifier is `local-radio-caller`. Hotseat
 behavior stays unchanged.
 
@@ -150,8 +152,9 @@ phrase text.
   inside the inclusive range, and reduced delay is exactly 100.
 - **AC-021-06:** A 1,000-match simulation completes without illegal command,
   stalled phase, privacy leak, or timer overrun.
-- **AC-021-07:** Custom setup starts player one against the player-two Local
-  Radio Caller. At each supported setup viewport, Single Player shows
+- **AC-021-07:** Custom setup requires the person to select and lock both the
+  player-one and player-two characters, then starts player one against the
+  player-two Local Radio Caller. At each supported setup viewport, Single Player shows
   Difficulty and Scene as two selects in one horizontal row. Difficulty has
   exactly one option, “Local Radio Caller.” The complete Difficulty and Scene
   labels fit, the Match settings fieldset and actions do not change height, and

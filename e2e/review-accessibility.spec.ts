@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -25,7 +26,12 @@ for (const viewport of [
     const stages = page.locator('.contestant-stage');
     await expect(stages).toHaveCount(2);
     await page.keyboard.press('Tab');
-    for (const stage of await stages.all()) {
+    for (const [index, stage] of (await stages.all()).entries()) {
+      if (index === 1) {
+        const lock = page.locator('[data-lock-player="one"]');
+        await lock.focus();
+        await lock.press('Enter');
+      }
       await expect(stage.locator('.contestant-player')).toBeVisible();
       await expect(stage.locator('.contestant-record strong')).toBeVisible();
       await expect(stage.locator('.contestant-weaknesses')).toBeVisible();
@@ -38,6 +44,7 @@ for (const viewport of [
       await expect(stage).toHaveCSS('outline-width', '3px');
     }
     await page.screenshot({ path: testInfo.outputPath('forced-setup.png') });
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.getByRole('button', { name: 'Pause', exact: true }).click();
     const fields = page.locator('.interruption-notice fieldset');

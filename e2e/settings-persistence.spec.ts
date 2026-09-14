@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 
 const settingsKey = 'grand-transition.settings.v1';
@@ -148,6 +149,7 @@ test('settings persist in the production build and fit every supported viewport'
   await page.emulateMedia({ forcedColors: 'none' });
   await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('[data-timer="unlimited"]')).toBeVisible();
   expect(await page.locator('grand-transition-app').evaluate((app) =>
@@ -260,6 +262,7 @@ for (const failure of ['quota', 'security', 'unavailable'] as const) {
     await expect(page.getByText(exactNotice, { exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Close' }).click();
     await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await prepareLethalGrammarMistake(page);
     await page

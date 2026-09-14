@@ -31,6 +31,12 @@ skins through the Milestone 023 filename convention. The final catalog contains
 any gender. There is no gender quota. A fully mechanical alternate uses another
 fully mechanical chassis.
 
+The setup roster presents all 30 selectable skins as portrait choices in one
+six-column grid. The current catalog therefore renders five complete rows of
+six portraits. Selecting an alternate portrait selects its owning character
+and skin together; the existing stage skin controls remain available for
+cycling and wraparound.
+
 A skin changes only visual presentation. It does not
 add or change phrases, weaknesses, comeback lines, balance data, or character
 identity. Additional alternate clothing is allowed. An archetype can remain
@@ -242,7 +248,10 @@ with passing content, grammar, and normal CI checks.
 - **AC-028-05:** Authored phrase and comeback text is unique. Existing grammar
   reachability, agreement, representative sentence, and normal CI checks pass.
 - **AC-028-06:** All roster and scene variants pass shared viewport geometry
-  with longest names and 40-percent-expanded UI strings.
+  with longest names and 40-percent-expanded UI strings. Production setup
+  presents all 30 selectable portraits in six columns and five current rows;
+  every portrait choice remains contained, keyboard-focusable, and selectable
+  for either player target.
 - **AC-028-07:** All 19 characters provide one default skin and zero through
   eight alternate skins. A ninth alternate fails validation. A human alternate
   can use any gender, and no gender quota applies. A robot alternate remains

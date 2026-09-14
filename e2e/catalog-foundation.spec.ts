@@ -17,7 +17,7 @@ for (const viewport of viewports) {
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.evaluate(() => document.fonts.ready);
-    await expect(page.locator('.roster-choice')).toHaveCount(19);
+    await expect(page.locator('.roster-choice')).toHaveCount(30);
     await expect(page.getByLabel('Scene', { exact: true }).locator('option')).toHaveCount(6);
     await page.locator('.roster-headshot').evaluateAll(async (images) => {
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
@@ -42,9 +42,7 @@ for (const viewport of viewports) {
       const selector = page.locator(side === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId');
       const stage = page.locator(`.contestant-stage--${side}`);
       for (const character of catalog.characters) {
-        // Choosing a character advances the target, so select the intended side each time.
-        await selector.click();
-        await page.locator(`.roster-choice[data-character-id="${character.id}"]`).click();
+        await page.locator(`.roster-choice[data-character-id="${character.id}"][data-skin-id="default"]`).click();
         await expect(selector).toHaveAttribute('data-character-id', character.id);
         await expect(stage.locator('.contestant-record strong')).toHaveText(locale.messages[character.nameKey]!);
         await stage.locator('.contestant-portrait').evaluate((image: HTMLImageElement) => image.decode());
@@ -70,6 +68,7 @@ for (const viewport of viewports) {
         });
         expect(geometry, `${side}: ${character.id}`).toEqual({ loaded: true, nameFits: true, nameInside: true, portraitInside: true, pageFits: true });
       }
+      await page.locator(`[data-lock-player="${side}"]`).click();
     }
 
     for (const scene of catalog.scenes) {

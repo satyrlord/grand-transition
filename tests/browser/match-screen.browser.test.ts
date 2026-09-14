@@ -1,3 +1,4 @@
+import { lockInSetup } from './setup-test-helpers';
 import { page, userEvent } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
@@ -1482,7 +1483,7 @@ async function startMatch(
     const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
     scene.value = sceneId;
     scene.dispatchEvent(new Event('change', { bubbles: true }));
-  }
+  }  await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;
 

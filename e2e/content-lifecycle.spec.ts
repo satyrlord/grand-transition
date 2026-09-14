@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import {
   copyFileSync,
@@ -288,10 +289,10 @@ async function assertTemporaryCharacterIsPlayable(
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
 
-  await expect(page.locator('.roster-choice')).toHaveCount(20);
-  await expect(page.locator('.roster-heading')).toContainText('20 contestants');
+  await expect(page.locator('.roster-choice')).toHaveCount(32);
+  await expect(page.locator('.roster-heading')).toContainText('32 portraits');
   await expect(page.locator('.roster-grid')).toHaveAccessibleName(
-    'Contestant roster, 20 characters',
+    'Contestant portrait roster, 32 portraits',
   );
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -303,18 +304,19 @@ async function assertTemporaryCharacterIsPlayable(
     await assertSyntheticRosterLayout(page);
   }
   await page.setViewportSize({ width: 1280, height: 720 });
-  await page.locator('#playerTwoCharacterId').click();
+  await page.getByRole('button', { name: 'Lock in Player one' }).click();
   const temporaryOption = page.locator(
-    `.roster-choice[data-character-id="${temporaryCharacterId}"]`,
+    `.roster-choice[data-character-id="${temporaryCharacterId}"][data-skin-id="default"]`,
   );
   await expect(temporaryOption).toHaveCount(1);
   await expect(temporaryOption).toHaveAccessibleName(
-    new RegExp(`^${temporaryCharacterName}\\. Weaknesses:`, 'u'),
+    new RegExp(`^${temporaryCharacterName} — Original\\. Weaknesses:`, 'u'),
   );
   await temporaryOption.click();
   await page
     .getByRole('button', { name: 'Next skin for Player two' })
     .click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   await expect(
@@ -339,14 +341,17 @@ async function assertTemporaryCharacterIsAbsent(
 ): Promise<void> {
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await expect(page.locator('.roster-choice')).toHaveCount(19);
-  await expect(page.locator('.roster-heading')).toContainText('19 contestants');
+  await expect(page.locator('.roster-choice')).toHaveCount(30);
+  await expect(page.locator('.roster-heading')).toContainText('30 portraits');
   await expect(page.locator('.roster-grid')).toHaveAccessibleName(
-    'Contestant roster, 19 characters',
+    'Contestant portrait roster, 30 portraits',
   );
   await expect(
     page.locator(`.roster-choice[data-character-id="${temporaryCharacterId}"]`),
   ).toHaveCount(0);
+
+  await lockInSetup(page);
+
 
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('.character-portrait')).toHaveCount(2);
@@ -379,7 +384,7 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
     return {
       rowCounts: [...rowCounts.values()],
       finalRowCenterOffset: Math.abs(
-        (choices[18]!.left + choices[19]!.right) / 2 -
+        (choices[30]!.left + choices[31]!.right) / 2 -
         (choices[0]!.left + choices[5]!.right) / 2,
       ),
       clearOfText: gridBox.top >= heading.bottom - 1 && gridBox.bottom <= note.top + 1,
@@ -392,7 +397,7 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
       tabIndex: grid.tabIndex,
     };
   });
-  expect(geometry.rowCounts).toEqual([6, 6, 6, 2]);
+  expect(geometry.rowCounts).toEqual([6, 6, 6, 6, 6, 2]);
   expect(geometry.finalRowCenterOffset).toBeLessThan(1);
   expect(geometry.clearOfText).toBe(true);
   expect(geometry.horizontallyContained).toBe(true);

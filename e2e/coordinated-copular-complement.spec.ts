@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { reachDeliveryTotal } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
@@ -49,6 +50,7 @@ for (const scenario of [
     await page.clock.install();
     await page.goto('/grand-transition/');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
 
     const fixture = await installTargetCards(page, scenario.cards);

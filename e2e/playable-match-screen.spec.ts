@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { finishPresentation } from './helpers/presentation';
 import type { RoundPresentationFrame } from '../src/app/round-presentation';
 import { expect, test, type Locator, type Page } from '@playwright/test';
@@ -556,6 +557,7 @@ test('the reported long bubble works on both sides at the reported viewport', as
   await selectSetupCharacter(page, 'one', 'black-sea-captain');
   await selectSetupCharacter(page, 'two', 'thunder-tribune');
   await page.getByLabel('Scene').selectOption('modern-debate-studio');
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
@@ -663,6 +665,8 @@ test('the selected roster characters load their local portrait assets', async ({
 }) => {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'two', 'black-sea-captain');
+  await lockInSetup(page);
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   await expect(
@@ -763,6 +767,7 @@ for (const viewport of [
     await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene').selectOption('modern-debate-studio');
     expect(sceneVariantRequests).toEqual([]);
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(
       page.getByRole('heading', { name: /Round 1.*turn/u }),
@@ -1202,6 +1207,8 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   // characters render through the frame presenter, whose own visible frame would
   // count as a third replacement portrait.
   await selectSetupCharacter(page, 'one', 'reluctant-theorem');
+  await lockInSetup(page);
+
   await page.getByRole('button', { name: 'Start match' }).click();
   await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
   let releasePortrait!: () => void;
@@ -2049,6 +2056,8 @@ async function pauseMatchClock(page: Page): Promise<void> {
 
 async function startMatch(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
+
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(
     page.getByRole('heading', { name: /Round 1.*turn/u }),
@@ -2062,9 +2071,12 @@ async function selectSetupCharacter(
 ): Promise<void> {
   const fieldId =
     player === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId';
+  if (player === 'two') {
+    await page.locator('[data-lock-player="one"]').click();
+  }
   await page.locator(fieldId).click();
   await page
-    .locator(`.roster-choice[data-character-id="${characterId}"]`)
+    .locator(`.roster-choice[data-character-id="${characterId}"][data-skin-id="default"]`)
     .click();
 }
 

@@ -135,16 +135,18 @@ Milestone 027 owns final balance and editorial evidence.
 - **AC-026-05:** Adding and removing one synthetic convention-driven character
   leaves no stale setup, match, locale, or production-build reference.
 - **AC-026-06:** Production-browser setup can select every character and scene.
-  The 19-item roster, longest names, six-scene selector, and selected interim
-  portrait remain usable at every supported viewport. Milestone 018 permits
-  compact roster reflow and vertical page scroll. The desktop roster uses
-  one compact fighting-game character-selection grid with six, six, six, and one
-  portraits in its current rows. Any future incomplete row is centered. The named roster
-  region uses contained vertical scrolling when its rows exceed the available
-  height or when later characters are added. It is keyboard-focusable and does
-  not scroll the page or cover the roster heading, note, settings, or actions.
-  Visible and accessible roster counts derive from discovered characters and
-  update when a convention-driven character is added or removed.
+  The 19 identity records, longest names, six-scene selector, and selected
+  interim portrait remain usable at every supported viewport. Milestone 018
+  permits compact roster reflow and vertical page scroll. The foundation
+  default-only view uses one compact fighting-game character-selection grid with
+  six, six, six, and one portraits in its current rows. The completed catalog
+  downstream in Milestone 028 exposes all 30 selectable portrait skins in five
+  rows of six. Any incomplete row is centered. The named roster region uses
+  contained vertical scrolling when its rows exceed the available height or
+  when later portraits are added. It is keyboard-focusable and does not scroll
+  the page or cover the roster heading, note, settings, or actions. Visible and
+  accessible roster counts derive from discovered characters and portraits and
+  update when convention-driven content is added or removed.
 
 ## Objective verifiers
 

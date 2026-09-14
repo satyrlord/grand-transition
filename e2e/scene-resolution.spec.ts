@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 
 for (const scene of ['modern-debate-studio', 'transition-era-television-studio']) {
@@ -19,6 +20,7 @@ for (const scene of ['modern-debate-studio', 'transition-era-television-studio']
         await page.goto(testInfo.project.use.baseURL!);
         await page.getByRole('button', { name: 'Multiplayer' }).click();
         await page.getByLabel('Scene').selectOption(scene);
+        await lockInSetup(page);
         await page.getByRole('button', { name: 'Start match', exact: true }).click();
         const layers = page.locator('.broadcast-stage-art, .broadcast-stage-foreground');
         await expect(layers).toHaveCount(2);

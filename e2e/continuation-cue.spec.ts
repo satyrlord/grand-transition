@@ -1,8 +1,10 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 
 test('the draft shows one unambiguous continuation cue', async ({ page }) => {
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const continuation = page.locator('[data-role="continuation"] .phrase-card');

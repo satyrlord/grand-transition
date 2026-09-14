@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -30,7 +31,8 @@ for (const fallback of [false, true]) {
     await page.evaluate(() => document.fonts.ready);
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
-    await page.locator('.roster-choice[data-character-id="apartment-block-geopolitician"]').click();
+    await page.locator('.roster-choice[data-character-id="apartment-block-geopolitician"][data-skin-id="default"]').click();
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.mouse.move(0, 0);
     await page.locator('grand-transition-match').evaluate(async (element, fixtures) => {

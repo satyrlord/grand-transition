@@ -83,6 +83,10 @@ type CharacterView = Readonly<{
 }>;
 
 type CharacterSkinView = CharacterSkin & Readonly<{ label: string }>;
+type CharacterRosterView = Readonly<{
+  character: CharacterView;
+  skin: CharacterSkinView;
+}>;
 
 export class GrandTransitionSetup extends LitElement {
   static properties = {
@@ -90,6 +94,8 @@ export class GrandTransitionSetup extends LitElement {
     snapshot: { attribute: false },
     validationAttempted: { state: true },
     selectionTarget: { state: true },
+    playerOneLocked: { state: true },
+    playerTwoLocked: { state: true },
     previewCharacterId: { state: true },
     previewPinned: { state: true },
     ladderProgress: { attribute: false },
@@ -100,6 +106,8 @@ export class GrandTransitionSetup extends LitElement {
   declare hotseatAvailable: boolean;
   declare private validationAttempted: boolean;
   declare private selectionTarget: CharacterField;
+  declare private playerOneLocked: boolean;
+  declare private playerTwoLocked: boolean;
   declare private previewCharacterId: string | null;
   declare private previewPinned: boolean;
   declare ladderProgress: LadderProgress | null;
@@ -111,6 +119,8 @@ export class GrandTransitionSetup extends LitElement {
     this.hotseatAvailable = true;
     this.validationAttempted = false;
     this.selectionTarget = 'playerOneCharacterId';
+    this.playerOneLocked = false;
+    this.playerTwoLocked = false;
     this.previewCharacterId = null;
     this.previewPinned = false;
     this.ladderProgress = null;
@@ -122,8 +132,15 @@ export class GrandTransitionSetup extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
-    if (changed.has('snapshot') && this.snapshot?.mode === 'ladder') {
-      this.selectionTarget = 'playerOneCharacterId';
+    if (changed.has('snapshot')) {
+      const previousSnapshot = changed.get('snapshot');
+      if (previousSnapshot?.mode !== this.snapshot?.mode) {
+        this.playerOneLocked = false;
+        this.playerTwoLocked = false;
+        this.selectionTarget = 'playerOneCharacterId';
+      } else if (this.snapshot?.mode === 'ladder') {
+        this.selectionTarget = 'playerOneCharacterId';
+      }
     }
   }
 
@@ -131,7 +148,7 @@ export class GrandTransitionSetup extends LitElement {
     if (!this.snapshot) return nothing;
 
     const errors = this.validationAttempted ? validateSetup(this.snapshot) : {};
-    const characters = characterViews();
+    const portraits = characterRosterViews();
     const playerOne = characterView(this.snapshot.playerOneCharacterId);
     const playerTwo = characterView(this.snapshot.playerTwoCharacterId);
     const playerOneSkin = selectedSkinView(
@@ -145,6 +162,7 @@ export class GrandTransitionSetup extends LitElement {
     const preview = this.previewCharacterId
       ? characterView(this.previewCharacterId)
       : undefined;
+    const bothPlayersLocked = this.bothPlayersLocked();
 
     return html`
       <main
@@ -190,7 +208,8 @@ export class GrandTransitionSetup extends LitElement {
               skinField: 'playerOneSkinId',
               characterError: errors.playerOneCharacterId,
               skinError: errors.playerOneSkinId,
-              locked: false,
+              locked: this.playerOneLocked,
+              fixed: false,
             })}
 
             <section class="roster-zone" aria-labelledby="roster-title">
@@ -198,11 +217,13 @@ export class GrandTransitionSetup extends LitElement {
                 <h2 id="roster-title">${msg('Contestant roster')}</h2>
                 <p aria-live="polite">
                   ${
-                    this.snapshot.mode === 'ladder'
-                      ? msg(str`${characters.length} contestants · Selecting your ladder character`)
+                    bothPlayersLocked
+                      ? msg(str`${portraits.length} portraits · Both players locked in`)
+                      : this.snapshot.mode === 'ladder'
+                      ? msg(str`${portraits.length} portraits · Selecting your ladder character`)
                       : this.selectionTarget === 'playerOneCharacterId'
-                        ? msg(str`${characters.length} contestants · Selecting for player one`)
-                        : msg(str`${characters.length} contestants · Selecting for player two`)
+                        ? msg(str`${portraits.length} portraits · Selecting for player one`)
+                        : msg(str`${portraits.length} portraits · Selecting for player two`)
                   }
                 </p>
               </div>
@@ -212,11 +233,11 @@ export class GrandTransitionSetup extends LitElement {
               <div
                 class="roster-grid"
                 role="group"
-                aria-label=${msg(str`Contestant roster, ${characters.length} characters`)}
+                aria-label=${msg(str`Contestant portrait roster, ${portraits.length} portraits`)}
                 tabindex="0"
               >
-                ${characters.map((character) =>
-                  this.rosterChoice(character),
+                ${portraits.map((portrait) =>
+                  this.rosterChoice(portrait),
                 )}
               </div>
 
@@ -247,7 +268,8 @@ export class GrandTransitionSetup extends LitElement {
               skinField: 'playerTwoSkinId',
               characterError: errors.playerTwoCharacterId,
               skinError: errors.playerTwoSkinId,
-              locked: this.snapshot.mode === 'ladder',
+              locked: this.snapshot.mode === 'ladder' || this.playerTwoLocked,
+              fixed: this.snapshot.mode === 'ladder',
             })}
           </section>
 
@@ -326,6 +348,7 @@ export class GrandTransitionSetup extends LitElement {
               class="primary-action"
               ?disabled=${
                 (this.snapshot.mode === 'hotseat' && !this.hotseatAvailable) ||
+                !bothPlayersLocked ||
                 (this.snapshot.mode === 'ladder' &&
                 (this.ladderProgress === null || this.ladderProgress.completed))
               }
@@ -356,10 +379,15 @@ export class GrandTransitionSetup extends LitElement {
     characterError: string | undefined;
     skinError: string | undefined;
     locked: boolean;
+    fixed: boolean;
   }): TemplateResult {
     const characterErrorId = config.field + '-error';
     const skinErrorId = config.skinField + '-error';
-    const targetActive = this.selectionTarget === config.field;
+    const targetActive =
+      this.selectionTarget === config.field && !config.locked;
+    const canUnlock = config.locked && !config.fixed && this.bothPlayersLocked();
+    const canLock = !config.locked && targetActive;
+    const lockName = this.lockName(config.side);
     return html`
       <section
         class="contestant-stage contestant-stage--${config.side}"
@@ -367,6 +395,7 @@ export class GrandTransitionSetup extends LitElement {
         data-skin-id=${config.skin?.id ?? ''}
         data-portrait-facing=${config.skin?.facing ?? 'right'}
         data-selection-target=${targetActive ? 'true' : 'false'}
+        data-locked=${config.locked ? 'true' : 'false'}
       >
         <button
           id=${config.field}
@@ -379,14 +408,16 @@ export class GrandTransitionSetup extends LitElement {
           aria-label=${
             config.character
               ? config.locked
-                ? config.playerLabel +
-                  ' opponent fixed by rung: ' +
-                  config.character.name
+                ? config.fixed
+                  ? config.playerLabel +
+                    ' opponent fixed by rung: ' +
+                    config.character.name
+                  : config.playerLabel + ' locked in: ' + config.character.name
                 : config.playerLabel + ' character: ' + config.character.name
               : config.playerLabel + ' character'
           }
           aria-pressed=${targetActive}
-          ?disabled=${config.locked}
+          ?disabled=${!targetActive}
           aria-describedby=${
             config.characterError ? characterErrorId : nothing
           }
@@ -418,7 +449,7 @@ export class GrandTransitionSetup extends LitElement {
                     />
                   </picture>
                   ${
-                    config.locked
+                    !targetActive
                       ? nothing
                       : this.skinSelector({
                           playerLabel: config.playerLabel,
@@ -438,7 +469,7 @@ export class GrandTransitionSetup extends LitElement {
                   ${
                     config.locked
                       ? html`<span class="contestant-locked-state">
-                          ${msg('Opponent fixed by rung')}
+                          ${config.fixed ? msg('Opponent fixed by rung') : msg('Locked in')}
                         </span>`
                       : nothing
                   }
@@ -450,6 +481,25 @@ export class GrandTransitionSetup extends LitElement {
                 </span>
               `
         }
+        <button
+          type="button"
+          class="contestant-lock-action"
+          data-lock-player=${config.side}
+          data-field=${config.field}
+          aria-pressed=${config.locked}
+          ?disabled=${!canLock && !canUnlock}
+          @click=${this.togglePlayerLock}
+        >
+          ${
+            config.fixed
+              ? msg('Opponent locked in')
+              : canUnlock
+                ? msg(str`Unlock ${lockName}`)
+                : config.locked
+                  ? msg(str`${lockName} locked in`)
+                  : msg(str`Lock in ${lockName}`)
+          }
+        </button>
       </section>
       ${
         config.characterError
@@ -519,15 +569,19 @@ export class GrandTransitionSetup extends LitElement {
     `;
   }
 
-  private rosterChoice(character: CharacterView): TemplateResult {
+  private rosterChoice(portraitView: CharacterRosterView): TemplateResult {
     if (!this.snapshot) return html``;
 
+    const { character, skin } = portraitView;
     const playerOneSelected =
-      this.snapshot.playerOneCharacterId === character.id;
+      this.snapshot.playerOneCharacterId === character.id &&
+      this.snapshot.playerOneSkinId === skin.id;
     const playerTwoSelected =
-      this.snapshot.playerTwoCharacterId === character.id;
+      this.snapshot.playerTwoCharacterId === character.id &&
+      this.snapshot.playerTwoSkinId === skin.id;
     const currentTargetSelected =
-      this.snapshot[this.selectionTarget] === character.id;
+      this.snapshot[this.selectionTarget] === character.id &&
+      this.snapshot[skinFieldForCharacterField(this.selectionTarget)] === skin.id;
     const playerLabel =
       this.selectionTarget === 'playerOneCharacterId'
         ? msg('player one')
@@ -541,6 +595,8 @@ export class GrandTransitionSetup extends LitElement {
       .join(' ');
     const accessibleLabel =
       character.name +
+      ' — ' +
+      skin.label +
       '. ' +
       msg('Weaknesses') +
       ': ' +
@@ -548,7 +604,7 @@ export class GrandTransitionSetup extends LitElement {
       '. ' +
       selectedFor +
       ' ' +
-      msg('Select for') +
+      (skin.id === 'default' ? msg('Select for') : msg('Select portrait for')) +
       ' ' +
       playerLabel +
       '.';
@@ -558,6 +614,8 @@ export class GrandTransitionSetup extends LitElement {
         type="button"
         class="roster-choice"
         data-character-id=${character.id}
+        data-skin-id=${skin.id}
+        data-portrait-id=${`${character.id}--${skin.id}`}
         data-character-species=${character.species}
         data-player-one-selected=${playerOneSelected ? 'true' : 'false'}
         data-player-two-selected=${playerTwoSelected ? 'true' : 'false'}
@@ -568,6 +626,7 @@ export class GrandTransitionSetup extends LitElement {
             : nothing
         }
         aria-label=${accessibleLabel}
+        ?disabled=${!this.canSelectRosterCharacter(character.id)}
         @click=${this.selectRosterCharacter}
         @pointerenter=${this.showTransientPreview}
         @pointerleave=${this.hideTransientPreview}
@@ -577,21 +636,21 @@ export class GrandTransitionSetup extends LitElement {
       >
         <span class="roster-portrait-window">
           <picture>
-            ${character.portrait.avif
+            ${skin.avif
               ? html`<source
-                  type=${character.portrait.avif.mimeType}
-                  srcset=${character.portrait.avif.srcSet}
-                  sizes=${character.portrait.sizes}
+                  type=${skin.avif.mimeType}
+                  srcset=${skin.avif.srcSet}
+                  sizes=${skin.sizes}
                 />`
               : nothing}
             <img
               class="roster-headshot"
-              src=${character.portrait.portraitUrl}
-              srcset=${character.portrait.webp?.srcSet ?? nothing}
-              sizes=${character.portrait.sizes}
+              src=${skin.portraitUrl}
+              srcset=${skin.webp?.srcSet ?? nothing}
+              sizes=${skin.sizes}
               alt=""
-              width=${character.portrait.width}
-              height=${character.portrait.height}
+              width=${skin.width}
+              height=${skin.height}
               loading="lazy"
               decoding="async"
             />
@@ -695,12 +754,53 @@ export class GrandTransitionSetup extends LitElement {
   private readonly chooseSelectionTarget = (event: Event): void => {
     const control = event.currentTarget as HTMLButtonElement;
     if (
-      this.snapshot?.mode === 'ladder' &&
-      control.dataset.field === 'playerTwoCharacterId'
+      control.disabled ||
+      control.dataset.field !== this.selectionTarget ||
+      this.isPlayerLocked(this.selectionTarget)
     ) {
       return;
     }
-    this.selectionTarget = control.dataset.field as CharacterField;
+    this.dismissPreview();
+  };
+
+  private readonly togglePlayerLock = (event: Event): void => {
+    event.stopPropagation();
+    if (!this.snapshot) return;
+    const control = event.currentTarget as HTMLButtonElement;
+    const field = control.dataset.field as CharacterField | undefined;
+    if (!field || (this.snapshot.mode === 'ladder' && field === 'playerTwoCharacterId')) {
+      return;
+    }
+
+    const currentlyLocked = this.isPlayerLocked(field);
+    if (currentlyLocked) {
+      if (!this.bothPlayersLocked()) return;
+      this.setPlayerLocked(field, false);
+      this.selectionTarget = field;
+      this.dismissPreview();
+      return;
+    }
+    if (field !== this.selectionTarget) return;
+
+    const errors = validateSetup(this.snapshot);
+    const skinField = skinFieldForCharacterField(field);
+    const firstInvalidField = errors[field] ? field : errors[skinField] ? skinField : undefined;
+    if (firstInvalidField) {
+      this.validationAttempted = true;
+      this.requestUpdate();
+      void this.updateComplete.then(() => {
+        const controlId = firstInvalidField === skinField
+          ? firstInvalidField + '-previous'
+          : firstInvalidField;
+        this.querySelector<HTMLElement>('#' + controlId)?.focus();
+      });
+      return;
+    }
+
+    this.setPlayerLocked(field, true);
+    if (field === 'playerOneCharacterId' && this.snapshot.mode !== 'ladder') {
+      this.selectionTarget = 'playerTwoCharacterId';
+    }
     this.dismissPreview();
   };
 
@@ -713,22 +813,20 @@ export class GrandTransitionSetup extends LitElement {
       this.snapshot?.mode === 'ladder'
         ? 'playerOneCharacterId'
         : this.selectionTarget;
+    if (!this.canSelectRosterCharacter(characterId)) return;
     this.dispatchSetupChange(changedField, characterId);
     const skinField = skinFieldForCharacterField(changedField);
     const currentSkinId = this.snapshot?.[skinField];
     const nextCharacterSkins = characterSkinViews(characterId);
-    if (
+    const requestedSkinId = control.dataset.skinId;
+    if (requestedSkinId) {
+      this.dispatchSetupChange(skinField, requestedSkinId);
+    } else if (
       currentSkinId &&
       !nextCharacterSkins.some((skin) => skin.id === currentSkinId)
     ) {
       this.dispatchSetupChange(skinField, nextCharacterSkins[0]?.id ?? '');
     }
-    this.selectionTarget =
-      this.snapshot?.mode === 'ladder'
-        ? 'playerOneCharacterId'
-        : changedField === 'playerOneCharacterId'
-          ? 'playerTwoCharacterId'
-          : 'playerOneCharacterId';
     this.previewCharacterId = characterId;
     this.previewPinned = false;
   };
@@ -760,7 +858,9 @@ export class GrandTransitionSetup extends LitElement {
 
   private cycleSkin(skinField: SkinField, direction: -1 | 1): void {
     if (!this.snapshot) return;
-    const characterId = this.snapshot[characterFieldForSkinField(skinField)];
+    const characterField = characterFieldForSkinField(skinField);
+    if (characterField !== this.selectionTarget || this.isPlayerLocked(characterField)) return;
+    const characterId = this.snapshot[characterField];
     const skins = characterSkinViews(characterId);
     if (skins.length < 2) return;
     const currentIndex = skins.findIndex(
@@ -867,6 +967,8 @@ export class GrandTransitionSetup extends LitElement {
       return;
     }
 
+    if (!this.bothPlayersLocked()) return;
+
     this.submissionLocked = true;
     this.dispatchEvent(
       new CustomEvent(startMatchEventName, {
@@ -876,6 +978,37 @@ export class GrandTransitionSetup extends LitElement {
       }),
     );
   };
+
+  private canSelectRosterCharacter(characterId: string): boolean {
+    if (!this.snapshot || this.isPlayerLocked(this.selectionTarget)) return false;
+    const characterFixed = this.snapshot.mode === 'ladder' &&
+      this.ladderProgress !== null &&
+      (this.ladderProgress.rungIndex > 0 || this.ladderProgress.losses > 0);
+    return !characterFixed || characterId === this.snapshot.playerOneCharacterId;
+  }
+
+  private bothPlayersLocked(): boolean {
+    return this.playerOneLocked &&
+      (this.snapshot?.mode === 'ladder' || this.playerTwoLocked);
+  }
+
+  private isPlayerLocked(field: CharacterField): boolean {
+    return field === 'playerOneCharacterId'
+      ? this.playerOneLocked
+      : this.snapshot?.mode === 'ladder' || this.playerTwoLocked;
+  }
+
+  private setPlayerLocked(field: CharacterField, locked: boolean): void {
+    if (field === 'playerOneCharacterId') this.playerOneLocked = locked;
+    else this.playerTwoLocked = locked;
+  }
+
+  private lockName(side: 'one' | 'two'): string {
+    if (side === 'one') {
+      return isSinglePlayerMode(this.snapshot?.mode ?? '') ? msg('You') : msg('Player one');
+    }
+    return this.snapshot?.mode === 'ai' ? msg('Computer') : msg('Player two');
+  }
 
   private readonly back = (): void => {
     this.dismissPreview();
@@ -1073,6 +1206,19 @@ function characterViews(): readonly CharacterView[] {
       weaknessTags: character.weaknessTags,
     };
   });
+}
+
+function characterRosterViews(): readonly CharacterRosterView[] {
+  return Object.freeze(
+    characterViews().flatMap((character) =>
+      characterSkinViews(character.id).map((skin) =>
+        Object.freeze({
+          character,
+          skin: Object.freeze({ ...skin, sizes: '21vw' }),
+        }),
+      ),
+    ),
+  );
 }
 
 function characterView(characterId: string): CharacterView | undefined {

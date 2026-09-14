@@ -1,3 +1,4 @@
+import { lockInSetup } from './setup-test-helpers';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell';
@@ -39,7 +40,7 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();  await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -102,6 +103,8 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   ) as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -184,6 +187,8 @@ test.each([
   ) as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   prepareComebackExchange(app);
@@ -257,6 +262,8 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
   ) as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -370,6 +377,8 @@ test('a lethal timeout shows victory instead of clearing the match', async () =>
   ) as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -434,6 +443,8 @@ test('storage quota failure preserves victory and reports session-only history o
   ) as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };

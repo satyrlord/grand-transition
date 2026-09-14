@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import type { MatchState } from '../src/engine/match-lifecycle';
@@ -50,11 +51,13 @@ async function configure(page: Page, choices: readonly Choice[], phraseIds: read
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   for (const [index, choice] of choices.entries()) {
+    if (index === 1) await page.locator('[data-lock-player="one"]').click();
     const id = index === 0 ? '#playerOneCharacterId' : '#playerTwoCharacterId';
     await page.locator(id).click();
-    await page.locator(`.roster-choice[data-character-id="${choice.character}"]`).click();
+    await page.locator(`.roster-choice[data-character-id="${choice.character}"][data-skin-id="default"]`).click();
     for (let skin = 1; skin < choice.skin; skin++) await page.locator(id).click({ button: 'right' });
   }
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   const state = await page.evaluate(() => (document.querySelector('grand-transition-app') as unknown as { matchState: MatchState }).matchState);
   const players = { ...state.draft!.playerStates };

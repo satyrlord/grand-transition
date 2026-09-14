@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -19,6 +20,7 @@ test('victory and populated history fit every supported landscape viewport', asy
   );
   await page.reload();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   await prepareLethalGrammarMistake(page);
   await page

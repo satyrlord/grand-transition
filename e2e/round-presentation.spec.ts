@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import type { MatchState } from '../src/engine/match-lifecycle';
 import type { RoundPresentationFrame } from '../src/app/round-presentation';
@@ -19,6 +20,7 @@ async function prepare(page: Page, lethal: boolean): Promise<number> {
   await page.clock.install();
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   const pick = (role: string) => page.locator(`.shared-board [data-role="${role}"] button`).first().click();
   await pick('noun'); await pick('noun'); await pick('predicate'); await pick('verb');
@@ -111,6 +113,7 @@ test('cliffhanger restoration stays inside the protected speech footprint at all
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   const match = page.locator('grand-transition-match');
   await match.evaluate(async (element) => {
