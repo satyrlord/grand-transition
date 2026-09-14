@@ -1129,8 +1129,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1655076,
-        "sha256": "a7699a5fc1d5d0eb98d8f17e51fce493df3107aaa4443267e2dbbeeef78d95f5"
+        "bytes": 5058339,
+        "sha256": "40aa12acc9d24a1f0338b8b0b11f7a8aa9bdfb59d1f4b721ee2e5e705ec7e8a3"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1149,9 +1149,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3653,
-          "sha256": "bb239fa6a8b4bce589c43eb18b18e3f11cd21e4555fbbcf9e5da76a8108e77c4"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 19881,
+          "sha256": "29a2bab59ee897ccb94ad1b0e582c882ca0c7aba3adc435ef6c8c1e55e1a2958"
         },
         {
           "path": "variants/government-ai--alternate-128x128.webp",
@@ -1159,17 +1160,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4102,
-          "sha256": "9df5e4f849c4abdd85349ae69d02cb453e15da8800820fdb6db7104f903483c5"
+          "bytes": 5716,
+          "sha256": "da71c55d7e99805e65fcbc42452c3fa54ab1818b77b7507c263733b97db8a734"
         },
         {
           "path": "variants/government-ai--alternate-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 7901,
-          "sha256": "fc9edd725cb4ac7a0dd3a228d936e873122dc4812476ffcbed1aa2a5272f76c1"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 55565,
+          "sha256": "4b8095e04c1b9dec139f69201f417ad548aeefea8aad86376aa5714d6ea44126"
         },
         {
           "path": "variants/government-ai--alternate-256x256.webp",
@@ -1177,8 +1179,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9606,
-          "sha256": "0cf803cd43c9eb5801b8116f8b7471a4cb0dc11d903eee02afe7b768e04a6a7c"
+          "bytes": 13424,
+          "sha256": "55cf86b0f26c308e344ed8fd649a6b6e9adbcbc0bb96286eb34957b3696d8395"
         },
         {
           "path": "variants/government-ai--alternate-320x320.avif",
@@ -1186,8 +1188,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 9917,
-          "sha256": "4188a224e35f103e12724e8bbe0a54fb7d157d9365976fc9abc53f0cdaa65a97"
+          "bytes": 12050,
+          "sha256": "ba84770fdef40e3e58d46d3b1fdb43b74080c9fffbf09236dbd7bd0a7fa941d8"
         },
         {
           "path": "variants/government-ai--alternate-320x320.webp",
@@ -1195,8 +1197,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 12228,
-          "sha256": "36ca7868548141e83873539ef1553ca29224593a5864e840ecd51d1e597246b3"
+          "bytes": 18884,
+          "sha256": "31c05f1360af767ef860ea4a6731c3bdb6b7cbf0fb8659ec3d570536b41b5518"
         },
         {
           "path": "variants/government-ai--alternate-640x640.avif",
@@ -1204,8 +1206,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 22083,
-          "sha256": "f6f1c7758997dde28a9018fd98cf9780845998f0ef6ee4ff28415122d839588a"
+          "bytes": 31094,
+          "sha256": "2006e36223e75b82c8c8a61ef9fa131e4cd4d9ed0798299bcae69a24cf21572f"
         },
         {
           "path": "variants/government-ai--alternate-640x640.webp",
@@ -1213,8 +1215,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 28340,
-          "sha256": "9490bf0dbf188280d3328d8b6e2de572b085b423946717590a2568251d7fcbe2"
+          "bytes": 45568,
+          "sha256": "5af7c350a2dca90f9c29d66b4f0cb16a2429c2b55c9a5e8b6cf5e8559bf8e0dc"
         },
         {
           "path": "variants/government-ai--alternate-960x960.avif",
@@ -1222,8 +1224,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 34924,
-          "sha256": "a6ff0d36c0d451b515cb4a29f6c46b06065ba3c89dd76c7db82bb461e115e9a7"
+          "bytes": 52621,
+          "sha256": "3fe734b9419333de9a9e2cb44c6a16c88152f2baaa6fb1d7874f637f2c55f7f6"
         },
         {
           "path": "variants/government-ai--alternate-960x960.webp",
@@ -1231,8 +1233,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 44250,
-          "sha256": "738432178fe92b47b6247ef8d6ed60de4047ed6a99b3e62b3b44a42c6591d10c"
+          "bytes": 78620,
+          "sha256": "671445d856621609f64ae3ce8b2ce67f071015f9be1a276294d5881b72f4fe46"
         }
       ]
     },
@@ -1252,8 +1254,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1462230,
-        "sha256": "bcb2c2e35b21e788a536f8a0b747c15128fbedc5fdafef10a42a21763c15337b"
+        "bytes": 4285203,
+        "sha256": "35646c833b5f5de296a24191691592bda5ec421845d23facfd002c10149ee704"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1272,9 +1274,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3489,
-          "sha256": "2dd33325dca33f69bb6f6fb5546ed20c02977b3d3f7524cf689bb9454dd5aa16"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 18212,
+          "sha256": "7593401f0f7dd2f44f9cb3d20f0c4e70d8ded4684cb2c6d3508dd6c50c902ed9"
         },
         {
           "path": "variants/government-ai--schoolteacher-128x128.webp",
@@ -1282,17 +1285,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4322,
-          "sha256": "16eef759959f0ee99d5a80e684a618e014483bca49479f33b93bd8211b3cf3fa"
+          "bytes": 5590,
+          "sha256": "0233b15b5034b5ca2107523f8194b115a21e32583b391d6b6be1f7e450e11477"
         },
         {
           "path": "variants/government-ai--schoolteacher-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6822,
-          "sha256": "a0cf77fa9d921e239ff973f132ab6832441c937bd61aad3e9e09e1f1ac1da854"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 48476,
+          "sha256": "8fb0df24ed911dc4b50d51d0a2d96a665517e535d738a762203cfd14ddd41b1d"
         },
         {
           "path": "variants/government-ai--schoolteacher-256x256.webp",
@@ -1300,8 +1304,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9462,
-          "sha256": "89c21deb91dccbc20732b1d712853424ac8424b1131795ab7b1f483418ca96ad"
+          "bytes": 12954,
+          "sha256": "01fc790dbbfc936a9538b67ce78401a0e61bda53a0885158d6c21bb398d586d8"
         },
         {
           "path": "variants/government-ai--schoolteacher-320x320.avif",
@@ -1309,8 +1313,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 9013,
-          "sha256": "3186cb3ee85bdbf430270d739176eb6d70ad9e69b9326d1cf635dc4e6f98d0cc"
+          "bytes": 11541,
+          "sha256": "7d5aab9826c11a1154de94d14997c32e9f5161865ce470989ff5d6ace4a8cca8"
         },
         {
           "path": "variants/government-ai--schoolteacher-320x320.webp",
@@ -1318,8 +1322,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 12076,
-          "sha256": "c820bad87f75622f30e07a3e3c63c20fd0183f44874969317fd59f12440a8813"
+          "bytes": 17596,
+          "sha256": "5f24c71f621e997e4008ed0a7f70bea63ac9405950a992314088a42f7b249830"
         },
         {
           "path": "variants/government-ai--schoolteacher-640x640.avif",
@@ -1327,8 +1331,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 22322,
-          "sha256": "041c6aeac2a6494bfe9ee8813636e5b493c5e714a5b7fb8841bfb3e8f03b710c"
+          "bytes": 28514,
+          "sha256": "10cf17d103345529f394737b0e490fe221f729812d61211e238ef8c632d9074e"
         },
         {
           "path": "variants/government-ai--schoolteacher-640x640.webp",
@@ -1336,8 +1340,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 28784,
-          "sha256": "4adb98af893983ab9315ea08a5ecd105db8ccb254a373de04d16d78e8367973f"
+          "bytes": 42972,
+          "sha256": "815ac9b8ba5309f2a9809e892f0e5dac4de96c3d26cf9a5067da43dc904e511e"
         },
         {
           "path": "variants/government-ai--schoolteacher-960x960.avif",
@@ -1345,8 +1349,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 35746,
-          "sha256": "89efdd688e41f0c215abe94c2d9fbb8dc674854fea6bf4107e1fa5be898287cc"
+          "bytes": 49285,
+          "sha256": "13f05b5e8490a208dd77aedef5efaa3738c04e720e46fb00cd24c6d5be532a6f"
         },
         {
           "path": "variants/government-ai--schoolteacher-960x960.webp",
@@ -1354,8 +1358,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 46176,
-          "sha256": "55d10b108836773dcf75ff200d89bda8c043640d512ef70f6d0d5b2edc5b2385"
+          "bytes": 75074,
+          "sha256": "fca5a2417c6ba453963cdb875530122fc91ab402f2ba682c0d16e9b74ce0e481"
         }
       ]
     },
@@ -1375,8 +1379,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2038133,
-        "sha256": "5c65b5b60ca21135e7dd172a9ea9534385bbf29f371b1bd02571c25760d09790"
+        "bytes": 3870747,
+        "sha256": "fbb90cb43ab65f3613653dcfa03df407e1177102e1e745b810125b4b9a2216a0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1395,9 +1399,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 4656,
-          "sha256": "d51d33e3faab3ede1c7d7bc8f69bffbbd691d46149cb4820ab6e91dd45d6800c"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 16514,
+          "sha256": "a41943004ede084099e047f4e3e6e3a2caab64cf730233105a77e8f3b3a119c0"
         },
         {
           "path": "variants/government-ai-128x128.webp",
@@ -1405,17 +1410,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 5756,
-          "sha256": "ccb1bafb302a98a256edb80ee0a3502b06b12329df410f29de2b155d88bbb681"
+          "bytes": 5576,
+          "sha256": "5c4795790d438a345234b81a402a15015e7a849758aff8bf2b77ae47aea60c71"
         },
         {
           "path": "variants/government-ai-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 10024,
-          "sha256": "b882229aee99672e6ec795cb101c384e4f4febe81cf80f2bbaae67e599a2c16a"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 42906,
+          "sha256": "aecc9f965de1aa55d8e80fd0ac0803668b75fc3f9cfbe6a03f82527303a7cd31"
         },
         {
           "path": "variants/government-ai-256x256.webp",
@@ -1423,17 +1429,18 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 13536,
-          "sha256": "9efb77799b3d6ead9c4803fbbac79b137fae91887b7747a23ecfb999c66d0a6f"
+          "bytes": 12978,
+          "sha256": "9b1a551d0607b4e1c41d44d6c02b8e7ad4365a9eaa44323712a65b61fbdae875"
         },
         {
           "path": "variants/government-ai-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 12533,
-          "sha256": "9945481a7172f05924c9628a3925f987b54504d77cdc394971ab23d369648f61"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 55788,
+          "sha256": "aaef4dfa35aaf3aa19eb315e941c7912dd8f54515c6ff384067c05951ba6fb11"
         },
         {
           "path": "variants/government-ai-320x320.webp",
@@ -1441,8 +1448,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 17278,
-          "sha256": "93d15786ede52b2f050c884bd05c1635a101ac14f66d3cff6d57cb5b4132e0c9"
+          "bytes": 17152,
+          "sha256": "f10845c27b94aeb807fe4ed002e87029bd3db0f4d233e22eef2a13eb1e331698"
         },
         {
           "path": "variants/government-ai-640x640.avif",
@@ -1450,8 +1457,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 31501,
-          "sha256": "9c35b1dd0052b27ec986128e6d85c0c8b3756a3b6e01bca850351476346cd355"
+          "bytes": 28099,
+          "sha256": "5967bed47f027c7dbb968dd6224f25e4266d038bd94b1af06787b015644c3c71"
         },
         {
           "path": "variants/government-ai-640x640.webp",
@@ -1459,8 +1466,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 41732,
-          "sha256": "a90f138892ffe9ffe7ea64c98284f12ef3b8467e4f50233dc528ebb4ba7247a5"
+          "bytes": 42700,
+          "sha256": "2d6279adcb0e36934e22bf8b5a6c0491acec5b44e7da71dd1c434e81f6a1e127"
         },
         {
           "path": "variants/government-ai-960x960.avif",
@@ -1468,8 +1475,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 48669,
-          "sha256": "1f6dd1483766a8daa43e13480188d7dc32d35e8760a03429b5cd6537d853399b"
+          "bytes": 48050,
+          "sha256": "7c0c6f0f3c26cc38fd988762cdff5e79173a45ecd9b565a34f6c21796809f3d2"
         },
         {
           "path": "variants/government-ai-960x960.webp",
@@ -1477,8 +1484,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 66244,
-          "sha256": "15271e7b9795d6f4ec29903beb8e632a6c73133f75f009a46082fe0965bf5e46"
+          "bytes": 74660,
+          "sha256": "6f0246a1d98e0a9c00804764a99197e2a779cea856e0c2b29fbae25cb74ac427"
         }
       ]
     },

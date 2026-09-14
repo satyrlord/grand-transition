@@ -35,11 +35,11 @@
     },
     "government-ai--alternate": {
       "facing": "right",
-      "sourceSha256": "a7699a5fc1d5d0eb98d8f17e51fce493df3107aaa4443267e2dbbeeef78d95f5"
+      "sourceSha256": "40aa12acc9d24a1f0338b8b0b11f7a8aa9bdfb59d1f4b721ee2e5e705ec7e8a3"
     },
     "government-ai": {
       "facing": "left",
-      "sourceSha256": "5c65b5b60ca21135e7dd172a9ea9534385bbf29f371b1bd02571c25760d09790"
+      "sourceSha256": "fbb90cb43ab65f3613653dcfa03df407e1177102e1e745b810125b4b9a2216a0"
     },
     "luxury-minister": {
       "facing": "right",
@@ -111,7 +111,7 @@
     },
     "government-ai--schoolteacher": {
       "facing": "left",
-      "sourceSha256": "bcb2c2e35b21e788a536f8a0b747c15128fbedc5fdafef10a42a21763c15337b"
+      "sourceSha256": "35646c833b5f5de296a24191691592bda5ec421845d23facfd002c10149ee704"
     },
     "county-baron--municipal-patron": {
       "facing": "left",
