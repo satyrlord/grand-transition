@@ -292,8 +292,9 @@ export class GrandTransitionMatch extends LitElement {
           ${backgroundLayers.map((layer) =>
             this.renderSceneLayer(layer, 'broadcast-stage-art'),
           )}
-          ${backgroundLayers[0]?.assetId === 'transition-era-television-studio'
+          ${backgroundLayers[0]
             ? html`<grand-transition-scene-ambience
+                .sceneId=${backgroundLayers[0].assetId}
                 style=${backgroundLayers[0].kind === 'manifest' ? sceneLayerStyle(backgroundLayers[0]) : nothing}
               ></grand-transition-scene-ambience>`
             : nothing}

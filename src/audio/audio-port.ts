@@ -5,7 +5,16 @@ export const effectIds = [
   'continuation-break', 'comeback', 'grammar-mistake',
 ] as const;
 export type EffectId = typeof effectIds[number];
-export type AudioScene = 'menu' | 'transition-era-television-studio' | null;
+export const sceneMusicTrackIds = {
+  'transition-era-television-studio': 'transition-era-television-studio-theme',
+  'modern-debate-studio': 'modern-debate-studio-theme',
+  'county-council-ballroom': 'county-council-ballroom-theme',
+  'midnight-call-in-studio': 'midnight-call-in-studio-theme',
+  'palace-press-hall': 'palace-press-hall-theme',
+  'influencer-campaign-livestream': 'influencer-campaign-livestream-theme',
+} as const;
+export type SceneAudioId = keyof typeof sceneMusicTrackIds;
+export type AudioScene = 'menu' | SceneAudioId | null;
 export type AudioStatus = 'idle' | 'loading' | 'ready' | 'unavailable';
 export type MixerSettings = Pick<SettingsDocument,
   'masterVolume' | 'musicVolume' | 'effectsVolume' | 'speechVolume'>;
@@ -25,4 +34,10 @@ export interface AudioPort {
   setScene(scene: AudioScene): void;
   play(cue: EffectId): boolean;
   dispose(): void;
+}
+
+export function audioScene(value: string | undefined): SceneAudioId | null {
+  return value && Object.hasOwn(sceneMusicTrackIds, value)
+    ? value as SceneAudioId
+    : null;
 }

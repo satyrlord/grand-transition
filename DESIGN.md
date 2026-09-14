@@ -180,8 +180,8 @@ scene, characters, sentence construction, speech, status, and actions share the
 same stage. They do not form a decorative scene above a separate dashboard.
 
 Each character is human or fully mechanical. Animal words in names or titles
-are metaphorical political labels only. The playable foundation uses 17 original
-human editorial caricatures and one original robot caricature, 18 total. Each
+are metaphorical political labels only. The playable foundation uses 18 original
+human editorial caricatures and one original robot caricature, 19 total. Each
 can occupy either player position.
 
 Eight archetypes have eleven alternate skins
@@ -240,8 +240,8 @@ human and fully mechanical characters inside one reusable 3:4 dark-oak and
 aged-gold frame.
 
 The robot crop includes its antenna, face panel, shoulders,
-and upper torso. Its face panel sits on the inner frame's center axis. All 18
-roster portraits stay visible in one compact six-six-six fighting-game
+and upper torso. Its face panel sits on the inner frame's center axis. All 19
+roster portraits stay visible in one compact six-six-six-one fighting-game
 selection grid between the two selected contestants. Any future incomplete row
 is centered.
 
@@ -348,7 +348,7 @@ perimeter actions. It remains valid after the earlier mock was removed.
   cartoon characters with painted comic-book, painterly semi-realistic,
   realistic concept-art, photographic, or three-dimensional-render scene
   layers.
-- Eighteen swappable player caricatures: 17 human and one fully mechanical.
+- Nineteen swappable player caricatures: 18 human and one fully mechanical.
   Two fixed fictional human moderators, one per layered studio. All have clear
   faces or face panels.
 - Navy and near-black broadcast framing with aged brass and opposing red and
@@ -553,10 +553,12 @@ masks protect text without turning the scene into stacked panels. Short dark
 shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
-The implemented build uses three brand rasters, six scene backgrounds, two
-transparent foreground desk plates, and 29 transparent character portraits:
-18 defaults and 11 alternates. All portrait skins are visual-only variations and
-do not change the fictional character identity or prose.
+The implemented build uses three brand rasters, six scene backgrounds, six
+transparent foreground plates, and 30 transparent character portraits: 19
+defaults and 11 alternates. Twenty-eight skins have complete nine-state
+packages; the Local Baron municipal-patron skin and Reluctant Theorem use the
+declared selection-art fallback. All portrait skins are visual-only variations
+and do not change the fictional character identity or prose.
 All shipping assets retain embedded generic source provenance. Required
 text and controls remain outside raster art.
 
@@ -607,7 +609,7 @@ characters use close headshots. The robot crop includes its antenna and face
 panel but not its complete body. Its face panel is centered in the inner
 portrait window.
 
-The 18 portraits stay in one equal-width six-six-six
+The 19 portraits stay in one equal-width six-six-six-one
 selection grid, with any future incomplete row centered, and never overlap the match
 settings. The grid scrolls vertically inside its roster region when required.
 The desktop page does not scroll. Compact setup follows Milestone 018.
@@ -640,10 +642,13 @@ three-dimensional-render people, furniture, bottles, lamps, floors, or
 architecture.
 
 Separate transparent portraits render the two selected characters over it and
-can exchange sides or mirror without changing the scene. A transparent desk
-plate renders over the portraits and clips their lower bodies behind two tall
-standing desks. The desk fronts continue below the lower stage frame. Do not
-show their extracted bottom contours or any portrait's lower raster contour.
+can exchange sides or mirror without changing the scene. A transparent
+foreground plate renders over the portraits. In the two debate studios, it
+clips their lower bodies behind two tall standing desks. The desk fronts
+continue below the lower stage frame. The four foundation scenes use
+scene-specific foreground props outside the central interaction and side-action
+safe rectangles. Do not show extracted bottom contours or any portrait's lower
+raster contour.
 
 Each transition-era standing desk has one microphone and one plain unbranded
 water bottle. Each modern standing desk has no microphone and holds one plain
@@ -663,10 +668,11 @@ text, public response, and damage without covering a face.
 
 ### Sentence construction tower
 
-All six scenes use their own manifest backgrounds. The County Council
-Ballroom, Midnight Call-In Studio, Palace Press Hall, and Influencer Campaign
-Livestream have opaque background art without fixed moderators or foreground
-plates. The title curtain is not a gameplay fallback.
+All six scenes use their own manifest backgrounds and transparent foreground
+plates. The County Council Ballroom, Midnight Call-In Studio, Palace Press Hall,
+and Influencer Campaign Livestream have no fixed moderator. Their foreground
+props keep the shared central interaction and side-action safe rectangles clear.
+The title curtain is not a gameplay fallback.
 
 Portrait frames share the background's bottom-aligned scene canvas. Their
 square source planes start at 24 percent of scene height, measure 80 percent

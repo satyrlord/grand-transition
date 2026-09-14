@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { BrowserAudio } from '../audio/browser-audio';
+import { audioScene } from '../audio/audio-port';
 import { NeuralVoiceRouter } from '../audio/neural-voice-router';
 import { SpeechDiagnostics, type PublicSpeechEvent } from '../audio/speech-diagnostics';
 import { GameAudio } from '../audio/game-audio';
@@ -376,7 +377,7 @@ export class GrandTransitionApp extends LitElement {
       else this.roundPresentation?.resume();
     } else if (concealed || this.view !== 'match' || this.matchState?.phase === 'results') this.gameSpeech?.cancel();
     this.audio?.setScene(concealed ? null : this.view !== 'match' ? 'menu' :
-      this.matchState?.setup.sceneId === 'transition-era-television-studio' ? 'transition-era-television-studio' : null);
+      audioScene(this.matchState?.setup.sceneId));
   };
 
   protected override render() {

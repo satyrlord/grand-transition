@@ -396,7 +396,8 @@ describe('advanced AI ladder policies', () => {
       expect(result.privacyLeaks).toBe(0);
       expect(result.timerOverruns).toBe(0);
     },
-    15_000,
+    // Browser coverage instruments a complete match; gameplay delay bounds are asserted above.
+    30_000,
   );
 
   test('routes configured Local Radio Caller simulation through its exact provider', () => {

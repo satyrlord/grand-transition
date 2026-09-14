@@ -21,7 +21,7 @@ specified task gates. Recheck those gates when the scope changes.
 - [`full-code-review`](full-code-review/SKILL.md): Review a diff, branch,
   milestone, or complete checkout.
 - [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate or edit
-  scene and character art. Use the Sunburst API for transparency, exact masters,
+  scene and character art. Use the Flare API for transparency, exact masters,
   and output above 1080p. Inspect, prepare, and integrate accepted art.
 - [`grill-me`](grill-me/SKILL.md): Resolve one product, architecture, or design
   decision at a time.

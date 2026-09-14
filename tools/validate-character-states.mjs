@@ -23,10 +23,8 @@ export function validateStateManifest(manifest, selectionManifest) {
   requireFact(isRecord(manifest) && manifest.schemaVersion === 1 && Array.isArray(manifest.packages) && Array.isArray(manifest.assets),
     'Character state manifest must declare schemaVersion 1, packages, and assets.');
   const skins = statePackages(selectionManifest);
-  requireFact(contract.characterIds.every((id) => skins.some((skin) => skin.ownerId === id)), 'Every slice character needs a selection portrait.');
-  requireFact(manifest.packages.length === skins.length, 'Character state package inventory must match every slice skin.');
-  const expectedStates = contract.states.filter(({ id }) => id !== 'selection');
-  requireFact(manifest.assets.length === skins.length * expectedStates.length, 'Character state master inventory is incomplete or contains extra assets.');
+  requireFact(manifest.packages.length === contract.expectedPackageCount,
+    `Character state package inventory must contain exactly ${contract.expectedPackageCount} packages.`);
   const assets = new Map();
   for (const asset of manifest.assets) {
     requireFact(isRecord(asset) && typeof asset.id === 'string' && !assets.has(asset.id), 'Character state asset IDs must be present and unique.');
@@ -47,11 +45,19 @@ export function validateStateManifest(manifest, selectionManifest) {
       requireFact(records.length === 1, `${skin.id}: missing or duplicate ${state.id} mapping.`);
       const record = records[0];
       requireFact(record.durationMs === state.durationMs && record.loop === state.loop, `${skin.id}/${state.id}: incorrect motion timing or loop mode.`);
-      const assetId = state.id === 'selection' ? skin.id : `${skin.id}--${state.id}`;
-      requireFact(record.assetId === assetId, `${skin.id}/${state.id}: incorrect asset mapping.`);
-      if (state.id === 'selection') continue;
+      const ownAssetId = state.id === 'selection' ? skin.id : `${skin.id}--${state.id}`;
+      const reusedStateId = contract.permittedStateAssetReuse[state.id];
+      const reusedAssetId = reusedStateId === 'selection'
+        ? skin.id
+        : reusedStateId ? `${skin.id}--${reusedStateId}` : null;
+      requireFact(record.assetId === ownAssetId || record.assetId === reusedAssetId,
+        `${skin.id}/${state.id}: incorrect asset mapping.`);
+      if (record.assetId === skin.id) continue;
+      const assetId = record.assetId;
+      const expectedAssetStateId = assetId === ownAssetId ? state.id : reusedStateId;
       const asset = assets.get(assetId);
-      requireFact(asset && asset.ownerType === 'character' && asset.ownerId === skin.ownerId && asset.skinId === skin.skinId && asset.stateId === state.id,
+      requireFact(asset && asset.ownerType === 'character' && asset.ownerId === skin.ownerId && asset.skinId === skin.skinId &&
+        asset.stateId === expectedAssetStateId,
         `${assetId}: missing asset or incorrect ownership.`);
       usedAssets.add(assetId);
       requireFact(identifier(asset.poseId) && identifier(asset.expressionId), `${assetId}: pose and expression identifiers are required.`);
@@ -61,7 +67,7 @@ export function validateStateManifest(manifest, selectionManifest) {
         `${assetId}: source description and license are required.`);
       requireFact(sameFields(asset.focalPoint, { x: 0.5, y: 0.32 }) && sameFields(asset.crop, crop), `${assetId}: incorrect focal point or crop.`);
       const source = asset.source;
-      requireFact(isRecord(source) && source.path === `states/${skin.id}/${state.id}.png` && source.format === 'png' && source.width === 2048 && source.height === 2048 &&
+      requireFact(isRecord(source) && source.path === `states/${skin.id}/${asset.stateId}.png` && source.format === 'png' && source.width === 2048 && source.height === 2048 &&
         hash(source.sha256) && Number.isInteger(source.bytes) && source.bytes > 0, `${assetId}: invalid source path, dimensions, bytes, or hash.`);
       requireFact(Array.isArray(asset.variants) && asset.variants.length === 6, `${assetId}: all six runtime variants are required.`);
       for (const width of stateWidths) {
@@ -81,8 +87,9 @@ export function validateStateManifest(manifest, selectionManifest) {
 }
 
 export function measurePackageBytes(manifest, selection, sceneManifest) {
-  const variantBytes = (asset, width, format) => {
-    const variant = asset.variants.find((item) => item.width === width && item.format === format);
+  const variantBytes = (asset, format) => {
+    const variant = asset.variants.filter((item) => item.format === format)
+      .reduce((largest, item) => !largest || item.width > largest.width ? item : largest, undefined);
     requireFact(variant && Number.isInteger(variant.bytes) && variant.bytes > 0,
       asset.id + ': missing largest ' + format + ' variant byte size.');
     return variant.bytes;
@@ -90,12 +97,12 @@ export function measurePackageBytes(manifest, selection, sceneManifest) {
   return Math.max(...stateFormats.map((format) => {
     const scenes = new Map();
     for (const asset of sceneManifest.assets) {
-      scenes.set(asset.ownerId, (scenes.get(asset.ownerId) ?? 0) + variantBytes(asset, 1920, format));
+      scenes.set(asset.ownerId, (scenes.get(asset.ownerId) ?? 0) + variantBytes(asset, format));
     }
     const packages = selection.assets.map((baseline) =>
-      variantBytes(baseline, 960, format) +
+      variantBytes(baseline, format) +
       manifest.assets.filter((asset) => asset.ownerId === baseline.ownerId && asset.skinId === baseline.skinId)
-        .reduce((sum, asset) => sum + variantBytes(asset, 960, format), 0));
+        .reduce((sum, asset) => sum + variantBytes(asset, format), 0));
     return Math.max(...scenes.values()) + 2 * Math.max(...packages);
   }));
 }

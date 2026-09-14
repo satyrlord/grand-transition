@@ -1,10 +1,10 @@
-# Generate through the Sunburst API
+# Generate through the Flare API
 
 ## API branch
 
 Use this branch for transparent output, exact-size masters, or output above 2,073,600 pixels.
-Use `gpt-image-2.5-sunburst`, high quality, PNG output, and explicit dimensions.
-The repository helper uses Node 24 `fetch` through `scripts/sunburst-api.mjs`.
+Use `gpt-image-2.5-flare`, high quality, PNG output, and explicit dimensions.
+The repository helper uses Node 24 `fetch` through `scripts/openai-api.mjs`.
 It constructs requests directly for OpenAI's image generation and edit endpoints.
 Do not modify an installed image CLI or require its size tables, SDK, Python, or `uv`.
 
@@ -15,7 +15,7 @@ Provider error bodies do not enter model context through the helper.
 An unavailable key blocks only the API branch.
 
 The [OpenAI image generation guide](https://developers.openai.com/api/docs/guides/image-generation)
-documents Sunburst's size and transparency contract.
+documents Flare's size and transparency contract.
 Dimensions must be multiples of 16. The maximum edge is 3840 and the maximum aspect ratio is 3:1.
 The total pixel count must be between 655,360 and 8,294,400, inclusive.
 These limits apply to generation sources, not the shipping dimensions declared by the asset pipeline.

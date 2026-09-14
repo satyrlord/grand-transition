@@ -1,6 +1,9 @@
 import { expect, test } from 'vitest';
 import { resolveCharacterAsset } from '../../src/app/character-assets';
-import { createCharacterStatePackages } from '../../src/app/character-state-assets';
+import {
+  createCharacterStatePackages,
+  resolveCharacterFramesFromInventory,
+} from '../../src/app/character-state-assets';
 import { characterMotion } from '../../src/app/character-motion';
 
 function fixture() {
@@ -59,6 +62,22 @@ test('variant order cannot choose a smaller fallback image', () => {
   expect(frames.every((frame) => frame.url.includes('960x960'))).toBe(true);
 });
 
+test('resolves declared state mappings that reuse selection and state assets', () => {
+  const { manifest, selection, urls } = fixture();
+  const mappings = manifest.packages[0]!.states;
+  mappings.find(({ stateId }) => stateId === 'idle')!.assetId = selection.id;
+  mappings.find(({ stateId }) => stateId === 'comeback')!.assetId = `${selection.id}--delivery`;
+  mappings.find(({ stateId }) => stateId === 'grammar-mistake')!.assetId = `${selection.id}--weakness`;
+  manifest.assets = manifest.assets.filter(
+    ({ stateId }) => !['idle', 'comeback', 'grammar-mistake'].includes(stateId),
+  );
+
+  const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
+  expect(frames.find(({ stateId }) => stateId === 'idle')!.id).toBe(selection.id);
+  expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(`${selection.id}--delivery`);
+  expect(frames.find(({ stateId }) => stateId === 'grammar-mistake')!.id).toBe(`${selection.id}--weakness`);
+});
+
 test('rejects missing state mappings, sources, and selection instead of producing blank frames', () => {
   const first = fixture();
   first.manifest.packages[0]!.states.pop();
@@ -77,4 +96,36 @@ test('rejects duplicate packages and a state pointing at another owner', () => {
   const second = fixture();
   second.manifest.assets[0]!.ownerId = 'wrong-character';
   expect(() => createCharacterStatePackages(second.manifest, [second.selection], second.urls)).toThrow(/incorrect asset/u);
+});
+
+test('uses selection art only for the two declared fallback skins', () => {
+  const fallbacks = [
+    resolveCharacterAsset('county-baron--municipal-patron'),
+    resolveCharacterAsset('reluctant-theorem'),
+  ];
+  for (const fallback of fallbacks) {
+    expect(resolveCharacterFramesFromInventory(
+      fallback.ownerId,
+      fallback.skinId,
+      new Map(),
+      [fallback],
+    )).toBeNull();
+  }
+
+  const required = resolveCharacterAsset('algorithmic-prophet');
+  expect(() => resolveCharacterFramesFromInventory(
+    required.ownerId,
+    required.skinId,
+    new Map(),
+    [required],
+  )).toThrow(/Required character state package is missing/u);
+
+  const frames = fixture();
+  expect(() => resolveCharacterFramesFromInventory(
+    fallbacks[0]!.ownerId,
+    fallbacks[0]!.skinId,
+    new Map([[fallbacks[0]!.ownerId + ':' + fallbacks[0]!.skinId,
+      createCharacterStatePackages(frames.manifest, [frames.selection], frames.urls)[0]!.frames]]),
+    [fallbacks[0]!],
+  )).toThrow(/Selection-art fallback must not declare/u);
 });

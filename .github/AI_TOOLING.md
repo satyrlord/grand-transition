@@ -50,9 +50,9 @@ See [create-skill](skills/create-skill/SKILL.md) for authoring and validation.
 
 Scene and character raster work uses
 [generate-scene-openai](skills/generate-scene-openai/SKILL.md).
-Its repository-owned Sunburst API adapter supports native transparency and exact master dimensions.
+Its repository-owned Flare API adapter supports native transparency and exact master dimensions.
 The skill also owns bounded alpha preparation, provenance, and staged asset integration.
-Installed generic image CLIs do not own this repository's Sunburst request contract.
+Installed generic image CLIs do not own this repository's Flare request contract.
 
 ## Model Context Protocol policy
 

@@ -3,9 +3,34 @@
   "characterIds": [
     "red-folded-chairman",
     "thunder-tribune",
+    "midnight-sensationalist",
+    "velvet-mogul",
     "black-sea-captain",
-    "government-ai"
+    "retiring-cassandra",
+    "oat-milk-reformist",
+    "marble-diplomat",
+    "county-baron",
+    "coalition-acrobat",
+    "algorithmic-prophet",
+    "spreadsheet-technocrat",
+    "football-tycoon",
+    "luxury-minister",
+    "diaspora-oracle",
+    "apartment-block-geopolitician",
+    "eu-funds-alchemist",
+    "government-ai",
+    "reluctant-theorem"
   ],
+  "selectionArtFallbackSkinIds": [
+    "county-baron--municipal-patron",
+    "reluctant-theorem"
+  ],
+  "expectedPackageCount": 28,
+  "permittedStateAssetReuse": {
+    "idle": "selection",
+    "comeback": "delivery",
+    "grammar-mistake": "weakness"
+  },
   "states": [
     { "id": "idle", "durationMs": 4000, "loop": true },
     { "id": "selection", "durationMs": 320, "loop": false },

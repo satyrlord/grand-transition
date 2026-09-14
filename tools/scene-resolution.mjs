@@ -7,7 +7,9 @@ export const SCENE_VARIANT_SIZES = Object.freeze([
 ]);
 
 export function sceneMasterSize(id) {
-  return ['modern-debate-studio', 'transition-era-television-studio'].includes(id.replace(/-desks$/u, ''))
+  return ['modern-debate-studio', 'transition-era-television-studio'].includes(
+    id.replace(/-(?:desks|foreground)$/u, ''),
+  )
     ? SCENE_VARIANT_SIZES[4]
     : SCENE_VARIANT_SIZES[2];
 }

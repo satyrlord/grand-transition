@@ -265,6 +265,7 @@ export const contentCatalogSchema = z
     });
 
     validateLocaleKeys(catalog, context);
+    validateUniqueLocalizedText(catalog, context);
     if (continuations.length === 1) {
       validateContinuationCue(catalog.locales, continuations[0]!, context);
     }
@@ -438,6 +439,66 @@ function validateLocaleKeys(
         );
     }
   });
+}
+
+function validateUniqueLocalizedText(
+  catalog: z.output<typeof contentCatalogSchema> | CatalogInput,
+  context: z.RefinementCtx,
+): void {
+  catalog.locales.forEach((locale, localeIndex) => {
+    if (/^en(?:-|$)/u.test(locale.locale)) {
+      for (const [kind, entries] of [
+        ['character', catalog.characters],
+        ['scene', catalog.scenes],
+      ] as const) {
+        const nameOwner = new Map<string, string>();
+        for (const { nameKey } of entries) {
+          const text = locale.messages[nameKey];
+          if (text === undefined) continue;
+          const normalized = normalizeVisibleText(text, locale.locale);
+          const previousOwner = nameOwner.get(normalized);
+          if (previousOwner) {
+            issue(
+              context,
+              ['locales', localeIndex, 'messages', nameKey],
+              `Use a unique English ${kind} name. "${nameKey}" duplicates "${previousOwner}" after normalization.`,
+            );
+          } else {
+            nameOwner.set(normalized, nameKey);
+          }
+        }
+      }
+    }
+
+    const comebackTextOwner = new Map<string, string>();
+    for (const character of catalog.characters) {
+      for (const key of Object.values(character.comebackLinesByTier).flat()) {
+        const text = locale.messages[key];
+        if (text === undefined) continue;
+        const normalized = normalizeVisibleText(text, locale.locale);
+        const previousOwner = comebackTextOwner.get(normalized);
+        if (previousOwner) {
+          issue(
+            context,
+            ['locales', localeIndex, 'messages', key],
+            `Use unique comeback text in locale "${locale.locale}". "${key}" duplicates "${previousOwner}" after normalization.`,
+          );
+        } else {
+          comebackTextOwner.set(normalized, key);
+        }
+      }
+    }
+  });
+}
+
+function normalizeVisibleText(text: string, locale: string): string {
+  const normalized = text.trim().replaceAll(/\s+/gu, ' ');
+  try {
+    return normalized.toLocaleLowerCase(locale);
+  } catch (error) {
+    if (error instanceof RangeError) return normalized.toLowerCase();
+    throw error;
+  }
 }
 
 function validateContinuationCue(

@@ -1,20 +1,23 @@
-import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import sharp from 'sharp';
 import { describe, expect, test } from 'vitest';
 import contract from '../../src/assets/characters/state-contract.json';
 import shippedSelection from '../../src/assets/characters/character-manifest.json';
-import shippedStates from '../../src/assets/characters/states/state-manifest.json';
 // @ts-expect-error The asset tools are native ECMAScript modules.
 import { measurePackageBytes, validateStateManifest } from '../../tools/validate-character-states.mjs';
 // @ts-expect-error The asset tools are native ECMAScript modules.
-import { buildCharacterStates } from '../../tools/build-character-states.mjs';
+import { buildCharacterStatePackage, buildCharacterStates, prepareCharacterStatePackage, stateAssetId, statePackages } from '../../tools/build-character-states.mjs';
+
+type SelectionEntry = Readonly<{ id: string; ownerId: string; skinId: string }>;
 
 function fixture() {
   const selection = {
-    assets: contract.characterIds.map((id) => ({ id, ownerId: id, skinId: 'default' })),
+    assets: shippedSelection.assets.map(({ id, ownerId, skinId }) => ({ id, ownerId, skinId })),
   };
-  const assets = selection.assets.flatMap((skin) =>
+  const requiredPackages = statePackages(selection) as SelectionEntry[];
+  const assets = requiredPackages.flatMap((skin) =>
     contract.states.filter((state) => state.id !== 'selection').map((state) => {
       const id = `${skin.id}--${state.id}`;
       return {
@@ -35,7 +38,7 @@ function fixture() {
     selection,
     manifest: {
       schemaVersion: 1, assets,
-      packages: selection.assets.map((skin) => ({
+      packages: requiredPackages.map((skin) => ({
         ownerId: skin.ownerId, skinId: skin.skinId,
         states: contract.states.map((state) => ({
           stateId: state.id, durationMs: state.durationMs, loop: state.loop,
@@ -47,6 +50,32 @@ function fixture() {
 }
 
 describe('complete character state contract', () => {
+  test('derives 28 state packages from all 19 characters and exactly two fallbacks', () => {
+    const { manifest, selection } = fixture();
+    expect(contract.characterIds).toHaveLength(19);
+    expect(contract.selectionArtFallbackSkinIds).toEqual([
+      'county-baron--municipal-patron',
+      'reluctant-theorem',
+    ]);
+    expect(statePackages(selection)).toHaveLength(28);
+    expect(manifest.packages).toHaveLength(28);
+    expect(manifest.packages.every(({ states }) => states.length === 9)).toBe(true);
+
+    const minimumMasters = new Set([
+      'thinking',
+      'delivery',
+      'light-hit',
+      'heavy-hit',
+      'weakness',
+    ]);
+    expect(stateAssetId('fixture', 'idle', minimumMasters)).toBe('fixture');
+    expect(stateAssetId('fixture', 'idle', new Set([...minimumMasters, 'idle'])))
+      .toBe('fixture--idle');
+    expect(stateAssetId('fixture', 'comeback', minimumMasters)).toBe('fixture--delivery');
+    expect(stateAssetId('fixture', 'grammar-mistake', minimumMasters)).toBe('fixture--weakness');
+    expect(() => stateAssetId('fixture', 'thinking', new Set())).toThrow(/required state master/u);
+  });
+
   test('package budget includes both scene layers, all states, fallback format, and foundation portraits', () => {
     const variants = (width: number, avif: number, webp: number) => [
       { width, format: 'avif', bytes: avif }, { width, format: 'webp', bytes: webp },
@@ -66,9 +95,59 @@ describe('complete character state contract', () => {
     selection.assets[1]!.variants = variants(960, 1, 1);
     expect(measurePackageBytes(manifest, selection, scenes)).toBe(320);
   });
-  test('accepts all nine mappings for each of the four slice characters', () => {
+  test('accepts all nine mappings for every required final state package', () => {
     const { manifest, selection } = fixture();
     expect(validateStateManifest(manifest, selection)).toBe(manifest);
+  });
+
+  test('package budget counts the largest scene sizes in both runtime formats', () => {
+    const variants = (width: number, avif: number, webp: number) => [
+      { width, format: 'avif', bytes: avif }, { width, format: 'webp', bytes: webp },
+    ];
+    const selection = { assets: [
+      { id: 'skin', ownerId: 'character', skinId: 'default', variants: variants(960, 200_000, 200_000) },
+    ] };
+    const manifest = { assets: Array.from({ length: 5 }, (_, index) => ({
+      id: `state-${index}`, ownerId: 'character', skinId: 'default',
+      variants: variants(960, 200_000, 200_000),
+    })) };
+    const scenes = { assets: [
+      { id: 'foundation', ownerId: 'foundation', variants: variants(1920, 100_000, 200_000) },
+      ...['back', 'front'].map((id) => ({
+        id, ownerId: 'studio', variants: [
+          ...variants(3840, 350_000, 500_000),
+          ...variants(1920, 100, 100),
+        ],
+      })),
+    ] };
+    expect(measurePackageBytes(manifest, selection, scenes)).toBe(3_400_000);
+    expect(measurePackageBytes(manifest, selection, scenes)).toBeGreaterThan(3 * 1024 * 1024);
+  });
+
+  test('allows only the declared state-to-asset reuse while preserving pose diversity', () => {
+    const { manifest, selection } = fixture();
+    const group = manifest.packages[0]!;
+    const skinId = selection.assets.find(
+      ({ ownerId, skinId }) => ownerId === group.ownerId && skinId === group.skinId,
+    )!.id;
+    const reuse = new Map([
+      ['idle', 'selection'],
+      ['comeback', 'delivery'],
+      ['grammar-mistake', 'weakness'],
+    ]);
+    for (const [stateId, sourceStateId] of reuse) {
+      const mapping = group.states.find((state) => state.stateId === stateId)!;
+      mapping.assetId = sourceStateId === 'selection'
+        ? skinId
+        : `${skinId}--${sourceStateId}`;
+      manifest.assets = manifest.assets.filter(
+        ({ id }) => id !== `${skinId}--${stateId}`,
+      );
+    }
+    expect(validateStateManifest(manifest, selection)).toBe(manifest);
+
+    group.states.find(({ stateId }) => stateId === 'light-hit')!.assetId = `${skinId}--delivery`;
+    expect(() => validateStateManifest(manifest, selection)).toThrow(/incorrect asset mapping/u);
   });
 
   test('rejects each missing named state, including the baseline selection mapping', () => {
@@ -100,10 +179,38 @@ describe('complete character state contract', () => {
     expect(() => validateStateManifest(third.manifest, third.selection)).toThrow(/incorrect asset mapping/u);
   });
 
-  test('rejects absent skins and does not silently drop a slice character', () => {
-    const { manifest, selection } = fixture();
-    selection.assets.pop();
-    expect(() => validateStateManifest(manifest, selection)).toThrow(/Every slice character/u);
+  test('rejects missing required packages and undeclared selection-art fallbacks', () => {
+    const missingPackage = fixture();
+    missingPackage.manifest.packages.pop();
+    expect(() => validateStateManifest(missingPackage.manifest, missingPackage.selection)).toThrow(/exactly 28 packages/u);
+
+    const missingCharacter = fixture();
+    missingCharacter.selection.assets = missingCharacter.selection.assets.filter(
+      ({ ownerId }) => ownerId !== 'reluctant-theorem',
+    );
+    expect(() => validateStateManifest(missingCharacter.manifest, missingCharacter.selection)).toThrow(/selection portrait is missing/u);
+
+    const missingFallback = fixture();
+    missingFallback.selection.assets = missingFallback.selection.assets.filter(
+      ({ id }) => id !== 'county-baron--municipal-patron',
+    );
+    expect(() => validateStateManifest(missingFallback.manifest, missingFallback.selection)).toThrow(/declared selection-art fallback is missing/u);
+
+    const fallbackAsPackage = fixture();
+    const fallback = fallbackAsPackage.selection.assets.find(
+      ({ id }) => id === 'reluctant-theorem',
+    )!;
+    fallbackAsPackage.manifest.packages.push({
+      ownerId: fallback.ownerId,
+      skinId: fallback.skinId,
+      states: contract.states.map((state) => ({
+        stateId: state.id,
+        durationMs: state.durationMs,
+        loop: state.loop,
+        assetId: fallback.id,
+      })),
+    });
+    expect(() => validateStateManifest(fallbackAsPackage.manifest, fallbackAsPackage.selection)).toThrow(/exactly 28 packages/u);
   });
 
   test('rejects altered timing and loop contracts', () => {
@@ -156,21 +263,61 @@ describe('complete character state contract', () => {
     }
   });
 
-  test('Sharp reproduces a complete shipped nine-state package from unchanged masters', async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-state-rebuild-'));
-    const skin = shippedSelection.assets.find(({ id }) => id === 'red-folded-chairman')!;
+  test('reproduces one minimum-source package with exact reuse mappings and bytes', async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-state-package-'));
+    const skin = shippedSelection.assets.find(({ id }) => id === 'black-sea-captain')!;
+    const requiredStates = ['thinking', 'delivery', 'light-hit', 'heavy-hit', 'weakness'] as const;
     try {
-      await writeFile(path.join(root, 'character-manifest.json'), JSON.stringify({ ...shippedSelection, assets: [skin] }));
-      for (const state of contract.states.filter(({ id }) => id !== 'selection')) {
-        const relative = `states/${skin.id}/${state.id}.png`;
-        await mkdir(path.dirname(path.join(root, relative)), { recursive: true });
-        await copyFile(path.resolve('src/assets/characters', relative), path.join(root, relative));
+      const sourceRoot = path.join(root, 'states', skin.id);
+      const firstVariants = path.join(root, 'first-variants');
+      const secondVariants = path.join(root, 'second-variants');
+      await Promise.all([sourceRoot, firstVariants, secondVariants].map((directory) =>
+        mkdir(directory, { recursive: true })));
+      for (const [index, stateId] of requiredStates.entries()) {
+        const figure = Buffer.from(
+          `<svg width="2048" height="2048"><ellipse cx="1024" cy="1040" rx="${500 + index}" ry="820" fill="#${index + 2}45678"/></svg>`,
+        );
+        await sharp({
+          create: { width: 2048, height: 2048, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
+        }).composite([{ input: figure }]).png().toFile(path.join(sourceRoot, `${stateId}.png`));
       }
-      const rebuilt = await buildCharacterStates({ characterRoot: root });
-      expect(rebuilt.packages).toEqual(shippedStates.packages.filter(({ ownerId, skinId }) => ownerId === skin.ownerId && skinId === skin.skinId));
-      expect(rebuilt.assets).toEqual(shippedStates.assets.filter(({ ownerId, skinId }) => ownerId === skin.ownerId && skinId === skin.skinId));
+
+      const prepared = await prepareCharacterStatePackage(root, skin);
+      const first = await buildCharacterStatePackage(prepared, firstVariants);
+      const second = await buildCharacterStatePackage(prepared, secondVariants);
+      const manifestText = (built: typeof first) => `${JSON.stringify({
+        schemaVersion: 1,
+        packages: [built.manifestPackage],
+        assets: built.assets,
+      }, null, 2)}\n`;
+      expect(manifestText(second)).toBe(manifestText(first));
+
+      const variantFiles = (await readdir(firstVariants)).toSorted();
+      expect(variantFiles).toHaveLength(requiredStates.length * 3 * 2);
+      expect(await Promise.all(variantFiles.map(async (file) =>
+        (await readFile(path.join(secondVariants, file))).equals(await readFile(path.join(firstVariants, file))))))
+        .toEqual(variantFiles.map(() => true));
+
+      const mapping = new Map(first.manifestPackage.states.map(
+        ({ stateId, assetId }: { stateId: string; assetId: string }) => [stateId, assetId],
+      ));
+      expect(mapping.get('idle')).toBe(skin.id);
+      expect(mapping.get('comeback')).toBe(`${skin.id}--delivery`);
+      expect(mapping.get('grammar-mistake')).toBe(`${skin.id}--weakness`);
+
+      const complete = fixture();
+      const packageIndex = complete.manifest.packages.findIndex(
+        ({ ownerId, skinId }) => ownerId === skin.ownerId && skinId === skin.skinId,
+      );
+      complete.manifest.packages[packageIndex] = first.manifestPackage;
+      complete.manifest.assets = complete.manifest.assets.filter(
+        ({ ownerId, skinId }) => ownerId !== skin.ownerId || skinId !== skin.skinId,
+      );
+      complete.manifest.assets.push(...first.assets);
+      expect(validateStateManifest(complete.manifest, complete.selection)).toBe(complete.manifest);
     } finally {
-      if (path.dirname(root) === os.tmpdir()) await rm(root, { recursive: true, force: true });
+      await rm(root, { recursive: true, force: true });
     }
   }, 180_000);
+
 });

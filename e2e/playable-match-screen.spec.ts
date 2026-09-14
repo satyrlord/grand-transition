@@ -1198,7 +1198,10 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   page,
 }) => {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await selectSetupCharacter(page, 'one', 'retiring-cassandra');
+  // A declared selection-art fallback keeps the static portrait path. State-package
+  // characters render through the frame presenter, whose own visible frame would
+  // count as a third replacement portrait.
+  await selectSetupCharacter(page, 'one', 'reluctant-theorem');
   await page.getByRole('button', { name: 'Start match' }).click();
   await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
   let releasePortrait!: () => void;
@@ -1692,7 +1695,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
     await page.locator('.timer-fact').getAttribute('data-timer'),
   );
 
-  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.locator('[data-interruption="paused"]')).toBeVisible();
   await expect(page.locator('.match-screen')).toHaveCount(0);
   await expect(page.locator('.phrase-card')).toHaveCount(0);
@@ -1744,7 +1747,7 @@ test('Pause settings apply to the resumed match', async ({
   page,
 }, testInfo) => {
   await startMatch(page);
-  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Resume' })).toBeFocused();
 
   const thirtySeconds = page.getByRole('button', { name: '30 seconds' });
@@ -1886,7 +1889,7 @@ test('Pause settings apply to the resumed match', async ({
   await page.setViewportSize({ width: 1280, height: 720 });
 
   await page.getByRole('button', { name: 'Resume' }).click();
-  await expect(page.getByRole('button', { name: 'Pause' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeFocused();
   await expect(page.locator('.timer-fact')).toHaveAttribute(
     'data-timer',
     /^(?:14|15)$/u,
@@ -1904,7 +1907,7 @@ test('Pause settings apply to the resumed match', async ({
     sentenceBefore?.trim() ?? '',
   );
 
-  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(
     page
       .locator('.interruption-audio-control')
@@ -1965,7 +1968,7 @@ test('paused match returns to the menu only after confirmation', async ({
   page,
 }, testInfo) => {
   await startMatch(page);
-  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await page.getByRole('button', { name: 'Back to menu' }).click();
 
   await expect(

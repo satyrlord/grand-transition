@@ -1,6 +1,6 @@
 # Milestone 028: Minimum Viable Product Content Finalization
 
-**Status:** Approved  
+**Status:** Complete\
 **Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
@@ -15,7 +15,8 @@ The phrase-data package uses the common authoring file and the 19 character
 authoring files. Replay compatibility is a separate Milestone 014 package.
 Historical replay content, replay codecs, common phrases, and character phrases have separate
 build chunks so the expanded catalog remains below the existing per-chunk size
-limit. Keep the limit unchanged.
+limit. Character-state image URLs and scene manifest data also have separate
+build chunks. Keep the limit unchanged.
 
 ## Deliver
 
@@ -25,7 +26,8 @@ and variety requirements. Use the existing schemas, pipelines, and presentation
 contracts.
 
 Every archetype has one default portrait skin and zero through eight alternate
-skins through the Milestone 023 filename convention. A human alternate can use
+skins through the Milestone 023 filename convention. The final catalog contains
+30 selectable skins: 19 defaults and 11 alternates. A human alternate can use
 any gender. There is no gender quota. A fully mechanical alternate uses another
 fully mechanical chassis.
 
@@ -50,6 +52,13 @@ The portrait uses the approved green-matte conversion fallback after native
 transparency fails validation. Banknote edges are pale blue to avoid the key
 color. Preserve the existing alpha and color checks. Matches use the
 selection-art fallback, without a new pose or state package.
+
+All other selectable skins use the complete nine-state Milestone 023 package.
+The final state inventory therefore contains 28 skin packages. State mappings
+can reuse an image where Milestone 023 permits it, but each package still meets
+its minimum distinct-pose and expression counts. `county-baron--municipal-patron`
+and `reluctant-theorem` are the only selection-art fallback IDs. A validator
+rejects another missing package or an undeclared fallback.
 
 Eighteen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
@@ -128,8 +137,46 @@ color is local to authored materials and lighting, not a complete scene grade.
   Its phrase themes are algorithms, sovereignty, podcast evidence, ancient
   energy, clips, and shadow bans.
 
-Each scene has a 1920x1080 layered master, landscape crops, lighting,
-motion, music treatment, and 25 to 35 owned phrases. The validated catalog has
+Each scene has a layered master, landscape crops, lighting, motion, music
+treatment, and 25 to 35 owned phrases. The two studio packages retain their
+3840x2160 back and foreground masters. The other four scenes use 1920x1080 back
+and foreground masters. Their final foreground IDs are
+`county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`,
+`palace-press-hall-foreground`, and
+`influencer-campaign-livestream-foreground`. Each transparent foreground stays
+within the shared scene plane and keeps the central interaction and side-action
+safe rectangles clear.
+
+Scene motion remains decorative and pointer-inert. Transition-era lamps keep
+`transition-era-studio-lights`; Modern Debate keeps
+`modern-debate-light-lines`. The four final foundation animations are
+`county-ballroom-chandelier-glint`, `midnight-ticker-crawl`,
+`palace-press-light-sweep`, and `livestream-reaction-rise`. Pause, document
+hiding, offscreen presentation, and reduced motion stop each overlay without
+changing the static scene or layout.
+Browser checks verify that every overlay contains SVG graphics with nonzero
+rendered bounds, as well as the required motion and suspension states.
+
+The six scene music IDs are `<scene-id>-theme`. Each ID resolves to a distinct
+local WAV master and distinct Ogg Vorbis and MP3 runtime variants. The audio
+manifest records its source, license, edit, hashes, and measured levels. Scene
+entry routes the selected scene ID to its matching music treatment. No scene
+uses a shared placeholder track, and scenes add no room-tone audio. The nine
+Milestone 024 effects remain unchanged and reachable.
+
+The final treatments use these non-overlapping edits from the pinned Chris
+Breemer CC0 recording of Bartók's _Romanian Folk Dances, Sz.56_:
+
+| Scene | Movement and source window |
+| --- | --- |
+| Transition-Era Television Studio | _Buciumeana_, 181.3 through 225.0 seconds |
+| Modern Debate Studio | _Brâul_, 76.4 through 107.6 seconds |
+| County Council Ballroom | _Poarga românească_, 227.2 through 259.6 seconds |
+| Midnight Call-In Studio | _Mărunțel_ first section, 260.3 through 288.3 seconds |
+| Palace Press Hall | _Pe loc_, 111.7 through 177.0 seconds |
+| Influencer Campaign Livestream | _Mărunțel_ second section, 289.0 through 318.1 seconds |
+
+The validated catalog has
 these inclusive general-pool ranges:
 
 | Role                             | Minimum | Maximum |
@@ -161,6 +208,13 @@ treatment and every named Milestone 024 effect remains reachable.
 
 ## Variety contract
 
+Setup keeps native scene selection and its keyboard behavior. The selected
+scene name has a wrapping visual text layer inside the control so a
+40-percent-expanded name stays readable on compact viewports. The duplicate
+visual layer is hidden from assistive technology; the native option owns the
+accessible value. Expansion evidence must exercise the selected option, not
+the separate Scene field label.
+
 The loaded catalog has unique authored phrase text across common and owned
 pools. Each character and tier has unique comeback text. Existing grammar
 checks verify phrase reachability, agreement forms, and representative complete
@@ -175,6 +229,9 @@ with passing content, grammar, and normal CI checks.
 
 - **AC-028-01:** The catalog contains exactly 19 required character IDs and
   six required scene IDs, with no duplicate English identity.
+  Character names and scene names are unique within their respective groups
+  after case and whitespace normalization. Validation identifies the second
+  duplicate locale key.
 - **AC-028-02:** Every general, character, scene, and comeback count meets its
   exact range and role minimum. Boundary fixtures fail one below and above.
 - **AC-028-03:** Every character and scene passes grammar reachability, board
@@ -236,6 +293,15 @@ summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statu
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
+
+Completion verified on 2026-09-14 with `CI=1 npm run ci` (exit 0): 975 unit
+tests, 694 browser tests, passing coverage, and 259 Playwright cases (257 passed
+initially and two passed on retry). The two retry cases then passed three runs
+each with retries disabled after making the Pause locator exact. No gameplay
+assertion or asset threshold was relaxed. Final logs are retained in
+`tmp/spec028-ci-verified.log` and `tmp/spec028-final-confirmation.log`.
+Impeccable audit and independent critique evidence, dispositions, and limitations
+are recorded in `.impeccable/review/spec-028-acceptance.md`.
 
 All content, localization, asset, license, and minimum-volume checks
 pass. Every character and scene loads at all supported landscape viewports and

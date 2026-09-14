@@ -35,6 +35,8 @@ export default defineConfig(({ command }) => ({
             { name: 'character-phrase-data', test: /[/\\]src[/\\]content[/\\]characters[/\\]/u },
             { name: 'content-data', test: /[/\\]src[/\\]content[/\\](?!legacy-|common-phrase-cards\.json|characters[/\\]).*\.json$/u },
             { name: 'character-state-data', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]state-manifest\.json$/u },
+            { name: 'character-state-urls', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]variants[/\\]/u },
+            { name: 'scene-data', test: /[/\\]src[/\\]assets[/\\]scenes[/\\]scene-manifest\.json$/u },
             { name: 'vendor', test: /[/\\]node_modules[/\\]/u, priority: 1 },
           ],
         },

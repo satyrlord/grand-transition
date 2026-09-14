@@ -142,6 +142,156 @@
       ]
     },
     {
+      "id": "county-council-ballroom-foreground",
+      "ownerType": "scene",
+      "ownerId": "county-council-ballroom",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "county-council-ballroom-foreground.png",
+        "sha256": "5c9bee65be27723243b0f8f50d6e467f2346df3482f900de8f88e4c197aa245c",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 367174,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/county-council-ballroom-foreground-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 6432,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "e8d68e2321ea426787ce68b01a45c85270b2ea24a64fd8a8a5223464e291b3b9"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 9604,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "ff373b4a6d71d3b71a9be7f3bbe151a19d9a44a91100ce819781ac7e01537f39"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 14691,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "ff912eb3cf0356337911c51d186d35aff6ad915ddfad49dffd1027df6f8b143d"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 23924,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "84210f33015eb5c75c6d33a41dc6236f14d6996ebb3fa6e06ce7d34d978c7f12"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 23151,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "6a95468db83ae0c89748e0fd261d6e4c9b536f30d520941a36a4fb75cf1bfab3"
+        },
+        {
+          "path": "variants/county-council-ballroom-foreground-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 34302,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "babab61ca2f6aa9ea54bd478937a21f7ce784e4cf9f95ca32252620dfc712248"
+        }
+      ]
+    },
+    {
       "id": "midnight-call-in-studio",
       "ownerType": "scene",
       "ownerId": "midnight-call-in-studio",
@@ -278,6 +428,156 @@
           "format": "webp",
           "quality": 86,
           "sha256": "d760f4d9021fad50436b42c50587bd52bee32471b9c0589a27c8942535e8662a"
+        }
+      ]
+    },
+    {
+      "id": "midnight-call-in-studio-foreground",
+      "ownerType": "scene",
+      "ownerId": "midnight-call-in-studio",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160; side groups were translated 160 source pixels outward, then downsampled to 1920x1080 and converted from a green matte.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "midnight-call-in-studio-foreground.png",
+        "sha256": "be7ca5ee565dbaec99e92d40d41e4a23ccb4ce38e678b30e093e7b5fb6d2d53b",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 138661,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/midnight-call-in-studio-foreground-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 2651,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "e254c645724d43340286228acf62dcd26e9793df5ee21156d640637e41cd4d39"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 3708,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "b078247a9cc3f59c6ae9320c9b3cfb697a4b3a3cf4649fd820ba014443bcc32c"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 5113,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "cea0e63f6fbec9efcc4e7a1c751f88f5ef0c721ae9dba47227c8225b23badb32"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 8660,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "d8768a58b8d3528b4838d0dc85d8a921201a9ded0e4dfd969710a85a36fff2e9"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 6799,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "31262ea807a9c38e3639836c86af1ac53736533c2c4672cf89f2afa847161786"
+        },
+        {
+          "path": "variants/midnight-call-in-studio-foreground-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 11860,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "83303ec99be5b6e41e3ead83568bd0ec8ef7ffb638f39a33786eb9ef0b4201fb"
         }
       ]
     },
@@ -422,6 +722,156 @@
       ]
     },
     {
+      "id": "palace-press-hall-foreground",
+      "ownerType": "scene",
+      "ownerId": "palace-press-hall",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded geometric podium foreground authored locally at 1920x1080 and converted from a green matte.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "palace-press-hall-foreground.png",
+        "sha256": "eed84a20cc163119e2d117923ef67db17ebe8e02cb9d315369f284f00b2f8d67",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 10251,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/palace-press-hall-foreground-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 1066,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "cf66d7a49fe8fc81aaab1b468265e1d44bb6395a57de0b7c82063d035422f440"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 1360,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "797f57ca7c69b831dc6979c985ecda8ff643b469ca8a5d2d09aba09de7dd8875"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 1288,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "7c365749e3a00aa6a2bf78fb011eb130209e27431b91a14de0909136c5943af1"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 3136,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "a5b1c302427ce9d9d0a0e51f6fa7906b2715d3eb82ab03c67c06de7766993079"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 1374,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "a6da4bb1a96fa587d7c1fc9fcc7a570cb197e7b4718201c7f184fc343644a993"
+        },
+        {
+          "path": "variants/palace-press-hall-foreground-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 5344,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "77a1094c53a2f9ff49d3c386243507a0d4f590261c6a26e3a882f55a834f8828"
+        }
+      ]
+    },
+    {
       "id": "influencer-campaign-livestream",
       "ownerType": "scene",
       "ownerId": "influencer-campaign-livestream",
@@ -558,6 +1008,156 @@
           "format": "webp",
           "quality": 86,
           "sha256": "054db83d5304316992ec7daf2e1acfa6bcc6459a7e1baf82a669c2c27aba82df"
+        }
+      ]
+    },
+    {
+      "id": "influencer-campaign-livestream-foreground",
+      "ownerType": "scene",
+      "ownerId": "influencer-campaign-livestream",
+      "layerRole": "foreground",
+      "sourceDescription": "Original flat cel-shaded scene foreground generated text-only with OpenAI gpt-image-2.5-sunburst at 3840x2160, downsampled to 1920x1080, and converted from a green matte.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "influencer-campaign-livestream-foreground.png",
+        "sha256": "331eded80cc4228c7e623361b66abceb3461aedb6f55618aeb8404da83aa0e36",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 192775,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.64
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": {
+          "x": 0.26,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        },
+        "rightDeskTopAndProps": {
+          "x": 0.68,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.16
+        }
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 1606,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "624e41989aba199f54dceb46b3cb3bab951f0d059c37564983d6975bfe8c0fab"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 2530,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "9610f1de9fb68b02751698c900adfee4c02f48d9d708631173ec54c39ed654f6"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 2710,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "e270bf211b25cec35f23c252fb0f9cdf00ec10a3d382fdb147f14fc8717a2ddc"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 5860,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "6634d59eab4fc7d714ec8a07084fd54672f8e8867b188b66eef2310a03f9962b"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 3116,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "43b4f169dc78ece8bb975a03b92c29cfb4fe2b17004e2747c968ce1d921a8951"
+        },
+        {
+          "path": "variants/influencer-campaign-livestream-foreground-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 9406,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "bb4472dc10d2d1e6bb6430da712edae0f6e629bb8fad1d929c45784873a757ca"
         }
       ]
     },

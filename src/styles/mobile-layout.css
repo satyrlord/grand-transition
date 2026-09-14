@@ -73,11 +73,13 @@
     .skin-cycle { min-width: 2.75rem; min-height: 2.75rem; }
     .skin-status { padding-inline: 2.75rem; overflow-wrap: anywhere; }
     .match-settings:is(.match-settings--hotseat, .match-settings--single-player, .match-settings--ladder) {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       grid-template-areas: 'heading heading' 'difficulty scene';
     }
     .match-settings--hotseat .match-settings-scene { grid-column: 1 / -1; }
     .setup-field select { min-height: 2.75rem; font-size: 1rem; }
+    .match-settings-scene select { padding-inline: 0.5rem 1.5rem; }
+    .scene-selected-text { margin-right: 1.5rem; padding-left: 0.5rem; font-size: 1rem; }
     .setup-actions { display: flex; flex-wrap: wrap; }
     .setup-actions button { flex: 1; min-width: 0; }
     .setup-actions .orientation-note { flex-basis: 100%; max-width: none; }

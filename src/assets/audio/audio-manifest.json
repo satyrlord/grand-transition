@@ -14,6 +14,7 @@
       "composition": "Romanian Folk Dances, Sz.56 (1915)",
       "compositionLicense": "Public domain",
       "recordingYear": 2025,
+      "sceneId": "menu",
       "edit": {
         "movement": "Joc cu bâtă",
         "startSeconds": 2.4,
@@ -32,7 +33,7 @@
         },
         {
           "path": "menu-theme.ogg",
-          "sha256": "4014318dedc9cce2547219bc9d0439fb909f2d456ad3f5242923f0eb355a68be",
+          "sha256": "ea4c7faff54f3dc0acd7f8971ff6c7a7c2dd4322c0021cadc69702b786c37fa5",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -65,6 +66,7 @@
       "composition": "Romanian Folk Dances, Sz.56 (1915)",
       "compositionLicense": "Public domain",
       "recordingYear": 2025,
+      "sceneId": "transition-era-television-studio",
       "edit": {
         "movement": "Buciumeana",
         "startSeconds": 181.3,
@@ -83,7 +85,7 @@
         },
         {
           "path": "transition-era-television-studio-theme.ogg",
-          "sha256": "dbbfb43c93a6f36f48d3b52a4c44346920e078e65e06fa01b3899c74754f70ba",
+          "sha256": "370e1a7afe6199028a22f14bb93bcfba9ef8f14d85fb0baf302ae88087be3c1b",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -99,6 +101,266 @@
             "sampleRate": 48000,
             "integratedLufs": -15.96,
             "truePeakDbfs": -2.18
+          }
+        }
+      ]
+    },
+    {
+      "id": "modern-debate-studio-theme",
+      "kind": "music",
+      "duration": 31.2,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "sceneId": "modern-debate-studio",
+      "edit": {
+        "movement": "Brâul",
+        "startSeconds": 76.4,
+        "durationSeconds": 31.2
+      },
+      "files": [
+        {
+          "path": "modern-debate-studio-theme.wav",
+          "sha256": "424970021bae834f56a2925d1517d1b6815937588636f26a345f8698a7e7089e",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -1.02
+          }
+        },
+        {
+          "path": "modern-debate-studio-theme.ogg",
+          "sha256": "6cff3b3185c5ef4a5fae88850b0fcf8ea7c117250f477bd1142e3504e0ed21d1",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.01,
+            "truePeakDbfs": -1.02
+          }
+        },
+        {
+          "path": "modern-debate-studio-theme.mp3",
+          "sha256": "76843a6d8c00bd31d78ec67819fef19c0e5dfc7254e74a951177dc7ad992cca9",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.44,
+            "truePeakDbfs": -1.32
+          }
+        }
+      ]
+    },
+    {
+      "id": "county-council-ballroom-theme",
+      "kind": "music",
+      "duration": 32.4,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "sceneId": "county-council-ballroom",
+      "edit": {
+        "movement": "Poarga românească",
+        "startSeconds": 227.2,
+        "durationSeconds": 32.4
+      },
+      "files": [
+        {
+          "path": "county-council-ballroom-theme.wav",
+          "sha256": "d37da80206b6f99e9bd0cbb271067c8d2ea4de87a870c235fdd25d337e19a0a4",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -2.07
+          }
+        },
+        {
+          "path": "county-council-ballroom-theme.ogg",
+          "sha256": "6d030b81caac8476984ebd82ddf84e6bc75d1f0e77a43bab7e2c729ae3dfb638",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.02,
+            "truePeakDbfs": -2.06
+          }
+        },
+        {
+          "path": "county-council-ballroom-theme.mp3",
+          "sha256": "c9c540f05bcb7593e1a76a7bfed0a69303b8abd116228d65f5e90f9e21c5c91a",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.44,
+            "truePeakDbfs": -2.35
+          }
+        }
+      ]
+    },
+    {
+      "id": "midnight-call-in-studio-theme",
+      "kind": "music",
+      "duration": 28,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "sceneId": "midnight-call-in-studio",
+      "edit": {
+        "movement": "Mărunțel, first section",
+        "startSeconds": 260.3,
+        "durationSeconds": 28
+      },
+      "files": [
+        {
+          "path": "midnight-call-in-studio-theme.wav",
+          "sha256": "5bffd31d54c654914487902158a973000ca261a6b06b5c8ff8803e31458f2d9d",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -3.62
+          }
+        },
+        {
+          "path": "midnight-call-in-studio-theme.ogg",
+          "sha256": "acb116b5c9a2ba8a4623f1ff16f7ae574d084c16e50cf65e88a43a600cbd0440",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.02,
+            "truePeakDbfs": -3.71
+          }
+        },
+        {
+          "path": "midnight-call-in-studio-theme.mp3",
+          "sha256": "c6422aa305a7d5abdd4f6a6d998560fe4cd96948b735e12ccd1b6841d5a70bea",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.44,
+            "truePeakDbfs": -4.02
+          }
+        }
+      ]
+    },
+    {
+      "id": "palace-press-hall-theme",
+      "kind": "music",
+      "duration": 65.3,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "sceneId": "palace-press-hall",
+      "edit": {
+        "movement": "Pe loc",
+        "startSeconds": 111.7,
+        "durationSeconds": 65.3
+      },
+      "files": [
+        {
+          "path": "palace-press-hall-theme.wav",
+          "sha256": "7cc09591b37956d58ffca15e642a9ca37c77c6ed047fa3e92e631ccd5279509c",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -1.82
+          }
+        },
+        {
+          "path": "palace-press-hall-theme.ogg",
+          "sha256": "7fb64d5a61bb32d6a7ac154600dd35d6b18c53e99c4a2c68e2761df544ff810f",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.01,
+            "truePeakDbfs": -1.45
+          }
+        },
+        {
+          "path": "palace-press-hall-theme.mp3",
+          "sha256": "e6ade6b3d7b5617d6b0862c08a90cb4c1b9a1749610035aa7e08d4c3082360f9",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.45,
+            "truePeakDbfs": -1.78
+          }
+        }
+      ]
+    },
+    {
+      "id": "influencer-campaign-livestream-theme",
+      "kind": "music",
+      "duration": 29.1,
+      "owner": "Chris Breemer",
+      "license": "CC0-1.0",
+      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
+      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
+      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
+      "composer": "Béla Bartók",
+      "composition": "Romanian Folk Dances, Sz.56 (1915)",
+      "compositionLicense": "Public domain",
+      "recordingYear": 2025,
+      "sceneId": "influencer-campaign-livestream",
+      "edit": {
+        "movement": "Mărunțel, second section",
+        "startSeconds": 289,
+        "durationSeconds": 29.1
+      },
+      "files": [
+        {
+          "path": "influencer-campaign-livestream-theme.wav",
+          "sha256": "aa13172b0e40bc526f8ce2bdc12b0cce6b8901945b63c0fcbdf7cce3dfdc1a81",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -2.84
+          }
+        },
+        {
+          "path": "influencer-campaign-livestream-theme.ogg",
+          "sha256": "8f7b78476775cebf594de937168491f513d5aa0f3af995db3650a8d0b72ee0d4",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.02,
+            "truePeakDbfs": -2.72
+          }
+        },
+        {
+          "path": "influencer-campaign-livestream-theme.mp3",
+          "sha256": "eef3552bbb93ff6105a5a34d55a148d18701546cba73fff5503bcf35c6ae12da",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.45,
+            "truePeakDbfs": -3.14
           }
         }
       ]
@@ -123,7 +385,7 @@
         },
         {
           "path": "role-select.ogg",
-          "sha256": "5f47b6943320cc4ac38a01b184c0a8cbf9e137b5476fdeafaa6aed1530a0f9b8",
+          "sha256": "da89221b5f65d200c63877ca535a48f2bbfd8d9abd5b8481b35a79a41925eb87",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -163,7 +425,7 @@
         },
         {
           "path": "commit.ogg",
-          "sha256": "384f54df2a177fe5b54a7263e973da4f3897b74519bfdedbd2b79fb9bc26eaab",
+          "sha256": "c6c47ab0f2532babc656043b6ff9117cd498236839cd41a6900131403cec405f",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -203,7 +465,7 @@
         },
         {
           "path": "hit-light.ogg",
-          "sha256": "f1c73d8a673198d8238df70d3cde02d603d4da7e9ce954bdb0d641f06fe79ac1",
+          "sha256": "3e628173d74134529d24996a0b19f6ec7faca53a643e0d4869b8bb732228ce56",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -243,7 +505,7 @@
         },
         {
           "path": "hit-heavy.ogg",
-          "sha256": "1635d5b8ae0a2acb14d63dc897bf4bcd052c65cd6ccfe83597f1f838fc60ca08",
+          "sha256": "ae07bb7a6f21978856164a36ed28ecf560256c600d6fb3a1746693c2f2518061",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -283,7 +545,7 @@
         },
         {
           "path": "weakness.ogg",
-          "sha256": "5e8647bf9046aea92e39b787fd471c8b955e9ad71af7164cf6c4b42093547d5f",
+          "sha256": "002d32f5bca1c6dea67f283bafff80bdf15404a43457824d5d237c95509a3905",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -323,7 +585,7 @@
         },
         {
           "path": "combo.ogg",
-          "sha256": "9d492c870dbe7aba4cde8fc4a8bb6b8d56e95665daee18c7ac32938f77e68424",
+          "sha256": "052a21b1aca5fd3aa6cc5aeed5b7aba194929e693033b0e9b95029a69a5c8d72",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -363,7 +625,7 @@
         },
         {
           "path": "continuation-break.ogg",
-          "sha256": "7595e483c84062d85c3b89b1cb8c9e98e90f286457ab9a33b45e95756956db9b",
+          "sha256": "c90ad6b50c6c3116b392d54fd33b4cfcf14c37e72cc5e0b1398792376ceafab6",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -403,7 +665,7 @@
         },
         {
           "path": "comeback.ogg",
-          "sha256": "96425c085c808eb3589fdc7ff645dd450c284beafe9aeaed120e7ea4d2e28a0a",
+          "sha256": "197e6f71ca14b6f33f6373bffdc45f0c1c18fb4a1a65d8c840c6a3151a5faa0b",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
@@ -443,7 +705,7 @@
         },
         {
           "path": "grammar-mistake.ogg",
-          "sha256": "fd7a5c7e85e422cb3f46a2e0d7681222d5e1db7e67047532d267db8d8963f436",
+          "sha256": "45752b1c2abef2828056005c275d3f3b1d1d214f9636159542875e25d89417b3",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
