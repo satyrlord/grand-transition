@@ -117,9 +117,22 @@ Operator AI policies. The local nine-rung ladder persists its exact opponents,
 scenes, wins, losses, and completion.
 
 Sound starts after a user interaction. Settings controls Master, Music, Effects,
-and Speech. CC0 piano treatments from _Romanian Folk Dances_ cover the menu and
-one distinct local track for each of the six playable scenes. The nine effects
-remain shared, and scenes add no room tone.
+and Speech. The menu and each of the six playable scenes use a distinct local
+music edit. The nine effects remain shared, and scenes add no room tone. All
+music is public domain through CC0, and the shipped edits are normalized to the
+same background-music target.
+
+| Use | Music and creator | Scene adaptation | License |
+| --- | --- | --- | --- |
+| Main menu | [_Joc cu bâtă_ from _Romanian Folk Dances_](https://imslp.org/wiki/Special:ReverseLookup/991622), composed by Béla Bartók and performed by Chris Breemer | Public-domain folk-derived piano introduction | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) recording; public-domain composition |
+| Transition-Era Television Studio | [_Buciumeana_ from _Romanian Folk Dances_](https://imslp.org/wiki/Special:ReverseLookup/991622), composed by Béla Bartók and performed by Chris Breemer | Existing folk-derived piano treatment; unchanged | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) recording; public-domain composition |
+| Modern Debate Studio | [_Tension Theme_ by Umplix](https://opengameart.org/content/tension-theme) | Tense futuristic electronic theme | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| County Council Ballroom | [_Apparitions Ball_ by bobjt](https://opengameart.org/content/apparitions-ball) | Slightly uncanny ballroom waltz | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Midnight Call-In Studio | [_jazz improvisation looped_ by Alex McCulloch (Pro Sensory)](https://opengameart.org/content/jazz-improvisation-looped) | Low-key improvised late-night jazz | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Palace Press Hall | [_Simple Battle Fanfare_ by Umplix](https://opengameart.org/content/simple-battle-fanfare) | Formal trumpet, timpani, and march figures | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Influencer Campaign Livestream | [_Try me!_ by iamoneabe](https://opengameart.org/content/try-me) | Gritty loopable trap beat | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+See [CREDITS.md](CREDITS.md) for source and edit details.
 Speech defaults on. Opening the menu prepares about 91 MB of local neural model
 resources. Male and female human skins use the selected streamed British voices.
 The `GPU voices` checkbox defaults on. When speech is enabled, it downloads

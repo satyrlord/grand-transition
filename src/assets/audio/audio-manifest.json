@@ -108,51 +108,49 @@
     {
       "id": "modern-debate-studio-theme",
       "kind": "music",
-      "duration": 31.2,
-      "owner": "Chris Breemer",
+      "duration": 43,
+      "title": "Tension Theme",
+      "owner": "Umplix",
       "license": "CC0-1.0",
-      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
-      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
-      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
-      "composer": "Béla Bartók",
-      "composition": "Romanian Folk Dances, Sz.56 (1915)",
-      "compositionLicense": "Public domain",
-      "recordingYear": 2025,
+      "source": "https://opengameart.org/content/tension-theme",
+      "download": "https://opengameart.org/sites/default/files/tension_theme.wav",
+      "sourceSha256": "322bd5f2334f038cab1bb65f218dd8593f5c0de883b1c14579e4425bdc03cfa8",
       "sceneId": "modern-debate-studio",
+      "treatment": "Tense futuristic electronic theme for a modern televised debate.",
       "edit": {
-        "movement": "Brâul",
-        "startSeconds": 76.4,
-        "durationSeconds": 31.2
+        "movement": "Complete track",
+        "startSeconds": 0,
+        "durationSeconds": 43
       },
       "files": [
         {
           "path": "modern-debate-studio-theme.wav",
-          "sha256": "424970021bae834f56a2925d1517d1b6815937588636f26a345f8698a7e7089e",
+          "sha256": "951bcc219e4322c6ad82f98f39c45d636cd14c0d5ae253cd9d740dcfa4052eee",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -1.02
+            "truePeakDbfs": -2.31
           }
         },
         {
           "path": "modern-debate-studio-theme.ogg",
-          "sha256": "6cff3b3185c5ef4a5fae88850b0fcf8ea7c117250f477bd1142e3504e0ed21d1",
+          "sha256": "60f60d09648cd93f1cbe92f2425953d8c5f0797e9ae844189e7978247231f9f2",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.01,
-            "truePeakDbfs": -1.02
+            "integratedLufs": -16.08,
+            "truePeakDbfs": -2.27
           }
         },
         {
           "path": "modern-debate-studio-theme.mp3",
-          "sha256": "76843a6d8c00bd31d78ec67819fef19c0e5dfc7254e74a951177dc7ad992cca9",
+          "sha256": "f78feb185944026e5d12a827a690222a98687e71ada03b0b9f866e15df1a67bc",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
             "integratedLufs": -16.44,
-            "truePeakDbfs": -1.32
+            "truePeakDbfs": -2.64
           }
         }
       ]
@@ -160,51 +158,49 @@
     {
       "id": "county-council-ballroom-theme",
       "kind": "music",
-      "duration": 32.4,
-      "owner": "Chris Breemer",
+      "duration": 37.8,
+      "title": "Apparitions Ball",
+      "owner": "bobjt",
       "license": "CC0-1.0",
-      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
-      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
-      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
-      "composer": "Béla Bartók",
-      "composition": "Romanian Folk Dances, Sz.56 (1915)",
-      "compositionLicense": "Public domain",
-      "recordingYear": 2025,
+      "source": "https://opengameart.org/content/apparitions-ball",
+      "download": "https://opengameart.org/sites/default/files/apparitions_ball.ogg",
+      "sourceSha256": "4a1fe1256237bc300dc57cb0d80315cd26316a7e5c0a232cd60991931fec5965",
       "sceneId": "county-council-ballroom",
+      "treatment": "A slightly uncanny ballroom waltz for municipal ceremony and intrigue.",
       "edit": {
-        "movement": "Poarga românească",
-        "startSeconds": 227.2,
-        "durationSeconds": 32.4
+        "movement": "Complete ensemble track",
+        "startSeconds": 0,
+        "durationSeconds": 37.8
       },
       "files": [
         {
           "path": "county-council-ballroom-theme.wav",
-          "sha256": "d37da80206b6f99e9bd0cbb271067c8d2ea4de87a870c235fdd25d337e19a0a4",
+          "sha256": "52780add820593bbb5839da79119f3ecb095594d41b5d38ffe657b43e09efa5e",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -2.07
+            "truePeakDbfs": -4.09
           }
         },
         {
           "path": "county-council-ballroom-theme.ogg",
-          "sha256": "6d030b81caac8476984ebd82ddf84e6bc75d1f0e77a43bab7e2c729ae3dfb638",
+          "sha256": "77eec47f94032b83ea279adb8ede38816ee370869b1dc4ce5c87c64f3af7c5e2",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.02,
-            "truePeakDbfs": -2.06
+            "integratedLufs": -15.98,
+            "truePeakDbfs": -3.61
           }
         },
         {
           "path": "county-council-ballroom-theme.mp3",
-          "sha256": "c9c540f05bcb7593e1a76a7bfed0a69303b8abd116228d65f5e90f9e21c5c91a",
+          "sha256": "41f255d983ae10dd8502f39ab3596f40b7e530d365a10678a23211ed9694d4e5",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
-            "integratedLufs": -16.44,
-            "truePeakDbfs": -2.35
+            "integratedLufs": -16.45,
+            "truePeakDbfs": -4
           }
         }
       ]
@@ -212,51 +208,49 @@
     {
       "id": "midnight-call-in-studio-theme",
       "kind": "music",
-      "duration": 28,
-      "owner": "Chris Breemer",
+      "duration": 60,
+      "title": "jazz improvisation looped",
+      "owner": "Alex McCulloch (Pro Sensory)",
       "license": "CC0-1.0",
-      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
-      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
-      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
-      "composer": "Béla Bartók",
-      "composition": "Romanian Folk Dances, Sz.56 (1915)",
-      "compositionLicense": "Public domain",
-      "recordingYear": 2025,
+      "source": "https://opengameart.org/content/jazz-improvisation-looped",
+      "download": "https://opengameart.org/sites/default/files/jazz_improv_looped_2.mp3",
+      "sourceSha256": "0e5cf555963479c60713a5640257fc6d65a272fad3a02113ab6a700e730ad447",
       "sceneId": "midnight-call-in-studio",
+      "treatment": "Low-key improvised jazz for a solitary late-night call-in broadcast.",
       "edit": {
-        "movement": "Mărunțel, first section",
-        "startSeconds": 260.3,
-        "durationSeconds": 28
+        "movement": "Opening loop",
+        "startSeconds": 0,
+        "durationSeconds": 60
       },
       "files": [
         {
           "path": "midnight-call-in-studio-theme.wav",
-          "sha256": "5bffd31d54c654914487902158a973000ca261a6b06b5c8ff8803e31458f2d9d",
+          "sha256": "a8fa8a8d7b8d374a3ab6d9cb85718a5e8fc33a4ed741f0019aab4b04ff32e9f2",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -3.62
+            "truePeakDbfs": -1.75
           }
         },
         {
           "path": "midnight-call-in-studio-theme.ogg",
-          "sha256": "acb116b5c9a2ba8a4623f1ff16f7ae574d084c16e50cf65e88a43a600cbd0440",
+          "sha256": "f792c6bba177ca43b6de72d943ab48e7f5cc5a2a7342d668db32edeae8becd01",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.02,
-            "truePeakDbfs": -3.71
+            "integratedLufs": -15.96,
+            "truePeakDbfs": -1.22
           }
         },
         {
           "path": "midnight-call-in-studio-theme.mp3",
-          "sha256": "c6422aa305a7d5abdd4f6a6d998560fe4cd96948b735e12ccd1b6841d5a70bea",
+          "sha256": "c86ca69e14c2fa6869e43a2d3d627ce93f228d96fb4a6228ed01bb5380a8c672",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
             "integratedLufs": -16.44,
-            "truePeakDbfs": -4.02
+            "truePeakDbfs": -1.98
           }
         }
       ]
@@ -264,51 +258,49 @@
     {
       "id": "palace-press-hall-theme",
       "kind": "music",
-      "duration": 65.3,
-      "owner": "Chris Breemer",
+      "duration": 31.4,
+      "title": "Simple Battle Fanfare",
+      "owner": "Umplix",
       "license": "CC0-1.0",
-      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
-      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
-      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
-      "composer": "Béla Bartók",
-      "composition": "Romanian Folk Dances, Sz.56 (1915)",
-      "compositionLicense": "Public domain",
-      "recordingYear": 2025,
+      "source": "https://opengameart.org/content/simple-battle-fanfare",
+      "download": "https://opengameart.org/sites/default/files/simple_battle_fanfare.wav",
+      "sourceSha256": "9da29921bbd700d382788d84866975eed934ca821290237380c6da3b898d9094",
       "sceneId": "palace-press-hall",
+      "treatment": "Formal trumpet, timpani, and march figures for an official press hall.",
       "edit": {
-        "movement": "Pe loc",
-        "startSeconds": 111.7,
-        "durationSeconds": 65.3
+        "movement": "Complete loop",
+        "startSeconds": 0,
+        "durationSeconds": 31.4
       },
       "files": [
         {
           "path": "palace-press-hall-theme.wav",
-          "sha256": "7cc09591b37956d58ffca15e642a9ca37c77c6ed047fa3e92e631ccd5279509c",
+          "sha256": "59e9ad1df860fc54521c84b64b7b9c6f88e6bbf3e3a146509ccc052d59d9e21b",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -1.82
+            "truePeakDbfs": -1.84
           }
         },
         {
           "path": "palace-press-hall-theme.ogg",
-          "sha256": "7fb64d5a61bb32d6a7ac154600dd35d6b18c53e99c4a2c68e2761df544ff810f",
+          "sha256": "0b8b05a8f50438365e0d8cb15b8b514332c422cac7256e30c6db1bf2c8325d0e",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.01,
-            "truePeakDbfs": -1.45
+            "integratedLufs": -15.97,
+            "truePeakDbfs": -2
           }
         },
         {
           "path": "palace-press-hall-theme.mp3",
-          "sha256": "e6ade6b3d7b5617d6b0862c08a90cb4c1b9a1749610035aa7e08d4c3082360f9",
+          "sha256": "e21903c1cd1d2bd221c6dd6a4969b4546734522ad320e16b4aba999ad3b2e19e",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
             "integratedLufs": -16.45,
-            "truePeakDbfs": -1.78
+            "truePeakDbfs": -2.31
           }
         }
       ]
@@ -316,51 +308,49 @@
     {
       "id": "influencer-campaign-livestream-theme",
       "kind": "music",
-      "duration": 29.1,
-      "owner": "Chris Breemer",
+      "duration": 60,
+      "title": "Try me!",
+      "owner": "iamoneabe",
       "license": "CC0-1.0",
-      "source": "https://imslp.org/wiki/Special:ReverseLookup/991622",
-      "download": "https://s9.imslp.org/files/imglnks/usimg/b/ba/IMSLP991622-PMLP3387-bartok-romanian-folk-dances-breemer.mp3",
-      "sourceSha256": "6a014e07e2f56ae1faffa5ac496aba6b06f4aa456a920b93d992051f14fa4ac6",
-      "composer": "Béla Bartók",
-      "composition": "Romanian Folk Dances, Sz.56 (1915)",
-      "compositionLicense": "Public domain",
-      "recordingYear": 2025,
+      "source": "https://opengameart.org/content/try-me",
+      "download": "https://opengameart.org/sites/default/files/tryme.wav",
+      "sourceSha256": "5ae29cc1474e9826e290a1099b82d0420f9c7d4bc46e4f748c83d07a7e2a93c7",
       "sceneId": "influencer-campaign-livestream",
+      "treatment": "Gritty loopable trap beat for a campaign influencer livestream.",
       "edit": {
-        "movement": "Mărunțel, second section",
-        "startSeconds": 289,
-        "durationSeconds": 29.1
+        "movement": "Opening loop",
+        "startSeconds": 0,
+        "durationSeconds": 60
       },
       "files": [
         {
           "path": "influencer-campaign-livestream-theme.wav",
-          "sha256": "aa13172b0e40bc526f8ce2bdc12b0cce6b8901945b63c0fcbdf7cce3dfdc1a81",
+          "sha256": "b9a2f66842b6343a118d0f59d41f38f54b3884a974128d0a5399fd07b6d2beb6",
           "measurements": {
             "codec": "pcm_s16le",
             "sampleRate": 48000,
             "integratedLufs": -16,
-            "truePeakDbfs": -2.84
+            "truePeakDbfs": -5.61
           }
         },
         {
           "path": "influencer-campaign-livestream-theme.ogg",
-          "sha256": "8f7b78476775cebf594de937168491f513d5aa0f3af995db3650a8d0b72ee0d4",
+          "sha256": "b4bca7a66fd7ea0fd87ed2aa20e27faa3aac0471de1fc6b9748908d44dd3c55e",
           "measurements": {
             "codec": "vorbis",
             "sampleRate": 48000,
-            "integratedLufs": -16.02,
-            "truePeakDbfs": -2.72
+            "integratedLufs": -16.11,
+            "truePeakDbfs": -3.42
           }
         },
         {
           "path": "influencer-campaign-livestream-theme.mp3",
-          "sha256": "eef3552bbb93ff6105a5a34d55a148d18701546cba73fff5503bcf35c6ae12da",
+          "sha256": "a862ae6243e0035b7f780c23972907dd354c8c47779e4098d95ae039594e8839",
           "measurements": {
             "codec": "mp3",
             "sampleRate": 48000,
-            "integratedLufs": -16.45,
-            "truePeakDbfs": -3.14
+            "integratedLufs": -16.39,
+            "truePeakDbfs": -4.23
           }
         }
       ]

@@ -170,17 +170,21 @@ entry routes the selected scene ID to its matching music treatment. No scene
 uses a shared placeholder track, and scenes add no room-tone audio. The nine
 Milestone 024 effects remain unchanged and reachable.
 
-The final treatments use these non-overlapping edits from the pinned Chris
-Breemer CC0 recording of Bartók's _Romanian Folk Dances, Sz.56_:
+The final treatments use these independently pinned CC0 recordings and edits:
 
-| Scene | Movement and source window |
-| --- | --- |
-| Transition-Era Television Studio | _Buciumeana_, 181.3 through 225.0 seconds |
-| Modern Debate Studio | _Brâul_, 76.4 through 107.6 seconds |
-| County Council Ballroom | _Poarga românească_, 227.2 through 259.6 seconds |
-| Midnight Call-In Studio | _Mărunțel_ first section, 260.3 through 288.3 seconds |
-| Palace Press Hall | _Pe loc_, 111.7 through 177.0 seconds |
-| Influencer Campaign Livestream | _Mărunțel_ second section, 289.0 through 318.1 seconds |
+| Scene | Recording | Treatment and source window |
+| --- | --- | --- |
+| Transition-Era Television Studio | Chris Breemer's recording of Bartók's _Buciumeana_ | Existing folk-derived piano treatment, unchanged; 181.3 through 225.0 seconds |
+| Modern Debate Studio | Umplix, _Tension Theme_ | Tense futuristic electronic theme; complete 43.0-second track |
+| County Council Ballroom | bobjt, _Apparitions Ball_ | Slightly uncanny ballroom waltz; opening 37.8 seconds |
+| Midnight Call-In Studio | Alex McCulloch (Pro Sensory), _jazz improvisation looped_ | Low-key improvised late-night jazz; opening 60.0 seconds |
+| Palace Press Hall | Umplix, _Simple Battle Fanfare_ | Formal trumpet, timpani, and march figures; opening 31.4 seconds |
+| Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty loopable trap beat; opening 60.0 seconds |
+
+`README.md` and `CREDITS.md` provide the source-page links and license credits.
+The manifest pins the direct downloads and source hashes. Validation rejects a
+music license other than public domain, CC0, or CC BY and rejects non-HTTPS or
+unpinned provenance.
 
 The validated catalog has
 these inclusive general-pool ranges:
