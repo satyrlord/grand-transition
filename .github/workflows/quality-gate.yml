@@ -24,4 +24,4 @@ jobs:
       - name: Install browsers for game and audio checks
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Run the non-deploying quality gate
-        run: npm run ci
+        run: npm run quality:full

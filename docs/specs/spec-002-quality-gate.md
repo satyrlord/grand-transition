@@ -30,8 +30,19 @@ It validates the pinned neural speech identity, complete file inventory,
 hashes, and size bounds. The production build validates audio and neural speech
 assets before bundling them.
 
-`ci` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests
-in that order.
+`quality:quick` runs `validate`, unit tests, browser tests, coverage, and
+end-to-end tests in that order. It excludes the slowest tests until their
+cumulative elapsed time reaches 20 percent of the latest recorded full gate:
+the current-catalog 500-match calibration and the nine-rung production ladder
+flow. The calibration is excluded from Node, Browser Mode, and coverage runs.
+The ladder flow is excluded only from Playwright. All other checks remain the
+same as the full gate.
+
+`quality:full` runs every check in the same order, including the excluded
+calibration and ladder flow. `ci` aliases `quality:full`. Continuous integration
+uses the full gate. An agent uses `quality:quick` for routine validation and
+must not invoke `quality:full` or `ci` unless the user explicitly requests the
+full quality-gate skill. A quick pass is not full-gate or release evidence.
 End-to-end tests build the production output before preview.
 
 Pure tests use Vitest in Node and `*.test.ts`. Components use Vitest Browser
@@ -58,8 +69,8 @@ lines.
 
 ## Acceptance criteria
 
-- **AC-002-01:** Every required script exists and the `validate` and `ci`
-  phase orders match this specification. Verify in
+- **AC-002-01:** Every required script exists and the `validate`, quick, and
+  full quality-gate phase orders match this specification. Verify in
   `tests/unit/quality-gate.test.ts`.
 - **AC-002-02:** Unit tests run in Node, component tests run in Chromium through
   Vitest Browser Mode, and end-to-end tests run against a built preview.
@@ -111,3 +122,9 @@ the selected source and decoded dimensions. Keep the default test timeout.
 Verify complete setup/cleanup through the default `npm test` command and
 `tests/unit/validate-character-assets.test.ts`. The reduced-motion and long-
 sentence E2E cases retain all assertions and pass with retries disabled.
+
+**AC-002-09:** `quality:quick` excludes only the documented slowest cumulative
+20-percent set. `quality:full` and `ci` include that set. The quality-gate
+runner exports the selected mode to all child phases. Verify the scripts and
+runner in `tests/unit/quality-gate.test.ts`; the calibration and ladder tests
+select their full-only behavior from that mode.
