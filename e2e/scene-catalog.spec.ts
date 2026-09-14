@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -25,6 +26,7 @@ const viewports = [
 test('a sentence forty percent longer than the long-match fixture fits above the moderator', async ({ page }) => {
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
   const baseline = [
     'A NATIONAL-SALVATION COMMITTEE REPACKAGES AN INFRASTRUCTURE FEASIBILITY STUDY',
@@ -76,6 +78,7 @@ for (const scene of scenes) {
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene', { exact: true }).selectOption(scene);
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene);
 

@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import sharp from 'sharp';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
@@ -11,6 +12,7 @@ test('forced colors keep phrase text and both player records readable through tu
   await page.getByRole('button', { name: 'Unlimited', exact: true }).click();
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
 
   for (const colorScheme of ['light', 'dark'] as const) {
@@ -48,6 +50,7 @@ test('forced colors preserve readable disabled choices during the computer turn'
   // Freeze before creating a turn timer. The target is beyond this test's
   // timeout, so browser/driver latency cannot turn it into a past deadline.
   await page.clock.pauseAt(new Date(clockStart.getTime() + 60_000));
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
   await page.locator('.shared-board [data-role="noun"] button').first().click();
   await expect(page.locator('.ai-thinking-record')).toBeVisible();

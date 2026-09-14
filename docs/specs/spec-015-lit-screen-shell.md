@@ -93,7 +93,7 @@ Mirror
 characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
 invalid.
 
-Setup presents one shared character roster between two selected-character
+Setup presents one shared character-portrait roster between two selected-character
 stages. The left stage owns player one and uses the oxblood identity. The right
 stage owns player two and uses the television-blue identity. Each stage shows
 the selected character's portrait, name, and complete public weakness
@@ -101,10 +101,11 @@ list. The list updates in the same render as the selection and remains visible
 before match start. Mirror selections show the same character and list on both
 sides.
 
-Each roster item uses an exact 3:4 vertical canvas. Every character uses a tight
-headshot crop from the top of the head through the upper chest. For a fully
-mechanical character, the crop includes the antenna, face panel, shoulders, and
-upper torso. The face panel is centered on the inner portrait window.
+Each roster portrait uses an exact 3:4 vertical canvas. Every character skin
+uses a tight headshot crop from the top of the head through the upper chest.
+For a fully mechanical character, the crop includes the antenna, face panel,
+shoulders, and upper torso. The face panel is centered on the inner portrait
+window.
 
 The crop
 does not show the complete body. Each item uses one authored heavy dark-oak
@@ -113,20 +114,35 @@ inner window. Each item shows no visible character label.
 
 The hover, focus, or
 pinned dossier supplies the visible character name. The accessible name keeps
-the complete character name, public weaknesses, and current player-one or
-player-two selection state.
-Selecting the item reveals the complete available portrait only
-on the owning left or right player stage. The selected stage does not fade or
-mask the lower body.
+the complete character name, portrait skin label, public weaknesses, and
+current player-one or player-two selection state. Selecting a portrait updates
+both the owning character and skin on the current player target. It does not
+advance the target. The selected stage does not fade or mask the lower body.
 
 Milestone 026 expands the roster to a six-column grid with contained vertical
-scrolling and centered incomplete rows. A roster item cannot cross the roster
+scrolling and centered incomplete rows. The current catalog exposes 30 portrait
+choices in six columns and five rows. A roster item cannot cross the roster
 boundary or overlap the match-settings strip.
 
-The roster has an explicit player-one or player-two selection target. Selecting
-a roster character updates that target and then advances the target to the
-other player. Selecting either player stage changes the target without changing
-the snapshot. Each selected-player stage shows its selected skin.
+The roster starts with player one as its selection target. Player one can
+change character and skin until using the separate “Lock in Player one”
+control. A roster choice never surrenders the turn. Locking player one moves
+the target to player two, who can then change character and skin until using
+“Lock in Player two.” Before that transition, player two's stage, skin
+controls, and lock control are unavailable. Each selected-player stage shows
+its selected skin. Mirror choices remain valid.
+
+Start match stays disabled and submission is rejected until both players are
+locked in. Before both locks exist, a locked player cannot unlock. When both
+players are locked, either lock control becomes an Unlock control. Unlocking
+one player disables Start match, preserves the other player's lock and both
+selections, and returns the selection target only to the unlocked player. The
+player must lock in again before the match can start.
+
+Single Player uses the same sequence. The person operating player one selects
+and locks both the human and computer characters. Ladder requires only the
+person's lock because the current rung's opponent is fixed and treated as
+locked. Ladder never permits selection or unlocking of that opponent.
 
 Previous and
 next arrow buttons cycle only that player's available skins and wrap at both
@@ -135,9 +151,8 @@ prevents the browser context menu. When the stage has keyboard focus, Left
 Arrow cycles to the previous skin and Right Arrow cycles to the next skin. Skin
 controls use visible side arrows, accessible names, and an announced current
 skin name. They support one default skin and as many as eight alternate skins
-for one archetype. The roster portrait stays
-on the character's default skin because it denotes the archetype, not the
-selected skin.
+for one archetype. The active roster marker stays on the selected portrait
+skin, while the dossier continues to denote the owning archetype.
 
 Hovering a roster character or moving keyboard focus to it shows
 a custom nonmodal floating panel with that character's name and complete public
@@ -195,16 +210,17 @@ hide validation.
   runtime size at or below 300 KiB. A delayed emblem shows the brass loading
   poster and then replaces it without layout shift.
 - **AC-015-10:** Every roster item has a computed 3:4 frame. Each human or fully
-  mechanical character renders a tight headshot with no complete body. The
-  robot headshot includes its antenna, centers its face panel, and cannot paint
-  outside the inner portrait window. The current roster uses the contained
-  six-column grid and centered incomplete rows owned by Milestone 026.
+  mechanical character renders a tight headshot with no complete body. Each
+  discovered selectable skin has one portrait choice. The robot headshot
+  includes its antenna, centers its face panel, and cannot paint outside the
+  inner portrait window. The current 30-portrait roster uses the contained
+  six-column grid and centered incomplete rows.
 
   Both selected-player stages
   render the complete portrait inside the selected-stage bounds without a lower
   fade. The generated frame overlay loads with valid transparency. No roster
-  item shows a visible character label. The roster
-  always uses the default character portrait.
+  item shows a visible character label. Each portrait choice uses its
+  discovered skin portrait.
 
   A selected-player stage uses its
   selected skin portrait.
@@ -213,7 +229,19 @@ hide validation.
   The controls cycle and wrap across one default skin and up to eight alternate
   skins. Cycling changes only the owning player's skin ID. It preserves the two
   character IDs and all phrase content. It prevents the stage context menu and
-  does not change a roster portrait.
+  does not change the roster portrait catalog. Selecting a roster skin directly
+  updates the owning character and skin together.
+- **AC-015-14:** Multiplayer and Single Player start with only player one
+  editable. Roster and skin changes stay on the current player until that
+  player's separate lock control is used. Player two becomes editable only
+  after player one locks. Start match remains disabled and direct submission
+  emits no command until both players are locked. When both are locked, either
+  player can unlock; Start match disables, the other lock stays set, and only
+  the unlocked player can reselect and lock again. Ladder treats its fixed
+  opponent as locked but still requires the person's lock. Click, right-click,
+  and keyboard handlers reject changes to locked or waiting players.
+  `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts`
+  verify the lock sequence and input guards.
 
 ## Impeccable UI validation
 

@@ -205,6 +205,13 @@ downloading the model. Reject software fallback adapters. Require a WebGPU
 session device and successful public warmup inference before reporting ready.
 Never run this FP32 model as a CPU-only fallback. Resources stay on the app
 origin; no phrase or audio is uploaded. Preserve the production CSP and subpath.
+WebGPU may leave supported shape or control-flow nodes on CPU. Treat that
+expected mixed-provider placement as non-fatal and keep only actual runtime
+errors visible in the application console.
+Apply the error threshold to the runtime environment, inference session, and
+each inference run. Keep initialization and inference failures observable through
+the worker's typed failure messages. `tests/unit/kokoro-gpu-worker.test.ts`
+verifies these thresholds and failure paths.
 
 Piper initializes alongside GPU loading. The main menu shows a styled GPU
 progress indicator while GPU support is checked, assets load, and warmup runs.

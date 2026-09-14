@@ -121,7 +121,7 @@
     position: relative;
     isolation: isolate;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     min-width: 0;
     min-height: 0;
     padding: 0;
@@ -393,6 +393,8 @@
   .roster-grid {
     align-self: stretch;
     display: grid;
+    /* Six portrait columns. Each tile spans two of the twelve tracks so an
+       incomplete final row can stay optically centered. */
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-auto-rows: minmax(min-content, auto);
     align-items: center;
@@ -415,6 +417,45 @@
   .roster-grid:focus-visible {
     outline: 2px solid var(--broadcast-paper-light);
     outline-offset: -2px;
+  }
+
+  .contestant-lock-action {
+    position: relative;
+    z-index: 6;
+    width: 100%;
+    min-height: 2.8rem;
+    padding: 0.5rem 0.65rem;
+    border: 0;
+    border-block-start: 3px double var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: 400 clamp(0.82rem, 1.2vw, 1rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.6px currentcolor;
+    cursor: pointer;
+  }
+
+  .contestant-stage--one .contestant-lock-action:not(:disabled) {
+    background: var(--broadcast-oxblood);
+  }
+
+  .contestant-stage--two .contestant-lock-action:not(:disabled) {
+    background: var(--television-blue);
+  }
+
+  .contestant-lock-action:hover:not(:disabled),
+  .contestant-lock-action:focus-visible {
+    color: var(--broadcast-paper-light);
+    outline: 2px solid var(--broadcast-paper-light);
+    outline-offset: -4px;
+  }
+
+  .contestant-lock-action:disabled {
+    border-block-start-style: dashed;
+    color: color-mix(in srgb, var(--broadcast-paper-light) 55%, transparent);
+    cursor: not-allowed;
   }
 
   .roster-choice:nth-last-child(1):nth-child(6n + 1) {
@@ -466,6 +507,11 @@
       inset 0 0 0 0.2rem var(--broadcast-black);
     font: inherit;
     cursor: pointer;
+  }
+
+  .roster-choice:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
   }
 
   .roster-portrait-window {
@@ -959,6 +1005,11 @@
       height: 3.25rem;
       min-height: 3.25rem;
     }
+
+    .contestant-lock-action {
+      min-height: 2.5rem;
+      padding-block: 0.4rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -978,6 +1029,7 @@
     .setup-screen::before,
     .contestant-stage,
     .skin-cycle,
+    .contestant-lock-action,
     .roster-zone,
     .match-settings,
     .setup-field select,
@@ -990,6 +1042,7 @@
     .contestant-stage,
     .skin-selector,
     .skin-cycle,
+    .contestant-lock-action,
     .roster-zone,
     .roster-choice,
     .match-settings,

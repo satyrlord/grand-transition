@@ -240,8 +240,8 @@ human and fully mechanical characters inside one reusable 3:4 dark-oak and
 aged-gold frame.
 
 The robot crop includes its antenna, face panel, shoulders,
-and upper torso. Its face panel sits on the inner frame's center axis. All 19
-roster portraits stay visible in one compact six-six-six-one fighting-game
+and upper torso. Its face panel sits on the inner frame's center axis. All 30
+selectable portrait skins stay visible in one compact six-by-five fighting-game
 selection grid between the two selected contestants. Any future incomplete row
 is centered.
 
@@ -609,14 +609,23 @@ characters use close headshots. The robot crop includes its antenna and face
 panel but not its complete body. Its face panel is centered in the inner
 portrait window.
 
-The 19 portraits stay in one equal-width six-six-six-one
-selection grid, with any future incomplete row centered, and never overlap the match
-settings. The grid scrolls vertically inside its roster region when required.
+The 30 selectable portrait skins stay in one equal-width six-by-five
+selection grid, with any future incomplete row centered, and never overlap the
+match settings. The grid scrolls vertically inside its roster region when
+required. Each portrait choice retains its owning archetype and selected skin.
 The desktop page does not scroll. Compact setup follows Milestone 018.
 
 Native selects keep difficulty and scene
 terms in a compact lower register. A nonmodal character dossier appears on
 hover or keyboard focus and stays pinned only after right-click.
+
+Each selected-character stage owns one persistent lock control. The roster
+continues to edit player one until that side locks, then moves to player two.
+The active side keeps its stage light; the waiting side cannot be selected.
+After both sides lock, Start match becomes available and either player can
+unlock for a new choice while preserving the other lock. Single Player uses
+the same handoff with one person operating both sides. Ladder treats its fixed
+opponent as already locked.
 
 ### Broadcast stage and status plaques
 

@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -9,8 +10,9 @@ for (const viewport of [{ width: 1024, height: 720 }, { width: 1920, height: 108
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     for (const side of ['One', 'Two']) {
+      if (side === 'Two') await page.locator('[data-lock-player="one"]').click();
       await page.locator(`#player${side}CharacterId`).click();
-      await page.locator('.roster-choice[data-character-id="reluctant-theorem"]').click();
+      await page.locator('.roster-choice[data-character-id="reluctant-theorem"][data-skin-id="default"]').click();
       await expect(page.locator(`#player${side}CharacterId`)).toHaveAttribute('data-character-id', 'reluctant-theorem');
     }
     await expect(page.locator('.contestant-weaknesses')).toHaveText([
@@ -20,6 +22,7 @@ for (const viewport of [{ width: 1024, height: 720 }, { width: 1920, height: 108
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
     });
     await page.screenshot({ path: testInfo.outputPath('reluctant-theorem-setup.png'), animations: 'disabled' });
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     for (const side of ['red', 'blue']) {
       const player = page.locator(`.match-player[data-side="${side}"]`);

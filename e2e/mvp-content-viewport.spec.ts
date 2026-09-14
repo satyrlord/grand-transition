@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 import { loadGameContent } from '../tools/load-game-content';
@@ -42,7 +43,7 @@ for (const viewport of supportedViewports) {
 
     for (const character of catalog.characters) {
       await stage.click();
-      await page.locator(`.roster-choice[data-character-id="${character.id}"]`).click();
+      await page.locator(`.roster-choice[data-character-id="${character.id}"][data-skin-id="default"]`).click();
       const expectedSkins = characterManifest.assets.filter(
         ({ ownerId }) => ownerId === character.id,
       );
@@ -109,7 +110,7 @@ for (const viewport of supportedViewports) {
       ({ nameKey }) => catalog.locales[0]!.messages[nameKey] === longestCharacterName,
     )!;
     await stage.click();
-    await page.locator(`.roster-choice[data-character-id="${longestCharacter.id}"]`).click();
+    await page.locator(`.roster-choice[data-character-id="${longestCharacter.id}"][data-skin-id="default"]`).click();
     const expandedLabels = await page.evaluate(({ characterName, sceneName }) => {
       const expand = (value: string) =>
         (value + ' ' + value).slice(0, Math.ceil(value.length * 1.4));
@@ -170,11 +171,13 @@ for (const viewport of [
     for (const asset of characterManifest.assets) {
       await openSinglePlayerSetup(page, viewport);
       await selectSkin(page, 'one', asset);
+      await page.locator('[data-lock-player="one"]').click();
       await selectSkin(page, 'two', asset);
       const longestScene = catalog.scenes.toSorted((left, right) =>
         catalog.locales[0]!.messages[right.nameKey]!.length -
         catalog.locales[0]!.messages[left.nameKey]!.length)[0]!;
       await page.getByLabel('Scene', { exact: true }).selectOption(longestScene.id);
+      await lockInSetup(page);
       await page.getByRole('button', { name: 'Start match', exact: true }).click();
 
       const character = catalog.characters.find(({ id }) => id === asset.ownerId)!;
@@ -211,6 +214,7 @@ for (const scene of catalog.scenes) {
   test(`${scene.id} stays horizontally contained at every compact viewport`, async ({ page }, testInfo) => {
     await openSinglePlayerSetup(page, compactViewports[0]!);
     await page.getByLabel('Scene', { exact: true }).selectOption(scene.id);
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     for (const viewport of compactViewports) {
       await page.setViewportSize(viewport);
@@ -267,7 +271,7 @@ async function selectSkin(
   const field = page.locator(side === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId');
   const stage = page.locator(`.contestant-stage--${side}`);
   await field.click();
-  await page.locator(`.roster-choice[data-character-id="${asset.ownerId}"]`).click();
+  await page.locator(`.roster-choice[data-character-id="${asset.ownerId}"][data-skin-id="default"]`).click();
   const skinCount = characterManifest.assets.filter(
     ({ ownerId }) => ownerId === asset.ownerId,
   ).length;

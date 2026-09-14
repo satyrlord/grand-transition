@@ -2,18 +2,22 @@ import { createHash } from 'node:crypto';
 import { afterEach, expect, test, vi } from 'vitest';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from '../../src/audio/speech-port';
 
-const state = vi.hoisted(() => ({ manifest: {} as unknown, gpu: true, warmupFailure: false,
+const state = vi.hoisted(() => ({ manifest: {} as unknown, gpu: true, warmupFailure: false, logLevel: 'warning' as 'warning' | 'error',
+  sessionOptions: undefined as unknown, runOptions: [] as unknown[],
   inputs: [] as Array<{ input_ids: { data: BigInt64Array }; pitch: { data: Float32Array }; speed: { data: Float32Array } }>,
 }));
 vi.mock('../../src/audio/kokoro-gpu-manifest.json', () => ({ default: state.manifest }));
 vi.mock('onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url&no-inline', () => ({ default: '/grand-transition/tts/kokoro-gpu/ort-wasm-simd-threaded.asyncify.mjs' }));
 vi.mock('phonemizer', () => ({ phonemize: async (text: string) => [text.trim().toLowerCase()] }));
 vi.mock('onnxruntime-web/webgpu', () => ({
-  env: { wasm: {}, webgpu: { get device() { return state.gpu ? { queue: {} } : undefined; } } },
+  env: { wasm: {}, get logLevel() { return state.logLevel; }, set logLevel(value: 'warning' | 'error') { state.logLevel = value; }, webgpu: { get device() { return state.gpu ? { queue: {} } : undefined; } } },
   Tensor: class { constructor(public type: string, public data: unknown, public dims: number[]) {} dispose() {} },
   InferenceSession: { create: async (_model: unknown, options: unknown) => {
-    expect(options).toEqual({ executionProviders: ['webgpu'] });
-    return { run: async (input: typeof state.inputs[number]) => {
+    state.sessionOptions = options;
+    expect(state.logLevel).toBe('error');
+    expect(options).toEqual({ executionProviders: ['webgpu'], logSeverityLevel: 3 });
+    return { run: async (input: typeof state.inputs[number], options: unknown) => {
+      state.runOptions.push(options);
       state.inputs.push(input);
       if (state.warmupFailure) throw new Error('Internal private failure details');
       return { waveform: { data: new Float32Array(input.input_ids.data.length * 600).fill(0.1), dispose() {} },
@@ -22,7 +26,7 @@ vi.mock('onnxruntime-web/webgpu', () => ({
   } },
 }));
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-afterEach(() => { vi.unstubAllGlobals(); vi.resetModules(); state.inputs.length = 0; state.gpu = true; state.warmupFailure = false; });
+afterEach(() => { vi.unstubAllGlobals(); vi.resetModules(); state.inputs.length = 0; state.gpu = true; state.warmupFailure = false; state.logLevel = 'warning'; state.sessionOptions = undefined; state.runOptions.length = 0; });
 async function harness() {
   const origin = 'http://127.0.0.1:4173';
   const base = origin + '/grand-transition/tts/kokoro-gpu/';
@@ -62,6 +66,7 @@ async function harness() {
 test('requires explicit loading, discards warmup PCM, and preserves pitch, tokens, and duration markers', async () => {
   const h = await harness(); h.send({ type: 'load', baseUrl: h.base });
   await vi.waitFor(() => expect(h.messages.some(message => message.type === 'ready')).toBe(true));
+  expect(state.logLevel).toBe('error');
   expect(state.inputs).toHaveLength(1);
   expect(h.messages.some(message => message.type === 'speech')).toBe(false);
   state.inputs.length = 0;
@@ -77,6 +82,17 @@ test('requires explicit loading, discards warmup PCM, and preserves pitch, token
   expect(state.inputs.reduce((sum, input) => sum + input.input_ids.data.length - 2, 0)).toBe(segments.join(' ').length);
   expect(state.inputs[0]!.pitch.data[0]).toBeCloseTo(0.9);
   expect(state.inputs[0]!.speed.data[0]).toBeCloseTo(1.2);
+});
+
+test('keeps error and fatal logging enabled for initialization, warmup, and delivery', async () => {
+  const h = await harness(); h.send({ type: 'load', baseUrl: h.base });
+  await vi.waitFor(() => expect(h.messages.some(message => message.type === 'ready')).toBe(true));
+  expect(state.logLevel).toBe('error');
+  expect(state.sessionOptions).toEqual({ executionProviders: ['webgpu'], logSeverityLevel: 3 });
+  expect(state.runOptions).toEqual([{ logSeverityLevel: 3 }]);
+  h.send({ type: 'synthesize', id: 8, segments: ['Public speech.'], voiceId: 'bm_george', rate: 1, pitch: 1 });
+  await vi.waitFor(() => expect(h.messages.some(message => message.type === 'speech')).toBe(true));
+  expect(state.runOptions).toEqual([{ logSeverityLevel: 3 }, { logSeverityLevel: 3 }]);
 });
 
 test.each(['missing-gpu', 'cpu-session', 'warmup', 'corrupt-shard', 'remote-origin'])('fails closed for %s without private diagnostics', async mode => {

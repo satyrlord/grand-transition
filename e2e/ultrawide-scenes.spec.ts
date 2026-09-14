@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 
 for (const scene of [
@@ -13,6 +14,7 @@ for (const scene of [
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
     await page.getByLabel('Scene').selectOption(scene);
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(page.locator('.broadcast-stage-art')).toBeVisible();
 

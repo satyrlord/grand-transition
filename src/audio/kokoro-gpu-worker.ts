@@ -84,6 +84,10 @@ async function load(baseUrl: string): Promise<void> {
   const moduleDigest = new Uint8Array(await crypto.subtle.digest('SHA-256', moduleBytes));
   if (moduleBytes.byteLength !== manifest.runtimeModule.bytes || Array.from(moduleDigest, byte => byte.toString(16).padStart(2, '0')).join('') !== manifest.runtimeModule.sha256) throw new Error('Invalid neural runtime.');
   loadedBytes += moduleBytes.byteLength;
+  // WebGPU intentionally leaves some shape/control-flow nodes on CPU. Keep
+  // ONNX Runtime's expected placement warning out of the app error console,
+  // while preserving actual error and fatal messages.
+  env.logLevel = 'error';
   env.wasm.wasmBinary = await readAsset('ort-wasm-simd-threaded.asyncify.wasm', true);
   const model = new Uint8Array(manifest.modelBytes);
   let offset = 0;
@@ -93,7 +97,8 @@ async function load(baseUrl: string): Promise<void> {
   }
   const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', model));
   if (offset !== model.length || Array.from(digest, byte => byte.toString(16).padStart(2, '0')).join('') !== manifest.modelSha256) throw new Error('Invalid GPU model.');
-  session = await InferenceSession.create(model, { executionProviders: ['webgpu'] });
+  // Session and run loggers have independent warning defaults in ONNX Runtime.
+  session = await InferenceSession.create(model, { executionProviders: ['webgpu'], logSeverityLevel: 3 });
   const device = await env.webgpu.device as { queue?: unknown; adapterInfo?: { isFallbackAdapter?: boolean }; lost?: Promise<unknown> } | undefined;
   if (!device?.queue || device.adapterInfo?.isFallbackAdapter) throw new Error('GPU speech is unavailable.');
   void device.lost?.then(() => { deviceLost = true; worker.postMessage({ type: 'error', id: null }); });
@@ -151,7 +156,7 @@ async function synthesize(request: Extract<NeuralSpeechCommand, { type: 'synthes
       speed: new Tensor('float32', new Float32Array([request.rate]), [1]),
       pitch: new Tensor('float32', new Float32Array([request.pitch]), [1]),
     };
-    const result = await session.run(feeds);
+    const result = await session.run(feeds, { logSeverityLevel: 3 });
     const waveform = result.waveform?.data;
     const durations = result['/encoder/Clip_output_0']?.data;
     if (!(waveform instanceof Float32Array) || !(durations instanceof Float32Array) || durations.length !== ids.length) {

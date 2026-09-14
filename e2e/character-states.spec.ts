@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import stateManifest from '../src/assets/characters/states/state-manifest.json' with { type: 'json' };
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
@@ -23,7 +24,7 @@ for (const entry of stateManifest.packages) {
     expect(await page.evaluate(() => (window as unknown as { characterStateShifts: number[] }).characterStateShifts.reduce((a, b) => a + b, 0))).toBeLessThanOrEqual(0.05);
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.locator('#playerOneCharacterId').click();
-    await page.locator(`.roster-choice[data-character-id="${entry.ownerId}"]`).click();
+      await page.locator(`.roster-choice[data-character-id="${entry.ownerId}"][data-skin-id="default"]`).click();
     const skinIds = characterManifest.assets
       .filter(({ ownerId }) => ownerId === entry.ownerId)
       .map(({ skinId }) => skinId)
@@ -38,6 +39,7 @@ for (const entry of stateManifest.packages) {
     for (let index = 0; index < skinIndex; index++) await stage.click({ button: 'right' });
     await expect(stage).toHaveAttribute('data-skin-id', entry.skinId);
     expect(stateRequests).toEqual([]);
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('grand-transition-character')).toHaveCount(2);
     await page.locator('grand-transition-character img').evaluateAll((images: HTMLImageElement[]) => Promise.all(images.map((image) => image.decode())));

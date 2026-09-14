@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 import { finishPresentation, reachDeliveryTotal } from './helpers/presentation';
@@ -45,6 +46,7 @@ for (const viewport of [...portraitViewports, ...landscapeViewports]) {
     await expect(page.getByRole('heading', { name: 'Select your debaters' })).toBeVisible();
     await expectNoHorizontalOverflow(page);
     await page.screenshot({ path: testInfo.outputPath('mobile-setup.png'), fullPage: true });
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).tap();
     await expect(page.locator('.match-screen')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeInViewport();
@@ -123,6 +125,7 @@ test('portrait AI pause and rotation preserve the match and remaining turn time'
   await page.goto('');
   await continueInPortrait(page);
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).tap();
   await page.clock.runFor(5_000);
   const before = await matchFacts(page);
@@ -144,6 +147,7 @@ test('rotating hotseat conceals the match and preserves timer and manual pause',
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).tap();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).tap();
   await page.clock.runFor(5_000);
   const before = await matchFacts(page);
@@ -167,6 +171,7 @@ test('first portrait rotation pauses an active AI match until the recommendation
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).tap();
   await page.clock.runFor(5_000);
   const before = await matchFacts(page);
@@ -182,6 +187,7 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).tap();
   let checkedPresentation = false;
   for (let step = 0; step < 600; step += 1) {
@@ -255,6 +261,7 @@ test('portrait recommendation suspends pending AI work and resumes it after dism
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).tap();
   const cardId = await page.locator('grand-transition-match').evaluate((element) => {
     const match = element as HTMLElement & {
@@ -340,6 +347,8 @@ async function expectConcealed(page: Page, kind: string): Promise<void> {
 
 async function matchFacts(page: Page) {
   await expect(page.locator('.match-screen')).toBeVisible();
+  // Compare the draft, not an autocomplete preview under the setup mouse position.
+  await page.mouse.move(0, 0);
   return {
     timer: await page.locator('.timer-fact').getAttribute('data-timer'),
     sentence: await page.locator('.sentence-preview').textContent(),

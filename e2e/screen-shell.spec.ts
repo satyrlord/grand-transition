@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { stat } from 'node:fs/promises';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
@@ -73,14 +74,10 @@ for (const viewport of supportedViewports) {
     ).toBeVisible();
     await expect(page.locator('#setup-title')).toBeFocused();
     expect(page.url()).toBe(url);
+    await page.getByRole('button', { name: 'Lock in Player one' }).click();
     await page
       .getByRole('button', {
-        name: 'Player two character: The Thunder Tribune',
-      })
-      .click();
-    await page
-      .getByRole('button', {
-        name: /Red-Folded Chairman.*Select for player two/u,
+        name: /Red-Folded Chairman — Original.*Select for player two/u,
       })
       .click();
     await expect(page.locator('.contestant-weaknesses')).toHaveText([
@@ -127,9 +124,9 @@ for (const viewport of supportedViewports) {
     });
 
     await page
-      .locator('.roster-choice[data-character-id="government-ai"]')
+      .locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]')
       .click();
-    await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-character-id',
       'government-ai',
     );
@@ -147,7 +144,7 @@ for (const viewport of supportedViewports) {
         Number.parseFloat(sceneStyle.paddingRight) -
         12;
       const robotChoice = document.querySelector<HTMLElement>(
-        '.roster-choice[data-character-id="government-ai"]',
+        '.roster-choice[data-character-id="government-ai"][data-skin-id="default"]',
       )!;
       const rosterZone = document.querySelector<HTMLElement>('.roster-zone')!;
       const rosterGrid = document.querySelector<HTMLElement>('.roster-grid')!;
@@ -327,7 +324,7 @@ for (const viewport of supportedViewports) {
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
     ).toBeLessThanOrEqual(0.02);
     expect(geometry.rosterLayout).toEqual({
-      rowCount: 4,
+    rowCount: 5,
       gridInsideZone: true,
       overflowX: 'hidden',
       overflowY: 'auto',
@@ -349,14 +346,108 @@ for (const viewport of supportedViewports) {
     await page.getByRole('button', { name: 'Multiplayer' }).click();
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-character-id',
-      'red-folded-chairman',
+      'government-ai',
     );
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-skin-id',
-      'alternate',
+      'default',
     );
   });
 }
+
+test('production setup requires ordered locks and reopens only the unlocked player', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+
+  const start = page.getByRole('button', { name: 'Start match' });
+  await expect(start).toBeDisabled();
+  await expect(page.locator('#playerTwoCharacterId')).toBeDisabled();
+  await page
+    .locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]')
+    .click();
+  await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
+    'data-character-id',
+    'government-ai',
+  );
+
+  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await expect(page.locator('#playerOneCharacterId')).toBeDisabled();
+  await expect(page.locator('#playerTwoCharacterId')).toBeEnabled();
+  await page
+    .locator('.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"]')
+    .click();
+  await page.getByRole('button', { name: 'Lock in Player two' }).click();
+  await expect(start).toBeEnabled();
+
+  await lockInSetup(page);
+  await expect(start).toBeEnabled();
+
+  await page.getByRole('button', { name: 'Unlock Player two' }).click();
+  await expect(start).toBeDisabled();
+  await expect(page.locator('#playerOneCharacterId')).toBeDisabled();
+  await expect(page.locator('#playerTwoCharacterId')).toBeEnabled();
+  await page.getByRole('button', { name: 'Lock in Player two' }).click();
+  await expect(start).toBeEnabled();
+});
+
+test('single player lets one person select and lock both contestants', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Single Player' }).click();
+
+  await expect(page.getByRole('button', { name: 'Lock in Computer' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Lock in You' }).click();
+  await expect(page.getByRole('button', { name: 'Lock in Computer' })).toBeEnabled();
+  await page
+    .locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]')
+    .click();
+  await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
+    'data-character-id',
+    'government-ai',
+  );
+  await page.getByRole('button', { name: 'Lock in Computer' }).click();
+  await expect(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
+});
+
+test('right-click skin cycling respects the current player and both locks', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('');
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  const robot = page.locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]');
+  await robot.click();
+  await page.locator('[data-lock-player="one"]').click();
+  await robot.click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+
+  const one = page.locator('#playerOneCharacterId');
+  const two = page.locator('#playerTwoCharacterId');
+  const rightClick = async (side: 'one' | 'two') => {
+    const target = side === 'one' ? one : two;
+    const box = await target.boundingBox();
+    expect(box).not.toBeNull();
+    // Native pointer input also reaches disabled controls through contextmenu.
+    await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2, { button: 'right' });
+  };
+
+  await expect(two).toBeDisabled();
+  await rightClick('two');
+  await expect(two).toHaveAttribute('data-skin-id', 'default');
+  await rightClick('one');
+  await expect(one).toHaveAttribute('data-skin-id', 'alternate');
+  await page.locator('[data-lock-player="one"]').click();
+  await rightClick('one');
+  await expect(one).toHaveAttribute('data-skin-id', 'alternate');
+  await rightClick('two');
+  await expect(two).toHaveAttribute('data-skin-id', 'alternate');
+  await page.locator('[data-lock-player="two"]').click();
+  await rightClick('one');
+  await rightClick('two');
+  await expect(one).toHaveAttribute('data-skin-id', 'alternate');
+  await expect(two).toHaveAttribute('data-skin-id', 'alternate');
+  await expect(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
+});
 
 test('selected skins reach the match without changing character identity', async (
   { page },
@@ -368,6 +459,7 @@ test('selected skins reach the match without changing character identity', async
   await page
     .getByRole('button', { name: 'Next skin for Player one' })
     .click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const redPlayer = page.locator('.match-player[data-side="red"]');
@@ -393,7 +485,7 @@ test('selected skins reach the match without changing character identity', async
   });
 });
 
-test('every alternate portrait decodes while roster portraits stay canonical', async (
+test('every alternate portrait decodes while the roster exposes all portrait skins', async (
   { page },
   testInfo,
 ) => {
@@ -415,7 +507,7 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
   for (const [characterId, alternateSkins] of alternateSkinsByCharacter) {
     await page.locator('#playerOneCharacterId').click();
     await page
-      .locator(`.roster-choice[data-character-id="${characterId}"]`)
+      .locator(`.roster-choice[data-character-id="${characterId}"][data-skin-id="default"]`)
       .click();
     const stage = page.locator('#playerOneCharacterId');
     for (let index = 0;
@@ -444,25 +536,25 @@ test('every alternate portrait decodes while roster portraits stay canonical', a
     }
   }
 
-  expect(
-    await page.locator('.roster-headshot').evaluateAll((portraits) =>
-      portraits.every(
-        (portrait) => !(portrait as HTMLImageElement).src.includes('--'),
-      ),
-    ),
-  ).toBe(true);
+  const rosterSources = await page.locator('.roster-headshot').evaluateAll(
+    (portraits) => portraits.map((portrait) => (portrait as HTMLImageElement).src),
+  );
+  expect(rosterSources).toHaveLength(30);
+  expect(rosterSources.some((source) => source.includes('--'))).toBe(true);
   await page.screenshot({
     path: testInfo.outputPath('alternate-skins-setup.png'),
     fullPage: true,
   });
 
   await page.locator('#playerOneCharacterId').click();
-  await page.locator('.roster-choice[data-character-id="county-baron"]').click();
+  await page.locator('.roster-choice[data-character-id="county-baron"][data-skin-id="default"]').click();
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
     'data-skin-id',
     'municipal-patron',
   );
+  await lockInSetup(page);
+
   await page.getByRole('button', { name: 'Start match' }).click();
   const redPlayer = page.locator('.match-player[data-side="red"]');
   await expect(redPlayer.getByRole('heading')).toHaveText('Local Baron');
@@ -666,7 +758,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   const captain = page.locator(
-    '.roster-choice[data-character-id="black-sea-captain"]',
+    '.roster-choice[data-character-id="black-sea-captain"][data-skin-id="default"]',
   );
   await captain.hover();
   const dossier = page.locator('.character-inspector');
@@ -704,7 +796,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   const frameOverlay = page.locator(
-    '.roster-choice[data-character-id="red-folded-chairman"] .roster-frame-overlay',
+    '.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"] .roster-frame-overlay',
   );
   await expect
     .poll(() =>
@@ -720,7 +812,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
 
   const crop = await page.evaluate(() => {
     const rosterPortrait = document.querySelector<HTMLElement>(
-      '.roster-choice[data-character-id="red-folded-chairman"] .roster-headshot',
+      '.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"] .roster-headshot',
     )!;
     const selectedPortrait = document.querySelector<HTMLElement>(
       '.contestant-stage--one .contestant-portrait',
@@ -732,7 +824,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
     const selectedBox = selectedPortrait.getBoundingClientRect();
     const selectedFrameBox = selectedFrame.getBoundingClientRect();
     const frameOverlay = document.querySelector<HTMLImageElement>(
-      '.roster-choice[data-character-id="red-folded-chairman"] .roster-frame-overlay',
+      '.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"] .roster-frame-overlay',
     )!;
     const headClearances = [
       ...document.querySelectorAll<HTMLImageElement>('.roster-headshot'),
@@ -797,7 +889,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   expect(crop.selectedInside).toBe(true);
   expect(crop.selectedFade).toBe('none');
   expect(crop.frameLoaded).toBe(true);
-  expect(crop.headClearances).toHaveLength(19);
+  expect(crop.headClearances).toHaveLength(30);
   expect(crop.headClearances.every((clearance) => clearance > 0)).toBe(true);
 });
 
@@ -849,6 +941,7 @@ test('duplicate setup submit dispatches one immutable command', async ({
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
 
   const eventFacts = await page.evaluate(() => {
     const app = document.querySelector('grand-transition-app')!;

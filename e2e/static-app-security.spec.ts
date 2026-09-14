@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { finishPresentation } from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { readFile, readdir, rm } from 'node:fs/promises';
@@ -195,6 +196,7 @@ test('development automatically writes one completed match text log', async ({
     await page.clock.install();
     await page.goto(developmentUrl);
     await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
 
     for (const action of plan.actions) {

@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
@@ -154,6 +155,7 @@ async function enableTutorial(page: Page): Promise<void> {
 
 async function startMatch(page: Page, mode = 'Multiplayer'): Promise<void> {
   await page.getByRole('button', { name: mode, exact: true }).click();
+  await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
 }
 

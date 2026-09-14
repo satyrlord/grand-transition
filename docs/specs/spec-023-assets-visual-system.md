@@ -218,7 +218,9 @@ Alternate portraits use
 `<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
 this filename convention. It does not use a TypeScript skin registry.
 
-The default skin is first. The roster uses only the default skin.
+The default skin is first. The setup roster exposes every discovered selectable
+skin as one portrait choice, while the default remains the archetype's first
+fallback when a skin is not selected.
 
 Setup stages and matches use the selected skin. All skins for one character share its character
 identity and phrase content.
@@ -1044,8 +1046,9 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   and zero through eight alternate skins. A ninth alternate fails validation.
   Filename discovery is deterministic, and the default is first. Foundation
   characters can keep only their default interim portrait until Milestone 028.
-  The roster resolves only the default. Setup and match views resolve an
-  available requested skin without changing character or phrase data.
+  The roster resolves every available selectable skin. Setup and match views
+  resolve an available requested skin without changing character or phrase
+  data.
 - **AC-023-10:** Each final character is recognizable without its nameplate by
   its silhouette, posture, face system, and prop logic. Default and alternate
   skins preserve one fictional archetype across all named states. The research
@@ -1165,8 +1168,8 @@ Existing character variant checks retain the same limits.
 At 1024 by 720, 1024 by 768, 1280 by 720, 1920 by 1080, 3424 by 1427,
 and 5120 by 1440, with device pixel ratios 1 and 2, the loaded source has
 enough pixels for the square image after cover fitting and active crop scaling,
-or uses the largest available 960-pixel variant. All 19 portraits retain their
-canonical skin and existing composition.
+or uses the largest available 960-pixel variant. All 30 selectable portraits
+retain their canonical skin and existing composition.
 Verify with `e2e/roster-resolution.spec.ts` and
 `tests/browser/screen-shell.browser.test.ts`.
 

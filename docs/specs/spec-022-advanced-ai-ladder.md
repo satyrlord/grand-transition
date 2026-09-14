@@ -91,7 +91,15 @@ The Main Menu offers “Ladder” under Milestone 015. Selecting it creates loca
 progress when absent or resumes saved progress. Custom Single Player adds Party Strategist and
 Palace Operator to the existing Difficulty select. Ladder setup keeps the
 player character selectable until the first recorded
-result. It fixes the current opponent and scene from progress.
+result. The player must lock that character before Start ladder or Continue
+ladder becomes available. The current opponent is fixed, treated as already
+locked, and cannot be selected or unlocked. The current scene is also fixed
+from progress.
+
+After a recorded win or loss, the roster disables other archetypes. Only skins
+of the saved player character remain selectable. Rejected archetype selection
+must not update that player's skin. `tests/browser/screen-shell.browser.test.ts`
+verifies this after both result types.
 
 The existing
 Match settings strip shows rung, wins, losses, and completion. The opponent status names the current

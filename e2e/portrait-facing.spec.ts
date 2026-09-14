@@ -1,3 +1,4 @@
+import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 
 for (const fixture of [
@@ -10,8 +11,9 @@ for (const fixture of [
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     for (const [index, field] of ['playerOneCharacterId', 'playerTwoCharacterId'].entries()) {
+      if (index === 1) await page.locator('[data-lock-player="one"]').click();
       await page.locator('#' + field).click();
-      await page.locator(`.roster-choice[data-character-id="${index === 0 ? fixture.one : fixture.two}"]`).click();
+      await page.locator(`.roster-choice[data-character-id="${index === 0 ? fixture.one : fixture.two}"][data-skin-id="default"]`).click();
       const cycles = fixture.name === 'foundation and alternate' && index === 0 ? 0 : fixture.cycles;
       for (let cycle = 0; cycle < cycles; cycle++) await page.locator('#' + field).click({ button: 'right' });
     }
@@ -21,6 +23,7 @@ for (const fixture of [
       const transform = await stage.locator('.contestant-portrait').evaluate((image) => new DOMMatrix(getComputedStyle(image).transform).a);
       expect(transform).toBe(fixture.mirrored[index] ? -1 : 1);
     }
+    await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.mouse.move(0, 0);
     for (const [index, side] of ['red', 'blue'].entries()) {

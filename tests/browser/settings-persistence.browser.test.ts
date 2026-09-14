@@ -1,3 +1,4 @@
+import { lockInSetup } from './setup-test-helpers';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell';
@@ -152,6 +153,7 @@ test('all five scoring choices persist and start a match with the selected multi
   await page.getByRole('checkbox', { name: 'Speech enabled', exact: true }).click();
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
   expect((app as unknown as { matchState: MatchState }).matchState.setup.basePointsMultiplier).toBe(5);
 });
@@ -242,7 +244,7 @@ test.each([
     settings.querySelector<HTMLButtonElement>('.settings-close')!.click();
     await app.updateComplete;
     expect(document.querySelector('.title-settings-notice')).toBeNull();
-    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();    await lockInSetup();
     await page.getByRole('button', { name: 'Start match' }).click();
     await completeMatch(app);
     await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
