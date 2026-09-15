@@ -44,10 +44,16 @@ test.each([
   { width: 1024, height: 720 }, { width: 1024, height: 768 },
   { width: 1280, height: 720 }, { width: 1920, height: 1080 },
 ])('keeps long sentence text reachable inside the fixed speech record at $width by $height', async ({ width, height }) => {
+  // The fixture stacks one extra `and` clause so the composed text stays above
+  // the historical 409-character worst case after the punchline and length
+  // passes shortened the source cards. A locale that adapts the cards later can
+  // produce a longer line again, and the speech record must stay reachable.
   const ids = [
     'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
     'will-bring-the-miners-to-bucharest', 'during-a-press-conference', 'and',
     'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
+    'will-bring-the-miners-to-bucharest',
+    'and', 'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
     'will-bring-the-miners-to-bucharest',
     'and', 'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
     'will-bring-the-miners-to-bucharest', 'during-a-press-conference',

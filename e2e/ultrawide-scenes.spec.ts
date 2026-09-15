@@ -1,4 +1,5 @@
 import { lockInSetup } from './helpers/setup';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 import { expect, test } from '@playwright/test';
 
 for (const scene of [
@@ -10,6 +11,7 @@ for (const scene of [
   'transition-era-television-studio',
 ]) {
   test(`${scene} fills ultrawide viewports without distorting scene layers`, async ({ page }, testInfo) => {
+    await useFixedBrowserMatchSeed(page);
     await page.setViewportSize({ width: 3424, height: 1427 });
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();

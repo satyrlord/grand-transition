@@ -9,6 +9,7 @@ import {
   decodeSettings,
   defaultSettings,
   encodeSettings,
+  settingsSchemaVersion,
   type SettingsDocument,
 } from '../../src/persistence/codecs/settings-codec';
 import {
@@ -30,7 +31,7 @@ afterEach(() => {
 
 test('restores every stored setting and applies title changes immediately', async () => {
   const stored: SettingsDocument = Object.freeze({
-    schemaVersion: 5,
+    schemaVersion: settingsSchemaVersion,
     basePointsMultiplier: 4,
     gpuVoices: false,
     masterVolume: 0.55,
@@ -162,7 +163,7 @@ test.each([
   ['malformed data', '{broken'],
   [
     'an unsupported version',
-    JSON.stringify({ ...defaultSettings, schemaVersion: 6 }),
+    JSON.stringify({ ...defaultSettings, schemaVersion: settingsSchemaVersion + 1 }),
   ],
 ] as const)(
   'uses defaults for %s without overwriting it before a user change',
@@ -244,7 +245,8 @@ test.each([
     settings.querySelector<HTMLButtonElement>('.settings-close')!.click();
     await app.updateComplete;
     expect(document.querySelector('.title-settings-notice')).toBeNull();
-    await page.getByRole('button', { name: 'Multiplayer' }).click();    await lockInSetup();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup();
     await page.getByRole('button', { name: 'Start match' }).click();
     await completeMatch(app);
     await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());

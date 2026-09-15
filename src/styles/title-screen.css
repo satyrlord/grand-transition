@@ -1015,8 +1015,7 @@
     text-transform: uppercase;
   }
 
-  .match-history-phrase-empty,
-  .match-history-legacy-phrases {
+  .match-history-phrase-empty {
     color: var(--broadcast-paper);
     font-size: 0.72rem;
     line-height: 1.3;
@@ -1024,12 +1023,6 @@
 
   .match-history-phrase-round .match-history-phrase-empty {
     margin-block-start: 0.5rem;
-  }
-
-  .match-history-legacy-phrases {
-    padding: 0.65rem;
-    border: 1px solid rgb(228 193 125 / 24%);
-    background: rgb(5 8 11 / 52%);
   }
 
   .match-history-entry pre {

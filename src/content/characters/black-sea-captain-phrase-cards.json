@@ -480,11 +480,11 @@
     {
       "id": "cannot-steer-own-party-from-puddle",
       "role": "predicate",
-      "text": "cannot steer its own party out of a puddle",
-      "singularText": "cannot steer its own party out of a puddle",
-      "pluralText": "cannot steer their own party out of a puddle",
-      "personalSingularText": "cannot steer their own party out of a puddle",
-      "secondPersonText": "cannot steer your own party out of a puddle",
+      "text": "cannot steer its own party around a puddle",
+      "singularText": "cannot steer its own party around a puddle",
+      "pluralText": "cannot steer their own party around a puddle",
+      "personalSingularText": "cannot steer their own party around a puddle",
+      "secondPersonText": "cannot steer your own party around a puddle",
       "tags": [
         "competence",
         "consistency"
@@ -514,11 +514,11 @@
     {
       "id": "could-not-steer-own-party-from-puddle",
       "role": "predicate",
-      "text": "could not steer its own party out of a puddle",
-      "singularText": "could not steer its own party out of a puddle",
-      "pluralText": "could not steer their own party out of a puddle",
-      "personalSingularText": "could not steer their own party out of a puddle",
-      "secondPersonText": "could not steer your own party out of a puddle",
+      "text": "could not steer its own party around a puddle",
+      "singularText": "could not steer its own party around a puddle",
+      "pluralText": "could not steer their own party around a puddle",
+      "personalSingularText": "could not steer their own party around a puddle",
+      "secondPersonText": "could not steer your own party around a puddle",
       "tags": [
         "competence",
         "consistency"
@@ -548,11 +548,11 @@
     {
       "id": "will-not-steer-own-party-from-puddle",
       "role": "predicate",
-      "text": "will not steer its own party out of a puddle",
-      "singularText": "will not steer its own party out of a puddle",
-      "pluralText": "will not steer their own party out of a puddle",
-      "personalSingularText": "will not steer their own party out of a puddle",
-      "secondPersonText": "will not steer your own party out of a puddle",
+      "text": "will not steer its own party around a puddle",
+      "singularText": "will not steer its own party around a puddle",
+      "pluralText": "will not steer their own party around a puddle",
+      "personalSingularText": "will not steer their own party around a puddle",
+      "secondPersonText": "will not steer your own party around a puddle",
       "tags": [
         "competence",
         "consistency"

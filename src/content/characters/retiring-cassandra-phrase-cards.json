@@ -27,8 +27,8 @@
     "results"
   ],
   "comebacks": {
-    "weak": "Do you believe in results, or only in the launch party?",
-    "medium": "I asked about your conscience. You sent its press officer.",
+    "weak": "Do you believe in results, or just cocktail parties?",
+    "medium": "I asked about your conscience but you sent the PR guy.",
     "strong": "You love the country so much you took half home."
   },
   "aiPersonality": {
@@ -240,7 +240,7 @@
     {
       "id": "retiring-cassandra-retirement-fire-alarm",
       "role": "noun",
-      "text": "a fire alarm at its own retirement party",
+      "text": "a fire alarm at its retirement party",
       "tags": [
         "hope",
         "results"

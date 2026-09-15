@@ -144,7 +144,24 @@ tests enforce these minimum and maximum counts.
 
 Editorial revisions keep stable IDs while the displayed text supplies enough
 English context. Each player-visible phrase text and agreement form contains no
-more than 11 whitespace-delimited words. The `securitate` weakness label reads
+more than 11 whitespace-delimited words, and no more than its role guardrail:
+conjunction 6, continuation 1, verb 10, modifier 9, noun 10, predicate 10, and
+ending 11. Comeback lines stay at 11 words or fewer. The manual card parser
+rejects a role guardrail at its exact path, so the guardrail is a content
+contract and not only an editorial guideline. The character-file parser rejects
+an overlong comeback at its exact tier path.
+
+The guardrails follow the measured corpus of the source party game the interface
+imitates: connectors of one word, objects and predicates of three to four words
+by median, finishers of about six, and an eleven-word maximum for the longest
+comeback. Original satire in that style lets a card sit well above the measured
+band when the extra words are the comic image or the punchline: humour takes
+priority over brevity, and a locale that adapts the cards later may need more
+words than the English original. The tighter editorial bands stay in the private
+research folder as guidance for new cards, together with the measurement and the
+documented exceptions.
+
+The `securitate` weakness label reads
 `Former secret police`
 in setup and score explanations. Phrase references use `the former secret
 police`; the past miners phrase reads `brought the miners to Bucharest`.
@@ -157,7 +174,8 @@ The Chairman's ancient-history ending reads
 `legacy` weakness tag. Preserve this exact approved wording; do not claim that
 it explains the historical names or contrasts them with modernity.
 The retired generic-abuse cards are `a-dumbass`, `an-animal`, and `a-monkey`.
-Version 9 and earlier replays retain their original content under Milestone 014.
+Milestone 014 records the single replay document format and owns how a stored
+replay behaves when the catalog changes.
 
 Phrase definitions and English phrase text must not be hardcoded in TypeScript.
 The common corpus is `src/content/common-phrase-cards.json`. Each character has

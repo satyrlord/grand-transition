@@ -1,22 +1,9 @@
 import { z } from 'zod';
-import {
-  legacyConciseReplayContext,
-  legacyRosterReplayContext,
-  legacyFinalizationReplayContext,
-  legacyHumorReplayContext,
-  legacyPhraseReplayContext,
-  legacyProphetReplayContext,
-  legacyPunchlineReplayContext,
-} from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import {
-  basicScoringBalance,
   basePointsMultiplierSchema,
   scoringBalanceForMultiplier,
-  legacyBasicScoringBalance,
-  legacyVersion2BasicScoringBalance,
-  legacyVersion3BasicScoringBalance,
   type BasicScoringBalance,
 } from '../../content/basic-scoring-balance';
 import { seededRandomSource } from '../../engine/random-source';
@@ -31,38 +18,13 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 12;
-export const supportedReplaySchemaVersions = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  replaySchemaVersion,
-] as const;
+// One replay document format exists at a time. The version only ever changes
+// when that format changes; content revisions never bump it.
+export const replaySchemaVersion = 1;
 export const replayKind = 'grand-transition-replay' as const;
 export const matchLogKind = 'grand-transition-match-log' as const;
 
-const replaySchemaVersionSchema = z.union([
-  z.literal(supportedReplaySchemaVersions[0]),
-  z.literal(supportedReplaySchemaVersions[1]),
-  z.literal(supportedReplaySchemaVersions[2]),
-  z.literal(supportedReplaySchemaVersions[3]),
-  z.literal(supportedReplaySchemaVersions[4]),
-  z.literal(supportedReplaySchemaVersions[5]),
-  z.literal(supportedReplaySchemaVersions[6]),
-  z.literal(supportedReplaySchemaVersions[7]),
-  z.literal(supportedReplaySchemaVersions[8]),
-  z.literal(supportedReplaySchemaVersions[9]),
-  z.literal(supportedReplaySchemaVersions[10]),
-  z.literal(supportedReplaySchemaVersions[11]),
-]);
+const replaySchemaVersionSchema = z.literal(replaySchemaVersion);
 
 export type ReplayFailureCode =
   'invalid-json' | 'wrong-document' | 'invalid-replay' | 'unsupported-version';
@@ -148,7 +110,7 @@ export const replaySetupSchema = z
     timerSeconds: z.literal(30),
     speechEnabled: z.boolean(),
     privacyEnabled: z.boolean(),
-    basePointsMultiplier: basePointsMultiplierSchema.optional(),
+    basePointsMultiplier: basePointsMultiplierSchema,
   })
   .strict()
   .superRefine((setup, context) => {
@@ -169,8 +131,7 @@ const replayDocumentSchema = z
     setup: replaySetupSchema,
     commands: z.array(replayCommandSchema),
   })
-  .strict()
-  .superRefine(validateScoringSetup);
+  .strict();
 
 const roundSummarySchema = z
   .object({
@@ -259,14 +220,13 @@ const matchLogDocumentSchema = z
     setup: replaySetupSchema,
     seed: z.number().int().min(0).max(0xffff_ffff),
     rounds: z.array(roundSummarySchema).min(1),
-    sentences: z.array(publicSentenceSchema).optional(),
+    sentences: z.array(publicSentenceSchema),
     selections: z.array(publicSelectionSchema).min(1),
     breakdowns: z.array(publicBreakdownSchema).min(2),
     events: z.array(publicRuleEventSchema),
     winner: identifier,
   })
   .strict()
-  .superRefine(validateScoringSetup)
   .superRefine((matchLog, context) => {
     const playerIds = new Set(
       matchLog.setup.players.map((player) => player.playerId),
@@ -290,7 +250,7 @@ const matchLogDocumentSchema = z
     matchLog.breakdowns.forEach((breakdown, index) =>
       requirePlayer(breakdown.playerId, ['breakdowns', index, 'playerId']),
     );
-    matchLog.sentences?.forEach((sentence, index) =>
+    matchLog.sentences.forEach((sentence, index) =>
       requirePlayer(sentence.playerId, ['sentences', index, 'playerId']),
     );
     matchLog.rounds.forEach((round, index) => {
@@ -311,43 +271,34 @@ const matchLogDocumentSchema = z
         });
       }
     });
-    if (matchLog.schemaVersion >= 3 && !matchLog.sentences) {
-      context.addIssue({
-        code: 'custom',
-        path: ['sentences'],
-        message: 'Current match logs must record each public sentence.',
-      });
-    }
-    if (matchLog.sentences) {
-      const roundNumbers = new Set(matchLog.rounds.map((round) => round.round));
-      const sentenceKeys = new Set<string>();
-      matchLog.sentences.forEach((sentence, index) => {
-        if (!roundNumbers.has(sentence.round)) {
+    const roundNumbers = new Set(matchLog.rounds.map((round) => round.round));
+    const sentenceKeys = new Set<string>();
+    matchLog.sentences.forEach((sentence, index) => {
+      if (!roundNumbers.has(sentence.round)) {
+        context.addIssue({
+          code: 'custom',
+          path: ['sentences', index, 'round'],
+          message: 'Reference a recorded round.',
+        });
+      }
+      const key = `${sentence.round}:${sentence.playerId}`;
+      if (sentenceKeys.has(key)) {
+        context.addIssue({
+          code: 'custom',
+          path: ['sentences', index],
+          message: 'Record one public sentence per player and round.',
+        });
+      }
+      sentenceKeys.add(key);
+    });
+    for (const round of matchLog.rounds) {
+      for (const playerId of playerIds) {
+        if (!sentenceKeys.has(`${round.round}:${playerId}`)) {
           context.addIssue({
             code: 'custom',
-            path: ['sentences', index, 'round'],
-            message: 'Reference a recorded round.',
-          });
-        }
-        const key = `${sentence.round}:${sentence.playerId}`;
-        if (sentenceKeys.has(key)) {
-          context.addIssue({
-            code: 'custom',
-            path: ['sentences', index],
+            path: ['sentences'],
             message: 'Record one public sentence per player and round.',
           });
-        }
-        sentenceKeys.add(key);
-      });
-      for (const round of matchLog.rounds) {
-        for (const playerId of playerIds) {
-          if (!sentenceKeys.has(`${round.round}:${playerId}`)) {
-            context.addIssue({
-              code: 'custom',
-              path: ['sentences'],
-              message: 'Record one public sentence per player and round.',
-            });
-          }
         }
       }
     }
@@ -424,27 +375,16 @@ export function replayMatch(
   const decoded = decodeReplay(serialized);
   if (!decoded.ok) return decoded;
 
-  const replayContext = replayContextForVersion(
-    decoded.value.schemaVersion,
-    context,
-  );
   let state = createReplayInitialState(decoded.value, context);
   if (!state) return { ok: false, code: 'invalid-replay' };
 
   const engineContext: MatchEngineContext = {
-    phrases: replayContext.catalog.phrases,
-    characters: replayContext.catalog.characters,
-    locale: replayContext.locale,
-    balance:
-      decoded.value.schemaVersion === 1
-        ? legacyBasicScoringBalance
-        : decoded.value.schemaVersion === 2
-          ? legacyVersion2BasicScoringBalance
-          : decoded.value.schemaVersion === 3
-            ? legacyVersion3BasicScoringBalance
-            : decoded.value.schemaVersion < 6
-              ? basicScoringBalance
-              : scoringBalanceForMultiplier(decoded.value.setup.basePointsMultiplier!),
+    phrases: context.catalog.phrases,
+    characters: context.catalog.characters,
+    locale: context.locale,
+    balance: scoringBalanceForMultiplier(
+      decoded.value.setup.basePointsMultiplier,
+    ),
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {
@@ -467,8 +407,7 @@ export function createReplayInitialState(
   replay: ReplayDocument,
   context: ReplayContext,
 ): MatchState | null {
-  const replayContext = replayContextForVersion(replay.schemaVersion, context);
-  const request = createSetupRequest(replay, replayContext.catalog);
+  const request = createSetupRequest(replay, context.catalog);
   if (!request) return null;
   try {
     return applyInitialValues(createMatchSetupState(request), replay.setup);
@@ -489,40 +428,17 @@ export function storeReplayImport(
   return stored.ok ? replayed : stored;
 }
 
-export function replayContextForVersion(
-  schemaVersion: number,
-  context: ReplayContext,
-): ReplayContext {
-  const punchlineContext = schemaVersion < 12
-    ? legacyPunchlineReplayContext(context)
-    : context;
-  const rosterContext = schemaVersion < 11
-    ? legacyRosterReplayContext(punchlineContext)
-    : punchlineContext;
-  const conciseContext = schemaVersion < 10
-    ? legacyConciseReplayContext(rosterContext)
-    : rosterContext;
-  const finalizationContext = schemaVersion < 9
-    ? legacyFinalizationReplayContext(conciseContext)
-    : conciseContext;
-  const prophetContext = schemaVersion < 8
-    ? legacyProphetReplayContext(finalizationContext)
-    : finalizationContext;
-  const contentContext = schemaVersion < 7
-    ? legacyHumorReplayContext(prophetContext)
-    : prophetContext;
-  return schemaVersion < 5
-    ? legacyPhraseReplayContext(contentContext)
-    : contentContext;
-}
-
 export function storeMatchLogImport(
   serialized: string,
+  context: ReplayContext,
   storage: StoragePort,
   key: string,
 ): CodecResult<MatchLogDocument> | Readonly<{ ok: false; code: string }> {
   const decoded = decodeMatchLog(serialized);
   if (!decoded.ok) return decoded;
+  if (!matchLogMatchesContext(decoded.value, context)) {
+    return { ok: false, code: 'invalid-replay' };
+  }
   const stored = storage.write(key, encodeMatchLog(decoded.value));
   return stored.ok ? decoded : stored;
 }
@@ -662,9 +578,7 @@ function decodeDocument<Schema extends z.ZodType>(
   if (
     typeof value.schemaVersion === 'number' &&
     Number.isInteger(value.schemaVersion) &&
-    !supportedReplaySchemaVersions.includes(
-      value.schemaVersion as (typeof supportedReplaySchemaVersions)[number],
-    )
+    value.schemaVersion !== replaySchemaVersion
   ) {
     return { ok: false, code: 'unsupported-version' };
   }
@@ -708,8 +622,7 @@ function createSetupRequest(
     aiDifficulty: replay.setup.aiDifficulty,
     speechEnabled: replay.setup.speechEnabled,
     privacyEnabled: replay.setup.privacyEnabled,
-    ...(replay.schemaVersion >= 6
-      ? { basePointsMultiplier: replay.setup.basePointsMultiplier } : {}),
+    basePointsMultiplier: replay.setup.basePointsMultiplier,
     openingPlayerIndex: scene.openingPlayerIndex,
   };
 }
@@ -730,16 +643,37 @@ function applyInitialValues(state: MatchState, setup: ReplaySetup): MatchState {
   };
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+function matchLogMatchesContext(
+  matchLog: MatchLogDocument,
+  context: ReplayContext,
+): boolean {
+  const allowedTextsByPhrase = new Map(
+    context.catalog.phrases.map((phrase) => {
+      const keys = [
+        phrase.textKey,
+        phrase.numberForms?.singularKey,
+        phrase.numberForms?.pluralKey,
+        phrase.numberForms?.personalSingularKey,
+        phrase.numberForms?.secondPersonKey,
+      ];
+      return [
+        phrase.id,
+        new Set(
+          keys.flatMap((key) => {
+            const text = key ? context.locale.messages[key] : undefined;
+            return typeof text === 'string' ? [text] : [];
+          }),
+        ),
+      ] as const;
+    }),
+  );
+  return matchLog.sentences.every((sentence) =>
+    sentence.phrases.every((phrase) =>
+      allowedTextsByPhrase.get(phrase.phraseId)?.has(phrase.text) === true,
+    ),
+  );
 }
 
-function validateScoringSetup(
-  value: { schemaVersion: number; setup: { basePointsMultiplier?: number } },
-  context: z.RefinementCtx,
-): void {
-  if ((value.schemaVersion >= 6) !== (value.setup.basePointsMultiplier !== undefined)) {
-    context.addIssue({ code: 'custom', path: ['setup', 'basePointsMultiplier'],
-      message: 'Use the scoring setup for this replay version.' });
-  }
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

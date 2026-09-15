@@ -77,7 +77,7 @@
     {
       "id": "spreadsheet-technocrat-foundation-modifier",
       "role": "modifier",
-      "text": "after delivering the food budget to the mice",
+      "text": "after delivering the budget to the rats",
       "tags": ["delivery", "accountability"],
       "rarity": "uncommon",
       "editorialReview": {
@@ -90,7 +90,7 @@
     {
       "id": "spreadsheet-technocrat-foundation-ending",
       "role": "ending",
-      "text": "and pantry mice get allowances before voters get crumbs.",
+      "text": "and pantry mice get allowances; voters get crumbs.",
       "tags": ["delivery", "accountability", "human-scale"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -118,7 +118,7 @@
     {
       "id": "spreadsheet-technocrat-green-cell-hospital",
       "role": "noun",
-      "text": "a hospital completed only in the green cells",
+      "text": "a hospital built on paper",
       "tags": [
         "delivery"
       ],

@@ -80,7 +80,7 @@ describe('authored humor grammar integration', () => {
 
   test.each([
     ['you', 'is-aligned-with-the-glorious-digital-transition', 'You are digitally transformed into a fax machine'],
-    ['campaign-promise', 'is-classified-as-load-bearing', 'Your promise with the expiry date scratched off is too expensive to uninstall'],
+    ['campaign-promise', 'is-classified-as-load-bearing', 'Your promise with the date scratched off is too expensive to uninstall'],
     ['your-voters', 'quietly-navigates-the-peoples-policy-landscape', 'Your voters get lost in the settings menu'],
     ['my-opponent', 'serves-the-people-through-a-maintenance-window', 'My opponent serves the people an error message in triplicate'],
   ])('renders agreement for %s with %s', (subject, predicate, expected) => {

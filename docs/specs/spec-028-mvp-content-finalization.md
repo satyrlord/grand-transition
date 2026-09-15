@@ -12,11 +12,11 @@ layers, motion, and final media packages; their delivery does not block
 Milestone 027.
 
 The phrase-data package uses the common authoring file and the 19 character
-authoring files. Replay compatibility is a separate Milestone 014 package.
-Historical replay content, replay codecs, common phrases, and character phrases have separate
-build chunks so the expanded catalog remains below the existing per-chunk size
-limit. Character-state image URLs and scene manifest data also have separate
-build chunks. Keep the limit unchanged.
+authoring files. Replay behavior is a separate Milestone 014 package. The replay
+codec, common phrases, and character phrases have separate build chunks so the
+expanded catalog remains below the existing per-chunk size limit.
+Character-state image URLs and scene manifest data also have separate build
+chunks. Keep the limit unchanged.
 
 ## Deliver
 

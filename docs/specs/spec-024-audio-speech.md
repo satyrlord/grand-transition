@@ -256,8 +256,8 @@ Resource preparation can precede that gesture. Skin metadata selects the voice. 
 speech voice dropdown. Settings exposes speech enablement, volume, and rate.
 Existing saved voice URIs remain valid and are preserved when another setting
 changes, but they do not override the skin assignment. Rate is 0.5
-through 2 in 0.1 steps, default 1.00. Settings migration restores the previous saved 1.2 rate to
-1.00 once, as specified in Milestone 020. Other saved rates remain unchanged.
+through 2 in 0.1 steps, default 1.00. A saved rate is preserved as stored;
+Milestone 020 owns the settings document. Other saved rates remain unchanged.
 Speech volume is 0 through 1 in 0.05 steps,
 default 0.8. Character data supplies pitch.
 

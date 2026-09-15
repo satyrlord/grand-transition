@@ -6,63 +6,26 @@ export const basePointsMultiplierSchema = z.union([
 
 export type BasePointsMultiplier = z.infer<typeof basePointsMultiplierSchema>;
 
-export const basicScoringBalanceSchema = z.discriminatedUnion('version', [
-  z
-    .object({
-      version: z.literal(1),
-      basePointsMinimum: z.literal(1),
-      basePointsMultiplier: z.literal(2),
-      substanceGroupPoints: z.literal(2),
-      flavourGroupPoints: z.literal(1),
-      weaknessMultiplier: z.literal(2),
-      restrictedPhraseMultiplier: z.literal(1.5),
-      rounding: z.literal('ceil'),
-    })
-    .strict(),
-  z
-    .object({
-      version: z.literal(2),
-      basePointsMinimum: z.literal(5),
-      basePointsMultiplier: z.literal(5),
-      substanceGroupPoints: z.literal(2),
-      flavourGroupPoints: z.literal(1),
-      weaknessMultiplier: z.literal(1.5),
-      restrictedPhraseMultiplier: z.literal(1),
-      rounding: z.literal('ceil'),
-    })
-    .strict(),
-  z
-    .object({
-      version: z.literal(3),
-      basePointsMinimum: z.literal(5),
-      basePointsMultiplier: z.literal(3),
-      substanceGroupPoints: z.literal(2),
-      flavourGroupPoints: z.literal(1),
-      weaknessMultiplier: z.literal(1.5),
-      restrictedPhraseMultiplier: z.literal(1),
-      rounding: z.literal('ceil'),
-    })
-    .strict(),
-  z
-    .object({
-      version: z.literal(4),
-      modifierPoints: z.literal(2),
-      basePointsMinimum: z.literal(5),
-      basePointsMultiplier: basePointsMultiplierSchema,
-      substanceGroupPoints: z.literal(2),
-      flavourGroupPoints: z.literal(1),
-      weaknessMultiplier: z.literal(1.5),
-      restrictedPhraseMultiplier: z.literal(1),
-      rounding: z.literal('ceil'),
-    })
-    .strict(),
-]);
+// One scoring balance exists at a time. The fields stay plain numbers so the
+// scoring tests can probe a single rule by overriding one value; the shipped
+// balance below is the only configuration the application uses.
+export const basicScoringBalanceSchema = z
+  .object({
+    modifierPoints: z.number().min(0),
+    basePointsMinimum: z.number().min(0),
+    basePointsMultiplier: basePointsMultiplierSchema,
+    substanceGroupPoints: z.number().min(0),
+    flavourGroupPoints: z.number().min(0),
+    weaknessMultiplier: z.number().min(1),
+    restrictedPhraseMultiplier: z.number().min(1),
+    rounding: z.literal('ceil'),
+  })
+  .strict();
 
 export type BasicScoringBalance = z.infer<typeof basicScoringBalanceSchema>;
 
 export const basicScoringBalance: BasicScoringBalance =
   basicScoringBalanceSchema.parse({
-    version: 4,
     modifierPoints: 2,
     basePointsMinimum: 5,
     basePointsMultiplier: 3,
@@ -73,44 +36,11 @@ export const basicScoringBalance: BasicScoringBalance =
     rounding: 'ceil',
   });
 
-export const legacyVersion3BasicScoringBalance: BasicScoringBalance =
-  basicScoringBalanceSchema.parse({
-    version: 3,
-    basePointsMinimum: 5,
-    basePointsMultiplier: 3,
-    substanceGroupPoints: 2,
-    flavourGroupPoints: 1,
-    weaknessMultiplier: 1.5,
-    restrictedPhraseMultiplier: 1,
-    rounding: 'ceil',
-  });
-
-export const legacyVersion2BasicScoringBalance: BasicScoringBalance =
-  basicScoringBalanceSchema.parse({
-    version: 2,
-    basePointsMinimum: 5,
-    basePointsMultiplier: 5,
-    substanceGroupPoints: 2,
-    flavourGroupPoints: 1,
-    weaknessMultiplier: 1.5,
-    restrictedPhraseMultiplier: 1,
-    rounding: 'ceil',
-  });
-
-export const legacyBasicScoringBalance: BasicScoringBalance =
-  basicScoringBalanceSchema.parse({
-    version: 1,
-    basePointsMinimum: 1,
-    basePointsMultiplier: 2,
-    substanceGroupPoints: 2,
-    flavourGroupPoints: 1,
-    weaknessMultiplier: 2,
-    restrictedPhraseMultiplier: 1.5,
-    rounding: 'ceil',
-  });
-
 export function scoringBalanceForMultiplier(
   basePointsMultiplier: BasePointsMultiplier,
 ): BasicScoringBalance {
-  return basicScoringBalanceSchema.parse({ ...basicScoringBalance, basePointsMultiplier });
+  return basicScoringBalanceSchema.parse({
+    ...basicScoringBalance,
+    basePointsMultiplier,
+  });
 }

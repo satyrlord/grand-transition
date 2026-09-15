@@ -227,6 +227,12 @@ export function decodeMatchHistory(serialized: string): MatchHistoryResult {
   const ids = new Set<string>();
   const entries: MatchHistoryEntry[] = [];
   for (const stored of parsed.data.entries) {
+    if (isForeignVersionPair(stored.replay, stored.matchLog)) {
+      // The pair was recorded under another replay document version, so it can
+      // no longer be reproduced. Keep the entries that still load and ignore
+      // this one; the next stored update writes only the retained entries.
+      continue;
+    }
     if (ids.has(stored.id) || !validIsoTime(stored.completedAt)) {
       return { ok: false, code: 'invalid-data' };
     }
@@ -359,6 +365,18 @@ function storageFailure(code: string): MatchHistoryFailureCode {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isForeignVersionPair(replay: unknown, matchLog: unknown): boolean {
+  if (!isRecord(replay) || !isRecord(matchLog)) return false;
+  const replayVersion = replay.schemaVersion;
+  const matchLogVersion = matchLog.schemaVersion;
+  return (
+    typeof replayVersion === 'number' &&
+    Number.isInteger(replayVersion) &&
+    replayVersion !== replaySchemaVersion &&
+    replayVersion === matchLogVersion
+  );
 }
 
 function deepFreeze<Value>(value: Value): Value {

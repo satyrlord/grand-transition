@@ -287,7 +287,7 @@
   {
     "id": "on-public-television",
     "role": "modifier",
-    "text": "on television, with the applause on a timer",
+    "text": "on television, with timed applause",
     "tags": [
       "media",
       "authenticity"
@@ -466,7 +466,7 @@
   {
     "id": "pension-recalculation",
     "role": "noun",
-    "text": "a pension increase visible only with a magnifying glass",
+    "text": "a pension increase visible under a magnifier",
     "tags": [
       "spending",
       "austerity"
@@ -490,7 +490,7 @@
   {
     "id": "unfinished-motorway",
     "role": "noun",
-    "text": "a motorway that ends at the photo opportunity",
+    "text": "a motorway that ends at the ribbon",
     "tags": [
       "evidence",
       "credibility"
@@ -886,7 +886,7 @@
   {
     "id": "at-victoria-palace",
     "role": "modifier",
-    "text": "at the government office, behind the emergency fern",
+    "text": "at the government office, behind a fern",
     "tags": [
       "bureaucracy"
     ],
@@ -901,7 +901,7 @@
   {
     "id": "under-an-emergency-ordinance",
     "role": "modifier",
-    "text": "under an ordinance still warm from the printer",
+    "text": "under an ordinance still warm",
     "tags": [
       "bureaucracy",
       "restraint"
@@ -1087,7 +1087,7 @@
   {
     "id": "budget-amendment",
     "role": "noun",
-    "text": "your budget with the decimal point on holiday",
+    "text": "your budget with a loose decimal point",
     "tags": [
       "bureaucracy",
       "evidence",
@@ -1136,7 +1136,7 @@
   {
     "id": "opinion-poll",
     "role": "noun",
-    "text": "an opinion poll conducted in your bathroom mirror",
+    "text": "an opinion poll in your bathroom mirror",
     "tags": [
       "evidence",
       "credibility"
@@ -1206,7 +1206,7 @@
   {
     "id": "campaign-promise",
     "role": "noun",
-    "text": "your promise with the expiry date scratched off",
+    "text": "your promise with the date scratched off",
     "tags": [
       "credibility",
       "consistency"
@@ -1350,7 +1350,7 @@
   {
     "id": "infrastructure-feasibility-study",
     "role": "noun",
-    "text": "a feasibility study for finishing the feasibility study",
+    "text": "a feasibility study for the next study",
     "tags": [
       "evidence",
       "modernity"
@@ -1374,7 +1374,7 @@
   {
     "id": "national-strategy",
     "role": "noun",
-    "text": "your national strategy on the back of a receipt",
+    "text": "your national strategy on a receipt",
     "tags": [
       "competence"
     ],
@@ -2807,17 +2807,14 @@
   {
     "id": "after-the-midnight-news",
     "role": "modifier",
-    "text": "after the newsreader runs out of eyebrows to raise",
-    "tags": [
-      "media",
-      "credibility"
-    ],
+    "text": "after midnight",
+    "tags": [],
     "rarity": "uncommon",
     "editorialReview": {
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
+      "notes": "Original neutral timing modifier reviewed after the concise rewrite. The visible text supports no weakness tag; the stable identifier remains unchanged."
     }
   },
   {
@@ -2839,7 +2836,7 @@
   {
     "id": "during-budget-season",
     "role": "modifier",
-    "text": "during the annual migration of the decimal point",
+    "text": "during the decimal point migration",
     "tags": [
       "spending",
       "competence"
@@ -2903,7 +2900,7 @@
   {
     "id": "under-the-studio-lights",
     "role": "modifier",
-    "text": "under studio lights bright enough to bleach a scandal",
+    "text": "under lights that bleach a scandal",
     "tags": [
       "media",
       "credibility"
@@ -2967,7 +2964,7 @@
   {
     "id": "during-a-press-conference",
     "role": "modifier",
-    "text": "during a press conference for the postponed press conference",
+    "text": "during a press conference about the conference",
     "tags": [
       "media",
       "competence"
@@ -3017,7 +3014,7 @@
   {
     "id": "beneath-the-national-banner",
     "role": "modifier",
-    "text": "beneath a flag large enough to hide the invoice",
+    "text": "beneath a flag hiding the invoice",
     "tags": [
       "corruption",
       "spending"
@@ -3075,7 +3072,7 @@
   {
     "id": "before-the-cameras-return",
     "role": "ending",
-    "text": "before the cameras find the road was a carpet.",
+    "text": "before the cameras call it a carpet.",
     "tags": [
       "media",
       "credibility"
@@ -6343,7 +6340,7 @@
   {
     "id": "public-an-office-door-with-visiting-hours-for-itself",
     "role": "noun",
-    "text": "an office door with visiting hours for itself",
+    "text": "an office door with visiting hours",
     "tags": [
       "bureaucracy",
       "accountability"
@@ -6361,7 +6358,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: an office door with visiting hours for itself. The joke concerns bureaucracy and accountability; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: an office door with visiting hours. The joke concerns bureaucracy and accountability; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -6535,7 +6532,7 @@
   {
     "id": "public-a-citation-that-refers-to-its-own-confidence",
     "role": "noun",
-    "text": "a citation that refers to its own confidence",
+    "text": "a citation citing its own confidence",
     "tags": [
       "evidence",
       "credibility"
@@ -6553,7 +6550,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a citation that refers to its own confidence. The joke concerns evidence and credibility; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a citation citing its own confidence. The joke concerns evidence and credibility; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -6703,7 +6700,7 @@
   {
     "id": "public-the-contract-with-an-emergency-exit-for-the-contractor",
     "role": "noun",
-    "text": "the contract with an emergency exit for the contractor",
+    "text": "a contract with an exit for the contractor",
     "tags": [
       "procurement",
       "transparency"
@@ -6721,7 +6718,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the contract with an emergency exit for the contractor. The joke concerns procurement and transparency; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a contract with an exit for the contractor. The joke concerns procurement and transparency; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -6775,7 +6772,7 @@
   {
     "id": "public-the-warranty-that-expired-during-the-ribbon-cutting",
     "role": "noun",
-    "text": "the warranty that expired during the ribbon cutting",
+    "text": "a warranty expiring at the ribbon cutting",
     "tags": [
       "procurement",
       "transparency"
@@ -6793,7 +6790,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the warranty that expired during the ribbon cutting. The joke concerns procurement and transparency; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a warranty expiring at the ribbon cutting. The joke concerns procurement and transparency; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -6943,7 +6940,7 @@
   {
     "id": "public-the-camera-angle-that-counts-as-a-witness",
     "role": "noun",
-    "text": "the camera angle that counts as a witness",
+    "text": "a camera angle counted as a witness",
     "tags": [
       "ratings",
       "credibility"
@@ -6961,7 +6958,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the camera angle that counts as a witness. The joke concerns ratings and credibility; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a camera angle counted as a witness. The joke concerns ratings and credibility; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7087,7 +7084,7 @@
   {
     "id": "public-a-gold-plated-bell-for-the-public-waiting-room",
     "role": "noun",
-    "text": "a gold-plated bell for the public waiting room",
+    "text": "a gold-plated bell for the waiting room",
     "tags": [
       "luxury",
       "elitism"
@@ -7105,7 +7102,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a gold-plated bell for the public waiting room. The joke concerns luxury and elitism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a gold-plated bell for the waiting room. The joke concerns luxury and elitism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7183,7 +7180,7 @@
   {
     "id": "public-your-progress-report-on-a-road-that-ends-at-the-printer",
     "role": "noun",
-    "text": "your progress report on a road to the printer",
+    "text": "your progress report for the printer",
     "tags": [
       "delivery",
       "results"
@@ -7201,7 +7198,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your progress report on a road that ends at the printer. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your progress report for the printer. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7231,7 +7228,7 @@
   {
     "id": "public-the-bridge-that-exists-only-on-its-commemorative-mug",
     "role": "noun",
-    "text": "the bridge that exists only on its commemorative mug",
+    "text": "a bridge living on a commemorative mug",
     "tags": [
       "delivery",
       "results"
@@ -7249,7 +7246,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the bridge that exists only on its commemorative mug. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a bridge living on a commemorative mug. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7351,7 +7348,7 @@
   {
     "id": "public-a-delivery-dashboard-with-nothing-behind-the-green-square",
     "role": "noun",
-    "text": "a delivery dashboard with nothing behind the green square",
+    "text": "a delivery dashboard with nothing behind it",
     "tags": [
       "delivery",
       "results"
@@ -7369,7 +7366,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a delivery dashboard with nothing behind the green square. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a delivery dashboard with nothing behind it. The joke concerns delivery and results; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7423,7 +7420,7 @@
   {
     "id": "public-the-promise-that-changes-address-after-voting-day",
     "role": "noun",
-    "text": "the promise that changes address after voting day",
+    "text": "a promise that moves after voting day",
     "tags": [
       "consistency",
       "commitment"
@@ -7441,7 +7438,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the promise that changes address after voting day. The joke concerns consistency and commitment; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a promise that moves after voting day. The joke concerns consistency and commitment; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7471,7 +7468,7 @@
   {
     "id": "public-a-party-whip-made-from-a-weather-vane",
     "role": "noun",
-    "text": "a party disciplinarian taking orders from a weather vane",
+    "text": "a party disciplinarian with a weather vane",
     "tags": [
       "consistency",
       "commitment"
@@ -7543,7 +7540,7 @@
   {
     "id": "public-a-firm-position-balanced-on-a-swivel-chair",
     "role": "noun",
-    "text": "a firm position balanced on a swivel chair",
+    "text": "a firm position on a swivel chair",
     "tags": [
       "consistency",
       "commitment"
@@ -7561,7 +7558,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a firm position balanced on a swivel chair. The joke concerns consistency and commitment; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a firm position on a swivel chair. The joke concerns consistency and commitment; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7615,7 +7612,7 @@
   {
     "id": "public-the-borrowed-work-boots-with-the-tags-attached",
     "role": "noun",
-    "text": "the borrowed work boots with the tags attached",
+    "text": "borrowed work boots with the tags on",
     "tags": [
       "authenticity",
       "sincerity"
@@ -7633,13 +7630,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the borrowed work boots with the tags attached. The joke concerns authenticity and sincerity; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: borrowed work boots with the tags on. The joke concerns authenticity and sincerity; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-your-modest-lunch-served-by-a-press-team",
     "role": "noun",
-    "text": "your modest lunch served by a press team",
+    "text": "your modest lunch with a press team",
     "tags": [
       "authenticity",
       "sincerity"
@@ -7657,7 +7654,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your modest lunch served by a press team. The joke concerns authenticity and sincerity; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your modest lunch with a press team. The joke concerns authenticity and sincerity; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7783,7 +7780,7 @@
   {
     "id": "public-a-local-briefing-translated-from-a-distant-headline",
     "role": "noun",
-    "text": "a local briefing translated from a distant headline",
+    "text": "a local briefing from a distant headline",
     "tags": [
       "context",
       "firsthand-knowledge"
@@ -7801,7 +7798,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a local briefing translated from a distant headline. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a local briefing from a distant headline. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7831,7 +7828,7 @@
   {
     "id": "public-your-field-report-filed-before-the-field-visit",
     "role": "noun",
-    "text": "your field report filed before the field visit",
+    "text": "your field report filed before the visit",
     "tags": [
       "context",
       "firsthand-knowledge"
@@ -7849,13 +7846,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your field report filed before the field visit. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your field report filed before the visit. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-a-street-interview-recorded-through-a-hotel-window",
     "role": "noun",
-    "text": "a street interview recorded through a hotel window",
+    "text": "a street interview from a hotel window",
     "tags": [
       "context",
       "firsthand-knowledge"
@@ -7873,13 +7870,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a street interview recorded through a hotel window. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a street interview from a hotel window. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-the-informed-opinion-with-the-town-name-misspelled",
     "role": "noun",
-    "text": "the informed opinion with the town name misspelled",
+    "text": "an informed opinion with spelling errors",
     "tags": [
       "context",
       "firsthand-knowledge"
@@ -7897,7 +7894,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the informed opinion with the town name misspelled. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: an informed opinion with spelling errors. The joke concerns context and firsthand-knowledge; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -7975,7 +7972,7 @@
   {
     "id": "public-a-public-microphone-bought-by-the-private-minute",
     "role": "noun",
-    "text": "a public microphone bought by the private minute",
+    "text": "a public microphone on the private minute",
     "tags": [
       "influence",
       "wealth"
@@ -7993,7 +7990,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a public microphone bought by the private minute. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a public microphone on the private minute. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -8047,7 +8044,7 @@
   {
     "id": "public-a-public-interest-held-in-a-private-safe",
     "role": "noun",
-    "text": "a public interest held in a private safe",
+    "text": "a public interest in a private safe",
     "tags": [
       "influence",
       "wealth"
@@ -8065,13 +8062,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a public interest held in a private safe. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a public interest in a private safe. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-the-campaign-purse-with-a-spare-ministry-inside",
     "role": "noun",
-    "text": "the campaign purse with a spare ministry inside",
+    "text": "a campaign purse with a spare ministry",
     "tags": [
       "influence",
       "wealth"
@@ -8089,7 +8086,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the campaign purse with a spare ministry inside. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a campaign purse with a spare ministry. The joke concerns influence and wealth; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -8143,7 +8140,7 @@
   {
     "id": "public-your-digital-strategy-waiting-for-the-fax-tone",
     "role": "noun",
-    "text": "your digital strategy waiting for the fax tone",
+    "text": "your digital strategy waiting for a fax",
     "tags": [
       "modernity",
       "obsolete"
@@ -8161,7 +8158,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your digital strategy waiting for the fax tone. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your digital strategy waiting for a fax. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -8239,7 +8236,7 @@
   {
     "id": "public-a-smart-queue-managed-by-a-brass-bell",
     "role": "noun",
-    "text": "a smart queue managed by a brass bell",
+    "text": "a smart queue managed by a bell",
     "tags": [
       "modernity",
       "obsolete"
@@ -8257,13 +8254,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a smart queue managed by a brass bell. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a smart queue managed by a bell. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-the-electronic-form-that-needs-a-wet-stamp",
     "role": "noun",
-    "text": "the electronic form that needs a wet stamp",
+    "text": "an electronic form needing a wet stamp",
     "tags": [
       "modernity",
       "obsolete"
@@ -8281,7 +8278,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the electronic form that needs a wet stamp. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: an electronic form needing a wet stamp. The joke concerns modernity and obsolete; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -8335,7 +8332,7 @@
   {
     "id": "public-your-cousin-s-open-competition-for-a-closed-position",
     "role": "noun",
-    "text": "your cousin's open competition for a closed position",
+    "text": "your cousin's open contest for one job",
     "tags": [
       "family",
       "nepotism"
@@ -8353,13 +8350,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your cousin's open competition for a closed position. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your cousin's open contest for one job. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-a-family-tree-printed-as-an-organization-chart",
     "role": "noun",
-    "text": "a family tree printed as an organization chart",
+    "text": "a family tree as an org chart",
     "tags": [
       "family",
       "nepotism"
@@ -8377,7 +8374,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a family tree printed as an organization chart. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a family tree as an org chart. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -8407,7 +8404,7 @@
   {
     "id": "public-your-nephew-s-fast-track-to-the-corner-office",
     "role": "noun",
-    "text": "your nephew's fast track to the corner office",
+    "text": "your nephew's fast-tracked promotion",
     "tags": [
       "family",
       "nepotism"
@@ -8425,13 +8422,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: your nephew's fast track to the corner office. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: your nephew's fast-tracked promotion. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-a-recruitment-panel-seated-for-a-family-photograph",
     "role": "noun",
-    "text": "a recruitment panel seated for a family photograph",
+    "text": "a recruitment panel posing as family",
     "tags": [
       "family",
       "nepotism"
@@ -8449,13 +8446,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a recruitment panel seated for a family photograph. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a recruitment panel posing as family. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "public-the-relative-who-passed-the-interview-by-attending-lunch",
     "role": "noun",
-    "text": "the relative who passed the interview by attending lunch",
+    "text": "a relative who was promoted just for showing up",
     "tags": [
       "family",
       "nepotism"
@@ -8473,7 +8470,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the relative who passed the interview by attending lunch. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a relative who was promoted just for showing up. The joke concerns family and nepotism; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -10114,11 +10111,11 @@
   {
     "id": "public-waiting-room-past",
     "role": "predicate",
-    "text": "was a waiting room with a campaign budget",
-    "singularText": "was a waiting room with a campaign budget",
-    "pluralText": "were waiting rooms with campaign budgets",
-    "personalSingularText": "was a waiting room with a campaign budget",
-    "secondPersonText": "were a waiting room with a campaign budget",
+    "text": "was a waiting room, fully funded",
+    "singularText": "was a waiting room, fully funded",
+    "pluralText": "were waiting rooms, fully funded",
+    "personalSingularText": "was a waiting room, fully funded",
+    "secondPersonText": "were a waiting room, fully funded",
     "tense": "past",
     "tenseFamily": "public-waiting-room",
     "tags": [
@@ -10152,11 +10149,11 @@
   {
     "id": "public-waiting-room-present",
     "role": "predicate",
-    "text": "is a waiting room with a campaign budget",
-    "singularText": "is a waiting room with a campaign budget",
-    "pluralText": "are waiting rooms with campaign budgets",
-    "personalSingularText": "is a waiting room with a campaign budget",
-    "secondPersonText": "are a waiting room with a campaign budget",
+    "text": "is a waiting room, fully funded",
+    "singularText": "is a waiting room, fully funded",
+    "pluralText": "are waiting rooms, fully funded",
+    "personalSingularText": "is a waiting room, fully funded",
+    "secondPersonText": "are a waiting room, fully funded",
     "tense": "present",
     "tenseFamily": "public-waiting-room",
     "tags": [
@@ -10190,11 +10187,11 @@
   {
     "id": "public-waiting-room-future",
     "role": "predicate",
-    "text": "will be a waiting room with a campaign budget",
-    "singularText": "will be a waiting room with a campaign budget",
-    "pluralText": "will be waiting rooms with campaign budgets",
-    "personalSingularText": "will be a waiting room with a campaign budget",
-    "secondPersonText": "will be a waiting room with a campaign budget",
+    "text": "will be a waiting room, fully funded",
+    "singularText": "will be a waiting room, fully funded",
+    "pluralText": "will be waiting rooms, fully funded",
+    "personalSingularText": "will be a waiting room, fully funded",
+    "secondPersonText": "will be a waiting room, fully funded",
     "tense": "future",
     "tenseFamily": "public-waiting-room",
     "tags": [
@@ -10228,11 +10225,11 @@
   {
     "id": "public-spare-key-past",
     "role": "predicate",
-    "text": "was the spare key to a locked office",
-    "singularText": "was the spare key to a locked office",
-    "pluralText": "were spare keys to locked offices",
-    "personalSingularText": "was the spare key to a locked office",
-    "secondPersonText": "were the spare key to a locked office",
+    "text": "was the spare key nobody could use",
+    "singularText": "was the spare key nobody could use",
+    "pluralText": "were spare keys nobody could use",
+    "personalSingularText": "was the spare key nobody could use",
+    "secondPersonText": "were the spare key nobody could use",
     "tense": "past",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -10265,11 +10262,11 @@
   {
     "id": "public-spare-key-present",
     "role": "predicate",
-    "text": "is the spare key to a locked office",
-    "singularText": "is the spare key to a locked office",
-    "pluralText": "are spare keys to locked offices",
-    "personalSingularText": "is the spare key to a locked office",
-    "secondPersonText": "are the spare key to a locked office",
+    "text": "is the spare key nobody can use",
+    "singularText": "is the spare key nobody can use",
+    "pluralText": "are spare keys nobody can use",
+    "personalSingularText": "is the spare key nobody can use",
+    "secondPersonText": "are the spare key nobody can use",
     "tense": "present",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -10302,11 +10299,11 @@
   {
     "id": "public-spare-key-future",
     "role": "predicate",
-    "text": "will be the spare key to a locked office",
-    "singularText": "will be the spare key to a locked office",
-    "pluralText": "will be spare keys to locked offices",
-    "personalSingularText": "will be the spare key to a locked office",
-    "secondPersonText": "will be the spare key to a locked office",
+    "text": "will be the spare key nobody can use",
+    "singularText": "will be the spare key nobody can use",
+    "pluralText": "will be spare keys nobody can use",
+    "personalSingularText": "will be the spare key nobody can use",
+    "secondPersonText": "will be the spare key nobody can use",
     "tense": "future",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -10450,11 +10447,11 @@
   {
     "id": "public-press-release-past",
     "role": "predicate",
-    "text": "was a press release looking for an event",
-    "singularText": "was a press release looking for an event",
-    "pluralText": "were press releases looking for events",
-    "personalSingularText": "was a press release looking for an event",
-    "secondPersonText": "were a press release looking for an event",
+    "text": "was a press release without an event",
+    "singularText": "was a press release without an event",
+    "pluralText": "were press releases without events",
+    "personalSingularText": "was a press release without an event",
+    "secondPersonText": "were a press release without an event",
     "tense": "past",
     "tenseFamily": "public-press-release",
     "tags": [
@@ -10487,11 +10484,11 @@
   {
     "id": "public-press-release-present",
     "role": "predicate",
-    "text": "is a press release looking for an event",
-    "singularText": "is a press release looking for an event",
-    "pluralText": "are press releases looking for events",
-    "personalSingularText": "is a press release looking for an event",
-    "secondPersonText": "are a press release looking for an event",
+    "text": "is a press release without an event",
+    "singularText": "is a press release without an event",
+    "pluralText": "are press releases without events",
+    "personalSingularText": "is a press release without an event",
+    "secondPersonText": "are a press release without an event",
     "tense": "present",
     "tenseFamily": "public-press-release",
     "tags": [
@@ -10524,11 +10521,11 @@
   {
     "id": "public-press-release-future",
     "role": "predicate",
-    "text": "will be a press release looking for an event",
-    "singularText": "will be a press release looking for an event",
-    "pluralText": "will be press releases looking for events",
-    "personalSingularText": "will be a press release looking for an event",
-    "secondPersonText": "will be a press release looking for an event",
+    "text": "will be a press release without an event",
+    "singularText": "will be a press release without an event",
+    "pluralText": "will be press releases without events",
+    "personalSingularText": "will be a press release without an event",
+    "secondPersonText": "will be a press release without an event",
     "tense": "future",
     "tenseFamily": "public-press-release",
     "tags": [
@@ -10561,11 +10558,11 @@
   {
     "id": "public-queue-supervisor-past",
     "role": "predicate",
-    "text": "was a queue that appointed its own supervisor",
-    "singularText": "was a queue that appointed its own supervisor",
-    "pluralText": "were queues that appointed their own supervisors",
-    "personalSingularText": "was a queue that appointed its own supervisor",
-    "secondPersonText": "were a queue that appointed its own supervisor",
+    "text": "was a queue with its own supervisor",
+    "singularText": "was a queue with its own supervisor",
+    "pluralText": "were queues with their own supervisors",
+    "personalSingularText": "was a queue with its own supervisor",
+    "secondPersonText": "were a queue with its own supervisor",
     "tense": "past",
     "tenseFamily": "public-queue-supervisor",
     "tags": [
@@ -10598,11 +10595,11 @@
   {
     "id": "public-queue-supervisor-present",
     "role": "predicate",
-    "text": "is a queue that appointed its own supervisor",
-    "singularText": "is a queue that appointed its own supervisor",
-    "pluralText": "are queues that appointed their own supervisors",
-    "personalSingularText": "is a queue that appointed its own supervisor",
-    "secondPersonText": "are a queue that appointed its own supervisor",
+    "text": "is a queue with its own supervisor",
+    "singularText": "is a queue with its own supervisor",
+    "pluralText": "are queues with their own supervisors",
+    "personalSingularText": "is a queue with its own supervisor",
+    "secondPersonText": "are a queue with its own supervisor",
     "tense": "present",
     "tenseFamily": "public-queue-supervisor",
     "tags": [
@@ -10635,11 +10632,11 @@
   {
     "id": "public-queue-supervisor-future",
     "role": "predicate",
-    "text": "will be a queue that appointed its own supervisor",
-    "singularText": "will be a queue that appointed its own supervisor",
-    "pluralText": "will be queues that appointed their own supervisors",
-    "personalSingularText": "will be a queue that appointed its own supervisor",
-    "secondPersonText": "will be a queue that appointed its own supervisor",
+    "text": "will be a queue with its own supervisor",
+    "singularText": "will be a queue with its own supervisor",
+    "pluralText": "will be queues with their own supervisors",
+    "personalSingularText": "will be a queue with its own supervisor",
+    "secondPersonText": "will be a queue with its own supervisor",
     "tense": "future",
     "tenseFamily": "public-queue-supervisor",
     "tags": [
@@ -10672,11 +10669,11 @@
   {
     "id": "public-shredder-box-past",
     "role": "predicate",
-    "text": "was a complaint box with a shredder underneath",
-    "singularText": "was a complaint box with a shredder underneath",
-    "pluralText": "were complaint boxes with shredders underneath",
-    "personalSingularText": "was a complaint box with a shredder underneath",
-    "secondPersonText": "were a complaint box with a shredder underneath",
+    "text": "was a complaint box attached to a trashcan",
+    "singularText": "was a complaint box attached to a trashcan",
+    "pluralText": "were complaint boxes attached to trashcans",
+    "personalSingularText": "was a complaint box attached to a trashcan",
+    "secondPersonText": "were a complaint box attached to a trashcan",
     "tense": "past",
     "tenseFamily": "public-shredder-box",
     "tags": [
@@ -10703,17 +10700,17 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional comparison with a complaint box with a shredder underneath. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
+      "notes": "Original fictional comparison with a complaint box attached to a trashcan. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
     }
   },
   {
     "id": "public-shredder-box-present",
     "role": "predicate",
-    "text": "is a complaint box with a shredder underneath",
-    "singularText": "is a complaint box with a shredder underneath",
-    "pluralText": "are complaint boxes with shredders underneath",
-    "personalSingularText": "is a complaint box with a shredder underneath",
-    "secondPersonText": "are a complaint box with a shredder underneath",
+    "text": "is a complaint box attached to a trashcan",
+    "singularText": "is a complaint box attached to a trashcan",
+    "pluralText": "are complaint boxes attached to trashcans",
+    "personalSingularText": "is a complaint box attached to a trashcan",
+    "secondPersonText": "are a complaint box attached to a trashcan",
     "tense": "present",
     "tenseFamily": "public-shredder-box",
     "tags": [
@@ -10740,17 +10737,17 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional comparison with a complaint box with a shredder underneath. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
+      "notes": "Original fictional comparison with a complaint box attached to a trashcan. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
     }
   },
   {
     "id": "public-shredder-box-future",
     "role": "predicate",
-    "text": "will be a complaint box with a shredder underneath",
-    "singularText": "will be a complaint box with a shredder underneath",
-    "pluralText": "will be complaint boxes with shredders underneath",
-    "personalSingularText": "will be a complaint box with a shredder underneath",
-    "secondPersonText": "will be a complaint box with a shredder underneath",
+    "text": "will be a complaint box attached to a trashcan",
+    "singularText": "will be a complaint box attached to a trashcan",
+    "pluralText": "will be complaint boxes attached to trashcans",
+    "personalSingularText": "will be a complaint box attached to a trashcan",
+    "secondPersonText": "will be a complaint box attached to a trashcan",
     "tense": "future",
     "tenseFamily": "public-shredder-box",
     "tags": [
@@ -10777,7 +10774,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional comparison with a complaint box with a shredder underneath. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
+      "notes": "Original fictional comparison with a complaint box attached to a trashcan. It concerns accountability. Complete predicate, plural complement, and singular second-person complement reviewed."
     }
   },
   {
@@ -10859,11 +10856,11 @@
   {
     "id": "public-ribbon-road-future",
     "role": "predicate",
-    "text": "will be a ribbon waiting for a road",
-    "singularText": "will be a ribbon waiting for a road",
-    "pluralText": "will be ribbons waiting for roads",
-    "personalSingularText": "will be a ribbon waiting for a road",
-    "secondPersonText": "will be a ribbon waiting for a road",
+    "text": "will be a ribbon awaiting a road",
+    "singularText": "will be a ribbon awaiting a road",
+    "pluralText": "will be ribbons awaiting roads",
+    "personalSingularText": "will be a ribbon awaiting a road",
+    "secondPersonText": "will be a ribbon awaiting a road",
     "tense": "future",
     "tenseFamily": "public-ribbon-road",
     "tags": [
@@ -10897,11 +10894,11 @@
   {
     "id": "public-absent-minutes-past",
     "role": "predicate",
-    "text": "was the minutes of a meeting nobody attended",
-    "singularText": "was the minutes of a meeting nobody attended",
-    "pluralText": "were the minutes of meetings nobody attended",
-    "personalSingularText": "was the minutes of a meeting nobody attended",
-    "secondPersonText": "were the minutes of a meeting nobody attended",
+    "text": "was the minutes of an empty meeting",
+    "singularText": "was the minutes of an empty meeting",
+    "pluralText": "were the minutes of empty meetings",
+    "personalSingularText": "was the minutes of an empty meeting",
+    "secondPersonText": "were the minutes of an empty meeting",
     "tense": "past",
     "tenseFamily": "public-absent-minutes",
     "tags": [
@@ -10934,11 +10931,11 @@
   {
     "id": "public-absent-minutes-present",
     "role": "predicate",
-    "text": "is the minutes of a meeting nobody attended",
-    "singularText": "is the minutes of a meeting nobody attended",
-    "pluralText": "are the minutes of meetings nobody attended",
-    "personalSingularText": "is the minutes of a meeting nobody attended",
-    "secondPersonText": "are the minutes of a meeting nobody attended",
+    "text": "is the minutes of an empty meeting",
+    "singularText": "is the minutes of an empty meeting",
+    "pluralText": "are the minutes of empty meetings",
+    "personalSingularText": "is the minutes of an empty meeting",
+    "secondPersonText": "are the minutes of an empty meeting",
     "tense": "present",
     "tenseFamily": "public-absent-minutes",
     "tags": [
@@ -10971,11 +10968,11 @@
   {
     "id": "public-absent-minutes-future",
     "role": "predicate",
-    "text": "will be the minutes of a meeting nobody attended",
-    "singularText": "will be the minutes of a meeting nobody attended",
-    "pluralText": "will be the minutes of meetings nobody attended",
-    "personalSingularText": "will be the minutes of a meeting nobody attended",
-    "secondPersonText": "will be the minutes of a meeting nobody attended",
+    "text": "will be the minutes of an empty meeting",
+    "singularText": "will be the minutes of an empty meeting",
+    "pluralText": "will be the minutes of empty meetings",
+    "personalSingularText": "will be the minutes of an empty meeting",
+    "secondPersonText": "will be the minutes of an empty meeting",
     "tense": "future",
     "tenseFamily": "public-absent-minutes",
     "tags": [
@@ -11008,11 +11005,11 @@
   {
     "id": "public-fact-check-past",
     "role": "predicate",
-    "text": "was a fact check with the conclusion removed",
-    "singularText": "was a fact check with the conclusion removed",
-    "pluralText": "were fact checks with the conclusions removed",
-    "personalSingularText": "was a fact check with the conclusion removed",
-    "secondPersonText": "were a fact check with the conclusion removed",
+    "text": "was a fact check without a conclusion",
+    "singularText": "was a fact check without a conclusion",
+    "pluralText": "were fact checks without conclusions",
+    "personalSingularText": "was a fact check without a conclusion",
+    "secondPersonText": "were a fact check without a conclusion",
     "tense": "past",
     "tenseFamily": "public-fact-check",
     "tags": [
@@ -11046,11 +11043,11 @@
   {
     "id": "public-fact-check-present",
     "role": "predicate",
-    "text": "is a fact check with the conclusion removed",
-    "singularText": "is a fact check with the conclusion removed",
-    "pluralText": "are fact checks with the conclusions removed",
-    "personalSingularText": "is a fact check with the conclusion removed",
-    "secondPersonText": "are a fact check with the conclusion removed",
+    "text": "is a fact check without a conclusion",
+    "singularText": "is a fact check without a conclusion",
+    "pluralText": "are fact checks without conclusions",
+    "personalSingularText": "is a fact check without a conclusion",
+    "secondPersonText": "are a fact check without a conclusion",
     "tense": "present",
     "tenseFamily": "public-fact-check",
     "tags": [
@@ -11084,11 +11081,11 @@
   {
     "id": "public-fact-check-future",
     "role": "predicate",
-    "text": "will be a fact check with the conclusion removed",
-    "singularText": "will be a fact check with the conclusion removed",
-    "pluralText": "will be fact checks with the conclusions removed",
-    "personalSingularText": "will be a fact check with the conclusion removed",
-    "secondPersonText": "will be a fact check with the conclusion removed",
+    "text": "will be a fact check without a conclusion",
+    "singularText": "will be a fact check without a conclusion",
+    "pluralText": "will be fact checks without conclusions",
+    "personalSingularText": "will be a fact check without a conclusion",
+    "secondPersonText": "will be a fact check without a conclusion",
     "tense": "future",
     "tenseFamily": "public-fact-check",
     "tags": [
@@ -11122,11 +11119,11 @@
   {
     "id": "public-locked-consultation-past",
     "role": "predicate",
-    "text": "was a public consultation behind a locked door",
-    "singularText": "was a public consultation behind a locked door",
+    "text": "was a public consultation behind locked doors",
+    "singularText": "was a public consultation behind locked doors",
     "pluralText": "were public consultations behind locked doors",
-    "personalSingularText": "was a public consultation behind a locked door",
-    "secondPersonText": "were a public consultation behind a locked door",
+    "personalSingularText": "was a public consultation behind locked doors",
+    "secondPersonText": "were a public consultation behind locked doors",
     "tense": "past",
     "tenseFamily": "public-locked-consultation",
     "tags": [
@@ -11160,11 +11157,11 @@
   {
     "id": "public-locked-consultation-present",
     "role": "predicate",
-    "text": "is a public consultation behind a locked door",
-    "singularText": "is a public consultation behind a locked door",
+    "text": "is a public consultation behind locked doors",
+    "singularText": "is a public consultation behind locked doors",
     "pluralText": "are public consultations behind locked doors",
-    "personalSingularText": "is a public consultation behind a locked door",
-    "secondPersonText": "are a public consultation behind a locked door",
+    "personalSingularText": "is a public consultation behind locked doors",
+    "secondPersonText": "are a public consultation behind locked doors",
     "tense": "present",
     "tenseFamily": "public-locked-consultation",
     "tags": [
@@ -11198,11 +11195,11 @@
   {
     "id": "public-locked-consultation-future",
     "role": "predicate",
-    "text": "will be a public consultation behind a locked door",
-    "singularText": "will be a public consultation behind a locked door",
+    "text": "will be a public consultation behind locked doors",
+    "singularText": "will be a public consultation behind locked doors",
     "pluralText": "will be public consultations behind locked doors",
-    "personalSingularText": "will be a public consultation behind a locked door",
-    "secondPersonText": "will be a public consultation behind a locked door",
+    "personalSingularText": "will be a public consultation behind locked doors",
+    "secondPersonText": "will be a public consultation behind locked doors",
     "tense": "future",
     "tenseFamily": "public-locked-consultation",
     "tags": [
@@ -11236,7 +11233,7 @@
   {
     "id": "public-with-the-delivery-date-hidden-under-a-gold-sticker",
     "role": "modifier",
-    "text": "with the delivery date hidden under a gold sticker",
+    "text": "with the delivery date under a sticker",
     "tags": [
       "delivery",
       "transparency"
@@ -11252,7 +11249,7 @@
   {
     "id": "public-at-a-public-hearing-held-inside-a-private-lift",
     "role": "modifier",
-    "text": "at a public hearing held inside a private lift",
+    "text": "at a hearing inside a private lift",
     "tags": [
       "transparency",
       "elitism"
@@ -11268,7 +11265,7 @@
   {
     "id": "public-on-the-authority-of-an-unsigned-expense-claim",
     "role": "modifier",
-    "text": "on the authority of an unsigned expense claim",
+    "text": "on the authority of an unsigned claim",
     "tags": [
       "evidence",
       "spending"
@@ -11299,7 +11296,7 @@
   {
     "id": "public-with-the-maintenance-budget-spent-on-the-opening-banner",
     "role": "modifier",
-    "text": "with the maintenance budget spent on the opening banner",
+    "text": "with the maintenance budget on the banner",
     "tags": [
       "maintenance",
       "spending"
@@ -11345,7 +11342,7 @@
   {
     "id": "public-and-even-the-rubber-stamp-wants-a-second-opinion",
     "role": "ending",
-    "text": "and even the rubber stamp wants a second opinion.",
+    "text": "and the rubber stamp wants a second opinion.",
     "tags": [
       "competence"
     ],
@@ -11355,7 +11352,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional punchline: and even the rubber stamp wants a second opinion. It targets competence rather than an identifiable person. It follows a complete clause and has a terminal full stop."
+      "notes": "Original fictional punchline: and the rubber stamp wants a second opinion. It targets competence rather than an identifiable person. It follows a complete clause and has a terminal full stop."
     }
   },
   {
@@ -12230,7 +12227,7 @@
   {
     "id": "transition-era-television-studio-a-velvet-backdrop-hiding-the-old-office-sign",
     "role": "noun",
-    "text": "a velvet backdrop hiding the old office sign",
+    "text": "a velvet backdrop over the old sign",
     "tags": [
       "legacy",
       "credibility"
@@ -12251,7 +12248,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a velvet backdrop hiding the old office sign. The joke concerns legacy and credibility; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a velvet backdrop over the old sign. The joke concerns legacy and credibility; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -12284,7 +12281,7 @@
   {
     "id": "transition-era-television-studio-a-camera-crane-older-than-the-new-republic",
     "role": "noun",
-    "text": "a camera crane older than the new republic",
+    "text": "a camera crane older than the republic",
     "tags": [
       "legacy",
       "obsolete"
@@ -12689,11 +12686,11 @@
   {
     "id": "transition-era-television-studio-comparison-past",
     "role": "predicate",
-    "text": "was a rerun dressed as a new beginning",
-    "singularText": "was a rerun dressed as a new beginning",
-    "pluralText": "were reruns dressed as new beginnings",
-    "personalSingularText": "was a rerun dressed as a new beginning",
-    "secondPersonText": "were a rerun dressed as a new beginning",
+    "text": "was a rerun sold as new",
+    "singularText": "was a rerun sold as new",
+    "pluralText": "were reruns sold as new",
+    "personalSingularText": "was a rerun sold as new",
+    "secondPersonText": "were a rerun sold as new",
     "tense": "past",
     "tenseFamily": "transition-era-television-studio-comparison",
     "tags": [
@@ -12730,11 +12727,11 @@
   {
     "id": "transition-era-television-studio-comparison-present",
     "role": "predicate",
-    "text": "is a rerun dressed as a new beginning",
-    "singularText": "is a rerun dressed as a new beginning",
-    "pluralText": "are reruns dressed as new beginnings",
-    "personalSingularText": "is a rerun dressed as a new beginning",
-    "secondPersonText": "are a rerun dressed as a new beginning",
+    "text": "is a rerun sold as new",
+    "singularText": "is a rerun sold as new",
+    "pluralText": "are reruns sold as new",
+    "personalSingularText": "is a rerun sold as new",
+    "secondPersonText": "are a rerun sold as new",
     "tense": "present",
     "tenseFamily": "transition-era-television-studio-comparison",
     "tags": [
@@ -12771,11 +12768,11 @@
   {
     "id": "transition-era-television-studio-comparison-future",
     "role": "predicate",
-    "text": "will be a rerun dressed as a new beginning",
-    "singularText": "will be a rerun dressed as a new beginning",
-    "pluralText": "will be reruns dressed as new beginnings",
-    "personalSingularText": "will be a rerun dressed as a new beginning",
-    "secondPersonText": "will be a rerun dressed as a new beginning",
+    "text": "will be a rerun sold as new",
+    "singularText": "will be a rerun sold as new",
+    "pluralText": "will be reruns sold as new",
+    "personalSingularText": "will be a rerun sold as new",
+    "secondPersonText": "will be a rerun sold as new",
     "tense": "future",
     "tenseFamily": "transition-era-television-studio-comparison",
     "tags": [
@@ -12812,7 +12809,7 @@
   {
     "id": "transition-era-television-studio-beneath-a-banner-left-over-from-the-previous-beginning",
     "role": "modifier",
-    "text": "beneath a banner left over from the previous beginning",
+    "text": "beneath a banner from the last beginning",
     "tags": [
       "legacy",
       "credibility"
@@ -12831,7 +12828,7 @@
   {
     "id": "transition-era-television-studio-with-the-historic-footage-conveniently-out-of-focus",
     "role": "modifier",
-    "text": "with the historic footage conveniently out of focus",
+    "text": "with the historic footage out of focus",
     "tags": [
       "legacy",
       "credibility"
@@ -12851,7 +12848,7 @@
     "id": "transition-era-television-studio-yet-after-the-emergency-bulletin",
     "role": "conjunction",
     "connectorKind": "yet",
-    "text": "yet, after the emergency bulletin,",
+    "text": "yet, after the bulletin,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [
@@ -13021,7 +13018,7 @@
   {
     "id": "modern-debate-studio-a-polling-sample-drawn-from-the-green-room",
     "role": "noun",
-    "text": "a polling sample drawn from the green room",
+    "text": "a polling sample from the green room",
     "tags": [
       "evidence",
       "credibility"
@@ -13042,7 +13039,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: a polling sample drawn from the green room. The joke concerns evidence and credibility; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a polling sample from the green room. The joke concerns evidence and credibility; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -13126,7 +13123,7 @@
   {
     "id": "modern-debate-studio-a-debate-rule-printed-only-on-the-reverse-side",
     "role": "noun",
-    "text": "a debate rule printed only on the reverse side",
+    "text": "a debate rule printed on the back",
     "tags": [
       "transparency"
     ],
@@ -13445,11 +13442,11 @@
   {
     "id": "modern-debate-studio-comparison-past",
     "role": "predicate",
-    "text": "was a talking point searching for its question",
-    "singularText": "was a talking point searching for its question",
-    "pluralText": "were talking points searching for their questions",
-    "personalSingularText": "was a talking point searching for its question",
-    "secondPersonText": "were a talking point searching for its question",
+    "text": "was a talking point without a question",
+    "singularText": "was a talking point without a question",
+    "pluralText": "were talking points without questions",
+    "personalSingularText": "was a talking point without a question",
+    "secondPersonText": "were a talking point without a question",
     "tense": "past",
     "tenseFamily": "modern-debate-studio-comparison",
     "tags": [
@@ -13486,11 +13483,11 @@
   {
     "id": "modern-debate-studio-comparison-present",
     "role": "predicate",
-    "text": "is a talking point searching for its question",
-    "singularText": "is a talking point searching for its question",
-    "pluralText": "are talking points searching for their questions",
-    "personalSingularText": "is a talking point searching for its question",
-    "secondPersonText": "are a talking point searching for its question",
+    "text": "is a talking point without a question",
+    "singularText": "is a talking point without a question",
+    "pluralText": "are talking points without questions",
+    "personalSingularText": "is a talking point without a question",
+    "secondPersonText": "are a talking point without a question",
     "tense": "present",
     "tenseFamily": "modern-debate-studio-comparison",
     "tags": [
@@ -13527,11 +13524,11 @@
   {
     "id": "modern-debate-studio-comparison-future",
     "role": "predicate",
-    "text": "will be a talking point searching for its question",
-    "singularText": "will be a talking point searching for its question",
-    "pluralText": "will be talking points searching for their questions",
-    "personalSingularText": "will be a talking point searching for its question",
-    "secondPersonText": "will be a talking point searching for its question",
+    "text": "will be a talking point without a question",
+    "singularText": "will be a talking point without a question",
+    "pluralText": "will be talking points without questions",
+    "personalSingularText": "will be a talking point without a question",
+    "secondPersonText": "will be a talking point without a question",
     "tense": "future",
     "tenseFamily": "modern-debate-studio-comparison",
     "tags": [
@@ -13587,7 +13584,7 @@
   {
     "id": "modern-debate-studio-while-the-fact-checker-waits-for-a-microphone",
     "role": "modifier",
-    "text": "while the fact checker waits for a microphone",
+    "text": "while the fact checker queues",
     "tags": [
       "evidence",
       "credibility"
@@ -13607,7 +13604,7 @@
     "id": "modern-debate-studio-but-after-the-closing-statement",
     "role": "conjunction",
     "connectorKind": "but",
-    "text": "but, after the closing statement,",
+    "text": "but, after the statement,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [
@@ -13670,7 +13667,7 @@
   {
     "id": "county-council-ballroom-a-county-contract-folded-into-a-place-card",
     "role": "noun",
-    "text": "a county contract folded into a place card",
+    "text": "a county contract folded as a place card",
     "tags": [
       "procurement"
     ],
@@ -13723,7 +13720,7 @@
   {
     "id": "county-council-ballroom-a-development-grant-spent-on-the-launch-buffet",
     "role": "noun",
-    "text": "a development grant spent on the launch buffet",
+    "text": "a grant spent on the launch buffet",
     "tags": [
       "spending",
       "delivery"
@@ -13831,7 +13828,7 @@
   {
     "id": "county-council-ballroom-a-road-map-whose-routes-all-end-at-the-contractor",
     "role": "noun",
-    "text": "a road map that ends at the contractor",
+    "text": "a road map ending at the contractor",
     "tags": [
       "procurement",
       "infrastructure"
@@ -14202,11 +14199,11 @@
   {
     "id": "county-council-ballroom-comparison-past",
     "role": "predicate",
-    "text": "was a construction site waiting for the caterer",
-    "singularText": "was a construction site waiting for the caterer",
-    "pluralText": "were construction sites waiting for the caterer",
-    "personalSingularText": "was a construction site waiting for the caterer",
-    "secondPersonText": "were a construction site waiting for the caterer",
+    "text": "was a construction site waiting for catering",
+    "singularText": "was a construction site waiting for catering",
+    "pluralText": "were construction sites waiting for catering",
+    "personalSingularText": "was a construction site waiting for catering",
+    "secondPersonText": "were a construction site waiting for catering",
     "tense": "past",
     "tenseFamily": "county-council-ballroom-comparison",
     "tags": [
@@ -14243,11 +14240,11 @@
   {
     "id": "county-council-ballroom-comparison-present",
     "role": "predicate",
-    "text": "is a construction site waiting for the caterer",
-    "singularText": "is a construction site waiting for the caterer",
-    "pluralText": "are construction sites waiting for the caterer",
-    "personalSingularText": "is a construction site waiting for the caterer",
-    "secondPersonText": "are a construction site waiting for the caterer",
+    "text": "is a construction site waiting for catering",
+    "singularText": "is a construction site waiting for catering",
+    "pluralText": "are construction sites waiting for catering",
+    "personalSingularText": "is a construction site waiting for catering",
+    "secondPersonText": "are a construction site waiting for catering",
     "tense": "present",
     "tenseFamily": "county-council-ballroom-comparison",
     "tags": [
@@ -14284,11 +14281,11 @@
   {
     "id": "county-council-ballroom-comparison-future",
     "role": "predicate",
-    "text": "will be a construction site waiting for the caterer",
-    "singularText": "will be a construction site waiting for the caterer",
-    "pluralText": "will be construction sites waiting for the caterer",
-    "personalSingularText": "will be a construction site waiting for the caterer",
-    "secondPersonText": "will be a construction site waiting for the caterer",
+    "text": "will be a construction site waiting for catering",
+    "singularText": "will be a construction site waiting for catering",
+    "pluralText": "will be construction sites waiting for catering",
+    "personalSingularText": "will be a construction site waiting for catering",
+    "secondPersonText": "will be a construction site waiting for catering",
     "tense": "future",
     "tenseFamily": "county-council-ballroom-comparison",
     "tags": [
@@ -14325,7 +14322,7 @@
   {
     "id": "county-council-ballroom-between-the-procurement-toast-and-the-missing-road",
     "role": "modifier",
-    "text": "between the procurement toast and the missing road",
+    "text": "between the toast and the missing road",
     "tags": [
       "procurement",
       "infrastructure"
@@ -14344,7 +14341,7 @@
   {
     "id": "county-council-ballroom-with-the-maintenance-money-folded-into-the-napkins",
     "role": "modifier",
-    "text": "with the maintenance money folded into the napkins",
+    "text": "with the maintenance money in the napkins",
     "tags": [
       "maintenance",
       "spending"
@@ -14364,7 +14361,7 @@
     "id": "county-council-ballroom-yet-between-the-council-toasts",
     "role": "conjunction",
     "connectorKind": "yet",
-    "text": "yet, between the council toasts,",
+    "text": "yet, between the toasts,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [
@@ -14453,7 +14450,7 @@
   {
     "id": "midnight-call-in-studio-the-hidden-tape-advertised-before-it-was-found",
     "role": "noun",
-    "text": "the hidden tape advertised before it was found",
+    "text": "the hidden tape advertised in advance",
     "tags": [
       "ratings",
       "sources"
@@ -14474,7 +14471,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the hidden tape advertised before it was found. The joke concerns ratings and sources; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: the hidden tape advertised in advance. The joke concerns ratings and sources; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -14507,7 +14504,7 @@
   {
     "id": "midnight-call-in-studio-the-midnight-hotline-to-the-empty-green-room",
     "role": "noun",
-    "text": "the midnight hotline to the empty green room",
+    "text": "the midnight hotline to an empty room",
     "tags": [
       "sources"
     ],
@@ -14586,7 +14583,7 @@
   {
     "id": "midnight-call-in-studio-a-telephone-lead-longer-than-the-evidence-trail",
     "role": "noun",
-    "text": "a telephone lead longer than the evidence trail",
+    "text": "a phone lead longer than the evidence",
     "tags": [
       "evidence",
       "sources"
@@ -15042,11 +15039,11 @@
   {
     "id": "midnight-call-in-studio-comparison-future",
     "role": "predicate",
-    "text": "will be an exclusive scheduled for every midnight",
-    "singularText": "will be an exclusive scheduled for every midnight",
-    "pluralText": "will be exclusives scheduled for every midnight",
-    "personalSingularText": "will be an exclusive scheduled for every midnight",
-    "secondPersonText": "will be an exclusive scheduled for every midnight",
+    "text": "will be an exclusive at midnight",
+    "singularText": "will be an exclusive at midnight",
+    "pluralText": "will be exclusives at midnight",
+    "personalSingularText": "will be an exclusive at midnight",
+    "secondPersonText": "will be an exclusive at midnight",
     "tense": "future",
     "tenseFamily": "midnight-call-in-studio-comparison",
     "tags": [
@@ -15083,7 +15080,7 @@
   {
     "id": "midnight-call-in-studio-with-the-anonymous-source-waiting-for-a-studio-pass",
     "role": "modifier",
-    "text": "with the anonymous source waiting for a studio pass",
+    "text": "with the source waiting for a pass",
     "tags": [
       "sources"
     ],
@@ -15101,7 +15098,7 @@
   {
     "id": "midnight-call-in-studio-during-an-emergency-extension-of-the-commercial-break",
     "role": "modifier",
-    "text": "during an emergency extension of the commercial break",
+    "text": "during an emergency extension of the break",
     "tags": [
       "ratings",
       "commercialism"
@@ -15344,7 +15341,7 @@
   {
     "id": "palace-press-hall-a-press-pass-that-expires-before-the-question",
     "role": "noun",
-    "text": "a press pass that expires before the question",
+    "text": "a press pass that expires before questions",
     "tags": [
       "accountability"
     ],
@@ -15718,11 +15715,11 @@
   {
     "id": "palace-press-hall-comparison-past",
     "role": "predicate",
-    "text": "was a solemn pause awaiting an official position",
-    "singularText": "was a solemn pause awaiting an official position",
-    "pluralText": "were solemn pauses awaiting official positions",
-    "personalSingularText": "was a solemn pause awaiting an official position",
-    "secondPersonText": "were a solemn pause awaiting an official position",
+    "text": "was a solemn pause awaiting a statement",
+    "singularText": "was a solemn pause awaiting a statement",
+    "pluralText": "were solemn pauses awaiting statements",
+    "personalSingularText": "was a solemn pause awaiting a statement",
+    "secondPersonText": "were a solemn pause awaiting a statement",
     "tense": "past",
     "tenseFamily": "palace-press-hall-comparison",
     "tags": [
@@ -15759,11 +15756,11 @@
   {
     "id": "palace-press-hall-comparison-present",
     "role": "predicate",
-    "text": "is a solemn pause awaiting an official position",
-    "singularText": "is a solemn pause awaiting an official position",
-    "pluralText": "are solemn pauses awaiting official positions",
-    "personalSingularText": "is a solemn pause awaiting an official position",
-    "secondPersonText": "are a solemn pause awaiting an official position",
+    "text": "is a solemn pause awaiting a statement",
+    "singularText": "is a solemn pause awaiting a statement",
+    "pluralText": "are solemn pauses awaiting statements",
+    "personalSingularText": "is a solemn pause awaiting a statement",
+    "secondPersonText": "are a solemn pause awaiting a statement",
     "tense": "present",
     "tenseFamily": "palace-press-hall-comparison",
     "tags": [
@@ -15800,11 +15797,11 @@
   {
     "id": "palace-press-hall-comparison-future",
     "role": "predicate",
-    "text": "will be a solemn pause awaiting an official position",
-    "singularText": "will be a solemn pause awaiting an official position",
-    "pluralText": "will be solemn pauses awaiting official positions",
-    "personalSingularText": "will be a solemn pause awaiting an official position",
-    "secondPersonText": "will be a solemn pause awaiting an official position",
+    "text": "will be a solemn pause awaiting a statement",
+    "singularText": "will be a solemn pause awaiting a statement",
+    "pluralText": "will be solemn pauses awaiting statements",
+    "personalSingularText": "will be a solemn pause awaiting a statement",
+    "secondPersonText": "will be a solemn pause awaiting a statement",
     "tense": "future",
     "tenseFamily": "palace-press-hall-comparison",
     "tags": [
@@ -15841,7 +15838,7 @@
   {
     "id": "palace-press-hall-after-the-protocol-officer-has-removed-the-question",
     "role": "modifier",
-    "text": "after the protocol officer has removed the question",
+    "text": "after the protocol officer removes the question",
     "tags": [
       "accountability",
       "decorum"
@@ -15880,7 +15877,7 @@
     "id": "palace-press-hall-yet-after-the-palace-statement",
     "role": "conjunction",
     "connectorKind": "yet",
-    "text": "yet, after the palace statement,",
+    "text": "yet, after the statement,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [
@@ -15916,7 +15913,7 @@
   {
     "id": "influencer-campaign-livestream-the-ancient-wisdom-sold-with-a-discount-code",
     "role": "noun",
-    "text": "the ancient wisdom sold with a discount code",
+    "text": "ancient wisdom with a discount code",
     "tags": [
       "authenticity",
       "commercialism"
@@ -15943,7 +15940,7 @@
   {
     "id": "influencer-campaign-livestream-a-sovereign-donation-button-in-a-rented-studio",
     "role": "noun",
-    "text": "a sovereign donation button in a rented studio",
+    "text": "a donation button in a rented studio",
     "tags": [
       "authenticity",
       "commercialism"
@@ -16023,7 +16020,7 @@
   {
     "id": "influencer-campaign-livestream-the-shadow-ban-appeal-pinned-above-a-million-views",
     "role": "noun",
-    "text": "the shadow-ban appeal pinned above a million views",
+    "text": "a shadow-ban appeal above a million views",
     "tags": [
       "credibility"
     ],
@@ -16076,7 +16073,7 @@
   {
     "id": "influencer-campaign-livestream-the-viral-clip-with-its-question-edited-out",
     "role": "noun",
-    "text": "the viral clip with its question edited out",
+    "text": "the viral clip with the question removed",
     "tags": [
       "evidence",
       "authenticity"
@@ -16097,7 +16094,7 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the viral clip with its question edited out. The joke concerns evidence and authenticity; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: the viral clip with the question removed. The joke concerns evidence and authenticity; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
@@ -16129,7 +16126,7 @@
   {
     "id": "influencer-campaign-livestream-the-livestream-poll-answered-by-the-merchandise-bot",
     "role": "noun",
-    "text": "the livestream poll answered by the merchandise bot",
+    "text": "a livestream poll answered by a bot",
     "tags": [
       "evidence",
       "authenticity"
@@ -16150,13 +16147,13 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional institutional image: the livestream poll answered by the merchandise bot. The joke concerns evidence and authenticity; no named person or party. Singular noun and English context reviewed."
+      "notes": "Original fictional institutional image: a livestream poll answered by a bot. The joke concerns evidence and authenticity; no named person or party. Singular noun and English context reviewed."
     }
   },
   {
     "id": "influencer-campaign-livestream-a-historic-revelation-interrupted-by-a-sponsor-alert",
     "role": "noun",
-    "text": "a historic revelation interrupted by a sponsor alert",
+    "text": "a revelation interrupted by a sponsor",
     "tags": [
       "authenticity",
       "commercialism"
@@ -16432,9 +16429,9 @@
   {
     "id": "influencer-campaign-livestream-relation-2-future",
     "role": "verb",
-    "text": "will cite a podcast episode as proof of",
-    "singularText": "will cite a podcast episode as proof of",
-    "pluralText": "will cite a podcast episode as proof of",
+    "text": "will cite a podcast as proof of",
+    "singularText": "will cite a podcast as proof of",
+    "pluralText": "will cite a podcast as proof of",
     "tense": "future",
     "tenseFamily": "influencer-campaign-livestream-relation-2",
     "tags": [
@@ -16471,17 +16468,17 @@
       "state": "approved",
       "originality": "original",
       "safetyFlags": [],
-      "notes": "Original fictional action: will cite a podcast episode as proof of. It requires a noun object. Its future and plural forms are reviewed; visible meaning supports evidence and authenticity."
+      "notes": "Original fictional action: will cite a podcast as proof of. It requires a noun object. Its future and plural forms are reviewed; visible meaning supports evidence and authenticity."
     }
   },
   {
     "id": "influencer-campaign-livestream-comparison-past",
     "role": "predicate",
-    "text": "was a revelation waiting for the donation alert",
-    "singularText": "was a revelation waiting for the donation alert",
-    "pluralText": "were revelations waiting for the donation alert",
-    "personalSingularText": "was a revelation waiting for the donation alert",
-    "secondPersonText": "were a revelation waiting for the donation alert",
+    "text": "was a revelation waiting for donations",
+    "singularText": "was a revelation waiting for donations",
+    "pluralText": "were revelations waiting for donations",
+    "personalSingularText": "was a revelation waiting for donations",
+    "secondPersonText": "were a revelation waiting for donations",
     "tense": "past",
     "tenseFamily": "influencer-campaign-livestream-comparison",
     "tags": [
@@ -16518,11 +16515,11 @@
   {
     "id": "influencer-campaign-livestream-comparison-present",
     "role": "predicate",
-    "text": "is a revelation waiting for the donation alert",
-    "singularText": "is a revelation waiting for the donation alert",
-    "pluralText": "are revelations waiting for the donation alert",
-    "personalSingularText": "is a revelation waiting for the donation alert",
-    "secondPersonText": "are a revelation waiting for the donation alert",
+    "text": "is a revelation waiting for donations",
+    "singularText": "is a revelation waiting for donations",
+    "pluralText": "are revelations waiting for donations",
+    "personalSingularText": "is a revelation waiting for donations",
+    "secondPersonText": "are a revelation waiting for donations",
     "tense": "present",
     "tenseFamily": "influencer-campaign-livestream-comparison",
     "tags": [
@@ -16559,11 +16556,11 @@
   {
     "id": "influencer-campaign-livestream-comparison-future",
     "role": "predicate",
-    "text": "will be a revelation waiting for the donation alert",
-    "singularText": "will be a revelation waiting for the donation alert",
-    "pluralText": "will be revelations waiting for the donation alert",
-    "personalSingularText": "will be a revelation waiting for the donation alert",
-    "secondPersonText": "will be a revelation waiting for the donation alert",
+    "text": "will be a revelation waiting for donations",
+    "singularText": "will be a revelation waiting for donations",
+    "pluralText": "will be revelations waiting for donations",
+    "personalSingularText": "will be a revelation waiting for donations",
+    "secondPersonText": "will be a revelation waiting for donations",
     "tense": "future",
     "tenseFamily": "influencer-campaign-livestream-comparison",
     "tags": [
@@ -16600,7 +16597,7 @@
   {
     "id": "influencer-campaign-livestream-after-editing-the-follow-up-question-out-of-the-clip",
     "role": "modifier",
-    "text": "after editing the follow-up question out of the clip",
+    "text": "after cutting the question from the clip",
     "tags": [
       "evidence",
       "authenticity"
@@ -16619,7 +16616,7 @@
   {
     "id": "influencer-campaign-livestream-under-a-ring-light-marketed-as-ancient-energy",
     "role": "modifier",
-    "text": "under a ring light marketed as ancient energy",
+    "text": "under a ring light sold as ancient",
     "tags": [
       "evidence",
       "authenticity"
@@ -16639,7 +16636,7 @@
     "id": "influencer-campaign-livestream-but-after-the-sponsor-alert",
     "role": "conjunction",
     "connectorKind": "but",
-    "text": "but, after the sponsor alert,",
+    "text": "but, after the alert,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [

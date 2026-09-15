@@ -48,7 +48,7 @@ uses zero Music volume and Music On restores the last non-zero Music volume in
 the page session, or the 10 percent default when no such value exists. Voices
 uses Speech enabled. These changes apply immediately and persist through the
 same settings document. Phrase color coding remains session-only because it is
-not in the strict version 5 document.
+not in the strict settings document.
 
 Do not expose a Speech voice dropdown. The Speech voice URI field
 still round-trips so existing settings remain valid. It has no visible control
@@ -56,15 +56,13 @@ and does not override skin voice assignments.
 Milestone 024 owns voice selection and all audio
 and speech output.
 
-## Version 5 settings
+## Settings document
 
-Version 2 adds the independent `gpuVoices` preference to the shipped English
-version 1 source format. GPU voices and Speech enabled both default to true.
-Version 3 restores the default speech rate to 1.00 times.
-Version 4 adds the persisted `basePointsMultiplier` choice, defaulting to 3.
-Version 5 adds the persisted `tutorialMode` Boolean, defaulting to false.
-Milestone 029 owns future version 6, its independent `interfaceLocale` and
-`gameLocale` fields, and the migration from earlier versions through version 5.
+One settings document format exists at a time. Its `schemaVersion` is `1` and
+identifies the document shape. A field addition changes that shape and requires
+a new version, but no earlier document is migrated. GPU voices and Speech
+enabled both default to true. Milestone 029 owns the `interfaceLocale` and
+`gameLocale` fields and the next version they need.
 
 The title-only Speech group has a **GPU voices** checkbox. Its help text states
 that these are alternative local human voices, require a supported GPU, and
@@ -101,35 +99,19 @@ Do not add locale controls or a GPU model picker in this change.
 Display Speech rate with two decimal places, such as `1.00×`.
 Preserve explicit saved Speech enabled and GPU voices choices, including opt-outs.
 
-Settings are one strict document with `schemaVersion: 5`. Tutorial mode is the
+Settings are one strict document with `schemaVersion: 1`. Tutorial mode is the
 only persisted guidance preference. The product stores no tutorial progress,
 onboarding completion, or other hint state.
 
-Version 1 is the first shipped schema. Decode strict version 1 data by preserving
-the old fields, including the retired speech voice URI, then adding
-`gpuVoices: true` and setting `schemaVersion: 3`. Reject malformed source values
-and unknown source fields before accepting the migration. Version 2 retains its
-GPU preference, including an explicit opt-out. Fresh settings and version 1
-documents without a GPU preference use the enabled default. Migrating either source version changes a saved rate of 1.2 to
-1.00; other rates remain unchanged. Version 3 accepts an explicitly selected
-1.2 without resetting it on reload. Version 3 migrates to version 4 by adding
-`basePointsMultiplier: 3` without changing any existing preference. Versions 1
-and 2 pass through their existing migration before this addition. Reject a
-multiplier field in any source version before 4 because it was not part of
-that strict schema. Version 4 requires an integer choice from 1 through 5;
-missing, wrong-type, fractional, and out-of-range values are invalid.
-Versions 1 through 4 migrate to version 5 with `tutorialMode: false`. Version 4
-retains all preferences, including a saved speech rate of 1.2 and its multiplier.
-Reject `tutorialMode` in source versions 1 through 4 because it was not part of
-those strict schemas. Version 5 requires a Boolean tutorial value; missing and
-wrong-type values are invalid. Migration does not remove unknown source fields
-or replace malformed preferences with defaults.
+Every field is required and unknown fields are rejected, including a field that
+belongs to a different settings shape. Decode returns `invalid-data` at the
+offending field path for a missing, malformed, off-step, or out-of-range value.
+An integer `schemaVersion` other than `1` returns `unsupported-version` before
+field validation. A rejected document is never rewritten, repaired, or partially
+applied: the repository keeps its bytes, uses the defaults in memory, and
+replaces them only when the user next changes a setting.
 Keep the existing
-`grand-transition.settings.v1` storage key. Reading migrates in memory; the next
-explicit setting change writes normalized version 5 bytes to that key. Unit
-tests contain a literal shipped source fixture. Future schema changes must add
-a documented source fixture and stepwise migration. Malformed data returns `invalid-data`. An unknown
-version returns `unsupported-version`. Storage failures are
+`grand-transition.settings.v1` storage key. Storage failures are
 `storage-unavailable`, `storage-quota`, or `storage-security`.
 
 The exact fallback notice is `Settings storage is unavailable. Changes will not
@@ -139,11 +121,11 @@ in-memory adapter remains active for the browser session.
 
 ## Acceptance criteria
 
-- **AC-020-11:** Tutorial is unchecked in fresh settings and migrated versions 1
-  through 4. Both checkbox values persist and restore on reload. The control
+- **AC-020-11:** Tutorial is unchecked in fresh settings. Both checkbox values
+  persist and restore on reload. The control
   has its native accessible label and associated help. Codec tests cover a
-  literal version 4 source fixture, malformed and unknown historical fields,
-  preserved preferences, and strict version 5 validation. Browser tests cover
+  missing `tutorialMode`, an unknown field, preserved preferences, and strict
+  validation of the single document shape. Browser tests cover
   the default, enabling, disabling, and reload behavior.
 
 - **AC-020-10:** All five scoring choices persist and restore on reload. Each
@@ -198,10 +180,11 @@ Verify selected and unselected siblings with
 volume. Music On restores the last non-zero Music volume for the page session,
 or the 10 percent default. Pause Voices Off sets Speech enabled to false,
 cancels active narration, and suppresses later narration until Voices is On.
-Both controls persist through the version 5 settings document and retain their
+Both controls persist through the settings document and retain their
 selected state after a later Pause.
 
-**AC-020-09:** Version 1 migration preserves settings except the previous 1.2 rate and adds GPU
-voices on. Version 5 round-trips both speech checkbox values independently. GPU
+**AC-020-09:** A stored document with a current shape keeps every preference,
+including an explicitly saved 1.20 speech rate. Both speech checkbox values
+round-trip independently. GPU
 loading progress and Piper fallback are visible on the main menu; a stored GPU preference can
 be turned off even when speech or GPU support is unavailable.

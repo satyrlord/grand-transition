@@ -207,6 +207,6 @@ four-card pool. Existing identifiers and text remain stable. New cards belong
 only to this character's private pool. Public wording and editorial notes contain
 no film quotations, real-person references, or source attribution. Private
 research records the adaptation sources. The current catalog is English;
-Romanian adaptation remains in Milestone 029. Milestone 014 version 8 preserves
-the preceding replay contexts. `tests/unit/authored-phrase-grammar.test.ts`
+Romanian adaptation remains in Milestone 029. Milestone 014 owns the current
+replay document contract. `tests/unit/authored-phrase-grammar.test.ts`
 verifies ownership and complete constructions.

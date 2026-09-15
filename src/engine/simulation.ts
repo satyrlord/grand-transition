@@ -1,5 +1,9 @@
 import type { ContentCatalog } from '../content/content-catalog';
 import type { Phrase } from '../content/schemas';
+import {
+  basicScoringBalance,
+  type BasePointsMultiplier,
+} from '../content/basic-scoring-balance';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
 import type { DraftCardReference, DraftCommand } from './draft-actions';
 import {
@@ -18,7 +22,6 @@ import {
   normalizedJson,
   replayKind,
   replayMatch,
-  replayContextForVersion,
   replaySchemaVersion,
   type MatchLogDocument,
   type ReplayContext,
@@ -34,6 +37,7 @@ export type SimulationSetupOptions = Readonly<{
   sceneId?: string;
   pride?: readonly [number, number];
   charge?: readonly [number, number];
+  basePointsMultiplier?: BasePointsMultiplier;
 }>;
 
 export type SimulationOption = Readonly<{
@@ -135,6 +139,8 @@ export function createSimulationSetup(
     timerSeconds: 30,
     speechEnabled: false,
     privacyEnabled: true,
+    basePointsMultiplier:
+      options.basePointsMultiplier ?? basicScoringBalance.basePointsMultiplier,
   };
 }
 
@@ -251,26 +257,24 @@ export function simulateMatch(
 ): SimulatedMatch {
   const normalizedSeed = normalizeSeed(seed);
   const replay: ReplayDocument = {
-    schemaVersion: context.balance.version < 4 ? context.balance.version : replaySchemaVersion,
+    schemaVersion: replaySchemaVersion,
     kind: replayKind,
     seed: normalizedSeed,
-    setup: context.balance.version === 4
-      ? { ...setup, basePointsMultiplier: setup.basePointsMultiplier ?? context.balance.basePointsMultiplier }
-      : setup,
+    setup,
     commands: [],
   };
   let state = createReplayInitialState(replay, context);
   if (!state) {
     throw simulationFailure(normalizedSeed, 'The setup is invalid.');
   }
-  const simulationContext = replayContextForVersion(replay.schemaVersion, context);
   const engineContext: MatchEngineContext = {
-    phrases: simulationContext.catalog.phrases,
-    characters: simulationContext.catalog.characters,
-    locale: simulationContext.locale,
-    balance: context.balance.version === 4
-      ? { ...context.balance, basePointsMultiplier: replay.setup.basePointsMultiplier! }
-      : context.balance,
+    phrases: context.catalog.phrases,
+    characters: context.catalog.characters,
+    locale: context.locale,
+    balance: {
+      ...context.balance,
+      basePointsMultiplier: replay.setup.basePointsMultiplier,
+    },
   };
   const reducer = createMatchReducer(engineContext);
   const commands: ReplayDocument['commands'][number][] = [];

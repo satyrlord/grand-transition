@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance, scoringBalanceForMultiplier, legacyVersion3BasicScoringBalance } from '../../src/content/basic-scoring-balance';
+import { basicScoringBalance, scoringBalanceForMultiplier } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import {
   ceilDamage,
@@ -259,7 +259,7 @@ describe('Hollywood Roast clause scoring', () => {
     const ids = [...core, ...modifiers];
     expect(scoreBasicConstruction({
       analysis: analysis(ids), phrases: sampleContent.phrases,
-      defenderWeaknessTags: [], balance: legacyVersion3BasicScoringBalance,
+      defenderWeaknessTags: [], balance: { ...basicScoringBalance, modifierPoints: 0 },
     }).finalDamage).toBe(5);
   });
 
