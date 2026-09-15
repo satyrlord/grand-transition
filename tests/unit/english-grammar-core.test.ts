@@ -455,7 +455,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'ENDED',
         punctuation: '.',
         publicText:
-          'Your unanimous disagreement belongs in a history museum by emergency ordinance; even the calendar needs permission.',
+          'Your unanimous disagreement belongs in a history museum by emergency ordinance; even Tuesday needs approval.',
       },
     });
   });

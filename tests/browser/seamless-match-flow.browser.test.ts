@@ -40,7 +40,8 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
     'grand-transition-app',
   ) as GrandTransitionApp;
   await app.updateComplete;
-  await page.getByRole('button', { name: 'Multiplayer' }).click();  await lockInSetup();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const owner = app as unknown as { matchState: MatchState };
@@ -208,10 +209,10 @@ test.each([
   expect(match.snapshot?.roundReview).toBe(true);
   expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
   expect(match.snapshot?.sentenceText).toContain(
-    'I obey the rules. Your argument was expelled for impersonating a thought.',
+    'I obey the rules. Your argument impersonated a thought.',
   );
   expect(match.querySelector('.sentence-preview')?.textContent).toContain(
-    'I obey the rules. Your argument was expelled for impersonating a thought.',
+    'I obey the rules. Your argument impersonated a thought.',
   );
   expect(match.querySelector('.round-review-dialog')).toBeNull();
   expect(match.querySelector('.timer-fact')).toBeNull();
@@ -223,7 +224,7 @@ test.each([
   expect(match.presentation?.phase).toBe('total');
   expect(match.presentation?.speakerId).toBe('player-two');
   expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
-    /Comeback.*Your argument was expelled.*\+18/su,
+    /Comeback.*Your argument impersonated.*\+18/su,
   );
   const phase = match.presentation?.phase;
   await page.viewport(width, height);

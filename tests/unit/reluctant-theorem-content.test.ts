@@ -15,7 +15,7 @@ describe('The Reluctant Theorem authored constructions', () => {
       'You are pending proof while the roof leaks and reconstruction starts tomorrow, once tomorrow passes committee.'],
     ['your-voters', 'reluctant-theorem-pending-proof-past',
       'reluctant-theorem-forms-first',
-      'Your voters were pending proof while the roof leaked and the public counter serves forms while citizens queue outside.'],
+      'Your voters were pending proof while the roof leaked and the counter serves forms to the queue.'],
   ])('preserves agreement and a complete ending for %s', (subject, predicate, ending, expected) => {
     const result = englishGrammarAdapter.analyze({
       steps: [subject, predicate, ending].map((id) => ({

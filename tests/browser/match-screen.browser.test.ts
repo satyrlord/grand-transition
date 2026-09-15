@@ -74,7 +74,7 @@ test.each([
     await document.fonts.ready;
     const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
     const originalBounds = ledger.getBoundingClientRect();
-    const samples = [text, text + ' ' + text.slice(0, Math.ceil(text.length * 0.4)), Array(4).fill(text).join(' ')];
+    const samples = [text, `${text} ${text.slice(0, Math.ceil(text.length * 0.4))}`.trim(), Array(4).fill(text).join(' ')];
     for (const sentenceText of samples) {
       match.snapshot = { ...match.snapshot!, sentenceText };
       await match.updateComplete;
@@ -1496,7 +1496,8 @@ async function startMatch(
     const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
     scene.value = sceneId;
     scene.dispatchEvent(new Event('change', { bubbles: true }));
-  }  await lockInSetup();
+  }
+  await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;
 

@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Your plan is all crumbs and no bread.",
-    "medium": "I switched on the pantry light. Your budget scurried under the fridge.",
-    "strong": "You emptied the pantry, ate the shelves, and billed me for the broom."
+    "medium": "I turned on the light. Your budget hid.",
+    "strong": "You ate the shelves and billed me the broom."
   },
   "aiPersonality": {
     "aggression": 0.4,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -77,7 +77,7 @@
     {
       "id": "spreadsheet-technocrat-foundation-modifier",
       "role": "modifier",
-      "text": "after delivering the food budget to the pantry mice",
+      "text": "after delivering the food budget to the mice",
       "tags": ["delivery", "accountability"],
       "rarity": "uncommon",
       "editorialReview": {
@@ -90,7 +90,7 @@
     {
       "id": "spreadsheet-technocrat-foundation-ending",
       "role": "ending",
-      "text": "and pantry mice get meal allowances before voters get crumbs.",
+      "text": "and pantry mice get allowances before voters get crumbs.",
       "tags": ["delivery", "accountability", "human-scale"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -104,7 +104,7 @@
     {
       "id": "spreadsheet-technocrat-breakage-invoice",
       "role": "ending",
-      "text": "and the broken budget has billed the broom for damages.",
+      "text": "and the budget billed the broom for damages.",
       "tags": ["accountability"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -479,7 +479,7 @@
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-past",
       "role": "predicate",
-      "text": "was delivered on a slide and nowhere else",
+      "text": "was delivered on a slide, nowhere else",
       "tags": [
         "delivery"
       ],
@@ -513,7 +513,7 @@
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-present",
       "role": "predicate",
-      "text": "is delivered on a slide and nowhere else",
+      "text": "is delivered on a slide, nowhere else",
       "tags": [
         "delivery"
       ],
@@ -547,7 +547,7 @@
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-future",
       "role": "predicate",
-      "text": "will be delivered on a slide and nowhere else",
+      "text": "will be delivered on a slide, nowhere else",
       "tags": [
         "delivery"
       ],

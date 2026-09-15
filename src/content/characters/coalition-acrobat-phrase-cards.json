@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Your promise is already out of season.",
-    "medium": "I wear my principles inside out. You left yours in the changing room.",
-    "strong": "You brought a red line to a negotiation. I brought an eraser."
+    "medium": "I turn my principles inside out. You lost yours changing.",
+    "strong": "You brought a red line. I brought an eraser."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -50,13 +50,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
       "id": "coalition-acrobat-foundation-noun",
       "role": "noun",
-      "text": "my coalition jacket with a pocket on every side",
+      "text": "my jacket with a pocket on every side",
       "tags": ["consistency", "commitment"],
       "scoreGroups": {
         "substance": [
@@ -94,7 +94,7 @@
     {
       "id": "coalition-acrobat-foundation-ending",
       "role": "ending",
-      "text": "and the coalition has changed partners but kept the wallet.",
+      "text": "and the coalition changed partners, kept the wallet.",
       "tags": [
         "consistency",
         "memory",
@@ -130,7 +130,7 @@
     {
       "id": "coalition-acrobat-hinged-red-line",
       "role": "noun",
-      "text": "a red line fitted with a door hinge",
+      "text": "a red line with a door hinge",
       "tags": [
         "commitment"
       ],

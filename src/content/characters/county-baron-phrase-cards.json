@@ -29,7 +29,7 @@
   "comebacks": {
     "weak": "Your evidence needs more icing.",
     "medium": "I checked the family tree. Your tender is adopted.",
-    "strong": "You could lose a road contract at your own family reunion."
+    "strong": "You could lose a contract at your own reunion."
   },
   "aiPersonality": {
     "aggression": 0.5,
@@ -50,13 +50,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
       "id": "county-baron-foundation-noun",
       "role": "noun",
-      "text": "my tender with a doughnut where the budget should be",
+      "text": "my tender with a doughnut in the budget",
       "tags": [
         "procurement",
         "spending"
@@ -96,7 +96,7 @@
     {
       "id": "county-baron-foundation-ending",
       "role": "ending",
-      "text": "and the road contract is held together with icing sugar.",
+      "text": "and the road contract runs on icing sugar.",
       "tags": [
         "procurement",
         "infrastructure"
@@ -113,7 +113,7 @@
     {
       "id": "county-baron-sunday-job-interview",
       "role": "ending",
-      "text": "and the job interview was held at Sunday lunch.",
+      "text": "and the interview happened at Sunday lunch.",
       "tags": [
         "nepotism"
       ],
@@ -129,7 +129,7 @@
     {
       "id": "county-baron-ribbon-roundabout",
       "role": "noun",
-      "text": "a roundabout built to display the opening ribbon",
+      "text": "a roundabout built around the ribbon",
       "tags": [
         "infrastructure"
       ],
@@ -155,7 +155,7 @@
     {
       "id": "county-baron-cousin-tender",
       "role": "noun",
-      "text": "a tender form with a box for the cousin relationship",
+      "text": "a tender form asking if we are related",
       "tags": [
         "nepotism",
         "family"
@@ -182,7 +182,7 @@
     {
       "id": "county-baron-portable-opening-ceremony",
       "role": "noun",
-      "text": "a portable opening ceremony looking for a finished road",
+      "text": "a portable ceremony seeking a finished road",
       "tags": [
         "infrastructure"
       ],
@@ -208,7 +208,7 @@
     {
       "id": "county-baron-municipal-dinner-table",
       "role": "noun",
-      "text": "a municipal budget drawn on the family dinner table",
+      "text": "a municipal budget drawn on the dinner table",
       "tags": [
         "nepotism",
         "family"
@@ -505,11 +505,11 @@
     {
       "id": "county-baron-predicate-1-past",
       "role": "predicate",
-      "text": "counted the same ribbon twice for the official road total",
-      "singularText": "counted the same ribbon twice for the official road total",
-      "pluralText": "counted the same ribbon twice for the official road total",
-      "personalSingularText": "counted the same ribbon twice for the official road total",
-      "secondPersonText": "counted the same ribbon twice for the official road total",
+      "text": "counted one ribbon twice for the road total",
+      "singularText": "counted one ribbon twice for the road total",
+      "pluralText": "counted one ribbon twice for the road total",
+      "personalSingularText": "counted one ribbon twice for the road total",
+      "secondPersonText": "counted one ribbon twice for the road total",
       "tags": [
         "infrastructure",
         "procurement"
@@ -540,11 +540,11 @@
     {
       "id": "county-baron-predicate-1-present",
       "role": "predicate",
-      "text": "counts the same ribbon twice for the official road total",
-      "singularText": "counts the same ribbon twice for the official road total",
-      "pluralText": "count the same ribbon twice for the official road total",
-      "personalSingularText": "counts the same ribbon twice for the official road total",
-      "secondPersonText": "count the same ribbon twice for the official road total",
+      "text": "counts one ribbon twice for the road total",
+      "singularText": "counts one ribbon twice for the road total",
+      "pluralText": "count one ribbon twice for the road total",
+      "personalSingularText": "counts one ribbon twice for the road total",
+      "secondPersonText": "count one ribbon twice for the road total",
       "tags": [
         "infrastructure",
         "procurement"
@@ -575,11 +575,11 @@
     {
       "id": "county-baron-predicate-1-future",
       "role": "predicate",
-      "text": "will count the same ribbon twice for the official road total",
-      "singularText": "will count the same ribbon twice for the official road total",
-      "pluralText": "will count the same ribbon twice for the official road total",
-      "personalSingularText": "will count the same ribbon twice for the official road total",
-      "secondPersonText": "will count the same ribbon twice for the official road total",
+      "text": "will count one ribbon twice for the road total",
+      "singularText": "will count one ribbon twice for the road total",
+      "pluralText": "will count one ribbon twice for the road total",
+      "personalSingularText": "will count one ribbon twice for the road total",
+      "secondPersonText": "will count one ribbon twice for the road total",
       "tags": [
         "infrastructure",
         "procurement"

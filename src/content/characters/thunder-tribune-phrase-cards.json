@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Fetch the phone. Even the dial tone has a stronger argument.",
-    "medium": "You cannot evict the truth from my office. It has never lived here.",
-    "strong": "I obey the rules. Your argument was expelled for impersonating a thought."
+    "medium": "You cannot evict the truth. It never lived here.",
+    "strong": "I obey the rules. Your argument impersonated a thought."
   },
   "aiPersonality": {
     "aggression": 0.95,
@@ -268,7 +268,7 @@
     {
       "id": "before-the-nation-loses-patience",
       "role": "ending",
-      "text": "and my second phone has already filed a complaint.",
+      "text": "and my second phone filed a complaint.",
       "tags": [
         "restraint",
         "credibility"
@@ -598,7 +598,7 @@
     {
       "id": "bring-me-the-studio-phone",
       "role": "ending",
-      "text": "and fetch my phone before I have to shout internationally.",
+      "text": "and fetch my phone before I shout internationally.",
       "tags": [
         "decorum",
         "restraint"
@@ -770,6 +770,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   }
 }

@@ -23,9 +23,9 @@
   },
   "weaknessTags": ["nepotism", "corruption", "spending", "obsolete"],
   "comebacks": {
-    "weak": "Objection received. Estimated reply: the next five-year plan.",
-    "medium": "Your argument passed the human test. The examiner was your cousin.",
-    "strong": "You call me obsolete? Your best idea just arrived by fax."
+    "weak": "Objection received. Reply expected in five years.",
+    "medium": "You passed the human test. Your cousin graded it.",
+    "strong": "Your best idea arrived by fax."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -115,7 +115,7 @@
     {
       "id": "a-phantom-digital-consultancy",
       "role": "noun",
-      "text": "a digital consultancy with a ghost on the payroll",
+      "text": "a consultancy with a ghost on the payroll",
       "tags": ["corruption"],
       "scoreGroups": {
         "substance": ["bureaucracy"],
@@ -132,7 +132,7 @@
     {
       "id": "the-national-synergy-platform",
       "role": "noun",
-      "text": "a national cloud stored on a floppy disk",
+      "text": "a national cloud on a floppy disk",
       "tags": ["obsolete", "spending"],
       "scoreGroups": {
         "substance": ["politics", "bureaucracy"],
@@ -761,7 +761,7 @@
     {
       "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
       "role": "modifier",
-      "text": "at the launch of a five-year software update",
+      "text": "at the launch of a five-year update",
       "tags": ["obsolete", "spending", "bureaucracy"],
       "rarity": "rare",
       "editorialReview": {
@@ -788,7 +788,7 @@
     {
       "id": "pending-the-peoples-steering-committee",
       "role": "ending",
-      "text": "and the paperless office still needs three signed copies.",
+      "text": "and the paperless office requires three copies.",
       "tags": ["obsolete", "bureaucracy"],
       "rarity": "rare",
       "finisherBonus": 14,
@@ -804,6 +804,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
+    "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   }
 }

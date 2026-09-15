@@ -364,7 +364,7 @@
   {
     "id": "by-emergency-ordinance",
     "role": "ending",
-    "text": "by emergency ordinance; even the calendar needs permission.",
+    "text": "by emergency ordinance; even Tuesday needs approval.",
     "tags": [
       "bureaucracy"
     ],
@@ -933,7 +933,7 @@
   {
     "id": "for-the-national-interest",
     "role": "ending",
-    "text": "for the national interest, payable to a private account.",
+    "text": "for the national interest, minus my handling fee.",
     "tags": [
       "corruption",
       "spending"
@@ -950,7 +950,7 @@
   {
     "id": "until-the-next-election",
     "role": "ending",
-    "text": "until the next election, when the warranty mysteriously expires.",
+    "text": "until the next election; then the warranty expires.",
     "tags": [
       "consistency",
       "credibility"
@@ -3075,7 +3075,7 @@
   {
     "id": "before-the-cameras-return",
     "role": "ending",
-    "text": "before the cameras return and discover the road was a carpet.",
+    "text": "before the cameras find the road was a carpet.",
     "tags": [
       "media",
       "credibility"
@@ -3092,7 +3092,7 @@
   {
     "id": "according-to-protocol",
     "role": "ending",
-    "text": "according to protocol; the facts were not on the guest list.",
+    "text": "according to protocol; the facts lack an invitation.",
     "tags": [
       "bureaucracy",
       "decorum"
@@ -3109,7 +3109,7 @@
   {
     "id": "with-one-final-amendment",
     "role": "ending",
-    "text": "with one final amendment: arithmetic is now optional.",
+    "text": "with one last amendment: arithmetic is optional.",
     "tags": [
       "bureaucracy",
       "competence"
@@ -3126,7 +3126,7 @@
   {
     "id": "until-the-next-reshuffle",
     "role": "ending",
-    "text": "until the next reshuffle, when the same circus changes hats.",
+    "text": "until the next reshuffle; new hats, same circus.",
     "tags": [
       "consistency"
     ],
@@ -3142,7 +3142,7 @@
   {
     "id": "for-stability-and-progress",
     "role": "ending",
-    "text": "because winter arrived without a feasibility study.",
+    "text": "because winter skipped the feasibility study.",
     "tags": [
       "competence",
       "infrastructure",
@@ -3211,7 +3211,7 @@
   {
     "id": "pending-further-consultation",
     "role": "ending",
-    "text": "while the facts get lost in their own synergy.",
+    "text": "while the facts get lost in synergy.",
     "tags": [
       "bureaucracy",
       "evidence"
@@ -7183,7 +7183,7 @@
   {
     "id": "public-your-progress-report-on-a-road-that-ends-at-the-printer",
     "role": "noun",
-    "text": "your progress report on a road that ends at the printer",
+    "text": "your progress report on a road to the printer",
     "tags": [
       "delivery",
       "results"
@@ -10228,11 +10228,11 @@
   {
     "id": "public-spare-key-past",
     "role": "predicate",
-    "text": "was the spare key to a locked public office",
-    "singularText": "was the spare key to a locked public office",
-    "pluralText": "were spare keys to locked public offices",
-    "personalSingularText": "was the spare key to a locked public office",
-    "secondPersonText": "were the spare key to a locked public office",
+    "text": "was the spare key to a locked office",
+    "singularText": "was the spare key to a locked office",
+    "pluralText": "were spare keys to locked offices",
+    "personalSingularText": "was the spare key to a locked office",
+    "secondPersonText": "were the spare key to a locked office",
     "tense": "past",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -10265,11 +10265,11 @@
   {
     "id": "public-spare-key-present",
     "role": "predicate",
-    "text": "is the spare key to a locked public office",
-    "singularText": "is the spare key to a locked public office",
-    "pluralText": "are spare keys to locked public offices",
-    "personalSingularText": "is the spare key to a locked public office",
-    "secondPersonText": "are the spare key to a locked public office",
+    "text": "is the spare key to a locked office",
+    "singularText": "is the spare key to a locked office",
+    "pluralText": "are spare keys to locked offices",
+    "personalSingularText": "is the spare key to a locked office",
+    "secondPersonText": "are the spare key to a locked office",
     "tense": "present",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -10302,11 +10302,11 @@
   {
     "id": "public-spare-key-future",
     "role": "predicate",
-    "text": "will be the spare key to a locked public office",
-    "singularText": "will be the spare key to a locked public office",
-    "pluralText": "will be spare keys to locked public offices",
-    "personalSingularText": "will be the spare key to a locked public office",
-    "secondPersonText": "will be the spare key to a locked public office",
+    "text": "will be the spare key to a locked office",
+    "singularText": "will be the spare key to a locked office",
+    "pluralText": "will be spare keys to locked offices",
+    "personalSingularText": "will be the spare key to a locked office",
+    "secondPersonText": "will be the spare key to a locked office",
     "tense": "future",
     "tenseFamily": "public-spare-key",
     "tags": [
@@ -11329,7 +11329,7 @@
   {
     "id": "public-and-the-complaint-box-has-applied-for-witness-protection",
     "role": "ending",
-    "text": "and the complaint box has applied for witness protection.",
+    "text": "and the complaint box wants witness protection.",
     "tags": [
       "accountability"
     ],
@@ -11377,7 +11377,7 @@
   {
     "id": "public-and-the-queue-needs-a-ticket-to-join-itself",
     "role": "ending",
-    "text": "and the queue needs a ticket to join itself.",
+    "text": "and the queue needs a ticket.",
     "tags": [
       "bureaucracy"
     ],
@@ -11409,7 +11409,7 @@
   {
     "id": "public-and-the-minutes-deny-that-the-meeting-took-place",
     "role": "ending",
-    "text": "and the minutes deny that the meeting took place.",
+    "text": "and the minutes deny that we met.",
     "tags": [
       "evidence"
     ],
@@ -11425,7 +11425,7 @@
   {
     "id": "public-and-the-receipt-is-the-only-thing-that-arrived",
     "role": "ending",
-    "text": "and the receipt is the only thing that arrived.",
+    "text": "and only the receipt arrived.",
     "tags": [
       "delivery"
     ],
@@ -11441,7 +11441,7 @@
   {
     "id": "public-and-the-deadline-has-changed-its-phone-number",
     "role": "ending",
-    "text": "and the deadline has changed its phone number.",
+    "text": "and the deadline changed its number.",
     "tags": [
       "delivery"
     ],
@@ -11457,7 +11457,7 @@
   {
     "id": "public-and-the-ribbon-is-longer-than-the-finished-road",
     "role": "ending",
-    "text": "and the ribbon is longer than the finished road.",
+    "text": "and the ribbon is longer than the road.",
     "tags": [
       "infrastructure",
       "results"
@@ -11474,7 +11474,7 @@
   {
     "id": "public-and-the-foundation-stone-now-qualifies-as-a-historic-ruin",
     "role": "ending",
-    "text": "and the foundation stone now qualifies as a historic ruin.",
+    "text": "and the foundation stone needs restoration.",
     "tags": [
       "delivery",
       "results"
@@ -11491,7 +11491,7 @@
   {
     "id": "public-and-the-progress-bar-has-requested-another-term",
     "role": "ending",
-    "text": "and the progress bar has requested another term.",
+    "text": "and the progress bar wants another term.",
     "tags": [
       "delivery"
     ],
@@ -11507,7 +11507,7 @@
   {
     "id": "public-and-the-opening-ceremony-is-still-the-largest-structure-on-site",
     "role": "ending",
-    "text": "and the opening ceremony is still the largest structure on site.",
+    "text": "and the opening ceremony is the largest structure.",
     "tags": [
       "infrastructure",
       "results"
@@ -11524,7 +11524,7 @@
   {
     "id": "public-and-the-facts-have-been-moved-to-a-less-visible-time-slot",
     "role": "ending",
-    "text": "and the facts were moved to a quieter time slot.",
+    "text": "and the facts got a quieter time slot.",
     "tags": [
       "evidence",
       "ratings"
@@ -11541,7 +11541,7 @@
   {
     "id": "public-and-the-correction-arrived-during-the-closing-credits",
     "role": "ending",
-    "text": "and the correction arrived during the closing credits.",
+    "text": "and the correction arrived during the credits.",
     "tags": [
       "credibility"
     ],
@@ -11557,7 +11557,7 @@
   {
     "id": "public-and-the-camera-is-the-only-witness-still-being-paid",
     "role": "ending",
-    "text": "and the camera is the only witness still being paid.",
+    "text": "and the camera is the only paid witness.",
     "tags": [
       "evidence",
       "spending"
@@ -11574,7 +11574,7 @@
   {
     "id": "public-and-the-headline-is-suing-the-story-for-abandonment",
     "role": "ending",
-    "text": "and the headline is suing the story for abandonment.",
+    "text": "and the headline is suing the story.",
     "tags": [
       "credibility"
     ],
@@ -11590,7 +11590,7 @@
   {
     "id": "public-and-the-microphone-has-asked-for-a-fact-check",
     "role": "ending",
-    "text": "and the microphone has asked for a fact check.",
+    "text": "and the microphone wants a fact check.",
     "tags": [
       "evidence"
     ],
@@ -11606,7 +11606,7 @@
   {
     "id": "public-and-the-applause-track-has-filed-for-overtime",
     "role": "ending",
-    "text": "and the applause track has filed for overtime.",
+    "text": "and the applause track wants overtime pay.",
     "tags": [
       "ratings",
       "spending"
@@ -11623,7 +11623,7 @@
   {
     "id": "public-and-the-contract-was-signed-before-the-need-was-discovered",
     "role": "ending",
-    "text": "and the contract was signed before the need was discovered.",
+    "text": "and the contract came before the need.",
     "tags": [
       "procurement"
     ],
@@ -11639,7 +11639,7 @@
   {
     "id": "public-and-the-sealed-bids-came-with-an-answer-sheet",
     "role": "ending",
-    "text": "and the sealed bids came with an answer sheet.",
+    "text": "and the sealed bids included the answers.",
     "tags": [
       "procurement",
       "transparency"
@@ -11656,7 +11656,7 @@
   {
     "id": "public-and-the-winning-supplier-brought-the-only-pen",
     "role": "ending",
-    "text": "and the winning supplier brought the only pen.",
+    "text": "and the winner brought the only pen.",
     "tags": [
       "procurement"
     ],
@@ -11672,7 +11672,7 @@
   {
     "id": "public-and-the-audit-trail-ends-at-a-reserved-parking-space",
     "role": "ending",
-    "text": "and the audit trail ends at a reserved parking space.",
+    "text": "and the audit trail ends in reserved parking.",
     "tags": [
       "transparency"
     ],
@@ -11688,7 +11688,7 @@
   {
     "id": "public-and-the-public-tender-has-a-private-dress-code",
     "role": "ending",
-    "text": "and the public tender has a private dress code.",
+    "text": "and the tender has a private dress code.",
     "tags": [
       "procurement",
       "elitism"
@@ -11705,7 +11705,7 @@
   {
     "id": "public-and-the-warranty-covers-only-the-commemorative-photograph",
     "role": "ending",
-    "text": "and the warranty covers only the commemorative photograph.",
+    "text": "and the warranty covers only the photograph.",
     "tags": [
       "maintenance"
     ],
@@ -11721,7 +11721,7 @@
   {
     "id": "public-and-the-family-tree-has-replaced-the-recruitment-website",
     "role": "ending",
-    "text": "and the family tree has replaced the recruitment website.",
+    "text": "and hiring starts at the family tree.",
     "tags": [
       "family",
       "nepotism"
@@ -11738,7 +11738,7 @@
   {
     "id": "public-and-the-interview-panel-is-saving-a-seat-for-dessert",
     "role": "ending",
-    "text": "and the interview chair is reserved for the director's cousin.",
+    "text": "and the interview chair belongs to the cousin.",
     "tags": [
       "family",
       "nepotism"
@@ -11772,7 +11772,7 @@
   {
     "id": "public-and-the-promotion-was-announced-before-the-birthday-cake",
     "role": "ending",
-    "text": "and the nephew got promoted before cutting his birthday cake.",
+    "text": "and the promotion arrived with the birthday cake.",
     "tags": [
       "family",
       "nepotism"
@@ -11806,7 +11806,7 @@
   {
     "id": "public-and-the-job-description-includes-bringing-the-family-photo",
     "role": "ending",
-    "text": "and the job description includes bringing the family photo.",
+    "text": "and the job description requires the family photo.",
     "tags": [
       "family",
       "nepotism"
@@ -11823,7 +11823,7 @@
   {
     "id": "public-and-the-velvet-rope-is-the-only-public-service-that-works",
     "role": "ending",
-    "text": "and the velvet rope is the only public service that works.",
+    "text": "and the velvet rope works overtime.",
     "tags": [
       "elitism",
       "service"
@@ -11840,7 +11840,7 @@
   {
     "id": "public-and-the-marble-has-received-a-larger-travel-allowance",
     "role": "ending",
-    "text": "and the marble has received a larger travel allowance.",
+    "text": "and the marble got a travel allowance.",
     "tags": [
       "luxury",
       "spending"
@@ -11857,7 +11857,7 @@
   {
     "id": "public-and-the-ceremonial-scissors-have-their-own-chauffeur",
     "role": "ending",
-    "text": "and the ceremonial scissors have their own chauffeur.",
+    "text": "and the ceremonial scissors have a chauffeur.",
     "tags": [
       "luxury",
       "spending"
@@ -11874,7 +11874,7 @@
   {
     "id": "public-and-the-expense-account-needs-a-second-suitcase",
     "role": "ending",
-    "text": "and the expense account needs a second suitcase.",
+    "text": "and the expense account needs another suitcase.",
     "tags": [
       "spending"
     ],
@@ -11890,7 +11890,7 @@
   {
     "id": "public-and-the-austerity-speech-came-with-valet-parking",
     "role": "ending",
-    "text": "and the austerity speech came with valet parking.",
+    "text": "and austerity came with valet parking.",
     "tags": [
       "austerity",
       "luxury"
@@ -11907,7 +11907,7 @@
   {
     "id": "public-and-the-modest-gesture-required-a-second-limousine",
     "role": "ending",
-    "text": "and the modest gesture required a second limousine.",
+    "text": "and modesty required a second limousine.",
     "tags": [
       "authenticity",
       "luxury"
@@ -11924,7 +11924,7 @@
   {
     "id": "public-and-the-manifesto-can-be-erased-with-a-damp-handshake",
     "role": "ending",
-    "text": "and the manifesto can be erased with a damp handshake.",
+    "text": "and a damp handshake erases the manifesto.",
     "tags": [
       "commitment",
       "consistency"
@@ -11957,7 +11957,7 @@
   {
     "id": "public-and-the-loyalty-oath-expires-at-the-next-opinion-poll",
     "role": "ending",
-    "text": "and the loyalty oath expires at the next opinion poll.",
+    "text": "and the oath expires at the next poll.",
     "tags": [
       "commitment"
     ],
@@ -11973,7 +11973,7 @@
   {
     "id": "public-and-the-promise-has-joined-the-opposite-coalition",
     "role": "ending",
-    "text": "and the promise has joined the opposite coalition.",
+    "text": "and the promise joined the other coalition.",
     "tags": [
       "consistency"
     ],
@@ -11989,7 +11989,7 @@
   {
     "id": "public-and-the-apology-is-waiting-for-its-sponsor-logo",
     "role": "ending",
-    "text": "and the apology is waiting for its sponsor logo.",
+    "text": "and the apology needs a sponsor logo.",
     "tags": [
       "sincerity",
       "influence"
@@ -12006,7 +12006,7 @@
   {
     "id": "public-and-the-spontaneous-reaction-is-on-its-fifth-rehearsal",
     "role": "ending",
-    "text": "and the spontaneous reaction is on its fifth rehearsal.",
+    "text": "and the spontaneous reaction is still rehearsing.",
     "tags": [
       "authenticity"
     ],
@@ -12022,7 +12022,7 @@
   {
     "id": "public-and-the-eyewitness-still-needs-directions-to-the-scene",
     "role": "ending",
-    "text": "and the eyewitness still needs directions to the scene.",
+    "text": "and the eyewitness still needs directions.",
     "tags": [
       "firsthand-knowledge",
       "context"
@@ -12039,7 +12039,7 @@
   {
     "id": "public-and-the-local-expert-has-misspelled-the-town-again",
     "role": "ending",
-    "text": "and the local expert has misspelled the town again.",
+    "text": "and the local expert misspelled the town.",
     "tags": [
       "context",
       "competence"
@@ -12056,7 +12056,7 @@
   {
     "id": "public-and-the-firsthand-account-includes-a-transfer-at-the-airport",
     "role": "ending",
-    "text": "and the firsthand account includes a transfer at the airport.",
+    "text": "and the firsthand account includes an airport transfer.",
     "tags": [
       "distance",
       "firsthand-knowledge"
@@ -12073,7 +12073,7 @@
   {
     "id": "public-and-the-nuance-was-lost-in-the-forwarded-message",
     "role": "ending",
-    "text": "and the nuance was lost in the forwarded message.",
+    "text": "and the nuance died in the forward.",
     "tags": [
       "nuance"
     ],
@@ -12089,7 +12089,7 @@
   {
     "id": "public-and-the-digital-transformation-is-waiting-for-fresh-carbon-paper",
     "role": "ending",
-    "text": "and the digital transformation is waiting for fresh carbon paper.",
+    "text": "and the digital transformation needs carbon paper.",
     "tags": [
       "modernity",
       "obsolete"
@@ -12106,7 +12106,7 @@
   {
     "id": "public-and-the-cloud-backup-is-in-the-bottom-filing-cabinet",
     "role": "ending",
-    "text": "and the cloud backup is in the bottom filing cabinet.",
+    "text": "and the cloud is in the bottom drawer.",
     "tags": [
       "modernity",
       "obsolete"
@@ -12867,7 +12867,7 @@
   {
     "id": "transition-era-television-studio-and-the-revolution-has-been-delayed-by-a-scheduled-rerun",
     "role": "ending",
-    "text": "and the revolution has been delayed by a scheduled rerun.",
+    "text": "and the revolution was delayed by a rerun.",
     "tags": [
       "legacy",
       "credibility"
@@ -13623,7 +13623,7 @@
   {
     "id": "modern-debate-studio-and-the-undecided-audience-has-voted-to-change-the-channel",
     "role": "ending",
-    "text": "and the undecided audience has voted to change the channel.",
+    "text": "and the undecided audience changed channels.",
     "tags": [
       "ratings",
       "relevance"
@@ -13831,7 +13831,7 @@
   {
     "id": "county-council-ballroom-a-road-map-whose-routes-all-end-at-the-contractor",
     "role": "noun",
-    "text": "a road map whose routes all end at the contractor",
+    "text": "a road map that ends at the contractor",
     "tags": [
       "procurement",
       "infrastructure"
@@ -14380,7 +14380,7 @@
   {
     "id": "county-council-ballroom-and-the-only-completed-lane-leads-to-the-buffet",
     "role": "ending",
-    "text": "and the only completed lane leads to the buffet.",
+    "text": "and every finished lane leads to the buffet.",
     "tags": [
       "infrastructure",
       "delivery"
@@ -15137,7 +15137,7 @@
   {
     "id": "midnight-call-in-studio-and-the-hidden-tape-contains-another-advert-for-the-hidden-tape",
     "role": "ending",
-    "text": "and the hidden tape contains another advert for the hidden tape.",
+    "text": "and the hidden tape advertises the hidden tape.",
     "tags": [
       "commercialism",
       "evidence"
@@ -15896,7 +15896,7 @@
   {
     "id": "palace-press-hall-and-the-official-silence-has-requested-a-larger-podium",
     "role": "ending",
-    "text": "and the official silence has requested a larger podium.",
+    "text": "and the silence requested a larger podium.",
     "tags": [
       "decorum",
       "commitment"
@@ -16655,7 +16655,7 @@
   {
     "id": "influencer-campaign-livestream-and-the-ancient-truth-is-available-in-three-subscription-tiers",
     "role": "ending",
-    "text": "and the ancient truth is available in three subscription tiers.",
+    "text": "and the ancient truth has three subscription tiers.",
     "tags": [
       "authenticity",
       "commercialism"
