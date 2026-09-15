@@ -293,9 +293,10 @@ source-only review does not satisfy them.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
     Final phrase volume, art, audio treatment, and variety evidence are present.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
-    Budget: 8 per delivery package. Phase 1 implements the full Romanian
-    experience with Mihai medium and Liana medium. Phase 2 evaluates Ro_VITS
-    and records a replacement decision. Implementation and evaluation are pending.
+    Budget: 8 per delivery package. Phase 1 translates the interface. Phase 2
+    translates the game content and implements Romanian grammar with Mihai
+    medium and Liana medium. Phase 3 evaluates Ro_VITS and records a
+    replacement decision. Implementation and evaluation are pending.
 30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The

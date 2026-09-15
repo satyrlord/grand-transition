@@ -62,7 +62,8 @@ One settings document format exists at a time. Its `schemaVersion` is `1` and
 identifies the document shape. A field addition changes that shape and requires
 a new version, but no earlier document is migrated. GPU voices and Speech
 enabled both default to true. Milestone 029 owns the `interfaceLocale` and
-`gameLocale` fields and the next version they need.
+`gameLocale` fields: its Phase 1 adds `interfaceLocale` at `schemaVersion` `2`
+and its Phase 2 adds `gameLocale` at `schemaVersion` `3`.
 
 The title-only Speech group has a **GPU voices** checkbox. Its help text states
 that these are alternative local human voices, require a supported GPU, and
