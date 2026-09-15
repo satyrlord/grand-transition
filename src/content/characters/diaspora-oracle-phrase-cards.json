@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "The keys are in the campaign brochure.",
-    "medium": "You wanted a roof? I offered unprecedented media coverage.",
-    "strong": "Your argument is like my model home: huge on camera, no foundations."
+    "medium": "You wanted a roof. I offered ten interviews.",
+    "strong": "Your argument is my model home: huge on camera, no foundations."
   },
   "aiPersonality": {
     "aggression": 0.5,
@@ -50,13 +50,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional comebacks transform housing-promotion rhetoric into brochure keys, media coverage, and a model home with no foundations. Private research records sources and disputed context; no attribution or quotation ships."
+    "notes": "Original fictional comebacks transform housing-promotion rhetoric into brochure keys, media coverage, and a model home with no foundations. Private research records sources and disputed context; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
       "id": "diaspora-oracle-foundation-noun",
       "role": "noun",
-      "text": "my overseas viewing of a house made of promises",
+      "text": "my overseas view of a house of promises",
       "tags": [
         "distance",
         "firsthand-knowledge"
@@ -80,7 +80,7 @@
     {
       "id": "diaspora-oracle-foundation-modifier",
       "role": "modifier",
-      "text": "from abroad, without checking whether the house exists",
+      "text": "from abroad, without checking the house exists",
       "tags": [
         "distance",
         "context",
@@ -97,7 +97,7 @@
     {
       "id": "diaspora-oracle-foundation-ending",
       "role": "ending",
-      "text": "and the housewarming party will be held inside the brochure.",
+      "text": "and the housewarming is inside the brochure.",
       "tags": [
         "context",
         "firsthand-knowledge"
@@ -114,7 +114,7 @@
     {
       "id": "diaspora-oracle-keys-in-another-time-zone",
       "role": "ending",
-      "text": "and the keys are waiting in a different time zone.",
+      "text": "and the keys wait in another time zone.",
       "tags": [
         "distance",
         "context"
@@ -181,7 +181,7 @@
     {
       "id": "diaspora-oracle-postage-stamp-map",
       "role": "noun",
-      "text": "a national reform plan drawn on a postage stamp",
+      "text": "a reform plan drawn on a postage stamp",
       "tags": [
         "context"
       ],
@@ -205,7 +205,7 @@
     {
       "id": "diaspora-oracle-time-zone-verdict",
       "role": "noun",
-      "text": "a verdict arriving three time zones before the facts",
+      "text": "a verdict three time zones ahead of the facts",
       "tags": [
         "distance",
         "firsthand-knowledge"
@@ -230,7 +230,7 @@
     {
       "id": "diaspora-oracle-holiday-sample",
       "role": "noun",
-      "text": "a population sample taken entirely at baggage claim",
+      "text": "a population sample from baggage claim",
       "tags": [
         "context"
       ],
@@ -494,7 +494,7 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-past",
       "role": "predicate",
-      "text": "was up to date as of the previous visit",
+      "text": "was current as of the last visit",
       "tags": [
         "context"
       ],
@@ -528,7 +528,7 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-present",
       "role": "predicate",
-      "text": "is up to date as of the previous visit",
+      "text": "is current as of the last visit",
       "tags": [
         "context"
       ],
@@ -562,7 +562,7 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-future",
       "role": "predicate",
-      "text": "will be up to date as of the previous visit",
+      "text": "will be current as of the last visit",
       "tags": [
         "context"
       ],
@@ -596,7 +596,7 @@
     {
       "id": "diaspora-oracle-through-cracked-lens",
       "role": "modifier",
-      "text": "through a webcam pointed at the wrong street",
+      "text": "through a webcam aimed at the wrong street",
       "tags": [
         "firsthand-knowledge"
       ],

@@ -41,7 +41,7 @@ describe('authored humor grammar integration', () => {
       accepted: true,
       analysis: {
         complete: true,
-        publicText: 'You belong in a history museum after mistaking the laptop fan for a wind of destiny and your bravery has never faced a follow-up question.',
+        publicText: 'You belong in a history museum after mistaking the laptop fan for destiny and your bravery fears the follow-up.',
       },
     });
   });
@@ -108,18 +108,18 @@ describe('authored humor grammar integration', () => {
   test.each([
     [
       'comeback.velvet-mogul.weak',
-      'Your argument is the only asset even I would not buy.',
+      'Your argument is the only asset I skip.',
     ],
     [
       'comeback.government-ai.medium',
-      'Your argument passed the human test. The examiner was your cousin.',
+      'You passed the human test. Your cousin graded it.',
     ],
     [
       'comeback.thunder-tribune.strong',
-      'I obey the rules. Your argument was expelled for impersonating a thought.',
+      'I obey the rules. Your argument impersonated a thought.',
     ],
   ])('keeps the reviewed %s tier directed at the opponent', (key, expected) => {
     expect(phraseCardCatalog.englishMessages[key]).toBe(expected);
-    expect(expected).toMatch(/\byour argument\b/iu);
+    expect(expected).toMatch(/\b(?:you|your)\b/iu);
   });
 });

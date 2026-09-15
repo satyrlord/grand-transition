@@ -27,9 +27,9 @@
     "credibility"
   ],
   "comebacks": {
-    "weak": "Your argument is the only asset even I would not buy.",
+    "weak": "Your argument is the only asset I skip.",
     "medium": "You hear an economic boom. I hear my cash register.",
-    "strong": "Count my assets again. By the time you finish, I will own the calculator."
+    "strong": "Count my assets. By the end, I own the calculator."
   },
   "aiPersonality": {
     "aggression": 0.45,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -81,7 +81,7 @@
     {
       "id": "velvet-mogul-foundation-modifier",
       "role": "modifier",
-      "text": "to the sound of an economy booming inside my wallet",
+      "text": "to an economy booming inside my wallet",
       "tags": [
         "wealth",
         "influence",
@@ -98,7 +98,7 @@
     {
       "id": "velvet-mogul-foundation-ending",
       "role": "ending",
-      "text": "and even my loose change has a holding company.",
+      "text": "and my loose change has a holding company.",
       "tags": [
         "wealth",
         "influence",
@@ -116,7 +116,7 @@
     {
       "id": "mogul-count-the-assets",
       "role": "ending",
-      "text": "and you count silverware while I buy the dining room.",
+      "text": "and you count silverware; I buy the room.",
       "tags": [
         "wealth",
         "influence"
@@ -133,7 +133,7 @@
     {
       "id": "mogul-measure-the-silence",
       "role": "ending",
-      "text": "and I measure every word before buying the microphone.",
+      "text": "and I measure words, then buy the microphone.",
       "tags": [
         "influence",
         "credibility"
@@ -202,7 +202,7 @@
     {
       "id": "velvet-mogul-rented-independence",
       "role": "noun",
-      "text": "a declaration of independence on a monthly lease",
+      "text": "independence on a monthly lease",
       "tags": [
         "wealth",
         "credibility"
@@ -255,7 +255,7 @@
     {
       "id": "velvet-mogul-sponsored-conscience",
       "role": "noun",
-      "text": "a conscience with a sponsor before every sentence",
+      "text": "a conscience sponsored sentence by sentence",
       "tags": [
         "influence",
         "credibility"
@@ -522,11 +522,11 @@
     {
       "id": "velvet-mogul-predicate-1-past",
       "role": "predicate",
-      "text": "charged rent for occupying the moral high ground",
-      "singularText": "charged rent for occupying the moral high ground",
-      "pluralText": "charged rent for occupying the moral high ground",
-      "personalSingularText": "charged rent for occupying the moral high ground",
-      "secondPersonText": "charged rent for occupying the moral high ground",
+      "text": "charged rent for the moral high ground",
+      "singularText": "charged rent for the moral high ground",
+      "pluralText": "charged rent for the moral high ground",
+      "personalSingularText": "charged rent for the moral high ground",
+      "secondPersonText": "charged rent for the moral high ground",
       "tags": [
         "wealth",
         "credibility"
@@ -557,11 +557,11 @@
     {
       "id": "velvet-mogul-predicate-1-present",
       "role": "predicate",
-      "text": "charges rent for occupying the moral high ground",
-      "singularText": "charges rent for occupying the moral high ground",
-      "pluralText": "charge rent for occupying the moral high ground",
-      "personalSingularText": "charges rent for occupying the moral high ground",
-      "secondPersonText": "charge rent for occupying the moral high ground",
+      "text": "charges rent for the moral high ground",
+      "singularText": "charges rent for the moral high ground",
+      "pluralText": "charge rent for the moral high ground",
+      "personalSingularText": "charges rent for the moral high ground",
+      "secondPersonText": "charge rent for the moral high ground",
       "tags": [
         "wealth",
         "credibility"
@@ -592,11 +592,11 @@
     {
       "id": "velvet-mogul-predicate-1-future",
       "role": "predicate",
-      "text": "will charge rent for occupying the moral high ground",
-      "singularText": "will charge rent for occupying the moral high ground",
-      "pluralText": "will charge rent for occupying the moral high ground",
-      "personalSingularText": "will charge rent for occupying the moral high ground",
-      "secondPersonText": "will charge rent for occupying the moral high ground",
+      "text": "will charge rent for the moral high ground",
+      "singularText": "will charge rent for the moral high ground",
+      "pluralText": "will charge rent for the moral high ground",
+      "personalSingularText": "will charge rent for the moral high ground",
+      "secondPersonText": "will charge rent for the moral high ground",
       "tags": [
         "wealth",
         "credibility"

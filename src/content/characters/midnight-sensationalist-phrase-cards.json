@@ -27,9 +27,9 @@
     "credibility"
   ],
   "comebacks": {
-    "weak": "Stay tuned. You have no idea how little evidence comes next.",
-    "medium": "The hidden system called. Even it wants you off the air.",
-    "strong": "I promised every viewer a fortune. You could not even deliver a punchline."
+    "weak": "Stay tuned for even less evidence.",
+    "medium": "The hidden system called. It wants you off air.",
+    "strong": "I promised viewers a fortune. You missed the punchline."
   },
   "aiPersonality": {
     "aggression": 0.8,
@@ -54,7 +54,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -85,7 +85,7 @@
     {
       "id": "midnight-sensationalist-foundation-modifier",
       "role": "modifier",
-      "text": "during the seventh exclusive trailer for the same revelation",
+      "text": "during the seventh trailer for one revelation",
       "tags": [
         "ratings",
         "evidence",
@@ -102,7 +102,7 @@
     {
       "id": "midnight-sensationalist-foundation-ending",
       "role": "ending",
-      "text": "and the evidence will arrive after one more commercial break.",
+      "text": "and the evidence arrives after the break.",
       "tags": [
         "ratings",
         "evidence",
@@ -120,7 +120,7 @@
     {
       "id": "midnight-fortune-on-hold",
       "role": "ending",
-      "text": "and your promised fortune is still on hold with our callers.",
+      "text": "and your fortune is still on hold.",
       "tags": [
         "ratings",
         "credibility"
@@ -137,7 +137,7 @@
     {
       "id": "midnight-hidden-system-catering",
       "role": "ending",
-      "text": "and the hidden system has mysteriously paid for catering.",
+      "text": "and the hidden system paid for catering.",
       "tags": [
         "evidence",
         "credibility"
@@ -154,7 +154,7 @@
     {
       "id": "midnight-sensationalist-anonymous-empty-chair",
       "role": "noun",
-      "text": "an empty chair billed as an anonymous witness",
+      "text": "an empty chair billed as a witness",
       "tags": [
         "evidence"
       ],
@@ -206,7 +206,7 @@
     {
       "id": "midnight-sensationalist-pixelated-pigeon",
       "role": "noun",
-      "text": "a pixelated pigeon described as a palace source",
+      "text": "a pixelated pigeon as a palace source",
       "tags": [
         "evidence",
         "credibility"

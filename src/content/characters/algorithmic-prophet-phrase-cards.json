@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Your evidence has gone flat.",
-    "medium": "I asked the tap for wisdom. It sent your speech down the drain.",
-    "strong": "You drank a software update and still could not install a coherent argument."
+    "medium": "The tap gave me wiser answers than your speech.",
+    "strong": "You drank a software update and installed no argument."
   },
   "aiPersonality": {
     "aggression": 0.85,
@@ -50,13 +50,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
       "id": "algorithmic-prophet-foundation-noun",
       "role": "noun",
-      "text": "my mineral-water modem with the specifications washed off",
+      "text": "my mineral-water modem without specifications",
       "tags": ["evidence", "specificity"],
       "scoreGroups": {
         "substance": [
@@ -77,7 +77,7 @@
     {
       "id": "algorithmic-prophet-foundation-modifier",
       "role": "modifier",
-      "text": "after downloading vague evidence through a drinking straw",
+      "text": "after downloading evidence through a straw",
       "tags": ["evidence", "specificity"],
       "rarity": "uncommon",
       "editorialReview": {
@@ -90,7 +90,7 @@
     {
       "id": "algorithmic-prophet-foundation-ending",
       "role": "ending",
-      "text": "and your follow-up question has drowned in a puddle.",
+      "text": "and your follow-up question drowned in a puddle.",
       "tags": ["follow-up-questions"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -104,7 +104,7 @@
     {
       "id": "algorithmic-prophet-lemonade-transfer",
       "role": "ending",
-      "text": "and even your lemonade's microchip dodges follow-up questions.",
+      "text": "and even your lemonade's microchip dodges questions.",
       "tags": ["evidence", "follow-up-questions"],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -165,7 +165,7 @@
     {
       "id": "algorithmic-prophet-laptop-wind-of-destiny",
       "role": "modifier",
-      "text": "after mistaking the laptop fan for a wind of destiny",
+      "text": "after mistaking the laptop fan for destiny",
       "tags": [
         "evidence"
       ],
@@ -180,7 +180,7 @@
     {
       "id": "algorithmic-prophet-ceremonial-donation-bow",
       "role": "modifier",
-      "text": "with a ceremonial bow to the donation button",
+      "text": "with a bow to the donation button",
       "tags": [
         "commercialism",
         "sincerity"
@@ -196,7 +196,7 @@
     {
       "id": "algorithmic-prophet-tap-water-excuses",
       "role": "ending",
-      "text": "and your tap water remembers every excuse except the evidence.",
+      "text": "and your tap water remembers only your excuses.",
       "tags": [
         "evidence"
       ],
@@ -212,7 +212,7 @@
     {
       "id": "algorithmic-prophet-prophetic-damp-socks",
       "role": "ending",
-      "text": "and your prophecy is a forecast from damp socks.",
+      "text": "and your prophecy is a damp-sock forecast.",
       "tags": [
         "evidence",
         "credibility"
@@ -229,7 +229,7 @@
     {
       "id": "algorithmic-prophet-greatness-error-cell",
       "role": "ending",
-      "text": "and your national greatness fits in a spreadsheet error cell.",
+      "text": "and your greatness fits in an error cell.",
       "tags": [
         "competence",
         "results"
@@ -246,7 +246,7 @@
     {
       "id": "algorithmic-prophet-bravery-follow-up",
       "role": "ending",
-      "text": "and your bravery has never faced a follow-up question.",
+      "text": "and your bravery fears the follow-up.",
       "tags": [
         "follow-up-questions"
       ],
@@ -262,7 +262,7 @@
     {
       "id": "algorithmic-prophet-offline-revelation",
       "role": "noun",
-      "text": "a revelation waiting for a stronger wireless signal",
+      "text": "a revelation awaiting a stronger signal",
       "tags": [
         "evidence"
       ],
@@ -310,7 +310,7 @@
     {
       "id": "algorithmic-prophet-prophecy-footnote",
       "role": "noun",
-      "text": "a prophecy with the date hidden in a footnote",
+      "text": "a prophecy dated in a footnote",
       "tags": [
         "specificity"
       ],

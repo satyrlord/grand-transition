@@ -29,7 +29,7 @@
   "comebacks": {
     "weak": "Your pastry budget has eaten your argument.",
     "medium": "Show me the receipts. Your wheelbarrow earns more than your country.",
-    "strong": "You budgeted imaginary rent, bought a real cake, and called the crumbs growth."
+    "strong": "You bought cake and called the crumbs growth."
   },
   "aiPersonality": {
     "aggression": 0.6,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional comebacks transform a household-budget analogy and pastry-price satire into grant and accounting jokes. Private research records sources; no attribution or quotation ships."
+    "notes": "Original fictional comebacks transform a household-budget analogy and pastry-price satire into grant and accounting jokes. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -80,7 +80,7 @@
     {
       "id": "eu-funds-alchemist-foundation-modifier",
       "role": "modifier",
-      "text": "with the repair budget spent on a launch cake",
+      "text": "with the repair budget spent on cake",
       "tags": [
         "maintenance",
         "outcomes"
@@ -96,7 +96,7 @@
     {
       "id": "eu-funds-alchemist-foundation-ending",
       "role": "ending",
-      "text": "and the wheelbarrow needs repairs before carrying the national budget.",
+      "text": "and the wheelbarrow cannot carry the budget.",
       "tags": [
         "maintenance",
         "outcomes"
@@ -113,7 +113,7 @@
     {
       "id": "eu-funds-alchemist-invisible-pastries",
       "role": "ending",
-      "text": "and the missing funds are itemized as invisible pastries.",
+      "text": "and the missing funds are invisible pastries.",
       "tags": [
         "transparency",
         "outcomes"
@@ -130,7 +130,7 @@
     {
       "id": "eu-funds-alchemist-ribbon-without-bridge",
       "role": "noun",
-      "text": "a bridge-opening ribbon stretched over an empty ditch",
+      "text": "an opening ribbon over an empty ditch",
       "tags": [
         "outcomes"
       ],
@@ -227,7 +227,7 @@
     {
       "id": "eu-funds-alchemist-milestone-balloon",
       "role": "noun",
-      "text": "a completed milestone tied to a helium balloon",
+      "text": "a milestone tied to a helium balloon",
       "tags": [
         "outcomes"
       ],
@@ -593,7 +593,7 @@
     {
       "id": "eu-funds-alchemist-ribbon-spare-parts",
       "role": "modifier",
-      "text": "with spare parts cut from the ceremonial ribbon",
+      "text": "with spare parts from the ceremonial ribbon",
       "tags": [
         "maintenance"
       ],

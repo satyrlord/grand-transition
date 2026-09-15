@@ -490,7 +490,7 @@ describe('Hollywood Roast draft actions', () => {
       selectedComebackTier: 'strong',
     });
     expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
-      /\. Your argument got lost in the synergy\. We are still recovering the minutes\.$/u,
+      /\. Your argument is lost in the synergy\.$/u,
     );
     expect(
       state.playerStates[playerIds[0]]!.construction.analysis.publicText,

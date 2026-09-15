@@ -6,6 +6,7 @@ import {
   legacyHumorReplayContext,
   legacyPhraseReplayContext,
   legacyProphetReplayContext,
+  legacyPunchlineReplayContext,
 } from './legacy-phrase-replay-context';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
@@ -30,7 +31,7 @@ import {
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
-export const replaySchemaVersion = 11;
+export const replaySchemaVersion = 12;
 export const supportedReplaySchemaVersions = [
   1,
   2,
@@ -42,6 +43,7 @@ export const supportedReplaySchemaVersions = [
   8,
   9,
   10,
+  11,
   replaySchemaVersion,
 ] as const;
 export const replayKind = 'grand-transition-replay' as const;
@@ -59,6 +61,7 @@ const replaySchemaVersionSchema = z.union([
   z.literal(supportedReplaySchemaVersions[8]),
   z.literal(supportedReplaySchemaVersions[9]),
   z.literal(supportedReplaySchemaVersions[10]),
+  z.literal(supportedReplaySchemaVersions[11]),
 ]);
 
 export type ReplayFailureCode =
@@ -490,9 +493,12 @@ export function replayContextForVersion(
   schemaVersion: number,
   context: ReplayContext,
 ): ReplayContext {
-  const rosterContext = schemaVersion < 11
-    ? legacyRosterReplayContext(context)
+  const punchlineContext = schemaVersion < 12
+    ? legacyPunchlineReplayContext(context)
     : context;
+  const rosterContext = schemaVersion < 11
+    ? legacyRosterReplayContext(punchlineContext)
+    : punchlineContext;
   const conciseContext = schemaVersion < 10
     ? legacyConciseReplayContext(rosterContext)
     : rosterContext;

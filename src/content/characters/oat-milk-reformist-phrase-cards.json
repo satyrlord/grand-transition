@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "I asked for public services. You sent a mindfulness leaflet.",
-    "medium": "You protected the forest by giving every stump a director.",
-    "strong": "Your budget takes from the poor and gives the rich a sustainability award."
+    "medium": "Every stump has a director. The forest is saved.",
+    "strong": "Your budget gives billionaires a sustainability award."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -54,13 +54,13 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
       "id": "oat-milk-reformist-foundation-noun",
       "role": "noun",
-      "text": "my listening circle with a six-month waiting list",
+      "text": "my listening circle with a waiting list",
       "tags": [
         "relevance",
         "authenticity",
@@ -85,7 +85,7 @@
     {
       "id": "oat-milk-reformist-foundation-modifier",
       "role": "modifier",
-      "text": "with a carbon footprint smaller than the launch party's",
+      "text": "with a footprint smaller than the party's",
       "tags": [
         "relevance",
         "authenticity",
@@ -102,7 +102,7 @@
     {
       "id": "oat-milk-reformist-foundation-ending",
       "role": "ending",
-      "text": "and the forest has more pension plans than trees.",
+      "text": "and the forest has more pensions than trees.",
       "tags": [
         "relevance",
         "authenticity",
@@ -120,7 +120,7 @@
     {
       "id": "reformist-reverse-redistribution",
       "role": "ending",
-      "text": "and the poor have kindly agreed to sponsor the billionaires.",
+      "text": "and the poor now sponsor the billionaires.",
       "tags": [
         "class",
         "authenticity"
@@ -137,7 +137,7 @@
     {
       "id": "reformist-listening-invoice",
       "role": "ending",
-      "text": "and listening is free once you have paid the consultation fee.",
+      "text": "and listening is free after the consultation fee.",
       "tags": [
         "class",
         "relevance"
@@ -181,7 +181,7 @@
     {
       "id": "oat-milk-reformist-sticky-note-coalition",
       "role": "noun",
-      "text": "a coalition held together by reusable sticky notes",
+      "text": "a coalition glued with reusable sticky notes",
       "tags": [
         "relevance"
       ],
@@ -526,11 +526,11 @@
     {
       "id": "oat-milk-reformist-predicate-1-past",
       "role": "predicate",
-      "text": "mistook the workshop attendance sheet for a public mandate",
-      "singularText": "mistook the workshop attendance sheet for a public mandate",
-      "pluralText": "mistook the workshop attendance sheet for a public mandate",
-      "personalSingularText": "mistook the workshop attendance sheet for a public mandate",
-      "secondPersonText": "mistook the workshop attendance sheet for a public mandate",
+      "text": "mistook an attendance sheet for a public mandate",
+      "singularText": "mistook an attendance sheet for a public mandate",
+      "pluralText": "mistook an attendance sheet for a public mandate",
+      "personalSingularText": "mistook an attendance sheet for a public mandate",
+      "secondPersonText": "mistook an attendance sheet for a public mandate",
       "tags": [
         "relevance",
         "authenticity"
@@ -561,11 +561,11 @@
     {
       "id": "oat-milk-reformist-predicate-1-present",
       "role": "predicate",
-      "text": "mistakes the workshop attendance sheet for a public mandate",
-      "singularText": "mistakes the workshop attendance sheet for a public mandate",
-      "pluralText": "mistake the workshop attendance sheet for a public mandate",
-      "personalSingularText": "mistakes the workshop attendance sheet for a public mandate",
-      "secondPersonText": "mistake the workshop attendance sheet for a public mandate",
+      "text": "mistakes an attendance sheet for a public mandate",
+      "singularText": "mistakes an attendance sheet for a public mandate",
+      "pluralText": "mistake an attendance sheet for a public mandate",
+      "personalSingularText": "mistakes an attendance sheet for a public mandate",
+      "secondPersonText": "mistake an attendance sheet for a public mandate",
       "tags": [
         "relevance",
         "authenticity"
@@ -596,11 +596,11 @@
     {
       "id": "oat-milk-reformist-predicate-1-future",
       "role": "predicate",
-      "text": "will mistake the workshop attendance sheet for a public mandate",
-      "singularText": "will mistake the workshop attendance sheet for a public mandate",
-      "pluralText": "will mistake the workshop attendance sheet for a public mandate",
-      "personalSingularText": "will mistake the workshop attendance sheet for a public mandate",
-      "secondPersonText": "will mistake the workshop attendance sheet for a public mandate",
+      "text": "will mistake an attendance sheet for a public mandate",
+      "singularText": "will mistake an attendance sheet for a public mandate",
+      "pluralText": "will mistake an attendance sheet for a public mandate",
+      "personalSingularText": "will mistake an attendance sheet for a public mandate",
+      "secondPersonText": "will mistake an attendance sheet for a public mandate",
       "tags": [
         "relevance",
         "authenticity"

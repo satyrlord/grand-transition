@@ -29,7 +29,7 @@
   "comebacks": {
     "weak": "Your briefing clashes with my shoes.",
     "medium": "I could live on that budget. My wardrobe couldn't.",
-    "strong": "Your facts are badly tailored. Send them back to geography."
+    "strong": "Your facts are badly tailored. Take them back."
   },
   "aiPersonality": {
     "aggression": 0.7,
@@ -53,7 +53,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional comebacks transform wardrobe rhetoric, low-budget bravado, and a televised geography correction. Private research records sources; no attribution or quotation ships."
+    "notes": "Original fictional comebacks transform wardrobe rhetoric, low-budget bravado, and a televised geography correction. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -99,7 +99,7 @@
     {
       "id": "luxury-minister-foundation-ending",
       "role": "ending",
-      "text": "and the public tightens its belt; I choose the leather.",
+      "text": "and the public tightens its belt; I choose leather.",
       "tags": [
         "austerity",
         "service",
@@ -117,7 +117,7 @@
     {
       "id": "luxury-minister-map-matches-itinerary",
       "role": "ending",
-      "text": "and the map will be corrected to match my itinerary.",
+      "text": "and the map will match my itinerary.",
       "tags": [
         "authenticity"
       ],
@@ -157,7 +157,7 @@
     {
       "id": "luxury-minister-priority-spa-lane",
       "role": "noun",
-      "text": "a public-service priority lane leading to the spa",
+      "text": "a public-service lane leading to the spa",
       "tags": [
         "service"
       ],
@@ -494,7 +494,7 @@
     {
       "id": "luxury-minister-queue-proof-past",
       "role": "predicate",
-      "text": "was insulated from queues by a private lift",
+      "text": "was insulated by a private lift",
       "tags": [
         "service"
       ],
@@ -528,7 +528,7 @@
     {
       "id": "luxury-minister-queue-proof-present",
       "role": "predicate",
-      "text": "is insulated from queues by a private lift",
+      "text": "is insulated by a private lift",
       "tags": [
         "service"
       ],
@@ -562,7 +562,7 @@
     {
       "id": "luxury-minister-queue-proof-future",
       "role": "predicate",
-      "text": "will be insulated from queues by a private lift",
+      "text": "will be insulated by a private lift",
       "tags": [
         "service"
       ],

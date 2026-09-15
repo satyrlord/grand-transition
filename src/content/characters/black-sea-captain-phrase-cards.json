@@ -27,9 +27,9 @@
     "securitate"
   ],
   "comebacks": {
-    "weak": "Summer called. It refuses responsibility for your winter excuses.",
-    "medium": "Your argument has more holes than my campaign promises.",
-    "strong": "That was barely a debate. Your flagship surrendered to a fishing float."
+    "weak": "Summer called. It denies your winter excuses.",
+    "medium": "Your argument has more holes than my promises.",
+    "strong": "Your flagship surrendered to a fishing float."
   },
   "aiPersonality": {
     "aggression": 0.7,
@@ -50,7 +50,7 @@
     {
       "id": "hands-on-presidency",
       "role": "noun",
-      "text": "a hands-on presidency with both hands on the microphone",
+      "text": "a hands-on presidency, hands on the microphone",
       "tags": [
         "consistency",
         "decorum"
@@ -180,7 +180,7 @@
     {
       "id": "from-the-bridge",
       "role": "ending",
-      "text": "and winter has once again refused to act like summer.",
+      "text": "and winter still refuses to act like summer.",
       "tags": [
         "consistency"
       ],
@@ -582,7 +582,7 @@
     {
       "id": "captain-ballot-lifejacket",
       "role": "ending",
-      "text": "and even the ballot box has asked for a lifejacket.",
+      "text": "and the ballot box wants a lifejacket.",
       "tags": [
         "competence"
       ],
@@ -640,6 +640,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   }
 }

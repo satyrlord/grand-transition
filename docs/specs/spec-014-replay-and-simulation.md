@@ -165,6 +165,29 @@ command bytes, the complete catalog and locale hash, the former long phrase
 text, and the exact captured final-state hash. Focused tests also check that
 changes to the current catalog cannot affect restored versions 1 through 9.
 
+Version 11 keeps version 10 scoring and adds The Reluctant Theorem. Before any
+older restoration, versions 1 through 10 load the complete saved version 10
+catalog from `src/content/legacy-roster-content-v10.json`. This preserves phrase
+order, text, agreement forms, tags, character definitions, scene definitions,
+phrase pools, and locale messages. Versions 1 through 9 then apply the older
+catalog and scoring rules described above. Version 11 skips this restoration and
+uses its saved version 11 catalog. The retained
+`tests/fixtures/replay-v10-before-reluctant-theorem.json` verifies the catalog
+fingerprint and exact final state of the nineteenth-archetype boundary.
+
+Version 12 keeps version 11 scoring and uses the shorter, punchier phrase
+catalog. Before any older restoration, versions 1 through 11 load the complete
+saved version 11 catalog from `src/content/legacy-punchline-content-v11.json`.
+This preserves phrase order, text, agreement forms, tags, character
+definitions, scene definitions, phrase pools, and locale messages. Versions 1
+through 10 then apply the older catalog and scoring rules described above.
+Version 12 skips this restoration and uses its saved version 12 catalog. The
+retained `tests/fixtures/replay-v11-before-punchline-phrases.json` verifies
+normalized command bytes, the complete catalog and locale hash, the former
+longer phrase text, and the exact captured final-state hash. Focused tests also
+check that changes to the current catalog cannot affect restored versions 1
+through 11.
+
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
 writes a concise summary to standard output. Invalid arguments exit nonzero and
@@ -185,7 +208,7 @@ Milestone 002 threshold remains 70 percent.
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
   normalized bytes and an exact final state. Version 1, version 2, and version 3
-  scoring fixtures replay with their original resolutions after version 11 becomes
+  scoring fixtures replay with their original resolutions after version 12 becomes
   current. The retained version 4 fixture preserves historical phrase identifiers,
   neutral-phrase weakness matches, scores, and normalized bytes. Version 5
   retains multiplier 3. Version 6 reproduces each selectable multiplier even
@@ -199,7 +222,10 @@ Milestone 002 threshold remains 70 percent.
   captured final state from before the concise-phrase changes. Versions 1
   through 10 remain independent of later catalog changes. Version 10 preserves
   its complete 18-character catalog and captured final state. Version 11
-  reproduces each selectable multiplier with the current catalog.
+  preserves the nineteenth-archetype catalog boundary. Version 12 preserves the
+  pre-punchline catalog, locale, normalized commands, and captured final state,
+  and versions 1 through 11 remain independent of later catalog changes.
+  Version 12 reproduces each selectable multiplier with the current catalog.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
   and causes no storage write or partial match start.
 - **AC-014-03:** A private-information scan finds no unselected hand text or ID
@@ -294,3 +320,8 @@ new character.
 `tests/unit/replay-and-simulation.test.ts` checks the catalog fingerprint and
 exact final state of `tests/fixtures/replay-v10-before-reluctant-theorem.json`.
 The fixture uses seed 20260912 and preserves version 10 normalized bytes.
+
+The version 11 sentence above describes the recorded state of that boundary.
+The later punchline revision supersedes it: new replays and match logs use
+version 12 with unchanged scoring, and version 11 replays restore the frozen
+catalog described above.

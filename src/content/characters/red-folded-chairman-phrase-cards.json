@@ -30,7 +30,7 @@
   "comebacks": {
     "weak": "My dear, even your outrage needs a committee.",
     "medium": "You domesticated the facts. Now they fetch your slippers.",
-    "strong": "Your argument got lost in the synergy. We are still recovering the minutes."
+    "strong": "Your argument is lost in the synergy."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -185,7 +185,7 @@
     {
       "id": "for-stabilitys-sake",
       "role": "ending",
-      "text": "and, with your permission, I remain in the chair.",
+      "text": "and, with permission, I remain in the chair.",
       "tags": [
         "restraint",
         "bureaucracy"
@@ -437,7 +437,7 @@
     {
       "id": "socialism-with-a-human-face",
       "role": "noun",
-      "text": "socialism with a human face and the same receptionist",
+      "text": "socialism with a human face, same receptionist",
       "tags": [
         "legacy",
         "restraint"
@@ -712,7 +712,7 @@
     {
       "id": "and-thats-the-synergy-of-facts",
       "role": "ending",
-      "text": "and the facts have formed a committee to escape the synergy.",
+      "text": "and the facts have taken it to committee.",
       "tags": [
         "evidence",
         "bureaucracy"
@@ -885,6 +885,6 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
+    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   }
 }

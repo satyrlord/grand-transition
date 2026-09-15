@@ -27,9 +27,9 @@
     "delivery"
   ],
   "comebacks": {
-    "weak": "Your dialogue has one unusual rule: nobody else gets a turn.",
-    "medium": "You asked for patience. Your waiting room has outlived the building.",
-    "strong": "Your plan works perfectly if we assume the city has no inhabitants."
+    "weak": "Your dialogue has one rule: nobody else speaks.",
+    "medium": "Your patience has outlived the building.",
+    "strong": "Your plan works if the city has no inhabitants."
   },
   "aiPersonality": {
     "aggression": 0.35,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional satire; agent editorial review, 2026-09-12. The fictional civic mathematician turns qualifications, proofs, planning disputes, and delayed decisions into original comic reversals. Three exclusive comeback tiers transform dialogue, public patience, and citizen service into escalating criticisms of the fictional opponent. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
+    "notes": "Original fictional satire; agent editorial review, 2026-09-12. The fictional civic mathematician turns qualifications, proofs, planning disputes, and delayed decisions into original comic reversals. Three exclusive comeback tiers transform dialogue, public patience, and citizen service into escalating criticisms of the fictional opponent. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -128,7 +128,7 @@
     {
       "id": "reluctant-theorem-permit-for-shadow",
       "role": "noun",
-      "text": "a building permit covering the entire park's shadow",
+      "text": "a permit covering the park's entire shadow",
       "tags": [
         "accountability"
       ],
@@ -152,7 +152,7 @@
     {
       "id": "reluctant-theorem-undecided-pencil",
       "role": "noun",
-      "text": "a pencil worn down by both sides of maybe",
+      "text": "a pencil worn flat by both maybes",
       "tags": [
         "indecision"
       ],
@@ -545,7 +545,7 @@
     {
       "id": "reluctant-theorem-before-defining-soon",
       "role": "modifier",
-      "text": "after three hearings on the definition of soon",
+      "text": "after three hearings about the word soon",
       "tags": [
         "urgency"
       ],
@@ -560,7 +560,7 @@
     {
       "id": "reluctant-theorem-subject-to-maybe",
       "role": "modifier",
-      "text": "subject to a second opinion from the first hesitation",
+      "text": "subject to the first hesitation's second opinion",
       "tags": [
         "indecision"
       ],
@@ -575,7 +575,7 @@
     {
       "id": "reluctant-theorem-pavement-appendix",
       "role": "modifier",
-      "text": "with the missing pavement attached as an appendix",
+      "text": "with the pavement attached as an appendix",
       "tags": [
         "delivery"
       ],
@@ -590,7 +590,7 @@
     {
       "id": "reluctant-theorem-permit-footnote",
       "role": "modifier",
-      "text": "under a footnote taller than the permitted building",
+      "text": "under a footnote taller than the building",
       "tags": [
         "accountability"
       ],
@@ -605,7 +605,7 @@
     {
       "id": "reluctant-theorem-forms-first",
       "role": "ending",
-      "text": "and the public counter serves forms while citizens queue outside.",
+      "text": "and the counter serves forms to the queue.",
       "tags": [
         "human-scale"
       ],
@@ -621,7 +621,7 @@
     {
       "id": "reluctant-theorem-question-survives",
       "role": "ending",
-      "text": "and your answer disproves everything except the original question.",
+      "text": "and your answer disproves only the question.",
       "tags": [
         "accountability"
       ],
@@ -654,7 +654,7 @@
     {
       "id": "reluctant-theorem-maybe-unanimous",
       "role": "ending",
-      "text": "and even the maybes cannot reach a unanimous decision.",
+      "text": "and the maybes are still undecided.",
       "tags": [
         "indecision"
       ],

@@ -313,7 +313,7 @@ describe('content schemas', () => {
   test('loads the Chairman phrase expansion and comeback tiers', () => {
     const expectedPhrases = [
       ['the-nordic-model', 'the Nordic model'],
-      ['socialism-with-a-human-face', 'socialism with a human face and the same receptionist'],
+      ['socialism-with-a-human-face', 'socialism with a human face, same receptionist'],
       ['a-free-thinker', 'a free thinker on the party payroll'],
       ['a-dictatorship', 'a dictatorship'],
       ['the-working-class', 'the working class'],
@@ -328,7 +328,7 @@ describe('content schemas', () => {
         'the-dacs-that-come-from-the-tracs',
         'and the Dacs come from the Tracs.',
       ],
-      ['and-thats-the-synergy-of-facts', 'and the facts have formed a committee to escape the synergy.'],
+      ['and-thats-the-synergy-of-facts', 'and the facts have taken it to committee.'],
     ] as const;
 
     for (const [id, text] of expectedPhrases) {
@@ -345,7 +345,7 @@ describe('content schemas', () => {
     ).toBe('You domesticated the facts. Now they fetch your slippers.');
     expect(
       phraseCardCatalog.englishMessages['comeback.red-folded-chairman.strong'],
-    ).toBe('Your argument got lost in the synergy. We are still recovering the minutes.');
+    ).toBe('Your argument is lost in the synergy.');
     const dacsEnding = phraseCardCatalog.phrases.find(
       (phrase) => phrase.id === 'the-dacs-that-come-from-the-tracs',
     );
@@ -363,11 +363,11 @@ describe('content schemas', () => {
     ).toBe('Fetch the phone. Even the dial tone has a stronger argument.');
     expect(
       phraseCardCatalog.englishMessages['comeback.thunder-tribune.medium'],
-    ).toBe('You cannot evict the truth from my office. It has never lived here.');
+    ).toBe('You cannot evict the truth. It never lived here.');
     expect(
       phraseCardCatalog.englishMessages['comeback.thunder-tribune.strong'],
     ).toBe(
-      'I obey the rules. Your argument was expelled for impersonating a thought.',
+      'I obey the rules. Your argument impersonated a thought.',
     );
   });
 
@@ -855,9 +855,9 @@ describe('content schemas', () => {
     );
     expect(phraseCardCatalog.englishMessages).toMatchObject({
       'comeback.government-ai.weak':
-        'Objection received. Estimated reply: the next five-year plan.',
+        'Objection received. Reply expected in five years.',
       'comeback.government-ai.strong':
-        'You call me obsolete? Your best idea just arrived by fax.',
+        'Your best idea arrived by fax.',
       'phrase.is-aligned-with-the-glorious-digital-transition':
         'is digitally transformed into a fax machine',
       'phrase.the-procurement-seam': 'a procurement loophole with a welcome mat',
@@ -874,9 +874,9 @@ describe('content schemas', () => {
       'phrase.quietly-navigates-the-peoples-policy-landscape.plural':
         'get lost in the settings menu',
       'phrase.at-the-core-of-the-robust-five-year-paradigm-shift':
-        'at the launch of a five-year software update',
+        'at the launch of a five-year update',
       'phrase.pending-the-peoples-steering-committee':
-        'and the paperless office still needs three signed copies.',
+        'and the paperless office requires three copies.',
     });
 
     for (const weakness of character!.weaknessTags) {

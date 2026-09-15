@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Pass the popcorn. Your argument needs salt.",
-    "medium": "I called it a bad joke. You called yours a foreign policy.",
-    "strong": "I stayed home for the debate. Somehow your facts still failed to turn up."
+    "medium": "I called it a joke. You called it foreign policy.",
+    "strong": "I skipped the debate. Your facts also skipped it."
   },
   "aiPersonality": {
     "aggression": 0.75,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional comebacks transform debate-spectator popcorn bravado and its later bad-joke explanation into domestic geopolitical overconfidence. Private research records sources; no attribution or quotation ships."
+    "notes": "Original fictional comebacks transform debate-spectator popcorn bravado and its later bad-joke explanation into domestic geopolitical overconfidence. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -80,7 +80,7 @@
     {
       "id": "apartment-block-geopolitician-foundation-modifier",
       "role": "modifier",
-      "text": "according to a snack packet with the small print removed",
+      "text": "according to a snack packet, small print removed",
       "tags": [
         "sources",
         "specificity"
@@ -96,7 +96,7 @@
     {
       "id": "apartment-block-geopolitician-foundation-ending",
       "role": "ending",
-      "text": "and the whole crisis fits on my popcorn packet.",
+      "text": "and the crisis fits on my popcorn packet.",
       "tags": [
         "specificity",
         "nuance"
@@ -113,7 +113,7 @@
     {
       "id": "apartment-block-geopolitician-exit-poll-before-popcorn",
       "role": "ending",
-      "text": "and the exit poll arrived before the microwave beeped.",
+      "text": "and the exit poll beat the microwave.",
       "tags": [],
       "rarity": "rare",
       "finisherBonus": 4,
@@ -127,7 +127,7 @@
     {
       "id": "apartment-block-geopolitician-stairwell-security-council",
       "role": "noun",
-      "text": "a stairwell security council with one folding chair",
+      "text": "a stairwell security council of one chair",
       "tags": [
         "nuance"
       ],
@@ -175,7 +175,7 @@
     {
       "id": "apartment-block-geopolitician-balcony-listening-post",
       "role": "noun",
-      "text": "my balcony listening post aimed at the washing line",
+      "text": "my balcony listening post at the washing line",
       "tags": [
         "sources"
       ],
@@ -199,7 +199,7 @@
     {
       "id": "apartment-block-geopolitician-anonymous-lift-source",
       "role": "noun",
-      "text": "an anonymous source from the lift repair notice",
+      "text": "an anonymous source from the lift notice",
       "tags": [
         "sources"
       ],
@@ -589,7 +589,7 @@
     {
       "id": "apartment-block-geopolitician-washing-line-evidence",
       "role": "modifier",
-      "text": "with a washing line marked as satellite evidence",
+      "text": "with a washing line as satellite evidence",
       "tags": [
         "sources"
       ],

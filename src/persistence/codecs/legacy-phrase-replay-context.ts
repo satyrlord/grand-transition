@@ -1,4 +1,5 @@
 import legacyRosterContent from '../../content/legacy-roster-content-v10.json' with { type: 'json' };
+import legacyPunchlineContent from '../../content/legacy-punchline-content-v11.json' with { type: 'json' };
 import legacyContent from '../../content/legacy-humor-content-v6.json' with { type: 'json' };
 import legacyProphetContent from '../../content/legacy-prophet-content-v7.json' with { type: 'json' };
 import legacyFinalizationContent from '../../content/legacy-finalization-content-v8.json' with { type: 'json' };
@@ -12,6 +13,11 @@ const removedProphetPhraseIds = new Set<string>(legacyProphetContent.removedPhra
 
 export function legacyRosterReplayContext(context: ReplayContext): ReplayContext {
   const catalog = legacyRosterContent as ContentCatalog;
+  return { ...context, catalog, locale: catalog.locales[0]! };
+}
+
+export function legacyPunchlineReplayContext(context: ReplayContext): ReplayContext {
+  const catalog = legacyPunchlineContent as ContentCatalog;
   return { ...context, catalog, locale: catalog.locales[0]! };
 }
 

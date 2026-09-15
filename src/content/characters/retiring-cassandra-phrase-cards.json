@@ -28,8 +28,8 @@
   ],
   "comebacks": {
     "weak": "Do you believe in results, or only in the launch party?",
-    "medium": "I asked about your conscience. You sent me its press officer.",
-    "strong": "You love the country so much that you took half of it home."
+    "medium": "I asked about your conscience. You sent its press officer.",
+    "strong": "You love the country so much you took half home."
   },
   "aiPersonality": {
     "aggression": 0.25,
@@ -54,7 +54,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -119,7 +119,7 @@
     {
       "id": "retiring-cassandra-country-removal-van",
       "role": "ending",
-      "text": "and your love of country comes with a removal van.",
+      "text": "and your patriotism arrives in a removal van.",
       "tags": [
         "corruption"
       ],
@@ -162,7 +162,7 @@
     {
       "id": "retiring-cassandra-resignation-draft",
       "role": "noun",
-      "text": "a resignation draft older than the office printer",
+      "text": "a resignation draft older than the printer",
       "tags": [
         "hope"
       ],
@@ -188,7 +188,7 @@
     {
       "id": "retiring-cassandra-disaster-agenda",
       "role": "noun",
-      "text": "a disaster postponed to the next agenda item",
+      "text": "a disaster postponed to the next item",
       "tags": [
         "competence"
       ],
@@ -240,7 +240,7 @@
     {
       "id": "retiring-cassandra-retirement-fire-alarm",
       "role": "noun",
-      "text": "a fire alarm invited to its own retirement party",
+      "text": "a fire alarm at its own retirement party",
       "tags": [
         "hope",
         "results"
@@ -606,7 +606,7 @@
     {
       "id": "retiring-cassandra-review-modifier",
       "role": "modifier",
-      "text": "after the third rehearsal of the preventable disaster",
+      "text": "after the third rehearsal of the disaster",
       "tags": [
         "competence",
         "results"

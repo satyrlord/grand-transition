@@ -29,7 +29,7 @@
   "comebacks": {
     "weak": "Bad luck. Even your invitation was rejected.",
     "medium": "My dear exit poll, we need to see other people.",
-    "strong": "I congratulated myself too early. You have never had that problem."
+    "strong": "I celebrated early. You never got the chance."
   },
   "aiPersonality": {
     "aggression": 0.55,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted."
+    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -80,7 +80,7 @@
     {
       "id": "marble-diplomat-foundation-modifier",
       "role": "modifier",
-      "text": "before the voters spoil the reception they paid for",
+      "text": "before the voters spoil the reception",
       "tags": [
         "luxury",
         "elitism",
@@ -114,7 +114,7 @@
     {
       "id": "marble-diplomat-recount-reception",
       "role": "ending",
-      "text": "and the recount has asked the orchestra to stop.",
+      "text": "and the recount stopped the orchestra.",
       "tags": [
         "luxury"
       ],
@@ -208,7 +208,7 @@
     {
       "id": "marble-diplomat-prestige-carpet",
       "role": "noun",
-      "text": "a prestige carpet rolled over an unpaid invoice",
+      "text": "a prestige carpet over an unpaid invoice",
       "tags": [
         "luxury",
         "corruption"
@@ -502,11 +502,11 @@
     {
       "id": "marble-diplomat-predicate-1-past",
       "role": "predicate",
-      "text": "measured national prestige by the length of the reception carpet",
-      "singularText": "measured national prestige by the length of the reception carpet",
-      "pluralText": "measured national prestige by the length of the reception carpet",
-      "personalSingularText": "measured national prestige by the length of the reception carpet",
-      "secondPersonText": "measured national prestige by the length of the reception carpet",
+      "text": "measured national prestige in carpet length",
+      "singularText": "measured national prestige in carpet length",
+      "pluralText": "measured national prestige in carpet length",
+      "personalSingularText": "measured national prestige in carpet length",
+      "secondPersonText": "measured national prestige in carpet length",
       "tags": [
         "luxury",
         "elitism"
@@ -537,11 +537,11 @@
     {
       "id": "marble-diplomat-predicate-1-present",
       "role": "predicate",
-      "text": "measures national prestige by the length of the reception carpet",
-      "singularText": "measures national prestige by the length of the reception carpet",
-      "pluralText": "measure national prestige by the length of the reception carpet",
-      "personalSingularText": "measures national prestige by the length of the reception carpet",
-      "secondPersonText": "measure national prestige by the length of the reception carpet",
+      "text": "measures national prestige in carpet length",
+      "singularText": "measures national prestige in carpet length",
+      "pluralText": "measure national prestige in carpet length",
+      "personalSingularText": "measures national prestige in carpet length",
+      "secondPersonText": "measure national prestige in carpet length",
       "tags": [
         "luxury",
         "elitism"
@@ -572,11 +572,11 @@
     {
       "id": "marble-diplomat-predicate-1-future",
       "role": "predicate",
-      "text": "will measure national prestige by the length of the reception carpet",
-      "singularText": "will measure national prestige by the length of the reception carpet",
-      "pluralText": "will measure national prestige by the length of the reception carpet",
-      "personalSingularText": "will measure national prestige by the length of the reception carpet",
-      "secondPersonText": "will measure national prestige by the length of the reception carpet",
+      "text": "will measure national prestige in carpet length",
+      "singularText": "will measure national prestige in carpet length",
+      "pluralText": "will measure national prestige in carpet length",
+      "personalSingularText": "will measure national prestige in carpet length",
+      "secondPersonText": "will measure national prestige in carpet length",
       "tags": [
         "luxury",
         "elitism"

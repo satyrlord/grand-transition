@@ -29,7 +29,7 @@
   "comebacks": {
     "weak": "I highlighted your argument in the color for skipping.",
     "medium": "Your principles need a shirt sponsor.",
-    "strong": "You did half the shouting, I did half the thinking. My half is bigger."
+    "strong": "We split the work. My half was bigger."
   },
   "aiPersonality": {
     "aggression": 0.95,
@@ -50,7 +50,7 @@
     "state": "approved",
     "originality": "original",
     "safetyFlags": [],
-    "notes": "Original fictional comebacks transform selective reading, shirt sponsorship, and impossible credit-sharing into sporting boasts. Private research records sources; no attribution or quotation ships."
+    "notes": "Original fictional comebacks transform selective reading, shirt sponsorship, and impossible credit-sharing into sporting boasts. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
   },
   "phrases": [
     {
@@ -80,7 +80,7 @@
     {
       "id": "football-tycoon-foundation-modifier",
       "role": "modifier",
-      "text": "with a sponsor stitched over the moral objection",
+      "text": "with a sponsor stitched over the objection",
       "tags": [
         "commercialism",
         "sincerity"
@@ -96,7 +96,7 @@
     {
       "id": "football-tycoon-foundation-ending",
       "role": "ending",
-      "text": "and the sponsor paid extra to make the defeat look patriotic.",
+      "text": "and the sponsor paid for a patriotic defeat.",
       "tags": [
         "commercialism",
         "accountability"
@@ -113,7 +113,7 @@
     {
       "id": "football-tycoon-credit-after-one-hundred-percent",
       "role": "ending",
-      "text": "and I claimed the credit left over after one hundred percent.",
+      "text": "and I claimed the credit left over.",
       "tags": [
         "accountability",
         "sincerity"
@@ -227,7 +227,7 @@
     {
       "id": "football-tycoon-blameless-owner",
       "role": "noun",
-      "text": "a club owner absent from every column of blame",
+      "text": "an owner absent from the blame column",
       "tags": [
         "accountability"
       ],
