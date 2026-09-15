@@ -3,9 +3,6 @@ import { describe, expect, test } from 'vitest';
 import {
   basicScoringBalance,
   scoringBalanceForMultiplier,
-  legacyBasicScoringBalance,
-  legacyVersion2BasicScoringBalance,
-  legacyVersion3BasicScoringBalance,
 } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
@@ -34,7 +31,6 @@ import {
   normalizedJson,
   replayKind,
   replayMatch,
-  replayContextForVersion,
   replaySchemaVersion,
   storeMatchLogImport,
   storeReplayImport,
@@ -43,14 +39,6 @@ import {
   type ReplayDocument,
 } from '../../src/persistence/codecs/replay-codec';
 import type { StoragePort } from '../../src/persistence/storage-port';
-import legacyReplayFixture from '../fixtures/replay-v1-scoring.json';
-import version4ReplayFixture from '../fixtures/replay-v4-neutral-scoring.json';
-import version6ReplayFixture from '../fixtures/replay-v6-pre-humor-catalog.json';
-import version7ReplayFixture from '../fixtures/replay-v7-before-prophet-film-phrases.json';
-import version8ReplayFixture from '../fixtures/replay-v8-before-final-volume.json';
-import version10ReplayFixture from '../fixtures/replay-v10-before-reluctant-theorem.json';
-import version11ReplayFixture from '../fixtures/replay-v11-before-punchline-phrases.json';
-import version9ReplayFixture from '../fixtures/replay-v9-before-concise-phrases.json';
 
 const context: ReplayContext = {
   catalog: sampleContent,
@@ -64,17 +52,7 @@ const engineContext: MatchEngineContext = {
   balance: basicScoringBalance,
 };
 
-async function sha256(value: string): Promise<string> {
-  const digest = await crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(value),
-  );
-  return [...new Uint8Array(digest)]
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('');
-}
-
-describe('versioned replay and local match-log codecs', () => {
+describe('replay and local match-log codecs', () => {
   const completed = simulateMatch(
     20_260_823,
     createSimulationSetup(sampleContent),
@@ -91,34 +69,14 @@ describe('versioned replay and local match-log codecs', () => {
     if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
   });
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects invalid captured multiplier %s in versions 6 through 12', (multiplier) => {
-    for (const schemaVersion of [6, 7, 8, 9, 10, 11, 12] as const) {
-      for (const [document, decode] of [
-        [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
-      ] as const) {
-        expect(decode(normalizedJson({
-          ...document,
-          schemaVersion,
-          setup: { ...document.setup, basePointsMultiplier: multiplier },
-        }))).toEqual({ ok: false, code: 'invalid-replay' });
-      }
-    }
-  });
-
-  test('version 5 keeps its original multiplier when the current balance changes', async () => {
-    const fixture = version6ReplayFixture as ReplayDocument;
-    const setup = { ...fixture.setup, basePointsMultiplier: undefined };
-    const bytes = encodeReplay({ ...fixture, schemaVersion: 5, setup });
-    const normal = replayMatch(bytes, context);
-    const changed = replayMatch(bytes, { ...context, balance: scoringBalanceForMultiplier(1) });
-    expect(normal.ok).toBe(true);
-    expect(changed).toEqual(normal);
-    expect(await sha256(bytes))
-      .toBe('352465135b702070afcdb32e2a4178e10e4dba11322e7ba19a9e5f9a1cf007f5');
-    if (changed.ok) {
-      expect(changed.normalized).toBe(bytes);
-      expect(await sha256(JSON.stringify(changed.state)))
-        .toBe('634ad0425f3889bba78708a61ac4cdc7751f016fc51d3c6a89dcfaee6bee7b85');
+  test.each([undefined, 0, 6, 1.5, '3'])('rejects an invalid captured multiplier %s', (multiplier) => {
+    for (const [document, decode] of [
+      [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
+    ] as const) {
+      expect(decode(normalizedJson({
+        ...document,
+        setup: { ...document.setup, basePointsMultiplier: multiplier },
+      }))).toEqual({ ok: false, code: 'invalid-replay' });
     }
   });
 
@@ -127,7 +85,7 @@ describe('versioned replay and local match-log codecs', () => {
     expect(decoded.ok).toBe(true);
     if (!decoded.ok) return;
 
-    expect(decoded.value.schemaVersion).toBe(12);
+    expect(decoded.value.schemaVersion).toBe(replaySchemaVersion);
     expect(encodeReplay(decoded.value)).toBe(completed.replayBytes);
     expect(completed.replayBytes.endsWith('\n')).toBe(true);
     expect(completed.replayBytes.endsWith('\n\n')).toBe(false);
@@ -147,309 +105,42 @@ describe('versioned replay and local match-log codecs', () => {
     }
   });
 
-  test('version 7 preserves its complete catalog and captured Prophet match', async () => {
-    const restored = replayContextForVersion(7, context);
-    expect(await sha256(JSON.stringify(restored)))
-      .toBe('92af39abb1a27e291476725b3a37ecd0cba159ffdc0f4dc6391fb0c90792f308');
-    const bytes = normalizedJson(version7ReplayFixture);
-    expect(await sha256(bytes))
-      .toBe('cfdac5e33dda28212c898826da25a83c14109daa7af884bdac9e38e69accfd13');
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(await sha256(JSON.stringify(replayed.state)))
-      .toBe('505dc5b56018833497b6e67c838ffe36901bbe60b907eba9ff7ee70fbc5ec058');
-    expect(replayContextForVersion(12, context)).toBe(context);
-  });
-
-  test('version 8 preserves its complete catalog, normalized commands, and exact final state', async () => {
-    const restored = replayContextForVersion(8, context);
-    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
-      .toBe('5565997abc36c74fe40e5bc1e226c282136a7a10971ca3fa1ec537e09a67c226');
-    const bytes = normalizedJson(version8ReplayFixture);
-    expect(await sha256(bytes))
-      .toBe('b777aa8d6683373e2e3057cab005ea151ebe742b037431fb209760c4bcf2949d');
-    const decoded = decodeReplay(bytes);
-    expect(decoded.ok).toBe(true);
-    if (decoded.ok) expect(encodeReplay(decoded.value)).toBe(bytes);
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state).toMatchObject({ schemaVersion: 8, phase: 'results', winner: 'player-2', round: 8 });
-    expect(await sha256(normalizedJson(replayed.state)))
-      .toBe('f59cbde67151dae58722d56d24cc795021016b8e50b90b8705a9766929731ccb');
-  });
-
-  test('version 9 preserves its complete catalog, long phrase text, and exact final state', async () => {
-    const restored = replayContextForVersion(9, context);
-    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
-      .toBe('64aef4eece6e761e4dda0305ec735b871329fa18fe5de4426847172e5026460f');
-    const bytes = normalizedJson(version9ReplayFixture);
-    expect(await sha256(bytes))
-      .toBe('8a24b97a359edee983509453fca03f37a4d9b3b0de3ab052eabbb6a51b2e70ed');
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state).toMatchObject({ schemaVersion: 9, phase: 'results', winner: 'player-1', round: 11 });
-    expect(replayed.state.resolutionHistory.some((round) =>
-      Object.values(round.players).some((player) =>
-        player.constructionPhrases.some((phrase) =>
-          phrase.phraseId === 'brings-the-miners-to-bucharest'
-          && phrase.text === 'brings a delegation of miners to the capital for a staged show of support'))))
-      .toBe(true);
-    expect(await sha256(normalizedJson(replayed.state)))
-      .toBe('b944cc9d916fb5211ed5b05c62877ffd6d7b0d3802809b9b3dff9c8da50dd8cb');
-  });
-
-  test('version 10 preserves the catalog and exact state before the nineteenth archetype', async () => {
-    const restored = replayContextForVersion(10, context);
-    expect(restored.catalog.characters).toHaveLength(18);
-    expect(restored.catalog.characters.some(({ id }) => id === 'reluctant-theorem')).toBe(false);
-    expect(restored.catalog.phrases.find(({ id }) => id === 'the-dacs-that-come-from-the-tracs')?.tags)
-      .toEqual(['legacy', 'modernity']);
-    for (const id of ['brought-the-miners-to-bucharest', 'brings-the-miners-to-bucharest', 'will-bring-the-miners-to-bucharest']) {
-      expect(restored.catalog.phrases.find((phrase) => phrase.id === id)?.tags)
-        .toEqual(['miners', 'legacy', 'credibility']);
-    }
-    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
-      .toBe('5fac8ff60df3b6c81531f66bd7517daa7b6af4d5d496f81b0a68ef9deeba55c1');
-    const bytes = normalizedJson(version10ReplayFixture);
-    expect(await sha256(bytes))
-      .toBe('cde327925c08412083cd99219fa77112704511946b569acc96170172f7606188');
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state).toMatchObject({ schemaVersion: 10, phase: 'results', winner: 'player-1', round: 9 });
-    expect(await sha256(normalizedJson(replayed.state)))
-      .toBe('cf0b371805cb69f5a362ccd09738da0f4a31e001f9476a0b233f29448cc13139');
-  });
-
-  test('version 11 preserves the pre-punchline catalog text and exact final state', async () => {
-    const restored = replayContextForVersion(11, context);
-    expect(restored.catalog.phrases).toHaveLength(1009);
-    expect(restored.locale.messages['phrase.by-emergency-ordinance'])
-      .toBe('by emergency ordinance; even the calendar needs permission.');
-    expect(restored.locale.messages['comeback.thunder-tribune.medium'])
-      .toBe('You cannot evict the truth from my office. It has never lived here.');
-    expect(await sha256(JSON.stringify({ catalog: restored.catalog, locale: restored.locale })))
-      .toBe('769d8c9259d2a679c8e8d58275e3b7f3e282019f73a80190a96296a3aa734360');
-    const bytes = normalizedJson(version11ReplayFixture);
-    expect(await sha256(bytes))
-      .toBe('2966db31c5cd46a2fe0ee3bbf90f3c89a8a383bb511ec84425831cb63ce043ea');
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state).toMatchObject({ schemaVersion: 11, phase: 'results', winner: 'player-2', round: 10 });
-    expect(await sha256(normalizedJson(replayed.state)))
-      .toBe('41662b37bff51239569fd0ed577deda7fc3ec41ad4a16cb182de87a5f1aacf82');
-  });
-
-  test('versions 1 through 11 restore saved catalogs before older rules; version 12 uses the current catalog', () => {
-    const changed: ReplayContext = {
-      ...context,
-      catalog: { ...context.catalog, phrases: [], characters: [], scenes: [], locales: [] },
-      locale: { ...context.locale, messages: { 'fixture.changed': 'Changed current catalog.' } },
-    };
-    for (const version of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) {
-      expect(replayContextForVersion(version, changed)).toEqual(replayContextForVersion(version, context));
-    }
-    expect(replayContextForVersion(12, changed)).toBe(changed);
-    expect(replayContextForVersion(12, context)).toBe(context);
-  });
-
-  test('version 6 restores the complete pre-humor catalog and exact final state', async () => {
-    const bytes = normalizedJson(version6ReplayFixture);
-    const replayed = replayMatch(bytes, context);
-
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state.schemaVersion).toBe(6);
-    expect(await sha256(JSON.stringify(replayed.state)))
-      .toBe('c8a49c0963a630b11431af7f6168c0b9a39b48b55df64d732343a181c5e9f988');
-    expect(replayed.state).toMatchObject({
-      phase: 'results',
-      winner: 'player-2',
-      round: 11,
-      playerStates: {
-        'player-1': { pride: 0 },
-        'player-2': { pride: 27 },
-      },
-    });
-
-    const restored = replayContextForVersion(6, context);
-    expect(restored.catalog.phrases).toHaveLength(367);
-    expect(restored.catalog.phrases.some(
-      ({ id }) => id === 'algorithmic-prophet-lemonade-transfer',
-    )).toBe(false);
-    expect(restored.locale.messages['phrase.national-strategy'])
-      .toBe('your national strategy');
-    expect(restored.catalog.phrases.find(({ id }) => id === 'national-strategy')?.tags)
-      .toEqual(['legacy', 'bureaucracy']);
-    expect(restored.locale.messages['comeback.algorithmic-prophet.strong'])
-      .toBe('I asked the algorithm and it muted your entire worldview.');
-    const tribunePredicate = restored.catalog.phrases.find(
-      ({ id }) => id === 'looks-like-a-somaldoaca-on-television',
-    );
-    expect(tribunePredicate?.numberForms).not.toHaveProperty('personalSingularKey');
-    expect(tribunePredicate?.numberForms).not.toHaveProperty('secondPersonKey');
-  });
-
-  test('replays legacy version 1 scoring with its original balance', () => {
-    const legacyReplay = normalizedJson(legacyReplayFixture);
-    const replayed = replayMatch(legacyReplay, context);
-
-    expect(replayed.ok).toBe(true);
-    if (replayed.ok) {
-      expect(replayed.replay.schemaVersion).toBe(1);
-      expect(replayed.normalized).toBe(legacyReplay);
-      expect(replayed.state.winner).toBe('player-1');
-      expect(
-        replayed.state.resolutionHistory.map((resolution) => ({
-          round: resolution.round,
-          playerOneDamage: resolution.players['player-1']!.outgoingDamage,
-          playerTwoDamage: resolution.players['player-2']!.outgoingDamage,
-          playerOnePride: resolution.players['player-1']!.prideAfter,
-          playerTwoPride: resolution.players['player-2']!.prideAfter,
-        })),
-      ).toEqual([
-        {
-          round: 1,
-          playerOneDamage: 2,
-          playerTwoDamage: 0,
-          playerOnePride: 5,
-          playerTwoPride: 3,
-        },
-        {
-          round: 2,
-          playerOneDamage: 2,
-          playerTwoDamage: 0,
-          playerOnePride: 5,
-          playerTwoPride: 1,
-        },
-        {
-          round: 3,
-          playerOneDamage: 4,
-          playerTwoDamage: 0,
-          playerOnePride: 5,
-          playerTwoPride: 0,
-        },
-      ]);
+  test('supports exactly one replay and match-log schema version', () => {
+    expect(replaySchemaVersion).toBe(1);
+    for (const schemaVersion of [0, 2, 13]) {
+      for (const [document, decode] of [
+        [completed.replay, decodeReplay],
+        [completed.matchLog, decodeMatchLog],
+      ] as const) {
+        expect(decode(normalizedJson({ ...document, schemaVersion }))).toEqual({
+          ok: false,
+          code: 'unsupported-version',
+        });
+      }
     }
   });
 
-  test('replays version 2 scoring with its original balance', () => {
-    const version2Replay = normalizedJson({
-      ...legacyReplayFixture,
-      schemaVersion: 2,
-      commands: legacyReplayFixture.commands.slice(0, 8),
-    });
-    const replayed = replayMatch(version2Replay, {
-      ...context,
-      balance: legacyBasicScoringBalance,
-    });
-
-    expect(replayed.ok).toBe(true);
-    if (replayed.ok) {
-      expect(replayed.replay.schemaVersion).toBe(2);
-      expect(replayed.normalized).toBe(version2Replay);
-      expect(replayed.state.winner).toBe('player-1');
-      expect(
-        replayed.state.resolutionHistory.map((resolution) => ({
-          round: resolution.round,
-          playerOneDamage: resolution.players['player-1']!.outgoingDamage,
-          playerTwoDamage: resolution.players['player-2']!.outgoingDamage,
-          playerOnePride: resolution.players['player-1']!.prideAfter,
-          playerTwoPride: resolution.players['player-2']!.prideAfter,
-        })),
-      ).toEqual([
-        {
-          round: 1,
-          playerOneDamage: 8,
-          playerTwoDamage: 0,
-          playerOnePride: 5,
-          playerTwoPride: 0,
-        },
-      ]);
-    }
-  });
-
-  test.each([
-    legacyBasicScoringBalance, legacyVersion2BasicScoringBalance, legacyVersion3BasicScoringBalance,
-  ])('simulates historical balance version $version from the current catalog', (balance) => {
-    const match = simulateMatch(20_260_823, createSimulationSetup(sampleContent), { ...context, balance });
-    const prepared = simulateMatch(20_260_823, createSimulationSetup(sampleContent),
-      replayContextForVersion(balance.version, { ...context, balance }));
-    expect(match.replay.schemaVersion).toBe(balance.version);
-    expect(match.replayBytes).toBe(prepared.replayBytes);
-    expect(match.finalState).toEqual(prepared.finalState);
-    const replayed = replayMatch(match.replayBytes, context);
-    expect(replayed.ok).toBe(true);
-    if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
-  });
-
-  test('version 3 replays retain scores for sentences with modifiers', () => {
-    const legacyContext = replayContextForVersion(3, {
-      ...context,
-      balance: legacyVersion3BasicScoringBalance,
-    });
-    const legacy = simulateMatch(20_260_823, createSimulationSetup(sampleContent), legacyContext,
-      (state, engine) => listSimulationOptions(state, engine).toSorted((left, right) =>
-        Number(right.phrase?.role === 'modifier') - Number(left.phrase?.role === 'modifier')),
-    );
-    const bytes = encodeReplay({ ...legacy.replay, schemaVersion: 3 });
-    expect(legacy.finalState.resolutionHistory.some((round) =>
-      Object.values(round.players).some((player) =>
-        player.score?.breakdown.some((item) => item.kind === 'clause-base' &&
-          item.phraseIds.some((id) => sampleContent.phrases.some((phrase) =>
-            phrase.id === id && phrase.role === 'modifier'))),
+  test('fails safely when the current catalog no longer holds a replayed phrase', () => {
+    const usedPhraseIds = new Set(
+      completed.matchLog.sentences.flatMap((sentence) =>
+        sentence.phrases.map((phrase) => phrase.phraseId),
       ),
-    )).toBe(true);
-    const replayed = replayMatch(bytes, context);
-    expect(replayed.ok).toBe(true);
-    if (replayed.ok) expect(replayed.state).toEqual({ ...legacy.finalState, schemaVersion: 3 });
-    expect(decodeMatchLog(normalizedJson({
-      ...completed.matchLog, schemaVersion: 3, sentences: undefined,
-    }))).toEqual({ ok: false, code: 'invalid-replay' });
-  });
-
-  test('version 4 retains neutral phrase weaknesses, connector IDs, and normalized commands', () => {
-    const bytes = normalizedJson(version4ReplayFixture);
-    const replayed = replayMatch(bytes, { ...context, balance: scoringBalanceForMultiplier(5) });
-    expect(replayed.ok).toBe(true);
-    if (!replayed.ok) return;
-    expect(replayed.normalized).toBe(bytes);
-    expect(replayed.state.schemaVersion).toBe(4);
-    expect(replayed.state.winner).toBe('player-1');
-    expect(replayed.state.resolutionHistory.map((round) => ({
-      damage: round.players['player-1']!.outgoingDamage,
-      pride: round.players['player-2']!.prideAfter,
-    }))).toEqual([
-      { damage: 15, pride: 85 },
-      { damage: 24, pride: 61 },
-      { damage: 30, pride: 31 },
-      { damage: 32, pride: 0 },
-    ]);
-    const thirdRound = replayed.state.resolutionHistory[2]!.players['player-1']!;
-    expect(thirdRound.constructionPhrases.map((phrase) => phrase.phraseId))
-      .toContain('televised-but');
-    expect(thirdRound.score?.breakdown).toContainEqual(expect.objectContaining({
-      kind: 'weakness-match', phraseId: 'coordinated', defenderTag: 'restraint',
-    }));
-    expect(thirdRound.score?.breakdown).toContainEqual(expect.objectContaining({
-      kind: 'weakness-match', phraseId: 'you', defenderTag: 'credibility',
-    }));
-    expect(context.catalog.phrases.find((phrase) => phrase.id === 'you')!.tags).toEqual([]);
-    expect(context.catalog.phrases.some((phrase) => phrase.id === 'televised-but')).toBe(false);
-    expect(replayed.state.resolutionHistory.some((round) =>
-      Object.values(round.players).some((player) =>
-        player.constructionText.includes('your coalition majority')),
-    )).toBe(true);
+    );
+    expect(usedPhraseIds.size).toBeGreaterThan(0);
+    const trimmed: ReplayContext = {
+      ...context,
+      catalog: {
+        ...context.catalog,
+        phrases: context.catalog.phrases.filter(
+          (phrase) => !usedPhraseIds.has(phrase.id),
+        ),
+      },
+    };
+    expect(trimmed.catalog.phrases.length).toBeGreaterThan(0);
+    expect(replayMatch(completed.replayBytes, trimmed)).toEqual({
+      ok: false,
+      code: 'invalid-replay',
+    });
   });
 
   test('normalizes and decodes the public match log', () => {
@@ -475,19 +166,14 @@ describe('versioned replay and local match-log codecs', () => {
     expect(completed.matchLog.winner).toBe(completed.finalState.winner);
   });
 
-  test('requires public sentence records in current match logs only', () => {
+  test('requires the public sentence record in every match log', () => {
     const { sentences: _, ...withoutSentences } = completed.matchLog;
 
     expect(decodeMatchLog(normalizedJson(withoutSentences))).toEqual({
       ok: false,
       code: 'invalid-replay',
     });
-    expect(
-      decodeMatchLog(
-        normalizedJson({ ...withoutSentences, schemaVersion: 2,
-          setup: { ...withoutSentences.setup, basePointsMultiplier: undefined } }),
-      ),
-    ).toMatchObject({ ok: true });
+    expect(decodeMatchLog(completed.matchLogBytes)).toMatchObject({ ok: true });
   });
 
   test.each([
@@ -531,8 +217,41 @@ describe('versioned replay and local match-log codecs', () => {
     ],
   ] as const)('rejects match-log fixture %s before a write', (code, bytes) => {
     const storage = recordingStorage();
-    const result = storeMatchLogImport(bytes, storage.port, 'match-log');
+    const result = storeMatchLogImport(bytes, context, storage.port, 'match-log');
     expect(result).toEqual({ ok: false, code });
+    expect(storage.writes).toEqual([]);
+  });
+
+  test.each([
+    ['an unknown phrase ID', { phraseId: 'missing-from-catalog' }],
+    ['stale phrase text', { text: 'retired catalog text' }],
+  ])('rejects match-log import with %s before a write', (_name, change) => {
+    const firstSentence = completed.matchLog.sentences.find(
+      (sentence) => sentence.phrases.length > 0,
+    )!;
+    const stale = {
+      ...completed.matchLog,
+      sentences: completed.matchLog.sentences.map((sentence) =>
+        sentence === firstSentence
+          ? {
+              ...sentence,
+              phrases: sentence.phrases.map((phrase, index) =>
+                index === 0 ? { ...phrase, ...change } : phrase,
+              ),
+            }
+          : sentence,
+      ),
+    };
+    const storage = recordingStorage();
+
+    expect(
+      storeMatchLogImport(
+        normalizedJson(stale),
+        context,
+        storage.port,
+        'match-log',
+      ),
+    ).toEqual({ ok: false, code: 'invalid-replay' });
     expect(storage.writes).toEqual([]);
   });
 
@@ -639,7 +358,12 @@ describe('versioned replay and local match-log codecs', () => {
 
     const logStorage = recordingStorage();
     expect(
-      storeMatchLogImport(completed.matchLogBytes, logStorage.port, 'match-log')
+      storeMatchLogImport(
+        completed.matchLogBytes,
+        context,
+        logStorage.port,
+        'match-log',
+      )
         .ok,
     ).toBe(true);
     expect(logStorage.writes).toEqual([
@@ -656,7 +380,12 @@ describe('versioned replay and local match-log codecs', () => {
       ),
     ).toEqual({ ok: false, code: 'storage-disabled' });
     expect(
-      storeMatchLogImport(completed.matchLogBytes, disabled.port, 'match-log'),
+      storeMatchLogImport(
+        completed.matchLogBytes,
+        context,
+        disabled.port,
+        'match-log',
+      ),
     ).toEqual({ ok: false, code: 'storage-disabled' });
   });
 

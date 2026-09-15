@@ -14,6 +14,7 @@ import {
   type MatchHistoryEntry,
 } from '../../src/persistence/match-history';
 import type { StoragePort } from '../../src/persistence/storage-port';
+import { replaySchemaVersion } from '../../src/persistence/codecs/replay-codec';
 
 const completed = simulateMatch(
   20_260_829,
@@ -26,7 +27,7 @@ const completed = simulateMatch(
 );
 
 describe('persistent match history', () => {
-  test('updates terminal speech diagnostics on the same history entry and retains legacy entries', () => {
+  test('updates terminal speech diagnostics on the same history entry', () => {
     let serialized: string | null = null;
     const storage: StoragePort = { read: () => ({ ok: true, value: serialized }),
       write: (_key, value) => { serialized = value; return { ok: true, value: undefined }; }, remove: () => ({ ok: true, value: undefined }) };
@@ -74,8 +75,8 @@ describe('persistent match history', () => {
 
   test('round-trips normalized public replay and match-log data', () => {
     const entry = historyEntry('match-one', '2026-08-29T12:00:00.000Z');
-    expect(entry.replay.schemaVersion).toBe(12);
-    expect(entry.matchLog.schemaVersion).toBe(12);
+    expect(entry.replay.schemaVersion).toBe(replaySchemaVersion);
+    expect(entry.matchLog.schemaVersion).toBe(replaySchemaVersion);
     const encoded = encodeMatchHistory({
       schemaVersion: matchHistorySchemaVersion,
       kind: matchHistoryKind,
@@ -113,40 +114,80 @@ describe('persistent match history', () => {
     expect(encoded).toContain(usedPhrases[0]!.text);
   });
 
-  test.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const)(
-    'keeps a matched replay and match-log version %s history pair',
+  test.each([0, 2, 6, 12] as const)(
+    'drops a replay and match-log pair recorded under document version %s and keeps the rest',
     (schemaVersion) => {
-      const entry = historyEntry(`older-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');
+      const stale = historyEntry(`stale-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');
+      const current = historyEntry('current-entry', '2026-08-29T13:30:00.000Z');
       const stored = JSON.parse(
         encodeMatchHistory({
           schemaVersion: matchHistorySchemaVersion,
           kind: matchHistoryKind,
-          entries: [entry],
+          entries: [stale, current],
         }),
       ) as {
         entries: Array<{
-          replay: { schemaVersion: number; setup: { basePointsMultiplier?: number } };
-          matchLog: { schemaVersion: number; sentences?: unknown; setup: { basePointsMultiplier?: number } };
+          replay: { schemaVersion: number };
+          matchLog: { schemaVersion: number };
         }>;
       };
-      if (schemaVersion < 6) {
-        delete stored.entries[0]!.replay.setup.basePointsMultiplier;
-        delete stored.entries[0]!.matchLog.setup.basePointsMultiplier;
-      }
       stored.entries[0]!.replay.schemaVersion = schemaVersion;
       stored.entries[0]!.matchLog.schemaVersion = schemaVersion;
-      if (schemaVersion <= 2) delete stored.entries[0]!.matchLog.sentences;
 
       const decoded = decodeMatchHistory(JSON.stringify(stored));
 
       expect(decoded.ok).toBe(true);
-      const sentences = decoded.ok
-        ? decoded.value.entries[0]?.matchLog.sentences
-        : null;
-      if (schemaVersion <= 2) expect(sentences).toBeUndefined();
-      else expect(sentences).toBeDefined();
+      expect(decoded.ok && decoded.value.entries.map(({ id }) => id)).toEqual([
+        'current-entry',
+      ]);
     },
   );
+
+  test('ignores a foreign pair before validating retained-entry identity and time', () => {
+    const current = historyEntry('current-entry', '2026-08-29T13:30:00.000Z');
+    const stored = JSON.parse(
+      encodeMatchHistory({
+        schemaVersion: matchHistorySchemaVersion,
+        kind: matchHistoryKind,
+        entries: [current],
+      }),
+    ) as { entries: Array<Record<string, unknown>> };
+    const foreign = structuredClone(stored.entries[0]!);
+    foreign.completedAt = 'not-an-iso-time';
+    (foreign.replay as { schemaVersion: number }).schemaVersion =
+      replaySchemaVersion + 1;
+    (foreign.matchLog as { schemaVersion: number }).schemaVersion =
+      replaySchemaVersion + 1;
+    stored.entries.push(foreign);
+
+    const decoded = decodeMatchHistory(JSON.stringify(stored));
+
+    expect(decoded.ok && decoded.value.entries.map(({ id }) => id)).toEqual([
+      'current-entry',
+    ]);
+  });
+
+  test('rejects mismatched replay and match-log versions instead of ignoring them', () => {
+    const entry = historyEntry('mixed-version', '2026-08-29T15:45:00.000Z');
+    const stored = JSON.parse(
+      encodeMatchHistory({
+        schemaVersion: matchHistorySchemaVersion,
+        kind: matchHistoryKind,
+        entries: [entry],
+      }),
+    ) as {
+      entries: Array<{
+        replay: { schemaVersion: number };
+        matchLog: { schemaVersion: number };
+      }>;
+    };
+    stored.entries[0]!.replay.schemaVersion = replaySchemaVersion + 1;
+
+    expect(decodeMatchHistory(JSON.stringify(stored))).toEqual({
+      ok: false,
+      code: 'invalid-data',
+    });
+  });
 
   test('stores every entry, restores newest first, and ignores duplicate IDs', () => {
     const storage = memoryStorage();
@@ -256,16 +297,15 @@ describe('persistent match history', () => {
 
   test('rejects a replay and match-log pair from different schema versions', () => {
     const entry = historyEntry('mixed-version', '2026-08-29T15:45:00.000Z');
+    const foreignMatchLog = {
+      ...entry.matchLog,
+      schemaVersion: replaySchemaVersion + 1,
+    } as unknown as MatchHistoryEntry['matchLog'];
     expect(() =>
       encodeMatchHistory({
         schemaVersion: matchHistorySchemaVersion,
         kind: matchHistoryKind,
-        entries: [
-          {
-            ...entry,
-            matchLog: { ...entry.matchLog, schemaVersion: 1 },
-          },
-        ],
+        entries: [{ ...entry, matchLog: foreignMatchLog }],
       }),
     ).toThrow('invalid entry');
   });

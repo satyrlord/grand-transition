@@ -56,7 +56,7 @@
     {
       "id": "diaspora-oracle-foundation-noun",
       "role": "noun",
-      "text": "my overseas view of a house of promises",
+      "text": "my overseas view of a promised house",
       "tags": [
         "distance",
         "firsthand-knowledge"
@@ -181,7 +181,7 @@
     {
       "id": "diaspora-oracle-postage-stamp-map",
       "role": "noun",
-      "text": "a reform plan drawn on a postage stamp",
+      "text": "a reform plan on a postage stamp",
       "tags": [
         "context"
       ],
@@ -205,7 +205,7 @@
     {
       "id": "diaspora-oracle-time-zone-verdict",
       "role": "noun",
-      "text": "a verdict three time zones ahead of the facts",
+      "text": "a verdict three time zones early",
       "tags": [
         "distance",
         "firsthand-knowledge"
@@ -494,14 +494,14 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-past",
       "role": "predicate",
-      "text": "was current as of the last visit",
+      "text": "was current until the next visit",
       "tags": [
         "context"
       ],
-      "singularText": "was up to date as of the previous visit",
-      "pluralText": "were up to date as of the previous visit",
-      "personalSingularText": "was up to date as of the previous visit",
-      "secondPersonText": "were up to date as of the previous visit",
+      "singularText": "was current until the next visit",
+      "pluralText": "were current until the next visit",
+      "personalSingularText": "was current until the next visit",
+      "secondPersonText": "were current until the next visit",
       "tense": "past",
       "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
       "scorePreferences": {
@@ -528,14 +528,14 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-present",
       "role": "predicate",
-      "text": "is current as of the last visit",
+      "text": "is current until the next visit",
       "tags": [
         "context"
       ],
-      "singularText": "is up to date as of the previous visit",
-      "pluralText": "are up to date as of the previous visit",
-      "personalSingularText": "is up to date as of the previous visit",
-      "secondPersonText": "are up to date as of the previous visit",
+      "singularText": "is current until the next visit",
+      "pluralText": "are current until the next visit",
+      "personalSingularText": "is current until the next visit",
+      "secondPersonText": "are current until the next visit",
       "tense": "present",
       "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
       "scorePreferences": {
@@ -562,14 +562,14 @@
     {
       "id": "diaspora-oracle-up-to-date-last-visit-future",
       "role": "predicate",
-      "text": "will be current as of the last visit",
+      "text": "will be current until the next visit",
       "tags": [
         "context"
       ],
-      "singularText": "will be up to date as of the previous visit",
-      "pluralText": "will be up to date as of the previous visit",
-      "personalSingularText": "will be up to date as of the previous visit",
-      "secondPersonText": "will be up to date as of the previous visit",
+      "singularText": "will be current until the next visit",
+      "pluralText": "will be current until the next visit",
+      "personalSingularText": "will be current until the next visit",
+      "secondPersonText": "will be current until the next visit",
       "tense": "future",
       "tenseFamily": "diaspora-oracle-up-to-date-last-visit",
       "scorePreferences": {
@@ -596,7 +596,7 @@
     {
       "id": "diaspora-oracle-through-cracked-lens",
       "role": "modifier",
-      "text": "through a webcam aimed at the wrong street",
+      "text": "through a faulty webcam",
       "tags": [
         "firsthand-knowledge"
       ],

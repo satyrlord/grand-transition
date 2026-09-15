@@ -54,8 +54,9 @@ agreement forms when relation text changes. Recheck weakness tags against the
 new visible meaning; preserve family tags on family references. Do not change
 score values or draw rarity merely to make a line funnier.
 Any text, tag, agreement, comeback, phrase-order, or pool change follows the
-Milestone 014 replay-version contract. A new replay version preserves the
-complete preceding catalog context instead of changing an existing version.
+Milestone 014 replay contract. The replay document version tracks the document
+shape only: content revisions change the catalog in place and do not add a
+version or snapshot the preceding catalog.
 
 Validate the loaded catalog, cross-corpus text uniqueness, locale derivation,
 ending grammar, comeback ownership, and representative complete sentences.
@@ -163,8 +164,8 @@ it matters.
 ## Review tools and evidence
 
 The development-only `npm run review:release` command owns the release review
-files. It adds no application UI, runtime import, network request, catalog
-mutation, or replay version. Its three source files are
+files. It adds no application UI, runtime import, network request, or catalog
+mutation. Its three source files are
 `tools/content-review.ts`, `tools/editorial-review.ts`, and
 `tools/review-release.ts`. The package script and ignore-file entries complete
 the five-production-file budget.

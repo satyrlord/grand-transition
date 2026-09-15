@@ -56,11 +56,8 @@
     {
       "id": "county-baron-foundation-noun",
       "role": "noun",
-      "text": "my tender with a doughnut in the budget",
-      "tags": [
-        "procurement",
-        "spending"
-      ],
+      "text": "my special shoe box",
+      "tags": [],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -74,7 +71,7 @@
         "state": "approved",
         "originality": "original",
         "safetyFlags": [],
-        "notes": "Original transformed pastry-denial motif: a procurement document contains a snack instead of public money. Agent editorial review, 2026-09-11; no real names or copied lines."
+        "notes": "Original fictional personal-property image reviewed after the concise rewrite. The visible text supports no weakness tag; no real names or copied lines."
       }
     },
     {
@@ -155,7 +152,7 @@
     {
       "id": "county-baron-cousin-tender",
       "role": "noun",
-      "text": "a tender form asking if we are related",
+      "text": "a form asking if we're related",
       "tags": [
         "nepotism",
         "family"
@@ -208,7 +205,7 @@
     {
       "id": "county-baron-municipal-dinner-table",
       "role": "noun",
-      "text": "a municipal budget drawn on the dinner table",
+      "text": "a budget drawn on the dinner table",
       "tags": [
         "nepotism",
         "family"
@@ -235,7 +232,7 @@
     {
       "id": "county-baron-pothole-warranty",
       "role": "noun",
-      "text": "a pothole warranty that expires when it rains",
+      "text": "a pothole warranty that expires in rain",
       "tags": [
         "procurement",
         "infrastructure"
@@ -610,7 +607,7 @@
     {
       "id": "county-baron-review-modifier",
       "role": "modifier",
-      "text": "with the road inspector seated at the family table",
+      "text": "with the inspector at the family table",
       "tags": [
         "nepotism",
         "family"

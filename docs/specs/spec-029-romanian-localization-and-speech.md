@@ -35,7 +35,7 @@ fixtures, and required specification updates do not count toward the budget.
 
 Use `en` and `ro-RO` for both interface and game locale identifiers. Use
 `ro-RO` for Romanian speech. Do not select a language from browser or operating
-system preferences. New installations and migrated English settings use `en`.
+system preferences. New installations and accepted English settings use `en`.
 
 The title Settings modal exposes two separate, independently saved drop-downs:
 
@@ -123,14 +123,14 @@ must not mutate state, consume randomness, or enter command history.
 
 ## Phase 1: Settings, replay, and history compatibility
 
-Extend the strict settings document to version 6 with separate
-`interfaceLocale: 'en' | 'ro-RO'` and `gameLocale: 'en' | 'ro-RO'` fields.
-Migrate real version 1 and 2 fixtures through the Milestone 020 version 3
-migration, including its speech-rate correction and GPU preference handling.
-Migrate version 3 through the Milestone 020 version 4 multiplier addition.
-Migrate version 4 through Milestone 020's version 5 tutorial preference addition.
-Then migrate version 5 to version 6 by setting both locale fields to `en`.
-Preserve every other value, including the retained speech voice URI and GPU
+Add separate
+`interfaceLocale: 'en' | 'ro-RO'` and `gameLocale: 'en' | 'ro-RO'` fields to the
+strict settings document and increment its schema version. Both default to `en`.
+A stored document written before these fields existed is rejected as
+`unsupported-version` and falls back to the defaults, as any other settings
+shape change does.
+Preserve every other value on an accepted document, including the retained
+speech voice URI and GPU
 voice preference, tutorial preference, and base points multiplier. Unknown locale values
 return `invalid-data`; unknown schema versions return `unsupported-version`.
 Use the existing defaults and storage fallback without overwriting invalid
@@ -139,10 +139,9 @@ fallback notice and preserve its meaning and dismissal behavior.
 
 Version the replay, match-log, and history formats that need a locale field.
 Record the match game locale and the content/grammar identity needed for exact
-reproduction. Pin each new schema number, source fixture, and migration in
-Milestones 014 and 019 before implementing its codec. Existing versions 1
-through 11 English replay/log pairs keep their original scoring rules and resolve
-to English. Existing history entries retain their original public text.
+reproduction. Pin each new schema number and source fixture in
+Milestones 014 and 019 before implementing its codec. English replay and
+match-log documents resolve to English. Existing history entries retain their original public text.
 
 History controls use the current interface language. Recorded sentences keep
 their original match language and carry the correct language annotation for
@@ -206,9 +205,9 @@ The new verifier paths below are implementation targets, not existing evidence.
   `npm run content:validate`, and `tests/unit/romanian-localization.test.ts`.
 - **AC-029-02:** Both drop-downs default to English and independently preserve
   all four language combinations after selection and reload. Changing either
-  leaves the other unchanged. Stepwise migration through versions 3, 4, and 5 to
-  version 6 sets both locale fields to English and preserves the base points
-  multiplier and tutorial preference.
+  leaves the other unchanged. Adding both fields preserves the base points
+  multiplier and tutorial preference, and a document stored before them is
+  rejected as `unsupported-version`.
   Invalid values in either field, unknown versions, and blocked/quota storage
   match this contract. Verifiers: `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.
@@ -222,7 +221,7 @@ The new verifier paths below are implementation targets, not existing evidence.
   `tests/unit/romanian-match.test.ts` and `e2e/romanian-localization.spec.ts`.
   Repeat fixed game-locale fixtures with each interface language and assert
   identical grammar results, AI decisions, state, and scores.
-- **AC-029-05:** Legacy English fixtures and new Romanian replay/log/history
+- **AC-029-05:** Current English fixtures and new Romanian replay/log/history
   fixtures round-trip with original text, locale, and scoring. Changing the
   interface language cannot alter stored results. Verifier:
   `tests/unit/romanian-persistence.test.ts`.

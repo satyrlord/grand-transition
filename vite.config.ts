@@ -29,11 +29,10 @@ export default defineConfig(({ command }) => ({
       output: {
         codeSplitting: {
           groups: [
-            { name: 'replay-codecs', test: /[/\\]src[/\\]persistence[/\\]codecs[/\\](?:replay-codec|legacy-phrase-replay-context)\.ts$/u },
-            { name: 'replay-content-data', test: /[/\\]src[/\\]content[/\\]legacy-.*\.json$/u },
+            { name: 'replay-codecs', test: /[/\\]src[/\\]persistence[/\\]codecs[/\\]replay-codec\.ts$/u },
             { name: 'common-phrase-data', test: /[/\\]src[/\\]content[/\\]common-phrase-cards\.json$/u },
             { name: 'character-phrase-data', test: /[/\\]src[/\\]content[/\\]characters[/\\]/u },
-            { name: 'content-data', test: /[/\\]src[/\\]content[/\\](?!legacy-|common-phrase-cards\.json|characters[/\\]).*\.json$/u },
+            { name: 'content-data', test: /[/\\]src[/\\]content[/\\](?!common-phrase-cards\.json|characters[/\\]).*\.json$/u },
             { name: 'character-state-data', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]state-manifest\.json$/u },
             { name: 'character-state-urls', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]variants[/\\]/u },
             { name: 'scene-data', test: /[/\\]src[/\\]assets[/\\]scenes[/\\]scene-manifest\.json$/u },

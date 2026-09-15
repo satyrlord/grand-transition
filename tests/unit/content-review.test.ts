@@ -115,7 +115,6 @@ describe('Milestone 027 content prerequisites', () => {
 
   test('content fingerprints include prose, pools, scene opener, and balance', () => {
     expect(contentFingerprint(context)).toBe(contentFingerprint(context));
-    if (basicScoringBalance.version !== 4) throw new Error('Expected current balance.');
     expect(contentFingerprint({ ...context, balance: { ...basicScoringBalance, basePointsMultiplier: 4 } })).not.toBe(contentFingerprint(context));
     expect(contentFingerprint({ ...context, catalog: { ...catalog, phrases: [...catalog.phrases].reverse() } })).not.toBe(contentFingerprint(context));
   });

@@ -81,23 +81,47 @@ test('victory and populated history fit every supported landscape viewport', asy
     const key = 'grand-transition.match-history.v1';
     const document = JSON.parse(localStorage.getItem(key)!) as {
       entries: Array<{
-        replay: { schemaVersion: number; setup: { basePointsMultiplier?: number } };
-        matchLog: { schemaVersion: number; setup: { basePointsMultiplier?: number }; sentences?: unknown };
+        id: string;
+        completedAt: string;
+        replay: { schemaVersion: number };
+        matchLog: { schemaVersion: number };
       }>;
     };
-    document.entries[0]!.replay.schemaVersion = 2;
-    document.entries[0]!.matchLog.schemaVersion = 2;
-    delete document.entries[0]!.replay.setup.basePointsMultiplier;
-    delete document.entries[0]!.matchLog.setup.basePointsMultiplier;
-    delete document.entries[0]!.matchLog.sentences;
+    const current = document.entries[0]!;
+    document.entries = [
+      {
+        ...current,
+        id: 'stale-document-match',
+        completedAt: new Date(Date.parse(current.completedAt) - 60_000).toISOString(),
+        replay: { ...current.replay, schemaVersion: 2 },
+        matchLog: { ...current.matchLog, schemaVersion: 2 },
+      },
+      current,
+    ];
     localStorage.setItem(key, JSON.stringify(document));
   });
+  const storedStaleDocument = await page.evaluate(() =>
+    localStorage.getItem('grand-transition.match-history.v1'),
+  );
+  expect(storedStaleDocument).not.toBe(storedCompletedMatch);
   await page.reload();
   await page.getByRole('button', { name: /Match history.*1/iu }).click();
-  await expect(page.locator('.match-history-legacy-phrases')).toContainText(
-    'Phrase text was not recorded',
+  await expect(page.locator('.match-history-entry')).toHaveCount(1);
+  await expect(page.locator('.match-history-entry')).toHaveAttribute(
+    'data-history-id',
+    completedMatchId!,
   );
   await page.getByRole('button', { name: 'Close' }).click();
+  expect(
+    await page.evaluate(() =>
+      localStorage.getItem('grand-transition.match-history.v1'),
+    ),
+  ).toBe(storedStaleDocument);
+  await page.evaluate(
+    (stored) =>
+      localStorage.setItem('grand-transition.match-history.v1', stored),
+    storedCompletedMatch!,
+  );
   await page.evaluate(() => {
     const key = 'grand-transition.match-history.v1';
     const document = JSON.parse(localStorage.getItem(key)!) as {

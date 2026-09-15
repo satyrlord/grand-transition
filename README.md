@@ -105,7 +105,7 @@ Settings opens from the main menu with Play, Sound, and Speech columns.
 Play offers a Scoring multiplier from ×1 through ×5, defaulting to ×3.
 It controls `5 + (compatibility × multiplier)` for both players in each new
 match. Weakness and combo rules remain separate. Replays retain their match's
-multiplier, and historical replays retain their original scoring.
+multiplier and use the current catalog and scoring rules.
 The main-menu Settings modal has a `Tutorial` checkbox, off by default.
 It gives every grammatically valid next shared or visible private phrase a
 subtle green pulse. Reduced motion keeps the glow steady. Tutorial mode does
@@ -145,8 +145,7 @@ for the match unless GPU speech fails, then later deliveries use Piper.
 Robot skins use installed Microsoft David, Mark, and Zira voices, with British
 neural fallback when the requested local voice is absent. Robot voices read
 each complete insult continuously, without restarting between cards. New
-settings use a 1.00 speech rate. Saved settings from versions 1 and 2 migrate
-the previous 1.2 rate to 1.00; other rates remain intact.
+settings use a 1.00 speech rate. A valid saved rate remains intact.
 No phrase is uploaded. Preparation time depends on the device and sentence length.
 The game remains playable when speech is unavailable.
 
@@ -160,8 +159,8 @@ narration position. Leaving the match cancels it.
 Completed match history includes local speech diagnostics in its Technical
 record: preparation, playback, failures, cancellations, and displayed scores,
 with round and speaker timing. Development match logs include the same record
-after final narration. No extra sentence text or audio is recorded. Older
-history entries remain readable.
+after final narration. No extra sentence text or audio is recorded. History
+entries with the current replay and match-log document version remain readable.
 
 `npm run audio:build` prepares the sourced music and original effects.
 `npm run speech:build` prepares pinned neural assets. Their corresponding

@@ -27,7 +27,7 @@
     "class"
   ],
   "comebacks": {
-    "weak": "I asked for public services. You sent a mindfulness leaflet.",
+    "weak": "The people want hospitals but you're selling them spa coupons.",
     "medium": "Every stump has a director. The forest is saved.",
     "strong": "Your budget gives billionaires a sustainability award."
   },
@@ -647,7 +647,7 @@
     {
       "id": "oat-milk-reformist-contrast",
       "role": "conjunction",
-      "text": "but, in a spirit of inclusion,",
+      "text": "but, with compassion,",
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon",

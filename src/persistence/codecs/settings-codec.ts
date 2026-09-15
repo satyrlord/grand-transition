@@ -3,13 +3,15 @@ import { basePointsMultiplierSchema, type BasePointsMultiplier } from '../../con
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
 
-export const settingsSchemaVersion = 5;
+// One settings document format exists at a time. A field addition changes that
+// format and requires a new version, but no earlier document is migrated.
+export const settingsSchemaVersion = 1;
 
 export type TurnTimerSeconds = 15 | 30 | null;
 export type { BasePointsMultiplier } from '../../content/basic-scoring-balance';
 
 export type SettingsDocument = Readonly<{
-  schemaVersion: 5;
+  schemaVersion: 1;
   masterVolume: number;
   musicVolume: number;
   effectsVolume: number;
@@ -136,19 +138,6 @@ export function decodeSettings(serialized: string): SettingsCodecResult {
     value = JSON.parse(serialized);
   } catch {
     return invalid('$');
-  }
-  if (isRecord(value) && [1, 2, 3, 4].includes(value.schemaVersion as number)) {
-    if ('tutorialMode' in value) return invalid('tutorialMode');
-    if (value.schemaVersion !== 4 && 'basePointsMultiplier' in value) return invalid('basePointsMultiplier');
-    if (value.schemaVersion === 1 && 'gpuVoices' in value) return invalid('gpuVoices');
-    return parseSettings({
-      ...value,
-      schemaVersion: settingsSchemaVersion,
-      ...(value.schemaVersion === 1 ? { gpuVoices: true } : {}),
-      speechRate: (value.schemaVersion === 1 || value.schemaVersion === 2) && value.speechRate === 1.2 ? 1 : value.speechRate,
-      ...(value.schemaVersion !== 4 ? { basePointsMultiplier: 3 } : {}),
-      tutorialMode: false,
-    });
   }
   if (
     isRecord(value) &&

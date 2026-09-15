@@ -1,7 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import {
   basicScoringBalance,
-  legacyBasicScoringBalance,
   type BasicScoringBalance,
 } from '../../src/content/basic-scoring-balance';
 import { englishGameLocale, sampleContent } from '../../src/game-content';
@@ -121,7 +120,7 @@ describe('Hollywood Roast combos and finishers', () => {
     );
   });
 
-  test('retains version 1 restriction scoring for legacy replays', () => {
+  test('applies a restriction multiplier to a phrase that a scene or character owns', () => {
     const result = score(
       [
         'national-consensus',
@@ -130,7 +129,7 @@ describe('Hollywood Roast combos and finishers', () => {
       ],
       {},
       [],
-      legacyBasicScoringBalance,
+      { ...basicScoringBalance, restrictedPhraseMultiplier: 1.5 },
     );
     expect(result.score.breakdown).toContainEqual({
       kind: 'restriction-multiplier',

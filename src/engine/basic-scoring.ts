@@ -409,10 +409,9 @@ export function scoreClause(
   const customScore = relation.customScores?.find(
     (item) => item.leftNounId === subject.id && item.rightNounId === object?.id,
   )?.score;
-  const modifierBonus = balance.version === 4
-    ? clausePhrases.filter((phrase) => phrase.role === 'modifier').length *
-      balance.modifierPoints
-    : 0;
+  const modifierBonus =
+    clausePhrases.filter((phrase) => phrase.role === 'modifier').length *
+    balance.modifierPoints;
   const base =
     (customScore ??
       compatibility * balance.basePointsMultiplier + balance.basePointsMinimum) +

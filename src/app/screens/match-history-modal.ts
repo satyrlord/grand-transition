@@ -157,70 +157,64 @@ export class GrandTransitionMatchHistory extends LitElement {
     return html`
       <section class="match-history-phrases" aria-label=${msg('Phrases used')}>
         <h4>${msg('Phrases used')}</h4>
-        ${log.sentences
-          ? log.rounds.map(
-              (round) => html`
-                <section class="match-history-phrase-round">
-                  <header>
-                    <h5>${msg(`Round ${round.round}`)}</h5>
-                    <p>
-                      ${round.suddenDeath ? msg('Cliffhanger') : msg('Debate')}
-                      <span aria-hidden="true"> · </span>
-                      ${log.setup.players
-                        .map(
-                          (player) =>
-                            `${characterName(player.characterId)} ${round.prideAfter[player.playerId]} Pride`,
-                        )
-                        .join(' · ')}
-                    </p>
-                  </header>
-                  <div class="match-history-sentence-grid">
-                    ${log.setup.players.map((player) => {
-                      const sentence = log.sentences!.find(
-                        (candidate) =>
-                          candidate.round === round.round &&
-                          candidate.playerId === player.playerId,
-                      )!;
-                      return html`
-                        <article data-history-player=${player.playerId}>
-                          <h6>${characterName(player.characterId)}</h6>
-                          <p class="match-history-sentence">
-                            ${sentence.text || msg('No completed public sentence.')}
-                          </p>
-                          ${sentence.phrases.length > 0
-                            ? html`
-                                <ol class="match-history-phrase-list">
-                                  ${sentence.phrases.map(
-                                    (phrase) => html`
-                                      <li
-                                        class="match-history-phrase"
-                                        data-phrase-id=${phrase.phraseId}
-                                        data-phrase-source=${phrase.source}
-                                      >
-                                        <span>${phrase.text}</span>
-                                        ${phrase.source === 'carried'
-                                          ? html`<small>${msg('carried')}</small>`
-                                          : nothing}
-                                      </li>
-                                    `,
-                                  )}
-                                </ol>
-                              `
-                            : html`<p class="match-history-phrase-empty">
-                                ${msg('No phrases were used.')}
-                              </p>`}
-                        </article>
-                      `;
-                    })}
-                  </div>
-                </section>
-              `,
-            )
-          : html`<p class="match-history-legacy-phrases">
-              ${msg(
-                'Phrase text was not recorded for this older match history entry.',
-              )}
-            </p>`}
+        ${log.rounds.map(
+          (round) => html`
+            <section class="match-history-phrase-round">
+              <header>
+                <h5>${msg(`Round ${round.round}`)}</h5>
+                <p>
+                  ${round.suddenDeath ? msg('Cliffhanger') : msg('Debate')}
+                  <span aria-hidden="true"> · </span>
+                  ${log.setup.players
+                    .map(
+                      (player) =>
+                        `${characterName(player.characterId)} ${round.prideAfter[player.playerId]} Pride`,
+                    )
+                    .join(' · ')}
+                </p>
+              </header>
+              <div class="match-history-sentence-grid">
+                ${log.setup.players.map((player) => {
+                  const sentence = log.sentences.find(
+                    (candidate) =>
+                      candidate.round === round.round &&
+                      candidate.playerId === player.playerId,
+                  )!;
+                  return html`
+                    <article data-history-player=${player.playerId}>
+                      <h6>${characterName(player.characterId)}</h6>
+                      <p class="match-history-sentence">
+                        ${sentence.text || msg('No completed public sentence.')}
+                      </p>
+                      ${sentence.phrases.length > 0
+                        ? html`
+                            <ol class="match-history-phrase-list">
+                              ${sentence.phrases.map(
+                                (phrase) => html`
+                                  <li
+                                    class="match-history-phrase"
+                                    data-phrase-id=${phrase.phraseId}
+                                    data-phrase-source=${phrase.source}
+                                  >
+                                    <span>${phrase.text}</span>
+                                    ${phrase.source === 'carried'
+                                      ? html`<small>${msg('carried')}</small>`
+                                      : nothing}
+                                  </li>
+                                `,
+                              )}
+                            </ol>
+                          `
+                        : html`<p class="match-history-phrase-empty">
+                            ${msg('No phrases were used.')}
+                          </p>`}
+                    </article>
+                  `;
+                })}
+              </div>
+            </section>
+          `,
+        )}
       </section>
     `;
   }

@@ -288,6 +288,127 @@ describe('content schemas', () => {
     ).toEqual(['red-folded-chairman']);
   });
 
+  test('limits every player-visible phrase form to its role ceiling', () => {
+    const ceilings = new Map([
+      ['conjunction', 6],
+      ['continuation', 1],
+      ['verb', 10],
+      ['modifier', 9],
+      ['noun', 10],
+      ['predicate', 10],
+      ['ending', 11],
+    ]);
+    for (const phrase of phraseCardCatalog.phrases) {
+      const ceiling = ceilings.get(phrase.role)!;
+      for (const key of [
+        phrase.textKey,
+        phrase.numberForms?.singularKey,
+        phrase.numberForms?.pluralKey,
+        phrase.numberForms?.personalSingularKey,
+        phrase.numberForms?.secondPersonKey,
+      ]) {
+        const text = key ? phraseCardCatalog.englishMessages[key] : undefined;
+        if (!text) continue;
+        expect(text.trim().split(/\s+/u).length, `${phrase.id} ${phrase.role}`)
+          .toBeLessThanOrEqual(ceiling);
+      }
+    }
+
+    const overlongModifier = [{
+      id: 'overlong-modifier-fixture',
+      role: 'modifier',
+      text: 'one two three four five six seven eight nine ten',
+      tags: [],
+      rarity: 'common',
+      editorialReview: approvedReview('Original fixture for the role ceiling boundary.'),
+    }];
+    expect(() => parsePhraseCardCorpus(overlongModifier)).toThrow(
+      /modifier text to 9 words or fewer/iu,
+    );
+  });
+
+  test('keeps final comeback text within the 11-word guardrail', () => {
+    const source = {
+      id: 'test-character',
+      rosterOrder: 99,
+      species: 'human',
+      name: 'The Test Character',
+      description: 'An original fictional authoring fixture.',
+      assets: {
+        portrait: { assetId: 'test-portrait', realLogo: false, copyrightedBroadcastGraphic: false },
+        token: { assetId: 'test-token', realLogo: false, copyrightedBroadcastGraphic: false },
+      },
+      palette: { primary: '#112233', secondary: '#445566', accent: '#778899' },
+      weaknessTags: ['paperwork', 'whimsy'],
+      comebacks: {
+        weak: 'one two three four five six seven eight nine ten eleven',
+        medium: 'one two three four five six seven eight nine ten eleven',
+        strong: 'one two three four five six seven eight nine ten eleven',
+      },
+      editorialReview: approvedReview('Original comeback boundary fixture.'),
+      aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
+      voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
+      animationSet: { idle: 'test-idle', speak: 'test-speak', react: 'test-react' },
+      phrases: [{
+        id: 'test-noun', role: 'noun', text: 'a test noun', tags: ['paperwork'],
+        scoreGroups: { substance: ['personal'], flavour: ['politics'] },
+        rarity: 'common', editorialReview: approvedReview('Original phrase fixture.'),
+      }],
+    } as const;
+
+    expect(() => parseCharacterCardFile(
+      source,
+      'characters/test-character-phrase-cards.json',
+    ))
+      .not.toThrow();
+    expect(() => parseCharacterCardFile({
+      ...source,
+      comebacks: {
+        ...source.comebacks,
+        medium: 'one two three four five six seven eight nine ten eleven twelve',
+      },
+    }, 'characters/test-character-phrase-cards.json'))
+      .toThrow(/comeback text to 11 words or fewer/iu);
+  });
+
+  test('keeps concise neutral phrases from activating unrelated weaknesses', () => {
+    for (const id of [
+      'after-the-midnight-news',
+      'county-baron-foundation-noun',
+    ]) {
+      expect(phraseCardCatalog.phrases.find((phrase) => phrase.id === id)?.tags)
+        .toEqual([]);
+    }
+    expect(
+      phraseCardCatalog.englishMessages['comeback.eu-funds-alchemist.medium'],
+    ).toBe('Your watch is worth more than the education budget.');
+  });
+
+  test('keeps the Diaspora Oracle visit punchline across agreement forms', () => {
+    expect(phraseCardCatalog.englishMessages).toMatchObject({
+      'phrase.diaspora-oracle-up-to-date-last-visit-past':
+        'was current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-past.singular':
+        'was current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-past.plural':
+        'were current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-past.personal-singular':
+        'was current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-past.second-person':
+        'were current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-present':
+        'is current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-present.singular':
+        'is current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-present.plural':
+        'are current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-present.personal-singular':
+        'is current until the next visit',
+      'phrase.diaspora-oracle-up-to-date-last-visit-present.second-person':
+        'are current until the next visit',
+    });
+  });
+
   test('limits every player-visible phrase form to 11 words', () => {
     const visibleForms = Object.entries(phraseCardCatalog.englishMessages)
       .filter(([key]) => key.startsWith('phrase.'));

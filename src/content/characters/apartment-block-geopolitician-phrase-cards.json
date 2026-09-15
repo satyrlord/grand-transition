@@ -28,7 +28,7 @@
   ],
   "comebacks": {
     "weak": "Pass the popcorn. Your argument needs salt.",
-    "medium": "I called it a joke. You called it foreign policy.",
+    "medium": "I called it a joke. You called it policy.",
     "strong": "I skipped the debate. Your facts also skipped it."
   },
   "aiPersonality": {
@@ -80,7 +80,7 @@
     {
       "id": "apartment-block-geopolitician-foundation-modifier",
       "role": "modifier",
-      "text": "according to a snack packet, small print removed",
+      "text": "according to an expired snack",
       "tags": [
         "sources",
         "specificity"
@@ -175,7 +175,7 @@
     {
       "id": "apartment-block-geopolitician-balcony-listening-post",
       "role": "noun",
-      "text": "my balcony listening post at the washing line",
+      "text": "my balcony listening post",
       "tags": [
         "sources"
       ],

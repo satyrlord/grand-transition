@@ -13,9 +13,36 @@ import {
 
 const maximumPhraseWordCount = 11;
 
+// Guardrail ceilings by role. They only stop real bloat: a card may sit well
+// above the measured source-game band when the length is the joke, and the
+// English text may later grow again when Romanian localization adapts it.
+// The soft editorial bands live in the private research record.
+const roleWordCeilings: Record<Phrase['role'], number> = {
+  conjunction: 6,
+  continuation: 1,
+  verb: 10,
+  modifier: 9,
+  noun: 10,
+  predicate: 10,
+  ending: 11,
+};
+
 function phraseWordCount(value: string): number {
   return value.trim().split(/\s+/u).length;
 }
+
+const comebackLineSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .superRefine((value, context) => {
+    if (phraseWordCount(value) > maximumPhraseWordCount) {
+      context.addIssue({
+        code: 'custom',
+        message: `Keep comeback text to ${maximumPhraseWordCount} words or fewer.`,
+      });
+    }
+  });
 
 const manualPhraseCardSchema = phraseDefinitionSchema
   .omit({
@@ -47,6 +74,14 @@ const manualPhraseCardSchema = phraseDefinitionSchema
           code: 'custom',
           path: [field],
           message: `Keep player-visible phrase text to ${maximumPhraseWordCount} words or fewer.`,
+        });
+      }
+      const ceiling = roleWordCeilings[card.role];
+      if (value && phraseWordCount(value) > ceiling) {
+        context.addIssue({
+          code: 'custom',
+          path: [field],
+          message: `Keep ${card.role} text to ${ceiling} words or fewer so the speech bubble stays readable.`,
         });
       }
     }
@@ -125,9 +160,9 @@ const manualCharacterFileSchema = characterDefinitionSchema
     description: z.string().trim().min(1),
     comebacks: z
       .object({
-        weak: z.string().trim().min(1),
-        medium: z.string().trim().min(1),
-        strong: z.string().trim().min(1),
+        weak: comebackLineSchema,
+        medium: comebackLineSchema,
+        strong: comebackLineSchema,
       })
       .strict(),
     editorialReview: editorialReviewSchema,
