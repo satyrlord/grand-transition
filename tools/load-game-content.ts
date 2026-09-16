@@ -7,6 +7,7 @@ import {
 } from '../src/content/phrase-card-catalog';
 import { createSampleContent } from '../src/content/sample-content';
 import { createEnglishGameLocale } from '../src/localization/en-game-locale';
+import { indexGameLocaleBundles } from '../src/localization/game-locale-bundles';
 
 const repositoryRoot = path.resolve(
   fileURLToPath(new URL('..', import.meta.url)),
@@ -15,6 +16,7 @@ const repositoryRoot = path.resolve(
 export function loadGameContent(rootDirectory = repositoryRoot): {
   phraseCardCatalog: PhraseCardCatalog;
   englishGameLocale: ReturnType<typeof createEnglishGameLocale>;
+  gameLocaleBundles: ReturnType<typeof indexGameLocaleBundles>;
   sampleContent: ReturnType<typeof createSampleContent>;
 } {
   const contentDirectory = path.join(rootDirectory, 'src', 'content');
@@ -38,10 +40,14 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
   const englishGameLocale = createEnglishGameLocale(
     phraseCardCatalog.englishMessages,
   );
+  const sampleContent = createSampleContent(phraseCardCatalog, [
+    englishGameLocale,
+  ]);
   return {
     phraseCardCatalog,
     englishGameLocale,
-    sampleContent: createSampleContent(phraseCardCatalog, englishGameLocale),
+    gameLocaleBundles: indexGameLocaleBundles(sampleContent.locales),
+    sampleContent,
   };
 }
 

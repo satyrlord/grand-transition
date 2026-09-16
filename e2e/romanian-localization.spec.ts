@@ -9,8 +9,9 @@ import {
 const settingsKey = 'grand-transition.settings.v1';
 
 const romanianSettings = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   interfaceLocale: 'ro-RO',
+  gameLocale: 'en',
   masterVolume: 1,
   musicVolume: 0,
   effectsVolume: 0.8,
@@ -39,24 +40,35 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
   await openSettings(page);
 
   const select = page.locator('select[name="interfaceLocale"]');
+  const gameSelect = page.locator('select[name="gameLocale"]');
   await expect(select).toHaveValue('en');
-  await expect(page.getByRole('option', { name: 'English', exact: true })).toHaveCount(1);
-  await expect(page.getByRole('option', { name: 'Română', exact: true })).toHaveCount(1);
+  await expect(gameSelect).toHaveValue('en');
+  await expect(select.getByRole('option', { name: 'English', exact: true })).toHaveCount(1);
+  await expect(select.getByRole('option', { name: 'Română', exact: true })).toHaveCount(1);
+  await expect(gameSelect.getByRole('option', { name: 'English', exact: true })).toHaveCount(1);
+  await expect(gameSelect.getByRole('option', { name: 'Română', exact: true })).toHaveCount(1);
 
   await select.focus();
   await select.selectOption('ro-RO');
 
   await expect(page.locator('#settings-title')).toHaveText('Setări');
   await expect(page.getByText('Limba interfeței')).toBeVisible();
-  await expect(page.locator('.settings-language select')).toHaveCount(1);
+  await expect(page.getByText('Limba jocului')).toBeVisible();
+  await expect(page.locator('.settings-language select')).toHaveCount(2);
   await expect(select).toBeFocused();
+  await expect(gameSelect).toHaveValue('en');
   await expect
     .poll(() => page.evaluate(() => document.documentElement.lang))
     .toBe('ro-RO');
 
   await expect
     .poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), settingsKey))
-    .toMatchObject({ schemaVersion: 2, interfaceLocale: 'ro-RO', tutorialMode: false });
+    .toMatchObject({
+      schemaVersion: 3,
+      interfaceLocale: 'ro-RO',
+      gameLocale: 'en',
+      tutorialMode: false,
+    });
 
   await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
   await expect(page.locator('.title-settings-action')).toHaveText('Setări');
@@ -179,6 +191,7 @@ test('shows Romanian archetype and scene names while English phrases stay annota
   await expect(pausePanel).toBeVisible();
   await expect(page.locator('.interruption-actions--paused')).toBeVisible();
   await expect(page.locator('select[name="interfaceLocale"]')).toHaveCount(0);
+  await expect(page.locator('select[name="gameLocale"]')).toHaveCount(0);
   await expect(page.locator('.settings-dialog')).toHaveCount(0);
   await expect(pausePanel.getByText('Pauză', { exact: true }).first()).toBeVisible();
   await expect(pausePanel.getByText('Colorarea expresiilor')).toBeVisible();
@@ -228,12 +241,64 @@ test('fits Romanian settings across the landscape matrix with keyboard and force
     await page.locator('select[name="interfaceLocale"]').focus();
     await expect(page.locator('select[name="interfaceLocale"]')).toBeFocused();
     await page.keyboard.press('Tab');
+    await expect(page.locator('select[name="gameLocale"]')).toBeFocused();
+    await page.keyboard.press('Tab');
     await expect(page.locator('.settings-dialog')).toContainText('Setări');
     await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
   }
   await page.emulateMedia({ forcedColors: 'active' });
   await openSettings(page);
   await expect(page.locator('select[name="interfaceLocale"]')).toBeVisible();
+  await expect(page.locator('select[name="gameLocale"]')).toBeVisible();
+});
+
+test('keeps both language drop-downs independent at every combination', async ({ page }) => {
+  await page.goto('/grand-transition/');
+  await page.evaluate((key) => localStorage.removeItem(key), settingsKey);
+  await page.reload();
+  await openSettings(page);
+
+  const interfaceSelect = page.locator('select[name="interfaceLocale"]');
+  const gameSelect = page.locator('select[name="gameLocale"]');
+
+  await gameSelect.focus();
+  await gameSelect.selectOption('ro-RO');
+  await expect(gameSelect).toHaveValue('ro-RO');
+  await expect(interfaceSelect).toHaveValue('en');
+  await expect(page.locator('#settings-title')).toHaveText('Settings');
+  await expect(gameSelect).toBeFocused();
+  await expect
+    .poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), settingsKey))
+    .toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'ro-RO' });
+
+  await interfaceSelect.focus();
+  await interfaceSelect.selectOption('ro-RO');
+  await expect(page.locator('#settings-title')).toHaveText('Setări');
+  await expect(gameSelect).toHaveValue('ro-RO');
+  await expect(interfaceSelect).toBeFocused();
+
+  await page.reload();
+  await openSettings(page);
+  await expect(page.locator('select[name="interfaceLocale"]')).toHaveValue('ro-RO');
+  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('ro-RO');
+});
+
+test('rejects a document stored before the game language existed', async ({ page }) => {
+  await page.goto('/grand-transition/');
+  await page.evaluate(([key, settings]) => localStorage.setItem(key, JSON.stringify(settings)),
+    [settingsKey, { ...romanianSettings, schemaVersion: 2, interfaceLocale: 'en' }] as const);
+  await page.reload();
+  await expect(page.locator('.title-settings-action')).toHaveText('Settings');
+  await openSettings(page);
+  await expect(page.locator('select[name="interfaceLocale"]')).toHaveValue('en');
+  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('en');
+  // The rejected document keeps its bytes until the next explicit change.
+  expect(
+    await page.evaluate(
+      (key) => JSON.parse(localStorage.getItem(key)!).schemaVersion,
+      settingsKey,
+    ),
+  ).toBe(2);
 });
 
 test('uses Romanian history dates without changing stored English match results', async ({ page }) => {

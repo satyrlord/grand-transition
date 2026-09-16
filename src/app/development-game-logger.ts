@@ -1,4 +1,5 @@
-import { englishGameLocale, sampleContent } from '../game-content';
+import { gameLocaleBundle, sampleContent } from '../game-content';
+import { defaultGameLocale } from '../localization/game-locale';
 import type { MatchCommand, MatchState } from '../engine/match-lifecycle';
 import type { SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
 
@@ -18,7 +19,7 @@ type LogSink = (text: string) => Promise<void>;
 const phraseTextById = new Map(
   sampleContent.phrases.map((phrase) => [
     phrase.id,
-    englishGameLocale.messages[phrase.textKey] ?? phrase.id,
+    gameLocaleBundle(defaultGameLocale).messages[phrase.textKey] ?? phrase.id,
   ]),
 );
 

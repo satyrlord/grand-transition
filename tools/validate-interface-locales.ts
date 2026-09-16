@@ -14,6 +14,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
 import { templates } from '../src/localization/generated/ro-RO';
+import {
+  validateLocalizedText,
+  type LocalizedTextFailure,
+} from '../src/localization/localized-text-rules';
 import { RuntimeLitLocalizer } from '@lit/localize-tools/lib/modes/runtime.js';
 import type { Config } from '@lit/localize-tools/lib/types/config.js';
 import type { ProgramMessage } from '@lit/localize-tools/lib/messages.js';
@@ -22,23 +26,9 @@ export const xliffPath = 'xliff/ro-RO.xlf';
 export const targetLocale = 'ro-RO';
 const generatedPath = `src/localization/generated/${targetLocale}.ts`;
 
-const unsafePatterns: readonly RegExp[] = [
-  /<[A-Za-z/!]/u,
-  /javascript:/iu,
-  /\bon[a-z]+\s*=/iu,
-];
-
-const legacyDiacritics = /[\u015e\u015f\u0162\u0163]/u;
-const latinLetter = /\p{Script=Latin}/gu;
-const romanianLetters =
-  /[A-Za-z\u0102\u0103\u00c2\u00e2\u00ce\u00ee\u0218\u0219\u021a\u021b]/u;
 const placeholderTag = /<x id="(\d+)" equiv-text="([^"]*)"\/>/gu;
 
-export type InterfaceLocaleFailure = Readonly<{
-  path: string;
-  code: string;
-  message: string;
-}>;
+export type InterfaceLocaleFailure = LocalizedTextFailure;
 
 export type InterfaceCatalogUnit = Readonly<{
   id: string;
@@ -92,35 +82,7 @@ export function validateMessageText(
   locale: string,
   path_: string,
 ): InterfaceLocaleFailure[] {
-  const failures: InterfaceLocaleFailure[] = [];
-  const fail = (code: string, message: string) => {
-    failures.push({ path: path_, code, message });
-  };
-
-  if (value.trim().length === 0) {
-    fail('incomplete-translation', 'Message text is empty.');
-    return failures;
-  }
-  if (value !== value.normalize('NFC')) {
-    fail('not-normalized', 'Message text is not Unicode NFC.');
-  }
-  if (legacyDiacritics.test(value)) {
-    fail('legacy-diacritic', 'Message text uses legacy cedilla diacritics.');
-  }
-  for (const match of value.matchAll(latinLetter)) {
-    const letter = match[0];
-    if (letter.toUpperCase() === letter.toLowerCase()) continue;
-    if (romanianLetters.test(letter)) continue;
-    if (locale === 'en') continue;
-    fail(
-      'non-standard-letter',
-      `Message text uses a non-Romanian diacritic: ${JSON.stringify(letter)}.`,
-    );
-  }
-  for (const pattern of unsafePatterns) {
-    if (pattern.test(value)) fail('unsafe-text', `Message text matches ${pattern}.`);
-  }
-  return failures;
+  return validateLocalizedText(value, locale, path_);
 }
 
 export function validateCatalog(

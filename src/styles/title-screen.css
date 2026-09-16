@@ -616,9 +616,13 @@
     cursor: pointer;
   }
 
+  /* The two language drop-downs share one row so the dialog keeps its
+     pre-localization vertical footprint at the shortest supported viewport. */
   .settings-language {
     display: grid;
-    max-width: 22rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--settings-space-control);
+    max-width: 46rem;
   }
 
   .settings-language .settings-control {

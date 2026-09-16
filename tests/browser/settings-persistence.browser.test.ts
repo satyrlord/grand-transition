@@ -33,6 +33,7 @@ test('restores every stored setting and applies title changes immediately', asyn
   const stored: SettingsDocument = Object.freeze({
     schemaVersion: settingsSchemaVersion,
     interfaceLocale: 'ro-RO',
+    gameLocale: 'en',
     basePointsMultiplier: 4,
     gpuVoices: false,
     masterVolume: 0.55,
@@ -365,6 +366,65 @@ test('applies the interface language immediately and keeps every other stored va
     tutorialMode: true,
   });
   expect(storedKeys()).toEqual([settingsStorageKey]);
+});
+
+test('keeps the interface and game languages independent and persists both after reload', async () => {
+  localStorage.setItem(settingsStorageKey, encodeSettings(defaultSettings));
+  let app = await mountApp();
+  let settings = await openSettings(app);
+  const interfaceSelect = () =>
+    settings.querySelector<HTMLSelectElement>('select[name="interfaceLocale"]')!;
+  const gameSelect = () =>
+    settings.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
+
+  expect(interfaceSelect().value).toBe('en');
+  expect(gameSelect().value).toBe('en');
+  for (const select of [interfaceSelect(), gameSelect()]) {
+    expect(select.options.length).toBe(2);
+    expect(
+      [...select.options].map((option) => option.textContent?.trim()),
+    ).toEqual(['English', 'Română']);
+  }
+
+  const game = gameSelect();
+  game.focus();
+  game.value = 'ro-RO';
+  game.dispatchEvent(new Event('change', { bubbles: true }));
+  await app.updateComplete;
+  await vi.waitFor(() => {
+    expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+      interfaceLocale: 'en',
+      gameLocale: 'ro-RO',
+    });
+  });
+
+  expect(document.activeElement).toBe(game);
+  expect(document.documentElement.lang).toBe('en');
+  expect(interfaceSelect().value).toBe('en');
+
+  app = await mountApp();
+  settings = await openSettings(app);
+  expect(settings.querySelector('.settings-persistence-notice')).toBeNull();
+  expect(interfaceSelect().value).toBe('en');
+  expect(gameSelect().value).toBe('ro-RO');
+
+  const interfaceControl = interfaceSelect();
+  interfaceControl.focus();
+  interfaceControl.value = 'ro-RO';
+  interfaceControl.dispatchEvent(new Event('change', { bubbles: true }));
+  await app.updateComplete;
+  await vi.waitFor(async () => {
+    await settings.updateComplete;
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
+      'Setări',
+    );
+  });
+
+  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+    interfaceLocale: 'ro-RO',
+    gameLocale: 'ro-RO',
+  });
+  expect(document.activeElement).toBe(interfaceControl);
 });
 
 test('shows the storage fallback notice in the selected interface language', async () => {

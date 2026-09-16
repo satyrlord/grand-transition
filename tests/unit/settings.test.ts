@@ -38,8 +38,8 @@ describe('settings codec', () => {
   });
 
   test('rejects every other settings document version as unsupported', () => {
-    expect(settingsSchemaVersion).toBe(2);
-    for (const schemaVersion of [1, 3, 4, 5, 6]) {
+    expect(settingsSchemaVersion).toBe(3);
+    for (const schemaVersion of [1, 2, 4, 5, 6]) {
       expect(decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion }))).toEqual({
         ok: false, code: 'unsupported-version', path: 'schemaVersion',
       });
@@ -55,6 +55,48 @@ describe('settings codec', () => {
         value: document,
       });
     }
+  });
+
+  test('defaults the game locale to English and keeps it independent of the interface locale', () => {
+    expect(defaultSettings.gameLocale).toBe('en');
+    for (const interfaceLocale of ['en', 'ro-RO'] as const) {
+      for (const gameLocale of ['en', 'ro-RO'] as const) {
+        const document = settings({ interfaceLocale, gameLocale });
+        expect(decodeSettings(encodeSettings(document))).toEqual({
+          ok: true,
+          value: document,
+        });
+      }
+    }
+  });
+
+  test('rejects an unknown game locale at its field path', () => {
+    for (const gameLocale of ['ro', 'en-US', 'ro-RO ', '', 1, null]) {
+      expect(
+        decodeSettings(JSON.stringify({ ...defaultSettings, gameLocale })),
+      ).toEqual({
+        ok: false,
+        code: 'invalid-data',
+        path: 'gameLocale',
+      });
+    }
+  });
+
+  test('rejects a document stored before the game locale existed and preserves the interface locale', () => {
+    const { gameLocale: _, ...previousShape } = defaultSettings;
+    expect(
+      decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 2 })),
+    ).toEqual({
+      ok: false,
+      code: 'unsupported-version',
+      path: 'schemaVersion',
+    });
+    const stored = settings({ interfaceLocale: 'ro-RO', gameLocale: 'ro-RO' });
+    expect(
+      new SettingsRepository(
+        createMemoryStorage({ [settingsStorageKey]: JSON.stringify(stored) }),
+      ).snapshot().settings,
+    ).toEqual(stored);
   });
 
   test('rejects an unknown interface locale at its field path', () => {
@@ -171,6 +213,10 @@ describe('settings codec', () => {
     const { interfaceLocale: __, ...withoutInterfaceLocale } = defaultSettings;
     expect(decodeSettings(JSON.stringify(withoutInterfaceLocale))).toEqual({
       ok: false, code: 'invalid-data', path: 'interfaceLocale',
+    });
+    const { gameLocale: ___, ...withoutGameLocale } = defaultSettings;
+    expect(decodeSettings(JSON.stringify(withoutGameLocale))).toEqual({
+      ok: false, code: 'invalid-data', path: 'gameLocale',
     });
   });
 

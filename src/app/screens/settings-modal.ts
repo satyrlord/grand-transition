@@ -5,6 +5,11 @@ import {
   interfaceLocales,
   isInterfaceLocale,
 } from '../../localization/interface-locale';
+import {
+  gameLocaleAutonyms,
+  gameLocales,
+  isGameLocale,
+} from '../../localization/game-locale';
 import { LitElement, html, nothing } from 'lit';
 import {
   defaultSettings,
@@ -103,9 +108,32 @@ export class GrandTransitionSettings extends LitElement {
                 .value=${this.settings.interfaceLocale}
                 @change=${this.changeLocale}
               >
-                ${interfaceLocales.map((locale) => html`<option value=${locale}>
-                  ${interfaceLocaleAutonyms[locale]}
-                </option>`)}
+                ${interfaceLocales.map(
+                  (locale) => html`<option
+                    value=${locale}
+                    ?selected=${this.settings.interfaceLocale === locale}
+                  >
+                    ${interfaceLocaleAutonyms[locale]}
+                  </option>`,
+                )}
+              </select>
+            </label>
+            <label class="settings-control">
+              <span>${msg('Game language')}</span>
+              <select
+                class="settings-select"
+                name="gameLocale"
+                .value=${this.settings.gameLocale}
+                @change=${this.changeGameLocale}
+              >
+                ${gameLocales.map(
+                  (locale) => html`<option
+                    value=${locale}
+                    ?selected=${this.settings.gameLocale === locale}
+                  >
+                    ${gameLocaleAutonyms[locale]}
+                  </option>`,
+                )}
               </select>
             </label>
           </div>
@@ -295,6 +323,12 @@ export class GrandTransitionSettings extends LitElement {
     const control = event.currentTarget as HTMLSelectElement;
     if (!isInterfaceLocale(control.value)) return;
     this.changeSetting('interfaceLocale', control.value);
+  };
+
+  private readonly changeGameLocale = (event: Event): void => {
+    const control = event.currentTarget as HTMLSelectElement;
+    if (!isGameLocale(control.value)) return;
+    this.changeSetting('gameLocale', control.value);
   };
 
   private readonly changeBoolean = (event: Event): void => {

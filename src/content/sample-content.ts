@@ -36,7 +36,7 @@ const foundationScenePresentation = {
 
 export function createSampleContent(
   phraseCardCatalog: PhraseCardCatalog,
-  englishGameLocale: GameLocaleBundle,
+  gameLocaleBundles: readonly GameLocaleBundle[],
 ): ContentCatalog {
   const scenePhraseIds = (sceneId: string): readonly string[] =>
     phraseCardCatalog.phrases
@@ -96,7 +96,7 @@ export function createSampleContent(
         scenePhraseIds('influencer-campaign-livestream'),
       ),
     ],
-    locales: [englishGameLocale],
+    locales: [...gameLocaleBundles],
   });
 }
 

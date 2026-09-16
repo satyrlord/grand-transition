@@ -14,9 +14,11 @@ import {
 } from 'lit';
 import {
   characterSkins,
+  gameLocaleBundle,
   sampleContent,
   type CharacterSkin,
 } from '../../game-content';
+import { defaultGameLocale } from '../../localization/game-locale';
 import { resolveBrandAsset } from '../brand-assets';
 import type { MatchMode } from '../../engine/match-lifecycle';
 import type { LadderProgress } from '../../engine/ladder';
@@ -1280,7 +1282,7 @@ function titleCase(value: string): string {
 
 function gameMessage(key: string | undefined): string {
   if (!key) return '';
-  return sampleContent.locales[0]?.messages[key] ?? key;
+  return gameLocaleBundle(defaultGameLocale).messages[key] ?? key;
 }
 
 function isSinglePlayerMode(mode: string): boolean {
