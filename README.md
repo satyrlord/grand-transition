@@ -42,20 +42,20 @@ catalog target, but their revised content-catalog contract is pending
 implementation. The current checkout contains 1,010 phrase cards, including
 587 common cards, and does not yet meet the revised target.
 
-The revised common catalog target is 656 cards: 300 nouns, 150 verbs split
-evenly across past, present, and future tense, 100 predicates, 50 modifiers,
+The revised common catalog target is 655 cards: 300 nouns, 150 verbs split
+evenly across past, present, and future tense, 99 predicates, 50 modifiers,
 5 neutral conjunctions, 50 endings, and one `[...]` continuation. Every common
 predicate, modifier, and ending must be inspired by a verifiably real quote.
 Balance and variety verification use deterministic CI, bounded scoring, text
 uniqueness, grammar fixtures, and private provenance review.
 
-Each of the six scenes targets exactly 33 scene-restricted cards: 10 nouns,
-9 verbs split three per tense, 5 predicates, 3 modifiers, 3 endings, and 3
+Each of the six scenes targets exactly 34 scene-restricted cards: 10 nouns,
+9 verbs split three per tense, 6 predicates, 3 modifiers, 3 endings, and 3
 scene-specific conjunctions. Scene cards have zero continuations; the global
 `[...]` continuation is added to each eligible scene pool separately.
 
-Each of the 19 characters targets exactly 38 character-owned cards: 10 nouns,
-9 verbs split three per tense, 10 predicates, 5 endings, 3 modifiers, and 1
+Each of the 19 characters targets exactly 40 character-owned cards: 10 nouns,
+9 verbs split three per tense, 12 predicates, 5 endings, 3 modifiers, and 1
 character-specific conjunction. Character cards have zero continuations.
 
 [Milestone 029](docs/specs/spec-029-romanian-localization-and-speech.md) is

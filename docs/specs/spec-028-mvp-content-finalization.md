@@ -26,20 +26,20 @@ Milestone 026. Complete their English phrase volume, art, scene audio treatment,
 and variety requirements. Use the existing schemas, pipelines, and presentation
 contracts.
 
-The shared common authoring corpus has exactly 656 cards: 300 nouns, 150 verbs,
-100 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
+The shared common authoring corpus has exactly 655 cards: 300 nouns, 150 verbs,
+99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
 The verb pool contains 50 past-tense, 50 present-tense, and 50 future-tense
 cards. Every predicate, modifier, and ending is inspired by a verifiably real
 quote, with private provenance evidence. The only continuation is the visible
 cue `[...]`.
 
-Each of the six scenes owns exactly 33 scene-restricted cards, for 198
-scene-restricted cards in total. Its eligible scene pool contains those 33 cards
-plus the single unrestricted common continuation, for exactly 34 phrase-pool
+Each of the six scenes owns exactly 34 scene-restricted cards, for 204
+scene-restricted cards in total. Its eligible scene pool contains those 34 cards
+plus the single unrestricted common continuation, for exactly 35 phrase-pool
 IDs. The continuation is global and is not scene-owned.
 
-Each of the 19 characters owns exactly 38 character-restricted cards, for 722
-character-restricted cards in total: 10 nouns, 9 verbs, 10 predicates, 5
+Each of the 19 characters owns exactly 40 character-restricted cards, for 760
+character-restricted cards in total: 10 nouns, 9 verbs, 12 predicates, 5
 endings, 3 modifiers, and 1 character-specific conjunction. No character owns a
 continuation.
 
@@ -162,7 +162,7 @@ color is local to authored materials and lighting, not a complete scene grade.
   energy, clips, and shadow bans.
 
 Each scene has a layered master, landscape crops, lighting, motion, music
-treatment, and exactly 34 eligible phrase-pool IDs: 33 scene-restricted cards
+treatment, and exactly 35 eligible phrase-pool IDs: 34 scene-restricted cards
 and the global continuation. All six packages use
 3840x2160 back and foreground masters, with 640, 1280, 1920, 2560, and
 3840-pixel-wide runtime variants in both formats. The four foundation foreground IDs are
@@ -218,22 +218,21 @@ Validation checks decoded duration and the sample discontinuity at the loop
 boundary in all three formats. These signal checks do not establish musical
 fit or subjective listening approval.
 
-The revised shared common authoring corpus has exactly 656 cards. Counts cover
-every card in `src/content/common-phrase-cards.json`, including scene-restricted
-shared cards; character-owned files are excluded.
+The revised unrestricted general common authoring corpus has exactly 655 cards.
+Counts exclude cards with `sceneIds` and character-owned files.
 
 | Role         | Required  |
 | ------------ | --------: |
 | Noun         |       300 |
 | Verb         |       150 |
-| Predicate    |       100 |
+| Predicate    |        99 |
 | Modifier     |        50 |
 | Conjunction  |         5 |
 | Ending       |        50 |
 | Continuation |         1 |
 
 The 150 verbs contain exactly 50 past-tense, 50 present-tense, and 50
-future-tense cards. The cards form 50 complete three-tense families. Humor and
+  future-tense cards. The cards form 50 complete three-tense families. Humor and
 editorial approval apply to the complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together.
 
@@ -252,15 +251,16 @@ Each scene has this exact scene-restricted role composition:
 | ------------ | --------: |
 | Noun         |        10 |
 | Verb         |         9 |
-| Predicate    |         5 |
+| Predicate    |         6 |
 | Modifier     |         3 |
 | Ending       |         3 |
 | Conjunction  |         3 |
 | Continuation |         0 |
-| **Total**    |    **33** |
+| **Total**    |    **34** |
 
 The 9 scene verbs contain exactly 3 past-tense, 3 present-tense, and 3
-future-tense cards arranged as 3 complete three-tense families. Humor and
+future-tense cards arranged as 3 complete three-tense families. The 6 scene
+predicates contain 2 complete three-tense families. Humor and
 editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
 scene-restricted predicate, modifier, and ending has the same verifiable
@@ -275,15 +275,16 @@ Each character has this exact character-restricted role composition:
 | ------------ | ------------: |
 | Noun         |            10 |
 | Verb         |             9 |
-| Predicate    |            10 |
+| Predicate    |            12 |
 | Modifier     |             3 |
 | Ending       |             5 |
 | Conjunction  |             1 |
 | Continuation |             0 |
-| **Total**    |        **38** |
+| **Total**    |        **40** |
 
 The 9 character verbs contain exactly 3 past-tense, 3 present-tense, and 3
-future-tense cards arranged as 3 complete three-tense families. Humor and
+future-tense cards arranged as 3 complete three-tense families. The 12
+character predicates contain 4 complete three-tense families. Humor and
 editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
 character-owned predicate, modifier, and ending has the same verifiable
@@ -291,9 +292,9 @@ real-quote provenance requirement as the common corpus. Its one conjunction is
 personalized to the character as far as grammar permits. Character cards are
 unique to their owner and never carry a continuation.
 
-Each scene pool contains the exact 10 nouns, 9 verbs, 5 predicates, 3 modifiers,
+Each scene pool contains the exact 10 nouns, 9 verbs, 6 predicates, 3 modifiers,
 3 endings, and 3 conjunctions above, plus the universal `[...]` continuation.
-It contains exactly 34 unique IDs. No character or scene owns another
+It contains exactly 35 unique IDs. No character or scene owns another
 continuation.
 
 Each character has exactly one unique comeback line in each tier and three total.
@@ -330,7 +331,7 @@ contract, with passing content, grammar, provenance, and normal CI checks.
   after case and whitespace normalization. Validation identifies the second
   duplicate locale key.
 - **AC-028-02:** The shared common corpus contains exactly 300 nouns, 150
-  verbs, 100 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one
+  verbs, 99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one
   continuation. The verb count is exactly 50 past-tense, 50 present-tense, and
   50 future-tense cards. Boundary fixtures fail one below and above, and the
   verb-family review treats all three tenses as one editorial unit.
@@ -359,14 +360,14 @@ contract, with passing content, grammar, provenance, and normal CI checks.
   adaptation that is not attributed to the real speaker. All five common
   conjunctions have neutral wording and empty weakness-tag arrays, and the one
   continuation always renders `[...]`.
-- **AC-028-09:** Each scene has exactly 10 nouns, 9 verbs, 5 predicates, 3
+- **AC-028-09:** Each scene has exactly 10 nouns, 9 verbs, 6 predicates, 3
   modifiers, 3 endings, 3 conjunctions, and zero scene-restricted continuations.
   Its verbs contain 3 past-tense, 3 present-tense, and 3 future-tense cards in
-  three complete families. Its eligible pool contains exactly 34 IDs after the
+  three complete families. Its eligible pool contains exactly 35 IDs after the
   global continuation is added. Scene predicates, modifiers, and endings pass
   verifiable quote-provenance review. Scene conjunctions are distinct,
   scene-specific, and reviewed against their owning scene's themes.
-- **AC-028-10:** Each character has exactly 10 nouns, 9 verbs, 10 predicates,
+- **AC-028-10:** Each character has exactly 10 nouns, 9 verbs, 12 predicates,
   5 endings, 3 modifiers, and 1 personalized conjunction, with zero
   character-owned continuations. Its verbs contain 3 past-tense, 3 present-
   tense, and 3 future-tense cards in three complete families. Character

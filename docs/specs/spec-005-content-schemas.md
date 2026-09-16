@@ -52,13 +52,13 @@ profiles to Romanian Mihai and Liana voices without changing character identity.
 A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects. Audio media contains music only; scenes
 have no room-tone media field.
-Each scene owns exactly 33 scene-restricted cards: 10 nouns, 9 verbs, 5
+Each scene owns exactly 34 scene-restricted cards: 10 nouns, 9 verbs, 6
 predicates, 3 modifiers, 3 endings, and 3 conjunctions. The 9 scene verbs are
 3 past-tense, 3 present-tense, and 3 future-tense cards arranged as 3 complete
 three-tense families. Every scene-restricted card belongs to one scene only.
 No scene owns a continuation. The single unrestricted `[...]` continuation
 remains available in each eligible scene pool as a global common card; it is not
-part of the 33-card scene-owned count. Thus, Milestone 008 can deal a valid
+part of the 34-card scene-owned count. Thus, Milestone 008 can deal a valid
 common board without a repeated phrase identifier. Scene conjunctions are
 reviewed for the owning scene's themes and are as personalized to that scene as
 possible. Contrast connectors are `but` and `yet`.
@@ -150,21 +150,22 @@ references, protected-trait insults, sexual humiliation, and threats.
 
 ## Manual phrase authoring
 
-Milestones 027 and 028 use the final English common catalog with exactly 656
-cards: 300 general nouns, 150 general verbs, 100 general predicates, 50
+Milestones 027 and 028 use the final English common catalog with exactly 655
+cards: 300 general nouns, 150 general verbs, 99 general predicates, 50
 general modifiers, five general conjunctions, 50 general endings, and one
 universal continuation. The verb pool has 50 past-tense, 50 present-tense,
 and 50 future-tense cards arranged as 50 complete three-tense families. Every
 common predicate, modifier, and ending has verifiable real-quote provenance in
-the private research folder. Each scene has exactly 33 scene-restricted cards
-and an eligible pool of 34 IDs after adding the single unrestricted continuation.
-Each of the 19 characters has exactly 38 owned phrases: 10 nouns, 9 verbs,
-10 predicates, 5 endings, 3 modifiers, and 1 personalized conjunction. It has
+the private research folder. Each scene has exactly 34 scene-restricted cards
+and an eligible pool of 35 IDs after adding the single unrestricted continuation.
+Each of the 19 characters has exactly 40 owned phrases: 10 nouns, 9 verbs,
+12 predicates, 5 endings, 3 modifiers, and 1 personalized conjunction. It has
 no character-owned continuation. The 9 verbs contain 3 past-tense, 3
 present-tense, and 3 future-tense cards arranged as 3 complete families; if
 one tense fails humor review, the complete family changes together. Every
 character predicate, ending, and modifier has verifiable real-quote provenance.
-The final character corpus therefore contains 722 owned cards.
+The 12 predicates contain 4 complete three-tense families. The final character
+corpus therefore contains 760 owned cards.
 
 Editorial revisions keep stable IDs while the displayed text supplies enough
 English context. Each player-visible phrase text and agreement form contains no

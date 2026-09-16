@@ -29,12 +29,12 @@ the Romanian catalog translate it correctly. Never rewrite a direct real phrase
 into an inaccurate paraphrase.
 
 Scene-restricted cards belong to one scene only. Each scene has exactly 10
-nouns, 9 verbs split three per tense, 5 predicates, 3 modifiers, 3 endings,
+nouns, 9 verbs split three per tense, 6 predicates, 3 modifiers, 3 endings,
 and 3 scene-specific conjunctions, with no scene-restricted continuation. The
 global `[...]` continuation remains available separately.
 
 Each character's final owned pool has exactly 10 nouns, 9 verbs split three per
-tense, 10 predicates, 5 endings, 3 modifiers, and 1 character-specific
+tense, 12 predicates, 5 endings, 3 modifiers, and 1 character-specific
 conjunction. It has no character-owned continuation. Character predicates,
 modifiers, and endings require the same verifiable quote provenance as common
 cards.
