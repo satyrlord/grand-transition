@@ -8,7 +8,10 @@ rounds, use comebacks, and reduce the opponent's Pride.
 The game occurs in an invented republic influenced by Romanian public life
 after 1989. Its character identities are fictional. Phrase text is either
 invented or a real, accurately reproduced line, so a phrase drawn from real
-speech keeps its real meaning in both languages. An approved
+speech keeps its real meaning in both languages. The common and character-owned
+predicate, modifier, and ending pools are additionally inspired by verifiably
+real quotes; their source evidence stays private, and an original adaptation
+remains fictional. An approved
 public-figure likeness may be used only as visual-only parody in a portrait skin
 and does not change the character identity or prose.
 The game does not reproduce real political party names, party acronyms, party
@@ -33,16 +36,27 @@ Milestone 022 advanced artificial intelligence (AI) ladder.
 It provides immutable
 game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
-024, 025, 030, and 031 remain incomplete. Milestones 023 and 028 are marked
-complete by their owning specifications.
+024, 025, 030, and 031 remain incomplete. Milestone 023 remains complete.
+Milestones 027 and 028 retain historical completion evidence for the previous
+catalog target, but their revised content-catalog contract is pending
+implementation. The current checkout contains 1,010 phrase cards, including
+587 common cards, and does not yet meet the revised target.
 
-Milestone 027 is complete against the current artwork and 1,009-phrase catalog.
-Its content boundary rules and normal CI checks pass. Milestone 028 completes
-the final art, scene audio, and content-validation packages. Manual user reviews and separate large balance or variety runs
-are not completion requirements.
-The catalog meets Milestone 028 phrase
-volumes. Balance and variety verification use existing deterministic
-CI, bounded scoring, text uniqueness, and grammar fixtures.
+The revised common catalog target is 656 cards: 300 nouns, 150 verbs split
+evenly across past, present, and future tense, 100 predicates, 50 modifiers,
+5 neutral conjunctions, 50 endings, and one `[...]` continuation. Every common
+predicate, modifier, and ending must be inspired by a verifiably real quote.
+Balance and variety verification use deterministic CI, bounded scoring, text
+uniqueness, grammar fixtures, and private provenance review.
+
+Each of the six scenes targets exactly 33 scene-restricted cards: 10 nouns,
+9 verbs split three per tense, 5 predicates, 3 modifiers, 3 endings, and 3
+scene-specific conjunctions. Scene cards have zero continuations; the global
+`[...]` continuation is added to each eligible scene pool separately.
+
+Each of the 19 characters targets exactly 38 character-owned cards: 10 nouns,
+9 verbs split three per tense, 10 predicates, 5 endings, 3 modifiers, and 1
+character-specific conjunction. Character cards have zero continuations.
 
 [Milestone 029](docs/specs/spec-029-romanian-localization-and-speech.md) is
 approved and pending implementation. Phase 1 ships the Romanian interface,
