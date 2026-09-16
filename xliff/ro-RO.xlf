@@ -104,7 +104,7 @@
 </trans-unit>
 <trans-unit id="s9d31826d98b144e8">
   <source>Grand Transition is designed to be played in landscape mode. Rotate your phone for the intended experience. You can continue in portrait for Single Player and Ladder. Multiplayer requires landscape.</source>
-  <target>Grand Transition este conceput pentru ecrane orientate orizontal. Rotește telefonul pentru o experiență optimă. Poți continua în orientare verticală în modurile Jucător unic și Scară. Modul Multiplayer necesită orientare orizontală.</target>
+  <target>Grand Transition este conceput pentru ecrane orientate orizontal. Rotește telefonul pentru o experiență optimă. Poți continua în orientare verticală în modurile Un Jucător și Campanie. Modul Doi Jucători necesită orientare orizontală.</target>
 </trans-unit>
 <trans-unit id="s64e024a428fb7396">
   <source>Continue in portrait</source>
@@ -240,7 +240,7 @@
 </trans-unit>
 <trans-unit id="s6121beb7500a123a">
   <source>Single player</source>
-  <target>Jucător unic</target>
+  <target>Un jucător</target>
 </trans-unit>
 <trans-unit id="see716a6c185d6205">
   <source>Hotseat</source>
@@ -532,7 +532,7 @@
 </trans-unit>
 <trans-unit id="sef33841c9538f900">
   <source>Continue ladder</source>
-  <target>Continuă scara</target>
+  <target>Continuă Campania</target>
 </trans-unit>
 <trans-unit id="s0c9d9124f61374b4">
   <source>Return to main menu</source>
@@ -724,7 +724,7 @@
 </trans-unit>
 <trans-unit id="s580af19b603edd89">
   <source>Choose your debater. Your opponent and scene follow ladder progress.</source>
-  <target>Alege-ți oratorul. Adversarul și scena depind de progresul pe scară.</target>
+  <target>Alege-ți oratorul. Adversarul și scena depind de progresul în campanie.</target>
 </trans-unit>
 <trans-unit id="sb8b173d943e0434c">
   <source>Choose both contestants, confirm the studio, and open the transmission.</source>
@@ -752,7 +752,7 @@
 </trans-unit>
 <trans-unit id="scbdf6ff315d7efce">
   <source><x id="0" equiv-text="${portraits.length}"/> portraits · Selecting your ladder character</source>
-  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Alegi personajul pentru Scară</target>
+  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Alegi personajul pentru Campanie</target>
 </trans-unit>
 <trans-unit id="s3ac8f4fafafed354">
   <source><x id="0" equiv-text="${portraits.length}"/> portraits · Selecting for player one</source>
@@ -768,7 +768,7 @@
 </trans-unit>
 <trans-unit id="sc4700d1f111b3ca4">
   <source>Opponent and scene are fixed by local ladder progress.</source>
-  <target>Adversarul și scena depind de progresul local pe scară.</target>
+  <target>Adversarul și scena depind de progresul local în campanie.</target>
 </trans-unit>
 <trans-unit id="sa47722fc513dcc19">
   <source>Both players can choose the same character.</source>
@@ -816,7 +816,7 @@
 </trans-unit>
 <trans-unit id="s9437944efdc72f61">
   <source>Start ladder</source>
-  <target>Începe scara</target>
+  <target>Începe Campania</target>
 </trans-unit>
 <trans-unit id="s4f4ed466498fc34e">
   <source>Start match</source>
@@ -900,11 +900,11 @@
 </trans-unit>
 <trans-unit id="s1310ba7044d2dd9f">
   <source>Ladder unavailable</source>
-  <target>Scara nu este disponibilă</target>
+  <target>Campania nu este disponibilă</target>
 </trans-unit>
 <trans-unit id="s95118f15960985bb">
   <source>Choose Ladder again to create local progress.</source>
-  <target>Alege din nou modul Scară pentru a crea progres local.</target>
+  <target>Alege din nou modul Campanie pentru a crea progres local.</target>
 </trans-unit>
 <trans-unit id="sf24cb54e29df4039">
   <source>Rung <x id="0" equiv-text="${progress.rungIndex + 1}"/>/9</source>
@@ -920,7 +920,7 @@
 </trans-unit>
 <trans-unit id="sed75f7f02aac8c14">
   <source>Reset ladder</source>
-  <target>Resetează scara</target>
+  <target>Resetează Campania</target>
 </trans-unit>
 <trans-unit id="s255857544a9d5ec0">
   <source>Reset</source>
@@ -928,15 +928,15 @@
 </trans-unit>
 <trans-unit id="s809b5e2dd93f6fec">
   <source>Reset all local ladder progress?</source>
-  <target>Vrei să resetezi tot progresul local pe scară?</target>
+  <target>Vrei să resetezi tot progresul campaniei?</target>
 </trans-unit>
 <trans-unit id="s8dc554dfcc22ee52">
   <source>Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
-  <target>Modul lipsește. Revino la Meniul principal și alege Jucător unic, Multiplayer sau Scară.</target>
+  <target>Modul lipsește. Revino la Meniul principal și alege Un Jucător, Doi Jucători sau Campanie.</target>
 </trans-unit>
 <trans-unit id="sf1459a12de394b73">
   <source>Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
-  <target>Modul nu este acceptat. Revino la Meniul principal și alege Jucător unic, Multiplayer sau Scară.</target>
+  <target>Modul nu este acceptat. Revino la Meniul principal și alege Un Jucător, Doi Jucători sau Campanie.</target>
 </trans-unit>
 <trans-unit id="s8909725bb5db486a">
   <source>Choose a listed artificial intelligence difficulty.</source>
@@ -1028,7 +1028,7 @@
 </trans-unit>
 <trans-unit id="s498a91cb2a45781a">
   <source>Single Player</source>
-  <target>Jucător unic</target>
+  <target>Un jucător</target>
 </trans-unit>
 <trans-unit id="s68f9d93cb9eb486b">
   <source>Multiplayer</source>
@@ -1036,7 +1036,7 @@
 </trans-unit>
 <trans-unit id="s16948826bf750b89">
   <source>Ladder</source>
-  <target>Scară</target>
+  <target>Campanie</target>
 </trans-unit>
 <trans-unit id="s65e20e46b64ca73f">
   <source>Multiplayer requires landscape mode.</source>
