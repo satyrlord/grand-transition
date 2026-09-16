@@ -61,7 +61,7 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
   await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
   await expect(page.locator('.title-settings-action')).toHaveText('Setări');
   await expect(page.locator('.status')).toHaveText('În direct, pe Canalul 3 NTV!');
-  await expect(page.getByRole('button', { name: 'Jucător unic' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Un jucător' })).toBeVisible();
 
   await page.reload();
   await expect(page.locator('.title-settings-action')).toHaveText('Setări');
@@ -114,7 +114,7 @@ test('shows Romanian archetype and scene names while English phrases stay annota
   );
   await page.reload();
 
-  await page.getByRole('button', { name: 'Jucător unic' }).click();
+  await page.getByRole('button', { name: 'Un jucător' }).click();
   const contestantName = page.locator('.contestant-record strong').first();
   const selectedCharacterId = await page.locator('.contestant-stage--one').getAttribute('data-character-id');
   expect(selectedCharacterId).not.toBeNull();

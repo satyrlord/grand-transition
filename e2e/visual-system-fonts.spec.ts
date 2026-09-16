@@ -13,7 +13,7 @@ test('Romanian display text and every diacritic use Poiret One glyphs', async ({
   await page.locator('.title-settings-action').click();
   await page.locator('select[name="interfaceLocale"]').selectOption('ro-RO');
   await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
-  const title = page.getByRole('button', { name: 'Jucător unic' });
+  const title = page.getByRole('button', { name: 'Un jucător' });
   await expect(title).toBeVisible();
   await page.evaluate(async () => document.fonts.load('400 24px "Poiret One"', 'ȘȚĂÎÂ șțăîâ'));
   const session = await page.context().newCDPSession(page);
