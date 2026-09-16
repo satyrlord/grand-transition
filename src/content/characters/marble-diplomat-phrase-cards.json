@@ -46,12 +46,6 @@
     "speak": "marble-diplomat-speak",
     "react": "marble-diplomat-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "marble-diplomat-foundation-noun",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed premature-celebration motif: ceremonial triumph needs a refund policy. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-foundation-modifier",
@@ -86,13 +74,7 @@
         "elitism",
         "corruption"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional protocol satire: public votes disrupt the elite reception. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "marble-diplomat-foundation-ending",
@@ -103,13 +85,7 @@
         "elitism"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed detached-dismissal motif: privilege assigns bad luck a separate entrance. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "marble-diplomat-recount-reception",
@@ -119,13 +95,7 @@
         "luxury"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed premature-celebration motif: the corrected result ends the party. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "marble-diplomat-protocol-empty-plinth",
@@ -145,13 +115,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-gilded-apology",
@@ -171,13 +135,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-reception-place-card",
@@ -197,13 +155,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-prestige-carpet",
@@ -224,13 +176,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-crystal-silence",
@@ -251,13 +197,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "marble-diplomat-verb-1-past",
@@ -291,13 +231,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-1"
     },
     {
       "id": "marble-diplomat-verb-1-present",
@@ -331,13 +265,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-1"
     },
     {
       "id": "marble-diplomat-verb-1-future",
@@ -371,13 +299,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-1"
     },
     {
       "id": "marble-diplomat-verb-2-past",
@@ -411,13 +333,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-2"
     },
     {
       "id": "marble-diplomat-verb-2-present",
@@ -451,13 +367,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-2"
     },
     {
       "id": "marble-diplomat-verb-2-future",
@@ -491,13 +401,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-verb-2"
     },
     {
       "id": "marble-diplomat-predicate-1-past",
@@ -526,13 +430,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-predicate-1"
     },
     {
       "id": "marble-diplomat-predicate-1-present",
@@ -561,13 +459,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-predicate-1"
     },
     {
       "id": "marble-diplomat-predicate-1-future",
@@ -596,13 +488,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "marble-diplomat-predicate-1"
     },
     {
       "id": "marble-diplomat-review-modifier",
@@ -612,13 +498,7 @@
         "luxury",
         "corruption"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "marble-diplomat-contrast",
@@ -626,13 +506,7 @@
       "text": "yet, with impeccable protocol,",
       "connectorKind": "yet",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

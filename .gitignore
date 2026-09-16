@@ -75,9 +75,8 @@ output/
 docs/reviews/
 HISTORY.md
 tools/*
-!tools/content-review.ts
-!tools/editorial-review.ts
-!tools/review-release.ts
+!tools/final-content-volumes.ts
+!tools/check-final-content-volumes.ts
 !tools/scene-replacement-baseline.json
 !tools/scene-resolution.mjs
 !tools/run-quality-gate.mjs

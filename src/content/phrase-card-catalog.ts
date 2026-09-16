@@ -2,7 +2,6 @@ import { z } from 'zod';
 import {
   characterDefinitionSchema,
   characterSchema,
-  editorialReviewSchema,
   identifierSchema,
   phraseDefinitionSchema,
   phraseSchema,
@@ -47,7 +46,6 @@ const comebackLineSchema = z
 const manualPhraseCardSchema = phraseDefinitionSchema
   .omit({
     characterIds: true,
-    editorialReview: true,
     numberForms: true,
     textKey: true,
   })
@@ -57,7 +55,6 @@ const manualPhraseCardSchema = phraseDefinitionSchema
     pluralText: z.string().trim().min(1).optional(),
     personalSingularText: z.string().trim().min(1).optional(),
     secondPersonText: z.string().trim().min(1).optional(),
-    editorialReview: editorialReviewSchema,
   })
   .strict()
   .superRefine((card, context) => {
@@ -165,7 +162,6 @@ const manualCharacterFileSchema = characterDefinitionSchema
         strong: comebackLineSchema,
       })
       .strict(),
-    editorialReview: editorialReviewSchema,
     phrases: manualPhraseCardsSchema,
   })
   .strict()
@@ -207,7 +203,6 @@ export function parsePhraseCardCorpus(
       pluralText,
       personalSingularText,
       secondPersonText,
-      editorialReview,
       ...definition
     } = card;
     const textKey = `phrase.${card.id}`;
@@ -235,10 +230,6 @@ export function parsePhraseCardCorpus(
                     : undefined,
               }
             : undefined,
-        editorialReview: requireApprovedEditorialReview(
-          editorialReview,
-          `phrase "${card.id}"`,
-        ),
       }),
     );
     englishMessages[textKey] = text;
@@ -279,11 +270,9 @@ export function parseCharacterCardFile(
     name,
     description,
     comebacks,
-    editorialReview,
     phrases: _phrases,
     ...definition
   } = source;
-  requireApprovedEditorialReview(editorialReview, `character "${source.id}"`);
   const character = characterSchema.parse({
     ...definition,
     nameKey,
@@ -393,22 +382,4 @@ function normalizeVisiblePhraseText(text: string): string {
 
 function fileName(sourceName: string): string {
   return sourceName.replaceAll('\\', '/').split('/').at(-1) ?? sourceName;
-}
-
-function requireApprovedEditorialReview(
-  review: z.infer<typeof editorialReviewSchema>,
-  owner: string,
-): z.infer<typeof editorialReviewSchema> {
-  if (review.state !== 'approved') {
-    throw new Error(`Approve the editorial review for ${owner}.`);
-  }
-  if (review.originality !== 'original') {
-    throw new Error(`Use original content for ${owner}.`);
-  }
-  if (review.safetyFlags.length > 0) {
-    throw new Error(
-      `Remove or replace ${owner} marked as ${review.safetyFlags.join(', ')}.`,
-    );
-  }
-  return review;
 }

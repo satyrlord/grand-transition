@@ -50,12 +50,6 @@
     "speak": "oat-milk-reformist-speak",
     "react": "oat-milk-reformist-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "oat-milk-reformist-foundation-noun",
@@ -74,13 +68,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-foundation-modifier",
@@ -91,13 +79,7 @@
         "authenticity",
         "class"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "oat-milk-reformist-foundation-ending",
@@ -109,13 +91,7 @@
         "class"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "reformist-reverse-redistribution",
@@ -126,13 +102,7 @@
         "authenticity"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "reformist-listening-invoice",
@@ -143,13 +113,7 @@
         "relevance"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "oat-milk-reformist-inclusive-velvet-rope",
@@ -170,13 +134,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-sticky-note-coalition",
@@ -196,13 +154,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-consensus-cushion",
@@ -222,13 +174,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-facilitated-pothole",
@@ -248,13 +194,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-accessible-rooftop",
@@ -275,13 +215,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "oat-milk-reformist-verb-1-past",
@@ -315,13 +249,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-1"
     },
     {
       "id": "oat-milk-reformist-verb-1-present",
@@ -355,13 +283,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-1"
     },
     {
       "id": "oat-milk-reformist-verb-1-future",
@@ -395,13 +317,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-1"
     },
     {
       "id": "oat-milk-reformist-verb-2-past",
@@ -435,13 +351,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-2"
     },
     {
       "id": "oat-milk-reformist-verb-2-present",
@@ -475,13 +385,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-2"
     },
     {
       "id": "oat-milk-reformist-verb-2-future",
@@ -515,13 +419,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-verb-2"
     },
     {
       "id": "oat-milk-reformist-predicate-1-past",
@@ -550,13 +448,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-predicate-1"
     },
     {
       "id": "oat-milk-reformist-predicate-1-present",
@@ -585,13 +477,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-predicate-1"
     },
     {
       "id": "oat-milk-reformist-predicate-1-future",
@@ -620,13 +506,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "oat-milk-reformist-predicate-1"
     },
     {
       "id": "oat-milk-reformist-review-modifier",
@@ -636,13 +516,7 @@
         "class",
         "relevance"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "oat-milk-reformist-contrast",
@@ -650,13 +524,7 @@
       "text": "but, with compassion,",
       "connectorKind": "but",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

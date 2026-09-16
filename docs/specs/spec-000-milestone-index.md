@@ -27,10 +27,12 @@ complete an approved specification.
   Continuations, comebacks, Pride damage, timer choices, and cliffhangers are
   also necessary. The default timer is 30 seconds. The local choices are 15
   seconds and Unlimited.
-- Use only original Grand Transition phrases, characters, scenes, prose, art,
-  audio, branding, and source. Reference-game mechanics are authority for
-  behavior, not permission to copy protected expression. The sourced English
-  slogan form that AC-005-07 names is the only phrase exception.
+- Use only original Grand Transition characters, scenes, identities, art,
+  audio, branding, and source. Phrase text can be invented or real. A phrase
+  that refers to real speech, a real slogan, or a real event keeps its real
+  wording, so its meaning survives translation into another language.
+  Reference-game mechanics are authority for behavior, not permission to copy
+  protected expression.
 - All generated representational raster art uses the shared cel-shaded
   editorial-cartoon direction that Milestone 023 owns. This rule applies to
   every character, skin, state, moderator, scene, foreground plate,
@@ -48,14 +50,15 @@ complete an approved specification.
 
   A public-figure likeness may be used only as visual-only parody in a portrait
   skin. It must not change fictional character identity or player-visible
-  content. Public institutions and documented historical events can inform
-  original satire when the result does not identify a real person.
-- Public political speech can inform original English comic adaptations in
-  common phrases, character phrases, endings, and comebacks. Milestone 027
-  owns source verification and private traceability. Translate the meaning,
-  then write a fictional punchline; do not publish attribution or present
-  adapted dialogue as an authentic quotation. This does not add a verbatim
-  quotation exception or change character identity across skins.
+  content. Public institutions and documented historical events can appear
+  directly and accurately when the result does not identify a real person.
+- Public political speech, slogans, memes, and documented events can appear in
+  common phrases, character phrases, endings, and comebacks. A phrase that
+  refers to real speech stays accurate: keep the real wording, in its original
+  language or as a faithful rendering whose meaning is preserved. An invented
+  phrase is equally permitted. Milestone 027 owns source verification and
+  private traceability. Do not name a real person or present an invented line
+  as a real person's words. Character identity stays fictional across skins.
 - Do not use a real political party's name, acronym, or logo. Use only generic
   ideological or social-family labels, such as Conservative, Peasant,
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
@@ -102,7 +105,7 @@ complete an approved specification.
 - Agents verify implementation through code and source inspection, automated
   checks, measurements, and production-browser checks. Record what was actually
   checked without claiming human approval or a subjective listening result.
-  Quality, style, privacy, originality, licensing, and automated acceptance
+  Quality, style, privacy, accuracy, licensing, and automated acceptance
   requirements remain in force.
 - Resolve routine creative and implementation choices from the existing
   contracts and record material assumptions. Ask only when an unresolved input
@@ -287,7 +290,7 @@ source-only review does not satisfy them.
     tactics.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
-27. [Balance and editorial review](spec-027-balance-editorial.md). Budget: 5.
+27. [Balance and editorial rules](spec-027-balance-editorial.md). Budget: 5.
     The current artwork and phrase catalog have safety and normal CI evidence.
     Additional Milestone 028 artwork is not a prerequisite.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.

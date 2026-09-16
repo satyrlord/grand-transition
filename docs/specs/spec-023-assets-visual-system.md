@@ -254,7 +254,7 @@ Sentence construction owns the center.
 This direction supports immediate video-game readability. It reduces reliance
 on realistic facial and material detail that can expose generated artifacts or
 create an accidental close likeness. It does not replace originality, license,
-provenance, or editorial review requirements.
+or provenance requirements.
 
 Secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.

@@ -484,3 +484,41 @@ test('completes the approved cemetery-turnout sentence as a modifier', () => {
     publicText: 'My opponent can lose an election to an empty ballot with 110% turnout at the cemetery',
   } });
 });
+
+// Catalog-wide guarantees. These read whatever the shipped catalog contains, so
+// adding or removing a card never needs an edit here. They fail only when an
+// authored card cannot reach a complete sentence.
+describe('catalog-wide clause coverage', () => {
+  test('every shipped ending completes personal, nonpersonal, and plural clauses', () => {
+    for (const ending of sampleContent.phrases.filter(({ role }) => role === 'ending')) {
+      for (const subject of ['you', 'campaign-promise', 'your-voters']) {
+        const result = analyze([
+          add(subject), add('belongs-in-a-party-museum'), add(ending.id),
+        ]);
+        expect(result, `${subject} + ${ending.id}`).toMatchObject({
+          accepted: true,
+          analysis: { complete: true, state: 'ENDED' },
+        });
+        if (!result.accepted) continue;
+        expect(result.analysis.publicText, ending.id).toMatch(/\.$/u);
+        expect(result.analysis.publicText, ending.id)
+          .not.toMatch(/\.\.|undefined|\s{2}/u);
+      }
+    }
+  });
+
+  test('every shipped noun and modifier stays reachable in a complete clause', () => {
+    for (const entry of sampleContent.phrases) {
+      const ids = entry.role === 'noun'
+        ? [entry.id, 'belongs-in-a-party-museum', 'under-the-national-banner']
+        : entry.role === 'modifier'
+          ? ['you', 'belongs-in-a-party-museum', entry.id, 'under-the-national-banner']
+          : null;
+      if (!ids) continue;
+      expect(analyze(ids.map(add)), entry.id).toMatchObject({
+        accepted: true,
+        analysis: { complete: true, state: 'ENDED' },
+      });
+    }
+  });
+});

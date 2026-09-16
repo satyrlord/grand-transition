@@ -11,14 +11,23 @@ Read the applicable approved specifications. Start with
 021 when the content affects grammar, draws, scoring, match flow, or artificial
 intelligence (AI).
 
+Adding or removing a phrase card is a content-only change. Follow
+`docs/phrase-authoring.md`. Do not add or update a test for an individual card;
+content is verified by catalog-wide schema, grammar, and workload checks.
+
 Keep English phrase text out of rule logic. Use stable IDs
-and locale-specific phrase forms. Use a separate grammar adapter. Preserve
-fictional-composite satire and editorial safety.
+and locale-specific phrase forms. Use a separate grammar adapter. Keep editorial
+safety, and keep characters, identities, and brands fictional.
+
+Phrase text can be invented or real. A phrase that draws on real speech, a real
+slogan, or a documented meme keeps its real wording and meaning, because that
+accuracy is what lets the Romanian catalog translate it correctly. Never rewrite
+a real phrase into an inaccurate paraphrase.
 
 Do not name or identify a real
 person in content or its rationale.
 Apply the approved Milestone 000 portrait-parody exception only to a skin's
-visual likeness. Keep its identity, prose, and public metadata fictional.
+visual likeness. Keep its identity and public metadata fictional.
 
 Use generic ideological or social-family
 party labels. Do not use real party names, acronyms, or logos. Use only original

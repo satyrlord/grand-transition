@@ -46,12 +46,6 @@
     "speak": "coalition-acrobat-speak",
     "react": "coalition-acrobat-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "coalition-acrobat-foundation-noun",
@@ -66,13 +60,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed jacket-and-cash motif: a negotiator carries storage for every alliance. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-foundation-modifier",
@@ -83,13 +71,7 @@
         "memory",
         "commitment"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional reversible-clothing metaphor for abandoned commitments. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-foundation-ending",
@@ -101,13 +83,7 @@
         "commitment"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed jacket-and-cash motif: changing allies preserves the material advantage. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "coalition-acrobat-fingerprinted-slate",
@@ -119,13 +95,7 @@
         "commitment"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed fresh-start motif: a supposedly new coalition retains evidence of its past. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "coalition-acrobat-hinged-red-line",
@@ -143,13 +113,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposedly firm negotiating limit opens like a door. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-rotating-principles",
@@ -167,13 +131,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A display mechanism turns political principles toward each audience. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-erasable-vow",
@@ -191,13 +149,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The ink contradicts the promised permanence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-double-booked-handshake",
@@ -215,13 +167,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial agreement has a competing appointment. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-amnesiac-calendar",
@@ -239,13 +185,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Removing yesterday hides earlier commitments. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-rented-to-both-sides-past",
@@ -279,13 +219,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-rented-to-both-sides-present",
@@ -319,13 +253,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-rented-to-both-sides-future",
@@ -359,13 +287,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The same political asset is rented to competing camps. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "coalition-acrobat-traded-for-cabinet-seats-past",
@@ -399,13 +321,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-traded-for-cabinet-seats-present",
@@ -439,13 +355,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-traded-for-cabinet-seats-future",
@@ -479,13 +389,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A government office is traded for the following object as if it were personal property. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "coalition-acrobat-loyal-until-lunch-past",
@@ -513,13 +417,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "coalition-acrobat-loyal-until-lunch-present",
@@ -547,13 +445,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-loyal-until-lunch-future",
@@ -581,13 +473,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A trivial social invitation sets the expiry time of loyalty. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "coalition-acrobat-under-reversible-oath",
@@ -596,13 +482,7 @@
       "tags": [
         "commitment"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An oath is treated as clothing that can be turned inside out. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-neutral-contrast",
@@ -610,13 +490,7 @@
       "text": "but, even so,",
       "tags": [],
       "connectorKind": "but",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

@@ -46,12 +46,6 @@
     "speak": "football-tycoon-speak",
     "react": "football-tycoon-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original fictional comebacks transform selective reading, shirt sponsorship, and impossible credit-sharing into sporting boasts. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "football-tycoon-foundation-noun",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional exaggeration of impossible credit-sharing arithmetic."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-foundation-modifier",
@@ -85,13 +73,7 @@
         "commercialism",
         "sincerity"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional transformation of sponsor-price bravado into a wearable moral compromise."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "football-tycoon-foundation-ending",
@@ -102,13 +84,7 @@
         "accountability"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional reversal of commercial sporting bravado."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "football-tycoon-credit-after-one-hundred-percent",
@@ -119,13 +95,7 @@
         "sincerity"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional punchline about taking more credit than the whole available total."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "football-tycoon-sponsored-conscience",
@@ -144,13 +114,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Moral judgment is converted into advertising space. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-rented-standing-ovation",
@@ -168,13 +132,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Public admiration is purchased as a service. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-invoice-whistle",
@@ -192,13 +150,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An instrument of sporting judgment becomes a billing device. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-charity-scoreboard",
@@ -216,13 +168,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A charitable event counts publicity instead of beneficiaries. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-blameless-owner",
@@ -241,13 +187,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The owner takes credit while avoiding recorded responsibility. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-sold-naming-rights-to-past",
@@ -281,13 +221,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-sold-naming-rights-to-present",
@@ -321,13 +255,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "football-tycoon-sold-naming-rights-to-future",
@@ -361,13 +289,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The relation treats the following object as a marketable name. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "football-tycoon-relegated-to-fine-print-past",
@@ -401,13 +323,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-relegated-to-fine-print-present",
@@ -441,13 +357,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "football-tycoon-relegated-to-fine-print-future",
@@ -481,13 +391,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A sponsor disclaimer lets commercial paperwork deflect responsibility for the following subject. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "football-tycoon-sincere-until-invoice-past",
@@ -516,13 +420,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "football-tycoon-sincere-until-invoice-present",
@@ -551,13 +449,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "football-tycoon-sincere-until-invoice-future",
@@ -586,13 +478,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A bill exposes the commercial limit of professed sincerity. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "football-tycoon-charity-camera-angle",
@@ -601,13 +487,7 @@
       "tags": [
         "sincerity"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A favorable camera view substitutes for charitable conduct. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "football-tycoon-neutral-contrast",
@@ -615,13 +495,7 @@
       "text": "yet, despite that,",
       "tags": [],
       "connectorKind": "yet",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

@@ -30,7 +30,7 @@ damage.
 ## Positioning
 
 Inferred from the approved specifications: the product joins deterministic
-tactical drafting with grammatical sentence construction and fictional
+tactical drafting with grammatical sentence construction and
 political-theater satire. The sentence is both the player's move and the source
 of its score.
 
@@ -61,8 +61,9 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes 19 original fictional characters, 18 human and one
-  fully mechanical, Romanian-politics phrase content, and separate transparent
+  bundle. It also includes 19 fictional characters, 18 human and one
+  fully mechanical, Romanian-politics phrase content that is either invented or
+  a real, accurately reproduced line, and separate transparent
   default portraits. Eight archetypes have eleven alternate skins in total. Skins
   are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and zero through eight
@@ -97,8 +98,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 ## Brand Commitments
 
 The approved name is "Grand Transition: A Verbal Republic." The subject is
-fictional political and social satire. It must not copy real brands, protected
-works, or unsupported claims about real people.
+political and social satire. Character identities and brands stay fictional,
+real-person names stay out of shipped content, and a phrase drawn from real
+speech stays accurate. It must not copy protected
+works or make unsupported claims about real people.
 The approved final image language is a flat cel-shaded editorial cartoon.
 
 Painted comic-book, painterly semi-realistic, realistic concept-art,

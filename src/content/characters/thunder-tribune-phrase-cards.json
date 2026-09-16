@@ -68,13 +68,7 @@
           "oratory"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of Romanian thunderous television-orator imagery. The target is a fictional studio persona. Not a quotation. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "condemns",
@@ -100,12 +94,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "tense": "present",
       "tenseFamily": "condemns"
     },
@@ -133,12 +121,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "tense": "past",
       "tenseFamily": "condemns"
     },
@@ -166,12 +148,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of competitive interruption and raised-volume themes in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "tense": "future",
       "tenseFamily": "condemns"
     },
@@ -192,12 +168,6 @@
           }
         ],
         "flavour": []
-      },
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
       },
       "tenseFamily": "from-the-marble-rostrum",
       "rarity": "common",
@@ -224,12 +194,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
-      },
       "singularText": "can lose an election to an empty ballot",
       "pluralText": "can lose an election to an empty ballot",
       "tense": "present",
@@ -254,12 +218,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of a Romanian political-media joke about a fictional candidate's weak vote. It makes no claim about a real election result. Not a quotation. Editorial review complete."
-      },
       "singularText": "will lose an election to an empty ballot",
       "pluralText": "will lose an election to an empty ballot",
       "tense": "future",
@@ -274,13 +232,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "raises-the-volume-again",
@@ -301,12 +253,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "singularText": "seizes the studio phone again",
       "pluralText": "seize the studio phone again",
       "tense": "present",
@@ -331,12 +277,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "singularText": "seized the studio phone again",
       "pluralText": "seized the studio phone again",
       "tense": "past",
@@ -361,12 +301,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional predicate about repeated studio-phone interruptions and televised oratorical intensity in Romanian political media. Not a quotation. Editorial review complete."
-      },
       "singularText": "will seize the studio phone again",
       "pluralText": "will seize the studio phone again",
       "tense": "future",
@@ -389,13 +323,7 @@
           "appearance-metaphor"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original costume-and-prop metaphor for a fictional television persona. It targets no protected trait. Editorial review complete."
-      }
+      "rarity": "rare"
     },
     {
       "id": "your-paper-crown",
@@ -413,13 +341,7 @@
           "status"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original status metaphor in the Thunder Tribune's fictional political voice. Not a quotation. Editorial review complete."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-squealing-party-trumpet",
@@ -438,13 +360,7 @@
           "oratory"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original noisy-instrument metaphor for a fictional party spokesperson. It is not a quotation. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "a-cursed-gnome",
@@ -463,13 +379,7 @@
           "fantasy-metaphor"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "rare"
     },
     {
       "id": "a-somaldoaca",
@@ -488,13 +398,7 @@
           "romanianism"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "rare"
     },
     {
       "id": "looks-like-a-somaldoaca-on-television",
@@ -520,12 +424,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "tense": "present",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
     },
@@ -553,12 +451,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "tense": "past",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
     },
@@ -586,12 +478,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "tense": "future",
       "tenseFamily": "looks-like-a-somaldoaca-on-television"
     },
@@ -604,13 +490,7 @@
         "restraint"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "with-cemetery-turnout",
@@ -620,13 +500,7 @@
         "evidence",
         "credibility"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "User-approved original adaptation of a dead-voter election joke for the fictional Thunder Tribune. The impossible turnout is fictional satire, not a quotation or a claim about an actual election."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "thunder-tribune-verb-1-past",
@@ -661,13 +535,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "thunder-tribune-verb-1"
     },
     {
       "id": "thunder-tribune-verb-1-present",
@@ -702,13 +570,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "thunder-tribune-verb-1"
     },
     {
       "id": "thunder-tribune-verb-1-future",
@@ -743,13 +605,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "thunder-tribune-verb-1"
     },
     {
       "id": "thunder-tribune-contrast",
@@ -757,19 +613,7 @@
       "text": "yet, above the applause,",
       "connectorKind": "yet",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
-  ],
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  }
+  ]
 }

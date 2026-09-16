@@ -68,13 +68,7 @@
           "transition"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "mediates",
@@ -97,12 +91,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
-      },
       "tense": "present",
       "tenseFamily": "mediates"
     },
@@ -127,12 +115,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
-      },
       "tense": "past",
       "tenseFamily": "mediates"
     },
@@ -157,12 +139,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation informed by Romanian dialogue and consensus rhetoric. Not a quotation. Editorial review complete."
-      },
       "tense": "future",
       "tenseFamily": "mediates"
     },
@@ -174,13 +150,7 @@
         "modernity",
         "legacy"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "for-stabilitys-sake",
@@ -191,13 +161,7 @@
         "bureaucracy"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "asks-for-patience-again",
@@ -218,12 +182,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "asks the calendar for another mandate",
       "pluralText": "ask the calendar for another mandate",
       "tense": "present",
@@ -248,12 +206,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "asked the calendar for another mandate",
       "pluralText": "asked the calendar for another mandate",
       "tense": "past",
@@ -278,12 +230,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "will ask the calendar for another mandate",
       "pluralText": "will ask the calendar for another mandate",
       "tense": "future",
@@ -306,13 +252,7 @@
           "procedure"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original political-obsolescence metaphor for a fictional persona. It does not target age or another protected trait. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "calls-every-delay-a-transition",
@@ -337,12 +277,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
-      },
       "tense": "present",
       "tenseFamily": "calls-every-delay-a-transition"
     },
@@ -369,12 +303,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
-      },
       "tense": "past",
       "tenseFamily": "calls-every-delay-a-transition"
     },
@@ -401,12 +329,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged procedural insult in the Chairman's fictional transition voice. Not a quotation. Editorial review complete."
-      },
       "tense": "future",
       "tenseFamily": "calls-every-delay-a-transition"
     },
@@ -426,13 +348,7 @@
           "social-policy"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original policy noun in the Red-Folded Chairman's fictional transition voice. It names no real person or party and is not a quotation. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "socialism-with-a-human-face",
@@ -450,13 +366,7 @@
           "ideology"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "rare"
     },
     {
       "id": "a-free-thinker",
@@ -475,13 +385,7 @@
           "independence"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-dictatorship",
@@ -499,13 +403,7 @@
           "institution"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original institutional noun for fictional political satire. It names no real regime, person, or party. Editorial review complete."
-      }
+      "rarity": "common"
     },
     {
       "id": "the-working-class",
@@ -524,13 +422,7 @@
           "class"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original social-policy noun for fictional political satire. It targets no protected trait and names no real person or party. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "some-hooligans",
@@ -550,13 +442,7 @@
           "crowd"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original crowd noun for fictional political satire. It names no real group or person and targets no protected trait. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "scientific-socialism",
@@ -574,13 +460,7 @@
           "ideology"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original ideological noun in the Red-Folded Chairman's fictional transition voice. It names no real person or party and is not a quotation. Editorial review complete."
-      }
+      "rarity": "rare"
     },
     {
       "id": "a-screwdriver-between-the-ribs",
@@ -598,13 +478,7 @@
           "physical-metaphor"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "rare"
     },
     {
       "id": "a-historical-blunder",
@@ -622,13 +496,7 @@
           "failure"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original historical-failure noun for fictional political satire. It makes no claim about a real person or event. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "rich-and-dishonest",
@@ -638,13 +506,7 @@
         "credibility",
         "evidence"
       ],
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional modifier about hypocrisy and wealth. It targets fictional persona behavior, not a protected trait. Editorial review complete."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-rooster",
@@ -660,13 +522,7 @@
           "animal-metaphor"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "a-naughty-boy",
@@ -685,13 +541,7 @@
           "behavior"
         ]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original patronizing noun for fictional political satire. It contains no sexual framing and targets no protected trait. Editorial review complete."
-      }
+      "rarity": "rare"
     },
     {
       "id": "the-dacs-that-come-from-the-tracs",
@@ -701,13 +551,7 @@
         "legacy"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional ending; agent editorial review, 2026-09-12. The approved ancestry aside reflects the Chairman's fixation on the past and supports the legacy tag. It makes no claim about modernity. The exact approved wording is retained; its historical names need cultural context. No real-person target or named modern group."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "and-thats-the-synergy-of-facts",
@@ -718,13 +562,7 @@
         "bureaucracy"
       ],
       "rarity": "uncommon",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "chairman-grammar-immunity",
@@ -735,13 +573,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English transformation of bureaucratic speech errors, reviewed for the requested humor revision on 2026-09-11. Targets fictional official evasiveness; private source traceability does not ship."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "red-folded-chairman-verb-1-past",
@@ -776,13 +608,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "red-folded-chairman-verb-1"
     },
     {
       "id": "red-folded-chairman-verb-1-present",
@@ -817,13 +643,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "red-folded-chairman-verb-1"
     },
     {
       "id": "red-folded-chairman-verb-1-future",
@@ -858,13 +678,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "red-folded-chairman-verb-1"
     },
     {
       "id": "red-folded-chairman-contrast",
@@ -872,19 +686,7 @@
       "text": "but, after due deliberation,",
       "connectorKind": "but",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
-  ],
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  }
+  ]
 }

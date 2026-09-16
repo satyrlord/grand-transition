@@ -46,12 +46,6 @@
     "speak": "velvet-mogul-speak",
     "react": "velvet-mogul-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "velvet-mogul-foundation-noun",
@@ -70,13 +64,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-foundation-modifier",
@@ -87,13 +75,7 @@
         "influence",
         "credibility"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "velvet-mogul-foundation-ending",
@@ -105,13 +87,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "mogul-count-the-assets",
@@ -122,13 +98,7 @@
         "influence"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "mogul-measure-the-silence",
@@ -139,13 +109,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "velvet-mogul-editorial-share-certificate",
@@ -165,13 +129,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-velvet-veto-button",
@@ -191,13 +149,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-rented-independence",
@@ -218,13 +170,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-offshore-applause",
@@ -244,13 +190,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-sponsored-conscience",
@@ -271,13 +211,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "velvet-mogul-verb-1-past",
@@ -311,13 +245,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-1"
     },
     {
       "id": "velvet-mogul-verb-1-present",
@@ -351,13 +279,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-1"
     },
     {
       "id": "velvet-mogul-verb-1-future",
@@ -391,13 +313,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-1"
     },
     {
       "id": "velvet-mogul-verb-2-past",
@@ -431,13 +347,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-2"
     },
     {
       "id": "velvet-mogul-verb-2-present",
@@ -471,13 +381,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-2"
     },
     {
       "id": "velvet-mogul-verb-2-future",
@@ -511,13 +415,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-verb-2"
     },
     {
       "id": "velvet-mogul-predicate-1-past",
@@ -546,13 +444,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-predicate-1"
     },
     {
       "id": "velvet-mogul-predicate-1-present",
@@ -581,13 +473,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-predicate-1"
     },
     {
       "id": "velvet-mogul-predicate-1-future",
@@ -616,13 +502,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "velvet-mogul-predicate-1"
     },
     {
       "id": "velvet-mogul-review-modifier",
@@ -631,13 +511,7 @@
       "tags": [
         "influence"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "velvet-mogul-contrast",
@@ -645,13 +519,7 @@
       "text": "but, under new management,",
       "connectorKind": "but",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

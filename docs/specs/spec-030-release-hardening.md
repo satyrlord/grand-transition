@@ -108,7 +108,9 @@ persistent terminal victory state and local match history. It also has
 development-only deterministic replay, validated data-driven content,
 locale-isolated English, and a responsive user interface (UI) under Milestone
 018. All
-art, writing, and branding are original. Audio is original, AI-generated, or
+art, audio, and branding are original or licensed, and characters stay
+fictional. Phrase text is original or a real, accurately reproduced line. Audio
+is original, AI-generated, or
 licensed under the Milestone 024 contract.
 
 The MVP has no online behavior.

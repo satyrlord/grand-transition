@@ -46,12 +46,6 @@
     "speak": "spreadsheet-technocrat-speak",
     "react": "spreadsheet-technocrat-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "spreadsheet-technocrat-foundation-noun",
@@ -66,26 +60,14 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed public-pantry motif: the manager audits a final crumb. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-foundation-modifier",
       "role": "modifier",
       "text": "after delivering the budget to the rats",
       "tags": ["delivery", "accountability"],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed public-pantry motif: bureaucratic metrics mistake pests for employees. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-foundation-ending",
@@ -93,13 +75,7 @@
       "text": "and pantry mice get allowances; voters get crumbs.",
       "tags": ["delivery", "accountability", "human-scale"],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed public-pantry motif: resource consumption becomes an expense claim. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "spreadsheet-technocrat-breakage-invoice",
@@ -107,13 +83,7 @@
       "text": "and the budget billed the broom for damages.",
       "tags": ["accountability"],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed broken-family-budget motif: the person cleaning up receives the invoice. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "spreadsheet-technocrat-green-cell-hospital",
@@ -131,13 +101,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Spreadsheet completion is mistaken for a functioning hospital. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-average-citizen",
@@ -156,12 +120,6 @@
         ]
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Numerical rounding erases the person a policy is meant to serve. No real-person or quotation attribution. Final owner acceptance is separate."
-      },
       "referentKind": "personal"
     },
     {
@@ -180,13 +138,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A spreadsheet hides the place where responsibility should be visible. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-progress-bar-ruler",
@@ -204,13 +156,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Another measurement device replaces completion of the work. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-queue-statistic",
@@ -228,13 +174,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A label disguises people waiting for a service. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-rounded-out-of-budget-past",
@@ -268,13 +208,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-rounded-out-of-budget-present",
@@ -308,13 +242,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-rounded-out-of-budget-future",
@@ -348,13 +276,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Rounding each citizen's budget makes the loss of human scale explicit in the visible text. All tense and person forms preserve that meaning. No real-person or quotation attribution."
-      }
+      "rarity": "rare"
     },
     {
       "id": "spreadsheet-technocrat-buried-in-appendix-past",
@@ -388,13 +310,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-buried-in-appendix-present",
@@ -428,13 +344,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-buried-in-appendix-future",
@@ -468,13 +378,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A report conceals when the following project or service must be delivered. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-past",
@@ -502,13 +406,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-present",
@@ -536,13 +434,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-delivered-on-slide-future",
@@ -570,13 +462,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A presentation claims delivery without any physical result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "spreadsheet-technocrat-excluding-actual-people",
@@ -585,13 +471,7 @@
       "tags": [
         "human-scale"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposed public-service measure omits the public. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-neutral-contrast",
@@ -599,13 +479,7 @@
       "text": "but, in either case,",
       "tags": [],
       "connectorKind": "but",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

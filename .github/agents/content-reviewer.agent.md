@@ -29,7 +29,7 @@ Review the selected scope without edits.
 
 Check stable identifiers (IDs), schema parity, and locale parity. Check grammar
 reachability, singular and plural forms, tag coverage, and pool size. Check
-scene references, character references, and editorial review fields. Check that
+scene references and character references. Check that
 character file names match their IDs.
 
 Check that roster orders are unique.
@@ -43,7 +43,12 @@ ideological or social-family labels instead of real names, acronyms, or logos.
 Apply the Milestone 000 exception for approved visual-only portrait parody.
 Do not infer approval from the asset's presence or from private research.
 
-Check protected characteristics, threats, copied lines, and unsafe Hypertext
+Check that a phrase drawn from real speech, a real slogan, or a documented meme
+repeats the real wording and meaning instead of an inaccurate paraphrase, and
+that the review states whether the card is invented or sourced.
+
+Check protected characteristics, threats, protected expression copied from
+another game or work, and unsafe Hypertext
 Markup Language (HTML). Check asset ownership, source, and license metadata.
 
 Report only evidence-backed findings. Give severity, exact record or path,

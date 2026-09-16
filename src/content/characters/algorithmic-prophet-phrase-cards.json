@@ -46,12 +46,6 @@
     "speak": "algorithmic-prophet-speak",
     "react": "algorithmic-prophet-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "algorithmic-prophet-foundation-noun",
@@ -66,26 +60,14 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed water-information motif: a fictional mystic treats a drink as network hardware. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-foundation-modifier",
       "role": "modifier",
       "text": "after downloading evidence through a straw",
       "tags": ["evidence", "specificity"],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed water-information motif: evidence arrives by drinking straw. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-foundation-ending",
@@ -93,13 +75,7 @@
       "text": "and your follow-up question drowned in a puddle.",
       "tags": ["follow-up-questions"],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed water-information motif: a debate argument fails a puddle-sized data test. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-lemonade-transfer",
@@ -107,13 +83,7 @@
       "text": "and even your lemonade's microchip dodges questions.",
       "tags": ["evidence", "follow-up-questions"],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed beverage-microchip motif: imaginary hardware refuses the speaker's rhetoric. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-bottled-prophecy-archive",
@@ -130,13 +100,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original beverage-memory satire: a fictional mystic bottles predictions without verification. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-sacred-leaderboard",
@@ -154,13 +118,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original ranking satire: a fictional mystic treats an empty performance table as a sacred object. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-laptop-wind-of-destiny",
@@ -169,13 +127,7 @@
       "tags": [
         "evidence"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original prophecy satire: an ordinary computer fan becomes an invented omen. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-ceremonial-donation-bow",
@@ -185,13 +137,7 @@
         "commercialism",
         "sincerity"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original ceremonial-honor satire: a fictional livestream ritual serves fundraising. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-tap-water-excuses",
@@ -201,13 +147,7 @@
         "evidence"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original beverage-memory reversal: imaginary water storage retains excuses but loses proof. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-prophetic-damp-socks",
@@ -218,13 +158,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original nature-omen reversal: a grand fictional prediction collapses into a mundane clothing complaint. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-greatness-error-cell",
@@ -235,13 +169,7 @@
         "results"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original greatness-versus-measurement satire: a grand claim collapses into an ordinary calculation failure. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-bravery-follow-up",
@@ -251,13 +179,7 @@
         "follow-up-questions"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original ceremonial-courage reversal: rhetorical bravery avoids ordinary scrutiny. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "algorithmic-prophet-offline-revelation",
@@ -275,13 +197,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A supernatural claim depends on mundane internet reception. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-sacred-comment-filter",
@@ -299,13 +215,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An online filter shields a claim from scrutiny. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-prophecy-footnote",
@@ -323,13 +233,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A prediction conceals the detail needed to test it. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-decoded-from-static-past",
@@ -363,13 +267,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-decoded-from-static-present",
@@ -403,13 +301,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-decoded-from-static-future",
@@ -443,13 +335,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Noise is promoted into a source of authoritative information. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "algorithmic-prophet-certified-by-pendulum-past",
@@ -483,13 +369,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-certified-by-pendulum-present",
@@ -523,13 +403,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-certified-by-pendulum-future",
@@ -563,13 +437,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An ornamental swinging weight replaces a reproducible check. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "algorithmic-prophet-vague-in-high-definition-past",
@@ -597,13 +465,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "algorithmic-prophet-vague-in-high-definition-present",
@@ -631,13 +493,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-vague-in-high-definition-future",
@@ -665,13 +521,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Sharp video resolution fails to sharpen the claim. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "algorithmic-prophet-neutral-contrast",
@@ -679,13 +529,7 @@
       "text": "yet, even now,",
       "tags": [],
       "connectorKind": "yet",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

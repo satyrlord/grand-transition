@@ -19,7 +19,8 @@ List only unresolved choices.
 Order choices from parent to child.
 Put the choice that is hardest to reverse or has the most dependencies first.
 Check applicable game rules, balance, artificial intelligence (AI), grammar,
-content safety, and originality. Check localization, privacy, browser support,
+content safety, and real-phrase accuracy. Check localization, privacy, browser
+support,
 assets, performance, delivery, and verification effects.
 
 ## Resolve one branch

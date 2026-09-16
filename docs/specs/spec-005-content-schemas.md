@@ -2,12 +2,12 @@
 
 **Status:** Approved  
 **Depends on:** 004  
-**Owns:** Phrase, character, scene, locale, score-group, and editorial schemas
+**Owns:** Phrase, character, scene, locale, and score-group schemas
 **Production-file budget:** 8
 
 ## Deliver
 
-Implement strict Zod 4 schemas for original Grand Transition content. The
+Implement strict Zod 4 schemas for Grand Transition content. The
 initial catalog contains the Red-Folded Chairman, Thunder Tribune, Black Sea
 Captain, and Government AI, at least one scene, and a canonical English locale.
 Each character owns English phrase cards. Animal terms in character titles are
@@ -17,8 +17,8 @@ A phrase owns an identifier, role, text key, and optional agreement forms. It
 can own a connector kind, grammatical number, grammatical person, and referent
 kind. A combined copular predicate can declare that it allows a coordinated
 noun complement. A phrase owns scoring tags, weakness tags, restrictions, draw
-rarity, and editorial review. It can also own custom clause scores and a
-finisher score. Ending text includes a terminal full stop.
+rarity. It can also own custom clause scores and a finisher score. Ending text
+includes a terminal full stop.
 
 Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
 `continuation`. A modifier is an adverbial or descriptive phrase that can
@@ -63,10 +63,10 @@ phrase, constructed-sentence, and speech semantic message-key sets. Milestone
 029 permits language-specific inflection shapes and owns complete Romanian
 coverage. Interface labels and controls use separate Lit message resources;
 they do not enter game locale bundles. Every referenced
-text and number-form key exists. Reject HTML, script URLs, inline handlers,
-and unsafe editorial states. Reject
-player-visible real-person references, real-party references, protected-trait
-insults, sexual humiliation, threats, real logos, and copyrighted broadcast graphics.
+text and number-form key exists. Schemas reject HTML, script URLs, inline
+handlers, real logos, and copyrighted broadcast graphics. Milestone 027's
+editorial review rejects player-visible real-person references, real-party
+references, protected-trait insults, sexual humiliation, and threats.
 
 ## Exact constraints
 
@@ -108,9 +108,9 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
   the literal value `true` and marks a combined copular predicate whose copula
   can also govern a following `and + NOUN` complement.
 - Each weakness tag occurs on at least two phrases.
-- Every shipped phrase has approved original editorial review with no flags.
-  An agent can record this review from actual source and content inspection;
-  the state does not require or imply human sign-off.
+- A phrase drawn from real speech records its source in the private research
+  folder and repeats the real wording, because accuracy is what lets another
+  language adapt it. An invented phrase needs no source record.
 - Each character owns exactly one weak, one medium, and one strong comeback
   line. Each key uses `comeback.<character-id>.<tier>` and cannot be shared by
   another character or tier. There is no common comeback pool.
@@ -122,10 +122,11 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
   Shipped prompts, source notes,
   and asset metadata use a generic source description and do not name a real
   person. The skin does not change the fictional character identity or prose.
-- Original comic adaptations of researched political speech are permitted as
-  specified in Milestone 027. Real names, source excerpts, translations, and
-  source-to-card mappings remain private. Public editorial notes describe the
-  fictional comic device and review; they do not embed research attribution.
+- Real slogans, real political speech, and documented memes are permitted as
+  specified in Milestone 027, and a real phrase keeps its real wording and
+  meaning. Real names, translations, and source-to-card mappings remain private.
+  Public editorial notes describe the phrase's source basis and the review; they
+  do not name a real person.
 - Shipped prose, specifications, editorial rationale, source notes, and asset
   metadata do not use a real political party's name, acronym, or logo. Allowed
   generic labels include `The Conservative Party`, `The Peasant's Party`,
@@ -135,12 +136,12 @@ insults, sexual humiliation, threats, real logos, and copyrighted broadcast grap
 
 ## Manual phrase authoring
 
-Milestones 027 and 028 use the final English catalog with 150 general nouns,
+Milestones 027 and 028 use the final English catalog with 151 general nouns,
 122 general verbs, 100 general predicates and modifiers, eight general
 conjunctions, 60 general endings, and one universal continuation. Each scene
 has 25 or 26 owned-pool IDs including the universal continuation. Each
-character has 20 through 32 owned phrases. The release preflight and focused
-tests enforce these minimum and maximum counts.
+character has 3 through 32 owned phrases, and the focused schema tests enforce
+that range with the character's noun, modifier, and ending minimums.
 
 Editorial revisions keep stable IDs while the displayed text supplies enough
 English context. Each player-visible phrase text and agreement form contains no
@@ -154,12 +155,12 @@ an overlong comeback at its exact tier path.
 The guardrails follow the measured corpus of the source party game the interface
 imitates: connectors of one word, objects and predicates of three to four words
 by median, finishers of about six, and an eleven-word maximum for the longest
-comeback. Original satire in that style lets a card sit well above the measured
+comeback. Satire in that style lets a card sit well above the measured
 band when the extra words are the comic image or the punchline: humour takes
 priority over brevity, and a locale that adapts the cards later may need more
 words than the English original. The tighter editorial bands stay in the private
 research folder as guidance for new cards, together with the measurement and the
-documented exceptions.
+recorded sources.
 
 The `securitate` weakness label reads
 `Former secret police`
@@ -189,8 +190,7 @@ The loader derives `characterIds`. Authors must not repeat that ownership field
 inside each phrase card.
 
 To add a common phrase, copy one same-role object in the common JSON array.
-Change its identifier, text, tags, scoring metadata, restrictions, and rarity.
-Also change its explicit editorial review. To add a phrase for an existing
+Change its identifier, text, tags, scoring metadata, restrictions, and rarity. To add a phrase for an existing
 character, do the same in that character's `phrases` array.
 
 Cards with number agreement include
@@ -206,8 +206,6 @@ duplicate identifiers, player-visible English phrase text, and roster orders.
 
 It rejects file-name mismatches and one-sided number or person forms. It also
 rejects unknown fields, invalid scoring data, and cross-corpus duplicates.
-Every phrase and character file explicitly records review state, originality,
-safety flags, and notes. The loader never invents editorial approval.
 
 The browser build discovers every matching character JSON file and portrait by
 file convention. Node tools discover the same JSON files through the file
@@ -228,7 +226,7 @@ simulation, and browser validation must pass before it can ship.
   unresolved references, restriction violations, duplicate set values, and
   missing board roles fail at the precise path.
 - **AC-005-04:** Locale parity, number and person forms, safe plain text,
-  editorial state, and original-media declarations fail independently.
+  and original-media declarations fail independently.
 - **AC-005-05:** Character data contains only character-hand restrictions and
   cannot reserve a common-board phrase.
 - **AC-005-06:** The common and per-character JSON corpora load all phrase
@@ -262,17 +260,22 @@ simulation, and browser validation must pass before it can ship.
   The only continuation is the unrestricted `[...]` card. It contains second-person
   `you`, plural `EU funds`, and person-aware subject forms for every shipped
   relation that contains a possessive reference to its subject. It contains
-  Romanian political themes in original English adaptations. The approved
-  `under-the-national-banner` ending renders the sourced English form of the
+  Romanian political themes, quoted from real speech or invented for the game.
+
+  The `under-the-national-banner` ending renders the real English form of the
   [public 2017 civic-protest
 slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
-  `Noaptea, ca hoții`. It retains its stable identifier for deterministic
-  replay compatibility. This one-record exception replaces the product-wide
-  original-phrase rule only for this entry.
+  `Noaptea, ca hoții`. A real phrase keeps its real wording and meaning so that
+  another language can reproduce it faithfully. It retains its stable identifier
+  for deterministic replay compatibility.
 
-  Every entry records its research
-  rationale. No other entry copies a slogan, and no entry names or identifies a
-  real person.
+  Every entry records whether it is invented or drawn from real speech. A
+  sourced entry records its source in the private research folder. No entry
+  names or identifies a real person.
+
+  The user-requested `an-extorsion-of-a-clearance` noun renders the documented
+  Romanian internet-meme phrase for a nonsense technical procedure with its real
+  wording. It names no person and asserts no real act.
 - **AC-005-08:** The common conjunction pool contains cards for `and`, `but`,
   `because`, `yet`, `so`, `for`, and `with`.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON

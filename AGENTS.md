@@ -85,7 +85,9 @@ architecture or behavior changes.
 
 ## Assets, Security & Deployment
 
-Use original, licensed art, audio, fonts, and fictional characters. Never scrape
+Use original, licensed art, audio, fonts, and fictional characters. Phrase text
+can be invented or real, and a phrase that draws on real speech keeps its real
+wording so that it stays accurate and translatable. Never scrape
 assets, commit secrets, or add runtime network calls. Generate AVIF/WebP
 variants and metadata through the approved Sharp tool. Keep controls and
 required text outside Canvas.
