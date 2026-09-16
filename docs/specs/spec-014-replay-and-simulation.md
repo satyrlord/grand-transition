@@ -121,12 +121,6 @@ Optional `--output <path>` writes normalized JSON. Without it, the command
 writes a concise summary to standard output. Invalid arguments exit nonzero and
 name the invalid option.
 
-Milestone 027 adds the separate development-only `npm run review:release`
-command for release matchup, variety, and editorial evidence. It composes this
-milestone's exact simulator and current AI policies without changing the
-ordinary `simulate` command or replay context. Its owning specification defines
-the schedules, prerequisite checks, report fields, and editorial evidence.
-
 Pure rule, grammar, scoring, artificial intelligence (AI), replay, and codec
 files have per-file thresholds. Each file must reach 90 percent for statements,
 functions, and lines. Each file must reach 85 percent for branches. The global

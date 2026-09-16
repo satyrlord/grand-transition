@@ -53,13 +53,7 @@
         "substance": ["politics", "bureaucracy"],
         "flavour": ["ideology", "strategy"]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-centrally-planned-innovation-sprint",
@@ -70,13 +64,7 @@
         "substance": ["politics", "bureaucracy"],
         "flavour": ["ideology", "strategy"]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "your-cousins-preferred-supplier",
@@ -87,13 +75,7 @@
         "substance": ["family", "bureaucracy"],
         "flavour": ["procurement", "direct"]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "common"
     },
     {
       "id": "an-emergency-fund-chatbot",
@@ -104,13 +86,7 @@
         "substance": ["bureaucracy"],
         "flavour": ["emergency", "technology"]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-phantom-digital-consultancy",
@@ -121,13 +97,7 @@
         "substance": ["bureaucracy"],
         "flavour": ["procurement", "technology"]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "the-national-synergy-platform",
@@ -138,13 +108,7 @@
         "substance": ["politics", "bureaucracy"],
         "flavour": ["technology", "institution"]
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "rare"
     },
     {
       "id": "the-procurement-seam",
@@ -155,13 +119,7 @@
         "substance": ["politics", "bureaucracy"],
         "flavour": ["procurement", "technology"]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "government-ai-procured",
@@ -189,13 +147,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-procures",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-procures"
     },
     {
       "id": "government-ai-procures",
@@ -223,13 +175,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-procures",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-procures"
     },
     {
       "id": "government-ai-will-procure",
@@ -257,13 +203,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-procures",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-procures"
     },
     {
       "id": "government-ai-double-clicked-on",
@@ -291,13 +231,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-double-clicks-on",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-double-clicks-on"
     },
     {
       "id": "government-ai-double-clicks-on",
@@ -325,13 +259,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-double-clicks-on",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-double-clicks-on"
     },
     {
       "id": "government-ai-will-double-click-on",
@@ -359,13 +287,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-double-clicks-on",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "government-ai-double-clicks-on"
     },
     {
       "id": "optimized",
@@ -385,13 +307,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "optimizes",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
-      }
+      "tenseFamily": "optimizes"
     },
     {
       "id": "optimizes",
@@ -411,13 +327,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "optimizes",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
-      }
+      "tenseFamily": "optimizes"
     },
     {
       "id": "will-optimize",
@@ -437,13 +347,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "optimizes",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original corporate-efficiency euphemism in the fictional chatbot's political voice. Editorial review complete."
-      }
+      "tenseFamily": "optimizes"
     },
     {
       "id": "was-classified-as-load-bearing",
@@ -462,13 +366,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "classified-as-load-bearing",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "classified-as-load-bearing"
     },
     {
       "id": "is-classified-as-load-bearing",
@@ -487,13 +385,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "classified-as-load-bearing",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "classified-as-load-bearing"
     },
     {
       "id": "will-be-classified-as-load-bearing",
@@ -512,13 +404,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "classified-as-load-bearing",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "classified-as-load-bearing"
     },
     {
       "id": "was-aligned-with-the-glorious-digital-transition",
@@ -537,13 +423,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "aligned-with-the-glorious-digital-transition"
     },
     {
       "id": "is-aligned-with-the-glorious-digital-transition",
@@ -562,13 +442,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "aligned-with-the-glorious-digital-transition"
     },
     {
       "id": "will-be-aligned-with-the-glorious-digital-transition",
@@ -587,13 +461,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "aligned-with-the-glorious-digital-transition"
     },
     {
       "id": "served-the-people-through-a-maintenance-window",
@@ -612,13 +480,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "serves-the-people-through-a-maintenance-window"
     },
     {
       "id": "serves-the-people-through-a-maintenance-window",
@@ -637,13 +499,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "serves-the-people-through-a-maintenance-window"
     },
     {
       "id": "will-serve-the-people-through-a-maintenance-window",
@@ -662,13 +518,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "serves-the-people-through-a-maintenance-window"
     },
     {
       "id": "quietly-navigated-the-peoples-policy-landscape",
@@ -687,13 +537,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
     },
     {
       "id": "quietly-navigates-the-peoples-policy-landscape",
@@ -712,13 +556,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
     },
     {
       "id": "will-quietly-navigate-the-peoples-policy-landscape",
@@ -737,39 +575,21 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
     },
     {
       "id": "under-the-comrades-quarterly-kpis",
       "role": "modifier",
       "text": "under the comrades' quota for spontaneous enthusiasm",
       "tags": ["obsolete", "spending", "bureaucracy"],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
       "role": "modifier",
       "text": "at the launch of a five-year update",
       "tags": ["obsolete", "spending", "bureaucracy"],
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "rarity": "rare"
     },
     {
       "id": "and-in-strategic-solidarity",
@@ -777,13 +597,7 @@
       "text": "and, in strategic solidarity,",
       "connectorKind": "and",
       "tags": ["obsolete", "bureaucracy"],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original corporate-strategy and collective-propaganda connector for the fictional Government AI. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "pending-the-peoples-steering-committee",
@@ -791,19 +605,7 @@
       "text": "and the paperless office requires three copies.",
       "tags": ["obsolete", "bureaucracy"],
       "rarity": "rare",
-      "finisherBonus": 14,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed."
-      }
+      "finisherBonus": 14
     }
-  ],
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English comic adaptation reviewed for the requested phrase rewrite. Uses fictional political behavior and a new punchline; no real-person target or quotation. Grammar role and scoring meaning reviewed. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  }
+  ]
 }

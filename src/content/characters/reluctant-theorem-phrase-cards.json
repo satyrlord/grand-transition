@@ -46,12 +46,6 @@
     "speak": "reluctant-theorem-speak",
     "react": "reluctant-theorem-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original fictional satire; agent editorial review, 2026-09-12. The fictional civic mathematician turns qualifications, proofs, planning disputes, and delayed decisions into original comic reversals. Three exclusive comeback tiers transform dialogue, public patience, and citizen service into escalating criticisms of the fictional opponent. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "reluctant-theorem-conditional-yes",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision hides behind an expanding list of conditions. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-deadline-proof",
@@ -93,13 +81,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A theoretical objection delays an urgent deadline. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-paper-bridge",
@@ -117,13 +99,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A public works plan supports annotations instead of traffic. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-permit-for-shadow",
@@ -141,13 +117,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An absurd permit measures the public space lost to construction. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-undecided-pencil",
@@ -165,13 +135,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Repeated hesitation consumes the tool meant to record a decision. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-unfinished-bus-stop",
@@ -189,13 +153,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A public service exists in paperwork but lacks a physical stop. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-postponed-decision-past",
@@ -229,13 +187,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-postponed-decision-present",
@@ -269,13 +221,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-postponed-decision-future",
@@ -309,13 +255,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A decision is repeatedly deferred; all forms retain the same action. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-missed-deadline-past",
@@ -349,13 +289,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-missed-deadline-present",
@@ -389,13 +323,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-missed-deadline-future",
@@ -429,13 +357,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An urgent deadline passes while the following subject waits. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-pending-proof-past",
@@ -464,13 +386,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "reluctant-theorem-pending-proof-present",
@@ -499,13 +415,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-pending-proof-future",
@@ -534,13 +444,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Procedural certainty takes priority over repairing a physical defect. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-before-defining-soon",
@@ -549,13 +453,7 @@
       "tags": [
         "urgency"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Defining a time limit consumes the time available. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-subject-to-maybe",
@@ -564,13 +462,7 @@
       "tags": [
         "indecision"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A hesitant decision asks its own hesitation for advice. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-pavement-appendix",
@@ -579,13 +471,7 @@
       "tags": [
         "delivery"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A document annex replaces a usable pavement. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-permit-footnote",
@@ -594,13 +480,7 @@
       "tags": [
         "accountability"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A planning qualification becomes larger than the construction it regulates. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-forms-first",
@@ -610,13 +490,7 @@
         "human-scale"
       ],
       "finisherBonus": 6,
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. The citizen-service motif becomes a counter that serves paperwork before people. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-question-survives",
@@ -626,13 +500,7 @@
         "accountability"
       ],
       "finisherBonus": 6,
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A precise correction exposes an answer that evades the actual question. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-tomorrow-committee",
@@ -643,13 +511,7 @@
         "urgency"
       ],
       "finisherBonus": 5,
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. An immediate reconstruction promise becomes a procedural delay imposed on the calendar itself. Verified source context stays private. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-maybe-unanimous",
@@ -659,13 +521,7 @@
         "indecision"
       ],
       "finisherBonus": 5,
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. Indecision expands until uncertainty itself cannot agree. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "reluctant-theorem-qualified-contrast",
@@ -673,13 +529,7 @@
       "text": "but, with that qualification,",
       "tags": [],
       "connectorKind": "but",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent editorial review, 2026-09-12. A neutral contrast connects complete clauses without implying a weakness. No real-person reference or copied line. Owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

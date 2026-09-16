@@ -46,12 +46,6 @@
     "speak": "diaspora-oracle-speak",
     "react": "diaspora-oracle-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original fictional comebacks transform housing-promotion rhetoric into brochure keys, media coverage, and a model home with no foundations. Private research records sources and disputed context; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "diaspora-oracle-foundation-noun",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional remote-viewing joke adapted from campaign housing promotion."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-foundation-modifier",
@@ -86,13 +74,7 @@
         "context",
         "firsthand-knowledge"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional extension of campaign housing promotion into remote certainty without inspection."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-foundation-ending",
@@ -103,13 +85,7 @@
         "firsthand-knowledge"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional transformation of housing promotion into an impossible brochure-sized party."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "diaspora-oracle-keys-in-another-time-zone",
@@ -120,13 +96,7 @@
         "context"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional combination of housing-promise evasion and the archetype's remote certainty."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "diaspora-oracle-dated-street-view",
@@ -145,13 +115,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An aged online image substitutes for current observation. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-airport-expertise",
@@ -170,13 +134,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A transit lounge provides a dubious claim to local expertise. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-postage-stamp-map",
@@ -194,13 +152,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A tiny remote view leaves little room for local detail. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-time-zone-verdict",
@@ -219,13 +171,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A confident remote conclusion precedes its supporting facts. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-holiday-sample",
@@ -243,13 +189,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. One travel encounter is mistaken for representative local knowledge. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-diagnosed-by-postcard-past",
@@ -283,13 +223,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-diagnosed-by-postcard-present",
@@ -323,13 +257,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-diagnosed-by-postcard-future",
@@ -363,13 +291,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A decorative travel card replaces direct investigation. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "diaspora-oracle-corrected-from-departure-gate-past",
@@ -403,13 +325,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-corrected-from-departure-gate-present",
@@ -443,13 +359,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-corrected-from-departure-gate-future",
@@ -483,13 +393,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Remote certainty persists at the moment of leaving. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "diaspora-oracle-up-to-date-last-visit-past",
@@ -517,13 +421,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "diaspora-oracle-up-to-date-last-visit-present",
@@ -551,13 +449,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-up-to-date-last-visit-future",
@@ -585,13 +477,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A claim to current knowledge contradicts its dated reference point. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "diaspora-oracle-through-cracked-lens",
@@ -600,13 +486,7 @@
       "tags": [
         "firsthand-knowledge"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A remote observation is confident despite showing the wrong place. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-neutral-contrast",
@@ -614,13 +494,7 @@
       "text": "yet, even then,",
       "tags": [],
       "connectorKind": "yet",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

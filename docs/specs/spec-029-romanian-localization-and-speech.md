@@ -226,7 +226,10 @@ Use standard Romanian with `ă`, `â`, `î`, `ș`, and `ț`. Normalize Unicode t
 and convert legacy cedilla forms to comma-below forms at the authoring boundary.
 
 Adapt idioms and satire into natural Romanian while preserving the phrase's
-role, target, strength, tense, and scoring meaning. Preserve stable phrase,
+role, target, strength, tense, and scoring meaning. A phrase that draws on real
+speech keeps its real meaning, and an invented phrase stays invented, so the
+English catalog must keep a real phrase accurate before it reaches translation.
+Preserve stable phrase,
 character, scene, weakness, and score-group IDs, restrictions, rarity, and
 balance values. Do not add or remove cards to avoid translation difficulties.
 The existing editorial exclusions apply to each translation.

@@ -88,7 +88,6 @@ type CharacterSource = {
     speak: string;
     react: string;
   };
-  editorialReview: { notes: string };
   phrases: Array<
     {
       id: string;
@@ -160,8 +159,6 @@ function addTemporaryCharacter(fixtureRoot: string): void {
     speak: `${temporaryCharacterId}-speak`,
     react: `${temporaryCharacterId}-react`,
   };
-  fixture.editorialReview.notes =
-    'Original fictional composite used only by the isolated lifecycle test.';
   makeTemporaryPhraseTextUnique(fixture);
 
   writeFileSync(

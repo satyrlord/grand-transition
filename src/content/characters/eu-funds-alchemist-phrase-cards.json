@@ -46,12 +46,6 @@
     "speak": "eu-funds-alchemist-speak",
     "react": "eu-funds-alchemist-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original fictional comebacks transform a household-budget analogy and pastry-price satire into grant and accounting jokes. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "eu-funds-alchemist-foundation-noun",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional adaptation of a household-budget analogy about implausible projected revenue."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-foundation-modifier",
@@ -85,13 +73,7 @@
         "maintenance",
         "outcomes"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional collision of pastry-price satire with launch spending that consumes maintenance funds."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-foundation-ending",
@@ -102,13 +84,7 @@
         "outcomes"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional extension of a rented-wheelbarrow budget analogy into failed infrastructure."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "eu-funds-alchemist-invisible-pastries",
@@ -119,13 +95,7 @@
         "outcomes"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional extension of pastry-price satire into an absurd explanation for missing funds."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "eu-funds-alchemist-ribbon-without-bridge",
@@ -143,13 +113,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremony supplies the ribbon before the bridge exists. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-maintenance-confetti",
@@ -167,13 +131,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A durable responsibility is recorded on disposable party debris. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-transparent-blackout",
@@ -191,13 +149,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. The report physically contradicts its promise of openness. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-funded-pothole",
@@ -216,13 +168,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. An unresolved defect receives a ceremony instead of a repair. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-milestone-balloon",
@@ -240,13 +186,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A claimed project result floats away instead of serving anyone. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-converted-into-launch-costs-past",
@@ -280,13 +220,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-converted-into-launch-costs-present",
@@ -320,13 +254,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-converted-into-launch-costs-future",
@@ -360,13 +288,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ceremonial budget is converted into the following object instead of a public result. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "eu-funds-alchemist-hid-behind-funding-plaque-past",
@@ -400,13 +322,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-hid-behind-funding-plaque-present",
@@ -440,13 +356,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-hid-behind-funding-plaque-future",
@@ -480,13 +390,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A funding sign is concealed behind the following object, reducing public visibility. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "eu-funds-alchemist-maintained-in-photo-past",
@@ -514,13 +418,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "eu-funds-alchemist-maintained-in-photo-present",
@@ -548,13 +446,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-maintained-in-photo-future",
@@ -582,13 +474,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A pristine ceremonial image replaces ongoing maintenance. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "eu-funds-alchemist-ribbon-spare-parts",
@@ -597,13 +483,7 @@
       "tags": [
         "maintenance"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A ribbon is an absurd substitute for functioning repair materials. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-neutral-contrast",
@@ -611,13 +491,7 @@
       "text": "yet, meanwhile,",
       "tags": [],
       "connectorKind": "yet",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

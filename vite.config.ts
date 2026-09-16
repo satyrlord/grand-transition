@@ -22,6 +22,14 @@ export const productionContentSecurityPolicy = [
 
 export default defineConfig(({ command }) => ({
   base: '/grand-transition/',
+  server: {
+    watch: {
+      ignored: (watchedPath) => {
+        const relativePath = path.relative(process.cwd(), path.resolve(watchedPath)).toLowerCase();
+        return relativePath === 'tmp' || relativePath.startsWith(`tmp${path.sep}`);
+      },
+    },
+  },
   optimizeDeps: { exclude: ['phonemizer', 'onnxruntime-web'] },
   worker: { format: 'es', plugins: () => [neuralPhonemizerPlugin()] },
   build: {

@@ -1,12 +1,14 @@
 # The Grand Transition: A Verbal Republic
 
 The Grand Transition is a browser game about tactical grammar and
-fictional political satire. Players draft phrase fragments, build legal insults,
+political satire. Players draft phrase fragments, build legal insults,
 deny useful phrases, target character weaknesses, continue combinations across
 rounds, use comebacks, and reduce the opponent's Pride.
 
 The game occurs in an invented republic influenced by Romanian public life
-after 1989. Its character identities and prose are fictional. An approved
+after 1989. Its character identities are fictional. Phrase text is either
+invented or a real, accurately reproduced line, so a phrase drawn from real
+speech keeps its real meaning in both languages. An approved
 public-figure likeness may be used only as visual-only parody in a portrait skin
 and does not change the character identity or prose.
 The game does not reproduce real political party names, party acronyms, party
@@ -35,18 +37,12 @@ secured production shell, and the complete configured quality gate. Milestones
 complete by their owning specifications.
 
 Milestone 027 is complete against the current artwork and 1,009-phrase catalog.
-Its editorial safety review and normal CI checks pass. Milestone 028 completes
+Its content boundary rules and normal CI checks pass. Milestone 028 completes
 the final art, scene audio, and content-validation packages. Manual user reviews and separate large balance or variety runs
 are not completion requirements.
-Run
-`npm run review:release -- --phase prepare --output tmp/review-027`
-to create editorial review records. The catalog meets Milestone 028 phrase
-volumes. The prepare and validate phases check content prerequisites and
-editorial evidence. Balance and variety verification use existing deterministic
-CI, bounded scoring, text uniqueness, and grammar fixtures. The review command
-does not run matches.
-The tools do not grant editorial approval or milestone completion. See
-[the review procedure](docs/specs/spec-027-balance-editorial.md#review-tools-and-evidence).
+The catalog meets Milestone 028 phrase
+volumes. Balance and variety verification use existing deterministic
+CI, bounded scoring, text uniqueness, and grammar fixtures.
 
 [Milestone 029](docs/specs/spec-029-romanian-localization-and-speech.md) is
 approved and pending implementation. Phase 1 ships the Romanian interface,
@@ -207,10 +203,12 @@ active milestones are in `docs/specs/`.
 
 Add shared cards to `src/content/common-phrase-cards.json`. Add character-only
 cards to that character's file under `src/content/characters/`. Each JSON card
-contains its English text, grammar role, scoring metadata, rarity, and review
-state, originality, safety flags, and notes. Run `npm run content:validate`
+contains its English text, grammar role, scoring metadata, tags, and rarity.
+Run `npm run content:validate`
 after an edit. The loader creates
 locale keys and rejects malformed or duplicate cards before the game starts.
+The step-by-step add and remove procedure is in
+[the phrase authoring tutorial](docs/phrase-authoring.md).
 
 ## Add a character
 

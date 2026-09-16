@@ -110,8 +110,9 @@ Each character has 3 through 32 unique owned phrases. Its foundation pool has
 at least one noun, one modifier, and one ending. The complete common pool
 supplies the other grammar roles needed for a match. Each character owns one
 unique weak, medium, and strong Comeback line. All content passes the Milestone
-005 schema, locale, grammar, editorial, safety, restriction, weakness, and
-deterministic-discovery contracts.
+005 schema, locale, grammar, restriction, weakness, and
+deterministic-discovery contracts. Milestone 027 owns editorial and safety
+review.
 
 Every ordered character and scene setup can prepare a round, complete a seeded
 headless match, and preserve private-hand secrecy. The foundation does not tune
@@ -127,8 +128,8 @@ Milestone 027 owns final balance and editorial evidence.
   option, or renderer map. Each portrait passes the shared asset, alpha,
   provenance, and color-policy checks.
 - **AC-026-03:** Each character meets the foundation role minimum, owns three unique
-  Comebacks, and passes grammar, weakness, restriction, locale, safety, and
-  editorial validation.
+  Comebacks, and passes grammar, weakness, restriction, and locale validation,
+  plus Milestone 027 editorial and safety review.
 - **AC-026-04:** Each character can prepare and complete one fixed-seed match
   in each scene without an illegal action, stalled phase, private-card leak, or
   timer overrun.
@@ -200,17 +201,19 @@ owning character path. Synthetic discovery characters must meet the same
 
 The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
 `with 110% turnout at the cemetery`. It belongs only to that character and
-satisfies the foundation modifier minimum. Its 25-card pool retains all prior
-phrases and IDs. Verify the card and the complete approved sentence in
-`tests/unit/content-schemas.test.ts` and `tests/unit/english-grammar-core.test.ts`.
+satisfies the foundation modifier minimum. Its card pool retains all prior
+phrases and IDs. Verify the complete approved sentence in
+`tests/unit/english-grammar-core.test.ts`.
 
-The Algorithmic Prophet owns 25 cards, including eight original comic
-adaptations of beverage memory, nature omens, national rankings, and ceremonial
+The Algorithmic Prophet owns 25 cards, including eight cards drawn from
+beverage memory, nature omens, national rankings, and ceremonial
 courage. These add two nouns, two modifiers, and four endings to the existing
 four-card pool. Existing identifiers and text remain stable. New cards belong
 only to this character's private pool. Public wording and editorial notes contain
-no film quotations, real-person references, or source attribution. Private
-research records the adaptation sources. The current catalog is English;
+no real-person references or source attribution, and no protected expression is
+copied from another work. Private
+research records the sources. The current catalog is English;
 Romanian adaptation remains in Milestone 029. Milestone 014 owns the current
-replay document contract. `tests/unit/authored-phrase-grammar.test.ts`
-verifies ownership and complete constructions.
+replay document contract. Milestone 027 owns the card-agnostic content
+verification that covers this character's ownership, role minima, and complete
+constructions.

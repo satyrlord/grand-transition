@@ -46,26 +46,6 @@ export const connectorKindSchema = z.enum([
   'with',
 ]);
 
-export const editorialSafetyFlagSchema = z.enum([
-  'real-person-reference',
-  'real-party-reference',
-  'protected-trait-insult',
-  'sexual-humiliation',
-  'threat',
-]);
-
-export const editorialReviewSchema = z
-  .object({
-    state: z.enum(['approved', 'needs-review', 'rejected']),
-    originality: z.enum(['original', 'unknown', 'copied']),
-    safetyFlags: uniqueArray(
-      editorialSafetyFlagSchema,
-      'List each editorial safety flag only once.',
-    ),
-    notes: z.string().trim().min(1, 'Add a concise editorial review note.'),
-  })
-  .strict();
-
 export const mediaReferenceSchema = z
   .object({
     assetId: identifierSchema,
@@ -197,7 +177,6 @@ export const phraseDefinitionSchema = z
       .optional(),
     rarity: z.enum(['common', 'uncommon', 'rare']),
     finisherBonus: z.number().int().min(1).max(20).optional(),
-    editorialReview: editorialReviewSchema,
   })
   .strict();
 
@@ -460,4 +439,3 @@ export const sceneSchema = z
 export type Phrase = z.infer<typeof phraseSchema>;
 export type Character = z.infer<typeof characterSchema>;
 export type Scene = z.infer<typeof sceneSchema>;
-export type EditorialSafetyFlag = z.infer<typeof editorialSafetyFlagSchema>;

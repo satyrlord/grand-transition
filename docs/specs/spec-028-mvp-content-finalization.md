@@ -278,7 +278,8 @@ with passing content, grammar, and normal CI checks.
 
 ## Content research boundary
 
-All character identities and prose remain fictional. Research can use public
+All character identities remain fictional. Phrase text can be real and accurate
+or invented. Research can use public
 institutions, documented historical events, constitutional mechanisms, and
 broad media forms. An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
@@ -286,9 +287,10 @@ Git-ignored research folder and does not ship.
 
 The common corpus and all 19 character authoring files can receive the
 speech-inspired humor pass defined in Milestone 027. This includes distinctive
-endings and all three comeback tiers. Short original English transformations
-can draw on verified speech motifs from the private archetype references.
-Source excerpts, translations, names, and mappings remain in private research.
+endings and all three comeback tiers. Real slogans, real speech, and documented
+memes keep their real wording and meaning, and invented lines are recorded as
+invented. The real wording, its language, and its source stay in private
+research, so another language can adapt a real phrase faithfully.
 The pass preserves useful grammar fragments and existing stable identities;
 it does not by itself complete this milestone's final content volumes or
 the existing content and grammar checks.
@@ -296,8 +298,9 @@ the existing content and grammar checks.
 Shipped generation provenance
 uses a generic source description and does not name a real person. Do not use a
 real person as a comparison or target in player-visible content. Do not copy
-photographs, accusations, protected prose, or slogans other than the one
-sourced English form that AC-005-07 approves. Do not use real political party
+photographs, protected prose, or protected expression from another game or
+work. Real slogans and real speech are permitted and stay accurate. Do not use
+real political party
 names, acronyms, or logos.
 
 Use only generic ideological or social-family party

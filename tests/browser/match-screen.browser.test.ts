@@ -19,8 +19,6 @@ import {
   decodeSettings,
 } from '../../src/persistence/codecs/settings-codec';
 import { settingsStorageKey } from '../../src/persistence/settings';
-import { englishGameLocale, phraseCardCatalog } from '../../src/game-content';
-import { englishGrammarAdapter, prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -94,30 +92,14 @@ test.each([
   { width: 1024, height: 720 }, { width: 1024, height: 768 },
   { width: 1280, height: 720 }, { width: 1920, height: 1080 },
 ])('keeps long sentence text reachable inside the fixed speech record at $width by $height', async ({ width, height }) => {
-  // The fixture stacks one extra `and` clause so the composed text stays above
-  // the historical 409-character worst case after the punchline and length
-  // passes shortened the source cards. A locale that adapts the cards later can
-  // produce a longer line again, and the speech record must stay reachable.
-  const ids = [
-    'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
-    'will-bring-the-miners-to-bucharest', 'during-a-press-conference', 'and',
-    'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
-    'will-bring-the-miners-to-bucharest',
-    'and', 'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
-    'will-bring-the-miners-to-bucharest',
-    'and', 'public-a-delivery-dashboard-with-nothing-behind-the-green-square',
-    'will-bring-the-miners-to-bucharest', 'during-a-press-conference',
-    'public-and-the-promotion-was-announced-before-the-birthday-cake',
-  ];
-  const rendered = englishGrammarAdapter.analyze({
-    steps: ids.map((id) => ({ kind: 'phrase' as const,
-      phrase: prepareEnglishGrammarPhrase(phraseCardCatalog.phrases.find((phrase) => phrase.id === id)!, englishGameLocale),
-    })),
-    subjectNumber: 'singular', objectNumber: 'singular',
-  });
-  if (!rendered.accepted) throw new Error('The long-sentence fixture must be grammatically valid.');
-  expect(rendered.analysis.complete).toBe(true);
-  const text = rendered.analysis.publicText;
+  // The speech record has a fixed size, so the longest reachable sentence text
+  // must stay readable and scrollable. The fixture is generated here rather
+  // than composed from named cards, so authoring content never changes this
+  // layout guarantee. The length keeps the historical 409-character worst case.
+  const text = `${Array.from(
+    { length: 8 },
+    () => 'and the transition will be televised after the next consultation',
+  ).join(' ')}.`;
   expect(text.length).toBeGreaterThanOrEqual(409);
   const match = await startMatch();
   const commands: string[] = [];

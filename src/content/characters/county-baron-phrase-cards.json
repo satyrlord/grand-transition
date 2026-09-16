@@ -46,12 +46,6 @@
     "speak": "county-baron-speak",
     "react": "county-baron-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "county-baron-foundation-noun",
@@ -66,13 +60,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional personal-property image reviewed after the concise rewrite. The visible text supports no weakness tag; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-foundation-modifier",
@@ -82,13 +70,7 @@
         "infrastructure",
         "nepotism"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional municipal-patron satire: road inspection becomes a family occasion. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "county-baron-foundation-ending",
@@ -99,13 +81,7 @@
         "infrastructure"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed pastry-denial motif: incriminating paperwork receives a cosmetic topping. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "county-baron-sunday-job-interview",
@@ -115,13 +91,7 @@
         "nepotism"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed family-staffing motif: a public appointment becomes a family meal. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "county-baron-ribbon-roundabout",
@@ -141,13 +111,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-cousin-tender",
@@ -168,13 +132,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-portable-opening-ceremony",
@@ -194,13 +152,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-municipal-dinner-table",
@@ -221,13 +173,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-pothole-warranty",
@@ -248,13 +194,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "county-baron-verb-1-past",
@@ -289,13 +229,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-1"
     },
     {
       "id": "county-baron-verb-1-present",
@@ -330,13 +264,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-1"
     },
     {
       "id": "county-baron-verb-1-future",
@@ -371,13 +299,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-1"
     },
     {
       "id": "county-baron-verb-2-past",
@@ -411,13 +333,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-2"
     },
     {
       "id": "county-baron-verb-2-present",
@@ -451,13 +367,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-2"
     },
     {
       "id": "county-baron-verb-2-future",
@@ -491,13 +401,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-verb-2"
     },
     {
       "id": "county-baron-predicate-1-past",
@@ -526,13 +430,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-predicate-1"
     },
     {
       "id": "county-baron-predicate-1-present",
@@ -561,13 +459,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-predicate-1"
     },
     {
       "id": "county-baron-predicate-1-future",
@@ -596,13 +488,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "county-baron-predicate-1"
     },
     {
       "id": "county-baron-review-modifier",
@@ -612,13 +498,7 @@
         "nepotism",
         "family"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "county-baron-contrast",
@@ -626,13 +506,7 @@
       "text": "but, among familiar faces,",
       "connectorKind": "but",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

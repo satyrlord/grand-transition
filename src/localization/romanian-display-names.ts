@@ -3,8 +3,8 @@ import type { InterfaceLocale } from './interface-locale';
 // Phase 1 translates names shown by the interface. Match state, content keys,
 // phrase prose, replay, and speech keep their English game-language identity.
 export const romanianCharacterNames: Readonly<Record<string, string>> = Object.freeze({
-  'algorithmic-prophet': 'Profetul algoritmilor',
-  'apartment-block-geopolitician': 'Geopoliticianul de la bloc',
+  'algorithmic-prophet': 'Profetul algoritmic',
+  'apartment-block-geopolitician': 'Geopoliticianul de bloc',
   'black-sea-captain': 'Căpitanul Mării Negre',
   'coalition-acrobat': 'Acrobatul coaliției',
   'county-baron': 'Baronul local',

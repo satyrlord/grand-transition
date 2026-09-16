@@ -50,12 +50,6 @@
     "speak": "retiring-cassandra-speak",
     "react": "retiring-cassandra-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Editorial rewrite requested on 2026-09-11; agent reviewed original transformed speech motifs for this fictional persona. Private sources remain outside shipped content. Separate final owner acceptance is not asserted. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "retiring-cassandra-foundation-noun",
@@ -74,13 +68,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional reform fatigue: an ambitious plan retires before delivery. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-foundation-modifier",
@@ -91,13 +79,7 @@
         "hope",
         "results"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional warning satire: hope becomes the office worker preparing to leave. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "retiring-cassandra-foundation-ending",
@@ -108,13 +90,7 @@
         "credibility"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed debate-question motif: an evasive conscience delegates its answer. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "retiring-cassandra-country-removal-van",
@@ -124,13 +100,7 @@
         "corruption"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original transformed civic-integrity motif: professed devotion becomes removal of public property. Agent editorial review, 2026-09-11; no real names or copied lines."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "retiring-cassandra-unopened-warning",
@@ -151,13 +121,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-resignation-draft",
@@ -177,13 +141,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-disaster-agenda",
@@ -203,13 +161,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-emergency-bookmark",
@@ -229,13 +181,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-retirement-fire-alarm",
@@ -256,13 +202,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "retiring-cassandra-verb-1-past",
@@ -296,13 +236,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-1"
     },
     {
       "id": "retiring-cassandra-verb-1-present",
@@ -336,13 +270,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-1"
     },
     {
       "id": "retiring-cassandra-verb-1-future",
@@ -376,13 +304,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-verb-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The relation links its subject to a following noun object through a character-specific institutional action. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-1"
     },
     {
       "id": "retiring-cassandra-verb-2-past",
@@ -414,13 +336,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-2"
     },
     {
       "id": "retiring-cassandra-verb-2-present",
@@ -452,13 +368,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-2"
     },
     {
       "id": "retiring-cassandra-verb-2-future",
@@ -490,13 +400,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-verb-2",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      }
+      "tenseFamily": "retiring-cassandra-verb-2"
     },
     {
       "id": "retiring-cassandra-predicate-1-past",
@@ -525,13 +429,7 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-predicate-1"
     },
     {
       "id": "retiring-cassandra-predicate-1-present",
@@ -560,13 +458,7 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-predicate-1"
     },
     {
       "id": "retiring-cassandra-predicate-1-future",
@@ -595,13 +487,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-predicate-1",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The complete predicate satirizes the stated fictional character behavior without an external reference. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "tenseFamily": "retiring-cassandra-predicate-1"
     },
     {
       "id": "retiring-cassandra-review-modifier",
@@ -611,13 +497,7 @@
         "competence",
         "results"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The adverbial circumstance extends a complete clause with a distinct institutional image. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "retiring-cassandra-contrast",
@@ -625,13 +505,7 @@
       "text": "yet, as previously noted,",
       "connectorKind": "yet",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

@@ -63,13 +63,7 @@
           "command"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "steers",
@@ -92,12 +86,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "present",
       "tenseFamily": "steers"
     },
@@ -122,12 +110,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "past",
       "tenseFamily": "steers"
     },
@@ -152,12 +134,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "future",
       "tenseFamily": "steers"
     },
@@ -169,13 +145,7 @@
         "competence",
         "consistency"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "from-the-bridge",
@@ -185,13 +155,7 @@
         "consistency"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "returns-to-the-wheel",
@@ -212,12 +176,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "announces victory before the lifeboat vote",
       "pluralText": "announce victory before the lifeboat vote",
       "tense": "present",
@@ -242,12 +200,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "announced victory before the lifeboat vote",
       "pluralText": "announced victory before the lifeboat vote",
       "tense": "past",
@@ -272,12 +224,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      },
       "singularText": "will announce victory before the lifeboat vote",
       "pluralText": "will announce victory before the lifeboat vote",
       "tense": "future",
@@ -299,13 +245,7 @@
           "maritime"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original maritime failure metaphor in the Captain's fictional political voice. Not a quotation. Editorial review complete."
-      }
+      "rarity": "common"
     },
     {
       "id": "a-dockside-peacock",
@@ -324,13 +264,7 @@
           "animal-metaphor"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "your-mutinous-coalition",
@@ -348,13 +282,7 @@
           "maritime"
         ]
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original maritime coalition metaphor for fictional party politics. Not a quotation or a claim about a real coalition. Editorial review complete."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "a-captain-without-compass",
@@ -373,13 +301,7 @@
           "maritime"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original competence insult in the Captain's fictional maritime voice. Not a quotation. Editorial review complete."
-      }
+      "rarity": "common"
     },
     {
       "id": "captain-grounds",
@@ -404,12 +326,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "present",
       "tenseFamily": "captain-grounds"
     },
@@ -436,12 +352,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "past",
       "tenseFamily": "captain-grounds"
     },
@@ -468,12 +378,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original project prose. Agent editorial review, 2026-09-12: this is a permitted generic action or referent. Its visible wording does not state a weakness; tags are empty. Character ownership and independent scoring preferences remain unchanged. No real-person target or quotation is asserted."
-      },
       "tense": "future",
       "tenseFamily": "captain-grounds"
     },
@@ -502,12 +406,6 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
-      },
       "tense": "present",
       "tenseFamily": "cannot-steer-own-party-from-puddle"
     },
@@ -536,12 +434,6 @@
         "flavour": []
       },
       "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
-      },
       "tense": "past",
       "tenseFamily": "cannot-steer-own-party-from-puddle"
     },
@@ -570,12 +462,6 @@
         "flavour": []
       },
       "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original hard-edged maritime competence insult in the Captain's fictional voice. Not a quotation or real-world claim. Editorial review complete."
-      },
       "tense": "future",
       "tenseFamily": "cannot-steer-own-party-from-puddle"
     },
@@ -587,13 +473,7 @@
         "competence"
       ],
       "rarity": "rare",
-      "finisherBonus": 3,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation."
-      }
+      "finisherBonus": 3
     },
     {
       "id": "black-sea-captain-ballot-lifeboat",
@@ -613,13 +493,7 @@
       "grammaticalNumber": "singular",
       "grammaticalPerson": "third",
       "referentKind": "nonpersonal",
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. The concrete institutional object expresses the character trait through an original comic contradiction. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "common"
     },
     {
       "id": "black-sea-captain-contrast",
@@ -627,19 +501,7 @@
       "text": "but, against the current,",
       "connectorKind": "but",
       "tags": [],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional character prose authored and reviewed by the content implementation agent on 2026-09-12. A contrast connector with a short parenthetical phrase preserves the complete-clause grammar branch; no weakness meaning is inferred from ownership. No quotation or new research attribution. Final owner editorial acceptance is not asserted."
-      }
+      "rarity": "uncommon"
     }
-  ],
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original English political-speech adaptation reviewed for the requested humor revision on 2026-09-11. Targets fictional political behavior; private source traceability does not ship. No quotation or real-person allegation. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  }
+  ]
 }

@@ -46,12 +46,6 @@
     "speak": "apartment-block-geopolitician-speak",
     "react": "apartment-block-geopolitician-react"
   },
-  "editorialReview": {
-    "state": "approved",
-    "originality": "original",
-    "safetyFlags": [],
-    "notes": "Original fictional comebacks transform debate-spectator popcorn bravado and its later bad-joke explanation into domestic geopolitical overconfidence. Private research records sources; no attribution or quotation ships. Punchline revision 2026-09-15: endings, comebacks, and character-owned text shortened; roles, tags, scoring, rarity, and agreement structure unchanged."
-  },
   "phrases": [
     {
       "id": "apartment-block-geopolitician-foundation-noun",
@@ -69,13 +63,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional transformation of debate-watching popcorn bravado into snack-based geopolitical expertise."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-foundation-modifier",
@@ -85,13 +73,7 @@
         "sources",
         "specificity"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional extension of spectator politics into an absurd source with its details removed."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-foundation-ending",
@@ -102,13 +84,7 @@
         "nuance"
       ],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional reduction of complex events to snack packaging."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "apartment-block-geopolitician-exit-poll-before-popcorn",
@@ -116,13 +92,7 @@
       "text": "and the exit poll beat the microwave.",
       "tags": [],
       "rarity": "rare",
-      "finisherBonus": 4,
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional reversal of leisurely popcorn-watching confidence through an early electoral result. No weakness is stated by this timing joke."
-      }
+      "finisherBonus": 4
     },
     {
       "id": "apartment-block-geopolitician-stairwell-security-council",
@@ -140,13 +110,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A small domestic meeting claims the authority of global diplomacy. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-fridge-border-map",
@@ -164,13 +128,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A kitchen display replaces an exact account of a territorial dispute. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-balcony-listening-post",
@@ -188,13 +146,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A supposed intelligence operation observes only laundry. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-anonymous-lift-source",
@@ -212,13 +164,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A maintenance notice is promoted into geopolitical evidence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-radiator-arms-race",
@@ -236,13 +182,7 @@
           "politics"
         ]
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Military rivalry is confused with a domestic heating problem. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-past",
@@ -276,13 +216,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-present",
@@ -316,13 +250,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-future",
@@ -356,13 +284,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Kitchen decorations replace precise strategic mapping. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "apartment-block-geopolitician-verified-through-wall-past",
@@ -396,13 +318,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-verified-through-wall-present",
@@ -436,13 +352,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-verified-through-wall-future",
@@ -476,13 +386,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Overheard fragments are treated as verified intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "apartment-block-geopolitician-classified-until-bell-past",
@@ -510,13 +414,7 @@
         ],
         "flavour": []
       },
-      "rarity": "common",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-classified-until-bell-present",
@@ -544,13 +442,7 @@
         ],
         "flavour": []
       },
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-classified-until-bell-future",
@@ -578,13 +470,7 @@
         ],
         "flavour": []
       },
-      "rarity": "rare",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Supposedly secret intelligence becomes ordinary doorstep gossip. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "rare"
     },
     {
       "id": "apartment-block-geopolitician-washing-line-evidence",
@@ -593,13 +479,7 @@
       "tags": [
         "sources"
       ],
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. Laundry infrastructure is mislabeled as high-grade intelligence. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-neutral-contrast",
@@ -607,13 +487,7 @@
       "text": "but, after all,",
       "tags": [],
       "connectorKind": "but",
-      "rarity": "uncommon",
-      "editorialReview": {
-        "state": "approved",
-        "originality": "original",
-        "safetyFlags": [],
-        "notes": "Original fictional satire; agent author review, 2026-09-12. A short neutral contrast connects two complete clauses. No real-person or quotation attribution. Final owner acceptance is separate."
-      }
+      "rarity": "uncommon"
     }
   ]
 }

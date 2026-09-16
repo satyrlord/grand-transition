@@ -1,6 +1,6 @@
 ---
 name: update-game-content
-description: Add or revise Grand Transition phrases, characters, scenes, localization, balance metadata, or editorial review data. Use for durable game-content changes, not interface copy alone.
+description: Add or revise Grand Transition phrases, characters, scenes, localization, or balance metadata. Use for durable game-content changes, not interface copy alone.
 ---
 
 # Update game content
@@ -30,20 +30,26 @@ A missing required module blocks its dependent action. Report its path.
 
 Use stable identifiers.
 Keep tactical definitions separate from localized text.
-Record editorial status and source or rationale in their schema fields.
+Record the source basis and rationale in the private research folder.
 
 For characters and scenes, keep names and visuals fictional and original.
 Apply the Milestone 000 exception for approved visual-only portrait parody.
 Keep real-person names and private study data out of shipped content and metadata.
-Do not infer editorial approval.
 
-Reject copied game lines and attacks on protected characteristics.
+Reject lines copied from another game or protected work, and attacks on
+protected characteristics.
 
 Reject sexual humiliation, threats, real-person references, real-party names or
 acronyms, real logos, and unsafe Hypertext Markup Language (HTML). Public
 institutions and historical events
-can inform original satire, but content and rationale must not name or identify
+can appear directly, but content and rationale must not name or identify
 a real person. Use generic ideological or social-family party labels.
+
+Phrase text can be invented or real. A phrase that draws on real speech, a real
+slogan, or a documented meme keeps the real wording and meaning, and the review
+records whether the card is invented or sourced. Accuracy is required because a
+faithful Romanian adaptation depends on it. Never rewrite a real phrase into an
+inaccurate paraphrase.
 
 ## Validate gameplay and provenance
 
@@ -57,5 +63,5 @@ Run affected engine and AI simulations.
 Then use [run-quality-gate](../run-quality-gate/SKILL.md).
 
 The update is complete when schemas, locale data, and grammar agree.
-Balance, editorial review, assets, tests, and approved specifications must also
+Balance, assets, tests, and approved specifications must also
 agree.

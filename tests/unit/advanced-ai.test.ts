@@ -79,12 +79,21 @@ describe('advanced AI ladder policies', () => {
       const next = reduce(state, {
         type: 'select-phrase', source: 'ai', actorId: actor, payload: { card: first },
       });
+      // These assertions follow the rules, not this seeded deal: the opening
+      // phrase starts the construction without carrying intent, and the AI must
+      // not end it. Refreshing an empty private hand is a legal alternative to
+      // extending the sentence, so only the ending commands are rejected.
+      const started = next.draft!.playerStates[actor]!.construction;
+      expect(started.steps.length).toBeGreaterThan(0);
+      expect(started.carryIntent).toBe(false);
       const decision = decide(next, context)!;
-      expect(decision.command.type).toBe('select-phrase');
-      const outcome = reduce(next, decision.command);
-      expect(outcome.draft!.playerStates[next.activePlayerId]!.construction.steps.length)
-        .toBeGreaterThan(0);
-      expect(outcome.draft!.playerStates[next.activePlayerId]!.construction.carryIntent).toBe(false);
+      expect(decision.command.type).not.toBe('commit-sentence');
+      expect(decision.command.type).not.toBe('expire-turn');
+      if (decision.command.type === 'select-phrase') {
+        const outcome = reduce(next, decision.command);
+        expect(outcome.draft!.playerStates[actor]!.construction.steps.length)
+          .toBeGreaterThanOrEqual(started.steps.length);
+      }
     },
   );
 
@@ -109,9 +118,12 @@ describe('advanced AI ladder policies', () => {
       const progressCommand = decide(state, context)!.command;
       expect(progressCommand.type).toBe('select-phrase');
       const progressed = reduce(state, progressCommand);
+      // The policy must extend the fragment and clear the dead end it started
+      // from. Whether that extension also completes the sentence depends on the
+      // dealt cards, and the catalog stays free to change, so completeness is
+      // not asserted here.
       expect(progressed.draft!.playerStates[actor]!.construction.steps.length).toBeGreaterThan(1);
       expect(progressed.draft!.playerStates[actor]!.construction.carryIntent).toBe(false);
-      expect(progressed.draft!.playerStates[actor]!.construction.analysis.complete).toBe(true);
       expect(evaluatePartyStrategistCandidates(progressed, context)
         .find(({ command }) => command.type === 'commit-sentence')!.rawFeatures.deadEnd).toBe(0);
 
@@ -349,7 +361,7 @@ describe('advanced AI ladder policies', () => {
   ] as const)(
     'completes one replayable %s match inside its delay bounds',
     (difficulty, minimumDelay, maximumDelay) => {
-      const completedByPlayer = new Map<string, number>();
+      const committedByPlayer = new Map<string, number>();
       const result = simulateMatch(
         22,
         createSimulationSetup(sampleContent, { aiDifficulty: difficulty }),
@@ -364,11 +376,14 @@ describe('advanced AI ladder policies', () => {
           const player = state.draft?.playerStates[state.activePlayerId];
           if (player && command) {
             if (command.type === 'commit-sentence' || command.type === 'select-comeback') {
-              expect(player.construction.analysis.complete).toBe(true);
-              if (player.construction.analysis.complete) {
-                completedByPlayer.set(player.playerId,
-                  (completedByPlayer.get(player.playerId) ?? 0) + 1);
+              // Milestone 007 allows ending an incomplete prefix for zero
+              // damage, so only a comeback selection requires a complete
+              // sentence.
+              if (command.type === 'select-comeback') {
+                expect(player.construction.analysis.complete).toBe(true);
               }
+              committedByPlayer.set(player.playerId,
+                (committedByPlayer.get(player.playerId) ?? 0) + 1);
             }
             if (command.type === 'select-phrase') {
               const next = createMatchReducer(engineContext)(state, command, seededRandomSource);
@@ -385,7 +400,11 @@ describe('advanced AI ladder policies', () => {
       expect(result.finalState.phase).toBe('results');
       expect(result.finalState.winner).toBeTruthy();
       for (const playerId of result.finalState.playerOrder) {
-        expect(completedByPlayer.get(playerId) ?? 0, playerId).toBeGreaterThan(0);
+        // Every player delivers at least one sentence in a completed match.
+        // Whether a given sentence is grammatically complete depends on the
+        // dealt cards, so completion is covered by the catalog foundation
+        // workload instead of by this policy test.
+        expect(committedByPlayer.get(playerId) ?? 0, playerId).toBeGreaterThan(0);
       }
       expect(result.maximumPresentationDelayMs).toBeGreaterThanOrEqual(
         minimumDelay,

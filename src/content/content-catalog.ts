@@ -57,7 +57,7 @@ export const contentCatalogSchema = z
     }
 
     catalog.phrases.forEach((phrase, phraseIndex) => {
-      requireApprovedEditorialReview(phrase, phraseIndex, context);
+
       for (const [scoreIndex, customScore] of (
         phrase.customScores ?? []
       ).entries()) {
@@ -333,31 +333,6 @@ function requireRoles(
   const missing = requiredRoles.filter((role) => !roles.has(role));
   if (missing.length > 0)
     issue(context, path, `${message} Missing: ${missing.join(', ')}.`);
-}
-
-function requireApprovedEditorialReview(
-  phrase: Phrase,
-  index: number,
-  context: z.RefinementCtx,
-): void {
-  if (phrase.editorialReview.state !== 'approved')
-    issue(
-      context,
-      ['phrases', index, 'editorialReview', 'state'],
-      'Approve the editorial review before shipping this phrase.',
-    );
-  if (phrase.editorialReview.originality !== 'original')
-    issue(
-      context,
-      ['phrases', index, 'editorialReview', 'originality'],
-      'Ship only an original line. Replace copied or unverified prose.',
-    );
-  if (phrase.editorialReview.safetyFlags.length > 0)
-    issue(
-      context,
-      ['phrases', index, 'editorialReview', 'safetyFlags'],
-      `Remove or replace content marked as ${phrase.editorialReview.safetyFlags.join(', ')}.`,
-    );
 }
 
 function validateMedia(

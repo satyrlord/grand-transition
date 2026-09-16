@@ -8,7 +8,8 @@
 ## Rule authority
 
 The final match rules follow _Oh...Sir! The Hollywood Roast_. The implementation
-uses original Grand Transition phrases, characters, scenes, and media. It does
+uses Grand Transition phrases, fictional characters, scenes, and original or
+licensed media. It does
 not copy reference-game prose, source, art, audio, or branding.
 
 The reference role mapping is:
