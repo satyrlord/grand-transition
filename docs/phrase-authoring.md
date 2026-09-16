@@ -68,8 +68,8 @@ A card that is restricted to one scene adds `"sceneIds": ["<scene-id>"]`. Cards
 inside a character file never declare `characterIds`; ownership comes from the
 file. Only an entry inside a scene selection needs `sceneIds`, and a card cannot
 belong to both a character and a scene. A final scene-specific card belongs to
-one scene only. Each scene has exactly 33 scene-restricted cards: 10 nouns, 9
-verbs, 5 predicates, 3 modifiers, 3 endings, and 3 conjunctions. It has no
+one scene only. Each scene has exactly 34 scene-restricted cards: 10 nouns, 9
+verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions. It has no
 scene-restricted continuation; the global `[...]` continuation is added to the
 eligible scene pool separately.
 
@@ -144,14 +144,14 @@ target.
   cue stays `[...]`.
 - Every character weakness tag needs at least two matching cards in the common
   corpus.
-- Each scene has exactly 10 nouns, 9 verbs, 5 predicates, 3 modifiers, 3
+- Each scene has exactly 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3
   endings, and 3 conjunctions in its scene-restricted cards. Its verbs contain
   3 past-tense, 3 present-tense, and 3 future-tense cards in three complete
-  families. Its eligible pool has exactly 34 IDs after adding the global
+  families. Its eligible pool has exactly 35 IDs after adding the global
   `[...]` continuation, and no scene-restricted card is shared between scenes.
 - Scene conjunctions are reviewed against the owning scene's themes and are as
   personalized to that scene as grammar permits.
-- Each character has exactly 10 nouns, 9 verbs, 10 predicates, 5 endings, 3
+- Each character has exactly 10 nouns, 9 verbs, 12 predicates, 5 endings, 3
   modifiers, and 1 character-specific conjunction. It has no character-owned
   continuation, and its conjunction is reviewed against the character's voice
   and themes.
@@ -187,17 +187,17 @@ composition is recorded in
 | --- | --- |
 | Common nouns | exactly 300 |
 | Common verbs | exactly 150: 50 past, 50 present, and 50 future |
-| Common predicates | exactly 100; every card is quote-inspired |
+| Common predicates | exactly 99; every card is quote-inspired |
 | Common modifiers | exactly 50; every card is quote-inspired |
 | Common endings | exactly 50; every card is quote-inspired |
 | Common conjunctions | exactly 5; as neutral as possible with empty tags |
-| Scene-restricted cards per scene | exactly 33: 10 nouns, 9 verbs, 5 predicates, 3 modifiers, 3 endings, and 3 conjunctions |
+| Scene-restricted cards per scene | exactly 34: 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions |
 | Scene-restricted continuations | exactly zero per scene |
-| Eligible scene-pool IDs | exactly 34 per scene, including the global continuation |
+| Eligible scene-pool IDs | exactly 35 per scene, including the global continuation |
 | `continuation` | exactly one in the whole catalog |
-| Owned character cards | exactly 38 per character: 10 nouns, 9 verbs, 10 predicates, 5 endings, 3 modifiers, and 1 conjunction |
+| Owned character cards | exactly 40 per character: 10 nouns, 9 verbs, 12 predicates, 5 endings, 3 modifiers, and 1 conjunction |
 | Character weakness tags | at least two matching cards in the common corpus |
-| Scene pool | exactly 34 IDs: 33 scene-restricted cards plus the global continuation |
+| Scene pool | exactly 35 IDs: 34 scene-restricted cards plus the global continuation |
 
 Update the catalog counts quoted in
 [`docs/specs/spec-005-content-schemas.md`](specs/spec-005-content-schemas.md) when
