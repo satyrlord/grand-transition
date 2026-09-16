@@ -7,6 +7,57 @@ const speech = "A national-salvation committee repackages an infrastructure feas
 const phrase = "pending unanimous approval from the people's steering committee.";
 const glyphs = 'ȘȚĂÎÂ șțăîâ — o ordonanță de urgență; 0123456789?!';
 
+test('Romanian display text and every diacritic use Poiret One glyphs', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 720 });
+  await page.goto('');
+  await page.locator('.title-settings-action').click();
+  await page.locator('select[name="interfaceLocale"]').selectOption('ro-RO');
+  await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
+  const title = page.getByRole('button', { name: 'Jucător unic' });
+  await expect(title).toBeVisible();
+  await page.evaluate(async () => document.fonts.load('400 24px "Poiret One"', 'ȘȚĂÎÂ șțăîâ'));
+  const session = await page.context().newCDPSession(page);
+  await session.send('DOM.enable');
+  await session.send('CSS.enable');
+  const platformFonts = async (selector: string) => {
+    const { root } = await session.send('DOM.getDocument');
+    const { nodeId } = await session.send('DOM.querySelector', {
+      nodeId: root.nodeId,
+      selector,
+    });
+    return (await session.send('CSS.getPlatformFontsForNode', { nodeId })).fonts;
+  };
+  const titleFonts = await platformFonts('.title-setup-action');
+  await title.click();
+  await expect(page.locator('.contestant-record strong').first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const nameFonts = await platformFonts('.contestant-record strong');
+  const rosterFonts = await platformFonts('#roster-title');
+  for (const fonts of [titleFonts, nameFonts, rosterFonts]) {
+    expect(fonts.length).toBeGreaterThan(0);
+    expect(fonts.every(({ isCustomFont, familyName }) =>
+      isCustomFont && familyName === 'Poiret One'), JSON.stringify(fonts)).toBe(true);
+  }
+  await page.evaluate(async () => {
+    await document.fonts.load('400 32px "Poiret One"', 'ĂÂÎȘȚăâîșț');
+    const probe = document.createElement('span');
+    probe.id = 'romanian-feature-glyph-probe';
+    probe.style.cssText = 'position: absolute; font: 400 32px "Poiret One";';
+    document.body.append(probe);
+  });
+  for (const glyph of 'ĂÂÎȘȚăâîșț') {
+    await page.locator('#romanian-feature-glyph-probe').evaluate((element, value) => {
+      element.textContent = value;
+    }, glyph);
+    await page.evaluate(() => document.fonts.ready);
+    const fonts = await platformFonts('#romanian-feature-glyph-probe');
+    expect(fonts.length, glyph).toBeGreaterThan(0);
+    expect(fonts.every(({ isCustomFont, familyName }) =>
+      isCustomFont && familyName === 'Poiret One'), `${glyph}: ${JSON.stringify(fonts)}`).toBe(true);
+  }
+  await session.detach();
+});
+
 test('production ships each complete font license unchanged', async ({ request }) => {
   for (const [name, packageName] of [
     ['poiret-one', '@fontsource/poiret-one'],

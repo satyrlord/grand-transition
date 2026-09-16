@@ -32,6 +32,7 @@ afterEach(() => {
 test('restores every stored setting and applies title changes immediately', async () => {
   const stored: SettingsDocument = Object.freeze({
     schemaVersion: settingsSchemaVersion,
+    interfaceLocale: 'ro-RO',
     basePointsMultiplier: 4,
     gpuVoices: false,
     masterVolume: 0.55,
@@ -294,6 +295,111 @@ test('the Settings modal traps focus, closes with Escape, and restores focus', a
 
   expect(document.querySelector('grand-transition-settings')).toBeNull();
   expect(document.activeElement).toBe(settingsButton);
+});
+
+test('applies the interface language immediately and keeps every other stored value', async () => {
+  localStorage.setItem(
+    settingsStorageKey,
+    encodeSettings({ ...defaultSettings, basePointsMultiplier: 4, tutorialMode: true }),
+  );
+  const app = await mountApp();
+  const settings = await openSettings(app);
+  const select = settings.querySelector<HTMLSelectElement>(
+    'select[name="interfaceLocale"]',
+  )!;
+  const storedKeys = () => Object.keys(localStorage).sort();
+
+  expect(select.value).toBe('en');
+  expect(select.options.length).toBe(2);
+  expect(
+    [...select.options].map((option) => option.textContent?.trim()),
+  ).toEqual(['English', 'Română']);
+  expect(document.documentElement.lang).toBe('en');
+  expect(settings.querySelector('output[for="speechRate"]')?.textContent?.trim()).toBe(
+    '1.00×',
+  );
+
+  select.focus();
+  select.value = 'ro-RO';
+  select.dispatchEvent(new Event('change', { bubbles: true }));
+  await app.updateComplete;
+  await vi.waitFor(async () => {
+    await settings.updateComplete;
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
+      'Setări',
+    );
+  });
+
+  expect(document.documentElement.lang).toBe('ro-RO');
+  expect(document.activeElement).toBe(select);
+  expect(
+    settings.querySelector('output[for="speechRate"]')?.textContent?.trim(),
+  ).toBe('1,00×');
+  expect(
+    document.querySelector('.status')?.textContent?.trim(),
+  ).toBe('În direct, pe Canalul 3 NTV!');
+  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+    schemaVersion: settingsSchemaVersion,
+    interfaceLocale: 'ro-RO',
+    basePointsMultiplier: 4,
+    tutorialMode: true,
+  });
+
+  select.value = 'en';
+  select.dispatchEvent(new Event('change', { bubbles: true }));
+  await app.updateComplete;
+  await vi.waitFor(async () => {
+    await settings.updateComplete;
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
+      'Settings',
+    );
+  });
+
+  expect(document.documentElement.lang).toBe('en');
+  expect(document.querySelector('.status')?.textContent?.trim()).toBe(
+    'Live now, on NTV Channel 3!',
+  );
+  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+    interfaceLocale: 'en',
+    basePointsMultiplier: 4,
+    tutorialMode: true,
+  });
+  expect(storedKeys()).toEqual([settingsStorageKey]);
+});
+
+test('shows the storage fallback notice in the selected interface language', async () => {
+  localStorage.setItem(
+    settingsStorageKey,
+    encodeSettings({ ...defaultSettings, interfaceLocale: 'ro-RO' }),
+  );
+  const app = await mountApp();
+  let settings = await openSettings(app);
+  await vi.waitFor(async () => {
+    await settings.updateComplete;
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
+      'Setări',
+    );
+  });
+
+  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    throw new Error('Storage unavailable.');
+  });
+  changeRange(settings, 'effectsVolume', '0.75');
+  await app.updateComplete;
+  settings = currentSettings();
+  await settings.updateComplete;
+
+  const notice = settings.querySelector('.settings-persistence-notice')!;
+  expect(notice.textContent).toContain(
+    'Setările nu pot fi salvate. Modificările nu vor persista după închiderea acestei pagini.',
+  );
+  expect(notice.textContent).not.toContain(settingsPersistenceNotice);
+  expect(notice.querySelector('button')?.textContent?.trim()).toBe('Am înțeles');
+  notice.querySelector<HTMLButtonElement>('button')!.click();
+  await app.updateComplete;
+  settings = currentSettings();
+  await settings.updateComplete;
+  expect(settings.querySelector('.settings-persistence-notice')).toBeNull();
 });
 
 async function mountApp(): Promise<GrandTransitionApp> {

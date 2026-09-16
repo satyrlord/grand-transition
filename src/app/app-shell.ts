@@ -9,7 +9,9 @@ import { CharacterSpeech } from '../audio/character-speech';
 import { MicrosoftRobotSpeech } from '../audio/microsoft-robot-speech';
 import { skinSpeechProfile } from '../audio/skin-speech-profile';
 import { RoundPresentation, type RoundPresentationFrame } from './round-presentation';
-import { msg } from '@lit/localize';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import { setInterfaceLocale } from './interface-localization';
+import { documentLanguageFor } from '../localization/interface-locale';
 import { MatchCoordinator, cliffhangerReaction, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
 import {
@@ -232,6 +234,7 @@ export class GrandTransitionApp extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     const browserStorage = createBrowserStorage();
     this.matchHistoryRepository = new MatchHistoryRepository(browserStorage);
     this.settingsRepository = new SettingsRepository(browserStorage);
@@ -273,6 +276,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.matchHistoryOpen = false;
     this.settingsSnapshot = this.settingsRepository.snapshot();
+    this.applyInterfaceLocale(this.settingsSnapshot.settings.interfaceLocale);
     this.musicVolumeBeforeMute = this.settingsSnapshot.settings.musicVolume > 0
       ? this.settingsSnapshot.settings.musicVolume
       : null;
@@ -913,7 +917,7 @@ export class GrandTransitionApp extends LitElement {
   };
 
   private updateSettings<
-    Field extends 'turnTimerSeconds' | 'autoComplete' | 'musicVolume' | 'speechEnabled',
+    Field extends 'turnTimerSeconds' | 'autoComplete' | 'musicVolume' | 'speechEnabled' | 'interfaceLocale',
   >(field: Field, value: SettingsSnapshot['settings'][Field]): void {
     this.replaceSettings({
       ...this.settingsSnapshot.settings,
@@ -921,8 +925,14 @@ export class GrandTransitionApp extends LitElement {
     });
   }
 
+  private applyInterfaceLocale(locale: SettingsSnapshot['settings']['interfaceLocale']): void {
+    void setInterfaceLocale(locale);
+    document.documentElement.lang = documentLanguageFor(locale);
+  }
+
   private replaceSettings(settings: SettingsSnapshot['settings']): void {
     if (settings.musicVolume > 0) this.musicVolumeBeforeMute = settings.musicVolume;
+    this.applyInterfaceLocale(settings.interfaceLocale);
     this.settingsSnapshot = this.settingsRepository.replace(settings);
     this.speech?.configure(this.settingsSnapshot.settings);
     this.roundPresentation?.updateSettings(this.settingsSnapshot.settings);

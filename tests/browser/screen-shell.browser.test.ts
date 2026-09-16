@@ -270,7 +270,7 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   )!;
   expect(governmentAi.dataset.characterSpecies).toBe('robot');
   expect(governmentAi.querySelector('.roster-choice-name')).toBeNull();
-  expect(governmentAi.getAttribute('aria-label')).toContain('Government AI');
+  expect(governmentAi.querySelector('.visually-hidden')?.textContent).toContain('Government AI');
   governmentAi.focus();
   await setup.updateComplete;
   expect(setup.querySelector('.character-inspector')?.textContent).toMatch(
@@ -547,8 +547,8 @@ test('emits the custom single-player setup with the fixed AI policy', async () =
     'Local Radio Caller',
   );
   expect(
-    setup.querySelector('#playerTwoCharacterId')?.getAttribute('aria-label'),
-  ).toContain('Local Radio Caller character');
+    setup.querySelector('#playerTwoCharacterId')?.textContent?.replaceAll(/\s+/gu, ' ').trim(),
+  ).toContain('Local Radio Caller character:');
   await lockInSetup();
   setup
     .querySelector('form')!
@@ -603,7 +603,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
       .querySelector<HTMLButtonElement>(
         '.roster-choice[data-character-id="black-sea-captain"][data-skin-id="default"]',
       )
-      ?.getAttribute('aria-label'),
+      ?.querySelector('.visually-hidden')?.textContent,
   ).toContain('Selected for player one.');
   document.querySelector('grand-transition-setup')!.dispatchEvent(
     new CustomEvent(setupChangeEventName, {

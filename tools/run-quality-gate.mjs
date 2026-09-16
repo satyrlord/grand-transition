@@ -9,9 +9,14 @@ const npmCli = process.env.npm_execpath;
 if (!npmCli) {
   throw new Error('Run this gate through npm run quality:quick or npm run quality:full.');
 }
-const environment = { ...process.env, GRAND_TRANSITION_QUALITY_GATE: mode };
+const environment = {
+  ...process.env,
+  GRAND_TRANSITION_QUALITY_GATE: mode,
+  GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
+};
 for (const phase of ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']) {
-  const result = spawnSync(process.execPath, [npmCli, 'run', phase], { stdio: 'inherit', env: environment });
+  const script = mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase;
+  const result = spawnSync(process.execPath, [npmCli, 'run', script], { stdio: 'inherit', env: environment });
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
 }

@@ -49,9 +49,11 @@ The tools do not grant editorial approval or milestone completion. See
 [the review procedure](docs/specs/spec-027-balance-editorial.md#review-tools-and-evidence).
 
 [Milestone 029](docs/specs/spec-029-romanian-localization-and-speech.md) is
-approved and pending implementation. Phase 1 adds the complete Romanian
-interface, game content, grammar, and local Mihai medium and Liana medium
-voices. Phase 2 compares Ro_VITS and records a model decision.
+approved and pending implementation. Phase 1 ships the Romanian interface,
+translated archetype and scene display names, and its persisted `Interface
+language` selection. Phase 2 adds the Romanian game
+content, grammar, and local Mihai medium and Liana medium voices. Phase 3
+compares Ro_VITS and records a model decision.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
@@ -59,7 +61,8 @@ default local portrait. Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
 content includes six fictional layered scenes. Each scene has a distinct local
 cartoon background and transparent foreground, and two debate studios include
-fixed fictional moderators. The game has one English game-locale bundle.
+fixed fictional moderators. The interface has English and Romanian message
+catalogs; the game content has one English game-locale bundle.
 
 The final asset contract permits one default skin and zero through eight
 alternate skins per archetype. The 30 skins comprise 19 defaults and 11
@@ -168,12 +171,21 @@ entries with the current replay and match-log document version remain readable.
 build and quality gate. Milestones 024 and 025 own audio and presentation
 acceptance, including separate listening and visual review.
 
+Interface translation uses Lit localization. `msg` and `str` call sites are
+extracted with `npm run localization:extract` into `xliff/`, and
+`npm run localization:build` regenerates `src/localization/generated/` from
+those catalogs. `npm run localization:validate` proves that every extracted
+message is translated, that placeholders keep their source references, and that
+the Romanian text is complete, safe, and written with standard diacritics.
+
 For routine agent validation, use `npm run quality:quick`. It runs the normal
 validation and test phases but omits the slowest cumulative 20-percent test
 set from the latest full gate: the 500-match calibration and nine-rung ladder
 flow. A quick pass is not release evidence. `npm run quality:full` and
 `npm run ci` run every check; agents run them only when the user explicitly
-requests the full quality-gate skill.
+requests the full quality-gate skill. The slowest set runs only under the full
+gate, so a direct test command such as `npm run test`, `npm run test:browser`,
+`npm run test:coverage`, or `npm run test:e2e` skips it.
 
 Implementation is divided into small, dependency-ordered milestones. Start at
 the [specification index](docs/specs/spec-000-milestone-index.md). The

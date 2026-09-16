@@ -1,6 +1,6 @@
 import type { MatchArenaReaction } from './match-coordinator';
 export type { MatchArenaReaction } from './match-coordinator';
-import { msg } from '@lit/localize';
+import { msg, str } from '@lit/localize';
 import type { Phrase } from '../content/schemas';
 import {
   snapshotDraftStateForPlayer,
@@ -20,6 +20,11 @@ import type {
   MatchState,
 } from '../engine/match-lifecycle';
 import { characterSkins, sampleContent } from '../game-content';
+import { interfaceLocale } from './interface-localization';
+import {
+  displayCharacterName,
+  displaySceneName,
+} from '../localization/romanian-display-names';
 import { deepFreeze } from './deep-freeze';
 import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
 import { resolveCharacterFrames } from './character-state-assets';
@@ -357,8 +362,10 @@ export function createMatchScreenSnapshot(
         }
       : null,
     round: state.round,
-    sceneName: gameMessage(
-      sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
+    sceneName: displaySceneName(
+      state.sceneId,
+      gameMessage(sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey),
+      interfaceLocale(),
     ),
     sceneLayers: sceneLayerViews(state.sceneId),
     activePlayerId,
@@ -581,10 +588,10 @@ function roundOutcomeLabel(
   const firstDamage = resolution.players[firstId]!.outgoingDamage;
   const secondDamage = resolution.players[secondId]!.outgoingDamage;
   if (firstDamage === secondDamage)
-    return msg(`Round ${resolution.round} result: tie`);
+    return msg(str`Round ${resolution.round} result: tie`);
   const winnerId = firstDamage > secondDamage ? firstId : secondId;
   return msg(
-    `Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
+    str`Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
   );
 }
 
@@ -609,7 +616,7 @@ function availableCard(
       action: 'select',
       grammarAccepted: false,
       previewText: msg(
-        `${construction.previewText || 'Empty sentence'} — continue in the next round.`,
+        str`${construction.previewText || 'Empty sentence'} — continue in the next round.`,
       ),
       knownWeaknesses,
       disabledReason: null,
@@ -748,9 +755,10 @@ function cardStateLabel(state: MatchCardState): string {
 }
 
 function characterName(characterId: string): string {
-  return gameMessage(
-    sampleContent.characters.find((character) => character.id === characterId)
-      ?.nameKey,
+  return displayCharacterName(
+    characterId,
+    gameMessage(sampleContent.characters.find((character) => character.id === characterId)?.nameKey),
+    interfaceLocale(),
   );
 }
 

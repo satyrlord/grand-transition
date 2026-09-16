@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="ro-RO" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s182172399c7f384e">
+  <source>No public sentence was completed.</source>
+  <target>Nu a fost încheiată nicio propoziție publică.</target>
+</trans-unit>
+<trans-unit id="s6c74530f7dd82b94">
+  <source>Select a noun to begin.</source>
+  <target>Alege un substantiv pentru a începe.</target>
+</trans-unit>
+<trans-unit id="s40b9c7692a0ab2a3">
+  <source>The chamber is waiting for its first exchange.</source>
+  <target>Camera așteaptă primul schimb de replici.</target>
+</trans-unit>
+<trans-unit id="sbb99caec27fba165">
+  <source>Finisher</source>
+  <target>Finalizare</target>
+</trans-unit>
+<trans-unit id="s10f86706c428992e">
+  <source>Comeback</source>
+  <target>Replică</target>
+</trans-unit>
+<trans-unit id="s2d5b9ba54404df2a">
+  <source>Round <x id="0" equiv-text="${resolution.round}"/> result: tie</source>
+  <target>Rezultatul rundei <x id="0" equiv-text="${resolution.round}"/>: egalitate</target>
+</trans-unit>
+<trans-unit id="s4f91203388db641c">
+  <source>Round <x id="0" equiv-text="${resolution.round}"/> winner: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></source>
+  <target>Câștigătorul rundei <x id="0" equiv-text="${resolution.round}"/>: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></target>
+</trans-unit>
+<trans-unit id="secaa8dfe52e0ef83">
+  <source><x id="0" equiv-text="${construction.previewText || 'Empty sentence'}"/> — continue in the next round.</source>
+  <target><x id="0" equiv-text="${construction.previewText || 'Empty sentence'}"/> — continuă în runda următoare.</target>
+</trans-unit>
+<trans-unit id="s00a84204340a1db4">
+  <source>Selected</source>
+  <target>Selectat</target>
+</trans-unit>
+<trans-unit id="s500fd71a4232050e">
+  <source>Empty</source>
+  <target>Gol</target>
+</trans-unit>
+<trans-unit id="s616be1819f76109e">
+  <source>This slot is empty.</source>
+  <target>Acest loc este gol.</target>
+</trans-unit>
+<trans-unit id="sd158a5fc0f062f18">
+  <source>Available</source>
+  <target>Disponibil</target>
+</trans-unit>
+<trans-unit id="s66722bc2ea775e05">
+  <source>Disabled</source>
+  <target>Indisponibil</target>
+</trans-unit>
+<trans-unit id="sfa5bc01ce096cdad">
+  <source>Channel 3</source>
+  <target>Canalul 3</target>
+</trans-unit>
+<trans-unit id="s1948a5b2a054862d">
+  <source>Match interruption</source>
+  <target>Întreruperea meciului</target>
+</trans-unit>
+<trans-unit id="scf6ca9a66d229850">
+  <source>Transmission held</source>
+  <target>Transmisiune în așteptare</target>
+</trans-unit>
+<trans-unit id="sce8a658c7b4545db">
+  <source>Transmission unavailable</source>
+  <target>Transmisie indisponibilă</target>
+</trans-unit>
+<trans-unit id="s4b4fbd2df4186644">
+  <source>End this match?</source>
+  <target>Vrei să închei meciul?</target>
+</trans-unit>
+<trans-unit id="s95bc8722b2708f8b">
+  <source>Paused</source>
+  <target>Pauză</target>
+</trans-unit>
+<trans-unit id="s01340eb7d65ffadd">
+  <source>Landscape recommended</source>
+  <target>Orientare orizontală recomandată</target>
+</trans-unit>
+<trans-unit id="sb074e95bf9d54fe8">
+  <source>Multiplayer requires landscape</source>
+  <target>Multiplayerul necesită orientare orizontală</target>
+</trans-unit>
+<trans-unit id="s00a8f46f90fb0109">
+  <source>Larger viewport required</source>
+  <target>Este necesară o fereastră mai mare</target>
+</trans-unit>
+<trans-unit id="sae959b2525196df3">
+  <source>Current match progress will be lost.</source>
+  <target>Progresul meciului curent se va pierde.</target>
+</trans-unit>
+<trans-unit id="s8680e63978433622">
+  <source>Stay paused</source>
+  <target>Rămâi în pauză</target>
+</trans-unit>
+<trans-unit id="s0814ddaa3bc5b457">
+  <source>End match</source>
+  <target>Încheie meciul</target>
+</trans-unit>
+<trans-unit id="s9d31826d98b144e8">
+  <source>Grand Transition is designed to be played in landscape mode. Rotate your phone for the intended experience. You can continue in portrait for Single Player and Ladder. Multiplayer requires landscape.</source>
+  <target>Grand Transition este conceput pentru ecrane orientate orizontal. Rotește telefonul pentru o experiență optimă. Poți continua în orientare verticală în modurile Jucător unic și Scară. Modul Multiplayer necesită orientare orizontală.</target>
+</trans-unit>
+<trans-unit id="s64e024a428fb7396">
+  <source>Continue in portrait</source>
+  <target>Continuă în orientare verticală</target>
+</trans-unit>
+<trans-unit id="s6ca326dd0f89cc01">
+  <source>The match is concealed and the turn timer is stopped. Rotate to landscape to continue. Your match is preserved.</source>
+  <target>Ecranul meciului este ascuns, iar cronometrul rândului este oprit. Rotește telefonul în poziție orizontală pentru a continua. Progresul meciului este păstrat.</target>
+</trans-unit>
+<trans-unit id="s6d993ae518539400">
+  <source>The match is concealed and the turn timer is stopped.</source>
+  <target>Ecranul meciului este ascuns, iar cronometrul rândului este oprit.</target>
+</trans-unit>
+<trans-unit id="sf0e356fda320c04f">
+  <source>Turn timer</source>
+  <target>Cronometrul rândului</target>
+</trans-unit>
+<trans-unit id="scb98233fc1fe95be">
+  <source>15 seconds</source>
+  <target>15 secunde</target>
+</trans-unit>
+<trans-unit id="s9a04d0509ccf2ae7">
+  <source>30 seconds</source>
+  <target>30 de secunde</target>
+</trans-unit>
+<trans-unit id="se9ef1815463f8000">
+  <source>Unlimited</source>
+  <target>Nelimitat</target>
+</trans-unit>
+<trans-unit id="s9b3c691f2622c0be">
+  <source>Auto-complete</source>
+  <target>Completare automată</target>
+</trans-unit>
+<trans-unit id="s091d5807b5b33550">
+  <source>On</source>
+  <target>Da</target>
+</trans-unit>
+<trans-unit id="s302cbb19bf9a174a">
+  <source>Off</source>
+  <target>Nu</target>
+</trans-unit>
+<trans-unit id="s2593d0c70a1c5074">
+  <source>Sound</source>
+  <target>Sunet</target>
+</trans-unit>
+<trans-unit id="s9ca372a6096ddd54">
+  <source>Music</source>
+  <target>Muzică</target>
+</trans-unit>
+<trans-unit id="se3767266a468255e">
+  <source>Voices</source>
+  <target>Voci</target>
+</trans-unit>
+<trans-unit id="sef196b160786170f">
+  <source>Phrase color coding</source>
+  <target>Colorarea expresiilor</target>
+</trans-unit>
+<trans-unit id="s89118d3a7be870ca">
+  <source>Resume</source>
+  <target>Reia</target>
+</trans-unit>
+<trans-unit id="s078a08058efaf7d6">
+  <source>Back to menu</source>
+  <target>Înapoi la meniu</target>
+</trans-unit>
+<trans-unit id="s57e1b383fb3feb48">
+  <source>Use a browser viewport of at least 640 by 320 CSS pixels in landscape, or 360 by 640 in portrait. Square viewports are not supported.</source>
+  <target>Folosește o fereastră de cel puțin 640 × 320 pixeli CSS în orientare orizontală sau 360 × 640 în orientare verticală. Ferestrele pătrate nu sunt acceptate.</target>
+</trans-unit>
+<trans-unit id="seb4eae68d45315b7">
+  <source>Minimum</source>
+  <target>Minim</target>
+</trans-unit>
+<trans-unit id="s05bbc0a1a3f7171e">
+  <source>640 × 320 landscape · 360 × 640 portrait</source>
+  <target>640 × 320 orizontal · 360 × 640 vertical</target>
+</trans-unit>
+<trans-unit id="s12f6b3b9aa6fe76c">
+  <source>Recommended</source>
+  <target>Recomandat</target>
+</trans-unit>
+<trans-unit id="s149cd9a4c3462af7">
+  <source>1920 × 1080 on PC</source>
+  <target>1920 × 1080 pe PC</target>
+</trans-unit>
+<trans-unit id="s0408cdc6fd2fb071">
+  <source>Resize the browser or rotate the display to continue.</source>
+  <target>Redimensionează fereastra sau rotește ecranul pentru a continua.</target>
+</trans-unit>
+<trans-unit id="s2e6dbd2fb5147b41">
+  <source>Grand Transition: A Verbal Republic</source>
+  <target>Grand Transition: O republică verbală</target>
+</trans-unit>
+<trans-unit id="s1d1f743fa7419f42">
+  <source>Match history</source>
+  <target>Istoricul meciurilor</target>
+</trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+  <target>Închide</target>
+</trans-unit>
+<trans-unit id="s7d7ba6a7a74c7df9">
+  <source>Completed matches stored on this browser.</source>
+  <target>Meciuri încheiate stocate în acest browser.</target>
+</trans-unit>
+<trans-unit id="s899bcb14c39753fe">
+  <source>No completed matches yet.</source>
+  <target>Nu există încă meciuri încheiate.</target>
+</trans-unit>
+<trans-unit id="s5397ae392e3ff69a">
+  <source>Match history cannot use persistent storage. New results are available only until this page closes. Allow site storage or clear this site's stored data, then reload.</source>
+  <target>Istoricul meciurilor nu poate folosi stocarea permanentă. Rezultatele noi rămân disponibile doar până închizi pagina. Permite stocarea datelor pentru acest site sau șterge datele lui salvate, apoi reîncarcă pagina.</target>
+</trans-unit>
+<trans-unit id="s5eb4fd194882f78f">
+  <source>won</source>
+  <target>a câștigat</target>
+</trans-unit>
+<trans-unit id="s63310947e6976083">
+  <source>versus</source>
+  <target>contra</target>
+</trans-unit>
+<trans-unit id="saf7472b8f6ac1a98">
+  <source>Rounds</source>
+  <target>Runde</target>
+</trans-unit>
+<trans-unit id="saf1cea015f4e88ad">
+  <source>Final Pride</source>
+  <target>Mândrie finală</target>
+</trans-unit>
+<trans-unit id="s37cbecaec58e2192">
+  <source>Mode</source>
+  <target>Mod</target>
+</trans-unit>
+<trans-unit id="s6121beb7500a123a">
+  <source>Single player</source>
+  <target>Jucător unic</target>
+</trans-unit>
+<trans-unit id="see716a6c185d6205">
+  <source>Hotseat</source>
+  <target>Același dispozitiv</target>
+</trans-unit>
+<trans-unit id="s5788d224d55d340c">
+  <source>Seed</source>
+  <target>Cod inițial</target>
+</trans-unit>
+<trans-unit id="s631dd8f2edc93f2d">
+  <source>Technical record</source>
+  <target>Înregistrare tehnică</target>
+</trans-unit>
+<trans-unit id="s0cf93d62d1d1ae12">
+  <source>Phrases used</source>
+  <target>Expresii folosite</target>
+</trans-unit>
+<trans-unit id="sa56951fc774839c0">
+  <source>Debate</source>
+  <target>Dezbatere</target>
+</trans-unit>
+<trans-unit id="sd4d597089e0fcced">
+  <source><x id="0" equiv-text="${characterName(player.characterId)} ${round.prideAfter[player.playerId]}"/> Pride</source>
+  <target><x id="0" equiv-text="${characterName(player.characterId)} ${round.prideAfter[player.playerId]}"/> mândrie</target>
+</trans-unit>
+<trans-unit id="s331981609549e8d5">
+  <source>No completed public sentence.</source>
+  <target>Nicio propoziție publică încheiată.</target>
+</trans-unit>
+<trans-unit id="s60f62a3bd55e9741">
+  <source>carried</source>
+  <target>reportată</target>
+</trans-unit>
+<trans-unit id="sba07c9a26a11b084">
+  <source>No phrases were used.</source>
+  <target>Nu au fost folosite expresii.</target>
+</trans-unit>
+<trans-unit id="scc5921284441e146">
+  <source>Local Radio Caller</source>
+  <target>Ascultător la telefon</target>
+</trans-unit>
+<trans-unit id="sb39b20329ebd304a">
+  <source>Unlimited turn timer</source>
+  <target>Cronometru nelimitat</target>
+</trans-unit>
+<trans-unit id="se7e1ababbc4868b8">
+  <source><x id="0" equiv-text="${timerValue}"/> seconds</source>
+  <target><x id="0" equiv-text="${timerValue}"/> sec.</target>
+</trans-unit>
+<trans-unit id="s023524331e278125">
+  <source>Waiting for <x id="0" equiv-text="${this.aiName}"/>…</source>
+  <target>În așteptare: <x id="0" equiv-text="${this.aiName}"/>…</target>
+</trans-unit>
+<trans-unit id="s061cc20e3432dead">
+  <source>Pause</source>
+  <target>Pauză</target>
+</trans-unit>
+<trans-unit id="s8f1034e1a9d93097">
+  <source>Final</source>
+  <target>Final</target>
+</trans-unit>
+<trans-unit id="se58c72d2a858e162">
+  <source>Timer</source>
+  <target>Cronometru</target>
+</trans-unit>
+<trans-unit id="s3bbd0d65f48b2bd5">
+  <source>Cliffhanger · Round <x id="0" equiv-text="${this.snapshot.round}"/></source>
+  <target>Suspans · Runda <x id="0" equiv-text="${this.snapshot.round}"/></target>
+</trans-unit>
+<trans-unit id="sd013b84b2761098d">
+  <source>Round <x id="0" equiv-text="${this.snapshot.round}"/></source>
+  <target>Runda <x id="0" equiv-text="${this.snapshot.round}"/></target>
+</trans-unit>
+<trans-unit id="se912116525a3eb72">
+  <source>Insult delivery</source>
+  <target>Schimb de replici</target>
+</trans-unit>
+<trans-unit id="s52456a3a9af92b06">
+  <source><x id="0" equiv-text="${this.snapshot.activePlayerName}"/>'s turn</source>
+  <target>La rând: <x id="0" equiv-text="${this.snapshot.activePlayerName}"/></target>
+</trans-unit>
+<trans-unit id="s1c5adef3147dda1d">
+  <source><x id="0" equiv-text="${this.aiName}"/> is thinking</source>
+  <target><x id="0" equiv-text="${this.aiName}"/> se gândește</target>
+</trans-unit>
+<trans-unit id="s51582dc444b881ee">
+  <source>Presentation outcomes</source>
+  <target>Rezultatele prezentării</target>
+</trans-unit>
+<trans-unit id="s94c9103c61326162">
+  <source>Public chamber</source>
+  <target>Camera publică</target>
+</trans-unit>
+<trans-unit id="s6e5a90a9d34b9e4b">
+  <source>Current sentence</source>
+  <target>Propoziția curentă</target>
+</trans-unit>
+<trans-unit id="s0cc6b00d51615557">
+  <source>Exchange complete</source>
+  <target>Schimb încheiat</target>
+</trans-unit>
+<trans-unit id="s1f2bbf3a8bf082ef">
+  <source>Sentence ready — end it or keep building</source>
+  <target>Propoziția este gata — încheie-o sau continuă</target>
+</trans-unit>
+<trans-unit id="s4d40074b76154cc0">
+  <source>Choose a phrase or end the sentence</source>
+  <target>Alege o expresie sau încheie propoziția</target>
+</trans-unit>
+<trans-unit id="s0144baf89bf8a4cb">
+  <source>Phrase draft</source>
+  <target>Propoziția în lucru</target>
+</trans-unit>
+<trans-unit id="s5c74c0ed6773ad76">
+  <source>Common phrases</source>
+  <target>Expresii comune</target>
+</trans-unit>
+<trans-unit id="s42d6b4214e5dcd66">
+  <source>Nine common phrase slots</source>
+  <target>Nouă locuri pentru expresii comune</target>
+</trans-unit>
+<trans-unit id="scd099a7cef69d1af">
+  <source>Artificial intelligence turn</source>
+  <target>Rândul inteligenței artificiale</target>
+</trans-unit>
+<trans-unit id="s24021a9011d9782b">
+  <source>Considering the next phrase…</source>
+  <target>Se alege următoarea expresie…</target>
+</trans-unit>
+<trans-unit id="sbb976f28e58c637a">
+  <source><x id="0" equiv-text="${this.snapshot.activePlayerName}"/>'s private phrases</source>
+  <target>Expresii personale: <x id="0" equiv-text="${this.snapshot.activePlayerName}"/></target>
+</trans-unit>
+<trans-unit id="s004608da5c98a82a">
+  <source>Reshuffle used</source>
+  <target>Amestecare folosită</target>
+</trans-unit>
+<trans-unit id="s56d9d5aaf591b2fc">
+  <source>Reshuffle private phrases</source>
+  <target>Amestecă expresiile personale</target>
+</trans-unit>
+<trans-unit id="sc74ede92cc6bc0f5">
+  <source>Turn actions</source>
+  <target>Acțiunile rândului</target>
+</trans-unit>
+<trans-unit id="sd8f923198e0c5c6a">
+  <source>End</source>
+  <target>Gata</target>
+</trans-unit>
+<trans-unit id="s6c521422145b62c5">
+  <source>No sentence yet.</source>
+  <target>Încă nicio propoziție.</target>
+</trans-unit>
+<trans-unit id="sef48b20c760a563b">
+  <source><x id="0" equiv-text="${player.characterName}"/>, <x id="1" equiv-text="${player.pride}"/> Pride, <x id="2" equiv-text="${this.snapshot?.roundReview&#10;    ? player.isActive&#10;        ? msg('last speaker')&#10;        : msg('round complete')&#10;    : player.isActive&#10;        ? msg('active turn')&#10;        : msg('waiting')}"/></source>
+  <target><x id="0" equiv-text="${player.characterName}"/>, <x id="1" equiv-text="${player.pride}"/> mândrie, <x id="2" equiv-text="${this.snapshot?.roundReview&#10;    ? player.isActive&#10;        ? msg('last speaker')&#10;        : msg('round complete')&#10;    : player.isActive&#10;        ? msg('active turn')&#10;        : msg('waiting')}"/></target>
+</trans-unit>
+<trans-unit id="s71f1a8640ae5dc98">
+  <source>last speaker</source>
+  <target>ultimul vorbitor</target>
+</trans-unit>
+<trans-unit id="s11b42265b6c84fbe">
+  <source>round complete</source>
+  <target>rundă încheiată</target>
+</trans-unit>
+<trans-unit id="saca03c51ee091fa2">
+  <source>active turn</source>
+  <target>rând activ</target>
+</trans-unit>
+<trans-unit id="seac9afef1a00b5e8">
+  <source>waiting</source>
+  <target>în așteptare</target>
+</trans-unit>
+<trans-unit id="seee86e8afeadd37d">
+  <source>Pride</source>
+  <target>Mândrie</target>
+</trans-unit>
+<trans-unit id="s86905aa4911ee22d">
+  <source><x id="0" equiv-text="${player.characterName}"/>: <x id="1" equiv-text="${player.pride}"/> Pride</source>
+  <target><x id="0" equiv-text="${player.characterName}"/>: <x id="1" equiv-text="${player.pride}"/> mândrie</target>
+</trans-unit>
+<trans-unit id="scc2f862c1d285c7d">
+  <source>Thinking</source>
+  <target>Se gândește</target>
+</trans-unit>
+<trans-unit id="se7a23c2885993fd5">
+  <source>Your turn</source>
+  <target>Rândul tău</target>
+</trans-unit>
+<trans-unit id="sa4a31048f93839b8">
+  <source><x id="0" equiv-text="${player.characterName}"/> comeback</source>
+  <target>Replică: <x id="0" equiv-text="${player.characterName}"/></target>
+</trans-unit>
+<trans-unit id="sf0166d72c001d4f1">
+  <source><x id="0" equiv-text="${speaker.characterName}"/>'s score</source>
+  <target>Scor: <x id="0" equiv-text="${speaker.characterName}"/></target>
+</trans-unit>
+<trans-unit id="s7bb038bad0ddc113">
+  <source>Hesitation</source>
+  <target>Ezitare</target>
+</trans-unit>
+<trans-unit id="s136a77e23657dd21">
+  <source>Scored sentences</source>
+  <target>Propoziții punctate</target>
+</trans-unit>
+<trans-unit id="sed8ec5e3c64fa25d">
+  <source>Total</source>
+  <target>Total</target>
+</trans-unit>
+<trans-unit id="s2d258cf48ffbba41">
+  <source>Combo</source>
+  <target>Combo</target>
+</trans-unit>
+<trans-unit id="sacaa59d79cb63175">
+  <source>Continuation held</source>
+  <target>Continuare menținută</target>
+</trans-unit>
+<trans-unit id="s483201580fc17eec">
+  <source><x id="0" equiv-text="${player.characterName}"/>: 0 Pride damage</source>
+  <target><x id="0" equiv-text="${player.characterName}"/>: 0 daune asupra mândriei</target>
+</trans-unit>
+<trans-unit id="s1e41bf46f2924f24">
+  <source>Incomplete statement</source>
+  <target>Afirmație incompletă</target>
+</trans-unit>
+<trans-unit id="s31bdda69b95fc536">
+  <source>Grammar mistake</source>
+  <target>Greșeală gramaticală</target>
+</trans-unit>
+<trans-unit id="s2cb170685cbadb1f">
+  <source>Turn expired</source>
+  <target>Rândul a expirat</target>
+</trans-unit>
+<trans-unit id="sd03b650004daea4f">
+  <source><x id="0" equiv-text="${label}"/>. <x id="1" equiv-text="${detail}"/>.</source>
+  <target><x id="0" equiv-text="${label}"/>. <x id="1" equiv-text="${detail}"/>.</target>
+</trans-unit>
+<trans-unit id="s1e08458f07ac6bad">
+  <source>Pride impact</source>
+  <target>Impact asupra mândriei</target>
+</trans-unit>
+<trans-unit id="sf8b4942e3131392b">
+  <source>Pride tally</source>
+  <target>Total mândrie</target>
+</trans-unit>
+<trans-unit id="s0fdd89eb3060b16f">
+  <source>Continuation broken</source>
+  <target>Continuare întreruptă</target>
+</trans-unit>
+<trans-unit id="s65bea29068a8d288">
+  <source>Pride loss</source>
+  <target>Pierdere de mândrie</target>
+</trans-unit>
+<trans-unit id="s32e02041b095df07">
+  <source><x id="0" equiv-text="${player.characterName}"/>: 0 Pride lost · <x id="1" equiv-text="${impact.prideAfter}"/> Pride remains</source>
+  <target><x id="0" equiv-text="${player.characterName}"/>: 0 mândrie pierdută · <x id="1" equiv-text="${impact.prideAfter}"/> mândrie rămasă</target>
+</trans-unit>
+<trans-unit id="sda35db94f244cf5d">
+  <source><x id="0" equiv-text="${player.characterName}"/>: −<x id="1" equiv-text="${impact.amount}"/> Pride · <x id="2" equiv-text="${impact.prideAfter}"/> Pride remains</source>
+  <target><x id="0" equiv-text="${player.characterName}"/>: −<x id="1" equiv-text="${impact.amount}"/> mândrie · <x id="2" equiv-text="${impact.prideAfter}"/> mândrie rămasă</target>
+</trans-unit>
+<trans-unit id="s8f7406db8693cb15">
+  <source>0 Pride lost</source>
+  <target>0 mândrie pierdută</target>
+</trans-unit>
+<trans-unit id="s5f3b8e8de3bfe497">
+  <source><x id="0" equiv-text="${frame.impact.amount}"/> Pride lost</source>
+  <target><x id="0" equiv-text="${frame.impact.amount}"/> mândrie pierdută</target>
+</trans-unit>
+<trans-unit id="sf5a77e5deb36b236">
+  <source><x id="0" equiv-text="${cause}"/>. <x id="1" equiv-text="${player.characterName}"/>: <x id="2" equiv-text="${amount}"/>. <x id="3" equiv-text="${frame.impact.prideAfter}"/> Pride remains.</source>
+  <target><x id="0" equiv-text="${cause}"/>. <x id="1" equiv-text="${player.characterName}"/>: <x id="2" equiv-text="${amount}"/>. <x id="3" equiv-text="${frame.impact.prideAfter}"/> mândrie rămasă.</target>
+</trans-unit>
+<trans-unit id="s78589f6aa7482f15">
+  <source>Victory</source>
+  <target>Victorie</target>
+</trans-unit>
+<trans-unit id="s0cacc7c5f357d74a">
+  <source><x id="0" equiv-text="${victory.winnerName}"/> wins the match</source>
+  <target><x id="0" equiv-text="${victory.winnerName}"/> câștigă meciul</target>
+</trans-unit>
+<trans-unit id="s2285130c0d366f25">
+  <source>1 completed round</source>
+  <target>1 rundă încheiată</target>
+</trans-unit>
+<trans-unit id="s341320d2daeba5d5">
+  <source><x id="0" equiv-text="${victory.completedRounds}"/> completed rounds</source>
+  <target><x id="0" equiv-text="${victory.completedRounds}"/> runde încheiate</target>
+</trans-unit>
+<trans-unit id="sef33841c9538f900">
+  <source>Continue ladder</source>
+  <target>Continuă scara</target>
+</trans-unit>
+<trans-unit id="s0c9d9124f61374b4">
+  <source>Return to main menu</source>
+  <target>Înapoi la meniul principal</target>
+</trans-unit>
+<trans-unit id="s0f2efd468f77d826">
+  <source>Cliffhanger</source>
+  <target>Suspans</target>
+</trans-unit>
+<trans-unit id="s61814651c9d97390">
+  <source>Pride restored: <x id="0" equiv-text="${first.characterName} ${first.pride}"/> Pride · <x id="1" equiv-text="${second.characterName} ${second.pride}"/> Pride</source>
+  <target>Mândrie refăcută: <x id="0" equiv-text="${first.characterName} ${first.pride}"/> mândrie · <x id="1" equiv-text="${second.characterName} ${second.pride}"/> mândrie</target>
+</trans-unit>
+<trans-unit id="s6cd7bfe08a9df7cd">
+  <source>Off script</source>
+  <target>În afara scenariului</target>
+</trans-unit>
+<trans-unit id="s6b888e088dffd81c">
+  <source><x id="0" equiv-text="${player.characterName}"/> score breakdown</source>
+  <target>Detalierea scorului: <x id="0" equiv-text="${player.characterName}"/></target>
+</trans-unit>
+<trans-unit id="sb70f8ed2425eecc5">
+  <source>No scored sentence</source>
+  <target>Nicio propoziție punctată</target>
+</trans-unit>
+<trans-unit id="s47ccdd28504d3122">
+  <source>−<x id="0" equiv-text="${reaction.selfDamage}"/> Pride penalty</source>
+  <target>−<x id="0" equiv-text="${reaction.selfDamage}"/> penalizare de mândrie</target>
+</trans-unit>
+<trans-unit id="s6eb3d0469f4318d6">
+  <source>Combo ×<x id="0" equiv-text="${reaction.comboFactor}"/></source>
+  <target>Combo ×<x id="0" equiv-text="${reaction.comboFactor}"/></target>
+</trans-unit>
+<trans-unit id="s2b8521b62ec5bceb">
+  <source>+<x id="0" equiv-text="${reaction.comboBonusDamage}"/> combo damage</source>
+  <target>+<x id="0" equiv-text="${reaction.comboBonusDamage}"/> daune combo</target>
+</trans-unit>
+<trans-unit id="s8f0a15630eb2a6cf">
+  <source>No combo bonus</source>
+  <target>Fără bonus de combo</target>
+</trans-unit>
+<trans-unit id="sd91748ca2ed35dcb">
+  <source>Weakness hit</source>
+  <target>Slăbiciune declanșată</target>
+</trans-unit>
+<trans-unit id="s364eac7f090c7d50">
+  <source>Final damage</source>
+  <target>Daune finale</target>
+</trans-unit>
+<trans-unit id="s59c6a008a1f1f54e">
+  <source>Weakness</source>
+  <target>Slăbiciune</target>
+</trans-unit>
+<trans-unit id="sf9175b8006687910">
+  <source>Grammatically valid next choice</source>
+  <target>Următoarea alegere corectă gramatical</target>
+</trans-unit>
+<trans-unit id="s75fbb860adc65b36">
+  <source>Phrase slot <x id="0" equiv-text="${card.slotIndex + 1}"/>: <x id="1" equiv-text="${card.stateLabel}"/></source>
+  <target>Loc pentru expresie <x id="0" equiv-text="${card.slotIndex + 1}"/>: <x id="1" equiv-text="${card.stateLabel}"/></target>
+</trans-unit>
+<trans-unit id="se0ee388bcd3a2181">
+  <source> times <x id="0" equiv-text="${formatScoreNumber(factor)}"/></source>
+  <target> ori <x id="0" equiv-text="${formatScoreNumber(factor)}"/></target>
+</trans-unit>
+<trans-unit id="s9d8b8aa2b404c2c8">
+  <source>Settings</source>
+  <target>Setări</target>
+</trans-unit>
+<trans-unit id="s88d2e337a24f5afb">
+  <source>Scoring applies to new matches. Other changes apply immediately.</source>
+  <target>Punctajul se aplică meciurilor noi. Celelalte modificări se aplică imediat.</target>
+</trans-unit>
+<trans-unit id="sd42d240fa3ecccd1">
+  <source>Settings storage is unavailable. Changes will not persist after this page closes.</source>
+  <target>Setările nu pot fi salvate. Modificările nu vor persista după închiderea acestei pagini.</target>
+</trans-unit>
+<trans-unit id="s12d6dde9b30c3093">
+  <source>Dismiss</source>
+  <target>Am înțeles</target>
+</trans-unit>
+<trans-unit id="s0e10c6f32d344c7a">
+  <source>Interface language</source>
+  <target>Limba interfeței</target>
+</trans-unit>
+<trans-unit id="scd105819b5a10243">
+  <source>Play</source>
+  <target>Joc</target>
+</trans-unit>
+<trans-unit id="se8ee5f388ce7378d">
+  <source>Scoring multiplier</source>
+  <target>Multiplicator de punctaj</target>
+</trans-unit>
+<trans-unit id="s9a65121f5869044d">
+  <source>Scales compatibility points for both players. Default: ×3. Weakness and combos apply separately.</source>
+  <target>Înmulțește punctele de compatibilitate ale ambilor jucători. Valoare implicită: ×3. Slăbiciunile și combinațiile se aplică separat.</target>
+</trans-unit>
+<trans-unit id="s47e65f4f8332798f">
+  <source>Tutorial</source>
+  <target>Tutorial</target>
+</trans-unit>
+<trans-unit id="s5d670d737923d37c">
+  <source>All grammatically valid next choices glow green.</source>
+  <target>Toate alegerile următoare corecte gramatical sunt evidențiate cu verde.</target>
+</trans-unit>
+<trans-unit id="s2c460f7c50d93c03">
+  <source>Master volume</source>
+  <target>Volum principal</target>
+</trans-unit>
+<trans-unit id="s87cce0be5aa1b6fe">
+  <source>Music volume</source>
+  <target>Volumul muzicii</target>
+</trans-unit>
+<trans-unit id="s8c4eba6b3017d779">
+  <source>Effects volume</source>
+  <target>Volumul efectelor</target>
+</trans-unit>
+<trans-unit id="sf1f70949ad691126">
+  <source>Loading sound…</source>
+  <target>Se încarcă sunetul…</target>
+</trans-unit>
+<trans-unit id="scd60d4f51389457d">
+  <source>Sound is unavailable. You can continue without sound.</source>
+  <target>Sunetul nu este disponibil. Poți continua fără sunet.</target>
+</trans-unit>
+<trans-unit id="s2eb700ead56e32a2">
+  <source>Sound starts after your first interaction.</source>
+  <target>Sunetul pornește după prima interacțiune.</target>
+</trans-unit>
+<trans-unit id="s34cb4fb9e2b5934a">
+  <source>Retry sound</source>
+  <target>Reîncearcă redarea sunetului</target>
+</trans-unit>
+<trans-unit id="saa3efba1f0c816b7">
+  <source>Speech</source>
+  <target>Vorbire</target>
+</trans-unit>
+<trans-unit id="s1fda0ced075c426e">
+  <source>Speech enabled</source>
+  <target>Vorbire activată</target>
+</trans-unit>
+<trans-unit id="s699d5c494392e7ff">
+  <source>Speech volume</source>
+  <target>Volumul vocii</target>
+</trans-unit>
+<trans-unit id="sabbbade70d4b56c0">
+  <source>GPU voices</source>
+  <target>Voci GPU</target>
+</trans-unit>
+<trans-unit id="s0c6da3e5456152b0">
+  <source>Alternative local human voices. Requires a supported GPU and an extra model download of about 353 MB. Enable speech to use them.</source>
+  <target>Voci umane locale alternative. Necesită un GPU compatibil și descărcarea unui model suplimentar de aproximativ 353 MB. Activează vorbirea pentru a le folosi.</target>
+</trans-unit>
+<trans-unit id="sdc5674c568d0b0c9">
+  <source>GPU voice credits</source>
+  <target>Creditele vocilor GPU</target>
+</trans-unit>
+<trans-unit id="s95086d133b69b27f">
+  <source>Loading local voice model…</source>
+  <target>Se încarcă modelul vocal local…</target>
+</trans-unit>
+<trans-unit id="s57ebace288174c71">
+  <source>Local neural speech is unavailable. You can continue without narration.</source>
+  <target>Vorbirea neurală locală nu este disponibilă. Poți continua fără narațiune.</target>
+</trans-unit>
+<trans-unit id="s3c153933a2d54073">
+  <source>Human voices use a local neural model. Robots use installed Microsoft voices when available. Phrase text stays on this device.</source>
+  <target>Vocile umane folosesc un model neural local. Roboții folosesc vocile Microsoft instalate, când sunt disponibile. Textul expresiilor rămâne pe acest dispozitiv.</target>
+</trans-unit>
+<trans-unit id="s3d0b9758dea99673">
+  <source>Voice credits</source>
+  <target>Creditele vocilor</target>
+</trans-unit>
+<trans-unit id="sc551187ef8ab16c0">
+  <source><x id="0" equiv-text="${Math.round(value * 100)}"/> percent</source>
+  <target><x id="0" equiv-text="${Math.round(value * 100)}"/> la sută</target>
+</trans-unit>
+<trans-unit id="s73a7248d18af72f7">
+  <source>Speech rate</source>
+  <target>Viteza vorbirii</target>
+</trans-unit>
+<trans-unit id="s487bce3703fc8c9b">
+  <source><x id="0" equiv-text="${formatInterfaceNumber(this.settings.speechRate, {&#10;    minimumFractionDigits: 2,&#10;    maximumFractionDigits: 2,&#10;})}"/> times</source>
+  <target><x id="0" equiv-text="${formatInterfaceNumber(this.settings.speechRate, {&#10;    minimumFractionDigits: 2,&#10;    maximumFractionDigits: 2,&#10;})}"/> ori</target>
+</trans-unit>
+<trans-unit id="seb1dbbfdcf75348a">
+  <source>Select your debaters</source>
+  <target>Alege oratorii</target>
+</trans-unit>
+<trans-unit id="s580af19b603edd89">
+  <source>Choose your debater. Your opponent and scene follow ladder progress.</source>
+  <target>Alege-ți oratorul. Adversarul și scena depind de progresul pe scară.</target>
+</trans-unit>
+<trans-unit id="sb8b173d943e0434c">
+  <source>Choose both contestants, confirm the studio, and open the transmission.</source>
+  <target>Alege-i pe ambii concurenți și studioul, apoi începe transmisiunea.</target>
+</trans-unit>
+<trans-unit id="s7f1b271de57889be">
+  <source>Character selection</source>
+  <target>Selecția personajelor</target>
+</trans-unit>
+<trans-unit id="scb6a9c1a1757adbc">
+  <source>You</source>
+  <target>Tu</target>
+</trans-unit>
+<trans-unit id="sf342c119b552d464">
+  <source>Player one</source>
+  <target>Jucătorul unu</target>
+</trans-unit>
+<trans-unit id="s70f6fbd254c13b6b">
+  <source>Contestant roster</source>
+  <target>Lista concurenților</target>
+</trans-unit>
+<trans-unit id="s0defb737de3fbc24">
+  <source><x id="0" equiv-text="${portraits.length}"/> portraits · Both players locked in</source>
+  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Ambii jucători au confirmat</target>
+</trans-unit>
+<trans-unit id="scbdf6ff315d7efce">
+  <source><x id="0" equiv-text="${portraits.length}"/> portraits · Selecting your ladder character</source>
+  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Alegi personajul pentru Scară</target>
+</trans-unit>
+<trans-unit id="s3ac8f4fafafed354">
+  <source><x id="0" equiv-text="${portraits.length}"/> portraits · Selecting for player one</source>
+  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Se selectează pentru jucătorul unu</target>
+</trans-unit>
+<trans-unit id="s50647bfa76166d0a">
+  <source><x id="0" equiv-text="${portraits.length}"/> portraits · Selecting for player two</source>
+  <target><x id="0" equiv-text="${portraits.length}"/> portrete · Se selectează pentru jucătorul doi</target>
+</trans-unit>
+<trans-unit id="sf5eed050ae0f7ca4">
+  <source>Contestant portrait roster, <x id="0" equiv-text="${portraits.length}"/> portraits</source>
+  <target>Lista portretelor concurenților, <x id="0" equiv-text="${portraits.length}"/> portrete</target>
+</trans-unit>
+<trans-unit id="sc4700d1f111b3ca4">
+  <source>Opponent and scene are fixed by local ladder progress.</source>
+  <target>Adversarul și scena depind de progresul local pe scară.</target>
+</trans-unit>
+<trans-unit id="sa47722fc513dcc19">
+  <source>Both players can choose the same character.</source>
+  <target>Ambii jucători pot alege același personaj.</target>
+</trans-unit>
+<trans-unit id="sc868e05b06dcb3d8">
+  <source>Ladder complete</source>
+  <target>Toate treptele parcurse</target>
+</trans-unit>
+<trans-unit id="s1e7aa819cdc7155a">
+  <source>Player two</source>
+  <target>Jucătorul doi</target>
+</trans-unit>
+<trans-unit id="sabfb27624e505967">
+  <source>Match settings</source>
+  <target>Setările meciului</target>
+</trans-unit>
+<trans-unit id="sc43eabc5a66b8450">
+  <source>Difficulty</source>
+  <target>Dificultate</target>
+</trans-unit>
+<trans-unit id="s6c00912614c95ef3">
+  <source>Party Strategist</source>
+  <target>Strateg de partid</target>
+</trans-unit>
+<trans-unit id="s5055becb5c54c053">
+  <source>Palace Operator</source>
+  <target>Operator de palat</target>
+</trans-unit>
+<trans-unit id="sb6dd112ccacdb8a9">
+  <source>Rung scene — fixed</source>
+  <target>Scena treptei — fixă</target>
+</trans-unit>
+<trans-unit id="s4a9a31623ab5f213">
+  <source>Scene</source>
+  <target>Scenă</target>
+</trans-unit>
+<trans-unit id="s4d819161cf1788ff">
+  <source>Rotate to landscape to start Multiplayer.</source>
+  <target>Rotește ecranul în poziție orizontală pentru a începe modul Multiplayer.</target>
+</trans-unit>
+<trans-unit id="sc16e00a7a8b2fde2">
+  <source>Back</source>
+  <target>Înapoi</target>
+</trans-unit>
+<trans-unit id="s9437944efdc72f61">
+  <source>Start ladder</source>
+  <target>Începe scara</target>
+</trans-unit>
+<trans-unit id="s4f4ed466498fc34e">
+  <source>Start match</source>
+  <target>Începe meciul</target>
+</trans-unit>
+<trans-unit id="s07f8ffdf667bee86">
+  <source>Weaknesses</source>
+  <target>Slăbiciuni</target>
+</trans-unit>
+<trans-unit id="se125b2d6ad4334cb">
+  <source>Opponent fixed by rung</source>
+  <target>Adversar stabilit pentru treaptă</target>
+</trans-unit>
+<trans-unit id="se1e7295df8f200aa">
+  <source>Locked in</source>
+  <target>Confirmat</target>
+</trans-unit>
+<trans-unit id="s2a8329d3b93a3d2f">
+  <source>Choose a listed character.</source>
+  <target>Alege un personaj din listă.</target>
+</trans-unit>
+<trans-unit id="scdfe0036534c8e89">
+  <source>Opponent locked in</source>
+  <target>Adversar confirmat</target>
+</trans-unit>
+<trans-unit id="s8493923d97d986e3">
+  <source>Unlock <x id="0" equiv-text="${lockName}"/></source>
+  <target>Schimbă alegerea: <x id="0" equiv-text="${lockName}"/></target>
+</trans-unit>
+<trans-unit id="s78c09e3f7bc161bc">
+  <source><x id="0" equiv-text="${lockName}"/> locked in</source>
+  <target>Alegere confirmată: <x id="0" equiv-text="${lockName}"/></target>
+</trans-unit>
+<trans-unit id="sbe4b68c15e297b2f">
+  <source>Lock in <x id="0" equiv-text="${lockName}"/></source>
+  <target>Confirmă alegerea: <x id="0" equiv-text="${lockName}"/></target>
+</trans-unit>
+<trans-unit id="sd551e71dda20a546">
+  <source>Previous skin for</source>
+  <target>Aspectul anterior pentru</target>
+</trans-unit>
+<trans-unit id="s1574dfbef6287726">
+  <source>Next skin for</source>
+  <target>Aspectul următor pentru</target>
+</trans-unit>
+<trans-unit id="s6da15831657fb704">
+  <source>player one</source>
+  <target>jucătorul unu</target>
+</trans-unit>
+<trans-unit id="s98d83f317df244fa">
+  <source>player two</source>
+  <target>jucătorul doi</target>
+</trans-unit>
+<trans-unit id="s9eb05045a1aae62a">
+  <source>Selected for player one.</source>
+  <target>Selectat pentru jucătorul unu.</target>
+</trans-unit>
+<trans-unit id="sd8a49eec406357e8">
+  <source>Selected for player two.</source>
+  <target>Selectat pentru jucătorul doi.</target>
+</trans-unit>
+<trans-unit id="sa55c452220876842">
+  <source>Select for</source>
+  <target>Alege pentru</target>
+</trans-unit>
+<trans-unit id="saf667e50a67374ff">
+  <source>Select portrait for</source>
+  <target>Alege portretul pentru</target>
+</trans-unit>
+<trans-unit id="sc4b498e9a42c6f12">
+  <source>Pinned dossier</source>
+  <target>Dosar fixat</target>
+</trans-unit>
+<trans-unit id="s130e1bd45c66973d">
+  <source>Character dossier</source>
+  <target>Dosarul personajului</target>
+</trans-unit>
+<trans-unit id="sba1e8892999bb878">
+  <source>Computer</source>
+  <target>Computer</target>
+</trans-unit>
+<trans-unit id="s1310ba7044d2dd9f">
+  <source>Ladder unavailable</source>
+  <target>Scara nu este disponibilă</target>
+</trans-unit>
+<trans-unit id="s95118f15960985bb">
+  <source>Choose Ladder again to create local progress.</source>
+  <target>Alege din nou modul Scară pentru a crea progres local.</target>
+</trans-unit>
+<trans-unit id="sf24cb54e29df4039">
+  <source>Rung <x id="0" equiv-text="${progress.rungIndex + 1}"/>/9</source>
+  <target>Treapta <x id="0" equiv-text="${progress.rungIndex + 1}"/>/9</target>
+</trans-unit>
+<trans-unit id="sfd5fb0cd89eec929">
+  <source>Nine victories recorded</source>
+  <target>Nouă victorii înregistrate</target>
+</trans-unit>
+<trans-unit id="sea4f3074c99b08df">
+  <source>Progress is session-only.</source>
+  <target>Progresul este doar pentru această sesiune.</target>
+</trans-unit>
+<trans-unit id="sed75f7f02aac8c14">
+  <source>Reset ladder</source>
+  <target>Resetează scara</target>
+</trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+  <target>Resetează</target>
+</trans-unit>
+<trans-unit id="s809b5e2dd93f6fec">
+  <source>Reset all local ladder progress?</source>
+  <target>Vrei să resetezi tot progresul local pe scară?</target>
+</trans-unit>
+<trans-unit id="s8dc554dfcc22ee52">
+  <source>Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
+  <target>Modul lipsește. Revino la Meniul principal și alege Jucător unic, Multiplayer sau Scară.</target>
+</trans-unit>
+<trans-unit id="sf1459a12de394b73">
+  <source>Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
+  <target>Modul nu este acceptat. Revino la Meniul principal și alege Jucător unic, Multiplayer sau Scară.</target>
+</trans-unit>
+<trans-unit id="s8909725bb5db486a">
+  <source>Choose a listed artificial intelligence difficulty.</source>
+  <target>Alege un nivel de dificultate din listă pentru computer.</target>
+</trans-unit>
+<trans-unit id="sd95f504269b3f959">
+  <source>Player one character is missing. Choose a listed character.</source>
+  <target>Personajul jucătorului unu lipsește. Alege un personaj din listă.</target>
+</trans-unit>
+<trans-unit id="s5eaa71a219107dc7">
+  <source>Player one character is unknown. Choose a listed character.</source>
+  <target>Personajul jucătorului unu este necunoscut. Alege un personaj din listă.</target>
+</trans-unit>
+<trans-unit id="sf96e6859db7c2efd">
+  <source>Player one skin is missing. Choose an available skin.</source>
+  <target>Aspectul jucătorului unu lipsește. Alege un aspect disponibil.</target>
+</trans-unit>
+<trans-unit id="s68965ab6d078b29b">
+  <source>Player one skin is unknown. Choose an available skin.</source>
+  <target>Aspectul jucătorului unu este necunoscut. Alege un aspect disponibil.</target>
+</trans-unit>
+<trans-unit id="s0c7091f3acd06c53">
+  <source>Player two character is missing. Choose a listed character.</source>
+  <target>Personajul jucătorului doi lipsește. Alege un personaj din listă.</target>
+</trans-unit>
+<trans-unit id="s36badb0cd4c42ce1">
+  <source>Player two character is unknown. Choose a listed character.</source>
+  <target>Personajul jucătorului doi este necunoscut. Alege un personaj din listă.</target>
+</trans-unit>
+<trans-unit id="s6a15b799e660e73f">
+  <source>Player two skin is missing. Choose an available skin.</source>
+  <target>Aspectul jucătorului doi lipsește. Alege un aspect disponibil.</target>
+</trans-unit>
+<trans-unit id="s301cb890876c598d">
+  <source>Player two skin is unknown. Choose an available skin.</source>
+  <target>Aspectul jucătorului doi este necunoscut. Alege un aspect disponibil.</target>
+</trans-unit>
+<trans-unit id="s76ea0b71bfd11c8c">
+  <source>Scene is missing. Choose a listed scene.</source>
+  <target>Scena lipsește. Alege o scenă din listă.</target>
+</trans-unit>
+<trans-unit id="sbdae4f41ee769afe">
+  <source>Scene is unknown. Choose a listed scene.</source>
+  <target>Scena este necunoscută. Alege o scenă din listă.</target>
+</trans-unit>
+<trans-unit id="s06f6c6f99db6b552">
+  <source>Original</source>
+  <target>Original</target>
+</trans-unit>
+<trans-unit id="s7d27db3c9639c6dd">
+  <source>Alternate</source>
+  <target>Alternativ</target>
+</trans-unit>
+<trans-unit id="scd21be01c16cc3b3">
+  <source>Original skin</source>
+  <target>Aspect original</target>
+</trans-unit>
+<trans-unit id="s934e2436da09e50d">
+  <source>Alternate chassis</source>
+  <target>Șasiu alternativ</target>
+</trans-unit>
+<trans-unit id="sd95b4f6c1405bf6e">
+  <source>Alternate skin</source>
+  <target>Aspect alternativ</target>
+</trans-unit>
+<trans-unit id="s3f1a2d18de6ad138">
+  <source>skin</source>
+  <target>aspect</target>
+</trans-unit>
+<trans-unit id="sef16678fe7072f5d">
+  <source>Grand</source>
+  <target>Grand</target>
+</trans-unit>
+<trans-unit id="s9fc686f7bbd941e2">
+  <source>Transition</source>
+  <target>Transition</target>
+</trans-unit>
+<trans-unit id="s029d583ae7cfacc0">
+  <source>A Verbal Republic</source>
+  <target>O republică verbală</target>
+</trans-unit>
+<trans-unit id="s9322174220131153">
+  <source>Live now, on NTV Channel 3!</source>
+  <target>În direct, pe Canalul 3 NTV!</target>
+</trans-unit>
+<trans-unit id="s76813002d9c586bf">
+  <source>Main Menu</source>
+  <target>Meniul principal</target>
+</trans-unit>
+<trans-unit id="s498a91cb2a45781a">
+  <source>Single Player</source>
+  <target>Jucător unic</target>
+</trans-unit>
+<trans-unit id="s68f9d93cb9eb486b">
+  <source>Multiplayer</source>
+  <target>Multiplayer</target>
+</trans-unit>
+<trans-unit id="s16948826bf750b89">
+  <source>Ladder</source>
+  <target>Scară</target>
+</trans-unit>
+<trans-unit id="s65e20e46b64ca73f">
+  <source>Multiplayer requires landscape mode.</source>
+  <target>Multiplayerul necesită orientarea orizontală.</target>
+</trans-unit>
+<trans-unit id="sd1d1aacff9495fb5">
+  <source>Match history will not persist after this page closes. Open Match history for recovery steps.</source>
+  <target>Istoricul meciurilor nu va fi salvat după închiderea paginii. Deschide Istoricul meciurilor pentru pașii de recuperare.</target>
+</trans-unit>
+<trans-unit id="sa9837d96b7410f64">
+  <source>All characters and events are fictional composites created for satire.</source>
+  <target>Toate personajele și evenimentele sunt compozite fictive create pentru satiră.</target>
+</trans-unit>
+<trans-unit id="sa227c18b0832fa64">
+  <source>GPU voices are unavailable. Using local Piper voices.</source>
+  <target>Vocile GPU nu sunt disponibile. Se folosesc vocile Piper locale.</target>
+</trans-unit>
+<trans-unit id="s2d0fc88aea214f62">
+  <source>Loading GPU voices…</source>
+  <target>Se încarcă vocile GPU…</target>
+</trans-unit>
+<trans-unit id="s563228df22bb5d7a">
+  <source>Preparing GPU voices…</source>
+  <target>Se pregătesc vocile GPU…</target>
+</trans-unit>
+<trans-unit id="se7bee6e9a9b5394c">
+  <source>Private</source>
+  <target>Privată</target>
+</trans-unit>
+<trans-unit id="sf072d582c213e3d4">
+  <source>Shared</source>
+  <target>Comună</target>
+</trans-unit>
+<trans-unit id="s8fb5270d76459892">
+  <source>said:</source>
+  <target>a spus:</target>
+</trans-unit>
+<trans-unit id="sf1769de2735d47e9">
+  <source><x id="0" equiv-text="${kindLabel}"/>: <x id="1" equiv-text="${formatScoreNumber(component.amount)}"/> bonus damage.</source>
+  <target><x id="0" equiv-text="${kindLabel}"/>: <x id="1" equiv-text="${formatScoreNumber(component.amount)}"/> daune suplimentare.</target>
+</trans-unit>
+<trans-unit id="s0ec64d4d39c30a79">
+  <source><x id="0" equiv-text="${kindLabel ? kindLabel + ': ' : ''}${formatScoreNumber(component.base)}${factors}"/> equals <x id="1" equiv-text="${formatScoreNumber(component.amount)}"/> damage.</source>
+  <target><x id="0" equiv-text="${kindLabel ? kindLabel + ': ' : ''}${formatScoreNumber(component.base)}${factors}"/> înseamnă <x id="1" equiv-text="${formatScoreNumber(component.amount)}"/> daune.</target>
+</trans-unit>
+<trans-unit id="s2a5952fa93eb5323">
+  <source>opponent fixed by rung:</source>
+  <target>adversar stabilit pentru treaptă:</target>
+</trans-unit>
+<trans-unit id="sba6242244430a750">
+  <source>locked in:</source>
+  <target>personaj confirmat:</target>
+</trans-unit>
+<trans-unit id="sc147ba8d5cef0a3e">
+  <source>character:</source>
+  <target>personaj:</target>
+</trans-unit>
+<trans-unit id="sb02d79c9016401f0">
+  <source>character</source>
+  <target>personaj</target>
+</trans-unit>
+<trans-unit id="s2b102584a7b35763">
+  <source>Change selection</source>
+  <target>Schimbă alegerea</target>
+</trans-unit>
+<trans-unit id="sddce35c2fc905870">
+  <source>Selection confirmed</source>
+  <target>Alegere confirmată</target>
+</trans-unit>
+<trans-unit id="sd5320779c92f343d">
+  <source>Confirm selection</source>
+  <target>Confirmă alegerea</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

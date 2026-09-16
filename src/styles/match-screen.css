@@ -2253,7 +2253,9 @@
   }
 
   .match-actions .action-primary {
-    width: min(5.5rem, 100%);
+    min-width: min(5.5rem, 100%);
+    width: max-content;
+    max-width: 100%;
     background: linear-gradient(180deg, #bd3029, #5c1718);
   }
 

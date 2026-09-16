@@ -26,7 +26,7 @@ test('tutorial persists and all valid next choices follow each hotseat draft and
   await enableTutorial(page);
   await expect.poll(() => page.evaluate(() =>
     JSON.parse(localStorage.getItem('grand-transition.settings.v1')!),
-  )).toMatchObject({ schemaVersion: 1, tutorialMode: true });
+  )).toMatchObject({ schemaVersion: 2, interfaceLocale: 'en', tutorialMode: true });
   await page.reload();
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByRole('checkbox', { name: 'Tutorial', exact: true })).toBeChecked();

@@ -1,4 +1,6 @@
-import { msg } from '@lit/localize';
+import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
+import { formatInterfaceNumber } from '../interface-format';
+import { gameTextLanguage } from '../game-text-language';
 import {
   LitElement,
   html,
@@ -84,6 +86,7 @@ export class GrandTransitionMatch extends LitElement {
   private sentenceScrollKey: string | null = null;
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.pauseMode = 'running';
     this.turnTimerSeconds = 30;
     this.autoComplete = true;
@@ -246,14 +249,17 @@ export class GrandTransitionMatch extends LitElement {
     const timerLabel =
       timerValue === null
         ? msg('Unlimited turn timer')
-        : msg(`${timerValue} seconds`);
-    const timerText = timerValue === null ? msg('Unlimited') : timerValue;
+        : msg(str`${timerValue} seconds`);
+    const timerText = timerValue === null ? msg('Unlimited') : formatInterfaceNumber(timerValue);
     const displayedSentence = this.presentation
       ? this.presentation.text || msg('No public sentence was completed.')
       : this.thinking &&
       this.snapshot.sentenceText === msg('Select a noun to begin.')
-        ? msg(`Waiting for ${this.aiName}…`)
+        ? msg(str`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
+    const displayedSentenceIsGameText = displayedSentence !== msg('No public sentence was completed.') &&
+      displayedSentence !== msg('Select a noun to begin.') &&
+      !(this.thinking && displayedSentence === msg(str`Waiting for ${this.aiName}…`));
     const arenaReaction = this.snapshot.arenaReaction?.kind === 'grammar-mistake' &&
       this.snapshot.arenaReaction.sequence === this.expiredGrammarStrikeSequence
       ? null
@@ -332,16 +338,16 @@ export class GrandTransitionMatch extends LitElement {
               <div class="match-turn-heading">
                 <h1 id="match-title" tabindex="-1">
                   <span>${this.snapshot.cliffhanger
-                    ? msg(`Cliffhanger · Round ${this.snapshot.round}`)
-                    : msg(`Round ${this.snapshot.round}`)}</span>
+                    ? msg(str`Cliffhanger · Round ${this.snapshot.round}`)
+                    : msg(str`Round ${this.snapshot.round}`)}</span>
                   <span class="visually-hidden">
-                    ${roundReview ? msg('Insult delivery') : msg(`${this.snapshot.activePlayerName}'s turn`)}
+                    ${roundReview ? msg('Insult delivery') : msg(str`${this.snapshot.activePlayerName}'s turn`)}
                   </span>
                 </h1>
                 ${
                   this.thinking
                     ? html`<span class="ai-thinking-status" role="status">
-                        ${msg(`${this.aiName} is thinking`)}
+                        ${msg(str`${this.aiName} is thinking`)}
                       </span>`
                     : nothing
                 }
@@ -390,6 +396,7 @@ export class GrandTransitionMatch extends LitElement {
             </h2>
             <p
               class="sentence-preview"
+              lang=${displayedSentenceIsGameText ? gameTextLanguage() ?? nothing : nothing}
               data-density=${sentenceDensity(displayedSentence)}
               tabindex="0"
               role="region"
@@ -459,7 +466,7 @@ export class GrandTransitionMatch extends LitElement {
                           aria-labelledby="private-hand-title"
                         >
                     <h2 id="private-hand-title" class="visually-hidden">
-                      ${msg(`${this.snapshot.activePlayerName}'s private phrases`)}
+                      ${msg(str`${this.snapshot.activePlayerName}'s private phrases`)}
                     </h2>
                     <div class="private-hand-controls">
                       <ol>
@@ -468,11 +475,9 @@ export class GrandTransitionMatch extends LitElement {
                       <button
                         type="button"
                         class="action-reshuffle"
-                        aria-label=${msg(
-                          this.snapshot.actions.redrawUsed
-                            ? 'Reshuffle used'
-                            : 'Reshuffle private phrases',
-                        )}
+                        aria-label=${this.snapshot.actions.redrawUsed
+                          ? msg('Reshuffle used')
+                          : msg('Reshuffle private phrases')}
                         ?disabled=${
                           !this.snapshot.actions.canRedraw ||
                           this.commandPending
@@ -540,7 +545,17 @@ export class GrandTransitionMatch extends LitElement {
         data-turn-state=${player.isActive ? 'active' : 'waiting'}
         data-reaction-state=${hasGrammarReaction ? 'grammar-mistake' : nothing}
         aria-current=${activeTurn ? 'true' : nothing}
-        aria-label=${`${player.characterName}, ${player.pride} Pride, ${this.snapshot?.roundReview ? (player.isActive ? 'last speaker' : 'round complete') : player.isActive ? 'active turn' : 'waiting'}`}
+        aria-label=${msg(
+          str`${player.characterName}, ${player.pride} Pride, ${
+            this.snapshot?.roundReview
+              ? player.isActive
+                ? msg('last speaker')
+                : msg('round complete')
+              : player.isActive
+                ? msg('active turn')
+                : msg('waiting')
+          }`,
+        )}
       >
         <header class="player-hud">
           <div class="player-health">
@@ -549,9 +564,9 @@ export class GrandTransitionMatch extends LitElement {
               min="0"
               max="100"
               value=${player.pride}
-              aria-label=${`${player.characterName}: ${player.pride} Pride`}
+              aria-label=${msg(str`${player.characterName}: ${player.pride} Pride`)}
             ></meter>
-            <strong aria-hidden="true">${player.pride}</strong>
+            <strong aria-hidden="true">${formatInterfaceNumber(player.pride)}</strong>
           </div>
           <div class="player-name-line">
             <h2>${compactCharacterName(player.characterName)}</h2>
@@ -595,9 +610,9 @@ export class GrandTransitionMatch extends LitElement {
             : player.comebackLine
               ? html`<blockquote
                   class="player-sentence player-sentence--waiting player-sentence--comeback"
-                  aria-label=${msg(`${player.characterName} comeback`)}
+                  aria-label=${msg(str`${player.characterName} comeback`)}
                 >
-                  <span>${player.sentence}</span>
+                  <span lang=${gameTextLanguage() ?? nothing}>${player.sentence}</span>
                 </blockquote>`
               : html`<button
                   type="button"
@@ -605,11 +620,7 @@ export class GrandTransitionMatch extends LitElement {
                   data-has-content="true"
                   data-revealed=${waitingSentenceRevealed ? 'true' : 'false'}
                   aria-expanded=${waitingSentenceRevealed}
-                  aria-label=${msg(
-                    hasWaitingSentence
-                      ? `${player.characterName} said: ${waitingSentence}`
-                      : `${player.characterName}: ${waitingSentence}`,
-                  )}
+                  aria-labelledby=${`waiting-name-${player.playerId} waiting-text-${player.playerId}`}
                   @pointerenter=${() =>
                     this.setHoveredWaitingSentence(player.playerId)}
                   @pointerleave=${() => this.setHoveredWaitingSentence(null)}
@@ -619,10 +630,18 @@ export class GrandTransitionMatch extends LitElement {
                   @click=${(event: MouseEvent) =>
                     this.revealWaitingSentence(event, player.playerId)}
                 >
+                  <span id=${`waiting-name-${player.playerId}`} class="visually-hidden">
+                    <span>${player.characterName}</span>
+                    ${hasWaitingSentence ? msg('said:') : ':'}
+                  </span>
+                  <span id=${`waiting-text-${player.playerId}`} class="visually-hidden"
+                    lang=${hasWaitingSentence ? gameTextLanguage() ?? nothing : nothing}>${waitingSentence}</span>
                   <span class="waiting-sentence-ellipsis" aria-hidden="true"
                     >…</span
                   >
                   <span class="waiting-sentence-content"
+                    aria-hidden="true"
+                    lang=${hasWaitingSentence ? gameTextLanguage() ?? nothing : nothing}
                     >${waitingSentence}</span
                   >
                 </button>`
@@ -638,10 +657,10 @@ export class GrandTransitionMatch extends LitElement {
     const impacted = frame.impact?.playerId === first.playerId ? first : second;
     return html`<section class="delivery-receipt" data-speaker=${frame.speakerId}
       data-side=${side(speaker.playerId)} role="log" aria-live="polite" aria-relevant="additions text"
-      aria-label=${msg(`${speaker.characterName}'s score`)}>
+      aria-label=${msg(str`${speaker.characterName}'s score`)}>
       ${frame.phase === 'hesitating' ? html`<p class="delivery-status">${msg('Hesitation')}</p>` : nothing}
       <ol class="delivery-components" tabindex="0" aria-label=${msg('Scored sentences')}>
-        ${frame.components.map((part) => this.renderInlineScore(part))}
+        ${frame.components.map((part, index) => this.renderInlineScore(part, index))}
       </ol>
       <div class="delivery-events">
         ${this.renderDeliveryEmphasis(speaker.playerId)}
@@ -663,7 +682,7 @@ export class GrandTransitionMatch extends LitElement {
   private renderDeliveryEmphasis(playerId: string): TemplateResult[] {
     return this.presentation!.emphasis.filter((item) => item.playerId === playerId).map((item) => html`<p data-emphasis=${item.kind}>
       ${item.kind === 'combo' ? html`<strong>${msg('Combo')}</strong> ${item.text} ×${item.value}`
-        : item.kind === 'weakness' ? html`${item.text.split(' · ').map(titleCase).join(' · ')} ×${formatScoreNumber(item.value)}`
+        : item.kind === 'weakness' ? html`<span lang=${gameTextLanguage() ?? nothing}>${item.text.split(' · ').map(titleCase).join(' · ')}</span> ×${formatScoreNumber(item.value)}`
           : html`${msg('Comeback')} +${item.value}`}
     </p>`);
   }
@@ -674,14 +693,14 @@ export class GrandTransitionMatch extends LitElement {
       return html``;
     }
     const [label, detail] = outcome.kind === 'continuation-held'
-      ? [msg('Continuation held'), msg(`${player.characterName}: 0 Pride damage`)]
+      ? [msg('Continuation held'), msg(str`${player.characterName}: 0 Pride damage`)]
       : outcome.kind === 'incomplete-statement'
-        ? [msg('Incomplete statement'), msg(`${player.characterName}: 0 Pride damage`)]
+        ? [msg('Incomplete statement'), msg(str`${player.characterName}: 0 Pride damage`)]
         : outcome.kind === 'grammar-mistake'
           ? [msg('Grammar mistake'), player.characterName]
           : [msg('Turn expired'), player.characterName];
     return html`<p class="delivery-outcome" data-outcome=${outcome.kind}
-      aria-label=${msg(`${label}. ${detail}.`)}>
+      aria-label=${msg(str`${label}. ${detail}.`)}>
       <strong>${label}</strong><span>${detail}</span>
     </p>`;
   }
@@ -702,12 +721,12 @@ export class GrandTransitionMatch extends LitElement {
           : msg('Pride loss');
     const detail = frame.phase === 'damage'
       ? impact.amount === 0
-        ? msg(`${player.characterName}: 0 Pride lost · ${impact.prideAfter} Pride remains`)
-        : msg(`${player.characterName}: −${impact.amount} Pride · ${impact.prideAfter} Pride remains`)
+        ? msg(str`${player.characterName}: 0 Pride lost · ${impact.prideAfter} Pride remains`)
+        : msg(str`${player.characterName}: −${impact.amount} Pride · ${impact.prideAfter} Pride remains`)
       : player.characterName;
     return html`<aside class="delivery-impact-record ${frame.phase === 'damage' ? 'delivery-damage' : ''}"
       data-impact-phase=${frame.phase} data-side=${side}
-      aria-label=${msg(`${label}. ${detail}.`)}>
+      aria-label=${msg(str`${label}. ${detail}.`)}>
       <strong>${label}</strong><span>${detail}</span>
     </aside>`;
   }
@@ -731,11 +750,11 @@ export class GrandTransitionMatch extends LitElement {
                 : msg('Pride loss');
           const amount = frame.impact.amount === 0
             ? msg('0 Pride lost')
-            : msg(`${frame.impact.amount} Pride lost`);
+            : msg(str`${frame.impact.amount} Pride lost`);
           this.presentationAnnouncementKeys.add(key);
           this.presentationAnnouncements = [
             ...this.presentationAnnouncements,
-            msg(`${cause}. ${player.characterName}: ${amount}. ${frame.impact.prideAfter} Pride remains.`),
+            msg(str`${cause}. ${player.characterName}: ${amount}. ${frame.impact.prideAfter} Pride remains.`),
           ];
         }
       }
@@ -756,11 +775,18 @@ export class GrandTransitionMatch extends LitElement {
     this.postPresentationRevision = null;
   }
 
-  private renderInlineScore(component: MatchScoreComponentView): TemplateResult {
+  private renderInlineScore(component: MatchScoreComponentView, index: number): TemplateResult {
     const kindLabel = component.kind === 'finisher' ? msg('Finisher') : component.kind === 'comeback' ? msg('Comeback') : '';
+    const phraseId = `delivery-score-phrase-${index}`;
+    const summaryId = `delivery-score-summary-${index}`;
     return html`<li class="delivery-score" data-score-kind=${component.kind} data-score-amount=${component.amount}
-      aria-label=${scoreComponentLabel(component, kindLabel)}>
-      <span class="delivery-score-text">${kindLabel ? kindLabel + ': ' : ''}${component.phraseText}</span>
+      aria-labelledby=${`${phraseId} ${summaryId}`}>
+      <span class="delivery-score-text">${kindLabel ? html`${kindLabel}: ` : nothing}<span
+        id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span></span>
+      <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
+        ${component.weaknessTags.length ? html`${msg('Weakness')}:
+          <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(', ')}</span>.` : nothing}
+      </span>
       <span class="delivery-score-math">
         ${component.kind === 'comeback' ? html`+${formatScoreNumber(component.amount)}` : html`${formatScoreNumber(component.base)}${
           component.restrictionFactor > 1 ? html` <span>×${formatScoreNumber(component.restrictionFactor)}</span>` : nothing}${
@@ -768,7 +794,8 @@ export class GrandTransitionMatch extends LitElement {
           component.comboFactor > 1 ? html` <span class="score-factor--combo">×${formatScoreNumber(component.comboFactor)}</span>` : nothing}
           = ${formatScoreNumber(component.amount)}`}
       </span>
-      ${component.weaknessTags.length ? html`<span class="delivery-score-weakness">${component.weaknessTags.map(titleCase).join(' · ')}</span>` : nothing}
+      ${component.weaknessTags.length ? html`<span class="delivery-score-weakness"
+        lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(' · ')}</span>` : nothing}
     </li>`;
   }
 
@@ -796,13 +823,13 @@ export class GrandTransitionMatch extends LitElement {
           </header>
           <p id="round-review-outcome" class="reaction-outcome">
             <strong>
-              ${msg(`${victory.winnerName} wins the match`)}
+              ${msg(str`${victory.winnerName} wins the match`)}
             </strong>
             ${victory
               ? html`<span>
                   ${victory.completedRounds === 1
                     ? msg('1 completed round')
-                    : msg(`${victory.completedRounds} completed rounds`)}
+                    : msg(str`${victory.completedRounds} completed rounds`)}
                 </span>`
               : nothing}
           </p>
@@ -864,7 +891,7 @@ export class GrandTransitionMatch extends LitElement {
           aria-atomic="true"
         >
           <strong>${msg('Cliffhanger')}</strong>
-          <span>${msg(`Pride restored: ${first.characterName} ${first.pride} Pride · ${second.characterName} ${second.pride} Pride`)}</span>
+          <span>${msg(str`Pride restored: ${first.characterName} ${first.pride} Pride · ${second.characterName} ${second.pride} Pride`)}</span>
         </aside>
       `;
     }
@@ -898,11 +925,11 @@ export class GrandTransitionMatch extends LitElement {
             reaction.scoreComponents.length > 0
               ? html`<ol
                   class="score-breakdown"
-                  aria-label=${msg(`${player.characterName} score breakdown`)}
+                  aria-label=${msg(str`${player.characterName} score breakdown`)}
                   tabindex="0"
                 >
                   ${reaction.scoreComponents.map((component, index) =>
-                    this.renderScoreComponent(component, index),
+                    this.renderScoreComponent(component, index, player.playerId),
                   )}
                 </ol>`
               : html`<p class="score-breakdown-empty">
@@ -911,15 +938,15 @@ export class GrandTransitionMatch extends LitElement {
           }
           ${reaction.selfDamage > 0
             ? html`<small class="self-damage">
-                ${msg(`−${reaction.selfDamage} Pride penalty`)}
+                ${msg(str`−${reaction.selfDamage} Pride penalty`)}
               </small>`
             : nothing}
           ${
             reaction.comboFactor > 1
               ? html`<span class="combo-bonus combo-bonus--active">
-                  ${msg(`Combo ×${reaction.comboFactor}`)}
+                  ${msg(str`Combo ×${reaction.comboFactor}`)}
                   <small
-                    >${msg(`+${reaction.comboBonusDamage} combo damage`)}</small
+                    >${msg(str`+${reaction.comboBonusDamage} combo damage`)}</small
                   >
                 </span>`
               : html`<span class="combo-bonus combo-bonus--none"
@@ -932,7 +959,7 @@ export class GrandTransitionMatch extends LitElement {
                   <span class="weakness-mark" aria-hidden="true"></span>
                   ${msg('Weakness hit')}
                   ×${formatScoreNumber(reaction.weaknessFactor)}
-                  <small
+                  <small lang=${gameTextLanguage() ?? nothing}
                     >${reaction.weaknesses.map(titleCase).join(' · ')}</small
                   >
                 </span>`
@@ -950,6 +977,7 @@ export class GrandTransitionMatch extends LitElement {
   private renderScoreComponent(
     component: MatchScoreComponentView,
     index: number,
+    playerId: string,
   ): TemplateResult {
     const delay = Math.min(index, 4) * 80;
     const kindLabel =
@@ -958,24 +986,30 @@ export class GrandTransitionMatch extends LitElement {
         : component.kind === 'finisher'
           ? msg('Finisher')
           : msg('Comeback');
+    const phraseId = `breakdown-score-phrase-${playerId}-${index}`;
+    const summaryId = `breakdown-score-summary-${playerId}-${index}`;
     return html`
       <li
         class="score-breakdown-step score-breakdown-step--${component.kind}"
         data-score-kind=${component.kind}
         data-score-amount=${component.amount}
-        aria-label=${scoreComponentLabel(component, kindLabel)}
+        aria-labelledby=${`${phraseId} ${summaryId}`}
         style=${`--score-step-delay: ${delay}ms`}
       >
         <span class="score-breakdown-copy">
           ${kindLabel ? html`<small>${kindLabel}</small>` : nothing}
-          <span>${component.phraseText}</span>
+           <span id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span>
           ${component.weaknessTags.length > 0
             ? html`<em>
-                ${msg('Weakness')}: ${component.weaknessTags
+                ${msg('Weakness')}: <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags
                   .map(titleCase)
-                  .join(' · ')}
+                  .join(' · ')}</span>
               </em>`
             : nothing}
+        </span>
+        <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
+          ${component.weaknessTags.length ? html`${msg('Weakness')}:
+            <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(', ')}</span>.` : nothing}
         </span>
         <span class="score-breakdown-math">
           ${component.kind === 'comeback'
@@ -1013,19 +1047,17 @@ export class GrandTransitionMatch extends LitElement {
       card.action !== null && !this.commandPending && !this.thinking &&
       this.pauseMode === 'running' && !this.presentation &&
       !this.snapshot?.roundReview && !this.snapshot?.victory;
+    const ownershipLabel = card.ownership === 'Private' ? msg('Private') : msg('Shared');
     const details = [
-      card.role,
-      card.ownership,
       card.stateLabel,
       card.disabledReason,
       tutorialChoice ? msg('Grammatically valid next choice') : null,
-      card.knownWeaknesses.length > 0
-        ? `${msg('Weakness')}: ${card.knownWeaknesses.map(titleCase).join(', ')}`
-        : null,
     ].filter((detail): detail is string => Boolean(detail));
     const accessibleLabel = empty
-      ? msg(`Phrase slot ${card.slotIndex + 1}: ${card.stateLabel}`)
-      : `${card.text}. ${details.join('. ')}`;
+      ? msg(str`Phrase slot ${card.slotIndex + 1}: ${card.stateLabel}`)
+      : '';
+    const labelId = `phrase-label-${card.ownership}-${card.slotIndex}`;
+    const detailsId = `${labelId}-details`;
 
     return html`
       <li
@@ -1049,7 +1081,7 @@ export class GrandTransitionMatch extends LitElement {
                 data-card-state=${card.state}
                 data-rarity=${card.rarity}
                 data-tutorial=${tutorialChoice ? 'true' : nothing}
-                aria-label=${accessibleLabel}
+                 aria-labelledby=${`${labelId} ${detailsId}`}
                 ?disabled=${
                   card.action === null || this.commandPending || this.thinking
                 }
@@ -1059,8 +1091,16 @@ export class GrandTransitionMatch extends LitElement {
                 @blur=${this.clearPreview}
                 @click=${() => this.activateCard(card)}
               >
-                <strong class="card-phrase">${card.text}</strong>
-              </button>`
+                 <strong id=${labelId} class="card-phrase"
+                   lang=${gameTextLanguage() ?? nothing}>${card.text}</strong>
+               </button>
+               <span id=${detailsId} class="visually-hidden">
+                 <span lang=${gameTextLanguage() ?? nothing}>${card.role}</span>.
+                 ${ownershipLabel}. ${details.join('. ')}.
+                 ${card.knownWeaknesses.length > 0 ? html`
+                   ${msg('Weakness')}: <span lang=${gameTextLanguage() ?? nothing}>${card.knownWeaknesses.map(titleCase).join(', ')}</span>.
+                 ` : nothing}
+               </span>`
         }
       </li>
     `;
@@ -1387,25 +1427,26 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
 }
 
 function titleCase(value: string): string {
-  if (value === 'securitate') return msg('Former secret police');
+  if (value === 'securitate') return 'Former secret police';
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
 function formatScoreNumber(value: number): string {
-  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+  return formatInterfaceNumber(
+    value,
+    Number.isInteger(value)
+      ? undefined
+      : { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+  );
 }
 
-function scoreComponentLabel(
+function scoreComponentSummary(
   component: MatchScoreComponentView,
   kindLabel: string,
 ): string {
-  const weakness =
-    component.weaknessTags.length > 0
-      ? `${msg('Weakness')}: ${component.weaknessTags.map(titleCase).join(', ')}. `
-      : '';
   if (component.kind === 'comeback') {
     return msg(
-      `${kindLabel}: ${component.phraseText}. ${weakness}${formatScoreNumber(component.amount)} bonus damage.`,
+      str`${kindLabel}: ${formatScoreNumber(component.amount)} bonus damage.`,
     );
   }
   const factors = [
@@ -1414,10 +1455,10 @@ function scoreComponentLabel(
     component.comboFactor,
   ]
     .filter((factor) => factor > 1)
-    .map((factor) => ` times ${formatScoreNumber(factor)}`)
+    .map((factor) => msg(str` times ${formatScoreNumber(factor)}`))
     .join('');
   return msg(
-    `${kindLabel ? kindLabel + ': ' : ''}${component.phraseText}. ${weakness}${formatScoreNumber(component.base)}${factors} equals ${formatScoreNumber(component.amount)} damage.`,
+    str`${kindLabel ? kindLabel + ': ' : ''}${formatScoreNumber(component.base)}${factors} equals ${formatScoreNumber(component.amount)} damage.`,
   );
 }
 

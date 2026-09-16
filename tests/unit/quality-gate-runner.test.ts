@@ -2,9 +2,11 @@ import { spawnSync } from 'node:child_process';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { stripVTControlCharacters } from 'node:util';
 import { describe, expect, test } from 'vitest';
 
 const runner = path.resolve('tools/run-quality-gate.mjs');
+const phaseRunner = path.resolve('tools/run-test-phase.mjs');
 const phases = ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e'];
 
 async function runFixture(mode: string, failPhase = '', includeNpm = true) {
@@ -15,6 +17,7 @@ async function runFixture(mode: string, failPhase = '', includeNpm = true) {
     await writeFile(npmCli, `import { appendFileSync } from 'node:fs';
 appendFileSync(process.env.GT_GATE_CAPTURE, JSON.stringify({
   args: process.argv.slice(2), mode: process.env.GRAND_TRANSITION_QUALITY_GATE,
+  runner: process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER,
   marker: process.env.GT_GATE_MARKER,
 }) + '\\n');
 if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
@@ -30,7 +33,7 @@ if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
     });
     const calls = await readFile(capture, 'utf8').then((text) =>
       text.trim().split('\n').map((line) => JSON.parse(line) as {
-        args: string[]; mode: string; marker: string;
+        args: string[]; mode: string; marker: string; runner: string;
       }), () => []);
     return { result, calls };
   } finally {
@@ -39,12 +42,37 @@ if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
 }
 
 describe('portable quality gate runner', () => {
+  test('direct quick phase ignores inherited full-mode variables', () => {
+    const result = spawnSync(process.execPath, [
+      phaseRunner,
+      'test',
+      'quick',
+      'tests/unit/replay-and-simulation.test.ts',
+      '-t',
+      '500-match',
+    ], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        GRAND_TRANSITION_QUALITY_GATE: 'full',
+        GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
+      },
+      encoding: 'utf8',
+      timeout: 30_000,
+    });
+    expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(0);
+    expect(stripVTControlCharacters(result.stdout)).toMatch(/Tests\s+\d+ skipped \(\d+\)/u);
+  }, 35_000);
+
   test.each(['quick', 'full'])('runs %s phases using the npm CLI path with spaces', async (mode) => {
     const { result, calls } = await runFixture(mode);
     expect(result.error).toBeUndefined();
     expect(result.status, result.stderr).toBe(0);
     expect(calls).toEqual(phases.map((phase) => ({
-      args: ['run', phase], mode, marker: 'preserved value with spaces',
+      args: ['run', mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase],
+      mode,
+      marker: 'preserved value with spaces',
+      runner: '1',
     })));
   });
 

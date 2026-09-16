@@ -38,12 +38,70 @@ describe('settings codec', () => {
   });
 
   test('rejects every other settings document version as unsupported', () => {
-    expect(settingsSchemaVersion).toBe(1);
-    for (const schemaVersion of [2, 4, 5, 6]) {
+    expect(settingsSchemaVersion).toBe(2);
+    for (const schemaVersion of [1, 3, 4, 5, 6]) {
       expect(decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion }))).toEqual({
         ok: false, code: 'unsupported-version', path: 'schemaVersion',
       });
     }
+  });
+
+  test('defaults the interface locale to English and round-trips both shipped locales', () => {
+    expect(defaultSettings.interfaceLocale).toBe('en');
+    for (const interfaceLocale of ['en', 'ro-RO'] as const) {
+      const document = settings({ interfaceLocale });
+      expect(decodeSettings(encodeSettings(document))).toEqual({
+        ok: true,
+        value: document,
+      });
+    }
+  });
+
+  test('rejects an unknown interface locale at its field path', () => {
+    for (const interfaceLocale of ['ro', 'en-US', 'ro-RO ', '', 1, null]) {
+      expect(
+        decodeSettings(JSON.stringify({ ...defaultSettings, interfaceLocale })),
+      ).toEqual({
+        ok: false,
+        code: 'invalid-data',
+        path: 'interfaceLocale',
+      });
+    }
+  });
+
+  test('rejects a document stored before the interface locale existed and preserves every other value', () => {
+    const { interfaceLocale: _, ...previousShape } = defaultSettings;
+    expect(
+      decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 1 })),
+    ).toEqual({
+      ok: false,
+      code: 'unsupported-version',
+      path: 'schemaVersion',
+    });
+
+    const stored = settings({
+      interfaceLocale: 'ro-RO',
+      basePointsMultiplier: 5,
+      tutorialMode: true,
+      speechVoiceUri: 'urn:grand-transition:saved-voice',
+      gpuVoices: false,
+    });
+    const storage = createMemoryStorage({
+      [settingsStorageKey]: encodeSettings(stored),
+    });
+    const repository = new SettingsRepository(storage);
+    expect(repository.snapshot().settings).toEqual(stored);
+    expect(repository.snapshot().settings.basePointsMultiplier).toBe(5);
+    expect(repository.snapshot().settings.tutorialMode).toBe(true);
+    expect(repository.snapshot().settings.gpuVoices).toBe(false);
+    expect(repository.snapshot().settings.speechVoiceUri).toBe(
+      'urn:grand-transition:saved-voice',
+    );
+    repository.replace({ ...stored, interfaceLocale: 'en' });
+    expect(new SettingsRepository(storage).snapshot().settings).toEqual({
+      ...stored,
+      interfaceLocale: 'en',
+    });
   });
 
   test.each([false, true])('round-trips tutorial mode %s', (tutorialMode) => {
@@ -109,6 +167,10 @@ describe('settings codec', () => {
     const { gpuVoices: _, ...withoutGpuVoices } = defaultSettings;
     expect(decodeSettings(JSON.stringify(withoutGpuVoices))).toEqual({
       ok: false, code: 'invalid-data', path: 'gpuVoices',
+    });
+    const { interfaceLocale: __, ...withoutInterfaceLocale } = defaultSettings;
+    expect(decodeSettings(JSON.stringify(withoutInterfaceLocale))).toEqual({
+      ok: false, code: 'invalid-data', path: 'interfaceLocale',
     });
   });
 

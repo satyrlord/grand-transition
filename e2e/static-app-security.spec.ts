@@ -262,7 +262,7 @@ test('production bundles only the four approved font families and subsets', asyn
   const variableFontFiles = assetFiles.filter((file) =>
     /^(?:nunito|rubik)-.*\.woff2$/u.test(file),
   );
-  expect(fontFiles).toHaveLength(6);
+  expect(fontFiles).toHaveLength(7);
   expect(variableFontFiles).toHaveLength(4);
   for (const font of ['nunito', 'rubik']) {
     expect(
@@ -280,6 +280,9 @@ test('production bundles only the four approved font families and subsets', asyn
     /arabic|barlow|cyrillic|hebrew|vietnamese|\.woff$/u,
   );
   expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-'))).toBe(
+    true,
+  );
+  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-ext-'))).toBe(
     true,
   );
   expect(

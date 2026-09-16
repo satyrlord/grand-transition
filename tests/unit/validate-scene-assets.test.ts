@@ -133,7 +133,9 @@ afterAll(async () => {
 describe.sequential('scene asset manifest validator', () => {
   test('accepts a complete temporary scene package', async () => {
     await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
-  }, 30_000);
+    // The fixture encodes twelve 4K masters first, so the validator shares the
+    // processor with that work and with the other parallel test files.
+  }, 120_000);
 
   test.each(['modern-debate-studio', 'county-council-ballroom', 'midnight-call-in-studio',
     'palace-press-hall', 'influencer-campaign-livestream'])(

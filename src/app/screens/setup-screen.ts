@@ -1,4 +1,10 @@
-import { msg, str } from '@lit/localize';
+import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
+import { gameTextLanguage } from '../game-text-language';
+import { interfaceLocale } from '../interface-localization';
+import {
+  displayCharacterName,
+  displaySceneName,
+} from '../../localization/romanian-display-names';
 import {
   LitElement,
   html,
@@ -116,6 +122,7 @@ export class GrandTransitionSetup extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.hotseatAvailable = true;
     this.validationAttempted = false;
     this.selectionTarget = 'playerOneCharacterId';
@@ -329,7 +336,7 @@ export class GrandTransitionSetup extends LitElement {
                       error: errors.sceneId,
                       options: sampleContent.scenes.map((scene) => ({
                         value: scene.id,
-                        label: gameMessage(scene.nameKey),
+                        label: sceneName(scene.id),
                       })),
                     })
               }
@@ -388,6 +395,7 @@ export class GrandTransitionSetup extends LitElement {
     const canUnlock = config.locked && !config.fixed && this.bothPlayersLocked();
     const canLock = !config.locked && targetActive;
     const lockName = this.lockName(config.side);
+    const romanianInterface = interfaceLocale() === 'ro-RO';
     return html`
       <section
         class="contestant-stage contestant-stage--${config.side}"
@@ -405,17 +413,6 @@ export class GrandTransitionSetup extends LitElement {
           data-skin-field=${config.skinField}
           data-character-id=${config.character?.id ?? ''}
           data-skin-id=${config.skin?.id ?? ''}
-          aria-label=${
-            config.character
-              ? config.locked
-                ? config.fixed
-                  ? config.playerLabel +
-                    ' opponent fixed by rung: ' +
-                    config.character.name
-                  : config.playerLabel + ' locked in: ' + config.character.name
-                : config.playerLabel + ' character: ' + config.character.name
-              : config.playerLabel + ' character'
-          }
           aria-pressed=${targetActive}
           ?disabled=${!targetActive}
           aria-describedby=${
@@ -424,7 +421,19 @@ export class GrandTransitionSetup extends LitElement {
           @click=${this.chooseSelectionTarget}
           @keydown=${this.handleStageKeyDown}
           @contextmenu=${this.cycleSkinFromContextMenu}
-        ></button>
+        >
+          <span class="visually-hidden">
+            ${config.playerLabel}${romanianInterface ? ',' : nothing}
+            ${config.character
+              ? html`${config.locked
+                  ? config.fixed
+                    ? msg('opponent fixed by rung:')
+                    : msg('locked in:')
+                  : msg('character:')}
+                  <span>${config.character.name}</span>`
+              : msg('character')}
+          </span>
+        </button>
         <span class="contestant-player">${config.playerLabel}</span>
         ${
           config.character && config.skin
@@ -463,7 +472,7 @@ export class GrandTransitionSetup extends LitElement {
                 <span class="contestant-record" aria-live="polite">
                   <strong>${config.character.name}</strong>
                   <span>${msg('Weaknesses')}</span>
-                  <span class="contestant-weaknesses">
+                  <span class="contestant-weaknesses" lang=${gameTextLanguage() ?? nothing}>
                     ${config.character.weaknessTags.map(titleCase).join(' · ')}
                   </span>
                   ${
@@ -490,15 +499,13 @@ export class GrandTransitionSetup extends LitElement {
           ?disabled=${!canLock && !canUnlock}
           @click=${this.togglePlayerLock}
         >
-          ${
-            config.fixed
-              ? msg('Opponent locked in')
-              : canUnlock
-                ? msg(str`Unlock ${lockName}`)
-                : config.locked
-                  ? msg(str`${lockName} locked in`)
-                  : msg(str`Lock in ${lockName}`)
-          }
+          ${config.fixed
+            ? msg('Opponent locked in')
+            : canUnlock
+              ? romanianInterface ? msg('Change selection') : msg(str`Unlock ${lockName}`)
+              : config.locked
+                ? romanianInterface ? msg('Selection confirmed') : msg(str`${lockName} locked in`)
+                : romanianInterface ? msg('Confirm selection') : msg(str`Lock in ${lockName}`)}
         </button>
       </section>
       ${
@@ -593,22 +600,6 @@ export class GrandTransitionSetup extends LitElement {
     ]
       .filter(Boolean)
       .join(' ');
-    const accessibleLabel =
-      character.name +
-      ' — ' +
-      skin.label +
-      '. ' +
-      msg('Weaknesses') +
-      ': ' +
-      weaknessNames +
-      '. ' +
-      selectedFor +
-      ' ' +
-      (skin.id === 'default' ? msg('Select for') : msg('Select portrait for')) +
-      ' ' +
-      playerLabel +
-      '.';
-
     return html`
       <button
         type="button"
@@ -625,7 +616,6 @@ export class GrandTransitionSetup extends LitElement {
             ? characterInspectorId
             : nothing
         }
-        aria-label=${accessibleLabel}
         ?disabled=${!this.canSelectRosterCharacter(character.id)}
         @click=${this.selectRosterCharacter}
         @pointerenter=${this.showTransientPreview}
@@ -679,6 +669,14 @@ export class GrandTransitionSetup extends LitElement {
               : nothing
           }
         </span>
+        <span class="visually-hidden">
+          <span>${character.name}</span> —
+          <span lang=${skin.id === 'default' || skin.id === 'alternate' ? nothing : gameTextLanguage() ?? nothing}>${skin.label}</span>.
+          ${msg('Weaknesses')}: <span lang=${gameTextLanguage() ?? nothing}>${weaknessNames}</span>.
+          ${selectedFor}
+          ${skin.id === 'default' ? msg('Select for') : msg('Select portrait for')}
+          ${playerLabel}.
+        </span>
       </button>
     `;
   }
@@ -700,7 +698,7 @@ export class GrandTransitionSetup extends LitElement {
         </span>
         <strong>${character.name}</strong>
         <span>${msg('Weaknesses')}</span>
-        <span>${character.weaknessTags.map(titleCase).join(' · ')}</span>
+        <span lang=${gameTextLanguage() ?? nothing}>${character.weaknessTags.map(titleCase).join(' · ')}</span>
       </aside>
     `;
   }
@@ -1038,7 +1036,7 @@ export class GrandTransitionSetup extends LitElement {
         ${
           progress.completed
             ? msg('Ladder complete')
-            : msg(`Rung ${progress.rungIndex + 1}/9`)
+            : msg(str`Rung ${progress.rungIndex + 1}/9`)
         }
       </strong>
       <span>
@@ -1196,7 +1194,11 @@ function characterViews(): readonly CharacterView[] {
     return {
       id: character.id,
       species: character.species,
-      name: gameMessage(character.nameKey),
+      name: displayCharacterName(
+        character.id,
+        gameMessage(character.nameKey),
+        interfaceLocale(),
+      ),
       portrait: Object.freeze({
         ...portrait,
         // Cover fitting and the 3.12 active crop enlarge the square source.
@@ -1272,7 +1274,7 @@ function characterFieldForSkinField(field: SkinField): CharacterField {
 }
 
 function titleCase(value: string): string {
-  if (value === 'securitate') return msg('Former secret police');
+  if (value === 'securitate') return 'Former secret police';
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
@@ -1297,8 +1299,10 @@ function currentDifficulty(progress: LadderProgress | null): string | null {
 }
 
 function sceneName(sceneId: string): string {
-  return gameMessage(
-    sampleContent.scenes.find((scene) => scene.id === sceneId)?.nameKey,
+  return displaySceneName(
+    sceneId,
+    gameMessage(sampleContent.scenes.find((scene) => scene.id === sceneId)?.nameKey),
+    interfaceLocale(),
   );
 }
 

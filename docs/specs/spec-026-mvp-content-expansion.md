@@ -154,10 +154,14 @@ Milestone 027 owns final balance and editorial evidence.
   AC-026-03 and AC-026-05.
 - Asset validation verifies the shared alpha, provenance, and color-policy
   checks for interim portraits and scene assets.
-- `tests/unit/catalog-foundation.test.ts` verifies AC-026-04 for all 2,166
+- `tests/unit/catalog-foundation.test.ts` and its four sibling shards share
+  `tests/unit/helpers/catalog-foundation-workload.ts` and verify AC-026-04 for
+  all 2,166
   ordered character-pair and scene setups, including mirrors. The workload uses
   fixed seeds and Local Radio Caller presentation timing. It checks completion,
-  action legality, private-hand secrecy, and timer bounds.
+  action legality, private-hand secrecy, and timer bounds. The shards split the
+  per-character cases across sibling files so one file cannot bound the unit
+  phase; the seeds and assertions are unchanged.
 - `e2e/catalog-foundation.spec.ts` selects every character for both player
   positions and every scene at all four supported matrix viewports. It verifies
   selected names, decoded portraits, geometry, and available actions for

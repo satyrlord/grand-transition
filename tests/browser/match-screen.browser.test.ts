@@ -36,8 +36,58 @@ test('explains secret-police weakness in accessible phrase labels', async () => 
   ] };
   await match.updateComplete;
   const card = match.querySelector(`[data-card-id="${first.reference!.cardId}"]`);
-  expect(card?.getAttribute('aria-label')).toContain('Former secret police');
-  expect(card?.getAttribute('aria-label')).not.toContain('securitate');
+  expect(labelledText(card)).toContain('Former secret police');
+  expect(labelledText(card)).not.toContain('securitate');
+});
+
+test('keeps both players score labels bound to their own English phrases', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const [first, second] = snapshot.players;
+  const component = {
+    narrationIndex: 0,
+    kind: 'clause' as const,
+    phraseText: 'First English phrase',
+    base: 5,
+    restrictionFactor: 1,
+    weaknessFactor: 1,
+    comboFactor: 1,
+    amount: 5,
+    weaknessTags: [],
+  };
+  match.snapshot = {
+    ...snapshot,
+    roundReview: true,
+    victory: {
+      winnerId: first.playerId,
+      winnerName: first.characterName,
+      completedRounds: 1,
+      ladder: false,
+    },
+    reaction: {
+      ...snapshot.reaction,
+      round: 1,
+      players: {
+        ...snapshot.reaction.players,
+        [first.playerId]: {
+          ...snapshot.reaction.players[first.playerId]!,
+          scoreComponents: [component],
+        },
+        [second.playerId]: {
+          ...snapshot.reaction.players[second.playerId]!,
+          scoreComponents: [{ ...component, phraseText: 'Second English phrase' }],
+        },
+      },
+    },
+  };
+  await match.updateComplete;
+  const items = [...match.querySelectorAll('.score-breakdown-step')];
+  expect(items).toHaveLength(2);
+  const ids = [...match.querySelectorAll('[id^="breakdown-score-"]')].map((element) => element.id);
+  expect(new Set(ids).size).toBe(ids.length);
+  expect(labelledText(items[0]!)).toContain('First English phrase');
+  expect(labelledText(items[1]!)).toContain('Second English phrase');
+  expect(labelledText(items[1]!)).not.toContain('First English phrase');
 });
 
 test.each([
@@ -155,7 +205,7 @@ test('tutorial highlights grammar-accepted choices only while human drafting is 
   match.phraseColorCoding = false;
   await match.updateComplete;
   expect(highlighted()).toEqual(expected);
-  expect(match.querySelector('[data-tutorial]')?.getAttribute('aria-label'))
+  expect(labelledText(match.querySelector('[data-tutorial]')))
     .toContain('Grammatically valid next choice');
   for (const pauseMode of ['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const) {
     match.pauseMode = pauseMode;
@@ -448,7 +498,10 @@ test('renders an immutable complete match snapshot and previews without changing
     ),
   ).toBe(true);
   expect(
-    visiblePhrases.some((button) => button.ariaLabel?.includes('Shared')),
+    visiblePhrases.some((button) => {
+      const descriptionId = button.getAttribute('aria-labelledby')?.split(' ')[1];
+      return descriptionId && document.getElementById(descriptionId)?.textContent?.includes('Shared');
+    }),
   ).toBe(true);
   expect(
     match.querySelectorAll(
@@ -954,7 +1007,7 @@ test('always exposes the complete waiting sentence for every interaction', async
   expect(bubble.tagName).toBe('BUTTON');
   expect(bubble.tabIndex).toBe(0);
   expect(bubble.getAttribute('aria-expanded')).toBe('false');
-  expect(bubble.ariaLabel).toContain(sentence);
+  expect(labelledText(bubble)).toContain(sentence);
   expect(
     bubble.querySelector('.waiting-sentence-ellipsis')?.textContent?.trim(),
   ).toBe('…');
@@ -1486,6 +1539,11 @@ test('confirms a paused exit before it discards the match', async () => {
     document.querySelector('grand-transition-title h1')?.textContent,
   ).toMatch(/Grand\s+Transition/u);
 });
+
+function labelledText(element: Element | null): string {
+  const ids = element?.getAttribute('aria-labelledby')?.split(/\s+/u) ?? [];
+  return ids.map((id) => document.getElementById(id)?.textContent?.trim() ?? '').join(' ');
+}
 
 async function startMatch(
   sceneId = 'transition-era-television-studio',

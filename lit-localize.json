@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/lit/lit/main/packages/localize-tools/config.schema.json",
+  "sourceLocale": "en",
+  "targetLocales": [
+    "ro-RO"
+  ],
+  "tsConfig": "tsconfig.json",
+  "output": {
+    "mode": "runtime",
+    "language": "ts",
+    "outputDir": "src/localization/generated"
+  },
+  "interchange": {
+    "format": "xliff",
+    "xliffDir": "xliff"
+  }
+}

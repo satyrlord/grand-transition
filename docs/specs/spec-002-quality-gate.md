@@ -43,6 +43,16 @@ calibration and ladder flow. `ci` aliases `quality:full`. Continuous integration
 uses the full gate. An agent uses `quality:quick` for routine validation and
 must not invoke `quality:full` or `ci` unless the user explicitly requests the
 full quality-gate skill. A quick pass is not full-gate or release evidence.
+
+Selection is opt-in and hard: the calibration and the nine-rung ladder flow run
+only when the full gate is explicitly requested. `quality:quick` and every
+direct test invocation, including `npm run test`, `npm run test:browser`,
+`npm run test:coverage`, and `npm run test:e2e`, select the quick behavior, so
+the slowest set cannot run by accident or by omitting the mode variable.
+The direct test scripts set quick mode in their phase runner even when full-mode
+environment variables are inherited. The full gate calls the internal
+`test:full`, `test:browser:full`, `test:coverage:full`, and `test:e2e:full`
+scripts after validation.
 End-to-end tests build the production output before preview.
 
 Pure tests use Vitest in Node and `*.test.ts`. Components use Vitest Browser

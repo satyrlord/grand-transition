@@ -3,6 +3,19 @@
   font-style: normal;
   font-display: swap;
   font-weight: 400;
+  src: url('../assets/fonts/poiret-one-latin-ext-ro-400-normal.woff2')
+    format('woff2');
+  unicode-range:
+    U+0100-02ba, U+02bd-02c5, U+02c7-02cc, U+02ce-02d7, U+02dd-02ff, U+0304,
+    U+0308, U+0329, U+1d00-1dbf, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab,
+    U+20ad-20c0, U+2113, U+2c60-2c7f, U+a720-a7ff;
+}
+
+@font-face {
+  font-family: 'Poiret One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
   src: url('@fontsource/poiret-one/files/poiret-one-latin-400-normal.woff2')
     format('woff2');
   unicode-range:

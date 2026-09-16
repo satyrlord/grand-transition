@@ -1,4 +1,11 @@
-import { msg } from '@lit/localize';
+import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
+import { formatInterfaceNumber } from '../interface-format';
+import { gameTextLanguage } from '../game-text-language';
+import { interfaceLocale } from '../interface-localization';
+import {
+  displayCharacterName,
+  displaySceneName,
+} from '../../localization/romanian-display-names';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
 import { sampleContent } from '../../game-content';
 import { normalizedJson } from '../../persistence/codecs/replay-codec';
@@ -27,6 +34,7 @@ export class GrandTransitionMatchHistory extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.entries = [];
     this.persistenceFailure = null;
     this.expandedEntryIds = new Set();
@@ -102,12 +110,12 @@ export class GrandTransitionMatchHistory extends LitElement {
       <article class="match-history-entry" data-history-id=${entry.id}>
         <header>
           <div>
-            <h3>${characterName(winner.characterId)} ${msg('won')}</h3>
+            <h3><span>${characterName(winner.characterId)}</span> ${msg('won')}</h3>
             <p>
-              ${characterName(winner.characterId)}
+              <span>${characterName(winner.characterId)}</span>
               <span aria-hidden="true">vs.</span>
               <span class="visually-hidden">${msg('versus')}</span>
-              ${characterName(opponent.characterId)}
+              <span>${characterName(opponent.characterId)}</span>
             </p>
           </div>
           <time datetime=${entry.completedAt}>${formatTime(entry.completedAt)}</time>
@@ -115,17 +123,17 @@ export class GrandTransitionMatchHistory extends LitElement {
         <dl class="match-history-facts">
           <div>
             <dt>${msg('Rounds')}</dt>
-            <dd>${log.rounds.length}</dd>
+            <dd>${formatInterfaceNumber(log.rounds.length)}</dd>
           </div>
           <div>
             <dt>${msg('Final Pride')}</dt>
             <dd>
-              ${lastRound.prideAfter[winner.playerId]}–${lastRound.prideAfter[opponent.playerId]}
+              ${formatInterfaceNumber(lastRound.prideAfter[winner.playerId])}–${formatInterfaceNumber(lastRound.prideAfter[opponent.playerId])}
             </dd>
           </div>
           <div>
             <dt>${msg('Scene')}</dt>
-            <dd>${sceneName(log.setup.sceneId)}</dd>
+            <dd><span>${sceneName(log.setup.sceneId)}</span></dd>
           </div>
           <div>
             <dt>${msg('Mode')}</dt>
@@ -133,7 +141,7 @@ export class GrandTransitionMatchHistory extends LitElement {
           </div>
           <div>
             <dt>${msg('Seed')}</dt>
-            <dd>${log.seed}</dd>
+            <dd>${formatInterfaceNumber(log.seed)}</dd>
           </div>
         </dl>
         ${this.renderPhraseHistory(log)}
@@ -161,14 +169,16 @@ export class GrandTransitionMatchHistory extends LitElement {
           (round) => html`
             <section class="match-history-phrase-round">
               <header>
-                <h5>${msg(`Round ${round.round}`)}</h5>
+                <h5>${msg(str`Round ${round.round}`)}</h5>
                 <p>
                   ${round.suddenDeath ? msg('Cliffhanger') : msg('Debate')}
                   <span aria-hidden="true"> · </span>
                   ${log.setup.players
                     .map(
                       (player) =>
-                        `${characterName(player.characterId)} ${round.prideAfter[player.playerId]} Pride`,
+                        msg(
+                          str`${characterName(player.characterId)} ${round.prideAfter[player.playerId]} Pride`,
+                        ),
                     )
                     .join(' · ')}
                 </p>
@@ -183,7 +193,8 @@ export class GrandTransitionMatchHistory extends LitElement {
                   return html`
                     <article data-history-player=${player.playerId}>
                       <h6>${characterName(player.characterId)}</h6>
-                      <p class="match-history-sentence">
+                      <p class="match-history-sentence"
+                        lang=${sentence.text ? gameTextLanguage() ?? nothing : nothing}>
                         ${sentence.text || msg('No completed public sentence.')}
                       </p>
                       ${sentence.phrases.length > 0
@@ -196,7 +207,7 @@ export class GrandTransitionMatchHistory extends LitElement {
                                     data-phrase-id=${phrase.phraseId}
                                     data-phrase-source=${phrase.source}
                                   >
-                                    <span>${phrase.text}</span>
+                                    <span lang=${gameTextLanguage() ?? nothing}>${phrase.text}</span>
                                     ${phrase.source === 'carried'
                                       ? html`<small>${msg('carried')}</small>`
                                       : nothing}
@@ -267,12 +278,20 @@ function characterName(characterId: string): string {
   const character = sampleContent.characters.find(
     (candidate) => candidate.id === characterId,
   );
-  return gameMessage(character?.nameKey) || titleCase(characterId);
+  return displayCharacterName(
+    characterId,
+    gameMessage(character?.nameKey) || titleCase(characterId),
+    interfaceLocale(),
+  );
 }
 
 function sceneName(sceneId: string): string {
   const scene = sampleContent.scenes.find((candidate) => candidate.id === sceneId);
-  return gameMessage(scene?.nameKey) || titleCase(sceneId);
+  return displaySceneName(
+    sceneId,
+    gameMessage(scene?.nameKey) || titleCase(sceneId),
+    interfaceLocale(),
+  );
 }
 
 function gameMessage(key: string | undefined): string {
@@ -285,7 +304,7 @@ function titleCase(value: string): string {
 }
 
 function formatTime(value: string): string {
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat(interfaceLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value));
