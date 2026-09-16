@@ -19,7 +19,8 @@ import type {
   MatchResolutionPlayer,
   MatchState,
 } from '../engine/match-lifecycle';
-import { characterSkins, sampleContent } from '../game-content';
+import { characterSkins, gameLocaleBundle, sampleContent } from '../game-content';
+import { defaultGameLocale } from '../localization/game-locale';
 import { interfaceLocale } from './interface-localization';
 import {
   displayCharacterName,
@@ -707,7 +708,10 @@ function legalPreview(
       ...player.construction.steps,
       {
         kind: 'phrase',
-        phrase: prepareEnglishGrammarPhrase(phrase, sampleContent.locales[0]!),
+        phrase: prepareEnglishGrammarPhrase(
+          phrase,
+          gameLocaleBundle(defaultGameLocale),
+        ),
       },
     ],
     subjectNumber: player.subjectNumber,
@@ -800,5 +804,7 @@ function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
 }
 
 function gameMessage(key: string | undefined): string {
-  return key ? (sampleContent.locales[0]?.messages[key] ?? key) : '';
+  return key
+    ? (gameLocaleBundle(defaultGameLocale).messages[key] ?? key)
+    : '';
 }

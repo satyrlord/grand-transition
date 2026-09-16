@@ -7,7 +7,8 @@ import {
   displaySceneName,
 } from '../../localization/romanian-display-names';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
-import { sampleContent } from '../../game-content';
+import { gameLocaleBundle, sampleContent } from '../../game-content';
+import { defaultGameLocale } from '../../localization/game-locale';
 import { normalizedJson } from '../../persistence/codecs/replay-codec';
 import type {
   MatchHistoryEntry,
@@ -296,7 +297,7 @@ function sceneName(sceneId: string): string {
 
 function gameMessage(key: string | undefined): string {
   if (!key) return '';
-  return sampleContent.locales[0]?.messages[key] ?? key;
+  return gameLocaleBundle(defaultGameLocale).messages[key] ?? key;
 }
 
 function titleCase(value: string): string {

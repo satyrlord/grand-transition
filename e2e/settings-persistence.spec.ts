@@ -33,7 +33,7 @@ test('fresh defaults prepare voices before interaction without starting playback
 test('keeps every stored preference and rewrites the document on a change', async ({ page }) => {
   await page.goto('/grand-transition/');
   await page.evaluate((key) => localStorage.setItem(key, JSON.stringify({
-    schemaVersion:2,interfaceLocale:'en',masterVolume:1,musicVolume:0.1,effectsVolume:0.8,speechVolume:0.8,
+    schemaVersion:3,interfaceLocale:'en',gameLocale:'en',masterVolume:1,musicVolume:0.1,effectsVolume:0.8,speechVolume:0.8,
     speechEnabled:false,gpuVoices:false,speechVoiceUri:'retired:voice',speechRate:1.2,
     turnTimerSeconds:30,autoComplete:true,tutorialMode:false,basePointsMultiplier:5,
   })), settingsKey);
@@ -42,7 +42,7 @@ test('keeps every stored preference and rewrites the document on a change', asyn
   await expect(page.locator('output[for="speechRate"]')).toHaveText('1.20×');
   await page.getByLabel('Music volume').fill('0.2');
   await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!),settingsKey)).toMatchObject({
-    schemaVersion:2,interfaceLocale:'en',basePointsMultiplier:5,tutorialMode:false,speechRate:1.2,musicVolume:0.2,speechVoiceUri:'retired:voice',
+    schemaVersion:3,interfaceLocale:'en',gameLocale:'en',basePointsMultiplier:5,tutorialMode:false,speechRate:1.2,musicVolume:0.2,speechVoiceUri:'retired:voice',
   });
   await page.reload(); await page.getByRole('button',{name:'Settings'}).click();
   await expect(page.locator('#speechRate')).toHaveValue('1.2');
@@ -87,8 +87,9 @@ test('settings persist in the production build and fit every supported viewport'
 
   const stored = await page.evaluate((key) => localStorage.getItem(key), settingsKey);
   expect(JSON.parse(stored!)).toEqual({
-    schemaVersion: 2,
+    schemaVersion: 3,
     interfaceLocale: 'en',
+    gameLocale: 'en',
     tutorialMode: false,
     basePointsMultiplier: 5,
     gpuVoices: false,
@@ -206,7 +207,7 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   await expect(gpu).toBeDisabled();
   expect(gpuRequests).toEqual([]);
   const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), settingsKey);
-  expect(stored).toMatchObject({ schemaVersion: 2, interfaceLocale: 'en', tutorialMode: false, gpuVoices: false, speechEnabled: false });
+  expect(stored).toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'en', tutorialMode: false, gpuVoices: false, speechEnabled: false });
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });

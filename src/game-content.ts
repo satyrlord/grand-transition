@@ -7,7 +7,14 @@ import {
   type PhraseCardCatalog,
 } from './content/phrase-card-catalog';
 import { createSampleContent } from './content/sample-content';
+import {
+  indexGameLocaleBundles,
+  selectGameLocaleBundle,
+  type GameLocaleBundles,
+} from './localization/game-locale-bundles';
 import { createEnglishGameLocale } from './localization/en-game-locale';
+import type { GameLocale } from './localization/game-locale';
+import type { GameLocaleBundle } from './localization/game-locale-schema';
 import {
   characterAssetManifest,
   characterImageSizes,
@@ -40,10 +47,20 @@ export const englishGameLocale = createEnglishGameLocale(
   phraseCardCatalog.englishMessages,
 );
 
-export const sampleContent = createSampleContent(
-  phraseCardCatalog,
+export const sampleContent = createSampleContent(phraseCardCatalog, [
   englishGameLocale,
+]);
+
+// Every shipped game-locale bundle, indexed by the locale it renders.
+export const gameLocaleBundles: GameLocaleBundles = indexGameLocaleBundles(
+  sampleContent.locales,
 );
+
+// The bundle that renders a match's captured game locale. A locale without a
+// bundle fails here rather than falling back to another language.
+export function gameLocaleBundle(locale: GameLocale): GameLocaleBundle {
+  return selectGameLocaleBundle(gameLocaleBundles, locale);
+}
 
 const portraitUrlByStem = new Map(
   Object.entries(portraitSources),

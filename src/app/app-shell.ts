@@ -26,9 +26,10 @@ import './screens/title-screen';
 import { basicScoringBalance } from '../content/basic-scoring-balance';
 import {
   characterSkins,
-  englishGameLocale,
+  gameLocaleBundle,
   sampleContent,
 } from '../game-content';
+import { defaultGameLocale } from '../localization/game-locale';
 import {
   createMatchSetupState,
   type MatchCommand,
@@ -100,7 +101,7 @@ function createMatchId(seed: number): string {
 const matchContext: MatchEngineContext = {
   phrases: sampleContent.phrases,
   characters: sampleContent.characters,
-  locale: englishGameLocale,
+  locale: gameLocaleBundle(defaultGameLocale),
   balance: basicScoringBalance,
 };
 

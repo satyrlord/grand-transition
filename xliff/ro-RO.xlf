@@ -1110,6 +1110,10 @@
   <source>Confirm selection</source>
   <target>Confirmă alegerea</target>
 </trans-unit>
+<trans-unit id="s22e221b32511567b">
+  <source>Game language</source>
+  <target>Limba jocului</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

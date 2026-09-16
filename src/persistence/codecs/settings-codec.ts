@@ -1,19 +1,21 @@
 import { z } from 'zod';
 import { basePointsMultiplierSchema, type BasePointsMultiplier } from '../../content/basic-scoring-balance';
 import { interfaceLocales, type InterfaceLocale } from '../../localization/interface-locale';
+import { gameLocales, type GameLocale } from '../../localization/game-locale';
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
 
 // One settings document format exists at a time. A field addition changes that
 // format and requires a new version, but no earlier document is migrated.
-export const settingsSchemaVersion = 2;
+export const settingsSchemaVersion = 3;
 
 export type TurnTimerSeconds = 15 | 30 | null;
 export type { BasePointsMultiplier } from '../../content/basic-scoring-balance';
 
 export type SettingsDocument = Readonly<{
-  schemaVersion: 2;
+  schemaVersion: 3;
   interfaceLocale: InterfaceLocale;
+  gameLocale: GameLocale;
   masterVolume: number;
   musicVolume: number;
   effectsVolume: number;
@@ -48,6 +50,7 @@ export class SettingsValidationError extends Error {
 const settingsFields = [
   'schemaVersion',
   'interfaceLocale',
+  'gameLocale',
   'masterVolume',
   'musicVolume',
   'effectsVolume',
@@ -74,6 +77,7 @@ const settingsSchema = z
   .object({
     schemaVersion: z.literal(settingsSchemaVersion),
     interfaceLocale: z.enum(interfaceLocales),
+    gameLocale: z.enum(gameLocales),
     masterVolume: volumeSchema,
     musicVolume: volumeSchema,
     effectsVolume: volumeSchema,
@@ -96,6 +100,7 @@ const settingsSchema = z
 export const defaultSettings: SettingsDocument = deepFreeze({
   schemaVersion: settingsSchemaVersion,
   interfaceLocale: 'en',
+  gameLocale: 'en',
   masterVolume: 1,
   musicVolume: 0.1,
   effectsVolume: 0.8,
@@ -123,6 +128,7 @@ export function encodeSettings(settings: SettingsDocument): string {
   return normalizedJson({
     schemaVersion: value.schemaVersion,
     interfaceLocale: value.interfaceLocale,
+    gameLocale: value.gameLocale,
     masterVolume: value.masterVolume,
     musicVolume: value.musicVolume,
     effectsVolume: value.effectsVolume,

@@ -632,10 +632,9 @@ describe('content schemas', () => {
         ...parsed.englishMessages,
       },
     };
-    const completeCatalog = createSampleContent(
-      expandedCatalog,
+    const completeCatalog = createSampleContent(expandedCatalog, [
       createEnglishGameLocale(expandedCatalog.englishMessages),
-    );
+    ]);
     expect(completeCatalog.characters).toHaveLength(
       sampleContent.characters.length + 1,
     );
