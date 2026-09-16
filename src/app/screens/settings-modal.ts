@@ -1,11 +1,16 @@
-import { msg } from '@lit/localize';
+import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
+import { formatInterfaceNumber } from '../interface-format';
+import {
+  interfaceLocaleAutonyms,
+  interfaceLocales,
+  isInterfaceLocale,
+} from '../../localization/interface-locale';
 import { LitElement, html, nothing } from 'lit';
 import {
   defaultSettings,
   type SettingsDocument,
   type TurnTimerSeconds,
 } from '../../persistence/codecs/settings-codec';
-import { settingsPersistenceNotice } from '../../persistence/settings';
 import type { AudioStatus } from '../../audio/audio-port';
 import type { NeuralSpeechStatus } from '../../audio/neural-speech';
 
@@ -46,6 +51,7 @@ export class GrandTransitionSettings extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.settings = defaultSettings;
     this.showPersistenceNotice = false;
     this.audioStatus = 'idle';
@@ -88,9 +94,28 @@ export class GrandTransitionSettings extends LitElement {
               ${msg('Close')}
             </button>
           </header>
+          <div class="settings-language">
+            <label class="settings-control">
+              <span>${msg('Interface language')}</span>
+              <select
+                class="settings-select"
+                name="interfaceLocale"
+                .value=${this.settings.interfaceLocale}
+                @change=${this.changeLocale}
+              >
+                ${interfaceLocales.map((locale) => html`<option value=${locale}>
+                  ${interfaceLocaleAutonyms[locale]}
+                </option>`)}
+              </select>
+            </label>
+          </div>
           ${this.showPersistenceNotice
             ? html`<div class="settings-persistence-notice" role="status">
-                <p>${msg(settingsPersistenceNotice)}</p>
+                <p>
+                  ${msg(
+                    'Settings storage is unavailable. Changes will not persist after this page closes.',
+                  )}
+                </p>
                 <button type="button" @click=${this.dismissNotice}>
                   ${msg('Dismiss')}
                 </button>
@@ -212,7 +237,7 @@ export class GrandTransitionSettings extends LitElement {
             max="1"
             step="0.05"
             .value=${String(value)}
-            aria-valuetext=${`${Math.round(value * 100)} percent`}
+            aria-valuetext=${msg(str`${Math.round(value * 100)} percent`)}
             @change=${this.changeNumber}
           />
           <output for=${field}>${Math.round(value * 100)}%</output>
@@ -234,10 +259,18 @@ export class GrandTransitionSettings extends LitElement {
             max="2"
             step="0.1"
             .value=${String(this.settings.speechRate)}
-            aria-valuetext=${`${this.settings.speechRate.toFixed(2)} times`}
+            aria-valuetext=${msg(
+              str`${formatInterfaceNumber(this.settings.speechRate, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })} times`,
+            )}
             @change=${this.changeNumber}
           />
-          <output for="speechRate">${this.settings.speechRate.toFixed(2)}×</output>
+          <output for="speechRate">${formatInterfaceNumber(this.settings.speechRate, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}×</output>
         </span>
       </label>
     `;
@@ -256,6 +289,12 @@ export class GrandTransitionSettings extends LitElement {
   private readonly changeNumber = (event: Event): void => {
     const control = event.currentTarget as HTMLInputElement;
     this.changeSetting(control.name as NumericSetting, Number(control.value));
+  };
+
+  private readonly changeLocale = (event: Event): void => {
+    const control = event.currentTarget as HTMLSelectElement;
+    if (!isInterfaceLocale(control.value)) return;
+    this.changeSetting('interfaceLocale', control.value);
   };
 
   private readonly changeBoolean = (event: Event): void => {
@@ -311,7 +350,7 @@ export class GrandTransitionSettings extends LitElement {
     }
     if (event.key !== 'Tab') return;
     const controls = [...this.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled]), a[href]',
+      'button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href]',
     )];
     if (controls.length === 0) return;
     const first = controls[0]!;

@@ -6,6 +6,7 @@ import { decidePalaceOperator } from '../src/ai/advanced-ai';
 import { basicScoringBalance } from '../src/content/basic-scoring-balance';
 import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle';
 import { loadGameContent } from '../tools/load-game-content';
+import { fullQualityGateRequested } from '../tools/quality-gate-mode';
 
 // The nine-rung persistence case plays the fixed-seed ladder until it wins nine
 // rungs, which needs up to twenty-one full matches (about 4.5 minutes alone).
@@ -114,8 +115,8 @@ for (const viewport of [
           (choice) => choice.querySelector('.roster-choice-name') === null,
         ),
         accessibleNamesComplete: choices.every((choice) =>
-          (choice.getAttribute('aria-label') ?? '').includes(
-            '. Weaknesses: ',
+          /\. Weaknesses:/u.test(
+            choice.querySelector('.visually-hidden')?.textContent?.replaceAll(/\s+/gu, ' ') ?? '',
           ),
         ),
         ladderTextSize: Number.parseFloat(
@@ -126,6 +127,7 @@ for (const viewport of [
     });
     expect(rosterReadability.visibleLabelsAbsent).toBe(true);
     expect(rosterReadability.accessibleNamesComplete).toBe(true);
+    await expect(page.locator('.roster-choice').first()).toHaveAccessibleName(/Weaknesses:/u);
     await page
       .getByRole('button', {
         name: /Apartment-Block Geopolitician.*Select for player one/u,
@@ -144,13 +146,10 @@ for (const viewport of [
   });
 }
 
-const fullLadderTest = process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick'
-  ? test.skip
-  : test;
-
-fullLadderTest('the production ladder completes nine persisted rungs and resumes exactly', async ({
+test('the production ladder completes nine persisted rungs and resumes exactly', async ({
   page,
 }) => {
+  test.skip(!fullQualityGateRequested(), 'Requires the full quality gate.');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.clock.install();
   await useFixedBrowserMatchSeed(page, 5);

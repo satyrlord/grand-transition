@@ -59,7 +59,6 @@ const pureRootPolicies = [
 function directoryDependency(...segments) {
   return { kind: 'directory', path: path.join(...segments) };
 }
-
 function moduleDependency(...segments) {
   return { kind: 'module', path: path.join(...segments) };
 }
@@ -401,6 +400,20 @@ function pathIsInside(candidatePath, directoryPath) {
   );
 }
 
+// `${policy.root}/generated/` holds lit-localize output: Lit message templates
+// for the interface catalog, which are generated rather than hand-written and
+// are validated by `npm run localization:validate` instead of by the
+// pure-module policy.
+const generatedLocalizationDirectories = [
+  path.join('src', 'localization', 'generated'),
+];
+
+function isGeneratedLocalizationFile(filePath, rootDirectory) {
+  return generatedLocalizationDirectories.some((directory) =>
+    pathIsInside(filePath, path.resolve(rootDirectory, directory)),
+  );
+}
+
 export async function checkPureBoundaries(rootDirectory = process.cwd()) {
   const failures = [];
   let checkedFiles = 0;
@@ -411,6 +424,7 @@ export async function checkPureBoundaries(rootDirectory = process.cwd()) {
       continue;
     }
     for await (const filePath of walkSourceFiles(absoluteRoot)) {
+      if (isGeneratedLocalizationFile(filePath, rootDirectory)) continue;
       checkedFiles += 1;
       const sourceText = await readFile(filePath, 'utf8');
       const relativePath = path.relative(rootDirectory, filePath);

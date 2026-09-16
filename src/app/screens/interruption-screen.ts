@@ -1,4 +1,4 @@
-import { msg } from '@lit/localize';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 
 const elementName = 'grand-transition-interruption';
@@ -40,6 +40,7 @@ export class GrandTransitionInterruption extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.kind = 'unsupported-viewport';
     this.turnTimerSeconds = 30;
     this.autoComplete = true;

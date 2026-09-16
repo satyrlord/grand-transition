@@ -1,5 +1,6 @@
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
+import { fullQualityGateRequested } from '../../tools/quality-gate-mode';
 import {
   basicScoringBalance,
   scoringBalanceForMultiplier,
@@ -461,9 +462,7 @@ describe('headless simulation and generated invariants', () => {
     expect(second.completedMatches).toBe(2);
   });
 
-  const calibrationTest = process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick'
-    ? test.skip
-    : test;
+  const calibrationTest = fullQualityGateRequested() ? test : test.skip;
   calibrationTest(
     'keeps the current-catalog 500-match calibration between three and eleven rounds',
     () => {

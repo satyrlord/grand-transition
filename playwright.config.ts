@@ -9,8 +9,13 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
+  // Measured on a 16-logical-processor machine: the suite has no long pole (its
+  // slowest test is under a minute) but saturates near three concurrent browser
+  // workers. Four workers gained only 13 percent and introduced a brittle
+  // geometry failure; six workers ran slower than two and failed five tests.
+  // Keep the local count at two and continuous integration at one.
   workers: process.env.CI ? 1 : 2,
-  reporter: 'list',
+  reporter: 'line',
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },
     { name: 'firefox-audio', testMatch: '**/audio-speech.spec.ts', use: { browserName: 'firefox' } },

@@ -481,7 +481,7 @@
     --settings-space-section: 1.5rem;
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
     gap: var(--settings-space-section);
     width: min(72rem, calc(100vw - 2rem));
     max-height: calc(100svh - 2rem);
@@ -606,6 +606,30 @@
     accent-color: var(--broadcast-oxblood-bright);
   }
 
+  .settings-select {
+    min-height: 2.75rem;
+    padding: 0 0.6rem;
+    border: 1px solid var(--broadcast-brass);
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: 700 0.8125rem/1 var(--font-interface);
+    cursor: pointer;
+  }
+
+  .settings-language {
+    display: grid;
+    max-width: 22rem;
+  }
+
+  .settings-language .settings-control {
+    gap: var(--settings-space-tight);
+  }
+
+  .settings-select:hover {
+    border-color: var(--broadcast-paper-light);
+    background: var(--broadcast-panel);
+  }
+
   .settings-range-line {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 3.2rem;
@@ -662,6 +686,7 @@
   .settings-close:focus-visible,
   .settings-options button:focus-visible,
   .settings-control input:focus-visible,
+  .settings-control select:focus-visible,
   .settings-toggle input:focus-visible,
   .settings-dialog a:focus-visible,
   .settings-persistence-notice button:focus-visible {
@@ -670,7 +695,7 @@
   }
 
   .settings-dialog:has(.settings-persistence-notice) {
-    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
   }
 
   .settings-options--multiplier {

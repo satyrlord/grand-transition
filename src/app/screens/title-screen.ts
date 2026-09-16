@@ -1,6 +1,6 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
-import { msg } from '@lit/localize';
-import { englishGameLocale } from '../../game-content';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import { formatInterfaceNumber } from '../interface-format';
 import { styleMap } from 'lit/directives/style-map.js';
 import { brandImageSet, resolveBrandAsset } from '../brand-assets';
 import type {
@@ -8,7 +8,6 @@ import type {
   MatchHistoryFailureCode,
 } from '../../persistence/match-history';
 import { defaultSettings, type SettingsDocument } from '../../persistence/codecs/settings-codec';
-import { settingsPersistenceNotice } from '../../persistence/settings';
 import type { AudioStatus } from '../../audio/audio-port';
 import type { NeuralSpeechStatus } from '../../audio/neural-speech';
 import './match-history-modal';
@@ -32,7 +31,6 @@ export type ShowSettingsEvent = CustomEvent<Readonly<{ type: 'show-settings' }>>
 export class GrandTransitionTitle extends LitElement {
   static properties = {
     hotseatAvailable: { type: Boolean },
-    status: { type: String },
     historyEntries: { attribute: false },
     historyOpen: { type: Boolean },
     historyPersistenceFailure: { attribute: false },
@@ -47,7 +45,6 @@ export class GrandTransitionTitle extends LitElement {
     gpuProgress: { attribute: false },
   };
 
-  declare status: string;
   declare hotseatAvailable: boolean;
   declare historyEntries: readonly MatchHistoryEntry[];
   declare historyOpen: boolean;
@@ -64,8 +61,8 @@ export class GrandTransitionTitle extends LitElement {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this.hotseatAvailable = true;
-    this.status = msg('Live now, on NTV Channel 3!');
     this.historyEntries = [];
     this.historyOpen = false;
     this.historyPersistenceFailure = null;
@@ -117,7 +114,7 @@ export class GrandTransitionTitle extends LitElement {
         </header>
 
         <div class="title-transmission">
-          <p class="status">${this.status}</p>
+          <p class="status">${msg('Live now, on NTV Channel 3!')}</p>
           <nav class="title-mode-actions" aria-label=${msg('Main Menu')}>
             ${([
               ['ai', msg('Single Player')],
@@ -152,7 +149,7 @@ export class GrandTransitionTitle extends LitElement {
               aria-haspopup="dialog"
               @click=${this.showMatchHistory}
             >
-              ${msg('Match history')} <span>(${this.historyEntries.length})</span>
+              ${msg('Match history')} <span>(${formatInterfaceNumber(this.historyEntries.length)})</span>
             </button>
           </div>
           ${this.renderGpuStatus()}
@@ -165,7 +162,11 @@ export class GrandTransitionTitle extends LitElement {
               </p>`}
           ${this.showSettingsPersistenceNotice && !this.settingsOpen
             ? html`<div class="title-settings-notice" role="status">
-                <p>${msg(settingsPersistenceNotice)}</p>
+                <p>
+                  ${msg(
+                    'Settings storage is unavailable. Changes will not persist after this page closes.',
+                  )}
+                </p>
                 <button type="button" @click=${this.dismissSettingsNotice}>
                   ${msg('Dismiss')}
                 </button>
@@ -174,7 +175,9 @@ export class GrandTransitionTitle extends LitElement {
         </div>
 
         <p class="title-disclaimer">
-          ${englishGameLocale.title.fictionalCompositeSatireDisclaimer}
+          ${msg(
+            'All characters and events are fictional composites created for satire.',
+          )}
         </p>
         ${this.historyOpen
           ? html`<grand-transition-match-history

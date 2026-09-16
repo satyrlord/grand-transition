@@ -58,8 +58,8 @@ and speech output.
 
 ## Settings document
 
-One settings document format exists at a time. Its `schemaVersion` is `1` and
-identifies the document shape. A field addition changes that shape and requires
+One settings document format exists at a time. The initial `schemaVersion` was
+`1` and identifies that document shape. A field addition changes the shape and requires
 a new version, but no earlier document is migrated. GPU voices and Speech
 enabled both default to true. Milestone 029 owns the `interfaceLocale` and
 `gameLocale` fields: its Phase 1 adds `interfaceLocale` at `schemaVersion` `2`
@@ -79,7 +79,8 @@ without a duplicate GPU loading or readiness status.
 Milestone 024 owns runtime capability checks, loading,
 fallback, and voice routing. Native Government AI voices are unaffected.
 The GPU help links to the same-origin `tts/kokoro-gpu/NOTICE.txt` credits.
-Do not add locale controls or a GPU model picker in this change.
+This milestone adds no locale controls or GPU model picker. Milestone 029 Phase 1
+adds the title Settings interface-language control.
 
 | Field                  | Type and range          | Default |
 | ---------------------- | ----------------------- | ------- |
@@ -100,14 +101,15 @@ Do not add locale controls or a GPU model picker in this change.
 Display Speech rate with two decimal places, such as `1.00×`.
 Preserve explicit saved Speech enabled and GPU voices choices, including opt-outs.
 
-Settings are one strict document with `schemaVersion: 1`. Tutorial mode is the
+Settings are one strict document; Milestone 029 Phase 1 makes the current
+`schemaVersion` `2`. Tutorial mode is the
 only persisted guidance preference. The product stores no tutorial progress,
 onboarding completion, or other hint state.
 
 Every field is required and unknown fields are rejected, including a field that
 belongs to a different settings shape. Decode returns `invalid-data` at the
 offending field path for a missing, malformed, off-step, or out-of-range value.
-An integer `schemaVersion` other than `1` returns `unsupported-version` before
+An integer `schemaVersion` other than the current version returns `unsupported-version` before
 field validation. A rejected document is never rewritten, repaired, or partially
 applied: the repository keeps its bytes, uses the defaults in memory, and
 replaces them only when the user next changes a setting.

@@ -689,13 +689,19 @@ The implementation uses `@fontsource/poiret-one`,
 1.1. Preserve each package's complete notice under `public/licenses/fonts/`
 and ship it unchanged in `dist/licenses/fonts/`. Disable Git newline conversion
 for these notices so Windows checkouts preserve the package bytes.
-Poiret One uses its Basic Latin subset. Nunito and Rubik load Basic Latin
-and Latin Extended coverage through Fontsource subset declarations. The feature,
+Poiret One, Nunito, and Rubik load Basic Latin and Latin Extended coverage
+with explicit Unicode subset declarations. The feature,
 speech, and interface metric fallback is Arial and then sans-serif. The timer
 fallback is Cascadia Mono, Consolas, and then monospace.
 
+The shipped Poiret One Latin Extended WOFF2 is a local SIL Open Font License
+derivative of the Fontsource file. It maps Romanian `Ț` and `ț` to the source
+font's existing comma-below T outlines. Keep its source and build method in
+`docs/assets/poiret-one-romanian-font.md`; ship the complete Poiret One license notice.
+
 Verify all four selected families together in the built arena. The
-Art Deco feature family needs English UI coverage only. The timer family needs
+Art Deco feature family must cover English and Romanian interface display text,
+including Romanian diacritics. The timer family needs
 digits, timer punctuation, and normalized technical-record data glyphs. The speech and interface families must cover
 localized grammar and phrase content, including Romanian diacritics.
 

@@ -254,6 +254,8 @@ or Victory, as specified in Milestone 025.
 Speech defaults on; playback needs a trusted gesture in each page session.
 Resource preparation can precede that gesture. Skin metadata selects the voice. Do not expose a
 speech voice dropdown. Settings exposes speech enablement, volume, and rate.
+Milestone 029 adds the title Settings interface-language selector. It selects
+interface messages and is not a speech voice control.
 Existing saved voice URIs remain valid and are preserved when another setting
 changes, but they do not override the skin assignment. Rate is 0.5
 through 2 in 0.1 steps, default 1.00. A saved rate is preserved as stored;

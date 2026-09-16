@@ -4,6 +4,9 @@ import './styles/screen-shell.css';
 import './styles/match-screen.css';
 import './styles/interruption-screen.css';
 import './styles/mobile-layout.css';
+// Configure interface localization before either dynamic import constructs
+// application schemas or renders interface messages.
+import './app/interface-localization';
 import { z } from 'zod';
 
 // Configure before either dynamic import constructs application schemas.

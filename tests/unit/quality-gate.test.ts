@@ -5,6 +5,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
+import { fullQualityGateRequested } from '../../tools/quality-gate-mode';
 
 const execFileAsync = promisify(execFile);
 const packagePath = path.resolve(process.cwd(), 'package.json');
@@ -115,18 +116,49 @@ describe('quality-gate scaffold', () => {
       'node tools/run-quality-gate.mjs full',
     );
     expect(packageJson.scripts.ci).toBe('npm run quality:full');
+    for (const phase of ['test', 'test:browser', 'test:coverage', 'test:e2e']) {
+      expect(packageJson.scripts[phase]).toBe(
+        `node tools/run-test-phase.mjs ${phase} quick`,
+      );
+      expect(packageJson.scripts[`${phase}:full`]).toBe(
+        `node tools/run-test-phase.mjs ${phase} full`,
+      );
+    }
     const gate = await readFile(path.resolve('tools', 'run-quality-gate.mjs'), 'utf8');
     expect(gate).toContain("['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']");
     expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
+    expect(gate).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1'");
+    expect(gate).toContain("mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase");
     expect(gate).toContain("['quick', 'full']");
-    const [calibration, ladder] = await Promise.all([
+    const [calibration, ladder, gateMode, browserConfig, phaseRunner] = await Promise.all([
       readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
       readFile(path.resolve('e2e', 'advanced-ai-ladder.spec.ts'), 'utf8'),
+      readFile(path.resolve('tools', 'quality-gate-mode.ts'), 'utf8'),
+      readFile(path.resolve('vitest.browser.config.ts'), 'utf8'),
+      readFile(path.resolve('tools', 'run-test-phase.mjs'), 'utf8'),
     ]);
     for (const source of [calibration, ladder]) {
-      expect(source).toContain("GRAND_TRANSITION_QUALITY_GATE === 'quick'");
+      expect(source).toContain('fullQualityGateRequested');
       expect(source).toContain('test.skip');
+      expect(source).not.toContain('GRAND_TRANSITION_QUALITY_GATE ===');
     }
+    expect(gateMode).toContain("GRAND_TRANSITION_QUALITY_GATE === 'full'");
+    expect(gateMode).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER === '1'");
+    // Browser Mode inlines the mode verbatim, so a bare `npm run test:browser`
+    // cannot promote itself to the full gate.
+    expect(browserConfig).toContain("GRAND_TRANSITION_QUALITY_GATE ?? ''");
+    expect(browserConfig).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER ?? ''");
+    expect(browserConfig).not.toContain("'quick' : 'full'");
+    expect(phaseRunner).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
+    expect(phaseRunner).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: mode === 'full' ? '1' : ''");
+    expect(fullQualityGateRequested({
+      GRAND_TRANSITION_QUALITY_GATE: 'full',
+      GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
+    })).toBe(true);
+    expect(fullQualityGateRequested({ GRAND_TRANSITION_QUALITY_GATE: 'full' })).toBe(false);
+    expect(fullQualityGateRequested({ GRAND_TRANSITION_QUALITY_GATE: 'quick' })).toBe(false);
+    expect(fullQualityGateRequested({ GRAND_TRANSITION_QUALITY_GATE: '' })).toBe(false);
+    expect(fullQualityGateRequested({})).toBe(false);
     const phases = [
       'validate',
       'test',

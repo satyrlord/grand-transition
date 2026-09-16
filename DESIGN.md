@@ -449,12 +449,18 @@ outside the Poiret One feature-display treatment.
 
 Use the Fontsource packages for Poiret One, variable Nunito, variable Rubik,
 and Share Tech Mono. All four use the SIL Open Font License 1.1. The feature
-family loads Basic Latin. Nunito and Rubik load Basic Latin and Latin Extended
+family loads Basic Latin and Latin Extended so Romanian display glyphs do not
+fall back per character. Nunito and Rubik load Basic Latin and Latin Extended
 subsets so Romanian phrase and speech glyphs do not fall back per character.
 The feature, speech, and interface fallbacks are Arial and then sans-serif.
 The timer fallback is Cascadia Mono, Consolas, and then monospace.
+The Poiret One Latin Extended asset is a local derivative that adds the absent
+Romanian `Ț` and `ț` Unicode mappings to existing comma-below T outlines.
+Its source, generation method, and license are recorded in
+`docs/assets/poiret-one-romanian-font.md`.
 
-The feature-display family needs English UI coverage only. The timer family
+The feature-display family needs English and Romanian interface coverage,
+including Romanian diacritics. The timer family
 needs digits, timer punctuation, and normalized technical-record data glyphs. The speech and interface families must
 include the glyphs required by localized grammar and phrase content, including
 Romanian diacritics. All selected Web Open Font Format 2 (WOFF2) files must

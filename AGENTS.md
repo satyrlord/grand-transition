@@ -24,15 +24,22 @@ If the temporary folder contains an HTML prototype, inspect it with
 npm run dev | preview | build
 npm run lint | typecheck
 npm run assets:build | assets:validate | validate
+npm run localization:extract | localization:build | localization:validate
 npm run test | test:coverage | test:browser | test:e2e
 npm run quality:quick | quality:full | ci
 ```
 
 `validate` includes markdownlint-cli2, assets, content, localization, pure-boundary
-checks, lint, and types. Agents use `quality:quick` for routine validation. It
+checks, lint, and types. Interface translation uses Lit localization: run
+`localization:extract` after changing interface messages and `localization:build`
+to regenerate `src/localization/generated/` from the `xliff/` catalogs.
+Agents use `quality:quick` for routine validation. It
 omits only the documented slowest cumulative 20-percent test set. `quality:full`
 and its `ci` alias are the complete gate. An agent runs the full gate only when
-the user explicitly invokes the full quality-gate skill; CI still uses it.
+the user explicitly invokes the full quality-gate skill; CI still uses it. That
+boundary is hard: the slowest set runs only when the full gate is explicitly
+requested, so a direct test command such as `npm run test`, `npm run test:browser`,
+`npm run test:coverage`, or `npm run test:e2e` never runs it.
 Do not report checks as passing until the scripts exist and run.
 
 ## AI Workflow
@@ -58,7 +65,7 @@ spaces, `kebab-case` filenames, `PascalCase` types and classes, and `camelCase`
 functions. Lit is view-only: components receive immutable snapshots and emit
 typed commands. Keep rules free of Lit and DOM imports. Use light DOM for
 screens. Put interface prose in Lit messages and grammar text in locale-specific
-phrase packs.
+phrase packs. Don't overengineer.
 
 ## Testing Guidelines
 

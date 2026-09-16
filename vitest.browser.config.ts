@@ -18,8 +18,13 @@ const browserApiPort = await findAvailableLoopbackPort();
 export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
   define: {
+    // Inline the mode and runner marker verbatim. The runtime helper requires
+    // both before it enables the slowest set.
     'process.env.GRAND_TRANSITION_QUALITY_GATE': JSON.stringify(
-      process.env.GRAND_TRANSITION_QUALITY_GATE === 'quick' ? 'quick' : 'full',
+      process.env.GRAND_TRANSITION_QUALITY_GATE ?? '',
+    ),
+    'process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER': JSON.stringify(
+      process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER ?? '',
     ),
   },
   optimizeDeps: { include: ['lit/directives/style-map.js', 'onnxruntime-web/wasm', 'phonemizer'] },

@@ -128,13 +128,8 @@ test('the longest desktop match state fits and exposes every required fact', asy
       ),
     );
   expect(visibleCardText).toBe(true);
-  expect(
-    await page
-      .locator('.shared-board button.phrase-card')
-      .evaluateAll((buttons) =>
-        buttons.some((button) => button.ariaLabel?.includes('Shared')),
-      ),
-  ).toBe(true);
+  await expect(page.locator('.shared-board button.phrase-card').first())
+    .toHaveAccessibleName(/Shared/u);
   const commonPhraseGeometry = await page
     .locator('.shared-board > li')
     .evaluateAll((slots) =>

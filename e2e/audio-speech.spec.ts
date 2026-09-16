@@ -206,7 +206,12 @@ test('speech controls omit voice selection and fit supported landscape states', 
   await page.setViewportSize({ width: 1280, height: 720 }); await probe(page);
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
-  await expect(page.getByRole('combobox')).toHaveCount(0);
+  // Milestone 024 forbids a speech voice dropdown. The dialog also carries the
+  // Milestone 029 interface-language selector, which is not a speech control, so
+  // the check is scoped to the Speech group.
+  const speechGroup = page.getByRole('group', { name: 'Speech', exact: true });
+  await expect(speechGroup.getByRole('combobox')).toHaveCount(0);
+  await expect(page.locator('select[name="interfaceLocale"]')).toHaveCount(1);
   await page.getByLabel('Speech rate').fill('1.4');
   await page.getByLabel('Speech volume').fill('0.5');
   for (const [width, height] of [[1024, 720], [1024, 768], [1280, 720], [1920, 1080]]) {
