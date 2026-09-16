@@ -52,11 +52,16 @@ profiles to Romanian Mihai and Liana voices without changing character identity.
 A scene owns identity, its first-round opener index, original media, its
 eligible phrase pool, and effects. Audio media contains music only; scenes
 have no room-tone media field.
-The scene pool supplies at least three distinct unrestricted nouns and three
-distinct unrestricted verbs. It supplies one unrestricted predicate, two
-distinct `and` or contrast connectors, and one continuation. Thus, Milestone
-008 can deal a valid common board without a repeated phrase identifier. Contrast connectors are
-`but` and `yet`.
+Each scene owns exactly 33 scene-restricted cards: 10 nouns, 9 verbs, 5
+predicates, 3 modifiers, 3 endings, and 3 conjunctions. The 9 scene verbs are
+3 past-tense, 3 present-tense, and 3 future-tense cards arranged as 3 complete
+three-tense families. Every scene-restricted card belongs to one scene only.
+No scene owns a continuation. The single unrestricted `[...]` continuation
+remains available in each eligible scene pool as a global common card; it is not
+part of the 33-card scene-owned count. Thus, Milestone 008 can deal a valid
+common board without a repeated phrase identifier. Scene conjunctions are
+reviewed for the owning scene's themes and are as personalized to that scene as
+possible. Contrast connectors are `but` and `yet`.
 
 Locale bundles use canonical BCP 47 tags and identical plain-text grammar,
 phrase, constructed-sentence, and speech semantic message-key sets. Milestone
@@ -110,7 +115,14 @@ references, protected-trait insults, sexual humiliation, and threats.
 - Each weakness tag occurs on at least two phrases.
 - A phrase drawn from real speech records its source in the private research
   folder and repeats the real wording, because accuracy is what lets another
-  language adapt it. An invented phrase needs no source record.
+  language adapt it. An invented phrase needs no source record. Every common
+  `predicate`, `modifier`, and `ending` must instead be inspired by a
+  verifiably real public quote. Its private provenance record includes the
+  source URL, quoted wording, language, context, and affected card ID. The
+  visible card can be a faithful quote or an original fictional adaptation;
+  an adaptation must not be presented as the real speaker's words. Common
+  nouns, verbs, conjunctions, and the continuation follow the general
+  invented-or-real rule.
 - Each character owns exactly one weak, one medium, and one strong comeback
   line. Each key uses `comeback.<character-id>.<tier>` and cannot be shared by
   another character or tier. There is no common comeback pool.
@@ -123,10 +135,12 @@ references, protected-trait insults, sexual humiliation, and threats.
   and asset metadata use a generic source description and do not name a real
   person. The skin does not change the fictional character identity or prose.
 - Real slogans, real political speech, and documented memes are permitted as
-  specified in Milestone 027, and a real phrase keeps its real wording and
-  meaning. Real names, translations, and source-to-card mappings remain private.
-  Public editorial notes describe the phrase's source basis and the review; they
-  do not name a real person.
+  specified in Milestone 027, and a direct real phrase keeps its real wording
+  and meaning. Quote-inspired adaptations preserve the source meaning without
+  claiming that the real speaker said the adapted line. Real names,
+  translations, and source-to-card mappings remain private. Public editorial
+  notes describe the phrase's source basis and the review; they do not name a
+  real person.
 - Shipped prose, specifications, editorial rationale, source notes, and asset
   metadata do not use a real political party's name, acronym, or logo. Allowed
   generic labels include `The Conservative Party`, `The Peasant's Party`,
@@ -136,12 +150,21 @@ references, protected-trait insults, sexual humiliation, and threats.
 
 ## Manual phrase authoring
 
-Milestones 027 and 028 use the final English catalog with 151 general nouns,
-122 general verbs, 100 general predicates and modifiers, eight general
-conjunctions, 60 general endings, and one universal continuation. Each scene
-has 25 or 26 owned-pool IDs including the universal continuation. Each
-character has 3 through 32 owned phrases, and the focused schema tests enforce
-that range with the character's noun, modifier, and ending minimums.
+Milestones 027 and 028 use the final English common catalog with exactly 656
+cards: 300 general nouns, 150 general verbs, 100 general predicates, 50
+general modifiers, five general conjunctions, 50 general endings, and one
+universal continuation. The verb pool has 50 past-tense, 50 present-tense,
+and 50 future-tense cards arranged as 50 complete three-tense families. Every
+common predicate, modifier, and ending has verifiable real-quote provenance in
+the private research folder. Each scene has exactly 33 scene-restricted cards
+and an eligible pool of 34 IDs after adding the single unrestricted continuation.
+Each of the 19 characters has exactly 38 owned phrases: 10 nouns, 9 verbs,
+10 predicates, 5 endings, 3 modifiers, and 1 personalized conjunction. It has
+no character-owned continuation. The 9 verbs contain 3 past-tense, 3
+present-tense, and 3 future-tense cards arranged as 3 complete families; if
+one tense fails humor review, the complete family changes together. Every
+character predicate, ending, and modifier has verifiable real-quote provenance.
+The final character corpus therefore contains 722 owned cards.
 
 Editorial revisions keep stable IDs while the displayed text supplies enough
 English context. Each player-visible phrase text and agreement form contains no
@@ -257,10 +280,8 @@ simulation, and browser validation must pass before it can ship.
   The common ending `and-most-of-your-followers-are-bots` renders
   `and most of your followers are bots.`
 
-  The only continuation is the unrestricted `[...]` card. It contains second-person
-  `you`, plural `EU funds`, and person-aware subject forms for every shipped
-  relation that contains a possessive reference to its subject. It contains
-  Romanian political themes, quoted from real speech or invented for the game.
+  The only continuation is the unrestricted card whose player-visible cue is
+  always `[...]`. It remains neutral and does not require quote provenance.
 
   The `under-the-national-banner` ending renders the real English form of the
   [public 2017 civic-protest
@@ -269,15 +290,17 @@ slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-jan
   another language can reproduce it faithfully. It retains its stable identifier
   for deterministic replay compatibility.
 
-  Every entry records whether it is invented or drawn from real speech. A
-  sourced entry records its source in the private research folder. No entry
-  names or identifies a real person.
+  Every entry records its provenance classification. A sourced or
+  quote-inspired entry records its source in the private research folder; the
+  latter is required for every common predicate, modifier, and ending. No
+  entry names or identifies a real person in shipped content.
 
   The user-requested `an-extorsion-of-a-clearance` noun renders the documented
   Romanian internet-meme phrase for a nonsense technical procedure with its real
   wording. It names no person and asserts no real act.
-- **AC-005-08:** The common conjunction pool contains cards for `and`, `but`,
-  `because`, `yet`, `so`, `for`, and `with`.
+- **AC-005-08:** The common conjunction pool contains exactly five cards. Every
+  one is as neutral as possible, uses an allowed connector kind, and has an
+  empty weakness-tag array.
 - **AC-005-09:** A synthetic character supplied as one correctly named JSON
   source produces its character record, owned phrase IDs, and derived locale
   keys. It also produces exclusive comebacks without registry edits. Browser and Node discovery

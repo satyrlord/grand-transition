@@ -102,21 +102,25 @@ The stable scene order, identifier, and phrase themes are:
    evidence, ancient energy, clips, and shadow bans.
 
 Each scene resolves a complete eligible pool through the current common
-catalog. Its scene-specific phrase volume remains deferred to Milestone 028.
+catalog. Its scene-specific phrase volume remains deferred to Milestone 028,
+which owns the exact 33-card scene-restricted composition and the global
+continuation rule.
 
 ## Playable data contract
 
-Each character has 3 through 32 unique owned phrases. Its foundation pool has
-at least one noun, one modifier, and one ending. The complete common pool
-supplies the other grammar roles needed for a match. Each character owns one
-unique weak, medium, and strong Comeback line. All content passes the Milestone
+Each foundation character has 3 through 32 unique owned phrases. Its foundation
+pool has at least one noun, one modifier, and one ending. The complete common
+pool supplies the other grammar roles needed for a match. Each character owns
+one unique weak, medium, and strong Comeback line. All content passes the Milestone
 005 schema, locale, grammar, restriction, weakness, and
 deterministic-discovery contracts. Milestone 027 owns editorial and safety
 review.
 
 Every ordered character and scene setup can prepare a round, complete a seeded
 headless match, and preserve private-hand secrecy. The foundation does not tune
-release balance. Milestone 028 raises phrase counts and scene-specific volume.
+release balance. Milestone 028 raises phrase counts and scene-specific volume to
+the exact final targets: 38 character-owned cards per character and 33
+scene-restricted cards per scene.
 Milestone 027 owns final balance and editorial evidence.
 
 ## Acceptance criteria
@@ -191,8 +195,8 @@ variety review, or release balance.
 
 ## Review repair regression
 
-**AC-026-07:** The complete catalog validator enforces each character's existing 3 through
-32 owned phrases and its noun, modifier, and ending minimum. Isolated source
+**AC-026-07:** The complete catalog validator enforces each foundation character's
+3 through 32 owned phrases and its noun, modifier, and ending minimum. Isolated source
 parsing does not replace this check. `tests/unit/content-schemas.test.ts`
 rejects two-noun pools, missing modifier/ending, and counts above 32 at the
 owning character path. Synthetic discovery characters must meet the same

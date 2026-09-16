@@ -55,10 +55,13 @@ complete an approved specification.
 - Public political speech, slogans, memes, and documented events can appear in
   common phrases, character phrases, endings, and comebacks. A phrase that
   refers to real speech stays accurate: keep the real wording, in its original
-  language or as a faithful rendering whose meaning is preserved. An invented
-  phrase is equally permitted. Milestone 027 owns source verification and
-  private traceability. Do not name a real person or present an invented line
-  as a real person's words. Character identity stays fictional across skins.
+  language or as a faithful rendering whose meaning is preserved. The revised
+  common catalog requires every predicate, modifier, and ending to be inspired
+  by a verifiably real quote, with private source evidence. The visible card may
+  be an original fictional adaptation, but it must not be presented as the real
+  person's words. An invented phrase remains permitted for the other roles.
+  Milestone 027 owns source verification and private traceability. Character
+  identity stays fictional across skins.
 - Do not use a real political party's name, acronym, or logo. Use only generic
   ideological or social-family labels, such as Conservative, Peasant,
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
@@ -291,10 +294,11 @@ source-only review does not satisfy them.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial rules](spec-027-balance-editorial.md). Budget: 5.
-    The current artwork and phrase catalog have safety and normal CI evidence.
-    Additional Milestone 028 artwork is not a prerequisite.
+    The revised content-catalog editorial contract is approved but pending
+    implementation. Additional Milestone 028 artwork is not a prerequisite.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
-    Final phrase volume, art, audio treatment, and variety evidence are present.
+    The revised exact common, character, and scene volumes, quote provenance,
+    art, audio treatment, and variety evidence are pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Phase 1 translates the interface. Phase 2
     translates the game content and implements Romanian grammar with Mihai

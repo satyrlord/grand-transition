@@ -36,10 +36,15 @@ list in TypeScript.
    and text with unique values, and keep the surrounding JSON valid, including
    the comma between entries.
 3. Fill the fields that the role requires (see the field table).
-4. Decide whether the card is invented or drawn from real speech. A card that
-   uses real speech, a real slogan, or a documented meme repeats the real
-   wording and meaning; it never becomes an inaccurate paraphrase. Keep the real
-   wording, its language, and its source in the private research folder.
+4. Apply the role's provenance rule. Every common or character-owned
+   `predicate`, `modifier`, and `ending` must be inspired by a verifiably real
+   quote. Record its public
+   source URL, quoted wording, language, context, and card ID in the private
+   research folder. The visible card can be a faithful quote or an original
+   fictional adaptation; never present an adaptation as the real speaker's
+   words. Other roles can be invented or accurately drawn from real speech. A
+   direct real phrase repeats its real wording and meaning; it never becomes an
+   inaccurate paraphrase.
 5. Run `npm run content:validate`.
 6. Run `npm run validate` and `npm run quality:quick`.
 7. Optional: open `npm run dev` and play the card, or run
@@ -62,7 +67,11 @@ list in TypeScript.
 A card that is restricted to one scene adds `"sceneIds": ["<scene-id>"]`. Cards
 inside a character file never declare `characterIds`; ownership comes from the
 file. Only an entry inside a scene selection needs `sceneIds`, and a card cannot
-belong to both a character and a scene.
+belong to both a character and a scene. A final scene-specific card belongs to
+one scene only. Each scene has exactly 33 scene-restricted cards: 10 nouns, 9
+verbs, 5 predicates, 3 modifiers, 3 endings, and 3 conjunctions. It has no
+scene-restricted continuation; the global `[...]` continuation is added to the
+eligible scene pool separately.
 
 ## Remove a card
 
@@ -111,6 +120,17 @@ extending an existing family, first check which tense it needs. The
 `should-have-been` family is the sole exception: it has distinct past and
 present cards and no future card.
 
+The final common verb pool uses 50 complete three-tense families. Review the
+family as one humor and editorial unit. If one tense is not funny or fails
+editorial review, change all three tense cards before approval. The
+`should-have-been` two-form exception is not counted among those 50 final verb
+families.
+
+Each character uses 3 complete three-tense verb families. Apply the same
+whole-family humor and editorial review to those 9 cards; the
+`should-have-been` two-form exception is not part of the final character verb
+target.
+
 ## Content rules
 
 - Word ceilings: `conjunction` 6, `continuation` 1, `verb` 10, `modifier` 9,
@@ -124,10 +144,27 @@ present cards and no future card.
   cue stays `[...]`.
 - Every character weakness tag needs at least two matching cards in the common
   corpus.
-- Each scene pool must reach the noun, verb, and predicate roles.
-- Phrase text can be invented or real. A phrase that draws on real speech, a
-  real slogan, or a documented meme keeps the real wording and meaning. Accuracy
-  is the requirement, because a faithful Romanian adaptation depends on it.
+- Each scene has exactly 10 nouns, 9 verbs, 5 predicates, 3 modifiers, 3
+  endings, and 3 conjunctions in its scene-restricted cards. Its verbs contain
+  3 past-tense, 3 present-tense, and 3 future-tense cards in three complete
+  families. Its eligible pool has exactly 34 IDs after adding the global
+  `[...]` continuation, and no scene-restricted card is shared between scenes.
+- Scene conjunctions are reviewed against the owning scene's themes and are as
+  personalized to that scene as grammar permits.
+- Each character has exactly 10 nouns, 9 verbs, 10 predicates, 5 endings, 3
+  modifiers, and 1 character-specific conjunction. It has no character-owned
+  continuation, and its conjunction is reviewed against the character's voice
+  and themes.
+- Every common or character-owned `predicate`, `modifier`, and `ending` maps to a publicly
+  verifiable real quote in the private research folder. Record the source URL,
+  exact quote, original language, context, and card ID. Mark whether the
+  shipped text is a faithful quote or an original fictional adaptation. An
+  adaptation preserves the source inspiration but is not presented as the real
+  speaker's words.
+- Common and character-owned nouns, verbs, and conjunctions can be invented or
+  accurately drawn from real speech. A direct real phrase, slogan, or documented
+  meme keeps its real wording and meaning. Accuracy is the requirement, because
+  a faithful Romanian adaptation depends on it.
 - Keep characters, identities, and brands fictional. No real person, no real
   party name, acronym, or logo, no protected expression copied from another game
   or work, no unsafe HTML, and no real logo or copyrighted broadcast graphic in
@@ -140,18 +177,27 @@ present cards and no future card.
 ## Validated counts
 
 The foundation schema enforces the minima below. The final-volume check in
-`npm run content:validate` also enforces the general, character, and scene
-ranges in [`docs/specs/spec-028-mvp-content-finalization.md`](specs/spec-028-mvp-content-finalization.md).
-Adding or removing a card can break a range. The approved general catalog
+`npm run content:validate` must enforce the exact common-catalog composition in
+[`docs/specs/spec-028-mvp-content-finalization.md`](specs/spec-028-mvp-content-finalization.md).
+Adding or removing a card can break an exact total. The approved role
 composition is recorded in
 [`docs/specs/spec-005-content-schemas.md`](specs/spec-005-content-schemas.md).
 
 | Scope | Rule |
 | --- | --- |
+| Common nouns | exactly 300 |
+| Common verbs | exactly 150: 50 past, 50 present, and 50 future |
+| Common predicates | exactly 100; every card is quote-inspired |
+| Common modifiers | exactly 50; every card is quote-inspired |
+| Common endings | exactly 50; every card is quote-inspired |
+| Common conjunctions | exactly 5; as neutral as possible with empty tags |
+| Scene-restricted cards per scene | exactly 33: 10 nouns, 9 verbs, 5 predicates, 3 modifiers, 3 endings, and 3 conjunctions |
+| Scene-restricted continuations | exactly zero per scene |
+| Eligible scene-pool IDs | exactly 34 per scene, including the global continuation |
 | `continuation` | exactly one in the whole catalog |
-| Owned character cards | 3 through 32, including a noun, a modifier, and an ending |
+| Owned character cards | exactly 38 per character: 10 nouns, 9 verbs, 10 predicates, 5 endings, 3 modifiers, and 1 conjunction |
 | Character weakness tags | at least two matching cards in the common corpus |
-| Scene pool | reaches the noun, verb, and predicate roles |
+| Scene pool | exactly 34 IDs: 33 scene-restricted cards plus the global continuation |
 
 Update the catalog counts quoted in
 [`docs/specs/spec-005-content-schemas.md`](specs/spec-005-content-schemas.md) when

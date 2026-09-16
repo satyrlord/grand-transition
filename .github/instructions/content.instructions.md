@@ -19,10 +19,25 @@ Keep English phrase text out of rule logic. Use stable IDs
 and locale-specific phrase forms. Use a separate grammar adapter. Keep editorial
 safety, and keep characters, identities, and brands fictional.
 
-Phrase text can be invented or real. A phrase that draws on real speech, a real
-slogan, or a documented meme keeps its real wording and meaning, because that
-accuracy is what lets the Romanian catalog translate it correctly. Never rewrite
-a real phrase into an inaccurate paraphrase.
+Phrase text can be invented or real except for the common `predicate`,
+`modifier`, and `ending` pools, which must each be inspired by a verifiably real
+quote. Record the public source URL, quote, language, context, and card mapping
+in private research. A visible card can be a faithful quote or an original
+fictional adaptation; do not present an adaptation as a real person's words.
+A direct real phrase keeps its wording and meaning, because that accuracy lets
+the Romanian catalog translate it correctly. Never rewrite a direct real phrase
+into an inaccurate paraphrase.
+
+Scene-restricted cards belong to one scene only. Each scene has exactly 10
+nouns, 9 verbs split three per tense, 5 predicates, 3 modifiers, 3 endings,
+and 3 scene-specific conjunctions, with no scene-restricted continuation. The
+global `[...]` continuation remains available separately.
+
+Each character's final owned pool has exactly 10 nouns, 9 verbs split three per
+tense, 10 predicates, 5 endings, 3 modifiers, and 1 character-specific
+conjunction. It has no character-owned continuation. Character predicates,
+modifiers, and endings require the same verifiable quote provenance as common
+cards.
 
 Do not name or identify a real
 person in content or its rationale.

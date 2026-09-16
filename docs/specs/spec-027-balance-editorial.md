@@ -1,6 +1,6 @@
 # Milestone 027: Balance and Editorial Rules
 
-**Status:** Complete
+**Status:** Approved; revised content-catalog contract pending
 
 **Depends on:** 025
 **Owns:** Content tone, safety approval, repetition, and balance evidence  
@@ -8,11 +8,13 @@
 
 ## Deliver
 
-Complete this milestone against the current playable artwork and validated
-phrase catalog. The phrase-volume checks use Milestone 028's ranges, but its
-additional character-pose images, scene layers, motion, and final media
-packages are not prerequisites for this milestone. Those asset deliveries
-remain in Milestone 028.
+Complete this milestone against the current playable artwork and the revised
+common and character-catalog contract in Milestone 028. The phrase-volume checks use
+Milestone 028's exact role totals, but its additional character-pose images,
+scene layers, motion, and final media packages are not prerequisites for this
+milestone. Those asset deliveries remain in Milestone 028. The earlier
+completion evidence remains historical and does not satisfy the revised
+content-catalog target.
 
 Use the existing deterministic CI simulations, catalog uniqueness checks, and
 content boundary rules. Adjust only
@@ -30,16 +32,21 @@ scoring-meaning rules.
 ## Speech-inspired humor
 
 Common and character-owned prose can quote real political speech, real slogans,
-and documented memes, or invent entirely new lines. Prefer a concrete image,
+and documented memes, or invent entirely new lines subject to the role-specific
+provenance rule below. Prefer a concrete image,
 contradiction, reversal, or short escalating punchline over an administrative
 label. Keep simple grammar
 connectors, copulas, and useful neutral referents short. Humor does not require
 every fragment to be a complete joke.
 
-The catalog stays trustworthy because a real phrase stays real. A phrase that
-refers to real speech repeats the real wording and meaning instead of a
-rewritten version, so another language can adapt it faithfully. An invented
-phrase is equally acceptable and is recorded as invented.
+The revised common and character-owned catalogs require every predicate,
+modifier, and ending to be inspired by a verifiably real quote. The requirement
+is about the source basis, not about copying public wording into the game. A
+direct real phrase repeats the real wording and meaning so another language can
+adapt it faithfully. An original fictional adaptation preserves the source
+inspiration without claiming that the real speaker said the adapted line. This
+includes every scene-restricted common card and every character-owned card.
+Record the distinction privately.
 
 Research each human archetype through its recorded private references. Verify
 the source and context of every real phrase. A meme, parody article,
@@ -48,9 +55,10 @@ the referenced speaker said. Record uncertainty when a source supports a
 recent remark rather than an established iconic line.
 
 Keep the source URL, the real wording and its language, an English meaning
-gloss, and the affected phrase or comeback IDs in
-the private research folder. Mark each card as drawn from real speech or
-invented, so the adaptation step can reproduce a real phrase faithfully.
+gloss, and the affected phrase or comeback IDs in the private research folder.
+For every common or character-owned predicate, modifier, and ending, also record
+the quote context and mark whether the shipped text is a faithful quote or an
+original fictional adaptation. The source must be publicly verifiable.
 Government AI remains a fictional robot
 without a politician reference.
 
@@ -94,7 +102,9 @@ broadcast art. Check every record against this boundary. Keep the source
 evidence for real phrases in the private research folder.
 
 The review confirms that each character identity is fictional and that phrase
-text is either invented or a real, accurately reproduced line. It rejects named
+text is either invented, a real accurately reproduced line, or an original
+fictional adaptation of a verifiably real quote where the common-role contract
+requires it. It rejects named
 or identifiable real-person comparisons, targets, and
 player-visible disclosures. An approved public-figure likeness may be used only
 as visual-only parody in a portrait skin. Private study data stays in the
@@ -140,7 +150,9 @@ than empty abuse, matches at least one authored character or scene trait, and
 reads clearly for an international English player. Neutral grammatical fragments
 such as connectors and copulas are exempt from the target and trait checks;
 safety and clarity still apply. A Romanian proper noun needs adjacent English
-context that explains why it matters.
+context that explains why it matters. The five common conjunction cards are
+neutral grammatical fragments with empty weakness-tag arrays and do not target
+an institution or persona.
 
 ## Acceptance criteria
 
@@ -162,6 +174,17 @@ context that explains why it matters.
   behavior, matches at least one authored character or scene trait, and is
   intelligible to an international English reader without external knowledge.
   Neutral grammatical fragments have the stated target and trait exemption.
+- **AC-027-08:** Every common or character-owned predicate, modifier, and ending has a private
+  provenance record that points to a publicly verifiable real quote. The record
+  distinguishes a faithful quote from an original fictional adaptation and does
+  not expose a real person's identity in shipped prose. The review treats each
+  verb's past, present, and future cards as one humor and editorial unit: if one
+  tense fails review, the complete family changes together. The five common
+  conjunctions remain neutral and carry empty weakness-tag arrays. Each scene
+  has three scene-specific conjunctions, and each character has one
+  character-specific conjunction; both are reviewed against their owning
+  context. No scene-restricted or character-owned continuation, or cross-owner
+  card reuse, is approved.
 
 Milestone 014
 owns the deterministic CI evidence for AC-027-01; Milestone 010 owns the bounded
@@ -180,7 +203,9 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Existing deterministic CI and bounded scoring fixtures pass.
-Authored phrase and comeback text remains unique and passes grammar checks.
-`npm run ci` passes. Stop before release
+Existing deterministic CI and bounded scoring fixtures remain recorded for the
+implemented catalog. Authored phrase and comeback text remains unique and
+passes grammar checks. The revised content-catalog contract is not complete
+until its exact volumes, quote provenance, verb-family review, and owner-specific
+conjunction requirements are implemented and verified. Stop before release
 optimization or infrastructure changes.

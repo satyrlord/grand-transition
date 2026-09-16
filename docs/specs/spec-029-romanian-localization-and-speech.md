@@ -227,8 +227,11 @@ and convert legacy cedilla forms to comma-below forms at the authoring boundary.
 
 Adapt idioms and satire into natural Romanian while preserving the phrase's
 role, target, strength, tense, and scoring meaning. A phrase that draws on real
-speech keeps its real meaning, and an invented phrase stays invented, so the
-English catalog must keep a real phrase accurate before it reaches translation.
+speech keeps its real meaning. A common predicate, modifier, or ending that is
+an original adaptation of a verifiably real quote preserves the source
+inspiration while remaining fictional in both languages. The English catalog
+must keep direct real phrases accurate and retain the private source mapping
+before any phrase reaches translation.
 Preserve stable phrase,
 character, scene, weakness, and score-group IDs, restrictions, rarity, and
 balance values. Do not add or remove cards to avoid translation difficulties.

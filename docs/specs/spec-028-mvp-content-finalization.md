@@ -1,15 +1,16 @@
 # Milestone 028: Minimum Viable Product Content Finalization
 
-**Status:** Complete\
+**Status:** Approved; revised content-catalog target pending\
 **Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
 **Production-file budget:** 20
 
-Milestone 027 can finish with the current artwork and the phrase volumes
-defined here. This milestone retains the additional pose images, scene
+Milestone 027 can finish with the current artwork and the exact common-catalog
+volumes defined here. This milestone retains the additional pose images, scene
 layers, motion, and final media packages; their delivery does not block
-Milestone 027.
+Milestone 027. The earlier completion evidence remains historical and does not
+verify the revised content-catalog target.
 
 The phrase-data package uses the common authoring file and the 19 character
 authoring files. Replay behavior is a separate Milestone 014 package. The replay
@@ -24,6 +25,23 @@ Finalize all 19 playable fictional archetypes and 6 playable scenes from
 Milestone 026. Complete their English phrase volume, art, scene audio treatment,
 and variety requirements. Use the existing schemas, pipelines, and presentation
 contracts.
+
+The shared common authoring corpus has exactly 656 cards: 300 nouns, 150 verbs,
+100 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
+The verb pool contains 50 past-tense, 50 present-tense, and 50 future-tense
+cards. Every predicate, modifier, and ending is inspired by a verifiably real
+quote, with private provenance evidence. The only continuation is the visible
+cue `[...]`.
+
+Each of the six scenes owns exactly 33 scene-restricted cards, for 198
+scene-restricted cards in total. Its eligible scene pool contains those 33 cards
+plus the single unrestricted common continuation, for exactly 34 phrase-pool
+IDs. The continuation is global and is not scene-owned.
+
+Each of the 19 characters owns exactly 38 character-restricted cards, for 722
+character-restricted cards in total: 10 nouns, 9 verbs, 10 predicates, 5
+endings, 3 modifiers, and 1 character-specific conjunction. No character owns a
+continuation.
 
 Every archetype has one default portrait skin and zero through eight alternate
 skins through the Milestone 023 filename convention. The final catalog contains
@@ -144,7 +162,8 @@ color is local to authored materials and lighting, not a complete scene grade.
   energy, clips, and shadow bans.
 
 Each scene has a layered master, landscape crops, lighting, motion, music
-treatment, and 25 to 35 owned phrases. All six packages use
+treatment, and exactly 34 eligible phrase-pool IDs: 33 scene-restricted cards
+and the global continuation. All six packages use
 3840x2160 back and foreground masters, with 640, 1280, 1920, 2560, and
 3840-pixel-wide runtime variants in both formats. The four foundation foreground IDs are
 `county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`,
@@ -199,27 +218,82 @@ Validation checks decoded duration and the sample discontinuity at the loop
 boundary in all three formats. These signal checks do not establish musical
 fit or subjective listening approval.
 
-The validated catalog has
-these inclusive general-pool ranges:
+The revised shared common authoring corpus has exactly 656 cards. Counts cover
+every card in `src/content/common-phrase-cards.json`, including scene-restricted
+shared cards; character-owned files are excluded.
 
-| Role                             | Minimum | Maximum |
-| -------------------------------- | ------: | ------: |
-| Noun                             |     150 |     165 |
-| Verb                             |     120 |     135 |
-| Predicate and modifier, combined |     100 |     115 |
-| Conjunction                      |       8 |      10 |
-| Ending                           |      60 |      70 |
-| Continuation                     |       1 |       1 |
+| Role         | Required  |
+| ------------ | --------: |
+| Noun         |       300 |
+| Verb         |       150 |
+| Predicate    |       100 |
+| Modifier     |        50 |
+| Conjunction  |         5 |
+| Ending       |        50 |
+| Continuation |         1 |
 
-Each character has 20 to 32 unique character phrases. Its pool contains at
-least six nouns, four verbs, and four predicates or modifiers. The pool has at
-least one predicate and one modifier. It also has one conjunction and one
-ending.
+The 150 verbs contain exactly 50 past-tense, 50 present-tense, and 50
+future-tense cards. The cards form 50 complete three-tense families. Humor and
+editorial approval apply to the complete family: if one tense is not funny or
+otherwise fails review, revise all three tense cards together.
 
-Each scene pool contains at least eight nouns and six verbs. It has five
-predicates or modifiers with at least one of each role. It also has one
-conjunction, one ending, and the universal `[...]` continuation. The scene pool
-contains 25 to 35 unique IDs. No character or scene owns another
+Every common predicate, modifier, and ending maps to a verifiably real quote in
+the private research folder. The provenance record includes a publicly
+retrievable source URL, the quoted wording, language, context, and affected
+card ID. The visible text may be a faithful quote or an original fictional
+adaptation, but an adaptation is never presented as the real speaker's words.
+The five common conjunctions are as neutral as possible and use empty
+weakness-tag arrays. The single continuation is unrestricted and always renders
+`[...]`.
+
+Each scene has this exact scene-restricted role composition:
+
+| Role         | Per scene |
+| ------------ | --------: |
+| Noun         |        10 |
+| Verb         |         9 |
+| Predicate    |         5 |
+| Modifier     |         3 |
+| Ending       |         3 |
+| Conjunction  |         3 |
+| Continuation |         0 |
+| **Total**    |    **33** |
+
+The 9 scene verbs contain exactly 3 past-tense, 3 present-tense, and 3
+future-tense cards arranged as 3 complete three-tense families. Humor and
+editorial approval apply to each complete family: if one tense is not funny or
+otherwise fails review, revise all three tense cards together. Every
+scene-restricted predicate, modifier, and ending has the same verifiable
+real-quote provenance requirement as the common corpus. The three
+scene-restricted conjunctions are distinct scene-specific choices reviewed
+against the owning scene's themes. No scene-restricted card is shared between
+scenes.
+
+Each character has this exact character-restricted role composition:
+
+| Role         | Per character |
+| ------------ | ------------: |
+| Noun         |            10 |
+| Verb         |             9 |
+| Predicate    |            10 |
+| Modifier     |             3 |
+| Ending       |             5 |
+| Conjunction  |             1 |
+| Continuation |             0 |
+| **Total**    |        **38** |
+
+The 9 character verbs contain exactly 3 past-tense, 3 present-tense, and 3
+future-tense cards arranged as 3 complete three-tense families. Humor and
+editorial approval apply to each complete family: if one tense is not funny or
+otherwise fails review, revise all three tense cards together. Every
+character-owned predicate, modifier, and ending has the same verifiable
+real-quote provenance requirement as the common corpus. Its one conjunction is
+personalized to the character as far as grammar permits. Character cards are
+unique to their owner and never carry a continuation.
+
+Each scene pool contains the exact 10 nouns, 9 verbs, 5 predicates, 3 modifiers,
+3 endings, and 3 conjunctions above, plus the universal `[...]` continuation.
+It contains exactly 34 unique IDs. No character or scene owns another
 continuation.
 
 Each character has exactly one unique comeback line in each tier and three total.
@@ -245,8 +319,8 @@ sentences. Normal CI verifies the catalog and its existing deterministic match
 fixtures. This milestone adds no separate simulation workload, selection
 coverage percentage, or frequency threshold.
 
-Content totals can change only through an approved change to the ranges above,
-with passing content, grammar, and normal CI checks.
+These exact role totals can change only through an approved change to this
+contract, with passing content, grammar, provenance, and normal CI checks.
 
 ## Acceptance criteria
 
@@ -255,8 +329,11 @@ with passing content, grammar, and normal CI checks.
   Character names and scene names are unique within their respective groups
   after case and whitespace normalization. Validation identifies the second
   duplicate locale key.
-- **AC-028-02:** Every general, character, scene, and comeback count meets its
-  exact range and role minimum. Boundary fixtures fail one below and above.
+- **AC-028-02:** The shared common corpus contains exactly 300 nouns, 150
+  verbs, 100 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one
+  continuation. The verb count is exactly 50 past-tense, 50 present-tense, and
+  50 future-tense cards. Boundary fixtures fail one below and above, and the
+  verb-family review treats all three tenses as one editorial unit.
 - **AC-028-03:** Every character and scene passes grammar reachability, board
   generation, simulated match, asset, crop, state, audio, license, locale, and
   shared color-policy validation.
@@ -275,25 +352,56 @@ with passing content, grammar, and normal CI checks.
   fully mechanical. Every skin passes the shared asset, alpha, provenance,
   color, viewport, and package checks while the character's phrase and balance
   records remain identical across skins.
+- **AC-028-08:** Every common predicate, modifier, and ending has a private
+  provenance record that points to a publicly verifiable real quote. The record
+  includes the source URL, quoted wording, language, context, and affected card
+  ID. The visible card is either a faithful quote or an original fictional
+  adaptation that is not attributed to the real speaker. All five common
+  conjunctions have neutral wording and empty weakness-tag arrays, and the one
+  continuation always renders `[...]`.
+- **AC-028-09:** Each scene has exactly 10 nouns, 9 verbs, 5 predicates, 3
+  modifiers, 3 endings, 3 conjunctions, and zero scene-restricted continuations.
+  Its verbs contain 3 past-tense, 3 present-tense, and 3 future-tense cards in
+  three complete families. Its eligible pool contains exactly 34 IDs after the
+  global continuation is added. Scene predicates, modifiers, and endings pass
+  verifiable quote-provenance review. Scene conjunctions are distinct,
+  scene-specific, and reviewed against their owning scene's themes.
+- **AC-028-10:** Each character has exactly 10 nouns, 9 verbs, 10 predicates,
+  5 endings, 3 modifiers, and 1 personalized conjunction, with zero
+  character-owned continuations. Its verbs contain 3 past-tense, 3 present-
+  tense, and 3 future-tense cards in three complete families. Character
+  predicates, modifiers, and endings pass verifiable quote-provenance review.
 
 ## Content research boundary
 
-All character identities remain fictional. Phrase text can be real and accurate
-or invented. Research can use public
-institutions, documented historical events, constitutional mechanisms, and
-broad media forms. An approved public-figure likeness may be used only as
+All character identities remain fictional. Common and character-owned nouns,
+verbs, and conjunctions can be invented or accurately real under the general
+content rules. Every common or character-owned predicate, modifier, and ending
+must be inspired by a verifiably real quote. Its private record contains a
+publicly retrievable source URL, the exact quote, original language, context,
+and mapping to the card. The shipped text can be a faithful quote or an
+original fictional adaptation, but it must never present an adaptation as the
+real speaker's words. An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
 Git-ignored research folder and does not ship.
 
-The common corpus and all 19 character authoring files can receive the
+The same quote-provenance rule applies to all scene-restricted predicates,
+modifiers, and endings. Scene-restricted conjunctions are not required to be
+neutral; they are selected for the owning scene's themes and personalized as
+far as grammar permits. Scene-restricted cards remain fictional in identity and
+do not share a card across scenes.
+
+Character-owned conjunctions are not required to be neutral; they are selected
+for the owning character's voice and themes and personalized as far as grammar
+permits. Character-restricted cards remain unique to their owner and do not
+carry a continuation.
+
+The common corpus and all 19 character authoring files receive the
 speech-inspired humor pass defined in Milestone 027. This includes distinctive
 endings and all three comeback tiers. Real slogans, real speech, and documented
-memes keep their real wording and meaning, and invented lines are recorded as
-invented. The real wording, its language, and its source stay in private
-research, so another language can adapt a real phrase faithfully.
-The pass preserves useful grammar fragments and existing stable identities;
-it does not by itself complete this milestone's final content volumes or
-the existing content and grammar checks.
+memes keep their real wording and meaning when used directly. The pass preserves
+useful grammar fragments and existing stable identities; it does not waive the
+exact final volumes, quote provenance, or existing content and grammar checks.
 
 Shipped generation provenance
 uses a generic source description and does not name a real person. Do not use a
@@ -323,7 +431,8 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Completion verified on 2026-09-14 with `CI=1 npm run ci` (exit 0): 975 unit
+The previous completion was verified on 2026-09-14 with `CI=1 npm run ci`
+(exit 0): 975 unit
 tests, 694 browser tests, passing coverage, and 259 Playwright cases (257 passed
 initially and two passed on retry). The two retry cases then passed three runs
 each with retries disabled after making the Pause locator exact. No gameplay
@@ -332,7 +441,9 @@ assertion or asset threshold was relaxed. Final logs are retained in
 Impeccable audit and independent critique evidence, dispositions, and limitations
 are recorded in `.impeccable/review/spec-028-acceptance.md`.
 
-All content, localization, asset, license, and minimum-volume checks
-pass. Every character and scene loads at all supported landscape viewports and
-completes a simulated match. `npm run ci` passes. Stop before balance changes, editorial
-approval, performance tuning, or deployment.
+That evidence covers the previous finalization target. The revised exact
+common, character, and scene volumes, quote provenance, verb-family review, and
+owner-personalized conjunction checks remain pending implementation and
+verification. The existing character, scene, asset, localization, and match
+evidence remains useful but does not establish completion of the revised
+contract. Stop before release optimization or deployment.
