@@ -14,8 +14,12 @@ const environment = {
   GRAND_TRANSITION_QUALITY_GATE: mode,
   GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
 };
-for (const phase of ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']) {
-  const script = mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase;
+const phases = mode === 'full'
+  ? ['validate', 'balance:validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']
+  : ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e'];
+const fullTestPhases = new Set(['test', 'test:browser', 'test:coverage', 'test:e2e']);
+for (const phase of phases) {
+  const script = mode === 'full' && fullTestPhases.has(phase) ? `${phase}:full` : phase;
   const result = spawnSync(process.execPath, [npmCli, 'run', script], { stdio: 'inherit', env: environment });
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);

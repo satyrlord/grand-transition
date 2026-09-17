@@ -525,6 +525,383 @@
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "oat-milk-reformist-contract-noun-1-a-reform-with-oat-milk-foam",
+      "role": "noun",
+      "text": "thirty therapy sessions from the state",
+      "tags": [
+        "relevance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "reform"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "oat-milk-reformist-contract-noun-2-a-class-analysis-on-a-caf-receipt",
+      "role": "noun",
+      "text": "a luxury no longer reserved for the privileged",
+      "tags": [
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "reform"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "oat-milk-reformist-contract-noun-3-a-sustainable-promise-in-a-plastic-cup",
+      "role": "noun",
+      "text": "a rich-to-poor transfer",
+      "tags": [
+        "class"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "reform"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "oat-milk-reformist-contract-noun-4-a-relevant-scarf-at-a-public-hearing",
+      "role": "noun",
+      "text": "a public service beyond privilege",
+      "tags": [
+        "relevance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "reform"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-past",
+      "role": "verb",
+      "text": "took from the rich to give to",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+    },
+    {
+      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-present",
+      "role": "verb",
+      "text": "takes from the rich to give to",
+      "singularText": "takes from the rich to give to",
+      "pluralText": "take from the rich to give to",
+      "personalSingularText": "takes from the rich to give to",
+      "secondPersonText": "take from the rich to give to",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+    },
+    {
+      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-future",
+      "role": "verb",
+      "text": "will take from the rich to give to",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a therapy session beyond privilege",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a therapy session beyond privilege",
+      "singularText": "is a therapy session beyond privilege",
+      "pluralText": "is a therapy session beyond privilege",
+      "personalSingularText": "is a therapy session beyond privilege",
+      "secondPersonText": "are a therapy session beyond privilege",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a therapy session beyond privilege",
+      "tags": [
+        "relevance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was an authentic apology in a takeaway cup",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is an authentic apology in a takeaway cup",
+      "singularText": "is an authentic apology in a takeaway cup",
+      "pluralText": "is an authentic apology in a takeaway cup",
+      "personalSingularText": "is an authentic apology in a takeaway cup",
+      "secondPersonText": "is an authentic apology in a takeaway cup",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be an authentic apology in a takeaway cup",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a class argument with a sponsored straw",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a class argument with a sponsored straw",
+      "singularText": "is a class argument with a sponsored straw",
+      "pluralText": "is a class argument with a sponsored straw",
+      "personalSingularText": "is a class argument with a sponsored straw",
+      "secondPersonText": "is a class argument with a sponsored straw",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "oat-milk-reformist-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a class argument with a sponsored straw",
+      "tags": [
+        "class"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "reform"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "oat-milk-reformist-contract-modifier-beside-a-reusable-apology",
+      "role": "modifier",
+      "text": "beside-a-reusable-apology",
+      "tags": [
+        "authenticity"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "oat-milk-reformist-contract-ending-and-the-reform-came-with-a-loyalty-card",
+      "role": "ending",
+      "text": "and the reform came with a loyalty card.",
+      "tags": [
+        "relevance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "oat-milk-reformist-contract-ending-and-authenticity-asked-for-oat-milk",
+      "role": "ending",
+      "text": "and authenticity asked for oat milk.",
+      "tags": [
+        "authenticity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

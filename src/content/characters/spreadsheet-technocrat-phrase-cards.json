@@ -480,6 +480,393 @@
       "tags": [],
       "connectorKind": "but",
       "rarity": "uncommon"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-noun-1-a-dashboard-with-a-human-scale-button",
+      "role": "noun",
+      "text": "rats gnawing at the supplies",
+      "tags": [
+        "delivery"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "dashboard"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-noun-2-a-delivery-chart-with-a-missing-truck",
+      "role": "noun",
+      "text": "the person gathering the broken pieces",
+      "tags": [
+        "accountability"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "dashboard"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-noun-3-a-spreadsheet-of-accountable-relatives",
+      "role": "noun",
+      "text": "a budget with a broom invoice",
+      "tags": [
+        "human-scale"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "dashboard"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-noun-4-a-metric-with-a-coffee-stain",
+      "role": "noun",
+      "text": "a crumb under audit",
+      "tags": [
+        "delivery"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "dashboard"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-past",
+      "role": "verb",
+      "text": "billed the broom for",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-present",
+      "role": "verb",
+      "text": "bills the broom for",
+      "singularText": "bills the broom for",
+      "pluralText": "bill the broom for",
+      "personalSingularText": "bills the broom for",
+      "secondPersonText": "bill the broom for",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-future",
+      "role": "verb",
+      "text": "will bill the broom for",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a pantry of gnawed provisions",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a pantry of gnawed provisions",
+      "singularText": "is a pantry of gnawed provisions",
+      "pluralText": "is a pantry of gnawed provisions",
+      "personalSingularText": "is a pantry of gnawed provisions",
+      "secondPersonText": "are a pantry of gnawed provisions",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a pantry of gnawed provisions",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a deadline with a dashboard",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a deadline with a dashboard",
+      "singularText": "is a deadline with a dashboard",
+      "pluralText": "is a deadline with a dashboard",
+      "personalSingularText": "is a deadline with a dashboard",
+      "secondPersonText": "is a deadline with a dashboard",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a deadline with a dashboard",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a delivery promise in a spreadsheet",
+      "tags": [
+        "human-scale"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a delivery promise in a spreadsheet",
+      "singularText": "is a delivery promise in a spreadsheet",
+      "pluralText": "is a delivery promise in a spreadsheet",
+      "personalSingularText": "is a delivery promise in a spreadsheet",
+      "secondPersonText": "is a delivery promise in a spreadsheet",
+      "tags": [
+        "human-scale"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a delivery promise in a spreadsheet",
+      "tags": [
+        "human-scale"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "dashboard"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-modifier-according-to-a-human-scale-metric",
+      "role": "modifier",
+      "text": "according-to-a-human-scale-metric",
+      "tags": [
+        "human-scale"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-ending-and-the-dashboard-requested-a-delivery-date",
+      "role": "ending",
+      "text": "and the dashboard requested a delivery date.",
+      "tags": [
+        "delivery"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-ending-and-accountability-opened-another-column",
+      "role": "ending",
+      "text": "and accountability opened another column.",
+      "tags": [
+        "accountability"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "spreadsheet-technocrat-contract-ending-and-the-metric-became-a-person",
+      "role": "ending",
+      "text": "and the metric became a person.",
+      "tags": [
+        "human-scale"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

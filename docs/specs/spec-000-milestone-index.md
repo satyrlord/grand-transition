@@ -294,11 +294,12 @@ source-only review does not satisfy them.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial rules](spec-027-balance-editorial.md). Budget: 5.
-    The revised content-catalog editorial contract is approved but pending
-    implementation. Additional Milestone 028 artwork is not a prerequisite.
+    The revised content implementation is verified; broader editorial evidence
+    remains pending. Additional Milestone 028 artwork is not a prerequisite.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
-    The revised exact common, character, and scene volumes, quote provenance,
-    art, audio treatment, and variety evidence are pending.
+    The revised exact common, character, and scene volumes are implemented and
+    focused-validated. Quote provenance, art, audio treatment, and variety
+    evidence remain pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Phase 1 translates the interface. Phase 2
     translates the game content and implements Romanian grammar with Mihai

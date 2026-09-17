@@ -502,6 +502,332 @@
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "black-sea-captain-contract-noun-1-a-winter-charter",
+      "role": "noun",
+      "text": "winter unlike summer",
+      "tags": [
+        "decorum"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "sea"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "black-sea-captain-contract-noun-2-a-tide-with-a-campaign-promise",
+      "role": "noun",
+      "text": "a campaign promise full of holes",
+      "tags": [
+        "consistency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "sea"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "black-sea-captain-contract-noun-3-a-fishing-boat-with-a-press-badge",
+      "role": "noun",
+      "text": "a ballot with a weather excuse",
+      "tags": [
+        "securitate"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "sea"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "black-sea-captain-contract-noun-4-a-lifejacket-for-the-ballot-box",
+      "role": "noun",
+      "text": "a lifejacket for a winter vote",
+      "tags": [
+        "decorum"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "sea"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-past",
+      "role": "verb",
+      "text": "compared winter with",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+    },
+    {
+      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-present",
+      "role": "verb",
+      "text": "compares winter with",
+      "singularText": "compares winter with",
+      "pluralText": "compare winter with",
+      "personalSingularText": "compares winter with",
+      "secondPersonText": "compare winter with",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+    },
+    {
+      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-future",
+      "role": "verb",
+      "text": "will compare winter with",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was winter refusing to act like summer",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is winter refusing to act like summer",
+      "singularText": "is winter refusing to act like summer",
+      "pluralText": "is winter refusing to act like summer",
+      "personalSingularText": "is winter refusing to act like summer",
+      "secondPersonText": "are winter refusing to act like summer",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be winter refusing to act like summer",
+      "tags": [
+        "decorum"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a navy of one borrowed boat",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a navy of one borrowed boat",
+      "singularText": "is a navy of one borrowed boat",
+      "pluralText": "is a navy of one borrowed boat",
+      "personalSingularText": "is a navy of one borrowed boat",
+      "secondPersonText": "is a navy of one borrowed boat",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+    },
+    {
+      "id": "black-sea-captain-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a navy of one borrowed boat",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "sea"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+    },
+    {
+      "id": "black-sea-captain-contract-modifier-beneath-a-summer-excuse",
+      "role": "modifier",
+      "text": "beneath-a-summer-excuse",
+      "tags": [
+        "consistency"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "black-sea-captain-contract-modifier-with-both-hands-on-the-microphone",
+      "role": "modifier",
+      "text": "with-both-hands-on-the-microphone",
+      "tags": [
+        "decorum"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "black-sea-captain-contract-ending-and-winter-refused-to-sign-the-minutes",
+      "role": "ending",
+      "text": "and winter refused to sign the minutes.",
+      "tags": [
+        "consistency"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "black-sea-captain-contract-ending-and-the-ballot-box-requested-a-lifejacket",
+      "role": "ending",
+      "text": "and the ballot box requested a lifejacket.",
+      "tags": [
+        "decorum"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "black-sea-captain-contract-ending-and-the-tide-filed-a-correction",
+      "role": "ending",
+      "text": "and the tide filed a correction.",
+      "tags": [
+        "securitate"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

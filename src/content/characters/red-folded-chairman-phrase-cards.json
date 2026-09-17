@@ -425,26 +425,6 @@
       "rarity": "uncommon"
     },
     {
-      "id": "some-hooligans",
-      "role": "noun",
-      "text": "some hooligans",
-      "grammaticalNumber": "plural",
-      "referentKind": "personal",
-      "tags": [
-        "decorum",
-        "restraint"
-      ],
-      "scoreGroups": {
-        "substance": [
-          "personal"
-        ],
-        "flavour": [
-          "crowd"
-        ]
-      },
-      "rarity": "uncommon"
-    },
-    {
       "id": "scientific-socialism",
       "role": "noun",
       "text": "scientific socialism",
@@ -507,41 +487,6 @@
         "evidence"
       ],
       "rarity": "common"
-    },
-    {
-      "id": "a-rooster",
-      "role": "noun",
-      "text": "a rooster",
-      "referentKind": "personal",
-      "tags": [],
-      "scoreGroups": {
-        "substance": [
-          "personal"
-        ],
-        "flavour": [
-          "animal-metaphor"
-        ]
-      },
-      "rarity": "uncommon"
-    },
-    {
-      "id": "a-naughty-boy",
-      "role": "noun",
-      "text": "a naughty boy",
-      "referentKind": "personal",
-      "tags": [
-        "restraint",
-        "credibility"
-      ],
-      "scoreGroups": {
-        "substance": [
-          "personal"
-        ],
-        "flavour": [
-          "behavior"
-        ]
-      },
-      "rarity": "rare"
     },
     {
       "id": "the-dacs-that-come-from-the-tracs",
@@ -687,6 +632,235 @@
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "red-folded-chairman-contract-verb-files-the-transition-past",
+      "role": "verb",
+      "text": "anchored universal claims in",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+    },
+    {
+      "id": "red-folded-chairman-contract-verb-files-the-transition-present",
+      "role": "verb",
+      "text": "anchors universal claims in",
+      "singularText": "anchors universal claims in",
+      "pluralText": "anchor universal claims in",
+      "personalSingularText": "anchors universal claims in",
+      "secondPersonText": "anchor universal claims in",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+    },
+    {
+      "id": "red-folded-chairman-contract-verb-files-the-transition-future",
+      "role": "verb",
+      "text": "will anchor universal claims in",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was the synergy of facts",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is the synergy of facts",
+      "singularText": "is the synergy of facts",
+      "pluralText": "is the synergy of facts",
+      "personalSingularText": "is the synergy of facts",
+      "secondPersonText": "are the synergy of facts",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be the synergy of facts",
+      "tags": [
+        "legacy"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a reform with a loose screw",
+      "tags": [
+        "modernity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a reform with a loose screw",
+      "singularText": "is a reform with a loose screw",
+      "pluralText": "is a reform with a loose screw",
+      "personalSingularText": "is a reform with a loose screw",
+      "secondPersonText": "is a reform with a loose screw",
+      "tags": [
+        "modernity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+    },
+    {
+      "id": "red-folded-chairman-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a reform with a loose screw",
+      "tags": [
+        "modernity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "history",
+              "transition"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+    },
+    {
+      "id": "red-folded-chairman-contract-modifier-beneath-a-legacy-footnote",
+      "role": "modifier",
+      "text": "beneath-a-legacy-footnote",
+      "tags": [
+        "legacy"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "red-folded-chairman-contract-ending-and-the-transition-requested-a-filing-cabinet",
+      "role": "ending",
+      "text": "and the transition requested a filing cabinet.",
+      "tags": [
+        "legacy"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 8
     }
   ]
 }

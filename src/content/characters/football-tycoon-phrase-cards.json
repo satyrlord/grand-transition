@@ -496,6 +496,393 @@
       "tags": [],
       "connectorKind": "yet",
       "rarity": "uncommon"
+    },
+    {
+      "id": "football-tycoon-contract-noun-1-a-transfer-fee-with-a-conscience",
+      "role": "noun",
+      "text": "the greatest credit is mine",
+      "tags": [
+        "commercialism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "commercialism"
+        ],
+        "flavour": [
+          "football"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "football-tycoon-contract-noun-2-a-stadium-seat-in-a-boardroom",
+      "role": "noun",
+      "text": "two markers on the unread pages",
+      "tags": [
+        "accountability"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "commercialism"
+        ],
+        "flavour": [
+          "football"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "football-tycoon-contract-noun-3-a-sponsorship-with-a-penalty-clause",
+      "role": "noun",
+      "text": "a sum worth the shirt",
+      "tags": [
+        "sincerity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "commercialism"
+        ],
+        "flavour": [
+          "football"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "football-tycoon-contract-noun-4-a-striker-of-the-public-imagination",
+      "role": "noun",
+      "text": "a trophy carrying my credit",
+      "tags": [
+        "commercialism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "commercialism"
+        ],
+        "flavour": [
+          "football"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-past",
+      "role": "verb",
+      "text": "claimed credit for",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+    },
+    {
+      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-present",
+      "role": "verb",
+      "text": "claims credit for",
+      "singularText": "claims credit for",
+      "pluralText": "claim credit for",
+      "personalSingularText": "claims credit for",
+      "secondPersonText": "claim credit for",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+    },
+    {
+      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-future",
+      "role": "verb",
+      "text": "will claim credit for",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a victory where the greatest credit was mine",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a victory where the greatest credit is mine",
+      "singularText": "is a victory where the greatest credit is mine",
+      "pluralText": "is a victory where the greatest credit is mine",
+      "personalSingularText": "is a victory where the greatest credit is mine",
+      "secondPersonText": "are a victory where the greatest credit is mine",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a victory where the greatest credit is mine",
+      "tags": [
+        "commercialism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a transfer wearing a moral ribbon",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a transfer wearing a moral ribbon",
+      "singularText": "is a transfer wearing a moral ribbon",
+      "pluralText": "is a transfer wearing a moral ribbon",
+      "personalSingularText": "is a transfer wearing a moral ribbon",
+      "secondPersonText": "is a transfer wearing a moral ribbon",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a transfer wearing a moral ribbon",
+      "tags": [
+        "accountability"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a penalty clause with a smile",
+      "tags": [
+        "sincerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a penalty clause with a smile",
+      "singularText": "is a penalty clause with a smile",
+      "pluralText": "is a penalty clause with a smile",
+      "personalSingularText": "is a penalty clause with a smile",
+      "secondPersonText": "is a penalty clause with a smile",
+      "tags": [
+        "sincerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+    },
+    {
+      "id": "football-tycoon-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a penalty clause with a smile",
+      "tags": [
+        "sincerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "commercialism",
+              "football"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+    },
+    {
+      "id": "football-tycoon-contract-modifier-beside-a-sponsor-shaped-trophy",
+      "role": "modifier",
+      "text": "beside-a-sponsor-shaped-trophy",
+      "tags": [
+        "commercialism"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "football-tycoon-contract-ending-and-the-scoreboard-requested-a-sponsor",
+      "role": "ending",
+      "text": "and the scoreboard requested a sponsor.",
+      "tags": [
+        "commercialism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "football-tycoon-contract-ending-and-sincerity-left-before-extra-time",
+      "role": "ending",
+      "text": "and sincerity left before extra time.",
+      "tags": [
+        "sincerity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "football-tycoon-contract-ending-and-the-transfer-fee-gave-an-interview",
+      "role": "ending",
+      "text": "and the transfer fee gave an interview.",
+      "tags": [
+        "accountability"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

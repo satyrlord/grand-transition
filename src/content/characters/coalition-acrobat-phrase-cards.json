@@ -491,6 +491,393 @@
       "tags": [],
       "connectorKind": "but",
       "rarity": "uncommon"
+    },
+    {
+      "id": "coalition-acrobat-contract-noun-1-a-coalition-of-spare-umbrellas",
+      "role": "noun",
+      "text": "a leather jacket",
+      "tags": [
+        "consistency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "coalition"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "coalition-acrobat-contract-noun-2-a-promise-with-a-hinge",
+      "role": "noun",
+      "text": "cash that never goes out of fashion",
+      "tags": [
+        "memory"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "coalition"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "coalition-acrobat-contract-noun-3-a-memory-stored-in-a-coalition-folder",
+      "role": "noun",
+      "text": "a clean slate with yesterday's signatures",
+      "tags": [
+        "commitment"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "coalition"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "coalition-acrobat-contract-noun-4-a-commitment-on-a-folding-chair",
+      "role": "noun",
+      "text": "a coalition starting from scratch",
+      "tags": [
+        "consistency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "coalition"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-past",
+      "role": "verb",
+      "text": "wore the leather jacket with",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+    },
+    {
+      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-present",
+      "role": "verb",
+      "text": "wears the leather jacket with",
+      "singularText": "wears the leather jacket with",
+      "pluralText": "wear the leather jacket with",
+      "personalSingularText": "wears the leather jacket with",
+      "secondPersonText": "wear the leather jacket with",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+    },
+    {
+      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-future",
+      "role": "verb",
+      "text": "will wear the leather jacket with",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a fresh start with fingerprints",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a fresh start with fingerprints",
+      "singularText": "is a fresh start with fingerprints",
+      "pluralText": "is a fresh start with fingerprints",
+      "personalSingularText": "is a fresh start with fingerprints",
+      "secondPersonText": "are a fresh start with fingerprints",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a fresh start with fingerprints",
+      "tags": [
+        "consistency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a coalition with a rehearsal date",
+      "tags": [
+        "memory"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a coalition with a rehearsal date",
+      "singularText": "is a coalition with a rehearsal date",
+      "pluralText": "is a coalition with a rehearsal date",
+      "personalSingularText": "is a coalition with a rehearsal date",
+      "secondPersonText": "is a coalition with a rehearsal date",
+      "tags": [
+        "memory"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a coalition with a rehearsal date",
+      "tags": [
+        "memory"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a mandate balancing on one foot",
+      "tags": [
+        "commitment"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a mandate balancing on one foot",
+      "singularText": "is a mandate balancing on one foot",
+      "pluralText": "is a mandate balancing on one foot",
+      "personalSingularText": "is a mandate balancing on one foot",
+      "secondPersonText": "is a mandate balancing on one foot",
+      "tags": [
+        "commitment"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "coalition-acrobat-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a mandate balancing on one foot",
+      "tags": [
+        "commitment"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "coalition",
+              "politics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "coalition-acrobat-contract-modifier-between-two-identical-minutes",
+      "role": "modifier",
+      "text": "between-two-identical-minutes",
+      "tags": [
+        "memory"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "coalition-acrobat-contract-ending-and-the-promise-joined-the-other-promise",
+      "role": "ending",
+      "text": "and the promise joined the other promise.",
+      "tags": [
+        "consistency"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "coalition-acrobat-contract-ending-and-the-coalition-changed-its-choreography",
+      "role": "ending",
+      "text": "and the coalition changed its choreography.",
+      "tags": [
+        "commitment"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "coalition-acrobat-contract-ending-and-the-minutes-remembered-nothing",
+      "role": "ending",
+      "text": "and the minutes remembered nothing.",
+      "tags": [
+        "memory"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

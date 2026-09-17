@@ -520,6 +520,383 @@
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "velvet-mogul-contract-noun-1-a-velvet-contract-with-a-hidden-fee",
+      "role": "noun",
+      "text": "wealth that lives in the head",
+      "tags": [
+        "wealth"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "influence"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "velvet-mogul-contract-noun-2-a-wealth-report-in-a-silk-folder",
+      "role": "noun",
+      "text": "cash that refuses to go out of fashion",
+      "tags": [
+        "influence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "influence"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "velvet-mogul-contract-noun-3-an-influence-map-with-a-valet-route",
+      "role": "noun",
+      "text": "a fortune in a velvet folder",
+      "tags": [
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "influence"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "velvet-mogul-contract-noun-4-a-credibility-badge-made-of-marble",
+      "role": "noun",
+      "text": "an idea richer than money",
+      "tags": [
+        "wealth"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "influence"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-past",
+      "role": "verb",
+      "text": "measured wealth by",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+    },
+    {
+      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-present",
+      "role": "verb",
+      "text": "measures wealth by",
+      "singularText": "measures wealth by",
+      "pluralText": "measure wealth by",
+      "personalSingularText": "measures wealth by",
+      "secondPersonText": "measure wealth by",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+    },
+    {
+      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-future",
+      "role": "verb",
+      "text": "will measure wealth by",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was wealth in the head, not money",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is wealth in the head, not money",
+      "singularText": "is wealth in the head, not money",
+      "pluralText": "is wealth in the head, not money",
+      "personalSingularText": "is wealth in the head, not money",
+      "secondPersonText": "are wealth in the head, not money",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be wealth in the head, not money",
+      "tags": [
+        "wealth"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a public promise with a private sponsor",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a public promise with a private sponsor",
+      "singularText": "is a public promise with a private sponsor",
+      "pluralText": "is a public promise with a private sponsor",
+      "personalSingularText": "is a public promise with a private sponsor",
+      "secondPersonText": "is a public promise with a private sponsor",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a public promise with a private sponsor",
+      "tags": [
+        "influence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a fortune wearing a modesty badge",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a fortune wearing a modesty badge",
+      "singularText": "is a fortune wearing a modesty badge",
+      "pluralText": "is a fortune wearing a modesty badge",
+      "personalSingularText": "is a fortune wearing a modesty badge",
+      "secondPersonText": "is a fortune wearing a modesty badge",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+    },
+    {
+      "id": "velvet-mogul-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a fortune wearing a modesty badge",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "influence"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+    },
+    {
+      "id": "velvet-mogul-contract-modifier-beside-a-platinum-apology",
+      "role": "modifier",
+      "text": "beside-a-platinum-apology",
+      "tags": [
+        "wealth"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "velvet-mogul-contract-ending-and-influence-sent-its-own-chauffeur",
+      "role": "ending",
+      "text": "and influence sent its own chauffeur.",
+      "tags": [
+        "influence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "velvet-mogul-contract-ending-and-the-wealth-report-requested-a-silk-cover",
+      "role": "ending",
+      "text": "and the wealth report requested a silk cover.",
+      "tags": [
+        "wealth"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

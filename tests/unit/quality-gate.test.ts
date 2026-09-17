@@ -14,6 +14,18 @@ const validatorPath = path.resolve(
   'tools',
   'validate-scaffold.mjs',
 );
+const balanceValidatorPath = path.resolve(
+  process.cwd(),
+  'tools',
+  'validate-content-balance.ts',
+);
+const tsxPath = path.resolve(
+  process.cwd(),
+  'node_modules',
+  'tsx',
+  'dist',
+  'cli.mjs',
+);
 const oxlintPath = path.resolve(
   process.cwd(),
   'node_modules',
@@ -40,6 +52,7 @@ const requiredScripts = [
   'test:e2e',
   'markdown:lint',
   'content:validate',
+  'balance:validate',
   'localization:validate',
   'boundaries:check',
   'simulate',
@@ -125,17 +138,19 @@ describe('quality-gate scaffold', () => {
       );
     }
     const gate = await readFile(path.resolve('tools', 'run-quality-gate.mjs'), 'utf8');
+    expect(gate).toContain("['validate', 'balance:validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']");
     expect(gate).toContain("['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']");
     expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
     expect(gate).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1'");
-    expect(gate).toContain("mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase");
+    expect(gate).toContain('fullTestPhases.has(phase)');
     expect(gate).toContain("['quick', 'full']");
-    const [calibration, ladder, gateMode, browserConfig, phaseRunner] = await Promise.all([
+    const [calibration, ladder, gateMode, browserConfig, phaseRunner, balanceValidator] = await Promise.all([
       readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
       readFile(path.resolve('e2e', 'advanced-ai-ladder.spec.ts'), 'utf8'),
       readFile(path.resolve('tools', 'quality-gate-mode.ts'), 'utf8'),
       readFile(path.resolve('vitest.browser.config.ts'), 'utf8'),
       readFile(path.resolve('tools', 'run-test-phase.mjs'), 'utf8'),
+      readFile(balanceValidatorPath, 'utf8'),
     ]);
     for (const source of [calibration, ladder]) {
       expect(source).toContain('fullQualityGateRequested');
@@ -151,6 +166,14 @@ describe('quality-gate scaffold', () => {
     expect(browserConfig).not.toContain("'quick' : 'full'");
     expect(phaseRunner).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
     expect(phaseRunner).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: mode === 'full' ? '1' : ''");
+    expect(balanceValidator).toContain('fullQualityGateRequested()');
+    expect(balanceValidator).toContain('Content balance validation is only available through npm run quality:full.');
+    expect(balanceValidator).toContain('const matchesPerCell = 500;');
+    expect(balanceValidator).toContain('const structuralSamplesPerDefender = 64;');
+    expect(balanceValidator).not.toContain('process.env.BALANCE_MATCHES');
+    expect(balanceValidator).not.toContain('process.env.BALANCE_STRUCTURAL_SAMPLES');
+    expect(balanceValidator).not.toContain('process.env.BALANCE_WORKERS');
+    expect(balanceValidator).not.toContain('process.env.BALANCE_MODEL');
     expect(fullQualityGateRequested({
       GRAND_TRANSITION_QUALITY_GATE: 'full',
       GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
@@ -161,6 +184,7 @@ describe('quality-gate scaffold', () => {
     expect(fullQualityGateRequested({})).toBe(false);
     const phases = [
       'validate',
+      'balance:validate',
       'test',
       'test:browser',
       'test:coverage',
@@ -173,6 +197,28 @@ describe('quality-gate scaffold', () => {
       expect(currentIndex, phase).toBeGreaterThan(previousIndex);
       previousIndex = currentIndex;
     }
+  });
+
+  test('blocks direct content-balance execution outside the full gate', async () => {
+    const environment = { ...process.env };
+    delete environment.GRAND_TRANSITION_QUALITY_GATE;
+    delete environment.GRAND_TRANSITION_QUALITY_GATE_RUNNER;
+
+    let failure: CommandError | undefined;
+    try {
+      await execFileAsync(
+        process.execPath,
+        [tsxPath, balanceValidatorPath],
+        { cwd: process.cwd(), env: environment, timeout: 5_000 },
+      );
+    } catch (error) {
+      failure = error as CommandError;
+    }
+
+    expect(failure).toBeDefined();
+    expect(failure?.stderr).toContain(
+      'Content balance validation is only available through npm run quality:full.',
+    );
   });
 
   test('validates content files and the aggregate content contract', async () => {

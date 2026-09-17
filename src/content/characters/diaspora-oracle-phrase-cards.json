@@ -495,6 +495,393 @@
       "tags": [],
       "connectorKind": "yet",
       "rarity": "uncommon"
+    },
+    {
+      "id": "diaspora-oracle-contract-noun-1-a-suitcase-full-of-local-wisdom",
+      "role": "noun",
+      "text": "a house made of promises",
+      "tags": [
+        "distance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "travel"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "diaspora-oracle-contract-noun-2-an-airport-map-with-a-missing-village",
+      "role": "noun",
+      "text": "a brochure with a roof",
+      "tags": [
+        "context"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "travel"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "diaspora-oracle-contract-noun-3-a-remote-witness-on-a-train",
+      "role": "noun",
+      "text": "keys advertised from abroad",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "travel"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "diaspora-oracle-contract-noun-4-a-postcard-with-a-footnote",
+      "role": "noun",
+      "text": "a marketing campaign with foundations",
+      "tags": [
+        "distance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "travel"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "diaspora-oracle-contract-verb-translates-distance-into-evidence-past",
+      "role": "verb",
+      "text": "marketed a house as",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-contract-verb-translates-distance-into-evidence"
+    },
+    {
+      "id": "diaspora-oracle-contract-verb-translates-distance-into-evidence-present",
+      "role": "verb",
+      "text": "markets a house as",
+      "singularText": "markets a house as",
+      "pluralText": "market a house as",
+      "personalSingularText": "markets a house as",
+      "secondPersonText": "market a house as",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-contract-verb-translates-distance-into-evidence"
+    },
+    {
+      "id": "diaspora-oracle-contract-verb-translates-distance-into-evidence-future",
+      "role": "verb",
+      "text": "will market a house as",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-contract-verb-translates-distance-into-evidence"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was marketing and promotion with no foundation",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-1"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is marketing and promotion with no foundation",
+      "singularText": "is marketing and promotion with no foundation",
+      "pluralText": "is marketing and promotion with no foundation",
+      "personalSingularText": "is marketing and promotion with no foundation",
+      "secondPersonText": "are marketing and promotion with no foundation",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-1"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be marketing and promotion with no foundation",
+      "tags": [
+        "distance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-1"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was an eyewitness between two time zones",
+      "tags": [
+        "context"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-2"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is an eyewitness between two time zones",
+      "singularText": "is an eyewitness between two time zones",
+      "pluralText": "is an eyewitness between two time zones",
+      "personalSingularText": "is an eyewitness between two time zones",
+      "secondPersonText": "is an eyewitness between two time zones",
+      "tags": [
+        "context"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-2"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be an eyewitness between two time zones",
+      "tags": [
+        "context"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-2"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a context waiting at baggage claim",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-3"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a context waiting at baggage claim",
+      "singularText": "is a context waiting at baggage claim",
+      "pluralText": "is a context waiting at baggage claim",
+      "personalSingularText": "is a context waiting at baggage claim",
+      "secondPersonText": "is a context waiting at baggage claim",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-3"
+    },
+    {
+      "id": "diaspora-oracle-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a context waiting at baggage claim",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "travel"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "diaspora-oracle-contract-predicate-predicate-3"
+    },
+    {
+      "id": "diaspora-oracle-contract-modifier-after-a-connection-in-another-country",
+      "role": "modifier",
+      "text": "after-a-connection-in-another-country",
+      "tags": [
+        "distance"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "diaspora-oracle-contract-ending-and-the-witness-still-needed-directions",
+      "role": "ending",
+      "text": "and the witness still needed directions.",
+      "tags": [
+        "firsthand-knowledge"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "diaspora-oracle-contract-ending-and-the-postcard-corrected-the-capital",
+      "role": "ending",
+      "text": "and the postcard corrected the capital.",
+      "tags": [
+        "context"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "diaspora-oracle-contract-ending-and-the-suitcase-contained-the-missing-context",
+      "role": "ending",
+      "text": "and the suitcase contained the missing context.",
+      "tags": [
+        "distance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

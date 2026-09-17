@@ -524,6 +524,383 @@
       "connectorKind": "yet",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "midnight-sensationalist-contract-noun-1-a-breaking-news-clock-on-overtime",
+      "role": "noun",
+      "text": "what you do not know you are losing",
+      "tags": [
+        "ratings"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "ratings"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "midnight-sensationalist-contract-noun-2-a-caller-with-a-hidden-sponsor",
+      "role": "noun",
+      "text": "a reward that is not cash",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "ratings"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "midnight-sensationalist-contract-noun-3-a-headline-with-a-siren",
+      "role": "noun",
+      "text": "a revelation before the commercial break",
+      "tags": [
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "ratings"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "midnight-sensationalist-contract-noun-4-a-camera-that-remembers-the-scandal",
+      "role": "noun",
+      "text": "a bad joke on the midnight line",
+      "tags": [
+        "ratings"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "ratings"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-past",
+      "role": "verb",
+      "text": "promised what you do not know you are losing to",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+    },
+    {
+      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-present",
+      "role": "verb",
+      "text": "promises what you do not know you are losing to",
+      "singularText": "promises what you do not know you are losing to",
+      "pluralText": "promise what you do not know you are losing to",
+      "personalSingularText": "promises what you do not know you are losing to",
+      "secondPersonText": "promise what you do not know you are losing to",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+    },
+    {
+      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-future",
+      "role": "verb",
+      "text": "will promise what you do not know you lose to",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was an exclusive you did not know you were missing",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is an exclusive you did not know you were missing",
+      "singularText": "is an exclusive you did not know you were missing",
+      "pluralText": "is an exclusive you did not know you were missing",
+      "personalSingularText": "is an exclusive you did not know you were missing",
+      "secondPersonText": "are an exclusive you did not know you were missing",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be an exclusive you did not know you miss",
+      "tags": [
+        "ratings"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a headline wearing an eyewitness badge",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a headline wearing an eyewitness badge",
+      "singularText": "is a headline wearing an eyewitness badge",
+      "pluralText": "is a headline wearing an eyewitness badge",
+      "personalSingularText": "is a headline wearing an eyewitness badge",
+      "secondPersonText": "is a headline wearing an eyewitness badge",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a headline wearing an eyewitness badge",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a scandal with a subscription tier",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a scandal with a subscription tier",
+      "singularText": "is a scandal with a subscription tier",
+      "pluralText": "is a scandal with a subscription tier",
+      "personalSingularText": "is a scandal with a subscription tier",
+      "secondPersonText": "is a scandal with a subscription tier",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "midnight-sensationalist-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a scandal with a subscription tier",
+      "tags": [
+        "credibility"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "ratings"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "midnight-sensationalist-contract-modifier-beneath-a-breaking-news-banner",
+      "role": "modifier",
+      "text": "beneath-a-breaking-news-banner",
+      "tags": [
+        "ratings"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "midnight-sensationalist-contract-ending-and-the-source-requested-a-better-angle",
+      "role": "ending",
+      "text": "and the source requested a better angle.",
+      "tags": [
+        "evidence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "midnight-sensationalist-contract-ending-and-the-headline-outlived-the-facts",
+      "role": "ending",
+      "text": "and the headline outlived the facts.",
+      "tags": [
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

@@ -119,7 +119,7 @@ review.
 Every ordered character and scene setup can prepare a round, complete a seeded
 headless match, and preserve private-hand secrecy. The foundation does not tune
 release balance. Milestone 028 raises phrase counts and scene-specific volume to
-the exact final targets: 40 character-owned cards per character and 33
+the exact final targets: 40 character-owned cards per character and 34
 scene-restricted cards per scene.
 Milestone 027 owns final balance and editorial evidence.
 

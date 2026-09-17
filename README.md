@@ -38,9 +38,10 @@ game contracts, replaceable external ports, enforced pure-module boundaries, a
 secured production shell, and the complete configured quality gate. Milestones
 024, 025, 030, and 031 remain incomplete. Milestone 023 remains complete.
 Milestones 027 and 028 retain historical completion evidence for the previous
-catalog target, but their revised content-catalog contract is pending
-implementation. The current checkout contains 1,010 phrase cards, including
-587 common cards, and does not yet meet the revised target.
+catalog target. Their revised content implementation is present in the current
+checkout and passes the focused content gate. The checkout contains 1,619
+phrase cards: 859 shared common-file cards, including 655 unrestricted and 204
+scene-restricted cards, plus 760 character-owned cards.
 
 The revised common catalog target is 655 cards: 300 nouns, 150 verbs split
 evenly across past, present, and future tense, 99 predicates, 50 modifiers,

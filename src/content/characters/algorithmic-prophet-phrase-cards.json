@@ -172,16 +172,6 @@
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-bravery-follow-up",
-      "role": "ending",
-      "text": "and your bravery fears the follow-up.",
-      "tags": [
-        "follow-up-questions"
-      ],
-      "rarity": "rare",
-      "finisherBonus": 4
-    },
-    {
       "id": "algorithmic-prophet-offline-revelation",
       "role": "noun",
       "text": "a revelation awaiting a stronger signal",
@@ -530,6 +520,354 @@
       "tags": [],
       "connectorKind": "yet",
       "rarity": "uncommon"
+    },
+    {
+      "id": "algorithmic-prophet-contract-noun-1-a-prediction-in-a-paper-cup",
+      "role": "noun",
+      "text": "information inside a glass of water",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "evidence"
+        ],
+        "flavour": [
+          "technology"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "algorithmic-prophet-contract-noun-2-a-dashboard-that-consults-the-weather",
+      "role": "noun",
+      "text": "a laptop entered by a fizzy prophecy",
+      "tags": [
+        "specificity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "evidence"
+        ],
+        "flavour": [
+          "technology"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "algorithmic-prophet-contract-noun-3-a-prophecy-with-a-password",
+      "role": "noun",
+      "text": "a prophecy with information inside",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "evidence"
+        ],
+        "flavour": [
+          "technology"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "algorithmic-prophet-contract-noun-4-a-model-trained-on-applause",
+      "role": "noun",
+      "text": "a model that enters the laptop",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "evidence"
+        ],
+        "flavour": [
+          "technology"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-past",
+      "role": "verb",
+      "text": "downloaded information from",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+    },
+    {
+      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-present",
+      "role": "verb",
+      "text": "downloads information from",
+      "singularText": "downloads information from",
+      "pluralText": "download information from",
+      "personalSingularText": "downloads information from",
+      "secondPersonText": "download information from",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+    },
+    {
+      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-future",
+      "role": "verb",
+      "text": "will download information from",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was information in a glass of water",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is information in a glass of water",
+      "singularText": "is information in a glass of water",
+      "pluralText": "is information in a glass of water",
+      "personalSingularText": "is information in a glass of water",
+      "secondPersonText": "are information in a glass of water",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be information in a glass of water",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a statistic wearing ceremonial courage",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a statistic wearing ceremonial courage",
+      "singularText": "is a statistic wearing ceremonial courage",
+      "pluralText": "is a statistic wearing ceremonial courage",
+      "personalSingularText": "is a statistic wearing ceremonial courage",
+      "secondPersonText": "is a statistic wearing ceremonial courage",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a statistic wearing ceremonial courage",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was an algorithm with a superstition",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is an algorithm with a superstition",
+      "singularText": "is an algorithm with a superstition",
+      "pluralText": "is an algorithm with a superstition",
+      "personalSingularText": "is an algorithm with a superstition",
+      "secondPersonText": "is an algorithm with a superstition",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
+    },
+    {
+      "id": "algorithmic-prophet-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be an algorithm with a superstition",
+      "tags": [
+        "follow-up-questions"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "evidence",
+              "technology"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
     }
   ]
 }
