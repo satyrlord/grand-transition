@@ -88,6 +88,12 @@ product name, stable identifiers, source identifiers, and license text. Render
 interface numeric values with the interface locale; stored numbers and scoring
 remain locale-neutral.
 
+Phase 2 supersedes the Phase 1 name rule: the two Phase 1 name tables stay only
+as a fallback for the Romanian game-content bundle, and the displayed names in
+setup, play, and history follow the selected game locale, so a Romanian game
+language shows Romanian names under either interface language. The Phase 1
+verifiers that assert interface-locale names are updated to the Phase 2 rule.
+
 Interface translations stay in Lit message resources. The two Phase 1 name
 tables stay in a locale-specific display-name resource. Do not put translated
 text or Romanian morphology in locale-neutral rules. Validate complete
@@ -278,7 +284,19 @@ reproduction. Pin each new schema number and source fixture in
 Milestones 014 and 019 before implementing its codec. English replay and
 match-log documents resolve to English. Existing history entries retain their original public text.
 
-History controls use the current interface language. Recorded sentences keep
+The shipped design records `gameLocale` in the replay setup and raises the
+replay and match-log document version from `1` to `2`; Milestone 014 owns both
+statements. The match-log document version is the replay version, and the
+history entry keeps its own version `1` because the embedded documents already
+carry the locale. A version `1` replay or match log fails as
+`unsupported-version`, and an entry whose pair uses version `1` is ignored
+without rewriting the stored bytes. Replaying checks the recorded identifier
+against the game-locale bundle the caller supplies and fails as `invalid-replay`
+on a mismatch, so a recorded match can never replay in another language. The
+`en` bundle resolves an English document and the `ro-RO` bundle a Romanian one.
+
+History controls use the current interface language, and displayed character and
+scene names follow the selected game locale. Recorded sentences keep
 their original match language and carry the correct language annotation for
 assistive technology. Do not translate or rescore a stored match when the
 current interface or game language changes. Locale metadata adds no private

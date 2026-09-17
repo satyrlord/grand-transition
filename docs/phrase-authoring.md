@@ -102,7 +102,7 @@ cards. Identifiers are stable for stored replays and match history.
 | `scoreGroups` | Nouns | `substance` and `flavour` groups that place the noun in scoring. |
 | `tense`, `tenseFamily` | Verbs, predicates | Both are required together; forbidden on other roles. Add or extend the complete family described below. |
 | `scorePreferences` or `customScores` | Verbs, predicates | At least one is required; forbidden on other roles. |
-| `connectorKind` | Conjunctions | `and`, `because`, `but`, `for`, `so`, `yet`, or `with`. |
+| `connectorKind` | Conjunctions | `and`, `because`, `but`, `so`, `yet`, or `with`. |
 | `finisherBonus` | Endings | Integer from 1 to 20; forbidden on other roles. |
 | `singularText`, `pluralText` | Optional | Add both or neither. Used where subject agreement changes the form. |
 | `personalSingularText`, `secondPersonText` | Optional | Add both or neither, and only after `singularText` plus `pluralText`. |
@@ -135,7 +135,7 @@ target.
 
 - Word ceilings: `conjunction` 6, `continuation` 1, `verb` 10, `modifier` 9,
   `noun` 10, `predicate` 10, `ending` 11. Every player-visible form and every
-  agreement form stays at 11 words or fewer, and comeback lines stay at 11 words
+  agreement form stays at 11 words or fewer, and comeback lines stay at 16 words
   or fewer.
 - An `ending` text ends with a full stop.
 - Identifiers and visible text stay unique across the common corpus and every

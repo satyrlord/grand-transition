@@ -23,7 +23,7 @@ includes a terminal full stop.
 Roles are `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, and
 `continuation`. A modifier is an adverbial or descriptive phrase that can
 follow a complete clause without ending it. Conjunctions declare `and`, `but`,
-`because`, `yet`, `so`, `for`, or `with`. Nouns can declare singular or plural. A verb
+`because`, `yet`, `so`, or `with`. Nouns can declare singular or plural. A verb
 or predicate can declare an exact left-noun and optional right-noun custom
 clause score from 0 through 100. Otherwise, Milestone 010 calculates group
 compatibility.
@@ -78,8 +78,8 @@ references, protected-trait insults, sexual humiliation, and threats.
 - Identifiers use lower-case kebab case.
 - Neutral phrases use neutral identifiers and explicit empty `tags` arrays.
   Tags describe meaning expressed by the phrase, not an implied political
-  context. Plain connectors (`and`, `but`, `because`, `yet`, `so`, `for`,
-  `with`), `ellipsis`, copulas, neutral referents, and generic neutral actions
+  context. Plain connectors (`and`, `but`, `because`, `yet`, `so`, `with`),
+  `ellipsis`, copulas, neutral referents, and generic neutral actions
   have no weakness tags. This applies to common and character-owned phrases
   in every tense. Family references retain their authored family weakness
   tags. Score groups, relation preferences, and restrictions are independent
@@ -171,10 +171,15 @@ Editorial revisions keep stable IDs while the displayed text supplies enough
 English context. Each player-visible phrase text and agreement form contains no
 more than 11 whitespace-delimited words, and no more than its role guardrail:
 conjunction 6, continuation 1, verb 10, modifier 9, noun 10, predicate 10, and
-ending 11. Comeback lines stay at 11 words or fewer. The manual card parser
+ending 11. Comeback lines stay at 16 words or fewer. The manual card parser
 rejects a role guardrail at its exact path, so the guardrail is a content
 contract and not only an editorial guideline. The character-file parser rejects
 an overlong comeback at its exact tier path.
+
+A comeback line is delivered alone, so its guardrail sits above the phrase
+ceiling rather than inside it. The longest shipped comeback is 14 words, and
+the Romanian adaptation of the same line is 13, so the ceiling leaves a small
+margin instead of forcing a rewrite of either language.
 
 The guardrails follow the measured corpus of the source party game the interface
 imitates: connectors of one word, objects and predicates of three to four words

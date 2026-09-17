@@ -125,19 +125,27 @@ choices in six columns and five rows. A roster item cannot cross the roster
 boundary or overlap the match-settings strip.
 
 The roster starts with player one as its selection target. Player one can
-change character and skin until using the separate “Lock in Player one”
-control. A roster choice never surrenders the turn. Locking player one moves
-the target to player two, who can then change character and skin until using
-“Lock in Player two.” Before that transition, player two's stage, skin
+change character and skin until using the separate player-one lock control,
+which reads `Confirm selection`. A roster choice never surrenders the turn.
+Locking player one moves the target to player two, who can then change
+character and skin until using the player-two lock control, which reads
+`Confirm selection` too. Before that transition, player two's stage, skin
 controls, and lock control are unavailable. Each selected-player stage shows
 its selected skin. Mirror choices remain valid.
 
+Both lock controls carry their own stable identity,
+`data-testid="lock-player-one"` and `data-testid="lock-player-two"`, because
+their visible copy is the same in both states and both languages. Tests and
+assistive technology tell the two controls apart by that identity and by the
+stage each one belongs to, never by their wording. Once a player is locked and
+the other is not, that player's control reads `Selection confirmed`.
+
 Start match stays disabled and submission is rejected until both players are
 locked in. Before both locks exist, a locked player cannot unlock. When both
-players are locked, either lock control becomes an Unlock control. Unlocking
-one player disables Start match, preserves the other player's lock and both
-selections, and returns the selection target only to the unlocked player. The
-player must lock in again before the match can start.
+players are locked, either lock control becomes a `Change selection` control.
+Unlocking one player disables Start match, preserves the other player's lock and
+both selections, and returns the selection target only to the unlocked player.
+The player must lock in again before the match can start.
 
 Single Player uses the same sequence. The person operating player one selects
 and locks both the human and computer characters. Ladder requires only the

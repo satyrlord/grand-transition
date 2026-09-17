@@ -105,6 +105,15 @@ scroll. Never invent or reconstruct phrase text that an entry does not contain.
 For a current-version entry, keep the exact recorded public text even when the
 live catalog has since revised that phrase.
 
+Milestone 029 owns the recorded match language. Every entry carries it inside
+its normalized replay and match-log setup as the captured `gameLocale`, and it
+is the language of the recorded public text. Annotate each recorded sentence
+with that language for assistive technology. The history controls use the
+current interface language, and the displayed character and scene names use the
+current interface display names, but changing either language selection must
+never translate, rescore, or otherwise alter the recorded public text, and
+never changes the entry's stored bytes.
+
 For entries with speech diagnostics, the technical record contains `matchLog`
 and `speechDiagnostics` objects. A recording status without final playback or
 presentation events identifies incomplete observation, not zero points.

@@ -59,10 +59,9 @@ The same noun prefix remains able to start the existing new-subject branch when 
 Predicates without this declaration continue to treat `and + NOUN` only as a new subject
 and remain incomplete until its relation follows.
 
-`so` and `for` can follow only a complete clause. Each requires a new noun
-subject and a complete following clause. They do not accept a shared-subject
-branch and cannot start a sentence. `so` presents a result. `for` presents a
-rationale.
+`so` can follow only a complete clause. It requires a new noun subject and a
+complete following clause. It does not accept a shared-subject branch and
+cannot start a sentence. `so` presents a result.
 
 `with` can follow a complete clause and requires one noun complement. The
 complement stays in the preceding clause and keeps the sentence complete. It
@@ -76,8 +75,8 @@ clause and also requires a new noun clause. Another connector cannot replace
 the noun immediately required by `because` or by an incomplete compound
 subject. After a subordinate clause is complete, `and`, `but`, `yet`, or
 `because` can extend it before the required main noun clause. A completed clause
-followed by `and`, `but`, or `yet` can also accept `because`. `so` and `for` do
-not enter this front-`because` bridge.
+followed by `and`, `but`, or `yet` can also accept `because`. `so` does not
+enter this front-`because` bridge.
 
 A finisher cannot end the front
 subordinate clause. The sentence is incomplete while either required clause is
@@ -128,7 +127,7 @@ text.
   object after `NOUN + VERB + NOUN + AND`.
 - **AC-006-03:** Tests prove new-subject and shared-subject branches for `and`,
   `but`, and `yet`. They prove the front and explanatory `because` branches.
-  They prove clause-only `so` and `for` branches with required noun transitions.
+  They prove the clause-only `so` branch with required noun transitions.
   They also prove the `with` noun-complement branch.
 - **AC-006-04:** Tests prove finisher placement, sentence-case rendering,
   singular, plural, personal-singular, second-person, singular complements for

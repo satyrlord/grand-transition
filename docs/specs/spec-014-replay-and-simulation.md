@@ -8,8 +8,9 @@
 Milestone 019 owns local, public, browser-stored match history. Keep development
 tools and imports non-player-facing.
 
-Milestone 029 owns the planned Romanian locale extension. Record its replay,
-match-log, and history changes here before implementing them.
+Milestone 029 owns the Romanian locale extension. It records the match game
+locale in the replay and match-log setup and raises the document version to `2`;
+the public text, scoring, and privacy contracts above are unchanged.
 
 ## Deliver
 
@@ -69,7 +70,7 @@ and winner. They contain no personal data and are never sent remotely.
 
 One replay document format exists at a time. It uses normalized JSON with these
 fields in order: `schemaVersion`, `kind`, `seed`, `setup`, and `commands`.
-`schemaVersion` is `1` and `kind` is `grand-transition-replay`. Commands contain
+`schemaVersion` is `2` and `kind` is `grand-transition-replay`. Commands contain
 only accepted public command inputs. Dealt private cards and derived state are
 regenerated from the seed. Encoding uses two-space indentation and one final
 newline.
@@ -83,6 +84,16 @@ The setup records `basePointsMultiplier` as an integer from 1 through 5. The
 field is required, both players use the captured value, and an invalid or
 missing value returns `invalid-replay`. Replaying always uses the captured
 multiplier and the current catalog.
+
+The setup also records `gameLocale` with one of the shipped game locale
+identifiers, `en` or `ro-RO`. The field is required, an unknown value returns
+`invalid-replay`, and it is the locale identifier the match captured at
+creation under Milestone 029. It is an identifier, not translated text. A replay
+uses the game-locale bundle the caller supplies and checks it against the
+recorded identifier, so a match always reproduces in its captured language and
+replaying it under another locale fails as `invalid-replay` instead of silently
+re-rendering the recorded sentences in a different language. Version `1`
+documents carry no `gameLocale` field and fail as `unsupported-version`.
 
 The local match log uses `kind: grand-transition-match-log`, the replay schema
 version, setup, seed, round summaries, public selections, public
@@ -99,7 +110,7 @@ The shipped scoring balance is Milestone 010's arithmetic: 5 base points,
 multiplier, a 1 restriction multiplier, and a ceiling rounding step.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
-Missing or invalid fields return `invalid-replay`. Any version other than `1`
+Missing or invalid fields return `invalid-replay`. Any version other than `2`
 returns `unsupported-version`.
 
 A replay import or standalone match-log import that no longer matches the
@@ -130,8 +141,10 @@ Milestone 002 threshold remains 70 percent.
 
 - **AC-014-01:** Encoding, decoding, and re-encoding a replay produces identical
   normalized bytes and an exact final state. The document records
-  `schemaVersion` `1`, and every other version fails as `unsupported-version`
-  for both replay and match-log documents. A replay reproduces its own captured
+  `schemaVersion` `2`, and every other version fails as `unsupported-version`
+  for both replay and match-log documents. A document whose recorded
+  `gameLocale` is not shipped fails as `invalid-replay`, and a version `1`
+  document without the field fails as `unsupported-version`. A replay reproduces its own captured
   multiplier and exact final state even when the caller supplies a different
   balance. A replay whose commands no longer match the current catalog fails as
   `invalid-replay` without a partial match start, and a match history entry
