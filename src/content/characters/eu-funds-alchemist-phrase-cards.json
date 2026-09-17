@@ -492,6 +492,393 @@
       "tags": [],
       "connectorKind": "yet",
       "rarity": "uncommon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-noun-1-a-grant-with-a-ceremonial-lock",
+      "role": "noun",
+      "text": "a wheelbarrow rented to the neighbour",
+      "tags": [
+        "transparency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "procurement"
+        ],
+        "flavour": [
+          "funds"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-noun-2-a-maintenance-plan-in-gold-leaf",
+      "role": "noun",
+      "text": "a robe without a pastry",
+      "tags": [
+        "outcomes"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "procurement"
+        ],
+        "flavour": [
+          "funds"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-noun-3-a-wheelbarrow-of-eligible-receipts",
+      "role": "noun",
+      "text": "an invisible pastry in the budget",
+      "tags": [
+        "maintenance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "procurement"
+        ],
+        "flavour": [
+          "funds"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-noun-4-an-outcome-printed-on-a-ribbon",
+      "role": "noun",
+      "text": "a grant carried by a wheelbarrow",
+      "tags": [
+        "transparency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "procurement"
+        ],
+        "flavour": [
+          "funds"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-past",
+      "role": "verb",
+      "text": "rented the wheelbarrow to",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-present",
+      "role": "verb",
+      "text": "rents the wheelbarrow to",
+      "singularText": "rents the wheelbarrow to",
+      "pluralText": "rent the wheelbarrow to",
+      "personalSingularText": "rents the wheelbarrow to",
+      "secondPersonText": "rent the wheelbarrow to",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-future",
+      "role": "verb",
+      "text": "will rent the wheelbarrow to",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a wheelbarrow for the national budget",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a wheelbarrow for the national budget",
+      "singularText": "is a wheelbarrow for the national budget",
+      "pluralText": "is a wheelbarrow for the national budget",
+      "personalSingularText": "is a wheelbarrow for the national budget",
+      "secondPersonText": "are a wheelbarrow for the national budget",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a wheelbarrow for the national budget",
+      "tags": [
+        "transparency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a project with a ceremonial outcome",
+      "tags": [
+        "outcomes"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a project with a ceremonial outcome",
+      "singularText": "is a project with a ceremonial outcome",
+      "pluralText": "is a project with a ceremonial outcome",
+      "personalSingularText": "is a project with a ceremonial outcome",
+      "secondPersonText": "is a project with a ceremonial outcome",
+      "tags": [
+        "outcomes"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a project with a ceremonial outcome",
+      "tags": [
+        "outcomes"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a receipt that promises maintenance",
+      "tags": [
+        "maintenance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a receipt that promises maintenance",
+      "singularText": "is a receipt that promises maintenance",
+      "pluralText": "is a receipt that promises maintenance",
+      "personalSingularText": "is a receipt that promises maintenance",
+      "secondPersonText": "is a receipt that promises maintenance",
+      "tags": [
+        "maintenance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a receipt that promises maintenance",
+      "tags": [
+        "maintenance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "procurement",
+              "funds"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-modifier-under-a-funded-ribbon-cutting",
+      "role": "modifier",
+      "text": "under-a-funded-ribbon-cutting",
+      "tags": [
+        "outcomes"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "eu-funds-alchemist-contract-ending-and-the-grant-requested-a-maintenance-plan",
+      "role": "ending",
+      "text": "and the grant requested a maintenance plan.",
+      "tags": [
+        "maintenance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "eu-funds-alchemist-contract-ending-and-the-receipt-was-the-only-outcome",
+      "role": "ending",
+      "text": "and the receipt was the only outcome.",
+      "tags": [
+        "transparency"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "eu-funds-alchemist-contract-ending-and-the-ribbon-qualified-for-another-grant",
+      "role": "ending",
+      "text": "and the ribbon qualified for another grant.",
+      "tags": [
+        "outcomes"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

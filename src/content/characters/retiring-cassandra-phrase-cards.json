@@ -506,6 +506,393 @@
       "connectorKind": "yet",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "retiring-cassandra-contract-noun-1-a-forecast-with-a-practical-handle",
+      "role": "noun",
+      "text": "one final question after the warning",
+      "tags": [
+        "competence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "results"
+        ],
+        "flavour": [
+          "foresight"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "retiring-cassandra-contract-noun-2-a-hopeful-spreadsheet",
+      "role": "noun",
+      "text": "a warning with a retirement date",
+      "tags": [
+        "hope"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "results"
+        ],
+        "flavour": [
+          "foresight"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "retiring-cassandra-contract-noun-3-a-result-waiting-in-the-corridor",
+      "role": "noun",
+      "text": "a country you refuse to steal",
+      "tags": [
+        "results"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "results"
+        ],
+        "flavour": [
+          "foresight"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "retiring-cassandra-contract-noun-4-a-competence-badge-with-a-cracked-pin",
+      "role": "noun",
+      "text": "an answer waiting at the exit",
+      "tags": [
+        "competence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "results"
+        ],
+        "flavour": [
+          "foresight"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-past",
+      "role": "verb",
+      "text": "delivered the final question to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+    },
+    {
+      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-present",
+      "role": "verb",
+      "text": "delivers the final question to",
+      "singularText": "delivers the final question to",
+      "pluralText": "deliver the final question to",
+      "personalSingularText": "delivers the final question to",
+      "secondPersonText": "deliver the final question to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+    },
+    {
+      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-future",
+      "role": "verb",
+      "text": "will deliver the final question to",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a final question awaiting competence",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a final question awaiting competence",
+      "singularText": "is a final question awaiting competence",
+      "pluralText": "is a final question awaiting competence",
+      "personalSingularText": "is a final question awaiting competence",
+      "secondPersonText": "are a final question awaiting competence",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a final question awaiting competence",
+      "tags": [
+        "competence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a result wearing a sensible coat",
+      "tags": [
+        "hope"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a result wearing a sensible coat",
+      "singularText": "is a result wearing a sensible coat",
+      "pluralText": "is a result wearing a sensible coat",
+      "personalSingularText": "is a result wearing a sensible coat",
+      "secondPersonText": "is a result wearing a sensible coat",
+      "tags": [
+        "hope"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a result wearing a sensible coat",
+      "tags": [
+        "hope"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a hopeful delay with paperwork",
+      "tags": [
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a hopeful delay with paperwork",
+      "singularText": "is a hopeful delay with paperwork",
+      "pluralText": "is a hopeful delay with paperwork",
+      "personalSingularText": "is a hopeful delay with paperwork",
+      "secondPersonText": "is a hopeful delay with paperwork",
+      "tags": [
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+    },
+    {
+      "id": "retiring-cassandra-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a hopeful delay with paperwork",
+      "tags": [
+        "results"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "results",
+              "foresight"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+    },
+    {
+      "id": "retiring-cassandra-contract-modifier-after-a-practical-prophecy",
+      "role": "modifier",
+      "text": "after-a-practical-prophecy",
+      "tags": [
+        "hope"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "retiring-cassandra-contract-ending-and-the-result-finally-found-the-door",
+      "role": "ending",
+      "text": "and the result finally found the door.",
+      "tags": [
+        "results"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "retiring-cassandra-contract-ending-and-competence-brought-a-checklist",
+      "role": "ending",
+      "text": "and competence brought a checklist.",
+      "tags": [
+        "competence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "retiring-cassandra-contract-ending-and-hope-arrived-before-the-ribbon",
+      "role": "ending",
+      "text": "and hope arrived before the ribbon.",
+      "tags": [
+        "hope"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

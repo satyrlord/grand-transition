@@ -495,6 +495,393 @@
       "tags": [],
       "connectorKind": "but",
       "rarity": "uncommon"
+    },
+    {
+      "id": "luxury-minister-contract-noun-1-austerity-with-a-valet-ticket",
+      "role": "noun",
+      "text": "a day when elegance was all I wanted",
+      "tags": [
+        "austerity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "service"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "luxury-minister-contract-noun-2-a-marble-service-counter",
+      "role": "noun",
+      "text": "a rural budget for designer leather",
+      "tags": [
+        "service"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "service"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "luxury-minister-contract-noun-3-a-ministry-with-a-velvet-rope",
+      "role": "noun",
+      "text": "a map corrected to match the itinerary",
+      "tags": [
+        "authenticity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "service"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "luxury-minister-contract-noun-4-a-modest-gesture-in-a-limousine",
+      "role": "noun",
+      "text": "a ministry with a wardrobe allowance",
+      "tags": [
+        "austerity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "service"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "luxury-minister-contract-verb-measures-service-in-marble-past",
+      "role": "verb",
+      "text": "tailored the map to",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+    },
+    {
+      "id": "luxury-minister-contract-verb-measures-service-in-marble-present",
+      "role": "verb",
+      "text": "tailors the map to",
+      "singularText": "tailors the map to",
+      "pluralText": "tailor the map to",
+      "personalSingularText": "tailors the map to",
+      "secondPersonText": "tailor the map to",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+    },
+    {
+      "id": "luxury-minister-contract-verb-measures-service-in-marble-future",
+      "role": "verb",
+      "text": "will tailor the map to",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was elegance with a budget objection",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is elegance with a budget objection",
+      "singularText": "is elegance with a budget objection",
+      "pluralText": "is elegance with a budget objection",
+      "personalSingularText": "is elegance with a budget objection",
+      "secondPersonText": "are elegance with a budget objection",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be elegance with a budget objection",
+      "tags": [
+        "austerity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was an austerity speech with valet parking",
+      "tags": [
+        "service"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is an austerity speech with valet parking",
+      "singularText": "is an austerity speech with valet parking",
+      "pluralText": "is an austerity speech with valet parking",
+      "personalSingularText": "is an austerity speech with valet parking",
+      "secondPersonText": "is an austerity speech with valet parking",
+      "tags": [
+        "service"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be an austerity speech with valet parking",
+      "tags": [
+        "service"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a ministry that invoices the welcome",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a ministry that invoices the welcome",
+      "singularText": "is a ministry that invoices the welcome",
+      "pluralText": "is a ministry that invoices the welcome",
+      "personalSingularText": "is a ministry that invoices the welcome",
+      "secondPersonText": "is a ministry that invoices the welcome",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+    },
+    {
+      "id": "luxury-minister-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a ministry that invoices the welcome",
+      "tags": [
+        "authenticity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "service"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+    },
+    {
+      "id": "luxury-minister-contract-modifier-beneath-a-modest-limousine",
+      "role": "modifier",
+      "text": "beneath-a-modest-limousine",
+      "tags": [
+        "austerity"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "luxury-minister-contract-ending-and-austerity-requested-a-larger-marble",
+      "role": "ending",
+      "text": "and austerity requested a larger marble.",
+      "tags": [
+        "austerity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "luxury-minister-contract-ending-and-the-service-came-with-a-chauffeur",
+      "role": "ending",
+      "text": "and the service came with a chauffeur.",
+      "tags": [
+        "service"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "luxury-minister-contract-ending-and-authenticity-waited-at-reception",
+      "role": "ending",
+      "text": "and authenticity waited at reception.",
+      "tags": [
+        "authenticity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

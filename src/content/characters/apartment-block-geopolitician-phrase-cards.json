@@ -488,6 +488,395 @@
       "tags": [],
       "connectorKind": "but",
       "rarity": "uncommon"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-noun-1-a-balcony-source",
+      "role": "noun",
+      "text": "popcorn and a soft drink",
+      "tags": [
+        "sources"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "geopolitics"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-noun-2-a-lift-notice-with-geopolitical-consequences",
+      "role": "noun",
+      "text": "a bad joke with a balcony view",
+      "tags": [
+        "specificity"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "geopolitics"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-noun-3-a-stairwell-border",
+      "role": "noun",
+      "text": "a 40-percent starting advantage",
+      "tags": [
+        "nuance"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "geopolitics"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-noun-4-a-map-folded-around-a-snack",
+      "role": "noun",
+      "text": "a foreign-policy debate from the stairwell",
+      "tags": [
+        "sources"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "personal"
+        ],
+        "flavour": [
+          "geopolitics"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-past",
+      "role": "verb",
+      "text": "watched the debate with",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-present",
+      "role": "verb",
+      "text": "watches the debate with",
+      "singularText": "watches the debate with",
+      "pluralText": "watch the debate with",
+      "personalSingularText": "watches the debate with",
+      "secondPersonText": "watch the debate with",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-future",
+      "role": "verb",
+      "text": "will watch the debate with",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a bad joke with a regret attached",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a bad joke with a regret attached",
+      "singularText": "is a bad joke with a regret attached",
+      "pluralText": "is a bad joke with a regret attached",
+      "personalSingularText": "is a bad joke with a regret attached",
+      "secondPersonText": "are a bad joke with a regret attached",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a bad joke with a regret attached",
+      "tags": [
+        "sources"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was an international incident in the laundry room",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is an international incident in the laundry room",
+      "singularText": "is an international incident in the laundry room",
+      "pluralText": "is an international incident in the laundry room",
+      "personalSingularText": "is an international incident in the laundry room",
+      "secondPersonText": "is an international incident in the laundry room",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be an international incident in the laundry room",
+      "tags": [
+        "specificity"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a source with a lift key",
+      "tags": [
+        "nuance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a source with a lift key",
+      "singularText": "is a source with a lift key",
+      "pluralText": "is a source with a lift key",
+      "personalSingularText": "is a source with a lift key",
+      "secondPersonText": "is a source with a lift key",
+      "tags": [
+        "nuance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a source with a lift key",
+      "tags": [
+        "nuance"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "personal",
+              "geopolitics"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-modifier-according-to-a-balcony-referendum",
+      "role": "modifier",
+      "text": "according-to-a-balcony-referendum",
+      "tags": [
+        "sources"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-ending-and-the-lift-reached-a-diplomatic-compromise",
+      "role": "ending",
+      "text": "and the lift reached a diplomatic compromise.",
+      "tags": [
+        "sources",
+        "nuance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-ending-and-the-balcony-source-requested-anonymity",
+      "role": "ending",
+      "text": "and the balcony source requested anonymity.",
+      "tags": [
+        "sources",
+        "specificity"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "apartment-block-geopolitician-contract-ending-and-the-map-folded-itself",
+      "role": "ending",
+      "text": "and the map folded itself.",
+      "tags": [
+        "nuance"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

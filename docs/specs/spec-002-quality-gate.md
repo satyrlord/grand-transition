@@ -16,6 +16,7 @@ minimal smoke tests and a non-deploying pull-request workflow. `validate` and
 Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`,
 `typecheck`, `test`, `test:coverage`, `test:browser`, `test:e2e`,
 `markdown:lint`, `content:validate`,
+`balance:validate`,
 `localization:validate`, `boundaries:check`, `validate`, and `ci`.
 
 `assets:build` builds both scene and fixed-baseline character manifests and
@@ -33,26 +34,36 @@ assets before bundling them.
 `quality:quick` runs `validate`, unit tests, browser tests, coverage, and
 end-to-end tests in that order. It excludes the slowest tests until their
 cumulative elapsed time reaches 20 percent of the latest recorded full gate:
-the current-catalog 500-match calibration and the nine-rung production ladder
-flow. The calibration is excluded from Node, Browser Mode, and coverage runs.
+the current-catalog 500-match calibration, the content-balance matrix, and the
+nine-rung production ladder flow. The calibration and content-balance matrix
+are excluded from Node, Browser Mode, and coverage runs.
 The ladder flow is excluded only from Playwright. All other checks remain the
 same as the full gate.
 
 `quality:full` runs every check in the same order, including the excluded
-calibration and ladder flow. `ci` aliases `quality:full`. Continuous integration
-uses the full gate. An agent uses `quality:quick` for routine validation and
-must not invoke `quality:full` or `ci` unless the user explicitly requests the
-full quality-gate skill. A quick pass is not full-gate or release evidence.
+calibration, content-balance matrix, and ladder flow. `ci` aliases
+`quality:full`. Continuous integration uses the full gate. An agent uses
+`quality:quick` for routine validation and must not invoke `quality:full` or
+`ci` unless the user explicitly requests the full quality-gate skill. A quick
+pass is not full-gate or release evidence.
 
-Selection is opt-in and hard: the calibration and the nine-rung ladder flow run
-only when the full gate is explicitly requested. `quality:quick` and every
+Selection is opt-in and hard: the calibration, content-balance matrix, and
+nine-rung ladder flow run only when the full gate is explicitly requested.
+`quality:quick` and every
 direct test invocation, including `npm run test`, `npm run test:browser`,
 `npm run test:coverage`, and `npm run test:e2e`, select the quick behavior, so
 the slowest set cannot run by accident or by omitting the mode variable.
 The direct test scripts set quick mode in their phase runner even when full-mode
-environment variables are inherited. The full gate calls the internal
+environment variables are inherited. The full gate calls `balance:validate`
+and the internal
 `test:full`, `test:browser:full`, `test:coverage:full`, and `test:e2e:full`
 scripts after validation.
+
+`balance:validate` is not an agent-runnable standalone check. The validator
+fails before loading the catalog unless both full-gate environment markers are
+present. Its 500-match matrix and 64 structural samples are fixed in the
+validator; no workload-size environment override is supported. Only
+`run-quality-gate.mjs full` supplies the runner marker.
 End-to-end tests build the production output before preview.
 
 Pure tests use Vitest in Node and `*.test.ts`. Components use Vitest Browser
@@ -138,3 +149,8 @@ sentence E2E cases retain all assertions and pass with retries disabled.
 runner exports the selected mode to all child phases. Verify the scripts and
 runner in `tests/unit/quality-gate.test.ts`; the calibration and ladder tests
 select their full-only behavior from that mode.
+
+**AC-002-10:** The content-balance validator is included only in the full gate.
+Direct execution fails before content loading, and its workload cannot be
+reduced through environment variables. Verify the runner wiring and direct
+invocation rejection in `tests/unit/quality-gate.test.ts`.

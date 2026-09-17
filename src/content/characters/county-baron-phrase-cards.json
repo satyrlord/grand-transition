@@ -507,6 +507,393 @@
       "connectorKind": "but",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "county-baron-contract-noun-1-a-road-with-a-reserved-ribbon",
+      "role": "noun",
+      "text": "a doughnut where the budget should be",
+      "tags": [
+        "procurement"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "infrastructure"
+        ],
+        "flavour": [
+          "contract"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "county-baron-contract-noun-2-a-cousin-shaped-procurement-stamp",
+      "role": "noun",
+      "text": "a family tree at the tender",
+      "tags": [
+        "infrastructure"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "infrastructure"
+        ],
+        "flavour": [
+          "contract"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "county-baron-contract-noun-3-a-bridge-with-a-buffet-schedule",
+      "role": "noun",
+      "text": "a contract with a Sunday lunch",
+      "tags": [
+        "nepotism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "infrastructure"
+        ],
+        "flavour": [
+          "contract"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "county-baron-contract-noun-4-a-maintenance-invoice-in-a-flower-bed",
+      "role": "noun",
+      "text": "a specialist chosen at the family table",
+      "tags": [
+        "procurement"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "infrastructure"
+        ],
+        "flavour": [
+          "contract"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "county-baron-contract-verb-counts-ribbon-twice-past",
+      "role": "verb",
+      "text": "served doughnuts to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+    },
+    {
+      "id": "county-baron-contract-verb-counts-ribbon-twice-present",
+      "role": "verb",
+      "text": "serves doughnuts to",
+      "singularText": "serves doughnuts to",
+      "pluralText": "serve doughnuts to",
+      "personalSingularText": "serves doughnuts to",
+      "secondPersonText": "serve doughnuts to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+    },
+    {
+      "id": "county-baron-contract-verb-counts-ribbon-twice-future",
+      "role": "verb",
+      "text": "will serve doughnuts to",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a family matter with a public title",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a family matter with a public title",
+      "singularText": "is a family matter with a public title",
+      "pluralText": "is a family matter with a public title",
+      "personalSingularText": "is a family matter with a public title",
+      "secondPersonText": "are a family matter with a public title",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a family matter with a public title",
+      "tags": [
+        "procurement"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a road map with a preferred destination",
+      "tags": [
+        "infrastructure"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a road map with a preferred destination",
+      "singularText": "is a road map with a preferred destination",
+      "pluralText": "is a road map with a preferred destination",
+      "personalSingularText": "is a road map with a preferred destination",
+      "secondPersonText": "is a road map with a preferred destination",
+      "tags": [
+        "infrastructure"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a road map with a preferred destination",
+      "tags": [
+        "infrastructure"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a grant wearing a ceremonial bow",
+      "tags": [
+        "nepotism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a grant wearing a ceremonial bow",
+      "singularText": "is a grant wearing a ceremonial bow",
+      "pluralText": "is a grant wearing a ceremonial bow",
+      "personalSingularText": "is a grant wearing a ceremonial bow",
+      "secondPersonText": "is a grant wearing a ceremonial bow",
+      "tags": [
+        "nepotism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+    },
+    {
+      "id": "county-baron-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a grant wearing a ceremonial bow",
+      "tags": [
+        "nepotism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "infrastructure",
+              "contract"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+    },
+    {
+      "id": "county-baron-contract-modifier-under-a-family-seating-plan",
+      "role": "modifier",
+      "text": "under-a-family-seating-plan",
+      "tags": [
+        "nepotism"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "county-baron-contract-ending-and-the-ribbon-led-to-the-cousin",
+      "role": "ending",
+      "text": "and the ribbon led to the cousin.",
+      "tags": [
+        "nepotism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "county-baron-contract-ending-and-the-road-arrived-after-dessert",
+      "role": "ending",
+      "text": "and the road arrived after dessert.",
+      "tags": [
+        "infrastructure"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "county-baron-contract-ending-and-the-tender-brought-its-own-answer-sheet",
+      "role": "ending",
+      "text": "and the tender brought its own answer sheet.",
+      "tags": [
+        "procurement"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

@@ -507,6 +507,393 @@
       "connectorKind": "yet",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "marble-diplomat-contract-noun-1-a-diplomatic-carpet-with-a-minibar",
+      "role": "noun",
+      "text": "a victory announced too early",
+      "tags": [
+        "luxury"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "diplomacy"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "marble-diplomat-contract-noun-2-a-marble-handshake",
+      "role": "noun",
+      "text": "a thank-you speech before the result",
+      "tags": [
+        "elitism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "diplomacy"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "marble-diplomat-contract-noun-3-a-reception-with-a-private-entrance",
+      "role": "noun",
+      "text": "a reception for a premature victory",
+      "tags": [
+        "corruption"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "diplomacy"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "marble-diplomat-contract-noun-4-a-protocol-tray-of-imported-silence",
+      "role": "noun",
+      "text": "bad luck at the servants' entrance",
+      "tags": [
+        "luxury"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "luxury"
+        ],
+        "flavour": [
+          "diplomacy"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-past",
+      "role": "verb",
+      "text": "congratulated the exit poll before",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+    },
+    {
+      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-present",
+      "role": "verb",
+      "text": "congratulates the exit poll before",
+      "singularText": "congratulates the exit poll before",
+      "pluralText": "congratulate the exit poll before",
+      "personalSingularText": "congratulates the exit poll before",
+      "secondPersonText": "congratulate the exit poll before",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+    },
+    {
+      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-future",
+      "role": "verb",
+      "text": "will congratulate the exit poll before",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was bad luck with a diplomatic invitation",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is bad luck with a diplomatic invitation",
+      "singularText": "is bad luck with a diplomatic invitation",
+      "pluralText": "is bad luck with a diplomatic invitation",
+      "personalSingularText": "is bad luck with a diplomatic invitation",
+      "secondPersonText": "are bad luck with a diplomatic invitation",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be bad luck with a diplomatic invitation",
+      "tags": [
+        "luxury"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a public office with a private elevator",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a public office with a private elevator",
+      "singularText": "is a public office with a private elevator",
+      "pluralText": "is a public office with a private elevator",
+      "personalSingularText": "is a public office with a private elevator",
+      "secondPersonText": "is a public office with a private elevator",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a public office with a private elevator",
+      "tags": [
+        "elitism"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a compromise in marble",
+      "tags": [
+        "corruption"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a compromise in marble",
+      "singularText": "is a compromise in marble",
+      "pluralText": "is a compromise in marble",
+      "personalSingularText": "is a compromise in marble",
+      "secondPersonText": "is a compromise in marble",
+      "tags": [
+        "corruption"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "marble-diplomat-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a compromise in marble",
+      "tags": [
+        "corruption"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "luxury",
+              "diplomacy"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+    },
+    {
+      "id": "marble-diplomat-contract-modifier-under-a-chandelier-of-courtesy",
+      "role": "modifier",
+      "text": "under-a-chandelier-of-courtesy",
+      "tags": [
+        "elitism"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "marble-diplomat-contract-ending-and-the-treaty-arrived-by-limousine",
+      "role": "ending",
+      "text": "and the treaty arrived by limousine.",
+      "tags": [
+        "luxury"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "marble-diplomat-contract-ending-and-the-compromise-required-a-second-carpet",
+      "role": "ending",
+      "text": "and the compromise required a second carpet.",
+      "tags": [
+        "elitism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "marble-diplomat-contract-ending-and-corruption-wore-the-protocol-badge",
+      "role": "ending",
+      "text": "and corruption wore the protocol badge.",
+      "tags": [
+        "corruption"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

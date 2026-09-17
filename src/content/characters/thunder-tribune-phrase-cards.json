@@ -384,7 +384,7 @@
     {
       "id": "a-somaldoaca",
       "role": "noun",
-      "text": "a scandal-powered kettle",
+      "text": "a nosy do-gooder",
       "referentKind": "personal",
       "tags": [
         "decorum",
@@ -403,11 +403,11 @@
     {
       "id": "looks-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "whistles like a scandal-powered kettle on television",
-      "secondPersonText": "whistle like a scandal-powered kettle on television",
-      "personalSingularText": "whistles like a scandal-powered kettle on television",
-      "singularText": "whistles like a scandal-powered kettle on television",
-      "pluralText": "whistle like scandal-powered kettles on television",
+      "text": "whistles like a nosy do-gooder on television",
+      "secondPersonText": "whistle like a nosy do-gooder on television",
+      "personalSingularText": "whistles like a nosy do-gooder on television",
+      "singularText": "whistles like a nosy do-gooder on television",
+      "pluralText": "whistle like nosy do-gooders on television",
       "tags": [
         "decorum",
         "credibility"
@@ -430,11 +430,11 @@
     {
       "id": "looked-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "whistled like a scandal-powered kettle on television",
-      "secondPersonText": "whistled like a scandal-powered kettle on television",
-      "personalSingularText": "whistled like a scandal-powered kettle on television",
-      "singularText": "whistled like a scandal-powered kettle on television",
-      "pluralText": "whistled like scandal-powered kettles on television",
+      "text": "whistled like a nosy do-gooder on television",
+      "secondPersonText": "whistled like a nosy do-gooder on television",
+      "personalSingularText": "whistled like a nosy do-gooder on television",
+      "singularText": "whistled like a nosy do-gooder on television",
+      "pluralText": "whistled like nosy do-gooders on television",
       "tags": [
         "decorum",
         "credibility"
@@ -457,11 +457,11 @@
     {
       "id": "will-look-like-a-somaldoaca-on-television",
       "role": "predicate",
-      "text": "will whistle like a scandal-powered kettle on television",
-      "secondPersonText": "will whistle like a scandal-powered kettle on television",
-      "personalSingularText": "will whistle like a scandal-powered kettle on television",
-      "singularText": "will whistle like a scandal-powered kettle on television",
-      "pluralText": "will whistle like scandal-powered kettles on television",
+      "text": "will whistle like a nosy do-gooder on television",
+      "secondPersonText": "will whistle like a nosy do-gooder on television",
+      "personalSingularText": "will whistle like a nosy do-gooder on television",
+      "singularText": "will whistle like a nosy do-gooder on television",
+      "pluralText": "will whistle like nosy do-gooders on television",
       "tags": [
         "decorum",
         "credibility"
@@ -614,6 +614,262 @@
       "connectorKind": "yet",
       "tags": [],
       "rarity": "uncommon"
+    },
+    {
+      "id": "thunder-tribune-contract-noun-1-a-microphone-with-a-victory-lap",
+      "role": "noun",
+      "text": "the phone from the podium",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "broadcast"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "thunder-tribune-contract-noun-2-a-headline-with-a-thunderclap",
+      "role": "noun",
+      "text": "everything within the rules",
+      "tags": [
+        "credibility"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "broadcast"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "thunder-tribune-contract-noun-3-a-source-that-demands-a-spotlight",
+      "role": "noun",
+      "text": "a volume above the studio limit",
+      "tags": [
+        "restraint"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "broadcast"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "thunder-tribune-contract-noun-4-a-restraint-belt-for-breaking-news",
+      "role": "noun",
+      "text": "a complaint about the dial tone",
+      "tags": [
+        "evidence"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "media"
+        ],
+        "flavour": [
+          "broadcast"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-past",
+      "role": "verb",
+      "text": "announced the evidence through",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+    },
+    {
+      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-present",
+      "role": "verb",
+      "text": "announces the evidence through",
+      "singularText": "announces the evidence through",
+      "pluralText": "announce the evidence through",
+      "personalSingularText": "announces the evidence through",
+      "secondPersonText": "announce the evidence through",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+    },
+    {
+      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-future",
+      "role": "verb",
+      "text": "will announce the evidence through",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+    },
+    {
+      "id": "thunder-tribune-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was a broadcast with a missing source",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+    },
+    {
+      "id": "thunder-tribune-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is a broadcast with a missing source",
+      "singularText": "is a broadcast with a missing source",
+      "pluralText": "is a broadcast with a missing source",
+      "personalSingularText": "is a broadcast with a missing source",
+      "secondPersonText": "is a broadcast with a missing source",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+    },
+    {
+      "id": "thunder-tribune-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be a broadcast with a missing source",
+      "tags": [
+        "evidence"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "media",
+              "broadcast"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+    },
+    {
+      "id": "thunder-tribune-contract-modifier-before-the-applause-can-object",
+      "role": "modifier",
+      "text": "before-the-applause-can-object",
+      "tags": [
+        "restraint"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "thunder-tribune-contract-modifier-under-a-loud-fact-check",
+      "role": "modifier",
+      "text": "under-a-loud-fact-check",
+      "tags": [
+        "evidence"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "thunder-tribune-contract-ending-and-the-evidence-demanded-a-microphone",
+      "role": "ending",
+      "text": "and the phone demanded the final word.",
+      "tags": [
+        "evidence"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "thunder-tribune-contract-ending-and-credibility-left-during-the-applause",
+      "role": "ending",
+      "text": "and credibility left during the applause.",
+      "tags": [
+        "credibility"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
+    },
+    {
+      "id": "thunder-tribune-contract-ending-and-restraint-missed-the-opening-bell",
+      "role": "ending",
+      "text": "and restraint missed the opening bell.",
+      "tags": [
+        "restraint"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 4
     }
   ]
 }

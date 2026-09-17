@@ -606,6 +606,107 @@
       "tags": ["obsolete", "bureaucracy"],
       "rarity": "rare",
       "finisherBonus": 14
+    },
+    {
+      "id": "government-ai-contract-noun-1-a-paperless-office-with-three-copies",
+      "role": "noun",
+      "text": "a computer that could pass for human",
+      "tags": [
+        "nepotism"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "technology"
+        ],
+        "flavour": [
+          "bureaucracy"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "government-ai-contract-noun-2-a-strategic-uncle-in-a-server-rack",
+      "role": "noun",
+      "text": "the imitation game with an answer key",
+      "tags": [
+        "corruption"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "technology"
+        ],
+        "flavour": [
+          "bureaucracy"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "government-ai-contract-noun-3-an-obsolete-algorithm-with-a-ribbon",
+      "role": "noun",
+      "text": "an obsolete algorithm with a ribbon",
+      "tags": [
+        "spending"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "technology"
+        ],
+        "flavour": [
+          "bureaucracy"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "government-ai-contract-modifier-according-to-a-machine-readable-exception",
+      "role": "modifier",
+      "text": "according to a human examiner",
+      "tags": [
+        "obsolete"
+      ],
+      "rarity": "uncommon"
+    },
+    {
+      "id": "government-ai-contract-ending-and-the-paperless-office-required-three-copies",
+      "role": "ending",
+      "text": "and the computer fooled the human examiner.",
+      "tags": [
+        "obsolete"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 2
+    },
+    {
+      "id": "government-ai-contract-ending-and-the-algorithm-requested-a-family-reference",
+      "role": "ending",
+      "text": "and the algorithm requested a family reference.",
+      "tags": [
+        "nepotism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 2
+    },
+    {
+      "id": "government-ai-contract-ending-and-the-procurement-bot-found-its-cousin",
+      "role": "ending",
+      "text": "and the procurement bot found its cousin.",
+      "tags": [
+        "corruption",
+        "nepotism"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 2
+    },
+    {
+      "id": "government-ai-contract-ending-and-the-budget-became-self-aware",
+      "role": "ending",
+      "text": "and the budget became self-aware.",
+      "tags": [
+        "spending"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 2
     }
   ]
 }

@@ -387,6 +387,29 @@ describe('content schemas', () => {
     ).toBe(true);
   });
 
+  test('keeps the Tribune Romanianism generic and name-free', () => {
+    const phrase = phraseCardCatalog.phrases.find(
+      (candidate) => candidate.id === 'a-somaldoaca',
+    );
+    expect(phrase).toBeDefined();
+    if (!phrase) return;
+
+    expect(phraseCardCatalog.englishMessages[phrase.textKey]).toBe(
+      'a nosy do-gooder',
+    );
+    const related = phraseCardCatalog.phrases.filter((candidate) =>
+      candidate.id.includes('somaldoaca'),
+    );
+    expect(
+      related.every(
+        (candidate) =>
+          !phraseCardCatalog.englishMessages[candidate.textKey]?.includes(
+            'Karen',
+          ),
+      ),
+    ).toBe(true);
+  });
+
   test('ships one universal continuation with the canonical visible cue', () => {
     const continuations = phraseCardCatalog.phrases.filter(
       (phrase) => phrase.role === 'continuation',
@@ -428,10 +451,11 @@ describe('content schemas', () => {
     const commonConjunctions = phraseCardCatalog.phrases.filter(
       (phrase) =>
         phrase.role === 'conjunction' &&
+        phrase.sceneIds === undefined &&
         phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
     expect(new Set(commonConjunctions.map((phrase) => phrase.connectorKind))).toEqual(
-      new Set(['and', 'but', 'because', 'yet', 'so', 'for', 'with']),
+      new Set(['and', 'but', 'because', 'so', 'with']),
     );
   });
 
@@ -1256,7 +1280,7 @@ test('rejects a two-noun character pool at the owning character path', () => {
   expect(result.success).toBe(false);
   if (!result.success) {
     for (const message of [
-      'Supply 3 through 32 owned character phrases.',
+      'Supply 3 through 40 owned character phrases.',
       'Supply a foundation noun, modifier, and ending for each character. Missing: modifier, ending.',
     ]) {
       expect(result.error.issues).toContainEqual(expect.objectContaining({
@@ -1267,43 +1291,39 @@ test('rejects a two-noun character pool at the owning character path', () => {
   }
 });
 
-test('rejects more than 32 character phrases at the character path', () => {
+test('rejects more than 40 character phrases at the character path', () => {
   const catalog = cloneCatalog();
   const character = catalog.characters[0]!;
   const source = catalog.phrases.find((phrase) => phrase.id === character.characterPhraseIds[0])!;
-  while (character.characterPhraseIds.length < 33) {
+  while (character.characterPhraseIds.length < 41) {
     const id = `overflow-phrase-${character.characterPhraseIds.length}`;
     catalog.phrases.push({ ...source, id });
     character.characterPhraseIds.push(id);
   }
   const result = contentCatalogSchema.safeParse(catalog);
   expect(result.success).toBe(false);
-  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({ path: ['characters', 0, 'characterPhraseIds'], message: 'Supply 3 through 32 owned character phrases.' }));
+  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({ path: ['characters', 0, 'characterPhraseIds'], message: 'Supply 3 through 40 owned character phrases.' }));
 });
 
 const finalRoles = [
-  ['noun', 150, 165],
-  ['verb', 120, 135],
-  ['descriptive', 100, 115],
-  ['conjunction', 8, 10],
-  ['ending', 60, 70],
-  ['continuation', 1, 1],
+  ['noun', 300],
+  ['verb', 150],
+  ['predicate', 99],
+  ['modifier', 50],
+  ['conjunction', 5],
+  ['ending', 50],
+  ['continuation', 1],
 ] as const;
-
-const matchesRole = (role: string, phraseRole: string) =>
-  role === 'descriptive'
-    ? phraseRole === 'predicate' || phraseRole === 'modifier'
-    : phraseRole === role;
 
 test('the production catalog meets every Milestone 028 final volume', () => {
   expect(finalContentVolumeIssues(sampleContent)).toEqual([]);
 });
 
-test.each(finalRoles)('rejects general %s one below and above its final range', (role, minimum, maximum) => {
-  for (const target of [minimum - 1, maximum + 1]) {
+test.each(finalRoles)('rejects general %s one below and above its final total', (role, required) => {
+  for (const target of [required - 1, required + 1]) {
     const catalog = cloneCatalog();
     const general = catalog.phrases.filter((phrase) =>
-      !phrase.characterIds && !phrase.sceneIds && matchesRole(role, phrase.role));
+      !phrase.characterIds && !phrase.sceneIds && phrase.role === role);
     const template = general[0]!;
     catalog.phrases = catalog.phrases.filter((phrase) => !general.includes(phrase));
     catalog.phrases.push(...Array.from({ length: target }, (_, index) => ({
@@ -1317,14 +1337,14 @@ test.each(finalRoles)('rejects general %s one below and above its final range', 
 });
 
 test.each([
-  ['character', 'apartment-block-geopolitician', 20, 32],
-  ['scene', 'transition-era-television-studio', 25, 35],
-] as const)('rejects %s phrase totals one below and above the final range', (kind, owner, minimum, maximum) => {
-  for (const target of [minimum - 1, maximum + 1]) {
+  ['character', 'apartment-block-geopolitician', 40],
+  ['scene', 'transition-era-television-studio', 34],
+] as const)('rejects %s phrase totals one below and above the final total', (kind, owner, required) => {
+  for (const target of [required - 1, required + 1]) {
     const catalog = cloneCatalog();
     const owned = catalog.phrases.filter((phrase) => kind === 'character'
       ? phrase.characterIds?.includes(owner)
-      : phrase.sceneIds?.includes(owner) || phrase.role === 'continuation');
+      : phrase.sceneIds?.includes(owner));
     const template = owned.find((phrase) => phrase.role === 'noun')!;
     catalog.phrases = catalog.phrases.filter((phrase) => !owned.includes(phrase));
     catalog.phrases.push(...Array.from({ length: target }, (_, index) => ({
@@ -1332,36 +1352,33 @@ test.each([
       id: `final-volume-${kind}-${index}`,
     })));
     expect(finalContentVolumeIssues(catalog)).toContainEqual(
-      expect.stringMatching(new RegExp(`^${owner} phrases: found ${target};`)),
+      expect.stringMatching(new RegExp(`^${owner} ${kind === 'scene' ? 'scene-owned ' : ''}phrases: found ${target};`)),
     );
   }
 });
 
 test.each([
-  ['character', 'apartment-block-geopolitician', 'noun', 6],
-  ['character', 'apartment-block-geopolitician', 'verb', 4],
-  ['character', 'apartment-block-geopolitician', 'descriptive', 4],
-  ['character', 'apartment-block-geopolitician', 'predicate', 1],
-  ['character', 'apartment-block-geopolitician', 'modifier', 1],
+  ['character', 'apartment-block-geopolitician', 'noun', 10],
+  ['character', 'apartment-block-geopolitician', 'verb', 9],
+  ['character', 'apartment-block-geopolitician', 'predicate', 12],
+  ['character', 'apartment-block-geopolitician', 'modifier', 3],
   ['character', 'apartment-block-geopolitician', 'conjunction', 1],
-  ['character', 'apartment-block-geopolitician', 'ending', 1],
-  ['scene', 'transition-era-television-studio', 'noun', 8],
-  ['scene', 'transition-era-television-studio', 'verb', 6],
-  ['scene', 'transition-era-television-studio', 'descriptive', 5],
-  ['scene', 'transition-era-television-studio', 'predicate', 1],
-  ['scene', 'transition-era-television-studio', 'modifier', 1],
-  ['scene', 'transition-era-television-studio', 'conjunction', 1],
-  ['scene', 'transition-era-television-studio', 'ending', 1],
-  ['scene', 'transition-era-television-studio', 'continuation', 1],
-] as const)('rejects %s %s below its %s role minimum', (kind, owner, role, minimum) => {
+  ['character', 'apartment-block-geopolitician', 'ending', 5],
+  ['scene', 'transition-era-television-studio', 'noun', 10],
+  ['scene', 'transition-era-television-studio', 'verb', 9],
+  ['scene', 'transition-era-television-studio', 'predicate', 6],
+  ['scene', 'transition-era-television-studio', 'modifier', 3],
+  ['scene', 'transition-era-television-studio', 'conjunction', 3],
+  ['scene', 'transition-era-television-studio', 'ending', 3],
+] as const)('rejects %s %s below its %s role total', (kind, owner, role, required) => {
   const catalog = cloneCatalog();
   const owned = catalog.phrases.filter((phrase) => kind === 'character'
     ? phrase.characterIds?.includes(owner)
-    : phrase.sceneIds?.includes(owner) || phrase.role === 'continuation');
-  const selected = owned.filter((phrase) => matchesRole(role, phrase.role));
-  const remove = selected.slice(0, selected.length - (minimum - 1));
+    : phrase.sceneIds?.includes(owner));
+  const selected = owned.filter((phrase) => phrase.role === role);
+  const remove = selected.slice(0, selected.length - (required - 1));
   catalog.phrases = catalog.phrases.filter((phrase) => !remove.includes(phrase));
   expect(finalContentVolumeIssues(catalog)).toContainEqual(
-    expect.stringMatching(new RegExp(`^${owner} ${role}: found ${minimum - 1};`)),
+    expect.stringMatching(new RegExp(`^${owner} ${role}: found ${required - 1};`)),
   );
 });

@@ -465,15 +465,6 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-pavement-appendix",
-      "role": "modifier",
-      "text": "with the pavement attached as an appendix",
-      "tags": [
-        "delivery"
-      ],
-      "rarity": "uncommon"
-    },
-    {
       "id": "reluctant-theorem-permit-footnote",
       "role": "modifier",
       "text": "under a footnote taller than the building",
@@ -530,6 +521,365 @@
       "tags": [],
       "connectorKind": "but",
       "rarity": "uncommon"
+    },
+    {
+      "id": "reluctant-theorem-contract-noun-1-a-theorem-with-a-provisional-door",
+      "role": "noun",
+      "text": "a final question at the exit",
+      "tags": [
+        "indecision"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "theorem"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "reluctant-theorem-contract-noun-2-a-proof-in-a-queue",
+      "role": "noun",
+      "text": "a competence test with a conscience",
+      "tags": [
+        "urgency"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "theorem"
+        ]
+      },
+      "rarity": "uncommon"
+    },
+    {
+      "id": "reluctant-theorem-contract-noun-3-a-deadline-with-a-footnote",
+      "role": "noun",
+      "text": "a result awaiting an answer",
+      "tags": [
+        "delivery"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "theorem"
+        ]
+      },
+      "rarity": "rare"
+    },
+    {
+      "id": "reluctant-theorem-contract-noun-4-a-building-permit-for-a-hypothesis",
+      "role": "noun",
+      "text": "a country you do not steal",
+      "tags": [
+        "indecision"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "theorem"
+        ]
+      },
+      "rarity": "common"
+    },
+    {
+      "id": "reluctant-theorem-contract-verb-postpones-the-proof-past",
+      "role": "verb",
+      "text": "asked one final question about",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+    },
+    {
+      "id": "reluctant-theorem-contract-verb-postpones-the-proof-present",
+      "role": "verb",
+      "text": "asks one final question about",
+      "singularText": "asks one final question about",
+      "pluralText": "ask one final question about",
+      "personalSingularText": "asks one final question about",
+      "secondPersonText": "ask one final question about",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+    },
+    {
+      "id": "reluctant-theorem-contract-verb-postpones-the-proof-future",
+      "role": "verb",
+      "text": "will ask one final question about",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-1-past",
+      "role": "predicate",
+      "text": "was one final question without an answer",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-1-present",
+      "role": "predicate",
+      "text": "is one final question without an answer",
+      "singularText": "is one final question without an answer",
+      "pluralText": "is one final question without an answer",
+      "personalSingularText": "is one final question without an answer",
+      "secondPersonText": "are one final question without an answer",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-1-future",
+      "role": "predicate",
+      "text": "will be one final question without an answer",
+      "tags": [
+        "indecision"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-2-past",
+      "role": "predicate",
+      "text": "was a conclusion waiting for a second opinion",
+      "tags": [
+        "urgency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-2-present",
+      "role": "predicate",
+      "text": "is a conclusion waiting for a second opinion",
+      "singularText": "is a conclusion waiting for a second opinion",
+      "pluralText": "is a conclusion waiting for a second opinion",
+      "personalSingularText": "is a conclusion waiting for a second opinion",
+      "secondPersonText": "is a conclusion waiting for a second opinion",
+      "tags": [
+        "urgency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-2-future",
+      "role": "predicate",
+      "text": "will be a conclusion waiting for a second opinion",
+      "tags": [
+        "urgency"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-3-past",
+      "role": "predicate",
+      "text": "was a deadline with a conditional hinge",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "common",
+      "tense": "past",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-3-present",
+      "role": "predicate",
+      "text": "is a deadline with a conditional hinge",
+      "singularText": "is a deadline with a conditional hinge",
+      "pluralText": "is a deadline with a conditional hinge",
+      "personalSingularText": "is a deadline with a conditional hinge",
+      "secondPersonText": "is a deadline with a conditional hinge",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "uncommon",
+      "tense": "present",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+    },
+    {
+      "id": "reluctant-theorem-contract-predicate-predicate-3-future",
+      "role": "predicate",
+      "text": "will be a deadline with a conditional hinge",
+      "tags": [
+        "delivery"
+      ],
+      "scorePreferences": {
+        "substance": [
+          {
+            "left": [
+              "bureaucracy",
+              "theorem"
+            ]
+          }
+        ],
+        "flavour": []
+      },
+      "rarity": "rare",
+      "tense": "future",
+      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+    },
+    {
+      "id": "reluctant-theorem-contract-ending-and-the-proof-requested-more-time",
+      "role": "ending",
+      "text": "and the proof requested more time.",
+      "tags": [
+        "indecision",
+        "urgency"
+      ],
+      "rarity": "rare",
+      "finisherBonus": 2
     }
   ]
 }

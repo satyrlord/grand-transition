@@ -77,6 +77,7 @@ HISTORY.md
 tools/*
 !tools/final-content-volumes.ts
 !tools/check-final-content-volumes.ts
+!tools/validate-content-balance.ts
 !tools/scene-replacement-baseline.json
 !tools/scene-resolution.mjs
 !tools/run-quality-gate.mjs

@@ -25,20 +25,31 @@ export const gameLocaleBundleSchema = z
     title: z
       .object({
         name: gameTextSchema,
-        fictionalCompositeSatireDisclaimer: gameTextSchema.refine(
-          (text) =>
-            /fictional/iu.test(text) &&
-            /composite/iu.test(text) &&
-            /satir/iu.test(text),
-          {
-            message:
-              'State that the title uses fictional composites created for satire.',
-          },
-        ),
+        fictionalCompositeSatireDisclaimer: gameTextSchema,
       })
       .strict(),
     messages: z.record(localeKeySchema, gameTextSchema),
   })
-  .strict();
+  .strict()
+  .superRefine((bundle, context) => {
+    // The English disclaimer is pinned by wording. Every other locale states the
+    // same meaning in its own language, so its wording is checked by reviewed
+    // content and focused assertions instead of by English keywords.
+    if (!/^en(?:-|$)/u.test(bundle.locale)) return;
+    const text = bundle.title.fictionalCompositeSatireDisclaimer;
+    if (
+      /fictional/iu.test(text) &&
+      /composite/iu.test(text) &&
+      /satir/iu.test(text)
+    ) {
+      return;
+    }
+    context.addIssue({
+      code: 'custom',
+      path: ['title', 'fictionalCompositeSatireDisclaimer'],
+      message:
+        'State that the title uses fictional composites created for satire.',
+    });
+  });
 
 export type GameLocaleBundle = z.infer<typeof gameLocaleBundleSchema>;

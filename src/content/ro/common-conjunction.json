@@ -2,15 +2,18 @@
   "phrase.and": "și",
   "phrase.but": "dar",
   "phrase.because": "fiindcă",
-  "phrase.yet": "totuși",
   "phrase.so": "așa că",
-  "phrase.for": "căci",
   "phrase.with": "cu",
-  "phrase.public-and-somehow": "și, cumva,",
   "phrase.transition-era-television-studio-yet-after-the-emergency-bulletin": "totuși, după buletinul de știri,",
   "phrase.modern-debate-studio-but-after-the-closing-statement": "dar, după închiderea urnelor,",
   "phrase.county-council-ballroom-yet-between-the-council-toasts": "totuși, între cocktailuri,",
   "phrase.midnight-call-in-studio-but-before-the-next-caller": "dar, înainte de următorul apelant,",
   "phrase.palace-press-hall-yet-after-the-palace-statement": "totuși, după toate declarațiile,",
-  "phrase.influencer-campaign-livestream-but-after-the-sponsor-alert": "dar, după reclamă,"
+  "phrase.influencer-campaign-livestream-but-after-the-sponsor-alert": "dar, după reclamă,",
+  "phrase.transition-era-television-studio-but-after-the-rerun": "dar, după iarna diferită de vară,",
+  "phrase.transition-era-television-studio-so-according-to-the-archive": "așa că, după o ultimă întrebare,",
+  "phrase.modern-debate-studio-but-after-the-briefing": "dar, după o glumă proastă,",
+  "phrase.modern-debate-studio-so-the-poll-can-explain-itself": "așa că raza la pătrat se explică,",
+  "phrase.county-council-ballroom-but-after-the-ribbon-cutting": "dar, după numărarea ouălor,",
+  "phrase.county-council-ballroom-so-the-invoice-can-be-framed": "așa că pagina albă se semnează,"
 }

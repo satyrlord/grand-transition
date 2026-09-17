@@ -18,6 +18,7 @@
     "assets:convert-green": "node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree",
     "assets:validate": "node tools/brand-assets.mjs validate && node tools/validate-scaffold.mjs --domain assets && node tools/validate-scene-assets.mjs src/assets/scenes && node tools/validate-character-assets.mjs src/assets/characters && node tools/validate-character-states.mjs && node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets && node tools/validate-asset-color.mjs validate src/assets && npm run audio:validate && npm run speech:validate",
     "content:validate": "node tools/validate-scaffold.mjs --domain content && tsx tools/check-final-content-volumes.ts && tsx tools/validate-game-locales.ts && vitest run --config vitest.config.ts tests/unit/content-schemas.test.ts",
+    "balance:validate": "tsx tools/validate-content-balance.ts",
     "localization:extract": "lit-localize extract",
     "localization:build": "lit-localize extract && lit-localize build",
     "localization:validate": "node tools/validate-scaffold.mjs --domain localization && tsx tools/validate-interface-locales.ts",

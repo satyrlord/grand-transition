@@ -1,6 +1,6 @@
 # Milestone 028: Minimum Viable Product Content Finalization
 
-**Status:** Approved; revised content-catalog target pending\
+**Status:** Approved; revised content implementation verified; finalization evidence pending\
 **Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
@@ -9,8 +9,9 @@ and variety evidence
 Milestone 027 can finish with the current artwork and the exact common-catalog
 volumes defined here. This milestone retains the additional pose images, scene
 layers, motion, and final media packages; their delivery does not block
-Milestone 027. The earlier completion evidence remains historical and does not
-verify the revised content-catalog target.
+Milestone 027. The earlier completion evidence remains historical. The revised
+phrase-volume implementation is verified by the focused content gate; final
+art, audio, variety, and broader milestone evidence remain separate concerns.
 
 The phrase-data package uses the common authoring file and the 19 character
 authoring files. Replay behavior is a separate Milestone 014 package. The replay
@@ -392,6 +393,12 @@ neutral; they are selected for the owning scene's themes and personalized as
 far as grammar permits. Scene-restricted cards remain fictional in identity and
 do not share a card across scenes.
 
+The final content review also targets an approximate 50/50 split of authentic
+adaptations and purely fictional lines within each newly generated common and
+character expansion. A source-inspired original joke is still fictional when
+the visible wording does not retain the documented quote or its meaning. Keep
+the classification lists and source basis in the private research folder.
+
 Character-owned conjunctions are not required to be neutral; they are selected
 for the owning character's voice and themes and personalized as far as grammar
 permits. Character-restricted cards remain unique to their owner and do not
@@ -442,9 +449,10 @@ assertion or asset threshold was relaxed. Final logs are retained in
 Impeccable audit and independent critique evidence, dispositions, and limitations
 are recorded in `.impeccable/review/spec-028-acceptance.md`.
 
-That evidence covers the previous finalization target. The revised exact
-common, character, and scene volumes, quote provenance, verb-family review, and
-owner-personalized conjunction checks remain pending implementation and
-verification. The existing character, scene, asset, localization, and match
-evidence remains useful but does not establish completion of the revised
-contract. Stop before release optimization or deployment.
+That evidence covers the previous finalization target. The current focused
+content gate verifies the revised exact common, character, and scene volumes,
+tense families, continuation rules, uniqueness, and grammar. Quote provenance,
+whole-family humor, and owner-personalized conjunction quality remain private or
+subjective editorial evidence; automated checks do not prove them. Final art,
+audio, variety, and release evidence remain outside this focused verification.
+Stop before release optimization or deployment.

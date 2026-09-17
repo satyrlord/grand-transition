@@ -2344,26 +2344,10 @@
     "rarity": "rare"
   },
   {
-    "id": "yet",
-    "role": "conjunction",
-    "text": "yet",
-    "connectorKind": "yet",
-    "tags": [],
-    "rarity": "rare"
-  },
-  {
     "id": "so",
     "role": "conjunction",
     "text": "so",
     "connectorKind": "so",
-    "tags": [],
-    "rarity": "rare"
-  },
-  {
-    "id": "for",
-    "role": "conjunction",
-    "text": "for",
-    "connectorKind": "for",
     "tags": [],
     "rarity": "rare"
   },
@@ -2409,18 +2393,6 @@
     ],
     "rarity": "rare",
     "finisherBonus": 3
-  },
-  {
-    "id": "for-stability-and-progress",
-    "role": "ending",
-    "text": "because winter skipped the feasibility study.",
-    "tags": [
-      "competence",
-      "infrastructure",
-      "bureaucracy"
-    ],
-    "rarity": "uncommon",
-    "finisherBonus": 2
   },
   {
     "id": "under-the-national-banner",
@@ -4281,62 +4253,6 @@
     "rarity": "rare",
     "tense": "future",
     "tenseFamily": "be"
-  },
-  {
-    "id": "should-have-been",
-    "role": "verb",
-    "text": "should have been",
-    "singularText": "should have been",
-    "pluralText": "should have been",
-    "tags": [],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": [
-            "history",
-            "politics",
-            "personal"
-          ],
-          "right": [
-            "history",
-            "politics",
-            "personal"
-          ]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "common",
-    "tense": "past",
-    "tenseFamily": "should-have-been"
-  },
-  {
-    "id": "should-be",
-    "role": "verb",
-    "text": "should be",
-    "singularText": "should be",
-    "pluralText": "should be",
-    "tags": [],
-    "scorePreferences": {
-      "substance": [
-        {
-          "left": [
-            "history",
-            "politics",
-            "personal"
-          ],
-          "right": [
-            "history",
-            "politics",
-            "personal"
-          ]
-        }
-      ],
-      "flavour": []
-    },
-    "rarity": "uncommon",
-    "tense": "present",
-    "tenseFamily": "should-have-been"
   },
   {
     "id": "stole",
@@ -8952,14 +8868,6 @@
     "rarity": "uncommon"
   },
   {
-    "id": "public-and-somehow",
-    "role": "conjunction",
-    "connectorKind": "and",
-    "text": "and, somehow,",
-    "tags": [],
-    "rarity": "common"
-  },
-  {
     "id": "public-and-the-complaint-box-has-applied-for-witness-protection",
     "role": "ending",
     "text": "and the complaint box wants witness protection.",
@@ -8983,16 +8891,6 @@
     "id": "public-and-the-missing-attachment-has-been-promoted",
     "role": "ending",
     "text": "and the missing attachment has been promoted.",
-    "tags": [
-      "bureaucracy"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "public-and-the-queue-needs-a-ticket-to-join-itself",
-    "role": "ending",
-    "text": "and the queue needs a ticket.",
     "tags": [
       "bureaucracy"
     ],
@@ -9030,16 +8928,6 @@
     "finisherBonus": 4
   },
   {
-    "id": "public-and-the-deadline-has-changed-its-phone-number",
-    "role": "ending",
-    "text": "and the deadline changed its number.",
-    "tags": [
-      "delivery"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
     "id": "public-and-the-ribbon-is-longer-than-the-finished-road",
     "role": "ending",
     "text": "and the ribbon is longer than the road.",
@@ -9067,17 +8955,6 @@
     "text": "and the progress bar wants another term.",
     "tags": [
       "delivery"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "public-and-the-opening-ceremony-is-still-the-largest-structure-on-site",
-    "role": "ending",
-    "text": "and the opening ceremony is the largest structure.",
-    "tags": [
-      "infrastructure",
-      "results"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9167,16 +9044,6 @@
     "finisherBonus": 4
   },
   {
-    "id": "public-and-the-winning-supplier-brought-the-only-pen",
-    "role": "ending",
-    "text": "and the winner brought the only pen.",
-    "tags": [
-      "procurement"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
     "id": "public-and-the-audit-trail-ends-at-a-reserved-parking-space",
     "role": "ending",
     "text": "and the audit trail ends in reserved parking.",
@@ -9241,31 +9108,9 @@
     "finisherBonus": 4
   },
   {
-    "id": "public-and-the-promotion-was-announced-before-the-birthday-cake",
-    "role": "ending",
-    "text": "and the promotion arrived with the birthday cake.",
-    "tags": [
-      "family",
-      "nepotism"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
     "id": "public-and-the-uncle-is-now-a-strategic-stakeholder",
     "role": "ending",
     "text": "and the uncle is now a strategic stakeholder.",
-    "tags": [
-      "family",
-      "nepotism"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "public-and-the-job-description-includes-bringing-the-family-photo",
-    "role": "ending",
-    "text": "and the job description requires the family photo.",
     "tags": [
       "family",
       "nepotism"
@@ -9307,16 +9152,6 @@
     "finisherBonus": 4
   },
   {
-    "id": "public-and-the-expense-account-needs-a-second-suitcase",
-    "role": "ending",
-    "text": "and the expense account needs another suitcase.",
-    "tags": [
-      "spending"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
     "id": "public-and-the-austerity-speech-came-with-valet-parking",
     "role": "ending",
     "text": "and austerity came with valet parking.",
@@ -9344,16 +9179,6 @@
     "text": "and a damp handshake erases the manifesto.",
     "tags": [
       "commitment",
-      "consistency"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "public-and-the-firm-position-comes-with-castors",
-    "role": "ending",
-    "text": "and the firm position comes with castors.",
-    "tags": [
       "consistency"
     ],
     "rarity": "rare",
@@ -9418,17 +9243,6 @@
     "tags": [
       "context",
       "competence"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "public-and-the-firsthand-account-includes-a-transfer-at-the-airport",
-    "role": "ending",
-    "text": "and the firsthand account includes an airport transfer.",
-    "tags": [
-      "distance",
-      "firsthand-knowledge"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9618,27 +9432,6 @@
     "tags": [
       "evidence",
       "accountability"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "media"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "transition-era-television-studio"
-    ]
-  },
-  {
-    "id": "transition-era-television-studio-a-studio-clock-still-showing-transition-time",
-    "role": "noun",
-    "text": "a studio clock still showing transition time",
-    "tags": [
-      "legacy",
-      "obsolete"
     ],
     "scoreGroups": {
       "substance": [
@@ -10196,26 +9989,6 @@
     "tags": [
       "evidence",
       "credibility"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "media"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "modern-debate-studio"
-    ]
-  },
-  {
-    "id": "modern-debate-studio-the-bottled-confidence-beside-the-lectern",
-    "role": "noun",
-    "text": "the bottled confidence beside the lectern",
-    "tags": [
-      "confidence"
     ],
     "scoreGroups": {
       "substance": [
@@ -10804,31 +10577,10 @@
   {
     "id": "county-council-ballroom-a-pothole-with-a-commemorative-plaque",
     "role": "noun",
-    "text": "a pothole with a commemorative plaque",
+    "text": "a pothole with a commemorative ribbon",
     "tags": [
       "infrastructure",
       "maintenance"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "bureaucracy"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "county-council-ballroom"
-    ]
-  },
-  {
-    "id": "county-council-ballroom-the-council-ballroom-s-emergency-catering-invoice",
-    "role": "noun",
-    "text": "the council ballroom's emergency catering invoice",
-    "tags": [
-      "procurement",
-      "spending"
     ],
     "scoreGroups": {
       "substance": [
@@ -11414,26 +11166,6 @@
     ]
   },
   {
-    "id": "midnight-call-in-studio-a-skyline-borrowed-from-the-weather-forecast",
-    "role": "noun",
-    "text": "a skyline borrowed from the weather forecast",
-    "tags": [
-      "authenticity"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "media"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "midnight-call-in-studio"
-    ]
-  },
-  {
     "id": "midnight-call-in-studio-the-commercial-clock-running-the-investigation",
     "role": "noun",
     "text": "the commercial clock running the investigation",
@@ -11899,17 +11631,6 @@
     ]
   },
   {
-    "id": "midnight-call-in-studio-but-before-the-next-caller",
-    "role": "conjunction",
-    "connectorKind": "but",
-    "text": "but, before the next caller,",
-    "tags": [],
-    "rarity": "common",
-    "sceneIds": [
-      "midnight-call-in-studio"
-    ]
-  },
-  {
     "id": "midnight-call-in-studio-and-the-hidden-tape-contains-another-advert-for-the-hidden-tape",
     "role": "ending",
     "text": "and the hidden tape advertises the hidden tape.",
@@ -12112,26 +11833,6 @@
     "id": "palace-press-hall-a-national-interest-photograph-without-the-public",
     "role": "noun",
     "text": "a national-interest photograph without the public",
-    "tags": [
-      "accountability"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "politics"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "palace-press-hall"
-    ]
-  },
-  {
-    "id": "palace-press-hall-the-palace-clock-measuring-a-considered-silence",
-    "role": "noun",
-    "text": "the palace clock measuring a considered silence",
     "tags": [
       "accountability"
     ],
@@ -12684,26 +12385,6 @@
     ]
   },
   {
-    "id": "influencer-campaign-livestream-a-campaign-algorithm-in-traditional-wrapping",
-    "role": "noun",
-    "text": "a campaign algorithm in traditional wrapping",
-    "tags": [
-      "authenticity"
-    ],
-    "scoreGroups": {
-      "substance": [
-        "media"
-      ],
-      "flavour": [
-        "politics"
-      ]
-    },
-    "rarity": "common",
-    "sceneIds": [
-      "influencer-campaign-livestream"
-    ]
-  },
-  {
     "id": "influencer-campaign-livestream-the-livestream-poll-answered-by-the-merchandise-bot",
     "role": "noun",
     "text": "a livestream poll answered by a bot",
@@ -13170,5 +12851,5396 @@
       ]
     },
     "rarity": "common"
+  },
+  {
+    "id": "general-docket-without-a-hearing",
+    "role": "noun",
+    "text": "the synergy of facts in a docket",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-queue-for-the-queue",
+    "role": "noun",
+    "text": "the twists of concrete reality in a queue",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-stamp-of-conditional-approval",
+    "role": "noun",
+    "text": "a radius squared on a stamp",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-committee-without-a-chair",
+    "role": "noun",
+    "text": "a committee that follows one final question",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-annex-that-annexes-the-annex",
+    "role": "noun",
+    "text": "a bad joke in the annex",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-public-form-in-triplicate",
+    "role": "noun",
+    "text": "popcorn and a soft drink in triplicate",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-minute-before-the-meeting",
+    "role": "noun",
+    "text": "one final question before the meeting",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-permit-for-a-permit",
+    "role": "noun",
+    "text": "what you do not know you are losing: a permit",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-cabinet-of-spare-cabinets",
+    "role": "noun",
+    "text": "a cabinet of spare clean slates",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-procedural-umbrella",
+    "role": "noun",
+    "text": "a procedural umbrella for winter",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-office-hour-after-office-hours",
+    "role": "noun",
+    "text": "an office hour with two markers",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-signature-in-a-sealed-envelope",
+    "role": "noun",
+    "text": "a signature measured ten times",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-emergency-tea-protocol",
+    "role": "noun",
+    "text": "an emergency tea after a bad joke",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-audit-trail-with-a-shortcut",
+    "role": "noun",
+    "text": "an audit trail through concrete reality",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-waiting-room-with-a-waiting-room",
+    "role": "noun",
+    "text": "a waiting room for what you are losing",
+    "tags": [
+      "bureaucracy"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "procedure"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-headline-without-a-story",
+    "role": "noun",
+    "text": "a headline with the synergy of facts",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-camera-that-never-blinks",
+    "role": "noun",
+    "text": "a camera for one final question",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-microphone-under-oath",
+    "role": "noun",
+    "text": "a microphone for a bad joke",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-breaking-news-snack",
+    "role": "noun",
+    "text": "a breaking-news snack with two markers",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-studio-applause-meter",
+    "role": "noun",
+    "text": "an applause meter for the greatest credit",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-caller-with-a-script",
+    "role": "noun",
+    "text": "a caller asking what you are losing",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-panel-of-empty-chairs",
+    "role": "noun",
+    "text": "a panel with the twists of reality",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-fact-check-in-costume",
+    "role": "noun",
+    "text": "a fact check after a bad joke",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-commercial-break-manifesto",
+    "role": "noun",
+    "text": "a manifesto for one final question",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-ratings-thermometer",
+    "role": "noun",
+    "text": "a ratings thermometer for a booming economy",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-press-release-in-disguise",
+    "role": "noun",
+    "text": "a press release with a clean slate",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-archive-with-a-subscription",
+    "role": "noun",
+    "text": "an archive of what you are losing",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-teleprompter-of-denial",
+    "role": "noun",
+    "text": "a teleprompter for the synergy of facts",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-witness-under-studio-lights",
+    "role": "noun",
+    "text": "a witness with one final question",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-correction-after-closing-credits",
+    "role": "noun",
+    "text": "a correction after two markers",
+    "tags": [
+      "media"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "media"
+      ],
+      "flavour": [
+        "broadcast"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-bridge-to-nowhere-with-a-ribbon",
+    "role": "noun",
+    "text": "a bridge built from the twists of reality",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-pothole-with-a-commemorative-plaque",
+    "role": "noun",
+    "text": "a pothole measured by a radius",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-road-map-to-reserved-parking",
+    "role": "noun",
+    "text": "a road map before one final question",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-construction-site-with-an-opening-ceremony",
+    "role": "noun",
+    "text": "a construction site with a bad joke",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-maintenance-plan-in-a-drawer",
+    "role": "noun",
+    "text": "a maintenance plan for what you are losing",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-municipal-fountain-without-water",
+    "role": "noun",
+    "text": "a municipal fountain with information inside",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-public-staircase-to-nowhere",
+    "role": "noun",
+    "text": "a public staircase toward a clean slate",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-elevator-with-a-ceremonial-key",
+    "role": "noun",
+    "text": "an elevator with the greatest credit",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-budget-road-on-a-napkin",
+    "role": "noun",
+    "text": "a budget road through concrete reality",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-traffic-light-in-a-committee",
+    "role": "noun",
+    "text": "a traffic light waiting for one final question",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-sidewalk-with-a-press-badge",
+    "role": "noun",
+    "text": "a sidewalk for a country you love",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-warehouse-of-unopened-bottles",
+    "role": "noun",
+    "text": "a warehouse of popcorn and soft drinks",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-railway-timetable-for-one-train",
+    "role": "noun",
+    "text": "a railway timetable for what you are losing",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-bridge-inspection-by-applause",
+    "role": "noun",
+    "text": "a bridge inspection with two markers",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-infrastructure-ribbon",
+    "role": "noun",
+    "text": "an infrastructure ribbon for a bad joke",
+    "tags": [
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "infrastructure"
+      ],
+      "flavour": [
+        "construction"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-sealed-bid-with-an-answer-sheet",
+    "role": "noun",
+    "text": "a sealed bid with the synergy of facts",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-supplier-with-the-only-pen",
+    "role": "noun",
+    "text": "a supplier with a country you love",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-contract-before-the-need",
+    "role": "noun",
+    "text": "a contract before one final question",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-invoice-for-a-future-invoice",
+    "role": "noun",
+    "text": "an invoice for what you do not know",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-tender-with-a-private-dress-code",
+    "role": "noun",
+    "text": "a tender with a bad joke",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-winning-bid-in-a-family-envelope",
+    "role": "noun",
+    "text": "a winning bid with two markers",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-procurement-magic-word",
+    "role": "noun",
+    "text": "a procurement word from concrete reality",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-audit-trail-to-reserved-parking",
+    "role": "noun",
+    "text": "an audit trail for the greatest credit",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-consultant-with-three-business-cards",
+    "role": "noun",
+    "text": "a consultant with a radius squared",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-public-purchase-of-a-private-service",
+    "role": "noun",
+    "text": "a public purchase of popcorn",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-price-comparison-with-one-price",
+    "role": "noun",
+    "text": "a price comparison after a bad joke",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-delivery-note-for-no-delivery",
+    "role": "noun",
+    "text": "a delivery note for one final question",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-maintenance-contract-for-the-ribbon",
+    "role": "noun",
+    "text": "a maintenance contract measured ten times",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-budget-line-with-a-sponsor",
+    "role": "noun",
+    "text": "a budget line with the economy booming",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-warehouse-of-emergency-gifts",
+    "role": "noun",
+    "text": "a warehouse of what you are losing",
+    "tags": [
+      "procurement"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "procurement"
+      ],
+      "flavour": [
+        "contract"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-coalition-with-a-spare-coalition",
+    "role": "noun",
+    "text": "a coalition with a clean slate",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-mandate-in-pencil",
+    "role": "noun",
+    "text": "a mandate measured ten times",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-national-interest-with-a-footnote",
+    "role": "noun",
+    "text": "a national interest for a country you love",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-cabinet-of-temporary-permanent-ministers",
+    "role": "noun",
+    "text": "a cabinet with the greatest credit",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-party-platform-on-castors",
+    "role": "noun",
+    "text": "a party platform for one final question",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-opposition-with-a-reservation",
+    "role": "noun",
+    "text": "an opposition after a bad joke",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-parliamentary-umbrella",
+    "role": "noun",
+    "text": "a parliamentary umbrella for winter",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-ministerial-chair-with-a-nameplate",
+    "role": "noun",
+    "text": "a ministerial chair with two markers",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-emergency-cabinet-of-ordinary-days",
+    "role": "noun",
+    "text": "an emergency cabinet of concrete reality",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-reform-in-a-velvet-folder",
+    "role": "noun",
+    "text": "a reform in a clean-slate folder",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-public-service-with-a-private-door",
+    "role": "noun",
+    "text": "a public service for a country you love",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-coalition-proposal-before-breakfast",
+    "role": "noun",
+    "text": "a coalition proposal before popcorn",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-policy-with-a-quiet-exit",
+    "role": "noun",
+    "text": "a policy with the synergy of facts",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-state-of-the-union-in-a-stairwell",
+    "role": "noun",
+    "text": "a state of the union after a bad joke",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-committee-for-the-next-committee",
+    "role": "noun",
+    "text": "a committee for what you are losing",
+    "tags": [
+      "consistency"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "coalition"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-algorithm-without-a-password",
+    "role": "noun",
+    "text": "a algorithm without a password",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-cloud-backup-in-a-filing-cabinet",
+    "role": "noun",
+    "text": "a cloud backup in a filing cabinet",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-spreadsheet-with-a-prophecy",
+    "role": "noun",
+    "text": "a spreadsheet with a prophecy",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-dashboard-with-no-buttons",
+    "role": "noun",
+    "text": "a dashboard with no buttons",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-digital-transformation-on-carbon-paper",
+    "role": "noun",
+    "text": "a digital transformation on carbon paper",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-database-of-unanswered-questions",
+    "role": "noun",
+    "text": "a database of unanswered questions",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-password-for-the-public-password",
+    "role": "noun",
+    "text": "a password for the public password",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-app-for-the-paper-form",
+    "role": "noun",
+    "text": "a app for the paper form",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-notification-with-a-stamp",
+    "role": "noun",
+    "text": "a notification with a stamp",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-progress-bar-with-another-term",
+    "role": "noun",
+    "text": "a progress bar with another term",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-platform-with-a-velvet-rope",
+    "role": "noun",
+    "text": "a platform with a velvet rope",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-software-update-for-an-old-printer",
+    "role": "noun",
+    "text": "a software update for an old printer",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-data-lake-with-a-bucket",
+    "role": "noun",
+    "text": "a data lake with a bucket",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-online-consultation-with-no-signal",
+    "role": "noun",
+    "text": "a online consultation with no signal",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-search-engine-for-a-single-result",
+    "role": "noun",
+    "text": "a search engine for a single result",
+    "tags": [
+      "technology"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "technology"
+      ],
+      "flavour": [
+        "digital"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-receipt-that-arrived-alone",
+    "role": "noun",
+    "text": "a receipt that arrived alone",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-witness-with-directions",
+    "role": "noun",
+    "text": "a witness with directions",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-fact-with-a-quieter-slot",
+    "role": "noun",
+    "text": "a fact with a quieter slot",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-source-on-the-payroll",
+    "role": "noun",
+    "text": "a source on the payroll",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-footnote-taller-than-the-building",
+    "role": "noun",
+    "text": "a footnote taller than the building",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-report-with-a-missing-attachment",
+    "role": "noun",
+    "text": "a report with a missing attachment",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-evidence-in-a-gift-bag",
+    "role": "noun",
+    "text": "a evidence in a gift bag",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-statistics-with-a-cake",
+    "role": "noun",
+    "text": "a statistics with a cake",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-audit-trail-with-a-blind-spot",
+    "role": "noun",
+    "text": "a audit trail with a blind spot",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-proof-by-commemorative-plaque",
+    "role": "noun",
+    "text": "a proof by commemorative plaque",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-expert-with-spelling-errors",
+    "role": "noun",
+    "text": "a expert with spelling errors",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-question-with-a-sponsor",
+    "role": "noun",
+    "text": "a question with a sponsor",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-answer-before-the-question",
+    "role": "noun",
+    "text": "a answer before the question",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-minutes-that-deny-the-meeting",
+    "role": "noun",
+    "text": "a minutes that deny the meeting",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-context-in-a-forwarded-message",
+    "role": "noun",
+    "text": "a context in a forwarded message",
+    "tags": [
+      "evidence"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "evidence"
+      ],
+      "flavour": [
+        "proof"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-undecided-voter-in-a-rehearsal-booth",
+    "role": "noun",
+    "text": "a undecided voter in a rehearsal booth",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-polling-sample-from-the-green-room",
+    "role": "noun",
+    "text": "a polling sample from the service lift",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-campaign-chart-with-an-escape-hatch",
+    "role": "noun",
+    "text": "a campaign chart with a trapdoor",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-ballot-box-with-a-lifejacket",
+    "role": "noun",
+    "text": "a ballot box with a lifejacket",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-exit-poll-before-the-microwave",
+    "role": "noun",
+    "text": "a exit poll before the microwave",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-manifesto-with-a-damp-handshake",
+    "role": "noun",
+    "text": "a manifesto with a damp handshake",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-promise-in-the-opposite-coalition",
+    "role": "noun",
+    "text": "a promise in the opposite coalition",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-loyalty-oath-at-an-opinion-poll",
+    "role": "noun",
+    "text": "a loyalty oath at an opinion poll",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-campaign-ribbon-longer-than-the-road",
+    "role": "noun",
+    "text": "a campaign ribbon longer than the road",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-election-warranty",
+    "role": "noun",
+    "text": "a election warranty",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-candidate-with-two-speeches",
+    "role": "noun",
+    "text": "a candidate with two speeches",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-public-apology-with-a-sponsor",
+    "role": "noun",
+    "text": "a public apology with a sponsor",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-national-salvation-chair",
+    "role": "noun",
+    "text": "a national-salvation chair",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-revolution-on-a-rerun",
+    "role": "noun",
+    "text": "a revolution on a rerun",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-historic-announcement-on-a-cassette",
+    "role": "noun",
+    "text": "a historic announcement on a cassette",
+    "tags": [
+      "politics"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "politics"
+      ],
+      "flavour": [
+        "campaign"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-family-tree-with-a-job-description",
+    "role": "noun",
+    "text": "a family tree with a job description",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-interview-chair-for-a-cousin",
+    "role": "noun",
+    "text": "a interview chair for a cousin",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-promotion-with-a-birthday-cake",
+    "role": "noun",
+    "text": "a promotion with a birthday cake",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-uncle-as-a-strategic-stakeholder",
+    "role": "noun",
+    "text": "a uncle as a strategic stakeholder",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-marble-with-a-travel-allowance",
+    "role": "noun",
+    "text": "a marble with a travel allowance",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-ceremonial-scissors-with-a-chauffeur",
+    "role": "noun",
+    "text": "a ceremonial scissors with a chauffeur",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-expense-account-with-a-suitcase",
+    "role": "noun",
+    "text": "a expense account with a suitcase",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-austerity-with-valet-parking",
+    "role": "noun",
+    "text": "a austerity with valet parking",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-modesty-with-a-limousine",
+    "role": "noun",
+    "text": "a modesty with a limousine",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-velvet-rope-public-service",
+    "role": "noun",
+    "text": "a velvet-rope public service",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-luxury-minister-with-a-receipt",
+    "role": "noun",
+    "text": "a luxury minister with a receipt",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-catering-invoice-with-an-emergency",
+    "role": "noun",
+    "text": "a catering invoice with an emergency",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-birthday-cake-with-a-procurement-number",
+    "role": "noun",
+    "text": "a birthday cake with a procurement number",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-family-photo-in-a-tender",
+    "role": "noun",
+    "text": "a family photo in a tender",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-office-with-reserved-seating",
+    "role": "noun",
+    "text": "a office with reserved seating",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-rooster-at-a-press-conference",
+    "role": "noun",
+    "text": "a rooster at a press conference",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-puddle-with-a-forecast",
+    "role": "noun",
+    "text": "a puddle with a forecast",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-damp-sock-prophecy",
+    "role": "noun",
+    "text": "a damp-sock prophecy",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-lemonade-microchip",
+    "role": "noun",
+    "text": "a lemonade microchip",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-coffee-break-emergency",
+    "role": "noun",
+    "text": "a coffee-break emergency",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-apology-in-a-suitcase",
+    "role": "noun",
+    "text": "a apology in a suitcase",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-microphone-with-a-noise-complaint",
+    "role": "noun",
+    "text": "a microphone with a noise complaint",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-printer-seeking-asylum",
+    "role": "noun",
+    "text": "a printer seeking asylum",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-queue-with-a-ticket",
+    "role": "noun",
+    "text": "a queue with a ticket",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-rubber-stamp-with-a-second-opinion",
+    "role": "noun",
+    "text": "a rubber stamp with a second opinion",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-complaint-box-with-witness-protection",
+    "role": "noun",
+    "text": "a complaint box with witness protection",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-headline-suing-the-story",
+    "role": "noun",
+    "text": "a headline suing the story",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "rare"
+  },
+  {
+    "id": "general-camera-as-a-paid-witness",
+    "role": "noun",
+    "text": "a camera as a paid witness",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "common"
+  },
+  {
+    "id": "general-silence-with-a-podium",
+    "role": "noun",
+    "text": "a silence with a podium",
+    "tags": [
+      "credibility"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "satire"
+      ]
+    },
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-audits-the-ceremony-past",
+    "role": "verb",
+    "text": "audited the synergy of facts in",
+    "tags": [
+      "evidence",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "evidence",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-audits-the-ceremony"
+  },
+  {
+    "id": "general-audits-the-ceremony-present",
+    "role": "verb",
+    "text": "audits the synergy of facts in",
+    "singularText": "audits the synergy of facts in",
+    "pluralText": "audit the synergy of facts in",
+    "personalSingularText": "audits the synergy of facts in",
+    "secondPersonText": "audit the synergy of facts in",
+    "tags": [
+      "evidence",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "evidence",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-audits-the-ceremony"
+  },
+  {
+    "id": "general-audits-the-ceremony-future",
+    "role": "verb",
+    "text": "will audit the synergy of facts in",
+    "tags": [
+      "evidence",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "evidence",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-audits-the-ceremony"
+  },
+  {
+    "id": "general-sponsors-the-apology-past",
+    "role": "verb",
+    "text": "sponsored a bad joke about",
+    "tags": [
+      "influence",
+      "sincerity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-sponsors-the-apology"
+  },
+  {
+    "id": "general-sponsors-the-apology-present",
+    "role": "verb",
+    "text": "sponsors a bad joke about",
+    "singularText": "sponsors a bad joke about",
+    "pluralText": "sponsor a bad joke about",
+    "personalSingularText": "sponsors a bad joke about",
+    "secondPersonText": "sponsor a bad joke about",
+    "tags": [
+      "influence",
+      "sincerity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-sponsors-the-apology"
+  },
+  {
+    "id": "general-sponsors-the-apology-future",
+    "role": "verb",
+    "text": "will sponsor a bad joke about",
+    "tags": [
+      "influence",
+      "sincerity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-sponsors-the-apology"
+  },
+  {
+    "id": "general-relabels-the-pothole-past",
+    "role": "verb",
+    "text": "relabelled a bad joke as",
+    "tags": [
+      "infrastructure",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "construction",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-relabels-the-pothole"
+  },
+  {
+    "id": "general-relabels-the-pothole-present",
+    "role": "verb",
+    "text": "relabels a bad joke as",
+    "singularText": "relabels a bad joke as",
+    "pluralText": "relabel a bad joke as",
+    "personalSingularText": "relabels a bad joke as",
+    "secondPersonText": "relabel a bad joke as",
+    "tags": [
+      "infrastructure",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "construction",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-relabels-the-pothole"
+  },
+  {
+    "id": "general-relabels-the-pothole-future",
+    "role": "verb",
+    "text": "will relabel a bad joke as",
+    "tags": [
+      "infrastructure",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "construction",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-relabels-the-pothole"
+  },
+  {
+    "id": "general-files-the-ribbon-past",
+    "role": "verb",
+    "text": "filed one final question beside",
+    "tags": [
+      "bureaucracy",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-files-the-ribbon"
+  },
+  {
+    "id": "general-files-the-ribbon-present",
+    "role": "verb",
+    "text": "files one final question beside",
+    "singularText": "files one final question beside",
+    "pluralText": "file one final question beside",
+    "personalSingularText": "files one final question beside",
+    "secondPersonText": "file one final question beside",
+    "tags": [
+      "bureaucracy",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-files-the-ribbon"
+  },
+  {
+    "id": "general-files-the-ribbon-future",
+    "role": "verb",
+    "text": "will file one final question beside",
+    "tags": [
+      "bureaucracy",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-files-the-ribbon"
+  },
+  {
+    "id": "general-measures-the-silence-past",
+    "role": "verb",
+    "text": "measured the radius of",
+    "tags": [
+      "accountability",
+      "decorum"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "protocol"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-measures-the-silence"
+  },
+  {
+    "id": "general-measures-the-silence-present",
+    "role": "verb",
+    "text": "measures the radius of",
+    "singularText": "measures the radius of",
+    "pluralText": "measure the radius of",
+    "personalSingularText": "measures the radius of",
+    "secondPersonText": "measure the radius of",
+    "tags": [
+      "accountability",
+      "decorum"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "protocol"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-measures-the-silence"
+  },
+  {
+    "id": "general-measures-the-silence-future",
+    "role": "verb",
+    "text": "will measure the radius of",
+    "tags": [
+      "accountability",
+      "decorum"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "protocol"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-measures-the-silence"
+  },
+  {
+    "id": "general-exports-the-excuse-past",
+    "role": "verb",
+    "text": "exported the twists of concrete reality to",
+    "tags": [
+      "credibility",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-exports-the-excuse"
+  },
+  {
+    "id": "general-exports-the-excuse-present",
+    "role": "verb",
+    "text": "exports the twists of concrete reality to",
+    "singularText": "exports the twists of concrete reality to",
+    "pluralText": "export the twists of concrete reality to",
+    "personalSingularText": "exports the twists of concrete reality to",
+    "secondPersonText": "export the twists of concrete reality to",
+    "tags": [
+      "credibility",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-exports-the-excuse"
+  },
+  {
+    "id": "general-exports-the-excuse-future",
+    "role": "verb",
+    "text": "will export the twists of concrete reality to",
+    "tags": [
+      "credibility",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-exports-the-excuse"
+  },
+  {
+    "id": "general-approves-the-invoice-past",
+    "role": "verb",
+    "text": "approved the clean slate for",
+    "tags": [
+      "procurement",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-approves-the-invoice"
+  },
+  {
+    "id": "general-approves-the-invoice-present",
+    "role": "verb",
+    "text": "approves the clean slate for",
+    "singularText": "approves the clean slate for",
+    "pluralText": "approve the clean slate for",
+    "personalSingularText": "approves the clean slate for",
+    "secondPersonText": "approve the clean slate for",
+    "tags": [
+      "procurement",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-approves-the-invoice"
+  },
+  {
+    "id": "general-approves-the-invoice-future",
+    "role": "verb",
+    "text": "will approve the clean slate for",
+    "tags": [
+      "procurement",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-approves-the-invoice"
+  },
+  {
+    "id": "general-broadcasts-the-rumour-past",
+    "role": "verb",
+    "text": "broadcast what you did not know you lost to",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-broadcasts-the-rumour"
+  },
+  {
+    "id": "general-broadcasts-the-rumour-present",
+    "role": "verb",
+    "text": "broadcasts what you do not know you lose to",
+    "singularText": "broadcasts what you do not know you lose to",
+    "pluralText": "broadcast what you do not know you lose to",
+    "personalSingularText": "broadcasts what you do not know you lose to",
+    "secondPersonText": "broadcast what you do not know you lose to",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-broadcasts-the-rumour"
+  },
+  {
+    "id": "general-broadcasts-the-rumour-future",
+    "role": "verb",
+    "text": "will broadcast what you do not know you lose to",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-broadcasts-the-rumour"
+  },
+  {
+    "id": "general-postpones-the-reform-past",
+    "role": "verb",
+    "text": "postponed the reform",
+    "tags": [
+      "delivery",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-postpones-the-reform"
+  },
+  {
+    "id": "general-postpones-the-reform-present",
+    "role": "verb",
+    "text": "postpones the reform",
+    "singularText": "postpones the reform",
+    "pluralText": "postpones the reform",
+    "personalSingularText": "postpones the reform",
+    "secondPersonText": "postpones the reform",
+    "tags": [
+      "delivery",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-postpones-the-reform"
+  },
+  {
+    "id": "general-postpones-the-reform-future",
+    "role": "verb",
+    "text": "will postpone the reform",
+    "tags": [
+      "delivery",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-postpones-the-reform"
+  },
+  {
+    "id": "general-rehearses-the-emergency-past",
+    "role": "verb",
+    "text": "rehearsed the emergency",
+    "tags": [
+      "authenticity",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-rehearses-the-emergency"
+  },
+  {
+    "id": "general-rehearses-the-emergency-present",
+    "role": "verb",
+    "text": "rehearses the emergency",
+    "singularText": "rehearses the emergency",
+    "pluralText": "rehearses the emergency",
+    "personalSingularText": "rehearses the emergency",
+    "secondPersonText": "rehearses the emergency",
+    "tags": [
+      "authenticity",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-rehearses-the-emergency"
+  },
+  {
+    "id": "general-rehearses-the-emergency-future",
+    "role": "verb",
+    "text": "will rehearse the emergency",
+    "tags": [
+      "authenticity",
+      "bureaucracy"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-rehearses-the-emergency"
+  },
+  {
+    "id": "general-is-a-committee-without-a-chair-past",
+    "role": "predicate",
+    "text": "was a committee following the twists of concrete reality",
+    "tags": [
+      "bureaucracy",
+      "competence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-committee-without-a-chair"
+  },
+  {
+    "id": "general-is-a-committee-without-a-chair-present",
+    "role": "predicate",
+    "text": "is a committee following the twists of concrete reality",
+    "tags": [
+      "bureaucracy",
+      "competence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-committee-without-a-chair"
+  },
+  {
+    "id": "general-is-a-committee-without-a-chair-future",
+    "role": "predicate",
+    "text": "will be a committee following the twists of concrete reality",
+    "tags": [
+      "bureaucracy",
+      "competence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "procedure",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-committee-without-a-chair"
+  },
+  {
+    "id": "general-is-a-headline-without-a-story-past",
+    "role": "predicate",
+    "text": "was a bad joke with a headline",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-headline-without-a-story"
+  },
+  {
+    "id": "general-is-a-headline-without-a-story-present",
+    "role": "predicate",
+    "text": "is a bad joke with a headline",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-headline-without-a-story"
+  },
+  {
+    "id": "general-is-a-headline-without-a-story-future",
+    "role": "predicate",
+    "text": "will be a bad joke with a headline",
+    "tags": [
+      "media",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "evidence"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-headline-without-a-story"
+  },
+  {
+    "id": "general-is-a-contract-before-the-need-past",
+    "role": "predicate",
+    "text": "was what you did not know you were losing",
+    "tags": [
+      "procurement",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-contract-before-the-need"
+  },
+  {
+    "id": "general-is-a-contract-before-the-need-present",
+    "role": "predicate",
+    "text": "is what you did not know you were losing",
+    "tags": [
+      "procurement",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-contract-before-the-need"
+  },
+  {
+    "id": "general-is-a-contract-before-the-need-future",
+    "role": "predicate",
+    "text": "will be what you did not know you were losing",
+    "tags": [
+      "procurement",
+      "delivery"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-contract-before-the-need"
+  },
+  {
+    "id": "general-is-a-promise-in-pencil-past",
+    "role": "predicate",
+    "text": "was a clean slate with fingerprints",
+    "tags": [
+      "consistency",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-promise-in-pencil"
+  },
+  {
+    "id": "general-is-a-promise-in-pencil-present",
+    "role": "predicate",
+    "text": "is a clean slate with fingerprints",
+    "tags": [
+      "consistency",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-promise-in-pencil"
+  },
+  {
+    "id": "general-is-a-promise-in-pencil-future",
+    "role": "predicate",
+    "text": "will be a clean slate with fingerprints",
+    "tags": [
+      "consistency",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-promise-in-pencil"
+  },
+  {
+    "id": "general-is-a-camera-under-oath-past",
+    "role": "predicate",
+    "text": "was the phone under oath",
+    "tags": [
+      "evidence",
+      "media"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-camera-under-oath"
+  },
+  {
+    "id": "general-is-a-camera-under-oath-present",
+    "role": "predicate",
+    "text": "is the phone under oath",
+    "tags": [
+      "evidence",
+      "media"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-camera-under-oath"
+  },
+  {
+    "id": "general-is-a-camera-under-oath-future",
+    "role": "predicate",
+    "text": "will be the phone under oath",
+    "tags": [
+      "evidence",
+      "media"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "broadcast",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-camera-under-oath"
+  },
+  {
+    "id": "general-is-a-receipt-without-a-payment-past",
+    "role": "predicate",
+    "text": "was a radius squared without pi",
+    "tags": [
+      "spending",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "finance",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-receipt-without-a-payment"
+  },
+  {
+    "id": "general-is-a-receipt-without-a-payment-present",
+    "role": "predicate",
+    "text": "is a radius squared without pi",
+    "tags": [
+      "spending",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "finance",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-receipt-without-a-payment"
+  },
+  {
+    "id": "general-is-a-receipt-without-a-payment-future",
+    "role": "predicate",
+    "text": "will be a radius squared without pi",
+    "tags": [
+      "spending",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "finance",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-receipt-without-a-payment"
+  },
+  {
+    "id": "general-is-a-reform-on-castors-past",
+    "role": "predicate",
+    "text": "was an economy that boomed on paper",
+    "tags": [
+      "delivery",
+      "consistency"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-reform-on-castors"
+  },
+  {
+    "id": "general-is-a-reform-on-castors-present",
+    "role": "predicate",
+    "text": "is an economy that boomed on paper",
+    "tags": [
+      "delivery",
+      "consistency"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-reform-on-castors"
+  },
+  {
+    "id": "general-is-a-reform-on-castors-future",
+    "role": "predicate",
+    "text": "will be an economy that boomed on paper",
+    "tags": [
+      "delivery",
+      "consistency"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "construction"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-reform-on-castors"
+  },
+  {
+    "id": "general-is-a-warranty-without-an-expiry-past",
+    "role": "predicate",
+    "text": "was a warranty without an expiry",
+    "tags": [
+      "credibility",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "general-is-a-warranty-without-an-expiry"
+  },
+  {
+    "id": "general-is-a-warranty-without-an-expiry-present",
+    "role": "predicate",
+    "text": "is a warranty without an expiry",
+    "tags": [
+      "credibility",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "general-is-a-warranty-without-an-expiry"
+  },
+  {
+    "id": "general-is-a-warranty-without-an-expiry-future",
+    "role": "predicate",
+    "text": "will be a warranty without an expiry",
+    "tags": [
+      "credibility",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "procedure"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "general-is-a-warranty-without-an-expiry"
+  },
+  {
+    "id": "general-after-the-cameras-leave",
+    "role": "modifier",
+    "text": "after one final question",
+    "tags": [
+      "media"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-under-a-protocol-umbrella",
+    "role": "modifier",
+    "text": "under the twists of concrete reality",
+    "tags": [
+      "bureaucracy"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-with-a-ribbon-already-cut",
+    "role": "modifier",
+    "text": "with winter unlike summer",
+    "tags": [
+      "infrastructure"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-during-the-emergency-tea",
+    "role": "modifier",
+    "text": "during a bad joke",
+    "tags": [
+      "bureaucracy"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-according-to-a-spreadsheet-footnote",
+    "role": "modifier",
+    "text": "according to a radius squared",
+    "tags": [
+      "evidence"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-after-the-fact-check-ends",
+    "role": "modifier",
+    "text": "after counting the eggs",
+    "tags": [
+      "credibility"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-beneath-a-sponsored-apology",
+    "role": "modifier",
+    "text": "beneath a clean slate",
+    "tags": [
+      "influence",
+      "sincerity"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-with-the-evidence-in-triplicate",
+    "role": "modifier",
+    "text": "with your permission",
+    "tags": [
+      "evidence",
+      "bureaucracy"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-under-a-velvet-budget",
+    "role": "modifier",
+    "text": "before the next question",
+    "tags": [
+      "luxury",
+      "spending"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-before-the-next-reshuffle",
+    "role": "modifier",
+    "text": "beside a paperless promise",
+    "tags": [
+      "consistency"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-beside-an-unopened-bottle",
+    "role": "modifier",
+    "text": "after a victory announced too early",
+    "tags": [
+      "delivery"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-after-a-committee-of-mirrors",
+    "role": "modifier",
+    "text": "with two markers",
+    "tags": [
+      "bureaucracy",
+      "credibility"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-with-a-private-public-service",
+    "role": "modifier",
+    "text": "under a country you love",
+    "tags": [
+      "service",
+      "nepotism"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-under-a-borrowed-spotlight",
+    "role": "modifier",
+    "text": "during the booming economy",
+    "tags": [
+      "media",
+      "authenticity"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-before-the-ribbon-dries",
+    "role": "modifier",
+    "text": "after marketing and promotion",
+    "tags": [
+      "infrastructure",
+      "delivery"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-during-the-fourth-consultation",
+    "role": "modifier",
+    "text": "during the fourth consultation",
+    "tags": [
+      "bureaucracy"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-with-the-facts-on-mute",
+    "role": "modifier",
+    "text": "with the facts on mute",
+    "tags": [
+      "evidence",
+      "media"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-after-the-warranty-expires",
+    "role": "modifier",
+    "text": "after the warranty expires",
+    "tags": [
+      "credibility",
+      "consistency"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-beneath-a-family-photograph",
+    "role": "modifier",
+    "text": "beneath a family photograph",
+    "tags": [
+      "family",
+      "nepotism"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-under-a-cloud-of-carbon-paper",
+    "role": "modifier",
+    "text": "under a cloud of carbon paper",
+    "tags": [
+      "modernity",
+      "obsolete"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-with-a-queue-for-the-queue",
+    "role": "modifier",
+    "text": "with a queue for the queue",
+    "tags": [
+      "bureaucracy"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-before-the-witness-gets-directions",
+    "role": "modifier",
+    "text": "before the witness gets directions",
+    "tags": [
+      "firsthand-knowledge",
+      "context"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "general-after-the-election-warranty",
+    "role": "modifier",
+    "text": "after the election warranty",
+    "tags": [
+      "credibility",
+      "commitment"
+    ],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "general-in-a-folder-marked-urgent",
+    "role": "modifier",
+    "text": "in a folder marked urgent",
+    "tags": [
+      "urgency",
+      "bureaucracy"
+    ],
+    "rarity": "rare"
+  },
+  {
+    "id": "general-with-a-ceremonial-shortcut",
+    "role": "modifier",
+    "text": "with a ceremonial shortcut",
+    "tags": [
+      "procedure",
+      "decorum"
+    ],
+    "rarity": "common"
+  },
+  {
+    "id": "transition-era-television-studio-archives-the-revolution-past",
+    "role": "verb",
+    "text": "archived the revolution",
+    "tags": [
+      "legacy",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "transition-era-television-studio-archives-the-revolution",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-archives-the-revolution-present",
+    "role": "verb",
+    "text": "archives the revolution",
+    "singularText": "archives the revolution",
+    "pluralText": "archives the revolution",
+    "personalSingularText": "archives the revolution",
+    "secondPersonText": "archives the revolution",
+    "tags": [
+      "legacy",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "transition-era-television-studio-archives-the-revolution",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-archives-the-revolution-future",
+    "role": "verb",
+    "text": "will archive the revolution",
+    "tags": [
+      "legacy",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "transition-era-television-studio-archives-the-revolution",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-past",
+    "role": "predicate",
+    "text": "was a rerun with a new flag",
+    "tags": [
+      "legacy",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "transition-era-television-studio-is-a-rerun-with-a-new-flag",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-present",
+    "role": "predicate",
+    "text": "is a rerun with a new flag",
+    "tags": [
+      "legacy",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "transition-era-television-studio-is-a-rerun-with-a-new-flag",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-future",
+    "role": "predicate",
+    "text": "will be a rerun with a new flag",
+    "tags": [
+      "legacy",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "history",
+            "media"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "transition-era-television-studio-is-a-rerun-with-a-new-flag",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-and-the-rerun-won-the-revolution",
+    "role": "ending",
+    "text": "and winter is not like summer.",
+    "tags": [
+      "legacy",
+      "media"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-and-the-new-republic-kept-the-old-studio",
+    "role": "ending",
+    "text": "and the synergy of facts survived the rerun.",
+    "tags": [
+      "legacy",
+      "modernity"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-but-after-the-rerun",
+    "role": "conjunction",
+    "text": "but, after winter differs from summer,",
+    "tags": [],
+    "connectorKind": "but",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "transition-era-television-studio-so-according-to-the-archive",
+    "role": "conjunction",
+    "text": "so, after one final question,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "transition-era-television-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-rehearses-the-closing-statement-past",
+    "role": "verb",
+    "text": "rehearsed the closing statement",
+    "tags": [
+      "authenticity",
+      "accountability"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "modern-debate-studio-rehearses-the-closing-statement",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-rehearses-the-closing-statement-present",
+    "role": "verb",
+    "text": "rehearses the closing statement",
+    "singularText": "rehearses the closing statement",
+    "pluralText": "rehearses the closing statement",
+    "personalSingularText": "rehearses the closing statement",
+    "secondPersonText": "rehearses the closing statement",
+    "tags": [
+      "authenticity",
+      "accountability"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "modern-debate-studio-rehearses-the-closing-statement",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-rehearses-the-closing-statement-future",
+    "role": "verb",
+    "text": "will rehearse the closing statement",
+    "tags": [
+      "authenticity",
+      "accountability"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "modern-debate-studio-rehearses-the-closing-statement",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-past",
+    "role": "predicate",
+    "text": "was a poll with an escape hatch",
+    "tags": [
+      "credibility",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "campaign",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "modern-debate-studio-is-a-poll-with-an-escape-hatch",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-present",
+    "role": "predicate",
+    "text": "is a poll with an escape hatch",
+    "tags": [
+      "credibility",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "campaign",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "modern-debate-studio-is-a-poll-with-an-escape-hatch",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-future",
+    "role": "predicate",
+    "text": "will be a poll with an escape hatch",
+    "tags": [
+      "credibility",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "campaign",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "modern-debate-studio-is-a-poll-with-an-escape-hatch",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-under-the-applause-sign",
+    "role": "modifier",
+    "text": "under the applause sign",
+    "tags": [
+      "ratings",
+      "authenticity"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-and-the-moderator-found-a-fourth-option",
+    "role": "ending",
+    "text": "and one final question found a fourth option.",
+    "tags": [
+      "accountability",
+      "nuance"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-and-the-poll-was-rehearsed-before-the-question",
+    "role": "ending",
+    "text": "and a bad joke was rehearsed before the question.",
+    "tags": [
+      "evidence",
+      "authenticity"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-but-after-the-briefing",
+    "role": "conjunction",
+    "text": "but, after a bad joke,",
+    "tags": [],
+    "connectorKind": "but",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "modern-debate-studio-so-the-poll-can-explain-itself",
+    "role": "conjunction",
+    "text": "so radius squared can explain itself,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "modern-debate-studio"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-counts-the-ribbon-twice-past",
+    "role": "verb",
+    "text": "counted the ribbon twice",
+    "tags": [
+      "procurement",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "infrastructure",
+            "contract"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "county-council-ballroom-counts-the-ribbon-twice",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-counts-the-ribbon-twice-present",
+    "role": "verb",
+    "text": "counts the ribbon twice",
+    "singularText": "counts the ribbon twice",
+    "pluralText": "counts the ribbon twice",
+    "personalSingularText": "counts the ribbon twice",
+    "secondPersonText": "counts the ribbon twice",
+    "tags": [
+      "procurement",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "infrastructure",
+            "contract"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "county-council-ballroom-counts-the-ribbon-twice",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-counts-the-ribbon-twice-future",
+    "role": "verb",
+    "text": "will count the ribbon twice",
+    "tags": [
+      "procurement",
+      "results"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "infrastructure",
+            "contract"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "county-council-ballroom-counts-the-ribbon-twice",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-is-a-tender-with-a-family-seat-past",
+    "role": "predicate",
+    "text": "was a tender with a family seat",
+    "tags": [
+      "procurement",
+      "nepotism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "family"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "county-council-ballroom-is-a-tender-with-a-family-seat",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-is-a-tender-with-a-family-seat-present",
+    "role": "predicate",
+    "text": "is a tender with a family seat",
+    "tags": [
+      "procurement",
+      "nepotism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "family"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "county-council-ballroom-is-a-tender-with-a-family-seat",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-is-a-tender-with-a-family-seat-future",
+    "role": "predicate",
+    "text": "will be a tender with a family seat",
+    "tags": [
+      "procurement",
+      "nepotism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "contract",
+            "family"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "county-council-ballroom-is-a-tender-with-a-family-seat",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-under-the-dessert-trolley",
+    "role": "modifier",
+    "text": "under the dessert trolley",
+    "tags": [
+      "procurement",
+      "spending"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-and-the-road-map-ended-at-dessert",
+    "role": "ending",
+    "text": "and the country you love ended at the ribbon.",
+    "tags": [
+      "infrastructure",
+      "spending"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-and-the-plaque-arrived-before-the-pothole",
+    "role": "ending",
+    "text": "and the greatest credit was mine before the pothole.",
+    "tags": [
+      "delivery",
+      "infrastructure"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-but-after-the-ribbon-cutting",
+    "role": "conjunction",
+    "text": "but, after counting eggs,",
+    "tags": [],
+    "connectorKind": "but",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "county-council-ballroom-so-the-invoice-can-be-framed",
+    "role": "conjunction",
+    "text": "so clean slate can be signed,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "county-council-ballroom"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-advertises-the-hidden-tape-past",
+    "role": "verb",
+    "text": "advertised the hidden tape",
+    "tags": [
+      "ratings",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "sources"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "midnight-call-in-studio-advertises-the-hidden-tape",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-advertises-the-hidden-tape-present",
+    "role": "verb",
+    "text": "advertises the hidden tape",
+    "singularText": "advertises the hidden tape",
+    "pluralText": "advertises the hidden tape",
+    "personalSingularText": "advertises the hidden tape",
+    "secondPersonText": "advertises the hidden tape",
+    "tags": [
+      "ratings",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "sources"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "midnight-call-in-studio-advertises-the-hidden-tape",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-advertises-the-hidden-tape-future",
+    "role": "verb",
+    "text": "will advertise the hidden tape",
+    "tags": [
+      "ratings",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "sources"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "midnight-call-in-studio-advertises-the-hidden-tape",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-is-a-call-with-a-script-past",
+    "role": "predicate",
+    "text": "was a call with a script",
+    "tags": [
+      "sources",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "midnight-call-in-studio-is-a-call-with-a-script",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-is-a-call-with-a-script-present",
+    "role": "predicate",
+    "text": "is a call with a script",
+    "tags": [
+      "sources",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "midnight-call-in-studio-is-a-call-with-a-script",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-is-a-call-with-a-script-future",
+    "role": "predicate",
+    "text": "will be a call with a script",
+    "tags": [
+      "sources",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "proof"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "midnight-call-in-studio-is-a-call-with-a-script",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-under-the-commercial-clock",
+    "role": "modifier",
+    "text": "under the commercial clock",
+    "tags": [
+      "ratings",
+      "commercialism"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-and-the-eyewitness-needed-a-commercial-break",
+    "role": "ending",
+    "text": "and the eyewitness needed a commercial break.",
+    "tags": [
+      "sources",
+      "ratings"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-and-the-hidden-tape-sold-the-next-hidden-tape",
+    "role": "ending",
+    "text": "and the hidden tape sold the next hidden tape.",
+    "tags": [
+      "ratings",
+      "commercialism"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-but-before-the-next-caller",
+    "role": "conjunction",
+    "text": "but, before the next caller,",
+    "tags": [],
+    "connectorKind": "but",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-so-the-source-can-take-a-break",
+    "role": "conjunction",
+    "text": "so the source can rest,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "palace-press-hall-guards-the-empty-envelope-past",
+    "role": "verb",
+    "text": "guarded the empty envelope",
+    "tags": [
+      "accountability",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "palace-press-hall-guards-the-empty-envelope",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-guards-the-empty-envelope-present",
+    "role": "verb",
+    "text": "guards the empty envelope",
+    "singularText": "guards the empty envelope",
+    "pluralText": "guards the empty envelope",
+    "personalSingularText": "guards the empty envelope",
+    "secondPersonText": "guards the empty envelope",
+    "tags": [
+      "accountability",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "palace-press-hall-guards-the-empty-envelope",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-guards-the-empty-envelope-future",
+    "role": "verb",
+    "text": "will guard the empty envelope",
+    "tags": [
+      "accountability",
+      "evidence"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "palace-press-hall-guards-the-empty-envelope",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-is-a-statement-without-a-verb-past",
+    "role": "predicate",
+    "text": "was a statement without a verb",
+    "tags": [
+      "accountability",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "palace-press-hall-is-a-statement-without-a-verb",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-is-a-statement-without-a-verb-present",
+    "role": "predicate",
+    "text": "is a statement without a verb",
+    "tags": [
+      "accountability",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "palace-press-hall-is-a-statement-without-a-verb",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-is-a-statement-without-a-verb-future",
+    "role": "predicate",
+    "text": "will be a statement without a verb",
+    "tags": [
+      "accountability",
+      "commitment"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "protocol",
+            "politics"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "palace-press-hall-is-a-statement-without-a-verb",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-behind-the-tall-doors",
+    "role": "modifier",
+    "text": "behind the tall doors",
+    "tags": [
+      "decorum",
+      "accountability"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-and-the-podium-outlived-the-answer",
+    "role": "ending",
+    "text": "and the podium outlived the answer.",
+    "tags": [
+      "accountability",
+      "decorum"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-and-the-envelope-contained-a-smaller-envelope",
+    "role": "ending",
+    "text": "and the envelope contained a smaller envelope.",
+    "tags": [
+      "bureaucracy",
+      "protocol"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-but-after-the-palace-statement",
+    "role": "conjunction",
+    "text": "but, after the palace statement,",
+    "tags": [],
+    "connectorKind": "but",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "palace-press-hall-so-the-protocol-can-remain-silent",
+    "role": "conjunction",
+    "text": "so the protocol can remain silent,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "palace-press-hall"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-past",
+    "role": "verb",
+    "text": "sponsored the ancient truth",
+    "tags": [
+      "commercialism",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "campaign"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "influencer-campaign-livestream-sponsors-the-ancient-truth",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-present",
+    "role": "verb",
+    "text": "sponsors the ancient truth",
+    "singularText": "sponsors the ancient truth",
+    "pluralText": "sponsors the ancient truth",
+    "personalSingularText": "sponsors the ancient truth",
+    "secondPersonText": "sponsors the ancient truth",
+    "tags": [
+      "commercialism",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "campaign"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "influencer-campaign-livestream-sponsors-the-ancient-truth",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-future",
+    "role": "verb",
+    "text": "will sponsor the ancient truth",
+    "tags": [
+      "commercialism",
+      "authenticity"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "campaign"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "influencer-campaign-livestream-sponsors-the-ancient-truth",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-past",
+    "role": "predicate",
+    "text": "was a prophecy with a discount code",
+    "tags": [
+      "commercialism",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "tense": "past",
+    "tenseFamily": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-present",
+    "role": "predicate",
+    "text": "is a prophecy with a discount code",
+    "tags": [
+      "commercialism",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "tense": "present",
+    "tenseFamily": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-future",
+    "role": "predicate",
+    "text": "will be a prophecy with a discount code",
+    "tags": [
+      "commercialism",
+      "credibility"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "media",
+            "finance"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "tense": "future",
+    "tenseFamily": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-beside-the-payment-terminal",
+    "role": "modifier",
+    "text": "beside the payment terminal",
+    "tags": [
+      "commercialism",
+      "spending"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-and-the-ancient-truth-had-a-sponsor",
+    "role": "ending",
+    "text": "and the ancient truth had a sponsor.",
+    "tags": [
+      "commercialism",
+      "authenticity"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-and-the-live-audience-requested-a-refund",
+    "role": "ending",
+    "text": "and the live audience requested a refund.",
+    "tags": [
+      "commercialism",
+      "results"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-so-the-prophecy-can-be-monetized",
+    "role": "conjunction",
+    "text": "so the prophecy can be monetized,",
+    "tags": [],
+    "connectorKind": "so",
+    "rarity": "rare",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
+  },
+  {
+    "id": "midnight-call-in-studio-with-the-hotline-open",
+    "role": "conjunction",
+    "text": "with the hotline open,",
+    "tags": [],
+    "connectorKind": "with",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "midnight-call-in-studio"
+    ]
+  },
+  {
+    "id": "influencer-campaign-livestream-with-the-sponsor-in-the-room",
+    "role": "conjunction",
+    "text": "with the sponsor in the room,",
+    "tags": [],
+    "connectorKind": "with",
+    "rarity": "uncommon",
+    "sceneIds": [
+      "influencer-campaign-livestream"
+    ]
   }
 ]

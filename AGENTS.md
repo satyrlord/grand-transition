@@ -42,6 +42,14 @@ requested, so a direct test command such as `npm run test`, `npm run test:browse
 `npm run test:coverage`, or `npm run test:e2e` never runs it.
 Do not report checks as passing until the scripts exist and run.
 
+The content-balance workload is long-running and full-gate-only. Agents must not
+invoke `npm run balance:validate` or `tools/validate-content-balance.ts`
+directly. The validator rejects direct execution and runs only when
+`npm run quality:full` supplies the full-gate runner context. Quick validation
+must not start this workload. Apply the same boundary to any future
+long-running check: add it to the full gate and give it an executable guard
+before making it available through a package script.
+
 ## AI Workflow
 
 Use [`.github/AI_TOOLING.md`](.github/AI_TOOLING.md) as the index for repository

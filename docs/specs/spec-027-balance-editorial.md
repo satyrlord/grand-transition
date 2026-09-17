@@ -1,6 +1,6 @@
 # Milestone 027: Balance and Editorial Rules
 
-**Status:** Approved; revised content-catalog contract pending
+**Status:** Approved; revised content implementation verified; editorial evidence pending
 
 **Depends on:** 025
 **Owns:** Content tone, safety approval, repetition, and balance evidence  
@@ -47,6 +47,14 @@ adapt it faithfully. An original fictional adaptation preserves the source
 inspiration without claiming that the real speaker said the adapted line. This
 includes every scene-restricted common card and every character-owned card.
 Record the distinction privately.
+
+For each newly generated common expansion and each newly generated character
+expansion, target an approximate 50/50 split between authentic adaptations and
+purely fictional lines. An authentic adaptation keeps a documented quote or
+its meaning visible in the shipped wording; a source-inspired original joke
+without that retained wording remains fictional. Measure each expansion set
+separately and record the card lists and source basis in the private research
+folder. Tense-family cards share one classification.
 
 Research each human archetype through its recorded private references. Verify
 the source and context of every real phrase. A meme, parody article,
@@ -203,9 +211,10 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Verify and stop
 
-Existing deterministic CI and bounded scoring fixtures remain recorded for the
-implemented catalog. Authored phrase and comeback text remains unique and
-passes grammar checks. The revised content-catalog contract is not complete
-until its exact volumes, quote provenance, verb-family review, and owner-specific
-conjunction requirements are implemented and verified. Stop before release
-optimization or infrastructure changes.
+The implemented catalog passes the exact volume, tense, uniqueness, and grammar
+checks in the focused content gate. Private quote provenance, whole-family
+humor review, and owner-specific conjunction review remain editorial evidence;
+automated checks do not prove those subjective or private records. The revised
+content implementation is therefore verified, while this milestone's broader
+editorial evidence remains pending. Stop before release optimization or
+infrastructure changes.

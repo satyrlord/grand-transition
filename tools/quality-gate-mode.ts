@@ -1,9 +1,9 @@
 // Quality-gate mode selection.
 //
-// The documented slowest test set — the current-catalog 500-match calibration
-// and the nine-rung production ladder flow — runs only when the full gate is
-// explicitly requested. `quality:quick` and a direct `npm run test` or
-// `npm run test:e2e` invocation select the quick behavior, so the slow set
+// The documented slowest test set — the current-catalog 500-match calibration,
+// content-balance matrix, and nine-rung production ladder flow — runs only when
+// the full gate is explicitly requested. `quality:quick` and direct test or
+// balance-validator invocations select the quick behavior, so the slow set
 // cannot run by accident. Direct test scripts force quick mode before starting
 // their runners, even when the caller's shell has both full-mode variables.
 export function fullQualityGateRequested(
