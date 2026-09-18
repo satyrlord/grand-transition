@@ -27,8 +27,8 @@
   <target>Rezultatul rundei <x id="0" equiv-text="${resolution.round}"/>: egalitate</target>
 </trans-unit>
 <trans-unit id="s4f91203388db641c">
-  <source>Round <x id="0" equiv-text="${resolution.round}"/> winner: <x id="1" equiv-text="${characterName(locale, state.playerStates[winnerId]!.characterId)}"/></source>
-  <target>Câștigătorul rundei <x id="0" equiv-text="${resolution.round}"/>: <x id="1" equiv-text="${characterName(locale, state.playerStates[winnerId]!.characterId)}"/></target>
+  <source>Round <x id="0" equiv-text="${resolution.round}"/> winner: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></source>
+  <target>Câștigătorul rundei <x id="0" equiv-text="${resolution.round}"/>: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></target>
 </trans-unit>
 <trans-unit id="secaa8dfe52e0ef83">
   <source><x id="0" equiv-text="${construction.previewText || 'Empty sentence'}"/> — continue in the next round.</source>
@@ -84,7 +84,7 @@
 </trans-unit>
 <trans-unit id="sb074e95bf9d54fe8">
   <source>Multiplayer requires landscape</source>
-  <target>Multiplayerul necesită orientare orizontală</target>
+  <target>Doi jucători necesită orientare orizontală</target>
 </trans-unit>
 <trans-unit id="s00a8f46f90fb0109">
   <source>Larger viewport required</source>
@@ -104,7 +104,7 @@
 </trans-unit>
 <trans-unit id="s9d31826d98b144e8">
   <source>Grand Transition is designed to be played in landscape mode. Rotate your phone for the intended experience. You can continue in portrait for Single Player and Ladder. Multiplayer requires landscape.</source>
-  <target>Grand Transition este conceput pentru ecrane orientate orizontal. Rotește telefonul pentru o experiență optimă. Poți continua în orientare verticală în modurile Un Jucător și Campanie. Modul Doi Jucători necesită orientare orizontală.</target>
+  <target>Grand Transition este conceput pentru ecrane orientate orizontal. Rotește telefonul pentru o experiență optimă. Poți continua în orientare verticală în modurile Un jucător și Campanie. Modul Doi jucători necesită orientare orizontală.</target>
 </trans-unit>
 <trans-unit id="s64e024a428fb7396">
   <source>Continue in portrait</source>
@@ -804,7 +804,7 @@
 </trans-unit>
 <trans-unit id="s4d819161cf1788ff">
   <source>Rotate to landscape to start Multiplayer.</source>
-  <target>Rotește ecranul în poziție orizontală pentru a începe modul Multiplayer.</target>
+  <target>Rotește ecranul în poziție orizontală pentru a începe modul Doi jucători.</target>
 </trans-unit>
 <trans-unit id="sc16e00a7a8b2fde2">
   <source>Back</source>
@@ -912,11 +912,11 @@
 </trans-unit>
 <trans-unit id="s8dc554dfcc22ee52">
   <source>Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
-  <target>Modul lipsește. Revino la Meniul principal și alege Un Jucător, Doi Jucători sau Campanie.</target>
+  <target>Modul lipsește. Revino la Meniul principal și alege Un jucător, Doi jucători sau Campanie.</target>
 </trans-unit>
 <trans-unit id="sf1459a12de394b73">
   <source>Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.</source>
-  <target>Modul nu este acceptat. Revino la Meniul principal și alege Un Jucător, Doi Jucători sau Campanie.</target>
+  <target>Modul nu este acceptat. Revino la Meniul principal și alege Un jucător, Doi jucători sau Campanie.</target>
 </trans-unit>
 <trans-unit id="s8909725bb5db486a">
   <source>Choose a listed artificial intelligence difficulty.</source>
@@ -1012,7 +1012,7 @@
 </trans-unit>
 <trans-unit id="s68f9d93cb9eb486b">
   <source>Multiplayer</source>
-  <target>Multiplayer</target>
+  <target>Doi jucători</target>
 </trans-unit>
 <trans-unit id="s16948826bf750b89">
   <source>Ladder</source>
@@ -1020,7 +1020,7 @@
 </trans-unit>
 <trans-unit id="s65e20e46b64ca73f">
   <source>Multiplayer requires landscape mode.</source>
-  <target>Multiplayerul necesită orientarea orizontală.</target>
+  <target>Doi jucători necesită orientarea orizontală.</target>
 </trans-unit>
 <trans-unit id="sd1d1aacff9495fb5">
   <source>Match history will not persist after this page closes. Open Match history for recovery steps.</source>

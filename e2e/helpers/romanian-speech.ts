@@ -34,7 +34,7 @@ export type RomanianSpeechEvidence = {
 
 export const romanianInterfaceText = {
   en: { settings: 'Settings', close: 'Close', multiplayer: 'Multiplayer', end: 'End', speech: 'Speech enabled', start: 'Start match' },
-  'ro-RO': { settings: 'Setări', close: 'Închide', multiplayer: 'Multiplayer', end: 'Gata', speech: 'Vorbire activată', start: 'Începe meciul' },
+  'ro-RO': { settings: 'Setări', close: 'Închide', multiplayer: 'Doi jucători', end: 'Gata', speech: 'Vorbire activată', start: 'Începe meciul' },
 } as const;
 
 /** Pick a fighter and cycle to the requested skin, exactly as the English speech spec does. */

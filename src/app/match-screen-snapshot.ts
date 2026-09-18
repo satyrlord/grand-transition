@@ -17,12 +17,11 @@ import type {
   MatchState,
 } from '../engine/match-lifecycle';
 import { characterSkins, sampleContent } from '../game-content';
-import { shippedGameLocale } from '../localization/game-locale';
 import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import {
-  displayCharacterName,
-  displaySceneName,
-} from '../localization/romanian-display-names';
+  interfaceCharacterName,
+  interfaceSceneName,
+} from './interface-names';
 import { deepFreeze } from './deep-freeze';
 import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
 import { resolveCharacterFrames } from './character-state-assets';
@@ -295,7 +294,7 @@ export function createMatchScreenSnapshot(
       playerId,
       characterId: player.characterId,
       skinId: skin.id,
-      characterName: characterName(locale, player.characterId),
+      characterName: characterName(player.characterId),
       portraitUrl: skin.portraitUrl,
       portraitAvifSrcSet: skin.avif?.srcSet ?? null,
       portraitWebpSrcSet: skin.webp?.srcSet ?? null,
@@ -342,7 +341,7 @@ export function createMatchScreenSnapshot(
       ];
     }),
   );
-  const activeName = characterName(locale, activePlayer.characterId);
+  const activeName = characterName(activePlayer.characterId);
   const arenaReactionPlayer = arenaReaction?.kind === 'grammar-mistake'
     ? state.playerStates[arenaReaction.playerId]
     : undefined;
@@ -360,7 +359,6 @@ export function createMatchScreenSnapshot(
       ? {
           winnerId: victory.winnerId,
           winnerName: characterName(
-            locale,
             state.playerStates[victory.winnerId]!.characterId,
           ),
           completedRounds: victory.completedRounds,
@@ -368,14 +366,7 @@ export function createMatchScreenSnapshot(
         }
       : null,
     round: state.round,
-    sceneName: displaySceneName(
-      state.sceneId,
-      gameMessage(
-        locale,
-        sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
-      ),
-      shippedGameLocale(locale),
-    ),
+    sceneName: interfaceSceneName(state.sceneId),
     sceneLayers: sceneLayerViews(state.sceneId),
     activePlayerId,
     activePlayerName: activeName,
@@ -411,7 +402,7 @@ export function createMatchScreenSnapshot(
       : arenaReaction.kind === 'grammar-mistake' && arenaReactionPlayer
         ? {
             ...arenaReaction,
-            playerName: characterName(locale, arenaReactionPlayer.characterId),
+            playerName: characterName(arenaReactionPlayer.characterId),
           }
         : arenaReaction.kind === 'cliffhanger'
           ? arenaReaction
@@ -419,7 +410,7 @@ export function createMatchScreenSnapshot(
     reaction: {
       round: reviewResolution?.round ?? null,
       outcomeLabel: reviewResolution
-        ? roundOutcomeLabel(locale, state, reviewResolution)
+        ? roundOutcomeLabel(state, reviewResolution)
         : msg('The chamber is waiting for its first exchange.'),
       players: reactionPlayers,
     },
@@ -591,7 +582,6 @@ function weaknessDamageDetails(
 }
 
 function roundOutcomeLabel(
-  locale: GameLocaleBundle,
   state: MatchState,
   resolution: MatchResolution,
 ): string {
@@ -602,7 +592,7 @@ function roundOutcomeLabel(
     return msg(str`Round ${resolution.round} result: tie`);
   const winnerId = firstDamage > secondDamage ? firstId : secondId;
   return msg(
-    str`Round ${resolution.round} winner: ${characterName(locale, state.playerStates[winnerId]!.characterId)}`,
+    str`Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
   );
 }
 
@@ -771,16 +761,8 @@ function cardStateLabel(state: MatchCardState): string {
   }
 }
 
-function characterName(locale: GameLocaleBundle, characterId: string): string {
-  return displayCharacterName(
-    characterId,
-    gameMessage(
-      locale,
-      sampleContent.characters.find((character) => character.id === characterId)
-        ?.nameKey,
-    ),
-    shippedGameLocale(locale),
-  );
+function characterName(characterId: string): string {
+  return interfaceCharacterName(characterId);
 }
 
 function characterSkin(characterId: string, skinId?: string) {

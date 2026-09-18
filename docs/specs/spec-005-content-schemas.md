@@ -229,9 +229,12 @@ for a personal-singular or second-person subject also includes both
 predicate whose second-person verb uses plural conjugation while its complement
 stays singular.
 
-The loader derives character, phrase, agreement-form, and
-comeback locale keys. It also derives the English message table. It rejects
-duplicate identifiers, player-visible English phrase text, and roster orders.
+The loader derives character, phrase, agreement-form, and comeback locale
+keys. It also derives the English message table. It derives no weakness locale
+key: a displayed weakness label is interface copy rather than game text, so
+Milestone 029 owns it and scoring and stored state keep the stable tag
+identifier. The loader rejects duplicate identifiers, player-visible
+English phrase text, and roster orders.
 
 It rejects file-name mismatches and one-sided number or person forms. It also
 rejects unknown fields, invalid scoring data, and cross-corpus duplicates.

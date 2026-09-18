@@ -17,8 +17,8 @@ Milestones 014, 019, 020, and 024 for language selection, stored match language,
 and Romanian speech. Their other behavior and failure contracts still apply.
 
 1. **Phase 1: Romanian interface.** Translate every interface message and the
-   displayed character and scene names, add the independently saved `Interface
-   language` selection, and set the document language. The game language remains
+   displayed character, scene, and weakness labels, add the independently saved
+   `Interface language` selection, and set the document language. The game language remains
    English. Complete automated checks and
    production-browser verification for the Romanian interface.
 2. **Phase 2: Romanian game content, grammar, and speech.** Translate the game
@@ -78,26 +78,30 @@ settings remain in force, and no Romanian model is downloaded or loaded.
 Translate all shipped interface text: controls, headings, instructions,
 tooltips, accessible names, notices, errors, score explanations, history
 labels, and the fictional-satire disclaimer. Phase 1 also translates all 19
-character archetype names and six scene names as interface display names keyed
-by stable IDs. These displayed names follow `interfaceLocale` in setup, play,
-and history. The English content bundle, match state, speech text, replay, and
-stored history remain unchanged. Descriptions, weakness names, phrases,
+character archetype names, all six scene names, and the weakness labels as
+interface display names keyed by stable identifiers. These displayed names and
+labels follow `interfaceLocale` in setup, play, history, and score explanations
+under every game-language selection. The English content bundle, match state,
+speech text, replay, and stored history remain unchanged. Descriptions, phrases,
 agreement forms, endings, comebacks, and grammar text stay in English until
-Phase 2; Phase 2 moves displayed names to the selected game locale. Preserve the Grand Transition
+Phase 2. Preserve the Grand Transition
 product name, stable identifiers, source identifiers, and license text. Render
 interface numeric values with the interface locale; stored numbers and scoring
 remain locale-neutral.
 
-Phase 2 supersedes the Phase 1 name rule: the two Phase 1 name tables stay only
-as a fallback for the Romanian game-content bundle, and the displayed names in
-setup, play, and history follow the selected game locale, so a Romanian game
-language shows Romanian names under either interface language. The Phase 1
-verifiers that assert interface-locale names are updated to the Phase 2 rule.
+Phase 2 does not supersede the Phase 1 name rule. A character archetype name, a
+scene name, and a weakness label are interface copy: they keep following
+`interfaceLocale` in setup, play, history, and score explanations whatever game
+language is selected, because the interface language reads them aloud and
+renders them inside interface sentences. `Game language` keeps owning game
+prose, grammar, speech, and stored match text. The interface display tables stay
+the interface copy. The Romanian character and scene labels must equal the
+Romanian game-content names of the same stable identifiers.
 
-Interface translations stay in Lit message resources. The two Phase 1 name
-tables stay in a locale-specific display-name resource. Do not put translated
-text or Romanian morphology in locale-neutral rules. Validate complete
-interface key coverage for `en` and `ro-RO`; shared semantic interface keys
+Interface translations stay in Lit message resources. The character, scene, and
+weakness label tables stay in a locale-specific display-name resource. Do not
+put translated text or Romanian morphology in locale-neutral rules. Validate
+complete interface key coverage for `en` and `ro-RO`; shared semantic interface keys
 must exist in both languages. Missing, duplicate, unsafe, or incomplete
 interface translations fail localization validation. A missing Romanian
 message must not silently display English in an accepted build.
@@ -105,13 +109,17 @@ message must not silently display English in an accepted build.
 Use standard Romanian with `ă`, `â`, `î`, `ș`, and `ț`. Normalize Unicode to NFC
 and convert legacy cedilla forms to comma-below forms at the authoring boundary.
 The feature-display font must render those Romanian letters without switching
-faces inside a word. Romanian selection locks read `Confirmă alegerea`;
+faces inside a word. The title mode actions read `Un jucător`, `Doi jucători`,
+and `Campanie`; use those names wherever the interface lists the modes.
+Romanian selection locks read `Confirmă alegerea`;
 available unlocks read `Schimbă alegerea`. Binary Pause choices read `Da` and
 `Nu`. The phrase highlighting control reads `Colorarea expresiilor`, the Pause
 heading reads `Pauză`, and the turn-ending action reads `Gata`.
 
 Annotate English game text with the `en` game locale whenever the interface
-language is Romanian. The translated display names inherit `ro-RO`. Phase 1
+language is Romanian. A displayed character archetype name, scene name, or
+weakness label is interface copy, so it inherits the document language and is
+never annotated with a game locale. Phase 1
 records no Romanian game locale, so no other game text is annotated `ro-RO`
 yet. Locale validation must check the Romanian
 disclaimer's meaning through reviewed content and focused assertions, rather
@@ -160,8 +168,9 @@ The new verifier paths below are implementation targets, not existing evidence.
 - **AC-029-03:** Every Romanian interface string is present and used: controls,
   headings, instructions, tooltips, accessible names, notices, errors, history
   labels, score explanations, the disclaimer, all 19 archetype display names,
-  and all six scene display names, with no English fallback for a missing
-  Romanian message or display name. The document language is the interface locale,
+  all six scene display names, and every shipped weakness label, with no English
+  fallback for a missing Romanian message or display name. The document language
+  is the interface locale,
   interface numbers use the interface locale, and English game text is
   annotated `en`. Verifier: `e2e/romanian-localization.spec.ts`.
 - **AC-029-04:** The translated settings-storage fallback notice preserves the
@@ -192,9 +201,9 @@ modal:
 - `Interface language` controls interface messages, including controls,
   instructions, notices, errors, accessible names, history labels, score
   explanations, and the fictional-satire disclaimer.
-- `Game language` controls character and scene names and descriptions,
-  weakness names, phrase content, grammar, constructed sentences, endings,
-  comebacks, and speech.
+- `Game language` controls character and scene descriptions, phrase content,
+  grammar, constructed sentences, endings, comebacks, and speech. It never
+  changes a displayed character archetype name, scene name, or weakness label.
 
 Each drop-down offers the autonyms `English` and `Română`. Translate its label
 with the interface language. Support all four language combinations. Changing
@@ -215,15 +224,19 @@ restores access to both drop-downs.
 ## Phase 2: Game content translation
 
 Translate all shipped game text: character and scene names and descriptions,
-weakness names, phrases, agreement forms, endings, comebacks, and constructed
-sentences. Preserve the Grand Transition product name, stable identifiers,
-source identifiers, and license text. Render numbers within game prose with the
+phrases, agreement forms, endings, comebacks, and constructed sentences.
+Preserve the Grand Transition product name, stable identifiers, source
+identifiers, and license text. Render numbers within game prose with the
 game locale where applicable; stored numbers and scoring remain
 locale-neutral.
 
 Game prose and grammar resources stay in locale-specific content bundles. Do
 not put translated text or Romanian morphology in locale-neutral rules.
 Validate complete game-content coverage for `en` and `ro-RO` independently.
+A weakness keeps its stable tag for scoring, content, and stored state. The
+displayed weakness label is interface copy rather than game text, so setup and
+score explanations show it in the selected interface language under every game
+language. Milestone 005 pins the English `securitate` label.
 Shared semantic keys must exist in both languages; language-specific
 inflection data can have different shapes. Do not require an English
 inflection shape for Romanian.
@@ -303,8 +316,8 @@ against the game-locale bundle the caller supplies and fails as `invalid-replay`
 on a mismatch, so a recorded match can never replay in another language. The
 `en` bundle resolves an English document and the `ro-RO` bundle a Romanian one.
 
-History controls use the current interface language, and displayed character and
-scene names follow the selected game locale. Recorded sentences keep
+History controls and displayed character and scene names use the current
+interface language. Recorded sentences keep
 their original match language and carry the correct language annotation for
 assistive technology. Do not translate or rescore a stored match when the
 current interface or game language changes. Locale metadata adds no private

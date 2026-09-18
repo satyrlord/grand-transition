@@ -78,6 +78,9 @@ describe('Romanian display names', () => {
       expect(romanian).toBe(romanian.normalize('NFC'));
     }
   });
+  // The two Romanian name authorships (this interface table and the Romanian
+  // game-content bundle) are pinned by `validateLocaleNameParity`, which
+  // `npm run content:validate` runs.
 });
 
 describe('Romanian interface catalog', () => {
