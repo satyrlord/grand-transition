@@ -79,7 +79,15 @@ export function catalogFoundationShard(shard: number): readonly CatalogFoundatio
   return Object.freeze(catalogFoundationCharacters.slice(shard * size, (shard + 1) * size));
 }
 
-export const catalogFoundationCaseTimeoutMs = 120_000;
+// The workload is synchronous and CPU-bound, but Vitest budgets wall clock, and
+// a local unit phase runs six worker processes. Every case costs roughly the
+// same: measured 2026-09-17, the shard 5 cases took 73 s to 77 s running alone
+// and 126 s under that contention, a 1.63 multiplier. Six workers therefore
+// inflate every case in this suite to the edge of the old 120 s budget, and the
+// case that crosses it varies between runs. The budget is a hang guard, not a
+// performance bound: spec-026 fixes the 2,166 setups and their seeds, not a
+// duration, so the guard has to cover the contention multiplier.
+export const catalogFoundationCaseTimeoutMs = 240_000;
 
 export function runCatalogFoundationCharacter({
   characterId,

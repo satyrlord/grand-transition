@@ -1,8 +1,13 @@
 import { describe, expect, test } from 'vitest';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { mergeRomanianMessageFiles } from '../../src/localization/ro-game-locale';
 import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
 import {
   validateGameLocaleBundleText,
   validateGameLocaleBundles,
+  validateLocaleNameParity,
+  validateSentenceTails,
   type GameLocaleFailure,
 } from '../../src/localization/game-locale-validation';
 import { validateGameLocales } from '../../tools/validate-game-locales';
@@ -159,6 +164,77 @@ describe('game-locale bundle validation', () => {
         code: 'incomplete-translation',
       },
     ]);
+  });
+
+  test('fails a verb card that would force the next noun card into the genitive', () => {
+    const messages = {
+      'phrase.a': 'a denunțat',
+      'phrase.b': 'o dovadă a',
+      'phrase.c': 'merge pentru',
+    };
+    const relations = new Set(['phrase.a', 'phrase.b', 'phrase.c']);
+    expect(pathsAndCodes(validateSentenceTails(messages, relations))).toEqual([
+      { path: 'messages.phrase.b', code: 'case-governing-tail' },
+    ]);
+    // A key outside the verb and predicate roles is never inspected.
+    expect(
+      validateSentenceTails(messages, new Set(['phrase.a', 'phrase.c'])),
+    ).toEqual([]);
+  });
+
+  test('fails a name that diverges from the displayed-name table', () => {
+    const messages = {
+      'character.one.name': 'Profetul algoritmic',
+      'character.two.name': 'Alt nume',
+      'scene.hall.name': 'Sala de presă a Palatului',
+    };
+    const failures = validateLocaleNameParity(messages, {
+      character: { one: 'Profetul algoritmic', two: 'Baronul local' },
+      scene: { hall: 'Sala de presă a Palatului' },
+    });
+    expect(pathsAndCodes(failures)).toEqual([
+      { path: 'messages.character.two.name', code: 'name-mismatch' },
+    ]);
+  });
+
+  test('rejects duplicate Romanian keys across authored files', () => {
+    expect(() => mergeRomanianMessageFiles({
+      'first.json': { 'phrase.a': 'prima variantă' },
+      'second.json': { 'phrase.a': 'a doua variantă' },
+    })).toThrow(/Duplicate Romanian game message "phrase.a" in "second.json"/u);
+  });
+
+  test('the shipped-locale gate reports name mismatch and relation tails', () => {
+    const tmpRoot = path.resolve(process.cwd(), 'tmp');
+    const fixtureRoot = mkdtempSync(path.join(tmpRoot, 'locale-gate-'));
+    expect(fixtureRoot.startsWith(`${tmpRoot}${path.sep}`)).toBe(true);
+    try {
+      cpSync(
+        path.join(process.cwd(), 'src', 'content'),
+        path.join(fixtureRoot, 'src', 'content'),
+        { recursive: true },
+      );
+      const change = (relativeFile: string, key: string, value: string) => {
+        const file = path.join(fixtureRoot, 'src', 'content', 'ro', relativeFile);
+        const json = JSON.parse(readFileSync(file, 'utf8')) as Record<string, string>;
+        json[key] = value;
+        writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
+      };
+      change('characters/algorithmic-prophet.json', 'character.algorithmic-prophet.name', 'Alt profet');
+      change('common-verb.json', 'phrase.denounced', 'o dovadă a');
+      change('relation-inflections.json', 'phrase.denounced.second-person', 'o dovadă a');
+      expect(pathsAndCodes(validateGameLocales(fixtureRoot))).toEqual(
+        expect.arrayContaining([
+          { path: 'messages.character.algorithmic-prophet.name', code: 'name-mismatch' },
+          { path: 'messages.phrase.denounced', code: 'case-governing-tail' },
+          { path: 'messages.phrase.denounced.second-person', code: 'case-governing-tail' },
+        ]),
+      );
+    } finally {
+      if (fixtureRoot.startsWith(`${tmpRoot}${path.sep}`)) {
+        rmSync(fixtureRoot, { recursive: true, force: true });
+      }
+    }
   });
 
   test('passes every shipped bundle', () => {

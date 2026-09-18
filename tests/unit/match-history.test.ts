@@ -114,7 +114,7 @@ describe('persistent match history', () => {
     expect(encoded).toContain(usedPhrases[0]!.text);
   });
 
-  test.each([0, 2, 6, 12] as const)(
+  test.each([0, 1, 6, 12] as const)(
     'drops a replay and match-log pair recorded under document version %s and keeps the rest',
     (schemaVersion) => {
       const stale = historyEntry(`stale-entry-${schemaVersion}`, '2026-08-29T12:30:00.000Z');
@@ -338,6 +338,7 @@ describe('persistent match history', () => {
           initialSeed: 20_260_829,
           completedAt: '2026-08-29T12:00:00.000Z',
           settings: settings(),
+          gameLocale: 'en',
         },
       ),
     ).toThrow('Match history requires a completed match.');
@@ -347,6 +348,7 @@ describe('persistent match history', () => {
         initialSeed: 20_260_829,
         completedAt: 'yesterday',
         settings: settings(),
+        gameLocale: 'en',
       }),
     ).toThrow('Match history requires a valid ISO completion time.');
   });
@@ -358,6 +360,7 @@ function historyEntry(id: string, completedAt: string): MatchHistoryEntry {
     initialSeed: 20_260_829,
     completedAt,
     settings: settings(),
+    gameLocale: 'en',
   });
 }
 

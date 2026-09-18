@@ -20,6 +20,29 @@ export async function finishPresentation(page: Page): Promise<boolean> {
   return observed;
 }
 
+/**
+ * Freeze the installed browser clock a moment ahead of itself.
+ *
+ * `pauseAt` fast-forwards to its target, so the target must still be in the
+ * mocked clock's future when the call lands. Reading the time and pausing are
+ * two separate round trips, which is why a fixed 50 ms margin intermittently
+ * failed with "Cannot fast-forward to the past" on a loaded machine. Re-read and
+ * retry instead, widening the margin slightly each attempt, so a busy round trip
+ * cannot turn into a failed test.
+ */
+export async function pauseMockedClock(page: Page, marginMs = 50): Promise<void> {
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    const now = await page.evaluate(() => Date.now());
+    try {
+      await page.clock.pauseAt(new Date(now + marginMs * attempt));
+      return;
+    } catch {
+      // The mocked clock passed the target while the call was in flight.
+    }
+  }
+  throw new Error('The mocked clock could not be paused.');
+}
+
 export async function reachDeliveryTotal(page: Page, speakerId: string): Promise<void> {
   for (let elapsed = 0; elapsed < 60_000; elapsed += 100) {
     if (await page.evaluate((id) => {

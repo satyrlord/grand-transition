@@ -569,7 +569,7 @@ export class GrandTransitionMatch extends LitElement {
             <strong aria-hidden="true">${formatInterfaceNumber(player.pride)}</strong>
           </div>
           <div class="player-name-line">
-            <h2>${compactCharacterName(player.characterName)}</h2>
+            <h2 lang=${gameTextLanguage() ?? nothing}>${compactCharacterName(player.characterName)}</h2>
             <span class="player-turn-status" ?hidden=${!activeTurn}
               >${this.thinking ? msg('Thinking') : msg('Your turn')}</span
             >
@@ -631,7 +631,7 @@ export class GrandTransitionMatch extends LitElement {
                     this.revealWaitingSentence(event, player.playerId)}
                 >
                   <span id=${`waiting-name-${player.playerId}`} class="visually-hidden">
-                    <span>${player.characterName}</span>
+                    <span lang=${gameTextLanguage() ?? nothing}>${player.characterName}</span>
                     ${hasWaitingSentence ? msg('said:') : ':'}
                   </span>
                   <span id=${`waiting-text-${player.playerId}`} class="visually-hidden"

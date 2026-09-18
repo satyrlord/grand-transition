@@ -11,6 +11,7 @@ import { skinSpeechProfile } from '../audio/skin-speech-profile';
 import { RoundPresentation, type RoundPresentationFrame } from './round-presentation';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
 import { setInterfaceLocale } from './interface-localization';
+import { currentGameTextLocale, setGameTextLocale } from './game-text-language';
 import { documentLanguageFor } from '../localization/interface-locale';
 import { MatchCoordinator, cliffhangerReaction, type MatchCommandLog } from './match-coordinator';
 import './screens/match-screen';
@@ -29,7 +30,10 @@ import {
   gameLocaleBundle,
   sampleContent,
 } from '../game-content';
-import { defaultGameLocale } from '../localization/game-locale';
+import {
+  defaultGameLocale,
+  shippedGameLocale,
+} from '../localization/game-locale';
 import {
   createMatchSetupState,
   type MatchCommand,
@@ -98,6 +102,9 @@ function createMatchId(seed: number): string {
   return globalThis.crypto.randomUUID?.() ?? `match-${seed}-${Date.now()}`;
 }
 
+// The coordinator's base context: catalog data and the default match balance.
+// Every match replaces `locale` at creation with the game language selected in
+// title Settings, so a running match never follows a later setting change.
 const matchContext: MatchEngineContext = {
   phrases: sampleContent.phrases,
   characters: sampleContent.characters,
@@ -278,6 +285,7 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistoryOpen = false;
     this.settingsSnapshot = this.settingsRepository.snapshot();
     this.applyInterfaceLocale(this.settingsSnapshot.settings.interfaceLocale);
+    this.applyGameTextLocale();
     this.musicVolumeBeforeMute = this.settingsSnapshot.settings.musicVolume > 0
       ? this.settingsSnapshot.settings.musicVolume
       : null;
@@ -397,6 +405,7 @@ export class GrandTransitionApp extends LitElement {
       (liveMatchState
         ? createMatchScreenSnapshot(
             liveMatchState,
+            this.matchCoordinator.locale,
             this.matchArenaReaction,
             null,
             null,
@@ -680,13 +689,19 @@ export class GrandTransitionApp extends LitElement {
       openingPlayerIndex: scene.openingPlayerIndex,
     });
     this.speech?.beginMatch();
-    this.matchState = this.matchCoordinator.start(state);
+    // A match captures its game language at creation, so a running match and
+    // its ladder keep it even when the title setting changes afterwards.
+    this.matchState = this.matchCoordinator.start(
+      state,
+      gameLocaleBundle(this.settingsSnapshot.settings.gameLocale),
+    );
     this.currentMatchIsLadder = payload.mode === 'ladder';
     this.matchArenaReaction = null;
     this.roundReviewSnapshot = null;
     this.manuallyPaused = false;
     this.screenController.showMatch();
     this.view = 'match';
+    this.applyGameTextLocale();
     this.focusViewHeading('match');
     this.scheduleAiTurn();
   };
@@ -720,7 +735,11 @@ export class GrandTransitionApp extends LitElement {
     if (publicPresentation) this.gameAudio?.accepted(command, transition);
     this.roundReviewSnapshot = review
       ? createMatchScreenSnapshot(
-          review.state, null, review.resolution, review.victory,
+          review.state,
+          this.matchCoordinator.locale,
+          null,
+          review.resolution,
+          review.victory,
           this.currentMatchSkinIds(),
           review.state.setup.mode === 'ai' ? 'player-one' : review.state.activePlayerId,
         )
@@ -731,7 +750,7 @@ export class GrandTransitionApp extends LitElement {
       const skins = this.currentMatchSkinIds();
       const voices = Object.fromEntries(this.matchState.setup.players.map((player) => [
         player.playerId, skinSpeechProfile(sampleContent.characters.find((character) => character.id === player.characterId)!,
-          skins[player.playerId] ?? 'default', this.speech?.activeMode),
+          skins[player.playerId] ?? 'default', this.speech?.activeMode, currentGameTextLocale()),
       ]));
       this.roundPresentation?.start({ resolution: review.resolution,
         firstSpeakerId: command.actorId ?? review.state.activePlayerId,
@@ -814,6 +833,8 @@ export class GrandTransitionApp extends LitElement {
       this.view = 'title';
       this.focusViewHeading('title');
     }
+    // The title and setup screens render the selected game language again.
+    this.applyGameTextLocale();
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -931,10 +952,21 @@ export class GrandTransitionApp extends LitElement {
     document.documentElement.lang = documentLanguageFor(locale);
   }
 
+  // The game text on screen always belongs to one game locale: the selected one
+  // on the title and setup screens, and the captured one during a match.
+  private applyGameTextLocale(): void {
+    setGameTextLocale(
+      this.view === 'match'
+        ? shippedGameLocale(this.matchCoordinator.locale)
+        : this.settingsSnapshot.settings.gameLocale,
+    );
+  }
+
   private replaceSettings(settings: SettingsSnapshot['settings']): void {
     if (settings.musicVolume > 0) this.musicVolumeBeforeMute = settings.musicVolume;
     this.applyInterfaceLocale(settings.interfaceLocale);
     this.settingsSnapshot = this.settingsRepository.replace(settings);
+    this.applyGameTextLocale();
     this.speech?.configure(this.settingsSnapshot.settings);
     this.roundPresentation?.updateSettings(this.settingsSnapshot.settings);
     this.audio?.configure(this.settingsSnapshot.settings);

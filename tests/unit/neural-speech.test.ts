@@ -6,7 +6,7 @@ const voices = [
   { voiceURI: 'piper:vctk-p226', name: 'Michael', lang: 'en-US', default: true },
   { voiceURI: 'piper:vctk-p225', name: 'Emma', lang: 'en-GB', default: false },
 ];
-function harness(options: { sampleRate?: number; voicePrefix?: string; defaultVoiceId?: string; startupBufferSeconds?: number; piperClarity?: boolean; initializationTimeoutMs?: number } = {}) {
+function harness(options: { sampleRate?: number; voicePrefix?: string; defaultVoiceId?: string; startupBufferSeconds?: number; piperClarity?: boolean; initializationTimeoutMs?: number; strictVoiceUri?: boolean; acceptsLanguage?: (language: string) => boolean } = {}) {
   const filters: { disconnect: ReturnType<typeof vi.fn> }[] = [];
   const workers: { onmessage: ((event: MessageEvent<NeuralSpeechMessage>) => void) | null; onerror: (() => void) | null;
     postMessage: ReturnType<typeof vi.fn>; terminate: ReturnType<typeof vi.fn> }[] = [];
@@ -44,6 +44,17 @@ function harness(options: { sampleRate?: number; voicePrefix?: string; defaultVo
 afterEach(() => vi.useRealTimers());
 
 describe('local neural speech', () => {
+  test('an exact voice requirement ends silently when that voice is missing', async () => {
+    const h = harness({ strictVoiceUri: true, acceptsLanguage: (language) => language === 'ro-RO' });
+    await h.initialize();
+    const onError = vi.fn();
+    h.speech.speak({ text: 'Public.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-medium', onError });
+    await Promise.resolve();
+    expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toEqual([]);
+    expect(onError).toHaveBeenCalledOnce();
+    expect(h.speech.status).toBe('unavailable');
+    h.speech.dispose();
+  });
   test('preloads without an audio context and resumes playback only on activation', async () => {
     const h=harness(); const ready=h.speech.initialize(false);
     h.emit({type:'booted'}); h.emit({type:'ready',voices}); expect(await ready).toBe(true);

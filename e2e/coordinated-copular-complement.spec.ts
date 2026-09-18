@@ -1,5 +1,8 @@
 import { lockInSetup } from './helpers/setup';
-import { reachDeliveryTotal } from './helpers/presentation';
+import {
+  pauseMockedClock,
+  reachDeliveryTotal,
+} from './helpers/presentation';
 import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
@@ -69,7 +72,7 @@ for (const scenario of [
     await page.getByRole('button', { name: 'End', exact: true }).click();
     await page.getByRole('button', { name: 'End', exact: true }).click();
 
-    await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+    await pauseMockedClock(page);
     await reachDeliveryTotal(page, fixture.playerId);
     await expect(page.locator('.round-review-dialog')).toHaveCount(0);
     await expect(page.locator('.sentence-preview')).toHaveText(

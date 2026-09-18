@@ -28,7 +28,7 @@ for (const viewport of [
     await page.keyboard.press('Tab');
     for (const [index, stage] of (await stages.all()).entries()) {
       if (index === 1) {
-        const lock = page.locator('[data-lock-player="one"]');
+        const lock = page.getByTestId('lock-player-one');
         await lock.focus();
         await lock.press('Enter');
       }

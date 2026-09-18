@@ -11,7 +11,7 @@ for (const fixture of [
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     for (const [index, field] of ['playerOneCharacterId', 'playerTwoCharacterId'].entries()) {
-      if (index === 1) await page.locator('[data-lock-player="one"]').click();
+      if (index === 1) await page.getByTestId('lock-player-one').click();
       await page.locator('#' + field).click();
       await page.locator(`.roster-choice[data-character-id="${index === 0 ? fixture.one : fixture.two}"][data-skin-id="default"]`).click();
       const cycles = fixture.name === 'foundation and alternate' && index === 0 ? 0 : fixture.cycles;

@@ -5,6 +5,7 @@ import {
   type BasePointsMultiplier,
 } from '../content/basic-scoring-balance';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
+import { defaultGameLocale, type GameLocale } from '../localization/game-locale';
 import type { DraftCardReference, DraftCommand } from './draft-actions';
 import {
   createMatchReducer,
@@ -38,6 +39,7 @@ export type SimulationSetupOptions = Readonly<{
   pride?: readonly [number, number];
   charge?: readonly [number, number];
   basePointsMultiplier?: BasePointsMultiplier;
+  gameLocale?: GameLocale;
 }>;
 
 export type SimulationOption = Readonly<{
@@ -141,6 +143,7 @@ export function createSimulationSetup(
     privacyEnabled: true,
     basePointsMultiplier:
       options.basePointsMultiplier ?? basicScoringBalance.basePointsMultiplier,
+    gameLocale: options.gameLocale ?? defaultGameLocale,
   };
 }
 

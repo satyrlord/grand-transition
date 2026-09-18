@@ -673,7 +673,7 @@
       "role": "predicate",
       "text": "is a family matter with a public title",
       "singularText": "is a family matter with a public title",
-      "pluralText": "is a family matter with a public title",
+      "pluralText": "are a family matter with a public title",
       "personalSingularText": "is a family matter with a public title",
       "secondPersonText": "are a family matter with a public title",
       "tags": [
@@ -743,7 +743,7 @@
       "role": "predicate",
       "text": "is a road map with a preferred destination",
       "singularText": "is a road map with a preferred destination",
-      "pluralText": "is a road map with a preferred destination",
+      "pluralText": "are a road map with a preferred destination",
       "personalSingularText": "is a road map with a preferred destination",
       "secondPersonText": "is a road map with a preferred destination",
       "tags": [
@@ -813,7 +813,7 @@
       "role": "predicate",
       "text": "is a grant wearing a ceremonial bow",
       "singularText": "is a grant wearing a ceremonial bow",
-      "pluralText": "is a grant wearing a ceremonial bow",
+      "pluralText": "are a grant wearing a ceremonial bow",
       "personalSingularText": "is a grant wearing a ceremonial bow",
       "secondPersonText": "is a grant wearing a ceremonial bow",
       "tags": [

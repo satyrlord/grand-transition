@@ -88,7 +88,7 @@ describe('match coordination', () => {
       sampleContent.characters.map(({ id }) => id), sampleContent.scenes.map(({ id }) => id)));
     const initial = setup();
     const original = JSON.stringify(initial);
-    let state = coordinator.start(initial);
+    let state = coordinator.start(initial, englishGameLocale);
     expect(JSON.stringify(initial)).toBe(original);
     let reviews = 0;
     for (let step = 0; state.phase !== 'results' && step < 2000; step += 1) {
@@ -121,7 +121,7 @@ describe('match coordination', () => {
   test('captures each new match multiplier for both players and saved replays', () => {
     const { coordinator, history } = harness();
     for (const multiplier of [1, 5] as const) {
-      let state = coordinator.start(setup(false, multiplier));
+      let state = coordinator.start(setup(false, multiplier), englishGameLocale);
       for (let step = 0; state.phase !== 'results' && step < 2000; step += 1) {
         const command = listSimulationOptions(state, context)[0]!.command;
         state = coordinator.apply(state, command, { ...identity, id: `multiplier-${multiplier}` }).state;
@@ -140,7 +140,7 @@ describe('match coordination', () => {
 
   test('logs a rejected command without state changes or completion writes', () => {
     const { coordinator, history, logs } = harness();
-    const state = coordinator.start(setup());
+    const state = coordinator.start(setup(), englishGameLocale);
     const before = JSON.stringify(state);
     expect(() => coordinator.apply(state, { type: 'start-match', source: 'user', payload: {} }, identity)).toThrow(/failed/u);
     expect(JSON.stringify(state)).toBe(before);
@@ -150,7 +150,7 @@ describe('match coordination', () => {
 
   test.each([3, 60])('preserves grammar-mistake presentation with Pride %s', (pride) => {
     const { coordinator, history } = harness();
-    const initial = coordinator.start(setup());
+    const initial = coordinator.start(setup(), englishGameLocale);
     const playerId = initial.activePlayerId;
     const state = { ...initial, playerStates: { ...initial.playerStates,
       [playerId]: { ...initial.playerStates[playerId]!, pride } } };
@@ -175,7 +175,7 @@ describe('match coordination', () => {
 
   test.each(['local-radio-caller', 'party-strategist', 'palace-operator'])('applies %s only after both timer tasks', (difficulty) => {
     const { coordinator, tasks, runTask } = harness();
-    const initial = coordinator.start(setup(true));
+    const initial = coordinator.start(setup(true), englishGameLocale);
     const state = { ...initial, setup: { ...initial.setup, aiDifficulty: difficulty } };
     const apply = vi.fn();
     const thinking = vi.fn();
@@ -191,7 +191,7 @@ describe('match coordination', () => {
 
   test.each(['cancel', 'ineligible', 'replacement'])('rejects stale AI work after %s', (change) => {
     const { coordinator, tasks, runTask } = harness();
-    let state: MatchState | null = coordinator.start(setup(true));
+    let state: MatchState | null = coordinator.start(setup(true), englishGameLocale);
     const apply = vi.fn();
     const thinking = vi.fn();
     coordinator.scheduleAiTurn({ currentState: () => state, reducedDelay: true, thinking, apply });
@@ -199,7 +199,7 @@ describe('match coordination', () => {
     const staleTask = tasks.values().next().value!;
     if (change === 'cancel') coordinator.cancelAiTurn();
     else if (change === 'ineligible') state = null;
-    else state = coordinator.start(setup(true));
+    else state = coordinator.start(setup(true), englishGameLocale);
     staleTask();
     expect(apply).not.toHaveBeenCalled();
     expect(thinking).toHaveBeenLastCalledWith(false);

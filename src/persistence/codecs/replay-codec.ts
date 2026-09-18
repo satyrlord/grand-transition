@@ -1,6 +1,17 @@
 import { z } from 'zod';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
+import { gameLocales } from '../../localization/game-locale';
+import {
+  romanianNestedObjectAnchorByFamily,
+  romanianObjectGovernmentByFamily,
+  romanianPersonalObjectByNounId,
+  romanianSpecialObjectCaseByFamily,
+} from '../../content/ro/grammar-metadata';
+import {
+  withDirectObjectClitic,
+  withNestedDirectObjectClitic,
+} from '../../engine/grammar/romanian-grammar-adapter';
 import {
   basePointsMultiplierSchema,
   scoringBalanceForMultiplier,
@@ -19,8 +30,9 @@ import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
 
 // One replay document format exists at a time. The version only ever changes
-// when that format changes; content revisions never bump it.
-export const replaySchemaVersion = 1;
+// when that format changes; content revisions never bump it. Version 2 records
+// the game locale the match captured at creation under Milestone 029.
+export const replaySchemaVersion = 2;
 export const replayKind = 'grand-transition-replay' as const;
 export const matchLogKind = 'grand-transition-match-log' as const;
 
@@ -111,6 +123,9 @@ export const replaySetupSchema = z
     speechEnabled: z.boolean(),
     privacyEnabled: z.boolean(),
     basePointsMultiplier: basePointsMultiplierSchema,
+    // The game locale the match captured at creation. It is an identifier, not
+    // translated text, and it owns the recorded public sentence language.
+    gameLocale: z.enum(gameLocales),
   })
   .strict()
   .superRefine((setup, context) => {
@@ -374,6 +389,9 @@ export function replayMatch(
 ): ReplayResult {
   const decoded = decodeReplay(serialized);
   if (!decoded.ok) return decoded;
+  if (!recordingMatchesLocale(decoded.value, context)) {
+    return { ok: false, code: 'invalid-replay' };
+  }
 
   let state = createReplayInitialState(decoded.value, context);
   if (!state) return { ok: false, code: 'invalid-replay' };
@@ -407,6 +425,7 @@ export function createReplayInitialState(
   replay: ReplayDocument,
   context: ReplayContext,
 ): MatchState | null {
+  if (!recordingMatchesLocale(replay, context)) return null;
   const request = createSetupRequest(replay, context.catalog);
   if (!request) return null;
   try {
@@ -414,6 +433,16 @@ export function createReplayInitialState(
   } catch {
     return null;
   }
+}
+
+// The document owns the captured game locale. Replaying it with a different
+// bundle would silently re-render the recorded sentences in another language,
+// so the mismatch fails instead.
+function recordingMatchesLocale(
+  replay: ReplayDocument,
+  context: ReplayContext,
+): boolean {
+  return replay.setup.gameLocale === context.locale.locale;
 }
 
 export function storeReplayImport(
@@ -647,6 +676,9 @@ function matchLogMatchesContext(
   matchLog: MatchLogDocument,
   context: ReplayContext,
 ): boolean {
+  // The recorded text was rendered in the recorded game locale, so validate it
+  // against that locale's agreement forms rather than another language's.
+  if (matchLog.setup.gameLocale !== context.locale.locale) return false;
   const allowedTextsByPhrase = new Map(
     context.catalog.phrases.map((phrase) => {
       const keys = [
@@ -655,16 +687,65 @@ function matchLogMatchesContext(
         phrase.numberForms?.pluralKey,
         phrase.numberForms?.personalSingularKey,
         phrase.numberForms?.secondPersonKey,
+        ...(context.locale.locale === 'ro-RO' &&
+        (phrase.role === 'verb' || phrase.role === 'predicate')
+          ? [`${phrase.textKey}.second-person`, `${phrase.textKey}.plural`]
+          : []),
       ];
-      return [
-        phrase.id,
-        new Set(
-          keys.flatMap((key) => {
-            const text = key ? context.locale.messages[key] : undefined;
-            return typeof text === 'string' ? [text] : [];
-          }),
-        ),
-      ] as const;
+      const texts = new Set(
+        keys.flatMap((key) => {
+          const text = key ? context.locale.messages[key] : undefined;
+          return typeof text === 'string' ? [text] : [];
+        }),
+      );
+      if (context.locale.locale === 'ro-RO') {
+        const government = phrase.role === 'verb'
+          ? romanianObjectGovernmentByFamily[phrase.tenseFamily ?? '']
+          : undefined;
+        if (government === 'direct' || government === 'nested-direct') {
+          for (const text of Array.from(texts)) {
+            for (const clitic of [
+              'polite-second',
+              'masculine-singular',
+              'masculine-plural',
+              'feminine-singular',
+              'feminine-plural',
+            ] as const) {
+              texts.add(
+                government === 'nested-direct'
+                  ? withNestedDirectObjectClitic(
+                      text,
+                      clitic,
+                      romanianNestedObjectAnchorByFamily[phrase.tenseFamily ?? '']!,
+                    )
+                  : withDirectObjectClitic(text, clitic),
+              );
+            }
+          }
+        }
+        if (
+          phrase.role === 'verb' &&
+          romanianSpecialObjectCaseByFamily[phrase.tenseFamily ?? ''] ===
+            'contract-indefinite'
+        ) {
+          for (const text of Array.from(texts)) {
+            if (text.endsWith(' în')) {
+              texts.add(`${text.slice(0, -3)} într-un`);
+              texts.add(`${text.slice(0, -3)} într-o`);
+            } else if (text.endsWith(' din')) {
+              texts.add(`${text.slice(0, -4)} dintr-un`);
+              texts.add(`${text.slice(0, -4)} dintr-o`);
+            }
+          }
+        }
+        if (phrase.role === 'noun') {
+          const directText = romanianPersonalObjectByNounId[phrase.id]?.directText;
+          if (directText) texts.add(directText);
+          const unmarked = /^(?:un|o)\s+(.+)$/u.exec(context.locale.messages[phrase.textKey] ?? '');
+          if (unmarked) texts.add(unmarked[1]!);
+        }
+      }
+      return [phrase.id, texts] as const;
     }),
   );
   return matchLog.sentences.every((sentence) =>

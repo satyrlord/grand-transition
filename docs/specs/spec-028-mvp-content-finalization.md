@@ -236,6 +236,9 @@ The 150 verbs contain exactly 50 past-tense, 50 present-tense, and 50
   future-tense cards. The cards form 50 complete three-tense families. Humor and
 editorial approval apply to the complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together.
+Every verb card must leave a grammatical place for the noun card that follows
+it. A phrase that already names one object needs a relation to the next noun.
+Review all three tense forms together when that relation changes.
 
 Every common predicate, modifier, and ending maps to a verifiably real quote in
 the private research folder. The provenance record includes a publicly
@@ -264,6 +267,7 @@ future-tense cards arranged as 3 complete three-tense families. The 6 scene
 predicates contain 2 complete three-tense families. Humor and
 editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
+scene verb leaves the same grammatical noun place as a common verb. Every
 scene-restricted predicate, modifier, and ending has the same verifiable
 real-quote provenance requirement as the common corpus. The three
 scene-restricted conjunctions are distinct scene-specific choices reviewed
@@ -288,6 +292,7 @@ future-tense cards arranged as 3 complete three-tense families. The 12
 character predicates contain 4 complete three-tense families. Humor and
 editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
+character verb leaves the same grammatical noun place as a common verb. Every
 character-owned predicate, modifier, and ending has the same verifiable
 real-quote provenance requirement as the common corpus. Its one conjunction is
 personalized to the character as far as grammar permits. Character cards are

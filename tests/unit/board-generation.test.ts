@@ -155,7 +155,7 @@ describe('Hollywood Roast shared board generation', () => {
       );
       return (
         phrase?.role !== 'conjunction' ||
-        ['because', 'for', 'so'].includes(phrase.connectorKind ?? '')
+        ['because', 'so'].includes(phrase.connectorKind ?? '')
       );
     });
     const result = generateBoard({ ...request(1), scenePhraseIds });
@@ -165,7 +165,7 @@ describe('Hollywood Roast shared board generation', () => {
     for (const slot of result.board.slots.filter(
       (candidate) => candidate.role === 'conjunction',
     )) {
-      expect(['because', 'for', 'so']).toContain(
+      expect(['because', 'so']).toContain(
         sampleContent.phrases.find((phrase) => phrase.id === slot.phraseId)
           ?.connectorKind,
       );

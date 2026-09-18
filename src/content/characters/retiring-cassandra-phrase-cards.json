@@ -672,7 +672,7 @@
       "role": "predicate",
       "text": "is a final question awaiting competence",
       "singularText": "is a final question awaiting competence",
-      "pluralText": "is a final question awaiting competence",
+      "pluralText": "are a final question awaiting competence",
       "personalSingularText": "is a final question awaiting competence",
       "secondPersonText": "are a final question awaiting competence",
       "tags": [
@@ -742,7 +742,7 @@
       "role": "predicate",
       "text": "is a result wearing a sensible coat",
       "singularText": "is a result wearing a sensible coat",
-      "pluralText": "is a result wearing a sensible coat",
+      "pluralText": "are a result wearing a sensible coat",
       "personalSingularText": "is a result wearing a sensible coat",
       "secondPersonText": "is a result wearing a sensible coat",
       "tags": [
@@ -812,7 +812,7 @@
       "role": "predicate",
       "text": "is a hopeful delay with paperwork",
       "singularText": "is a hopeful delay with paperwork",
-      "pluralText": "is a hopeful delay with paperwork",
+      "pluralText": "are a hopeful delay with paperwork",
       "personalSingularText": "is a hopeful delay with paperwork",
       "secondPersonText": "is a hopeful delay with paperwork",
       "tags": [

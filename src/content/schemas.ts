@@ -40,7 +40,6 @@ export const connectorKindSchema = z.enum([
   'and',
   'because',
   'but',
-  'for',
   'so',
   'yet',
   'with',
@@ -222,7 +221,7 @@ export const phraseSchema = phraseDefinitionSchema.superRefine(
     if (phrase.role === 'conjunction' && !phrase.connectorKind) {
       issue(
         'connectorKind',
-        'Declare and, because, but, for, so, or yet for each conjunction.',
+        'Declare and, because, but, so, yet, or with for each conjunction.',
       );
     } else if (phrase.role !== 'conjunction' && phrase.connectorKind) {
       issue(

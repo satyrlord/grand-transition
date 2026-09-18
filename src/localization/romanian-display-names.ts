@@ -1,7 +1,9 @@
-import type { InterfaceLocale } from './interface-locale';
+import type { GameLocale } from './game-locale';
 
-// Phase 1 translates names shown by the interface. Match state, content keys,
-// phrase prose, replay, and speech keep their English game-language identity.
+// Romanian display names keyed by the same stable identifiers the English
+// content bundle uses. Phase 1 rendered these as interface display names;
+// Phase 2 owns them with the game locale, so a Romanian game language shows
+// Romanian names whichever interface language is selected.
 export const romanianCharacterNames: Readonly<Record<string, string>> = Object.freeze({
   'algorithmic-prophet': 'Profetul algoritmic',
   'apartment-block-geopolitician': 'Geopoliticianul de bloc',
@@ -36,7 +38,7 @@ export const romanianSceneNames: Readonly<Record<string, string>> = Object.freez
 export function displayCharacterName(
   characterId: string,
   englishName: string,
-  locale: InterfaceLocale,
+  locale: GameLocale,
 ): string {
   return locale === 'ro-RO' ? romanianCharacterNames[characterId] ?? englishName : englishName;
 }
@@ -44,7 +46,7 @@ export function displayCharacterName(
 export function displaySceneName(
   sceneId: string,
   englishName: string,
-  locale: InterfaceLocale,
+  locale: GameLocale,
 ): string {
   return locale === 'ro-RO' ? romanianSceneNames[sceneId] ?? englishName : englishName;
 }

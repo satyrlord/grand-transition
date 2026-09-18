@@ -1,5 +1,5 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { gameTextLanguage } from '../game-text-language';
+import { currentGameTextLocale, gameTextLanguage } from '../game-text-language';
 import { interfaceLocale } from '../interface-localization';
 import {
   displayCharacterName,
@@ -18,7 +18,6 @@ import {
   sampleContent,
   type CharacterSkin,
 } from '../../game-content';
-import { defaultGameLocale } from '../../localization/game-locale';
 import { resolveBrandAsset } from '../brand-assets';
 import type { MatchMode } from '../../engine/match-lifecycle';
 import type { LadderProgress } from '../../engine/ladder';
@@ -339,6 +338,7 @@ export class GrandTransitionSetup extends LitElement {
                       options: sampleContent.scenes.map((scene) => ({
                         value: scene.id,
                         label: sceneName(scene.id),
+                        language: gameTextLanguage() ?? undefined,
                       })),
                     })
               }
@@ -396,7 +396,6 @@ export class GrandTransitionSetup extends LitElement {
       this.selectionTarget === config.field && !config.locked;
     const canUnlock = config.locked && !config.fixed && this.bothPlayersLocked();
     const canLock = !config.locked && targetActive;
-    const lockName = this.lockName(config.side);
     const romanianInterface = interfaceLocale() === 'ro-RO';
     return html`
       <section
@@ -432,7 +431,7 @@ export class GrandTransitionSetup extends LitElement {
                     ? msg('opponent fixed by rung:')
                     : msg('locked in:')
                   : msg('character:')}
-                  <span>${config.character.name}</span>`
+                  <span lang=${gameTextLanguage() ?? nothing}>${config.character.name}</span>`
               : msg('character')}
           </span>
         </button>
@@ -472,7 +471,7 @@ export class GrandTransitionSetup extends LitElement {
                   }
                 </span>
                 <span class="contestant-record" aria-live="polite">
-                  <strong>${config.character.name}</strong>
+                  <strong lang=${gameTextLanguage() ?? nothing}>${config.character.name}</strong>
                   <span>${msg('Weaknesses')}</span>
                   <span class="contestant-weaknesses" lang=${gameTextLanguage() ?? nothing}>
                     ${config.character.weaknessTags.map(titleCase).join(' · ')}
@@ -495,7 +494,7 @@ export class GrandTransitionSetup extends LitElement {
         <button
           type="button"
           class="contestant-lock-action"
-          data-lock-player=${config.side}
+          data-testid=${`lock-player-${config.side}`}
           data-field=${config.field}
           aria-pressed=${config.locked}
           ?disabled=${!canLock && !canUnlock}
@@ -504,10 +503,10 @@ export class GrandTransitionSetup extends LitElement {
           ${config.fixed
             ? msg('Opponent locked in')
             : canUnlock
-              ? romanianInterface ? msg('Change selection') : msg(str`Unlock ${lockName}`)
+              ? msg('Change selection')
               : config.locked
-                ? romanianInterface ? msg('Selection confirmed') : msg(str`${lockName} locked in`)
-                : romanianInterface ? msg('Confirm selection') : msg(str`Lock in ${lockName}`)}
+                ? msg('Selection confirmed')
+                : msg('Confirm selection')}
         </button>
       </section>
       ${
@@ -672,7 +671,7 @@ export class GrandTransitionSetup extends LitElement {
           }
         </span>
         <span class="visually-hidden">
-          <span>${character.name}</span> —
+          <span lang=${gameTextLanguage() ?? nothing}>${character.name}</span> —
           <span lang=${skin.id === 'default' || skin.id === 'alternate' ? nothing : gameTextLanguage() ?? nothing}>${skin.label}</span>.
           ${msg('Weaknesses')}: <span lang=${gameTextLanguage() ?? nothing}>${weaknessNames}</span>.
           ${selectedFor}
@@ -710,7 +709,11 @@ export class GrandTransitionSetup extends LitElement {
     label: string;
     value: string;
     error: string | undefined;
-    options: readonly Readonly<{ value: string; label: string }>[];
+    options: readonly Readonly<{
+      value: string;
+      label: string;
+      language?: string;
+    }>[];
   }): TemplateResult {
     const errorId = config.field + '-error';
     return html`
@@ -730,6 +733,7 @@ export class GrandTransitionSetup extends LitElement {
               <option
                 value=${option.value}
                 .selected=${option.value === config.value}
+                lang=${option.language ?? nothing}
               >
                 ${option.label}
               </option>
@@ -737,7 +741,9 @@ export class GrandTransitionSetup extends LitElement {
           )}
         </select>
         ${config.field === 'sceneId'
-          ? html`<span class="scene-selected-text" aria-hidden="true">${
+          ? html`<span class="scene-selected-text" aria-hidden="true"
+              lang=${config.options.find((option) => option.value === config.value)
+                ?.language ?? nothing}>${
               config.options.find((option) => option.value === config.value)?.label
             }</span>`
           : nothing}
@@ -1003,13 +1009,6 @@ export class GrandTransitionSetup extends LitElement {
     else this.playerTwoLocked = locked;
   }
 
-  private lockName(side: 'one' | 'two'): string {
-    if (side === 'one') {
-      return isSinglePlayerMode(this.snapshot?.mode ?? '') ? msg('You') : msg('Player one');
-    }
-    return this.snapshot?.mode === 'ai' ? msg('Computer') : msg('Player two');
-  }
-
   private readonly back = (): void => {
     this.dismissPreview();
     this.dispatchEvent(
@@ -1199,7 +1198,7 @@ function characterViews(): readonly CharacterView[] {
       name: displayCharacterName(
         character.id,
         gameMessage(character.nameKey),
-        interfaceLocale(),
+        currentGameTextLocale(),
       ),
       portrait: Object.freeze({
         ...portrait,
@@ -1282,7 +1281,7 @@ function titleCase(value: string): string {
 
 function gameMessage(key: string | undefined): string {
   if (!key) return '';
-  return gameLocaleBundle(defaultGameLocale).messages[key] ?? key;
+  return gameLocaleBundle(currentGameTextLocale()).messages[key] ?? key;
 }
 
 function isSinglePlayerMode(mode: string): boolean {
@@ -1304,7 +1303,7 @@ function sceneName(sceneId: string): string {
   return displaySceneName(
     sceneId,
     gameMessage(sampleContent.scenes.find((scene) => scene.id === sceneId)?.nameKey),
-    interfaceLocale(),
+    currentGameTextLocale(),
   );
 }
 

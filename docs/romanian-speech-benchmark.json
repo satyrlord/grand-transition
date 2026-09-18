@@ -1,0 +1,95 @@
+{
+  "criterion": "AC-029-16",
+  "recordedAt": "2026-09-18T09:23:03.345Z",
+  "environment": {
+    "cpu": "11th Gen Intel(R) Core(TM) i7-11700 @ 2.50GHz",
+    "cpuCores": 16,
+    "totalMemoryBytes": 137025044480,
+    "os": "win32 10.0.26200",
+    "node": "v24.19.0",
+    "browser": "chromium 153.0.8010.12",
+    "cpuThrottleRate": 4,
+    "cacheDisabled": true,
+    "viewport": "1280x720",
+    "pageStartedAt": "2026-09-18T09:22:31.809Z"
+  },
+  "workload": {
+    "text": [
+      "Fratele vostru este un turnător ",
+      "dar dezacordul vostru unanim are locul într-un muzeu de istorie.",
+      "Fratele vostru este un turnător ",
+      "dar dezacordul vostru unanim are locul într-un muzeu de istorie."
+    ],
+    "voices": [
+      "ro_RO-mihai-medium",
+      "ro_RO-mihai-medium",
+      "ro_RO-liana-medium",
+      "ro_RO-liana-medium"
+    ],
+    "repetitions": 4,
+    "roundWallClockMs": 22340
+  },
+  "coldDownload": {
+    "progressMessages": 13971,
+    "transferMs": 20475,
+    "packagedBytes": 129882037,
+    "reportedLoadedBytes": 76952867
+  },
+  "coldInitializationMs": 5690,
+  "perVoiceColdInitializationMs": {
+    "ro_RO-mihai-medium": 5690,
+    "ro_RO-liana-medium": 5454
+  },
+  "samples": [
+    {
+      "voiceId": "ro_RO-mihai-medium",
+      "cold": true,
+      "ms": 5690
+    },
+    {
+      "voiceId": "ro_RO-mihai-medium",
+      "cold": false,
+      "ms": 1651
+    },
+    {
+      "voiceId": "ro_RO-liana-medium",
+      "cold": true,
+      "ms": 5454
+    },
+    {
+      "voiceId": "ro_RO-liana-medium",
+      "cold": false,
+      "ms": 1983
+    }
+  ],
+  "warmSynthesis": {
+    "repetitions": 2,
+    "medianMs": 1817,
+    "worstMs": 1983
+  },
+  "perVoiceWarm": {
+    "ro_RO-mihai-medium": {
+      "repetitions": 1,
+      "medianMs": 1651,
+      "worstMs": 1651
+    },
+    "ro_RO-liana-medium": {
+      "repetitions": 1,
+      "medianMs": 1983,
+      "worstMs": 1983
+    }
+  },
+  "perVoiceNote": "The first synthesis of each voice is cold. Warm samples are one per voice in a single run; the raw samples above carry the real evidence.",
+  "peakJavaScriptHeapBytes": 10000000,
+  "peakMemoryNote": "performance.memory reports the JavaScript heap only, quantised by Chromium, and excludes the WebAssembly heap that holds the weights (the shipped package is the figure below). The WebAssembly heap remains unverified; see coldDownload.packagedBytes.",
+  "cancellation": {
+    "clausesInDelivery": 4,
+    "clausesRequestedForTheInterruptedDelivery": 2,
+    "msFromCancelToLastAnswer": 1048,
+    "note": "A clause already being inferred cannot be recalled; the load-bearing observation is that the app requests fewer clauses than the delivery contains, and stops asking for further ones."
+  },
+  "unverified": {
+    "device": "No low-end physical device or mobile browser was available; the throttled desktop Chromium run is the reproducible proxy.",
+    "wasmHeap": true
+  }
+}

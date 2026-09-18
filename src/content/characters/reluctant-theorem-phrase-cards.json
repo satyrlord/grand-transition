@@ -687,7 +687,7 @@
       "role": "predicate",
       "text": "is one final question without an answer",
       "singularText": "is one final question without an answer",
-      "pluralText": "is one final question without an answer",
+      "pluralText": "are one final question without an answer",
       "personalSingularText": "is one final question without an answer",
       "secondPersonText": "are one final question without an answer",
       "tags": [
@@ -757,7 +757,7 @@
       "role": "predicate",
       "text": "is a conclusion waiting for a second opinion",
       "singularText": "is a conclusion waiting for a second opinion",
-      "pluralText": "is a conclusion waiting for a second opinion",
+      "pluralText": "are a conclusion waiting for a second opinion",
       "personalSingularText": "is a conclusion waiting for a second opinion",
       "secondPersonText": "is a conclusion waiting for a second opinion",
       "tags": [
@@ -827,7 +827,7 @@
       "role": "predicate",
       "text": "is a deadline with a conditional hinge",
       "singularText": "is a deadline with a conditional hinge",
-      "pluralText": "is a deadline with a conditional hinge",
+      "pluralText": "are a deadline with a conditional hinge",
       "personalSingularText": "is a deadline with a conditional hinge",
       "secondPersonText": "is a deadline with a conditional hinge",
       "tags": [

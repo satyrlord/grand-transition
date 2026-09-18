@@ -84,6 +84,8 @@ tools/*
 !tools/run-test-phase.mjs
 !tools/quality-gate-mode.ts
 !tools/validate-interface-locales.ts
+!tools/validate-game-locales.ts
+!tools/romanian-speech-assets.mjs
 !tools/build-romanian-display-font.py
 !tools/audio-assets.mjs
 !tools/neural-speech-assets.mjs

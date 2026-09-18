@@ -13,6 +13,10 @@ import {
   type GameLocaleBundles,
 } from './localization/game-locale-bundles';
 import { createEnglishGameLocale } from './localization/en-game-locale';
+import {
+  createRomanianGameLocale,
+  mergeRomanianMessageFiles,
+} from './localization/ro-game-locale';
 import type { GameLocale } from './localization/game-locale';
 import type { GameLocaleBundle } from './localization/game-locale-schema';
 import {
@@ -26,6 +30,13 @@ const characterSources = import.meta.glob(
   './content/characters/*-phrase-cards.json',
   { eager: true, import: 'default' },
 ) as Record<string, unknown>;
+
+// The authored Romanian content tree is a flat locale-key map spread across
+// several files, so every file is merged into one message record.
+const romanianSources = import.meta.glob('./content/ro/**/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Record<string, string>>;
 
 export type CharacterSkin = Readonly<{
   id: string;
@@ -47,8 +58,13 @@ export const englishGameLocale = createEnglishGameLocale(
   phraseCardCatalog.englishMessages,
 );
 
+export const romanianGameLocale = createRomanianGameLocale(
+  mergeRomanianMessageFiles(romanianSources),
+);
+
 export const sampleContent = createSampleContent(phraseCardCatalog, [
   englishGameLocale,
+  romanianGameLocale,
 ]);
 
 // Every shipped game-locale bundle, indexed by the locale it renders.

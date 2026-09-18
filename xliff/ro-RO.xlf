@@ -27,8 +27,8 @@
   <target>Rezultatul rundei <x id="0" equiv-text="${resolution.round}"/>: egalitate</target>
 </trans-unit>
 <trans-unit id="s4f91203388db641c">
-  <source>Round <x id="0" equiv-text="${resolution.round}"/> winner: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></source>
-  <target>Câștigătorul rundei <x id="0" equiv-text="${resolution.round}"/>: <x id="1" equiv-text="${characterName(state.playerStates[winnerId]!.characterId)}"/></target>
+  <source>Round <x id="0" equiv-text="${resolution.round}"/> winner: <x id="1" equiv-text="${characterName(locale, state.playerStates[winnerId]!.characterId)}"/></source>
+  <target>Câștigătorul rundei <x id="0" equiv-text="${resolution.round}"/>: <x id="1" equiv-text="${characterName(locale, state.playerStates[winnerId]!.characterId)}"/></target>
 </trans-unit>
 <trans-unit id="secaa8dfe52e0ef83">
   <source><x id="0" equiv-text="${construction.previewText || 'Empty sentence'}"/> — continue in the next round.</source>
@@ -261,10 +261,6 @@
 <trans-unit id="sa56951fc774839c0">
   <source>Debate</source>
   <target>Dezbatere</target>
-</trans-unit>
-<trans-unit id="sd4d597089e0fcced">
-  <source><x id="0" equiv-text="${characterName(player.characterId)} ${round.prideAfter[player.playerId]}"/> Pride</source>
-  <target><x id="0" equiv-text="${characterName(player.characterId)} ${round.prideAfter[player.playerId]}"/> mândrie</target>
 </trans-unit>
 <trans-unit id="s331981609549e8d5">
   <source>No completed public sentence.</source>
@@ -842,18 +838,6 @@
   <source>Opponent locked in</source>
   <target>Adversar confirmat</target>
 </trans-unit>
-<trans-unit id="s8493923d97d986e3">
-  <source>Unlock <x id="0" equiv-text="${lockName}"/></source>
-  <target>Schimbă alegerea: <x id="0" equiv-text="${lockName}"/></target>
-</trans-unit>
-<trans-unit id="s78c09e3f7bc161bc">
-  <source><x id="0" equiv-text="${lockName}"/> locked in</source>
-  <target>Alegere confirmată: <x id="0" equiv-text="${lockName}"/></target>
-</trans-unit>
-<trans-unit id="sbe4b68c15e297b2f">
-  <source>Lock in <x id="0" equiv-text="${lockName}"/></source>
-  <target>Confirmă alegerea: <x id="0" equiv-text="${lockName}"/></target>
-</trans-unit>
 <trans-unit id="sd551e71dda20a546">
   <source>Previous skin for</source>
   <target>Aspectul anterior pentru</target>
@@ -893,10 +877,6 @@
 <trans-unit id="s130e1bd45c66973d">
   <source>Character dossier</source>
   <target>Dosarul personajului</target>
-</trans-unit>
-<trans-unit id="sba1e8892999bb878">
-  <source>Computer</source>
-  <target>Computer</target>
 </trans-unit>
 <trans-unit id="s1310ba7044d2dd9f">
   <source>Ladder unavailable</source>

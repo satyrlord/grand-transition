@@ -22,13 +22,15 @@ import type {
   RuleError,
 } from './game-contracts';
 import {
-  englishGrammarAdapter,
-  prepareEnglishGrammarPhrase,
   type EnglishGrammarAnalysis,
   type EnglishGrammarRole,
   type EnglishGrammarStep,
   type GrammaticalNumber,
 } from './grammar/english-grammar-adapter';
+import {
+  grammarFor,
+  type GrammarLocaleBinding,
+} from './grammar/grammar-locale';
 import {
   generatePrivateHand,
   type PrivateHandGenerationFailure,
@@ -250,10 +252,11 @@ export function prepareDraftRound(
     request.players,
     request.previousOpeningPlayerId,
   );
+  const grammar = grammarFor(request.locale);
   const constructions = new Map(
     request.players.map((player) => [
       player.playerId,
-      createConstruction(player),
+      createConstruction(player, grammar),
     ]),
   );
 
@@ -482,11 +485,12 @@ function selectPhrase(
     );
   }
 
+  const grammar = grammarFor(context.locale);
   const step: EnglishGrammarStep = {
     kind: 'phrase',
-    phrase: prepareEnglishGrammarPhrase(resolved.phrase, context.locale),
+    phrase: grammar.prepare(resolved.phrase, context.locale),
   };
-  const analysis = englishGrammarAdapter.analyze({
+  const analysis = grammar.adapter.analyze({
     steps: [...player.construction.steps, step],
     subjectNumber: player.subjectNumber,
     objectNumber: player.objectNumber,
@@ -586,7 +590,10 @@ function commitSentence(
   command: Extract<DraftCommand, { readonly type: 'commit-sentence' }>,
   context: DraftEngineContext,
 ): ReducerResult<DraftState, DraftRuleError> {
-  const construction = endCompleteConstruction(player);
+  const construction = endCompleteConstruction(
+    player,
+    grammarFor(context.locale),
+  );
   return acceptPlayerAction(state, player, command, construction, context);
 }
 
@@ -623,7 +630,10 @@ function selectComeback(
     randomSource,
   });
   if (!selection.ok) return reject(command, selection.error.code);
-  const endedConstruction = endCompleteConstruction(player);
+  const endedConstruction = endCompleteConstruction(
+    player,
+    grammarFor(context.locale),
+  );
   const construction = {
     ...endedConstruction,
     previewText: `${endedConstruction.previewText} ${selection.selection.closingLine}`,
@@ -843,15 +853,16 @@ function collectLegalCards(
     }
   }
 
+  const grammar = grammarFor(context.locale);
   return cards
     .filter(({ phrase }) => {
       if (phrase.role === 'continuation') return true;
-      const result = englishGrammarAdapter.analyze({
+      const result = grammar.adapter.analyze({
         steps: [
           ...player.construction.steps,
           {
             kind: 'phrase',
-            phrase: prepareEnglishGrammarPhrase(phrase, context.locale),
+            phrase: grammar.prepare(phrase, context.locale),
           },
         ],
         subjectNumber: player.subjectNumber,
@@ -893,12 +904,15 @@ function resolveCard(
   return phrase ? { reference, phrase } : { code: 'card-unavailable' };
 }
 
-function endCompleteConstruction(player: DraftPlayerState): DraftConstruction {
+function endCompleteConstruction(
+  player: DraftPlayerState,
+  grammar: GrammarLocaleBinding,
+): DraftConstruction {
   const steps: readonly EnglishGrammarStep[] = [
     ...player.construction.steps,
     { kind: 'end' },
   ];
-  const result = englishGrammarAdapter.analyze({
+  const result = grammar.adapter.analyze({
     steps,
     subjectNumber: player.subjectNumber,
     objectNumber: player.objectNumber,
@@ -927,9 +941,12 @@ function constructionWithAnalysis(
   };
 }
 
-function createConstruction(player: DraftPlayerSetup): DraftConstruction {
+function createConstruction(
+  player: DraftPlayerSetup,
+  grammar: GrammarLocaleBinding,
+): DraftConstruction {
   const steps = player.restoredCarry?.steps ?? [];
-  const result = englishGrammarAdapter.analyze({
+  const result = grammar.adapter.analyze({
     steps,
     subjectNumber: player.subjectNumber,
     objectNumber: player.objectNumber,

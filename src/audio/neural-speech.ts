@@ -4,7 +4,11 @@ import { createPiperClarity } from './piper-clarity';
 
 export type NeuralSpeechStatus = 'idle' | 'loading' | 'ready' | 'generating' | 'speaking' | 'unavailable';
 type Dependencies = { supported: () => boolean; createContext: () => AudioContext; createWorker: () => Worker; baseUrl: string;
-  sampleRate?: number; voicePrefix?: string; defaultVoiceId?: string; startupBufferSeconds?: number; piperClarity?: boolean; initializationTimeoutMs?: number };
+  sampleRate?: number; voicePrefix?: string; defaultVoiceId?: string; startupBufferSeconds?: number; piperClarity?: boolean; initializationTimeoutMs?: number;
+  /** Which request languages this engine speaks. Defaults to English only. */
+  acceptsLanguage?: (language: string) => boolean;
+  /** Require an exact voice match where substituting another voice is forbidden. */
+  strictVoiceUri?: boolean };
 type Prepared = Extract<NeuralSpeechMessage, { type: 'speech' }>;
 type Pending = { request: SpeechRequest; playback: boolean; key: string; parts: { segments: readonly string[]; offset: number }[];
   prepared: Prepared[]; generated: number; scheduled: number; completed: number };
@@ -79,7 +83,9 @@ export class LocalNeuralSpeech implements SpeechPort {
   private enqueue(request: SpeechRequest, playback: boolean): SpeechResult {
     if (!this.available) return { accepted: false, reason: 'unavailable' };
     if (!request.text.trim() || request.volume === 0) return { accepted: false, reason: 'silent' };
-    if (!request.language.toLowerCase().startsWith('en')) return { accepted: false, reason: 'unsupported-language' };
+    if (!(this.dependencies.acceptsLanguage ?? ((language: string) => language.toLowerCase().startsWith('en')))(request.language)) {
+      return { accepted: false, reason: 'unsupported-language' };
+    }
     const key = preparationKey(request);
     const existing = [...this.pending.values()].find((pending) => !pending.playback && pending.key === key);
     if (existing) {
@@ -162,6 +168,10 @@ export class LocalNeuralSpeech implements SpeechPort {
       this.voices.find((candidate) => candidate.lang.toLowerCase() === language && candidate.default) ??
       this.voices.find((candidate) => candidate.lang.toLowerCase() === language) ??
       this.voices.find((candidate) => candidate.default) ?? this.voices[0];
+    if (this.dependencies.strictVoiceUri && voice?.voiceURI !== request.voiceUri) {
+      this.fail('worker');
+      return;
+    }
     this.synthesizing = { id, requestId, offset: part.offset };
     this.setStatus(this.sources.size ? 'speaking' : 'generating');
     this.watchdog = setTimeout(() => {

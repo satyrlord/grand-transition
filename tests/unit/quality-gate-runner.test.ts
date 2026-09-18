@@ -8,6 +8,10 @@ import { describe, expect, test } from 'vitest';
 const runner = path.resolve('tools/run-quality-gate.mjs');
 const phaseRunner = path.resolve('tools/run-test-phase.mjs');
 const phases = ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e'];
+// The full gate adds the long-running content-balance workload. It is not a
+// test phase, so it never takes the `:full` script suffix.
+const fullPhases = ['validate', 'balance:validate', 'test', 'test:browser', 'test:coverage', 'test:e2e'];
+const fullScriptPhases = new Set(['test', 'test:browser', 'test:coverage', 'test:e2e']);
 
 async function runFixture(mode: string, failPhase = '', includeNpm = true) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'grand transition gate '));
@@ -58,18 +62,21 @@ describe('portable quality gate runner', () => {
         GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1',
       },
       encoding: 'utf8',
-      timeout: 30_000,
+      // A nested vitest run competes with the six-worker local pool, so the
+      // budget tolerates a fully loaded machine. The assertion is unchanged.
+      timeout: 120_000,
     });
     expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(0);
     expect(stripVTControlCharacters(result.stdout)).toMatch(/Tests\s+\d+ skipped \(\d+\)/u);
-  }, 35_000);
+  }, 125_000);
 
   test.each(['quick', 'full'])('runs %s phases using the npm CLI path with spaces', async (mode) => {
     const { result, calls } = await runFixture(mode);
     expect(result.error).toBeUndefined();
     expect(result.status, result.stderr).toBe(0);
-    expect(calls).toEqual(phases.map((phase) => ({
-      args: ['run', mode === 'full' && phase !== 'validate' ? `${phase}:full` : phase],
+    const expectedPhases = mode === 'full' ? fullPhases : phases;
+    expect(calls).toEqual(expectedPhases.map((phase) => ({
+      args: ['run', mode === 'full' && fullScriptPhases.has(phase) ? `${phase}:full` : phase],
       mode,
       marker: 'preserved value with spaces',
       runner: '1',

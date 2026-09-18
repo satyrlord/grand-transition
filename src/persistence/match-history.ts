@@ -15,6 +15,7 @@ import {
 } from './codecs/replay-codec';
 import type { StoragePort } from './storage-port';
 import { speechDiagnosticsSchema, type SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
+import type { GameLocale } from '../localization/game-locale';
 
 export const matchHistoryStorageKey = 'grand-transition.match-history.v1';
 export const matchHistoryKind = 'grand-transition-match-history' as const;
@@ -160,6 +161,7 @@ export function createMatchHistoryEntry(
     initialSeed: number;
     completedAt: string;
     settings: MatchHistorySettings;
+    gameLocale: GameLocale;
   }>,
 ): MatchHistoryEntry {
   if (state.phase !== 'results' || !state.winner) {
@@ -168,7 +170,11 @@ export function createMatchHistoryEntry(
   if (!validIsoTime(input.completedAt)) {
     throw new Error('Match history requires a valid ISO completion time.');
   }
-  const replay = createCompletedReplay(state, input.initialSeed);
+  const replay = createCompletedReplay(
+    state,
+    input.initialSeed,
+    input.gameLocale,
+  );
   const matchLog = createMatchLog(replay, state);
   return deepFreeze({
     id: input.id,
@@ -319,6 +325,7 @@ function validHistoryPair(
 function createCompletedReplay(
   state: MatchState,
   initialSeed: number,
+  gameLocale: GameLocale,
 ): ReplayDocument {
   const replay: ReplayDocument = {
     schemaVersion: replaySchemaVersion,
@@ -340,6 +347,7 @@ function createCompletedReplay(
       speechEnabled: state.setup.speechEnabled,
       privacyEnabled: state.setup.privacyEnabled,
       basePointsMultiplier: state.setup.basePointsMultiplier ?? 3,
+      gameLocale,
     },
     commands: state.commandHistory as ReplayDocument['commands'],
   };

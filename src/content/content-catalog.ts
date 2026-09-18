@@ -387,6 +387,29 @@ function validateLocaleKeys(
   const referenceKeys = new Set(
     Object.keys(catalog.locales[0]?.messages ?? {}),
   );
+  // Romanian has a polite second-person form for every relation. English
+  // metadata declares only the forms it needs, so these extra keys belong to
+  // the Romanian locale rather than the shared phrase schema.
+  const romanianSecondPersonKeys = new Set(
+    catalog.phrases
+      .filter((phrase) =>
+        (phrase.role === 'verb' || phrase.role === 'predicate') &&
+        !phrase.numberForms?.secondPersonKey,
+      )
+      .map((phrase) => `phrase.${phrase.id}.second-person`),
+  );
+  const romanianPluralKeys = new Set(
+    catalog.phrases
+      .filter((phrase) =>
+        (phrase.role === 'verb' || phrase.role === 'predicate') &&
+        !phrase.numberForms,
+      )
+      .map((phrase) => `phrase.${phrase.id}.plural`),
+  );
+  const romanianInflectionKeys = new Set([
+    ...romanianSecondPersonKeys,
+    ...romanianPluralKeys,
+  ]);
   catalog.locales.forEach((locale, localeIndex) => {
     const keys = new Set(Object.keys(locale.messages));
     for (const key of requiredKeys) {
@@ -405,8 +428,21 @@ function validateLocaleKeys(
           `Match locale key parity. Add "${key}".`,
         );
     }
+    if (locale.locale === 'ro-RO') {
+      for (const key of romanianInflectionKeys) {
+        if (!keys.has(key))
+          issue(
+            context,
+            ['locales', localeIndex, 'messages', key],
+            `Add the required Romanian relation form "${key}".`,
+          );
+      }
+    }
     for (const key of keys) {
-      if (!referenceKeys.has(key))
+      if (
+        !referenceKeys.has(key) &&
+        !(locale.locale === 'ro-RO' && romanianInflectionKeys.has(key))
+      )
         issue(
           context,
           ['locales', localeIndex, 'messages', key],

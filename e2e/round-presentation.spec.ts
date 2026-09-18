@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type { MatchState } from '../src/engine/match-lifecycle';
 import type { RoundPresentationFrame } from '../src/app/round-presentation';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { pauseMockedClock } from './helpers/presentation';
 
 test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
@@ -36,7 +37,7 @@ async function prepare(page: Page, lethal: boolean): Promise<number> {
     (element) => element.getBoundingClientRect().width,
   );
   await page.getByRole('button', { name: 'End', exact: true }).click();
-  await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+  await pauseMockedClock(page);
   return draftingBubbleWidth;
 }
 

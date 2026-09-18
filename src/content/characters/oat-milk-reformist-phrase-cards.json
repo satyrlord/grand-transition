@@ -691,7 +691,7 @@
       "role": "predicate",
       "text": "is a therapy session beyond privilege",
       "singularText": "is a therapy session beyond privilege",
-      "pluralText": "is a therapy session beyond privilege",
+      "pluralText": "are a therapy session beyond privilege",
       "personalSingularText": "is a therapy session beyond privilege",
       "secondPersonText": "are a therapy session beyond privilege",
       "tags": [
@@ -761,7 +761,7 @@
       "role": "predicate",
       "text": "is an authentic apology in a takeaway cup",
       "singularText": "is an authentic apology in a takeaway cup",
-      "pluralText": "is an authentic apology in a takeaway cup",
+      "pluralText": "are an authentic apology in a takeaway cup",
       "personalSingularText": "is an authentic apology in a takeaway cup",
       "secondPersonText": "is an authentic apology in a takeaway cup",
       "tags": [
@@ -831,7 +831,7 @@
       "role": "predicate",
       "text": "is a class argument with a sponsored straw",
       "singularText": "is a class argument with a sponsored straw",
-      "pluralText": "is a class argument with a sponsored straw",
+      "pluralText": "are a class argument with a sponsored straw",
       "personalSingularText": "is a class argument with a sponsored straw",
       "secondPersonText": "is a class argument with a sponsored straw",
       "tags": [
