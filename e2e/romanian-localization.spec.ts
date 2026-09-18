@@ -76,6 +76,8 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
   await expect(page.locator('.title-settings-action')).toHaveText('Setări');
   await expect(page.locator('.status')).toHaveText('În direct, pe Canalul 3 NTV!');
   await expect(page.getByRole('button', { name: 'Un jucător' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Doi jucători', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Campanie', exact: true })).toBeVisible();
 
   await page.reload();
   await expect(page.locator('.title-settings-action')).toHaveText('Setări');
@@ -120,7 +122,7 @@ test('rejects a document stored before the interface language existed', async ({
   expect(await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!).schemaVersion, settingsKey)).toBe(1);
 });
 
-test('keeps the interface Romanian while English game text is annotated', async ({ page }) => {
+test('keeps the interface Romanian while game text stays in the game language', async ({ page }) => {
   // Baseline: read the English display name the application shows when both
   // languages are English, so the Romanian case can prove it is unchanged.
   await page.goto('/grand-transition/');
@@ -142,34 +144,32 @@ test('keeps the interface Romanian while English game text is annotated', async 
   const contestantName = page.locator('.contestant-record strong').first();
   const selectedCharacterId = await page.locator('.contestant-stage--one').getAttribute('data-character-id');
   expect(selectedCharacterId).toBe(englishCharacterId);
-  // The game language is still English, so the displayed name is English even
-  // though the interface language is Romanian.
+  // A debater name is interface copy, so the Romanian interface shows the
+  // Romanian name even though the game language is English.
   expect(englishName).not.toBe(romanianCharacterNames[selectedCharacterId!]);
-  await expect(contestantName).toHaveText(englishName);
-  await expect(contestantName).toHaveAttribute('lang', 'en');
+  await expect(contestantName).toHaveText(romanianCharacterNames[selectedCharacterId!]!);
+  await expect(contestantName).not.toHaveAttribute('lang');
   await expect(page.locator('#setup-title')).toHaveText('Alege oratorii');
   for (const [id, name] of Object.entries(romanianCharacterNames)) {
     await expect(page.locator(`.roster-choice[data-character-id="${id}"][data-skin-id="default"]`))
-      .not.toContainText(name);
+      .toContainText(name);
   }
   await expect(page.locator('#sceneId option[value="transition-era-television-studio"]'))
-    .not.toHaveText(romanianSceneNames['transition-era-television-studio']!);
+    .toHaveText(romanianSceneNames['transition-era-television-studio']!);
   await expect(page.locator('.roster-choice').first()).toHaveAccessibleName(/Slăbiciuni/u);
-  await expect(page.locator('.roster-choice .visually-hidden [lang="en"]').first()).toBeAttached();
   const alternate = page.locator('.roster-choice[data-skin-id="alternate"]').first();
   await expect(alternate).toHaveAccessibleName(/Alternativ/u);
-  await expect(alternate.locator('.visually-hidden span').nth(1)).not.toHaveAttribute('lang', 'en');
+  await expect(alternate.locator('.visually-hidden span').nth(1)).not.toHaveAttribute('lang');
   await expect(page.locator('.contestant-stage-target').first())
     .toHaveAccessibleName(/^Tu, personaj:/u);
-  await expect(page.locator('#sceneId option').first()).toHaveAttribute('lang', 'en');
+  await expect(page.locator('#sceneId option').first()).not.toHaveAttribute('lang');
   await expect(page.getByTestId('lock-player-one')).toHaveText('Confirmă alegerea');
 
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Începe meciul' }).click();
-  // The match heading abbreviates a leading "The " from the English name.
   await expect(page.locator('.match-player h2').first())
-    .toHaveText(englishName.replace(/^The\s+/u, ''));
-  await expect(page.locator('.match-player h2').first()).toHaveAttribute('lang', 'en');
+    .toHaveText(romanianCharacterNames[selectedCharacterId!]!);
+  await expect(page.locator('.match-player h2').first()).not.toHaveAttribute('lang');
   const finishAction = page.locator('.match-actions .action-primary').first();
   await expect(finishAction.locator('.action-title')).toHaveText('Gata');
   for (const viewport of [
@@ -216,6 +216,15 @@ test('keeps the interface Romanian while English game text is annotated', async 
 test('plays Romanian game text under an English interface and annotates it', async ({
   page,
 }) => {
+  // Baseline: the English interface names the default debater.
+  await page.goto('/grand-transition/');
+  await page.evaluate((key) => localStorage.removeItem(key), settingsKey);
+  await page.reload();
+  await page.getByRole('button', { name: 'Single Player', exact: true }).click();
+  const englishName = (await page.locator('.contestant-record strong').first().textContent())!.trim();
+  const englishCharacterId = await page.locator('.contestant-stage--one').getAttribute('data-character-id');
+  expect(englishName.length).toBeGreaterThan(0);
+
   await page.goto('/grand-transition/');
   await page.evaluate(
     ([key, settings]) => localStorage.setItem(key!, JSON.stringify(settings)),
@@ -229,25 +238,36 @@ test('plays Romanian game text under an English interface and annotates it', asy
 
   const contestantName = page.locator('.contestant-record strong').first();
   const selectedCharacterId = await page.locator('.contestant-stage--one').getAttribute('data-character-id');
-  expect(selectedCharacterId).not.toBeNull();
-  await expect(contestantName).toHaveText(romanianCharacterNames[selectedCharacterId!]!);
-  await expect(contestantName).toHaveAttribute('lang', 'ro-RO');
+  expect(selectedCharacterId).toBe(englishCharacterId);
+  // The interface language names the debater, so the English interface keeps
+  // the English name even though the game language is Romanian.
+  expect(englishName).not.toBe(romanianCharacterNames[selectedCharacterId!]);
+  await expect(contestantName).toHaveText(englishName);
+  await expect(contestantName).not.toHaveAttribute('lang');
   for (const [id, name] of Object.entries(romanianCharacterNames)) {
     await expect(page.locator(`.roster-choice[data-character-id="${id}"][data-skin-id="default"]`))
-      .toContainText(name);
+      .not.toContainText(name);
   }
   for (const [id, name] of Object.entries(romanianSceneNames)) {
-    await expect(page.locator(`#sceneId option[value="${id}"]`)).toHaveText(name);
+    await expect(page.locator(`#sceneId option[value="${id}"]`)).not.toHaveText(name);
   }
-  await expect(page.locator('#sceneId option').first()).toHaveAttribute('lang', 'ro-RO');
+  // A weakness label is interface copy too, so the English interface keeps the
+  // English label while the phrases and sentences are Romanian.
+  const captain = page.locator(
+    '.roster-choice[data-character-id="black-sea-captain"][data-skin-id="default"]',
+  );
+  await expect(captain).toHaveAccessibleName(/Decorum, Consistency, Former secret police/u);
+  await expect(captain).not.toHaveAccessibleName(/Fosta Securitate/u);
+  await expect(page.locator('#sceneId option').first()).not.toHaveAttribute('lang');
   // With an English interface the unlocked action keeps its English wording.
   await expect(page.getByTestId('lock-player-one')).toHaveText('Confirm selection');
 
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
+  // The match heading abbreviates a leading "The " from the English name.
   await expect(page.locator('.match-player h2').first())
-    .toHaveText(romanianCharacterNames[selectedCharacterId!]!);
-  await expect(page.locator('.match-player h2').first()).toHaveAttribute('lang', 'ro-RO');
+    .toHaveText(englishName.replace(/^The\s+/u, ''));
+  await expect(page.locator('.match-player h2').first()).not.toHaveAttribute('lang');
   await expect(page.locator('.match-actions .action-primary').first().locator('.action-title'))
     .toHaveText('End');
   // Interface copy stays English while game cards are Romanian.
@@ -401,17 +421,21 @@ test('uses Romanian history dates without changing stored English match results'
   const sceneName = (await page.locator('.match-history-facts dd').nth(2).textContent())!.trim();
   expect(winnerName.length).toBeGreaterThan(0);
   expect(winnerName).not.toBe(romanianCharacterNames[winnerId]);
+  expect(sceneName).not.toBe(romanianSceneNames[recorded.setup.sceneId]);
   await expect(page.locator('.match-history-sentence').first())
     .not.toHaveAttribute('lang');
   await page.locator('.match-history-close').click();
 
-  // Switching the interface language cannot translate or rescore the entry.
+  // Switching the interface language renames the presentation without
+  // translating or rescoring the stored entry.
   await openSettings(page);
   await page.locator('select[name="interfaceLocale"]').selectOption('ro-RO');
   await page.getByRole('button', { name: 'Închide', exact: true }).first().click();
   await page.locator('.title-history-action').click();
-  await expect(page.locator('.match-history-entry h3 span').first()).toHaveText(winnerName);
-  await expect(page.locator('.match-history-facts dd').nth(2)).toHaveText(sceneName);
+  await expect(page.locator('.match-history-entry h3 span').first())
+    .toHaveText(romanianCharacterNames[winnerId]!);
+  await expect(page.locator('.match-history-facts dd').nth(2))
+    .toHaveText(romanianSceneNames[recorded.setup.sceneId]!);
   // This fixture ends on a knockout before any sentence is completed, so the
   // modal shows the interface placeholder. Interface text follows the document
   // language and is never annotated.

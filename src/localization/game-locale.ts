@@ -1,8 +1,9 @@
 // Game locale identifiers. The game locale owns every piece of game prose:
-// character and scene names and descriptions, weakness names, phrase content,
-// grammar, constructed sentences, endings, comebacks, and speech. It is
-// independent from the interface locale and is never selected from browser or
-// operating system preferences.
+// character and scene names and descriptions, phrase content, grammar,
+// constructed sentences, endings, comebacks, and speech. A displayed character,
+// scene, or weakness name is interface copy and belongs to the interface locale
+// instead. The game locale is independent from the interface locale and is never
+// selected from browser or operating system preferences.
 
 export type GameLocale = 'en' | 'ro-RO';
 

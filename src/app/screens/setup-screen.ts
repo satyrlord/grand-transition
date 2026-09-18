@@ -1,10 +1,10 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { currentGameTextLocale, gameTextLanguage } from '../game-text-language';
 import { interfaceLocale } from '../interface-localization';
 import {
-  displayCharacterName,
-  displaySceneName,
-} from '../../localization/romanian-display-names';
+  interfaceCharacterName,
+  interfaceSceneName,
+  interfaceWeaknessName,
+} from '../interface-names';
 import {
   LitElement,
   html,
@@ -14,7 +14,6 @@ import {
 } from 'lit';
 import {
   characterSkins,
-  gameLocaleBundle,
   sampleContent,
   type CharacterSkin,
 } from '../../game-content';
@@ -329,7 +328,7 @@ export class GrandTransitionSetup extends LitElement {
                   ? html`<span class="ladder-field-label"
                         >${msg('Rung scene — fixed')}</span
                       >
-                      <output>${sceneName(this.snapshot.sceneId)}</output>`
+                      <output>${interfaceSceneName(this.snapshot.sceneId)}</output>`
                   : this.selectField({
                       field: 'sceneId',
                       label: msg('Scene'),
@@ -337,8 +336,7 @@ export class GrandTransitionSetup extends LitElement {
                       error: errors.sceneId,
                       options: sampleContent.scenes.map((scene) => ({
                         value: scene.id,
-                        label: sceneName(scene.id),
-                        language: gameTextLanguage() ?? undefined,
+                        label: interfaceSceneName(scene.id),
                       })),
                     })
               }
@@ -431,7 +429,7 @@ export class GrandTransitionSetup extends LitElement {
                     ? msg('opponent fixed by rung:')
                     : msg('locked in:')
                   : msg('character:')}
-                  <span lang=${gameTextLanguage() ?? nothing}>${config.character.name}</span>`
+                  <span>${config.character.name}</span>`
               : msg('character')}
           </span>
         </button>
@@ -471,10 +469,10 @@ export class GrandTransitionSetup extends LitElement {
                   }
                 </span>
                 <span class="contestant-record" aria-live="polite">
-                  <strong lang=${gameTextLanguage() ?? nothing}>${config.character.name}</strong>
+                  <strong>${config.character.name}</strong>
                   <span>${msg('Weaknesses')}</span>
-                  <span class="contestant-weaknesses" lang=${gameTextLanguage() ?? nothing}>
-                    ${config.character.weaknessTags.map(titleCase).join(' · ')}
+                  <span class="contestant-weaknesses">
+                    ${config.character.weaknessTags.map(interfaceWeaknessName).join(' · ')}
                   </span>
                   ${
                     config.locked
@@ -594,7 +592,9 @@ export class GrandTransitionSetup extends LitElement {
       this.selectionTarget === 'playerOneCharacterId'
         ? msg('player one')
         : msg('player two');
-    const weaknessNames = character.weaknessTags.map(titleCase).join(', ');
+    const weaknessNames = character.weaknessTags
+      .map(interfaceWeaknessName)
+      .join(', ');
     const selectedFor = [
       playerOneSelected ? msg('Selected for player one.') : '',
       playerTwoSelected ? msg('Selected for player two.') : '',
@@ -671,9 +671,9 @@ export class GrandTransitionSetup extends LitElement {
           }
         </span>
         <span class="visually-hidden">
-          <span lang=${gameTextLanguage() ?? nothing}>${character.name}</span> —
-          <span lang=${skin.id === 'default' || skin.id === 'alternate' ? nothing : gameTextLanguage() ?? nothing}>${skin.label}</span>.
-          ${msg('Weaknesses')}: <span lang=${gameTextLanguage() ?? nothing}>${weaknessNames}</span>.
+          <span>${character.name}</span> —
+          <span>${skin.label}</span>.
+          ${msg('Weaknesses')}: <span>${weaknessNames}</span>.
           ${selectedFor}
           ${skin.id === 'default' ? msg('Select for') : msg('Select portrait for')}
           ${playerLabel}.
@@ -699,7 +699,7 @@ export class GrandTransitionSetup extends LitElement {
         </span>
         <strong>${character.name}</strong>
         <span>${msg('Weaknesses')}</span>
-        <span lang=${gameTextLanguage() ?? nothing}>${character.weaknessTags.map(titleCase).join(' · ')}</span>
+        <span>${character.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span>
       </aside>
     `;
   }
@@ -712,7 +712,6 @@ export class GrandTransitionSetup extends LitElement {
     options: readonly Readonly<{
       value: string;
       label: string;
-      language?: string;
     }>[];
   }): TemplateResult {
     const errorId = config.field + '-error';
@@ -730,20 +729,14 @@ export class GrandTransitionSetup extends LitElement {
         >
           ${config.options.map(
             (option) => html`
-              <option
-                value=${option.value}
-                .selected=${option.value === config.value}
-                lang=${option.language ?? nothing}
-              >
+              <option value=${option.value} .selected=${option.value === config.value}>
                 ${option.label}
               </option>
             `,
           )}
         </select>
         ${config.field === 'sceneId'
-          ? html`<span class="scene-selected-text" aria-hidden="true"
-              lang=${config.options.find((option) => option.value === config.value)
-                ?.language ?? nothing}>${
+          ? html`<span class="scene-selected-text" aria-hidden="true">${
               config.options.find((option) => option.value === config.value)?.label
             }</span>`
           : nothing}
@@ -1195,11 +1188,7 @@ function characterViews(): readonly CharacterView[] {
     return {
       id: character.id,
       species: character.species,
-      name: displayCharacterName(
-        character.id,
-        gameMessage(character.nameKey),
-        currentGameTextLocale(),
-      ),
+      name: interfaceCharacterName(character.id),
       portrait: Object.freeze({
         ...portrait,
         // Cover fitting and the 3.12 active crop enlarge the square source.
@@ -1275,13 +1264,7 @@ function characterFieldForSkinField(field: SkinField): CharacterField {
 }
 
 function titleCase(value: string): string {
-  if (value === 'securitate') return 'Former secret police';
   return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
-}
-
-function gameMessage(key: string | undefined): string {
-  if (!key) return '';
-  return gameLocaleBundle(currentGameTextLocale()).messages[key] ?? key;
 }
 
 function isSinglePlayerMode(mode: string): boolean {
@@ -1297,14 +1280,6 @@ function difficultyLabel(difficulty: string | null): string {
 function currentDifficulty(progress: LadderProgress | null): string | null {
   if (!progress || progress.completed) return null;
   return ladderDifficulty(progress.rungIndex);
-}
-
-function sceneName(sceneId: string): string {
-  return displaySceneName(
-    sceneId,
-    gameMessage(sampleContent.scenes.find((scene) => scene.id === sceneId)?.nameKey),
-    currentGameTextLocale(),
-  );
 }
 
 export function registerGrandTransitionSetup(): void {

@@ -12,6 +12,7 @@ import {
 import type { MatchCommand } from '../../engine/match-lifecycle';
 import type { RoundPresentationFrame } from '../round-presentation';
 import { deepFreeze } from '../deep-freeze';
+import { interfaceWeaknessName } from '../interface-names';
 import type {
   MatchCardView,
   MatchPlayerView,
@@ -569,7 +570,7 @@ export class GrandTransitionMatch extends LitElement {
             <strong aria-hidden="true">${formatInterfaceNumber(player.pride)}</strong>
           </div>
           <div class="player-name-line">
-            <h2 lang=${gameTextLanguage() ?? nothing}>${compactCharacterName(player.characterName)}</h2>
+            <h2>${compactCharacterName(player.characterName)}</h2>
             <span class="player-turn-status" ?hidden=${!activeTurn}
               >${this.thinking ? msg('Thinking') : msg('Your turn')}</span
             >
@@ -631,7 +632,7 @@ export class GrandTransitionMatch extends LitElement {
                     this.revealWaitingSentence(event, player.playerId)}
                 >
                   <span id=${`waiting-name-${player.playerId}`} class="visually-hidden">
-                    <span lang=${gameTextLanguage() ?? nothing}>${player.characterName}</span>
+                    <span>${player.characterName}</span>
                     ${hasWaitingSentence ? msg('said:') : ':'}
                   </span>
                   <span id=${`waiting-text-${player.playerId}`} class="visually-hidden"
@@ -682,7 +683,7 @@ export class GrandTransitionMatch extends LitElement {
   private renderDeliveryEmphasis(playerId: string): TemplateResult[] {
     return this.presentation!.emphasis.filter((item) => item.playerId === playerId).map((item) => html`<p data-emphasis=${item.kind}>
       ${item.kind === 'combo' ? html`<strong>${msg('Combo')}</strong> ${item.text} ×${item.value}`
-        : item.kind === 'weakness' ? html`<span lang=${gameTextLanguage() ?? nothing}>${item.text.split(' · ').map(titleCase).join(' · ')}</span> ×${formatScoreNumber(item.value)}`
+        : item.kind === 'weakness' ? html`<span>${item.text.split(' · ').map(interfaceWeaknessName).join(' · ')}</span> ×${formatScoreNumber(item.value)}`
           : html`${msg('Comeback')} +${item.value}`}
     </p>`);
   }
@@ -785,7 +786,7 @@ export class GrandTransitionMatch extends LitElement {
         id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span></span>
       <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
         ${component.weaknessTags.length ? html`${msg('Weakness')}:
-          <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(', ')}</span>.` : nothing}
+          <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.` : nothing}
       </span>
       <span class="delivery-score-math">
         ${component.kind === 'comeback' ? html`+${formatScoreNumber(component.amount)}` : html`${formatScoreNumber(component.base)}${
@@ -795,7 +796,7 @@ export class GrandTransitionMatch extends LitElement {
           = ${formatScoreNumber(component.amount)}`}
       </span>
       ${component.weaknessTags.length ? html`<span class="delivery-score-weakness"
-        lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(' · ')}</span>` : nothing}
+        >${component.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span>` : nothing}
     </li>`;
   }
 
@@ -959,8 +960,8 @@ export class GrandTransitionMatch extends LitElement {
                   <span class="weakness-mark" aria-hidden="true"></span>
                   ${msg('Weakness hit')}
                   ×${formatScoreNumber(reaction.weaknessFactor)}
-                  <small lang=${gameTextLanguage() ?? nothing}
-                    >${reaction.weaknesses.map(titleCase).join(' · ')}</small
+                  <small
+                    >${reaction.weaknesses.map(interfaceWeaknessName).join(' · ')}</small
                   >
                 </span>`
               : nothing
@@ -1001,15 +1002,15 @@ export class GrandTransitionMatch extends LitElement {
            <span id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span>
           ${component.weaknessTags.length > 0
             ? html`<em>
-                ${msg('Weakness')}: <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags
-                  .map(titleCase)
+                ${msg('Weakness')}: <span>${component.weaknessTags
+                  .map(interfaceWeaknessName)
                   .join(' · ')}</span>
               </em>`
             : nothing}
         </span>
         <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
           ${component.weaknessTags.length ? html`${msg('Weakness')}:
-            <span lang=${gameTextLanguage() ?? nothing}>${component.weaknessTags.map(titleCase).join(', ')}</span>.` : nothing}
+            <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.` : nothing}
         </span>
         <span class="score-breakdown-math">
           ${component.kind === 'comeback'
@@ -1098,7 +1099,7 @@ export class GrandTransitionMatch extends LitElement {
                  <span lang=${gameTextLanguage() ?? nothing}>${card.role}</span>.
                  ${ownershipLabel}. ${details.join('. ')}.
                  ${card.knownWeaknesses.length > 0 ? html`
-                   ${msg('Weakness')}: <span lang=${gameTextLanguage() ?? nothing}>${card.knownWeaknesses.map(titleCase).join(', ')}</span>.
+                   ${msg('Weakness')}: <span>${card.knownWeaknesses.map(interfaceWeaknessName).join(', ')}</span>.
                  ` : nothing}
                </span>`
         }
@@ -1424,11 +1425,6 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
   if (text.length > 160) return 'dense';
   if (text.length > 90) return 'compact';
   return 'regular';
-}
-
-function titleCase(value: string): string {
-  if (value === 'securitate') return 'Former secret police';
-  return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
 function formatScoreNumber(value: number): string {

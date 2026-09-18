@@ -1,14 +1,12 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
 import { formatInterfaceNumber } from '../interface-format';
-import { currentGameTextLocale, gameTextLanguage } from '../game-text-language';
+import { gameTextLanguage } from '../game-text-language';
 import { interfaceLocale } from '../interface-localization';
 import {
-  displayCharacterName,
-  displaySceneName,
-} from '../../localization/romanian-display-names';
+  interfaceCharacterName,
+  interfaceSceneName,
+} from '../interface-names';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
-import { gameLocaleBundle, sampleContent } from '../../game-content';
-import { defaultGameLocale } from '../../localization/game-locale';
 import { normalizedJson } from '../../persistence/codecs/replay-codec';
 import type {
   MatchHistoryEntry,
@@ -111,12 +109,12 @@ export class GrandTransitionMatchHistory extends LitElement {
       <article class="match-history-entry" data-history-id=${entry.id}>
         <header>
           <div>
-            <h3><span lang=${gameTextLanguage() ?? nothing}>${characterName(winner.characterId)}</span> ${msg('won')}</h3>
+            <h3><span>${interfaceCharacterName(winner.characterId)}</span> ${msg('won')}</h3>
             <p>
-              <span lang=${gameTextLanguage() ?? nothing}>${characterName(winner.characterId)}</span>
+              <span>${interfaceCharacterName(winner.characterId)}</span>
               <span aria-hidden="true">vs.</span>
               <span class="visually-hidden">${msg('versus')}</span>
-              <span lang=${gameTextLanguage() ?? nothing}>${characterName(opponent.characterId)}</span>
+              <span>${interfaceCharacterName(opponent.characterId)}</span>
             </p>
           </div>
           <time datetime=${entry.completedAt}>${formatTime(entry.completedAt)}</time>
@@ -134,7 +132,7 @@ export class GrandTransitionMatchHistory extends LitElement {
           </div>
           <div>
             <dt>${msg('Scene')}</dt>
-            <dd><span lang=${gameTextLanguage() ?? nothing}>${sceneName(log.setup.sceneId)}</span></dd>
+            <dd><span>${interfaceSceneName(log.setup.sceneId)}</span></dd>
           </div>
           <div>
             <dt>${msg('Mode')}</dt>
@@ -176,7 +174,7 @@ export class GrandTransitionMatchHistory extends LitElement {
                   <span aria-hidden="true"> · </span>
                   ${log.setup.players.map((player, index) => html`
                     ${index > 0 ? ' · ' : nothing}
-                    <span lang=${gameTextLanguage() ?? nothing}>${characterName(player.characterId)}</span>
+                    <span>${interfaceCharacterName(player.characterId)}</span>
                     ${formatInterfaceNumber(round.prideAfter[player.playerId])} ${msg('Pride')}
                   `)}
                 </p>
@@ -190,7 +188,7 @@ export class GrandTransitionMatchHistory extends LitElement {
                   )!;
                   return html`
                     <article data-history-player=${player.playerId}>
-                      <h6 lang=${gameTextLanguage() ?? nothing}>${characterName(player.characterId)}</h6>
+                      <h6>${interfaceCharacterName(player.characterId)}</h6>
                       <p class="match-history-sentence"
                         lang=${sentence.text ? gameTextLanguage(log.setup.gameLocale) ?? nothing : nothing}>
                         ${sentence.text || msg('No completed public sentence.')}
@@ -270,35 +268,6 @@ export class GrandTransitionMatchHistory extends LitElement {
       }),
     );
   };
-}
-
-function characterName(characterId: string): string {
-  const character = sampleContent.characters.find(
-    (candidate) => candidate.id === characterId,
-  );
-  return displayCharacterName(
-    characterId,
-    gameMessage(character?.nameKey) || titleCase(characterId),
-    currentGameTextLocale(),
-  );
-}
-
-function sceneName(sceneId: string): string {
-  const scene = sampleContent.scenes.find((candidate) => candidate.id === sceneId);
-  return displaySceneName(
-    sceneId,
-    gameMessage(scene?.nameKey) || titleCase(sceneId),
-    currentGameTextLocale(),
-  );
-}
-
-function gameMessage(key: string | undefined): string {
-  if (!key) return '';
-  return gameLocaleBundle(defaultGameLocale).messages[key] ?? key;
-}
-
-function titleCase(value: string): string {
-  return value.replaceAll(/(^|[-\s])\p{L}/gu, (letter) => letter.toUpperCase());
 }
 
 function formatTime(value: string): string {

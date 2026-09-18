@@ -13,6 +13,7 @@ import {
 import { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal';
 import { setInterfaceLocale } from '../../src/app/interface-localization';
 import { setGameTextLocale } from '../../src/app/game-text-language';
+import { interfaceCharacterName } from '../../src/app/interface-names';
 
 const seed = 20_260_917;
 
@@ -71,7 +72,13 @@ test('annotates a recorded Romanian sentence with its match language', async () 
     expect(recordedSentence()?.getAttribute('lang')).toBe('ro-RO');
     const summary = document.querySelector('.match-history-phrase-round header p');
     expect(summary?.getAttribute('lang')).toBeNull();
-    expect(summary?.querySelectorAll('span[lang="ro-RO"]')).toHaveLength(2);
+    // A debater name is interface copy, so the English interface names the
+    // players in English even though the recorded sentence stays Romanian.
+    expect(summary?.querySelectorAll('span[lang="ro-RO"]')).toHaveLength(0);
+    for (const player of entry.matchLog.setup.players) {
+      const name = interfaceCharacterName(player.characterId);
+      expect(summary?.textContent, name).toContain(name);
+    }
     expect(summary?.textContent).toContain('Pride');
   });
 

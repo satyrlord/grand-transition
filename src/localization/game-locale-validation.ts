@@ -168,9 +168,11 @@ export function validateSentenceTails(
   return Object.freeze(failures);
 }
 
-// The interface still ships the two Phase 1 name tables. Until the game locale
-// owns displayed names, both Romanian sources must agree, or a character is
-// named one way in the interface and another way inside a match.
+// A displayed character or scene name is interface copy, so the interface name
+// tables own it. The Romanian game-content bundle still names the same
+// characters and scenes for game prose, and both Romanian sources must agree,
+// or a character is named one way in an interface sentence and another way
+// inside its own content.
 export function validateLocaleNameParity(
   messages: Readonly<Record<string, string>>,
   displayedNames: Readonly<Record<string, Readonly<Record<string, string>>>>,
