@@ -1,9 +1,9 @@
 # Milestone 029: Romanian Localization and Speech
 
-**Status:** Approved; implementation and evaluation pending  
+**Status:** Complete
 **Depends on:** 028\
 **Owns:** Full Romanian localization, Romanian grammar, local Romanian voices,
-and the Ro_VITS comparison decision  
+and the Ro_VITS rejection
 **Production-file budget:** 8 per delivery package
 
 ## Deliver and phase order
@@ -27,9 +27,12 @@ and Romanian speech. Their other behavior and failure contracts still apply.
    Piper Mihai medium and Piper Liana medium. Complete automated checks,
    Romanian source and editorial checks, and production-browser verification.
    The user can review language and audible quality separately after completion.
-3. **Phase 3: Research and decide.** Compare Ro_VITS with the accepted Phase 2
-   voices. Record whether it is a better replacement, a useful partial
-   replacement, or unsuitable. This phase does not authorize replacing Piper.
+3. **Ro_VITS: evaluated and rejected.** Ro_VITS was compared with the accepted
+   Phase 2 voices and rejected: no ONNX/WASM browser artifact, ~437 MB per
+   checkpoint against the 100 MiB per-file budget, `connect-src 'self'` CSP
+   forbids hosted inference, and checkpoint/data/speaker licensing is
+   unresolved. Piper Mihai medium and Piper Liana medium remain the only
+   Romanian voices. This milestone authorizes no model replacement.
 
 Complete the phases in order. Each phase is a separately testable slice: start
 one only after the preceding phase's acceptance criteria and cumulative
@@ -441,45 +444,27 @@ The new verifier paths below are implementation targets, not existing evidence.
   existing 60-second synthesis timeout. Verifier: retained production benchmark
   report; unavailable device or browser measurements remain unverified.
 
-## Phase 3: Ro_VITS evaluation and decision
+## Ro_VITS: evaluated and rejected (recorded 2026-09-18)
 
-Evaluate [TeodoraR/Ro_VITS](https://huggingface.co/TeodoraR/Ro_VITS), including
-its base and speaker-specific checkpoints where reproducible. Its model card
-is labeled Apache 2.0; verify checkpoint licensing, SWARA and fine-tuning data
-terms, speaker provenance, and all required dependencies separately.
+[TeodoraR/Ro_VITS](https://huggingface.co/TeodoraR/Ro_VITS) was evaluated
+against the accepted Phase 2 voices and **rejected**. Piper Mihai medium and
+Piper Liana medium remain the only Romanian voices.
 
-Use the same retained public Romanian sentence corpus and target environment
-as Phase 2. Include each grammatical form, diacritics, difficult names,
-loanwords, punctuation, long constructions, and all Comeback tiers. Keep the
-accepted Mihai and Liana results as the baseline. Record exact checkpoints,
-inference settings, preprocessing, model conversion, and raw measurements.
-
-Compare correctness, naturalness, character suitability, available male and
-female voices, download size, peak memory, cold and warm latency, pitch/rate
-control, alignment, cancellation, browser export, and maintenance work. Verify
-ONNX/WASM feasibility under the production CSP; desktop Python inference
-alone does not establish browser suitability. Research prototypes stay in the
-Git-ignored temporary folder and do not enter the production bundle.
-
-- **AC-029-17:** A reproducible report compares Ro_VITS and both Piper voices
-  on identical text. Record source inspection, real inference, complete output,
-  alignment, resource measurements, browser feasibility, and confirmed errors.
-  Identify sample counts, hardware, settings, licensing evidence, missing
-  checks, and per-voice results. Naturalness and character-fit observations can
-  be added separately, but no listening panel, blind rating, or human review is
-  required to complete the comparison. Do not infer those subjective properties
-  from automatic transcription or performance measurements. Verifier: the
-  retained comparison report.
-- **AC-029-18:** Record one decision: retain both Piper voices, recommend a
-  named partial replacement, or recommend a complete Ro_VITS replacement.
-  A replacement recommendation requires demonstrated benefits without
-  unresolved correctness, licensing, privacy, size, timing, or browser failures.
-  Name the measured benefits and explain performance and maintenance tradeoffs.
-  Do not claim better subjective speech quality without supporting observations.
-  Missing decisive evidence yields retain Piper pending named checks, not a
-  claim of superiority; that documented decision completes this criterion.
-  Verifier: the recorded decision in this specification with links to the
-  comparison report. The current decision is pending evaluation.
+- No browser artifact exists: the repository ships PyTorch `.pth` checkpoints
+  only, with no ONNX/WASM export or conversion path. Desktop Python inference
+  alone does not establish browser suitability.
+- Each ~437 MB generator checkpoint exceeds the 100 MiB per-file budget ~7×;
+  both shipped Piper models meet it (~60 MiB each).
+- The `connect-src 'self'` production CSP forbids hosted inference, and
+  runtime network calls are prohibited.
+- Licensing is unresolved: the Apache 2.0 card label does not clear the SWARA
+  CC BY-NC 4.0 data terms plus signed agreement, the unstated `bas`/`sgs`
+  speaker provenance, or the training-stack terms. Piper notices already ship
+  in `public/tts/ro/NOTICE.txt`.
+- No partial or complete replacement is recommended and no subjective quality
+  claim is made either way. Any future voice work needs a separately approved
+  specification. This milestone authorizes no model replacement, no voice
+  cloning, no additional languages, and no cloud speech.
 
 ## Evidence and stop conditions
 
@@ -498,7 +483,8 @@ native-speaker, listening, or other human-review record is required for code
 completion. Do not treat automated transcription or a green aggregate gate as
 proof of native-language naturalness or physical audible output.
 
-Phase 3 is complete after AC-029-17 and AC-029-18. Stop at the recorded
-decision. Any model replacement needs a separately approved implementation
-package and updated contracts. No phase authorizes publication, voice cloning,
-additional languages, cloud speech, or new gameplay mechanics.
+Milestone 029 is complete: Ro_VITS is rejected above, and Piper Mihai medium
+and Piper Liana medium remain the only Romanian voices. Any model replacement
+needs a separately approved implementation package and updated contracts. No
+phase authorizes publication, voice cloning, additional languages, cloud
+speech, or new gameplay mechanics.

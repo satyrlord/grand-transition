@@ -248,4 +248,5 @@ content contract.
 - [`docs/specs/spec-027-balance-editorial.md`](specs/spec-027-balance-editorial.md):
   content boundaries, balance bands, and the Milestone 014 replay contract.
 - [`docs/specs/spec-029-romanian-localization-and-speech.md`](specs/spec-029-romanian-localization-and-speech.md):
-  phrase text stays English until the game-content localization phase.
+  complete Romanian localization; Ro_VITS evaluated and rejected, so Mihai
+  medium and Liana medium remain the only Romanian voices.

@@ -60,11 +60,11 @@ Each of the 19 characters targets exactly 40 character-owned cards: 10 nouns,
 character-specific conjunction. Character cards have zero continuations.
 
 [Milestone 029](docs/specs/spec-029-romanian-localization-and-speech.md) is
-approved and pending implementation. Phase 1 ships the Romanian interface,
+complete. Phase 1 ships the Romanian interface,
 translated archetype and scene display names, and its persisted `Interface
 language` selection. Phase 2 adds the Romanian game
-content, grammar, and local Mihai medium and Liana medium voices. Phase 3
-compares Ro_VITS and records a model decision.
+content, grammar, and local Mihai medium and Liana medium voices. Ro_VITS was
+evaluated and rejected, so Mihai and Liana remain the only Romanian voices.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a

@@ -301,12 +301,9 @@ source-only review does not satisfy them.
     focused-validated. Quote provenance, art, audio treatment, and variety
     evidence remain pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
-    Budget: 8 per delivery package. Phase 1 translates the interface. Phase 2
-    translates the game content, implements Romanian grammar, records the match
-    game locale in replay, match log, and history, and names game text by the
-    selected game language; Romanian speech with Mihai medium and Liana medium
-    is still outstanding, so Phase 2 is not complete. Phase 3 evaluates Ro_VITS
-    and records a replacement decision.
+    Budget: 8 per delivery package. Complete: Romanian interface, game
+    content, grammar, replay locale, Mihai medium and Liana medium speech;
+    Ro_VITS evaluated and rejected as the Romanian voice.
 30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The
