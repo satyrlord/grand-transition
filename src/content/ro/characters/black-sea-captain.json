@@ -70,8 +70,20 @@
   "phrase.black-sea-captain-contract-predicate-predicate-1-past": "era iarna care refuza să fie ca vara",
   "phrase.black-sea-captain-contract-predicate-predicate-1-present": "este iarna care refuză să fie ca vara",
   "phrase.black-sea-captain-contract-predicate-predicate-1-present.singular": "este iarna care refuză să fie ca vara",
-  "phrase.black-sea-captain-contract-predicate-predicate-1-present.plural": "este iarna care refuză să fie ca vara",
+  "phrase.black-sea-captain-contract-predicate-predicate-1-present.plural": "sunt iarna care refuză să fie ca vara",
   "phrase.black-sea-captain-contract-predicate-predicate-1-present.personal-singular": "este iarna care refuză să fie ca vara",
-  "phrase.black-sea-captain-contract-predicate-predicate-1-present.second-person": "ești iarna care refuză să fie ca vara",
-  "phrase.black-sea-captain-contract-predicate-predicate-1-future": "va fi iarna care refuză să fie ca vara"
+  "phrase.black-sea-captain-contract-predicate-predicate-1-present.second-person": "sunteți iarna care refuză să fie ca vara",
+  "phrase.black-sea-captain-contract-predicate-predicate-1-future": "va fi iarna care refuză să fie ca vara",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-past": "era o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-present": "este o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-present.singular": "este o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-present.plural": "sunt o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-present.personal-singular": "este o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-present.second-person": "sunteți o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-predicate-predicate-2-future": "va fi o flotă dintr-o singură barcă împrumutată",
+  "phrase.black-sea-captain-contract-modifier-beneath-a-summer-excuse": "sub o scuză de vară",
+  "phrase.black-sea-captain-contract-modifier-with-both-hands-on-the-microphone": "cu ambele mâini pe microfon",
+  "phrase.black-sea-captain-contract-ending-and-winter-refused-to-sign-the-minutes": "și iarna a refuzat să semneze procesul-verbal.",
+  "phrase.black-sea-captain-contract-ending-and-the-ballot-box-requested-a-lifejacket": "și urna a cerut o vestă de salvare.",
+  "phrase.black-sea-captain-contract-ending-and-the-tide-filed-a-correction": "și mareea a depus o rectificare."
 }

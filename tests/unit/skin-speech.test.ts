@@ -37,6 +37,37 @@ describe('skin voice assignments', () => {
       expect(skinSpeechProfile(character(id!), skin!)).toEqual({ provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 0.9 });
     }
   });
+  test('Romanian game speech maps the George, David and Mark assignments onto Mihai', () => {
+    for (const mode of ['piper', 'gpu'] as const) {
+      expect(skinSpeechProfile(character('red-folded-chairman'), 'default', mode, 'ro-RO')).toEqual({
+        provider: 'neural', voiceUri: 'piper:ro_RO-mihai-medium', language: 'ro-RO', pitch: 0.9,
+      });
+    }
+  });
+  test('Romanian game speech maps the Emma and Zira assignments onto Liana', () => {
+    for (const id of femaleSpeechSkins) {
+      const [ownerId, skinId = 'default'] = id.split('--');
+      expect(skinSpeechProfile(character(ownerId!), skinId, 'piper', 'ro-RO')).toMatchObject({
+        voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
+      });
+    }
+  });
+  test('Romanian robot skins use the Romanian neural voices, never the English-only exception', () => {
+    for (const skin of ['default', 'alternate', 'schoolteacher']) {
+      const profile = skinSpeechProfile(character('government-ai', 'robot'), skin, 'piper', 'ro-RO');
+      expect(profile.provider).toBe('neural');
+      expect(profile.microsoftVoice).toBeUndefined();
+      expect(['piper:ro_RO-mihai-medium', 'piper:ro_RO-liana-medium']).toContain(profile.voiceUri);
+    }
+  });
+  test('only the game locale selects the voice; an English match keeps English speech', () => {
+    expect(skinSpeechProfile(character('red-folded-chairman'), 'default', 'piper', 'en')).toMatchObject({
+      voiceUri: 'piper:vctk-p226', language: 'en-GB',
+    });
+    expect(skinSpeechProfile(character('luxury-minister'), 'default', 'piper', 'en')).toMatchObject({
+      voiceUri: 'piper:vctk-p225', language: 'en-GB',
+    });
+  });
   test.each([['default', 'David', 'vctk-p226'], ['alternate', 'Mark', 'vctk-p226'], ['schoolteacher', 'Zira', 'vctk-p225']] as const)(
     'robot skin %s selects %s and retains the appropriate neural fallback', (skin, name, fallback) => {
       expect(skinSpeechProfile(character('government-ai', 'robot'), skin)).toMatchObject({

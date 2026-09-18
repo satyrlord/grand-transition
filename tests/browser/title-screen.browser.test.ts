@@ -128,6 +128,7 @@ test.each([['ai', 'Single player'], ['hotseat', 'Hotseat']] as const)('history l
   const entry = createMatchHistoryEntry(completed.finalState, {
     id: `mode-${mode}`, initialSeed: 20_260_829, completedAt: '2026-09-05T12:00:00.000Z',
     settings: { turnTimerSeconds: 30, autoComplete: true, phraseColorCoding: true },
+    gameLocale: 'en',
   });
   document.body.innerHTML = '<grand-transition-match-history></grand-transition-match-history>';
   const modal = document.querySelector('grand-transition-match-history') as GrandTransitionMatchHistory;

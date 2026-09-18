@@ -1,10 +1,10 @@
 import { describe, expect, test, vi } from 'vitest';
-import { NeuralVoiceRouter, type NeuralVoiceMode } from '../../src/audio/neural-voice-router';
+import { NeuralVoiceRouter, type NeuralEngineMode } from '../../src/audio/neural-voice-router';
 import type { NeuralSpeechStatus } from '../../src/audio/neural-speech';
 import type { SpeechRequest } from '../../src/audio/speech-port';
 
 function harness() {
-  const engines: { mode: NeuralVoiceMode; status: NeuralSpeechStatus; progress: number | null;
+  const engines: { mode: NeuralEngineMode; status: NeuralSpeechStatus; progress: number | null;
     voices: { voiceURI: string; name: string; lang: string; default: boolean }[]; available: boolean;
     initialize: ReturnType<typeof vi.fn>; speak: ReturnType<typeof vi.fn>; prepare: ReturnType<typeof vi.fn>;
     cancel: ReturnType<typeof vi.fn>; pause: ReturnType<typeof vi.fn>; resume: ReturnType<typeof vi.fn>; dispose: ReturnType<typeof vi.fn> }[] = [];
@@ -21,6 +21,31 @@ function harness() {
 const request = { text: 'Your brother is a snitch.', language: 'en-GB', voiceUri: 'piper:vctk-p226' };
 
 describe('neural engine selection', () => {
+  test('Romanian availability survives an unavailable English engine', () => {
+    const h = harness();
+    h.engines[0]!.available = false;
+    expect(h.router.available).toBe(true);
+    expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'ro']);
+    expect(h.engines[1]!.initialize).not.toHaveBeenCalled();
+    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-mihai-medium' });
+    expect(h.engines[1]!.speak).toHaveBeenCalledOnce();
+    expect(h.engines[0]!.speak).not.toHaveBeenCalled();
+    h.router.dispose();
+  });
+  test('Romanian speech creates its own engine on first use and never uses the English engines', () => {
+    const h = harness();
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
+    // Nothing Romanian is created before Romanian speech is actually requested.
+    expect(h.engines.map((engine) => engine.mode)).toEqual(['piper']);
+    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-medium' });
+    expect(h.engines.map((engine) => engine.mode)).toEqual(['piper', 'ro']);
+    const romanian = h.engines.find((engine) => engine.mode === 'ro')!;
+    expect(romanian.speak).toHaveBeenCalledWith(expect.objectContaining({
+      voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
+    }));
+    expect(h.engines[0]!.speak).not.toHaveBeenCalled();
+    h.router.dispose();
+  });
   test('menu preparation loads both requested engines without audio activation', async () => {
     const h=harness();h.router.configure({speechEnabled:true,gpuVoices:true});await h.router.preload();
     expect(h.engines).toHaveLength(2);

@@ -262,6 +262,14 @@ constructions where the translated relation requires them. Never derive these
 forms from English suffixes or a character's portrait. A valid construction
 must render a complete grammatical Romanian sentence and preserve its semantic
 clause decomposition for scoring.
+Each Romanian verb and predicate card supplies the plural and polite
+second-person forms it needs, even when the English card uses one form for
+several persons or numbers. Locale-specific inflection keys are valid only
+when their relation card exists, and content validation rejects missing,
+duplicate, or unexpected forms. Romanian object relations specify whether the
+following noun is a direct object, a prepositional object, or a complement;
+personal direct objects receive the required marking and clitic. These rules
+apply to every playable tense and noun pairing.
 
 Use the selected adapter for drafting, completion, AI search, sentence display,
 and speech. The same game locale, content revision, seed, and command sequence must

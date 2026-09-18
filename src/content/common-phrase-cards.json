@@ -15972,7 +15972,7 @@
   {
     "id": "general-postpones-the-reform-past",
     "role": "verb",
-    "text": "postponed the reform",
+    "text": "postponed the reform for",
     "tags": [
       "delivery",
       "commitment"
@@ -15995,11 +15995,11 @@
   {
     "id": "general-postpones-the-reform-present",
     "role": "verb",
-    "text": "postpones the reform",
-    "singularText": "postpones the reform",
-    "pluralText": "postpones the reform",
-    "personalSingularText": "postpones the reform",
-    "secondPersonText": "postpones the reform",
+    "text": "postpones the reform for",
+    "singularText": "postpones the reform for",
+    "pluralText": "postpone the reform for",
+    "personalSingularText": "postpones the reform for",
+    "secondPersonText": "postpone the reform for",
     "tags": [
       "delivery",
       "commitment"
@@ -16022,7 +16022,7 @@
   {
     "id": "general-postpones-the-reform-future",
     "role": "verb",
-    "text": "will postpone the reform",
+    "text": "will postpone the reform for",
     "tags": [
       "delivery",
       "commitment"
@@ -16045,7 +16045,7 @@
   {
     "id": "general-rehearses-the-emergency-past",
     "role": "verb",
-    "text": "rehearsed the emergency",
+    "text": "rehearsed the emergency for",
     "tags": [
       "authenticity",
       "bureaucracy"
@@ -16068,11 +16068,11 @@
   {
     "id": "general-rehearses-the-emergency-present",
     "role": "verb",
-    "text": "rehearses the emergency",
-    "singularText": "rehearses the emergency",
-    "pluralText": "rehearses the emergency",
-    "personalSingularText": "rehearses the emergency",
-    "secondPersonText": "rehearses the emergency",
+    "text": "rehearses the emergency for",
+    "singularText": "rehearses the emergency for",
+    "pluralText": "rehearse the emergency for",
+    "personalSingularText": "rehearses the emergency for",
+    "secondPersonText": "rehearse the emergency for",
     "tags": [
       "authenticity",
       "bureaucracy"
@@ -16095,7 +16095,7 @@
   {
     "id": "general-rehearses-the-emergency-future",
     "role": "verb",
-    "text": "will rehearse the emergency",
+    "text": "will rehearse the emergency for",
     "tags": [
       "authenticity",
       "bureaucracy"
@@ -16119,6 +16119,8 @@
     "id": "general-is-a-committee-without-a-chair-past",
     "role": "predicate",
     "text": "was a committee following the twists of concrete reality",
+    "singularText": "was a committee following the twists of concrete reality",
+    "pluralText": "were a committee following the twists of concrete reality",
     "tags": [
       "bureaucracy",
       "competence"
@@ -16142,6 +16144,8 @@
     "id": "general-is-a-committee-without-a-chair-present",
     "role": "predicate",
     "text": "is a committee following the twists of concrete reality",
+    "singularText": "is a committee following the twists of concrete reality",
+    "pluralText": "are a committee following the twists of concrete reality",
     "tags": [
       "bureaucracy",
       "competence"
@@ -16165,6 +16169,8 @@
     "id": "general-is-a-committee-without-a-chair-future",
     "role": "predicate",
     "text": "will be a committee following the twists of concrete reality",
+    "singularText": "will be a committee following the twists of concrete reality",
+    "pluralText": "will be a committee following the twists of concrete reality",
     "tags": [
       "bureaucracy",
       "competence"
@@ -16188,6 +16194,8 @@
     "id": "general-is-a-headline-without-a-story-past",
     "role": "predicate",
     "text": "was a bad joke with a headline",
+    "singularText": "was a bad joke with a headline",
+    "pluralText": "were a bad joke with a headline",
     "tags": [
       "media",
       "credibility"
@@ -16211,6 +16219,8 @@
     "id": "general-is-a-headline-without-a-story-present",
     "role": "predicate",
     "text": "is a bad joke with a headline",
+    "singularText": "is a bad joke with a headline",
+    "pluralText": "are a bad joke with a headline",
     "tags": [
       "media",
       "credibility"
@@ -16234,6 +16244,8 @@
     "id": "general-is-a-headline-without-a-story-future",
     "role": "predicate",
     "text": "will be a bad joke with a headline",
+    "singularText": "will be a bad joke with a headline",
+    "pluralText": "will be a bad joke with a headline",
     "tags": [
       "media",
       "credibility"
@@ -16257,6 +16269,8 @@
     "id": "general-is-a-contract-before-the-need-past",
     "role": "predicate",
     "text": "was what you did not know you were losing",
+    "singularText": "was what you did not know you were losing",
+    "pluralText": "were what you did not know you were losing",
     "tags": [
       "procurement",
       "delivery"
@@ -16280,6 +16294,8 @@
     "id": "general-is-a-contract-before-the-need-present",
     "role": "predicate",
     "text": "is what you did not know you were losing",
+    "singularText": "is what you did not know you were losing",
+    "pluralText": "are what you did not know you were losing",
     "tags": [
       "procurement",
       "delivery"
@@ -16303,6 +16319,8 @@
     "id": "general-is-a-contract-before-the-need-future",
     "role": "predicate",
     "text": "will be what you did not know you were losing",
+    "singularText": "will be what you did not know you were losing",
+    "pluralText": "will be what you did not know you were losing",
     "tags": [
       "procurement",
       "delivery"
@@ -16326,6 +16344,8 @@
     "id": "general-is-a-promise-in-pencil-past",
     "role": "predicate",
     "text": "was a clean slate with fingerprints",
+    "singularText": "was a clean slate with fingerprints",
+    "pluralText": "were a clean slate with fingerprints",
     "tags": [
       "consistency",
       "commitment"
@@ -16349,6 +16369,8 @@
     "id": "general-is-a-promise-in-pencil-present",
     "role": "predicate",
     "text": "is a clean slate with fingerprints",
+    "singularText": "is a clean slate with fingerprints",
+    "pluralText": "are a clean slate with fingerprints",
     "tags": [
       "consistency",
       "commitment"
@@ -16372,6 +16394,8 @@
     "id": "general-is-a-promise-in-pencil-future",
     "role": "predicate",
     "text": "will be a clean slate with fingerprints",
+    "singularText": "will be a clean slate with fingerprints",
+    "pluralText": "will be a clean slate with fingerprints",
     "tags": [
       "consistency",
       "commitment"
@@ -16395,6 +16419,8 @@
     "id": "general-is-a-camera-under-oath-past",
     "role": "predicate",
     "text": "was the phone under oath",
+    "singularText": "was the phone under oath",
+    "pluralText": "were the phone under oath",
     "tags": [
       "evidence",
       "media"
@@ -16418,6 +16444,8 @@
     "id": "general-is-a-camera-under-oath-present",
     "role": "predicate",
     "text": "is the phone under oath",
+    "singularText": "is the phone under oath",
+    "pluralText": "are the phone under oath",
     "tags": [
       "evidence",
       "media"
@@ -16441,6 +16469,8 @@
     "id": "general-is-a-camera-under-oath-future",
     "role": "predicate",
     "text": "will be the phone under oath",
+    "singularText": "will be the phone under oath",
+    "pluralText": "will be the phone under oath",
     "tags": [
       "evidence",
       "media"
@@ -16464,6 +16494,8 @@
     "id": "general-is-a-receipt-without-a-payment-past",
     "role": "predicate",
     "text": "was a radius squared without pi",
+    "singularText": "was a radius squared without pi",
+    "pluralText": "were a radius squared without pi",
     "tags": [
       "spending",
       "evidence"
@@ -16487,6 +16519,8 @@
     "id": "general-is-a-receipt-without-a-payment-present",
     "role": "predicate",
     "text": "is a radius squared without pi",
+    "singularText": "is a radius squared without pi",
+    "pluralText": "are a radius squared without pi",
     "tags": [
       "spending",
       "evidence"
@@ -16510,6 +16544,8 @@
     "id": "general-is-a-receipt-without-a-payment-future",
     "role": "predicate",
     "text": "will be a radius squared without pi",
+    "singularText": "will be a radius squared without pi",
+    "pluralText": "will be a radius squared without pi",
     "tags": [
       "spending",
       "evidence"
@@ -16533,6 +16569,8 @@
     "id": "general-is-a-reform-on-castors-past",
     "role": "predicate",
     "text": "was an economy that boomed on paper",
+    "singularText": "was an economy that boomed on paper",
+    "pluralText": "were an economy that boomed on paper",
     "tags": [
       "delivery",
       "consistency"
@@ -16556,6 +16594,8 @@
     "id": "general-is-a-reform-on-castors-present",
     "role": "predicate",
     "text": "is an economy that boomed on paper",
+    "singularText": "is an economy that boomed on paper",
+    "pluralText": "are an economy that boomed on paper",
     "tags": [
       "delivery",
       "consistency"
@@ -16579,6 +16619,8 @@
     "id": "general-is-a-reform-on-castors-future",
     "role": "predicate",
     "text": "will be an economy that boomed on paper",
+    "singularText": "will be an economy that boomed on paper",
+    "pluralText": "will be an economy that boomed on paper",
     "tags": [
       "delivery",
       "consistency"
@@ -16602,6 +16644,8 @@
     "id": "general-is-a-warranty-without-an-expiry-past",
     "role": "predicate",
     "text": "was a warranty without an expiry",
+    "singularText": "was a warranty without an expiry",
+    "pluralText": "were a warranty without an expiry",
     "tags": [
       "credibility",
       "results"
@@ -16625,6 +16669,8 @@
     "id": "general-is-a-warranty-without-an-expiry-present",
     "role": "predicate",
     "text": "is a warranty without an expiry",
+    "singularText": "is a warranty without an expiry",
+    "pluralText": "are a warranty without an expiry",
     "tags": [
       "credibility",
       "results"
@@ -16648,6 +16694,8 @@
     "id": "general-is-a-warranty-without-an-expiry-future",
     "role": "predicate",
     "text": "will be a warranty without an expiry",
+    "singularText": "will be a warranty without an expiry",
+    "pluralText": "will be a warranty without an expiry",
     "tags": [
       "credibility",
       "results"
@@ -16910,7 +16958,7 @@
   {
     "id": "transition-era-television-studio-archives-the-revolution-past",
     "role": "verb",
-    "text": "archived the revolution",
+    "text": "archived the revolution for",
     "tags": [
       "legacy",
       "evidence"
@@ -16936,11 +16984,11 @@
   {
     "id": "transition-era-television-studio-archives-the-revolution-present",
     "role": "verb",
-    "text": "archives the revolution",
-    "singularText": "archives the revolution",
-    "pluralText": "archives the revolution",
-    "personalSingularText": "archives the revolution",
-    "secondPersonText": "archives the revolution",
+    "text": "archives the revolution for",
+    "singularText": "archives the revolution for",
+    "pluralText": "archive the revolution for",
+    "personalSingularText": "archives the revolution for",
+    "secondPersonText": "archive the revolution for",
     "tags": [
       "legacy",
       "evidence"
@@ -16966,7 +17014,7 @@
   {
     "id": "transition-era-television-studio-archives-the-revolution-future",
     "role": "verb",
-    "text": "will archive the revolution",
+    "text": "will archive the revolution for",
     "tags": [
       "legacy",
       "evidence"
@@ -16993,6 +17041,8 @@
     "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-past",
     "role": "predicate",
     "text": "was a rerun with a new flag",
+    "singularText": "was a rerun with a new flag",
+    "pluralText": "were a rerun with a new flag",
     "tags": [
       "legacy",
       "credibility"
@@ -17019,6 +17069,8 @@
     "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-present",
     "role": "predicate",
     "text": "is a rerun with a new flag",
+    "singularText": "is a rerun with a new flag",
+    "pluralText": "are a rerun with a new flag",
     "tags": [
       "legacy",
       "credibility"
@@ -17045,6 +17097,8 @@
     "id": "transition-era-television-studio-is-a-rerun-with-a-new-flag-future",
     "role": "predicate",
     "text": "will be a rerun with a new flag",
+    "singularText": "will be a rerun with a new flag",
+    "pluralText": "will be a rerun with a new flag",
     "tags": [
       "legacy",
       "credibility"
@@ -17120,7 +17174,7 @@
   {
     "id": "modern-debate-studio-rehearses-the-closing-statement-past",
     "role": "verb",
-    "text": "rehearsed the closing statement",
+    "text": "rehearsed the closing statement for",
     "tags": [
       "authenticity",
       "accountability"
@@ -17146,11 +17200,11 @@
   {
     "id": "modern-debate-studio-rehearses-the-closing-statement-present",
     "role": "verb",
-    "text": "rehearses the closing statement",
-    "singularText": "rehearses the closing statement",
-    "pluralText": "rehearses the closing statement",
-    "personalSingularText": "rehearses the closing statement",
-    "secondPersonText": "rehearses the closing statement",
+    "text": "rehearses the closing statement for",
+    "singularText": "rehearses the closing statement for",
+    "pluralText": "rehearse the closing statement for",
+    "personalSingularText": "rehearses the closing statement for",
+    "secondPersonText": "rehearse the closing statement for",
     "tags": [
       "authenticity",
       "accountability"
@@ -17176,7 +17230,7 @@
   {
     "id": "modern-debate-studio-rehearses-the-closing-statement-future",
     "role": "verb",
-    "text": "will rehearse the closing statement",
+    "text": "will rehearse the closing statement for",
     "tags": [
       "authenticity",
       "accountability"
@@ -17203,6 +17257,8 @@
     "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-past",
     "role": "predicate",
     "text": "was a poll with an escape hatch",
+    "singularText": "was a poll with an escape hatch",
+    "pluralText": "were a poll with an escape hatch",
     "tags": [
       "credibility",
       "commitment"
@@ -17229,6 +17285,8 @@
     "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-present",
     "role": "predicate",
     "text": "is a poll with an escape hatch",
+    "singularText": "is a poll with an escape hatch",
+    "pluralText": "are a poll with an escape hatch",
     "tags": [
       "credibility",
       "commitment"
@@ -17255,6 +17313,8 @@
     "id": "modern-debate-studio-is-a-poll-with-an-escape-hatch-future",
     "role": "predicate",
     "text": "will be a poll with an escape hatch",
+    "singularText": "will be a poll with an escape hatch",
+    "pluralText": "will be a poll with an escape hatch",
     "tags": [
       "credibility",
       "commitment"
@@ -17343,7 +17403,7 @@
   {
     "id": "county-council-ballroom-counts-the-ribbon-twice-past",
     "role": "verb",
-    "text": "counted the ribbon twice",
+    "text": "counted the ribbon twice for",
     "tags": [
       "procurement",
       "results"
@@ -17369,11 +17429,11 @@
   {
     "id": "county-council-ballroom-counts-the-ribbon-twice-present",
     "role": "verb",
-    "text": "counts the ribbon twice",
-    "singularText": "counts the ribbon twice",
-    "pluralText": "counts the ribbon twice",
-    "personalSingularText": "counts the ribbon twice",
-    "secondPersonText": "counts the ribbon twice",
+    "text": "counts the ribbon twice for",
+    "singularText": "counts the ribbon twice for",
+    "pluralText": "count the ribbon twice for",
+    "personalSingularText": "counts the ribbon twice for",
+    "secondPersonText": "count the ribbon twice for",
     "tags": [
       "procurement",
       "results"
@@ -17399,7 +17459,7 @@
   {
     "id": "county-council-ballroom-counts-the-ribbon-twice-future",
     "role": "verb",
-    "text": "will count the ribbon twice",
+    "text": "will count the ribbon twice for",
     "tags": [
       "procurement",
       "results"
@@ -17426,6 +17486,8 @@
     "id": "county-council-ballroom-is-a-tender-with-a-family-seat-past",
     "role": "predicate",
     "text": "was a tender with a family seat",
+    "singularText": "was a tender with a family seat",
+    "pluralText": "were a tender with a family seat",
     "tags": [
       "procurement",
       "nepotism"
@@ -17452,6 +17514,8 @@
     "id": "county-council-ballroom-is-a-tender-with-a-family-seat-present",
     "role": "predicate",
     "text": "is a tender with a family seat",
+    "singularText": "is a tender with a family seat",
+    "pluralText": "are a tender with a family seat",
     "tags": [
       "procurement",
       "nepotism"
@@ -17478,6 +17542,8 @@
     "id": "county-council-ballroom-is-a-tender-with-a-family-seat-future",
     "role": "predicate",
     "text": "will be a tender with a family seat",
+    "singularText": "will be a tender with a family seat",
+    "pluralText": "will be a tender with a family seat",
     "tags": [
       "procurement",
       "nepotism"
@@ -17566,7 +17632,7 @@
   {
     "id": "midnight-call-in-studio-advertises-the-hidden-tape-past",
     "role": "verb",
-    "text": "advertised the hidden tape",
+    "text": "advertised the hidden tape for",
     "tags": [
       "ratings",
       "evidence"
@@ -17592,11 +17658,11 @@
   {
     "id": "midnight-call-in-studio-advertises-the-hidden-tape-present",
     "role": "verb",
-    "text": "advertises the hidden tape",
-    "singularText": "advertises the hidden tape",
-    "pluralText": "advertises the hidden tape",
-    "personalSingularText": "advertises the hidden tape",
-    "secondPersonText": "advertises the hidden tape",
+    "text": "advertises the hidden tape for",
+    "singularText": "advertises the hidden tape for",
+    "pluralText": "advertise the hidden tape for",
+    "personalSingularText": "advertises the hidden tape for",
+    "secondPersonText": "advertise the hidden tape for",
     "tags": [
       "ratings",
       "evidence"
@@ -17622,7 +17688,7 @@
   {
     "id": "midnight-call-in-studio-advertises-the-hidden-tape-future",
     "role": "verb",
-    "text": "will advertise the hidden tape",
+    "text": "will advertise the hidden tape for",
     "tags": [
       "ratings",
       "evidence"
@@ -17649,6 +17715,8 @@
     "id": "midnight-call-in-studio-is-a-call-with-a-script-past",
     "role": "predicate",
     "text": "was a call with a script",
+    "singularText": "was a call with a script",
+    "pluralText": "were a call with a script",
     "tags": [
       "sources",
       "authenticity"
@@ -17675,6 +17743,8 @@
     "id": "midnight-call-in-studio-is-a-call-with-a-script-present",
     "role": "predicate",
     "text": "is a call with a script",
+    "singularText": "is a call with a script",
+    "pluralText": "are a call with a script",
     "tags": [
       "sources",
       "authenticity"
@@ -17701,6 +17771,8 @@
     "id": "midnight-call-in-studio-is-a-call-with-a-script-future",
     "role": "predicate",
     "text": "will be a call with a script",
+    "singularText": "will be a call with a script",
+    "pluralText": "will be a call with a script",
     "tags": [
       "sources",
       "authenticity"
@@ -17789,7 +17861,7 @@
   {
     "id": "palace-press-hall-guards-the-empty-envelope-past",
     "role": "verb",
-    "text": "guarded the empty envelope",
+    "text": "guarded the empty envelope for",
     "tags": [
       "accountability",
       "evidence"
@@ -17815,11 +17887,11 @@
   {
     "id": "palace-press-hall-guards-the-empty-envelope-present",
     "role": "verb",
-    "text": "guards the empty envelope",
-    "singularText": "guards the empty envelope",
-    "pluralText": "guards the empty envelope",
-    "personalSingularText": "guards the empty envelope",
-    "secondPersonText": "guards the empty envelope",
+    "text": "guards the empty envelope for",
+    "singularText": "guards the empty envelope for",
+    "pluralText": "guard the empty envelope for",
+    "personalSingularText": "guards the empty envelope for",
+    "secondPersonText": "guard the empty envelope for",
     "tags": [
       "accountability",
       "evidence"
@@ -17845,7 +17917,7 @@
   {
     "id": "palace-press-hall-guards-the-empty-envelope-future",
     "role": "verb",
-    "text": "will guard the empty envelope",
+    "text": "will guard the empty envelope for",
     "tags": [
       "accountability",
       "evidence"
@@ -17872,6 +17944,8 @@
     "id": "palace-press-hall-is-a-statement-without-a-verb-past",
     "role": "predicate",
     "text": "was a statement without a verb",
+    "singularText": "was a statement without a verb",
+    "pluralText": "were a statement without a verb",
     "tags": [
       "accountability",
       "commitment"
@@ -17898,6 +17972,8 @@
     "id": "palace-press-hall-is-a-statement-without-a-verb-present",
     "role": "predicate",
     "text": "is a statement without a verb",
+    "singularText": "is a statement without a verb",
+    "pluralText": "are a statement without a verb",
     "tags": [
       "accountability",
       "commitment"
@@ -17924,6 +18000,8 @@
     "id": "palace-press-hall-is-a-statement-without-a-verb-future",
     "role": "predicate",
     "text": "will be a statement without a verb",
+    "singularText": "will be a statement without a verb",
+    "pluralText": "will be a statement without a verb",
     "tags": [
       "accountability",
       "commitment"
@@ -18012,7 +18090,7 @@
   {
     "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-past",
     "role": "verb",
-    "text": "sponsored the ancient truth",
+    "text": "sponsored the ancient truth for",
     "tags": [
       "commercialism",
       "authenticity"
@@ -18038,11 +18116,11 @@
   {
     "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-present",
     "role": "verb",
-    "text": "sponsors the ancient truth",
-    "singularText": "sponsors the ancient truth",
-    "pluralText": "sponsors the ancient truth",
-    "personalSingularText": "sponsors the ancient truth",
-    "secondPersonText": "sponsors the ancient truth",
+    "text": "sponsors the ancient truth for",
+    "singularText": "sponsors the ancient truth for",
+    "pluralText": "sponsor the ancient truth for",
+    "personalSingularText": "sponsors the ancient truth for",
+    "secondPersonText": "sponsor the ancient truth for",
     "tags": [
       "commercialism",
       "authenticity"
@@ -18068,7 +18146,7 @@
   {
     "id": "influencer-campaign-livestream-sponsors-the-ancient-truth-future",
     "role": "verb",
-    "text": "will sponsor the ancient truth",
+    "text": "will sponsor the ancient truth for",
     "tags": [
       "commercialism",
       "authenticity"
@@ -18095,6 +18173,8 @@
     "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-past",
     "role": "predicate",
     "text": "was a prophecy with a discount code",
+    "singularText": "was a prophecy with a discount code",
+    "pluralText": "were a prophecy with a discount code",
     "tags": [
       "commercialism",
       "credibility"
@@ -18121,6 +18201,8 @@
     "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-present",
     "role": "predicate",
     "text": "is a prophecy with a discount code",
+    "singularText": "is a prophecy with a discount code",
+    "pluralText": "are a prophecy with a discount code",
     "tags": [
       "commercialism",
       "credibility"
@@ -18147,6 +18229,8 @@
     "id": "influencer-campaign-livestream-is-a-prophecy-with-a-discount-code-future",
     "role": "predicate",
     "text": "will be a prophecy with a discount code",
+    "singularText": "will be a prophecy with a discount code",
+    "pluralText": "will be a prophecy with a discount code",
     "tags": [
       "commercialism",
       "credibility"

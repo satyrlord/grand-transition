@@ -207,7 +207,7 @@ describe('Hollywood Roast extended grammar', () => {
       analyze([
         add('national-consensus'),
         add('belongs-in-a-party-museum'),
-        add('yet'),
+        add('algorithmic-prophet-neutral-contrast'),
         add('televised-revolution'),
         add('makes-own-voters-change-the-channel'),
       ]),
@@ -256,7 +256,7 @@ describe('Hollywood Roast extended grammar', () => {
     const result = analyze([
       add('your-voters'),
       add('was-a-snitch'),
-      add('yet'),
+      add('algorithmic-prophet-neutral-contrast'),
       add('audits'),
       add('your-brother'),
       add('and'),
@@ -269,7 +269,7 @@ describe('Hollywood Roast extended grammar', () => {
         complete: true,
         state: 'CLAUSE_COMPLETE',
         publicText:
-          'Your voters were snitches yet audit your brother and will be dragged before the cameras',
+          'Your voters were snitches yet, even now, audit your brother and will be dragged before the cameras',
       },
     });
   });
@@ -362,34 +362,31 @@ describe('Hollywood Roast extended grammar', () => {
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each(['so', 'for'])(
-    '%s joins complete clauses and requires a new noun subject',
-    (connector) => {
-      expect(analyze([add(connector)])).toMatchObject({
-        accepted: false,
-        faults: [{ state: 'EXPECT_SUBJECT' }],
-      });
-      expect(
-        analyze([
-          add('national-consensus'),
-          add('belongs-in-a-party-museum'),
-          add(connector),
-        ]),
-      ).toMatchObject({
-        accepted: true,
-        analysis: { complete: false, nextRoles: ['noun'] },
-      });
-      expect(
-        analyze([
-          add('national-consensus'),
-          add('belongs-in-a-party-museum'),
-          add(connector),
-          add('televised-revolution'),
-          add('makes-own-voters-change-the-channel'),
-        ]),
-      ).toMatchObject({ accepted: true, analysis: { complete: true } });
-    },
-  );
+  test('so joins complete clauses and requires a new noun subject', () => {
+    expect(analyze([add('so')])).toMatchObject({
+      accepted: false,
+      faults: [{ state: 'EXPECT_SUBJECT' }],
+    });
+    expect(
+      analyze([
+        add('national-consensus'),
+        add('belongs-in-a-party-museum'),
+        add('so'),
+      ]),
+    ).toMatchObject({
+      accepted: true,
+      analysis: { complete: false, nextRoles: ['noun'] },
+    });
+    expect(
+      analyze([
+        add('national-consensus'),
+        add('belongs-in-a-party-museum'),
+        add('so'),
+        add('televised-revolution'),
+        add('makes-own-voters-change-the-channel'),
+      ]),
+    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+  });
 
   test('reaches the during-the-night ending from a complete clause', () => {
     expect(

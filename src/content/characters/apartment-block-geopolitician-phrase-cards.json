@@ -27,7 +27,7 @@
     "nuance"
   ],
   "comebacks": {
-    "weak": "Pass the popcorn. Your argument needs salt.",
+    "weak": "Last time I was here I didn't drink any water, but today I did.",
     "medium": "I called it a joke. You called it policy.",
     "strong": "I skipped the debate. Your facts also skipped it."
   },
@@ -654,7 +654,7 @@
       "role": "predicate",
       "text": "is a bad joke with a regret attached",
       "singularText": "is a bad joke with a regret attached",
-      "pluralText": "is a bad joke with a regret attached",
+      "pluralText": "are a bad joke with a regret attached",
       "personalSingularText": "is a bad joke with a regret attached",
       "secondPersonText": "are a bad joke with a regret attached",
       "tags": [
@@ -724,7 +724,7 @@
       "role": "predicate",
       "text": "is an international incident in the laundry room",
       "singularText": "is an international incident in the laundry room",
-      "pluralText": "is an international incident in the laundry room",
+      "pluralText": "are an international incident in the laundry room",
       "personalSingularText": "is an international incident in the laundry room",
       "secondPersonText": "is an international incident in the laundry room",
       "tags": [
@@ -794,7 +794,7 @@
       "role": "predicate",
       "text": "is a source with a lift key",
       "singularText": "is a source with a lift key",
-      "pluralText": "is a source with a lift key",
+      "pluralText": "are a source with a lift key",
       "personalSingularText": "is a source with a lift key",
       "secondPersonText": "is a source with a lift key",
       "tags": [

@@ -74,7 +74,7 @@ for (const viewport of supportedViewports) {
     ).toBeVisible();
     await expect(page.locator('#setup-title')).toBeFocused();
     expect(page.url()).toBe(url);
-    await page.getByRole('button', { name: 'Lock in Player one' }).click();
+    await page.getByTestId('lock-player-one').click();
     await page
       .getByRole('button', {
         name: /Red-Folded Chairman — Original.*Select for player two/u,
@@ -130,6 +130,10 @@ for (const viewport of supportedViewports) {
       'data-character-id',
       'government-ai',
     );
+    // Match the shared geometry convention: measure only after the interface
+    // fonts load, because a late webfont changes text metrics and therefore the
+    // roster tile size that the pixel-sampled face offset is derived from.
+    await page.evaluate(() => document.fonts.ready);
 
     const geometry = await page.evaluate(() => {
       const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
@@ -265,6 +269,7 @@ for (const viewport of supportedViewports) {
           facePixelRatio:
             robotFacePixelCount /
             (robotCanvas.width * robotCanvas.height),
+          // Measured against the portrait window, which is what a reader sees.
           faceCenterOffsetRatio:
             Math.abs(renderedRobotFaceCenter - robotWindowCenter) /
             robotWindowBox.width,
@@ -333,11 +338,18 @@ for (const viewport of supportedViewports) {
       geometry.robotRosterPortrait.transformOriginXRatio,
     ).toBeLessThanOrEqual(0.51);
     // The 128px source keeps the amber face legible after quantization, while
-    // the 3x crop amplifies a one- or two-pixel source-center offset.
+    // the 3x crop amplifies a one- or two-pixel source-center offset. The offset
+    // is measured against the portrait window because that is what a reader
+    // sees. A source-pixel bar was implemented and rejected: object-fit: cover
+    // crops by aspect ratio, so the raw source offset spans 3.5 to 8 pixels
+    // across the supported viewports while this ratio holds at 0.0650. The bar
+    // carries a small tolerance because the pixel-sampled offset moves by a
+    // fraction of a pixel with sub-pixel layout, which the exact 0.065 could
+    // not absorb: unchanged code passed and failed it in consecutive runs.
     expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0009);
     expect(
       geometry.robotRosterPortrait.faceCenterOffsetRatio,
-    ).toBeLessThanOrEqual(0.065);
+    ).toBeLessThanOrEqual(0.066);
     expect(geometry.rosterLayout).toEqual({
     rowCount: 5,
       gridInsideZone: true,
@@ -386,23 +398,23 @@ test('production setup requires ordered locks and reopens only the unlocked play
     'government-ai',
   );
 
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await expect(page.locator('#playerOneCharacterId')).toBeDisabled();
   await expect(page.locator('#playerTwoCharacterId')).toBeEnabled();
   await page
     .locator('.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"]')
     .click();
-  await page.getByRole('button', { name: 'Lock in Player two' }).click();
+  await page.getByTestId('lock-player-two').click();
   await expect(start).toBeEnabled();
 
   await lockInSetup(page);
   await expect(start).toBeEnabled();
 
-  await page.getByRole('button', { name: 'Unlock Player two' }).click();
+  await page.getByTestId('lock-player-two').click();
   await expect(start).toBeDisabled();
   await expect(page.locator('#playerOneCharacterId')).toBeDisabled();
   await expect(page.locator('#playerTwoCharacterId')).toBeEnabled();
-  await page.getByRole('button', { name: 'Lock in Player two' }).click();
+  await page.getByTestId('lock-player-two').click();
   await expect(start).toBeEnabled();
 });
 
@@ -411,9 +423,9 @@ test('single player lets one person select and lock both contestants', async ({ 
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player' }).click();
 
-  await expect(page.getByRole('button', { name: 'Lock in Computer' })).toBeDisabled();
-  await page.getByRole('button', { name: 'Lock in You' }).click();
-  await expect(page.getByRole('button', { name: 'Lock in Computer' })).toBeEnabled();
+  await expect(page.getByTestId('lock-player-two')).toBeDisabled();
+  await page.getByTestId('lock-player-one').click();
+  await expect(page.getByTestId('lock-player-two')).toBeEnabled();
   await page
     .locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]')
     .click();
@@ -421,7 +433,7 @@ test('single player lets one person select and lock both contestants', async ({ 
     'data-character-id',
     'government-ai',
   );
-  await page.getByRole('button', { name: 'Lock in Computer' }).click();
+  await page.getByTestId('lock-player-two').click();
   await expect(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
 });
 
@@ -431,7 +443,7 @@ test('right-click skin cycling respects the current player and both locks', asyn
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   const robot = page.locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]');
   await robot.click();
-  await page.locator('[data-lock-player="one"]').click();
+  await page.getByTestId('lock-player-one').click();
   await robot.click();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -451,12 +463,12 @@ test('right-click skin cycling respects the current player and both locks', asyn
   await expect(two).toHaveAttribute('data-skin-id', 'default');
   await rightClick('one');
   await expect(one).toHaveAttribute('data-skin-id', 'alternate');
-  await page.locator('[data-lock-player="one"]').click();
+  await page.getByTestId('lock-player-one').click();
   await rightClick('one');
   await expect(one).toHaveAttribute('data-skin-id', 'alternate');
   await rightClick('two');
   await expect(two).toHaveAttribute('data-skin-id', 'alternate');
-  await page.locator('[data-lock-player="two"]').click();
+  await page.getByTestId('lock-player-two').click();
   await rightClick('one');
   await rightClick('two');
   await expect(one).toHaveAttribute('data-skin-id', 'alternate');

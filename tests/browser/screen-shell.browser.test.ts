@@ -27,6 +27,11 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+// Tests address controls by test id and assert their state, so visible copy and
+// translations can change without rewriting an interaction.
+const lockButton = (side: 'one' | 'two'): HTMLButtonElement | null =>
+  document.querySelector<HTMLButtonElement>(`[data-testid="lock-player-${side}"]`);
+
 test('roster crops and selected stages keep full responsive portrait sources', async () => {
   const setup = await mountSetup(createDefaultSetupSnapshot());
   const roster = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')];
@@ -160,7 +165,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
     completeWeaknessList.clientHeight + 1,
   );
   weaknessFixture.remove();
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await page
     .getByRole('button', {
       name: /Red-Folded Chairman.*Select for player two/u,
@@ -389,8 +394,8 @@ test('requires ordered lock-in and lets either player reopen only after both loc
   await page.getByRole('button', { name: 'Multiplayer' }).click();
 
   const start = page.getByRole('button', { name: 'Start match' });
-  const playerOneLock = page.getByRole('button', { name: 'Lock in Player one' });
-  const playerTwoLock = page.getByRole('button', { name: 'Lock in Player two' });
+  const playerOneLock = page.getByTestId('lock-player-one');
+  const playerTwoLock = page.getByTestId('lock-player-two');
   await expect.element(start).toBeDisabled();
   await expect.element(playerOneLock).toBeEnabled();
   await expect.element(playerTwoLock).toBeDisabled();
@@ -412,22 +417,18 @@ test('requires ordered lock-in and lets either player reopen only after both loc
 
   await playerOneLock.click();
   await expect.element(playerTwoLock).toBeEnabled();
-  await expect
-    .element(page.getByRole('button', { name: 'Player one locked in', exact: true }))
-    .toBeDisabled();
+  await expect.element(playerOneLock).toBeDisabled();
+  await expect.poll(() => lockButton('one')?.getAttribute('aria-pressed')).toBe('true');
 
   await playerTwoLock.click();
   await expect.element(start).toBeEnabled();
-  await page.getByRole('button', { name: 'Unlock Player one' }).click();
+  await playerOneLock.click();
   await expect.element(start).toBeDisabled();
-  await expect
-    .element(page.getByRole('button', { name: 'Player two locked in', exact: true }))
-    .toBeDisabled();
-  await expect
-    .element(page.getByRole('button', { name: 'Unlock Player two' }))
-    .not.toBeInTheDocument();
+  await expect.element(playerTwoLock).toBeDisabled();
+  await expect.poll(() => lockButton('two')?.getAttribute('aria-pressed')).toBe('true');
+  await expect.poll(() => lockButton('one')?.getAttribute('aria-pressed')).toBe('false');
 
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await playerOneLock.click();
   await expect.element(start).toBeEnabled();
 });
 
@@ -441,7 +442,7 @@ test('ignores selection and skin events on stages outside the current unlocked s
     const stage = setup.querySelector<HTMLButtonElement>(`#player${side}CharacterId`)!;
     expect(stage.disabled).toBe(true);
     const selectionStatus = setup.querySelector('.roster-heading')!.textContent;
-    const lockAvailability = () => [...setup.querySelectorAll<HTMLButtonElement>('[data-lock-player]')]
+    const lockAvailability = () => [...setup.querySelectorAll<HTMLButtonElement>('[data-testid^="lock-player-"]')]
       .map(control => control.disabled);
     const beforeLocks = lockAvailability();
     changed.mockClear();
@@ -456,24 +457,24 @@ test('ignores selection and skin events on stages outside the current unlocked s
   };
 
   await assertSkinInputsIgnored('Two');
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await assertSkinInputsIgnored('One');
-  await page.getByRole('button', { name: 'Lock in Player two' }).click();
+  await page.getByTestId('lock-player-two').click();
   await assertSkinInputsIgnored('One');
   await assertSkinInputsIgnored('Two');
-  await page.getByRole('button', { name: 'Unlock Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await assertSkinInputsIgnored('Two');
 });
 
 test('the setup helper completes partial locks and preserves completed locks', async () => {
   await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await lockInSetup();
   await expect.element(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
   await lockInSetup();
   await expect.element(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
-  await page.getByRole('button', { name: 'Unlock Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await lockInSetup();
   await expect.element(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
 });
@@ -640,7 +641,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     'Opponent and scene are fixed by local ladder progress.',
   );
   expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull();
-  await page.getByRole('button', { name: 'Lock in You' }).click();
+  await page.getByTestId('lock-player-one').click();
   await expect
     .element(page.getByRole('button', { name: 'Start ladder' }))
     .toBeEnabled();
@@ -703,7 +704,7 @@ test.each([
   expect(changed).not.toHaveBeenCalled();
   expect(setup.snapshot).toBe(before);
   expect(localStorage.getItem(ladderProgressStorageKey)).toBe(saved);
-  await page.getByRole('button', { name: 'Lock in You' }).click();
+  await page.getByTestId('lock-player-one').click();
   expect(setup.querySelector('.contestant-error')).toBeNull();
   expect(setup.querySelector<HTMLButtonElement>('.primary-action')?.disabled).toBe(false);
 });
@@ -999,7 +1000,7 @@ test.each([
 test('restores setup state after the viewport becomes supported again', async () => {
   const app = await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   await page
     .getByRole('button', {
       name: /Red-Folded Chairman.*Select for player two/u,

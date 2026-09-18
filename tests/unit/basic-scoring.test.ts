@@ -50,9 +50,15 @@ describe('Hollywood Roast clause scoring', () => {
     },
   );
 
-  test.each(['and', 'but', 'because', 'yet', 'so', 'for'])(
-    'neutral %s clauses do not activate any defender weakness',
-    (connector) => {
+  test.each([
+    { connector: 'and', label: 'and' },
+    { connector: 'but', label: 'but' },
+    { connector: 'because', label: 'because' },
+    { connector: 'algorithmic-prophet-neutral-contrast', label: 'yet' },
+    { connector: 'so', label: 'so' },
+  ])(
+    'neutral $label clauses do not activate any defender weakness',
+    ({ connector }) => {
       const ids = ['you', 'is', 'my-opponent', connector, 'you', 'is', 'my-opponent'];
       const weaknesses = [...new Set(sampleContent.characters.flatMap((character) => character.weaknessTags))];
       const result = score(ids, weaknesses);
@@ -266,7 +272,8 @@ describe('Hollywood Roast clause scoring', () => {
   test('stacked modifier tags trigger one weakness multiplier on their clause only', () => {
     const ids = ['a-pig', 'stole', 'municipal-ribbon',
       'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
-      'yet', 'national-consensus', 'belongs-in-a-party-museum'];
+      'algorithmic-prophet-neutral-contrast', 'national-consensus',
+      'belongs-in-a-party-museum'];
     const modifiers = new Set(ids.slice(3, 6));
     const phrases = sampleContent.phrases.map((phrase) => ({
       ...phrase, tags: modifiers.has(phrase.id) ? ['modifier-only'] : [],
@@ -300,7 +307,7 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('modifiers give no damage to incomplete sentences', () => {
     const ids = ['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election'];
-    expect(score([...ids, 'yet']).finalDamage).toBe(0);
+    expect(score([...ids, 'algorithmic-prophet-neutral-contrast']).finalDamage).toBe(0);
   });
 
   test('keeps a with complement in the preceding clause', () => {

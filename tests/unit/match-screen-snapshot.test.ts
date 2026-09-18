@@ -34,7 +34,7 @@ describe('match-screen snapshot', () => {
     let rejected = 0;
     for (let pick = 0; pick < 8 && state.phase === 'drafting'; pick += 1) {
       const before = JSON.stringify(state);
-      const snapshot = createMatchScreenSnapshot(state);
+      const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
       const cards = [...snapshot.sharedCards, ...snapshot.privateCards];
       for (const card of cards) {
         if (!card.reference || card.role === 'continuation') {
@@ -80,7 +80,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
 
-    const snapshot = createMatchScreenSnapshot(state, null, null, null, {
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale, null, null, null, {
       'player-1': 'alternate',
       'player-2': 'default',
     });
@@ -157,6 +157,7 @@ describe('match-screen snapshot', () => {
 
     const snapshot = createMatchScreenSnapshot(
       state,
+      englishGameLocale,
       null,
       null,
       null,
@@ -189,7 +190,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
 
-    const snapshot = createMatchScreenSnapshot(state);
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
 
     expect(snapshot.sceneName).toBe('Modern Debate Studio');
     expect(snapshot.sceneLayers).toEqual([
@@ -224,7 +225,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
 
-    const layer = createMatchScreenSnapshot(state).sceneLayers[0]!;
+    const layer = createMatchScreenSnapshot(state, englishGameLocale).sceneLayers[0]!;
     expect(layer).toMatchObject({
       kind: 'manifest',
       assetId: 'county-council-ballroom',
@@ -284,7 +285,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('resolve-round'));
     state = accept(state, lifecycleCommand('prepare-round'));
 
-    const snapshot = createMatchScreenSnapshot(state);
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
     const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
     expect(waitingPlayer.playerId).toBe(firstSpeakerId);
     expect(waitingPlayer.sentence).toBeNull();
@@ -345,7 +346,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('prepare-round'));
 
     expect(state.activePlayerId).toBe(secondSpeakerId);
-    expect(createMatchScreenSnapshot(state).sentenceText).toBe(
+    expect(createMatchScreenSnapshot(state, englishGameLocale).sentenceText).toBe(
       'Select a noun to begin.',
     );
 
@@ -359,7 +360,7 @@ describe('match-screen snapshot', () => {
     });
     const currentSentence =
       state.draft!.playerStates[secondSpeakerId]!.construction.previewText;
-    const snapshot = createMatchScreenSnapshot(state);
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
 
     expect(snapshot.sentenceText).toBe(currentSentence);
     expect(snapshot.sentenceText).toBe('Your partner with a reserved public office');
@@ -396,7 +397,7 @@ describe('match-screen snapshot', () => {
 
     const publicSentence =
       state.draft!.playerStates[firstSpeakerId]!.construction.previewText;
-    const snapshot = createMatchScreenSnapshot(state);
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
     const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
     expect(waitingPlayer.playerId).toBe(firstSpeakerId);
     expect(waitingPlayer.sentence).toBe(publicSentence);
@@ -550,6 +551,7 @@ describe('match-screen snapshot', () => {
 
     const snapshot = createMatchScreenSnapshot(
       reviewState,
+      englishGameLocale,
       null,
       reviewResolution,
     );

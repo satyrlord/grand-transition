@@ -157,7 +157,7 @@ test('settings persist in the production build and fit every supported viewport'
   expect(await page.locator('grand-transition-app').evaluate((app) =>
     (app as HTMLElement & { matchState: { setup: { basePointsMultiplier: number } } }).matchState.setup.basePointsMultiplier,
   )).toBe(5);
-  await page.getByRole('button', { name: 'Pause' }).click();
+  await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Unlimited' })).toHaveAttribute(
     'aria-pressed',
     'true',

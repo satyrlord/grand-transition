@@ -63,15 +63,11 @@ describe('game-locale bundles', () => {
   });
 
   test('ships one bundle per locale and never borrows another language', () => {
-    expect(shippedGameLocales(gameLocaleBundles)).toEqual(['en']);
+    expect(shippedGameLocales(gameLocaleBundles)).toEqual(['en', 'ro-RO']);
     expect(Object.keys(gameLocaleBundles)).toEqual(
       sampleContent.locales.map((bundle) => bundle.locale),
     );
-    expect(gameLocaleBundle('en')).toBe(sampleContent.locales[0]);
-    // Phase 2 content adds the Romanian bundle; until then the lookup fails
-    // instead of rendering English prose as Romanian.
-    expect(() => gameLocaleBundle('ro-RO')).toThrow(
-      /Game locale "ro-RO" has no bundle\. Shipped: en\./u,
-    );
+    expect(gameLocaleBundle('en').locale).toBe('en');
+    expect(gameLocaleBundle('ro-RO').locale).toBe('ro-RO');
   });
 });

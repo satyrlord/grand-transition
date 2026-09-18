@@ -116,7 +116,8 @@ returns `unsupported-version`.
 A replay import or standalone match-log import that no longer matches the
 current catalog fails as `invalid-replay`. Each recorded phrase ID in a
 standalone match-log import must exist, and its recorded text must match one
-current locale agreement form. The application rejects it before a storage
+current locale agreement form, including Romanian plural, polite second-person,
+and personal-object forms. The application rejects it before a storage
 write or partial match start, and a rejected document makes no state change.
 Milestone 019 owns match logs embedded in browser history: a current-version
 entry keeps its exact recorded public text instead of reconstructing or

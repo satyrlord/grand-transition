@@ -686,7 +686,7 @@
       "role": "predicate",
       "text": "is wealth in the head, not money",
       "singularText": "is wealth in the head, not money",
-      "pluralText": "is wealth in the head, not money",
+      "pluralText": "are wealth in the head, not money",
       "personalSingularText": "is wealth in the head, not money",
       "secondPersonText": "are wealth in the head, not money",
       "tags": [
@@ -756,7 +756,7 @@
       "role": "predicate",
       "text": "is a public promise with a private sponsor",
       "singularText": "is a public promise with a private sponsor",
-      "pluralText": "is a public promise with a private sponsor",
+      "pluralText": "are a public promise with a private sponsor",
       "personalSingularText": "is a public promise with a private sponsor",
       "secondPersonText": "is a public promise with a private sponsor",
       "tags": [
@@ -826,7 +826,7 @@
       "role": "predicate",
       "text": "is a fortune wearing a modesty badge",
       "singularText": "is a fortune wearing a modesty badge",
-      "pluralText": "is a fortune wearing a modesty badge",
+      "pluralText": "are a fortune wearing a modesty badge",
       "personalSingularText": "is a fortune wearing a modesty badge",
       "secondPersonText": "is a fortune wearing a modesty badge",
       "tags": [

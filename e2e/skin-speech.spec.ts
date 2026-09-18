@@ -51,7 +51,7 @@ async function configure(page: Page, choices: readonly Choice[], phraseIds: read
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   for (const [index, choice] of choices.entries()) {
-    if (index === 1) await page.locator('[data-lock-player="one"]').click();
+    if (index === 1) await page.getByTestId('lock-player-one').click();
     const id = index === 0 ? '#playerOneCharacterId' : '#playerTwoCharacterId';
     await page.locator(id).click();
     await page.locator(`.roster-choice[data-character-id="${choice.character}"][data-skin-id="default"]`).click();

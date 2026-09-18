@@ -1,6 +1,6 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
 import { formatInterfaceNumber } from '../interface-format';
-import { gameTextLanguage } from '../game-text-language';
+import { currentGameTextLocale, gameTextLanguage } from '../game-text-language';
 import { interfaceLocale } from '../interface-localization';
 import {
   displayCharacterName,
@@ -111,12 +111,12 @@ export class GrandTransitionMatchHistory extends LitElement {
       <article class="match-history-entry" data-history-id=${entry.id}>
         <header>
           <div>
-            <h3><span>${characterName(winner.characterId)}</span> ${msg('won')}</h3>
+            <h3><span lang=${gameTextLanguage() ?? nothing}>${characterName(winner.characterId)}</span> ${msg('won')}</h3>
             <p>
-              <span>${characterName(winner.characterId)}</span>
+              <span lang=${gameTextLanguage() ?? nothing}>${characterName(winner.characterId)}</span>
               <span aria-hidden="true">vs.</span>
               <span class="visually-hidden">${msg('versus')}</span>
-              <span>${characterName(opponent.characterId)}</span>
+              <span lang=${gameTextLanguage() ?? nothing}>${characterName(opponent.characterId)}</span>
             </p>
           </div>
           <time datetime=${entry.completedAt}>${formatTime(entry.completedAt)}</time>
@@ -134,7 +134,7 @@ export class GrandTransitionMatchHistory extends LitElement {
           </div>
           <div>
             <dt>${msg('Scene')}</dt>
-            <dd><span>${sceneName(log.setup.sceneId)}</span></dd>
+            <dd><span lang=${gameTextLanguage() ?? nothing}>${sceneName(log.setup.sceneId)}</span></dd>
           </div>
           <div>
             <dt>${msg('Mode')}</dt>
@@ -174,14 +174,11 @@ export class GrandTransitionMatchHistory extends LitElement {
                 <p>
                   ${round.suddenDeath ? msg('Cliffhanger') : msg('Debate')}
                   <span aria-hidden="true"> · </span>
-                  ${log.setup.players
-                    .map(
-                      (player) =>
-                        msg(
-                          str`${characterName(player.characterId)} ${round.prideAfter[player.playerId]} Pride`,
-                        ),
-                    )
-                    .join(' · ')}
+                  ${log.setup.players.map((player, index) => html`
+                    ${index > 0 ? ' · ' : nothing}
+                    <span lang=${gameTextLanguage() ?? nothing}>${characterName(player.characterId)}</span>
+                    ${formatInterfaceNumber(round.prideAfter[player.playerId])} ${msg('Pride')}
+                  `)}
                 </p>
               </header>
               <div class="match-history-sentence-grid">
@@ -193,9 +190,9 @@ export class GrandTransitionMatchHistory extends LitElement {
                   )!;
                   return html`
                     <article data-history-player=${player.playerId}>
-                      <h6>${characterName(player.characterId)}</h6>
+                      <h6 lang=${gameTextLanguage() ?? nothing}>${characterName(player.characterId)}</h6>
                       <p class="match-history-sentence"
-                        lang=${sentence.text ? gameTextLanguage() ?? nothing : nothing}>
+                        lang=${sentence.text ? gameTextLanguage(log.setup.gameLocale) ?? nothing : nothing}>
                         ${sentence.text || msg('No completed public sentence.')}
                       </p>
                       ${sentence.phrases.length > 0
@@ -208,7 +205,7 @@ export class GrandTransitionMatchHistory extends LitElement {
                                     data-phrase-id=${phrase.phraseId}
                                     data-phrase-source=${phrase.source}
                                   >
-                                    <span lang=${gameTextLanguage() ?? nothing}>${phrase.text}</span>
+                                    <span lang=${gameTextLanguage(log.setup.gameLocale) ?? nothing}>${phrase.text}</span>
                                     ${phrase.source === 'carried'
                                       ? html`<small>${msg('carried')}</small>`
                                       : nothing}
@@ -282,7 +279,7 @@ function characterName(characterId: string): string {
   return displayCharacterName(
     characterId,
     gameMessage(character?.nameKey) || titleCase(characterId),
-    interfaceLocale(),
+    currentGameTextLocale(),
   );
 }
 
@@ -291,7 +288,7 @@ function sceneName(sceneId: string): string {
   return displaySceneName(
     sceneId,
     gameMessage(scene?.nameKey) || titleCase(sceneId),
-    interfaceLocale(),
+    currentGameTextLocale(),
   );
 }
 

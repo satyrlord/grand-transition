@@ -22,9 +22,14 @@ export type EnglishGrammarRole = Extract<
 
 export type EnglishGrammarPhrase = Readonly<{
   id: string;
+  tenseFamily?: string;
+  // The game locale that supplied this phrase's text. The analyzer is
+  // locale-agnostic; this tag only selects grapheme segmentation and
+  // sentence-case uppercasing for the rendered public text.
+  localeTag: string;
   role: Phrase['role'];
   connectorKind?:
-    'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
+    'and' | 'because' | 'but' | 'so' | 'yet' | 'with' | null;
   allowsCoordinatedNounComplement?: true;
   grammaticalNumber?: GrammaticalNumber | null;
   grammaticalPerson?: GrammaticalPerson | null;
@@ -50,7 +55,7 @@ export type EnglishRenderedPhrase = Readonly<{
   phraseId: string;
   role: Phrase['role'];
   connectorKind:
-    'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' | null;
+    'and' | 'because' | 'but' | 'so' | 'yet' | 'with' | null;
   grammaticalNumber: GrammaticalNumber | null;
   text: string;
 }>;
@@ -118,18 +123,22 @@ const nextRolesByState: Readonly<
   ENDED: [],
 };
 
-const englishGraphemeSegmenter = new Intl.Segmenter('en', {
-  granularity: 'grapheme',
-});
+// One segmenter per prepared locale tag, so one shipped language never
+// segments or uppercases another language's text.
+const graphemeSegmentersByLocaleTag = new Map<string, Intl.Segmenter>();
 
-export function prepareEnglishGrammarPhrase(
+function graphemeSegmenterFor(localeTag: string): Intl.Segmenter {
+  const existing = graphemeSegmentersByLocaleTag.get(localeTag);
+  if (existing) return existing;
+  const segmenter = new Intl.Segmenter(localeTag, { granularity: 'grapheme' });
+  graphemeSegmentersByLocaleTag.set(localeTag, segmenter);
+  return segmenter;
+}
+
+export function prepareGrammarPhrase(
   phrase: Phrase,
   locale: GameLocaleBundle,
 ): EnglishGrammarPhrase {
-  if (locale.locale !== 'en') {
-    throw new Error('Use the English game-locale bundle with this adapter.');
-  }
-
   const defaultText = requireMessage(locale, phrase.textKey);
   const singularText = phrase.numberForms
     ? requireMessage(locale, phrase.numberForms.singularKey)
@@ -139,6 +148,7 @@ export function prepareEnglishGrammarPhrase(
     : defaultText;
   return {
     id: phrase.id,
+    localeTag: locale.locale,
     role: phrase.role,
     connectorKind:
       phrase.role === 'conjunction'
@@ -165,7 +175,20 @@ export function prepareEnglishGrammarPhrase(
   };
 }
 
-export const englishGrammarAdapter: GrammarAdapter<
+export function prepareEnglishGrammarPhrase(
+  phrase: Phrase,
+  locale: GameLocaleBundle,
+): EnglishGrammarPhrase {
+  if (locale.locale !== 'en') {
+    throw new Error('Use the English game-locale bundle with this adapter.');
+  }
+  return prepareGrammarPhrase(phrase, locale);
+}
+
+// The state machine reads only roles, connectors, agreement data, and prepared
+// phrase text, so it plays every shipped locale. Each locale binds this same
+// analyzer object; the English name is kept for the existing English callers.
+export const grammarAdapter: GrammarAdapter<
   EnglishGrammarInput,
   EnglishGrammarAnalysis,
   EnglishGrammarFault
@@ -212,7 +235,11 @@ export const englishGrammarAdapter: GrammarAdapter<
 
     const complete = context.hasCompleteClause && isFinishable(context.state);
     const state: EnglishGrammarState = ended ? 'ENDED' : context.state;
-    const publicText = renderPublicText(renderedPhrases, ended && complete);
+    const publicText = renderPublicText(
+      renderedPhrases,
+      ended && complete,
+      sentenceLocaleTag(input.steps),
+    );
     return {
       accepted: true,
       analysis: {
@@ -240,6 +267,8 @@ export const englishGrammarAdapter: GrammarAdapter<
     };
   },
 };
+
+export const englishGrammarAdapter = grammarAdapter;
 
 function transition(
   context: ParseContext,
@@ -360,7 +389,7 @@ function transition(
       };
     }
     if (
-      (kind === 'for' || kind === 'so') &&
+      kind === 'so' &&
       context.state === 'CLAUSE_COMPLETE' &&
       !context.frontBecausePending
     ) {
@@ -662,16 +691,28 @@ function renderPhrase(
   };
 }
 
-function renderPublicText(
+function sentenceLocaleTag(steps: readonly EnglishGrammarStep[]): string {
+  for (const step of steps) {
+    if (step.kind === 'phrase' && step.phrase.localeTag) {
+      return step.phrase.localeTag;
+    }
+  }
+  // Steps without prepared phrases fall back to the original English behavior.
+  return 'en';
+}
+
+export function renderPublicText(
   phrases: readonly EnglishRenderedPhrase[],
   punctuate: boolean,
+  localeTag: string,
 ): string {
   if (phrases.length === 0) return '';
   const text = phrases.map((phrase) => phrase.text).join(' ');
   const first =
-    englishGraphemeSegmenter.segment(text)[Symbol.iterator]().next().value
-      ?.segment ?? '';
-  const sentenceCase = first.toLocaleUpperCase('en') + text.slice(first.length);
+    graphemeSegmenterFor(localeTag).segment(text)[Symbol.iterator]().next()
+      .value?.segment ?? '';
+  const sentenceCase =
+    first.toLocaleUpperCase(localeTag) + text.slice(first.length);
   const needsFullStop = punctuate && !text.trimEnd().endsWith('.');
   return `${sentenceCase}${needsFullStop ? '.' : ''}`;
 }
@@ -705,17 +746,20 @@ function reject(
 
 function requireMessage(locale: GameLocaleBundle, key: string): string {
   const value = locale.messages[key];
-  if (!value) throw new Error(`Missing English game message "${key}".`);
+  if (!value) {
+    throw new Error(
+      `Missing game message "${key}" for game locale "${locale.locale}".`,
+    );
+  }
   return value;
 }
 
 function inferConnectorKind(
   text: string,
-): 'and' | 'because' | 'but' | 'for' | 'so' | 'yet' | 'with' {
+): 'and' | 'because' | 'but' | 'so' | 'yet' | 'with' {
   const connectors = {
     because: 'because',
     but: 'but',
-    for: 'for',
     so: 'so',
     yet: 'yet',
     with: 'with',

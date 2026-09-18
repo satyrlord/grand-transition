@@ -27,7 +27,7 @@
     "follow-up-questions"
   ],
   "comebacks": {
-    "weak": "Your evidence has gone flat.",
+    "weak": "And your online group has more moderators than members.",
     "medium": "The tap gave me wiser answers than your speech.",
     "strong": "You drank a software update and installed no argument."
   },
@@ -686,7 +686,7 @@
       "role": "predicate",
       "text": "is information in a glass of water",
       "singularText": "is information in a glass of water",
-      "pluralText": "is information in a glass of water",
+      "pluralText": "are information in a glass of water",
       "personalSingularText": "is information in a glass of water",
       "secondPersonText": "are information in a glass of water",
       "tags": [
@@ -756,7 +756,7 @@
       "role": "predicate",
       "text": "is a statistic wearing ceremonial courage",
       "singularText": "is a statistic wearing ceremonial courage",
-      "pluralText": "is a statistic wearing ceremonial courage",
+      "pluralText": "are a statistic wearing ceremonial courage",
       "personalSingularText": "is a statistic wearing ceremonial courage",
       "secondPersonText": "is a statistic wearing ceremonial courage",
       "tags": [
@@ -826,7 +826,7 @@
       "role": "predicate",
       "text": "is an algorithm with a superstition",
       "singularText": "is an algorithm with a superstition",
-      "pluralText": "is an algorithm with a superstition",
+      "pluralText": "are an algorithm with a superstition",
       "personalSingularText": "is an algorithm with a superstition",
       "secondPersonText": "is an algorithm with a superstition",
       "tags": [

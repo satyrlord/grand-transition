@@ -11,6 +11,9 @@ import {
 } from './schemas';
 
 const maximumPhraseWordCount = 11;
+// A comeback line is delivered alone, with no card placed after it, so its
+// guardrail sits above the phrase ceiling. It still stops real bloat.
+const maximumComebackWordCount = 16;
 
 // Guardrail ceilings by role. They only stop real bloat: a card may sit well
 // above the measured source-game band when the length is the joke, and the
@@ -35,10 +38,10 @@ const comebackLineSchema = z
   .trim()
   .min(1)
   .superRefine((value, context) => {
-    if (phraseWordCount(value) > maximumPhraseWordCount) {
+    if (phraseWordCount(value) > maximumComebackWordCount) {
       context.addIssue({
         code: 'custom',
-        message: `Keep comeback text to ${maximumPhraseWordCount} words or fewer.`,
+        message: `Keep comeback text to ${maximumComebackWordCount} words or fewer.`,
       });
     }
   });

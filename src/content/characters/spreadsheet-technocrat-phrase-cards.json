@@ -646,7 +646,7 @@
       "role": "predicate",
       "text": "is a pantry of gnawed provisions",
       "singularText": "is a pantry of gnawed provisions",
-      "pluralText": "is a pantry of gnawed provisions",
+      "pluralText": "are a pantry of gnawed provisions",
       "personalSingularText": "is a pantry of gnawed provisions",
       "secondPersonText": "are a pantry of gnawed provisions",
       "tags": [
@@ -716,7 +716,7 @@
       "role": "predicate",
       "text": "is a deadline with a dashboard",
       "singularText": "is a deadline with a dashboard",
-      "pluralText": "is a deadline with a dashboard",
+      "pluralText": "are a deadline with a dashboard",
       "personalSingularText": "is a deadline with a dashboard",
       "secondPersonText": "is a deadline with a dashboard",
       "tags": [
@@ -786,7 +786,7 @@
       "role": "predicate",
       "text": "is a delivery promise in a spreadsheet",
       "singularText": "is a delivery promise in a spreadsheet",
-      "pluralText": "is a delivery promise in a spreadsheet",
+      "pluralText": "are a delivery promise in a spreadsheet",
       "personalSingularText": "is a delivery promise in a spreadsheet",
       "secondPersonText": "is a delivery promise in a spreadsheet",
       "tags": [

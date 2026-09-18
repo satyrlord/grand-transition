@@ -690,7 +690,7 @@
       "role": "predicate",
       "text": "is an exclusive you did not know you were missing",
       "singularText": "is an exclusive you did not know you were missing",
-      "pluralText": "is an exclusive you did not know you were missing",
+      "pluralText": "are an exclusive you did not know you were missing",
       "personalSingularText": "is an exclusive you did not know you were missing",
       "secondPersonText": "are an exclusive you did not know you were missing",
       "tags": [
@@ -760,7 +760,7 @@
       "role": "predicate",
       "text": "is a headline wearing an eyewitness badge",
       "singularText": "is a headline wearing an eyewitness badge",
-      "pluralText": "is a headline wearing an eyewitness badge",
+      "pluralText": "are a headline wearing an eyewitness badge",
       "personalSingularText": "is a headline wearing an eyewitness badge",
       "secondPersonText": "is a headline wearing an eyewitness badge",
       "tags": [
@@ -830,7 +830,7 @@
       "role": "predicate",
       "text": "is a scandal with a subscription tier",
       "singularText": "is a scandal with a subscription tier",
-      "pluralText": "is a scandal with a subscription tier",
+      "pluralText": "are a scandal with a subscription tier",
       "personalSingularText": "is a scandal with a subscription tier",
       "secondPersonText": "is a scandal with a subscription tier",
       "tags": [

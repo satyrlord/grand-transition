@@ -2,6 +2,7 @@ import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
 import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { pauseMockedClock } from './helpers/presentation';
 
 const highlightedCards = 'button.phrase-card[data-tutorial="true"]';
 const supportedViewports = [
@@ -11,7 +12,16 @@ const supportedViewports = [
   { width: 1920, height: 1080 },
 ] as const;
 
+// Each flow below plays a full match at four viewports and captures screenshots
+// while Playwright also runs the audio projects. The menu additionally has to
+// parse both shipped game-locale bundles behind a cold production preview, so
+// the default 30 s budget fits an idle machine only. Wait for the menu before
+// interacting, so a slow boot fails here instead of inside a later click.
+const menuReadyTimeoutMs = 60_000;
+const tutorialFlowTimeoutMs = 120_000;
+
 test('tutorial starts unchecked and the default match has no tutorial glow', async ({ page }) => {
+  test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByRole('checkbox', { name: 'Tutorial', exact: true })).not.toBeChecked();
@@ -22,6 +32,7 @@ test('tutorial starts unchecked and the default match has no tutorial glow', asy
 });
 
 test('tutorial persists and all valid next choices follow each hotseat draft and pause', async ({ page }) => {
+  test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
   await expect.poll(() => page.evaluate(() =>
@@ -61,6 +72,7 @@ test('tutorial persists and all valid next choices follow each hotseat draft and
 });
 
 test('tutorial glow pulses slowly and remains steady with reduced motion and distinct in forced colors', async ({ page }) => {
+  test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
   await startMatch(page);
@@ -98,6 +110,7 @@ test('tutorial glow pulses slowly and remains steady with reduced motion and dis
 });
 
 test('tutorial does not reveal recommendations during the computer turn', async ({ page }) => {
+  test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
   await page.evaluate(() => {
@@ -123,6 +136,7 @@ test('tutorial does not reveal recommendations during the computer turn', async 
 });
 
 test('tutorial recommendations disappear during round delivery', async ({ page }) => {
+  test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
   await page.clock.install();
@@ -135,7 +149,7 @@ test('tutorial recommendations disappear during round delivery', async ({ page }
   await page.getByRole('button', { name: 'End', exact: true }).click();
   await pick('noun');
   await page.getByRole('button', { name: 'End', exact: true }).click();
-  await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+  await pauseMockedClock(page);
   await expect(page.locator('.match-screen')).toHaveAttribute('data-delivery-phase', /.+/u);
   await expect(page.locator(highlightedCards)).toHaveCount(0);
 });
@@ -144,6 +158,8 @@ async function prepareMenu(page: Page): Promise<void> {
   await page.setViewportSize(supportedViewports[0]);
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.goto('/grand-transition/');
+  await expect(page.getByRole('button', { name: 'Settings', exact: true }))
+    .toBeVisible({ timeout: menuReadyTimeoutMs });
 }
 
 async function enableTutorial(page: Page): Promise<void> {

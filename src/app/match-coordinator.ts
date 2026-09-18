@@ -11,6 +11,8 @@ import {
   type MatchState,
 } from '../engine/match-lifecycle';
 import { recordLadderResult } from '../engine/ladder';
+import { shippedGameLocale } from '../localization/game-locale';
+import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import { createMatchHistoryEntry, type MatchHistoryRepository, type MatchHistorySettings } from '../persistence/match-history';
 import type { LadderProgressRepository } from '../persistence/ladder-progress';
 
@@ -83,10 +85,20 @@ export class MatchCoordinator {
     this.reducer = createMatchReducer(this.context);
   }
 
-  start(state: MatchState): MatchState {
+  /**
+   * The captured game locale of the running match, owned by the engine
+   * context. Snapshots render from this value so a running match and its
+   * ladder keep the language they were created with.
+   */
+  get locale(): GameLocaleBundle {
+    return this.context.locale;
+  }
+
+  start(state: MatchState, locale: GameLocaleBundle): MatchState {
     this.cancelAiTurn();
     this.context = {
       ...this.dependencies.context,
+      locale,
       balance: scoringBalanceForMultiplier(state.setup.basePointsMultiplier ?? 3),
     };
     this.reducer = createMatchReducer(this.context);
@@ -192,6 +204,7 @@ export class MatchCoordinator {
     this.dependencies.history.append(createMatchHistoryEntry(state, {
       id: identity.id, initialSeed: identity.initialSeed,
       completedAt: this.dependencies.now(), settings: identity.settings,
+      gameLocale: shippedGameLocale(this.locale),
     }));
   }
 }

@@ -102,6 +102,16 @@ export function referenceLocaleTextParity(
     }
     for (const key of keys) {
       if (referenceKeys.has(key)) continue;
+      // Romanian relation cards need number and person inflections even when
+      // English shares a single form. The source phrase key still has to exist
+      // in the reference bundle.
+      if (
+        bundle.locale === 'ro-RO' &&
+        (key.endsWith('.second-person') || key.endsWith('.plural')) &&
+        referenceKeys.has(key.slice(0, key.lastIndexOf('.')))
+      ) {
+        continue;
+      }
       failures.push({
         path: `messages.${key}`,
         code: 'unexpected-message',
@@ -132,4 +142,51 @@ function normalizeVisibleText(text: string, locale: string): string {
     if (error instanceof RangeError) return normalized.toLowerCase();
     throw error;
   }
+}
+
+const possessiveArticles = new Set(['a', 'al', 'ai', 'ale']);
+
+// A verb or predicate card is placed immediately in front of the object noun
+// card, which carries no genitive form. A possessive article would force one,
+// so such a card must never end with it.
+export function validateSentenceTails(
+  messages: Readonly<Record<string, string>>,
+  relationKeys: ReadonlySet<string>,
+): readonly GameLocaleFailure[] {
+  const failures: GameLocaleFailure[] = [];
+  for (const key of relationKeys) {
+    const text = messages[key];
+    if (text === undefined) continue;
+    const lastWord = text.trim().split(/\s+/u).at(-1) ?? '';
+    if (!possessiveArticles.has(lastWord.toLocaleLowerCase('ro-RO'))) continue;
+    failures.push({
+      path: `messages.${key}`,
+      code: 'case-governing-tail',
+      message: `End this sentence part so the next noun card stays an unmarked object; "${lastWord}" would force a genitive.`,
+    });
+  }
+  return Object.freeze(failures);
+}
+
+// The interface still ships the two Phase 1 name tables. Until the game locale
+// owns displayed names, both Romanian sources must agree, or a character is
+// named one way in the interface and another way inside a match.
+export function validateLocaleNameParity(
+  messages: Readonly<Record<string, string>>,
+  displayedNames: Readonly<Record<string, Readonly<Record<string, string>>>>,
+): readonly GameLocaleFailure[] {
+  const failures: GameLocaleFailure[] = [];
+  for (const [group, names] of Object.entries(displayedNames)) {
+    for (const [id, name] of Object.entries(names)) {
+      const key = `${group}.${id}.name`;
+      const actual = messages[key];
+      if (actual === undefined || actual === name) continue;
+      failures.push({
+        path: `messages.${key}`,
+        code: 'name-mismatch',
+        message: `Use "${name}" so this name matches the displayed-name table.`,
+      });
+    }
+  }
+  return Object.freeze(failures);
 }

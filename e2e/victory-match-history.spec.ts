@@ -93,8 +93,10 @@ test('victory and populated history fit every supported landscape viewport', asy
         ...current,
         id: 'stale-document-match',
         completedAt: new Date(Date.parse(current.completedAt) - 60_000).toISOString(),
-        replay: { ...current.replay, schemaVersion: 2 },
-        matchLog: { ...current.matchLog, schemaVersion: 2 },
+        // The previous replay and match-log document version, which the current
+        // codec no longer reproduces, so this entry must be ignored.
+        replay: { ...current.replay, schemaVersion: 1 },
+        matchLog: { ...current.matchLog, schemaVersion: 1 },
       },
       current,
     ];

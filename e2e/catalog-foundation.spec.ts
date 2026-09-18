@@ -68,7 +68,7 @@ for (const viewport of viewports) {
         });
         expect(geometry, `${side}: ${character.id}`).toEqual({ loaded: true, nameFits: true, nameInside: true, portraitInside: true, pageFits: true });
       }
-      await page.locator(`[data-lock-player="${side}"]`).click();
+      await page.getByTestId(`lock-player-${side}`).click();
     }
 
     for (const scene of catalog.scenes) {

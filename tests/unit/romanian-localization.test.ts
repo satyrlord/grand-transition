@@ -16,13 +16,23 @@ import {
   validateMessageText,
   validateSourceCatalog,
 } from '../../tools/validate-interface-locales';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import {
+  englishGameLocale,
+  romanianGameLocale,
+  sampleContent,
+} from '../../src/game-content';
 import {
   displayCharacterName,
   displaySceneName,
   romanianCharacterNames,
   romanianSceneNames,
 } from '../../src/localization/romanian-display-names';
+import {
+  validateGameLocaleBundleText,
+  validateGameLocaleBundles,
+  type GameLocaleFailure,
+} from '../../src/localization/game-locale-validation';
+import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
 
 const xliffText = await readFile('xliff/ro-RO.xlf', 'utf8');
 const units = parseXliff(xliffText);
@@ -247,5 +257,142 @@ describe('interface number formatting', () => {
   test('formats interface numbers with the interface locale', () => {
     expect(formatInterfaceNumber(1.5)).toBe('1.5');
     expect(formatInterfacePercent(0.8)).toBe('80%');
+  });
+});
+
+describe('Romanian game content', () => {
+  const shipped = [englishGameLocale, romanianGameLocale];
+  const romanianKeys = Object.keys(romanianGameLocale.messages);
+
+  /** Replace one Romanian message and report only that field path's failures. */
+  const troublesAt = (
+    key: string,
+    text: string,
+  ): readonly GameLocaleFailure[] =>
+    validateGameLocaleBundleText(
+      {
+        ...romanianGameLocale,
+        messages: { ...romanianGameLocale.messages, [key]: text },
+      },
+      'ro-RO',
+    ).filter((failure) => failure.path === `messages.${key}`);
+
+  const withoutKey = (key: string): GameLocaleBundle => {
+    const messages = { ...romanianGameLocale.messages };
+    delete messages[key];
+    return { ...romanianGameLocale, messages };
+  };
+
+  test('ships both complete, safe, unique game-content bundles', () => {
+    expect(validateGameLocaleBundles(shipped, 'en')).toEqual([]);
+    expect(romanianKeys.length).toBeGreaterThan(3_000);
+  });
+
+  test('carries every English key plus only required Romanian agreement forms', () => {
+    const englishKeys = new Set(Object.keys(englishGameLocale.messages));
+    const expectedRomanianForms = sampleContent.phrases
+      .filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate')
+      .flatMap((phrase) => [
+        ...(!phrase.numberForms ? [`${phrase.textKey}.plural`] : []),
+        ...(!phrase.numberForms?.secondPersonKey
+          ? [`${phrase.textKey}.second-person`]
+          : []),
+      ]);
+    expect(new Set(romanianKeys)).toEqual(
+      new Set([...englishKeys, ...expectedRomanianForms]),
+    );
+    const withRomanianDiacritics = Object.values(
+      romanianGameLocale.messages,
+    ).filter((text) => /[ăâîșț]/u.test(text));
+    expect(withRomanianDiacritics.length).toBeGreaterThan(2_000);
+  });
+
+  test('states the Romanian title and disclaimer in Romanian', () => {
+    expect(romanianGameLocale.locale).toBe('ro-RO');
+    expect(romanianGameLocale.title.name).toBe(
+      'Grand Transition: A Verbal Republic',
+    );
+    expect(romanianGameLocale.title.fictionalCompositeSatireDisclaimer).toBe(
+      'Toate personajele și evenimentele sunt compozite fictive create pentru satiră.',
+    );
+  });
+
+  test('fails a missing Romanian key at its field path', () => {
+    const key = romanianKeys.find((candidate) =>
+      candidate.startsWith('phrase.'),
+    )!;
+    expect(
+      validateGameLocaleBundles([englishGameLocale, withoutKey(key)], 'en'),
+    ).toContainEqual({
+      path: `messages.${key}`,
+      code: 'missing-translation',
+      message: `Add the ro-RO game text for "${key}".`,
+    });
+  });
+
+  test('fails an extra Romanian key at its field path', () => {
+    const bundle: GameLocaleBundle = {
+      ...romanianGameLocale,
+      messages: {
+        ...romanianGameLocale.messages,
+        'phrase.invented-romanian-card': 'un card inventat',
+      },
+    };
+    expect(
+      validateGameLocaleBundles([englishGameLocale, bundle], 'en'),
+    ).toContainEqual({
+      path: 'messages.phrase.invented-romanian-card',
+      code: 'unexpected-message',
+      message:
+        'Remove the ro-RO game text "phrase.invented-romanian-card" or add it to every locale.',
+    });
+  });
+
+  test('fails incomplete, unsafe, and legacy-cedilla Romanian text at its path', () => {
+    const key = romanianKeys.find((candidate) =>
+      candidate.startsWith('phrase.'),
+    )!;
+    expect(troublesAt(key, '   ')).toEqual([
+      {
+        path: `messages.${key}`,
+        code: 'incomplete-translation',
+        message: 'Message text is empty.',
+      },
+    ]);
+    expect(troublesAt(key, '<script>alert(1)</script>')).toContainEqual(
+      expect.objectContaining({ code: 'unsafe-text' }),
+    );
+    expect(troublesAt(key, 'Şef de trib')).toContainEqual(
+      expect.objectContaining({ code: 'legacy-diacritic' }),
+    );
+    expect(
+      validateGameLocaleBundleText(
+        {
+          ...romanianGameLocale,
+          title: { ...romanianGameLocale.title, name: '' },
+        },
+        'ro-RO',
+      ),
+    ).toEqual([
+      {
+        path: 'title.name',
+        code: 'incomplete-translation',
+        message: 'Message text is empty.',
+      },
+    ]);
+  });
+
+  test('fails a duplicate Romanian character name at its field path', () => {
+    const nameKeys = romanianKeys.filter(
+      (key) => key.startsWith('character.') && key.endsWith('.name'),
+    );
+    const [first, second] = nameKeys;
+    expect(first).toBeDefined();
+    expect(second).toBeDefined();
+    expect(
+      troublesAt(second!, romanianGameLocale.messages[first!]!),
+    ).toContainEqual(
+      expect.objectContaining({ code: 'duplicate-visible-text' }),
+    );
   });
 });

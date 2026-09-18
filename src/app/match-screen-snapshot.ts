@@ -10,18 +10,15 @@ import {
 import type { ComboFinisherScore } from '../engine/combo-finisher-scoring';
 import { extractScoreClauseAnchors } from '../engine/basic-scoring';
 import type { EnglishGrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
-import {
-  englishGrammarAdapter,
-  prepareEnglishGrammarPhrase,
-} from '../engine/grammar/english-grammar-adapter';
+import { grammarFor } from '../engine/grammar/grammar-locale';
 import type {
   MatchResolution,
   MatchResolutionPlayer,
   MatchState,
 } from '../engine/match-lifecycle';
-import { characterSkins, gameLocaleBundle, sampleContent } from '../game-content';
-import { defaultGameLocale } from '../localization/game-locale';
-import { interfaceLocale } from './interface-localization';
+import { characterSkins, sampleContent } from '../game-content';
+import { shippedGameLocale } from '../localization/game-locale';
+import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import {
   displayCharacterName,
   displaySceneName,
@@ -190,6 +187,7 @@ export type MatchScreenSnapshot = Readonly<{
 
 export function createMatchScreenSnapshot(
   state: MatchState,
+  locale: GameLocaleBundle,
   arenaReaction: MatchArenaReaction | null = null,
   reviewResolution: MatchResolution | null = null,
   victory: Readonly<{
@@ -259,6 +257,7 @@ export function createMatchScreenSnapshot(
       slotIndex,
       'Shared',
       opponent.weaknessTags,
+      locale,
     );
   });
 
@@ -279,6 +278,7 @@ export function createMatchScreenSnapshot(
       slotIndex,
       'Private',
       opponent.weaknessTags,
+      locale,
     );
   }
   const privateCards = privateSlots.map(
@@ -295,7 +295,7 @@ export function createMatchScreenSnapshot(
       playerId,
       characterId: player.characterId,
       skinId: skin.id,
-      characterName: characterName(player.characterId),
+      characterName: characterName(locale, player.characterId),
       portraitUrl: skin.portraitUrl,
       portraitAvifSrcSet: skin.avif?.srcSet ?? null,
       portraitWebpSrcSet: skin.webp?.srcSet ?? null,
@@ -333,12 +333,16 @@ export function createMatchScreenSnapshot(
           weaknessFactor: weakness.factor,
           sentenceDamage: result?.sentenceDamage ?? 0,
           comebackBonus: result?.comebackBonus ?? 0,
-          scoreComponents: scoreComponentViews(result, state.draft!.playerStates[playerId]!.construction.analysis),
+          scoreComponents: scoreComponentViews(
+            result,
+            state.draft!.playerStates[playerId]!.construction.analysis,
+            locale,
+          ),
         },
       ];
     }),
   );
-  const activeName = characterName(activePlayer.characterId);
+  const activeName = characterName(locale, activePlayer.characterId);
   const arenaReactionPlayer = arenaReaction?.kind === 'grammar-mistake'
     ? state.playerStates[arenaReaction.playerId]
     : undefined;
@@ -356,6 +360,7 @@ export function createMatchScreenSnapshot(
       ? {
           winnerId: victory.winnerId,
           winnerName: characterName(
+            locale,
             state.playerStates[victory.winnerId]!.characterId,
           ),
           completedRounds: victory.completedRounds,
@@ -365,8 +370,11 @@ export function createMatchScreenSnapshot(
     round: state.round,
     sceneName: displaySceneName(
       state.sceneId,
-      gameMessage(sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey),
-      interfaceLocale(),
+      gameMessage(
+        locale,
+        sampleContent.scenes.find((scene) => scene.id === state.sceneId)?.nameKey,
+      ),
+      shippedGameLocale(locale),
     ),
     sceneLayers: sceneLayerViews(state.sceneId),
     activePlayerId,
@@ -403,7 +411,7 @@ export function createMatchScreenSnapshot(
       : arenaReaction.kind === 'grammar-mistake' && arenaReactionPlayer
         ? {
             ...arenaReaction,
-            playerName: characterName(arenaReactionPlayer.characterId),
+            playerName: characterName(locale, arenaReactionPlayer.characterId),
           }
         : arenaReaction.kind === 'cliffhanger'
           ? arenaReaction
@@ -411,7 +419,7 @@ export function createMatchScreenSnapshot(
     reaction: {
       round: reviewResolution?.round ?? null,
       outcomeLabel: reviewResolution
-        ? roundOutcomeLabel(state, reviewResolution)
+        ? roundOutcomeLabel(locale, state, reviewResolution)
         : msg('The chamber is waiting for its first exchange.'),
       players: reactionPlayers,
     },
@@ -421,6 +429,7 @@ export function createMatchScreenSnapshot(
 function scoreComponentViews(
   result: MatchResolutionPlayer | undefined,
   analysis: EnglishGrammarAnalysis,
+  locale: GameLocaleBundle,
 ): readonly MatchScoreComponentView[] {
   if (!result) return [];
   const phraseTextById = new Map(
@@ -495,7 +504,7 @@ function scoreComponentViews(
           narrationIndex: result.constructionPhrases.findIndex(({ phraseId }) => phraseId === item.phraseId),
           phraseText:
             phraseTextById.get(item.phraseId) ??
-            (phrase ? gameMessage(phrase.textKey) : msg('Finisher')),
+            (phrase ? gameMessage(locale, phrase.textKey) : msg('Finisher')),
           base: phrase?.finisherBonus ?? item.amount,
           restrictionFactor: finisherRestrictionFactor,
           weaknessFactor: finisherWeaknessFactor,
@@ -582,6 +591,7 @@ function weaknessDamageDetails(
 }
 
 function roundOutcomeLabel(
+  locale: GameLocaleBundle,
   state: MatchState,
   resolution: MatchResolution,
 ): string {
@@ -592,7 +602,7 @@ function roundOutcomeLabel(
     return msg(str`Round ${resolution.round} result: tie`);
   const winnerId = firstDamage > secondDamage ? firstId : secondId;
   return msg(
-    str`Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
+    str`Round ${resolution.round} winner: ${characterName(locale, state.playerStates[winnerId]!.characterId)}`,
   );
 }
 
@@ -604,6 +614,7 @@ function availableCard(
   slotIndex: number,
   ownership: MatchCardView['ownership'],
   opponentWeaknessTags: readonly string[],
+  locale: GameLocaleBundle,
 ): MatchCardView {
   const construction = state.draft!.playerStates[activePlayerId]!.construction;
   const knownWeaknesses = weaknessMatches(phrase, opponentWeaknessTags);
@@ -621,9 +632,10 @@ function availableCard(
       ),
       knownWeaknesses,
       disabledReason: null,
+      locale,
     });
   }
-  const preview = legalPreview(state, activePlayerId, phrase);
+  const preview = legalPreview(state, activePlayerId, phrase, locale);
   return createCardView({
     slotIndex,
     reference,
@@ -635,6 +647,7 @@ function availableCard(
     grammarAccepted: preview.accepted,
     knownWeaknesses,
     disabledReason: null,
+    locale,
   });
 }
 
@@ -650,9 +663,10 @@ function createCardView(
     grammarAccepted: boolean;
     knownWeaknesses: readonly string[];
     disabledReason: string | null;
+    locale: GameLocaleBundle;
   }>,
 ): MatchCardView {
-  const text = gameMessage(config.phrase.textKey);
+  const text = gameMessage(config.locale, config.phrase.textKey);
   const stateLabel = cardStateLabel(config.state);
   return {
     slotIndex: config.slotIndex,
@@ -701,17 +715,16 @@ function legalPreview(
   state: MatchState,
   activePlayerId: string,
   phrase: Phrase,
+  locale: GameLocaleBundle,
 ): Readonly<{ accepted: boolean; text: string }> {
   const player = state.draft!.playerStates[activePlayerId]!;
-  const result = englishGrammarAdapter.analyze({
+  const grammar = grammarFor(locale);
+  const result = grammar.adapter.analyze({
     steps: [
       ...player.construction.steps,
       {
         kind: 'phrase',
-        phrase: prepareEnglishGrammarPhrase(
-          phrase,
-          gameLocaleBundle(defaultGameLocale),
-        ),
+        phrase: grammar.prepare(phrase, locale),
       },
     ],
     subjectNumber: player.subjectNumber,
@@ -758,11 +771,15 @@ function cardStateLabel(state: MatchCardState): string {
   }
 }
 
-function characterName(characterId: string): string {
+function characterName(locale: GameLocaleBundle, characterId: string): string {
   return displayCharacterName(
     characterId,
-    gameMessage(sampleContent.characters.find((character) => character.id === characterId)?.nameKey),
-    interfaceLocale(),
+    gameMessage(
+      locale,
+      sampleContent.characters.find((character) => character.id === characterId)
+        ?.nameKey,
+    ),
+    shippedGameLocale(locale),
   );
 }
 
@@ -803,8 +820,6 @@ function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
   });
 }
 
-function gameMessage(key: string | undefined): string {
-  return key
-    ? (gameLocaleBundle(defaultGameLocale).messages[key] ?? key)
-    : '';
+function gameMessage(locale: GameLocaleBundle, key: string | undefined): string {
+  return key ? (locale.messages[key] ?? key) : '';
 }

@@ -34,21 +34,25 @@ assets before bundling them.
 `quality:quick` runs `validate`, unit tests, browser tests, coverage, and
 end-to-end tests in that order. It excludes the slowest tests until their
 cumulative elapsed time reaches 20 percent of the latest recorded full gate:
-the current-catalog 500-match calibration, the content-balance matrix, and the
-nine-rung production ladder flow. The calibration and content-balance matrix
+the current-catalog 500-match calibration, the content-balance matrix, the
+nine-rung production ladder flow, and the isolated character content lifecycle
+with its two production builds. The calibration and content-balance matrix
 are excluded from Node, Browser Mode, and coverage runs.
-The ladder flow is excluded only from Playwright. All other checks remain the
+The ladder flow and the content lifecycle are excluded only from Playwright.
+All other checks remain the
 same as the full gate.
 
 `quality:full` runs every check in the same order, including the excluded
-calibration, content-balance matrix, and ladder flow. `ci` aliases
+calibration, content-balance matrix, ladder flow, and content lifecycle.
+`ci` aliases
 `quality:full`. Continuous integration uses the full gate. An agent uses
 `quality:quick` for routine validation and must not invoke `quality:full` or
 `ci` unless the user explicitly requests the full quality-gate skill. A quick
 pass is not full-gate or release evidence.
 
-Selection is opt-in and hard: the calibration, content-balance matrix, and
-nine-rung ladder flow run only when the full gate is explicitly requested.
+Selection is opt-in and hard: the calibration, content-balance matrix,
+nine-rung ladder flow, and content lifecycle run only when the full gate is
+explicitly requested.
 `quality:quick` and every
 direct test invocation, including `npm run test`, `npm run test:browser`,
 `npm run test:coverage`, and `npm run test:e2e`, select the quick behavior, so
@@ -147,7 +151,8 @@ sentence E2E cases retain all assertions and pass with retries disabled.
 **AC-002-09:** `quality:quick` excludes only the documented slowest cumulative
 20-percent set. `quality:full` and `ci` include that set. The quality-gate
 runner exports the selected mode to all child phases. Verify the scripts and
-runner in `tests/unit/quality-gate.test.ts`; the calibration and ladder tests
+runner in `tests/unit/quality-gate.test.ts`; the calibration, ladder, and
+content-lifecycle tests
 select their full-only behavior from that mode.
 
 **AC-002-10:** The content-balance validator is included only in the full gate.

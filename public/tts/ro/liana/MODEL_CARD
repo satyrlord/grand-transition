@@ -1,0 +1,336 @@
+---
+language:
+  - ro
+license: cc-by-nc-4.0
+tags:
+  - text-to-speech
+  - piper
+  - vits
+  - romanian
+  - tts
+  - speech-synthesis
+  - storytelling
+pipeline_tag: text-to-speech
+---
+
+# Liana — Romanian Piper voice for storytelling and long-form reading
+
+Two fine-tuned [Piper](https://github.com/OHF-Voice/piper1-gpl) (VITS) voices — one
+**medium** (64 MB, real-time on CPU and phones) and one **high** (114 MB, best quality) —
+built for reading whole stories, articles and books aloud in Romanian. Non-autoregressive,
+CPU-only, no hallucinations, no drift.
+
+Liana is the successor of the **Lili** voice from
+[eduardem/piper-tts-romanian](https://huggingface.co/eduardem/piper-tts-romanian): the same
+narrator, retrained on a new purpose-recorded corpus and specifically polished on
+everything the old voices got wrong — long sentences, English loanwords,
+foreign names, and numbers.
+
+**Quick listen** — *„Punguța cu doi bani"* by Ion Creangă, read end to end in one
+synthesis call (no chunking, no post-editing):
+
+**Liana medium** (8:00): <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/stories/punguta-cu-doi-bani.mp3"></audio>
+**Liana high** (8:03): <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/stories/punguta-cu-doi-bani.mp3"></audio>
+
+## Voices
+
+| Voice | Quality | Size | Fair WER: standard / loanwords / names | Best for |
+|---|---|---|---|---|
+| `ro_RO-liana-medium` | medium | 64 MB | 2.7% / 3.3% / **1.9%** | on-device, real-time, bulk generation |
+| `ro_RO-liana-high` | high | 114 MB | 2.9% / **2.4%** / 3.1% | best quality, server-side narration |
+
+WER measured with Whisper `large-v3` transcription against the input text, normalized
+before scoring (case, punctuation, digits written out, hyphenation variants) so that only
+real errors count. Raw unnormalized WER runs ~2–7 pp higher on the same audio; both
+numbers per test set are in the tables below. VITS synthesis is stochastic, so single
+measurements on small sets swing ±2–4 pp.
+
+## What makes Liana different
+
+### 1. It does not fall apart on long input
+
+The v1 voices collapse past ~200–300 characters in a single sentence (up to 90%+ WER —
+the [old card](https://huggingface.co/eduardem/piper-tts-romanian) documents it and tells
+you to chunk). Liana was trained on long spliced clips precisely to fix this. Same test,
+one unchunked sentence per synthesis call, five sentences per length bucket:
+
+| Fair WER, one unchunked sentence | 100 ch | 150 ch | 200 ch | 300 ch | 450 ch | 600 ch |
+|---|---|---|---|---|---|---|
+| Lili medium (v1) | 1.0% | 7.9% | 8.9% | 66.7% | 91.8% | 93.6% |
+| **Liana medium** | 0.0% | 6.1% | 3.8% | 3.8% | 5.6% | 3.5% |
+| **Liana high** | 2.5% | 5.3% | 1.7% | 1.5% | 3.4% | 2.7% |
+
+Lili's row was re-measured for this card, same session, same methodology, same patched
+dictionary — the collapse is the voice, not the setup.
+
+It holds on real texts, fed whole — one synthesis call per article, Piper's own sentence
+splitting, nothing else:
+
+| Whole article, unchunked | Length | Lili medium (v1) | Liana medium | Liana high |
+|---|---|---|---|---|
+| news | 2,910 chars | 30.5% | **2.3%** | **3.6%** |
+| literary (Creangă, 19th-century prose) | 4,844 chars | 45.7% | **8.7%** | **8.9%** |
+| practical advice | 7,222 chars | 14.2% | **3.8%** | **2.7%** |
+
+And the two full stories in [`samples/…/stories/`](#audio-samples) — 4 and 8 minutes of
+continuous narration each — were generated exactly that way.
+
+### 2. English loanwords and names, without tricks
+
+Romanian everyday text is full of English — weekend, podcast, marketing, laptop, site,
+WhatsApp. The old voices depend on the patched dictionary for this (Lili v1: 10.4% on
+the loanword set stock, 3.9% with it); Liana was *trained* on it, on purpose-recorded
+loanword and name material. Same methodology, same dictionary: loanwords 3.3%, and on
+the English-names set **1.9% vs Lili's 4.0%** — names are where dictionaries help least
+and training shows most.
+
+> "Filmele cu John Wayne se dădeau duminica după-amiaza, pe vremea aceea."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/names_john_wayne.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/names_john_wayne.wav"></audio>
+
+### 3. Numbers read like a human reads them
+
+Compound numerals come out in one breath — not "patruzeci … și … două" with a pause in
+the middle:
+
+> "A plătit două sute optzeci și șapte de lei pe patruzeci și două de bilete."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/numerale.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/numerale.wav"></audio>
+
+> "De luni se anunță temperaturi de treizeci și cinci de grade în oraș."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/luni_temp.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/luni_temp.wav"></audio>
+
+### 4. Abbreviations, addresses, centuries — expanded before synthesis
+
+The shipped `ro_text.py` front-end (single file, standard library only) normalizes
+diacritics, expands abbreviations to their spoken forms and knows Romanian grammar corner
+cases: `bd.` → *bulevardul*, `nr.` → *numărul*, `80 mp` → *80 de metri pătrați*,
+`sec. XX` → *secolul al douăzecilea*.
+
+> "Biroul s-a mutat pe bd. Unirii nr. 24, et. 3, ap. 12, într-un spațiu de 80 mp construit în sec. XX."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/frontend_adresa.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/frontend_adresa.wav"></audio>
+
+### 5. A storytelling register
+
+The corpus behind Liana was recorded in a projected, narrative read — the register of
+someone telling a story to a room, not dictating into a phone. It shows most on
+literature; hear the full Creangă stories below.
+
+## Audio samples
+
+### Full stories (Ion Creangă, public domain)
+
+Each story is one synthesis call over the whole text.
+
+> **Ursul păcălit de vulpe** (4:13)
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/stories/ursul-pacalit-de-vulpe.mp3"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/stories/ursul-pacalit-de-vulpe.mp3"></audio>
+
+> **Punguța cu doi bani** (8:00)
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/stories/punguta-cu-doi-bani.mp3"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/stories/punguta-cu-doi-bani.mp3"></audio>
+
+### Short sentences
+
+Same texts and file names as the [old card](https://huggingface.co/eduardem/piper-tts-romanian#audio-samples),
+so you can compare the voices player for player.
+
+> "Copiii se jucau fericiți în grădina plină de flori colorate."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/sample_06.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/sample_06.wav"></audio>
+
+> "Într-o dimineață de toamnă, frunzele cădeau ușor pe aleea din parc."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/sample_04.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/sample_04.wav"></audio>
+
+> "Guvernul a anunțat un plan ambițios de investiții în infrastructură, care include construcția a trei autostrăzi și modernizarea rețelei feroviare din întreaga țară."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/sample_13.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/sample_13.wav"></audio>
+
+### Tongue twisters
+
+> "S-a suit capra pe piatră, piatra a crăpat în patru, crăpai-ar capul caprei negre în patru cum a crăpat și piatra în patru."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/tongue_twister_01.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/tongue_twister_01.wav"></audio>
+
+> "Ce-ntâmplare întâmplăreață s-a-ntâmplat în tâmplărie, un tâmplar din întâmplare s-a lovit cu tâmpla-n cap."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/tongue_twister_02.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/tongue_twister_02.wav"></audio>
+
+### English loanwords
+
+> "Weekendul acesta rămânem în oraș."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/loanwords/loanword_02.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/loanwords/loanword_02.wav"></audio>
+
+> "Echipa testează software-ul înainte de lansare."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/loanwords/loanword_03.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/loanwords/loanword_03.wav"></audio>
+
+> "Trimite-mi locația pe WhatsApp, ca să ajung mai repede."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/loanwords/loanword_23.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/loanwords/loanword_23.wav"></audio>
+
+> "Pe YouTube au publicat și subtitrarea în română."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/loanwords/loanword_27.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/loanwords/loanword_27.wav"></audio>
+
+> "A salvat traseul în Google Maps."
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/loanwords/loanword_19.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/loanwords/loanword_19.wav"></audio>
+
+### The old card's long text (1:49, one unchunked call)
+
+The same 1,565-character paragraph the old card uses to demonstrate where the v1 voices
+break — three of its sentences are 292, 410 and 448 characters long. Compare with the
+players there.
+
+**Liana medium**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-medium/long_text.wav"></audio>
+**Liana high**: <audio controls src="https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/samples/liana-high/long_text.wav"></audio>
+
+## Quick start
+
+```bash
+pip install piper-tts
+
+wget https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/voices/liana-medium/ro_RO-liana-medium.onnx
+wget https://huggingface.co/eduardem/piper-liana-romanian/resolve/main/voices/liana-medium/ro_RO-liana-medium.onnx.json
+
+echo "Bună ziua!" | piper -m ro_RO-liana-medium.onnx --output_file hello.wav
+```
+
+Keep each `.onnx` with **its own** `.onnx.json` — the configs are not interchangeable
+between voices.
+
+### Python, with the text front-end
+
+```python
+import numpy as np
+import soundfile as sf
+from piper import PiperVoice, SynthesisConfig
+
+from ro_text import prepare   # ships in this repo — normalize, expand
+
+voice = PiperVoice.load("ro_RO-liana-medium.onnx")
+sc = SynthesisConfig(
+    length_scale=voice.config.length_scale,
+    noise_scale=voice.config.noise_scale,
+    noise_w_scale=voice.config.noise_w_scale,
+)
+
+text = open("poveste.txt", encoding="utf-8").read()
+
+sentences = []
+for piece in prepare(text):                       # no chunking — see below
+    for chunk in voice.synthesize(piece, syn_config=sc):
+        sentences.append(chunk.audio_float_array.astype(np.float32))
+
+# Piper emits one chunk per sentence and no silence between them, so the pause
+# a listener hears is whatever you join them with.
+gap = np.zeros(int(0.2 * voice.config.sample_rate), dtype=np.float32)
+parts = []
+for i, sentence in enumerate(sentences):
+    if i:
+        parts.append(gap)
+    parts.append(sentence)
+
+audio = np.concatenate(parts)
+sf.write("poveste.wav", audio, voice.config.sample_rate)
+```
+
+`prepare()` folds the Turkish cedilla ş/ţ into the Romanian comma-below ș/ț (web text
+carries the wrong pair constantly), NFC-normalizes, and expands abbreviations.
+
+**Do not chunk for Liana.** Piper already splits at `.`, `?` and `!` and synthesizes one
+chunk per sentence, so chunking multi-sentence text buys nothing; all it adds is cutting
+a long sentence at its commas, which is precisely what Liana does not need — the table
+above is flat to 600 characters, and the stories were synthesized in one call each. The
+chunker is still in `ro_text.py` for the v1 voices, off by default: pass
+`prepare(text, max_chars=140)` to switch it on. Note that `max_chars` never joins
+sentences, so raising it does not give you longer pieces — the choice is chunking or no
+chunking.
+
+### The dictionary
+
+The voices phonemize through espeak-ng's Romanian dictionary. This repo ships the patched
+`ro_dict` these voices are built around — 200+ added entries for English loanwords and
+proper names, respelled into Romanian phonemes (one respelling was further corrected
+during release listening; everything else is byte-identical to what the voices were
+trained and evaluated with). Installing it is a one-file
+swap into the `espeak-ng-data` directory of your Piper installation; the `ro_extra`
+source and build script are alongside, so it can be rebuilt or extended.
+
+Without the patched dictionary the voices still work, but rare names fall back to
+espeak's Romanian letter-to-sound rules and come out mangled.
+
+## Known limitations
+
+- A handful of rare foreign names and brands still render imperfectly —
+  in our test battery: LinkedIn, Nietzsche, München, Zürich, Marseille, Auchan,
+  ChatGPT, Kafka, Bilbao and a few similar. The dictionary source ships in this
+  repo, so a better respelling is a one-line edit and a rebuild away — no
+  retraining needed.
+- VITS is stochastic: the same input renders slightly differently each run.
+- The voices speak Romanian. English words in Romanian text are handled; English
+  sentences are not.
+- The literary register (19th-century prose, dialogue interjections) is measurably
+  harder than modern text — see the Creangă row in the article table.
+
+## Training
+
+Both voices continue the Lili lineage: they warm-start from the released v1 weights and
+are retrained on a new ~25-hour corpus recorded by the same narrator specifically for
+this project — long spliced clips (up to ~55 s) for endurance, wide-coverage sentences
+for vocabulary, and a storytelling register throughout. Two low-learning-rate polish
+rounds followed, on a ~1,000-clip curated booster recorded to fix what the evaluation
+battery and human listening found: English loanwords and names, compound numerals read
+in one breath, and specific phonetic gaps. Checkpoint selection at every stage was done
+by transcription-WER evaluation and human listening, never by training loss.
+
+- **Framework**: [piper1-gpl](https://github.com/OHF-Voice/piper1-gpl) v1.4.1
+- **Evaluation**: Whisper `large-v3` transcription; a 444-sentence Romanian test battery
+  (names, loanwords, numbers, abbreviations, phoneme-grapheme traps, prosody) plus
+  long-form article and sentence-length stress suites
+- The training corpus is not published.
+
+## Files
+
+```
+voices/
+├── liana-medium/
+│   ├── ro_RO-liana-medium.onnx           # 64 MB
+│   └── ro_RO-liana-medium.onnx.json
+└── liana-high/
+    ├── ro_RO-liana-high.onnx             # 114 MB
+    └── ro_RO-liana-high.onnx.json
+ro_text.py                                # text front-end: normalize + expand
+espeak/
+├── ro_dict                               # prebuilt patched dictionary (drop-in)
+├── ro_extra                              # dictionary source
+├── build_ro_dict.sh                      # rebuilds ro_dict from source
+└── espeak-ng.pin                         # the upstream commit the build pins to
+samples/
+├── liana-medium/                         # everything embedded above, plus more
+│   ├── loanwords/
+│   └── stories/                          # full stories, WAV + MP3
+└── liana-high/
+texts/                                    # the story texts (public domain, provenance inside)
+```

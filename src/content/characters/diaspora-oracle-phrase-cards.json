@@ -661,7 +661,7 @@
       "role": "predicate",
       "text": "is marketing and promotion with no foundation",
       "singularText": "is marketing and promotion with no foundation",
-      "pluralText": "is marketing and promotion with no foundation",
+      "pluralText": "are marketing and promotion with no foundation",
       "personalSingularText": "is marketing and promotion with no foundation",
       "secondPersonText": "are marketing and promotion with no foundation",
       "tags": [
@@ -731,7 +731,7 @@
       "role": "predicate",
       "text": "is an eyewitness between two time zones",
       "singularText": "is an eyewitness between two time zones",
-      "pluralText": "is an eyewitness between two time zones",
+      "pluralText": "are an eyewitness between two time zones",
       "personalSingularText": "is an eyewitness between two time zones",
       "secondPersonText": "is an eyewitness between two time zones",
       "tags": [
@@ -801,7 +801,7 @@
       "role": "predicate",
       "text": "is a context waiting at baggage claim",
       "singularText": "is a context waiting at baggage claim",
-      "pluralText": "is a context waiting at baggage claim",
+      "pluralText": "are a context waiting at baggage claim",
       "personalSingularText": "is a context waiting at baggage claim",
       "secondPersonText": "is a context waiting at baggage claim",
       "tags": [

@@ -1,6 +1,7 @@
 import { lockInSetup } from './helpers/setup';
 import {
   finishPresentation,
+  pauseMockedClock,
   reachDeliveryHesitation,
   reachDeliveryTotal,
 } from './helpers/presentation';
@@ -75,7 +76,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
     await executeDraftAction(page, action);
     if (await page.locator('.match-screen').getAttribute('data-delivery-phase')) {
       reviewedExchange = true;
-      await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 50));
+      await pauseMockedClock(page);
       await expect(page.locator('.round-review-dialog')).toHaveCount(0);
       const expectedResolution = plan.finalState.resolutionHistory[reviewIndex]!;
       if (expectedResolution.suddenDeath) {

@@ -215,10 +215,10 @@ describe('content schemas', () => {
       ...source,
       comebacks: {
         ...source.comebacks,
-        medium: 'one two three four five six seven eight nine ten eleven twelve',
+        medium: 'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen',
       },
     }, 'characters/test-character-phrase-cards.json'))
-      .toThrow(/comeback text to 11 words or fewer/iu);
+      .toThrow(/comeback text to 16 words or fewer/iu);
   });
 
   test('limits every player-visible phrase form to 11 words', () => {
@@ -1147,9 +1147,20 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     const secondLocale = structuredClone(catalog.locales[0]!);
     secondLocale.locale = 'en-GB';
-    delete secondLocale.messages['phrase.condemns'];
+    // Derive both the key and the appended index from the catalog so this
+    // fixture cannot go stale when the corpus or the shipped locale list is
+    // revised.
+    const requiredKey = catalog.phrases.find(
+      (phrase) => phrase.numberForms,
+    )!.numberForms!.singularKey;
+    const appendedIndex = catalog.locales.length;
+    delete secondLocale.messages[requiredKey];
     catalog.locales.push(secondLocale);
-    expectFailure(catalog, 'locales.1.messages', /phrase\.condemns/iu);
+    expectFailure(
+      catalog,
+      `locales.${appendedIndex}.messages`,
+      new RegExp(requiredKey.replaceAll('.', '\\.'), 'u'),
+    );
   });
 
   test('rejects a non-canonical BCP 47 locale tag', () => {
@@ -1179,6 +1190,51 @@ describe('content schemas', () => {
       'locales.0.messages.phrase.made-own-voters-change-the-channel.second-person',
       /required locale message/iu,
     );
+  });
+
+  test('requires Romanian-only polite and plural forms for relations without shared metadata', () => {
+    for (const [id, suffix] of [
+      ['denounced', 'second-person'],
+      ['general-audits-the-ceremony-past', 'plural'],
+    ] as const) {
+      const catalog = cloneCatalog();
+      const key = `phrase.${id}.${suffix}`;
+      delete catalog.locales.find((locale) => locale.locale === 'ro-RO')!.messages[key];
+      expectFailure(
+        catalog,
+        `locales.1.messages.${key}`,
+        /required Romanian relation form/iu,
+      );
+    }
+  });
+
+  test('complete-action verb families leave a governed noun slot in both languages', () => {
+    const families = [
+      'general-postpones-the-reform',
+      'general-rehearses-the-emergency',
+      'transition-era-television-studio-archives-the-revolution',
+      'modern-debate-studio-rehearses-the-closing-statement',
+      'county-council-ballroom-counts-the-ribbon-twice',
+      'midnight-call-in-studio-advertises-the-hidden-tape',
+      'palace-press-hall-guards-the-empty-envelope',
+      'influencer-campaign-livestream-sponsors-the-ancient-truth',
+    ];
+    const english = sampleContent.locales.find((locale) => locale.locale === 'en')!;
+    const romanian = sampleContent.locales.find((locale) => locale.locale === 'ro-RO')!;
+    for (const family of families) {
+      for (const tense of ['past', 'present', 'future']) {
+        const phrase = phraseCardCatalog.phrases.find(
+          (candidate) => candidate.id === `${family}-${tense}`,
+        )!;
+        expect(phrase.role).toBe('verb');
+        expect(english.messages[phrase.textKey]).toMatch(/ for$/u);
+        expect(romanian.messages[phrase.textKey]).toMatch(/ pentru$/u);
+        for (const nounText of ['dumneavoastră', 'dezacordul vostru unanim']) {
+          expect(`${romanian.messages[phrase.textKey]} ${nounText}`)
+            .toMatch(/ pentru (?:dumneavoastră|dezacordul vostru unanim)$/u);
+        }
+      }
+    }
   });
 
   test('rejects unsafe HTML in game-locale text', () => {

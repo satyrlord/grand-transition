@@ -5,7 +5,7 @@ import {
   basicScoringBalance,
   scoringBalanceForMultiplier,
 } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, romanianGameLocale, sampleContent } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
 import {
   createMatchReducer,
@@ -107,8 +107,8 @@ describe('replay and local match-log codecs', () => {
   });
 
   test('supports exactly one replay and match-log schema version', () => {
-    expect(replaySchemaVersion).toBe(1);
-    for (const schemaVersion of [0, 2, 13]) {
+    expect(replaySchemaVersion).toBe(2);
+    for (const schemaVersion of [0, 1, 13]) {
       for (const [document, decode] of [
         [completed.replay, decodeReplay],
         [completed.matchLog, decodeMatchLog],
@@ -119,6 +119,33 @@ describe('replay and local match-log codecs', () => {
         });
       }
     }
+  });
+
+  test('rejects a document recorded under another game locale', () => {
+    const romanianContext: ReplayContext = { ...context, locale: romanianGameLocale };
+    expect(replayMatch(completed.replayBytes, romanianContext)).toEqual({
+      ok: false,
+      code: 'invalid-replay',
+    });
+    expect(encodeReplay(completed.replay)).toContain('"gameLocale": "en"');
+    for (const [document, decode] of [
+      [completed.replay, decodeReplay],
+      [completed.matchLog, decodeMatchLog],
+    ] as const) {
+      expect(
+        decode(
+          normalizedJson({
+            ...document,
+            setup: { ...document.setup, gameLocale: 'fr' },
+          }),
+        ),
+      ).toEqual({ ok: false, code: 'invalid-replay' });
+    }
+    const storage = recordingStorage();
+    expect(
+      storeMatchLogImport(completed.matchLogBytes, romanianContext, storage.port, 'match-log'),
+    ).toEqual({ ok: false, code: 'invalid-replay' });
+    expect(storage.writes).toHaveLength(0);
   });
 
   test('fails safely when the current catalog no longer holds a replayed phrase', () => {
@@ -616,7 +643,9 @@ describe('headless simulation and generated invariants', () => {
       }),
       { numRuns: runs, seed: 20_260_823 },
     );
-  }, 120_000);
+    // 500 deterministic matches plus their replays. The budget only tolerates a
+    // fully loaded local worker pool; the workload and assertions are unchanged.
+  }, 300_000);
 });
 
 function recordingStorage(failureCode?: string): Readonly<{

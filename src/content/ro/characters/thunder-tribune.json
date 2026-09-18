@@ -82,5 +82,16 @@
   "phrase.thunder-tribune-contract-verb-announces-the-evidence-loudly-present.personal-singular": "anunță dovezile prin",
   "phrase.thunder-tribune-contract-verb-announces-the-evidence-loudly-present.second-person": "anunțați dovezile prin",
   "phrase.thunder-tribune-contract-verb-announces-the-evidence-loudly-future": "va anunța dovezile prin",
-  "phrase.thunder-tribune-contract-ending-and-the-evidence-demanded-a-microphone": "și telefonul a cerut ultimul cuvânt."
+  "phrase.thunder-tribune-contract-predicate-predicate-1-past": "era o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-present": "este o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-present.singular": "este o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-present.plural": "sunt o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-present.personal-singular": "este o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-present.second-person": "sunteți o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-predicate-predicate-1-future": "va fi o emisiune cu sursa dispărută",
+  "phrase.thunder-tribune-contract-modifier-before-the-applause-can-object": "înainte ca aplauzele să poată obiecta",
+  "phrase.thunder-tribune-contract-modifier-under-a-loud-fact-check": "sub o verificare a faptelor cu voce tare",
+  "phrase.thunder-tribune-contract-ending-and-the-evidence-demanded-a-microphone": "și telefonul a cerut ultimul cuvânt.",
+  "phrase.thunder-tribune-contract-ending-and-credibility-left-during-the-applause": "și credibilitatea a plecat în timpul aplauzelor.",
+  "phrase.thunder-tribune-contract-ending-and-restraint-missed-the-opening-bell": "și cumpătarea a ratat gongul de start."
 }

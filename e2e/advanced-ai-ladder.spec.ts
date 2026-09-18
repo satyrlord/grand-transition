@@ -171,7 +171,7 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
     await expect(page.locator('.ladder-record')).toContainText(
       `Rung ${wins + 1}/9`,
     );
-    await page.getByRole('button', { name: 'Lock in You' }).click();
+    await page.getByTestId('lock-player-one').click();
     await page
       .getByRole('button', {
         name: wins === 0 ? 'Start ladder' : 'Continue ladder',

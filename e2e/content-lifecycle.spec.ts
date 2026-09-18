@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup';
 import { expect, test, type Page } from '@playwright/test';
+import { fullQualityGateRequested } from '../tools/quality-gate-mode';
 import {
   copyFileSync,
   cpSync,
@@ -29,7 +30,14 @@ test.describe('production character content lifecycle', () => {
   test('adds and removes a convention-based character without registry edits', async ({
     page,
   }) => {
-    test.setTimeout(180_000);
+    // This test copies the source tree, adds a character, and runs two complete
+    // production builds before it drives the page. It belongs to the slowest
+    // full-gate set with the ladder flow and the calibration matrix.
+    test.skip(
+      !fullQualityGateRequested(),
+      'Requires the full quality gate.',
+    );
+    test.setTimeout(420_000);
 
     const temporaryRoot = path.join(repositoryRoot, 'tmp');
     mkdirSync(temporaryRoot, { recursive: true });
@@ -92,6 +100,10 @@ type CharacterSource = {
     {
       id: string;
       role: string;
+      text: string;
+      pluralText?: string;
+      secondPersonText?: string;
+      tenseFamily?: string;
     } & Record<string, unknown>
   >;
 };
@@ -132,6 +144,12 @@ function addTemporaryCharacter(fixtureRoot: string): void {
     structuredClone(source),
     phraseIdReplacements,
   ) as CharacterSource;
+  // The cloned cards keep the same grammatical relation as their source.
+  // Their new stable IDs are discovered by convention, while the existing
+  // Romanian family metadata still describes how each relation takes a noun.
+  fixture.phrases.forEach((phrase, index) => {
+    phrase.tenseFamily = source.phrases[index]?.tenseFamily;
+  });
   const rosterOrders = readdirSync(characterDirectory)
     .filter((fileName) => fileName.endsWith('-phrase-cards.json'))
     .map(
@@ -164,6 +182,15 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   writeFileSync(
     characterJsonPath(fixtureRoot),
     JSON.stringify(fixture, null, 2),
+  );
+  // The shipped catalog requires exact English/Romanian locale-key parity, so
+  // the temporary character must ship its own Romanian message record. Each
+  // value mirrors the English fixture text with standard Romanian diacritics
+  // absent and a locale marker, which keeps the record valid, unique inside
+  // the Romanian bundle, and removable with the character.
+  writeFileSync(
+    temporaryRomanianPath(fixtureRoot),
+    JSON.stringify(temporaryRomanianMessages(fixture), null, 2),
   );
 
   for (const [sourceName, destinationPath, marker] of [
@@ -213,8 +240,65 @@ function makeTemporaryPhraseTextUnique(fixture: CharacterSource): void {
 
 function removeTemporaryCharacter(fixtureRoot: string): void {
   rmSync(characterJsonPath(fixtureRoot));
+  rmSync(temporaryRomanianPath(fixtureRoot));
   rmSync(characterPortraitPath(fixtureRoot));
   rmSync(characterAlternatePortraitPath(fixtureRoot));
+}
+
+function temporaryRomanianPath(fixtureRoot: string): string {
+  return path.join(
+    fixtureRoot,
+    'src',
+    'content',
+    'ro',
+    'characters',
+    `${temporaryCharacterId}.json`,
+  );
+}
+
+function temporaryRomanianMessages(
+  fixture: CharacterSource,
+): Record<string, string> {
+  const messages: Record<string, string> = {
+    [`character.${temporaryCharacterId}.name`]: temporaryCharacterName,
+    [`character.${temporaryCharacterId}.description`]: fixture.description,
+    [`comeback.${temporaryCharacterId}.weak`]: fixture.comebacks.weak,
+    [`comeback.${temporaryCharacterId}.medium`]: fixture.comebacks.medium,
+    [`comeback.${temporaryCharacterId}.strong`]: fixture.comebacks.strong,
+  };
+  const textFields = [
+    'text',
+    'singularText',
+    'pluralText',
+    'personalSingularText',
+    'secondPersonText',
+  ] as const;
+  const keySuffixes: Record<(typeof textFields)[number], string> = {
+    text: '',
+    singularText: '.singular',
+    pluralText: '.plural',
+    personalSingularText: '.personal-singular',
+    secondPersonText: '.second-person',
+  };
+  for (const phrase of fixture.phrases) {
+    for (const field of textFields) {
+      const value = phrase[field];
+      if (typeof value !== 'string') continue;
+      messages[`phrase.${phrase.id}${keySuffixes[field]}`] = value;
+    }
+    if (phrase.role !== 'verb' && phrase.role !== 'predicate') continue;
+    // English can omit agreement forms that Romanian requires. The isolated
+    // character still needs the complete Romanian relation-key shape to pass
+    // the production catalog check when it is discovered by convention.
+    if (typeof phrase.pluralText !== 'string') {
+      messages[`phrase.${phrase.id}.plural`] = phrase.text;
+    }
+    if (typeof phrase.secondPersonText !== 'string') {
+      messages[`phrase.${phrase.id}.second-person`] =
+        phrase.pluralText ?? phrase.text;
+    }
+  }
+  return messages;
 }
 
 function characterJsonPath(fixtureRoot: string): string {
@@ -301,7 +385,7 @@ async function assertTemporaryCharacterIsPlayable(
     await assertSyntheticRosterLayout(page);
   }
   await page.setViewportSize({ width: 1280, height: 720 });
-  await page.getByRole('button', { name: 'Lock in Player one' }).click();
+  await page.getByTestId('lock-player-one').click();
   const temporaryOption = page.locator(
     `.roster-choice[data-character-id="${temporaryCharacterId}"][data-skin-id="default"]`,
   );

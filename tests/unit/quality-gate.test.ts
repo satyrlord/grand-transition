@@ -97,6 +97,7 @@ describe('quality-gate scaffold', () => {
         'node tools/audio-assets.mjs validate && ' +
         'node tools/neural-speech-assets.mjs validate && ' +
         'node tools/kokoro-gpu-assets.mjs validate && ' +
+        'node tools/romanian-speech-assets.mjs validate && ' +
         'vite build',
     );
     expect(packageJson.scripts['assets:build']).toContain(
@@ -144,15 +145,16 @@ describe('quality-gate scaffold', () => {
     expect(gate).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1'");
     expect(gate).toContain('fullTestPhases.has(phase)');
     expect(gate).toContain("['quick', 'full']");
-    const [calibration, ladder, gateMode, browserConfig, phaseRunner, balanceValidator] = await Promise.all([
+    const [calibration, ladder, lifecycle, gateMode, browserConfig, phaseRunner, balanceValidator] = await Promise.all([
       readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
       readFile(path.resolve('e2e', 'advanced-ai-ladder.spec.ts'), 'utf8'),
+      readFile(path.resolve('e2e', 'content-lifecycle.spec.ts'), 'utf8'),
       readFile(path.resolve('tools', 'quality-gate-mode.ts'), 'utf8'),
       readFile(path.resolve('vitest.browser.config.ts'), 'utf8'),
       readFile(path.resolve('tools', 'run-test-phase.mjs'), 'utf8'),
       readFile(balanceValidatorPath, 'utf8'),
     ]);
-    for (const source of [calibration, ladder]) {
+    for (const source of [calibration, ladder, lifecycle]) {
       expect(source).toContain('fullQualityGateRequested');
       expect(source).toContain('test.skip');
       expect(source).not.toContain('GRAND_TRANSITION_QUALITY_GATE ===');

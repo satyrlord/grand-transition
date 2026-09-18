@@ -171,7 +171,7 @@ for (const viewport of [
     for (const asset of characterManifest.assets) {
       await openSinglePlayerSetup(page, viewport);
       await selectSkin(page, 'one', asset);
-      await page.locator('[data-lock-player="one"]').click();
+      await page.getByTestId('lock-player-one').click();
       await selectSkin(page, 'two', asset);
       const longestScene = catalog.scenes.toSorted((left, right) =>
         catalog.locales[0]!.messages[right.nameKey]!.length -

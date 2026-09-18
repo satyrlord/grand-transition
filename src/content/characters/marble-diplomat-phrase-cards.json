@@ -673,7 +673,7 @@
       "role": "predicate",
       "text": "is bad luck with a diplomatic invitation",
       "singularText": "is bad luck with a diplomatic invitation",
-      "pluralText": "is bad luck with a diplomatic invitation",
+      "pluralText": "are bad luck with a diplomatic invitation",
       "personalSingularText": "is bad luck with a diplomatic invitation",
       "secondPersonText": "are bad luck with a diplomatic invitation",
       "tags": [
@@ -743,7 +743,7 @@
       "role": "predicate",
       "text": "is a public office with a private elevator",
       "singularText": "is a public office with a private elevator",
-      "pluralText": "is a public office with a private elevator",
+      "pluralText": "are a public office with a private elevator",
       "personalSingularText": "is a public office with a private elevator",
       "secondPersonText": "is a public office with a private elevator",
       "tags": [
@@ -813,7 +813,7 @@
       "role": "predicate",
       "text": "is a compromise in marble",
       "singularText": "is a compromise in marble",
-      "pluralText": "is a compromise in marble",
+      "pluralText": "are a compromise in marble",
       "personalSingularText": "is a compromise in marble",
       "secondPersonText": "is a compromise in marble",
       "tags": [

@@ -7,6 +7,10 @@ import {
 } from '../src/content/phrase-card-catalog';
 import { createSampleContent } from '../src/content/sample-content';
 import { createEnglishGameLocale } from '../src/localization/en-game-locale';
+import {
+  createRomanianGameLocale,
+  mergeRomanianMessageFiles,
+} from '../src/localization/ro-game-locale';
 import { indexGameLocaleBundles } from '../src/localization/game-locale-bundles';
 
 const repositoryRoot = path.resolve(
@@ -40,8 +44,12 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
   const englishGameLocale = createEnglishGameLocale(
     phraseCardCatalog.englishMessages,
   );
+  const romanianGameLocale = createRomanianGameLocale(
+    readRomanianMessages(rootDirectory),
+  );
   const sampleContent = createSampleContent(phraseCardCatalog, [
     englishGameLocale,
+    romanianGameLocale,
   ]);
   return {
     phraseCardCatalog,
@@ -49,6 +57,28 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
     gameLocaleBundles: indexGameLocaleBundles(sampleContent.locales),
     sampleContent,
   };
+}
+
+// The authored Romanian content tree is a flat locale-key map spread across
+// several files, so every file is merged into one message record.
+function readRomanianMessages(
+  rootDirectory: string,
+): Record<string, string> {
+  const sources: Record<string, Record<string, string>> = {};
+  for (const file of jsonFiles(
+    path.join(rootDirectory, 'src', 'content', 'ro'),
+  )) {
+    sources[path.relative(rootDirectory, file)] = readJson(file) as Record<string, string>;
+  }
+  return mergeRomanianMessageFiles(sources);
+}
+
+function* jsonFiles(directory: string): Generator<string> {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) yield* jsonFiles(full);
+    else if (entry.name.endsWith('.json')) yield full;
+  }
 }
 
 function readJson(filePath: string): unknown {

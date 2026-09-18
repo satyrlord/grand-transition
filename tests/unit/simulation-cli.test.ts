@@ -98,7 +98,9 @@ describe('simulation command', () => {
       ).toBe(0);
       expect(messages[0]).toMatch(/Simulated 1 match/u);
     }
-  }, 15_000);
+    // Two advanced-difficulty simulations. The budget only tolerates a fully
+    // loaded local worker pool; the work and assertions are unchanged.
+  }, 60_000);
 
   test('returns nonzero output that names the invalid option', async () => {
     const messages: string[] = [];

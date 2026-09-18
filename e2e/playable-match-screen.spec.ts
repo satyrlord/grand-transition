@@ -1712,7 +1712,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
   await expect(
     page.locator('[data-interruption="unsupported-viewport"]'),
   ).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Resume' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Resume', exact: true })).toHaveCount(0);
   await page.screenshot({
     path: testInfo.outputPath('unsupported-viewport-639x320.png'),
     fullPage: true,
@@ -1720,7 +1720,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
 
   await page.setViewportSize({ width: 1024, height: 720 });
   await expect(page.locator('[data-interruption="paused"]')).toBeVisible();
-  await page.getByRole('button', { name: 'Resume' }).click();
+  await page.getByRole('button', { name: 'Resume', exact: true }).click();
   await expect(page.locator('.match-screen')).toBeVisible();
   const timerAfterManualPause = Number(
     await page.locator('.timer-fact').getAttribute('data-timer'),
@@ -1750,7 +1750,7 @@ test('Pause settings apply to the resumed match', async ({
 }, testInfo) => {
   await startMatch(page);
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Resume' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Resume', exact: true })).toBeFocused();
 
   const thirtySeconds = page.getByRole('button', { name: '30 seconds' });
   const autoCompleteSettings = page
@@ -1890,7 +1890,7 @@ test('Pause settings apply to the resumed match', async ({
   }
   await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page.getByRole('button', { name: 'Resume' }).click();
+  await page.getByRole('button', { name: 'Resume', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeFocused();
   await expect(page.locator('.timer-fact')).toHaveAttribute(
     'data-timer',
@@ -1923,7 +1923,7 @@ test('Pause settings apply to the resumed match', async ({
       .getByRole('button', { name: 'Off', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Unlimited' }).click();
-  await page.getByRole('button', { name: 'Resume' }).click();
+  await page.getByRole('button', { name: 'Resume', exact: true }).click();
   await expect(page.locator('.timer-fact')).toHaveAttribute(
     'data-timer',
     'unlimited',
@@ -2067,7 +2067,7 @@ async function selectSetupCharacter(
   const fieldId =
     player === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId';
   if (player === 'two') {
-    await page.locator('[data-lock-player="one"]').click();
+    await page.getByTestId('lock-player-one').click();
   }
   await page.locator(fieldId).click();
   await page

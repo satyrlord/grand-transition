@@ -658,7 +658,7 @@
       "role": "predicate",
       "text": "is a wheelbarrow for the national budget",
       "singularText": "is a wheelbarrow for the national budget",
-      "pluralText": "is a wheelbarrow for the national budget",
+      "pluralText": "are a wheelbarrow for the national budget",
       "personalSingularText": "is a wheelbarrow for the national budget",
       "secondPersonText": "are a wheelbarrow for the national budget",
       "tags": [
@@ -728,7 +728,7 @@
       "role": "predicate",
       "text": "is a project with a ceremonial outcome",
       "singularText": "is a project with a ceremonial outcome",
-      "pluralText": "is a project with a ceremonial outcome",
+      "pluralText": "are a project with a ceremonial outcome",
       "personalSingularText": "is a project with a ceremonial outcome",
       "secondPersonText": "is a project with a ceremonial outcome",
       "tags": [
@@ -798,7 +798,7 @@
       "role": "predicate",
       "text": "is a receipt that promises maintenance",
       "singularText": "is a receipt that promises maintenance",
-      "pluralText": "is a receipt that promises maintenance",
+      "pluralText": "are a receipt that promises maintenance",
       "personalSingularText": "is a receipt that promises maintenance",
       "secondPersonText": "is a receipt that promises maintenance",
       "tags": [
