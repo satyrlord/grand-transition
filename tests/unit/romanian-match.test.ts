@@ -134,7 +134,10 @@ describe('Romanian deterministic play', () => {
   test('scores a matched semantic clause identically in both game locales', () => {
     const english = simulateMatch(
       seed,
-      createSimulationSetup(sampleContent, { aiDifficulty: 'palace-operator' }),
+      createSimulationSetup(sampleContent, {
+        aiDifficulty: 'palace-operator',
+        gameLocale: 'en',
+      }),
       englishContext,
     );
     // Replay the exact same accepted public commands in Romanian. The commands

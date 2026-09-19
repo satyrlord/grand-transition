@@ -7,6 +7,11 @@ import {
   type ComebackTier,
   type DraftCardReference,
 } from '../engine/draft-actions';
+import {
+  comebackChargeCap,
+  comebackRules,
+  comebackTiers,
+} from '../engine/continuation-comeback-resolution';
 import type { ComboFinisherScore } from '../engine/combo-finisher-scoring';
 import { extractScoreClauseAnchors } from '../engine/basic-scoring';
 import type { EnglishGrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
@@ -26,6 +31,7 @@ import { deepFreeze } from './deep-freeze';
 import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
 import { resolveCharacterFrames } from './character-state-assets';
 import { matchCharacterImageSizes, type CharacterFacing } from './character-assets';
+import { comebackSidekickBottomInset, resolveComebackSidekick } from './sidekick-assets';
 import {
   resolveSceneAsset,
   sceneImageSizes,
@@ -68,7 +74,14 @@ export type MatchPlayerView = Readonly<{
   portraitCue: CharacterCue;
   portraitFacing: CharacterFacing;
   portraitFrames: readonly CharacterFrame[] | null;
+  comebackSidekickUrl: string | null;
+  comebackSidekickBottomInset: number;
   pride: number;
+  comeback: Readonly<{
+    charge: number;
+    cap: number;
+    segments: number;
+  }>;
   isActive: boolean;
   sentence: string | null;
   comebackLine: string | null;
@@ -148,6 +161,8 @@ export type MatchScreenSnapshot = Readonly<{
     canRedraw: boolean;
     redrawUsed: boolean;
     comebackTiers: readonly ComebackTier[];
+    comebackTier: ComebackTier | null;
+    comebackDamageBonus: number | null;
   }>;
   arenaReaction:
     | Readonly<{
@@ -304,7 +319,14 @@ export function createMatchScreenSnapshot(
       portraitCue: projectCharacterCue(state, playerId, arenaReaction, reviewResolution),
       portraitFacing: skin.facing,
       portraitFrames: resolveCharacterFrames(player.characterId, skin.id),
+      comebackSidekickUrl: resolveComebackSidekick(player.characterId),
+      comebackSidekickBottomInset: comebackSidekickBottomInset(player.characterId),
       pride: reviewResolution?.players[playerId]?.prideAfter ?? player.pride,
+      comeback: {
+        charge: reviewResolution?.players[playerId]?.chargeAfter ?? player.comebackCharge,
+        cap: comebackChargeCap,
+        segments: comebackTiers.length,
+      },
       isActive: playerId === activePlayerId,
       sentence:
         reviewResolution?.players[playerId]?.constructionText ||
@@ -350,6 +372,12 @@ export function createMatchScreenSnapshot(
       latestPublicSentence(state, activePlayerId)
     : null;
 
+  const actionComebackTiers =
+    reviewResolution === null && viewerId === activePlayerId
+      ? activePlayer.availableComebackTiers
+      : [];
+  const actionComebackTier = actionComebackTiers.at(-1) ?? null;
+
   return deepFreeze({
     revision: state.commandHistory.length,
     phase: victory ? 'results' : state.phase,
@@ -392,10 +420,12 @@ export function createMatchScreenSnapshot(
         activePlayer.construction.status === 'building' &&
         !activePlayer.redrawUsed,
       redrawUsed: activePlayer.redrawUsed,
-      comebackTiers:
-        reviewResolution === null && viewerId === activePlayerId
-          ? activePlayer.availableComebackTiers
-          : [],
+      comebackTiers: actionComebackTiers,
+      comebackTier: actionComebackTier,
+      comebackDamageBonus:
+        actionComebackTier === null
+          ? null
+          : comebackRules[actionComebackTier].damageBonus,
     },
     arenaReaction: reviewResolution !== null || !arenaReaction
       ? null

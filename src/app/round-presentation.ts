@@ -10,6 +10,7 @@ import type { SpeechCancellationReason, SpeechDiagnostic } from '../audio/speech
 
 export type RoundPresentationFrame = Readonly<{
   phase: 'preparing' | 'reciting' | 'hesitating' | 'total' | 'strike' | 'points' | 'damage';
+  comebackActive: boolean;
   speakerId: string;
   text: string;
   segment: number;
@@ -63,7 +64,7 @@ export class RoundPresentation {
     this.order = [input.firstSpeakerId, ...Object.keys(input.resolution.players).filter((id) => id !== input.firstSpeakerId)];
     this.speakerIndex = 0;
     const pride = Object.fromEntries(Object.entries(input.resolution.players).map(([id, player]) => [id, player.prideBefore]));
-    this.frame = { phase: 'preparing', speakerId: input.firstSpeakerId, text: '', segment: -1,
+    this.frame = { phase: 'preparing', comebackActive: false, speakerId: input.firstSpeakerId, text: '', segment: -1,
       components: [], emphasis: [], outcome: null, impact: null, total: null, damage: null,
       pride, cues: this.idleCues() };
     if (paused) this.speech.pause(); else this.speech.resume();
@@ -74,7 +75,7 @@ export class RoundPresentation {
     cause: 'grammar-mistake' | 'turn-timeout', paused = false): void {
     this.cancel(); this.paused = paused; this.order = Object.keys(resolution.players);
     const player = resolution.players[playerId]!;
-    this.frame = deepFreeze({ phase: 'damage', speakerId: playerId, text: player.constructionText,
+    this.frame = deepFreeze({ phase: 'damage', comebackActive: false, speakerId: playerId, text: player.constructionText,
       segment: -1, components: [], emphasis: [], outcome: { kind: cause, playerId, amount: null },
       impact: { playerId, amount, prideAfter: player.prideAfter },
       total: null, damage: { playerId, amount },
@@ -135,7 +136,7 @@ export class RoundPresentation {
     const defender = input.resolution.players[defenderId]!;
     const text = player.insultText ? [player.insultText, player.comebackClosingLine].filter(Boolean).join(' ') : player.constructionText;
     this.bonuses.clear();
-    this.update({ speakerId: id, text, phase: 'preparing', segment: -1, components: [], emphasis: [], outcome: null,
+    this.update({ speakerId: id, text, phase: 'preparing', comebackActive: false, segment: -1, components: [], emphasis: [], outcome: null,
       impact: player.completeValidInsult ? {
         playerId: defenderId,
         amount: defender.opponentOutgoingDamage,
@@ -179,7 +180,7 @@ export class RoundPresentation {
 
   private reciting(): void {
     const id = this.frame!.speakerId;
-    this.update({ phase: 'reciting', cues: { ...this.idleCues(), [id]: {
+    this.update({ phase: 'reciting', comebackActive: false, cues: { ...this.idleCues(), [id]: {
       stateId: 'delivery', sequence: ++this.cueSequence, hold: true,
     } } });
   }
@@ -201,7 +202,14 @@ export class RoundPresentation {
     const frame = this.frame!;
     const player = this.input!.resolution.players[frame.speakerId]!;
     this.bonusEvents(player, index - 1);
-    this.update({ segment: index, components: (this.input!.components[frame.speakerId] ?? []).filter((part) => part.narrationIndex <= index) });
+    this.update({
+      segment: index,
+      comebackActive:
+        player.comebackActivated &&
+        index >= player.constructionPhrases.length,
+      components: (this.input!.components[frame.speakerId] ?? [])
+        .filter((part) => part.narrationIndex <= index),
+    });
   }
 
   private bonusEvents(player: MatchResolutionPlayer, completedIndex: number): void {
@@ -231,7 +239,6 @@ export class RoundPresentation {
     if (weaknesses.size) emphasis.push({ kind: 'weakness',
       playerId: this.order.find((id) => id !== player.playerId)!, text: [...weaknesses].join(' · '), value: 1.5 });
     if (player.comebackActivated && completedIndex >= player.constructionPhrases.length) {
-      play('comeback', 'comeback');
       emphasis.push({ kind: 'comeback', playerId: player.playerId, text: '', value: player.comebackBonus });
     }
     this.update({ emphasis });
@@ -242,7 +249,7 @@ export class RoundPresentation {
     const player = input.resolution.players[this.frame!.speakerId]!;
     this.record({ type: 'presentation-total', value: player.outgoingDamage });
     this.bonusEvents(player, Number.POSITIVE_INFINITY);
-    this.update({ phase: 'total', components: input.components[player.playerId] ?? [], total: player.outgoingDamage, cues: this.idleCues() });
+    this.update({ phase: 'total', comebackActive: false, components: input.components[player.playerId] ?? [], total: player.outgoingDamage, cues: this.idleCues() });
     this.schedule(() => {
       this.update({ phase: 'strike' });
       this.schedule(() => {

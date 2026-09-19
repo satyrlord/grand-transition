@@ -108,7 +108,7 @@ describe('Romanian replay, match-log, and history records', () => {
   });
 
   test('keeps the English catalog fixtures valid under the new version', () => {
-    const english = simulateMatch(seed, createSimulationSetup(sampleContent), englishContext);
+    const english = simulateMatch(seed, createSimulationSetup(sampleContent, { gameLocale: 'en' }), englishContext);
     expect(english.replay.setup.gameLocale).toBe('en');
     const replayed = replayMatch(english.replayBytes, englishContext);
     expect(replayed.ok).toBe(true);
@@ -120,7 +120,7 @@ describe('Romanian replay, match-log, and history records', () => {
       ok: false,
       code: 'invalid-replay',
     });
-    const english = simulateMatch(seed, createSimulationSetup(sampleContent), englishContext);
+    const english = simulateMatch(seed, createSimulationSetup(sampleContent, { gameLocale: 'en' }), englishContext);
     expect(replayMatch(english.replayBytes, romanianContext)).toEqual({
       ok: false,
       code: 'invalid-replay',

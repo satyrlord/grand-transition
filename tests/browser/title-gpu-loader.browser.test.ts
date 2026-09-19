@@ -15,26 +15,17 @@ async function mount(status: GrandTransitionTitle['gpuStatus'] = 'loading') {
   return title;
 }
 
-test.each(['idle', 'checking', 'loading'] as const)('blocks setup during %s and keeps menu controls available', async (status) => {
+test.each(['idle', 'checking', 'loading'] as const)('keeps setup available and prepares in the background during %s', async (status) => {
   const title = await mount(status);
   const buttons = [...title.querySelectorAll<HTMLButtonElement>('.title-setup-action')];
   expect(buttons).toHaveLength(3);
   const navigate = vi.fn();
   title.addEventListener('show-setup', navigate);
-  for (const button of buttons) {
-    expect(button.disabled).toBe(true);
-    button.click();
-    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  }
-  expect(navigate).not.toHaveBeenCalled();
   expect(title.querySelector<HTMLButtonElement>('.title-settings-action')!.disabled).toBe(false);
   expect(title.querySelector<HTMLButtonElement>('.title-history-action')!.disabled).toBe(false);
   const meter = title.querySelector('[role="progressbar"]')!;
   expect(meter.getAttribute('aria-label')).toBe('GPU voices');
   expect(meter.getAttribute('aria-valuenow')).toBe(status === 'loading' ? '42' : null);
-  title.gpuStatus = 'ready';
-  await title.updateComplete;
-  expect(title.querySelector('.title-voice-feedback')).toBeNull();
   for (const [index, mode] of ['ai', 'hotseat', 'ladder'].entries()) {
     const button = buttons[index]!;
     expect(button.disabled).toBe(false);
@@ -45,6 +36,11 @@ test.each(['idle', 'checking', 'loading'] as const)('blocks setup during %s and 
     expect(event.bubbles && event.composed).toBe(true);
   }
   expect(navigate).toHaveBeenCalledTimes(3);
+  // Readiness only removes the loader; it never had to unlock the menu.
+  title.gpuStatus = 'ready';
+  await title.updateComplete;
+  expect(title.querySelector('.title-voice-feedback')).toBeNull();
+  expect(buttons.every((button) => !button.disabled)).toBe(true);
 });
 
 test('unavailable GPU voices unblock setup with a main-menu fallback notice', async () => {
@@ -54,7 +50,7 @@ test('unavailable GPU voices unblock setup with a main-menu fallback notice', as
   expect(title.querySelector('.title-voice-fallback')?.textContent).toContain('Using local Piper voices.');
 });
 
-test.each(['speechEnabled', 'gpuVoices'] as const)('turning %s off immediately hides status and unblocks setup', async (preference) => {
+test.each(['speechEnabled', 'gpuVoices'] as const)('turning %s off immediately hides status and keeps setup available', async (preference) => {
   const title = await mount();
   title.settings = { ...defaultSettings, [preference]: false };
   await title.updateComplete;
@@ -65,11 +61,11 @@ test.each(['speechEnabled', 'gpuVoices'] as const)('turning %s off immediately h
   expect(title.querySelector('.title-voice-feedback')).toBeNull();
 });
 
-test('download completion still blocks setup until GPU initialization finishes', async () => {
+test('download completion keeps the preparing label without blocking setup', async () => {
   const title = await mount();
   title.gpuProgress = 1;
   await title.updateComplete;
-  expect(title.querySelector<HTMLButtonElement>('.title-setup-action')!.disabled).toBe(true);
+  expect(title.querySelector<HTMLButtonElement>('.title-setup-action')!.disabled).toBe(false);
   expect(title.querySelector('[role="progressbar"]')?.getAttribute('aria-valuetext')).toBe('Preparing GPU voices…');
   title.gpuProgress = Number.NaN;
   await title.updateComplete;

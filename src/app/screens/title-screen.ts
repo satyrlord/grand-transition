@@ -124,7 +124,7 @@ export class GrandTransitionTitle extends LitElement {
               <button
                 type="button"
                 class="title-setup-action"
-                ?disabled=${this.gpuLoading || (mode === 'hotseat' && !this.hotseatAvailable)}
+                ?disabled=${mode === 'hotseat' && !this.hotseatAvailable}
                 aria-describedby=${mode === 'hotseat' && !this.hotseatAvailable
                   ? 'hotseat-orientation-note' : this.gpuLoading ? 'title-gpu-status' : nothing}
                 @click=${() => this.showSetup(mode)}
@@ -215,7 +215,7 @@ export class GrandTransitionTitle extends LitElement {
   }
 
   private readonly showSetup = (mode: MenuMode): void => {
-    if (this.gpuLoading || (mode === 'hotseat' && !this.hotseatAvailable)) return;
+    if (mode === 'hotseat' && !this.hotseatAvailable) return;
     this.dispatchEvent(
       new CustomEvent(showSetupEventName, {
         bubbles: true,

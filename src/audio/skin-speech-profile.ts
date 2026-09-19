@@ -4,7 +4,7 @@ import { defaultGameLocale, type GameLocale } from '../localization/game-locale'
 export type SkinSpeechProfile = Readonly<{
   provider: 'neural' | 'microsoft-local';
   voiceUri: 'piper:vctk-p226' | 'piper:vctk-p225' | 'kokoro:bm_george' | 'kokoro:bf_emma' |
-    'piper:ro_RO-mihai-medium' | 'piper:ro_RO-liana-medium';
+    'piper:ro_RO-mihai-medium' | 'piper:ro_RO-liana-high';
   language: 'en-GB' | 'ro-RO';
   pitch: number;
   microsoftVoice?: 'David' | 'Mark' | 'Zira';
@@ -26,7 +26,7 @@ export function skinSpeechProfile(
   if (gameLocale === 'ro-RO') {
     return Object.freeze({
       provider: 'neural',
-      voiceUri: female ? 'piper:ro_RO-liana-medium' : 'piper:ro_RO-mihai-medium',
+      voiceUri: female ? 'piper:ro_RO-liana-high' : 'piper:ro_RO-mihai-medium',
       language: 'ro-RO',
       pitch: character.voiceProfile.pitch,
     });

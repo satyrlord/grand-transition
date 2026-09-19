@@ -22,6 +22,11 @@ import {
   sampleContent,
 } from '../../src/game-content';
 import {
+  defaultGameLocale,
+  gameLocales,
+  referenceGameLocale,
+} from '../../src/localization/game-locale';
+import {
   displayCharacterName,
   displaySceneName,
   romanianCharacterNames,
@@ -50,6 +55,14 @@ describe('interface locale', () => {
     expect(interfaceLocaleAutonyms['en']).toBe('English');
     expect(interfaceLocaleAutonyms['ro-RO']).toBe('Română');
     expect(interfaceLocale()).toBe('en');
+  });
+});
+
+describe('game locale defaults', () => {
+  test('defaults the game language to Romanian and keeps English as the authored reference', () => {
+    expect([...gameLocales]).toEqual(['en', 'ro-RO']);
+    expect(defaultGameLocale).toBe('ro-RO');
+    expect(referenceGameLocale).toBe('en');
   });
 });
 

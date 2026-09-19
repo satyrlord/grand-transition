@@ -101,6 +101,9 @@ export function runCatalogFoundationCharacter({
         characterIds: [characterId, opponent.id],
         sceneId: scene.id,
         aiDifficulty: 'local-radio-caller',
+        // This workload compares English fixtures, so it states its language
+        // instead of following the Romanian product default.
+        gameLocale: 'en',
       });
       const label = `${characterId} / ${opponent.id} / ${scene.id}; seed=${seed}`;
       try {

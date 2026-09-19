@@ -48,7 +48,7 @@ describe('local neural speech', () => {
     const h = harness({ strictVoiceUri: true, acceptsLanguage: (language) => language === 'ro-RO' });
     await h.initialize();
     const onError = vi.fn();
-    h.speech.speak({ text: 'Public.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-medium', onError });
+    h.speech.speak({ text: 'Public.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-high', onError });
     await Promise.resolve();
     expect(h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'synthesize')).toEqual([]);
     expect(onError).toHaveBeenCalledOnce();

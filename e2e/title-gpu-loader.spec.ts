@@ -23,14 +23,12 @@ async function holdGpu(page:Page,speechEnabled=true){
   },{...defaultSettings,speechEnabled});
 }
 
-test('main-menu GPU loading gates setup, fits supported sizes, and unlocks on readiness',async({page})=>{
+test('main-menu GPU loading keeps setup available, fits supported sizes, and clears on readiness',async({page})=>{
   await holdGpu(page);await page.goto('/grand-transition/');
   const setup=page.getByRole('button',{name:'Multiplayer'});
   const progress=page.getByRole('progressbar',{name:'GPU voices'});
-  await expect(progress).toHaveAttribute('aria-valuenow','40');await expect(setup).toBeDisabled();
+  await expect(progress).toHaveAttribute('aria-valuenow','40');await expect(setup).toBeEnabled();
   await page.locator('.title-emblem').evaluate(async (image:HTMLImageElement)=>image.decode());
-  await page.evaluate(()=>document.querySelector('grand-transition-title')!.dispatchEvent(new CustomEvent('show-setup',{bubbles:true,detail:{type:'show-setup',mode:'hotseat'}})));
-  await expect(setup).toBeVisible();
   for(const [width,height] of [[1024,720],[1024,768],[1280,720],[1920,1080]]){
     await page.setViewportSize({width:width!,height:height!});
     const bounds=await progress.boundingBox();expect(bounds).not.toBeNull();
@@ -44,16 +42,23 @@ test('main-menu GPU loading gates setup, fits supported sizes, and unlocks on re
   await expect(page.getByRole('button',{name:'Start match'})).toBeVisible();
 });
 
-test('GPU failure releases setup and presents the fallback on the menu',async({page})=>{
+test('a match opens while GPU voices are still preparing',async({page})=>{
   await holdGpu(page);await page.goto('/grand-transition/');
-  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeDisabled();
+  await expect(page.getByRole('progressbar',{name:'GPU voices'})).toBeVisible();
+  await page.getByRole('button',{name:'Multiplayer'}).click();
+  await expect(page.getByRole('button',{name:'Start match'})).toBeVisible();
+});
+
+test('GPU failure presents the fallback on the menu',async({page})=>{
+  await holdGpu(page);await page.goto('/grand-transition/');
+  await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
   await page.evaluate(()=>(window as unknown as {finishGpu:(ready:boolean)=>void}).finishGpu(false));
   await expect(page.getByRole('progressbar')).toHaveCount(0);
   await expect(page.getByText('GPU voices are unavailable. Using local Piper voices.',{exact:true})).toBeVisible();
   await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });
 
-test('speech off removes the loader immediately and unlocks setup',async({page})=>{
+test('speech off removes the loader immediately',async({page})=>{
   await holdGpu(page);await page.goto('/grand-transition/');
   await expect(page.getByRole('progressbar')).toBeVisible();
   await page.getByRole('button',{name:'Settings',exact:true}).click();

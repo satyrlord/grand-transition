@@ -8,7 +8,16 @@
 export type GameLocale = 'en' | 'ro-RO';
 
 export const gameLocales = ['en', 'ro-RO'] as const;
-export const defaultGameLocale: GameLocale = 'en';
+
+// Romanian is the default game language while English stays the default
+// interface language. A new installation, a rejected settings document, and a
+// headless caller that selects no locale all render game prose in Romanian.
+export const defaultGameLocale: GameLocale = 'ro-RO';
+
+// The game locale that owns the authored key set. Game content is authored in
+// English and translated outward, so locale parity is always measured against
+// English rather than against the default game language.
+export const referenceGameLocale: GameLocale = 'en';
 
 // Autonyms name each language in that language and are never translated.
 export const gameLocaleAutonyms: Readonly<Record<GameLocale, string>> =

@@ -118,7 +118,7 @@ test('opens an empty title-only history modal and traps keyboard focus', async (
 
 test.each([['ai', 'Single player'], ['hotseat', 'Hotseat']] as const)('history labels %s without changing stored mode', async (mode, label) => {
   const setup = {
-    ...createSimulationSetup(sampleContent),
+    ...createSimulationSetup(sampleContent, { gameLocale: 'en' }),
     mode,
     aiDifficulty: mode === 'ai' ? 'local-radio-caller' : null,
   };

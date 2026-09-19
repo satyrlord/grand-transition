@@ -1094,6 +1094,26 @@
   <source>Game language</source>
   <target>Limba jocului</target>
 </trans-unit>
+<trans-unit id="s8e52c9ecf3c109ba">
+  <source>Strong</source>
+  <target>Puternică</target>
+</trans-unit>
+<trans-unit id="sac6bdc71f750ac96">
+  <source>Medium</source>
+  <target>Medie</target>
+</trans-unit>
+<trans-unit id="s680119021b521f09">
+  <source>Weak</source>
+  <target>Slabă</target>
+</trans-unit>
+<trans-unit id="s2c56465877449213">
+  <source>Comeback: <x id="0" equiv-text="${tierLabel}"/>, <x id="1" equiv-text="${damageBonus}"/> bonus damage, <x id="2" equiv-text="${player.comeback.charge}"/> of <x id="3" equiv-text="${player.comeback.cap}"/> charge</source>
+  <target>Replică: <x id="0" equiv-text="${tierLabel}"/>, <x id="1" equiv-text="${damageBonus}"/> daune bonus, încărcare <x id="2" equiv-text="${player.comeback.charge}"/> din <x id="3" equiv-text="${player.comeback.cap}"/></target>
+</trans-unit>
+<trans-unit id="sfead05465f1ddff7">
+  <source>Comeback: <x id="0" equiv-text="${player.comeback.charge}"/> of <x id="1" equiv-text="${player.comeback.cap}"/> charge</source>
+  <target>Replică: încărcare <x id="0" equiv-text="${player.comeback.charge}"/> din <x id="1" equiv-text="${player.comeback.cap}"/></target>
+</trans-unit>
 </body>
 </file>
 </xliff>

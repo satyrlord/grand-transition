@@ -44,7 +44,7 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
   const select = page.locator('select[name="interfaceLocale"]');
   const gameSelect = page.locator('select[name="gameLocale"]');
   await expect(select).toHaveValue('en');
-  await expect(gameSelect).toHaveValue('en');
+  await expect(gameSelect).toHaveValue('ro-RO');
   await expect(select.getByRole('option', { name: 'English', exact: true })).toHaveCount(1);
   await expect(select.getByRole('option', { name: 'Română', exact: true })).toHaveCount(1);
   await expect(gameSelect.getByRole('option', { name: 'English', exact: true })).toHaveCount(1);
@@ -58,7 +58,7 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
   await expect(page.getByText('Limba jocului')).toBeVisible();
   await expect(page.locator('.settings-language select')).toHaveCount(2);
   await expect(select).toBeFocused();
-  await expect(gameSelect).toHaveValue('en');
+  await expect(gameSelect).toHaveValue('ro-RO');
   await expect
     .poll(() => page.evaluate(() => document.documentElement.lang))
     .toBe('ro-RO');
@@ -68,7 +68,7 @@ test('switches the whole interface to Romanian, keeps focus, and restores Englis
     .toMatchObject({
       schemaVersion: 3,
       interfaceLocale: 'ro-RO',
-      gameLocale: 'en',
+      gameLocale: 'ro-RO',
       tutorialMode: false,
     });
 
@@ -328,6 +328,38 @@ test('fits Romanian settings across the landscape matrix with keyboard and force
   await expect(page.locator('select[name="gameLocale"]')).toBeVisible();
 });
 
+test('defaults a new installation to an English interface and Romanian game text', async ({ page }) => {
+  await page.goto('/grand-transition/');
+  await page.evaluate((key) => localStorage.removeItem(key), settingsKey);
+  await page.reload();
+
+  await expect(page.locator('.title-settings-action')).toHaveText('Settings');
+  expect(await page.evaluate(() => document.documentElement.lang)).toBe('en');
+  await openSettings(page);
+  await expect(page.locator('select[name="interfaceLocale"]')).toHaveValue('en');
+  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('ro-RO');
+  await page.getByRole('button', { name: 'Close', exact: true }).first().click();
+
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup(page);
+  await page.getByRole('button', { name: 'Start match' }).click();
+  // The interface stays English while the shared board renders Romanian game
+  // prose annotated with the game locale it belongs to.
+  await expect(page.locator('.match-actions .action-primary').first().locator('.action-title'))
+    .toHaveText('End');
+  await expect(page.locator('.shared-board .phrase-card .card-phrase').first())
+    .toHaveAttribute('lang', 'ro-RO');
+  // Selecting a shared card passes the tablet, so the draft returns to the
+  // first player only after the second shared selection.
+  const legalNoun = page.locator(
+    '.shared-board [data-role="noun"] button[data-card-state="legal"]',
+  );
+  await legalNoun.first().click();
+  await legalNoun.first().click();
+  await expect(page.locator('.sentence-preview')).toHaveAttribute('lang', 'ro-RO');
+  await expect(page.locator('.sentence-preview')).not.toHaveText('Select a noun to begin.');
+});
+
 test('keeps both language drop-downs independent at every combination', async ({ page }) => {
   await page.goto('/grand-transition/');
   await page.evaluate((key) => localStorage.removeItem(key), settingsKey);
@@ -336,27 +368,31 @@ test('keeps both language drop-downs independent at every combination', async ({
 
   const interfaceSelect = page.locator('select[name="interfaceLocale"]');
   const gameSelect = page.locator('select[name="gameLocale"]');
+  // The fresh defaults already ship the Romanian game language, so the
+  // independence evidence starts from the English selection instead.
+  await expect(interfaceSelect).toHaveValue('en');
+  await expect(gameSelect).toHaveValue('ro-RO');
 
   await gameSelect.focus();
-  await gameSelect.selectOption('ro-RO');
-  await expect(gameSelect).toHaveValue('ro-RO');
+  await gameSelect.selectOption('en');
+  await expect(gameSelect).toHaveValue('en');
   await expect(interfaceSelect).toHaveValue('en');
   await expect(page.locator('#settings-title')).toHaveText('Settings');
   await expect(gameSelect).toBeFocused();
   await expect
     .poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), settingsKey))
-    .toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'ro-RO' });
+    .toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'en' });
 
   await interfaceSelect.focus();
   await interfaceSelect.selectOption('ro-RO');
   await expect(page.locator('#settings-title')).toHaveText('Setări');
-  await expect(gameSelect).toHaveValue('ro-RO');
+  await expect(gameSelect).toHaveValue('en');
   await expect(interfaceSelect).toBeFocused();
 
   await page.reload();
   await openSettings(page);
   await expect(page.locator('select[name="interfaceLocale"]')).toHaveValue('ro-RO');
-  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('ro-RO');
+  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('en');
 });
 
 test('rejects a document stored before the game language existed', async ({ page }) => {
@@ -367,7 +403,9 @@ test('rejects a document stored before the game language existed', async ({ page
   await expect(page.locator('.title-settings-action')).toHaveText('Settings');
   await openSettings(page);
   await expect(page.locator('select[name="interfaceLocale"]')).toHaveValue('en');
-  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('en');
+  // The rejected document falls back to the shipped defaults, whose game
+  // language is Romanian.
+  await expect(page.locator('select[name="gameLocale"]')).toHaveValue('ro-RO');
   // The rejected document keeps its bytes until the next explicit change.
   expect(
     await page.evaluate(

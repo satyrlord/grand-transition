@@ -1,6 +1,7 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
 import { formatInterfaceNumber } from '../interface-format';
 import { gameTextLanguage } from '../game-text-language';
+import { styleMap } from 'lit/directives/style-map.js';
 import {
   LitElement,
   html,
@@ -246,6 +247,7 @@ export class GrandTransitionMatch extends LitElement {
     } : player);
     const first = players[0]!;
     const second = players[1]!;
+    const activeDraftPlayer = this.snapshot.players.find((player) => player.isActive)!;
     const timerValue = this.remainingSeconds;
     const timerLabel =
       timerValue === null
@@ -505,18 +507,7 @@ export class GrandTransitionMatch extends LitElement {
                     >
                       <span class="action-title">${msg('End')}</span>
                     </button>
-                    <button
-                      type="button"
-                      class="action-secondary"
-                      @click=${this.useComeback}
-                      ?disabled=${
-                        this.commandPending ||
-                        !this.snapshot.sentenceComplete ||
-                        this.snapshot.actions.comebackTiers.length === 0
-                      }
-                    >
-                      <span class="action-title">${msg('Comeback')}</span>
-                    </button>
+                    ${this.renderComebackAction(activeDraftPlayer)}
                         </nav>`
                   }
                 </section>`
@@ -656,7 +647,24 @@ export class GrandTransitionMatch extends LitElement {
     const speaker = frame.speakerId === first.playerId ? first : second;
     const side = (id: string) => id === first.playerId ? 'red' : 'blue';
     const impacted = frame.impact?.playerId === first.playerId ? first : second;
-    return html`<section class="delivery-receipt" data-speaker=${frame.speakerId}
+    return html`${speaker.comebackLine && speaker.comebackSidekickUrl
+      ? html`<div
+          class="comeback-sidekick"
+          data-side=${side(speaker.playerId)}
+          data-visible=${frame.comebackActive ? 'true' : 'false'}
+          style=${styleMap({ '--sidekick-bottom-inset': `${speaker.comebackSidekickBottomInset * 100}%` })}
+          aria-hidden="true"
+        >
+          <img
+            src=${speaker.comebackSidekickUrl}
+            alt=""
+            width="1254"
+            height="1254"
+            draggable="false"
+          />
+        </div>`
+      : nothing}
+    <section class="delivery-receipt" data-speaker=${frame.speakerId}
       data-side=${side(speaker.playerId)} role="log" aria-live="polite" aria-relevant="additions text"
       aria-label=${msg(str`${speaker.characterName}'s score`)}>
       ${frame.phase === 'hesitating' ? html`<p class="delivery-status">${msg('Hesitation')}</p>` : nothing}
@@ -678,6 +686,48 @@ export class GrandTransitionMatch extends LitElement {
         ? this.renderDeliveryEmphasis(player.playerId)
         : nothing}
     </div>`)}`;
+  }
+
+  private renderComebackAction(player: MatchPlayerView): TemplateResult {
+    const fill = player.comeback.cap > 0
+      ? Math.min(1, Math.max(0, player.comeback.charge / player.comeback.cap))
+      : 0;
+    const tier = this.snapshot!.actions.comebackTier;
+    const tierLabel = tier === 'strong'
+      ? msg('Strong')
+      : tier === 'medium'
+        ? msg('Medium')
+        : tier === 'weak'
+          ? msg('Weak')
+          : null;
+    const damageBonus = this.snapshot!.actions.comebackDamageBonus;
+    const accessibleLabel = tierLabel && damageBonus !== null
+      ? msg(str`Comeback: ${tierLabel}, ${damageBonus} bonus damage, ${player.comeback.charge} of ${player.comeback.cap} charge`)
+      : msg(str`Comeback: ${player.comeback.charge} of ${player.comeback.cap} charge`);
+    return html`<button
+      type="button"
+      class="action-secondary comeback-action"
+      aria-label=${accessibleLabel}
+      @click=${this.useComeback}
+      ?disabled=${
+        this.commandPending ||
+        !this.snapshot!.sentenceComplete ||
+        this.snapshot!.actions.comebackTiers.length === 0
+      }
+    >
+      <span
+        class="comeback-action__fill"
+        aria-hidden="true"
+        style=${styleMap({ transform: `scaleX(${fill})` })}
+      ></span>
+      <span class="comeback-action__segments" aria-hidden="true">
+        ${Array.from(
+          { length: player.comeback.segments },
+          () => html`<span></span>`,
+        )}
+      </span>
+      <span class="action-title">${msg('Comeback')}</span>
+    </button>`;
   }
 
   private renderDeliveryEmphasis(playerId: string): TemplateResult[] {

@@ -52,6 +52,16 @@ describe('public audio event projection', () => {
     });
     expect(play).toHaveBeenCalledExactlyOnceWith('commit');
   });
+
+  test('an accepted comeback plays its dedicated cue immediately', () => {
+    const play = vi.fn();
+    new GameAudio({ play } as unknown as AudioPort).accepted({
+      type: 'select-comeback', source: 'user', actorId: 'one', payload: {},
+    }, {
+      state: {} as MatchTransition['state'], reaction: null, review: null,
+    });
+    expect(play).toHaveBeenCalledExactlyOnceWith('comeback');
+  });
 });
 
 describe('finalized public speech', () => {

@@ -75,6 +75,7 @@ output/
 docs/reviews/
 HISTORY.md
 tools/*
+!tools/sidekick-assets.mjs
 !tools/final-content-volumes.ts
 !tools/check-final-content-volumes.ts
 !tools/validate-content-balance.ts

@@ -409,6 +409,7 @@
       "id": "the-working-class",
       "role": "noun",
       "text": "the working class",
+      "grammaticalNumber": "plural",
       "referentKind": "personal",
       "tags": [
         "legacy",

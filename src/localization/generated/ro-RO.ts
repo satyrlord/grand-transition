@@ -64,6 +64,7 @@
 's2b102584a7b35763': `Schimbă alegerea`,
 's2b8521b62ec5bceb': str`+${0} daune combo`,
 's2c460f7c50d93c03': `Volum principal`,
+'s2c56465877449213': str`Replică: ${0}, ${1} daune bonus, încărcare ${2} din ${3}`,
 's2cb170685cbadb1f': `Rândul a expirat`,
 's2d0fc88aea214f62': `Se încarcă vocile GPU…`,
 's2d258cf48ffbba41': `Combo`,
@@ -127,6 +128,7 @@
 's65bea29068a8d288': `Pierdere de mândrie`,
 's65e20e46b64ca73f': `Doi jucători necesită orientarea orizontală.`,
 's66722bc2ea775e05': `Indisponibil`,
+'s680119021b521f09': `Slabă`,
 's68965ab6d078b29b': `Aspectul jucătorului unu este necunoscut. Alege un aspect disponibil.`,
 's68f9d93cb9eb486b': `Doi jucători`,
 's699d5c494392e7ff': `Volumul vocii`,
@@ -162,6 +164,7 @@
 's899bcb14c39753fe': `Nu există încă meciuri încheiate.`,
 's8c4eba6b3017d779': `Volumul efectelor`,
 's8dc554dfcc22ee52': `Modul lipsește. Revino la Meniul principal și alege Un jucător, Doi jucători sau Campanie.`,
+'s8e52c9ecf3c109ba': `Puternică`,
 's8f0a15630eb2a6cf': `Fără bonus de combo`,
 's8f1034e1a9d93097': `Final`,
 's8f7406db8693cb15': `0 mândrie pierdută`,
@@ -191,6 +194,7 @@
 'saa3efba1f0c816b7': `Vorbire`,
 'sabbbade70d4b56c0': `Voci GPU`,
 'sabfb27624e505967': `Setările meciului`,
+'sac6bdc71f750ac96': `Medie`,
 'saca03c51ee091fa2': `rând activ`,
 'sacaa59d79cb63175': `Continuare menținută`,
 'sae959b2525196df3': `Progresul meciului curent se va pierde.`,
@@ -282,5 +286,6 @@
 'sf96e6859db7c2efd': `Aspectul jucătorului unu lipsește. Alege un aspect disponibil.`,
 'sfa5bc01ce096cdad': `Canalul 3`,
 'sfd5fb0cd89eec929': `Nouă victorii înregistrate`,
+'sfead05465f1ddff7': str`Replică: încărcare ${0} din ${1}`,
     };
   

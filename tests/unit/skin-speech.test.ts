@@ -21,20 +21,20 @@ afterEach(() => vi.useRealTimers());
 
 describe('skin voice assignments', () => {
   test('GPU mode selects George and Emma while Government AI retains its native provider', () => {
-    expect(skinSpeechProfile(character('red-folded-chairman'), 'default', 'gpu')).toMatchObject({provider:'neural',voiceUri:'kokoro:bm_george',pitch:0.9});
-    expect(skinSpeechProfile(character('luxury-minister'), 'default', 'gpu')).toMatchObject({provider:'neural',voiceUri:'kokoro:bf_emma'});
-    expect(skinSpeechProfile(character('government-ai','robot'), 'schoolteacher', 'gpu')).toMatchObject({provider:'microsoft-local',microsoftVoice:'Zira',voiceUri:'kokoro:bf_emma'});
+    expect(skinSpeechProfile(character('red-folded-chairman'), 'default', 'gpu', 'en')).toMatchObject({provider:'neural',voiceUri:'kokoro:bm_george',pitch:0.9});
+    expect(skinSpeechProfile(character('luxury-minister'), 'default', 'gpu', 'en')).toMatchObject({provider:'neural',voiceUri:'kokoro:bf_emma'});
+    expect(skinSpeechProfile(character('government-ai','robot'), 'schoolteacher', 'gpu', 'en')).toMatchObject({provider:'microsoft-local',microsoftVoice:'Zira',voiceUri:'kokoro:bf_emma'});
   });
   test('the robot roster exposes David, Mark, and schoolteacher Zira in skin order', () => {
     expect(characterSkins['government-ai']?.map(({ id }) => id)).toEqual(['default', 'alternate', 'schoolteacher']);
   });
   test.each(femaleSpeechSkins)('%s uses the female British neural fallback', (id) => {
     const [ownerId, skinId = 'default'] = id.split('--');
-    expect(skinSpeechProfile(character(ownerId!), skinId)).toMatchObject({ voiceUri: 'piper:vctk-p225', language: 'en-GB' });
+    expect(skinSpeechProfile(character(ownerId!), skinId, 'piper', 'en')).toMatchObject({ voiceUri: 'piper:vctk-p225', language: 'en-GB' });
   });
   test('male defaults and male alternate skins use George', () => {
     for (const [id, skin] of [['red-folded-chairman', 'default'], ['velvet-mogul', 'silk-diplomat']]) {
-      expect(skinSpeechProfile(character(id!), skin!)).toEqual({ provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 0.9 });
+      expect(skinSpeechProfile(character(id!), skin!, 'piper', 'en')).toEqual({ provider: 'neural', voiceUri: 'piper:vctk-p226', language: 'en-GB', pitch: 0.9 });
     }
   });
   test('Romanian game speech maps the George, David and Mark assignments onto Mihai', () => {
@@ -48,7 +48,7 @@ describe('skin voice assignments', () => {
     for (const id of femaleSpeechSkins) {
       const [ownerId, skinId = 'default'] = id.split('--');
       expect(skinSpeechProfile(character(ownerId!), skinId, 'piper', 'ro-RO')).toMatchObject({
-        voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
+        voiceUri: 'piper:ro_RO-liana-high', language: 'ro-RO',
       });
     }
   });
@@ -57,7 +57,7 @@ describe('skin voice assignments', () => {
       const profile = skinSpeechProfile(character('government-ai', 'robot'), skin, 'piper', 'ro-RO');
       expect(profile.provider).toBe('neural');
       expect(profile.microsoftVoice).toBeUndefined();
-      expect(['piper:ro_RO-mihai-medium', 'piper:ro_RO-liana-medium']).toContain(profile.voiceUri);
+      expect(['piper:ro_RO-mihai-medium', 'piper:ro_RO-liana-high']).toContain(profile.voiceUri);
     }
   });
   test('only the game locale selects the voice; an English match keeps English speech', () => {
@@ -70,7 +70,7 @@ describe('skin voice assignments', () => {
   });
   test.each([['default', 'David', 'vctk-p226'], ['alternate', 'Mark', 'vctk-p226'], ['schoolteacher', 'Zira', 'vctk-p225']] as const)(
     'robot skin %s selects %s and retains the appropriate neural fallback', (skin, name, fallback) => {
-      expect(skinSpeechProfile(character('government-ai', 'robot'), skin)).toMatchObject({
+      expect(skinSpeechProfile(character('government-ai', 'robot'), skin, 'piper', 'en')).toMatchObject({
         provider: 'microsoft-local', microsoftVoice: name, voiceUri: `piper:${fallback}`,
       });
     });
@@ -182,7 +182,7 @@ test.each(['throw', 'error-event'] as const)('native synchronous %s preserves ne
   const game = new GameSpeech(new CharacterSpeech(neural, h.port), diagnostics);
   game.userGesture();
   expect(game.deliver(publicPlayer, { ...defaultSettings, speechEnabled: true },
-    skinSpeechProfile(character('government-ai', 'robot'), 'default'), h.events)).toBe(true);
+    skinSpeechProfile(character('government-ai', 'robot'), 'default', 'piper', 'en'), h.events)).toBe(true);
   expect(requests).toHaveLength(1);
   expect(requests[0]).toMatchObject({ text: publicPlayer.insultText, voiceUri: 'piper:vctk-p226' });
   expect(diagnostics).toHaveBeenCalledWith(expect.objectContaining({

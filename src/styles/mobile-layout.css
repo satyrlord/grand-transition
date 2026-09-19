@@ -186,6 +186,10 @@
     .match-player h2 { width: 100%; min-height: 2.3em; font-size: 0.875rem; text-align: center; }
     .player-turn-status { min-width: 0; padding: 0.125rem 0.25rem; font-size: 0.6875rem; }
     .player-health { gap: 0.25rem; }
+    .comeback-sidekick {
+      --sidekick-height: calc(var(--mobile-art-height) * 0.264);
+      --sidekick-center: calc(var(--mobile-scene-width) / 2);
+    }
     .character-frame {
       top: calc(var(--mobile-hud-height) + var(--mobile-art-height) * 0.15);
       width: calc(var(--mobile-art-height) * 0.88);
@@ -330,5 +334,31 @@
     .match-actions[data-side] { grid-row: 4; }
     .delivery-receipt[data-side] { grid-column: 2; grid-row: 1 / span 4; }
     .delivery-emphasis[data-side], .delivery-impact-record[data-side] { grid-column: 2; }
+
+    .comeback-sidekick {
+      --sidekick-center: calc((100vw + var(--mobile-scene-width)) / 2);
+    }
+
+    .broadcast-stage:has(.comeback-sidekick[data-visible='true']) .delivery-receipt {
+      align-self: start;
+      max-height: calc(100svh - var(--mobile-art-height) * 0.264 - 2.5rem);
+    }
+
+    .broadcast-stage:has(.comeback-sidekick[data-visible='true']) .delivery-components {
+      overflow: auto;
+    }
+
+    .broadcast-stage:has(.comeback-sidekick[data-visible='true']):has(.delivery-emphasis p) .delivery-receipt {
+      max-height: calc(100svh - var(--mobile-art-height) * 0.264 - 7rem);
+    }
+
+    .broadcast-stage:has(.comeback-sidekick[data-visible='true']) .delivery-emphasis[data-side] {
+      position: fixed;
+      right: 0;
+      bottom: calc(var(--mobile-art-height) * 0.264 + 1rem);
+      left: var(--mobile-scene-width);
+      max-height: 4rem;
+      overflow: auto;
+    }
   }
 }

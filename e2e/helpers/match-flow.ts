@@ -75,8 +75,12 @@ export async function useFixedBrowserMatchSeed(
   }, {
     fixedSeed: seed,
     settingsKey: settingsStorageKey,
+    // These flows drive the authored English catalog, so the harness selects
+    // both languages explicitly instead of following the product defaults.
     settings: encodeSettings({
       ...defaultSettings,
+      interfaceLocale: 'en',
+      gameLocale: 'en',
       speechEnabled: false,
       gpuVoices: false,
     }),

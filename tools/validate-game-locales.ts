@@ -10,7 +10,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
-import { defaultGameLocale } from '../src/localization/game-locale';
+import { referenceGameLocale } from '../src/localization/game-locale';
 import {
   romanianCharacterNames,
   romanianSceneNames,
@@ -32,7 +32,7 @@ export function validateGameLocales(
     (bundle) => bundle.locale === 'ro-RO',
   );
   return Object.freeze([
-    ...validateGameLocaleBundles(sampleContent.locales, defaultGameLocale),
+    ...validateGameLocaleBundles(sampleContent.locales, referenceGameLocale),
     ...(romanian ? [
       ...validateLocaleNameParity(romanian.messages, {
         character: romanianCharacterNames,

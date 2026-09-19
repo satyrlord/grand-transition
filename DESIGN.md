@@ -24,6 +24,7 @@ colors:
   reaction-apricot: '#ffb07a'
   phrase-noun: 'rgb(72 172 104)'
   phrase-verb: 'rgb(201 55 48)'
+  phrase-predicate: 'rgb(46 158 162)'
   phrase-modifier: 'rgb(139 90 177)'
   phrase-ending: 'rgb(53 124 199)'
   phrase-continuation: 'rgb(154 161 170)'
@@ -391,9 +392,9 @@ reaction, focus, timer, and phrase-role colors only for their named states.
   headings, active borders, signal rails, and channel plaques.
 - **Bright Television Blue:** Selected state and precise interactive emphasis
   for blue-owned controls.
-- **Phrase role colors:** Green noun, red verb or predicate, purple modifier,
-  blue ending, gray continuation, and orange conjunction. They blend into
-  phrase text only when Phrase color coding is on.
+- **Phrase role colors:** Green noun, red verb, teal predicate, purple
+  modifier, blue ending, gray continuation, and orange conjunction. They blend
+  into phrase text only when Phrase color coding is on.
 
 ### Neutral
 
@@ -673,7 +674,8 @@ tap-water bottle plus one distinct sparkling-water bottle.
 The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
-the complete character name in two reserved lines, visible Pride label, and Pride meter and remain
+the complete character name in two reserved lines and the visible Pride label
+and meter, and remain
 outside the portrait bounds.
 
 Only the active strip states “Your turn.” Its portrait stays bright under a
@@ -817,8 +819,36 @@ landscape recommendation. The recommended PC viewport remains 1920 by 1080.
 
 ### Comeback action
 
-The comeback action becomes available after a complete sentence and one filled
-tier. It uses the strongest filled tier immediately.
+The Comeback button is always visible beneath End in the active-side perimeter
+rail. Its surface is divided into three permanent brass-bordered cells and is
+the only comeback-charge display. The blue fill progresses continuously and
+reaches each boundary at 20, 40, and 60 charge. A complete sentence and one full
+tier enable the button; activation uses the strongest filled tier immediately.
+Spending lowers the same fill to the remaining charge. Its accessible name
+reports tier, bonus, and exact charge. Forced colors preserve the cells and
+fill, and reduced motion removes the fill transition.
+
+An approved character-owned Comeback sidekick is a separate static transparent
+prop layer. It stays hidden while speech prepares and throughout the main
+insult. When the separate Comeback closing-line audio segment starts, it slides
+from the narrator's outer viewport border and rests in the lower central lane
+on the speech and common-phrase axis, completes its entrance within the short
+closing line, anchors its visible feet or object base to the viewport bottom,
+remains above scene art and below interface
+records, and exits immediately when that speech ends so score rows cannot cover
+it. Player two mirrors the same
+right-facing master. Sidekicks use about one-
+third of the visible portrait height. Reduced motion replaces travel with an
+immediate appearance. Characters without an approved asset show no placeholder.
+
+Every Comeback sidekick uses a deliberately cartoony, anthropomorphic design.
+Human concepts become compact stringless minions, animal concepts become
+expressive pets, and object, plant, or vehicle concepts retain a recognizable
+base silhouette while gaining an integrated face or clear human-like character
+acting. Use bold connected shapes, thick near-opaque contours, and simplified
+details that survive the native-alpha contract. Do not ship a realistic inert
+object, realistic animal, puppet strings, marionette joints, hairline rigging,
+detached haze, or fine semi-transparent ornament as a sidekick.
 
 ## Preferred and prohibited patterns
 

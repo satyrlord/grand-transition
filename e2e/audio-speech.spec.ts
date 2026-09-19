@@ -70,7 +70,7 @@ async function probe(page: Page, unavailable = false) {
       speak: () => { throw new Error('Legacy platform speech must not run.'); },
     } });
 
-  }, { unavailable, settings: { ...defaultSettings, speechEnabled: false, gpuVoices: false } });
+  }, { unavailable, settings: { ...defaultSettings, interfaceLocale: 'en', gameLocale: 'en', speechEnabled: false, gpuVoices: false } });
 }
 
 async function ready(page: Page) {

@@ -37,11 +37,11 @@ describe('neural engine selection', () => {
     h.router.configure({ speechEnabled: true, gpuVoices: false });
     // Nothing Romanian is created before Romanian speech is actually requested.
     expect(h.engines.map((engine) => engine.mode)).toEqual(['piper']);
-    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-medium' });
-    expect(h.engines.map((engine) => engine.mode)).toEqual(['piper', 'ro']);
+    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-high' });
+    expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'ro']);
     const romanian = h.engines.find((engine) => engine.mode === 'ro')!;
     expect(romanian.speak).toHaveBeenCalledWith(expect.objectContaining({
-      voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
+      voiceUri: 'piper:ro_RO-liana-high', language: 'ro-RO',
     }));
     expect(h.engines[0]!.speak).not.toHaveBeenCalled();
     h.router.dispose();
@@ -71,6 +71,17 @@ describe('neural engine selection', () => {
     expect(h.engines[1]!.speak.mock.calls[0]![0].voiceUri).toBe('kokoro:bm_george');
     h.router.dispose();
     expect(h.router.available).toBe(false); expect(h.router.status).toBeDefined();
+  });
+  test('re-applying settings neither releases nor restarts an in-flight GPU preparation', async () => {
+    const h = harness(); h.router.configure({ speechEnabled:true, gpuVoices:true }); await h.router.initialize();
+    expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'gpu']);
+    const gpu = h.engines[1]!;
+    // Every Settings change re-applies the accepted document; preparation survives it.
+    h.router.configure({ speechEnabled:true, gpuVoices:true }); await h.router.preload();
+    expect(h.engines).toHaveLength(2); expect(gpu.dispose).not.toHaveBeenCalled();
+    expect(h.router.gpuStatus).toBe('loading');
+    h.ready(1); expect(h.router.gpuStatus).toBe('ready');
+    h.router.dispose();
   });
   test('maps both voices and actual diagnostics consistently for preparation and playback', async () => {
     const h = harness(); h.router.configure({ speechEnabled:true, gpuVoices:true }); await h.router.initialize(); h.ready(1); h.router.beginMatch();

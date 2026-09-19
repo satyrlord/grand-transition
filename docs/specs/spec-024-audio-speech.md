@@ -88,10 +88,12 @@ Effects volume or any match state.
 
 After decode, effects begin within 100 milliseconds of their public events.
 A phrase pick produces role-select. A grammar mistake produces grammar-mistake.
-End, Comeback, and a selection that ends participation produce commit. Damage
-1 through 15 uses light hit. Damage 16 or more uses heavy hit. Zero is silent.
-Narration markers schedule applied combo, weakness, and comeback cues. Each
-event fires once per delivery. Stale callbacks cannot repeat it.
+End and a phrase selection that ends participation produce commit. An accepted
+Comeback produces its dedicated cartoon-impact cue immediately and does not
+repeat that cue during narration. Damage 1 through 15 uses light hit. Damage 16
+or more uses heavy hit. Zero is silent. Narration markers schedule applied
+combo and weakness cues. Each event fires once per delivery. Stale callbacks
+cannot repeat it.
 
 Audio status changes refresh title Settings only. They must not replace a match
 snapshot, close a disclosed waiting sentence, or restart presentation.
@@ -218,10 +220,15 @@ verifies these thresholds and failure paths.
 
 Piper initializes alongside GPU loading. The main menu shows a styled GPU
 progress indicator while GPU support is checked, assets load, and warmup runs.
-Disable all three Main Menu mode buttons during these pending states, including initial idle, and
-guard its command. Hide the indicator when speech or GPU voices is off. Keep
-Settings available for opt-out. Readiness hides the indicator and unlocks setup.
-GPU unavailability also unlocks setup and shows a concise Piper fallback notice.
+Preparation is asynchronous and never pauses the menu: keep all three Main Menu
+mode buttons enabled during these pending states and accept their commands. A
+match that starts while preparation is still running uses Piper throughout,
+because the ready engine is selected once at match start.
+Hide the indicator when speech or GPU voices is off. Keep
+Settings available for opt-out; changing any other setting neither cancels nor
+restarts an in-flight preparation, and only turning Speech enabled or GPU
+voices off releases the GPU worker. Readiness hides the indicator.
+GPU unavailability also hides it and shows a concise Piper fallback notice.
 No initialization progress for 120 seconds fails GPU preparation; ongoing
 download progress resets that inactivity timer. Readiness and disposal clear it.
 GPU loading status belongs to the main menu, not the Settings dialog.

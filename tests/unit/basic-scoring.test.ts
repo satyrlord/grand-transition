@@ -39,6 +39,17 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
 
 describe('Hollywood Roast clause scoring', () => {
 
+  test.each(['marble-diplomat-foundation-modifier', 'marble-diplomat-review-modifier'])(
+    'neutral modifier %s does not activate luxury, elitism, or corruption weaknesses',
+    (modifier) => {
+      const ids = ['you', 'is', 'my-opponent', modifier];
+      const result = score(ids, ['luxury', 'elitism', 'corruption']);
+      expect(result.finalDamage).toBeGreaterThan(0);
+      expect(result.finalDamage).toBe(score(ids).finalDamage);
+      expect(result.breakdown.some((item) => item.kind === 'weakness-match')).toBe(false);
+    },
+  );
+
   test.each(['brought-the-miners-to-bucharest', 'brings-the-miners-to-bucharest', 'will-bring-the-miners-to-bucharest'])(
     'the concise %s predicate does not imply a credibility weakness',
     (predicate) => {

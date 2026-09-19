@@ -63,12 +63,15 @@ brass-and-ink voice loader below its actions during GPU preparation and loading.
 The meter has an accessible name and a numeric value only when download
 progress is known. It uses restrained motion that stops with reduced motion,
 and remains legible in forced colors. Loading does not move the menu actions.
-All three native mode buttons are disabled until GPU voices are ready or
-unavailable, including the initial pending state. Its command handler also
-rejects activation during that wait. Settings and Match history remain usable.
-Ready removes the loader and enables setup. Unavailable removes the loader,
-enables setup, and shows a compact local Piper fallback notice. Turning either
-Speech enabled or GPU voices off removes GPU status and enables setup
+Preparation never blocks the menu: all three native mode buttons stay enabled
+and their command handler accepts activation while GPU voices are idle,
+checking, or loading. A match started before preparation finishes plays with the
+local Piper voices for that match, and Milestone 024 selects the ready GPU
+voices from the next match. Settings and Match history remain usable, and
+changing any other setting neither cancels nor restarts preparation. Ready
+removes the loader. Unavailable removes the loader and shows a compact local
+Piper fallback notice. Turning either
+Speech enabled or GPU voices off removes GPU status
 immediately. No GPU status is shown while speech is off. Milestone 024 owns
 preparation, timeout, and fallback behavior; Milestone 020 owns the preferences.
 
@@ -186,7 +189,8 @@ hide validation.
   title. A later setup visit restores the values. Each title or setup transition
   moves focus to the destination heading.
 - **AC-015-13:** Each Main Menu mode opens the correct setup. Setup has no mode
-  selector. All three mode buttons respect GPU loading. Switching modes preserves
+  selector. All three mode buttons stay available during GPU preparation and
+  open their setup. Switching modes preserves
   Ladder progress and supported viewports keep all menu actions visible.
 - **AC-015-02:** Defaults create the exact typed setup payload, including both
   default skin IDs. A mirror match with different skins succeeds.

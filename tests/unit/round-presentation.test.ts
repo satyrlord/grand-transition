@@ -128,7 +128,7 @@ describe('reference round presentation', () => {
     h.advance(200); expect(h.requests).toHaveLength(2); expect(h.completed).not.toHaveBeenCalled();
   });
 
-  test('bonus cues follow completed phrases once and the comeback follows its closing line', () => {
+  test('bonus cues follow completed phrases once without replaying the accepted comeback cue', () => {
     const h = harness();
     h.controller.start({ ...h.input, components: {
       ...h.input.components,
@@ -141,13 +141,18 @@ describe('reference round presentation', () => {
       ] },
     } }) });
     const voice = h.requests[0]!;
-    voice.onStart!(); voice.onSegment!(0); expect(h.play).not.toHaveBeenCalled();
+    voice.onStart!(); expect(h.frame()?.comebackActive).toBe(false);
+    voice.onSegment!(0); expect(h.play).not.toHaveBeenCalled();
+    expect(h.frame()?.comebackActive).toBe(false);
     voice.onSegment!(1); expect(h.play.mock.calls.flat()).toEqual(['combo']);
+    expect(h.frame()?.comebackActive).toBe(false);
     expect(h.frame()?.emphasis).toContainEqual({ kind: 'combo', playerId: 'two', text: 'Your audit', value: 2 });
     voice.onSegment!(2); expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
+    expect(h.frame()?.comebackActive).toBe(true);
     expect(h.frame()?.emphasis).toContainEqual({ kind: 'weakness', playerId: 'one', text: 'evidence', value: 1.5 });
     voice.onSegment!(2); voice.onEnd!(); voice.onEnd!();
-    expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness', 'comeback']);
+    expect(h.frame()?.comebackActive).toBe(false);
+    expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
   });
 
   test('reports a broken continuation only when damage lands', () => {

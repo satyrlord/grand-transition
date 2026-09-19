@@ -18,7 +18,7 @@ import { replaySchemaVersion } from '../../src/persistence/codecs/replay-codec';
 
 const completed = simulateMatch(
   20_260_829,
-  createSimulationSetup(sampleContent),
+  createSimulationSetup(sampleContent, { gameLocale: 'en' }),
   {
     catalog: sampleContent,
     locale: englishGameLocale,

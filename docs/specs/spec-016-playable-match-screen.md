@@ -45,7 +45,10 @@ private choices and all nine common phrases in the central
 and lower play field. Put infrequent actions at the side or bottom edges.
 
 The End and Comeback rail follows the active side's board margin. Anchor the red
-rail to the left margin. Anchor the blue rail to the right margin.
+rail to the left margin. Anchor the blue rail to the right margin. The Comeback
+button is itself the only comeback-charge display. Keep its three cells visible
+from the start of the draft and fill them progressively as charge increases.
+Do not render a separate comeback meter elsewhere.
 
 Render the scene in this order: studio and moderator, selected portraits,
 foreground standing desks, then Hypertext Markup Language (HTML) game content.
@@ -77,7 +80,8 @@ scoring, match history identity, or any reducer input.
 
 Use one complete compact archetype name in the reserved two-line nameplate
 that Milestone 023 defines, a visible Pride label, and a Pride bar for each
-portrait. Both top Pride frames are rectangular, with square
+portrait. Both top Pride frames are
+rectangular, with square
 corners and parallel vertical ends. The compact strip can omit the leading
 article from the full English name. Text and controls must not intersect a face,
 hand, or required prop. The integrated composition must keep scene, opponents,
@@ -203,6 +207,31 @@ current text replaces all prior round text after the first accepted phrase.
 After every exchange, keep the arena visible during the Milestone 025 narrated
 sequence. The current narrator owns the wide bubble, including its Comeback
 line. Offset that bubble toward the speaker as defined by Milestone 025. Disable draft input and stop the turn timer until both deliveries finish.
+When that narrator used a Comeback and owns an approved sidekick asset, keep the
+asset hidden during speech preparation and the complete main insult. When the
+speech adapter reports the start marker for the separate Comeback closing-line
+segment, slide it from the narrator's outer viewport border into the lower
+central lane on the speech and common-phrase axis. Complete that entrance before
+the short closing line can finish. Anchor its visible feet or object base to the
+viewport bottom. Player one enters from the left. Player two uses the same
+mirrored asset and enters from the right. The sidekick is at most one-third of
+the visible portrait height,
+renders above portraits and scene foreground art but below speech, scoring, and
+controls, and exits immediately when that speaker's final audio chunk ends so
+the total and score rows cannot cover it. Silent delivery
+enters when its simulated Comeback segment begins and uses the same remaining
+visible interval. An archetype without an
+approved asset renders no sidekick and leaves no empty placeholder.
+Compact layouts derive sidekick scale from the compact portrait frame and keep
+the visible base at the viewport floor, independent of the scrolling stage's
+content height. Both entrances start fully outside their owning viewport edge.
+In compact landscape, place the sidekick in the right common-phrase column.
+While it is visible, reserve a separate floor lane below the score receipt and
+any public emphasis. Bound the score receipt and retain its keyboard-focusable
+native scroll region so every scored phrase remains reachable. Speech remains
+in the left column. Keep the sidekick below interface text and controls.
+Verifier: `tests/browser/match-screen.browser.test.ts` checks both sides across
+the supported viewport matrix, including the source-alpha base offset.
 Each scored clause owns one inline line beside its speaker, without a Clause
 heading or a central panel. The line contains its complete phrase text, base,
 applied restriction, weakness, and combo factors, and resulting value. Finisher
@@ -250,9 +279,9 @@ Music Off stores zero Music volume and turning it back On restores the last
 non-zero Music volume in the page session, or the 10 percent default when no
 such value exists. Voices maps to the stored Speech enabled setting.
 
-When Phrase color coding is On, noun cards use green. Verb and predicate cards
-use red. Modifier cards use purple. Ending cards use blue. Continuation cards
-use gray. Conjunction cards use orange.
+When Phrase color coding is On, noun cards use green. Verb cards use red.
+Predicate cards use teal. Modifier cards use purple. Ending cards use blue.
+Continuation cards use gray. Conjunction cards use orange.
 
 Phrase text stays white. A common, uncommon, or
 rare card uses the 40, 50, or 60 percent role-color blend respectively. The
@@ -329,7 +358,7 @@ timer-refill abuse.
   text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
   60 percent for rare.
 
-  Nouns are green. Verbs and predicates are red. Modifiers are purple.
+  Nouns are green. Verbs are red. Predicates are teal. Modifiers are purple.
   Endings are blue.
 
   Continuations are gray. Conjunctions are orange.
@@ -416,6 +445,18 @@ timer-refill abuse.
   no weakness record.
 - **AC-016-17:** Comeback appends its closing line to the complete public insult.
   Its narrator's bubble displays that full text during delivery and total.
+- **AC-016-18:** The Comeback action is one segmented button and the only
+  comeback-charge display. It shows three cells before charge is available. The
+  fill is progressive: 20 charge fills the first cell, 40 reaches the second
+  cell boundary, and 60 fills the button. Spending a tier lowers the fill to the
+  remaining charge. Its accessible name reports the available tier, bonus, and
+  exact charge. During a Comeback delivery, an available character-owned
+  sidekick enters from the owning border only when the Comeback phrase segment
+  starts, mirrors for player two, and exits at speech completion. Missing
+  sidekicks are valid during the manually approved rollout. Verifiers:
+  `tests/unit/match-screen-snapshot.test.ts` and
+  `tests/unit/sidekick-assets.test.ts` and
+  `tests/browser/match-screen.browser.test.ts`.
 
 ## Impeccable UI validation
 

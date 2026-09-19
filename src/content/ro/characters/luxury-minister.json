@@ -1,7 +1,7 @@
 {
   "character.luxury-minister.name": "Ministrul luxului",
   "character.luxury-minister.description": "Un patron gata de filmare care prezintă confortul privat ca pe o jertfă grea pentru serviciul public.",
-  "comeback.luxury-minister.weak": "Briefingul vostru se ceartă cu pantofii mei.",
+  "comeback.luxury-minister.weak": "Informarea ta se ceartă cu pantofii mei.",
   "comeback.luxury-minister.medium": "Aș putea trăi din bugetul acela. Garderoba mea, nu.",
   "comeback.luxury-minister.strong": "Faptele voastre sunt croite prost. Luați-le înapoi.",
   "phrase.luxury-minister-foundation-noun": "fondul meu de urgență pentru pantofi asortați",
@@ -67,7 +67,7 @@
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-past": "a croit harta după",
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-present": "croiește harta după",
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-present.singular": "croiește harta după",
-  "phrase.luxury-minister-contract-verb-measures-service-in-marble-present.plural": "croiți harta după",
+  "phrase.luxury-minister-contract-verb-measures-service-in-marble-present.plural": "croiesc harta după",
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-present.personal-singular": "croiește harta după",
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-present.second-person": "croiți harta după",
   "phrase.luxury-minister-contract-verb-measures-service-in-marble-future": "va croi harta după",

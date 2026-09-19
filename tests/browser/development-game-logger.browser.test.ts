@@ -33,7 +33,7 @@ beforeEach(() => {
 test('writes every command and redacts a rejected private selection', async () => {
   const completed = simulateMatch(
     73,
-    createSimulationSetup(sampleContent),
+    createSimulationSetup(sampleContent, { gameLocale: 'en' }),
     context,
   );
   const writes: string[] = [];

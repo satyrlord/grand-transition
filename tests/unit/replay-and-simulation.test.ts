@@ -56,13 +56,13 @@ const engineContext: MatchEngineContext = {
 describe('replay and local match-log codecs', () => {
   const completed = simulateMatch(
     20_260_823,
-    createSimulationSetup(sampleContent),
+    createSimulationSetup(sampleContent, { gameLocale: 'en' }),
     context,
   );
 
   test.each([1, 2, 3, 4, 5] as const)('captures multiplier %s and replays independently of the current balance', (multiplier) => {
     const match = simulateMatch(20_260_823,
-      { ...createSimulationSetup(sampleContent), basePointsMultiplier: multiplier }, context);
+      { ...createSimulationSetup(sampleContent, { gameLocale: 'en' }), basePointsMultiplier: multiplier }, context);
     expect(match.replay.setup.basePointsMultiplier).toBe(multiplier);
     expect(match.matchLog.setup.basePointsMultiplier).toBe(multiplier);
     const replayed = replayMatch(match.replayBytes, { ...context, balance: scoringBalanceForMultiplier(5) });
@@ -465,7 +465,7 @@ describe('replay and local match-log codecs', () => {
 });
 
 describe('headless simulation and generated invariants', () => {
-  const setup = createSimulationSetup(sampleContent);
+  const setup = createSimulationSetup(sampleContent, { gameLocale: 'en' });
 
   test.each([0, 0xffff_ffff])(
     'accepts boundary seed %s and repeats every byte',
@@ -496,6 +496,7 @@ describe('headless simulation and generated invariants', () => {
       expect(context.catalog.characters).toHaveLength(19);
       expect(context.catalog.scenes).toHaveLength(6);
       const calibrationSetup = createSimulationSetup(context.catalog, {
+        gameLocale: 'en',
         characterIds: ['red-folded-chairman', 'thunder-tribune'],
         sceneId: 'transition-era-television-studio',
       });
