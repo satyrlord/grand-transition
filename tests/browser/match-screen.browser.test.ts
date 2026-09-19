@@ -701,25 +701,25 @@ test('declares the requested phrase role colors and rarity opacity', async () =>
     /data-rarity='rare'[\s\S]*--phrase-rarity-opacity: 60%/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='noun'[\s\S]*--phrase-role-color: rgb\(72 172 104\)/u,
+    /data-role='noun'[\s\S]*?--phrase-role-color: rgb\(230 200 60\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='verb'[\s\S]*--phrase-role-color: rgb\(201 55 48\)/u,
+    /data-role='verb'[\s\S]*?--phrase-role-color: rgb\(235 145 48\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='predicate'[\s\S]*--phrase-role-color: rgb\(46 158 162\)/u,
+    /data-role='predicate'[\s\S]*?--phrase-role-color: rgb\(201 55 48\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='modifier'[\s\S]*--phrase-role-color: rgb\(139 90 177\)/u,
+    /data-role='modifier'[\s\S]*?--phrase-role-color: rgb\(53 124 199\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='ending'[\s\S]*--phrase-role-color: rgb\(53 124 199\)/u,
+    /data-role='ending'[\s\S]*?--phrase-role-color: rgb\(139 90 177\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='continuation'[\s\S]*--phrase-role-color: rgb\(154 161 170\)/u,
+    /data-role='continuation'[\s\S]*?--phrase-role-color: rgb\(154 161 170\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='conjunction'[\s\S]*--phrase-role-color: rgb\(235 145 48\)/u,
+    /data-role='conjunction'[\s\S]*?--phrase-role-color: rgb\(72 172 104\)/u,
   );
   expect(
     match.querySelector<HTMLElement>('.match-screen')?.dataset

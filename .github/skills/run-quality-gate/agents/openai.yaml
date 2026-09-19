@@ -1,6 +1,6 @@
 interface:
   display_name: 'Run Quality Gate'
-  short_description: 'Run or repair configured checks'
-  default_prompt: 'Use $run-quality-gate to run the configured Grand Transition repository checks.'
+  short_description: 'Run or repair the full quality gate'
+  default_prompt: 'Use $run-quality-gate to run the full Grand Transition quality gate.'
 policy:
   allow_implicit_invocation: true

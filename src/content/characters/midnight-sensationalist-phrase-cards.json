@@ -23,8 +23,8 @@
   },
   "weaknessTags": [
     "ratings",
-    "evidence",
-    "credibility"
+    "sources",
+    "delivery"
   ],
   "comebacks": {
     "weak": "Stay tuned for even less evidence.",

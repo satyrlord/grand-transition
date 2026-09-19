@@ -1,26 +1,26 @@
 ---
 name: run-quality-gate
-description: Run or repair the Grand Transition quality gate. Use for verification, CI failures, merge or release readiness, builds, tests, assets, content, localization, or deployment checks.
+description: Run or repair the full Grand Transition quality gate. Use for verification, CI failures, merge or release readiness, builds, tests, assets, content, localization, or deployment checks.
 ---
 
-# Run the quality gate
+# Run the full quality gate
 
 ## Select the mode
 
-- Quick mode is the default for an agent validating its own scoped work.
-  Run `npm run quality:quick`.
-- Full mode runs every check. Use it only when the user explicitly invokes this
-  skill for a "full quality gate". Run `npm run quality:full`.
+- Every run of this skill executes the full gate. Run `npm run quality:full`.
+- Verify mode runs the gate and reports evidence. This mode is the default.
 - Repair mode fixes failed checks only when the user requests repair.
 - Release mode collects complete release-readiness evidence.
+
+Do not substitute `npm run quality:quick` or a direct test command for this
+gate. This skill invocation is the explicit full-gate request that `AGENTS.md`
+and the approved specifications require.
 
 Do not add suppressions, exclusions, disabled rules, changed pins, invented
 commands, or lower thresholds without explicit approval.
 
-Do not infer authority for Full mode from a broad change, a milestone, a
-release-related file, or a request to verify work. Continuous integration uses
-the full gate independently. A quick pass is never full-gate or release
-evidence.
+Continuous integration runs the same full gate independently. A quick pass is
+never full-gate or release evidence.
 
 ## Discover the configured gate
 
@@ -39,18 +39,18 @@ Do not invent an equivalent command and call it a pass.
 
 ## Run checks
 
-Run applicable focused checks first. Then run `npm run quality:quick` when the
-user has not explicitly invoked Full mode. When configured, run changed-skill
-validation. For complete gate verification, run `npm run quality:full` once
-after focused checks. This command owns the phase order in `package.json`.
+Run applicable focused checks first. Then run `npm run quality:full` once.
+This command owns the phase order in `package.json`.
+Run changed-skill validation when a skill package changed.
+Do not invoke `npm run balance:validate` directly. The full gate supplies the
+required runner marker.
 
 The Playwright web-server command builds the production artifact before preview.
+The gate also runs the documented slowest set, so allow the full duration.
 Do not repeat successful phases without a change, failure, or unresolved concern.
-For a bounded documentation repair, run Markdown, links, skill validation, and
-the applicable contract checks. Run `npm run validate` when configuration or
-repository guidance changes affect its checks.
+Run `npm run validate` when configuration or repository guidance changes affect
+its checks.
 
-State when the full gate is outside the requested verification scope.
 Release mode requires the complete gate and the Milestone 030 and 031 evidence.
 Run `git diff --check`.
 Inspect final status and diff.
@@ -66,6 +66,8 @@ Include its command or procedure and result.
 Separate pre-existing failures from scoped regressions.
 List changed files, or state `none`.
 Give each blocker its smallest next action.
+When the user limits the scope or forbids a check, report that check as `N-A`
+with the reason, and do not claim an overall pass.
 Claim an overall pass only when every applicable configured check passes.
 
 The gate report is complete when every applicable check has a status, every
