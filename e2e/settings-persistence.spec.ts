@@ -89,7 +89,7 @@ test('settings persist in the production build and fit every supported viewport'
   expect(JSON.parse(stored!)).toEqual({
     schemaVersion: 3,
     interfaceLocale: 'en',
-    gameLocale: 'en',
+    gameLocale: 'ro-RO',
     tutorialMode: false,
     basePointsMultiplier: 5,
     gpuVoices: false,
@@ -207,7 +207,9 @@ test('GPU voices on unsupported hardware retain the preference and use Piper wit
   await expect(gpu).toBeDisabled();
   expect(gpuRequests).toEqual([]);
   const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), settingsKey);
-  expect(stored).toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'en', tutorialMode: false, gpuVoices: false, speechEnabled: false });
+  // A fresh document carries the shipped defaults: English interface, Romanian
+  // game language.
+  expect(stored).toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'ro-RO', tutorialMode: false, gpuVoices: false, speechEnabled: false });
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await expect(page.getByRole('button',{name:'Multiplayer'})).toBeEnabled();
 });

@@ -63,7 +63,7 @@ character-specific conjunction. Character cards have zero continuations.
 complete. Phase 1 ships the Romanian interface,
 translated archetype and scene display names, and its persisted `Interface
 language` selection. Phase 2 adds the Romanian game
-content, grammar, and local Mihai medium and Liana medium voices. Ro_VITS was
+content, grammar, and local Mihai medium and Liana high voices. Ro_VITS was
 evaluated and rejected, so Mihai and Liana remain the only Romanian voices.
 
 The current content has common Romanian-politics phrases and 19 fictional
@@ -73,7 +73,8 @@ Skins are visual-only variations that do not change game identity or prose. The
 content includes six fictional layered scenes. Each scene has a distinct local
 cartoon background and transparent foreground, and two debate studios include
 fixed fictional moderators. The interface has English and Romanian message
-catalogs; the game content has one English game-locale bundle.
+catalogs; the game content has English and Romanian game-locale bundles.
+New installations use English interface text and Romanian game content.
 
 The final asset contract permits one default skin and zero through eight
 alternate skins per archetype. The 30 skins comprise 19 defaults and 11
@@ -148,18 +149,21 @@ same background-music target.
 
 See [CREDITS.md](CREDITS.md) for source and edit details.
 Speech defaults on. Opening the menu prepares about 91 MB of local neural model
-resources. Male and female human skins use the selected streamed British voices.
+resources. In English matches, male and female human skins use the selected
+streamed British voices.
 The `GPU voices` checkbox defaults on. When speech is enabled, it downloads
 about 353 MB more for streamed FP32
 Kokoro George and Emma. It needs a working WebGPU device. Matches use Piper if
-GPU initialization fails. A main-menu loader shows GPU preparation and holds
-Single Player, Multiplayer, and Ladder until readiness or fallback. Turning speech off hides the loader
-and unlocks setup. Playback still needs a user interaction. Engine selection stays fixed
+GPU initialization has not finished or fails. A main-menu loader shows GPU
+preparation while Single Player, Multiplayer, and Ladder remain available.
+Turning speech off hides the loader. Playback still needs a user interaction. Engine selection stays fixed
 for the match unless GPU speech fails, then later deliveries use Piper.
-Robot skins use installed Microsoft David, Mark, and Zira voices, with British
+In English matches, robot skins use installed Microsoft David, Mark, and Zira voices, with British
 neural fallback when the requested local voice is absent. Robot voices read
 each complete insult continuously, without restarting between cards. New
 settings use a 1.00 speech rate. A valid saved rate remains intact.
+Romanian matches use local Mihai medium and Liana high voices for all skins.
+Only the requested Romanian voice loads; an unavailable voice stays silent.
 No phrase is uploaded. Preparation time depends on the device and sentence length.
 The game remains playable when speech is unavailable.
 

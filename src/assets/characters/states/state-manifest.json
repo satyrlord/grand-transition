@@ -3138,8 +3138,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1403908,
-        "sha256": "705d0cea8acdcda803326dfd0b4e1c6cb7e2a518b17dff33acc76c1238871135"
+        "bytes": 3699189,
+        "sha256": "9a83334b7b127f02d707f40989f63a3ae2df50b3e219da483ccc663cef7d2e6a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3158,48 +3158,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8041,
-          "sha256": "115bf5de3ba21e95edd58b925afa3250bdaaf6840a0c5075ea84d89fd02acfb7"
+          "bytes": 7214,
+          "sha256": "1721471a1b13af02ef4f45d133ecd82d46192cda8c3b5ffb63f60cb8ca81e851"
         },
         {
           "path": "states/variants/coalition-acrobat--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11228,
-          "sha256": "293556c3a8dadde4c0cc1e8cfaa42688162ec5a76dd6d02d9c16980e56aa4d0e"
+          "bytes": 11790,
+          "sha256": "10e3e0ff014033b9d14f43ef8e639644e2299e5e499b240753ec9f8811f80b09"
         },
         {
           "path": "states/variants/coalition-acrobat--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19061,
-          "sha256": "c25ecce353789b9282a465b38283810b100976842b1941d88991d78271938497"
+          "bytes": 17786,
+          "sha256": "7838c6f404d7d6f65255fc0b422bc664adab8f1f6adcd5180ee7384029e07016"
         },
         {
           "path": "states/variants/coalition-acrobat--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25664,
-          "sha256": "2549cf794b861c97d87e2d4a05d62d74db009fe4f3acd1655d8a896ccc54a7e8"
+          "bytes": 28854,
+          "sha256": "567a83292e834dd9516d946de99dd5626ad101f081a372e039f9c2084f23857e"
         },
         {
           "path": "states/variants/coalition-acrobat--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 29730,
-          "sha256": "7cd94e780ff9ef443697a00761d1f54568190d5ea9271bff0245580775eec77a"
+          "bytes": 28106,
+          "sha256": "91e5ecc698c03d615742d5c6a55ca9b518b184ef016739f78070885d82000f0f"
         },
         {
           "path": "states/variants/coalition-acrobat--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40614,
-          "sha256": "2e4b45c2b3e774457e28aab6a8f0c757960ae8391734f24aec72c2e7cdeb7d4b"
+          "bytes": 47818,
+          "sha256": "2ac0994be7fb52147e560726ef1f2f8bfcaa88bf5c12a1905a23b4538f7e1f8a"
         }
       ]
     },
@@ -3218,8 +3218,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1392344,
-        "sha256": "b50d7cf26d1fec2c5ed6db2a5d1d8b3e70da841ef3b4369abbc3703f55f94538"
+        "bytes": 3089911,
+        "sha256": "b6d1d9a4b224ceba33c627bc3fb55b92f78013c0f92736c24dfe477a0fbdcc0e"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3238,48 +3238,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7520,
-          "sha256": "065c25c22b8afc4b7aed1ce6e6c1acac7046394d4dc02ae3a366f8d1554860f8"
+          "bytes": 7750,
+          "sha256": "20a33849a567498cb075613568c61b5c080ad8b7c662e1171fe7d046b5210ff2"
         },
         {
           "path": "states/variants/coalition-acrobat--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9970,
-          "sha256": "df62a435ada8503385672f2a20e6f29cdade5b73b82ec25c5cd04b2677ca8152"
+          "bytes": 12190,
+          "sha256": "a8d085e86b16e63d436eb31d3e18262ab3feaca5ad7a8ad6fff49b7482faceb3"
         },
         {
           "path": "states/variants/coalition-acrobat--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18278,
-          "sha256": "2e39073a1b8028b446f5af938d7b4b8965023230bc0ce41f9ba5fe21ccff3fd6"
+          "bytes": 19012,
+          "sha256": "f7a63d911002d0728fc84bd1dae5ba9d0cfffb4919fb25bfed414f2651234bb8"
         },
         {
           "path": "states/variants/coalition-acrobat--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23394,
-          "sha256": "c18bb62a02612cce4047ed174b24937a98f7caf0b451ab9e6a96400b817bb52c"
+          "bytes": 29346,
+          "sha256": "eea92a365b38c65c488ec6213ca19fdef72717be07ab3be60d4c16980d1dd0bc"
         },
         {
           "path": "states/variants/coalition-acrobat--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28683,
-          "sha256": "d1d8742fb61efd2f9dd8ceeca0d492244413e9248c7a8c75bb642fe09773fa30"
+          "bytes": 30641,
+          "sha256": "d9bd5b3b591ad8d4e01da47ed173998eb948f40e8eab7a8dcd4285cd8fae81be"
         },
         {
           "path": "states/variants/coalition-acrobat--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 37394,
-          "sha256": "e5fea9e4238f9b3dfce293dc44662eafb949b5e61f1a93f5c3a063a719dbcc80"
+          "bytes": 48606,
+          "sha256": "a43c720867a364c579ddfec7aeff1d27e3cc0271064d39dd32b5258cbb09882e"
         }
       ]
     },
@@ -3458,8 +3458,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1369155,
-        "sha256": "cfbe0ae15f5d03b59c797ee50752fbbca852b2b75d5b99dfa1a7fdb05cf8fa40"
+        "bytes": 3150445,
+        "sha256": "c6967b72d507ae4288b4985d009c8fc68c3c59fa1fe3fbdace33f40eaf244c96"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3478,48 +3478,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7171,
-          "sha256": "436cea2597790361a29f284ba45b4cf93fcea8986323bbe057c9d4ceec49bdc8"
+          "bytes": 7632,
+          "sha256": "12ccf78366a7e22c695d28ab769ca0c2a16dc674ff005f9ddce5798820b5a217"
         },
         {
           "path": "states/variants/coalition-acrobat--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9476,
-          "sha256": "bbce89226b68babbc140a41aacb5340acfa6edc7ad4b3eb7ff1c2794f2f56056"
+          "bytes": 11694,
+          "sha256": "32d8db7ffee1bc4290a5d1b0e8bbbedb55a764b6c270cb64f2b633b126ba169a"
         },
         {
           "path": "states/variants/coalition-acrobat--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16989,
-          "sha256": "618757ca14b4699d8755d5b578bb5c5a2a4723874407767f134afe7ff712f9c9"
+          "bytes": 18609,
+          "sha256": "7406fd266ce905ced3c45abd0539ba2f3eb9173cfa5d6a14e105e8eebc1ab2bf"
         },
         {
           "path": "states/variants/coalition-acrobat--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 22318,
-          "sha256": "a45688f165ba228063dd9cb738579172ea54b41f947fd0e4a734d449d1fd0f8c"
+          "bytes": 28142,
+          "sha256": "5e0127302926d33c3f0c00a91a4ed3226a154096e255dc7c5210c5e289855c2e"
         },
         {
           "path": "states/variants/coalition-acrobat--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 26737,
-          "sha256": "c0593815411adfac8f1d6799ba50c38ddfc6e8583f347b2fa23f931bcb6dea0e"
+          "bytes": 30019,
+          "sha256": "d9cbfe5106ac26db6f9502a203d9c5c8cad3f53455a55af6718783811c5f9118"
         },
         {
           "path": "states/variants/coalition-acrobat--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 35518,
-          "sha256": "d49b227349b7025fac346759af26d4eac779df70219b9eed0793a9a530ac66d4"
+          "bytes": 47162,
+          "sha256": "68628efc6095941fc204fcba7c0ec0ac732e1a96a612705430feb0c5e4d5608d"
         }
       ]
     },

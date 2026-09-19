@@ -516,8 +516,6 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly showSetup = (event: ShowSetupEvent): void => {
     event.stopPropagation();
-    if (this.settingsSnapshot.settings.speechEnabled && this.settingsSnapshot.settings.gpuVoices &&
-      this.speech?.gpuStatus !== 'ready' && this.speech?.gpuStatus !== 'unavailable') return;
     const mode = event.detail?.mode;
     if (mode !== 'ai' && mode !== 'hotseat' && mode !== 'ladder') return;
     if (mode === 'hotseat' && this.portraitViewport) return;

@@ -378,7 +378,7 @@ test('keeps the interface and game languages independent and persists both after
     settings.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
 
   expect(interfaceSelect().value).toBe('en');
-  expect(gameSelect().value).toBe('en');
+  expect(gameSelect().value).toBe('ro-RO');
   for (const select of [interfaceSelect(), gameSelect()]) {
     expect(select.options.length).toBe(2);
     expect(
@@ -388,13 +388,13 @@ test('keeps the interface and game languages independent and persists both after
 
   const game = gameSelect();
   game.focus();
-  game.value = 'ro-RO';
+  game.value = 'en';
   game.dispatchEvent(new Event('change', { bubbles: true }));
   await app.updateComplete;
   await vi.waitFor(() => {
     expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
       interfaceLocale: 'en',
-      gameLocale: 'ro-RO',
+      gameLocale: 'en',
     });
   });
 
@@ -406,7 +406,7 @@ test('keeps the interface and game languages independent and persists both after
   settings = await openSettings(app);
   expect(settings.querySelector('.settings-persistence-notice')).toBeNull();
   expect(interfaceSelect().value).toBe('en');
-  expect(gameSelect().value).toBe('ro-RO');
+  expect(gameSelect().value).toBe('en');
 
   const interfaceControl = interfaceSelect();
   interfaceControl.focus();
@@ -422,7 +422,7 @@ test('keeps the interface and game languages independent and persists both after
 
   expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
     interfaceLocale: 'ro-RO',
-    gameLocale: 'ro-RO',
+    gameLocale: 'en',
   });
   expect(document.activeElement).toBe(interfaceControl);
 });

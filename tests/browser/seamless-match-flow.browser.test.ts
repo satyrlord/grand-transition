@@ -179,6 +179,8 @@ test.each([
   vi.useFakeTimers();
   localStorage.setItem(settingsStorageKey, encodeSettings({
     ...defaultSettings,
+    interfaceLocale: 'en',
+    gameLocale: 'en',
     speechEnabled: false,
     gpuVoices: false,
   }));

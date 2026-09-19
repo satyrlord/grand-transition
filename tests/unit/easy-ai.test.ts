@@ -297,6 +297,7 @@ describe('Local Radio Caller', () => {
   test('completes one replayable match through the Local Radio Caller policy', () => {
     const setup = createSimulationSetup(sampleContent, {
       aiDifficulty: 'local-radio-caller',
+      gameLocale: 'en',
     });
     const replayContext = {
       catalog: sampleContent,

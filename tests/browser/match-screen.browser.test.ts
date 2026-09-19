@@ -2,11 +2,13 @@ import { lockInSetup } from './setup-test-helpers';
 import { page, userEvent } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
+import mobileLayoutStyles from '../../src/styles/mobile-layout.css?raw';
 import screenShellStyles from '../../src/styles/screen-shell.css?raw';
 import titleScreenStyles from '../../src/styles/title-screen.css?raw';
 import '../../src/styles/fonts.css';
 import { GrandTransitionApp } from '../../src/app/app-shell';
 import type { RoundPresentationFrame } from '../../src/app/round-presentation';
+import type { MatchPlayerView } from '../../src/app/match-screen-snapshot';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
 import {
   automaticAiBubbleRevealMs,
@@ -702,7 +704,10 @@ test('declares the requested phrase role colors and rarity opacity', async () =>
     /data-role='noun'[\s\S]*--phrase-role-color: rgb\(72 172 104\)/u,
   );
   expect(matchScreenStyles).toMatch(
-    /data-role='verb'[\s\S]*data-role='predicate'[\s\S]*--phrase-role-color: rgb\(201 55 48\)/u,
+    /data-role='verb'[\s\S]*--phrase-role-color: rgb\(201 55 48\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /data-role='predicate'[\s\S]*--phrase-role-color: rgb\(46 158 162\)/u,
   );
   expect(matchScreenStyles).toMatch(
     /data-role='modifier'[\s\S]*--phrase-role-color: rgb\(139 90 177\)/u,
@@ -870,12 +875,205 @@ test('shows an appended comeback line in the speaker bubble', async () => {
   expect(bubble?.getAttribute('aria-label')).toContain('comeback');
 });
 
+test('unifies active charge and the three cells in the Comeback button', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const players = [...snapshot.players] as [
+    (typeof snapshot.players)[number],
+    (typeof snapshot.players)[number],
+  ];
+  const charge = (value: number) => ({
+    charge: value,
+    cap: players[0].comeback.cap,
+    segments: players[0].comeback.segments,
+  });
+  const activeIndex = players.findIndex((player) => player.isActive);
+  players[activeIndex] = { ...players[activeIndex]!, comeback: charge(35) };
+  match.snapshot = {
+    ...snapshot,
+    revision: snapshot.revision + 1,
+    players,
+    sentenceComplete: true,
+    actions: {
+      ...snapshot.actions,
+      comebackTiers: ['weak'],
+      comebackTier: 'weak',
+      comebackDamageBonus: 4,
+    },
+  };
+  await match.updateComplete;
+
+  expect(match.querySelector('.player-comeback-track')).toBeNull();
+  const button = match.querySelector<HTMLButtonElement>('.comeback-action')!;
+  expect(button).not.toBeNull();
+  expect(button.disabled).toBe(false);
+  expect(button.querySelectorAll('.comeback-action__segments span')).toHaveLength(3);
+  expect(button.getAttribute('aria-label')).toMatch(/Comeback.*Weak.*4.*35.*60/su);
+  // The fill is transform-driven, never a layout property.
+  const fillElement = button.querySelector<HTMLElement>('.comeback-action__fill')!;
+  expect(Number(fillElement.style.transform.match(/scaleX\(([^)]+)\)/u)?.[1]))
+    .toBeCloseTo(35 / 60, 5);
+  expect(getComputedStyle(fillElement).transform).not.toBe('none');
+  expect(matchScreenStyles).toMatch(
+    /\.match-actions \.comeback-action \{[\s\S]*background: var\(--broadcast-ink\)/u,
+  );
+  expect(matchScreenStyles).toMatch(
+    /\.comeback-action__fill \{[\s\S]*background: var\(--broadcast-blue-bright\)/u,
+  );
+  expect(button.textContent?.trim()).toBe('Comeback');
+});
+
+test('shows an approved sidekick only while its comeback speech is active', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const speakerIndex = snapshot.players.findIndex((player) => player.comebackSidekickUrl);
+  const speaker = snapshot.players[speakerIndex]!;
+  const defender = snapshot.players[speakerIndex === 0 ? 1 : 0]!;
+  const players = [...snapshot.players] as [MatchPlayerView, MatchPlayerView];
+  players[speakerIndex] = {
+    ...speaker,
+    sentence: 'A complete statement. A closing line.',
+    comebackLine: 'A closing line.',
+  };
+  const base = {
+    phase: 'preparing',
+    comebackActive: false,
+    speakerId: speaker.playerId,
+    text: players[speakerIndex]!.sentence!,
+    segment: -1,
+    components: [],
+    emphasis: [],
+    outcome: null,
+    impact: { playerId: defender.playerId, amount: 4, prideAfter: defender.pride - 4 },
+    total: null,
+    damage: null,
+    pride: Object.fromEntries(players.map((player) => [player.playerId, player.pride])),
+    cues: Object.fromEntries(players.map((player, sequence) => [player.playerId,
+      { stateId: 'idle', sequence }])),
+  } as RoundPresentationFrame;
+  match.snapshot = { ...snapshot, roundReview: true, players };
+  match.presentation = base;
+  await match.updateComplete;
+
+  const sidekick = match.querySelector<HTMLElement>('.comeback-sidekick')!;
+  expect(sidekick).not.toBeNull();
+  expect(sidekick.dataset.visible).toBe('false');
+  expect(sidekick.querySelector('img')?.getAttribute('src')).toBe(speaker.comebackSidekickUrl);
+  expect(matchScreenStyles).toMatch(
+    /data-visible='true'[\s\S]*transform 220ms cubic-bezier\(0\.16, 1, 0\.3, 1\)/u,
+  );
+
+  match.presentation = { ...base, phase: 'reciting' };
+  await match.updateComplete;
+  expect(sidekick.dataset.visible).toBe('false');
+
+  match.presentation = { ...base, phase: 'reciting', comebackActive: true };
+  await match.updateComplete;
+  expect(sidekick.dataset.visible).toBe('true');
+
+  match.presentation = { ...base, phase: 'total', total: 4 };
+  await match.updateComplete;
+  expect(sidekick.dataset.visible).toBe('false');
+});
+
+test('keeps both sidekick entrances outside the viewport and bounds their size and visible base', async () => {
+  const initial = await startMatch();
+  const snapshot = initial.snapshot!;
+  document.body.innerHTML = '';
+  const match = document.createElement('grand-transition-match') as GrandTransitionMatch;
+  match.snapshot = {
+    ...snapshot,
+    roundReview: true,
+    players: snapshot.players.map((player) => ({
+      ...player, comebackLine: 'A closing line.',
+    })) as [MatchPlayerView, MatchPlayerView],
+  };
+  document.body.append(match);
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles + mobileLayoutStyles;
+  document.head.append(style);
+  try {
+    for (const [width, height] of [
+      [1024, 720], [1024, 768], [1280, 720], [1400, 1050], [1920, 1080],
+      [360, 640], [360, 780], [384, 832], [412, 915], [384, 700],
+      [640, 320], [780, 360], [832, 384], [915, 412], [700, 384], [740, 360],
+    ] as const) {
+      await page.viewport(width, height);
+      for (const [index, speaker] of snapshot.players.entries()) {
+        const frame: RoundPresentationFrame = {
+          phase: 'reciting', comebackActive: false, speakerId: speaker.playerId,
+          text: 'A complete statement. A closing line.', segment: 0,
+          components: Array.from({ length: 12 }, (_, row) => ({
+            narrationIndex: row, kind: 'clause', phraseText: `Public scored phrase ${row + 1}: the complete record remains available for inspection.`,
+            base: 5, restrictionFactor: 1, weaknessFactor: 1.5, comboFactor: 2,
+            amount: 15, weaknessTags: ['evidence', 'procedure'],
+          })),
+          emphasis: [{ kind: 'weakness', playerId: snapshot.players[index === 0 ? 1 : 0].playerId,
+            text: 'evidence · procedure', value: 1.5 }],
+          outcome: null, impact: null, total: null, damage: null,
+          pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
+          cues: {},
+        };
+        match.presentation = frame;
+        await match.updateComplete;
+        const sidekick = match.querySelector<HTMLElement>('.comeback-sidekick')!;
+        const hidden = sidekick.getBoundingClientRect();
+        const label = `${width}x${height}, player ${index + 1}`;
+        if (index === 0) expect(hidden.right, label).toBeLessThanOrEqual(0);
+        else expect(hidden.left, label).toBeGreaterThanOrEqual(width);
+
+        match.presentation = { ...frame, comebackActive: true };
+        await match.updateComplete;
+        await Promise.all(sidekick.getAnimations().map((animation) => animation.finished));
+        const visible = sidekick.getBoundingClientRect();
+        const portrait = match.querySelectorAll<HTMLElement>('.character-frame')[index]!
+          .getBoundingClientRect();
+        expect(visible.height, label).toBeLessThanOrEqual(portrait.height / 3 + 0.1);
+        expect(visible.left, label).toBeGreaterThanOrEqual(0);
+        expect(visible.right, label).toBeLessThanOrEqual(width);
+        const image = sidekick.querySelector('img')!.getBoundingClientRect();
+        const visibleBottom = image.top + image.height * (1 - speaker.comebackSidekickBottomInset);
+        expect(Math.abs(visibleBottom - height), label).toBeLessThan(1);
+        if (width > height && (width < 1024 || height < 720)) {
+          for (const record of match.querySelectorAll('.sentence-ledger, .delivery-receipt, .delivery-emphasis')) {
+            if (!record.textContent?.trim()) continue;
+            const bounds = record.getBoundingClientRect();
+            expect(visible.left < bounds.right && visible.right > bounds.left &&
+              visible.top < bounds.bottom && visible.bottom > bounds.top, `${label}: ${record.className}`)
+              .toBe(false);
+          }
+          const scores = match.querySelector<HTMLElement>('.delivery-components')!;
+          expect(scores.scrollHeight, label).toBeGreaterThan(scores.clientHeight);
+          scores.scrollTop = 0;
+          expect(scores.scrollTop, label).toBe(0);
+          scores.scrollTop = scores.scrollHeight;
+          expect(scores.scrollHeight - scores.scrollTop - scores.clientHeight, label).toBeLessThanOrEqual(1);
+        }
+        if (width < 1024 || height < 720) {
+          const scrollContent = document.createElement('div');
+          scrollContent.style.height = '320px';
+          document.body.append(scrollContent);
+          window.scrollTo(0, 100);
+          expect(window.scrollY, label).toBeGreaterThan(0);
+          expect(sidekick.getBoundingClientRect().top, label).toBeCloseTo(visible.top, 1);
+          window.scrollTo(0, 0);
+          scrollContent.remove();
+        }
+      }
+    }
+  } finally {
+    style.remove();
+    await page.viewport(1280, 720);
+  }
+});
+
 test('renders public continuation and target-side impact records without early damage', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
   const [speaker, defender] = snapshot.players;
   const base = {
     phase: 'hesitating',
+    comebackActive: false,
     speakerId: speaker.playerId,
     text: speaker.sentence ?? '',
     segment: -1,

@@ -43,9 +43,9 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 
 - The interface ships English and Romanian, selected independently in title
   Settings and persisted. Romanian interface mode displays translated archetype
-  and scene names. Phrase content, grammar, and speech remain English until
-  Milestone 029 Phase 2. English
-  remains the default.
+  and scene names. Game content, grammar, and local speech support English and
+  Romanian. English is the default interface language; Romanian is the default
+  game language.
 - A pure deterministic reducer owns game truth. Lit is view-only.
 - Content is data-driven. Interface prose and localizable grammar and
   phrase content have separate owners.
@@ -60,8 +60,8 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented platform includes the toolchain, quality gate, immutable
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
-- The implemented content includes Zod 4 schemas and an English game-locale
-  bundle. It also includes 19 fictional characters, 18 human and one
+- The implemented content includes Zod 4 schemas and English and Romanian
+  game-locale bundles. It also includes 19 fictional characters, 18 human and one
   fully mechanical, Romanian-politics phrase content that is either invented or
   a real, accurately reproduced line, and separate transparent
   default portraits. Eight archetypes have eleven alternate skins in total. Skins

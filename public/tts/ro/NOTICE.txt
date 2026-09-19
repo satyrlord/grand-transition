@@ -3,7 +3,7 @@ Romanian neural speech assets. Local inference only; no phrase leaves the device
 Mihai (ro_RO-mihai-medium): https://huggingface.co/rhasspy/piper-voices
 Pinned revision: 1162a9173d0ce503555aed757976b7a9912eae4c. Published model repository license: MIT. Training data: CC0 (https://github.com/OHF-Voice/voice-datasets).
 
-Liana (ro_RO-liana-medium): https://huggingface.co/eduardem/piper-liana-romanian
+Liana (ro_RO-liana-high): https://huggingface.co/eduardem/piper-liana-romanian
 Pinned revision: acfc14ae87bb4c124947f0cb7ee0023ffceb0005. Published model repository license: CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/).
 Liana is a third-party voice and is not project code; do not relabel it as MIT. Non-commercial use only per its published terms.
 The shipped pronunciation dictionary ro_dict and its source ro_extra come from the same revision.

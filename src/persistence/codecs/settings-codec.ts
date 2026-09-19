@@ -1,7 +1,15 @@
 import { z } from 'zod';
 import { basePointsMultiplierSchema, type BasePointsMultiplier } from '../../content/basic-scoring-balance';
-import { interfaceLocales, type InterfaceLocale } from '../../localization/interface-locale';
-import { gameLocales, type GameLocale } from '../../localization/game-locale';
+import {
+  defaultInterfaceLocale,
+  interfaceLocales,
+  type InterfaceLocale,
+} from '../../localization/interface-locale';
+import {
+  defaultGameLocale,
+  gameLocales,
+  type GameLocale,
+} from '../../localization/game-locale';
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
 
@@ -97,10 +105,12 @@ const settingsSchema = z
   })
   .strict();
 
+// The interface and game language defaults are owned by their locale modules,
+// so the settings document cannot drift from the product default.
 export const defaultSettings: SettingsDocument = deepFreeze({
   schemaVersion: settingsSchemaVersion,
-  interfaceLocale: 'en',
-  gameLocale: 'en',
+  interfaceLocale: defaultInterfaceLocale,
+  gameLocale: defaultGameLocale,
   masterVolume: 1,
   musicVolume: 0.1,
   effectsVolume: 0.8,

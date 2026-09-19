@@ -110,6 +110,9 @@ export async function runSimulationCommand(
     parsed.value.matches,
     createSimulationSetup(sampleContent, {
       aiDifficulty: parsed.value.difficulty ?? 'local-radio-caller',
+      // The command-line context is English, so the recorded setup must state
+      // its language instead of following the Romanian product default.
+      gameLocale: 'en',
     }),
     context,
     parsed.value.difficulty && parsed.value.difficulty !== 'local-radio-caller'

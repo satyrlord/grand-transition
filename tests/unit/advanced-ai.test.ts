@@ -364,7 +364,10 @@ describe('advanced AI ladder policies', () => {
       const committedByPlayer = new Map<string, number>();
       const result = simulateMatch(
         22,
-        createSimulationSetup(sampleContent, { aiDifficulty: difficulty }),
+        createSimulationSetup(sampleContent, {
+          aiDifficulty: difficulty,
+          gameLocale: 'en',
+        }),
         {
           catalog: sampleContent,
           locale: englishGameLocale,

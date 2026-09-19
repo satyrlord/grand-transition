@@ -41,7 +41,7 @@ async function configure(page: Page, choices: readonly Choice[], phraseIds: read
         if (Array.isArray(options)) super.postMessage(message, options); else super.postMessage(message, options);
       }
     };
-  }, { ...defaultSettings, gpuVoices: false });
+  }, { ...defaultSettings, interfaceLocale: 'en', gameLocale: 'en', gpuVoices: false });
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Speech enabled').check();

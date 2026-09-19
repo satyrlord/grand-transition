@@ -68,12 +68,8 @@
     {
       "id": "marble-diplomat-foundation-modifier",
       "role": "modifier",
-      "text": "before the voters spoil the reception",
-      "tags": [
-        "luxury",
-        "elitism",
-        "corruption"
-      ],
+      "text": "with attention and concern",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
@@ -493,11 +489,8 @@
     {
       "id": "marble-diplomat-review-modifier",
       "role": "modifier",
-      "text": "beneath a chandelier billed as essential infrastructure",
-      "tags": [
-        "luxury",
-        "corruption"
-      ],
+      "text": "while still waiting for the report",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
@@ -859,7 +852,7 @@
     {
       "id": "marble-diplomat-contract-modifier-under-a-chandelier-of-courtesy",
       "role": "modifier",
-      "text": "under-a-chandelier-of-courtesy",
+      "text": "with the office as the entire country",
       "tags": [
         "elitism"
       ],

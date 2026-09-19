@@ -106,7 +106,7 @@ cards. Identifiers are stable for stored replays and match history.
 | `finisherBonus` | Endings | Integer from 1 to 20; forbidden on other roles. |
 | `singularText`, `pluralText` | Optional | Add both or neither. Used where subject agreement changes the form. |
 | `personalSingularText`, `secondPersonText` | Optional | Add both or neither, and only after `singularText` plus `pluralText`. |
-| `grammaticalNumber`, `grammaticalPerson`, `referentKind` | Optional | Nouns only. A second-person noun must be a personal referent. |
+| `grammaticalNumber`, `grammaticalPerson`, `referentKind` | Optional | Nouns only. Plural text needs `plural`; otherwise verbs stay singular. Second-person nouns need personal referents. |
 | `allowsCoordinatedNounComplement` | Optional | `true` on a predicate that accepts a coordinated noun complement. |
 | `sceneIds` | Optional | Restricts a shared card to named scenes. |
 
@@ -249,4 +249,4 @@ content contract.
   content boundaries, balance bands, and the Milestone 014 replay contract.
 - [`docs/specs/spec-029-romanian-localization-and-speech.md`](specs/spec-029-romanian-localization-and-speech.md):
   complete Romanian localization; Ro_VITS evaluated and rejected, so Mihai
-  medium and Liana medium remain the only Romanian voices.
+  medium and Liana high remain the only Romanian voices.

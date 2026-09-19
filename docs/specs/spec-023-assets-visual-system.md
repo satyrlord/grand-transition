@@ -103,6 +103,45 @@ visual lighting effects, and transitions.
 Keep each code package within the ten-production-file budget. Keep each
 character-state art package to one master and six runtime files.
 
+### Comeback sidekick pilot
+
+Comeback sidekicks are optional character-owned transparent prop layers. Their
+filename is `<character-id>.png` under `src/assets/sidekicks/`; runtime discovery
+must not use a hand-maintained character map. Each approved source is one
+static, right-facing, native-alpha square image. The match mirrors that same
+image for player two. Sidekicks use the shared flat cel-shaded editorial-cartoon
+language but remain separate from selection skins and character-state packages.
+Every sidekick is cartoony and anthropomorphic. Human concepts are compact
+stringless minions, animal concepts are expressive pets, and object, plant, or
+vehicle concepts preserve their recognizable base silhouette while gaining an
+integrated face or clear human-like character acting. Use bold connected shapes,
+thick near-opaque contours, and simplified details that remain legible at the
+runtime scale and pass native-alpha preparation. Do not use a realistic inert
+object, realistic animal, puppet strings, marionette joints, hairline rigging,
+detached haze, or fine semi-transparent ornament.
+
+The playable rollout currently contains `algorithmic-prophet.png`,
+`apartment-block-geopolitician.png`, `black-sea-captain.png`,
+`coalition-acrobat.png`, `county-baron.png`,
+`diaspora-oracle.png`, `eu-funds-alchemist.png`, `football-tycoon.png`,
+`government-ai.png`, `luxury-minister.png`,
+`marble-diplomat.png`,
+`midnight-sensationalist.png`, `oat-milk-reformist.png`,
+`red-folded-chairman.png`, `reluctant-theorem.png`, `retiring-cassandra.png`,
+`spreadsheet-technocrat.png`, `thunder-tribune.png`, and `velvet-mogul.png`, all
+manually approved. Unknown character IDs deliberately resolve no sidekick. A
+missing sidekick is valid and must not block catalog loading, match setup, or a
+Comeback.
+
+`src/assets/sidekicks/layout.json` records each PNG's source height and the
+exclusive last nontransparent pixel row. Derive these values from decoded
+native alpha. The view compensates for this transparent lower padding so the
+visible base reaches the viewport floor without changing the approved raster.
+`tests/unit/sidekick-assets.test.ts` verifies the complete filename inventory
+and pixel bounds against every source PNG. Run
+`node tools/sidekick-assets.mjs build` after changing a source PNG; run
+`node tools/sidekick-assets.mjs validate` to check the generated metadata.
+
 ## Regeneration baseline and decision recovery
 
 ### Fixed replacement baseline

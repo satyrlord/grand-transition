@@ -131,11 +131,69 @@ describe('match-screen snapshot', () => {
     );
     expect(snapshot.players[1].skinId).toBe('default');
     expect(snapshot.timer.durationSeconds).toBe(30);
+    expect(snapshot.players.map(({ comeback }) => comeback)).toEqual([
+      { charge: 0, cap: 60, segments: 3 },
+      { charge: 0, cap: 60, segments: 3 },
+    ]);
     expect(Object.isFrozen(snapshot)).toBe(true);
     expect(Object.isFrozen(snapshot.sharedCards)).toBe(true);
     expect(Object.isFrozen(snapshot.privateCards[0])).toBe(true);
     expect(Object.isFrozen(snapshot.sceneLayers)).toBe(true);
     expect(Object.isFrozen(snapshot.sceneLayers[0])).toBe(true);
+  });
+
+  test('projects charge for the segmented comeback action and optional approved sidekicks', () => {
+    const scene = sampleContent.scenes[0]!;
+    let state = createMatchSetupState({
+      schemaVersion: 1,
+      seed: 20_260_823,
+      players: [configuredPlayer(0), configuredPlayer(1)],
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
+      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
+    });
+    state = accept(state, lifecycleCommand('start-match'));
+    state = accept(state, lifecycleCommand('prepare-round'));
+    const [first, second] = state.playerOrder;
+    state = {
+      ...state,
+      playerStates: {
+        ...state.playerStates,
+        [first!]: { ...state.playerStates[first!]!, comebackCharge: 40 },
+        [second!]: { ...state.playerStates[second!]!, comebackCharge: 60 },
+      },
+      draft: {
+        ...state.draft!,
+        playerStates: {
+          ...state.draft!.playerStates,
+          [first!]: {
+            ...state.draft!.playerStates[first!]!,
+            comebackCharge: 40,
+            availableComebackTiers: ['weak', 'medium'],
+          },
+          [second!]: {
+            ...state.draft!.playerStates[second!]!,
+            comebackCharge: 60,
+            availableComebackTiers: ['weak', 'medium', 'strong'],
+          },
+        },
+      },
+    };
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
+    expect(snapshot.players.map(({ comeback }) => comeback)).toEqual([
+      { charge: 40, cap: 60, segments: 3 },
+      { charge: 60, cap: 60, segments: 3 },
+    ]);
+    expect(snapshot.players.map(({ comebackSidekickUrl }) => comebackSidekickUrl))
+      .toEqual([expect.stringMatching(/red-folded-chairman.*\.png/u),
+        expect.stringMatching(/thunder-tribune.*\.png/u)]);
+    expect(snapshot.actions).toMatchObject(
+      state.activePlayerId === first
+        ? { comebackTier: 'medium', comebackDamageBonus: 10 }
+        : { comebackTier: 'strong', comebackDamageBonus: 18 },
+    );
   });
 
   test('conceals the active AI hand from the human viewer', () => {

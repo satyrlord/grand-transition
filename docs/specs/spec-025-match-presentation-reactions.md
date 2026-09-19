@@ -29,7 +29,15 @@ TTS audio and its timing metadata for the corresponding events.
 3. Expand the current narrator's public bubble and hold its reciting stance.
    Keep the other character idle. Expansion occurs inside the reserved 32-percent
    scene-width footprint and does not move surrounding layout. Synthesis
-   preparation is distinct from reciting and has no visible progress record.
+   preparation is distinct from reciting and has no visible progress record. If
+   this narrator used a Comeback and owns an approved sidekick, its static image
+   stays hidden for the main insult and slides in from the owning outer border
+   only when the speech adapter reports the start marker for the separate
+   Comeback closing-line segment. It leaves when the final audio chunk reports
+   completion. A silent delivery enters when the simulated Comeback segment
+   begins. Pause preserves the
+   current visibility state, cancellation removes it, and reduced motion uses
+   an immediate appearance without directional travel.
 4. Reveal inline component scores and bonuses at their narration markers.
    Keep the complete sentence associated with the correct character.
 5. At narration completion, show the full-insult total inline and stop reciting.

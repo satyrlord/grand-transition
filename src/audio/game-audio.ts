@@ -18,7 +18,8 @@ export class GameAudio {
         publicState.draft?.playerStates[command.actorId]?.construction.status === 'ended';
       cues.add(ended ? 'commit' : 'role-select');
     }
-    if (command.type === 'commit-sentence' || command.type === 'select-comeback') cues.add('commit');
+    if (command.type === 'commit-sentence') cues.add('commit');
+    if (command.type === 'select-comeback') cues.add('comeback');
     // Narration, bonus, and impact cues belong to the round presentation clock.
     for (const cue of cues) this.audio.play(cue);
   }

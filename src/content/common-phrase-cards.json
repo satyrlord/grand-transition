@@ -5483,6 +5483,7 @@
     "id": "public-your-ceremonial-scissors-in-business-class",
     "role": "noun",
     "text": "your ceremonial scissors in business class",
+    "grammaticalNumber": "plural",
     "tags": [
       "luxury",
       "elitism"
@@ -5663,6 +5664,7 @@
     "id": "public-your-principles-on-a-revolving-door",
     "role": "noun",
     "text": "your principles on a revolving door",
+    "grammaticalNumber": "plural",
     "tags": [
       "consistency",
       "commitment"
@@ -5843,6 +5845,7 @@
     "id": "public-the-borrowed-work-boots-with-the-tags-attached",
     "role": "noun",
     "text": "borrowed work boots with the tags on",
+    "grammaticalNumber": "plural",
     "tags": [
       "authenticity",
       "sincerity"
@@ -12873,6 +12876,7 @@
     "id": "general-queue-for-the-queue",
     "role": "noun",
     "text": "the twists of concrete reality in a queue",
+    "grammaticalNumber": "plural",
     "tags": [
       "bureaucracy"
     ],
@@ -12941,6 +12945,7 @@
     "id": "general-public-form-in-triplicate",
     "role": "noun",
     "text": "popcorn and a soft drink in triplicate",
+    "grammaticalNumber": "plural",
     "tags": [
       "bureaucracy"
     ],

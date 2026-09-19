@@ -57,8 +57,9 @@ describe('settings codec', () => {
     }
   });
 
-  test('defaults the game locale to English and keeps it independent of the interface locale', () => {
-    expect(defaultSettings.gameLocale).toBe('en');
+  test('defaults the game locale to Romanian and keeps it independent of the interface locale', () => {
+    expect(defaultSettings.gameLocale).toBe('ro-RO');
+    expect(defaultSettings.interfaceLocale).toBe('en');
     for (const interfaceLocale of ['en', 'ro-RO'] as const) {
       for (const gameLocale of ['en', 'ro-RO'] as const) {
         const document = settings({ interfaceLocale, gameLocale });

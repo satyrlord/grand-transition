@@ -67,7 +67,8 @@ complete an approved specification.
   Democratic, Liberal, Communist, Socialist, or Ethnic Party.
 - The game is political satire for adults aged 18 and older. Phrase cards do
   not carry individual age-rating metadata.
-- English is the default language. Milestone 029 adds a complete Romanian
+- English is the default interface language and Romanian is the default game
+  language. Milestone 029 adds a complete Romanian
   interface, game content, grammar, and speech. Interface messages and
   locale-specific game bundles have separate owners. Localized grammar and
   phrase prose must not enter locale-neutral rules.
@@ -302,7 +303,7 @@ source-only review does not satisfy them.
     evidence remain pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Complete: Romanian interface, game
-    content, grammar, replay locale, Mihai medium and Liana medium speech;
+    content, grammar, replay locale, Mihai medium and Liana high speech;
     Ro_VITS evaluated and rejected as the Romanian voice.
 30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.

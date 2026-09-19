@@ -10,7 +10,8 @@ and the Ro_VITS rejection
 
 Add Romanian as a complete playable language beside English. Translate the
 interface, then the game content, implement Romanian grammar, and generate
-Romanian speech locally. English remains the default. Phase 1 replaces the
+Romanian speech locally. English remains the default interface language and
+Romanian becomes the default game language. Phase 1 replaces the
 English-only interface restriction in Milestones 000, 003, and 005. Phase 2
 replaces their English-only game-content restriction. This milestone extends
 Milestones 014, 019, 020, and 024 for language selection, stored match language,
@@ -24,15 +25,15 @@ and Romanian speech. Their other behavior and failure contracts still apply.
 2. **Phase 2: Romanian game content, grammar, and speech.** Translate the game
    content, add the independently saved `Game language` selection, implement
    Romanian grammar and deterministic play, and deliver Romanian speech with
-   Piper Mihai medium and Piper Liana medium. Complete automated checks,
+   Piper Mihai medium and Piper Liana high. Complete automated checks,
    Romanian source and editorial checks, and production-browser verification.
    The user can review language and audible quality separately after completion.
 3. **Ro_VITS: evaluated and rejected.** Ro_VITS was compared with the accepted
    Phase 2 voices and rejected: no ONNX/WASM browser artifact, ~437 MB per
-   checkpoint against the 100 MiB per-file budget, `connect-src 'self'` CSP
+   checkpoint against the 120 MiB assembled-model budget, `connect-src 'self'` CSP
    forbids hosted inference, and checkpoint/data/speaker licensing is
-   unresolved. Piper Mihai medium and Piper Liana medium remain the only
-   Romanian voices. This milestone authorizes no model replacement.
+   unresolved. Piper Mihai medium and Piper Liana high remain the only
+   Romanian voices. This milestone authorizes no further model replacement.
 
 Complete the phases in order. Each phase is a separately testable slice: start
 one only after the preceding phase's acceptance criteria and cumulative
@@ -192,7 +193,9 @@ The new verifier paths below are implementation targets, not existing evidence.
 ## Phase 2: Game language selection
 
 Add a `gameLocale: 'en' | 'ro-RO'` field to the strict settings document and
-increment its schema version from `2` to `3`. It defaults to `en`. A stored
+increment its schema version from `2` to `3`. It defaults to `ro-RO`, so a new
+installation plays Romanian game content under an English interface, and the
+two languages stay independently selectable in both directions. A stored
 document written before the field existed is rejected as `unsupported-version`
 and falls back to the defaults. Preserve the accepted `interfaceLocale` and
 every other value on an accepted document. Unknown locale values return
@@ -242,7 +245,9 @@ score explanations show it in the selected interface language under every game
 language. Milestone 005 pins the English `securitate` label.
 Shared semantic keys must exist in both languages; language-specific
 inflection data can have different shapes. Do not require an English
-inflection shape for Romanian.
+inflection shape for Romanian. The English catalog stays the authored
+reference for locale parity even though Romanian is the default game language,
+so a Romanian inflection form never requires a matching English form.
 
 Use standard Romanian with `ă`, `â`, `î`, `ș`, and `ț`. Normalize Unicode to NFC
 and convert legacy cedilla forms to comma-below forms at the authoring boundary.
@@ -333,7 +338,11 @@ Use these exact model families and quality levels:
 | Profile | Phase 2 model | Published source |
 | --- | --- | --- |
 | Romanian male | `ro_RO-mihai-medium` | [Piper Mihai](https://huggingface.co/rhasspy/piper-voices/tree/main/ro/ro_RO/mihai/medium) |
-| Romanian female | `ro_RO-liana-medium` | [Piper Liana](https://huggingface.co/eduardem/piper-liana-romanian) |
+| Romanian female | `ro_RO-liana-high` | [Piper Liana](https://huggingface.co/eduardem/piper-liana-romanian/tree/main/voices/liana-high) |
+
+The female profile ships Liana's high tier at the same pinned revision as its
+pronunciation resources; the medium tier is withdrawn from the package
+(recorded 2026-09-18).
 
 Map English George, David, and Mark skin assignments to Mihai. Map Emma and
 Zira assignments to Liana. This preserves authored presentation profiles;
@@ -361,7 +370,15 @@ game language alone must not download both voices. Speech remains on by default.
 Extend the existing speech build and validation commands to cover Romanian.
 Before importing assets, pin upstream revisions, exact file names, SHA-256
 hashes, sample rates, input/output tensors, sizes, pronunciation dependencies,
-and license notices. Each shipped model file must remain below 100 MiB. Keep
+and license notices. Each assembled Romanian model must remain below
+120 MiB so the ~109 MiB Liana high weights fit. Each shipped file must remain
+below 100 MiB to fit regular Git hosting. Split larger models into ordered
+static parts, at most 96 MiB each, and reassemble the exact model bytes before
+inference. Validate every part and the assembled model size and SHA-256 hash.
+Revalidate the package manifest when the worker initializes so a new deployment
+cannot reuse an outdated voice inventory. Hash-pinned files may use the browser
+cache. Mihai retains its single model file. The English Piper and GPU packages keep
+their own budgets. Keep
 the English Piper profiles and their behavior intact. Long input must be split
 at valid boundaries and delivered in full, without token-limit truncation.
 
@@ -376,7 +393,8 @@ GPL source obligations if Piper or eSpeak NG components are distributed.
 
 The new verifier paths below are implementation targets, not existing evidence.
 
-- **AC-029-06:** Both drop-downs default to English and independently preserve
+- **AC-029-06:** The `Interface language` drop-down defaults to English and the
+  `Game language` drop-down defaults to Romanian. Both independently preserve
   all four language combinations after selection and reload. Changing either
   leaves the other unchanged. Adding `gameLocale` preserves the accepted
   `interfaceLocale`, the base points multiplier, and the tutorial preference,
@@ -448,13 +466,14 @@ The new verifier paths below are implementation targets, not existing evidence.
 
 [TeodoraR/Ro_VITS](https://huggingface.co/TeodoraR/Ro_VITS) was evaluated
 against the accepted Phase 2 voices and **rejected**. Piper Mihai medium and
-Piper Liana medium remain the only Romanian voices.
+Piper Liana high remain the only Romanian voices.
 
 - No browser artifact exists: the repository ships PyTorch `.pth` checkpoints
   only, with no ONNX/WASM export or conversion path. Desktop Python inference
   alone does not establish browser suitability.
-- Each ~437 MB generator checkpoint exceeds the 100 MiB per-file budget ~7×;
-  both shipped Piper models meet it (~60 MiB each).
+- Each ~437 MB generator checkpoint is more than three times the 120 MiB
+  assembled-model budget; the shipped Piper models meet it (~60 MiB and
+  ~109 MiB), with every shipped file below 100 MiB.
 - The `connect-src 'self'` production CSP forbids hosted inference, and
   runtime network calls are prohibited.
 - Licensing is unresolved: the Apache 2.0 card label does not clear the SWARA
@@ -484,7 +503,10 @@ completion. Do not treat automated transcription or a green aggregate gate as
 proof of native-language naturalness or physical audible output.
 
 Milestone 029 is complete: Ro_VITS is rejected above, and Piper Mihai medium
-and Piper Liana medium remain the only Romanian voices. Any model replacement
-needs a separately approved implementation package and updated contracts. No
-phase authorizes publication, voice cloning, additional languages, cloud
-speech, or new gameplay mechanics.
+and Piper Liana high remain the only Romanian voices. The female voice moved
+from Liana medium to Liana high on 2026-09-18 at the same pinned revision,
+within the 120 MiB assembled-model budget and 100 MiB shipped-file budget.
+Any further model replacement needs
+a separately approved implementation package and updated contracts. No phase
+authorizes publication, voice cloning, additional languages, cloud speech, or
+new gameplay mechanics.

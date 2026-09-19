@@ -150,9 +150,100 @@ describe('Romanian grammar binding', () => {
     );
   });
 
+  test('agrees with a plural noun subject', () => {
+    const result = analyzeWith(
+      romanianGrammar,
+      romanianGameLocale,
+      ['public-your-ceremonial-scissors-in-business-class', 'public-press-release-present'],
+      { end: true },
+    );
+    expect(result.accepted).toBe(true);
+    if (!result.accepted) return;
+    expect(result.analysis.renderedPhrases[0]?.grammaticalNumber).toBe('plural');
+    expect(result.analysis.publicText).toBe(
+      'Foarfecile voastre de ceremonie la clasa business sunt comunicate de presă fără evenimente.',
+    );
+  });
+
   test.each([
-    ['was-a-snitch', 'au fost persoane care turnau'],
-    ['will-be-a-snitch', 'vor fi persoane care vor turna'],
+    [englishGameLocale, 'Your breaking news on a repeat schedule is a press release without an event.'],
+    [romanianGameLocale, 'Fluxul vostru de știri de ultimă oră în reluare este un comunicat de presă fără eveniment.'],
+  ] as const)('keeps singular agreement for the news noun in $0.locale', (locale, expected) => {
+    const result = analyzeWith(
+      grammarFor(locale),
+      locale,
+      ['public-your-breaking-news-on-a-repeat-schedule', 'public-press-release-present'],
+      { end: true },
+    );
+    expect(result.accepted).toBe(true);
+    if (result.accepted) expect(result.analysis.publicText).toBe(expected);
+  });
+
+  test.each([
+    ['palace-press-hall-is-a-statement-without-a-verb', 'o propoziție fără verb'],
+    ['influencer-campaign-livestream-is-a-prophecy-with-a-discount-code', 'o profeție la reducere'],
+  ])('preserves the predicate meaning for polite subjects in %s', (family, complement) => {
+    for (const [tense, copula] of [['past', 'erați'], ['present', 'sunteți'], ['future', 'veți fi']]) {
+      const result = analyzeWith(
+        romanianGrammar,
+        romanianGameLocale,
+        ['you', `${family}-${tense}`],
+        { end: true },
+      );
+      expect(result.accepted).toBe(true);
+      if (result.accepted) {
+        expect(result.analysis.publicText).toBe(`Dumneavoastră ${copula} ${complement}.`);
+      }
+    }
+  });
+
+  test.each([
+    ['apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-present', 'privesc dezbaterea cu', 'priviți dezbaterea cu'],
+    ['luxury-minister-contract-verb-measures-service-in-marble-present', 'croiesc harta după', 'croiți harta după'],
+    ['marble-diplomat-contract-verb-serves-luxury-as-protocol-present', 'felicită exit-pollul înainte de', 'felicitați exit-pollul înainte de'],
+  ])('distinguishes third-person plural from polite second person in %s', (id, plural, polite) => {
+    for (const [subject, expected] of [['your-voters', plural], ['you', polite]]) {
+      const result = analyzeWith(
+        romanianGrammar,
+        romanianGameLocale,
+        [subject!, id, 'national-consensus'],
+        { end: true },
+      );
+      expect(result.accepted).toBe(true);
+      if (result.accepted) expect(result.analysis.renderedPhrases[1]?.text).toBe(expected);
+    }
+  });
+
+  test.each(['past', 'present', 'future'])('ends the prestige predicate with a complete complement in %s', (tense) => {
+    for (const subject of ['national-consensus', 'your-voters', 'you']) {
+      const result = analyzeWith(romanianGrammar, romanianGameLocale,
+        [subject, `marble-diplomat-predicate-1-${tense}`], { end: true });
+      expect(result.accepted).toBe(true);
+      if (result.accepted) {
+        expect(result.analysis.complete).toBe(true);
+        expect(result.analysis.publicText).toMatch(/prestigiul național în frunze căzute\.$/u);
+      }
+    }
+  });
+
+  test.each(['past', 'present', 'future'])('keeps the consultation complement across persons in %s', (tense) => {
+    for (const subject of ['national-consensus', 'your-voters', 'you']) {
+      const result = analyzeWith(
+        romanianGrammar,
+        romanianGameLocale,
+        [subject, `public-consultation-fee-${tense}`, 'national-consensus'],
+        { end: true },
+      );
+      expect(result.accepted).toBe(true);
+      if (result.accepted) {
+        expect(result.analysis.publicText).toContain('drept consultație dezacordul vostru unanim.');
+      }
+    }
+  });
+
+  test.each([
+    ['was-a-snitch', 'au fost turnători'],
+    ['will-be-a-snitch', 'vor fi turnători'],
     [
       'football-tycoon-contract-predicate-predicate-1-future',
       'vor fi o victorie în care cel mai mare merit va fi al meu',

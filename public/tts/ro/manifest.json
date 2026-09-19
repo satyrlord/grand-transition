@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "package": "Piper-ro_RO-mihai-medium + Piper-ro_RO-liana-medium",
+  "package": "Piper-ro_RO-mihai-medium + Piper-ro_RO-liana-high",
   "sampleRate": 22050,
   "runtime": {
     "path": "../piper/ort-wasm-simd-threaded.wasm",
@@ -17,17 +17,30 @@
       "lang": "ro-RO",
       "speakerId": 0,
       "default": true,
-      "model": "mihai/model.onnx",
+      "model": {
+        "files": [
+          "mihai/model.onnx"
+        ],
+        "bytes": 63201408,
+        "sha256": "240154e6744cb496897bbb4242121dc1709d3279f25e4f1ba5de61b341c9da38"
+      },
       "config": "mihai/config.json",
       "license": "MIT; dataset CC0"
     },
     {
-      "id": "ro_RO-liana-medium",
+      "id": "ro_RO-liana-high",
       "name": "Piper Romanian female (Liana)",
       "lang": "ro-RO",
       "speakerId": 0,
       "default": false,
-      "model": "liana/model.onnx",
+      "model": {
+        "files": [
+          "liana/model-01.bin",
+          "liana/model-02.bin"
+        ],
+        "bytes": 114204137,
+        "sha256": "84ed2745cf73dc43a7c352a072a393ec5468eafea01012a77e574b66e5ab97aa"
+      },
       "config": "liana/config.json",
       "license": "CC BY-NC 4.0"
     }
@@ -53,14 +66,14 @@
       "sha256": "e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1"
     },
     {
-      "name": "liana/ro_RO-liana-medium.onnx",
-      "url": "https://huggingface.co/eduardem/piper-liana-romanian/resolve/acfc14ae87bb4c124947f0cb7ee0023ffceb0005/voices/liana-medium/ro_RO-liana-medium.onnx",
-      "bytes": 63516050,
-      "sha256": "40c6cbe08905ba702f4df5966a3a8de2bcc232db8ad3784db74bbd948d9953d3"
+      "name": "liana/ro_RO-liana-high.onnx",
+      "url": "https://huggingface.co/eduardem/piper-liana-romanian/resolve/acfc14ae87bb4c124947f0cb7ee0023ffceb0005/voices/liana-high/ro_RO-liana-high.onnx",
+      "bytes": 114204023,
+      "sha256": "d8837c0920785d883b584af5af64abac5f528a9914b02f549698786355eada26"
     },
     {
-      "name": "liana/ro_RO-liana-medium.onnx.json",
-      "url": "https://huggingface.co/eduardem/piper-liana-romanian/resolve/acfc14ae87bb4c124947f0cb7ee0023ffceb0005/voices/liana-medium/ro_RO-liana-medium.onnx.json",
+      "name": "liana/ro_RO-liana-high.onnx.json",
+      "url": "https://huggingface.co/eduardem/piper-liana-romanian/resolve/acfc14ae87bb4c124947f0cb7ee0023ffceb0005/voices/liana-high/ro_RO-liana-high.onnx.json",
       "bytes": 4855,
       "sha256": "bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46"
     },
@@ -92,8 +105,8 @@
   "files": [
     {
       "path": "NOTICE.txt",
-      "bytes": 1589,
-      "sha256": "55d966a3897a7a13162d80f2a3aeba5fc022daa8b878062d45acefedabc29018"
+      "bytes": 1587,
+      "sha256": "7724e3858de717988e4c6437e0054437be84421604f27be0f156c77213af2d0c"
     },
     {
       "path": "liana/MODEL_CARD",
@@ -106,9 +119,14 @@
       "sha256": "bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46"
     },
     {
-      "path": "liana/model.onnx",
-      "bytes": 63516164,
-      "sha256": "6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14"
+      "path": "liana/model-01.bin",
+      "bytes": 100663296,
+      "sha256": "c090e7b3fafa823fa1e5fe3a62d26f5c2873fa1316c8d7ff8d4efc5121bf25c3"
+    },
+    {
+      "path": "liana/model-02.bin",
+      "bytes": 13540841,
+      "sha256": "360d591849d4a749d0b8a7cec488e8af57fe8403d31e2d78b5722271a2249b68"
     },
     {
       "path": "mihai/MODEL_CARD",
