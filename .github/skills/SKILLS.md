@@ -30,8 +30,8 @@ specified task gates. Recheck those gates when the scope changes.
 - [`refactor`](refactor/SKILL.md): Improve structure without behavior changes.
 - [`repair-scene-composition`](repair-scene-composition/SKILL.md): Diagnose and
   repair scene scale, proportions, layers, crops, and visual integration.
-- [`run-quality-gate`](run-quality-gate/SKILL.md): Run or repair configured
-  repository checks.
+- [`run-quality-gate`](run-quality-gate/SKILL.md): Run or repair the full
+  configured repository quality gate.
 - [`simulate-matches`](simulate-matches/SKILL.md): Run a required-size
   deterministic headless match workload.
 - [`update-game-content`](update-game-content/SKILL.md): Change phrases,

@@ -21,7 +21,7 @@
     "secondary": "#46515e",
     "accent": "#a82f24"
   },
-  "weaknessTags": ["nepotism", "corruption", "spending", "obsolete"],
+  "weaknessTags": ["nepotism", "corruption", "obsolete"],
   "comebacks": {
     "weak": "Objection received. Reply expected in five years.",
     "medium": "You passed the human test. Your cousin graded it.",

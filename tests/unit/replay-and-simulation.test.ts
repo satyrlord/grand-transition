@@ -148,24 +148,29 @@ describe('replay and local match-log codecs', () => {
     expect(storage.writes).toHaveLength(0);
   });
 
-  test('fails safely when the current catalog no longer holds a replayed phrase', () => {
-    const usedPhraseIds = new Set(
-      completed.matchLog.sentences.flatMap((sentence) =>
-        sentence.phrases.map((phrase) => phrase.phraseId),
-      ),
+  test('fails safely when a replay command references a missing catalog card', () => {
+    const selection = completed.replay.commands.find(
+      (command) => command.type === 'select-phrase',
     );
-    expect(usedPhraseIds.size).toBeGreaterThan(0);
-    const trimmed: ReplayContext = {
-      ...context,
-      catalog: {
-        ...context.catalog,
-        phrases: context.catalog.phrases.filter(
-          (phrase) => !usedPhraseIds.has(phrase.id),
-        ),
-      },
+    expect(selection?.type).toBe('select-phrase');
+    if (!selection || selection.type !== 'select-phrase') return;
+    const staleReplay: ReplayDocument = {
+      ...completed.replay,
+      commands: completed.replay.commands.map((command) =>
+        command === selection
+          ? {
+              ...command,
+              payload: {
+                card: {
+                  ...command.payload.card,
+                  cardId: 'missing-from-catalog',
+                },
+              },
+            }
+          : command,
+      ),
     };
-    expect(trimmed.catalog.phrases.length).toBeGreaterThan(0);
-    expect(replayMatch(completed.replayBytes, trimmed)).toEqual({
+    expect(replayMatch(encodeReplay(staleReplay), context)).toEqual({
       ok: false,
       code: 'invalid-replay',
     });

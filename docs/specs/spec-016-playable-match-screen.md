@@ -279,9 +279,9 @@ Music Off stores zero Music volume and turning it back On restores the last
 non-zero Music volume in the page session, or the 10 percent default when no
 such value exists. Voices maps to the stored Speech enabled setting.
 
-When Phrase color coding is On, noun cards use green. Verb cards use red.
-Predicate cards use teal. Modifier cards use purple. Ending cards use blue.
-Continuation cards use gray. Conjunction cards use orange.
+When Phrase color coding is On, noun cards use yellow. Verb cards use orange.
+Predicate cards use red. Modifier cards use blue. Ending cards use purple.
+Continuation cards use gray. Conjunction cards use green.
 
 Phrase text stays white. A common, uncommon, or
 rare card uses the 40, 50, or 60 percent role-color blend respectively. The
@@ -358,10 +358,10 @@ timer-refill abuse.
   text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
   60 percent for rare.
 
-  Nouns are green. Verbs are red. Predicates are teal. Modifiers are purple.
-  Endings are blue.
+  Nouns are yellow. Verbs are orange. Predicates are red. Modifiers are blue.
+  Endings are purple.
 
-  Continuations are gray. Conjunctions are orange.
+  Continuations are gray. Conjunctions are green.
   With it Off, the text remains white
   with no role or rarity color. The card background stays unchanged. The
   feature keeps visible phrase rows text-only and does not change accessible

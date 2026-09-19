@@ -61,15 +61,17 @@ Compare commands and paths with the current checkout.
 Distinguish approved future work from implemented behavior.
 Remove stale workflow rules that conflict with the owning specification.
 
-Run the `quick_validate.py` script from the installed `skill-creator` package:
+Validate each changed skill package with the repository runner:
 
 ```text
-quick_validate.py <skill-folder>
+node .github/skills/create-skill/scripts/validate-skill.mjs <skill-folder>...
 ```
 
-Find the installed path for this script. Do not put a user-specific absolute
-path in the repository. If the script's Python environment lacks PyYAML, use an
-isolated environment or report the validator as blocked.
+The runner locates `quick_validate.py` from the installed `skill-creator`
+package. It supplies PyYAML through an isolated `uv` environment, so the system
+Python stays untouched. Set `CODEX_HOME` when the package is outside its default
+user location. Do not put a user-specific absolute path in the repository.
+Report the runner's `BLOCKED` message and its next action instead of a pass.
 
 Also verify links, metadata parity, foreign terms, unfinished placeholders, and
 any added script. A validator pass does not prove that the workflow is useful.

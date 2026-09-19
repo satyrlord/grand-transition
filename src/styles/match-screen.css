@@ -2016,31 +2016,31 @@
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='noun']
     > button.phrase-card {
-    --phrase-role-color: rgb(72 172 104);
+    --phrase-role-color: rgb(230 200 60);
   }
 
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='verb']
     > button.phrase-card {
-    --phrase-role-color: rgb(201 55 48);
+    --phrase-role-color: rgb(235 145 48);
   }
 
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='predicate']
     > button.phrase-card {
-    --phrase-role-color: rgb(46 158 162);
+    --phrase-role-color: rgb(201 55 48);
   }
 
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='modifier']
     > button.phrase-card {
-    --phrase-role-color: rgb(139 90 177);
+    --phrase-role-color: rgb(53 124 199);
   }
 
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='ending']
     > button.phrase-card {
-    --phrase-role-color: rgb(53 124 199);
+    --phrase-role-color: rgb(139 90 177);
   }
 
   .match-screen[data-phrase-color-coding='on']
@@ -2052,7 +2052,7 @@
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='conjunction']
     > button.phrase-card {
-    --phrase-role-color: rgb(235 145 48);
+    --phrase-role-color: rgb(72 172 104);
   }
 
   button.phrase-card:focus-visible,
