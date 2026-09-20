@@ -18,7 +18,7 @@ const englishBundle: GameLocaleBundle = Object.freeze({
     fictionalCompositeSatireDisclaimer:
       'All characters and events are fictional composites created for satire.',
   },
-  messages: Object.freeze({ 'phrase.national-consensus': 'your disagreement' }),
+  messages: Object.freeze({ 'phrase.common-noun-001': 'your disagreement' }),
 });
 
 const romanianBundle: GameLocaleBundle = Object.freeze({
@@ -28,7 +28,7 @@ const romanianBundle: GameLocaleBundle = Object.freeze({
     fictionalCompositeSatireDisclaimer:
       'Toate personajele și evenimentele sunt compoziții fictive create pentru satiră.',
   },
-  messages: Object.freeze({ 'phrase.national-consensus': 'dezacordul vostru' }),
+  messages: Object.freeze({ 'phrase.common-noun-001': 'dezacordul vostru' }),
 });
 
 describe('game-locale bundles', () => {

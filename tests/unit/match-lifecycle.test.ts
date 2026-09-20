@@ -108,12 +108,12 @@ function started(): MatchState {
 function finishDraft(
   state: MatchState,
   predicateByPlayer: Readonly<Record<string, string>> = {
-    [playerIds[0]]: 'belongs-in-a-party-museum',
-    [playerIds[1]]: 'belongs-in-a-party-museum',
+    [playerIds[0]]: 'common-predicate-010-present',
+    [playerIds[1]]: 'common-predicate-010-present',
   },
   nounByPlayer: Readonly<Record<string, string>> = {
-    [playerIds[0]]: 'national-consensus',
-    [playerIds[1]]: 'televised-revolution',
+    [playerIds[0]]: 'common-noun-001',
+    [playerIds[1]]: 'common-noun-002',
   },
 ): MatchState {
   let index = 0;
@@ -156,7 +156,7 @@ describe('Hollywood Roast match lifecycle', () => {
     const state = selectPrivate(
       started(),
       playerIds[0],
-      'before-the-next-election',
+      'common-modifier-001',
       'wrong',
     );
     expect(state.playerStates[playerIds[0]]!.pride).toBe(97);
@@ -178,7 +178,7 @@ describe('Hollywood Roast match lifecycle', () => {
     state = selectPrivate(
       state,
       playerIds[0],
-      'before-the-next-election',
+      'common-modifier-001',
       'lethal-wrong',
     );
     expect(state.phase).toBe('results');
@@ -261,12 +261,12 @@ describe('Hollywood Roast match lifecycle', () => {
     state = finishDraft(
       state,
       {
-        [playerIds[0]]: 'makes-own-voters-change-the-channel',
-        [playerIds[1]]: 'belongs-in-a-party-museum',
+        [playerIds[0]]: 'common-predicate-011-present',
+        [playerIds[1]]: 'common-predicate-010-present',
       },
       {
-        [playerIds[0]]: 'televised-revolution',
-        [playerIds[1]]: 'national-consensus',
+        [playerIds[0]]: 'common-noun-002',
+        [playerIds[1]]: 'common-noun-001',
       },
     );
     state = lifecycle(state, 'resolve-round');
@@ -301,12 +301,12 @@ describe('Hollywood Roast match lifecycle', () => {
     state = finishDraft(
       state,
       {
-        [playerIds[0]]: 'belongs-in-a-party-museum',
-        [playerIds[1]]: 'belongs-in-a-party-museum',
+        [playerIds[0]]: 'common-predicate-010-present',
+        [playerIds[1]]: 'common-predicate-010-present',
       },
       {
-        [playerIds[0]]: 'national-consensus',
-        [playerIds[1]]: 'national-consensus',
+        [playerIds[0]]: 'common-noun-001',
+        [playerIds[1]]: 'common-noun-001',
       },
     );
     state = lifecycle(state, 'resolve-round');
@@ -348,7 +348,7 @@ describe('Hollywood Roast match lifecycle', () => {
     let state = selectPrivate(
       started(),
       playerIds[0],
-      'before-the-next-election',
+      'common-modifier-001',
       'mistake-stat',
     );
     state = finishDraft(state);

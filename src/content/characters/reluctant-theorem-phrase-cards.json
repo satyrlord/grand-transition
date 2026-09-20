@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "reluctant-theorem-conditional-yes",
+      "id": "reluctant-theorem-noun-001",
       "role": "noun",
       "text": "a yes waiting for its seventh condition",
       "tags": [
@@ -66,7 +66,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-deadline-proof",
+      "id": "reluctant-theorem-noun-002",
       "role": "noun",
       "text": "a deadline awaiting proof that tomorrow exists",
       "tags": [
@@ -84,7 +84,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-paper-bridge",
+      "id": "reluctant-theorem-noun-003",
       "role": "noun",
       "text": "a bridge that carries only footnotes",
       "tags": [
@@ -102,7 +102,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-permit-for-shadow",
+      "id": "reluctant-theorem-noun-004",
       "role": "noun",
       "text": "a permit covering the park's entire shadow",
       "tags": [
@@ -120,7 +120,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-undecided-pencil",
+      "id": "reluctant-theorem-noun-005",
       "role": "noun",
       "text": "a pencil worn flat by both maybes",
       "tags": [
@@ -138,7 +138,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-unfinished-bus-stop",
+      "id": "reluctant-theorem-noun-006",
       "role": "noun",
       "text": "an unfinished bus stop",
       "tags": [
@@ -156,7 +156,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-postponed-decision-past",
+      "id": "reluctant-theorem-verb-001-past",
       "role": "verb",
       "text": "postponed the decision on",
       "tags": [
@@ -167,7 +167,7 @@
       "personalSingularText": "postponed the decision on",
       "secondPersonText": "postponed the decision on",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "tenseFamily": "reluctant-theorem-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -190,7 +190,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-postponed-decision-present",
+      "id": "reluctant-theorem-verb-001-present",
       "role": "verb",
       "text": "postpones the decision on",
       "tags": [
@@ -201,7 +201,7 @@
       "personalSingularText": "postpones the decision on",
       "secondPersonText": "postpone the decision on",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "tenseFamily": "reluctant-theorem-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -224,7 +224,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-postponed-decision-future",
+      "id": "reluctant-theorem-verb-001-future",
       "role": "verb",
       "text": "will postpone the decision on",
       "tags": [
@@ -235,7 +235,7 @@
       "personalSingularText": "will postpone the decision on",
       "secondPersonText": "will postpone the decision on",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-postponed-decision",
+      "tenseFamily": "reluctant-theorem-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -258,7 +258,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-missed-deadline-past",
+      "id": "reluctant-theorem-verb-002-past",
       "role": "verb",
       "text": "missed the emergency deadline for",
       "tags": [
@@ -269,7 +269,7 @@
       "personalSingularText": "missed the emergency deadline for",
       "secondPersonText": "missed the emergency deadline for",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "tenseFamily": "reluctant-theorem-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -292,7 +292,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-missed-deadline-present",
+      "id": "reluctant-theorem-verb-002-present",
       "role": "verb",
       "text": "misses the emergency deadline for",
       "tags": [
@@ -303,7 +303,7 @@
       "personalSingularText": "misses the emergency deadline for",
       "secondPersonText": "miss the emergency deadline for",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "tenseFamily": "reluctant-theorem-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -326,7 +326,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-missed-deadline-future",
+      "id": "reluctant-theorem-verb-002-future",
       "role": "verb",
       "text": "will miss the emergency deadline for",
       "tags": [
@@ -337,7 +337,7 @@
       "personalSingularText": "will miss the emergency deadline for",
       "secondPersonText": "will miss the emergency deadline for",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-missed-deadline",
+      "tenseFamily": "reluctant-theorem-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -360,7 +360,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-pending-proof-past",
+      "id": "reluctant-theorem-predicate-001-past",
       "role": "predicate",
       "text": "was pending proof while the roof leaked",
       "tags": [
@@ -372,7 +372,7 @@
       "personalSingularText": "was pending proof while the roof leaked",
       "secondPersonText": "were pending proof while the roof leaked",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-pending-proof",
+      "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -389,7 +389,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-pending-proof-present",
+      "id": "reluctant-theorem-predicate-001-present",
       "role": "predicate",
       "text": "is pending proof while the roof leaks",
       "tags": [
@@ -401,7 +401,7 @@
       "personalSingularText": "is pending proof while the roof leaks",
       "secondPersonText": "are pending proof while the roof leaks",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-pending-proof",
+      "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -418,7 +418,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-pending-proof-future",
+      "id": "reluctant-theorem-predicate-001-future",
       "role": "predicate",
       "text": "will be pending proof while the roof leaks",
       "tags": [
@@ -430,7 +430,7 @@
       "personalSingularText": "will be pending proof while the roof leaks",
       "secondPersonText": "will be pending proof while the roof leaks",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-pending-proof",
+      "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -447,7 +447,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-before-defining-soon",
+      "id": "reluctant-theorem-modifier-001",
       "role": "modifier",
       "text": "after three hearings about the word soon",
       "tags": [
@@ -456,7 +456,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-subject-to-maybe",
+      "id": "reluctant-theorem-modifier-002",
       "role": "modifier",
       "text": "subject to the first hesitation's second opinion",
       "tags": [
@@ -465,7 +465,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-permit-footnote",
+      "id": "reluctant-theorem-modifier-003",
       "role": "modifier",
       "text": "under a footnote taller than the building",
       "tags": [
@@ -474,7 +474,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-forms-first",
+      "id": "reluctant-theorem-ending-001",
       "role": "ending",
       "text": "and the counter serves forms to the queue.",
       "tags": [
@@ -484,7 +484,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-question-survives",
+      "id": "reluctant-theorem-ending-002",
       "role": "ending",
       "text": "and your answer disproves only the question.",
       "tags": [
@@ -494,7 +494,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-tomorrow-committee",
+      "id": "reluctant-theorem-ending-003",
       "role": "ending",
       "text": "and reconstruction starts tomorrow, once tomorrow passes committee.",
       "tags": [
@@ -505,7 +505,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-maybe-unanimous",
+      "id": "reluctant-theorem-ending-004",
       "role": "ending",
       "text": "and the maybes are still undecided.",
       "tags": [
@@ -515,7 +515,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-qualified-contrast",
+      "id": "reluctant-theorem-conjunction-001",
       "role": "conjunction",
       "text": "but, with that qualification,",
       "tags": [],
@@ -523,7 +523,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-contract-noun-1-a-theorem-with-a-provisional-door",
+      "id": "reluctant-theorem-noun-007",
       "role": "noun",
       "text": "a final question at the exit",
       "tags": [
@@ -540,7 +540,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-contract-noun-2-a-proof-in-a-queue",
+      "id": "reluctant-theorem-noun-008",
       "role": "noun",
       "text": "a competence test with a conscience",
       "tags": [
@@ -557,7 +557,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "reluctant-theorem-contract-noun-3-a-deadline-with-a-footnote",
+      "id": "reluctant-theorem-noun-009",
       "role": "noun",
       "text": "a result awaiting an answer",
       "tags": [
@@ -574,7 +574,7 @@
       "rarity": "rare"
     },
     {
-      "id": "reluctant-theorem-contract-noun-4-a-building-permit-for-a-hypothesis",
+      "id": "reluctant-theorem-noun-010",
       "role": "noun",
       "text": "a country you do not steal",
       "tags": [
@@ -591,7 +591,7 @@
       "rarity": "common"
     },
     {
-      "id": "reluctant-theorem-contract-verb-postpones-the-proof-past",
+      "id": "reluctant-theorem-verb-003-past",
       "role": "verb",
       "text": "asked one final question about",
       "tags": [
@@ -610,10 +610,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+      "tenseFamily": "reluctant-theorem-verb-003"
     },
     {
-      "id": "reluctant-theorem-contract-verb-postpones-the-proof-present",
+      "id": "reluctant-theorem-verb-003-present",
       "role": "verb",
       "text": "asks one final question about",
       "singularText": "asks one final question about",
@@ -636,10 +636,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+      "tenseFamily": "reluctant-theorem-verb-003"
     },
     {
-      "id": "reluctant-theorem-contract-verb-postpones-the-proof-future",
+      "id": "reluctant-theorem-verb-003-future",
       "role": "verb",
       "text": "will ask one final question about",
       "tags": [
@@ -658,10 +658,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-contract-verb-postpones-the-proof"
+      "tenseFamily": "reluctant-theorem-verb-003"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-1-past",
+      "id": "reluctant-theorem-predicate-002-past",
       "role": "predicate",
       "text": "was one final question without an answer",
       "tags": [
@@ -680,10 +680,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+      "tenseFamily": "reluctant-theorem-predicate-002"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-1-present",
+      "id": "reluctant-theorem-predicate-002-present",
       "role": "predicate",
       "text": "is one final question without an answer",
       "singularText": "is one final question without an answer",
@@ -706,10 +706,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+      "tenseFamily": "reluctant-theorem-predicate-002"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-1-future",
+      "id": "reluctant-theorem-predicate-002-future",
       "role": "predicate",
       "text": "will be one final question without an answer",
       "tags": [
@@ -728,10 +728,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-1"
+      "tenseFamily": "reluctant-theorem-predicate-002"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-2-past",
+      "id": "reluctant-theorem-predicate-003-past",
       "role": "predicate",
       "text": "was a conclusion waiting for a second opinion",
       "tags": [
@@ -750,10 +750,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+      "tenseFamily": "reluctant-theorem-predicate-003"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-2-present",
+      "id": "reluctant-theorem-predicate-003-present",
       "role": "predicate",
       "text": "is a conclusion waiting for a second opinion",
       "singularText": "is a conclusion waiting for a second opinion",
@@ -776,10 +776,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+      "tenseFamily": "reluctant-theorem-predicate-003"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-2-future",
+      "id": "reluctant-theorem-predicate-003-future",
       "role": "predicate",
       "text": "will be a conclusion waiting for a second opinion",
       "tags": [
@@ -798,10 +798,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-2"
+      "tenseFamily": "reluctant-theorem-predicate-003"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-3-past",
+      "id": "reluctant-theorem-predicate-004-past",
       "role": "predicate",
       "text": "was a deadline with a conditional hinge",
       "tags": [
@@ -820,10 +820,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+      "tenseFamily": "reluctant-theorem-predicate-004"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-3-present",
+      "id": "reluctant-theorem-predicate-004-present",
       "role": "predicate",
       "text": "is a deadline with a conditional hinge",
       "singularText": "is a deadline with a conditional hinge",
@@ -846,10 +846,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+      "tenseFamily": "reluctant-theorem-predicate-004"
     },
     {
-      "id": "reluctant-theorem-contract-predicate-predicate-3-future",
+      "id": "reluctant-theorem-predicate-004-future",
       "role": "predicate",
       "text": "will be a deadline with a conditional hinge",
       "tags": [
@@ -868,10 +868,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-contract-predicate-predicate-3"
+      "tenseFamily": "reluctant-theorem-predicate-004"
     },
     {
-      "id": "reluctant-theorem-contract-ending-and-the-proof-requested-more-time",
+      "id": "reluctant-theorem-ending-005",
       "role": "ending",
       "text": "and the proof requested more time.",
       "tags": [

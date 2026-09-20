@@ -160,7 +160,7 @@ describe('Romanian replay, match-log, and history records', () => {
               phrases: [
                 {
                   ...sentence.phrases[0]!,
-                  phraseId: 'denounced',
+                  phraseId: 'common-verb-001-past',
                   text: 'ați denunțat',
                 },
                 ...sentence.phrases.slice(1),
@@ -192,12 +192,12 @@ describe('Romanian replay, match-log, and history records', () => {
               phrases: [
                 {
                   ...sentence.phrases[0]!,
-                  phraseId: 'denounced',
+                  phraseId: 'common-verb-001-past',
                   text: 'v-a denunțat',
                 },
                 {
                   ...sentence.phrases[1]!,
-                  phraseId: 'you',
+                  phraseId: 'common-noun-028',
                   text: 'pe dumneavoastră',
                 },
                 ...sentence.phrases.slice(2),
@@ -229,7 +229,7 @@ describe('Romanian replay, match-log, and history records', () => {
               phrases: [
                 {
                   ...sentence.phrases[0]!,
-                  phraseId: 'public-outsourced-explanation-past',
+                  phraseId: 'common-verb-028-past',
                   text: 'a pus pe altcineva să vă explice',
                 },
                 ...sentence.phrases.slice(1),

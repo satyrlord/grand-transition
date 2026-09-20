@@ -13,7 +13,7 @@ type Evidence = { native: Array<{ text: string; name: string; local: boolean;
   submitted: number; started?: number; ended?: number; boundaries: Array<{ charIndex: number; at: number }> }>;
   neural: Array<{ voiceId: string; segments: string[] }>; voices: Array<{ name: string; local: boolean }> };
 
-async function configure(page: Page, choices: readonly Choice[], phraseIds: readonly string[] = ['your-brother', 'is-a-snitch']) {
+async function configure(page: Page, choices: readonly Choice[], phraseIds: readonly string[] = ['common-noun-036', 'common-predicate-015-present']) {
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.addInitScript((settings) => {
     localStorage.setItem('grand-transition.settings.v1', JSON.stringify({ ...settings, turnTimerSeconds: null, musicVolume: 0, effectsVolume: 0 }));
@@ -85,7 +85,7 @@ test('Piper streams both public clauses with exact phrase markers and one comple
   await configure(page, [
     { character:'red-folded-chairman', skin:2, neural:'vctk-p225' },
     { character:'thunder-tribune', skin:1, neural:'vctk-p226' },
-  ], ['your-brother', 'is-a-snitch', 'but', 'national-consensus', 'belongs-in-a-party-museum']);
+  ], ['common-noun-036', 'common-predicate-015-present', 'common-conjunction-002', 'common-noun-001', 'common-predicate-010-present']);
   await page.getByRole('button', { name:'End', exact:true }).click();
   await page.getByRole('button', { name:'End', exact:true }).click();
   await expect(page.getByRole('heading', { name:/Round 2/u })).toBeVisible({ timeout:90_000 });

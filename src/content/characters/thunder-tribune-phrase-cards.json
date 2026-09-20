@@ -52,7 +52,7 @@
   },
   "phrases": [
     {
-      "id": "tribunes-indictment",
+      "id": "thunder-tribune-noun-001",
       "role": "noun",
       "text": "that prime-time scarecrow",
       "referentKind": "personal",
@@ -71,7 +71,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "condemns",
+      "id": "thunder-tribune-verb-001-present",
       "role": "verb",
       "text": "outshouts",
       "singularText": "outshouts",
@@ -95,10 +95,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "condemns"
+      "tenseFamily": "thunder-tribune-verb-001"
     },
     {
-      "id": "outshouted",
+      "id": "thunder-tribune-verb-001-past",
       "role": "verb",
       "text": "outshouted",
       "singularText": "outshouted",
@@ -122,10 +122,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "condemns"
+      "tenseFamily": "thunder-tribune-verb-001"
     },
     {
-      "id": "will-outshout",
+      "id": "thunder-tribune-verb-001-future",
       "role": "verb",
       "text": "will outshout",
       "singularText": "will outshout",
@@ -149,10 +149,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "condemns"
+      "tenseFamily": "thunder-tribune-verb-001"
     },
     {
-      "id": "from-the-marble-rostrum",
+      "id": "thunder-tribune-predicate-001-past",
       "role": "predicate",
       "text": "could lose an election to an empty ballot",
       "tags": [
@@ -169,14 +169,14 @@
         ],
         "flavour": []
       },
-      "tenseFamily": "from-the-marble-rostrum",
+      "tenseFamily": "thunder-tribune-predicate-001",
       "rarity": "common",
       "singularText": "could lose an election to an empty ballot",
       "pluralText": "could lose an election to an empty ballot",
       "tense": "past"
     },
     {
-      "id": "can-lose-to-an-empty-ballot",
+      "id": "thunder-tribune-predicate-001-present",
       "role": "predicate",
       "text": "can lose an election to an empty ballot",
       "tags": [
@@ -197,10 +197,10 @@
       "singularText": "can lose an election to an empty ballot",
       "pluralText": "can lose an election to an empty ballot",
       "tense": "present",
-      "tenseFamily": "from-the-marble-rostrum"
+      "tenseFamily": "thunder-tribune-predicate-001"
     },
     {
-      "id": "will-lose-to-an-empty-ballot",
+      "id": "thunder-tribune-predicate-001-future",
       "role": "predicate",
       "text": "will lose an election to an empty ballot",
       "tags": [
@@ -221,10 +221,10 @@
       "singularText": "will lose an election to an empty ballot",
       "pluralText": "will lose an election to an empty ballot",
       "tense": "future",
-      "tenseFamily": "from-the-marble-rostrum"
+      "tenseFamily": "thunder-tribune-predicate-001"
     },
     {
-      "id": "before-the-nation-loses-patience",
+      "id": "thunder-tribune-ending-001",
       "role": "ending",
       "text": "and my second phone filed a complaint.",
       "tags": [
@@ -235,7 +235,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "raises-the-volume-again",
+      "id": "thunder-tribune-predicate-002-present",
       "role": "predicate",
       "text": "seizes the studio phone again",
       "tags": [
@@ -256,10 +256,10 @@
       "singularText": "seizes the studio phone again",
       "pluralText": "seize the studio phone again",
       "tense": "present",
-      "tenseFamily": "raises-the-volume-again"
+      "tenseFamily": "thunder-tribune-predicate-002"
     },
     {
-      "id": "seized-the-studio-phone-again",
+      "id": "thunder-tribune-predicate-002-past",
       "role": "predicate",
       "text": "seized the studio phone again",
       "tags": [
@@ -280,10 +280,10 @@
       "singularText": "seized the studio phone again",
       "pluralText": "seized the studio phone again",
       "tense": "past",
-      "tenseFamily": "raises-the-volume-again"
+      "tenseFamily": "thunder-tribune-predicate-002"
     },
     {
-      "id": "will-seize-the-studio-phone-again",
+      "id": "thunder-tribune-predicate-002-future",
       "role": "predicate",
       "text": "will seize the studio phone again",
       "tags": [
@@ -304,10 +304,10 @@
       "singularText": "will seize the studio phone again",
       "pluralText": "will seize the studio phone again",
       "tense": "future",
-      "tenseFamily": "raises-the-volume-again"
+      "tenseFamily": "thunder-tribune-predicate-002"
     },
     {
-      "id": "that-powdered-scarecrow",
+      "id": "thunder-tribune-noun-002",
       "role": "noun",
       "text": "that powdered scarecrow",
       "referentKind": "personal",
@@ -326,7 +326,7 @@
       "rarity": "rare"
     },
     {
-      "id": "your-paper-crown",
+      "id": "thunder-tribune-noun-003",
       "role": "noun",
       "text": "your paper crown",
       "tags": [
@@ -344,7 +344,7 @@
       "rarity": "common"
     },
     {
-      "id": "a-squealing-party-trumpet",
+      "id": "thunder-tribune-noun-004",
       "role": "noun",
       "text": "a squealing party trumpet",
       "referentKind": "personal",
@@ -363,7 +363,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "a-cursed-gnome",
+      "id": "thunder-tribune-noun-005",
       "role": "noun",
       "text": "a committee clerk possessed by a loudspeaker",
       "referentKind": "personal",
@@ -382,7 +382,7 @@
       "rarity": "rare"
     },
     {
-      "id": "a-somaldoaca",
+      "id": "thunder-tribune-noun-006",
       "role": "noun",
       "text": "a nosy do-gooder",
       "referentKind": "personal",
@@ -401,7 +401,7 @@
       "rarity": "rare"
     },
     {
-      "id": "looks-like-a-somaldoaca-on-television",
+      "id": "thunder-tribune-predicate-003-present",
       "role": "predicate",
       "text": "whistles like a nosy do-gooder on television",
       "secondPersonText": "whistle like a nosy do-gooder on television",
@@ -425,10 +425,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "looks-like-a-somaldoaca-on-television"
+      "tenseFamily": "thunder-tribune-predicate-003"
     },
     {
-      "id": "looked-like-a-somaldoaca-on-television",
+      "id": "thunder-tribune-predicate-003-past",
       "role": "predicate",
       "text": "whistled like a nosy do-gooder on television",
       "secondPersonText": "whistled like a nosy do-gooder on television",
@@ -452,10 +452,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "looks-like-a-somaldoaca-on-television"
+      "tenseFamily": "thunder-tribune-predicate-003"
     },
     {
-      "id": "will-look-like-a-somaldoaca-on-television",
+      "id": "thunder-tribune-predicate-003-future",
       "role": "predicate",
       "text": "will whistle like a nosy do-gooder on television",
       "secondPersonText": "will whistle like a nosy do-gooder on television",
@@ -479,10 +479,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "looks-like-a-somaldoaca-on-television"
+      "tenseFamily": "thunder-tribune-predicate-003"
     },
     {
-      "id": "bring-me-the-studio-phone",
+      "id": "thunder-tribune-ending-002",
       "role": "ending",
       "text": "and fetch my phone before I shout internationally.",
       "tags": [
@@ -493,7 +493,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "with-cemetery-turnout",
+      "id": "thunder-tribune-modifier-001",
       "role": "modifier",
       "text": "with 110% turnout at the cemetery",
       "tags": [
@@ -503,7 +503,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "thunder-tribune-verb-1-past",
+      "id": "thunder-tribune-verb-002-past",
       "role": "verb",
       "text": "declared a poetic emergency over",
       "singularText": "declared a poetic emergency over",
@@ -535,10 +535,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-verb-1"
+      "tenseFamily": "thunder-tribune-verb-002"
     },
     {
-      "id": "thunder-tribune-verb-1-present",
+      "id": "thunder-tribune-verb-002-present",
       "role": "verb",
       "text": "declares a poetic emergency over",
       "singularText": "declares a poetic emergency over",
@@ -570,10 +570,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-verb-1"
+      "tenseFamily": "thunder-tribune-verb-002"
     },
     {
-      "id": "thunder-tribune-verb-1-future",
+      "id": "thunder-tribune-verb-002-future",
       "role": "verb",
       "text": "will declare a poetic emergency over",
       "singularText": "will declare a poetic emergency over",
@@ -605,10 +605,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-verb-1"
+      "tenseFamily": "thunder-tribune-verb-002"
     },
     {
-      "id": "thunder-tribune-contrast",
+      "id": "thunder-tribune-conjunction-001",
       "role": "conjunction",
       "text": "yet, above the applause,",
       "connectorKind": "yet",
@@ -616,7 +616,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "thunder-tribune-contract-noun-1-a-microphone-with-a-victory-lap",
+      "id": "thunder-tribune-noun-007",
       "role": "noun",
       "text": "the phone from the podium",
       "tags": [
@@ -633,7 +633,7 @@
       "rarity": "common"
     },
     {
-      "id": "thunder-tribune-contract-noun-2-a-headline-with-a-thunderclap",
+      "id": "thunder-tribune-noun-008",
       "role": "noun",
       "text": "everything within the rules",
       "tags": [
@@ -650,7 +650,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "thunder-tribune-contract-noun-3-a-source-that-demands-a-spotlight",
+      "id": "thunder-tribune-noun-009",
       "role": "noun",
       "text": "a volume above the studio limit",
       "tags": [
@@ -667,7 +667,7 @@
       "rarity": "rare"
     },
     {
-      "id": "thunder-tribune-contract-noun-4-a-restraint-belt-for-breaking-news",
+      "id": "thunder-tribune-noun-010",
       "role": "noun",
       "text": "a complaint about the dial tone",
       "tags": [
@@ -684,7 +684,7 @@
       "rarity": "common"
     },
     {
-      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-past",
+      "id": "thunder-tribune-verb-003-past",
       "role": "verb",
       "text": "announced the evidence through",
       "tags": [
@@ -703,10 +703,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+      "tenseFamily": "thunder-tribune-verb-003"
     },
     {
-      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-present",
+      "id": "thunder-tribune-verb-003-present",
       "role": "verb",
       "text": "announces the evidence through",
       "singularText": "announces the evidence through",
@@ -729,10 +729,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+      "tenseFamily": "thunder-tribune-verb-003"
     },
     {
-      "id": "thunder-tribune-contract-verb-announces-the-evidence-loudly-future",
+      "id": "thunder-tribune-verb-003-future",
       "role": "verb",
       "text": "will announce the evidence through",
       "tags": [
@@ -751,10 +751,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-contract-verb-announces-the-evidence-loudly"
+      "tenseFamily": "thunder-tribune-verb-003"
     },
     {
-      "id": "thunder-tribune-contract-predicate-predicate-1-past",
+      "id": "thunder-tribune-predicate-004-past",
       "role": "predicate",
       "text": "was a broadcast with a missing source",
       "singularText": "was a broadcast with a missing source",
@@ -775,10 +775,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+      "tenseFamily": "thunder-tribune-predicate-004"
     },
     {
-      "id": "thunder-tribune-contract-predicate-predicate-1-present",
+      "id": "thunder-tribune-predicate-004-present",
       "role": "predicate",
       "text": "is a broadcast with a missing source",
       "singularText": "is a broadcast with a missing source",
@@ -801,10 +801,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+      "tenseFamily": "thunder-tribune-predicate-004"
     },
     {
-      "id": "thunder-tribune-contract-predicate-predicate-1-future",
+      "id": "thunder-tribune-predicate-004-future",
       "role": "predicate",
       "text": "will be a broadcast with a missing source",
       "tags": [
@@ -823,10 +823,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-contract-predicate-predicate-1"
+      "tenseFamily": "thunder-tribune-predicate-004"
     },
     {
-      "id": "thunder-tribune-contract-modifier-before-the-applause-can-object",
+      "id": "thunder-tribune-modifier-002",
       "role": "modifier",
       "text": "before the applause can object",
       "tags": [
@@ -835,7 +835,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "thunder-tribune-contract-modifier-under-a-loud-fact-check",
+      "id": "thunder-tribune-modifier-003",
       "role": "modifier",
       "text": "under a loud fact-check",
       "tags": [
@@ -844,7 +844,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "thunder-tribune-contract-ending-and-the-evidence-demanded-a-microphone",
+      "id": "thunder-tribune-ending-003",
       "role": "ending",
       "text": "and the phone demanded the final word.",
       "tags": [
@@ -854,7 +854,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "thunder-tribune-contract-ending-and-credibility-left-during-the-applause",
+      "id": "thunder-tribune-ending-004",
       "role": "ending",
       "text": "and credibility left during the applause.",
       "tags": [
@@ -864,7 +864,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "thunder-tribune-contract-ending-and-restraint-missed-the-opening-bell",
+      "id": "thunder-tribune-ending-005",
       "role": "ending",
       "text": "and restraint missed the opening bell.",
       "tags": [

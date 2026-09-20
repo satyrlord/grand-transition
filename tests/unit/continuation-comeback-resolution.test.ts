@@ -30,8 +30,8 @@ function completeConstruction(): Readonly<{
   publicText: string;
 }> {
   const phraseIds = [
-    'national-consensus',
-    'belongs-in-a-party-museum',
+    'common-noun-001',
+    'common-predicate-010-present',
   ] as const;
   const steps: readonly EnglishGrammarStep[] = phraseIds.map((phraseId) => ({
     kind: 'phrase',
@@ -55,13 +55,13 @@ function completeConstruction(): Readonly<{
 
 function phrasesForDamage(damage: number): readonly Phrase[] {
   return sampleContent.phrases.map((phrase) => {
-    if (phrase.id === 'national-consensus') {
+    if (phrase.id === 'common-noun-001') {
       return { ...phrase, tags: ['neutral'] };
     }
-    if (phrase.id === 'belongs-in-a-party-museum') {
+    if (phrase.id === 'common-predicate-010-present') {
       return {
         ...phrase,
-        customScores: [{ leftNounId: 'national-consensus', score: damage }],
+        customScores: [{ leftNounId: 'common-noun-001', score: damage }],
         tags: ['neutral'],
       };
     }
@@ -159,12 +159,12 @@ describe('continuation resolution', () => {
   test('breaks at 16 damage and clears only the carrier combo chains', () => {
     const comboState: ComboChainState = {
       [players[0]]: {
-        previousNounIds: ['national-consensus'],
-        chainByNounId: { 'national-consensus': 3 },
+        previousNounIds: ['common-noun-001'],
+        chainByNounId: { 'common-noun-001': 3 },
       },
       [players[1]]: {
-        previousNounIds: ['televised-revolution'],
-        chainByNounId: { 'televised-revolution': 2 },
+        previousNounIds: ['common-noun-002'],
+        chainByNounId: { 'common-noun-002': 2 },
       },
     };
     const result = resolve(
@@ -182,7 +182,7 @@ describe('continuation resolution', () => {
       chainByNounId: {},
     });
     expect(result.comboState[players[1]]!.previousNounIds).toEqual([
-      'national-consensus',
+      'common-noun-001',
     ]);
   });
 
@@ -206,8 +206,8 @@ describe('continuation resolution', () => {
   test('a later commit compares every restored noun with the last commit', () => {
     const comboState: ComboChainState = {
       [players[0]]: {
-        previousNounIds: ['national-consensus'],
-        chainByNounId: { 'national-consensus': 2 },
+        previousNounIds: ['common-noun-001'],
+        chainByNounId: { 'common-noun-001': 2 },
       },
     };
     const carried = resolve(
@@ -223,7 +223,7 @@ describe('continuation resolution', () => {
       carried.comboState,
     );
     expect(committed.players[players[0]]!.score?.combo).toEqual({
-      nounPhraseId: 'national-consensus',
+      nounPhraseId: 'common-noun-001',
       phraseIndex: 0,
       chain: 3,
     });

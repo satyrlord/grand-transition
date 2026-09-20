@@ -156,12 +156,12 @@ function passWithValidCard(state: DraftState, playerId: string): DraftState {
 }
 
 function completeFirst(state = prepared()): DraftState {
-  state = selectPrivate(state, playerIds[0], 'national-consensus', 'subject');
+  state = selectPrivate(state, playerIds[0], 'common-noun-001', 'subject');
   state = passWithValidCard(state, playerIds[1]);
   state = selectPrivate(
     state,
     playerIds[0],
-    'belongs-in-a-party-museum',
+    'common-predicate-010-present',
     'predicate',
   );
   return state;
@@ -268,11 +268,11 @@ describe('Hollywood Roast draft actions', () => {
     const connectorKindIn = (result: PrivateHandGenerationResult) => {
       expect(result.ok).toBe(true);
       if (!result.ok) return undefined;
-      return sampleContent.phrases.find(
-        (phrase) =>
-          result.hand.phraseIds.includes(phrase.id) &&
-          phrase.role === 'conjunction',
-      )?.connectorKind;
+      return result.hand.phraseIds
+        .map((phraseId) =>
+          sampleContent.phrases.find((phrase) => phrase.id === phraseId),
+        )
+        .find((phrase) => phrase?.role === 'conjunction')?.connectorKind;
     };
     expect(['but', 'yet']).toContain(connectorKindIn(butHand));
     expect(connectorKindIn(andHand)).toBe('and');
@@ -280,7 +280,7 @@ describe('Hollywood Roast draft actions', () => {
 
     const restrictedPhrase = {
       ...sampleContent.phrases.find(
-        (phrase) => phrase.id === 'national-salvation-committee',
+        (phrase) => phrase.id === 'red-folded-chairman-noun-001',
       )!,
       characterIds: ['red-folded-chairman'],
     };
@@ -293,7 +293,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(privateHandAvailableCount(restrictedRequest)).toBeLessThan(
       privateHandAvailableCount({
         ...restrictedRequest,
-        characterPhraseIds: ['national-salvation-committee'],
+        characterPhraseIds: ['red-folded-chairman-noun-001'],
       }),
     );
   });
@@ -364,21 +364,21 @@ describe('Hollywood Roast draft actions', () => {
     state = selectPrivate(
       state,
       playerIds[0],
-      'televised-revolution',
+      'common-noun-002',
       'noun-one',
     );
     state = passWithValidCard(state, playerIds[1]);
     state = selectPrivate(
       state,
       playerIds[0],
-      'and',
-      'and',
+      'common-conjunction-001',
+      'common-conjunction-001',
     );
     state = passWithValidCard(state, playerIds[1]);
     state = selectPrivate(
       state,
       playerIds[0],
-      'national-salvation-committee',
+      'red-folded-chairman-noun-001',
       'noun-two',
     );
 
@@ -397,14 +397,14 @@ describe('Hollywood Roast draft actions', () => {
     const selected = selectPrivate(
       initial,
       playerIds[0],
-      'before-the-next-election',
+      'common-modifier-001',
       'wrong-predicate',
     );
     const construction = selected.playerStates[playerIds[0]]!.construction;
     expect(construction.steps).toEqual([]);
     expect(construction.grammarMistakes).toBe(1);
     expect(construction.lastGrammarMistakePhraseId).toBe(
-      'before-the-next-election',
+      'common-modifier-001',
     );
     expect(selected.activePlayerId).toBe(playerIds[1]);
   });
@@ -414,13 +414,13 @@ describe('Hollywood Roast draft actions', () => {
     state = selectPrivate(
       state,
       playerIds[1],
-      'televised-revolution',
+      'common-noun-002',
       'other-subject',
     );
     state = selectPrivate(
       state,
       playerIds[0],
-      'before-the-next-election',
+      'common-modifier-001',
       'modifier',
     );
 
@@ -441,7 +441,7 @@ describe('Hollywood Roast draft actions', () => {
     const selected = selectPrivate(
       prepared(),
       playerIds[0],
-      'ellipsis',
+      'common-continuation-001',
       'continuation',
     );
     expect(selected.playerStates[playerIds[0]]!.construction).toMatchObject({
@@ -470,7 +470,7 @@ describe('Hollywood Roast draft actions', () => {
     state = selectPrivate(
       state,
       playerIds[0],
-      'by-emergency-ordinance',
+      'common-ending-001',
       'finisher',
     );
     expect(state.playerStates[playerIds[0]]!.construction.status).toBe('ended');
@@ -543,7 +543,7 @@ describe('Hollywood Roast draft actions', () => {
 
   test('timeouts after the opponent ends deal 3, 6, 12, and 24', () => {
     let state = prepared();
-    state = selectPrivate(state, playerIds[0], 'ellipsis', 'first-carry');
+    state = selectPrivate(state, playerIds[0], 'common-continuation-001', 'first-carry');
     const expectations = [3, 9, 21, 45];
     for (const expected of expectations) {
       state = run(state, {
@@ -560,7 +560,7 @@ describe('Hollywood Roast draft actions', () => {
     const state = selectPrivate(
       prepared(),
       playerIds[0],
-      'national-consensus',
+      'common-noun-001',
       'public-subject',
     );
     const snapshot = snapshotDraftStateForPlayer(state, playerIds[1]);
@@ -607,7 +607,7 @@ describe('Hollywood Roast draft actions', () => {
     const illegalStep = {
       kind: 'phrase' as const,
       phrase: prepareEnglishGrammarPhrase(
-        sampleContent.phrases.find((phrase) => phrase.id === 'rebrands')!,
+        sampleContent.phrases.find((phrase) => phrase.id === 'common-verb-010-present')!,
         englishGameLocale,
       ),
     };

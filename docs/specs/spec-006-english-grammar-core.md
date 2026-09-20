@@ -107,7 +107,8 @@ English second-person verbs use that conjugation.
 
 A combined copular predicate
 supplies a second-person form when this plural fallback would also pluralize a
-singular complement. Thus, `you` renders `were a Communist Party member`, not
+singular complement. Thus, the `common-noun-028` card (`you`) renders
+`were a Communist Party member`, not
 `were Communist Party members`.
 
 Shared-subject branches keep the subject's

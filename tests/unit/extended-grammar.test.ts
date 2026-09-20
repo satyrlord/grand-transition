@@ -23,7 +23,7 @@ const analyze = (steps: readonly EnglishGrammarStep[]) =>
 describe('Hollywood Roast extended grammar', () => {
   test('and is legal immediately after the opening noun', () => {
     expect(
-      analyze([add('televised-revolution'), add('and')]),
+      analyze([add('common-noun-002'), add('common-conjunction-001')]),
     ).toMatchObject({
       accepted: true,
       analysis: {
@@ -35,7 +35,7 @@ describe('Hollywood Roast extended grammar', () => {
   });
 
   test('a continuation remains a draft action instead of a grammar atom', () => {
-    expect(analyze([add('ellipsis')])).toMatchObject({
+    expect(analyze([add('common-continuation-001')])).toMatchObject({
       accepted: false,
       faults: [{ code: 'unexpected-role', attempted: 'continuation' }],
     });
@@ -44,9 +44,9 @@ describe('Hollywood Roast extended grammar', () => {
   test('accepts a front because clause followed by the main clause', () => {
     expect(
       analyze([
-        add('because'),
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
+        add('common-conjunction-003'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -59,31 +59,31 @@ describe('Hollywood Roast extended grammar', () => {
 
     expect(
       analyze([
-        add('because'),
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('televised-revolution'),
-        add('belongs-in-a-party-museum'),
+        add('common-conjunction-003'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-noun-002'),
+        add('common-predicate-010-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('because requires a noun before another connector or finisher', () => {
-    expect(analyze([add('because')])).toMatchObject({
+    expect(analyze([add('common-conjunction-003')])).toMatchObject({
       accepted: true,
       analysis: { state: 'EXPECT_SUBJECT', nextRoles: ['noun'] },
     });
     expect(
-      analyze([add('because'), add('because')]),
+      analyze([add('common-conjunction-003'), add('common-conjunction-003')]),
     ).toMatchObject({
       accepted: false,
       faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
     });
     expect(
       analyze([
-        add('national-consensus'),
-        add('and'),
-        add('because'),
+        add('common-noun-001'),
+        add('common-conjunction-001'),
+        add('common-conjunction-003'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -91,10 +91,10 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('because'),
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('by-emergency-ordinance'),
+        add('common-conjunction-003'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-ending-001'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -110,9 +110,9 @@ describe('Hollywood Roast extended grammar', () => {
   test('accepts explanatory because only with its following noun clause', () => {
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('because'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-003'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -120,10 +120,10 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('because'),
-        add('because'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-003'),
+        add('common-conjunction-003'),
       ]),
     ).toMatchObject({
       accepted: false,
@@ -131,11 +131,11 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('because'),
-        add('televised-revolution'),
-        add('belongs-in-a-party-museum'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-003'),
+        add('common-noun-002'),
+        add('common-predicate-010-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
@@ -143,10 +143,10 @@ describe('Hollywood Roast extended grammar', () => {
   test('keeps the required main clause after a subordinate-clause modifier', () => {
     expect(
       analyze([
-        add('because'),
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('before-the-next-election'),
+        add('common-conjunction-003'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-modifier-001'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -158,45 +158,45 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('because'),
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('before-the-next-election'),
-        add('televised-revolution'),
-        add('makes-own-voters-change-the-channel'),
+        add('common-conjunction-003'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-modifier-001'),
+        add('common-noun-002'),
+        add('common-predicate-011-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
-  test.each(['and', 'but', 'because'])(
+  test.each(['common-conjunction-001', 'common-conjunction-002', 'common-conjunction-003'])(
     'accepts %s after a complete front-because subordinate clause',
     (connector) => {
       expect(
         analyze([
-          add('because'),
-          add('national-consensus'),
-          add('belongs-in-a-party-museum'),
+          add('common-conjunction-003'),
+          add('common-noun-001'),
+          add('common-predicate-010-present'),
           add(connector),
-          add('televised-revolution'),
-          add('belongs-in-a-party-museum'),
-          add('national-salvation-committee'),
-          add('belongs-in-a-party-museum'),
+          add('common-noun-002'),
+          add('common-predicate-010-present'),
+          add('red-folded-chairman-noun-001'),
+          add('common-predicate-010-present'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
   );
 
-  test.each(['and', 'but'])(
+  test.each(['common-conjunction-001', 'common-conjunction-002'])(
     'accepts because after a completed clause plus %s',
     (connector) => {
       expect(
         analyze([
-          add('national-consensus'),
-          add('belongs-in-a-party-museum'),
+          add('common-noun-001'),
+          add('common-predicate-010-present'),
           add(connector),
-          add('because'),
-          add('televised-revolution'),
-          add('belongs-in-a-party-museum'),
+          add('common-conjunction-003'),
+          add('common-noun-002'),
+          add('common-predicate-010-present'),
         ]),
       ).toMatchObject({ accepted: true, analysis: { complete: true } });
     },
@@ -205,21 +205,21 @@ describe('Hollywood Roast extended grammar', () => {
   test('uses yet as a strong-contrast connector after a complete clause', () => {
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('algorithmic-prophet-neutral-contrast'),
-        add('televised-revolution'),
-        add('makes-own-voters-change-the-channel'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('algorithmic-prophet-conjunction-001'),
+        add('common-noun-002'),
+        add('common-predicate-011-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('uses with to add a noun complement to a complete clause', () => {
     const result = analyze([
-      add('my-opponent'),
-      add('interrupts-the-debate'),
-      add('with'),
-      add('a-public-apology'),
+      add('common-noun-053'),
+      add('common-predicate-001-present'),
+      add('common-conjunction-005'),
+      add('common-noun-054'),
       { kind: 'end' },
     ]);
 
@@ -235,10 +235,10 @@ describe('Hollywood Roast extended grammar', () => {
 
   test('keeps a past-tense insult composable with an institutional modifier', () => {
     const result = analyze([
-      add('your-brother'),
-      add('denounced'),
-      add('your-concubine'),
-      add('to-the-securitate'),
+      add('common-noun-036'),
+      add('common-verb-001-past'),
+      add('common-noun-040'),
+      add('common-modifier-021'),
       { kind: 'end' },
     ]);
 
@@ -254,13 +254,13 @@ describe('Hollywood Roast extended grammar', () => {
 
   test('accepts the passive camera predicate after a contrasted object clause', () => {
     const result = analyze([
-      add('your-voters'),
-      add('was-a-snitch'),
-      add('algorithmic-prophet-neutral-contrast'),
-      add('audits'),
-      add('your-brother'),
-      add('and'),
-      add('will-drag-before-the-cameras'),
+      add('common-noun-031'),
+      add('common-predicate-015-past'),
+      add('algorithmic-prophet-conjunction-001'),
+      add('common-verb-017-present'),
+      add('common-noun-036'),
+      add('common-conjunction-001'),
+      add('common-predicate-002-future'),
     ]);
 
     expect(result).toMatchObject({
@@ -276,10 +276,10 @@ describe('Hollywood Roast extended grammar', () => {
 
   test('completes coordinated noun complements after a declared copular predicate', () => {
     const result = analyze([
-      add('your-brother'),
-      add('is-a-snitch'),
-      add('and'),
-      add('a-pig'),
+      add('common-noun-036'),
+      add('common-predicate-015-present'),
+      add('common-conjunction-001'),
+      add('common-noun-048'),
       { kind: 'end' },
     ]);
 
@@ -297,11 +297,11 @@ describe('Hollywood Roast extended grammar', () => {
   test('preserves the new-subject branch after a copular noun-complement prefix', () => {
     expect(
       analyze([
-        add('your-brother'),
-        add('is-a-snitch'),
-        add('and'),
-        add('a-pig'),
-        add('belongs-in-a-party-museum'),
+        add('common-noun-036'),
+        add('common-predicate-015-present'),
+        add('common-conjunction-001'),
+        add('common-noun-048'),
+        add('common-predicate-010-present'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -313,12 +313,12 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('your-brother'),
-        add('is-a-snitch'),
-        add('and'),
-        add('a-pig'),
-        add('denounced'),
-        add('your-concubine'),
+        add('common-noun-036'),
+        add('common-predicate-015-present'),
+        add('common-conjunction-001'),
+        add('common-noun-048'),
+        add('common-verb-001-past'),
+        add('common-noun-040'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -333,10 +333,10 @@ describe('Hollywood Roast extended grammar', () => {
   test('keeps and plus a noun incomplete after an unrelated predicate', () => {
     expect(
       analyze([
-        add('your-brother'),
-        add('interrupts-the-debate'),
-        add('and'),
-        add('a-pig'),
+        add('common-noun-036'),
+        add('common-predicate-001-present'),
+        add('common-conjunction-001'),
+        add('common-noun-048'),
         { kind: 'end' },
       ]),
     ).toMatchObject({
@@ -350,28 +350,28 @@ describe('Hollywood Roast extended grammar', () => {
   });
 
   test.each([
-    ['stole', 'EU funds'],
-    ['appropriated', 'EU funds'],
-    ['was-not', 'a state secretary'],
-    ['is-not', 'a state secretary'],
-    ['will-never-be', 'a state secretary'],
+    ['common-verb-024-past', 'EU funds'],
+    ['common-verb-025-past', 'EU funds'],
+    ['common-verb-026-past', 'a state secretary'],
+    ['common-verb-026-present', 'a state secretary'],
+    ['common-verb-027-future', 'a state secretary'],
   ] as const)('accepts the requested verb card %s with %s', (verb, object) => {
-    const objectId = object === 'EU funds' ? 'eu-funds' : 'a-state-secretary';
+    const objectId = object === 'EU funds' ? 'common-noun-050' : 'common-noun-051';
     expect(
-      analyze([add('my-opponent'), add(verb), add(objectId)]),
+      analyze([add('common-noun-053'), add(verb), add(objectId)]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('so joins complete clauses and requires a new noun subject', () => {
-    expect(analyze([add('so')])).toMatchObject({
+    expect(analyze([add('common-conjunction-004')])).toMatchObject({
       accepted: false,
       faults: [{ state: 'EXPECT_SUBJECT' }],
     });
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('so'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-004'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -379,11 +379,11 @@ describe('Hollywood Roast extended grammar', () => {
     });
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('so'),
-        add('televised-revolution'),
-        add('makes-own-voters-change-the-channel'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-004'),
+        add('common-noun-002'),
+        add('common-predicate-011-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
@@ -391,9 +391,9 @@ describe('Hollywood Roast extended grammar', () => {
   test('reaches the during-the-night ending from a complete clause', () => {
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('under-the-national-banner'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-ending-008'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -404,10 +404,10 @@ describe('Hollywood Roast extended grammar', () => {
   test('a later phrase cannot be appended after an ending', () => {
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('by-emergency-ordinance'),
-        add('national-consensus'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-ending-001'),
+        add('common-noun-001'),
       ]),
     ).toMatchObject({
       accepted: false,

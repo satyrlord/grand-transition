@@ -221,13 +221,13 @@ describe('game-locale bundle validation', () => {
         writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
       };
       change('characters/algorithmic-prophet.json', 'character.algorithmic-prophet.name', 'Alt profet');
-      change('common-verb.json', 'phrase.denounced', 'o dovadă a');
-      change('relation-inflections.json', 'phrase.denounced.second-person', 'o dovadă a');
+      change('common-verb.json', 'phrase.common-verb-001-past', 'o dovadă a');
+      change('relation-inflections.json', 'phrase.common-verb-001-past.second-person', 'o dovadă a');
       expect(pathsAndCodes(validateGameLocales(fixtureRoot))).toEqual(
         expect.arrayContaining([
           { path: 'messages.character.algorithmic-prophet.name', code: 'name-mismatch' },
-          { path: 'messages.phrase.denounced', code: 'case-governing-tail' },
-          { path: 'messages.phrase.denounced.second-person', code: 'case-governing-tail' },
+          { path: 'messages.phrase.common-verb-001-past', code: 'case-governing-tail' },
+          { path: 'messages.phrase.common-verb-001-past.second-person', code: 'case-governing-tail' },
         ]),
       );
     } finally {

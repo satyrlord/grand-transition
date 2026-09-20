@@ -48,10 +48,13 @@
   },
   "phrases": [
     {
-      "id": "algorithmic-prophet-foundation-noun",
+      "id": "algorithmic-prophet-noun-001",
       "role": "noun",
       "text": "my mineral-water modem without specifications",
-      "tags": ["evidence", "specificity"],
+      "tags": [
+        "evidence",
+        "specificity"
+      ],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -63,30 +66,38 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-foundation-modifier",
+      "id": "algorithmic-prophet-modifier-001",
       "role": "modifier",
       "text": "after downloading evidence through a straw",
-      "tags": ["evidence", "specificity"],
+      "tags": [
+        "evidence",
+        "specificity"
+      ],
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-foundation-ending",
+      "id": "algorithmic-prophet-ending-001",
       "role": "ending",
       "text": "and your follow-up question drowned in a puddle.",
-      "tags": ["follow-up-questions"],
+      "tags": [
+        "follow-up-questions"
+      ],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-lemonade-transfer",
+      "id": "algorithmic-prophet-ending-002",
       "role": "ending",
       "text": "and even your lemonade's microchip dodges questions.",
-      "tags": ["evidence", "follow-up-questions"],
+      "tags": [
+        "evidence",
+        "follow-up-questions"
+      ],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-bottled-prophecy-archive",
+      "id": "algorithmic-prophet-noun-002",
       "role": "noun",
       "text": "your bottled archive of unverified prophecies",
       "tags": [
@@ -103,7 +114,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-sacred-leaderboard",
+      "id": "algorithmic-prophet-noun-003",
       "role": "noun",
       "text": "your sacred leaderboard with every result missing",
       "tags": [
@@ -121,7 +132,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-laptop-wind-of-destiny",
+      "id": "algorithmic-prophet-modifier-002",
       "role": "modifier",
       "text": "after mistaking the laptop fan for destiny",
       "tags": [
@@ -130,7 +141,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-ceremonial-donation-bow",
+      "id": "algorithmic-prophet-modifier-003",
       "role": "modifier",
       "text": "with a bow to the donation button",
       "tags": [
@@ -140,7 +151,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-tap-water-excuses",
+      "id": "algorithmic-prophet-ending-003",
       "role": "ending",
       "text": "and your tap water remembers only your excuses.",
       "tags": [
@@ -150,7 +161,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-prophetic-damp-socks",
+      "id": "algorithmic-prophet-ending-004",
       "role": "ending",
       "text": "and your prophecy is a damp-sock forecast.",
       "tags": [
@@ -161,7 +172,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-greatness-error-cell",
+      "id": "algorithmic-prophet-ending-005",
       "role": "ending",
       "text": "and your greatness fits in an error cell.",
       "tags": [
@@ -172,7 +183,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "algorithmic-prophet-offline-revelation",
+      "id": "algorithmic-prophet-noun-004",
       "role": "noun",
       "text": "a revelation awaiting a stronger signal",
       "tags": [
@@ -190,7 +201,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-sacred-comment-filter",
+      "id": "algorithmic-prophet-noun-005",
       "role": "noun",
       "text": "my sacred filter for inconvenient comments",
       "tags": [
@@ -208,7 +219,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-prophecy-footnote",
+      "id": "algorithmic-prophet-noun-006",
       "role": "noun",
       "text": "a prophecy dated in a footnote",
       "tags": [
@@ -226,7 +237,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-decoded-from-static-past",
+      "id": "algorithmic-prophet-verb-001-past",
       "role": "verb",
       "text": "decoded radio static into",
       "tags": [
@@ -237,7 +248,7 @@
       "personalSingularText": "decoded radio static into",
       "secondPersonText": "decoded radio static into",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "tenseFamily": "algorithmic-prophet-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -260,7 +271,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-decoded-from-static-present",
+      "id": "algorithmic-prophet-verb-001-present",
       "role": "verb",
       "text": "decodes radio static into",
       "tags": [
@@ -271,7 +282,7 @@
       "personalSingularText": "decodes radio static into",
       "secondPersonText": "decode radio static into",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "tenseFamily": "algorithmic-prophet-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -294,7 +305,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-decoded-from-static-future",
+      "id": "algorithmic-prophet-verb-001-future",
       "role": "verb",
       "text": "will decode radio static into",
       "tags": [
@@ -305,7 +316,7 @@
       "personalSingularText": "will decode radio static into",
       "secondPersonText": "will decode radio static into",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-decoded-from-static",
+      "tenseFamily": "algorithmic-prophet-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -328,7 +339,7 @@
       "rarity": "rare"
     },
     {
-      "id": "algorithmic-prophet-certified-by-pendulum-past",
+      "id": "algorithmic-prophet-verb-002-past",
       "role": "verb",
       "text": "waved a sacred pendulum over",
       "tags": [
@@ -339,7 +350,7 @@
       "personalSingularText": "waved a sacred pendulum over",
       "secondPersonText": "waved a sacred pendulum over",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "tenseFamily": "algorithmic-prophet-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -362,7 +373,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-certified-by-pendulum-present",
+      "id": "algorithmic-prophet-verb-002-present",
       "role": "verb",
       "text": "waves a sacred pendulum over",
       "tags": [
@@ -373,7 +384,7 @@
       "personalSingularText": "waves a sacred pendulum over",
       "secondPersonText": "wave a sacred pendulum over",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "tenseFamily": "algorithmic-prophet-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -396,7 +407,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-certified-by-pendulum-future",
+      "id": "algorithmic-prophet-verb-002-future",
       "role": "verb",
       "text": "will wave a sacred pendulum over",
       "tags": [
@@ -407,7 +418,7 @@
       "personalSingularText": "will wave a sacred pendulum over",
       "secondPersonText": "will wave a sacred pendulum over",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-certified-by-pendulum",
+      "tenseFamily": "algorithmic-prophet-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -430,7 +441,7 @@
       "rarity": "rare"
     },
     {
-      "id": "algorithmic-prophet-vague-in-high-definition-past",
+      "id": "algorithmic-prophet-predicate-001-past",
       "role": "predicate",
       "text": "was vague in high definition",
       "tags": [
@@ -441,7 +452,7 @@
       "personalSingularText": "was vague in high definition",
       "secondPersonText": "were vague in high definition",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -458,7 +469,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-vague-in-high-definition-present",
+      "id": "algorithmic-prophet-predicate-001-present",
       "role": "predicate",
       "text": "is vague in high definition",
       "tags": [
@@ -469,7 +480,7 @@
       "personalSingularText": "is vague in high definition",
       "secondPersonText": "are vague in high definition",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -486,7 +497,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-vague-in-high-definition-future",
+      "id": "algorithmic-prophet-predicate-001-future",
       "role": "predicate",
       "text": "will be vague in high definition",
       "tags": [
@@ -497,7 +508,7 @@
       "personalSingularText": "will be vague in high definition",
       "secondPersonText": "will be vague in high definition",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-vague-in-high-definition",
+      "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -514,7 +525,7 @@
       "rarity": "rare"
     },
     {
-      "id": "algorithmic-prophet-neutral-contrast",
+      "id": "algorithmic-prophet-conjunction-001",
       "role": "conjunction",
       "text": "yet, even now,",
       "tags": [],
@@ -522,7 +533,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-contract-noun-1-a-prediction-in-a-paper-cup",
+      "id": "algorithmic-prophet-noun-007",
       "role": "noun",
       "text": "information inside a glass of water",
       "tags": [
@@ -539,7 +550,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-contract-noun-2-a-dashboard-that-consults-the-weather",
+      "id": "algorithmic-prophet-noun-008",
       "role": "noun",
       "text": "a laptop entered by a fizzy prophecy",
       "tags": [
@@ -556,7 +567,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "algorithmic-prophet-contract-noun-3-a-prophecy-with-a-password",
+      "id": "algorithmic-prophet-noun-009",
       "role": "noun",
       "text": "a prophecy with information inside",
       "tags": [
@@ -573,7 +584,7 @@
       "rarity": "rare"
     },
     {
-      "id": "algorithmic-prophet-contract-noun-4-a-model-trained-on-applause",
+      "id": "algorithmic-prophet-noun-010",
       "role": "noun",
       "text": "a model that enters the laptop",
       "tags": [
@@ -590,7 +601,7 @@
       "rarity": "common"
     },
     {
-      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-past",
+      "id": "algorithmic-prophet-verb-003-past",
       "role": "verb",
       "text": "downloaded information from",
       "tags": [
@@ -609,10 +620,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+      "tenseFamily": "algorithmic-prophet-verb-003"
     },
     {
-      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-present",
+      "id": "algorithmic-prophet-verb-003-present",
       "role": "verb",
       "text": "downloads information from",
       "singularText": "downloads information from",
@@ -635,10 +646,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+      "tenseFamily": "algorithmic-prophet-verb-003"
     },
     {
-      "id": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring-future",
+      "id": "algorithmic-prophet-verb-003-future",
       "role": "verb",
       "text": "will download information from",
       "tags": [
@@ -657,10 +668,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-contract-verb-predicts-drought-from-coffee-ring"
+      "tenseFamily": "algorithmic-prophet-verb-003"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-1-past",
+      "id": "algorithmic-prophet-predicate-002-past",
       "role": "predicate",
       "text": "was information in a glass of water",
       "tags": [
@@ -679,10 +690,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+      "tenseFamily": "algorithmic-prophet-predicate-002"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-1-present",
+      "id": "algorithmic-prophet-predicate-002-present",
       "role": "predicate",
       "text": "is information in a glass of water",
       "singularText": "is information in a glass of water",
@@ -705,10 +716,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+      "tenseFamily": "algorithmic-prophet-predicate-002"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-1-future",
+      "id": "algorithmic-prophet-predicate-002-future",
       "role": "predicate",
       "text": "will be information in a glass of water",
       "tags": [
@@ -727,10 +738,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-1"
+      "tenseFamily": "algorithmic-prophet-predicate-002"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-2-past",
+      "id": "algorithmic-prophet-predicate-003-past",
       "role": "predicate",
       "text": "was a statistic wearing ceremonial courage",
       "tags": [
@@ -749,10 +760,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+      "tenseFamily": "algorithmic-prophet-predicate-003"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-2-present",
+      "id": "algorithmic-prophet-predicate-003-present",
       "role": "predicate",
       "text": "is a statistic wearing ceremonial courage",
       "singularText": "is a statistic wearing ceremonial courage",
@@ -775,10 +786,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+      "tenseFamily": "algorithmic-prophet-predicate-003"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-2-future",
+      "id": "algorithmic-prophet-predicate-003-future",
       "role": "predicate",
       "text": "will be a statistic wearing ceremonial courage",
       "tags": [
@@ -797,10 +808,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-2"
+      "tenseFamily": "algorithmic-prophet-predicate-003"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-3-past",
+      "id": "algorithmic-prophet-predicate-004-past",
       "role": "predicate",
       "text": "was an algorithm with a superstition",
       "tags": [
@@ -819,10 +830,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
+      "tenseFamily": "algorithmic-prophet-predicate-004"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-3-present",
+      "id": "algorithmic-prophet-predicate-004-present",
       "role": "predicate",
       "text": "is an algorithm with a superstition",
       "singularText": "is an algorithm with a superstition",
@@ -845,10 +856,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
+      "tenseFamily": "algorithmic-prophet-predicate-004"
     },
     {
-      "id": "algorithmic-prophet-contract-predicate-predicate-3-future",
+      "id": "algorithmic-prophet-predicate-004-future",
       "role": "predicate",
       "text": "will be an algorithm with a superstition",
       "tags": [
@@ -867,7 +878,7 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-contract-predicate-predicate-3"
+      "tenseFamily": "algorithmic-prophet-predicate-004"
     }
   ]
 }

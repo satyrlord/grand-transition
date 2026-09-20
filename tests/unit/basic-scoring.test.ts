@@ -39,10 +39,10 @@ const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
 
 describe('Hollywood Roast clause scoring', () => {
 
-  test.each(['marble-diplomat-foundation-modifier', 'marble-diplomat-review-modifier'])(
+  test.each(['marble-diplomat-modifier-001', 'marble-diplomat-modifier-002'])(
     'neutral modifier %s does not activate luxury, elitism, or corruption weaknesses',
     (modifier) => {
-      const ids = ['you', 'is', 'my-opponent', modifier];
+      const ids = ['common-noun-028', 'common-verb-023-present', 'common-noun-053', modifier];
       const result = score(ids, ['luxury', 'elitism', 'corruption']);
       expect(result.finalDamage).toBeGreaterThan(0);
       expect(result.finalDamage).toBe(score(ids).finalDamage);
@@ -50,10 +50,10 @@ describe('Hollywood Roast clause scoring', () => {
     },
   );
 
-  test.each(['brought-the-miners-to-bucharest', 'brings-the-miners-to-bucharest', 'will-bring-the-miners-to-bucharest'])(
+  test.each(['common-predicate-013-past', 'common-predicate-013-present', 'common-predicate-013-future'])(
     'the concise %s predicate does not imply a credibility weakness',
     (predicate) => {
-      const ids = ['you', predicate];
+      const ids = ['common-noun-028', predicate];
       expect(score(ids, ['credibility']).finalDamage).toBe(score(ids).finalDamage);
       expect(score(ids, ['miners']).breakdown).toContainEqual(
         expect.objectContaining({ kind: 'weakness-match', phraseId: predicate, defenderTag: 'miners' }),
@@ -62,15 +62,15 @@ describe('Hollywood Roast clause scoring', () => {
   );
 
   test.each([
-    { connector: 'and', label: 'and' },
-    { connector: 'but', label: 'but' },
-    { connector: 'because', label: 'because' },
-    { connector: 'algorithmic-prophet-neutral-contrast', label: 'yet' },
-    { connector: 'so', label: 'so' },
+    { connector: 'common-conjunction-001', label: 'common-conjunction-001' },
+    { connector: 'common-conjunction-002', label: 'common-conjunction-002' },
+    { connector: 'common-conjunction-003', label: 'common-conjunction-003' },
+    { connector: 'algorithmic-prophet-conjunction-001', label: 'yet' },
+    { connector: 'common-conjunction-004', label: 'common-conjunction-004' },
   ])(
     'neutral $label clauses do not activate any defender weakness',
     ({ connector }) => {
-      const ids = ['you', 'is', 'my-opponent', connector, 'you', 'is', 'my-opponent'];
+      const ids = ['common-noun-028', 'common-verb-023-present', 'common-noun-053', connector, 'common-noun-028', 'common-verb-023-present', 'common-noun-053'];
       const weaknesses = [...new Set(sampleContent.characters.flatMap((character) => character.weaknessTags))];
       const result = score(ids, weaknesses);
       expect(result.finalDamage).toBeGreaterThan(0);
@@ -80,14 +80,14 @@ describe('Hollywood Roast clause scoring', () => {
   );
 
   test('neutral with and its neutral complement add no weakness while a tagged complement still matches', () => {
-    const neutral = ['you', 'is', 'my-opponent', 'with', 'you'];
+    const neutral = ['common-noun-028', 'common-verb-023-present', 'common-noun-053', 'common-conjunction-005', 'common-noun-028'];
     expect(score(neutral, ['credibility', 'decorum']).finalDamage).toBe(score(neutral).finalDamage);
-    const tagged = score(['you', 'is', 'my-opponent', 'with', 'a-thief'], ['corruption']);
-    expect(tagged.breakdown).toContainEqual(expect.objectContaining({ kind: 'weakness-match', phraseId: 'a-thief', defenderTag: 'corruption' }));
+    const tagged = score(['common-noun-028', 'common-verb-023-present', 'common-noun-053', 'common-conjunction-005', 'common-noun-033'], ['corruption']);
+    expect(tagged.breakdown).toContainEqual(expect.objectContaining({ kind: 'weakness-match', phraseId: 'common-noun-033', defenderTag: 'corruption' }));
   });
 
   test('a neutral action retains compatibility scoring without adding weakness damage', () => {
-    const ids = ['you', 'explains', 'my-opponent'];
+    const ids = ['common-noun-028', 'common-verb-006-present', 'common-noun-053'];
     const result = score(ids, ['evidence', 'credibility', 'decorum', 'consistency']);
     expect(result.finalDamage).toBe(score(ids).finalDamage);
     expect(result.breakdown.some((item) => item.kind === 'weakness-match')).toBe(false);
@@ -95,28 +95,28 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('narration anchors distinguish repeated relation occurrences and shared compound completion', () => {
     const phrases = new Map(sampleContent.phrases.map((phrase) => [phrase.id, phrase]));
-    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum']), phrases)).toEqual([1]);
-    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([3, 3]);
-    expect(extractScoreClauseAnchors(analysis(['national-consensus', 'belongs-in-a-party-museum', 'and', 'televised-revolution', 'belongs-in-a-party-museum']), phrases)).toEqual([1, 4]);
+    expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-predicate-010-present']), phrases)).toEqual([1]);
+    expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-conjunction-001', 'common-noun-002', 'common-predicate-010-present']), phrases)).toEqual([3, 3]);
+    expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-predicate-010-present', 'common-conjunction-001', 'common-noun-002', 'common-predicate-010-present']), phrases)).toEqual([1, 4]);
   });
   test('scores semantic compatibility instead of summing card values', () => {
-    const result = score(['national-consensus', 'belongs-in-a-party-museum']);
+    const result = score(['common-noun-001', 'common-predicate-010-present']);
     expect(result.finalDamage).toBe(5);
     expect(result.breakdown).toContainEqual({
       kind: 'clause-base',
       operation: 'note',
-      phraseIds: ['national-consensus', 'belongs-in-a-party-museum'],
+      phraseIds: ['common-noun-001', 'common-predicate-010-present'],
       amount: 5,
     });
   });
 
   test('supports flavour matches and exact noun-specific score overrides', () => {
     const baseAnalysis = analysis([
-      'national-consensus',
-      'belongs-in-a-party-museum',
+      'common-noun-001',
+      'common-predicate-010-present',
     ]);
     const flavourPhrases = sampleContent.phrases.map((phrase) =>
-      phrase.id === 'belongs-in-a-party-museum'
+      phrase.id === 'common-predicate-010-present'
         ? {
             ...phrase,
             scorePreferences: {
@@ -136,10 +136,10 @@ describe('Hollywood Roast clause scoring', () => {
     ).toBe(8);
 
     const customPhrases = flavourPhrases.map((phrase) =>
-      phrase.id === 'belongs-in-a-party-museum'
+      phrase.id === 'common-predicate-010-present'
         ? {
             ...phrase,
-            customScores: [{ leftNounId: 'national-consensus', score: 9 }],
+            customScores: [{ leftNounId: 'common-noun-001', score: 9 }],
           }
         : phrase,
     );
@@ -155,7 +155,7 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('applies a weakness multiplier to the matching clause only', () => {
     expect(
-      score(['national-consensus', 'belongs-in-a-party-museum'], ['restraint'])
+      score(['common-noun-001', 'common-predicate-010-present'], ['restraint'])
         .finalDamage,
     ).toBe(10);
   });
@@ -176,9 +176,9 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('keeps scene and character restrictions out of damage', () => {
     const result = score([
-      'televised-revolution',
-      'rebrands',
-      'national-salvation-committee',
+      'common-noun-002',
+      'common-verb-010-present',
+      'red-folded-chairman-noun-001',
     ]);
     expect(result.finalDamage).toBe(11);
     expect(
@@ -187,13 +187,13 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test.each([1, 2, 3, 4, 5] as const)('uses compatibility multiplier %s with the fixed five-point base', (multiplier) => {
-    const relationId = 'belongs-in-a-party-museum';
-    const baseAnalysis = analysis(['national-consensus', relationId]);
+    const relationId = 'common-predicate-010-present';
+    const baseAnalysis = analysis(['common-noun-001', relationId]);
     const tier = (substance: boolean, flavour: boolean): number =>
       scoreBasicConstruction({
         analysis: baseAnalysis,
         phrases: sampleContent.phrases.map((phrase) => {
-          if (phrase.id === 'national-consensus') {
+          if (phrase.id === 'common-noun-001') {
             return {
               ...phrase,
               scoreGroups: {
@@ -226,9 +226,9 @@ describe('Hollywood Roast clause scoring', () => {
 
   test.each([1, 2, 3, 4, 5] as const)('keeps custom bases, modifier points, and weakness separate at multiplier %s', (multiplier) => {
     const result = scoreBasicConstruction({
-      analysis: analysis(['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election']),
-      phrases: sampleContent.phrases.map((phrase) => phrase.id === 'belongs-in-a-party-museum'
-        ? { ...phrase, customScores: [{ leftNounId: 'national-consensus', score: 9 }] }
+      analysis: analysis(['common-noun-001', 'common-predicate-010-present', 'common-modifier-001']),
+      phrases: sampleContent.phrases.map((phrase) => phrase.id === 'common-predicate-010-present'
+        ? { ...phrase, customScores: [{ leftNounId: 'common-noun-001', score: 9 }] }
         : phrase),
       defenderWeaknessTags: ['consistency'],
       balance: scoringBalanceForMultiplier(multiplier),
@@ -240,12 +240,12 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('keeps a modifier in the preceding clause for weakness scoring', () => {
     const ids = [
-      'national-consensus',
-      'belongs-in-a-party-museum',
-      'before-the-next-election',
+      'common-noun-001',
+      'common-predicate-010-present',
+      'common-modifier-001',
     ] as const;
     const phrases = sampleContent.phrases.map((phrase) =>
-      phrase.id === 'before-the-next-election'
+      phrase.id === 'common-modifier-001'
         ? {
             ...phrase,
             sceneIds: ['transition-era-television-studio'],
@@ -276,14 +276,14 @@ describe('Hollywood Roast clause scoring', () => {
       expect.objectContaining({
         kind: 'weakness-match',
         defenderTag: 'consistency',
-        phraseId: 'before-the-next-election',
+        phraseId: 'common-modifier-001',
       }),
     );
   });
 
   test('each stacked modifier adds points to the screenshot clause', () => {
-    const core = ['a-pig', 'stole', 'municipal-ribbon'];
-    const modifiers = ['on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights'];
+    const core = ['common-noun-048', 'common-verb-024-past', 'common-noun-013'];
+    const modifiers = ['common-modifier-012', 'common-modifier-009', 'common-modifier-013'];
     expect([0, 1, 2, 3].map((count) =>
       score([...core, ...modifiers.slice(0, count)]).finalDamage,
     )).toEqual([5, 7, 9, 11]);
@@ -295,10 +295,10 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test('stacked modifier tags trigger one weakness multiplier on their clause only', () => {
-    const ids = ['a-pig', 'stole', 'municipal-ribbon',
-      'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
-      'algorithmic-prophet-neutral-contrast', 'national-consensus',
-      'belongs-in-a-party-museum'];
+    const ids = ['common-noun-048', 'common-verb-024-past', 'common-noun-013',
+      'common-modifier-012', 'common-modifier-009', 'common-modifier-013',
+      'algorithmic-prophet-conjunction-001', 'common-noun-001',
+      'common-predicate-010-present'];
     const modifiers = new Set(ids.slice(3, 6));
     const phrases = sampleContent.phrases.map((phrase) => ({
       ...phrase, tags: modifiers.has(phrase.id) ? ['modifier-only'] : [],
@@ -313,11 +313,11 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test('modifier points apply to custom scores and repeated occurrences', () => {
-    const ids = ['national-consensus', 'belongs-in-a-party-museum',
-      'before-the-next-election', 'before-the-next-election'];
+    const ids = ['common-noun-001', 'common-predicate-010-present',
+      'common-modifier-001', 'common-modifier-001'];
     const phrases = sampleContent.phrases.map((phrase) =>
-      phrase.id === 'belongs-in-a-party-museum'
-        ? { ...phrase, customScores: [{ leftNounId: 'national-consensus', score: 9 }] }
+      phrase.id === 'common-predicate-010-present'
+        ? { ...phrase, customScores: [{ leftNounId: 'common-noun-001', score: 9 }] }
         : phrase);
     expect(scoreBasicConstruction({
       analysis: analysis(ids), phrases, defenderWeaknessTags: [],
@@ -326,21 +326,21 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test('a shared modifier adds points to each compound-subject clause', () => {
-    expect(score(['national-consensus', 'and', 'televised-revolution',
-      'belongs-in-a-party-museum', 'before-the-next-election']).finalDamage).toBe(14);
+    expect(score(['common-noun-001', 'common-conjunction-001', 'common-noun-002',
+      'common-predicate-010-present', 'common-modifier-001']).finalDamage).toBe(14);
   });
 
   test('modifiers give no damage to incomplete sentences', () => {
-    const ids = ['national-consensus', 'belongs-in-a-party-museum', 'before-the-next-election'];
-    expect(score([...ids, 'algorithmic-prophet-neutral-contrast']).finalDamage).toBe(0);
+    const ids = ['common-noun-001', 'common-predicate-010-present', 'common-modifier-001'];
+    expect(score([...ids, 'algorithmic-prophet-conjunction-001']).finalDamage).toBe(0);
   });
 
   test('keeps a with complement in the preceding clause', () => {
     const result = score([
-      'my-opponent',
-      'interrupts-the-debate',
-      'with',
-      'a-public-apology',
+      'common-noun-053',
+      'common-predicate-001-present',
+      'common-conjunction-005',
+      'common-noun-054',
     ]);
 
     expect(
@@ -350,10 +350,10 @@ describe('Hollywood Roast clause scoring', () => {
       kind: 'clause-base',
       operation: 'note',
       phraseIds: [
-        'my-opponent',
-        'interrupts-the-debate',
-        'with',
-        'a-public-apology',
+        'common-noun-053',
+        'common-predicate-001-present',
+        'common-conjunction-005',
+        'common-noun-054',
       ],
       amount: 5,
     });
@@ -361,10 +361,10 @@ describe('Hollywood Roast clause scoring', () => {
 
   test('keeps a coordinated copular noun complement in the preceding clause', () => {
     const ids = [
-      'your-brother',
-      'is-a-snitch',
-      'and',
-      'a-pig',
+      'common-noun-036',
+      'common-predicate-015-present',
+      'common-conjunction-001',
+      'common-noun-048',
     ] as const;
     const result = score(ids, ['restraint']);
 
@@ -382,7 +382,7 @@ describe('Hollywood Roast clause scoring', () => {
       expect.objectContaining({
         kind: 'weakness-match',
         defenderTag: 'restraint',
-        phraseId: 'a-pig',
+        phraseId: 'common-noun-048',
       }),
     );
   });
@@ -390,10 +390,10 @@ describe('Hollywood Roast clause scoring', () => {
   test('adds the scores of compound-subject clauses', () => {
     expect(
       score([
-        'national-consensus',
-        'and',
-        'televised-revolution',
-        'belongs-in-a-party-museum',
+        'common-noun-001',
+        'common-conjunction-001',
+        'common-noun-002',
+        'common-predicate-010-present',
       ]).finalDamage,
     ).toBe(10);
   });
@@ -401,11 +401,11 @@ describe('Hollywood Roast clause scoring', () => {
   test('adds the scores of compound-object clauses', () => {
     expect(
       score([
-        'national-consensus',
-        'denounced',
-        'televised-revolution',
-        'and',
-        'national-salvation-committee',
+        'common-noun-001',
+        'common-verb-001-past',
+        'common-noun-002',
+        'common-conjunction-001',
+        'red-folded-chairman-noun-001',
       ]).finalDamage,
     ).toBe(16);
   });
@@ -413,11 +413,11 @@ describe('Hollywood Roast clause scoring', () => {
   test('scores front-because subordinate and main clauses separately', () => {
     expect(
       score([
-        'because',
-        'national-consensus',
-        'belongs-in-a-party-museum',
-        'televised-revolution',
-        'makes-own-voters-change-the-channel',
+        'common-conjunction-003',
+        'common-noun-001',
+        'common-predicate-010-present',
+        'common-noun-002',
+        'common-predicate-011-present',
       ]).finalDamage,
     ).toBe(16);
   });
@@ -425,14 +425,14 @@ describe('Hollywood Roast clause scoring', () => {
   test('scores each extended front-because clause once before the main clause', () => {
     expect(
       score([
-        'because',
-        'national-consensus',
-        'belongs-in-a-party-museum',
-        'and',
-        'televised-revolution',
-        'makes-own-voters-change-the-channel',
-        'coalition-protocol',
-        'belongs-in-a-party-museum',
+        'common-conjunction-003',
+        'common-noun-001',
+        'common-predicate-010-present',
+        'common-conjunction-001',
+        'common-noun-002',
+        'common-predicate-011-present',
+        'common-noun-003',
+        'common-predicate-010-present',
       ]).finalDamage,
     ).toBe(21);
   });
@@ -440,21 +440,21 @@ describe('Hollywood Roast clause scoring', () => {
   test('does not reuse an object relation after a shared-subject subordinate extension', () => {
     expect(
       score([
-        'because',
-        'national-consensus',
-        'rebrands',
-        'televised-revolution',
-        'and',
-        'belongs-in-a-party-museum',
-        'coalition-protocol',
-        'belongs-in-a-party-museum',
+        'common-conjunction-003',
+        'common-noun-001',
+        'common-verb-010-present',
+        'common-noun-002',
+        'common-conjunction-001',
+        'common-predicate-010-present',
+        'common-noun-003',
+        'common-predicate-010-present',
       ]).finalDamage,
     ).toBe(21);
   });
 
   test('an incomplete sentence deals zero damage and has no clause score', () => {
     const result = scoreBasicConstruction({
-      analysis: analysis(['national-consensus']),
+      analysis: analysis(['common-noun-001']),
       phrases: sampleContent.phrases,
       defenderWeaknessTags: ['restraint'],
       balance: basicScoringBalance,

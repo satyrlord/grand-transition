@@ -48,7 +48,7 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
   const state = owner.matchState;
   const activePlayerId = state.draft!.activePlayerId;
   const player = state.draft!.playerStates[activePlayerId]!;
-  const phraseIds = ['you', 'were-communist-party-members'] as const;
+  const phraseIds = ['common-noun-028', 'common-predicate-005-past'] as const;
   const steps = phraseIds.map((phraseId) => ({
     kind: 'phrase' as const,
     phrase: prepareEnglishGrammarPhrase(
@@ -113,10 +113,10 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   const activePlayerId = state.draft!.activePlayerId;
   const player = state.draft!.playerStates[activePlayerId]!;
   const phraseIds = [
-    'your-brother',
-    'is-a-snitch',
-    'and',
-    'a-pig',
+    'common-noun-036',
+    'common-predicate-015-present',
+    'common-conjunction-001',
+    'common-noun-048',
   ] as const;
   const phraseSteps = phraseIds.map((phraseId) => ({
     kind: 'phrase' as const,
@@ -542,12 +542,12 @@ function prepareComebackExchange(app: GrandTransitionApp): void {
   };
   const first = completeConstruction(
     'player-one',
-    ['national-consensus', 'belongs-in-a-party-museum'],
+    ['common-noun-001', 'common-predicate-010-present'],
     true,
   );
   const second = completeConstruction(
     'player-two',
-    ['televised-revolution', 'makes-own-voters-change-the-channel'],
+    ['common-noun-002', 'common-predicate-011-present'],
     false,
   );
   owner.matchState = {

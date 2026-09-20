@@ -52,7 +52,7 @@
   },
   "phrases": [
     {
-      "id": "oat-milk-reformist-foundation-noun",
+      "id": "oat-milk-reformist-noun-001",
       "role": "noun",
       "text": "my listening circle with a waiting list",
       "tags": [
@@ -71,7 +71,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-foundation-modifier",
+      "id": "oat-milk-reformist-modifier-001",
       "role": "modifier",
       "text": "with a footprint smaller than the party's",
       "tags": [
@@ -82,7 +82,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "oat-milk-reformist-foundation-ending",
+      "id": "oat-milk-reformist-ending-001",
       "role": "ending",
       "text": "and the forest has more pensions than trees.",
       "tags": [
@@ -94,7 +94,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "reformist-reverse-redistribution",
+      "id": "oat-milk-reformist-ending-002",
       "role": "ending",
       "text": "and the poor now sponsor the billionaires.",
       "tags": [
@@ -105,7 +105,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "reformist-listening-invoice",
+      "id": "oat-milk-reformist-ending-003",
       "role": "ending",
       "text": "and listening is free after the consultation fee.",
       "tags": [
@@ -116,7 +116,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "oat-milk-reformist-inclusive-velvet-rope",
+      "id": "oat-milk-reformist-noun-002",
       "role": "noun",
       "text": "an inclusive workshop behind a velvet rope",
       "tags": [
@@ -137,7 +137,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-sticky-note-coalition",
+      "id": "oat-milk-reformist-noun-003",
       "role": "noun",
       "text": "a coalition glued with reusable sticky notes",
       "tags": [
@@ -157,7 +157,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-consensus-cushion",
+      "id": "oat-milk-reformist-noun-004",
       "role": "noun",
       "text": "a consensus cushion for uncomfortable questions",
       "tags": [
@@ -177,7 +177,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-facilitated-pothole",
+      "id": "oat-milk-reformist-noun-005",
       "role": "noun",
       "text": "a pothole with a trained discussion facilitator",
       "tags": [
@@ -197,7 +197,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-accessible-rooftop",
+      "id": "oat-milk-reformist-noun-006",
       "role": "noun",
       "text": "an accessible consultation on a members-only rooftop",
       "tags": [
@@ -218,7 +218,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-verb-1-past",
+      "id": "oat-milk-reformist-verb-001-past",
       "role": "verb",
       "text": "invited a certified facilitator to discuss",
       "singularText": "invited a certified facilitator to discuss",
@@ -249,10 +249,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-verb-1"
+      "tenseFamily": "oat-milk-reformist-verb-001"
     },
     {
-      "id": "oat-milk-reformist-verb-1-present",
+      "id": "oat-milk-reformist-verb-001-present",
       "role": "verb",
       "text": "invites a certified facilitator to discuss",
       "singularText": "invites a certified facilitator to discuss",
@@ -283,10 +283,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-verb-1"
+      "tenseFamily": "oat-milk-reformist-verb-001"
     },
     {
-      "id": "oat-milk-reformist-verb-1-future",
+      "id": "oat-milk-reformist-verb-001-future",
       "role": "verb",
       "text": "will invite a certified facilitator to discuss",
       "singularText": "will invite a certified facilitator to discuss",
@@ -317,10 +317,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-verb-1"
+      "tenseFamily": "oat-milk-reformist-verb-001"
     },
     {
-      "id": "oat-milk-reformist-verb-2-past",
+      "id": "oat-milk-reformist-verb-002-past",
       "role": "verb",
       "text": "dedicated a premium listening session to",
       "singularText": "dedicated a premium listening session to",
@@ -351,10 +351,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-verb-2"
+      "tenseFamily": "oat-milk-reformist-verb-002"
     },
     {
-      "id": "oat-milk-reformist-verb-2-present",
+      "id": "oat-milk-reformist-verb-002-present",
       "role": "verb",
       "text": "dedicates a premium listening session to",
       "singularText": "dedicates a premium listening session to",
@@ -385,10 +385,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-verb-2"
+      "tenseFamily": "oat-milk-reformist-verb-002"
     },
     {
-      "id": "oat-milk-reformist-verb-2-future",
+      "id": "oat-milk-reformist-verb-002-future",
       "role": "verb",
       "text": "will dedicate a premium listening session to",
       "singularText": "will dedicate a premium listening session to",
@@ -419,10 +419,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-verb-2"
+      "tenseFamily": "oat-milk-reformist-verb-002"
     },
     {
-      "id": "oat-milk-reformist-predicate-1-past",
+      "id": "oat-milk-reformist-predicate-001-past",
       "role": "predicate",
       "text": "mistook an attendance sheet for a public mandate",
       "singularText": "mistook an attendance sheet for a public mandate",
@@ -448,10 +448,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-001"
     },
     {
-      "id": "oat-milk-reformist-predicate-1-present",
+      "id": "oat-milk-reformist-predicate-001-present",
       "role": "predicate",
       "text": "mistakes an attendance sheet for a public mandate",
       "singularText": "mistakes an attendance sheet for a public mandate",
@@ -477,10 +477,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-001"
     },
     {
-      "id": "oat-milk-reformist-predicate-1-future",
+      "id": "oat-milk-reformist-predicate-001-future",
       "role": "predicate",
       "text": "will mistake an attendance sheet for a public mandate",
       "singularText": "will mistake an attendance sheet for a public mandate",
@@ -506,10 +506,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-001"
     },
     {
-      "id": "oat-milk-reformist-review-modifier",
+      "id": "oat-milk-reformist-modifier-002",
       "role": "modifier",
       "text": "after checking the revolution for dietary preferences",
       "tags": [
@@ -519,7 +519,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "oat-milk-reformist-contrast",
+      "id": "oat-milk-reformist-conjunction-001",
       "role": "conjunction",
       "text": "but, with compassion,",
       "connectorKind": "but",
@@ -527,7 +527,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "oat-milk-reformist-contract-noun-1-a-reform-with-oat-milk-foam",
+      "id": "oat-milk-reformist-noun-007",
       "role": "noun",
       "text": "thirty therapy sessions from the state",
       "grammaticalNumber": "plural",
@@ -545,7 +545,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-contract-noun-2-a-class-analysis-on-a-caf-receipt",
+      "id": "oat-milk-reformist-noun-008",
       "role": "noun",
       "text": "a luxury no longer reserved for the privileged",
       "tags": [
@@ -562,7 +562,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "oat-milk-reformist-contract-noun-3-a-sustainable-promise-in-a-plastic-cup",
+      "id": "oat-milk-reformist-noun-009",
       "role": "noun",
       "text": "a rich-to-poor transfer",
       "tags": [
@@ -579,7 +579,7 @@
       "rarity": "rare"
     },
     {
-      "id": "oat-milk-reformist-contract-noun-4-a-relevant-scarf-at-a-public-hearing",
+      "id": "oat-milk-reformist-noun-010",
       "role": "noun",
       "text": "a public service beyond privilege",
       "tags": [
@@ -596,7 +596,7 @@
       "rarity": "common"
     },
     {
-      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-past",
+      "id": "oat-milk-reformist-verb-003-past",
       "role": "verb",
       "text": "took from the rich to give to",
       "tags": [
@@ -615,10 +615,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+      "tenseFamily": "oat-milk-reformist-verb-003"
     },
     {
-      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-present",
+      "id": "oat-milk-reformist-verb-003-present",
       "role": "verb",
       "text": "takes from the rich to give to",
       "singularText": "takes from the rich to give to",
@@ -641,10 +641,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+      "tenseFamily": "oat-milk-reformist-verb-003"
     },
     {
-      "id": "oat-milk-reformist-contract-verb-serves-relevance-with-foam-future",
+      "id": "oat-milk-reformist-verb-003-future",
       "role": "verb",
       "text": "will take from the rich to give to",
       "tags": [
@@ -663,10 +663,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-contract-verb-serves-relevance-with-foam"
+      "tenseFamily": "oat-milk-reformist-verb-003"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-1-past",
+      "id": "oat-milk-reformist-predicate-002-past",
       "role": "predicate",
       "text": "was a therapy session beyond privilege",
       "tags": [
@@ -685,10 +685,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-002"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-1-present",
+      "id": "oat-milk-reformist-predicate-002-present",
       "role": "predicate",
       "text": "is a therapy session beyond privilege",
       "singularText": "is a therapy session beyond privilege",
@@ -711,10 +711,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-002"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-1-future",
+      "id": "oat-milk-reformist-predicate-002-future",
       "role": "predicate",
       "text": "will be a therapy session beyond privilege",
       "tags": [
@@ -733,10 +733,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-1"
+      "tenseFamily": "oat-milk-reformist-predicate-002"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-2-past",
+      "id": "oat-milk-reformist-predicate-003-past",
       "role": "predicate",
       "text": "was an authentic apology in a takeaway cup",
       "tags": [
@@ -755,10 +755,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+      "tenseFamily": "oat-milk-reformist-predicate-003"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-2-present",
+      "id": "oat-milk-reformist-predicate-003-present",
       "role": "predicate",
       "text": "is an authentic apology in a takeaway cup",
       "singularText": "is an authentic apology in a takeaway cup",
@@ -781,10 +781,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+      "tenseFamily": "oat-milk-reformist-predicate-003"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-2-future",
+      "id": "oat-milk-reformist-predicate-003-future",
       "role": "predicate",
       "text": "will be an authentic apology in a takeaway cup",
       "tags": [
@@ -803,10 +803,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-2"
+      "tenseFamily": "oat-milk-reformist-predicate-003"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-3-past",
+      "id": "oat-milk-reformist-predicate-004-past",
       "role": "predicate",
       "text": "was a class argument with a sponsored straw",
       "tags": [
@@ -825,10 +825,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+      "tenseFamily": "oat-milk-reformist-predicate-004"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-3-present",
+      "id": "oat-milk-reformist-predicate-004-present",
       "role": "predicate",
       "text": "is a class argument with a sponsored straw",
       "singularText": "is a class argument with a sponsored straw",
@@ -851,10 +851,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+      "tenseFamily": "oat-milk-reformist-predicate-004"
     },
     {
-      "id": "oat-milk-reformist-contract-predicate-predicate-3-future",
+      "id": "oat-milk-reformist-predicate-004-future",
       "role": "predicate",
       "text": "will be a class argument with a sponsored straw",
       "tags": [
@@ -873,10 +873,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-contract-predicate-predicate-3"
+      "tenseFamily": "oat-milk-reformist-predicate-004"
     },
     {
-      "id": "oat-milk-reformist-contract-modifier-beside-a-reusable-apology",
+      "id": "oat-milk-reformist-modifier-003",
       "role": "modifier",
       "text": "beside-a-reusable-apology",
       "tags": [
@@ -885,7 +885,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "oat-milk-reformist-contract-ending-and-the-reform-came-with-a-loyalty-card",
+      "id": "oat-milk-reformist-ending-004",
       "role": "ending",
       "text": "and the reform came with a loyalty card.",
       "tags": [
@@ -895,7 +895,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "oat-milk-reformist-contract-ending-and-authenticity-asked-for-oat-milk",
+      "id": "oat-milk-reformist-ending-005",
       "role": "ending",
       "text": "and authenticity asked for oat milk.",
       "tags": [

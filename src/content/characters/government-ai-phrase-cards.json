@@ -21,7 +21,11 @@
     "secondary": "#46515e",
     "accent": "#a82f24"
   },
-  "weaknessTags": ["nepotism", "corruption", "obsolete"],
+  "weaknessTags": [
+    "nepotism",
+    "corruption",
+    "obsolete"
+  ],
   "comebacks": {
     "weak": "Objection received. Reply expected in five years.",
     "medium": "You passed the human test. Your cousin graded it.",
@@ -36,7 +40,11 @@
     "voiceHint": "measured",
     "rate": 0.84,
     "pitch": 0.72,
-    "skinVoices": {"default": "david", "alternate": "mark", "schoolteacher": "zira"}
+    "skinVoices": {
+      "default": "david",
+      "alternate": "mark",
+      "schoolteacher": "zira"
+    }
   },
   "animationSet": {
     "idle": "government-ai-idle",
@@ -45,84 +53,145 @@
   },
   "phrases": [
     {
-      "id": "the-peoples-agile-transformation-roadmap",
+      "id": "government-ai-noun-001",
       "role": "noun",
       "text": "the people's five-year loading screen",
-      "tags": ["obsolete", "spending"],
+      "tags": [
+        "obsolete",
+        "spending"
+      ],
       "scoreGroups": {
-        "substance": ["politics", "bureaucracy"],
-        "flavour": ["ideology", "strategy"]
+        "substance": [
+          "politics",
+          "bureaucracy"
+        ],
+        "flavour": [
+          "ideology",
+          "strategy"
+        ]
       },
       "rarity": "common"
     },
     {
-      "id": "a-centrally-planned-innovation-sprint",
+      "id": "government-ai-noun-002",
       "role": "noun",
       "text": "an innovation sprint to the fax machine",
-      "tags": ["obsolete", "spending"],
+      "tags": [
+        "obsolete",
+        "spending"
+      ],
       "scoreGroups": {
-        "substance": ["politics", "bureaucracy"],
-        "flavour": ["ideology", "strategy"]
+        "substance": [
+          "politics",
+          "bureaucracy"
+        ],
+        "flavour": [
+          "ideology",
+          "strategy"
+        ]
       },
       "rarity": "uncommon"
     },
     {
-      "id": "your-cousins-preferred-supplier",
+      "id": "government-ai-noun-003",
       "role": "noun",
       "text": "your cousin's one-man bidding war",
-      "tags": ["nepotism", "corruption"],
+      "tags": [
+        "nepotism",
+        "corruption"
+      ],
       "scoreGroups": {
-        "substance": ["family", "bureaucracy"],
-        "flavour": ["procurement", "direct"]
+        "substance": [
+          "family",
+          "bureaucracy"
+        ],
+        "flavour": [
+          "procurement",
+          "direct"
+        ]
       },
       "rarity": "common"
     },
     {
-      "id": "an-emergency-fund-chatbot",
+      "id": "government-ai-noun-004",
       "role": "noun",
       "text": "a million-euro chatbot asking for printer ink",
-      "tags": ["spending", "obsolete"],
+      "tags": [
+        "spending",
+        "obsolete"
+      ],
       "scoreGroups": {
-        "substance": ["bureaucracy"],
-        "flavour": ["emergency", "technology"]
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "emergency",
+          "technology"
+        ]
       },
       "rarity": "common"
     },
     {
-      "id": "a-phantom-digital-consultancy",
+      "id": "government-ai-noun-005",
       "role": "noun",
       "text": "a consultancy with a ghost on the payroll",
-      "tags": ["corruption"],
+      "tags": [
+        "corruption"
+      ],
       "scoreGroups": {
-        "substance": ["bureaucracy"],
-        "flavour": ["procurement", "technology"]
+        "substance": [
+          "bureaucracy"
+        ],
+        "flavour": [
+          "procurement",
+          "technology"
+        ]
       },
       "rarity": "uncommon"
     },
     {
-      "id": "the-national-synergy-platform",
+      "id": "government-ai-noun-006",
       "role": "noun",
       "text": "a national cloud on a floppy disk",
-      "tags": ["obsolete", "spending"],
+      "tags": [
+        "obsolete",
+        "spending"
+      ],
       "scoreGroups": {
-        "substance": ["politics", "bureaucracy"],
-        "flavour": ["technology", "institution"]
+        "substance": [
+          "politics",
+          "bureaucracy"
+        ],
+        "flavour": [
+          "technology",
+          "institution"
+        ]
       },
       "rarity": "rare"
     },
     {
-      "id": "the-procurement-seam",
+      "id": "government-ai-noun-007",
       "role": "noun",
       "text": "a procurement loophole with a welcome mat",
-      "tags": ["corruption", "spending", "bureaucracy"],
+      "tags": [
+        "corruption",
+        "spending",
+        "bureaucracy"
+      ],
       "scoreGroups": {
-        "substance": ["politics", "bureaucracy"],
-        "flavour": ["procurement", "technology"]
+        "substance": [
+          "politics",
+          "bureaucracy"
+        ],
+        "flavour": [
+          "procurement",
+          "technology"
+        ]
       },
       "rarity": "uncommon"
     },
     {
-      "id": "government-ai-procured",
+      "id": "government-ai-verb-001-past",
       "role": "verb",
       "text": "procured",
       "singularText": "procured",
@@ -147,10 +216,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-procures"
+      "tenseFamily": "government-ai-verb-001"
     },
     {
-      "id": "government-ai-procures",
+      "id": "government-ai-verb-001-present",
       "role": "verb",
       "text": "procures",
       "singularText": "procures",
@@ -175,10 +244,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-procures"
+      "tenseFamily": "government-ai-verb-001"
     },
     {
-      "id": "government-ai-will-procure",
+      "id": "government-ai-verb-001-future",
       "role": "verb",
       "text": "will procure",
       "singularText": "will procure",
@@ -203,10 +272,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-procures"
+      "tenseFamily": "government-ai-verb-001"
     },
     {
-      "id": "government-ai-double-clicked-on",
+      "id": "government-ai-verb-002-past",
       "role": "verb",
       "text": "double-clicked on",
       "singularText": "double-clicked on",
@@ -231,10 +300,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-double-clicks-on"
+      "tenseFamily": "government-ai-verb-002"
     },
     {
-      "id": "government-ai-double-clicks-on",
+      "id": "government-ai-verb-002-present",
       "role": "verb",
       "text": "double-clicks on",
       "singularText": "double-clicks on",
@@ -259,10 +328,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-double-clicks-on"
+      "tenseFamily": "government-ai-verb-002"
     },
     {
-      "id": "government-ai-will-double-click-on",
+      "id": "government-ai-verb-002-future",
       "role": "verb",
       "text": "will double-click on",
       "singularText": "will double-click on",
@@ -287,10 +356,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-double-clicks-on"
+      "tenseFamily": "government-ai-verb-002"
     },
     {
-      "id": "optimized",
+      "id": "government-ai-verb-003-past",
       "role": "verb",
       "text": "optimized",
       "singularText": "optimized",
@@ -299,18 +368,26 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "politics", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "politics",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "optimizes"
+      "tenseFamily": "government-ai-verb-003"
     },
     {
-      "id": "optimizes",
+      "id": "government-ai-verb-003-present",
       "role": "verb",
       "text": "optimizes",
       "singularText": "optimizes",
@@ -319,18 +396,26 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "politics", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "politics",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "optimizes"
+      "tenseFamily": "government-ai-verb-003"
     },
     {
-      "id": "will-optimize",
+      "id": "government-ai-verb-003-future",
       "role": "verb",
       "text": "will optimize",
       "singularText": "will optimize",
@@ -339,276 +424,394 @@
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "personal"],
-            "right": ["bureaucracy", "politics", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "personal"
+            ],
+            "right": [
+              "bureaucracy",
+              "politics",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "optimizes"
+      "tenseFamily": "government-ai-verb-003"
     },
     {
-      "id": "was-classified-as-load-bearing",
+      "id": "government-ai-predicate-001-past",
       "role": "predicate",
       "text": "was too expensive to uninstall",
       "singularText": "was too expensive to uninstall",
       "pluralText": "were too expensive to uninstall",
-      "tags": ["spending", "obsolete"],
+      "tags": [
+        "spending",
+        "obsolete"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "classified-as-load-bearing"
+      "tenseFamily": "government-ai-predicate-001"
     },
     {
-      "id": "is-classified-as-load-bearing",
+      "id": "government-ai-predicate-001-present",
       "role": "predicate",
       "text": "is too expensive to uninstall",
       "singularText": "is too expensive to uninstall",
       "pluralText": "are too expensive to uninstall",
-      "tags": ["spending", "obsolete"],
+      "tags": [
+        "spending",
+        "obsolete"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "classified-as-load-bearing"
+      "tenseFamily": "government-ai-predicate-001"
     },
     {
-      "id": "will-be-classified-as-load-bearing",
+      "id": "government-ai-predicate-001-future",
       "role": "predicate",
       "text": "will be too expensive to uninstall",
       "singularText": "will be too expensive to uninstall",
       "pluralText": "will be too expensive to uninstall",
-      "tags": ["spending", "obsolete"],
+      "tags": [
+        "spending",
+        "obsolete"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "classified-as-load-bearing"
+      "tenseFamily": "government-ai-predicate-001"
     },
     {
-      "id": "was-aligned-with-the-glorious-digital-transition",
+      "id": "government-ai-predicate-002-past",
       "role": "predicate",
       "text": "was digitally transformed into a fax machine",
       "singularText": "was digitally transformed into a fax machine",
       "pluralText": "were digitally transformed into a fax machine",
-      "tags": ["obsolete", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition"
+      "tenseFamily": "government-ai-predicate-002"
     },
     {
-      "id": "is-aligned-with-the-glorious-digital-transition",
+      "id": "government-ai-predicate-002-present",
       "role": "predicate",
       "text": "is digitally transformed into a fax machine",
       "singularText": "is digitally transformed into a fax machine",
       "pluralText": "are digitally transformed into a fax machine",
-      "tags": ["obsolete", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition"
+      "tenseFamily": "government-ai-predicate-002"
     },
     {
-      "id": "will-be-aligned-with-the-glorious-digital-transition",
+      "id": "government-ai-predicate-002-future",
       "role": "predicate",
       "text": "will be digitally transformed into a fax machine",
       "singularText": "will be digitally transformed into a fax machine",
       "pluralText": "will be digitally transformed into a fax machine",
-      "tags": ["obsolete", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "aligned-with-the-glorious-digital-transition"
+      "tenseFamily": "government-ai-predicate-002"
     },
     {
-      "id": "served-the-people-through-a-maintenance-window",
+      "id": "government-ai-predicate-003-past",
       "role": "predicate",
       "text": "served the people an error message in triplicate",
       "singularText": "served the people an error message in triplicate",
       "pluralText": "served the people an error message in triplicate",
-      "tags": ["competence", "obsolete", "bureaucracy"],
+      "tags": [
+        "competence",
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window"
+      "tenseFamily": "government-ai-predicate-003"
     },
     {
-      "id": "serves-the-people-through-a-maintenance-window",
+      "id": "government-ai-predicate-003-present",
       "role": "predicate",
       "text": "serves the people an error message in triplicate",
       "singularText": "serves the people an error message in triplicate",
       "pluralText": "serve the people an error message in triplicate",
-      "tags": ["competence", "obsolete", "bureaucracy"],
+      "tags": [
+        "competence",
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window"
+      "tenseFamily": "government-ai-predicate-003"
     },
     {
-      "id": "will-serve-the-people-through-a-maintenance-window",
+      "id": "government-ai-predicate-003-future",
       "role": "predicate",
       "text": "will serve the people an error message in triplicate",
       "singularText": "will serve the people an error message in triplicate",
       "pluralText": "will serve the people an error message in triplicate",
-      "tags": ["competence", "obsolete", "bureaucracy"],
+      "tags": [
+        "competence",
+        "obsolete",
+        "bureaucracy"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "serves-the-people-through-a-maintenance-window"
+      "tenseFamily": "government-ai-predicate-003"
     },
     {
-      "id": "quietly-navigated-the-peoples-policy-landscape",
+      "id": "government-ai-predicate-004-past",
       "role": "predicate",
       "text": "got lost in the settings menu",
       "singularText": "got lost in the settings menu",
       "pluralText": "got lost in the settings menu",
-      "tags": ["competence"],
+      "tags": [
+        "competence"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
+      "tenseFamily": "government-ai-predicate-004"
     },
     {
-      "id": "quietly-navigates-the-peoples-policy-landscape",
+      "id": "government-ai-predicate-004-present",
       "role": "predicate",
       "text": "gets lost in the settings menu",
       "singularText": "gets lost in the settings menu",
       "pluralText": "get lost in the settings menu",
-      "tags": ["competence"],
+      "tags": [
+        "competence"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
+      "tenseFamily": "government-ai-predicate-004"
     },
     {
-      "id": "will-quietly-navigate-the-peoples-policy-landscape",
+      "id": "government-ai-predicate-004-future",
       "role": "predicate",
       "text": "will get lost in the settings menu",
       "singularText": "will get lost in the settings menu",
       "pluralText": "will get lost in the settings menu",
-      "tags": ["competence"],
+      "tags": [
+        "competence"
+      ],
       "scorePreferences": {
         "substance": [
           {
-            "left": ["politics", "bureaucracy", "media", "personal"]
+            "left": [
+              "politics",
+              "bureaucracy",
+              "media",
+              "personal"
+            ]
           }
         ],
         "flavour": []
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "quietly-navigates-the-peoples-policy-landscape"
+      "tenseFamily": "government-ai-predicate-004"
     },
     {
-      "id": "under-the-comrades-quarterly-kpis",
+      "id": "government-ai-modifier-001",
       "role": "modifier",
       "text": "under the comrades' quota for spontaneous enthusiasm",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
       "rarity": "uncommon"
     },
     {
-      "id": "at-the-core-of-the-robust-five-year-paradigm-shift",
+      "id": "government-ai-modifier-002",
       "role": "modifier",
       "text": "at the launch of a five-year update",
-      "tags": ["obsolete", "spending", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "spending",
+        "bureaucracy"
+      ],
       "rarity": "rare"
     },
     {
-      "id": "and-in-strategic-solidarity",
+      "id": "government-ai-conjunction-001",
       "role": "conjunction",
       "text": "and, in strategic solidarity,",
       "connectorKind": "and",
-      "tags": ["obsolete", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "bureaucracy"
+      ],
       "rarity": "uncommon"
     },
     {
-      "id": "pending-the-peoples-steering-committee",
+      "id": "government-ai-ending-001",
       "role": "ending",
       "text": "and the paperless office requires three copies.",
-      "tags": ["obsolete", "bureaucracy"],
+      "tags": [
+        "obsolete",
+        "bureaucracy"
+      ],
       "rarity": "rare",
       "finisherBonus": 14
     },
     {
-      "id": "government-ai-contract-noun-1-a-paperless-office-with-three-copies",
+      "id": "government-ai-noun-008",
       "role": "noun",
       "text": "a computer that could pass for human",
       "tags": [
@@ -625,7 +828,7 @@
       "rarity": "common"
     },
     {
-      "id": "government-ai-contract-noun-2-a-strategic-uncle-in-a-server-rack",
+      "id": "government-ai-noun-009",
       "role": "noun",
       "text": "the imitation game with an answer key",
       "tags": [
@@ -642,7 +845,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "government-ai-contract-noun-3-an-obsolete-algorithm-with-a-ribbon",
+      "id": "government-ai-noun-010",
       "role": "noun",
       "text": "an obsolete algorithm with a ribbon",
       "tags": [
@@ -659,7 +862,7 @@
       "rarity": "rare"
     },
     {
-      "id": "government-ai-contract-modifier-according-to-a-machine-readable-exception",
+      "id": "government-ai-modifier-003",
       "role": "modifier",
       "text": "according to a human examiner",
       "tags": [
@@ -668,7 +871,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "government-ai-contract-ending-and-the-paperless-office-required-three-copies",
+      "id": "government-ai-ending-002",
       "role": "ending",
       "text": "and the computer fooled the human examiner.",
       "tags": [
@@ -678,7 +881,7 @@
       "finisherBonus": 2
     },
     {
-      "id": "government-ai-contract-ending-and-the-algorithm-requested-a-family-reference",
+      "id": "government-ai-ending-003",
       "role": "ending",
       "text": "and the algorithm requested a family reference.",
       "tags": [
@@ -688,7 +891,7 @@
       "finisherBonus": 2
     },
     {
-      "id": "government-ai-contract-ending-and-the-procurement-bot-found-its-cousin",
+      "id": "government-ai-ending-004",
       "role": "ending",
       "text": "and the procurement bot found its cousin.",
       "tags": [
@@ -699,7 +902,7 @@
       "finisherBonus": 2
     },
     {
-      "id": "government-ai-contract-ending-and-the-budget-became-self-aware",
+      "id": "government-ai-ending-005",
       "role": "ending",
       "text": "and the budget became self-aware.",
       "tags": [

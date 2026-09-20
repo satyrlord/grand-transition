@@ -52,7 +52,7 @@
   },
   "phrases": [
     {
-      "id": "retiring-cassandra-foundation-noun",
+      "id": "retiring-cassandra-noun-001",
       "role": "noun",
       "text": "my reform plan's retirement application",
       "tags": [
@@ -71,7 +71,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-foundation-modifier",
+      "id": "retiring-cassandra-modifier-001",
       "role": "modifier",
       "text": "while hope updates its resignation letter",
       "tags": [
@@ -82,7 +82,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "retiring-cassandra-foundation-ending",
+      "id": "retiring-cassandra-ending-001",
       "role": "ending",
       "text": "and your conscience has hired a spokesperson.",
       "tags": [
@@ -93,7 +93,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "retiring-cassandra-country-removal-van",
+      "id": "retiring-cassandra-ending-002",
       "role": "ending",
       "text": "and your patriotism arrives in a removal van.",
       "tags": [
@@ -103,7 +103,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "retiring-cassandra-unopened-warning",
+      "id": "retiring-cassandra-noun-002",
       "role": "noun",
       "text": "an unopened warning marked as already resolved",
       "tags": [
@@ -124,7 +124,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-resignation-draft",
+      "id": "retiring-cassandra-noun-003",
       "role": "noun",
       "text": "a resignation draft older than the printer",
       "tags": [
@@ -144,7 +144,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-disaster-agenda",
+      "id": "retiring-cassandra-noun-004",
       "role": "noun",
       "text": "a disaster postponed to the next item",
       "tags": [
@@ -164,7 +164,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-emergency-bookmark",
+      "id": "retiring-cassandra-noun-005",
       "role": "noun",
       "text": "a bookmark in the emergency manual",
       "tags": [
@@ -184,7 +184,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-retirement-fire-alarm",
+      "id": "retiring-cassandra-noun-006",
       "role": "noun",
       "text": "a fire alarm at its retirement party",
       "tags": [
@@ -205,7 +205,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-verb-1-past",
+      "id": "retiring-cassandra-verb-001-past",
       "role": "verb",
       "text": "attached a previous warning to",
       "singularText": "attached a previous warning to",
@@ -236,10 +236,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-verb-1"
+      "tenseFamily": "retiring-cassandra-verb-001"
     },
     {
-      "id": "retiring-cassandra-verb-1-present",
+      "id": "retiring-cassandra-verb-001-present",
       "role": "verb",
       "text": "attaches a previous warning to",
       "singularText": "attaches a previous warning to",
@@ -270,10 +270,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-verb-1"
+      "tenseFamily": "retiring-cassandra-verb-001"
     },
     {
-      "id": "retiring-cassandra-verb-1-future",
+      "id": "retiring-cassandra-verb-001-future",
       "role": "verb",
       "text": "will attach a previous warning to",
       "singularText": "will attach a previous warning to",
@@ -304,10 +304,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-verb-1"
+      "tenseFamily": "retiring-cassandra-verb-001"
     },
     {
-      "id": "retiring-cassandra-verb-2-past",
+      "id": "retiring-cassandra-verb-002-past",
       "role": "verb",
       "text": "left a forwarding address for",
       "singularText": "left a forwarding address for",
@@ -336,10 +336,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-verb-2"
+      "tenseFamily": "retiring-cassandra-verb-002"
     },
     {
-      "id": "retiring-cassandra-verb-2-present",
+      "id": "retiring-cassandra-verb-002-present",
       "role": "verb",
       "text": "leaves a forwarding address for",
       "singularText": "leaves a forwarding address for",
@@ -368,10 +368,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-verb-2"
+      "tenseFamily": "retiring-cassandra-verb-002"
     },
     {
-      "id": "retiring-cassandra-verb-2-future",
+      "id": "retiring-cassandra-verb-002-future",
       "role": "verb",
       "text": "will leave a forwarding address for",
       "singularText": "will leave a forwarding address for",
@@ -400,10 +400,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-verb-2"
+      "tenseFamily": "retiring-cassandra-verb-002"
     },
     {
-      "id": "retiring-cassandra-predicate-1-past",
+      "id": "retiring-cassandra-predicate-001-past",
       "role": "predicate",
       "text": "packed the emergency plan in a farewell hamper",
       "singularText": "packed the emergency plan in a farewell hamper",
@@ -429,10 +429,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-001"
     },
     {
-      "id": "retiring-cassandra-predicate-1-present",
+      "id": "retiring-cassandra-predicate-001-present",
       "role": "predicate",
       "text": "packs the emergency plan in a farewell hamper",
       "singularText": "packs the emergency plan in a farewell hamper",
@@ -458,10 +458,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-001"
     },
     {
-      "id": "retiring-cassandra-predicate-1-future",
+      "id": "retiring-cassandra-predicate-001-future",
       "role": "predicate",
       "text": "will pack the emergency plan in a farewell hamper",
       "singularText": "will pack the emergency plan in a farewell hamper",
@@ -487,10 +487,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-001"
     },
     {
-      "id": "retiring-cassandra-review-modifier",
+      "id": "retiring-cassandra-modifier-002",
       "role": "modifier",
       "text": "after the third rehearsal of the disaster",
       "tags": [
@@ -500,7 +500,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "retiring-cassandra-contrast",
+      "id": "retiring-cassandra-conjunction-001",
       "role": "conjunction",
       "text": "yet, as previously noted,",
       "connectorKind": "yet",
@@ -508,7 +508,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "retiring-cassandra-contract-noun-1-a-forecast-with-a-practical-handle",
+      "id": "retiring-cassandra-noun-007",
       "role": "noun",
       "text": "one final question after the warning",
       "tags": [
@@ -525,7 +525,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-contract-noun-2-a-hopeful-spreadsheet",
+      "id": "retiring-cassandra-noun-008",
       "role": "noun",
       "text": "a warning with a retirement date",
       "tags": [
@@ -542,7 +542,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "retiring-cassandra-contract-noun-3-a-result-waiting-in-the-corridor",
+      "id": "retiring-cassandra-noun-009",
       "role": "noun",
       "text": "a country you refuse to steal",
       "tags": [
@@ -559,7 +559,7 @@
       "rarity": "rare"
     },
     {
-      "id": "retiring-cassandra-contract-noun-4-a-competence-badge-with-a-cracked-pin",
+      "id": "retiring-cassandra-noun-010",
       "role": "noun",
       "text": "an answer waiting at the exit",
       "tags": [
@@ -576,7 +576,7 @@
       "rarity": "common"
     },
     {
-      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-past",
+      "id": "retiring-cassandra-verb-003-past",
       "role": "verb",
       "text": "delivered the final question to",
       "tags": [
@@ -595,10 +595,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+      "tenseFamily": "retiring-cassandra-verb-003"
     },
     {
-      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-present",
+      "id": "retiring-cassandra-verb-003-present",
       "role": "verb",
       "text": "delivers the final question to",
       "singularText": "delivers the final question to",
@@ -621,10 +621,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+      "tenseFamily": "retiring-cassandra-verb-003"
     },
     {
-      "id": "retiring-cassandra-contract-verb-delivers-the-result-late-future",
+      "id": "retiring-cassandra-verb-003-future",
       "role": "verb",
       "text": "will deliver the final question to",
       "tags": [
@@ -643,10 +643,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-contract-verb-delivers-the-result-late"
+      "tenseFamily": "retiring-cassandra-verb-003"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-1-past",
+      "id": "retiring-cassandra-predicate-002-past",
       "role": "predicate",
       "text": "was a final question awaiting competence",
       "tags": [
@@ -665,10 +665,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-002"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-1-present",
+      "id": "retiring-cassandra-predicate-002-present",
       "role": "predicate",
       "text": "is a final question awaiting competence",
       "singularText": "is a final question awaiting competence",
@@ -691,10 +691,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-002"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-1-future",
+      "id": "retiring-cassandra-predicate-002-future",
       "role": "predicate",
       "text": "will be a final question awaiting competence",
       "tags": [
@@ -713,10 +713,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-1"
+      "tenseFamily": "retiring-cassandra-predicate-002"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-2-past",
+      "id": "retiring-cassandra-predicate-003-past",
       "role": "predicate",
       "text": "was a result wearing a sensible coat",
       "tags": [
@@ -735,10 +735,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+      "tenseFamily": "retiring-cassandra-predicate-003"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-2-present",
+      "id": "retiring-cassandra-predicate-003-present",
       "role": "predicate",
       "text": "is a result wearing a sensible coat",
       "singularText": "is a result wearing a sensible coat",
@@ -761,10 +761,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+      "tenseFamily": "retiring-cassandra-predicate-003"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-2-future",
+      "id": "retiring-cassandra-predicate-003-future",
       "role": "predicate",
       "text": "will be a result wearing a sensible coat",
       "tags": [
@@ -783,10 +783,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-2"
+      "tenseFamily": "retiring-cassandra-predicate-003"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-3-past",
+      "id": "retiring-cassandra-predicate-004-past",
       "role": "predicate",
       "text": "was a hopeful delay with paperwork",
       "tags": [
@@ -805,10 +805,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+      "tenseFamily": "retiring-cassandra-predicate-004"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-3-present",
+      "id": "retiring-cassandra-predicate-004-present",
       "role": "predicate",
       "text": "is a hopeful delay with paperwork",
       "singularText": "is a hopeful delay with paperwork",
@@ -831,10 +831,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+      "tenseFamily": "retiring-cassandra-predicate-004"
     },
     {
-      "id": "retiring-cassandra-contract-predicate-predicate-3-future",
+      "id": "retiring-cassandra-predicate-004-future",
       "role": "predicate",
       "text": "will be a hopeful delay with paperwork",
       "tags": [
@@ -853,10 +853,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-contract-predicate-predicate-3"
+      "tenseFamily": "retiring-cassandra-predicate-004"
     },
     {
-      "id": "retiring-cassandra-contract-modifier-after-a-practical-prophecy",
+      "id": "retiring-cassandra-modifier-003",
       "role": "modifier",
       "text": "after-a-practical-prophecy",
       "tags": [
@@ -865,7 +865,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "retiring-cassandra-contract-ending-and-the-result-finally-found-the-door",
+      "id": "retiring-cassandra-ending-003",
       "role": "ending",
       "text": "and the result finally found the door.",
       "tags": [
@@ -875,7 +875,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "retiring-cassandra-contract-ending-and-competence-brought-a-checklist",
+      "id": "retiring-cassandra-ending-004",
       "role": "ending",
       "text": "and competence brought a checklist.",
       "tags": [
@@ -885,7 +885,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "retiring-cassandra-contract-ending-and-hope-arrived-before-the-ribbon",
+      "id": "retiring-cassandra-ending-005",
       "role": "ending",
       "text": "and hope arrived before the ribbon.",
       "tags": [

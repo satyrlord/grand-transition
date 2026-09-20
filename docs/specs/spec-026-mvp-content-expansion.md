@@ -203,7 +203,7 @@ owning character path. Synthetic discovery characters must meet the same
   complete-catalog minimum. The complete current catalog must pass this
   contract. Valid additions that meet these minima must also pass.
 
-The approved Thunder Tribune modifier is `with-cemetery-turnout`, rendered as
+The approved Thunder Tribune modifier is `thunder-tribune-modifier-001`, rendered as
 `with 110% turnout at the cemetery`. It belongs only to that character and
 satisfies the foundation modifier minimum. Its card pool retains all prior
 phrases and IDs. Verify the complete approved sentence in

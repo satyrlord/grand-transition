@@ -48,10 +48,13 @@
   },
   "phrases": [
     {
-      "id": "spreadsheet-technocrat-foundation-noun",
+      "id": "spreadsheet-technocrat-noun-001",
       "role": "noun",
       "text": "my per-person budget of one audited breadcrumb",
-      "tags": ["accountability", "human-scale"],
+      "tags": [
+        "accountability",
+        "human-scale"
+      ],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -63,30 +66,39 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-foundation-modifier",
+      "id": "spreadsheet-technocrat-modifier-001",
       "role": "modifier",
       "text": "after delivering the budget to the rats",
-      "tags": ["delivery", "accountability"],
+      "tags": [
+        "delivery",
+        "accountability"
+      ],
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-foundation-ending",
+      "id": "spreadsheet-technocrat-ending-001",
       "role": "ending",
       "text": "and pantry mice get allowances; voters get crumbs.",
-      "tags": ["delivery", "accountability", "human-scale"],
+      "tags": [
+        "delivery",
+        "accountability",
+        "human-scale"
+      ],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
-      "id": "spreadsheet-technocrat-breakage-invoice",
+      "id": "spreadsheet-technocrat-ending-002",
       "role": "ending",
       "text": "and the budget billed the broom for damages.",
-      "tags": ["accountability"],
+      "tags": [
+        "accountability"
+      ],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
-      "id": "spreadsheet-technocrat-green-cell-hospital",
+      "id": "spreadsheet-technocrat-noun-002",
       "role": "noun",
       "text": "a hospital built on paper",
       "tags": [
@@ -104,7 +116,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-average-citizen",
+      "id": "spreadsheet-technocrat-noun-003",
       "role": "noun",
       "text": "an average citizen rounded down to zero",
       "tags": [
@@ -123,7 +135,7 @@
       "referentKind": "personal"
     },
     {
-      "id": "spreadsheet-technocrat-accountability-tab",
+      "id": "spreadsheet-technocrat-noun-004",
       "role": "noun",
       "text": "a responsibility tab permanently hidden from view",
       "tags": [
@@ -141,7 +153,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-progress-bar-ruler",
+      "id": "spreadsheet-technocrat-noun-005",
       "role": "noun",
       "text": "a ruler for measuring unfinished progress bars",
       "tags": [
@@ -159,7 +171,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-queue-statistic",
+      "id": "spreadsheet-technocrat-noun-006",
       "role": "noun",
       "text": "a waiting-room queue filed as spare capacity",
       "tags": [
@@ -177,7 +189,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-rounded-out-of-budget-past",
+      "id": "spreadsheet-technocrat-verb-001-past",
       "role": "verb",
       "text": "rounded each citizen's budget down to",
       "tags": [
@@ -188,7 +200,7 @@
       "personalSingularText": "rounded each citizen's budget down to",
       "secondPersonText": "rounded each citizen's budget down to",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "tenseFamily": "spreadsheet-technocrat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -211,7 +223,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-rounded-out-of-budget-present",
+      "id": "spreadsheet-technocrat-verb-001-present",
       "role": "verb",
       "text": "rounds each citizen's budget down to",
       "tags": [
@@ -222,7 +234,7 @@
       "personalSingularText": "rounds each citizen's budget down to",
       "secondPersonText": "round each citizen's budget down to",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "tenseFamily": "spreadsheet-technocrat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -245,7 +257,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-rounded-out-of-budget-future",
+      "id": "spreadsheet-technocrat-verb-001-future",
       "role": "verb",
       "text": "will round each citizen's budget down to",
       "tags": [
@@ -256,7 +268,7 @@
       "personalSingularText": "will round each citizen's budget down to",
       "secondPersonText": "will round each citizen's budget down to",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-rounded-out-of-budget",
+      "tenseFamily": "spreadsheet-technocrat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -279,7 +291,7 @@
       "rarity": "rare"
     },
     {
-      "id": "spreadsheet-technocrat-buried-in-appendix-past",
+      "id": "spreadsheet-technocrat-verb-002-past",
       "role": "verb",
       "text": "buried the delivery date for",
       "tags": [
@@ -290,7 +302,7 @@
       "personalSingularText": "buried the delivery date for",
       "secondPersonText": "buried the delivery date for",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "tenseFamily": "spreadsheet-technocrat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -313,7 +325,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-buried-in-appendix-present",
+      "id": "spreadsheet-technocrat-verb-002-present",
       "role": "verb",
       "text": "buries the delivery date for",
       "tags": [
@@ -324,7 +336,7 @@
       "personalSingularText": "buries the delivery date for",
       "secondPersonText": "bury the delivery date for",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "tenseFamily": "spreadsheet-technocrat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -347,7 +359,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-buried-in-appendix-future",
+      "id": "spreadsheet-technocrat-verb-002-future",
       "role": "verb",
       "text": "will bury the delivery date for",
       "tags": [
@@ -358,7 +370,7 @@
       "personalSingularText": "will bury the delivery date for",
       "secondPersonText": "will bury the delivery date for",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-buried-in-appendix",
+      "tenseFamily": "spreadsheet-technocrat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -381,7 +393,7 @@
       "rarity": "rare"
     },
     {
-      "id": "spreadsheet-technocrat-delivered-on-slide-past",
+      "id": "spreadsheet-technocrat-predicate-001-past",
       "role": "predicate",
       "text": "was delivered on a slide, nowhere else",
       "tags": [
@@ -392,7 +404,7 @@
       "personalSingularText": "was delivered on a slide and nowhere else",
       "secondPersonText": "were delivered on a slide and nowhere else",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -409,7 +421,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-delivered-on-slide-present",
+      "id": "spreadsheet-technocrat-predicate-001-present",
       "role": "predicate",
       "text": "is delivered on a slide, nowhere else",
       "tags": [
@@ -420,7 +432,7 @@
       "personalSingularText": "is delivered on a slide and nowhere else",
       "secondPersonText": "are delivered on a slide and nowhere else",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -437,7 +449,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-delivered-on-slide-future",
+      "id": "spreadsheet-technocrat-predicate-001-future",
       "role": "predicate",
       "text": "will be delivered on a slide, nowhere else",
       "tags": [
@@ -448,7 +460,7 @@
       "personalSingularText": "will be delivered on a slide and nowhere else",
       "secondPersonText": "will be delivered on a slide and nowhere else",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-delivered-on-slide",
+      "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -465,7 +477,7 @@
       "rarity": "rare"
     },
     {
-      "id": "spreadsheet-technocrat-excluding-actual-people",
+      "id": "spreadsheet-technocrat-modifier-002",
       "role": "modifier",
       "text": "after excluding actual people from the sample",
       "tags": [
@@ -474,7 +486,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-neutral-contrast",
+      "id": "spreadsheet-technocrat-conjunction-001",
       "role": "conjunction",
       "text": "but, in either case,",
       "tags": [],
@@ -482,7 +494,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-contract-noun-1-a-dashboard-with-a-human-scale-button",
+      "id": "spreadsheet-technocrat-noun-007",
       "role": "noun",
       "text": "rats gnawing at the supplies",
       "grammaticalNumber": "plural",
@@ -500,7 +512,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-contract-noun-2-a-delivery-chart-with-a-missing-truck",
+      "id": "spreadsheet-technocrat-noun-008",
       "role": "noun",
       "text": "the person gathering the broken pieces",
       "tags": [
@@ -517,7 +529,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-contract-noun-3-a-spreadsheet-of-accountable-relatives",
+      "id": "spreadsheet-technocrat-noun-009",
       "role": "noun",
       "text": "a budget with a broom invoice",
       "tags": [
@@ -534,7 +546,7 @@
       "rarity": "rare"
     },
     {
-      "id": "spreadsheet-technocrat-contract-noun-4-a-metric-with-a-coffee-stain",
+      "id": "spreadsheet-technocrat-noun-010",
       "role": "noun",
       "text": "a crumb under audit",
       "tags": [
@@ -551,7 +563,7 @@
       "rarity": "common"
     },
     {
-      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-past",
+      "id": "spreadsheet-technocrat-verb-003-past",
       "role": "verb",
       "text": "billed the broom for",
       "tags": [
@@ -570,10 +582,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+      "tenseFamily": "spreadsheet-technocrat-verb-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-present",
+      "id": "spreadsheet-technocrat-verb-003-present",
       "role": "verb",
       "text": "bills the broom for",
       "singularText": "bills the broom for",
@@ -596,10 +608,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+      "tenseFamily": "spreadsheet-technocrat-verb-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard-future",
+      "id": "spreadsheet-technocrat-verb-003-future",
       "role": "verb",
       "text": "will bill the broom for",
       "tags": [
@@ -618,10 +630,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-contract-verb-measures-delivery-by-dashboard"
+      "tenseFamily": "spreadsheet-technocrat-verb-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-past",
+      "id": "spreadsheet-technocrat-predicate-002-past",
       "role": "predicate",
       "text": "was a pantry of gnawed provisions",
       "tags": [
@@ -640,10 +652,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+      "tenseFamily": "spreadsheet-technocrat-predicate-002"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-present",
+      "id": "spreadsheet-technocrat-predicate-002-present",
       "role": "predicate",
       "text": "is a pantry of gnawed provisions",
       "singularText": "is a pantry of gnawed provisions",
@@ -666,10 +678,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+      "tenseFamily": "spreadsheet-technocrat-predicate-002"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-1-future",
+      "id": "spreadsheet-technocrat-predicate-002-future",
       "role": "predicate",
       "text": "will be a pantry of gnawed provisions",
       "tags": [
@@ -688,10 +700,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-1"
+      "tenseFamily": "spreadsheet-technocrat-predicate-002"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-past",
+      "id": "spreadsheet-technocrat-predicate-003-past",
       "role": "predicate",
       "text": "was a deadline with a dashboard",
       "tags": [
@@ -710,10 +722,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+      "tenseFamily": "spreadsheet-technocrat-predicate-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-present",
+      "id": "spreadsheet-technocrat-predicate-003-present",
       "role": "predicate",
       "text": "is a deadline with a dashboard",
       "singularText": "is a deadline with a dashboard",
@@ -736,10 +748,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+      "tenseFamily": "spreadsheet-technocrat-predicate-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-2-future",
+      "id": "spreadsheet-technocrat-predicate-003-future",
       "role": "predicate",
       "text": "will be a deadline with a dashboard",
       "tags": [
@@ -758,10 +770,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-2"
+      "tenseFamily": "spreadsheet-technocrat-predicate-003"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-past",
+      "id": "spreadsheet-technocrat-predicate-004-past",
       "role": "predicate",
       "text": "was a delivery promise in a spreadsheet",
       "tags": [
@@ -780,10 +792,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+      "tenseFamily": "spreadsheet-technocrat-predicate-004"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-present",
+      "id": "spreadsheet-technocrat-predicate-004-present",
       "role": "predicate",
       "text": "is a delivery promise in a spreadsheet",
       "singularText": "is a delivery promise in a spreadsheet",
@@ -806,10 +818,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+      "tenseFamily": "spreadsheet-technocrat-predicate-004"
     },
     {
-      "id": "spreadsheet-technocrat-contract-predicate-predicate-3-future",
+      "id": "spreadsheet-technocrat-predicate-004-future",
       "role": "predicate",
       "text": "will be a delivery promise in a spreadsheet",
       "tags": [
@@ -828,10 +840,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-contract-predicate-predicate-3"
+      "tenseFamily": "spreadsheet-technocrat-predicate-004"
     },
     {
-      "id": "spreadsheet-technocrat-contract-modifier-according-to-a-human-scale-metric",
+      "id": "spreadsheet-technocrat-modifier-003",
       "role": "modifier",
       "text": "according-to-a-human-scale-metric",
       "tags": [
@@ -840,7 +852,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "spreadsheet-technocrat-contract-ending-and-the-dashboard-requested-a-delivery-date",
+      "id": "spreadsheet-technocrat-ending-003",
       "role": "ending",
       "text": "and the dashboard requested a delivery date.",
       "tags": [
@@ -850,7 +862,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "spreadsheet-technocrat-contract-ending-and-accountability-opened-another-column",
+      "id": "spreadsheet-technocrat-ending-004",
       "role": "ending",
       "text": "and accountability opened another column.",
       "tags": [
@@ -860,7 +872,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "spreadsheet-technocrat-contract-ending-and-the-metric-became-a-person",
+      "id": "spreadsheet-technocrat-ending-005",
       "role": "ending",
       "text": "and the metric became a person.",
       "tags": [

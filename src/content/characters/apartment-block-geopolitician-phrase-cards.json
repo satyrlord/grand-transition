@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "apartment-block-geopolitician-foundation-noun",
+      "id": "apartment-block-geopolitician-noun-001",
       "role": "noun",
       "text": "my foreign-policy briefing from the popcorn bag",
       "tags": [
@@ -66,7 +66,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-foundation-modifier",
+      "id": "apartment-block-geopolitician-modifier-001",
       "role": "modifier",
       "text": "according to an expired snack",
       "tags": [
@@ -76,7 +76,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-foundation-ending",
+      "id": "apartment-block-geopolitician-ending-001",
       "role": "ending",
       "text": "and the crisis fits on my popcorn packet.",
       "tags": [
@@ -87,7 +87,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "apartment-block-geopolitician-exit-poll-before-popcorn",
+      "id": "apartment-block-geopolitician-ending-002",
       "role": "ending",
       "text": "and the exit poll beat the microwave.",
       "tags": [],
@@ -95,7 +95,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "apartment-block-geopolitician-stairwell-security-council",
+      "id": "apartment-block-geopolitician-noun-002",
       "role": "noun",
       "text": "a stairwell security council of one chair",
       "tags": [
@@ -113,7 +113,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-fridge-border-map",
+      "id": "apartment-block-geopolitician-noun-003",
       "role": "noun",
       "text": "a disputed border drawn between fridge magnets",
       "tags": [
@@ -131,7 +131,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-balcony-listening-post",
+      "id": "apartment-block-geopolitician-noun-004",
       "role": "noun",
       "text": "my balcony listening post",
       "tags": [
@@ -149,7 +149,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-anonymous-lift-source",
+      "id": "apartment-block-geopolitician-noun-005",
       "role": "noun",
       "text": "an anonymous source from the lift notice",
       "tags": [
@@ -167,7 +167,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-radiator-arms-race",
+      "id": "apartment-block-geopolitician-noun-006",
       "role": "noun",
       "text": "an arms race between two leaking radiators",
       "tags": [
@@ -185,7 +185,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-past",
+      "id": "apartment-block-geopolitician-verb-001-past",
       "role": "verb",
       "text": "mapped fridge magnets around",
       "tags": [
@@ -196,7 +196,7 @@
       "personalSingularText": "mapped fridge magnets around",
       "secondPersonText": "mapped fridge magnets around",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "tenseFamily": "apartment-block-geopolitician-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -219,7 +219,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-present",
+      "id": "apartment-block-geopolitician-verb-001-present",
       "role": "verb",
       "text": "maps fridge magnets around",
       "tags": [
@@ -230,7 +230,7 @@
       "personalSingularText": "maps fridge magnets around",
       "secondPersonText": "map fridge magnets around",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "tenseFamily": "apartment-block-geopolitician-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -253,7 +253,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-mapped-with-fridge-magnets-future",
+      "id": "apartment-block-geopolitician-verb-001-future",
       "role": "verb",
       "text": "will map fridge magnets around",
       "tags": [
@@ -264,7 +264,7 @@
       "personalSingularText": "will map fridge magnets around",
       "secondPersonText": "will map fridge magnets around",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-mapped-with-fridge-magnets",
+      "tenseFamily": "apartment-block-geopolitician-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -287,7 +287,7 @@
       "rarity": "rare"
     },
     {
-      "id": "apartment-block-geopolitician-verified-through-wall-past",
+      "id": "apartment-block-geopolitician-verb-002-past",
       "role": "verb",
       "text": "verified kitchen-wall gossip about",
       "tags": [
@@ -298,7 +298,7 @@
       "personalSingularText": "verified kitchen-wall gossip about",
       "secondPersonText": "verified kitchen-wall gossip about",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "tenseFamily": "apartment-block-geopolitician-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -321,7 +321,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-verified-through-wall-present",
+      "id": "apartment-block-geopolitician-verb-002-present",
       "role": "verb",
       "text": "verifies kitchen-wall gossip about",
       "tags": [
@@ -332,7 +332,7 @@
       "personalSingularText": "verifies kitchen-wall gossip about",
       "secondPersonText": "verify kitchen-wall gossip about",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "tenseFamily": "apartment-block-geopolitician-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -355,7 +355,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-verified-through-wall-future",
+      "id": "apartment-block-geopolitician-verb-002-future",
       "role": "verb",
       "text": "will verify kitchen-wall gossip about",
       "tags": [
@@ -366,7 +366,7 @@
       "personalSingularText": "will verify kitchen-wall gossip about",
       "secondPersonText": "will verify kitchen-wall gossip about",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-verified-through-wall",
+      "tenseFamily": "apartment-block-geopolitician-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -389,7 +389,7 @@
       "rarity": "rare"
     },
     {
-      "id": "apartment-block-geopolitician-classified-until-bell-past",
+      "id": "apartment-block-geopolitician-predicate-001-past",
       "role": "predicate",
       "text": "was classified until the doorbell rang",
       "tags": [
@@ -400,7 +400,7 @@
       "personalSingularText": "was classified until the doorbell rang",
       "secondPersonText": "were classified until the doorbell rang",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -417,7 +417,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-classified-until-bell-present",
+      "id": "apartment-block-geopolitician-predicate-001-present",
       "role": "predicate",
       "text": "is classified until the doorbell rings",
       "tags": [
@@ -428,7 +428,7 @@
       "personalSingularText": "is classified until the doorbell rings",
       "secondPersonText": "are classified until the doorbell rings",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -445,7 +445,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-classified-until-bell-future",
+      "id": "apartment-block-geopolitician-predicate-001-future",
       "role": "predicate",
       "text": "will be classified until the doorbell rings",
       "tags": [
@@ -456,7 +456,7 @@
       "personalSingularText": "will be classified until the doorbell rings",
       "secondPersonText": "will be classified until the doorbell rings",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-classified-until-bell",
+      "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -473,7 +473,7 @@
       "rarity": "rare"
     },
     {
-      "id": "apartment-block-geopolitician-washing-line-evidence",
+      "id": "apartment-block-geopolitician-modifier-002",
       "role": "modifier",
       "text": "with a washing line as satellite evidence",
       "tags": [
@@ -482,7 +482,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-neutral-contrast",
+      "id": "apartment-block-geopolitician-conjunction-001",
       "role": "conjunction",
       "text": "but, after all,",
       "tags": [],
@@ -490,7 +490,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-contract-noun-1-a-balcony-source",
+      "id": "apartment-block-geopolitician-noun-007",
       "role": "noun",
       "text": "popcorn and a soft drink",
       "grammaticalNumber": "plural",
@@ -508,7 +508,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-contract-noun-2-a-lift-notice-with-geopolitical-consequences",
+      "id": "apartment-block-geopolitician-noun-008",
       "role": "noun",
       "text": "a bad joke with a balcony view",
       "tags": [
@@ -525,7 +525,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-contract-noun-3-a-stairwell-border",
+      "id": "apartment-block-geopolitician-noun-009",
       "role": "noun",
       "text": "a 40-percent starting advantage",
       "tags": [
@@ -542,7 +542,7 @@
       "rarity": "rare"
     },
     {
-      "id": "apartment-block-geopolitician-contract-noun-4-a-map-folded-around-a-snack",
+      "id": "apartment-block-geopolitician-noun-010",
       "role": "noun",
       "text": "a foreign-policy debate from the stairwell",
       "tags": [
@@ -559,7 +559,7 @@
       "rarity": "common"
     },
     {
-      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-past",
+      "id": "apartment-block-geopolitician-verb-003-past",
       "role": "verb",
       "text": "watched the debate with",
       "tags": [
@@ -578,10 +578,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+      "tenseFamily": "apartment-block-geopolitician-verb-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-present",
+      "id": "apartment-block-geopolitician-verb-003-present",
       "role": "verb",
       "text": "watches the debate with",
       "singularText": "watches the debate with",
@@ -604,10 +604,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+      "tenseFamily": "apartment-block-geopolitician-verb-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-future",
+      "id": "apartment-block-geopolitician-verb-003-future",
       "role": "verb",
       "text": "will watch the debate with",
       "tags": [
@@ -626,10 +626,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor"
+      "tenseFamily": "apartment-block-geopolitician-verb-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-past",
+      "id": "apartment-block-geopolitician-predicate-002-past",
       "role": "predicate",
       "text": "was a bad joke with a regret attached",
       "tags": [
@@ -648,10 +648,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+      "tenseFamily": "apartment-block-geopolitician-predicate-002"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-present",
+      "id": "apartment-block-geopolitician-predicate-002-present",
       "role": "predicate",
       "text": "is a bad joke with a regret attached",
       "singularText": "is a bad joke with a regret attached",
@@ -674,10 +674,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+      "tenseFamily": "apartment-block-geopolitician-predicate-002"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-1-future",
+      "id": "apartment-block-geopolitician-predicate-002-future",
       "role": "predicate",
       "text": "will be a bad joke with a regret attached",
       "tags": [
@@ -696,10 +696,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-1"
+      "tenseFamily": "apartment-block-geopolitician-predicate-002"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-past",
+      "id": "apartment-block-geopolitician-predicate-003-past",
       "role": "predicate",
       "text": "was an international incident in the laundry room",
       "tags": [
@@ -718,10 +718,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+      "tenseFamily": "apartment-block-geopolitician-predicate-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-present",
+      "id": "apartment-block-geopolitician-predicate-003-present",
       "role": "predicate",
       "text": "is an international incident in the laundry room",
       "singularText": "is an international incident in the laundry room",
@@ -744,10 +744,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+      "tenseFamily": "apartment-block-geopolitician-predicate-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-2-future",
+      "id": "apartment-block-geopolitician-predicate-003-future",
       "role": "predicate",
       "text": "will be an international incident in the laundry room",
       "tags": [
@@ -766,10 +766,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-2"
+      "tenseFamily": "apartment-block-geopolitician-predicate-003"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-past",
+      "id": "apartment-block-geopolitician-predicate-004-past",
       "role": "predicate",
       "text": "was a source with a lift key",
       "tags": [
@@ -788,10 +788,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+      "tenseFamily": "apartment-block-geopolitician-predicate-004"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-present",
+      "id": "apartment-block-geopolitician-predicate-004-present",
       "role": "predicate",
       "text": "is a source with a lift key",
       "singularText": "is a source with a lift key",
@@ -814,10 +814,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+      "tenseFamily": "apartment-block-geopolitician-predicate-004"
     },
     {
-      "id": "apartment-block-geopolitician-contract-predicate-predicate-3-future",
+      "id": "apartment-block-geopolitician-predicate-004-future",
       "role": "predicate",
       "text": "will be a source with a lift key",
       "tags": [
@@ -836,10 +836,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-contract-predicate-predicate-3"
+      "tenseFamily": "apartment-block-geopolitician-predicate-004"
     },
     {
-      "id": "apartment-block-geopolitician-contract-modifier-according-to-a-balcony-referendum",
+      "id": "apartment-block-geopolitician-modifier-003",
       "role": "modifier",
       "text": "according-to-a-balcony-referendum",
       "tags": [
@@ -848,7 +848,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "apartment-block-geopolitician-contract-ending-and-the-lift-reached-a-diplomatic-compromise",
+      "id": "apartment-block-geopolitician-ending-003",
       "role": "ending",
       "text": "and the lift reached a diplomatic compromise.",
       "tags": [
@@ -859,7 +859,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "apartment-block-geopolitician-contract-ending-and-the-balcony-source-requested-anonymity",
+      "id": "apartment-block-geopolitician-ending-004",
       "role": "ending",
       "text": "and the balcony source requested anonymity.",
       "tags": [
@@ -870,7 +870,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "apartment-block-geopolitician-contract-ending-and-the-map-folded-itself",
+      "id": "apartment-block-geopolitician-ending-005",
       "role": "ending",
       "text": "and the map folded itself.",
       "tags": [

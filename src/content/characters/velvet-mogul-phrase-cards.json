@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "velvet-mogul-foundation-noun",
+      "id": "velvet-mogul-noun-001",
       "role": "noun",
       "text": "my offshore collection of very patriotic ideas",
       "tags": [
@@ -67,7 +67,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-foundation-modifier",
+      "id": "velvet-mogul-modifier-001",
       "role": "modifier",
       "text": "to an economy booming inside my wallet",
       "tags": [
@@ -78,7 +78,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "velvet-mogul-foundation-ending",
+      "id": "velvet-mogul-ending-001",
       "role": "ending",
       "text": "and my loose change has a holding company.",
       "tags": [
@@ -90,7 +90,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "mogul-count-the-assets",
+      "id": "velvet-mogul-ending-002",
       "role": "ending",
       "text": "and you count silverware; I buy the room.",
       "tags": [
@@ -101,7 +101,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "mogul-measure-the-silence",
+      "id": "velvet-mogul-ending-003",
       "role": "ending",
       "text": "and I measure words, then buy the microphone.",
       "tags": [
@@ -112,7 +112,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "velvet-mogul-editorial-share-certificate",
+      "id": "velvet-mogul-noun-002",
       "role": "noun",
       "text": "an editorial opinion with a share certificate",
       "tags": [
@@ -132,7 +132,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-velvet-veto-button",
+      "id": "velvet-mogul-noun-003",
       "role": "noun",
       "text": "a veto button under the desk",
       "tags": [
@@ -152,7 +152,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-rented-independence",
+      "id": "velvet-mogul-noun-004",
       "role": "noun",
       "text": "independence on a monthly lease",
       "tags": [
@@ -173,7 +173,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-offshore-applause",
+      "id": "velvet-mogul-noun-005",
       "role": "noun",
       "text": "an offshore account for public applause",
       "tags": [
@@ -193,7 +193,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-sponsored-conscience",
+      "id": "velvet-mogul-noun-006",
       "role": "noun",
       "text": "a conscience sponsored sentence by sentence",
       "tags": [
@@ -214,7 +214,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-verb-1-past",
+      "id": "velvet-mogul-verb-001-past",
       "role": "verb",
       "text": "bought the naming rights to",
       "singularText": "bought the naming rights to",
@@ -245,10 +245,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-verb-1"
+      "tenseFamily": "velvet-mogul-verb-001"
     },
     {
-      "id": "velvet-mogul-verb-1-present",
+      "id": "velvet-mogul-verb-001-present",
       "role": "verb",
       "text": "buys the naming rights to",
       "singularText": "buys the naming rights to",
@@ -279,10 +279,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-verb-1"
+      "tenseFamily": "velvet-mogul-verb-001"
     },
     {
-      "id": "velvet-mogul-verb-1-future",
+      "id": "velvet-mogul-verb-001-future",
       "role": "verb",
       "text": "will buy the naming rights to",
       "singularText": "will buy the naming rights to",
@@ -313,10 +313,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-verb-1"
+      "tenseFamily": "velvet-mogul-verb-001"
     },
     {
-      "id": "velvet-mogul-verb-2-past",
+      "id": "velvet-mogul-verb-002-past",
       "role": "verb",
       "text": "offered a controlling stake in",
       "singularText": "offered a controlling stake in",
@@ -347,10 +347,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-verb-2"
+      "tenseFamily": "velvet-mogul-verb-002"
     },
     {
-      "id": "velvet-mogul-verb-2-present",
+      "id": "velvet-mogul-verb-002-present",
       "role": "verb",
       "text": "offers a controlling stake in",
       "singularText": "offers a controlling stake in",
@@ -381,10 +381,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-verb-2"
+      "tenseFamily": "velvet-mogul-verb-002"
     },
     {
-      "id": "velvet-mogul-verb-2-future",
+      "id": "velvet-mogul-verb-002-future",
       "role": "verb",
       "text": "will offer a controlling stake in",
       "singularText": "will offer a controlling stake in",
@@ -415,10 +415,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-verb-2"
+      "tenseFamily": "velvet-mogul-verb-002"
     },
     {
-      "id": "velvet-mogul-predicate-1-past",
+      "id": "velvet-mogul-predicate-001-past",
       "role": "predicate",
       "text": "charged rent for the moral high ground",
       "singularText": "charged rent for the moral high ground",
@@ -444,10 +444,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-001"
     },
     {
-      "id": "velvet-mogul-predicate-1-present",
+      "id": "velvet-mogul-predicate-001-present",
       "role": "predicate",
       "text": "charges rent for the moral high ground",
       "singularText": "charges rent for the moral high ground",
@@ -473,10 +473,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-001"
     },
     {
-      "id": "velvet-mogul-predicate-1-future",
+      "id": "velvet-mogul-predicate-001-future",
       "role": "predicate",
       "text": "will charge rent for the moral high ground",
       "singularText": "will charge rent for the moral high ground",
@@ -502,10 +502,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-001"
     },
     {
-      "id": "velvet-mogul-review-modifier",
+      "id": "velvet-mogul-modifier-002",
       "role": "modifier",
       "text": "with the watchdog listed as a subsidiary",
       "tags": [
@@ -514,7 +514,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "velvet-mogul-contrast",
+      "id": "velvet-mogul-conjunction-001",
       "role": "conjunction",
       "text": "but, under new management,",
       "connectorKind": "but",
@@ -522,7 +522,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "velvet-mogul-contract-noun-1-a-velvet-contract-with-a-hidden-fee",
+      "id": "velvet-mogul-noun-007",
       "role": "noun",
       "text": "wealth that lives in the head",
       "tags": [
@@ -539,7 +539,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-contract-noun-2-a-wealth-report-in-a-silk-folder",
+      "id": "velvet-mogul-noun-008",
       "role": "noun",
       "text": "cash that refuses to go out of fashion",
       "tags": [
@@ -556,7 +556,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "velvet-mogul-contract-noun-3-an-influence-map-with-a-valet-route",
+      "id": "velvet-mogul-noun-009",
       "role": "noun",
       "text": "a fortune in a velvet folder",
       "tags": [
@@ -573,7 +573,7 @@
       "rarity": "rare"
     },
     {
-      "id": "velvet-mogul-contract-noun-4-a-credibility-badge-made-of-marble",
+      "id": "velvet-mogul-noun-010",
       "role": "noun",
       "text": "an idea richer than money",
       "tags": [
@@ -590,7 +590,7 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-past",
+      "id": "velvet-mogul-verb-003-past",
       "role": "verb",
       "text": "measured wealth by",
       "tags": [
@@ -609,10 +609,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+      "tenseFamily": "velvet-mogul-verb-003"
     },
     {
-      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-present",
+      "id": "velvet-mogul-verb-003-present",
       "role": "verb",
       "text": "measures wealth by",
       "singularText": "measures wealth by",
@@ -635,10 +635,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+      "tenseFamily": "velvet-mogul-verb-003"
     },
     {
-      "id": "velvet-mogul-contract-verb-buys-influence-before-breakfast-future",
+      "id": "velvet-mogul-verb-003-future",
       "role": "verb",
       "text": "will measure wealth by",
       "tags": [
@@ -657,10 +657,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-contract-verb-buys-influence-before-breakfast"
+      "tenseFamily": "velvet-mogul-verb-003"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-1-past",
+      "id": "velvet-mogul-predicate-002-past",
       "role": "predicate",
       "text": "was wealth in the head, not money",
       "tags": [
@@ -679,10 +679,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-002"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-1-present",
+      "id": "velvet-mogul-predicate-002-present",
       "role": "predicate",
       "text": "is wealth in the head, not money",
       "singularText": "is wealth in the head, not money",
@@ -705,10 +705,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-002"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-1-future",
+      "id": "velvet-mogul-predicate-002-future",
       "role": "predicate",
       "text": "will be wealth in the head, not money",
       "tags": [
@@ -727,10 +727,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-1"
+      "tenseFamily": "velvet-mogul-predicate-002"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-2-past",
+      "id": "velvet-mogul-predicate-003-past",
       "role": "predicate",
       "text": "was a public promise with a private sponsor",
       "tags": [
@@ -749,10 +749,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+      "tenseFamily": "velvet-mogul-predicate-003"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-2-present",
+      "id": "velvet-mogul-predicate-003-present",
       "role": "predicate",
       "text": "is a public promise with a private sponsor",
       "singularText": "is a public promise with a private sponsor",
@@ -775,10 +775,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+      "tenseFamily": "velvet-mogul-predicate-003"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-2-future",
+      "id": "velvet-mogul-predicate-003-future",
       "role": "predicate",
       "text": "will be a public promise with a private sponsor",
       "tags": [
@@ -797,10 +797,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-2"
+      "tenseFamily": "velvet-mogul-predicate-003"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-3-past",
+      "id": "velvet-mogul-predicate-004-past",
       "role": "predicate",
       "text": "was a fortune wearing a modesty badge",
       "tags": [
@@ -819,10 +819,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+      "tenseFamily": "velvet-mogul-predicate-004"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-3-present",
+      "id": "velvet-mogul-predicate-004-present",
       "role": "predicate",
       "text": "is a fortune wearing a modesty badge",
       "singularText": "is a fortune wearing a modesty badge",
@@ -845,10 +845,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+      "tenseFamily": "velvet-mogul-predicate-004"
     },
     {
-      "id": "velvet-mogul-contract-predicate-predicate-3-future",
+      "id": "velvet-mogul-predicate-004-future",
       "role": "predicate",
       "text": "will be a fortune wearing a modesty badge",
       "tags": [
@@ -867,10 +867,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-contract-predicate-predicate-3"
+      "tenseFamily": "velvet-mogul-predicate-004"
     },
     {
-      "id": "velvet-mogul-contract-modifier-beside-a-platinum-apology",
+      "id": "velvet-mogul-modifier-003",
       "role": "modifier",
       "text": "beside-a-platinum-apology",
       "tags": [
@@ -879,7 +879,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "velvet-mogul-contract-ending-and-influence-sent-its-own-chauffeur",
+      "id": "velvet-mogul-ending-004",
       "role": "ending",
       "text": "and influence sent its own chauffeur.",
       "tags": [
@@ -889,7 +889,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "velvet-mogul-contract-ending-and-the-wealth-report-requested-a-silk-cover",
+      "id": "velvet-mogul-ending-005",
       "role": "ending",
       "text": "and the wealth report requested a silk cover.",
       "tags": [

@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "hands-on-presidency",
+      "id": "black-sea-captain-noun-001",
       "role": "noun",
       "text": "a hands-on presidency, hands on the microphone",
       "tags": [
@@ -66,7 +66,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "steers",
+      "id": "black-sea-captain-verb-001-present",
       "role": "verb",
       "text": "steers",
       "singularText": "steers",
@@ -87,10 +87,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "steers"
+      "tenseFamily": "black-sea-captain-verb-001"
     },
     {
-      "id": "steered",
+      "id": "black-sea-captain-verb-001-past",
       "role": "verb",
       "text": "steered",
       "singularText": "steered",
@@ -111,10 +111,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "steers"
+      "tenseFamily": "black-sea-captain-verb-001"
     },
     {
-      "id": "will-steer",
+      "id": "black-sea-captain-verb-001-future",
       "role": "verb",
       "text": "will steer",
       "singularText": "will steer",
@@ -135,10 +135,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "steers"
+      "tenseFamily": "black-sea-captain-verb-001"
     },
     {
-      "id": "through-troubled-waters",
+      "id": "black-sea-captain-modifier-001",
       "role": "modifier",
       "text": "with a snowplough booked for midsummer",
       "tags": [
@@ -148,7 +148,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "from-the-bridge",
+      "id": "black-sea-captain-ending-001",
       "role": "ending",
       "text": "and winter still refuses to act like summer.",
       "tags": [
@@ -158,7 +158,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "returns-to-the-wheel",
+      "id": "black-sea-captain-predicate-001-present",
       "role": "predicate",
       "text": "announces victory before the lifeboat vote",
       "tags": [
@@ -179,10 +179,10 @@
       "singularText": "announces victory before the lifeboat vote",
       "pluralText": "announce victory before the lifeboat vote",
       "tense": "present",
-      "tenseFamily": "returns-to-the-wheel"
+      "tenseFamily": "black-sea-captain-predicate-001"
     },
     {
-      "id": "returned-to-the-wheel",
+      "id": "black-sea-captain-predicate-001-past",
       "role": "predicate",
       "text": "announced victory before the lifeboat vote",
       "tags": [
@@ -203,10 +203,10 @@
       "singularText": "announced victory before the lifeboat vote",
       "pluralText": "announced victory before the lifeboat vote",
       "tense": "past",
-      "tenseFamily": "returns-to-the-wheel"
+      "tenseFamily": "black-sea-captain-predicate-001"
     },
     {
-      "id": "will-return-to-the-wheel",
+      "id": "black-sea-captain-predicate-001-future",
       "role": "predicate",
       "text": "will announce victory before the lifeboat vote",
       "tags": [
@@ -227,10 +227,10 @@
       "singularText": "will announce victory before the lifeboat vote",
       "pluralText": "will announce victory before the lifeboat vote",
       "tense": "future",
-      "tenseFamily": "returns-to-the-wheel"
+      "tenseFamily": "black-sea-captain-predicate-001"
     },
     {
-      "id": "your-leaking-flagship",
+      "id": "black-sea-captain-noun-002",
       "role": "noun",
       "text": "your leaking flagship",
       "tags": [
@@ -248,7 +248,7 @@
       "rarity": "common"
     },
     {
-      "id": "a-dockside-peacock",
+      "id": "black-sea-captain-noun-003",
       "role": "noun",
       "text": "a dockside peacock with admiral privileges",
       "referentKind": "personal",
@@ -267,7 +267,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "your-mutinous-coalition",
+      "id": "black-sea-captain-noun-004",
       "role": "noun",
       "text": "your mutinous coalition",
       "tags": [
@@ -285,7 +285,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "a-captain-without-compass",
+      "id": "black-sea-captain-noun-005",
       "role": "noun",
       "text": "a captain without a compass",
       "referentKind": "personal",
@@ -304,7 +304,7 @@
       "rarity": "common"
     },
     {
-      "id": "captain-grounds",
+      "id": "black-sea-captain-verb-002-present",
       "role": "verb",
       "text": "grounds",
       "singularText": "grounds",
@@ -327,10 +327,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "captain-grounds"
+      "tenseFamily": "black-sea-captain-verb-002"
     },
     {
-      "id": "captain-grounded",
+      "id": "black-sea-captain-verb-002-past",
       "role": "verb",
       "text": "grounded",
       "singularText": "grounded",
@@ -353,10 +353,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "captain-grounds"
+      "tenseFamily": "black-sea-captain-verb-002"
     },
     {
-      "id": "captain-will-ground",
+      "id": "black-sea-captain-verb-002-future",
       "role": "verb",
       "text": "will ground",
       "singularText": "will ground",
@@ -379,10 +379,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "captain-grounds"
+      "tenseFamily": "black-sea-captain-verb-002"
     },
     {
-      "id": "cannot-steer-own-party-from-puddle",
+      "id": "black-sea-captain-predicate-002-present",
       "role": "predicate",
       "text": "cannot steer its own party around a puddle",
       "singularText": "cannot steer its own party around a puddle",
@@ -407,10 +407,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "cannot-steer-own-party-from-puddle"
+      "tenseFamily": "black-sea-captain-predicate-002"
     },
     {
-      "id": "could-not-steer-own-party-from-puddle",
+      "id": "black-sea-captain-predicate-002-past",
       "role": "predicate",
       "text": "could not steer its own party around a puddle",
       "singularText": "could not steer its own party around a puddle",
@@ -435,10 +435,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "cannot-steer-own-party-from-puddle"
+      "tenseFamily": "black-sea-captain-predicate-002"
     },
     {
-      "id": "will-not-steer-own-party-from-puddle",
+      "id": "black-sea-captain-predicate-002-future",
       "role": "predicate",
       "text": "will not steer its own party around a puddle",
       "singularText": "will not steer its own party around a puddle",
@@ -463,10 +463,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "cannot-steer-own-party-from-puddle"
+      "tenseFamily": "black-sea-captain-predicate-002"
     },
     {
-      "id": "captain-ballot-lifejacket",
+      "id": "black-sea-captain-ending-002",
       "role": "ending",
       "text": "and the ballot box wants a lifejacket.",
       "tags": [
@@ -476,7 +476,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "black-sea-captain-ballot-lifeboat",
+      "id": "black-sea-captain-noun-006",
       "role": "noun",
       "text": "a lifeboat reserved for the winning coalition",
       "tags": [
@@ -496,7 +496,7 @@
       "rarity": "common"
     },
     {
-      "id": "black-sea-captain-contrast",
+      "id": "black-sea-captain-conjunction-001",
       "role": "conjunction",
       "text": "but, against the current,",
       "connectorKind": "but",
@@ -504,7 +504,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "black-sea-captain-contract-noun-1-a-winter-charter",
+      "id": "black-sea-captain-noun-007",
       "role": "noun",
       "text": "winter unlike summer",
       "tags": [
@@ -521,7 +521,7 @@
       "rarity": "common"
     },
     {
-      "id": "black-sea-captain-contract-noun-2-a-tide-with-a-campaign-promise",
+      "id": "black-sea-captain-noun-008",
       "role": "noun",
       "text": "a campaign promise full of holes",
       "tags": [
@@ -538,7 +538,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "black-sea-captain-contract-noun-3-a-fishing-boat-with-a-press-badge",
+      "id": "black-sea-captain-noun-009",
       "role": "noun",
       "text": "a ballot with a weather excuse",
       "tags": [
@@ -555,7 +555,7 @@
       "rarity": "rare"
     },
     {
-      "id": "black-sea-captain-contract-noun-4-a-lifejacket-for-the-ballot-box",
+      "id": "black-sea-captain-noun-010",
       "role": "noun",
       "text": "a lifejacket for a winter vote",
       "tags": [
@@ -572,7 +572,7 @@
       "rarity": "common"
     },
     {
-      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-past",
+      "id": "black-sea-captain-verb-003-past",
       "role": "verb",
       "text": "compared winter with",
       "tags": [
@@ -591,10 +591,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+      "tenseFamily": "black-sea-captain-verb-003"
     },
     {
-      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-present",
+      "id": "black-sea-captain-verb-003-present",
       "role": "verb",
       "text": "compares winter with",
       "singularText": "compares winter with",
@@ -617,10 +617,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+      "tenseFamily": "black-sea-captain-verb-003"
     },
     {
-      "id": "black-sea-captain-contract-verb-sails-past-official-explanation-future",
+      "id": "black-sea-captain-verb-003-future",
       "role": "verb",
       "text": "will compare winter with",
       "tags": [
@@ -639,10 +639,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-contract-verb-sails-past-official-explanation"
+      "tenseFamily": "black-sea-captain-verb-003"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-1-past",
+      "id": "black-sea-captain-predicate-003-past",
       "role": "predicate",
       "text": "was winter refusing to act like summer",
       "tags": [
@@ -661,10 +661,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+      "tenseFamily": "black-sea-captain-predicate-003"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-1-present",
+      "id": "black-sea-captain-predicate-003-present",
       "role": "predicate",
       "text": "is winter refusing to act like summer",
       "singularText": "is winter refusing to act like summer",
@@ -687,10 +687,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+      "tenseFamily": "black-sea-captain-predicate-003"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-1-future",
+      "id": "black-sea-captain-predicate-003-future",
       "role": "predicate",
       "text": "will be winter refusing to act like summer",
       "tags": [
@@ -709,10 +709,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-1"
+      "tenseFamily": "black-sea-captain-predicate-003"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-2-past",
+      "id": "black-sea-captain-predicate-004-past",
       "role": "predicate",
       "text": "was a navy of one borrowed boat",
       "tags": [
@@ -731,10 +731,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+      "tenseFamily": "black-sea-captain-predicate-004"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-2-present",
+      "id": "black-sea-captain-predicate-004-present",
       "role": "predicate",
       "text": "is a navy of one borrowed boat",
       "singularText": "is a navy of one borrowed boat",
@@ -757,10 +757,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+      "tenseFamily": "black-sea-captain-predicate-004"
     },
     {
-      "id": "black-sea-captain-contract-predicate-predicate-2-future",
+      "id": "black-sea-captain-predicate-004-future",
       "role": "predicate",
       "text": "will be a navy of one borrowed boat",
       "tags": [
@@ -779,10 +779,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-contract-predicate-predicate-2"
+      "tenseFamily": "black-sea-captain-predicate-004"
     },
     {
-      "id": "black-sea-captain-contract-modifier-beneath-a-summer-excuse",
+      "id": "black-sea-captain-modifier-002",
       "role": "modifier",
       "text": "beneath-a-summer-excuse",
       "tags": [
@@ -791,7 +791,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "black-sea-captain-contract-modifier-with-both-hands-on-the-microphone",
+      "id": "black-sea-captain-modifier-003",
       "role": "modifier",
       "text": "with-both-hands-on-the-microphone",
       "tags": [
@@ -800,7 +800,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "black-sea-captain-contract-ending-and-winter-refused-to-sign-the-minutes",
+      "id": "black-sea-captain-ending-003",
       "role": "ending",
       "text": "and winter refused to sign the minutes.",
       "tags": [
@@ -810,7 +810,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "black-sea-captain-contract-ending-and-the-ballot-box-requested-a-lifejacket",
+      "id": "black-sea-captain-ending-004",
       "role": "ending",
       "text": "and the ballot box requested a lifejacket.",
       "tags": [
@@ -820,7 +820,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "black-sea-captain-contract-ending-and-the-tide-filed-a-correction",
+      "id": "black-sea-captain-ending-005",
       "role": "ending",
       "text": "and the tide filed a correction.",
       "tags": [

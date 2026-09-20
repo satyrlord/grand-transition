@@ -102,7 +102,7 @@ describe('Hollywood Roast shared board generation', () => {
 
   test('rejects a board pool without the one universal continuation', () => {
     const scenePhraseIds = scene.phrasePool.filter(
-      (phraseId) => phraseId !== 'ellipsis',
+      (phraseId) => phraseId !== 'common-continuation-001',
     );
     const result = generateBoard({ ...request(1), scenePhraseIds });
 
@@ -155,7 +155,7 @@ describe('Hollywood Roast shared board generation', () => {
       );
       return (
         phrase?.role !== 'conjunction' ||
-        ['because', 'so'].includes(phrase.connectorKind ?? '')
+        ['common-conjunction-003', 'common-conjunction-004'].includes(phrase.connectorKind ?? '')
       );
     });
     const result = generateBoard({ ...request(1), scenePhraseIds });
@@ -165,7 +165,7 @@ describe('Hollywood Roast shared board generation', () => {
     for (const slot of result.board.slots.filter(
       (candidate) => candidate.role === 'conjunction',
     )) {
-      expect(['because', 'so']).toContain(
+      expect(['common-conjunction-003', 'common-conjunction-004']).toContain(
         sampleContent.phrases.find((phrase) => phrase.id === slot.phraseId)
           ?.connectorKind,
       );
@@ -175,7 +175,7 @@ describe('Hollywood Roast shared board generation', () => {
   test('never puts a character-restricted phrase on the common board', () => {
     const restricted = {
       ...sampleContent.phrases.find(
-        (phrase) => phrase.id === 'national-salvation-committee',
+        (phrase) => phrase.id === 'red-folded-chairman-noun-001',
       )!,
       characterIds: ['red-folded-chairman'],
     };
@@ -187,7 +187,7 @@ describe('Hollywood Roast shared board generation', () => {
     if (result.ok) {
       expect(
         result.board.slots.some(
-          (slot) => slot.phraseId === 'national-salvation-committee',
+          (slot) => slot.phraseId === 'red-folded-chairman-noun-001',
         ),
       ).toBe(false);
     }
@@ -196,7 +196,7 @@ describe('Hollywood Roast shared board generation', () => {
   test('reports the available role counts for an impossible scene pool', () => {
     const result = generateBoard({
       ...request(),
-      scenePhraseIds: ['and'],
+      scenePhraseIds: ['common-conjunction-001'],
     });
     expect(result).toMatchObject({
       ok: false,

@@ -52,7 +52,7 @@
   },
   "phrases": [
     {
-      "id": "midnight-sensationalist-foundation-noun",
+      "id": "midnight-sensationalist-noun-001",
       "role": "noun",
       "text": "my anonymous source with a loyalty card",
       "tags": [
@@ -71,7 +71,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-foundation-modifier",
+      "id": "midnight-sensationalist-modifier-001",
       "role": "modifier",
       "text": "during the seventh trailer for one revelation",
       "tags": [
@@ -82,7 +82,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "midnight-sensationalist-foundation-ending",
+      "id": "midnight-sensationalist-ending-001",
       "role": "ending",
       "text": "and the evidence arrives after the break.",
       "tags": [
@@ -94,7 +94,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "midnight-fortune-on-hold",
+      "id": "midnight-sensationalist-ending-002",
       "role": "ending",
       "text": "and your fortune is still on hold.",
       "tags": [
@@ -105,7 +105,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "midnight-hidden-system-catering",
+      "id": "midnight-sensationalist-ending-003",
       "role": "ending",
       "text": "and the hidden system paid for catering.",
       "tags": [
@@ -116,7 +116,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "midnight-sensationalist-anonymous-empty-chair",
+      "id": "midnight-sensationalist-noun-002",
       "role": "noun",
       "text": "an empty chair billed as a witness",
       "tags": [
@@ -136,7 +136,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-commercial-countdown",
+      "id": "midnight-sensationalist-noun-003",
       "role": "noun",
       "text": "a countdown to the next exclusive commercial",
       "tags": [
@@ -156,7 +156,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-pixelated-pigeon",
+      "id": "midnight-sensationalist-noun-004",
       "role": "noun",
       "text": "a pixelated pigeon as a palace source",
       "tags": [
@@ -177,7 +177,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-recycled-breaking-banner",
+      "id": "midnight-sensationalist-noun-005",
       "role": "noun",
       "text": "a breaking-news banner with yesterday underneath",
       "tags": [
@@ -197,7 +197,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-rented-outrage-meter",
+      "id": "midnight-sensationalist-noun-006",
       "role": "noun",
       "text": "an outrage meter rented by the minute",
       "tags": [
@@ -217,7 +217,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-verb-1-past",
+      "id": "midnight-sensationalist-verb-001-past",
       "role": "verb",
       "text": "interrupted the advertisement to investigate",
       "singularText": "interrupted the advertisement to investigate",
@@ -248,10 +248,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-verb-1"
+      "tenseFamily": "midnight-sensationalist-verb-001"
     },
     {
-      "id": "midnight-sensationalist-verb-1-present",
+      "id": "midnight-sensationalist-verb-001-present",
       "role": "verb",
       "text": "interrupts the advertisement to investigate",
       "singularText": "interrupts the advertisement to investigate",
@@ -282,10 +282,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-verb-1"
+      "tenseFamily": "midnight-sensationalist-verb-001"
     },
     {
-      "id": "midnight-sensationalist-verb-1-future",
+      "id": "midnight-sensationalist-verb-001-future",
       "role": "verb",
       "text": "will interrupt the advertisement to investigate",
       "singularText": "will interrupt the advertisement to investigate",
@@ -316,10 +316,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-verb-1"
+      "tenseFamily": "midnight-sensationalist-verb-001"
     },
     {
-      "id": "midnight-sensationalist-verb-2-past",
+      "id": "midnight-sensationalist-verb-002-past",
       "role": "verb",
       "text": "offered a witness-protection microphone to",
       "singularText": "offered a witness-protection microphone to",
@@ -350,10 +350,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-verb-2"
+      "tenseFamily": "midnight-sensationalist-verb-002"
     },
     {
-      "id": "midnight-sensationalist-verb-2-present",
+      "id": "midnight-sensationalist-verb-002-present",
       "role": "verb",
       "text": "offers a witness-protection microphone to",
       "singularText": "offers a witness-protection microphone to",
@@ -384,10 +384,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-verb-2"
+      "tenseFamily": "midnight-sensationalist-verb-002"
     },
     {
-      "id": "midnight-sensationalist-verb-2-future",
+      "id": "midnight-sensationalist-verb-002-future",
       "role": "verb",
       "text": "will offer a witness-protection microphone to",
       "singularText": "will offer a witness-protection microphone to",
@@ -418,10 +418,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-verb-2"
+      "tenseFamily": "midnight-sensationalist-verb-002"
     },
     {
-      "id": "midnight-sensationalist-predicate-1-past",
+      "id": "midnight-sensationalist-predicate-001-past",
       "role": "predicate",
       "text": "promoted a dial tone to chief correspondent",
       "singularText": "promoted a dial tone to chief correspondent",
@@ -447,10 +447,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-001"
     },
     {
-      "id": "midnight-sensationalist-predicate-1-present",
+      "id": "midnight-sensationalist-predicate-001-present",
       "role": "predicate",
       "text": "promotes a dial tone to chief correspondent",
       "singularText": "promotes a dial tone to chief correspondent",
@@ -476,10 +476,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-001"
     },
     {
-      "id": "midnight-sensationalist-predicate-1-future",
+      "id": "midnight-sensationalist-predicate-001-future",
       "role": "predicate",
       "text": "will promote a dial tone to chief correspondent",
       "singularText": "will promote a dial tone to chief correspondent",
@@ -505,10 +505,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-001"
     },
     {
-      "id": "midnight-sensationalist-review-modifier",
+      "id": "midnight-sensationalist-modifier-002",
       "role": "modifier",
       "text": "during the eyewitness recruitment break",
       "tags": [
@@ -518,7 +518,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "midnight-sensationalist-contrast",
+      "id": "midnight-sensationalist-conjunction-001",
       "role": "conjunction",
       "text": "yet, between exclusives,",
       "connectorKind": "yet",
@@ -526,7 +526,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "midnight-sensationalist-contract-noun-1-a-breaking-news-clock-on-overtime",
+      "id": "midnight-sensationalist-noun-007",
       "role": "noun",
       "text": "what you do not know you are losing",
       "tags": [
@@ -543,7 +543,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-contract-noun-2-a-caller-with-a-hidden-sponsor",
+      "id": "midnight-sensationalist-noun-008",
       "role": "noun",
       "text": "a reward that is not cash",
       "tags": [
@@ -560,7 +560,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "midnight-sensationalist-contract-noun-3-a-headline-with-a-siren",
+      "id": "midnight-sensationalist-noun-009",
       "role": "noun",
       "text": "a revelation before the commercial break",
       "tags": [
@@ -577,7 +577,7 @@
       "rarity": "rare"
     },
     {
-      "id": "midnight-sensationalist-contract-noun-4-a-camera-that-remembers-the-scandal",
+      "id": "midnight-sensationalist-noun-010",
       "role": "noun",
       "text": "a bad joke on the midnight line",
       "tags": [
@@ -594,7 +594,7 @@
       "rarity": "common"
     },
     {
-      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-past",
+      "id": "midnight-sensationalist-verb-003-past",
       "role": "verb",
       "text": "promised what you do not know you are losing to",
       "tags": [
@@ -613,10 +613,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+      "tenseFamily": "midnight-sensationalist-verb-003"
     },
     {
-      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-present",
+      "id": "midnight-sensationalist-verb-003-present",
       "role": "verb",
       "text": "promises what you do not know you are losing to",
       "singularText": "promises what you do not know you are losing to",
@@ -639,10 +639,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+      "tenseFamily": "midnight-sensationalist-verb-003"
     },
     {
-      "id": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings-future",
+      "id": "midnight-sensationalist-verb-003-future",
       "role": "verb",
       "text": "will promise what you do not know you lose to",
       "tags": [
@@ -661,10 +661,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-contract-verb-turns-rumour-into-ratings"
+      "tenseFamily": "midnight-sensationalist-verb-003"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-1-past",
+      "id": "midnight-sensationalist-predicate-002-past",
       "role": "predicate",
       "text": "was an exclusive you did not know you were missing",
       "tags": [
@@ -683,10 +683,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-002"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-1-present",
+      "id": "midnight-sensationalist-predicate-002-present",
       "role": "predicate",
       "text": "is an exclusive you did not know you were missing",
       "singularText": "is an exclusive you did not know you were missing",
@@ -709,10 +709,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-002"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-1-future",
+      "id": "midnight-sensationalist-predicate-002-future",
       "role": "predicate",
       "text": "will be an exclusive you did not know you miss",
       "tags": [
@@ -731,10 +731,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-1"
+      "tenseFamily": "midnight-sensationalist-predicate-002"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-2-past",
+      "id": "midnight-sensationalist-predicate-003-past",
       "role": "predicate",
       "text": "was a headline wearing an eyewitness badge",
       "tags": [
@@ -753,10 +753,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+      "tenseFamily": "midnight-sensationalist-predicate-003"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-2-present",
+      "id": "midnight-sensationalist-predicate-003-present",
       "role": "predicate",
       "text": "is a headline wearing an eyewitness badge",
       "singularText": "is a headline wearing an eyewitness badge",
@@ -779,10 +779,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+      "tenseFamily": "midnight-sensationalist-predicate-003"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-2-future",
+      "id": "midnight-sensationalist-predicate-003-future",
       "role": "predicate",
       "text": "will be a headline wearing an eyewitness badge",
       "tags": [
@@ -801,10 +801,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-2"
+      "tenseFamily": "midnight-sensationalist-predicate-003"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-3-past",
+      "id": "midnight-sensationalist-predicate-004-past",
       "role": "predicate",
       "text": "was a scandal with a subscription tier",
       "tags": [
@@ -823,10 +823,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+      "tenseFamily": "midnight-sensationalist-predicate-004"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-3-present",
+      "id": "midnight-sensationalist-predicate-004-present",
       "role": "predicate",
       "text": "is a scandal with a subscription tier",
       "singularText": "is a scandal with a subscription tier",
@@ -849,10 +849,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+      "tenseFamily": "midnight-sensationalist-predicate-004"
     },
     {
-      "id": "midnight-sensationalist-contract-predicate-predicate-3-future",
+      "id": "midnight-sensationalist-predicate-004-future",
       "role": "predicate",
       "text": "will be a scandal with a subscription tier",
       "tags": [
@@ -871,10 +871,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-contract-predicate-predicate-3"
+      "tenseFamily": "midnight-sensationalist-predicate-004"
     },
     {
-      "id": "midnight-sensationalist-contract-modifier-beneath-a-breaking-news-banner",
+      "id": "midnight-sensationalist-modifier-003",
       "role": "modifier",
       "text": "beneath-a-breaking-news-banner",
       "tags": [
@@ -883,7 +883,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "midnight-sensationalist-contract-ending-and-the-source-requested-a-better-angle",
+      "id": "midnight-sensationalist-ending-004",
       "role": "ending",
       "text": "and the source requested a better angle.",
       "tags": [
@@ -893,7 +893,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "midnight-sensationalist-contract-ending-and-the-headline-outlived-the-facts",
+      "id": "midnight-sensationalist-ending-005",
       "role": "ending",
       "text": "and the headline outlived the facts.",
       "tags": [

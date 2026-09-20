@@ -48,46 +48,46 @@ const score = (
 
 describe('Hollywood Roast combos and finishers', () => {
   test('repeating the same noun in consecutive complete insults raises its combo', () => {
-    const first = score(['national-consensus', 'belongs-in-a-party-museum']);
+    const first = score(['common-noun-001', 'common-predicate-010-present']);
     const second = score(
-      ['national-consensus', 'belongs-in-a-party-museum'],
+      ['common-noun-001', 'common-predicate-010-present'],
       first.comboState,
     );
     expect(first.score.finalDamage).toBe(5);
     expect(second.score.finalDamage).toBe(10);
     expect(second.score.combo).toMatchObject({
-      nounPhraseId: 'national-consensus',
+      nounPhraseId: 'common-noun-001',
       chain: 2,
     });
   });
 
   test('the first screenshot scores all three modifiers and its finisher', () => {
-    const result = score(['a-pig', 'stole', 'municipal-ribbon',
-      'on-the-campaign-trail', 'during-budget-season', 'under-the-studio-lights',
-      'by-emergency-ordinance']);
+    const result = score(['common-noun-048', 'common-verb-024-past', 'common-noun-013',
+      'common-modifier-012', 'common-modifier-009', 'common-modifier-013',
+      'common-ending-001']);
     expect(result.score.finalDamage).toBe(13);
   });
 
   test('modifier points receive weakness and noun combos before the finisher is added', () => {
-    const first = score(['national-consensus', 'belongs-in-a-party-museum']);
+    const first = score(['common-noun-001', 'common-predicate-010-present']);
     const result = score(
-      ['national-consensus', 'belongs-in-a-party-museum',
-        'before-the-next-election', 'by-emergency-ordinance'],
+      ['common-noun-001', 'common-predicate-010-present',
+        'common-modifier-001', 'common-ending-001'],
       first.comboState, ['consistency'],
     );
     expect(result.score.finalDamage).toBe(30); // (5 + 2) * 2 * 2 + 2
-    expect(result.comboState.player!.previousNounIds).toEqual(['national-consensus']);
+    expect(result.comboState.player!.previousNounIds).toEqual(['common-noun-001']);
   });
 
   test('multiplies a transitive clause by both noun combo chains', () => {
     const prior: ComboChainState = {
       player: {
-        previousNounIds: ['national-consensus'],
-        chainByNounId: { 'national-consensus': 1 },
+        previousNounIds: ['common-noun-001'],
+        chainByNounId: { 'common-noun-001': 1 },
       },
     };
     const result = score(
-      ['national-consensus', 'rebrands', 'national-consensus'],
+      ['common-noun-001', 'common-verb-010-present', 'common-noun-001'],
       prior,
     );
     expect(result.score.breakdown).toContainEqual(
@@ -98,9 +98,9 @@ describe('Hollywood Roast combos and finishers', () => {
   test('adds a finisher after clause scoring and applies its weakness separately', () => {
     const result = score(
       [
-        'national-consensus',
-        'belongs-in-a-party-museum',
-        'by-emergency-ordinance',
+        'common-noun-001',
+        'common-predicate-010-present',
+        'common-ending-001',
       ],
       {},
       ['bureaucracy'],
@@ -108,14 +108,14 @@ describe('Hollywood Roast combos and finishers', () => {
     expect(result.score.breakdown).toContainEqual({
       kind: 'finisher-bonus',
       operation: 'add',
-      phraseId: 'by-emergency-ordinance',
+      phraseId: 'common-ending-001',
       amount: 4,
     });
     expect(result.score.breakdown).toContainEqual(
       expect.objectContaining({
         kind: 'weakness-match',
         defenderTag: 'bureaucracy',
-        phraseId: 'by-emergency-ordinance',
+        phraseId: 'common-ending-001',
       }),
     );
   });
@@ -123,9 +123,9 @@ describe('Hollywood Roast combos and finishers', () => {
   test('applies a restriction multiplier to a phrase that a scene or character owns', () => {
     const result = score(
       [
-        'national-consensus',
-        'belongs-in-a-party-museum',
-        'for-stabilitys-sake',
+        'common-noun-001',
+        'common-predicate-010-present',
+        'red-folded-chairman-ending-001',
       ],
       {},
       [],
@@ -134,20 +134,20 @@ describe('Hollywood Roast combos and finishers', () => {
     expect(result.score.breakdown).toContainEqual({
       kind: 'restriction-multiplier',
       operation: 'note',
-      phraseIds: ['for-stabilitys-sake'],
+      phraseIds: ['red-folded-chairman-ending-001'],
       factor: 2,
     });
     expect(result.score.breakdown).toContainEqual({
       kind: 'finisher-bonus',
       operation: 'add',
-      phraseId: 'for-stabilitys-sake',
+      phraseId: 'red-folded-chairman-ending-001',
       amount: 6,
     });
   });
 
   test('an incomplete insult clears that player combo chain', () => {
     const incomplete = englishGrammarAdapter.analyze({
-      steps: [add('national-consensus'), { kind: 'end' }],
+      steps: [add('common-noun-001'), { kind: 'end' }],
       subjectNumber: 'singular',
       objectNumber: 'singular',
     });
@@ -157,8 +157,8 @@ describe('Hollywood Roast combos and finishers', () => {
       attackerCharacterId: 'red-folded-chairman',
       comboState: {
         player: {
-          previousNounIds: ['national-consensus'],
-          chainByNounId: { 'national-consensus': 3 },
+          previousNounIds: ['common-noun-001'],
+          chainByNounId: { 'common-noun-001': 3 },
         },
       },
       analysis: incomplete.analysis,
