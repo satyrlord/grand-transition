@@ -39,8 +39,8 @@ secured production shell, and the complete configured quality gate. Milestones
 024, 025, 030, and 031 remain incomplete. Milestone 023 remains complete.
 Milestones 027 and 028 retain historical completion evidence for the previous
 catalog target. Their revised content implementation is present in the current
-checkout and passes the focused content gate. The checkout contains 1,619
-phrase cards: 859 shared common-file cards, including 655 unrestricted and 204
+checkout and passes the focused content gate. The checkout contains 1,653
+phrase cards: 893 shared common-file cards, including 655 unrestricted and 238
 scene-restricted cards, plus 760 character-owned cards.
 
 The revised common catalog target is 655 cards: 300 nouns, 150 verbs split
@@ -50,7 +50,7 @@ predicate, modifier, and ending must be inspired by a verifiably real quote.
 Balance and variety verification use deterministic CI, bounded scoring, text
 uniqueness, grammar fixtures, and private provenance review.
 
-Each of the six scenes targets exactly 34 scene-restricted cards: 10 nouns,
+Each of the seven scenes targets exactly 34 scene-restricted cards: 10 nouns,
 9 verbs split three per tense, 6 predicates, 3 modifiers, 3 endings, and 3
 scene-specific conjunctions. Scene cards have zero continuations; the global
 `[...]` continuation is added to each eligible scene pool separately.
@@ -63,15 +63,16 @@ character-specific conjunction. Character cards have zero continuations.
 complete. Phase 1 ships the Romanian interface,
 translated archetype and scene display names, and its persisted `Interface
 language` selection. Phase 2 adds the Romanian game
-content, grammar, and local Mihai medium and Liana high voices. Ro_VITS was
+content, grammar, and local Mihai medium and Liana medium voices. Ro_VITS was
 evaluated and rejected, so Mihai and Liana remain the only Romanian voices.
 
 The current content has common Romanian-politics phrases and 19 fictional
 characters: 18 humans and one robot. Each character has owned phrases and a
 default local portrait. Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations that do not change game identity or prose. The
-content includes six fictional layered scenes. Each scene has a distinct local
-cartoon background and transparent foreground, and two debate studios include
+content includes seven fictional scenes. Each has a distinct local cartoon
+background; six use transparent foreground plates, while the desk-free Civic
+Cypher Boxing Ring uses one unobstructed back layer. Two debate studios include
 fixed fictional moderators. The interface has English and Romanian message
 catalogs; the game content has English and Romanian game-locale bundles.
 New installations use English interface text and Romanian game content.
@@ -97,7 +98,7 @@ immediate grammar mistakes. They also include seeded common-board and
 private-hand generation, clause scoring, noun combos, continuations, comebacks,
 cliffhangers, match lifecycle, replay, simulation, and automatic development
 match logs. Default clause scoring uses compatibility bases of 5, 8, 11, and
-14, plus 2 points per modifier before the local 1.5 weakness multiplier and
+14, plus 2 points per modifier before the local 2 weakness multiplier and
 noun combos. Restrictions do not add damage.
 
 The responsive Lit interface provides title, setup, playable single-player
@@ -132,10 +133,10 @@ Operator AI policies. The local nine-rung ladder persists its exact opponents,
 scenes, wins, losses, and completion.
 
 Sound starts after a user interaction. Settings controls Master, Music, Effects,
-and Speech. The menu and each of the six playable scenes use a distinct local
-music edit. The nine effects remain shared, and scenes add no room tone. All
-music is public domain through CC0, and the shipped edits are normalized to the
-same background-music target.
+and Speech. The menu and each of the seven playable scenes use a distinct local
+music edit. The ten effects remain shared, and scenes add no room tone. All
+music uses CC0 or CC BY 4.0 sources, and the shipped edits are normalized to
+the same background-music target.
 
 | Use | Music and creator | Scene adaptation | License |
 | --- | --- | --- | --- |
@@ -146,6 +147,7 @@ same background-music target.
 | Midnight Call-In Studio | [_jazz improvisation looped_ by Alex McCulloch (Pro Sensory)](https://opengameart.org/content/jazz-improvisation-looped) | Low-key improvised late-night jazz | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Palace Press Hall | [_Intro Music_ by RonyDkid](https://opengameart.org/content/intro-music-0) | 82.286-second pizzicato phrase | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Influencer Campaign Livestream | [_Try me!_ by iamoneabe](https://opengameart.org/content/try-me) | 132.414-second trap arrangement with a filtered breakdown | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Civic Cypher Boxing Ring | [_Boom Bap Old School Hip-Hop Beat_ by Alex Morgan](https://freemusicarchive.org/music/alex-morgan/trap-hip-hop-beats/boom-bap-old-school-hip-hop-beat/) | Complete 129.480-second classic boom-bap instrumental with a corrected loop seam | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 
 See [CREDITS.md](CREDITS.md) for source and edit details.
 Speech defaults on. Opening the menu prepares about 91 MB of local neural model
@@ -162,7 +164,7 @@ In English matches, robot skins use installed Microsoft David, Mark, and Zira vo
 neural fallback when the requested local voice is absent. Robot voices read
 each complete insult continuously, without restarting between cards. New
 settings use a 1.00 speech rate. A valid saved rate remains intact.
-Romanian matches use local Mihai medium and Liana high voices for all skins.
+Romanian matches use local Mihai medium and Liana medium voices for all skins.
 Only the requested Romanian voice loads; an unavailable voice stays silent.
 No phrase is uploaded. Preparation time depends on the device and sentence length.
 The game remains playable when speech is unavailable.

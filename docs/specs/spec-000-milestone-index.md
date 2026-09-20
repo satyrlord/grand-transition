@@ -83,7 +83,8 @@ complete an approved specification.
   chat, servers, live-service systems, public content sharing, blockchain,
   tokens, and real-money purchases are out of scope.
 - Milestone 029 approves post-MVP Romanian localization and local speech.
-  Other post-MVP candidates include additional content, controller support,
+  Specification 032 approves the first post-MVP scene extension. Other
+  post-MVP candidates include additional content, controller support,
   local content packs, recorded voice,
   replays, and local simulation tools. Milestone 019 approves local match
   history. Do not implement another candidate without a new approved
@@ -303,12 +304,16 @@ source-only review does not satisfy them.
     evidence remain pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Complete: Romanian interface, game
-    content, grammar, replay locale, Mihai medium and Liana high speech;
+    content, grammar, replay locale, Mihai medium and Liana medium speech;
     Ro_VITS evaluated and rejected as the Romanian voice.
 30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The
     tested artifact deploys and passes smoke tests.
+32. [Civic Cypher Boxing Ring](spec-032-civic-cypher-boxing-ring.md). Budget: 8.
+    A seventh bilingual playable scene adds original Romanian hip-hop battle
+    art, a complete scene phrase pool, local boom-bap music, and focused
+    production-browser evidence without changing the version-1 ladder tuple.
 
 Each milestone follows its explicit **Depends on** field. Milestone filenames,
 headings, acceptance IDs, and references use the same numeric identifier. This

@@ -36,7 +36,7 @@ const sceneVolumes: readonly Volume[] = [
 
 const generalConnectorKinds = new Set(['and', 'but', 'because', 'so', 'with']);
 
-/** Milestone 028 release volumes, separate from the reusable catalog schema. */
+/** Milestone 028 volumes plus the Specification 032 scene extension. */
 export function finalContentVolumeIssues(
   catalog: Pick<ContentCatalog, 'phrases' | 'characters' | 'scenes'>,
 ): string[] {
@@ -69,7 +69,7 @@ export function finalContentVolumeIssues(
   };
 
   check('Characters', catalog.characters.length, 19);
-  check('Scenes', catalog.scenes.length, 6);
+  check('Scenes', catalog.scenes.length, 7);
   const general = catalog.phrases.filter((phrase) =>
     !phrase.characterIds && !phrase.sceneIds);
   checkRoles('General', general, generalVolumes);

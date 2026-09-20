@@ -52,7 +52,7 @@ test('Romanian game speech uses the shipped Romanian voices and never leaves the
   const { speech } = evidence;
   // Both players speak Romanian neural voices: the male player Mihai, the female Liana.
   expect(speech.neural.map((call) => call.voiceId)).toEqual([
-    'ro_RO-mihai-medium', 'ro_RO-mihai-medium', 'ro_RO-liana-high', 'ro_RO-liana-high',
+    'ro_RO-mihai-medium', 'ro_RO-mihai-medium', 'ro_RO-liana-medium', 'ro_RO-liana-medium',
   ]);
   expect(evidence.pcm).toHaveLength(4);
   for (const { sampleCount, sampleRate, playbackRate, finite, audible, duration, markers } of evidence.pcm) {

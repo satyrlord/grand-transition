@@ -220,13 +220,15 @@ export class RoundPresentation {
     };
     const emphasis: RoundPresentationFrame['emphasis'][number][] = [];
     let latestCombo: RoundPresentationFrame['emphasis'][number] | undefined;
+    const components = this.input!.components[player.playerId] ?? [];
     const weaknesses = new Set(
-      (this.input!.components[player.playerId] ?? [])
+      components
         .filter((component) =>
           component.narrationIndex <= completedIndex &&
           component.weaknessTags.length > 0)
         .flatMap((component) => component.weaknessTags),
     );
+    const weaknessFactor = components.find((component) => component.weaknessFactor > 1)?.weaknessFactor ?? 1;
     for (const item of player.score?.breakdown ?? []) {
       if (item.kind === 'combo-chain' && item.chain > 1 && item.phraseIndex <= completedIndex) {
         play('combo', `combo:${item.phraseIndex}`);
@@ -237,7 +239,7 @@ export class RoundPresentation {
     if (weaknesses.size > 0) play('weakness', 'weakness');
     if (latestCombo) emphasis.push(latestCombo);
     if (weaknesses.size) emphasis.push({ kind: 'weakness',
-      playerId: this.order.find((id) => id !== player.playerId)!, text: [...weaknesses].join(' · '), value: 1.5 });
+      playerId: this.order.find((id) => id !== player.playerId)!, text: [...weaknesses].join(' · '), value: weaknessFactor });
     if (player.comebackActivated && completedIndex >= player.constructionPhrases.length) {
       emphasis.push({ kind: 'comeback', playerId: player.playerId, text: '', value: player.comebackBonus });
     }

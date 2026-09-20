@@ -25,14 +25,14 @@ and Romanian speech. Their other behavior and failure contracts still apply.
 2. **Phase 2: Romanian game content, grammar, and speech.** Translate the game
    content, add the independently saved `Game language` selection, implement
    Romanian grammar and deterministic play, and deliver Romanian speech with
-   Piper Mihai medium and Piper Liana high. Complete automated checks,
+   Piper Mihai medium and Piper Liana medium. Complete automated checks,
    Romanian source and editorial checks, and production-browser verification.
    The user can review language and audible quality separately after completion.
 3. **Ro_VITS: evaluated and rejected.** Ro_VITS was compared with the accepted
    Phase 2 voices and rejected: no ONNX/WASM browser artifact, ~437 MB per
    checkpoint against the 120 MiB assembled-model budget, `connect-src 'self'` CSP
    forbids hosted inference, and checkpoint/data/speaker licensing is
-   unresolved. Piper Mihai medium and Piper Liana high remain the only
+   unresolved. Piper Mihai medium and Piper Liana medium remain the only
    Romanian voices. This milestone authorizes no further model replacement.
 
 Complete the phases in order. Each phase is a separately testable slice: start
@@ -338,11 +338,11 @@ Use these exact model families and quality levels:
 | Profile | Phase 2 model | Published source |
 | --- | --- | --- |
 | Romanian male | `ro_RO-mihai-medium` | [Piper Mihai](https://huggingface.co/rhasspy/piper-voices/tree/main/ro/ro_RO/mihai/medium) |
-| Romanian female | `ro_RO-liana-high` | [Piper Liana](https://huggingface.co/eduardem/piper-liana-romanian/tree/main/voices/liana-high) |
+| Romanian female | `ro_RO-liana-medium` | [Piper Liana](https://huggingface.co/eduardem/piper-liana-romanian/tree/main/voices/liana-medium) |
 
-The female profile ships Liana's high tier at the same pinned revision as its
-pronunciation resources; the medium tier is withdrawn from the package
-(recorded 2026-09-18).
+The female profile ships Liana's medium tier at the same pinned revision as its
+pronunciation resources. It replaces the larger high tier to reduce the local
+asset download from about 108.9 MiB to 60.6 MiB (recorded 2026-09-20).
 
 Map English George, David, and Mark skin assignments to Mihai. Map Emma and
 Zira assignments to Liana. This preserves authored presentation profiles;
@@ -371,7 +371,7 @@ Extend the existing speech build and validation commands to cover Romanian.
 Before importing assets, pin upstream revisions, exact file names, SHA-256
 hashes, sample rates, input/output tensors, sizes, pronunciation dependencies,
 and license notices. Each assembled Romanian model must remain below
-120 MiB so the ~109 MiB Liana high weights fit. Each shipped file must remain
+120 MiB so both medium-tier voices fit. Each shipped file must remain
 below 100 MiB to fit regular Git hosting. Split larger models into ordered
 static parts, at most 96 MiB each, and reassemble the exact model bytes before
 inference. Validate every part and the assembled model size and SHA-256 hash.
@@ -466,14 +466,14 @@ The new verifier paths below are implementation targets, not existing evidence.
 
 [TeodoraR/Ro_VITS](https://huggingface.co/TeodoraR/Ro_VITS) was evaluated
 against the accepted Phase 2 voices and **rejected**. Piper Mihai medium and
-Piper Liana high remain the only Romanian voices.
+Piper Liana medium remain the only Romanian voices.
 
 - No browser artifact exists: the repository ships PyTorch `.pth` checkpoints
   only, with no ONNX/WASM export or conversion path. Desktop Python inference
   alone does not establish browser suitability.
 - Each ~437 MB generator checkpoint is more than three times the 120 MiB
   assembled-model budget; the shipped Piper models meet it (~60 MiB and
-  ~109 MiB), with every shipped file below 100 MiB.
+  ~60.6 MiB), with every shipped file below 100 MiB.
 - The `connect-src 'self'` production CSP forbids hosted inference, and
   runtime network calls are prohibited.
 - Licensing is unresolved: the Apache 2.0 card label does not clear the SWARA
@@ -503,8 +503,9 @@ completion. Do not treat automated transcription or a green aggregate gate as
 proof of native-language naturalness or physical audible output.
 
 Milestone 029 is complete: Ro_VITS is rejected above, and Piper Mihai medium
-and Piper Liana high remain the only Romanian voices. The female voice moved
-from Liana medium to Liana high on 2026-09-18 at the same pinned revision,
+and Piper Liana medium remain the only Romanian voices. The female voice moved
+from Liana high to Liana medium on 2026-09-20 at the same pinned revision,
+reducing the assembled model from about 108.9 MiB to 60.6 MiB while remaining
 within the 120 MiB assembled-model budget and 100 MiB shipped-file budget.
 Any further model replacement needs
 a separately approved implementation package and updated contracts. No phase

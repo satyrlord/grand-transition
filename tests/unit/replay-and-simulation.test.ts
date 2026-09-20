@@ -499,7 +499,7 @@ describe('headless simulation and generated invariants', () => {
     'keeps the current-catalog 500-match calibration between three and eleven rounds',
     () => {
       expect(context.catalog.characters).toHaveLength(19);
-      expect(context.catalog.scenes).toHaveLength(6);
+      expect(context.catalog.scenes).toHaveLength(7);
       const calibrationSetup = createSimulationSetup(context.catalog, {
         gameLocale: 'en',
         characterIds: ['red-folded-chairman', 'thunder-tribune'],

@@ -40,11 +40,11 @@ async function setDelivery(page: Page, index: number, active: boolean): Promise<
       components: Array.from({ length: 12 }, (_, row) => ({
         narrationIndex: row, kind: 'clause',
         phraseText: `Public scored phrase ${row + 1}: the complete record remains available for inspection.`,
-        base: 5, restrictionFactor: 1, weaknessFactor: 1.5, comboFactor: 2,
-        amount: 15, weaknessTags: ['evidence', 'procedure'],
+        base: 5, restrictionFactor: 1, weaknessFactor: 2, comboFactor: 2,
+        amount: 20, weaknessTags: ['evidence', 'procedure'],
       })),
       emphasis: [{ kind: 'weakness', playerId: players[values.index === 0 ? 1 : 0]!.playerId,
-        text: 'evidence · procedure', value: 1.5 }],
+        text: 'evidence · procedure', value: 2 }],
       outcome: null, impact: null, total: null, damage: null,
       pride: Object.fromEntries(players.map((player) => [player.playerId, player.pride])), cues: {},
     };

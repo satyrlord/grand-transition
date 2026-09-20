@@ -48,6 +48,7 @@ const sceneIds = [
   'midnight-call-in-studio',
   'palace-press-hall',
   'influencer-campaign-livestream',
+  'civic-cypher-boxing-ring',
 ] as const;
 
 const golden: LadderProgress = Object.freeze({
@@ -80,7 +81,7 @@ const golden: LadderProgress = Object.freeze({
 });
 
 describe('ladder engine', () => {
-  test('reproduces nine unique opponents and a six-scene permutation', () => {
+  test('reproduces nine unique opponents and the founding six-scene permutation', () => {
     const progress = createLadderProgress(
       'red-folded-chairman',
       22_026,
@@ -164,9 +165,16 @@ describe('ladder engine', () => {
       ladderProgressMatchesCatalog(
         golden,
         characterIds,
-        sceneIds.slice(1),
+        sceneIds.filter((id) => id !== 'transition-era-television-studio'),
       ),
     ).toBe(false);
+    expect(
+      ladderProgressMatchesCatalog(
+        golden,
+        characterIds,
+        sceneIds.filter((id) => id !== 'civic-cypher-boxing-ring'),
+      ),
+    ).toBe(true);
   });
 });
 

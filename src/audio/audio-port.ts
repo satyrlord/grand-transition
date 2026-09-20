@@ -2,7 +2,7 @@ import type { SettingsDocument } from '../persistence/codecs/settings-codec';
 
 export const effectIds = [
   'role-select', 'commit', 'hit-light', 'hit-heavy', 'weakness', 'combo',
-  'continuation-break', 'comeback', 'grammar-mistake',
+  'continuation-break', 'comeback', 'grammar-mistake', 'timer-tick',
 ] as const;
 export type EffectId = typeof effectIds[number];
 export const sceneMusicTrackIds = {
@@ -12,6 +12,7 @@ export const sceneMusicTrackIds = {
   'midnight-call-in-studio': 'midnight-call-in-studio-theme',
   'palace-press-hall': 'palace-press-hall-theme',
   'influencer-campaign-livestream': 'influencer-campaign-livestream-theme',
+  'civic-cypher-boxing-ring': 'civic-cypher-boxing-ring-theme',
 } as const;
 export type SceneAudioId = keyof typeof sceneMusicTrackIds;
 export type AudioScene = 'menu' | SceneAudioId | null;

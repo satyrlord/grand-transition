@@ -42,7 +42,7 @@ for (const scenario of [
     ],
     sentence:
       'A pig stole a ribbon longer than the road on a campaign bus fuelled by applause during the decimal point migration under lights that bleach a scandal',
-    total: 17,
+    total: 22,
   },
 ]) {
   test('the production game scores ' + scenario.name, async ({
@@ -87,6 +87,11 @@ for (const scenario of [
       await expect(page.locator(
         '.delivery-receipt[data-speaker="' + fixture.playerId + '"] [data-score-kind="clause"]',
       )).toContainText('11');
+    }
+    if (scenario.name === 'three stacked modifiers') {
+      await expect(page.locator(
+        `.delivery-receipt[data-speaker="${fixture.playerId}"] .score-factor--weakness`,
+      )).toHaveText('×2');
     }
     await expect(
       page.locator(

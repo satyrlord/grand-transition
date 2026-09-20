@@ -191,7 +191,7 @@ The six scene music IDs are `<scene-id>-theme`. Each ID resolves to a distinct
 local WAV master and distinct Ogg Vorbis and MP3 runtime variants. The audio
 manifest records its source, license, edit, hashes, and measured levels. Scene
 entry routes the selected scene ID to its matching music treatment. No scene
-uses a shared placeholder track, and scenes add no room-tone audio. The nine
+uses a shared placeholder track, and scenes add no room-tone audio. The
 Milestone 024 effects remain unchanged and reachable.
 
 The final treatments use these independently pinned CC0 recordings and edits:

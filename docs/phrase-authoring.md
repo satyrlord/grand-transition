@@ -249,4 +249,4 @@ content contract.
   content boundaries, balance bands, and the Milestone 014 replay contract.
 - [`docs/specs/spec-029-romanian-localization-and-speech.md`](specs/spec-029-romanian-localization-and-speech.md):
   complete Romanian localization; Ro_VITS evaluated and rejected, so Mihai
-  medium and Liana high remain the only Romanian voices.
+  medium and Liana medium remain the only Romanian voices.

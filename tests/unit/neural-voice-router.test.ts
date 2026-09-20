@@ -37,11 +37,11 @@ describe('neural engine selection', () => {
     h.router.configure({ speechEnabled: true, gpuVoices: false });
     // Nothing Romanian is created before Romanian speech is actually requested.
     expect(h.engines.map((engine) => engine.mode)).toEqual(['piper']);
-    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-high' });
+    h.router.speak({ text: 'Bună ziua.', language: 'ro-RO', voiceUri: 'piper:ro_RO-liana-medium' });
     expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'ro']);
     const romanian = h.engines.find((engine) => engine.mode === 'ro')!;
     expect(romanian.speak).toHaveBeenCalledWith(expect.objectContaining({
-      voiceUri: 'piper:ro_RO-liana-high', language: 'ro-RO',
+      voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
     }));
     expect(h.engines[0]!.speak).not.toHaveBeenCalled();
     h.router.dispose();

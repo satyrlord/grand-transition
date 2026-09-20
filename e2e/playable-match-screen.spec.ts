@@ -1534,11 +1534,11 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await page.locator('grand-transition-match').evaluate(async (element) => {
     const match = element as HTMLElement & { presentation: RoundPresentationFrame; updateComplete: Promise<boolean> };
     const base = { narrationIndex: 1, restrictionFactor: 1, weaknessFactor: 1, comboFactor: 1, weaknessTags: [] };
-    match.presentation = { ...match.presentation, phase: 'total', total: 51,
+    match.presentation = { ...match.presentation, phase: 'total', total: 61,
       text: 'Your party belongs in a party museum, and your voters change the channel.',
       components: [
         { ...base, kind: 'clause', phraseText: 'Your party belongs in a party museum', base: 10,
-          amount: 30, weaknessFactor: 1.5, comboFactor: 2, weaknessTags: ['evidence', 'credibility', 'restraint'] },
+          amount: 40, weaknessFactor: 2, comboFactor: 2, weaknessTags: ['evidence', 'credibility', 'restraint'] },
         { ...base, kind: 'finisher', phraseText: 'By emergency ordinance.', base: 3, amount: 3 },
         { ...base, kind: 'comeback', phraseText: 'And that closes the record.', base: 18, amount: 18 },
       ] };
@@ -1546,11 +1546,11 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   });
   const receipt = page.locator('.delivery-receipt');
   await expect(receipt.locator('.delivery-score')).toHaveCount(3);
-  await expect(receipt.locator('.score-factor--weakness')).toHaveText('×1.5');
+  await expect(receipt.locator('.score-factor--weakness')).toHaveText('×2');
   await expect(receipt.locator('.score-factor--combo')).toHaveText('×2');
-  await expect(receipt.locator('[data-score-amount="30"]')).toContainText(/=\s*30/u);
+  await expect(receipt.locator('[data-score-amount="40"]')).toContainText(/=\s*40/u);
   await expect(receipt.locator('[data-score-kind="comeback"]')).toContainText(/Comeback.*And that closes the record.*\+18/su);
-  await expect(receipt.locator('.delivery-total')).toContainText(/Total\s*51/u);
+  await expect(receipt.locator('.delivery-total')).toContainText(/Total\s*61/u);
   await expect(receipt.locator('.delivery-score-weakness')).toHaveText('Evidence · Credibility · Restraint');
   expect(await receipt.locator('.delivery-score').first().evaluate((step) => getComputedStyle(step).animationName)).toBe('none');
   for (const viewport of [{ width: 1280, height: 720 }, { width: 1024, height: 720 },

@@ -416,10 +416,10 @@ global yellow, amber, sepia, golden-hour, mustard, beige, or brown color grade.
 Warm color belongs to named local materials or lights. It must not flatten the
 navy, charcoal, paper, red, and blue separation of the broadcast palette.
 
-**The Semantic State Rule.** Red, blue, green, purple, gray, and orange can
-speed phrase recognition. Semantic attributes and accessible names must contain
-phrase ownership, role, availability, weakness, and unavailable state. This rule
-also applies when the compact visible row shows phrase text only.
+**The Semantic State Rule.** Role color can speed phrase recognition. Semantic
+attributes and accessible names must contain phrase ownership, role,
+availability, weakness, and unavailable state. This rule also applies when the
+compact visible row shows phrase text only.
 
 ## Typography
 
@@ -561,7 +561,7 @@ masks protect text without turning the scene into stacked panels. Short dark
 shadows lift signs, phrase records, actions, roster tiles, and dialogs. Inset
 brass and navy rules make the arena feel built.
 
-The implemented build uses three brand rasters, six scene backgrounds, six
+The implemented build uses three brand rasters, seven scene backgrounds, six
 transparent foreground plates, and 30 transparent character portraits: 19
 defaults and 11 alternates. Twenty-eight skins have complete nine-state
 packages; the Local Baron municipal-patron skin and Reluctant Theorem use the
@@ -686,9 +686,10 @@ text, public response, and damage without covering a face.
 
 ### Sentence construction tower
 
-All six scenes use their own manifest backgrounds and transparent foreground
-plates. The County Council Ballroom, Midnight Call-In Studio, Palace Press Hall,
-and Influencer Campaign Livestream have no fixed moderator. Their foreground
+All seven scenes use their own manifest backgrounds. Six use transparent
+foreground plates. The desk-free Civic Cypher Boxing Ring uses one unobstructed
+back layer with no moderator. The County Council Ballroom, Midnight Call-In
+Studio, Palace Press Hall, and Influencer Campaign Livestream have no fixed moderator. Their foreground
 desks keep the shared central interaction rectangle clear and cover both
 candidates' lower bodies. Side-action HTML remains above the plain desk fronts.
 The title curtain is not a gameplay fallback.

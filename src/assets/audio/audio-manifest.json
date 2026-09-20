@@ -361,6 +361,57 @@
       ]
     },
     {
+      "id": "civic-cypher-boxing-ring-theme",
+      "kind": "music",
+      "duration": 129.47997916666668,
+      "title": "Boom Bap Old School Hip-Hop Beat",
+      "owner": "Alex Morgan",
+      "license": "CC-BY-4.0",
+      "source": "https://freemusicarchive.org/music/alex-morgan/trap-hip-hop-beats/boom-bap-old-school-hip-hop-beat/",
+      "download": "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/gPErM47lHFyiTrV4ejWhgNku0SEU6EZklOHmmnKp.mp3",
+      "sourceSha256": "5826a96205ccb03fdf7d21bd2bb464f6b8432cde2c8e46242f842291316f03d0",
+      "sceneId": "civic-cypher-boxing-ring",
+      "treatment": "Classic boom-bap instrumental with dusty swung drums, a restrained sample figure, and speech-friendly bass for the civic cypher.",
+      "edit": {
+        "movement": "Complete boom-bap instrumental with a corrected loop seam",
+        "startSeconds": 0,
+        "durationSeconds": 129.47997916666668,
+        "seamless": true
+      },
+      "files": [
+        {
+          "path": "civic-cypher-boxing-ring-theme.wav",
+          "sha256": "60703552bc07d31a8afd656cc9ab1af1bb23b5799e6607535a0285317b3de4d2",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": -16,
+            "truePeakDbfs": -6.02
+          }
+        },
+        {
+          "path": "civic-cypher-boxing-ring-theme.ogg",
+          "sha256": "ae75d295711cf8511e5d9948ccfbe94c4723e16f54ba6e62bdf3e946f5975dc5",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": -16.07,
+            "truePeakDbfs": -5.08
+          }
+        },
+        {
+          "path": "civic-cypher-boxing-ring-theme.mp3",
+          "sha256": "03abd57a725784c57d6bbcdfafb69e0c3e66840d86095e8e53780dbd1d1340ce",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": -16.43,
+            "truePeakDbfs": -6.17
+          }
+        }
+      ]
+    },
+    {
       "id": "role-select",
       "kind": "effect",
       "duration": 0.16,
@@ -716,6 +767,46 @@
             "sampleRate": 48000,
             "integratedLufs": null,
             "truePeakDbfs": -8.42
+          }
+        }
+      ]
+    },
+    {
+      "id": "timer-tick",
+      "kind": "effect",
+      "duration": 0.07,
+      "owner": "Grand Transition contributors",
+      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        {
+          "path": "timer-tick.wav",
+          "sha256": "2234b5c7226bf888541561b4a088225659f1da60cd2502cc542554a77f569fb9",
+          "measurements": {
+            "codec": "pcm_s16le",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -9.33
+          }
+        },
+        {
+          "path": "timer-tick.ogg",
+          "sha256": "6cfc88b8008e9b4cc4a7289ba3a05122b70aa31c4db104b70bf320fdea84f4b8",
+          "measurements": {
+            "codec": "vorbis",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -9.34
+          }
+        },
+        {
+          "path": "timer-tick.mp3",
+          "sha256": "5e0517bfbbdd2d7b217b3a88501be213104765a70d94e46fe2d7d9f29c02709f",
+          "measurements": {
+            "codec": "mp3",
+            "sampleRate": 48000,
+            "integratedLufs": null,
+            "truePeakDbfs": -9.78
           }
         }
       ]

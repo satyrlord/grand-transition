@@ -194,11 +194,11 @@ test('long inline scores keep the latest line, bonuses, and total visible beside
     const match = element as HTMLElement & { presentation: RoundPresentationFrame; updateComplete: Promise<unknown> };
     match.presentation = { ...match.presentation, components: Array.from({ length: 10 }, (_, index) => ({
       kind: 'clause' as const, narrationIndex: index, phraseText: `Your public statement number ${index + 1} failed the audit.`,
-      base: 5, amount: 15, restrictionFactor: 1, weaknessFactor: 1.5, comboFactor: 2, weaknessTags: ['evidence'],
+      base: 5, amount: 20, restrictionFactor: 1, weaknessFactor: 2, comboFactor: 2, weaknessTags: ['evidence'],
     })), emphasis: [
       { kind: 'combo', playerId: 'player-two', text: 'Your public statement', value: 2 },
-      { kind: 'weakness', playerId: 'player-one', text: 'evidence', value: 1.5 },
-    ], total: 150 };
+      { kind: 'weakness', playerId: 'player-one', text: 'evidence', value: 2 },
+    ], total: 200 };
     await match.updateComplete;
   });
   for (const size of [{ width: 1024, height: 720 }, { width: 1024, height: 768 },
@@ -208,8 +208,8 @@ test('long inline scores keep the latest line, bonuses, and total visible beside
     await expect(page.locator('.delivery-score')).toHaveCount(10);
     await expect(page.locator('.delivery-score small')).toHaveCount(0);
     await expect(page.locator('[data-emphasis="combo"]')).toContainText('×2');
-    await expect(page.locator('[data-emphasis="weakness"]')).toContainText('Evidence ×1.5');
-    await expect(page.locator('.delivery-total strong')).toHaveText('150');
+    await expect(page.locator('[data-emphasis="weakness"]')).toContainText('Evidence ×2');
+    await expect(page.locator('.delivery-total strong')).toHaveText('200');
     const geometry = await page.locator('.delivery-receipt').evaluate((record) => {
       const list = record.querySelector('.delivery-components')!;
       const area = list.getBoundingClientRect();

@@ -745,7 +745,7 @@ describe('content schemas', () => {
     );
   });
 
-  test('accepts the ordered 19-character and six-scene foundation', () => {
+  test('accepts the ordered 19-character and seven-scene catalog', () => {
     const result = contentCatalogSchema.parse(sampleContent);
 
     expect(result.characters.map(({ id }) => id)).toEqual([
@@ -783,6 +783,7 @@ describe('content schemas', () => {
       'midnight-call-in-studio',
       'palace-press-hall',
       'influencer-campaign-livestream',
+      'civic-cypher-boxing-ring',
     ]);
     expect(new Set(result.phrases.map((phrase) => phrase.role))).toEqual(
       new Set([

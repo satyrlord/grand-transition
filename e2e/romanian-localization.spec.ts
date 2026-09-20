@@ -1,9 +1,11 @@
 import { lockInSetup } from './helpers/setup';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 import { expect, test, type Page } from '@playwright/test';
+import captainContent from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
 // Keep this spec free of application modules that pull in Vite-only virtual
 // imports: Playwright loads it through the default ESM loader.
 import {
+  displayWeaknessName,
   romanianCharacterNames,
   romanianSceneNames,
 } from '../src/localization/romanian-display-names';
@@ -256,7 +258,9 @@ test('plays Romanian game text under an English interface and annotates it', asy
   const captain = page.locator(
     '.roster-choice[data-character-id="black-sea-captain"][data-skin-id="default"]',
   );
-  await expect(captain).toHaveAccessibleName(/Decorum, Consistency, Former secret police/u);
+  await expect(captain).toHaveAccessibleName(new RegExp(
+    captainContent.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(', '), 'u',
+  ));
   await expect(captain).not.toHaveAccessibleName(/Fosta Securitate/u);
   await expect(page.locator('#sceneId option').first()).not.toHaveAttribute('lang');
   // With an English interface the unlocked action keeps its English wording.

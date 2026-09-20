@@ -15,6 +15,7 @@ import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
 
 export const SCENE_MASTER_NAMES = Object.freeze([
+  'civic-cypher-boxing-ring.png',
   'county-council-ballroom.png',
   'county-council-ballroom-foreground.png',
   'midnight-call-in-studio.png',

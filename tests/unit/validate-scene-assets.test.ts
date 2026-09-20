@@ -119,7 +119,7 @@ beforeAll(async () => {
       ] as const),
     ),
   );
-// Encode all twelve 4K masters with the production codec settings.
+// Encode the complete 4K master set with the production codec settings.
 }, 600_000);
 
 afterEach(async () => {
@@ -133,7 +133,7 @@ afterAll(async () => {
 describe.sequential('scene asset manifest validator', () => {
   test('accepts a complete temporary scene package', async () => {
     await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
-    // The fixture encodes twelve 4K masters first, so the validator shares the
+    // The fixture encodes the complete 4K master set first, so the validator shares the
     // processor with that work and with the other parallel test files.
   }, 120_000);
 
@@ -327,7 +327,7 @@ describe.sequential('scene asset manifest validator', () => {
     'rejects $defect in a final foreground $target',
     async ({ target, defect }) => {
       const manifest = await readManifest();
-      const asset = (manifest.assets as Array<{
+      const assets = manifest.assets as Array<{
         id: string;
         source: { path: string; bytes: number; sha256: string };
         variants: Array<{
@@ -338,7 +338,11 @@ describe.sequential('scene asset manifest validator', () => {
           bytes: number;
           sha256: string;
         }>;
-      }>).find(({ id }) => id === 'county-council-ballroom-foreground')!;
+      }>;
+      const asset = assets.find(({ id }) => id === 'county-council-ballroom-foreground')!;
+      // Check the corrupted foreground before decoding unrelated scene packages.
+      // Manifest order does not change validation requirements or the asset set.
+      manifest.assets = [asset, ...assets.filter((candidate) => candidate !== asset)];
       const record = target === 'source'
         ? asset.source
         : asset.variants.find(({ format, width }) => format === 'webp' && width === 640)!;

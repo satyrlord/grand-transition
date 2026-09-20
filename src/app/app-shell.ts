@@ -446,6 +446,7 @@ export class GrandTransitionApp extends LitElement {
         @return-to-main-menu=${this.returnToMainMenu}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
+        @timer-tick=${this.playTimerTick}
         @return-to-menu=${this.returnToMenu}
         @turn-timer-change=${this.changeTurnTimer}
         @auto-complete-change=${this.changeAutoComplete}
@@ -847,6 +848,12 @@ export class GrandTransitionApp extends LitElement {
       this.manuallyPaused = false;
       this.scheduleAiTurn();
     }
+  };
+
+  private readonly playTimerTick = (event: Event): void => {
+    event.stopPropagation();
+    if (this.view !== 'match' || !this.matchViewportReady || this.manuallyPaused || document.hidden) return;
+    this.audio?.play('timer-tick');
   };
 
   private readonly returnToMenu = (event: Event): void => {

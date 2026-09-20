@@ -489,6 +489,36 @@ test('completes the approved cemetery-turnout sentence as a modifier', () => {
 // adding or removing a card never needs an edit here. They fail only when an
 // authored card cannot reach a complete sentence.
 describe('catalog-wide clause coverage', () => {
+  test.each([
+    ['red-folded-chairman-contract-predicate-predicate-1', 'was', 'were'],
+    ['red-folded-chairman-contract-predicate-predicate-2', 'was', 'were'],
+    ['thunder-tribune-contract-predicate-predicate-1', 'was', 'were'],
+    ['football-tycoon-contract-predicate-predicate-1', 'was', 'were'],
+    ['football-tycoon-contract-predicate-predicate-2', 'was', 'were'],
+    ['football-tycoon-contract-predicate-predicate-3', 'was', 'were'],
+  ])('agrees with singular, plural, and second-person subjects in %s', (family, singular, plural) => {
+    for (const [subject, copula] of [
+      ['national-consensus', singular], ['your-voters', plural], ['you', plural],
+    ]) {
+      const result = analyze([add(subject!), add(`${family}-past`), { kind: 'end' }]);
+      expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
+      if (result.accepted) {
+        expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+      }
+    }
+  });
+
+  test.each([
+    'red-folded-chairman-contract-predicate-predicate-2-present',
+    'thunder-tribune-contract-predicate-predicate-1-present',
+    'football-tycoon-contract-predicate-predicate-2-present',
+    'football-tycoon-contract-predicate-predicate-3-present',
+  ])('uses the second-person copula in %s', (id) => {
+    const result = analyze([add('you'), add(id), { kind: 'end' }]);
+    expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
+    if (result.accepted) expect(result.analysis.publicText).toMatch(/^You are /u);
+  });
+
   test('every shipped ending completes personal, nonpersonal, and plural clauses', () => {
     for (const ending of sampleContent.phrases.filter(({ role }) => role === 'ending')) {
       for (const subject of ['you', 'campaign-promise', 'your-voters']) {

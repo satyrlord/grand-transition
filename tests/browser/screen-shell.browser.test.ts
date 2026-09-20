@@ -14,6 +14,7 @@ import {
   type StartMatchEvent,
 } from '../../src/app/screens/setup-screen';
 import { sampleContent } from '../../src/game-content';
+import { displayWeaknessName } from '../../src/localization/romanian-display-names';
 import {
   createLadderProgress,
   recordLadderResult,
@@ -31,6 +32,10 @@ afterEach(() => {
 // translations can change without rewriting an interaction.
 const lockButton = (side: 'one' | 'two'): HTMLButtonElement | null =>
   document.querySelector<HTMLButtonElement>(`[data-testid="lock-player-${side}"]`);
+
+const publicWeaknesses = (characterId: string): string =>
+  sampleContent.characters.find(({ id }) => id === characterId)!.weaknessTags
+    .map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
 
 test('roster crops and selected stages keep full responsive portrait sources', async () => {
   const setup = await mountSetup(createDefaultSetupSnapshot());
@@ -141,11 +146,11 @@ test('moves through the two-state graph on one URL and restores setup values', a
     .toHaveValue('transition-era-television-studio');
   const weaknesses = document.querySelectorAll('.contestant-weaknesses');
   expect(weaknesses).toHaveLength(2);
-  expect(weaknesses[0]!.textContent).toMatch(
-    /Legacy.*Modernity.*Bureaucracy.*Miners/su,
+  expect(weaknesses[0]!.textContent?.trim()).toBe(
+    publicWeaknesses('red-folded-chairman'),
   );
-  expect(weaknesses[1]!.textContent).toMatch(
-    /Evidence.*Credibility.*Restraint/su,
+  expect(weaknesses[1]!.textContent?.trim()).toBe(
+    publicWeaknesses('thunder-tribune'),
   );
   const weaknessFixture = document.createElement('span');
   weaknessFixture.className = 'contestant-weaknesses';
@@ -177,7 +182,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
         [...document.querySelectorAll('.contestant-weaknesses')].filter(
           (record) =>
             record.textContent?.trim() ===
-            'Legacy · Modernity · Bureaucracy · Miners',
+            publicWeaknesses('red-folded-chairman'),
         ).length,
     )
     .toBe(2);
@@ -215,8 +220,9 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   await setup.updateComplete;
   const transient = setup.querySelector('.character-inspector')!;
   expect(transient.textContent).toMatch(
-    /Character dossier.*Black Sea Captain.*Decorum.*Consistency.*Former secret police/su,
+    /Character dossier.*Black Sea Captain/su,
   );
+  expect(transient.textContent).toContain(publicWeaknesses('black-sea-captain'));
   expect(transient.getAttribute('data-pinned')).toBe('false');
 
   captain.blur();
@@ -233,8 +239,9 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   const pinned = setup.querySelector('.character-inspector')!;
   expect(pinned.getAttribute('data-pinned')).toBe('true');
   expect(pinned.textContent).toMatch(
-    /Pinned dossier.*Black Sea Captain.*Decorum.*Consistency.*Former secret police/su,
+    /Pinned dossier.*Black Sea Captain/su,
   );
+  expect(pinned.textContent).toContain(publicWeaknesses('black-sea-captain'));
 
   const playerOneTarget = setup.querySelector<HTMLButtonElement>(
     '#playerOneCharacterId',
@@ -279,8 +286,9 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   governmentAi.focus();
   await setup.updateComplete;
   expect(setup.querySelector('.character-inspector')?.textContent).toMatch(
-    /Government AI.*Nepotism.*Corruption.*Spending.*Obsolete/su,
+    /Government AI/su,
   );
+  expect(setup.querySelector('.character-inspector')?.textContent).toContain(publicWeaknesses('government-ai'));
 
   await page
     .getByRole('button', { name: /Government AI.*Select for player one/u })
@@ -291,8 +299,8 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   await expect
     .poll(() => playerOneStage.dataset.characterId)
     .toBe('government-ai');
-  expect(playerOneStage.textContent).toMatch(
-    /Nepotism.*Corruption.*Spending.*Obsolete/su,
+  expect(playerOneStage.querySelector('.contestant-weaknesses')?.textContent?.trim()).toBe(
+    publicWeaknesses('government-ai'),
   );
   expect(
     playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,

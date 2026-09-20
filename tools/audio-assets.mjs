@@ -66,6 +66,15 @@ const musicDefinitions = [
     edit: { movement: 'Two complete 32-bar phrases at 116 BPM', startSeconds: 0,
       durationSeconds: 66.20689655172414, repetitions: 2, breakdownSeconds: 16.551724137931036,
       seamless: true } },
+  { id: 'civic-cypher-boxing-ring-theme', sceneId: 'civic-cypher-boxing-ring', duration: 129.47997916666668,
+    sourceFile: 'boom-bap-old-school-hip-hop-beat.mp3', sourceDurationSeconds: 129.47997916666668,
+    provenance: { title: 'Boom Bap Old School Hip-Hop Beat', owner: 'Alex Morgan', license: 'CC-BY-4.0',
+      source: 'https://freemusicarchive.org/music/alex-morgan/trap-hip-hop-beats/boom-bap-old-school-hip-hop-beat/',
+      download: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/gPErM47lHFyiTrV4ejWhgNku0SEU6EZklOHmmnKp.mp3',
+      sourceSha256: '5826a96205ccb03fdf7d21bd2bb464f6b8432cde2c8e46242f842291316f03d0' },
+    treatment: 'Classic boom-bap instrumental with dusty swung drums, a restrained sample figure, and speech-friendly bass for the civic cypher.',
+    edit: { movement: 'Complete boom-bap instrumental with a corrected loop seam', startSeconds: 0,
+      durationSeconds: 129.47997916666668, seamless: true } },
 ];
 export const sceneMusicDefinitions = musicDefinitions.filter(({ sceneId }) => sceneId !== 'menu');
 const effectDefinitions = [
@@ -73,7 +82,7 @@ const effectDefinitions = [
   ['hit-light', 'effect', 0.28], ['hit-heavy', 'effect', 0.55],
   ['weakness', 'effect', 0.45], ['combo', 'effect', 0.6],
   ['continuation-break', 'effect', 0.45], ['comeback', 'effect', 0.75],
-  ['grammar-mistake', 'effect', 0.3],
+  ['grammar-mistake', 'effect', 0.3], ['timer-tick', 'effect', 0.07],
 ];
 export const audioDefinitions = [
   ...musicDefinitions.map(({ id, duration }) => [id, 'music', duration]),
@@ -242,7 +251,7 @@ function compose(index, duration) {
     const t = frame / sampleRate;
     const u = t / duration;
     const envelope = Math.min(1, t / 0.005) * (1 - u) ** 3;
-    const frequencies = [920, 660, 180, 85, 1240, 520, 300, 390, 145];
+    const frequencies = [920, 660, 180, 85, 1240, 520, 300, 390, 145, 1320];
     const frequency = frequencies[index];
     const rising = [1, 4, 5, 7].includes(index);
     const phase = 2 * Math.PI * frequency * (t + (rising ? 1 : -0.45) * t * t / duration);

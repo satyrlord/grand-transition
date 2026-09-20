@@ -74,6 +74,11 @@ export class GrandTransitionSceneAmbience extends LitElement {
           <rect x="1510" y="760" width="32" height="32" />
           <circle cx="1600" cy="690" r="12" />
         </g>`;
+      case 'civic-cypher-boxing-ring':
+        return svg`<g class="scene-motion scene-motion--cypher">
+          <path d="M180 390l24-30 24 30-24 30zM310 330l20-26 20 26-20 26z" />
+          <path d="M1692 390l24-30 24 30-24 30zM1570 330l20-26 20 26-20 26z" />
+        </g>`;
       default:
         return svg`
           <g class="scene-motion scene-ambience-light">

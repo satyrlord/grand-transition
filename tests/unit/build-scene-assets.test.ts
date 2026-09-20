@@ -99,7 +99,9 @@ describe('scene asset build', () => {
     await expect(buildSceneAssets({ sceneRoot: root, only })).rejects.toThrow();
     await writeFile(cachedPath, cachedBytes);
 
-    const selectedPath = path.join(root, first.assets[0].variants[0].path);
+    const selectedAsset = first.assets.find((asset: { id: string }) =>
+      asset.id === only[0])!;
+    const selectedPath = path.join(root, selectedAsset.variants[0].path);
     await writeFile(selectedPath, Buffer.from('replace this selected cache'));
     const second = await buildSceneAssets({ sceneRoot: root, only });
     const secondManifestText = await readFile(path.join(root, 'scene-manifest.json'), 'utf8');
@@ -113,8 +115,8 @@ describe('scene asset build', () => {
     expect(secondVariants).toEqual(firstVariants);
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
-    expect(first.assets).toHaveLength(12);
-    expect(firstVariants).toHaveLength(120);
+    expect(first.assets).toHaveLength(13);
+    expect(firstVariants).toHaveLength(130);
 
     expect(
       first.assets
@@ -132,7 +134,7 @@ describe('scene asset build', () => {
       { id: 'modern-debate-studio-desks', ownerId: 'modern-debate-studio', sourcePath: 'modern-debate-studio-desks.png' },
       { id: 'transition-era-television-studio-desks', ownerId: 'transition-era-television-studio', sourcePath: 'transition-era-television-studio-desks.png' },
     ]);
-    expect(first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back')).toHaveLength(6);
+    expect(first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back')).toHaveLength(7);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');

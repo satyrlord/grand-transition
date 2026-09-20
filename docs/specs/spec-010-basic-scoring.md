@@ -52,12 +52,14 @@ Apply these steps to each clause in order:
 1. Calculate the clause base or use its custom matrix value. Add 2 points for
    each modifier in that clause. The displayed clause base includes these points.
 2. If any phrase in that clause matches a defender weakness, multiply the
-   clause by 1.5 once.
+   clause by 2 once.
 3. Apply noun-combo multipliers as specified in Milestone 011.
 
-Add the final clause values. Always round final non-negative damage up. There is
-no card-value sum, directness bonus, general length bonus, whole-sentence weakness
-multiplier, or nearest-half rounding.
+Add the final clause values. Always round final non-negative damage up. The
+shipped point values and score-producing multipliers are whole numbers, so valid
+gameplay damage has no fractional score values. There is no card-value sum,
+directness bonus, general length bonus, whole-sentence weakness multiplier, or
+nearest-half rounding.
 
 An incomplete sentence and a continued fragment deal zero outgoing damage.
 
@@ -75,7 +77,7 @@ can still activate that multiplier.
   14 at the default multiplier of 3. Each selectable multiplier produces
   `5`, `5 + multiplier`, `5 + 2 * multiplier`, and `5 + 3 * multiplier`.
   Character and scene restrictions do not change clause or finisher damage.
-- **AC-010-03:** Weakness multiplies each matching clause by 1.5 once and does
+- **AC-010-03:** Weakness multiplies each matching clause by 2 once and does
   not multiply unrelated clauses. Neutral connectors, copulas, referents, and
   actions cause no weakness match, including in a compound or continued
   construction. A tagged noun in the same construction still matches normally.

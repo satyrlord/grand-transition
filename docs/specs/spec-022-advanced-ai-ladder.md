@@ -69,7 +69,10 @@ A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
 three Palace Operator opponents in that order. The ladder selects opponents
 without replacement from the other 18 characters in the 19-character catalog. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
-permutation of all six scenes and then repeat.
+permutation of the six founding scenes and then repeat. Additional post-MVP
+scenes remain selectable in custom Single Player and Multiplayer without
+changing the version-1 ladder document's six-scene tuple or invalidating saved
+progress.
 
 A win advances one rung. A loss keeps the same rung and opponent. Abandoning a
 match keeps the rung and records no result. Completion follows the ninth win.

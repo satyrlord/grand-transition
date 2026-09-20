@@ -9,6 +9,7 @@ const tracks: Readonly<Record<Exclude<AudioScene, null>, readonly string[]>> = {
   'midnight-call-in-studio': [sceneMusicTrackIds['midnight-call-in-studio']],
   'palace-press-hall': [sceneMusicTrackIds['palace-press-hall']],
   'influencer-campaign-livestream': [sceneMusicTrackIds['influencer-campaign-livestream']],
+  'civic-cypher-boxing-ring': [sceneMusicTrackIds['civic-cypher-boxing-ring']],
 };
 const assetIds = [...new Set([...Object.values(tracks).flat(), ...effectIds])];
 const fadeSeconds = 0.3;

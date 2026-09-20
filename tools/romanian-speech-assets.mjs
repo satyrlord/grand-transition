@@ -44,12 +44,12 @@ const sources = [
   { name: 'mihai/ro_RO-mihai-medium.onnx.json', url: `${piperBase}ro_RO-mihai-medium.onnx.json`, bytes: 4877, sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e' },
   { name: 'mihai/MODEL_CARD', url: `${piperBase}MODEL_CARD`, bytes: 278, sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1' },
   {
-    name: 'liana/ro_RO-liana-high.onnx',
-    url: `${lianaBase}voices/liana-high/ro_RO-liana-high.onnx`,
-    bytes: 114204023,
-    sha256: 'd8837c0920785d883b584af5af64abac5f528a9914b02f549698786355eada26',
+    name: 'liana/ro_RO-liana-medium.onnx',
+    url: `${lianaBase}voices/liana-medium/ro_RO-liana-medium.onnx`,
+    bytes: 63516050,
+    sha256: '40c6cbe08905ba702f4df5966a3a8de2bcc232db8ad3784db74bbd948d9953d3',
   },
-  { name: 'liana/ro_RO-liana-high.onnx.json', url: `${lianaBase}voices/liana-high/ro_RO-liana-high.onnx.json`, bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
+  { name: 'liana/ro_RO-liana-medium.onnx.json', url: `${lianaBase}voices/liana-medium/ro_RO-liana-medium.onnx.json`, bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
   { name: 'liana/README.md', url: `${lianaBase}README.md`, bytes: 17843, sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01' },
   { name: 'pronounce/ro_dict', url: `${lianaBase}espeak/ro_dict`, bytes: 72506, sha256: '6cd3b221a33308d802b6c4d7bf1e618db4fb1caa92ef165a327fc775ee82e5ca' },
   { name: 'pronounce/ro_extra', url: `${lianaBase}espeak/ro_extra`, bytes: 13456, sha256: 'bef32cd1d8cc9ca5cba64416845c13782ae82b154ce009dd222495ebbd6089d7' },
@@ -66,7 +66,7 @@ const schemaSource = {
 
 const identity = {
   schemaVersion: 1,
-  package: 'Piper-ro_RO-mihai-medium + Piper-ro_RO-liana-high',
+  package: 'Piper-ro_RO-mihai-medium + Piper-ro_RO-liana-medium',
   sampleRate: 22050,
   runtime: 'onnxruntime-web@1.29.0',
   pronunciation: 'espeak-phonemizer@0.1.2',
@@ -89,15 +89,15 @@ const identity = {
       license: 'MIT; dataset CC0',
     },
     {
-      id: 'ro_RO-liana-high',
+      id: 'ro_RO-liana-medium',
       name: 'Piper Romanian female (Liana)',
       lang: 'ro-RO',
       speakerId: 0,
       default: false,
       model: {
-        files: ['liana/model-01.bin', 'liana/model-02.bin'],
-        bytes: 114204137,
-        sha256: '84ed2745cf73dc43a7c352a072a393ec5468eafea01012a77e574b66e5ab97aa',
+        files: ['liana/model.onnx'],
+        bytes: 63516164,
+        sha256: '6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14',
       },
       config: 'liana/config.json',
       license: 'CC BY-NC 4.0',
@@ -110,11 +110,10 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 // Output inventory pinned by the first build. validate() refuses any drift from
 // it, including a changed file size, a changed digest, or an extra file.
 const expectedFiles = [
-  { path: 'NOTICE.txt', bytes: 1587, sha256: '7724e3858de717988e4c6437e0054437be84421604f27be0f156c77213af2d0c' },
+  { path: 'NOTICE.txt', bytes: 1589, sha256: '55d966a3897a7a13162d80f2a3aeba5fc022daa8b878062d45acefedabc29018' },
   { path: 'liana/MODEL_CARD', bytes: 17843, sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01' },
   { path: 'liana/config.json', bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
-  { path: 'liana/model-01.bin', bytes: 100663296, sha256: 'c090e7b3fafa823fa1e5fe3a62d26f5c2873fa1316c8d7ff8d4efc5121bf25c3' },
-  { path: 'liana/model-02.bin', bytes: 13540841, sha256: '360d591849d4a749d0b8a7cec488e8af57fe8403d31e2d78b5722271a2249b68' },
+  { path: 'liana/model.onnx', bytes: 63516164, sha256: '6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14' },
   { path: 'mihai/MODEL_CARD', bytes: 278, sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1' },
   { path: 'mihai/config.json', bytes: 4877, sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e' },
   { path: 'mihai/model.onnx', bytes: 63201408, sha256: '240154e6744cb496897bbb4242121dc1709d3279f25e4f1ba5de61b341c9da38' },
@@ -240,7 +239,7 @@ async function build() {
   await mkdir(cache, { recursive: true });
   // Rebuild from scratch: a stale asset from an earlier layout must not survive
   // into a package the pinned inventory does not describe. That includes the
-  // withdrawn Liana medium weights, now replaced by the high tier.
+  // retired Liana high weights, now replaced by the medium tier.
   await rm(root, { recursive: true, force: true });
   const loaded = new Map();
   for (const source of sources) {
@@ -259,7 +258,7 @@ async function build() {
   }
   if (hash(schema) !== schemaSource.sha256) throw new Error('The pinned ONNX schema hash does not match.');
   const Model = protobuf.parse(schema.toString('utf8')).root.lookupType('onnx.ModelProto');
-  const voiceStems = { mihai: 'ro_RO-mihai-medium', liana: 'ro_RO-liana-high' };
+  const voiceStems = { mihai: 'ro_RO-mihai-medium', liana: 'ro_RO-liana-medium' };
   for (const [voice, stem] of Object.entries(voiceStems)) {
     const patched = patchModel(loaded.get(`${voice}/${stem}.onnx`), Model, voice);
     const model = identity.voices.find(({ id }) => id === stem).model;
@@ -307,7 +306,7 @@ function notice(bucketName) {
     `Mihai (ro_RO-mihai-medium): ${piperSource}`,
     `Pinned revision: ${piperRevision}. Published model repository license: MIT. Training data: CC0 (https://github.com/OHF-Voice/voice-datasets).`,
     '',
-    `Liana (ro_RO-liana-high): ${lianaSource}`,
+    `Liana (ro_RO-liana-medium): ${lianaSource}`,
     `Pinned revision: ${lianaRevision}. Published model repository license: CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/).`,
     'Liana is a third-party voice and is not project code; do not relabel it as MIT. Non-commercial use only per its published terms.',
     `The shipped pronunciation dictionary ro_dict and its source ro_extra come from the same revision.`,

@@ -32,6 +32,9 @@ export function createEnglishGameLocale(
         'Influencer Campaign Livestream',
       'scene.influencer-campaign-livestream.description':
         'A campaign livestream set with ring lights, vertical screens, donation alerts, and wellness props.',
+      'scene.civic-cypher-boxing-ring.name': 'Civic Cypher Boxing Ring',
+      'scene.civic-cypher-boxing-ring.description':
+        'A classic hip-hop battle in a worn Romanian sports hall, with a boxing ring, hanging microphones, vinyl crates, and a roaring cartoon crowd.',
     },
   };
 }

@@ -1,6 +1,6 @@
 // Shared workload for the Milestone 026 deterministic catalog foundation suite.
 //
-// Each per-character case replays 114 independent fixed-seed matches and shares
+// Each per-character case replays every opponent and scene pairing and shares
 // no mutable state with its siblings. The cases are split across sibling test
 // files because Vitest parallelizes files across worker processes while the
 // tests inside one file share a single thread. The workload is synchronous and
@@ -85,7 +85,7 @@ export function catalogFoundationShard(shard: number): readonly CatalogFoundatio
 // and 126 s under that contention, a 1.63 multiplier. Six workers therefore
 // inflate every case in this suite to the edge of the old 120 s budget, and the
 // case that crosses it varies between runs. The budget is a hang guard, not a
-// performance bound: spec-026 fixes the 2,166 setups and their seeds, not a
+// performance bound: specs 026 and 032 fix the catalog setups and their seeds, not a
 // duration, so the guard has to cover the contention multiplier.
 export const catalogFoundationCaseTimeoutMs = 240_000;
 
