@@ -38,6 +38,7 @@ export default defineConfig(({ command }) => ({
         codeSplitting: {
           groups: [
             { name: 'replay-codecs', test: /[/\\]src[/\\]persistence[/\\]codecs[/\\]replay-codec\.ts$/u },
+            { name: 'ladder-runtime', test: /[/\\]src[/\\](?:engine[/\\]ladder|persistence[/\\](?:ladder-progress|codecs[/\\]ladder-progress-codec))\.ts$/u },
             { name: 'common-phrase-data', test: /[/\\]src[/\\]content[/\\]common-phrase-cards\.json$/u },
             { name: 'character-phrase-data', test: /[/\\]src[/\\]content[/\\]characters[/\\]/u },
             { name: 'content-data', test: /[/\\]src[/\\]content[/\\](?!common-phrase-cards\.json|characters[/\\]).*\.json$/u },

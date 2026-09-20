@@ -1,15 +1,6 @@
 import { seededRandomSource, type RandomSource } from './random-source';
 
 export const ladderRungCount = 9;
-export const ladderSceneCount = 6;
-export const ladderSceneIds = Object.freeze([
-  'transition-era-television-studio',
-  'modern-debate-studio',
-  'county-council-ballroom',
-  'midnight-call-in-studio',
-  'palace-press-hall',
-  'influencer-campaign-livestream',
-] as const);
 
 export type LadderDifficulty =
   | 'local-radio-caller'
@@ -31,7 +22,7 @@ export type LadderProgress = Readonly<{
     string,
     string,
   ];
-  sceneOrder: readonly [string, string, string, string, string, string];
+  sceneOrder: readonly string[];
   rungIndex: number;
   wins: number;
   losses: number;
@@ -58,17 +49,12 @@ export function createLadderProgress(
   const opponents = characterIds
     .filter((characterId) => characterId !== selectedCharacterId)
     .toSorted();
-  const availableScenes = new Set(sceneIds);
-  const scenes = [...ladderSceneIds].toSorted();
+  const scenes = validSceneIds(sceneIds);
   if (opponents.length < ladderRungCount) {
     throw new Error('A ladder needs at least nine non-player characters.');
   }
   if (new Set(opponents).size !== opponents.length) {
     throw new Error('A ladder needs unique character identifiers.');
-  }
-  if (sceneIds.length !== availableScenes.size ||
-    scenes.some((sceneId) => !availableScenes.has(sceneId))) {
-    throw new Error('A ladder needs the six unique founding scene identifiers.');
   }
   let nextSeed = seed >>> 0;
   const opponentShuffle = shuffle(opponents, nextSeed, randomSource);
@@ -79,7 +65,7 @@ export function createLadderProgress(
     selectedCharacterId,
     seed: seed >>> 0,
     opponentIds: nine(opponentShuffle.values),
-    sceneOrder: six(sceneShuffle.values),
+    sceneOrder: sceneShuffle.values,
     rungIndex: 0,
     wins: 0,
     losses: 0,
@@ -125,13 +111,43 @@ export function ladderProgressMatchesCatalog(
 ): boolean {
   const characters = new Set(characterIds);
   const scenes = new Set(sceneIds);
+  const progressScenes = new Set(progress.sceneOrder);
   return (
     characters.has(progress.selectedCharacterId) &&
     progress.opponentIds.every((opponentId) => characters.has(opponentId)) &&
-    progress.sceneOrder.length === ladderSceneCount &&
-    progress.sceneOrder.every((sceneId) => scenes.has(sceneId)) &&
-    ladderSceneIds.every((sceneId) => progress.sceneOrder.includes(sceneId))
+    scenes.size > 0 &&
+    scenes.size === sceneIds.length &&
+    progressScenes.size === progress.sceneOrder.length &&
+    progressScenes.size === scenes.size &&
+    progress.sceneOrder.every((sceneId) => scenes.has(sceneId))
   );
+}
+
+export function reconcileLadderScenes(
+  progress: LadderProgress,
+  sceneIds: readonly string[],
+  randomSource: RandomSource = seededRandomSource,
+): LadderProgress {
+  const scenes = validSceneIds(sceneIds);
+  const availableScenes = new Set(scenes);
+  const retainedScenes: string[] = [];
+  const retainedSceneIds = new Set<string>();
+  for (const sceneId of progress.sceneOrder) {
+    if (availableScenes.has(sceneId) && !retainedSceneIds.has(sceneId)) {
+      retainedScenes.push(sceneId);
+      retainedSceneIds.add(sceneId);
+    }
+  }
+  const addedScenes = scenes.filter((sceneId) => !retainedSceneIds.has(sceneId));
+  const shuffledAdditions = shuffle(addedScenes, progress.seed, randomSource).values;
+  const sceneOrder = Object.freeze([...retainedScenes, ...shuffledAdditions]);
+  if (
+    sceneOrder.length === progress.sceneOrder.length &&
+    sceneOrder.every((sceneId, index) => sceneId === progress.sceneOrder[index])
+  ) {
+    return progress;
+  }
+  return deepFreeze({ ...progress, sceneOrder });
 }
 
 export function ladderDifficulty(rungIndex: number): LadderDifficulty {
@@ -173,15 +189,14 @@ function nine(values: readonly string[]): LadderProgress['opponentIds'] {
   ];
 }
 
-function six(values: readonly string[]): LadderProgress['sceneOrder'] {
-  return [
-    values[0]!,
-    values[1]!,
-    values[2]!,
-    values[3]!,
-    values[4]!,
-    values[5]!,
-  ];
+function validSceneIds(sceneIds: readonly string[]): string[] {
+  if (sceneIds.length === 0) {
+    throw new Error('A ladder needs at least one scene identifier.');
+  }
+  if (new Set(sceneIds).size !== sceneIds.length) {
+    throw new Error('A ladder needs unique scene identifiers.');
+  }
+  return [...sceneIds].toSorted();
 }
 
 function deepFreeze<Value>(value: Value): Value {

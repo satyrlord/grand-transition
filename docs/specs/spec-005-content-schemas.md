@@ -280,8 +280,8 @@ simulation, and browser validation must pass before it can ship.
   family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,
   and `will be dragged before the cameras`. The `posted-on-social-media` family
-  renders `was posted on social media`, `is posted on social media`, and
-  `will be posted on social media`. The
+  renders `cheered for a Russian attack`, `cheers for a Russian attack`, and
+  `will cheer for a Russian attack`. The
   `harasses-innocent-people-on-social-media` family renders `harassed innocent
   people on social media`, `harasses innocent people on social media`, and
   `will harass innocent people on social media`.

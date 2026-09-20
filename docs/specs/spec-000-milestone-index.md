@@ -312,8 +312,9 @@ source-only review does not satisfy them.
     tested artifact deploys and passes smoke tests.
 32. [Civic Cypher Boxing Ring](spec-032-civic-cypher-boxing-ring.md). Budget: 8.
     A seventh bilingual playable scene adds original Romanian hip-hop battle
-    art, a complete scene phrase pool, local boom-bap music, and focused
-    production-browser evidence without changing the version-1 ladder tuple.
+    art, a complete scene phrase pool, local boom-bap music, focused
+    production-browser evidence, and automatic inclusion in the catalog-driven
+    Ladder scene order.
 
 Each milestone follows its explicit **Depends on** field. Milestone filenames,
 headings, acceptance IDs, and references use the same numeric identifier. This

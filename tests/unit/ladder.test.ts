@@ -4,6 +4,7 @@ import {
   currentLadderRung,
   ladderDifficulty,
   ladderProgressMatchesCatalog,
+  reconcileLadderScenes,
   recordLadderResult,
   type LadderProgress,
 } from '../../src/engine/ladder';
@@ -69,10 +70,11 @@ const golden: LadderProgress = Object.freeze({
   sceneOrder: [
     'influencer-campaign-livestream',
     'palace-press-hall',
+    'county-council-ballroom',
     'midnight-call-in-studio',
     'modern-debate-studio',
     'transition-era-television-studio',
-    'county-council-ballroom',
+    'civic-cypher-boxing-ring',
   ] as const,
   rungIndex: 0,
   wins: 0,
@@ -81,7 +83,7 @@ const golden: LadderProgress = Object.freeze({
 });
 
 describe('ladder engine', () => {
-  test('reproduces nine unique opponents and the founding six-scene permutation', () => {
+  test('reproduces nine unique opponents and a permutation of every catalog scene', () => {
     const progress = createLadderProgress(
       'red-folded-chairman',
       22_026,
@@ -99,7 +101,38 @@ describe('ladder engine', () => {
     ).toEqual(golden);
     expect(new Set(progress.opponentIds)).toHaveLength(9);
     expect(progress.opponentIds).not.toContain(progress.selectedCharacterId);
-    expect(new Set(progress.sceneOrder)).toHaveLength(6);
+    expect(new Set(progress.sceneOrder)).toEqual(new Set(sceneIds));
+  });
+
+  test.each([
+    [['only-scene']],
+    [Array.from({ length: 12 }, (_, index) => `scene-${index + 1}`)],
+  ])('supports a dynamic catalog of %s scenes', (dynamicSceneIds) => {
+    const progress = createLadderProgress(
+      'red-folded-chairman',
+      22_026,
+      characterIds,
+      dynamicSceneIds,
+    );
+    expect(progress.sceneOrder).toHaveLength(dynamicSceneIds.length);
+    expect(new Set(progress.sceneOrder)).toEqual(new Set(dynamicSceneIds));
+    expect(
+      createLadderProgress(
+        'red-folded-chairman',
+        22_026,
+        characterIds,
+        [...dynamicSceneIds].reverse(),
+      ),
+    ).toEqual(progress);
+  });
+
+  test('rejects empty or duplicate scene catalogs', () => {
+    expect(() => createLadderProgress(
+      'red-folded-chairman', 22_026, characterIds, [],
+    )).toThrow('at least one scene identifier');
+    expect(() => createLadderProgress(
+      'red-folded-chairman', 22_026, characterIds, ['scene-1', 'scene-1'],
+    )).toThrow('unique scene identifiers');
   });
 
   test('maps three rungs to each difficulty and rotates scenes', () => {
@@ -125,8 +158,45 @@ describe('ladder engine', () => {
     expect(currentLadderRung(rungSeven)).toMatchObject({
       number: 7,
       difficulty: 'palace-operator',
-      sceneId: 'influencer-campaign-livestream',
+      sceneId: 'civic-cypher-boxing-ring',
     });
+  });
+
+  test('reconciles added and removed scenes without losing ladder progress', () => {
+    const legacy = recordLadderResult(createLadderProgress(
+      'red-folded-chairman',
+      22_026,
+      characterIds,
+      sceneIds.slice(0, 6),
+    ), 'win');
+    const changedSceneIds = [
+      ...sceneIds.filter((sceneId) => sceneId !== 'modern-debate-studio'),
+      'future-scene-one',
+      'future-scene-two',
+    ];
+    const reconciled = reconcileLadderScenes(legacy, changedSceneIds);
+    const retained = legacy.sceneOrder.filter(
+      (sceneId) => changedSceneIds.includes(sceneId),
+    );
+
+    expect(reconciled).toMatchObject({
+      selectedCharacterId: legacy.selectedCharacterId,
+      opponentIds: legacy.opponentIds,
+      rungIndex: 1,
+      wins: 1,
+      losses: 0,
+      completed: false,
+    });
+    expect(reconciled.sceneOrder.slice(0, retained.length)).toEqual(retained);
+    expect(new Set(reconciled.sceneOrder)).toEqual(new Set(changedSceneIds));
+    expect(reconcileLadderScenes(legacy, [...changedSceneIds].reverse()))
+      .toEqual(reconciled);
+    expect(reconcileLadderScenes(reconciled, changedSceneIds)).toBe(reconciled);
+    expect(ladderProgressMatchesCatalog(
+      reconciled,
+      characterIds,
+      changedSceneIds,
+    )).toBe(true);
   });
 
   test('keeps the rung on loss and abandon, and completes after the ninth win', () => {
@@ -174,7 +244,7 @@ describe('ladder engine', () => {
         characterIds,
         sceneIds.filter((id) => id !== 'civic-cypher-boxing-ring'),
       ),
-    ).toBe(true);
+    ).toBe(false);
   });
 });
 
@@ -191,6 +261,17 @@ describe('ladder progress codec and repository', () => {
       progress: afterWin,
       persistenceFailure: null,
       usingMemoryFallback: false,
+    });
+  });
+
+  test.each([
+    [['only-scene']],
+    [Array.from({ length: 12 }, (_, index) => `scene-${index + 1}`)],
+  ])('round-trips a variable-length scene order with %s entries', (sceneOrder) => {
+    const progress = { ...golden, sceneOrder };
+    expect(decodeLadderProgress(encodeLadderProgress(progress))).toEqual({
+      ok: true,
+      value: progress,
     });
   });
 
@@ -230,7 +311,7 @@ describe('ladder progress codec and repository', () => {
 
   test.each([
     ['opponentIds', { opponentIds: [...golden.opponentIds.slice(0, 8), golden.selectedCharacterId] }],
-    ['sceneOrder', { sceneOrder: golden.sceneOrder.slice(0, 5) }],
+    ['sceneOrder', { sceneOrder: [] }],
     ['rungIndex', { rungIndex: 10 }],
     ['wins', { wins: 1 }],
     ['completed', { completed: true }],

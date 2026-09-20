@@ -60,6 +60,7 @@ import {
   createLadderProgress,
   currentLadderRung,
   ladderProgressMatchesCatalog,
+  reconcileLadderScenes,
   type LadderProgress,
 } from '../engine/ladder';
 import {
@@ -258,14 +259,33 @@ export class GrandTransitionApp extends LitElement {
     });
     this.view = 'title';
     this.setupSnapshot = createDefaultSetupSnapshot();
-    this.ladderSnapshot = this.ladderProgressRepository.validateCatalog(
-      (progress) =>
-        ladderProgressMatchesCatalog(
-          progress,
-          sampleContent.characters.map(({ id }) => id),
-          sampleContent.scenes.map(({ id }) => id),
-        ),
-    );
+    const storedLadderSnapshot = this.ladderProgressRepository.snapshot();
+    const storedLadderProgress = storedLadderSnapshot.progress;
+    if (!storedLadderProgress) {
+      this.ladderSnapshot = storedLadderSnapshot;
+    } else {
+      const characterIds = sampleContent.characters.map(({ id }) => id);
+      const sceneIds = sampleContent.scenes.map(({ id }) => id);
+      const reconciledProgress = reconcileLadderScenes(
+        storedLadderProgress,
+        sceneIds,
+      );
+      if (!ladderProgressMatchesCatalog(
+        reconciledProgress,
+        characterIds,
+        sceneIds,
+      )) {
+        this.ladderSnapshot = this.ladderProgressRepository.validateCatalog(
+          () => false,
+        );
+      } else if (reconciledProgress === storedLadderProgress) {
+        this.ladderSnapshot = storedLadderSnapshot;
+      } else {
+        this.ladderSnapshot = this.ladderProgressRepository.replace(
+          reconciledProgress,
+        );
+      }
+    }
     if (this.ladderSnapshot.progress) {
       this.setupSnapshot = setupSnapshotForLadder(
         this.setupSnapshot,
@@ -1092,7 +1112,8 @@ function setupSnapshotForLadder(
   const rung = currentLadderRung(progress);
   const opponentId = rung?.opponentCharacterId ?? progress.opponentIds.at(-1)!;
   const sceneId =
-    rung?.sceneId ?? progress.sceneOrder[(progress.opponentIds.length - 1) % 6]!;
+    rung?.sceneId ??
+      progress.sceneOrder[(progress.opponentIds.length - 1) % progress.sceneOrder.length]!;
   return Object.freeze({
     ...snapshot,
     mode: 'ladder',

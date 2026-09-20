@@ -20,6 +20,10 @@ const uniqueIdentifiers = <Length extends number>(length: Length) =>
     .array(identifier)
     .length(length)
     .refine((values) => new Set(values).size === values.length);
+const nonEmptyUniqueIdentifiers = z
+  .array(identifier)
+  .min(1)
+  .refine((values) => new Set(values).size === values.length);
 
 const schema = z
   .object({
@@ -27,7 +31,7 @@ const schema = z
     selectedCharacterId: identifier,
     seed: z.number().int().min(0).max(0xffff_ffff),
     opponentIds: uniqueIdentifiers(9),
-    sceneOrder: uniqueIdentifiers(6),
+    sceneOrder: nonEmptyUniqueIdentifiers,
     rungIndex: z.number().int().min(0).max(9),
     wins: z.number().int().min(0),
     losses: z.number().int().min(0),
@@ -120,14 +124,7 @@ function parse(value: unknown): LadderProgressCodecResult {
         data.opponentIds[7]!,
         data.opponentIds[8]!,
       ],
-      sceneOrder: [
-        data.sceneOrder[0]!,
-        data.sceneOrder[1]!,
-        data.sceneOrder[2]!,
-        data.sceneOrder[3]!,
-        data.sceneOrder[4]!,
-        data.sceneOrder[5]!,
-      ],
+      sceneOrder: [...data.sceneOrder],
     }),
   };
 }
