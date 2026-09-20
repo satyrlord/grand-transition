@@ -6,7 +6,7 @@ import {
 } from '../localization/interface-locale';
 
 // Lit localization runtime configuration. The interface locale selects the Lit
-// message templates; the game locale stays separate and arrives in Phase 2.
+// message templates; the game locale stays separate.
 // Configuration happens once, before the application shell is imported.
 const localization = configureLocalization({
   sourceLocale: defaultInterfaceLocale,
@@ -34,8 +34,4 @@ export async function setInterfaceLocale(
   await localization.setLocale(locale);
 }
 
-export function interfaceLocaleIsConfigured(): boolean {
-  void localization;
-  return true;
-}
 export { documentLanguageFor };

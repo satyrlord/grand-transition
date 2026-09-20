@@ -110,7 +110,7 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 // Output inventory pinned by the first build. validate() refuses any drift from
 // it, including a changed file size, a changed digest, or an extra file.
 const expectedFiles = [
-  { path: 'NOTICE.txt', bytes: 1589, sha256: '55d966a3897a7a13162d80f2a3aeba5fc022daa8b878062d45acefedabc29018' },
+  { path: 'NOTICE.txt', bytes: 1591, sha256: 'b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b' },
   { path: 'liana/MODEL_CARD', bytes: 17843, sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01' },
   { path: 'liana/config.json', bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
   { path: 'liana/model.onnx', bytes: 63516164, sha256: '6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14' },
@@ -131,7 +131,7 @@ async function download(url) {
   return Buffer.from(await response.arrayBuffer());
 }
 
-// Sources are cached so a repeated build does not re-download 177 MB of weights.
+// Cache pinned sources for repeated builds.
 async function fetchPinned({ name, url, bytes, sha256 }) {
   const file = path.join(cache, name);
   let content;
@@ -315,7 +315,7 @@ function notice(bucketName) {
     `eSpeak NG source revision: ${espeakRevision} (release 1.52.0).`,
     'GPL obligation: the complete corresponding source of eSpeak NG is available at',
     'https://github.com/espeak-ng/espeak-ng and https://github.com/OHF-Voice/piper1-gpl at the pinned revisions above.',
-    'See espeak-phonemizer-LICENSE and espeak-phonemizer-NOTICES in this directory.',
+    'See pronounce/espeak-phonemizer-LICENSE and pronounce/espeak-phonemizer-NOTICES.',
     `The shipped pronouncing data is trimmed to Romanian: core.data plus ${bucketName}.data.`,
     '',
     identity.modification,

@@ -112,7 +112,7 @@ describe('Romanian interface catalog', () => {
     }
   });
 
-  test('keeps the product name and the autonyms out of the catalog', () => {
+  test('keeps brand words untranslated and language autonyms out of the catalog', () => {
     const bySource = new Map(units.map((unit) => [unit.source, unit.target]));
     expect(bySource.get('Grand')).toBe('Grand');
     expect(bySource.get('Transition')).toBe('Transition');
