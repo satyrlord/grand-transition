@@ -76,6 +76,13 @@ references, protected-trait insults, sexual humiliation, and threats.
 ## Exact constraints
 
 - Identifiers use lower-case kebab case.
+- Phrase identifiers describe only their owner, role, stable numeric slot, and,
+  for verbs and predicates, tense. Common cards use
+  `common-<role>-<slot>` and character cards use
+  `<character-id>-<role>-<slot>`. A verb or predicate uses the neutral family
+  identifier `<owner>-<role>-<slot>` and appends `-past`, `-present`, or
+  `-future` to its card identifier. Slots contain at least three digits. They
+  are never renumbered or reused when wording changes or a card is removed.
 - Neutral phrases use neutral identifiers and explicit empty `tags` arrays.
   Tags describe meaning expressed by the phrase, not an implied political
   context. Plain connectors (`and`, `but`, `because`, `yet`, `so`, `with`),
@@ -98,9 +105,8 @@ references, protected-trait insults, sexual humiliation, and threats.
   Each verb and predicate declares one tense family and one of the `past`,
   `present`, or `future` tenses. A family contains at most one card for each
   tense, and all of its cards have distinct player-visible English text. Each
-  family supplies all three tenses except `should-have-been`, which supplies
-  only the distinct `should have been` and `should be` forms. A past card is
-  common, a present card is uncommon, and a future card is rare.
+  family supplies all three tenses. A past card is common, a present card is
+  uncommon, and a future card is rare.
 - A finisher score is an integer from 1 through 20.
 - A custom clause score is an integer from 0 through 100.
 - Nouns alone own noun score groups, grammatical number, grammatical person,
@@ -197,8 +203,8 @@ in setup and score explanations. Phrase references use `the former secret
 police`; the past miners phrase reads `brought the miners to Bucharest`.
 The miners tense family keeps `miners` and `legacy` tags. Its concise wording
 does not describe deception and has no `credibility` tag.
-`your-circumscription` reads `your electoral district`, and
-`your-concubine` reads `your partner with a reserved public office`.
+`common-noun-030` reads `your electoral district`, and
+`common-noun-040` reads `your partner with a reserved public office`.
 The Chairman's ancient-history ending reads
 `and the Dacs come from the Tracs.` Its ancestry reference has only the
 `legacy` weakness tag. Preserve this exact approved wording; do not claim that
@@ -276,23 +282,23 @@ simulation, and browser validation must pass before it can ship.
   predicate `was a snitch`.
 
   Every player-visible phrase text and agreement form contains no more than 11
-  whitespace-delimited words. The stable `drags-before-the-cameras` tense
+  whitespace-delimited words. The stable `common-predicate-002` tense
   family renders three passive predicates.
   They are `is dragged before the cameras`, `was dragged before the cameras`,
-  and `will be dragged before the cameras`. The `posted-on-social-media` family
+  and `will be dragged before the cameras`. The `common-predicate-003` family
   renders `cheered for a Russian attack`, `cheers for a Russian attack`, and
   `will cheer for a Russian attack`. The
-  `harasses-innocent-people-on-social-media` family renders `harassed innocent
+  `common-predicate-004` family renders `harassed innocent
   people on social media`, `harasses innocent people on social media`, and
   `will harass innocent people on social media`.
 
-  The common ending `and-most-of-your-followers-are-bots` renders
+  The common ending `common-ending-010` renders
   `and most of your followers are bots.`
 
   The only continuation is the unrestricted card whose player-visible cue is
   always `[...]`. It remains neutral and does not require quote provenance.
 
-  The `under-the-national-banner` ending renders the real English form of the
+  The `common-ending-008` ending renders the real English form of the
   [public 2017 civic-protest
 slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-january-4-february-2017-id124467.html)
   `Noaptea, ca hoții`. A real phrase keeps its real wording and meaning so that
@@ -304,7 +310,7 @@ slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-jan
   latter is required for every common predicate, modifier, and ending. No
   entry names or identifies a real person in shipped content.
 
-  The user-requested `an-extorsion-of-a-clearance` noun renders the documented
+  The user-requested `common-noun-211` noun renders the documented
   Romanian internet-meme phrase for a nonsense technical procedure with its real
   wording. It names no person and asserts no real act.
 - **AC-005-08:** The common conjunction pool contains exactly five cards. Every

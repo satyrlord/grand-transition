@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "county-baron-foundation-noun",
+      "id": "county-baron-noun-001",
       "role": "noun",
       "text": "my special shoe box",
       "tags": [],
@@ -63,7 +63,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-foundation-modifier",
+      "id": "county-baron-modifier-001",
       "role": "modifier",
       "text": "after the pothole inspection's family photo",
       "tags": [
@@ -73,7 +73,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "county-baron-foundation-ending",
+      "id": "county-baron-ending-001",
       "role": "ending",
       "text": "and the road contract runs on icing sugar.",
       "tags": [
@@ -84,7 +84,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "county-baron-sunday-job-interview",
+      "id": "county-baron-ending-002",
       "role": "ending",
       "text": "and the interview happened at Sunday lunch.",
       "tags": [
@@ -94,7 +94,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "county-baron-ribbon-roundabout",
+      "id": "county-baron-noun-002",
       "role": "noun",
       "text": "a roundabout built around the ribbon",
       "tags": [
@@ -114,7 +114,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-cousin-tender",
+      "id": "county-baron-noun-003",
       "role": "noun",
       "text": "a form asking if we're related",
       "tags": [
@@ -135,7 +135,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-portable-opening-ceremony",
+      "id": "county-baron-noun-004",
       "role": "noun",
       "text": "a portable ceremony seeking a finished road",
       "tags": [
@@ -155,7 +155,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-municipal-dinner-table",
+      "id": "county-baron-noun-005",
       "role": "noun",
       "text": "a budget drawn on the dinner table",
       "tags": [
@@ -176,7 +176,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-pothole-warranty",
+      "id": "county-baron-noun-006",
       "role": "noun",
       "text": "a pothole warranty that expires in rain",
       "tags": [
@@ -197,7 +197,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-verb-1-past",
+      "id": "county-baron-verb-001-past",
       "role": "verb",
       "text": "reserved a seat at the family tender for",
       "singularText": "reserved a seat at the family tender for",
@@ -229,10 +229,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-verb-1"
+      "tenseFamily": "county-baron-verb-001"
     },
     {
-      "id": "county-baron-verb-1-present",
+      "id": "county-baron-verb-001-present",
       "role": "verb",
       "text": "reserves a seat at the family tender for",
       "singularText": "reserves a seat at the family tender for",
@@ -264,10 +264,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-verb-1"
+      "tenseFamily": "county-baron-verb-001"
     },
     {
-      "id": "county-baron-verb-1-future",
+      "id": "county-baron-verb-001-future",
       "role": "verb",
       "text": "will reserve a seat at the family tender for",
       "singularText": "will reserve a seat at the family tender for",
@@ -299,10 +299,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-verb-1"
+      "tenseFamily": "county-baron-verb-001"
     },
     {
-      "id": "county-baron-verb-2-past",
+      "id": "county-baron-verb-002-past",
       "role": "verb",
       "text": "awarded a ceremonial shovel to",
       "singularText": "awarded a ceremonial shovel to",
@@ -333,10 +333,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-verb-2"
+      "tenseFamily": "county-baron-verb-002"
     },
     {
-      "id": "county-baron-verb-2-present",
+      "id": "county-baron-verb-002-present",
       "role": "verb",
       "text": "awards a ceremonial shovel to",
       "singularText": "awards a ceremonial shovel to",
@@ -367,10 +367,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-verb-2"
+      "tenseFamily": "county-baron-verb-002"
     },
     {
-      "id": "county-baron-verb-2-future",
+      "id": "county-baron-verb-002-future",
       "role": "verb",
       "text": "will award a ceremonial shovel to",
       "singularText": "will award a ceremonial shovel to",
@@ -401,10 +401,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-verb-2"
+      "tenseFamily": "county-baron-verb-002"
     },
     {
-      "id": "county-baron-predicate-1-past",
+      "id": "county-baron-predicate-001-past",
       "role": "predicate",
       "text": "counted one ribbon twice for the road total",
       "singularText": "counted one ribbon twice for the road total",
@@ -430,10 +430,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-predicate-1"
+      "tenseFamily": "county-baron-predicate-001"
     },
     {
-      "id": "county-baron-predicate-1-present",
+      "id": "county-baron-predicate-001-present",
       "role": "predicate",
       "text": "counts one ribbon twice for the road total",
       "singularText": "counts one ribbon twice for the road total",
@@ -459,10 +459,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-predicate-1"
+      "tenseFamily": "county-baron-predicate-001"
     },
     {
-      "id": "county-baron-predicate-1-future",
+      "id": "county-baron-predicate-001-future",
       "role": "predicate",
       "text": "will count one ribbon twice for the road total",
       "singularText": "will count one ribbon twice for the road total",
@@ -488,10 +488,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-predicate-1"
+      "tenseFamily": "county-baron-predicate-001"
     },
     {
-      "id": "county-baron-review-modifier",
+      "id": "county-baron-modifier-002",
       "role": "modifier",
       "text": "with the inspector at the family table",
       "tags": [
@@ -501,7 +501,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "county-baron-contrast",
+      "id": "county-baron-conjunction-001",
       "role": "conjunction",
       "text": "but, among familiar faces,",
       "connectorKind": "but",
@@ -509,7 +509,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "county-baron-contract-noun-1-a-road-with-a-reserved-ribbon",
+      "id": "county-baron-noun-007",
       "role": "noun",
       "text": "a doughnut where the budget should be",
       "tags": [
@@ -526,7 +526,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-contract-noun-2-a-cousin-shaped-procurement-stamp",
+      "id": "county-baron-noun-008",
       "role": "noun",
       "text": "a family tree at the tender",
       "tags": [
@@ -543,7 +543,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "county-baron-contract-noun-3-a-bridge-with-a-buffet-schedule",
+      "id": "county-baron-noun-009",
       "role": "noun",
       "text": "a contract with a Sunday lunch",
       "tags": [
@@ -560,7 +560,7 @@
       "rarity": "rare"
     },
     {
-      "id": "county-baron-contract-noun-4-a-maintenance-invoice-in-a-flower-bed",
+      "id": "county-baron-noun-010",
       "role": "noun",
       "text": "a specialist chosen at the family table",
       "tags": [
@@ -577,7 +577,7 @@
       "rarity": "common"
     },
     {
-      "id": "county-baron-contract-verb-counts-ribbon-twice-past",
+      "id": "county-baron-verb-003-past",
       "role": "verb",
       "text": "served doughnuts to",
       "tags": [
@@ -596,10 +596,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+      "tenseFamily": "county-baron-verb-003"
     },
     {
-      "id": "county-baron-contract-verb-counts-ribbon-twice-present",
+      "id": "county-baron-verb-003-present",
       "role": "verb",
       "text": "serves doughnuts to",
       "singularText": "serves doughnuts to",
@@ -622,10 +622,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+      "tenseFamily": "county-baron-verb-003"
     },
     {
-      "id": "county-baron-contract-verb-counts-ribbon-twice-future",
+      "id": "county-baron-verb-003-future",
       "role": "verb",
       "text": "will serve doughnuts to",
       "tags": [
@@ -644,10 +644,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-contract-verb-counts-ribbon-twice"
+      "tenseFamily": "county-baron-verb-003"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-1-past",
+      "id": "county-baron-predicate-002-past",
       "role": "predicate",
       "text": "was a family matter with a public title",
       "tags": [
@@ -666,10 +666,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+      "tenseFamily": "county-baron-predicate-002"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-1-present",
+      "id": "county-baron-predicate-002-present",
       "role": "predicate",
       "text": "is a family matter with a public title",
       "singularText": "is a family matter with a public title",
@@ -692,10 +692,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+      "tenseFamily": "county-baron-predicate-002"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-1-future",
+      "id": "county-baron-predicate-002-future",
       "role": "predicate",
       "text": "will be a family matter with a public title",
       "tags": [
@@ -714,10 +714,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-contract-predicate-predicate-1"
+      "tenseFamily": "county-baron-predicate-002"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-2-past",
+      "id": "county-baron-predicate-003-past",
       "role": "predicate",
       "text": "was a road map with a preferred destination",
       "tags": [
@@ -736,10 +736,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+      "tenseFamily": "county-baron-predicate-003"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-2-present",
+      "id": "county-baron-predicate-003-present",
       "role": "predicate",
       "text": "is a road map with a preferred destination",
       "singularText": "is a road map with a preferred destination",
@@ -762,10 +762,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+      "tenseFamily": "county-baron-predicate-003"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-2-future",
+      "id": "county-baron-predicate-003-future",
       "role": "predicate",
       "text": "will be a road map with a preferred destination",
       "tags": [
@@ -784,10 +784,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-contract-predicate-predicate-2"
+      "tenseFamily": "county-baron-predicate-003"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-3-past",
+      "id": "county-baron-predicate-004-past",
       "role": "predicate",
       "text": "was a grant wearing a ceremonial bow",
       "tags": [
@@ -806,10 +806,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+      "tenseFamily": "county-baron-predicate-004"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-3-present",
+      "id": "county-baron-predicate-004-present",
       "role": "predicate",
       "text": "is a grant wearing a ceremonial bow",
       "singularText": "is a grant wearing a ceremonial bow",
@@ -832,10 +832,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+      "tenseFamily": "county-baron-predicate-004"
     },
     {
-      "id": "county-baron-contract-predicate-predicate-3-future",
+      "id": "county-baron-predicate-004-future",
       "role": "predicate",
       "text": "will be a grant wearing a ceremonial bow",
       "tags": [
@@ -854,10 +854,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-contract-predicate-predicate-3"
+      "tenseFamily": "county-baron-predicate-004"
     },
     {
-      "id": "county-baron-contract-modifier-under-a-family-seating-plan",
+      "id": "county-baron-modifier-003",
       "role": "modifier",
       "text": "under-a-family-seating-plan",
       "tags": [
@@ -866,7 +866,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "county-baron-contract-ending-and-the-ribbon-led-to-the-cousin",
+      "id": "county-baron-ending-003",
       "role": "ending",
       "text": "and the ribbon led to the cousin.",
       "tags": [
@@ -876,7 +876,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "county-baron-contract-ending-and-the-road-arrived-after-dessert",
+      "id": "county-baron-ending-004",
       "role": "ending",
       "text": "and the road arrived after dessert.",
       "tags": [
@@ -886,7 +886,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "county-baron-contract-ending-and-the-tender-brought-its-own-answer-sheet",
+      "id": "county-baron-ending-005",
       "role": "ending",
       "text": "and the tender brought its own answer sheet.",
       "tags": [

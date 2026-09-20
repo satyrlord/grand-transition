@@ -366,27 +366,27 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
     const firstSpeakerId = state.activePlayerId;
-    state = withPrivateCard(state, firstSpeakerId, 'your-father');
-    state = selectPrivateCard(state, firstSpeakerId, 'your-father');
+    state = withPrivateCard(state, firstSpeakerId, 'common-noun-037');
+    state = selectPrivateCard(state, firstSpeakerId, 'common-noun-037');
 
     const secondSpeakerId = state.activePlayerId;
-    state = withPrivateCard(state, secondSpeakerId, 'national-consensus');
-    state = selectPrivateCard(state, secondSpeakerId, 'national-consensus');
-    state = withPrivateCard(state, firstSpeakerId, 'is-rejected-by-own-voters');
+    state = withPrivateCard(state, secondSpeakerId, 'common-noun-001');
+    state = selectPrivateCard(state, secondSpeakerId, 'common-noun-001');
+    state = withPrivateCard(state, firstSpeakerId, 'common-predicate-009-present');
     state = selectPrivateCard(
       state,
       firstSpeakerId,
-      'is-rejected-by-own-voters',
+      'common-predicate-009-present',
     );
     state = withPrivateCard(
       state,
       secondSpeakerId,
-      'is-rejected-by-own-voters',
+      'common-predicate-009-present',
     );
     state = selectPrivateCard(
       state,
       secondSpeakerId,
-      'is-rejected-by-own-voters',
+      'common-predicate-009-present',
     );
     state = accept(state, {
       type: 'commit-sentence',
@@ -408,8 +408,8 @@ describe('match-screen snapshot', () => {
       'Select a noun to begin.',
     );
 
-    state = withPrivateCard(state, secondSpeakerId, 'your-concubine');
-    state = selectPrivateCard(state, secondSpeakerId, 'your-concubine');
+    state = withPrivateCard(state, secondSpeakerId, 'common-noun-040');
+    state = selectPrivateCard(state, secondSpeakerId, 'common-noun-040');
     state = accept(state, {
       type: 'commit-sentence',
       source: 'user',
@@ -440,12 +440,12 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('start-match'));
     state = accept(state, lifecycleCommand('prepare-round'));
     const firstSpeakerId = state.activePlayerId;
-    state = withPrivateCard(state, firstSpeakerId, 'your-father');
-    state = selectPrivateCard(state, firstSpeakerId, 'your-father');
+    state = withPrivateCard(state, firstSpeakerId, 'common-noun-037');
+    state = selectPrivateCard(state, firstSpeakerId, 'common-noun-037');
 
     const secondSpeakerId = state.activePlayerId;
-    state = withPrivateCard(state, secondSpeakerId, 'national-consensus');
-    state = selectPrivateCard(state, secondSpeakerId, 'national-consensus');
+    state = withPrivateCard(state, secondSpeakerId, 'common-noun-001');
+    state = selectPrivateCard(state, secondSpeakerId, 'common-noun-001');
     state = accept(state, {
       type: 'commit-sentence',
       source: 'user',
@@ -478,10 +478,10 @@ describe('match-screen snapshot', () => {
     const firstId = state.playerOrder[0];
     const secondId = state.playerOrder[1];
     for (const [playerId, phraseId] of [
-      [firstId, 'national-consensus'],
-      [secondId, 'televised-revolution'],
-      [firstId, 'belongs-in-a-party-museum'],
-      [secondId, 'makes-own-voters-change-the-channel'],
+      [firstId, 'common-noun-001'],
+      [secondId, 'common-noun-002'],
+      [firstId, 'common-predicate-010-present'],
+      [secondId, 'common-predicate-011-present'],
     ] as const) {
       state = withPrivateCard(state, playerId, phraseId);
       state = selectPrivateCard(state, playerId, phraseId);
@@ -510,17 +510,17 @@ describe('match-screen snapshot', () => {
           ...original,
           constructionPhrases: [
             {
-              phraseId: 'national-consensus',
+              phraseId: 'common-noun-001',
               text: 'National consensus',
               source: 'active',
             },
             {
-              phraseId: 'belongs-in-a-party-museum',
+              phraseId: 'common-predicate-010-present',
               text: 'belongs in a party museum',
               source: 'active',
             },
             {
-              phraseId: 'by-emergency-ordinance',
+              phraseId: 'common-ending-001',
               text: 'by emergency ordinance.',
               source: 'active',
             },
@@ -537,7 +537,7 @@ describe('match-screen snapshot', () => {
             unroundedTotal: 62,
             finalDamage: 62,
             combo: {
-              nounPhraseId: 'national-consensus',
+              nounPhraseId: 'common-noun-001',
               phraseIndex: 0,
               chain: 2,
             },
@@ -546,8 +546,8 @@ describe('match-screen snapshot', () => {
                 kind: 'clause-base',
                 operation: 'note',
                 phraseIds: [
-                  'national-consensus',
-                  'belongs-in-a-party-museum',
+                  'common-noun-001',
+                  'common-predicate-010-present',
                 ],
                 amount: 15,
               },
@@ -555,7 +555,7 @@ describe('match-screen snapshot', () => {
                 kind: 'weakness-match',
                 operation: 'note',
                 defenderTag: 'restraint',
-                phraseId: 'national-consensus',
+                phraseId: 'common-noun-001',
                 phraseIndex: 0,
               },
               {
@@ -566,29 +566,29 @@ describe('match-screen snapshot', () => {
               {
                 kind: 'combo-multiplier',
                 operation: 'note',
-                nounPhraseIds: ['national-consensus'],
+                nounPhraseIds: ['common-noun-001'],
                 factor: 2,
               },
               {
                 kind: 'clause-score',
                 operation: 'add',
                 phraseIds: [
-                  'national-consensus',
-                  'belongs-in-a-party-museum',
+                  'common-noun-001',
+                  'common-predicate-010-present',
                 ],
                 amount: 60,
               },
               {
                 kind: 'combo-chain',
                 operation: 'note',
-                nounPhraseId: 'national-consensus',
+                nounPhraseId: 'common-noun-001',
                 phraseIndex: 0,
                 chain: 2,
               },
               {
                 kind: 'finisher-bonus',
                 operation: 'add',
-                phraseId: 'by-emergency-ordinance',
+                phraseId: 'common-ending-001',
                 amount: 2,
               },
               {

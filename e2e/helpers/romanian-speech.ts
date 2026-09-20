@@ -20,7 +20,7 @@ import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
 const { sampleContent, gameLocaleBundles } = loadGameContent();
 const romanian = gameLocaleBundles['ro-RO']!;
 // Two clauses, as in the English speech spec, so each speaker delivers twice.
-const phraseIds = ['your-brother', 'is-a-snitch', 'but', 'national-consensus', 'belongs-in-a-party-museum'];
+const phraseIds = ['common-noun-036', 'common-predicate-015-present', 'common-conjunction-002', 'common-noun-001', 'common-predicate-010-present'];
 
 export type RomanianSpeechEvidence = {
   native: { text: string; name: string }[];

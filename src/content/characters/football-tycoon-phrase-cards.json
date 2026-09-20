@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "football-tycoon-foundation-noun",
+      "id": "football-tycoon-noun-001",
       "role": "noun",
       "text": "my trophy for taking all the credit",
       "tags": [
@@ -66,7 +66,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-foundation-modifier",
+      "id": "football-tycoon-modifier-001",
       "role": "modifier",
       "text": "with a sponsor stitched over the objection",
       "tags": [
@@ -76,7 +76,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-foundation-ending",
+      "id": "football-tycoon-ending-001",
       "role": "ending",
       "text": "and the sponsor paid for a patriotic defeat.",
       "tags": [
@@ -87,7 +87,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "football-tycoon-credit-after-one-hundred-percent",
+      "id": "football-tycoon-ending-002",
       "role": "ending",
       "text": "and I claimed the credit left over.",
       "tags": [
@@ -98,7 +98,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "football-tycoon-sponsored-conscience",
+      "id": "football-tycoon-noun-002",
       "role": "noun",
       "text": "a conscience with space for three sponsors",
       "tags": [
@@ -117,7 +117,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-rented-standing-ovation",
+      "id": "football-tycoon-noun-003",
       "role": "noun",
       "text": "my rented standing ovation",
       "tags": [
@@ -135,7 +135,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-invoice-whistle",
+      "id": "football-tycoon-noun-004",
       "role": "noun",
       "text": "a referee whistle that prints invoices",
       "tags": [
@@ -153,7 +153,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-charity-scoreboard",
+      "id": "football-tycoon-noun-005",
       "role": "noun",
       "text": "a charity scoreboard counting camera crews",
       "tags": [
@@ -171,7 +171,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-blameless-owner",
+      "id": "football-tycoon-noun-006",
       "role": "noun",
       "text": "an owner absent from the blame column",
       "tags": [
@@ -190,7 +190,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-sold-naming-rights-to-past",
+      "id": "football-tycoon-verb-001-past",
       "role": "verb",
       "text": "sold the naming rights to",
       "tags": [
@@ -201,7 +201,7 @@
       "personalSingularText": "sold the naming rights to",
       "secondPersonText": "sold the naming rights to",
       "tense": "past",
-      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "tenseFamily": "football-tycoon-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -224,7 +224,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-sold-naming-rights-to-present",
+      "id": "football-tycoon-verb-001-present",
       "role": "verb",
       "text": "sells the naming rights to",
       "tags": [
@@ -235,7 +235,7 @@
       "personalSingularText": "sells the naming rights to",
       "secondPersonText": "sell the naming rights to",
       "tense": "present",
-      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "tenseFamily": "football-tycoon-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -258,7 +258,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-sold-naming-rights-to-future",
+      "id": "football-tycoon-verb-001-future",
       "role": "verb",
       "text": "will sell the naming rights to",
       "tags": [
@@ -269,7 +269,7 @@
       "personalSingularText": "will sell the naming rights to",
       "secondPersonText": "will sell the naming rights to",
       "tense": "future",
-      "tenseFamily": "football-tycoon-sold-naming-rights-to",
+      "tenseFamily": "football-tycoon-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -292,7 +292,7 @@
       "rarity": "rare"
     },
     {
-      "id": "football-tycoon-relegated-to-fine-print-past",
+      "id": "football-tycoon-verb-002-past",
       "role": "verb",
       "text": "printed a sponsor disclaimer about",
       "tags": [
@@ -303,7 +303,7 @@
       "personalSingularText": "printed a sponsor disclaimer about",
       "secondPersonText": "printed a sponsor disclaimer about",
       "tense": "past",
-      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "tenseFamily": "football-tycoon-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -326,7 +326,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-relegated-to-fine-print-present",
+      "id": "football-tycoon-verb-002-present",
       "role": "verb",
       "text": "prints a sponsor disclaimer about",
       "tags": [
@@ -337,7 +337,7 @@
       "personalSingularText": "prints a sponsor disclaimer about",
       "secondPersonText": "print a sponsor disclaimer about",
       "tense": "present",
-      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "tenseFamily": "football-tycoon-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -360,7 +360,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-relegated-to-fine-print-future",
+      "id": "football-tycoon-verb-002-future",
       "role": "verb",
       "text": "will print a sponsor disclaimer about",
       "tags": [
@@ -371,7 +371,7 @@
       "personalSingularText": "will print a sponsor disclaimer about",
       "secondPersonText": "will print a sponsor disclaimer about",
       "tense": "future",
-      "tenseFamily": "football-tycoon-relegated-to-fine-print",
+      "tenseFamily": "football-tycoon-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -394,7 +394,7 @@
       "rarity": "rare"
     },
     {
-      "id": "football-tycoon-sincere-until-invoice-past",
+      "id": "football-tycoon-predicate-001-past",
       "role": "predicate",
       "text": "was sincere until the invoice arrived",
       "tags": [
@@ -406,7 +406,7 @@
       "personalSingularText": "was sincere until the invoice arrived",
       "secondPersonText": "were sincere until the invoice arrived",
       "tense": "past",
-      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "tenseFamily": "football-tycoon-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -423,7 +423,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-sincere-until-invoice-present",
+      "id": "football-tycoon-predicate-001-present",
       "role": "predicate",
       "text": "is sincere until the invoice arrives",
       "tags": [
@@ -435,7 +435,7 @@
       "personalSingularText": "is sincere until the invoice arrives",
       "secondPersonText": "are sincere until the invoice arrives",
       "tense": "present",
-      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "tenseFamily": "football-tycoon-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -452,7 +452,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-sincere-until-invoice-future",
+      "id": "football-tycoon-predicate-001-future",
       "role": "predicate",
       "text": "will be sincere until the invoice arrives",
       "tags": [
@@ -464,7 +464,7 @@
       "personalSingularText": "will be sincere until the invoice arrives",
       "secondPersonText": "will be sincere until the invoice arrives",
       "tense": "future",
-      "tenseFamily": "football-tycoon-sincere-until-invoice",
+      "tenseFamily": "football-tycoon-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -481,7 +481,7 @@
       "rarity": "rare"
     },
     {
-      "id": "football-tycoon-charity-camera-angle",
+      "id": "football-tycoon-modifier-002",
       "role": "modifier",
       "text": "from the most charitable camera angle",
       "tags": [
@@ -490,7 +490,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-neutral-contrast",
+      "id": "football-tycoon-conjunction-001",
       "role": "conjunction",
       "text": "yet, despite that,",
       "tags": [],
@@ -498,7 +498,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-contract-noun-1-a-transfer-fee-with-a-conscience",
+      "id": "football-tycoon-noun-007",
       "role": "noun",
       "text": "the claim that the greatest credit is mine",
       "tags": [
@@ -515,7 +515,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-contract-noun-2-a-stadium-seat-in-a-boardroom",
+      "id": "football-tycoon-noun-008",
       "role": "noun",
       "text": "two markers on the unread pages",
       "grammaticalNumber": "plural",
@@ -533,7 +533,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-contract-noun-3-a-sponsorship-with-a-penalty-clause",
+      "id": "football-tycoon-noun-009",
       "role": "noun",
       "text": "a sum worth the shirt",
       "tags": [
@@ -550,7 +550,7 @@
       "rarity": "rare"
     },
     {
-      "id": "football-tycoon-contract-noun-4-a-striker-of-the-public-imagination",
+      "id": "football-tycoon-noun-010",
       "role": "noun",
       "text": "a trophy carrying my credit",
       "tags": [
@@ -567,7 +567,7 @@
       "rarity": "common"
     },
     {
-      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-past",
+      "id": "football-tycoon-verb-003-past",
       "role": "verb",
       "text": "claimed credit for",
       "tags": [
@@ -586,10 +586,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+      "tenseFamily": "football-tycoon-verb-003"
     },
     {
-      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-present",
+      "id": "football-tycoon-verb-003-present",
       "role": "verb",
       "text": "claims credit for",
       "singularText": "claims credit for",
@@ -612,10 +612,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+      "tenseFamily": "football-tycoon-verb-003"
     },
     {
-      "id": "football-tycoon-contract-verb-sells-sincerity-at-halftime-future",
+      "id": "football-tycoon-verb-003-future",
       "role": "verb",
       "text": "will claim credit for",
       "tags": [
@@ -634,10 +634,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "football-tycoon-contract-verb-sells-sincerity-at-halftime"
+      "tenseFamily": "football-tycoon-verb-003"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-1-past",
+      "id": "football-tycoon-predicate-002-past",
       "role": "predicate",
       "text": "was a victory where the greatest credit was mine",
       "singularText": "was a victory where the greatest credit was mine",
@@ -658,10 +658,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+      "tenseFamily": "football-tycoon-predicate-002"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-1-present",
+      "id": "football-tycoon-predicate-002-present",
       "role": "predicate",
       "text": "is a victory where the greatest credit is mine",
       "singularText": "is a victory where the greatest credit is mine",
@@ -684,10 +684,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+      "tenseFamily": "football-tycoon-predicate-002"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-1-future",
+      "id": "football-tycoon-predicate-002-future",
       "role": "predicate",
       "text": "will be a victory where the greatest credit is mine",
       "tags": [
@@ -706,10 +706,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-1"
+      "tenseFamily": "football-tycoon-predicate-002"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-2-past",
+      "id": "football-tycoon-predicate-003-past",
       "role": "predicate",
       "text": "was a transfer wearing a moral ribbon",
       "singularText": "was a transfer wearing a moral ribbon",
@@ -730,10 +730,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+      "tenseFamily": "football-tycoon-predicate-003"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-2-present",
+      "id": "football-tycoon-predicate-003-present",
       "role": "predicate",
       "text": "is a transfer wearing a moral ribbon",
       "singularText": "is a transfer wearing a moral ribbon",
@@ -756,10 +756,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+      "tenseFamily": "football-tycoon-predicate-003"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-2-future",
+      "id": "football-tycoon-predicate-003-future",
       "role": "predicate",
       "text": "will be a transfer wearing a moral ribbon",
       "tags": [
@@ -778,10 +778,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-2"
+      "tenseFamily": "football-tycoon-predicate-003"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-3-past",
+      "id": "football-tycoon-predicate-004-past",
       "role": "predicate",
       "text": "was a penalty clause with a smile",
       "singularText": "was a penalty clause with a smile",
@@ -802,10 +802,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+      "tenseFamily": "football-tycoon-predicate-004"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-3-present",
+      "id": "football-tycoon-predicate-004-present",
       "role": "predicate",
       "text": "is a penalty clause with a smile",
       "singularText": "is a penalty clause with a smile",
@@ -828,10 +828,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+      "tenseFamily": "football-tycoon-predicate-004"
     },
     {
-      "id": "football-tycoon-contract-predicate-predicate-3-future",
+      "id": "football-tycoon-predicate-004-future",
       "role": "predicate",
       "text": "will be a penalty clause with a smile",
       "tags": [
@@ -850,10 +850,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "football-tycoon-contract-predicate-predicate-3"
+      "tenseFamily": "football-tycoon-predicate-004"
     },
     {
-      "id": "football-tycoon-contract-modifier-beside-a-sponsor-shaped-trophy",
+      "id": "football-tycoon-modifier-003",
       "role": "modifier",
       "text": "beside a sponsor-shaped trophy",
       "tags": [
@@ -862,7 +862,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "football-tycoon-contract-ending-and-the-scoreboard-requested-a-sponsor",
+      "id": "football-tycoon-ending-003",
       "role": "ending",
       "text": "and the scoreboard requested a sponsor.",
       "tags": [
@@ -872,7 +872,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "football-tycoon-contract-ending-and-sincerity-left-before-extra-time",
+      "id": "football-tycoon-ending-004",
       "role": "ending",
       "text": "and sincerity left before extra time.",
       "tags": [
@@ -882,7 +882,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "football-tycoon-contract-ending-and-the-transfer-fee-gave-an-interview",
+      "id": "football-tycoon-ending-005",
       "role": "ending",
       "text": "and the transfer fee gave an interview.",
       "tags": [

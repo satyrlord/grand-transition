@@ -48,10 +48,13 @@
   },
   "phrases": [
     {
-      "id": "coalition-acrobat-foundation-noun",
+      "id": "coalition-acrobat-noun-001",
       "role": "noun",
       "text": "my donation box open to everyone",
-      "tags": ["consistency", "commitment"],
+      "tags": [
+        "consistency",
+        "commitment"
+      ],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -63,7 +66,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-foundation-modifier",
+      "id": "coalition-acrobat-modifier-001",
       "role": "modifier",
       "text": "while yesterday's promise changes its lining",
       "tags": [
@@ -74,7 +77,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-foundation-ending",
+      "id": "coalition-acrobat-ending-001",
       "role": "ending",
       "text": "and the coalition changed partners, kept the wallet.",
       "tags": [
@@ -86,7 +89,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "coalition-acrobat-fingerprinted-slate",
+      "id": "coalition-acrobat-ending-002",
       "role": "ending",
       "text": "and our clean slate still has your fingerprints.",
       "tags": [
@@ -98,7 +101,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "coalition-acrobat-hinged-red-line",
+      "id": "coalition-acrobat-noun-002",
       "role": "noun",
       "text": "a red line with a door hinge",
       "tags": [
@@ -116,7 +119,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-rotating-principles",
+      "id": "coalition-acrobat-noun-003",
       "role": "noun",
       "text": "my rotating display stand for principles",
       "tags": [
@@ -134,7 +137,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-erasable-vow",
+      "id": "coalition-acrobat-noun-004",
       "role": "noun",
       "text": "a permanent commitment written in erasable ink",
       "tags": [
@@ -152,7 +155,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-double-booked-handshake",
+      "id": "coalition-acrobat-noun-005",
       "role": "noun",
       "text": "a handshake double-booked with the opposition",
       "tags": [
@@ -170,7 +173,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-amnesiac-calendar",
+      "id": "coalition-acrobat-noun-006",
       "role": "noun",
       "text": "a negotiating calendar with yesterday torn out",
       "tags": [
@@ -188,7 +191,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-rented-to-both-sides-past",
+      "id": "coalition-acrobat-verb-001-past",
       "role": "verb",
       "text": "offered rival coalitions a lease on",
       "tags": [
@@ -199,7 +202,7 @@
       "personalSingularText": "offered rival coalitions a lease on",
       "secondPersonText": "offered rival coalitions a lease on",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "tenseFamily": "coalition-acrobat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -222,7 +225,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-rented-to-both-sides-present",
+      "id": "coalition-acrobat-verb-001-present",
       "role": "verb",
       "text": "offers rival coalitions a lease on",
       "tags": [
@@ -233,7 +236,7 @@
       "personalSingularText": "offers rival coalitions a lease on",
       "secondPersonText": "offer rival coalitions a lease on",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "tenseFamily": "coalition-acrobat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -256,7 +259,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-rented-to-both-sides-future",
+      "id": "coalition-acrobat-verb-001-future",
       "role": "verb",
       "text": "will offer rival coalitions a lease on",
       "tags": [
@@ -267,7 +270,7 @@
       "personalSingularText": "will offer rival coalitions a lease on",
       "secondPersonText": "will offer rival coalitions a lease on",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-rented-to-both-sides",
+      "tenseFamily": "coalition-acrobat-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -290,7 +293,7 @@
       "rarity": "rare"
     },
     {
-      "id": "coalition-acrobat-traded-for-cabinet-seats-past",
+      "id": "coalition-acrobat-verb-002-past",
       "role": "verb",
       "text": "traded a cabinet seat for",
       "tags": [
@@ -301,7 +304,7 @@
       "personalSingularText": "traded a cabinet seat for",
       "secondPersonText": "traded a cabinet seat for",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "tenseFamily": "coalition-acrobat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -324,7 +327,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-traded-for-cabinet-seats-present",
+      "id": "coalition-acrobat-verb-002-present",
       "role": "verb",
       "text": "trades a cabinet seat for",
       "tags": [
@@ -335,7 +338,7 @@
       "personalSingularText": "trades a cabinet seat for",
       "secondPersonText": "trade a cabinet seat for",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "tenseFamily": "coalition-acrobat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -358,7 +361,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-traded-for-cabinet-seats-future",
+      "id": "coalition-acrobat-verb-002-future",
       "role": "verb",
       "text": "will trade a cabinet seat for",
       "tags": [
@@ -369,7 +372,7 @@
       "personalSingularText": "will trade a cabinet seat for",
       "secondPersonText": "will trade a cabinet seat for",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-traded-for-cabinet-seats",
+      "tenseFamily": "coalition-acrobat-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -392,7 +395,7 @@
       "rarity": "rare"
     },
     {
-      "id": "coalition-acrobat-loyal-until-lunch-past",
+      "id": "coalition-acrobat-predicate-001-past",
       "role": "predicate",
       "text": "was loyal until the lunch invitations arrived",
       "tags": [
@@ -403,7 +406,7 @@
       "personalSingularText": "was loyal until the lunch invitations arrived",
       "secondPersonText": "were loyal until the lunch invitations arrived",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -420,7 +423,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-loyal-until-lunch-present",
+      "id": "coalition-acrobat-predicate-001-present",
       "role": "predicate",
       "text": "is loyal until the lunch invitations arrive",
       "tags": [
@@ -431,7 +434,7 @@
       "personalSingularText": "is loyal until the lunch invitations arrive",
       "secondPersonText": "are loyal until the lunch invitations arrive",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -448,7 +451,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-loyal-until-lunch-future",
+      "id": "coalition-acrobat-predicate-001-future",
       "role": "predicate",
       "text": "will be loyal until the lunch invitations arrive",
       "tags": [
@@ -459,7 +462,7 @@
       "personalSingularText": "will be loyal until the lunch invitations arrive",
       "secondPersonText": "will be loyal until the lunch invitations arrive",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-loyal-until-lunch",
+      "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -476,7 +479,7 @@
       "rarity": "rare"
     },
     {
-      "id": "coalition-acrobat-under-reversible-oath",
+      "id": "coalition-acrobat-modifier-002",
       "role": "modifier",
       "text": "under an oath with a reversible cover",
       "tags": [
@@ -485,7 +488,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-neutral-contrast",
+      "id": "coalition-acrobat-conjunction-001",
       "role": "conjunction",
       "text": "but, even so,",
       "tags": [],
@@ -493,7 +496,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-contract-noun-1-a-coalition-of-spare-umbrellas",
+      "id": "coalition-acrobat-noun-007",
       "role": "noun",
       "text": "a leather jacket",
       "tags": [
@@ -510,7 +513,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-contract-noun-2-a-promise-with-a-hinge",
+      "id": "coalition-acrobat-noun-008",
       "role": "noun",
       "text": "cash that never goes out of fashion",
       "tags": [
@@ -527,7 +530,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-contract-noun-3-a-memory-stored-in-a-coalition-folder",
+      "id": "coalition-acrobat-noun-009",
       "role": "noun",
       "text": "a clean slate with yesterday's signatures",
       "tags": [
@@ -544,7 +547,7 @@
       "rarity": "rare"
     },
     {
-      "id": "coalition-acrobat-contract-noun-4-a-commitment-on-a-folding-chair",
+      "id": "coalition-acrobat-noun-010",
       "role": "noun",
       "text": "a coalition starting from scratch",
       "tags": [
@@ -561,7 +564,7 @@
       "rarity": "common"
     },
     {
-      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-past",
+      "id": "coalition-acrobat-verb-003-past",
       "role": "verb",
       "text": "wore the leather jacket with",
       "tags": [
@@ -580,10 +583,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+      "tenseFamily": "coalition-acrobat-verb-003"
     },
     {
-      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-present",
+      "id": "coalition-acrobat-verb-003-present",
       "role": "verb",
       "text": "wears the leather jacket with",
       "singularText": "wears the leather jacket with",
@@ -606,10 +609,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+      "tenseFamily": "coalition-acrobat-verb-003"
     },
     {
-      "id": "coalition-acrobat-contract-verb-rehearses-opposite-coalition-future",
+      "id": "coalition-acrobat-verb-003-future",
       "role": "verb",
       "text": "will wear the leather jacket with",
       "tags": [
@@ -628,10 +631,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-contract-verb-rehearses-opposite-coalition"
+      "tenseFamily": "coalition-acrobat-verb-003"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-1-past",
+      "id": "coalition-acrobat-predicate-002-past",
       "role": "predicate",
       "text": "was a fresh start with fingerprints",
       "tags": [
@@ -650,10 +653,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+      "tenseFamily": "coalition-acrobat-predicate-002"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-1-present",
+      "id": "coalition-acrobat-predicate-002-present",
       "role": "predicate",
       "text": "is a fresh start with fingerprints",
       "singularText": "is a fresh start with fingerprints",
@@ -676,10 +679,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+      "tenseFamily": "coalition-acrobat-predicate-002"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-1-future",
+      "id": "coalition-acrobat-predicate-002-future",
       "role": "predicate",
       "text": "will be a fresh start with fingerprints",
       "tags": [
@@ -698,10 +701,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-1"
+      "tenseFamily": "coalition-acrobat-predicate-002"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-2-past",
+      "id": "coalition-acrobat-predicate-003-past",
       "role": "predicate",
       "text": "was a coalition with a rehearsal date",
       "tags": [
@@ -720,10 +723,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+      "tenseFamily": "coalition-acrobat-predicate-003"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-2-present",
+      "id": "coalition-acrobat-predicate-003-present",
       "role": "predicate",
       "text": "is a coalition with a rehearsal date",
       "singularText": "is a coalition with a rehearsal date",
@@ -746,10 +749,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+      "tenseFamily": "coalition-acrobat-predicate-003"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-2-future",
+      "id": "coalition-acrobat-predicate-003-future",
       "role": "predicate",
       "text": "will be a coalition with a rehearsal date",
       "tags": [
@@ -768,10 +771,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-2"
+      "tenseFamily": "coalition-acrobat-predicate-003"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-3-past",
+      "id": "coalition-acrobat-predicate-004-past",
       "role": "predicate",
       "text": "was a mandate balancing on one foot",
       "tags": [
@@ -790,10 +793,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+      "tenseFamily": "coalition-acrobat-predicate-004"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-3-present",
+      "id": "coalition-acrobat-predicate-004-present",
       "role": "predicate",
       "text": "is a mandate balancing on one foot",
       "singularText": "is a mandate balancing on one foot",
@@ -816,10 +819,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+      "tenseFamily": "coalition-acrobat-predicate-004"
     },
     {
-      "id": "coalition-acrobat-contract-predicate-predicate-3-future",
+      "id": "coalition-acrobat-predicate-004-future",
       "role": "predicate",
       "text": "will be a mandate balancing on one foot",
       "tags": [
@@ -838,10 +841,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-contract-predicate-predicate-3"
+      "tenseFamily": "coalition-acrobat-predicate-004"
     },
     {
-      "id": "coalition-acrobat-contract-modifier-between-two-identical-minutes",
+      "id": "coalition-acrobat-modifier-003",
       "role": "modifier",
       "text": "between-two-identical-minutes",
       "tags": [
@@ -850,7 +853,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "coalition-acrobat-contract-ending-and-the-promise-joined-the-other-promise",
+      "id": "coalition-acrobat-ending-003",
       "role": "ending",
       "text": "and the promise joined the other promise.",
       "tags": [
@@ -860,7 +863,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "coalition-acrobat-contract-ending-and-the-coalition-changed-its-choreography",
+      "id": "coalition-acrobat-ending-004",
       "role": "ending",
       "text": "and the coalition changed its choreography.",
       "tags": [
@@ -870,7 +873,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "coalition-acrobat-contract-ending-and-the-minutes-remembered-nothing",
+      "id": "coalition-acrobat-ending-005",
       "role": "ending",
       "text": "and the minutes remembered nothing.",
       "tags": [

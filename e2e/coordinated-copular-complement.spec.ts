@@ -7,10 +7,10 @@ import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
 const targetCards = [
-  { phraseId: 'your-brother', role: 'noun' },
-  { phraseId: 'is-a-snitch', role: 'predicate' },
-  { phraseId: 'and', role: 'conjunction' },
-  { phraseId: 'a-pig', role: 'noun' },
+  { phraseId: 'common-noun-036', role: 'noun' },
+  { phraseId: 'common-predicate-015-present', role: 'predicate' },
+  { phraseId: 'common-conjunction-001', role: 'conjunction' },
+  { phraseId: 'common-noun-048', role: 'noun' },
 ] as const;
 
 for (const scenario of [
@@ -23,9 +23,9 @@ for (const scenario of [
   {
     name: 'a neutral clause without weakness damage',
     cards: [
-      { phraseId: 'you', role: 'noun' },
-      { phraseId: 'is', role: 'verb' },
-      { phraseId: 'my-opponent', role: 'noun' },
+      { phraseId: 'common-noun-028', role: 'noun' },
+      { phraseId: 'common-verb-023-present', role: 'verb' },
+      { phraseId: 'common-noun-053', role: 'noun' },
     ],
     sentence: 'You are my opponent',
     total: 11,
@@ -33,12 +33,12 @@ for (const scenario of [
   {
     name: 'three stacked modifiers',
     cards: [
-      { phraseId: 'a-pig', role: 'noun' },
-      { phraseId: 'stole', role: 'verb' },
-      { phraseId: 'municipal-ribbon', role: 'noun' },
-      { phraseId: 'on-the-campaign-trail', role: 'modifier' },
-      { phraseId: 'during-budget-season', role: 'modifier' },
-      { phraseId: 'under-the-studio-lights', role: 'modifier' },
+      { phraseId: 'common-noun-048', role: 'noun' },
+      { phraseId: 'common-verb-024-past', role: 'verb' },
+      { phraseId: 'common-noun-013', role: 'noun' },
+      { phraseId: 'common-modifier-012', role: 'modifier' },
+      { phraseId: 'common-modifier-009', role: 'modifier' },
+      { phraseId: 'common-modifier-013', role: 'modifier' },
     ],
     sentence:
       'A pig stole a ribbon longer than the road on a campaign bus fuelled by applause during the decimal point migration under lights that bleach a scandal',

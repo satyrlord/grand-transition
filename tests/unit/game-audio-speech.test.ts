@@ -66,14 +66,14 @@ describe('public audio event projection', () => {
 
 describe('finalized public speech', () => {
   test('streams separate scored clauses and Comeback without splitting coordinated nouns', () => {
-    const player = { ...publicPlayer, constructionPhrases: ['subject','relation','and','subject-two','relation-two'].map(phraseId => ({ phraseId,text:phraseId,source:'active' as const })),
+    const player = { ...publicPlayer, constructionPhrases: ['subject','relation','common-conjunction-001','subject-two','relation-two'].map(phraseId => ({ phraseId,text:phraseId,source:'active' as const })),
       comebackClosingLine:'The record is closed.', score: { finalDamage:10, unroundedTotal:10, combo:null, breakdown:[
         { kind:'clause-score' as const, operation:'add' as const, phraseIds:['subject','relation'], amount:5 },
         { kind:'clause-score' as const, operation:'add' as const, phraseIds:['subject-two','relation-two'], amount:5 },
       ] } };
     expect(publicNarrationChunkStarts(player)).toEqual([0,2,5]);
     expect(publicNarrationChunkStarts({ ...player, comebackClosingLine:null, score:{ ...player.score,
-      breakdown:[{ kind:'clause-score',operation:'add',phraseIds:['subject','relation','and','subject-two'],amount:10 }] } })).toEqual([0]);
+      breakdown:[{ kind:'clause-score',operation:'add',phraseIds:['subject','relation','common-conjunction-001','subject-two'],amount:10 }] } })).toEqual([0]);
     expect(publicNarrationChunkStarts({ ...player, comebackClosingLine:null, score:{ ...player.score,
       breakdown:[player.score.breakdown[0]!, {kind:'clause-score',operation:'add',phraseIds:['subject','relation-two'],amount:5}] } })).toEqual([0]);
   });

@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "eu-funds-alchemist-foundation-noun",
+      "id": "eu-funds-alchemist-noun-001",
       "role": "noun",
       "text": "my imaginary wheelbarrow rental income",
       "tags": [
@@ -66,7 +66,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-foundation-modifier",
+      "id": "eu-funds-alchemist-modifier-001",
       "role": "modifier",
       "text": "with the repair budget spent on cake",
       "tags": [
@@ -76,7 +76,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-foundation-ending",
+      "id": "eu-funds-alchemist-ending-001",
       "role": "ending",
       "text": "and the wheelbarrow cannot carry the budget.",
       "tags": [
@@ -87,7 +87,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "eu-funds-alchemist-invisible-pastries",
+      "id": "eu-funds-alchemist-ending-002",
       "role": "ending",
       "text": "and the missing funds are invisible pastries.",
       "tags": [
@@ -98,7 +98,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "eu-funds-alchemist-ribbon-without-bridge",
+      "id": "eu-funds-alchemist-noun-002",
       "role": "noun",
       "text": "an opening ribbon over an empty ditch",
       "tags": [
@@ -116,7 +116,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-maintenance-confetti",
+      "id": "eu-funds-alchemist-noun-003",
       "role": "noun",
       "text": "a maintenance plan printed on confetti",
       "tags": [
@@ -134,7 +134,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-transparent-blackout",
+      "id": "eu-funds-alchemist-noun-004",
       "role": "noun",
       "text": "a transparency report with opaque fold-out pages",
       "tags": [
@@ -152,7 +152,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-funded-pothole",
+      "id": "eu-funds-alchemist-noun-005",
       "role": "noun",
       "text": "a pothole with its own project anniversary",
       "tags": [
@@ -171,7 +171,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-milestone-balloon",
+      "id": "eu-funds-alchemist-noun-006",
       "role": "noun",
       "text": "a milestone tied to a helium balloon",
       "tags": [
@@ -189,7 +189,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-converted-into-launch-costs-past",
+      "id": "eu-funds-alchemist-verb-001-past",
       "role": "verb",
       "text": "converted the launch budget into",
       "tags": [
@@ -200,7 +200,7 @@
       "personalSingularText": "converted the launch budget into",
       "secondPersonText": "converted the launch budget into",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "tenseFamily": "eu-funds-alchemist-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -223,7 +223,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-converted-into-launch-costs-present",
+      "id": "eu-funds-alchemist-verb-001-present",
       "role": "verb",
       "text": "converts the launch budget into",
       "tags": [
@@ -234,7 +234,7 @@
       "personalSingularText": "converts the launch budget into",
       "secondPersonText": "convert the launch budget into",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "tenseFamily": "eu-funds-alchemist-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -257,7 +257,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-converted-into-launch-costs-future",
+      "id": "eu-funds-alchemist-verb-001-future",
       "role": "verb",
       "text": "will convert the launch budget into",
       "tags": [
@@ -268,7 +268,7 @@
       "personalSingularText": "will convert the launch budget into",
       "secondPersonText": "will convert the launch budget into",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-converted-into-launch-costs",
+      "tenseFamily": "eu-funds-alchemist-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -291,7 +291,7 @@
       "rarity": "rare"
     },
     {
-      "id": "eu-funds-alchemist-hid-behind-funding-plaque-past",
+      "id": "eu-funds-alchemist-verb-002-past",
       "role": "verb",
       "text": "hid the funding plaque behind",
       "tags": [
@@ -302,7 +302,7 @@
       "personalSingularText": "hid the funding plaque behind",
       "secondPersonText": "hid the funding plaque behind",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "tenseFamily": "eu-funds-alchemist-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -325,7 +325,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-hid-behind-funding-plaque-present",
+      "id": "eu-funds-alchemist-verb-002-present",
       "role": "verb",
       "text": "hides the funding plaque behind",
       "tags": [
@@ -336,7 +336,7 @@
       "personalSingularText": "hides the funding plaque behind",
       "secondPersonText": "hide the funding plaque behind",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "tenseFamily": "eu-funds-alchemist-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -359,7 +359,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-hid-behind-funding-plaque-future",
+      "id": "eu-funds-alchemist-verb-002-future",
       "role": "verb",
       "text": "will hide the funding plaque behind",
       "tags": [
@@ -370,7 +370,7 @@
       "personalSingularText": "will hide the funding plaque behind",
       "secondPersonText": "will hide the funding plaque behind",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-hid-behind-funding-plaque",
+      "tenseFamily": "eu-funds-alchemist-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -393,7 +393,7 @@
       "rarity": "rare"
     },
     {
-      "id": "eu-funds-alchemist-maintained-in-photo-past",
+      "id": "eu-funds-alchemist-predicate-001-past",
       "role": "predicate",
       "text": "was maintained only in the opening-day photograph",
       "tags": [
@@ -404,7 +404,7 @@
       "personalSingularText": "was maintained only in the opening-day photograph",
       "secondPersonText": "were maintained only in the opening-day photograph",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -421,7 +421,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-maintained-in-photo-present",
+      "id": "eu-funds-alchemist-predicate-001-present",
       "role": "predicate",
       "text": "is maintained only in the opening-day photograph",
       "tags": [
@@ -432,7 +432,7 @@
       "personalSingularText": "is maintained only in the opening-day photograph",
       "secondPersonText": "are maintained only in the opening-day photograph",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -449,7 +449,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-maintained-in-photo-future",
+      "id": "eu-funds-alchemist-predicate-001-future",
       "role": "predicate",
       "text": "will be maintained only in the opening-day photograph",
       "tags": [
@@ -460,7 +460,7 @@
       "personalSingularText": "will be maintained only in the opening-day photograph",
       "secondPersonText": "will be maintained only in the opening-day photograph",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-maintained-in-photo",
+      "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -477,7 +477,7 @@
       "rarity": "rare"
     },
     {
-      "id": "eu-funds-alchemist-ribbon-spare-parts",
+      "id": "eu-funds-alchemist-modifier-002",
       "role": "modifier",
       "text": "with spare parts from the ceremonial ribbon",
       "tags": [
@@ -486,7 +486,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-neutral-contrast",
+      "id": "eu-funds-alchemist-conjunction-001",
       "role": "conjunction",
       "text": "yet, meanwhile,",
       "tags": [],
@@ -494,7 +494,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-contract-noun-1-a-grant-with-a-ceremonial-lock",
+      "id": "eu-funds-alchemist-noun-007",
       "role": "noun",
       "text": "a wheelbarrow rented to the neighbour",
       "tags": [
@@ -511,7 +511,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-contract-noun-2-a-maintenance-plan-in-gold-leaf",
+      "id": "eu-funds-alchemist-noun-008",
       "role": "noun",
       "text": "a robe without a pastry",
       "tags": [
@@ -528,7 +528,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-contract-noun-3-a-wheelbarrow-of-eligible-receipts",
+      "id": "eu-funds-alchemist-noun-009",
       "role": "noun",
       "text": "an invisible pastry in the budget",
       "tags": [
@@ -545,7 +545,7 @@
       "rarity": "rare"
     },
     {
-      "id": "eu-funds-alchemist-contract-noun-4-an-outcome-printed-on-a-ribbon",
+      "id": "eu-funds-alchemist-noun-010",
       "role": "noun",
       "text": "a grant carried by a wheelbarrow",
       "tags": [
@@ -562,7 +562,7 @@
       "rarity": "common"
     },
     {
-      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-past",
+      "id": "eu-funds-alchemist-verb-003-past",
       "role": "verb",
       "text": "rented the wheelbarrow to",
       "tags": [
@@ -581,10 +581,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+      "tenseFamily": "eu-funds-alchemist-verb-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-present",
+      "id": "eu-funds-alchemist-verb-003-present",
       "role": "verb",
       "text": "rents the wheelbarrow to",
       "singularText": "rents the wheelbarrow to",
@@ -607,10 +607,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+      "tenseFamily": "eu-funds-alchemist-verb-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon-future",
+      "id": "eu-funds-alchemist-verb-003-future",
       "role": "verb",
       "text": "will rent the wheelbarrow to",
       "tags": [
@@ -629,10 +629,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-contract-verb-converts-grant-into-ribbon"
+      "tenseFamily": "eu-funds-alchemist-verb-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-1-past",
+      "id": "eu-funds-alchemist-predicate-002-past",
       "role": "predicate",
       "text": "was a wheelbarrow for the national budget",
       "tags": [
@@ -651,10 +651,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+      "tenseFamily": "eu-funds-alchemist-predicate-002"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-1-present",
+      "id": "eu-funds-alchemist-predicate-002-present",
       "role": "predicate",
       "text": "is a wheelbarrow for the national budget",
       "singularText": "is a wheelbarrow for the national budget",
@@ -677,10 +677,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+      "tenseFamily": "eu-funds-alchemist-predicate-002"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-1-future",
+      "id": "eu-funds-alchemist-predicate-002-future",
       "role": "predicate",
       "text": "will be a wheelbarrow for the national budget",
       "tags": [
@@ -699,10 +699,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-1"
+      "tenseFamily": "eu-funds-alchemist-predicate-002"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-2-past",
+      "id": "eu-funds-alchemist-predicate-003-past",
       "role": "predicate",
       "text": "was a project with a ceremonial outcome",
       "tags": [
@@ -721,10 +721,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+      "tenseFamily": "eu-funds-alchemist-predicate-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-2-present",
+      "id": "eu-funds-alchemist-predicate-003-present",
       "role": "predicate",
       "text": "is a project with a ceremonial outcome",
       "singularText": "is a project with a ceremonial outcome",
@@ -747,10 +747,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+      "tenseFamily": "eu-funds-alchemist-predicate-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-2-future",
+      "id": "eu-funds-alchemist-predicate-003-future",
       "role": "predicate",
       "text": "will be a project with a ceremonial outcome",
       "tags": [
@@ -769,10 +769,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-2"
+      "tenseFamily": "eu-funds-alchemist-predicate-003"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-3-past",
+      "id": "eu-funds-alchemist-predicate-004-past",
       "role": "predicate",
       "text": "was a receipt that promises maintenance",
       "tags": [
@@ -791,10 +791,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+      "tenseFamily": "eu-funds-alchemist-predicate-004"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-3-present",
+      "id": "eu-funds-alchemist-predicate-004-present",
       "role": "predicate",
       "text": "is a receipt that promises maintenance",
       "singularText": "is a receipt that promises maintenance",
@@ -817,10 +817,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+      "tenseFamily": "eu-funds-alchemist-predicate-004"
     },
     {
-      "id": "eu-funds-alchemist-contract-predicate-predicate-3-future",
+      "id": "eu-funds-alchemist-predicate-004-future",
       "role": "predicate",
       "text": "will be a receipt that promises maintenance",
       "tags": [
@@ -839,10 +839,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-contract-predicate-predicate-3"
+      "tenseFamily": "eu-funds-alchemist-predicate-004"
     },
     {
-      "id": "eu-funds-alchemist-contract-modifier-under-a-funded-ribbon-cutting",
+      "id": "eu-funds-alchemist-modifier-003",
       "role": "modifier",
       "text": "under-a-funded-ribbon-cutting",
       "tags": [
@@ -851,7 +851,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "eu-funds-alchemist-contract-ending-and-the-grant-requested-a-maintenance-plan",
+      "id": "eu-funds-alchemist-ending-003",
       "role": "ending",
       "text": "and the grant requested a maintenance plan.",
       "tags": [
@@ -861,7 +861,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "eu-funds-alchemist-contract-ending-and-the-receipt-was-the-only-outcome",
+      "id": "eu-funds-alchemist-ending-004",
       "role": "ending",
       "text": "and the receipt was the only outcome.",
       "tags": [
@@ -871,7 +871,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "eu-funds-alchemist-contract-ending-and-the-ribbon-qualified-for-another-grant",
+      "id": "eu-funds-alchemist-ending-005",
       "role": "ending",
       "text": "and the ribbon qualified for another grant.",
       "tags": [

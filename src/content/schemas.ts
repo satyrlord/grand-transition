@@ -11,7 +11,7 @@ export const localeKeySchema = z
   .string()
   .regex(
     /^(?:title|phrase|character|scene|comeback)\.[a-z0-9]+(?:[.-][a-z0-9]+)*$/u,
-    'Use a namespaced locale key, for example "phrase.national-consensus".',
+    'Use a namespaced locale key, for example "phrase.common-noun-001".',
   );
 
 const uniqueArray = <T extends z.ZodTypeAny>(item: T, message: string) =>

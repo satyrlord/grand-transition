@@ -52,7 +52,7 @@
   },
   "phrases": [
     {
-      "id": "national-salvation-committee",
+      "id": "red-folded-chairman-noun-001",
       "role": "noun",
       "text": "a national-salvation committee with reserved parking",
       "tags": [
@@ -70,7 +70,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "mediates",
+      "id": "red-folded-chairman-verb-001-present",
       "role": "verb",
       "text": "mediates",
       "singularText": "mediates",
@@ -91,10 +91,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "mediates"
+      "tenseFamily": "red-folded-chairman-verb-001"
     },
     {
-      "id": "mediated",
+      "id": "red-folded-chairman-verb-001-past",
       "role": "verb",
       "text": "mediated",
       "singularText": "mediated",
@@ -115,10 +115,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "mediates"
+      "tenseFamily": "red-folded-chairman-verb-001"
     },
     {
-      "id": "will-mediate",
+      "id": "red-folded-chairman-verb-001-future",
       "role": "verb",
       "text": "will mediate",
       "singularText": "will mediate",
@@ -139,10 +139,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "mediates"
+      "tenseFamily": "red-folded-chairman-verb-001"
     },
     {
-      "id": "through-a-gradual-transition",
+      "id": "red-folded-chairman-modifier-001",
       "role": "modifier",
       "text": "through a transition with no estimated arrival",
       "tags": [
@@ -152,7 +152,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "for-stabilitys-sake",
+      "id": "red-folded-chairman-ending-001",
       "role": "ending",
       "text": "and, with permission, I remain in the chair.",
       "tags": [
@@ -163,7 +163,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "asks-for-patience-again",
+      "id": "red-folded-chairman-predicate-001-present",
       "role": "predicate",
       "text": "asks the calendar for another mandate",
       "tags": [
@@ -184,10 +184,10 @@
       "singularText": "asks the calendar for another mandate",
       "pluralText": "ask the calendar for another mandate",
       "tense": "present",
-      "tenseFamily": "asks-for-patience-again"
+      "tenseFamily": "red-folded-chairman-predicate-001"
     },
     {
-      "id": "asked-for-patience-again",
+      "id": "red-folded-chairman-predicate-001-past",
       "role": "predicate",
       "text": "asked the calendar for another mandate",
       "tags": [
@@ -208,10 +208,10 @@
       "singularText": "asked the calendar for another mandate",
       "pluralText": "asked the calendar for another mandate",
       "tense": "past",
-      "tenseFamily": "asks-for-patience-again"
+      "tenseFamily": "red-folded-chairman-predicate-001"
     },
     {
-      "id": "will-ask-for-patience-again",
+      "id": "red-folded-chairman-predicate-001-future",
       "role": "predicate",
       "text": "will ask the calendar for another mandate",
       "tags": [
@@ -232,10 +232,10 @@
       "singularText": "will ask the calendar for another mandate",
       "pluralText": "will ask the calendar for another mandate",
       "tense": "future",
-      "tenseFamily": "asks-for-patience-again"
+      "tenseFamily": "red-folded-chairman-predicate-001"
     },
     {
-      "id": "a-committee-room-fossil",
+      "id": "red-folded-chairman-noun-002",
       "role": "noun",
       "text": "a committee-room fossil",
       "referentKind": "personal",
@@ -254,7 +254,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "calls-every-delay-a-transition",
+      "id": "red-folded-chairman-predicate-002-present",
       "role": "predicate",
       "text": "calls every delay a transition",
       "singularText": "calls every delay a transition",
@@ -277,10 +277,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "calls-every-delay-a-transition"
+      "tenseFamily": "red-folded-chairman-predicate-002"
     },
     {
-      "id": "called-every-delay-a-transition",
+      "id": "red-folded-chairman-predicate-002-past",
       "role": "predicate",
       "text": "called every delay a transition",
       "singularText": "called every delay a transition",
@@ -303,10 +303,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "calls-every-delay-a-transition"
+      "tenseFamily": "red-folded-chairman-predicate-002"
     },
     {
-      "id": "will-call-every-delay-a-transition",
+      "id": "red-folded-chairman-predicate-002-future",
       "role": "predicate",
       "text": "will call every delay a transition",
       "singularText": "will call every delay a transition",
@@ -329,10 +329,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "calls-every-delay-a-transition"
+      "tenseFamily": "red-folded-chairman-predicate-002"
     },
     {
-      "id": "the-nordic-model",
+      "id": "red-folded-chairman-noun-003",
       "role": "noun",
       "text": "the Nordic model",
       "tags": [
@@ -350,7 +350,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "socialism-with-a-human-face",
+      "id": "red-folded-chairman-noun-004",
       "role": "noun",
       "text": "socialism with a human face, same receptionist",
       "tags": [
@@ -368,7 +368,7 @@
       "rarity": "rare"
     },
     {
-      "id": "a-free-thinker",
+      "id": "red-folded-chairman-noun-005",
       "role": "noun",
       "text": "a free thinker on the party payroll",
       "referentKind": "personal",
@@ -387,7 +387,7 @@
       "rarity": "common"
     },
     {
-      "id": "a-dictatorship",
+      "id": "red-folded-chairman-noun-006",
       "role": "noun",
       "text": "a dictatorship",
       "tags": [
@@ -405,7 +405,7 @@
       "rarity": "common"
     },
     {
-      "id": "the-working-class",
+      "id": "red-folded-chairman-noun-007",
       "role": "noun",
       "text": "the working class",
       "grammaticalNumber": "plural",
@@ -425,7 +425,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "scientific-socialism",
+      "id": "red-folded-chairman-noun-008",
       "role": "noun",
       "text": "scientific socialism",
       "tags": [
@@ -443,7 +443,7 @@
       "rarity": "rare"
     },
     {
-      "id": "a-screwdriver-between-the-ribs",
+      "id": "red-folded-chairman-noun-009",
       "role": "noun",
       "text": "a screwdriver in the reform gearbox",
       "tags": [
@@ -461,7 +461,7 @@
       "rarity": "rare"
     },
     {
-      "id": "a-historical-blunder",
+      "id": "red-folded-chairman-noun-010",
       "role": "noun",
       "text": "a historical blunder",
       "tags": [
@@ -479,7 +479,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "rich-and-dishonest",
+      "id": "red-folded-chairman-modifier-002",
       "role": "modifier",
       "text": "rich and dishonest",
       "tags": [
@@ -489,7 +489,7 @@
       "rarity": "common"
     },
     {
-      "id": "the-dacs-that-come-from-the-tracs",
+      "id": "red-folded-chairman-ending-002",
       "role": "ending",
       "text": "and the Dacs come from the Tracs.",
       "tags": [
@@ -499,7 +499,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "and-thats-the-synergy-of-facts",
+      "id": "red-folded-chairman-ending-003",
       "role": "ending",
       "text": "and the facts have taken it to committee.",
       "tags": [
@@ -510,7 +510,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "chairman-grammar-immunity",
+      "id": "red-folded-chairman-ending-004",
       "role": "ending",
       "text": "and the grammar has requested parliamentary immunity.",
       "tags": [
@@ -521,7 +521,7 @@
       "finisherBonus": 3
     },
     {
-      "id": "red-folded-chairman-verb-1-past",
+      "id": "red-folded-chairman-verb-002-past",
       "role": "verb",
       "text": "adjourned the historical hearing on",
       "singularText": "adjourned the historical hearing on",
@@ -553,10 +553,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-verb-1"
+      "tenseFamily": "red-folded-chairman-verb-002"
     },
     {
-      "id": "red-folded-chairman-verb-1-present",
+      "id": "red-folded-chairman-verb-002-present",
       "role": "verb",
       "text": "adjourns the historical hearing on",
       "singularText": "adjourns the historical hearing on",
@@ -588,10 +588,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-verb-1"
+      "tenseFamily": "red-folded-chairman-verb-002"
     },
     {
-      "id": "red-folded-chairman-verb-1-future",
+      "id": "red-folded-chairman-verb-002-future",
       "role": "verb",
       "text": "will adjourn the historical hearing on",
       "singularText": "will adjourn the historical hearing on",
@@ -623,10 +623,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-verb-1"
+      "tenseFamily": "red-folded-chairman-verb-002"
     },
     {
-      "id": "red-folded-chairman-contrast",
+      "id": "red-folded-chairman-conjunction-001",
       "role": "conjunction",
       "text": "but, after due deliberation,",
       "connectorKind": "but",
@@ -634,7 +634,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "red-folded-chairman-contract-verb-files-the-transition-past",
+      "id": "red-folded-chairman-verb-003-past",
       "role": "verb",
       "text": "anchored universal claims in",
       "tags": [
@@ -653,10 +653,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+      "tenseFamily": "red-folded-chairman-verb-003"
     },
     {
-      "id": "red-folded-chairman-contract-verb-files-the-transition-present",
+      "id": "red-folded-chairman-verb-003-present",
       "role": "verb",
       "text": "anchors universal claims in",
       "singularText": "anchors universal claims in",
@@ -679,10 +679,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+      "tenseFamily": "red-folded-chairman-verb-003"
     },
     {
-      "id": "red-folded-chairman-contract-verb-files-the-transition-future",
+      "id": "red-folded-chairman-verb-003-future",
       "role": "verb",
       "text": "will anchor universal claims in",
       "tags": [
@@ -701,10 +701,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-contract-verb-files-the-transition"
+      "tenseFamily": "red-folded-chairman-verb-003"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-1-past",
+      "id": "red-folded-chairman-predicate-003-past",
       "role": "predicate",
       "text": "was the synergy of facts",
       "singularText": "was the synergy of facts",
@@ -725,10 +725,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+      "tenseFamily": "red-folded-chairman-predicate-003"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-1-present",
+      "id": "red-folded-chairman-predicate-003-present",
       "role": "predicate",
       "text": "is the synergy of facts",
       "singularText": "is the synergy of facts",
@@ -751,10 +751,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+      "tenseFamily": "red-folded-chairman-predicate-003"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-1-future",
+      "id": "red-folded-chairman-predicate-003-future",
       "role": "predicate",
       "text": "will be the synergy of facts",
       "tags": [
@@ -773,10 +773,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-1"
+      "tenseFamily": "red-folded-chairman-predicate-003"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-2-past",
+      "id": "red-folded-chairman-predicate-004-past",
       "role": "predicate",
       "text": "was a reform with a loose screw",
       "singularText": "was a reform with a loose screw",
@@ -797,10 +797,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+      "tenseFamily": "red-folded-chairman-predicate-004"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-2-present",
+      "id": "red-folded-chairman-predicate-004-present",
       "role": "predicate",
       "text": "is a reform with a loose screw",
       "singularText": "is a reform with a loose screw",
@@ -823,10 +823,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+      "tenseFamily": "red-folded-chairman-predicate-004"
     },
     {
-      "id": "red-folded-chairman-contract-predicate-predicate-2-future",
+      "id": "red-folded-chairman-predicate-004-future",
       "role": "predicate",
       "text": "will be a reform with a loose screw",
       "tags": [
@@ -845,10 +845,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-contract-predicate-predicate-2"
+      "tenseFamily": "red-folded-chairman-predicate-004"
     },
     {
-      "id": "red-folded-chairman-contract-modifier-beneath-a-legacy-footnote",
+      "id": "red-folded-chairman-modifier-003",
       "role": "modifier",
       "text": "beneath a legacy footnote",
       "tags": [
@@ -857,7 +857,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "red-folded-chairman-contract-ending-and-the-transition-requested-a-filing-cabinet",
+      "id": "red-folded-chairman-ending-005",
       "role": "ending",
       "text": "and the transition requested a filing cabinet.",
       "tags": [

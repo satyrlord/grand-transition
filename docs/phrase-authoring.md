@@ -32,9 +32,10 @@ list in TypeScript.
 ## Add a card
 
 1. Choose the owning file from the table above.
-2. Add one card object. Start from the example below, replace its existing ID
-   and text with unique values, and keep the surrounding JSON valid, including
-   the comma between entries.
+2. Add one card object. Start from the example below. Give it the next unused
+   stable numeric slot for its owner and role; do not derive the ID from its
+   text or renumber existing cards. Replace the text with a unique value and
+   keep the surrounding JSON valid, including the comma between entries.
 3. Fill the fields that the role requires (see the field table).
 4. Apply the role's provenance rule. Every common or character-owned
    `predicate`, `modifier`, and `ending` must be inspired by a verifiably real
@@ -52,7 +53,7 @@ list in TypeScript.
 
 ```json
 {
-  "id": "an-extorsion-of-a-clearance",
+  "id": "common-noun-211",
   "role": "noun",
   "text": "an extorsion of a clearance",
   "tags": ["bureaucracy", "competence"],
@@ -79,8 +80,9 @@ eligible scene pool separately.
 2. Confirm that no other file still names the identifier:
    `rg "<phrase-id>" src tests e2e tools docs`.
    Content JSON, tests, and `e2e/` specs are the only expected places. Structural
-   tests use a small set of long-lived foundation cards (`you`, `is`, `and`,
-   `belongs-in-a-party-museum`, and similar) as grammar, scoring, and layout
+   tests use a small set of long-lived foundation cards (`common-noun-028`,
+   `common-verb-023-present`, `common-conjunction-001`,
+   `common-predicate-010-present`, and similar) as grammar, scoring, and layout
    fixtures. If you remove one of those, update the referencing test in the same
    change.
 3. Confirm that the owner still satisfies the per-character, per-scene, and
@@ -94,7 +96,7 @@ cards. Identifiers are stable for stored replays and match history.
 
 | Field | Required | Rule |
 | --- | --- | --- |
-| `id` | Always | Lowercase kebab-case identifier, unique in the whole catalog, stable forever. |
+| `id` | Always | Content-neutral `<owner>-<role>-<slot>` identifier, with a tense suffix for relations; unique in the whole catalog and stable forever. |
 | `role` | Always | `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, or `continuation`. |
 | `text` | Always | The player-visible English phrase. Unique across both corpora after normalization. |
 | `tags` | Always | Weakness tags this card can punish. Use `[]` for a neutral card. |
@@ -114,22 +116,17 @@ Extra keys are rejected, and so is role data on the wrong role. A shared card
 that lists `sceneIds` is no longer part of the general corpus.
 
 Each verb or predicate family has distinct past, present, and future cards with
-the same role and `tenseFamily`. Their rarities are `common`, `uncommon`, and
+the same role and content-neutral `<owner>-<role>-<slot>` `tenseFamily`.
+Their card IDs append `-past`, `-present`, or `-future`. Their rarities are `common`, `uncommon`, and
 `rare`, respectively. When adding a new family, add all three cards. When
-extending an existing family, first check which tense it needs. The
-`should-have-been` family is the sole exception: it has distinct past and
-present cards and no future card.
+extending an existing family, first check which tense it needs.
 
 The final common verb pool uses 50 complete three-tense families. Review the
 family as one humor and editorial unit. If one tense is not funny or fails
-editorial review, change all three tense cards before approval. The
-`should-have-been` two-form exception is not counted among those 50 final verb
-families.
+editorial review, change all three tense cards before approval.
 
 Each character uses 3 complete three-tense verb families. Apply the same
-whole-family humor and editorial review to those 9 cards; the
-`should-have-been` two-form exception is not part of the final character verb
-target.
+whole-family humor and editorial review to those 9 cards.
 
 ## Content rules
 

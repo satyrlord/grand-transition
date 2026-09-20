@@ -25,13 +25,13 @@ const analyze = (steps: readonly EnglishGrammarStep[]) =>
 describe('Hollywood Roast English grammar', () => {
   test('accepts the two minimum sentence forms', () => {
     const predicate = analyze([
-      add('national-consensus'),
-      add('belongs-in-a-party-museum'),
+      add('common-noun-001'),
+      add('common-predicate-010-present'),
     ]);
     const object = analyze([
-      add('national-consensus'),
-      add('rebrands'),
-      add('national-salvation-committee'),
+      add('common-noun-001'),
+      add('common-verb-010-present'),
+      add('red-folded-chairman-noun-001'),
     ]);
 
     expect(predicate).toMatchObject({
@@ -46,9 +46,9 @@ describe('Hollywood Roast English grammar', () => {
 
   test('accepts noun and noun as a compound subject before either completion form', () => {
     const prefix = analyze([
-      add('televised-revolution'),
-      add('and'),
-      add('national-salvation-committee'),
+      add('common-noun-002'),
+      add('common-conjunction-001'),
+      add('red-folded-chairman-noun-001'),
     ]);
     expect(prefix).toMatchObject({
       accepted: true,
@@ -61,11 +61,11 @@ describe('Hollywood Roast English grammar', () => {
     });
 
     const complete = analyze([
-      add('televised-revolution'),
-      add('and'),
-      add('national-salvation-committee'),
-      add('rebrands'),
-      add('national-consensus'),
+      add('common-noun-002'),
+      add('common-conjunction-001'),
+      add('red-folded-chairman-noun-001'),
+      add('common-verb-010-present'),
+      add('common-noun-001'),
     ]);
     expect(complete).toMatchObject({
       accepted: true,
@@ -79,19 +79,19 @@ describe('Hollywood Roast English grammar', () => {
   test('renders complete number, person, and referent agreement', () => {
     const cases = [
       [
-        ['your-party', 'makes-own-voters-change-the-channel'],
+        ['common-noun-029', 'common-predicate-011-present'],
         'Your party makes its own voters change the channel',
       ],
       [
-        ['my-opponent', 'makes-own-voters-change-the-channel'],
+        ['common-noun-053', 'common-predicate-011-present'],
         'My opponent makes their own voters change the channel',
       ],
       [
-        ['you', 'makes-own-voters-change-the-channel'],
+        ['common-noun-028', 'common-predicate-011-present'],
         'You make your own voters change the channel',
       ],
       [
-        ['eu-funds', 'makes-own-voters-change-the-channel'],
+        ['common-noun-050', 'common-predicate-011-present'],
         'EU funds make their own voters change the channel',
       ],
     ] as const;
@@ -105,31 +105,31 @@ describe('Hollywood Roast English grammar', () => {
     }
 
     expect(
-      analyze([add('you'), add('rebrands'), add('national-consensus')]),
+      analyze([add('common-noun-028'), add('common-verb-010-present'), add('common-noun-001')]),
     ).toMatchObject({
       accepted: true,
       analysis: { publicText: 'You reinvent your unanimous disagreement' },
     });
     expect(
-      analyze([add('my-opponent'), add('rebrands'), add('national-consensus')]),
+      analyze([add('common-noun-053'), add('common-verb-010-present'), add('common-noun-001')]),
     ).toMatchObject({
       accepted: true,
       analysis: { publicText: 'My opponent reinvents your unanimous disagreement' },
     });
 
     for (const [predicateId, expected] of [
-      ['were-communist-party-members', 'You were a Communist Party member'],
-      ['are-communist-party-members', 'You are a Communist Party member'],
+      ['common-predicate-005-past', 'You were a Communist Party member'],
+      ['common-predicate-005-present', 'You are a Communist Party member'],
       [
-        'will-be-communist-party-members',
+        'common-predicate-005-future',
         'You will be a Communist Party member',
       ],
-      ['was-a-snitch', 'You were a snitch'],
-      ['is-a-snitch', 'You are a snitch'],
-      ['will-be-a-snitch', 'You will be a snitch'],
+      ['common-predicate-015-past', 'You were a snitch'],
+      ['common-predicate-015-present', 'You are a snitch'],
+      ['common-predicate-015-future', 'You will be a snitch'],
     ] as const) {
       expect(
-        analyze([add('you'), add(predicateId)]),
+        analyze([add('common-noun-028'), add(predicateId)]),
         predicateId,
       ).toMatchObject({
         accepted: true,
@@ -141,43 +141,43 @@ describe('Hollywood Roast English grammar', () => {
   test('renders the requested social-media families and ending', () => {
     for (const [predicateId, expected] of [
       [
-        'was-posted-on-social-media',
+        'common-predicate-003-past',
         'A liberal cheered for a Russian attack',
       ],
-      ['is-posted-on-social-media', 'A liberal cheers for a Russian attack'],
+      ['common-predicate-003-present', 'A liberal cheers for a Russian attack'],
       [
-        'will-be-posted-on-social-media',
+        'common-predicate-003-future',
         'A liberal will cheer for a Russian attack',
       ],
       [
-        'harassed-innocent-people-on-social-media',
+        'common-predicate-004-past',
         'A liberal harassed innocent people on social media',
       ],
       [
-        'harasses-innocent-people-on-social-media',
+        'common-predicate-004-present',
         'A liberal harasses innocent people on social media',
       ],
       [
-        'will-harass-innocent-people-on-social-media',
+        'common-predicate-004-future',
         'A liberal will harass innocent people on social media',
       ],
     ] as const) {
-      expect(analyze([add('a-liberal'), add(predicateId)])).toMatchObject({
+      expect(analyze([add('common-noun-044'), add(predicateId)])).toMatchObject({
         accepted: true,
         analysis: { complete: true, publicText: expected },
       });
     }
 
     expect(
-      analyze([add('you'), add('is-posted-on-social-media')]),
+      analyze([add('common-noun-028'), add('common-predicate-003-present')]),
     ).toMatchObject({
       accepted: true,
       analysis: { publicText: 'You cheer for a Russian attack' },
     });
     expect(
       analyze([
-        add('you'),
-        add('harasses-innocent-people-on-social-media'),
+        add('common-noun-028'),
+        add('common-predicate-004-present'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -185,9 +185,9 @@ describe('Hollywood Roast English grammar', () => {
     });
     expect(
       analyze([
-        add('a-liberal'),
-        add('is-posted-on-social-media'),
-        add('and-most-of-your-followers-are-bots'),
+        add('common-noun-044'),
+        add('common-predicate-003-present'),
+        add('common-ending-010'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -201,18 +201,18 @@ describe('Hollywood Roast English grammar', () => {
 
   test('renders every shipped possessive relation for every shipped noun', () => {
     const relationIds = [
-      'could-not-win-own-stairwell',
-      'cannot-win-own-stairwell',
-      'will-not-win-own-stairwell',
-      'was-rejected-by-own-voters',
-      'is-rejected-by-own-voters',
-      'will-be-rejected-by-own-voters',
-      'makes-own-voters-change-the-channel',
-      'made-own-voters-change-the-channel',
-      'will-make-own-voters-change-the-channel',
-      'cannot-steer-own-party-from-puddle',
-      'could-not-steer-own-party-from-puddle',
-      'will-not-steer-own-party-from-puddle',
+      'common-predicate-007-past',
+      'common-predicate-007-present',
+      'common-predicate-007-future',
+      'common-predicate-009-past',
+      'common-predicate-009-present',
+      'common-predicate-009-future',
+      'common-predicate-011-present',
+      'common-predicate-011-past',
+      'common-predicate-011-future',
+      'black-sea-captain-predicate-002-present',
+      'black-sea-captain-predicate-002-past',
+      'black-sea-captain-predicate-002-future',
     ] as const;
     const nouns = sampleContent.phrases.filter(
       (candidate) => candidate.role === 'noun',
@@ -244,10 +244,10 @@ describe('Hollywood Roast English grammar', () => {
 
   test('keeps second-person agreement through shared and compound subjects', () => {
     const shared = analyze([
-      add('you'),
-      add('made-own-voters-change-the-channel'),
-      add('and'),
-      add('could-not-win-own-stairwell'),
+      add('common-noun-028'),
+      add('common-predicate-011-past'),
+      add('common-conjunction-001'),
+      add('common-predicate-007-past'),
       { kind: 'end' },
     ]);
     expect(shared).toMatchObject({
@@ -260,10 +260,10 @@ describe('Hollywood Roast English grammar', () => {
     });
 
     const compound = analyze([
-      add('my-opponent'),
-      add('and'),
-      add('you'),
-      add('made-own-voters-change-the-channel'),
+      add('common-noun-053'),
+      add('common-conjunction-001'),
+      add('common-noun-028'),
+      add('common-predicate-011-past'),
     ]);
     expect(compound).toMatchObject({
       accepted: true,
@@ -278,11 +278,11 @@ describe('Hollywood Roast English grammar', () => {
 
   test('replaces person agreement when a conjunction starts a new subject', () => {
     const result = analyze([
-      add('you'),
-      add('made-own-voters-change-the-channel'),
-      add('and'),
-      add('my-opponent'),
-      add('made-own-voters-change-the-channel'),
+      add('common-noun-028'),
+      add('common-predicate-011-past'),
+      add('common-conjunction-001'),
+      add('common-noun-053'),
+      add('common-predicate-011-past'),
     ]);
     expect(result).toMatchObject({
       accepted: true,
@@ -297,31 +297,31 @@ describe('Hollywood Roast English grammar', () => {
   test('accepts and after a complete clause with a new or shared subject', () => {
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('and'),
-        add('televised-revolution'),
-        add('belongs-in-a-party-museum'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-001'),
+        add('common-noun-002'),
+        add('common-predicate-010-present'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
     expect(
       analyze([
-        add('national-consensus'),
-        add('belongs-in-a-party-museum'),
-        add('and'),
-        add('rebrands'),
-        add('televised-revolution'),
+        add('common-noun-001'),
+        add('common-predicate-010-present'),
+        add('common-conjunction-001'),
+        add('common-verb-010-present'),
+        add('common-noun-002'),
       ]),
     ).toMatchObject({ accepted: true, analysis: { complete: true } });
   });
 
   test('keeps a transitive clause complete when and adds another object', () => {
     const compoundObject = analyze([
-      add('national-consensus'),
-      add('denounced'),
-      add('televised-revolution'),
-      add('and'),
-      add('national-salvation-committee'),
+      add('common-noun-001'),
+      add('common-verb-001-past'),
+      add('common-noun-002'),
+      add('common-conjunction-001'),
+      add('red-folded-chairman-noun-001'),
     ]);
     expect(compoundObject).toMatchObject({
       accepted: true,
@@ -334,12 +334,12 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('national-consensus'),
-        add('denounced'),
-        add('televised-revolution'),
-        add('and'),
-        add('national-salvation-committee'),
-        add('by-emergency-ordinance'),
+        add('common-noun-001'),
+        add('common-verb-001-past'),
+        add('common-noun-002'),
+        add('common-conjunction-001'),
+        add('red-folded-chairman-noun-001'),
+        add('common-ending-001'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -348,13 +348,13 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('national-consensus'),
-        add('denounced'),
-        add('televised-revolution'),
-        add('and'),
-        add('national-salvation-committee'),
-        add('rebrands'),
-        add('national-consensus'),
+        add('common-noun-001'),
+        add('common-verb-001-past'),
+        add('common-noun-002'),
+        add('common-conjunction-001'),
+        add('red-folded-chairman-noun-001'),
+        add('common-verb-010-present'),
+        add('common-noun-001'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -363,12 +363,12 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(
       analyze([
-        add('national-consensus'),
-        add('denounced'),
-        add('televised-revolution'),
-        add('and'),
-        add('national-salvation-committee'),
-        add('before-the-next-election'),
+        add('common-noun-001'),
+        add('common-verb-001-past'),
+        add('common-noun-002'),
+        add('common-conjunction-001'),
+        add('red-folded-chairman-noun-001'),
+        add('common-modifier-001'),
       ]),
     ).toMatchObject({
       accepted: true,
@@ -377,7 +377,7 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('allows a player to end an incomplete sentence for zero damage', () => {
-    const result = analyze([add('national-consensus'), { kind: 'end' }]);
+    const result = analyze([add('common-noun-001'), { kind: 'end' }]);
     expect(result).toMatchObject({
       accepted: true,
       analysis: {
@@ -395,11 +395,11 @@ describe('Hollywood Roast English grammar', () => {
 
   test('accepts modifiers only after a complete clause and keeps construction open', () => {
     const result = analyze([
-      add('national-consensus'),
-      add('rebrands'),
-      add('televised-revolution'),
-      add('before-the-next-election'),
-      add('behind-closed-doors'),
+      add('common-noun-001'),
+      add('common-verb-010-present'),
+      add('common-noun-002'),
+      add('common-modifier-001'),
+      add('common-modifier-008'),
     ]);
     expect(result).toMatchObject({
       accepted: true,
@@ -412,7 +412,7 @@ describe('Hollywood Roast English grammar', () => {
       },
     });
     expect(
-      analyze([add('national-consensus'), add('before-the-next-election')]),
+      analyze([add('common-noun-001'), add('common-modifier-001')]),
     ).toMatchObject({
       accepted: false,
       faults: [
@@ -426,7 +426,7 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('returns a typed grammar mistake for a role that does not fit', () => {
-    expect(analyze([add('rebrands')])).toEqual({
+    expect(analyze([add('common-verb-010-present')])).toEqual({
       accepted: false,
       faults: [
         {
@@ -434,7 +434,7 @@ describe('Hollywood Roast English grammar', () => {
           code: 'unexpected-role',
           state: 'EXPECT_SUBJECT',
           attempted: 'verb',
-          phraseId: 'rebrands',
+          phraseId: 'common-verb-010-present',
           stepIndex: 0,
           expectedRoles: ['noun', 'conjunction'],
         },
@@ -444,9 +444,9 @@ describe('Hollywood Roast English grammar', () => {
 
   test('a finisher ends a complete sentence immediately', () => {
     const result = analyze([
-      add('national-consensus'),
-      add('belongs-in-a-party-museum'),
-      add('by-emergency-ordinance'),
+      add('common-noun-001'),
+      add('common-predicate-010-present'),
+      add('common-ending-001'),
     ]);
     expect(result).toMatchObject({
       accepted: true,
@@ -463,21 +463,21 @@ describe('Hollywood Roast English grammar', () => {
 
 
 test('with requires its noun before another connector can start a clause', () => {
-  const prefix = ['my-opponent', 'interrupts-the-debate', 'with'];
+  const prefix = ['common-noun-053', 'common-predicate-001-present', 'common-conjunction-005'];
   expect(analyze(prefix.map(add))).toMatchObject({ accepted: true, analysis: { complete: false } });
   for (const ids of [
-    [...prefix, 'because'],
-    [...prefix, 'because', 'national-consensus', 'belongs-in-a-party-museum'],
+    [...prefix, 'common-conjunction-003'],
+    [...prefix, 'common-conjunction-003', 'common-noun-001', 'common-predicate-010-present'],
   ]) {
     expect(analyze(ids.map(add))).toMatchObject({ accepted: false });
   }
-  expect(analyze([...prefix, 'national-consensus'].map(add))).toMatchObject({ accepted: true, analysis: { complete: true } });
+  expect(analyze([...prefix, 'common-noun-001'].map(add))).toMatchObject({ accepted: true, analysis: { complete: true } });
 });
 
 
 test('completes the approved cemetery-turnout sentence as a modifier', () => {
   const result = analyze([
-    add('my-opponent'), add('can-lose-to-an-empty-ballot'), add('with-cemetery-turnout'),
+    add('common-noun-053'), add('thunder-tribune-predicate-001-present'), add('thunder-tribune-modifier-001'),
   ]);
   expect(result).toMatchObject({ accepted: true, analysis: {
     complete: true,
@@ -490,15 +490,15 @@ test('completes the approved cemetery-turnout sentence as a modifier', () => {
 // authored card cannot reach a complete sentence.
 describe('catalog-wide clause coverage', () => {
   test.each([
-    ['red-folded-chairman-contract-predicate-predicate-1', 'was', 'were'],
-    ['red-folded-chairman-contract-predicate-predicate-2', 'was', 'were'],
-    ['thunder-tribune-contract-predicate-predicate-1', 'was', 'were'],
-    ['football-tycoon-contract-predicate-predicate-1', 'was', 'were'],
-    ['football-tycoon-contract-predicate-predicate-2', 'was', 'were'],
-    ['football-tycoon-contract-predicate-predicate-3', 'was', 'were'],
+    ['red-folded-chairman-predicate-003', 'was', 'were'],
+    ['red-folded-chairman-predicate-004', 'was', 'were'],
+    ['thunder-tribune-predicate-004', 'was', 'were'],
+    ['football-tycoon-predicate-002', 'was', 'were'],
+    ['football-tycoon-predicate-003', 'was', 'were'],
+    ['football-tycoon-predicate-004', 'was', 'were'],
   ])('agrees with singular, plural, and second-person subjects in %s', (family, singular, plural) => {
     for (const [subject, copula] of [
-      ['national-consensus', singular], ['your-voters', plural], ['you', plural],
+      ['common-noun-001', singular], ['common-noun-031', plural], ['common-noun-028', plural],
     ]) {
       const result = analyze([add(subject!), add(`${family}-past`), { kind: 'end' }]);
       expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
@@ -509,21 +509,21 @@ describe('catalog-wide clause coverage', () => {
   });
 
   test.each([
-    'red-folded-chairman-contract-predicate-predicate-2-present',
-    'thunder-tribune-contract-predicate-predicate-1-present',
-    'football-tycoon-contract-predicate-predicate-2-present',
-    'football-tycoon-contract-predicate-predicate-3-present',
+    'red-folded-chairman-predicate-004-present',
+    'thunder-tribune-predicate-004-present',
+    'football-tycoon-predicate-003-present',
+    'football-tycoon-predicate-004-present',
   ])('uses the second-person copula in %s', (id) => {
-    const result = analyze([add('you'), add(id), { kind: 'end' }]);
+    const result = analyze([add('common-noun-028'), add(id), { kind: 'end' }]);
     expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
     if (result.accepted) expect(result.analysis.publicText).toMatch(/^You are /u);
   });
 
   test('every shipped ending completes personal, nonpersonal, and plural clauses', () => {
     for (const ending of sampleContent.phrases.filter(({ role }) => role === 'ending')) {
-      for (const subject of ['you', 'campaign-promise', 'your-voters']) {
+      for (const subject of ['common-noun-028', 'common-noun-019', 'common-noun-031']) {
         const result = analyze([
-          add(subject), add('belongs-in-a-party-museum'), add(ending.id),
+          add(subject), add('common-predicate-010-present'), add(ending.id),
         ]);
         expect(result, `${subject} + ${ending.id}`).toMatchObject({
           accepted: true,
@@ -540,9 +540,9 @@ describe('catalog-wide clause coverage', () => {
   test('every shipped noun and modifier stays reachable in a complete clause', () => {
     for (const entry of sampleContent.phrases) {
       const ids = entry.role === 'noun'
-        ? [entry.id, 'belongs-in-a-party-museum', 'under-the-national-banner']
+        ? [entry.id, 'common-predicate-010-present', 'common-ending-008']
         : entry.role === 'modifier'
-          ? ['you', 'belongs-in-a-party-museum', entry.id, 'under-the-national-banner']
+          ? ['common-noun-028', 'common-predicate-010-present', entry.id, 'common-ending-008']
           : null;
       if (!ids) continue;
       expect(analyze(ids.map(add)), entry.id).toMatchObject({

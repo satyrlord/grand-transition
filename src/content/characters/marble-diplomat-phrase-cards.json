@@ -48,7 +48,7 @@
   },
   "phrases": [
     {
-      "id": "marble-diplomat-foundation-noun",
+      "id": "marble-diplomat-noun-001",
       "role": "noun",
       "text": "my victory champagne on the taxpayers' tab",
       "tags": [
@@ -66,14 +66,14 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-foundation-modifier",
+      "id": "marble-diplomat-modifier-001",
       "role": "modifier",
       "text": "with attention and concern",
       "tags": [],
       "rarity": "uncommon"
     },
     {
-      "id": "marble-diplomat-foundation-ending",
+      "id": "marble-diplomat-ending-001",
       "role": "ending",
       "text": "and bad luck can use the servants' entrance.",
       "tags": [
@@ -84,7 +84,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "marble-diplomat-recount-reception",
+      "id": "marble-diplomat-ending-002",
       "role": "ending",
       "text": "and the recount stopped the orchestra.",
       "tags": [
@@ -94,7 +94,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "marble-diplomat-protocol-empty-plinth",
+      "id": "marble-diplomat-noun-002",
       "role": "noun",
       "text": "an empty plinth with diplomatic immunity",
       "tags": [
@@ -114,7 +114,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-gilded-apology",
+      "id": "marble-diplomat-noun-003",
       "role": "noun",
       "text": "a gilded apology too heavy to deliver",
       "tags": [
@@ -134,7 +134,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-reception-place-card",
+      "id": "marble-diplomat-noun-004",
       "role": "noun",
       "text": "a place card attending the reception alone",
       "tags": [
@@ -154,7 +154,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-prestige-carpet",
+      "id": "marble-diplomat-noun-005",
       "role": "noun",
       "text": "a prestige carpet over an unpaid invoice",
       "tags": [
@@ -175,7 +175,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-crystal-silence",
+      "id": "marble-diplomat-noun-006",
       "role": "noun",
       "text": "a crystal decanter reserved for official silence",
       "tags": [
@@ -196,7 +196,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-verb-1-past",
+      "id": "marble-diplomat-verb-001-past",
       "role": "verb",
       "text": "reserved a ceremonial entrance for",
       "singularText": "reserved a ceremonial entrance for",
@@ -227,10 +227,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-verb-1"
+      "tenseFamily": "marble-diplomat-verb-001"
     },
     {
-      "id": "marble-diplomat-verb-1-present",
+      "id": "marble-diplomat-verb-001-present",
       "role": "verb",
       "text": "reserves a ceremonial entrance for",
       "singularText": "reserves a ceremonial entrance for",
@@ -261,10 +261,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-verb-1"
+      "tenseFamily": "marble-diplomat-verb-001"
     },
     {
-      "id": "marble-diplomat-verb-1-future",
+      "id": "marble-diplomat-verb-001-future",
       "role": "verb",
       "text": "will reserve a ceremonial entrance for",
       "singularText": "will reserve a ceremonial entrance for",
@@ -295,10 +295,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-verb-1"
+      "tenseFamily": "marble-diplomat-verb-001"
     },
     {
-      "id": "marble-diplomat-verb-2-past",
+      "id": "marble-diplomat-verb-002-past",
       "role": "verb",
       "text": "commissioned a marble pedestal for",
       "singularText": "commissioned a marble pedestal for",
@@ -329,10 +329,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-verb-2"
+      "tenseFamily": "marble-diplomat-verb-002"
     },
     {
-      "id": "marble-diplomat-verb-2-present",
+      "id": "marble-diplomat-verb-002-present",
       "role": "verb",
       "text": "commissions a marble pedestal for",
       "singularText": "commissions a marble pedestal for",
@@ -363,10 +363,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-verb-2"
+      "tenseFamily": "marble-diplomat-verb-002"
     },
     {
-      "id": "marble-diplomat-verb-2-future",
+      "id": "marble-diplomat-verb-002-future",
       "role": "verb",
       "text": "will commission a marble pedestal for",
       "singularText": "will commission a marble pedestal for",
@@ -397,10 +397,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-verb-2"
+      "tenseFamily": "marble-diplomat-verb-002"
     },
     {
-      "id": "marble-diplomat-predicate-1-past",
+      "id": "marble-diplomat-predicate-001-past",
       "role": "predicate",
       "text": "measured national prestige in carpet length",
       "singularText": "measured national prestige in carpet length",
@@ -426,10 +426,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-001"
     },
     {
-      "id": "marble-diplomat-predicate-1-present",
+      "id": "marble-diplomat-predicate-001-present",
       "role": "predicate",
       "text": "measures national prestige in carpet length",
       "singularText": "measures national prestige in carpet length",
@@ -455,10 +455,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-001"
     },
     {
-      "id": "marble-diplomat-predicate-1-future",
+      "id": "marble-diplomat-predicate-001-future",
       "role": "predicate",
       "text": "will measure national prestige in carpet length",
       "singularText": "will measure national prestige in carpet length",
@@ -484,17 +484,17 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-001"
     },
     {
-      "id": "marble-diplomat-review-modifier",
+      "id": "marble-diplomat-modifier-002",
       "role": "modifier",
       "text": "while still waiting for the report",
       "tags": [],
       "rarity": "uncommon"
     },
     {
-      "id": "marble-diplomat-contrast",
+      "id": "marble-diplomat-conjunction-001",
       "role": "conjunction",
       "text": "yet, with impeccable protocol,",
       "connectorKind": "yet",
@@ -502,7 +502,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "marble-diplomat-contract-noun-1-a-diplomatic-carpet-with-a-minibar",
+      "id": "marble-diplomat-noun-007",
       "role": "noun",
       "text": "a victory announced too early",
       "tags": [
@@ -519,7 +519,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-contract-noun-2-a-marble-handshake",
+      "id": "marble-diplomat-noun-008",
       "role": "noun",
       "text": "a thank-you speech before the result",
       "tags": [
@@ -536,7 +536,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "marble-diplomat-contract-noun-3-a-reception-with-a-private-entrance",
+      "id": "marble-diplomat-noun-009",
       "role": "noun",
       "text": "a reception for a premature victory",
       "tags": [
@@ -553,7 +553,7 @@
       "rarity": "rare"
     },
     {
-      "id": "marble-diplomat-contract-noun-4-a-protocol-tray-of-imported-silence",
+      "id": "marble-diplomat-noun-010",
       "role": "noun",
       "text": "bad luck at the servants' entrance",
       "tags": [
@@ -570,7 +570,7 @@
       "rarity": "common"
     },
     {
-      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-past",
+      "id": "marble-diplomat-verb-003-past",
       "role": "verb",
       "text": "congratulated the exit poll before",
       "tags": [
@@ -589,10 +589,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+      "tenseFamily": "marble-diplomat-verb-003"
     },
     {
-      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-present",
+      "id": "marble-diplomat-verb-003-present",
       "role": "verb",
       "text": "congratulates the exit poll before",
       "singularText": "congratulates the exit poll before",
@@ -615,10 +615,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+      "tenseFamily": "marble-diplomat-verb-003"
     },
     {
-      "id": "marble-diplomat-contract-verb-serves-luxury-as-protocol-future",
+      "id": "marble-diplomat-verb-003-future",
       "role": "verb",
       "text": "will congratulate the exit poll before",
       "tags": [
@@ -637,10 +637,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-contract-verb-serves-luxury-as-protocol"
+      "tenseFamily": "marble-diplomat-verb-003"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-1-past",
+      "id": "marble-diplomat-predicate-002-past",
       "role": "predicate",
       "text": "was bad luck with a diplomatic invitation",
       "tags": [
@@ -659,10 +659,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-002"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-1-present",
+      "id": "marble-diplomat-predicate-002-present",
       "role": "predicate",
       "text": "is bad luck with a diplomatic invitation",
       "singularText": "is bad luck with a diplomatic invitation",
@@ -685,10 +685,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-002"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-1-future",
+      "id": "marble-diplomat-predicate-002-future",
       "role": "predicate",
       "text": "will be bad luck with a diplomatic invitation",
       "tags": [
@@ -707,10 +707,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-1"
+      "tenseFamily": "marble-diplomat-predicate-002"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-2-past",
+      "id": "marble-diplomat-predicate-003-past",
       "role": "predicate",
       "text": "was a public office with a private elevator",
       "tags": [
@@ -729,10 +729,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+      "tenseFamily": "marble-diplomat-predicate-003"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-2-present",
+      "id": "marble-diplomat-predicate-003-present",
       "role": "predicate",
       "text": "is a public office with a private elevator",
       "singularText": "is a public office with a private elevator",
@@ -755,10 +755,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+      "tenseFamily": "marble-diplomat-predicate-003"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-2-future",
+      "id": "marble-diplomat-predicate-003-future",
       "role": "predicate",
       "text": "will be a public office with a private elevator",
       "tags": [
@@ -777,10 +777,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-2"
+      "tenseFamily": "marble-diplomat-predicate-003"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-3-past",
+      "id": "marble-diplomat-predicate-004-past",
       "role": "predicate",
       "text": "was a compromise in marble",
       "tags": [
@@ -799,10 +799,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+      "tenseFamily": "marble-diplomat-predicate-004"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-3-present",
+      "id": "marble-diplomat-predicate-004-present",
       "role": "predicate",
       "text": "is a compromise in marble",
       "singularText": "is a compromise in marble",
@@ -825,10 +825,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+      "tenseFamily": "marble-diplomat-predicate-004"
     },
     {
-      "id": "marble-diplomat-contract-predicate-predicate-3-future",
+      "id": "marble-diplomat-predicate-004-future",
       "role": "predicate",
       "text": "will be a compromise in marble",
       "tags": [
@@ -847,10 +847,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-contract-predicate-predicate-3"
+      "tenseFamily": "marble-diplomat-predicate-004"
     },
     {
-      "id": "marble-diplomat-contract-modifier-under-a-chandelier-of-courtesy",
+      "id": "marble-diplomat-modifier-003",
       "role": "modifier",
       "text": "with the office as the entire country",
       "tags": [
@@ -859,7 +859,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "marble-diplomat-contract-ending-and-the-treaty-arrived-by-limousine",
+      "id": "marble-diplomat-ending-003",
       "role": "ending",
       "text": "and the treaty arrived by limousine.",
       "tags": [
@@ -869,7 +869,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "marble-diplomat-contract-ending-and-the-compromise-required-a-second-carpet",
+      "id": "marble-diplomat-ending-004",
       "role": "ending",
       "text": "and the compromise required a second carpet.",
       "tags": [
@@ -879,7 +879,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "marble-diplomat-contract-ending-and-corruption-wore-the-protocol-badge",
+      "id": "marble-diplomat-ending-005",
       "role": "ending",
       "text": "and corruption wore the protocol badge.",
       "tags": [

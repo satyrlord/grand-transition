@@ -306,6 +306,10 @@ export function buildPhraseCardCatalog(
         left.rosterOrder - right.rosterOrder ||
         left.character.id.localeCompare(right.character.id),
     );
+  validateNeutralPhraseIdentifiers(common, 'common');
+  for (const file of characterFiles) {
+    validateNeutralPhraseIdentifiers(file.corpus, file.character.id);
+  }
   const seenOrders = new Set<number>();
   for (const file of characterFiles) {
     if (seenOrders.has(file.rosterOrder)) {
@@ -328,6 +332,37 @@ export function buildPhraseCardCatalog(
       ...characterFiles.map((file) => file.englishMessages),
     ) as Record<string, string>,
   };
+}
+
+function validateNeutralPhraseIdentifiers(
+  corpus: PhraseCardCorpus,
+  owner: string,
+): void {
+  const escapedOwner = owner.replaceAll(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  for (const phrase of corpus.phrases) {
+    const familyPattern = new RegExp(
+      `^${escapedOwner}-${phrase.role}-[0-9]{3,}$`,
+      'u',
+    );
+    if (phrase.role === 'verb' || phrase.role === 'predicate') {
+      if (!phrase.tenseFamily || !familyPattern.test(phrase.tenseFamily)) {
+        throw new Error(
+          `Phrase card "${phrase.id}" must use a content-neutral tense family such as "${owner}-${phrase.role}-001".`,
+        );
+      }
+      if (phrase.id !== `${phrase.tenseFamily}-${phrase.tense}`) {
+        throw new Error(
+          `Phrase card "${phrase.id}" must append its tense to the content-neutral family "${phrase.tenseFamily}".`,
+        );
+      }
+      continue;
+    }
+    if (!familyPattern.test(phrase.id)) {
+      throw new Error(
+        `Phrase card "${phrase.id}" must use a content-neutral identifier such as "${owner}-${phrase.role}-001".`,
+      );
+    }
+  }
 }
 
 export function combinePhraseCardCorpora(input: {

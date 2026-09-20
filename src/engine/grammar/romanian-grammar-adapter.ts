@@ -92,14 +92,14 @@ export const romanianGrammarAdapter: GrammarAdapter<
       if (
         government === 'copular' &&
         objects.some((candidate) =>
-          candidate.id === 'you' || candidate.grammaticalNumber === 'plural',
+          candidate.id === 'common-noun-028' || candidate.grammaticalNumber === 'plural',
         )
       ) {
         // An identifying predicate can control agreement: "Problema sunteți
         // dumneavoastră" and "Problema sunt votanții voștri".
         renderedPhrases[index] = {
           ...renderedPhrases[index]!,
-          text: objects.some((candidate) => candidate.id === 'you')
+          text: objects.some((candidate) => candidate.id === 'common-noun-028')
             ? relation.secondPersonText
             : relation.pluralText,
         };

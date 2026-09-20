@@ -51,7 +51,7 @@
   },
   "phrases": [
     {
-      "id": "luxury-minister-foundation-noun",
+      "id": "luxury-minister-noun-001",
       "role": "noun",
       "text": "my emergency fund for matching shoes",
       "tags": [
@@ -69,7 +69,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-foundation-modifier",
+      "id": "luxury-minister-modifier-001",
       "role": "modifier",
       "text": "while budgeting for poverty from the penthouse",
       "tags": [
@@ -79,7 +79,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-foundation-ending",
+      "id": "luxury-minister-ending-001",
       "role": "ending",
       "text": "and the public tightens its belt; I choose leather.",
       "tags": [
@@ -91,7 +91,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "luxury-minister-map-matches-itinerary",
+      "id": "luxury-minister-ending-002",
       "role": "ending",
       "text": "and the map will match my itinerary.",
       "tags": [
@@ -101,7 +101,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "luxury-minister-velvet-cutback",
+      "id": "luxury-minister-noun-002",
       "role": "noun",
       "text": "a spending cut wrapped in imported velvet",
       "tags": [
@@ -119,7 +119,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-priority-spa-lane",
+      "id": "luxury-minister-noun-003",
       "role": "noun",
       "text": "a public-service lane leading to the spa",
       "tags": [
@@ -137,7 +137,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-designer-hardship",
+      "id": "luxury-minister-noun-004",
       "role": "noun",
       "text": "my designer collection of other people's hardships",
       "tags": [
@@ -155,7 +155,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-limousine-bus-timetable",
+      "id": "luxury-minister-noun-005",
       "role": "noun",
       "text": "a bus timetable delivered by limousine",
       "tags": [
@@ -174,7 +174,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-diamond-savings-pin",
+      "id": "luxury-minister-noun-006",
       "role": "noun",
       "text": "a diamond pin celebrating household savings",
       "tags": [
@@ -192,7 +192,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-upgraded-to-silk-past",
+      "id": "luxury-minister-verb-001-past",
       "role": "verb",
       "text": "awarded ministerial silk to",
       "tags": [
@@ -203,7 +203,7 @@
       "personalSingularText": "awarded ministerial silk to",
       "secondPersonText": "awarded ministerial silk to",
       "tense": "past",
-      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "tenseFamily": "luxury-minister-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -226,7 +226,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-upgraded-to-silk-present",
+      "id": "luxury-minister-verb-001-present",
       "role": "verb",
       "text": "awards ministerial silk to",
       "tags": [
@@ -237,7 +237,7 @@
       "personalSingularText": "awards ministerial silk to",
       "secondPersonText": "award ministerial silk to",
       "tense": "present",
-      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "tenseFamily": "luxury-minister-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -260,7 +260,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-upgraded-to-silk-future",
+      "id": "luxury-minister-verb-001-future",
       "role": "verb",
       "text": "will award ministerial silk to",
       "tags": [
@@ -271,7 +271,7 @@
       "personalSingularText": "will award ministerial silk to",
       "secondPersonText": "will award ministerial silk to",
       "tense": "future",
-      "tenseFamily": "luxury-minister-upgraded-to-silk",
+      "tenseFamily": "luxury-minister-verb-001",
       "scorePreferences": {
         "substance": [
           {
@@ -294,7 +294,7 @@
       "rarity": "rare"
     },
     {
-      "id": "luxury-minister-charged-to-hardship-fund-past",
+      "id": "luxury-minister-verb-002-past",
       "role": "verb",
       "text": "charged the hardship fund for",
       "tags": [
@@ -305,7 +305,7 @@
       "personalSingularText": "charged the hardship fund for",
       "secondPersonText": "charged the hardship fund for",
       "tense": "past",
-      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "tenseFamily": "luxury-minister-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -328,7 +328,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-charged-to-hardship-fund-present",
+      "id": "luxury-minister-verb-002-present",
       "role": "verb",
       "text": "charges the hardship fund for",
       "tags": [
@@ -339,7 +339,7 @@
       "personalSingularText": "charges the hardship fund for",
       "secondPersonText": "charge the hardship fund for",
       "tense": "present",
-      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "tenseFamily": "luxury-minister-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -362,7 +362,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-charged-to-hardship-fund-future",
+      "id": "luxury-minister-verb-002-future",
       "role": "verb",
       "text": "will charge the hardship fund for",
       "tags": [
@@ -373,7 +373,7 @@
       "personalSingularText": "will charge the hardship fund for",
       "secondPersonText": "will charge the hardship fund for",
       "tense": "future",
-      "tenseFamily": "luxury-minister-charged-to-hardship-fund",
+      "tenseFamily": "luxury-minister-verb-002",
       "scorePreferences": {
         "substance": [
           {
@@ -396,7 +396,7 @@
       "rarity": "rare"
     },
     {
-      "id": "luxury-minister-queue-proof-past",
+      "id": "luxury-minister-predicate-001-past",
       "role": "predicate",
       "text": "was insulated by a private lift",
       "tags": [
@@ -407,7 +407,7 @@
       "personalSingularText": "was insulated from queues by a private lift",
       "secondPersonText": "were insulated from queues by a private lift",
       "tense": "past",
-      "tenseFamily": "luxury-minister-queue-proof",
+      "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -424,7 +424,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-queue-proof-present",
+      "id": "luxury-minister-predicate-001-present",
       "role": "predicate",
       "text": "is insulated by a private lift",
       "tags": [
@@ -435,7 +435,7 @@
       "personalSingularText": "is insulated from queues by a private lift",
       "secondPersonText": "are insulated from queues by a private lift",
       "tense": "present",
-      "tenseFamily": "luxury-minister-queue-proof",
+      "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -452,7 +452,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-queue-proof-future",
+      "id": "luxury-minister-predicate-001-future",
       "role": "predicate",
       "text": "will be insulated by a private lift",
       "tags": [
@@ -463,7 +463,7 @@
       "personalSingularText": "will be insulated from queues by a private lift",
       "secondPersonText": "will be insulated from queues by a private lift",
       "tense": "future",
-      "tenseFamily": "luxury-minister-queue-proof",
+      "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
         "substance": [
           {
@@ -480,7 +480,7 @@
       "rarity": "rare"
     },
     {
-      "id": "luxury-minister-gold-economy-label",
+      "id": "luxury-minister-modifier-002",
       "role": "modifier",
       "text": "with the word economy embossed in gold",
       "tags": [
@@ -489,7 +489,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-neutral-contrast",
+      "id": "luxury-minister-conjunction-001",
       "role": "conjunction",
       "text": "but, all the same,",
       "tags": [],
@@ -497,7 +497,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-contract-noun-1-austerity-with-a-valet-ticket",
+      "id": "luxury-minister-noun-007",
       "role": "noun",
       "text": "a day when elegance was all I wanted",
       "tags": [
@@ -514,7 +514,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-contract-noun-2-a-marble-service-counter",
+      "id": "luxury-minister-noun-008",
       "role": "noun",
       "text": "a rural budget for designer leather",
       "tags": [
@@ -531,7 +531,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-contract-noun-3-a-ministry-with-a-velvet-rope",
+      "id": "luxury-minister-noun-009",
       "role": "noun",
       "text": "a map corrected to match the itinerary",
       "tags": [
@@ -548,7 +548,7 @@
       "rarity": "rare"
     },
     {
-      "id": "luxury-minister-contract-noun-4-a-modest-gesture-in-a-limousine",
+      "id": "luxury-minister-noun-010",
       "role": "noun",
       "text": "a ministry with a wardrobe allowance",
       "tags": [
@@ -565,7 +565,7 @@
       "rarity": "common"
     },
     {
-      "id": "luxury-minister-contract-verb-measures-service-in-marble-past",
+      "id": "luxury-minister-verb-003-past",
       "role": "verb",
       "text": "tailored the map to",
       "tags": [
@@ -584,10 +584,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+      "tenseFamily": "luxury-minister-verb-003"
     },
     {
-      "id": "luxury-minister-contract-verb-measures-service-in-marble-present",
+      "id": "luxury-minister-verb-003-present",
       "role": "verb",
       "text": "tailors the map to",
       "singularText": "tailors the map to",
@@ -610,10 +610,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+      "tenseFamily": "luxury-minister-verb-003"
     },
     {
-      "id": "luxury-minister-contract-verb-measures-service-in-marble-future",
+      "id": "luxury-minister-verb-003-future",
       "role": "verb",
       "text": "will tailor the map to",
       "tags": [
@@ -632,10 +632,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-contract-verb-measures-service-in-marble"
+      "tenseFamily": "luxury-minister-verb-003"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-1-past",
+      "id": "luxury-minister-predicate-002-past",
       "role": "predicate",
       "text": "was elegance with a budget objection",
       "tags": [
@@ -654,10 +654,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+      "tenseFamily": "luxury-minister-predicate-002"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-1-present",
+      "id": "luxury-minister-predicate-002-present",
       "role": "predicate",
       "text": "is elegance with a budget objection",
       "singularText": "is elegance with a budget objection",
@@ -680,10 +680,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+      "tenseFamily": "luxury-minister-predicate-002"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-1-future",
+      "id": "luxury-minister-predicate-002-future",
       "role": "predicate",
       "text": "will be elegance with a budget objection",
       "tags": [
@@ -702,10 +702,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-1"
+      "tenseFamily": "luxury-minister-predicate-002"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-2-past",
+      "id": "luxury-minister-predicate-003-past",
       "role": "predicate",
       "text": "was an austerity speech with valet parking",
       "tags": [
@@ -724,10 +724,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+      "tenseFamily": "luxury-minister-predicate-003"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-2-present",
+      "id": "luxury-minister-predicate-003-present",
       "role": "predicate",
       "text": "is an austerity speech with valet parking",
       "singularText": "is an austerity speech with valet parking",
@@ -750,10 +750,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+      "tenseFamily": "luxury-minister-predicate-003"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-2-future",
+      "id": "luxury-minister-predicate-003-future",
       "role": "predicate",
       "text": "will be an austerity speech with valet parking",
       "tags": [
@@ -772,10 +772,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-2"
+      "tenseFamily": "luxury-minister-predicate-003"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-3-past",
+      "id": "luxury-minister-predicate-004-past",
       "role": "predicate",
       "text": "was a ministry that invoices the welcome",
       "tags": [
@@ -794,10 +794,10 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+      "tenseFamily": "luxury-minister-predicate-004"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-3-present",
+      "id": "luxury-minister-predicate-004-present",
       "role": "predicate",
       "text": "is a ministry that invoices the welcome",
       "singularText": "is a ministry that invoices the welcome",
@@ -820,10 +820,10 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+      "tenseFamily": "luxury-minister-predicate-004"
     },
     {
-      "id": "luxury-minister-contract-predicate-predicate-3-future",
+      "id": "luxury-minister-predicate-004-future",
       "role": "predicate",
       "text": "will be a ministry that invoices the welcome",
       "tags": [
@@ -842,10 +842,10 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-contract-predicate-predicate-3"
+      "tenseFamily": "luxury-minister-predicate-004"
     },
     {
-      "id": "luxury-minister-contract-modifier-beneath-a-modest-limousine",
+      "id": "luxury-minister-modifier-003",
       "role": "modifier",
       "text": "beneath-a-modest-limousine",
       "tags": [
@@ -854,7 +854,7 @@
       "rarity": "uncommon"
     },
     {
-      "id": "luxury-minister-contract-ending-and-austerity-requested-a-larger-marble",
+      "id": "luxury-minister-ending-003",
       "role": "ending",
       "text": "and austerity requested a larger marble.",
       "tags": [
@@ -864,7 +864,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "luxury-minister-contract-ending-and-the-service-came-with-a-chauffeur",
+      "id": "luxury-minister-ending-004",
       "role": "ending",
       "text": "and the service came with a chauffeur.",
       "tags": [
@@ -874,7 +874,7 @@
       "finisherBonus": 4
     },
     {
-      "id": "luxury-minister-contract-ending-and-authenticity-waited-at-reception",
+      "id": "luxury-minister-ending-005",
       "role": "ending",
       "text": "and authenticity waited at reception.",
       "tags": [
