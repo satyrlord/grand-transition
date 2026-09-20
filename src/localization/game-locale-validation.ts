@@ -122,8 +122,8 @@ export function referenceLocaleTextParity(
   return Object.freeze(failures);
 }
 
-// Agreement forms of one phrase share a group, so an identical singular and
-// plural text stays legal while two phrase cards may not read the same.
+// Compare base phrase text only. Agreement forms are excluded, so identical
+// singular and plural text stays legal while two phrase cards may not read the same.
 function duplicateTextGroup(key: string): DuplicateTextGroup | null {
   const segments = key.split('.');
   const [namespace, , field] = segments;

@@ -178,7 +178,7 @@ describe('content schemas', () => {
     );
   });
 
-  test('keeps final comeback text within the 11-word guardrail', () => {
+  test('keeps final comeback text within the 16-word guardrail', () => {
     const source = {
       id: 'test-character',
       rosterOrder: 99,

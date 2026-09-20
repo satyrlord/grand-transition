@@ -6,9 +6,8 @@ export const basePointsMultiplierSchema = z.union([
 
 export type BasePointsMultiplier = z.infer<typeof basePointsMultiplierSchema>;
 
-// One scoring balance exists at a time. The fields stay plain numbers so the
-// scoring tests can probe a single rule by overriding one value; the shipped
-// balance below is the only configuration the application uses.
+// Matches use the default balance below with their selected base-points
+// multiplier. Scoring tests can override individual values to isolate rules.
 export const basicScoringBalanceSchema = z
   .object({
     modifierPoints: z.number().int().min(0),

@@ -106,7 +106,7 @@ async function main() {
   const relativeDirectory = path.relative(rootDirectory, result.directory);
   if (result.files.length === 0) {
     console.log(
-      `${domain} ${mode} passed: ${relativeDirectory} is empty; no ${domain} contract exists in this milestone.`,
+      `${domain} ${mode} passed: ${relativeDirectory} is empty.`,
     );
     return;
   }

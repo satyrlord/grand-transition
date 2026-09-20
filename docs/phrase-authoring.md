@@ -29,6 +29,10 @@ keys (`phrase.<id>`, `phrase.<id>.singular`, `phrase.<id>.plural`,
 phrase pool. Never edit those derived lists, and never add a card to a curated
 list in TypeScript.
 
+Romanian translations are authored separately under `src/content/ro/`.
+They are not generated from English text. Romanian grammar metadata lives in
+`src/content/ro/grammar-metadata.ts`.
+
 ## Add a card
 
 1. Choose the owning file from the table above.
@@ -46,9 +50,15 @@ list in TypeScript.
    words. Other roles can be invented or accurately drawn from real speech. A
    direct real phrase repeats its real wording and meaning; it never becomes an
    inaccurate paraphrase.
-5. Run `npm run content:validate`.
-6. Run `npm run validate` and `npm run quality:quick`.
-7. Optional: open `npm run dev` and play the card, or run
+5. Add matching Romanian translations and required agreement forms under
+   `src/content/ro/`. For verbs and predicates, include the required plural and
+   second-person forms in `relation-inflections.json`.
+6. For a new verb family or personal noun, add its Romanian object metadata in
+   `src/content/ro/grammar-metadata.ts`. Follow existing entries for the same
+   grammatical construction.
+7. Run `npm run content:validate`.
+8. Run `npm run validate` and `npm run quality:quick`.
+9. Optional: open `npm run dev` and play the card, or run
    `npm run simulate -- --seed 1 --matches 1`.
 
 ```json
@@ -77,7 +87,9 @@ eligible scene pool separately.
 ## Remove a card
 
 1. Delete the card object and keep the surrounding JSON valid.
-2. Confirm that no other file still names the identifier:
+2. Remove its Romanian messages and relation forms. Remove grammar metadata
+   only when no remaining card uses the noun ID or verb family.
+3. Confirm that no other file still names the identifier:
    `rg "<phrase-id>" src tests e2e tools docs`.
    Content JSON, tests, and `e2e/` specs are the only expected places. Structural
    tests use a small set of long-lived foundation cards (`common-noun-028`,
@@ -85,9 +97,9 @@ eligible scene pool separately.
    `common-predicate-010-present`, and similar) as grammar, scoring, and layout
    fixtures. If you remove one of those, update the referencing test in the same
    change.
-3. Confirm that the owner still satisfies the per-character, per-scene, and
-   general-corpus minima listed below.
-4. Run the same commands as for an addition.
+4. Confirm that the owner still satisfies the per-character, per-scene, and
+   common-corpus counts listed below.
+5. Run the same commands as for an addition.
 
 Never reuse a removed identifier for different text, and never renumber other
 cards. Identifiers are stable for stored replays and match history.
@@ -194,7 +206,6 @@ composition is recorded in
 | `continuation` | exactly one in the whole catalog |
 | Owned character cards | exactly 40 per character: 10 nouns, 9 verbs, 12 predicates, 5 endings, 3 modifiers, and 1 conjunction |
 | Character weakness tags | at least two matching cards in the common corpus |
-| Scene pool | exactly 35 IDs: 34 scene-restricted cards plus the global continuation |
 
 Update the catalog counts quoted in
 [`docs/specs/spec-005-content-schemas.md`](specs/spec-005-content-schemas.md) when
@@ -223,18 +234,18 @@ sentences:
   complete sentence fails here.
 - `tests/unit/catalog-foundation*.test.ts` plays every character and scene
   combination with fixed seeds.
+- `tests/unit/romanian-grammar.test.ts` checks Romanian relation forms and
+  object metadata across the shipped catalog.
 - `npm run simulate -- --seed 1 --matches 1` runs one deterministic headless
   match. Use the `$simulate-matches` skill for larger workloads.
 
 ## What stays automatic
 
-- The card's locale keys, ownership lists, and scene pool membership.
+- The card's English locale keys, ownership lists, and scene pool membership.
 - The character roster, setup options, and renderer lookups.
 
-Nothing in that list needs a matching edit, and no test asserts a card's
-ownership, count, or text as a content requirement. If a change would require
-adding one, treat that as a signal that the change is reaching outside the
-content contract.
+These derived values need no manual edit. Authored Romanian messages and
+grammar metadata must stay synchronized with the catalog.
 
 ## Related references
 

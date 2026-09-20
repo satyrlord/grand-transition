@@ -104,8 +104,8 @@
   "files": [
     {
       "path": "NOTICE.txt",
-      "bytes": 1589,
-      "sha256": "55d966a3897a7a13162d80f2a3aeba5fc022daa8b878062d45acefedabc29018"
+      "bytes": 1591,
+      "sha256": "b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b"
     },
     {
       "path": "liana/MODEL_CARD",

@@ -326,7 +326,7 @@ async function buildAudio(root = 'src/assets/audio') {
   let existingAssets = [];
   try {
     existingAssets = JSON.parse(await readFile(path.join(root, 'audio-manifest.json'), 'utf8')).assets;
-  } catch { /* A missing manifest is reported below for preserved assets. */ }
+  } catch { /* Rebuild assets when no readable manifest is available. */ }
   const assets = [];
   for (const [id, kind, duration] of audioDefinitions) {
     if (preservedIds.has(id)) {

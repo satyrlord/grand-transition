@@ -197,8 +197,8 @@ the Romanian text is complete, safe, and written with standard diacritics.
 
 For routine agent validation, use `npm run quality:quick`. It runs the normal
 validation and test phases but omits the slowest cumulative 20-percent test
-set from the latest full gate: the 500-match calibration and nine-rung ladder
-flow. A quick pass is not release evidence. `npm run quality:full` and
+set defined in [Milestone 002](docs/specs/spec-002-quality-gate.md).
+A quick pass is not release evidence. `npm run quality:full` and
 `npm run ci` run every check; agents run them only when the user explicitly
 requests the full quality-gate skill. The slowest set runs only under the full
 gate, so a direct test command such as `npm run test`, `npm run test:browser`,

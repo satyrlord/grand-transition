@@ -12,7 +12,7 @@ Pronunciation runtime: espeak-phonemizer 0.1.2, GPL-3.0-only, inherited from eSp
 eSpeak NG source revision: 4870adfa25b1a32b4361592f1be8a40337c58d6c (release 1.52.0).
 GPL obligation: the complete corresponding source of eSpeak NG is available at
 https://github.com/espeak-ng/espeak-ng and https://github.com/OHF-Voice/piper1-gpl at the pinned revisions above.
-See espeak-phonemizer-LICENSE and espeak-phonemizer-NOTICES in this directory.
+See pronounce/espeak-phonemizer-LICENSE and pronounce/espeak-phonemizer-NOTICES.
 The shipped pronouncing data is trimmed to Romanian: core.data plus bundle-1.data.
 
 Expose predicted phoneme durations; retain all trained weights. Ship eSpeak NG data trimmed to Romanian with the upstream patched ro_dict.
