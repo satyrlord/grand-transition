@@ -3,6 +3,7 @@ import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import type { GrammarAdapter } from './grammar-adapter';
 import {
   englishGrammarAdapter,
+  englishRenderedForms,
   prepareEnglishGrammarPhrase,
   type EnglishGrammarAnalysis,
   type EnglishGrammarFault,
@@ -12,6 +13,7 @@ import {
 import {
   prepareRomanianGrammarPhrase,
   romanianGrammarAdapter,
+  romanianRenderedForms,
 } from './romanian-grammar-adapter';
 
 // One grammar binding per shipped game locale: how that locale prepares its
@@ -20,6 +22,10 @@ import {
 // prepare function still rejects a bundle from the other locale.
 export type GrammarLocaleBinding = Readonly<{
   prepare: (phrase: Phrase, locale: GameLocaleBundle) => EnglishGrammarPhrase;
+  renderedForms: (
+    phrase: Phrase,
+    locale: GameLocaleBundle,
+  ) => ReadonlySet<string>;
   adapter: GrammarAdapter<
     EnglishGrammarInput,
     EnglishGrammarAnalysis,
@@ -32,6 +38,7 @@ const grammarBindings = new Map<string, GrammarLocaleBinding>([
     'en',
     Object.freeze({
       prepare: prepareEnglishGrammarPhrase,
+      renderedForms: englishRenderedForms,
       adapter: englishGrammarAdapter,
     }),
   ],
@@ -39,6 +46,7 @@ const grammarBindings = new Map<string, GrammarLocaleBinding>([
     'ro-RO',
     Object.freeze({
       prepare: prepareRomanianGrammarPhrase,
+      renderedForms: romanianRenderedForms,
       adapter: romanianGrammarAdapter,
     }),
   ],

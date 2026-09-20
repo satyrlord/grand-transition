@@ -293,6 +293,12 @@ The browser setting controls when the UI dispatches the pure `expire-turn`
 command. It does not change the reducer's deterministic 30-second baseline or
 the timeout-damage rules. Unlimited does not schedule that command.
 
+The application turn clock stores the remaining duration in milliseconds.
+The match screen renders its whole-second projection and maps its final-five
+ticks and once-only expiration to existing typed events. Manual Pause,
+viewport interruption, hotseat portrait guidance, and landscape guidance stop
+elapsed-time accounting at the exact interruption boundary.
+
 The countdown requests one audible turn-timer tick for each of its final five
 seconds, including the second that displays one, and requests none under
 Unlimited. It requests no tick while the timer is stopped.
@@ -349,8 +355,9 @@ timer-refill abuse.
 - **AC-016-05:** A timed turn updates once per second and zero emits one
   expiration command. Each of its final five seconds requests one timer tick,
   and Unlimited requests none. Manual Pause hides the complete match, freezes
-  the exact value, blocks commands, and resumes without changing state or
-  adding time.
+  the exact millisecond value, blocks commands, and resumes without changing
+  state or adding time. Viewport, hotseat portrait, and landscape guidance
+  preserve the same exact value.
   The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
   Sound Voices On, and Phrase color coding On. Selecting 15, 30, or Unlimited
   takes effect on Resume. Unlimited does not expire the turn,

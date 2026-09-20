@@ -1604,7 +1604,7 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   ) as GrandTransitionApp;
   const revision = match.snapshot!.revision;
 
-  await vi.advanceTimersByTimeAsync(5_000);
+  await vi.advanceTimersByTimeAsync(5_900);
   await match.updateComplete;
   expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
 
@@ -1621,7 +1621,7 @@ test('conceals a paused match and resumes from the exact timer value', async () 
     expect(document.activeElement?.textContent?.trim()).toBe('Resume'),
   );
 
-  await vi.advanceTimersByTimeAsync(5_000);
+  await vi.advanceTimersByTimeAsync(5_900);
   match.querySelector<HTMLButtonElement>('.interruption-primary')!.click();
   await app.updateComplete;
   await match.updateComplete;
@@ -1630,16 +1630,34 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   expect(match.snapshot!.revision).toBe(revision);
   expect(document.activeElement?.textContent?.trim()).toBe('Pause');
 
-  await vi.advanceTimersByTimeAsync(1_000);
+  await vi.advanceTimersByTimeAsync(99);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(1);
   await match.updateComplete;
   expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
+
+  await vi.advanceTimersByTimeAsync(400);
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(5_900);
+  match.querySelector<HTMLButtonElement>('.interruption-primary')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(599);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(1);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="23"]')).not.toBeNull();
 });
 
 test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
   'conceals the match and preserves the exact timer through %s', async (pauseMode) => {
     vi.useFakeTimers();
     const match = await startMatch();
-    await vi.advanceTimersByTimeAsync(5_000);
+    await vi.advanceTimersByTimeAsync(5_900);
     await match.updateComplete;
     expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
     const snapshot = match.snapshot;
@@ -1655,11 +1673,49 @@ test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
     match.pauseMode = 'running';
     await match.updateComplete;
     expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
-    await vi.advanceTimersByTimeAsync(1_000);
+    await vi.advanceTimersByTimeAsync(99);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
+    await vi.advanceTimersByTimeAsync(1);
     await match.updateComplete;
     expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
   },
 );
+
+test('resets fractional elapsed time for a new turn and expires it once', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const commands: MatchCommandEvent[] = [];
+  match.addEventListener(matchCommandEventName, (event) =>
+    commands.push(event),
+  );
+
+  await vi.advanceTimersByTimeAsync(5_900);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
+
+  const snapshot = match.snapshot!;
+  match.snapshot = {
+    ...snapshot,
+    timer: { ...snapshot.timer, sequence: snapshot.timer.sequence + 1 },
+  };
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="30"]')).not.toBeNull();
+
+  await vi.advanceTimersByTimeAsync(29_999);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="1"]')).not.toBeNull();
+  expect(
+    commands.filter((event) => event.detail.type === 'expire-turn'),
+  ).toHaveLength(0);
+
+  await vi.advanceTimersByTimeAsync(1);
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(10_000);
+  expect(
+    commands.filter((event) => event.detail.type === 'expire-turn'),
+  ).toHaveLength(1);
+});
 
 test('applies Pause settings when the match resumes', async () => {
   vi.useFakeTimers();

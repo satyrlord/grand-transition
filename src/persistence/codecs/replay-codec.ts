@@ -2,16 +2,7 @@ import { z } from 'zod';
 import type { ContentCatalog } from '../../content/content-catalog';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import { gameLocales } from '../../localization/game-locale';
-import {
-  romanianNestedObjectAnchorByFamily,
-  romanianObjectGovernmentByFamily,
-  romanianPersonalObjectByNounId,
-  romanianSpecialObjectCaseByFamily,
-} from '../../content/ro/grammar-metadata';
-import {
-  withDirectObjectClitic,
-  withNestedDirectObjectClitic,
-} from '../../engine/grammar/romanian-grammar-adapter';
+import { grammarFor } from '../../engine/grammar/grammar-locale';
 import {
   basePointsMultiplierSchema,
   scoringBalanceForMultiplier,
@@ -679,74 +670,12 @@ function matchLogMatchesContext(
   // The recorded text was rendered in the recorded game locale, so validate it
   // against that locale's agreement forms rather than another language's.
   if (matchLog.setup.gameLocale !== context.locale.locale) return false;
+  const grammar = grammarFor(context.locale);
   const allowedTextsByPhrase = new Map(
-    context.catalog.phrases.map((phrase) => {
-      const keys = [
-        phrase.textKey,
-        phrase.numberForms?.singularKey,
-        phrase.numberForms?.pluralKey,
-        phrase.numberForms?.personalSingularKey,
-        phrase.numberForms?.secondPersonKey,
-        ...(context.locale.locale === 'ro-RO' &&
-        (phrase.role === 'verb' || phrase.role === 'predicate')
-          ? [`${phrase.textKey}.second-person`, `${phrase.textKey}.plural`]
-          : []),
-      ];
-      const texts = new Set(
-        keys.flatMap((key) => {
-          const text = key ? context.locale.messages[key] : undefined;
-          return typeof text === 'string' ? [text] : [];
-        }),
-      );
-      if (context.locale.locale === 'ro-RO') {
-        const government = phrase.role === 'verb'
-          ? romanianObjectGovernmentByFamily[phrase.tenseFamily ?? '']
-          : undefined;
-        if (government === 'direct' || government === 'nested-direct') {
-          for (const text of Array.from(texts)) {
-            for (const clitic of [
-              'polite-second',
-              'masculine-singular',
-              'masculine-plural',
-              'feminine-singular',
-              'feminine-plural',
-            ] as const) {
-              texts.add(
-                government === 'nested-direct'
-                  ? withNestedDirectObjectClitic(
-                      text,
-                      clitic,
-                      romanianNestedObjectAnchorByFamily[phrase.tenseFamily ?? '']!,
-                    )
-                  : withDirectObjectClitic(text, clitic),
-              );
-            }
-          }
-        }
-        if (
-          phrase.role === 'verb' &&
-          romanianSpecialObjectCaseByFamily[phrase.tenseFamily ?? ''] ===
-            'contract-indefinite'
-        ) {
-          for (const text of Array.from(texts)) {
-            if (text.endsWith(' în')) {
-              texts.add(`${text.slice(0, -3)} într-un`);
-              texts.add(`${text.slice(0, -3)} într-o`);
-            } else if (text.endsWith(' din')) {
-              texts.add(`${text.slice(0, -4)} dintr-un`);
-              texts.add(`${text.slice(0, -4)} dintr-o`);
-            }
-          }
-        }
-        if (phrase.role === 'noun') {
-          const directText = romanianPersonalObjectByNounId[phrase.id]?.directText;
-          if (directText) texts.add(directText);
-          const unmarked = /^(?:un|o)\s+(.+)$/u.exec(context.locale.messages[phrase.textKey] ?? '');
-          if (unmarked) texts.add(unmarked[1]!);
-        }
-      }
-      return [phrase.id, texts] as const;
-    }),
+    context.catalog.phrases.map((phrase) => [
+      phrase.id,
+      grammar.renderedForms(phrase, context.locale),
+    ]),
   );
   return matchLog.sentences.every((sentence) =>
     sentence.phrases.every((phrase) =>

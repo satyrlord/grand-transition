@@ -299,6 +299,10 @@ clause fixtures must receive equal scores and weakness/combo effects. Do not
 require identical AI command sequences across languages when legal rendering
 or available completions differ. Each AI difficulty and the ladder must finish
 Romanian matches without invalid-command loops.
+The Romanian grammar binding also owns every permitted rendered form for each
+phrase, including agreement, contractions, personal-object marking, and
+clitics. Standalone match-log validation consumes that set without duplicating
+Romanian morphology in persistence.
 Interface language must not affect grammar, AI decisions, state, or scoring.
 
 Keep existing typed grammar failures. Document any new Romanian failure code,

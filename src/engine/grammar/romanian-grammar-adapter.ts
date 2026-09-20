@@ -9,6 +9,7 @@ import {
 import type { GrammarAdapter } from './grammar-adapter';
 import {
   grammarAdapter,
+  preparedGrammarPhraseForms,
   prepareGrammarPhrase,
   renderPublicText,
   type EnglishGrammarAnalysis,
@@ -58,6 +59,55 @@ export function prepareRomanianGrammarPhrase(
     pluralText,
     secondPersonText,
   };
+}
+
+export function romanianRenderedForms(
+  phrase: Phrase,
+  locale: GameLocaleBundle,
+): ReadonlySet<string> {
+  const texts = new Set(
+    preparedGrammarPhraseForms(prepareRomanianGrammarPhrase(phrase, locale)),
+  );
+  const government = phrase.role === 'verb'
+    ? romanianObjectGovernmentByFamily[phrase.tenseFamily ?? '']
+    : undefined;
+  if (government === 'direct' || government === 'nested-direct') {
+    for (const text of Array.from(texts)) {
+      for (const clitic of Object.keys(cliticForms) as DirectObjectClitic[]) {
+        texts.add(
+          government === 'nested-direct'
+            ? withNestedDirectObjectClitic(
+                text,
+                clitic,
+                romanianNestedObjectAnchorByFamily[phrase.tenseFamily ?? '']!,
+              )
+            : withDirectObjectClitic(text, clitic),
+        );
+      }
+    }
+  }
+  if (
+    phrase.role === 'verb' &&
+    romanianSpecialObjectCaseByFamily[phrase.tenseFamily ?? ''] ===
+      'contract-indefinite'
+  ) {
+    for (const text of Array.from(texts)) {
+      const preposition = /( în| din)$/u.exec(text)?.[1];
+      if (!preposition) continue;
+      const contracted = preposition === ' în' ? ' într' : ' dintr';
+      texts.add(`${text.slice(0, -preposition.length)}${contracted}-un`);
+      texts.add(`${text.slice(0, -preposition.length)}${contracted}-o`);
+    }
+  }
+  if (phrase.role === 'noun') {
+    for (const text of Array.from(texts)) {
+      const unmarked = /^(?:un|o)\s+(.+)$/u.exec(text);
+      if (unmarked) texts.add(unmarked[1]!);
+    }
+    const directText = romanianPersonalObjectByNounId[phrase.id]?.directText;
+    if (directText) texts.add(directText);
+  }
+  return texts;
 }
 
 export const romanianGrammarAdapter: GrammarAdapter<

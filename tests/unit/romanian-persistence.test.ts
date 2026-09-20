@@ -249,6 +249,42 @@ describe('Romanian replay, match-log, and history records', () => {
     expect(storage.writes).toHaveLength(1);
   });
 
+  test.each([
+    ['a form owned by another phrase', 'ați denunțat'],
+    ['arbitrary text', 'formă românească inventată'],
+  ])('rejects %s before storing a Romanian match log', (_name, text) => {
+    const base = romanianCompleted.matchLog;
+    const first = base.sentences.find((sentence) => sentence.phrases.length > 0)!;
+    const changed = {
+      ...base,
+      sentences: base.sentences.map((sentence) =>
+        sentence === first
+          ? {
+              ...sentence,
+              phrases: [
+                {
+                  ...sentence.phrases[0]!,
+                  phraseId: 'common-verb-002-past',
+                  text,
+                },
+                ...sentence.phrases.slice(1),
+              ],
+            }
+          : sentence,
+      ),
+    };
+    const storage = memoryStorage();
+    expect(
+      storeMatchLogImport(
+        encodeMatchLog(changed),
+        romanianContext,
+        storage.port,
+        'match-log',
+      ),
+    ).toEqual({ ok: false, code: 'invalid-replay' });
+    expect(storage.writes).toEqual([]);
+  });
+
   test('stores a Romanian replay without rewriting its recorded bytes', () => {
     const storage = memoryStorage();
     const result = storeReplayImport(

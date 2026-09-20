@@ -24,6 +24,11 @@ and emit typed events with `bubbles: true` and `composed: true`. Components can
 own focus, tooltip, or animation view state. Components must not own Pride,
 turn, board, hand, score, replay, or rules.
 
+`src/app/turn-clock.ts` owns elapsed-time accounting for the browser turn
+timer, including exact pause and resume boundaries and once-only expiration.
+The match screen binds its visible-second changes to rendering and typed
+events. The reducer remains the sole owner of timeout consequences.
+
 `src/app/match-coordinator.ts` owns application-level command sequencing,
 automatic round resolution, completion writes, and AI scheduling. It receives
 the current immutable state and returns the next state with review facts.
@@ -69,7 +74,7 @@ selection. Translated prose must not enter locale-neutral rules.
   request, and supports cancellation.
 
 The pure-boundary checker scans `src/engine`, `src/ai`, `src/content`,
-`src/localization`, and
+handwritten sources under `src/localization`, and
 `src/persistence/codecs` when present. It rejects Lit imports, `window`,
 `document`, `customElements`, storage, speech synthesis, Canvas, and network
 APIs in those roots. Test fixtures can contain those names only when they prove
@@ -91,6 +96,9 @@ The checker also enforces these dependency directions:
 
 No pure module can import application, component, audio-adapter, browser
 storage-adapter, asset, style, main-entry, tool, or test code.
+Generated interface localization under `src/localization/generated` remains
+outside the pure-source scan. No checked pure module, including handwritten
+localization, can import or re-export it. Application code can import it.
 
 ## Acceptance criteria
 
@@ -103,8 +111,12 @@ storage-adapter, asset, style, main-entry, tool, or test code.
   state, seed, and history unchanged.
 - **AC-003-04:** Boundary fixtures prove one rejection for a Lit import. They
   prove one rejection for each owned browser API class. They also prove one
-  rejected dependency from a pure module to application code. Fixtures prove each allowed dependency
-  direction. The normal pure roots pass.
+  rejected dependency from a pure module to application code and reject
+  generated interface localization dependencies from each checked pure root,
+  covering both imports and re-exports.
+  A fixture proves that application imports of generated interface localization
+  remain allowed while generated files remain outside the pure-source scan.
+  Fixtures prove each allowed dependency direction. The normal pure roots pass.
   A fixture also rejects browser access or an application import in localization
   when an engine module imports that localization module.
 - **AC-003-05:** Test-local storage and speech fakes satisfy their ports without

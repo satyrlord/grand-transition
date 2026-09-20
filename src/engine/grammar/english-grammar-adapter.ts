@@ -185,6 +185,27 @@ export function prepareEnglishGrammarPhrase(
   return prepareGrammarPhrase(phrase, locale);
 }
 
+export function englishRenderedForms(
+  phrase: Phrase,
+  locale: GameLocaleBundle,
+): ReadonlySet<string> {
+  return preparedGrammarPhraseForms(
+    prepareEnglishGrammarPhrase(phrase, locale),
+  );
+}
+
+export function preparedGrammarPhraseForms(
+  phrase: EnglishGrammarPhrase,
+): ReadonlySet<string> {
+  return new Set([
+    phrase.defaultText,
+    phrase.singularText,
+    phrase.pluralText,
+    phrase.personalSingularText,
+    phrase.secondPersonText,
+  ]);
+}
+
 // The state machine reads only roles, connectors, agreement data, and prepared
 // phrase text, so it plays every shipped locale. Each locale binds this same
 // analyzer object; the English name is kept for the existing English callers.
