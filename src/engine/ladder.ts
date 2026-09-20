@@ -2,6 +2,14 @@ import { seededRandomSource, type RandomSource } from './random-source';
 
 export const ladderRungCount = 9;
 export const ladderSceneCount = 6;
+export const ladderSceneIds = Object.freeze([
+  'transition-era-television-studio',
+  'modern-debate-studio',
+  'county-council-ballroom',
+  'midnight-call-in-studio',
+  'palace-press-hall',
+  'influencer-campaign-livestream',
+] as const);
 
 export type LadderDifficulty =
   | 'local-radio-caller'
@@ -50,15 +58,17 @@ export function createLadderProgress(
   const opponents = characterIds
     .filter((characterId) => characterId !== selectedCharacterId)
     .toSorted();
-  const scenes = [...sceneIds].toSorted();
+  const availableScenes = new Set(sceneIds);
+  const scenes = [...ladderSceneIds].toSorted();
   if (opponents.length < ladderRungCount) {
     throw new Error('A ladder needs at least nine non-player characters.');
   }
   if (new Set(opponents).size !== opponents.length) {
     throw new Error('A ladder needs unique character identifiers.');
   }
-  if (scenes.length !== ladderSceneCount || new Set(scenes).size !== scenes.length) {
-    throw new Error('A ladder needs exactly six unique scene identifiers.');
+  if (sceneIds.length !== availableScenes.size ||
+    scenes.some((sceneId) => !availableScenes.has(sceneId))) {
+    throw new Error('A ladder needs the six unique founding scene identifiers.');
   }
   let nextSeed = seed >>> 0;
   const opponentShuffle = shuffle(opponents, nextSeed, randomSource);
@@ -118,8 +128,9 @@ export function ladderProgressMatchesCatalog(
   return (
     characters.has(progress.selectedCharacterId) &&
     progress.opponentIds.every((opponentId) => characters.has(opponentId)) &&
-    progress.sceneOrder.length === scenes.size &&
-    progress.sceneOrder.every((sceneId) => scenes.has(sceneId))
+    progress.sceneOrder.length === ladderSceneCount &&
+    progress.sceneOrder.every((sceneId) => scenes.has(sceneId)) &&
+    ladderSceneIds.every((sceneId) => progress.sceneOrder.includes(sceneId))
   );
 }
 

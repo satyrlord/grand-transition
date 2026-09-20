@@ -293,6 +293,10 @@ The browser setting controls when the UI dispatches the pure `expire-turn`
 command. It does not change the reducer's deterministic 30-second baseline or
 the timeout-damage rules. Unlimited does not schedule that command.
 
+The countdown requests one audible turn-timer tick for each of its final five
+seconds, including the second that displays one, and requests none under
+Unlimited. It requests no tick while the timer is stopped.
+
 Changing a timer value while paused starts the current turn at the selected
 value after Resume and applies that value to later turns. Unlimited shows no
 countdown and does not dispatch `expire-turn`. Changing Auto-complete applies
@@ -343,8 +347,10 @@ timer-refill abuse.
   filled value on `Canvas`. Keyboard focus stays distinct from
   the Tutorial outline. Verifier: `e2e/match-forced-colors.spec.ts`.
 - **AC-016-05:** A timed turn updates once per second and zero emits one
-  expiration command. Manual Pause hides the complete match, freezes the exact
-  value, blocks commands, and resumes without changing state or adding time.
+  expiration command. Each of its final five seconds requests one timer tick,
+  and Unlimited requests none. Manual Pause hides the complete match, freezes
+  the exact value, blocks commands, and resumes without changing state or
+  adding time.
   The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
   Sound Voices On, and Phrase color coding On. Selecting 15, 30, or Unlimited
   takes effect on Resume. Unlimited does not expire the turn,
@@ -354,19 +360,6 @@ timer-refill abuse.
   Its exit confirmation remains concealed, defaults to staying paused, and
   returns to the title only after “End match.” Pause moves keyboard focus to
   Resume. Resume returns focus to Pause in the unchanged match.
-- **AC-016-18:** With Phrase color coding On, every available phrase keeps one
-  text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
-  60 percent for rare.
-
-  Nouns are yellow. Verbs are orange. Predicates are red. Modifiers are blue.
-  Endings are purple.
-
-  Continuations are gray. Conjunctions are green.
-  With it Off, the text remains white
-  with no role or rarity color. The card background stays unchanged. The
-  feature keeps visible phrase rows text-only and does not change accessible
-  labels, phrase actions, game truth, or timer behavior. Browser tests verify
-  the default, both Pause choices, and the rendered role and rarity data.
 - **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.
@@ -440,7 +433,7 @@ timer-refill abuse.
   `tests/browser/match-screen.browser.test.ts`, and `e2e/tutorial-mode.spec.ts`.
   No other guided turn, tactical hint, card-role explanation, weakness
   explanation, disabled-action reason, strategy prompt, or shortcut layer ships.
-- **AC-016-16:** A scored weakness shows its exact 1.5 factor and unique public
+- **AC-016-16:** A scored weakness shows its exact 2 factor and unique public
   weakness names in the affected inline component. Unscored matching tags show
   no weakness record.
 - **AC-016-17:** Comeback appends its closing line to the complete public insult.
@@ -457,6 +450,19 @@ timer-refill abuse.
   `tests/unit/match-screen-snapshot.test.ts` and
   `tests/unit/sidekick-assets.test.ts` and
   `tests/browser/match-screen.browser.test.ts`.
+- **AC-016-19:** With Phrase color coding On, every available phrase keeps one
+  text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
+  60 percent for rare.
+
+  Nouns are yellow. Verbs are orange. Predicates are red. Modifiers are blue.
+  Endings are purple.
+
+  Continuations are gray. Conjunctions are green.
+  With it Off, the text remains white
+  with no role or rarity color. The card background stays unchanged. The
+  feature keeps visible phrase rows text-only and does not change accessible
+  labels, phrase actions, game truth, or timer behavior. Browser tests verify
+  the default, both Pause choices, and the rendered role and rarity data.
 
 ## Impeccable UI validation
 

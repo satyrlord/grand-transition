@@ -24,7 +24,7 @@ twice. Clause combo factors do not multiply unrelated clauses.
 A player can select a finisher only after a complete clause. The finisher ends
 the sentence immediately. Add its configured score after clause scoring. Character and
 scene restrictions affect eligibility only and do not change its damage. A
-finisher that matches a defender weakness receives one 1.5 weakness multiplier.
+finisher that matches a defender weakness receives one 2 weakness multiplier.
 Noun combos do not multiply a finisher.
 
 ## Acceptance criteria

@@ -36,8 +36,7 @@ async function harness(cachedManifest?: unknown) {
     inference: { noise_scale: 0.667, length_scale: 1, noise_w: 0.8 } });
   const files = new Map([
     ['mihai/model.onnx', new Uint8Array([1, 2, 3])],
-    ['liana/model-01.bin', new Uint8Array([4, 5])],
-    ['liana/model-02.bin', new Uint8Array([6, 7])],
+    ['liana/model.onnx', new Uint8Array([4, 5, 6, 7])],
     ['mihai/config.json', config], ['liana/config.json', config],
     ['../piper/ort-wasm-simd-threaded.wasm', new Uint8Array([8])],
   ]);
@@ -47,8 +46,8 @@ async function harness(cachedManifest?: unknown) {
     voices: [
       { id: 'ro_RO-mihai-medium', name: 'Mihai', lang: 'ro-RO', speakerId: 0, default: true,
         model: { files: ['mihai/model.onnx'], bytes: 3, sha256: hash(new Uint8Array([1, 2, 3])) }, config: 'mihai/config.json' },
-      { id: 'ro_RO-liana-high', name: 'Liana', lang: 'ro-RO', speakerId: 0, default: false,
-        model: { files: ['liana/model-01.bin', 'liana/model-02.bin'], bytes: 4, sha256: hash(new Uint8Array([4, 5, 6, 7])) }, config: 'liana/config.json' },
+      { id: 'ro_RO-liana-medium', name: 'Liana', lang: 'ro-RO', speakerId: 0, default: false,
+        model: { files: ['liana/model.onnx'], bytes: 4, sha256: hash(new Uint8Array([4, 5, 6, 7])) }, config: 'liana/config.json' },
     ],
     files: [...files].map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: hash(bytes) })),
   };
@@ -76,7 +75,7 @@ async function harness(cachedManifest?: unknown) {
     send({ type: 'load', baseUrl: base });
     await vi.waitFor(() => expect(messages.some(({ type }) => type === 'ready')).toBe(true));
   };
-  const speak = (voiceId = 'ro_RO-liana-high', id = 1) =>
+  const speak = (voiceId = 'ro_RO-liana-medium', id = 1) =>
     send({ type: 'synthesize', id, segments: ['Public'], voiceId, rate: 1, pitch: 1 });
   return { ready, speak, manifest, messages, fetched, files };
 }
@@ -94,7 +93,7 @@ test('revalidates a cached package manifest so a deployed voice change loads the
 
 test.each([
   ['ro_RO-mihai-medium', [1, 2, 3], ['mihai/model.onnx']],
-  ['ro_RO-liana-high', [4, 5, 6, 7], ['liana/model-01.bin', 'liana/model-02.bin']],
+  ['ro_RO-liana-medium', [4, 5, 6, 7], ['liana/model.onnx']],
 ] as const)('loads only %s on demand and supplies its exact assembled model to inference', async (voice, bytes, paths) => {
   const h = await harness();
   await h.ready();
@@ -113,13 +112,12 @@ test.each([
   expect(h.fetched.filter((path) => path.includes('model'))).toEqual(paths);
 });
 
-test.each(['missing', 'corrupt', 'unmanifested', 'reordered', 'wrong-size', 'wrong-digest'] as const)(
+test.each(['missing', 'corrupt', 'unmanifested', 'wrong-size', 'wrong-digest'] as const)(
   'rejects %s model parts before creating an inference session', async (failure) => {
     const h = await harness();
-    if (failure === 'missing') h.files.delete('liana/model-02.bin');
-    if (failure === 'corrupt') h.files.set('liana/model-02.bin', new Uint8Array([9, 9]));
-    if (failure === 'unmanifested') h.manifest.files = h.manifest.files.filter(({ path }) => path !== 'liana/model-02.bin');
-    if (failure === 'reordered') h.manifest.voices[1]!.model.files.reverse();
+    if (failure === 'missing') h.files.delete('liana/model.onnx');
+    if (failure === 'corrupt') h.files.set('liana/model.onnx', new Uint8Array([9, 9, 9, 9]));
+    if (failure === 'unmanifested') h.manifest.files = h.manifest.files.filter(({ path }) => path !== 'liana/model.onnx');
     if (failure === 'wrong-size') h.manifest.voices[1]!.model.bytes = 5;
     if (failure === 'wrong-digest') h.manifest.voices[1]!.model.sha256 = 'f'.repeat(64);
     await h.ready();

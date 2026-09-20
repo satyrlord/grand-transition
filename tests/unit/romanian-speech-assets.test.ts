@@ -70,15 +70,15 @@ test('the shipped manifest declares both Romanian voices, the shared runtime, an
     runtime: { path: string; bytes: number; sha256: string };
     files: ManifestFile[];
   };
-  expect(manifest.voices.map((voice) => voice.id)).toEqual(['ro_RO-mihai-medium', 'ro_RO-liana-high']);
+  expect(manifest.voices.map((voice) => voice.id)).toEqual(['ro_RO-mihai-medium', 'ro_RO-liana-medium']);
   expect(manifest.voices[0]).toMatchObject({ default: true, model: { files: ['mihai/model.onnx'] }, lang: 'ro-RO' });
   expect(manifest.voices[1]).toMatchObject({ default: false,
-    model: { files: ['liana/model-01.bin', 'liana/model-02.bin'] }, license: 'CC BY-NC 4.0' });
+    model: { files: ['liana/model.onnx'] }, license: 'CC BY-NC 4.0' });
   // The ONNX runtime is shared with the English package rather than duplicated.
   expect(manifest.runtime.path).toBe('../piper/ort-wasm-simd-threaded.wasm');
   // Both models and the pronunciation data ship with the package.
   expect(manifest.files.map(({ path: name }) => name)).toContain('mihai/model.onnx');
-  expect(manifest.files.map(({ path: name }) => name)).not.toContain('liana/model.onnx');
+  expect(manifest.files.map(({ path: name }) => name)).toContain('liana/model.onnx');
   for (const { model } of manifest.voices) {
     const hash = createHash('sha256');
     let bytes = 0;

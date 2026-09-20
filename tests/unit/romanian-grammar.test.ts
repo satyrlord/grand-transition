@@ -69,6 +69,74 @@ const compoundSubjectClause = [
 ] as const;
 
 describe('Romanian grammar binding', () => {
+  test('keeps the triplicate drinks plural and a quoted claim inside its noun slot', () => {
+    for (const [noun, expected] of [
+      ['general-public-form-in-triplicate', 'Băuturi răcoritoare în trei exemplare sunt comunicate de presă fără evenimente.'],
+      ['football-tycoon-contract-noun-1-a-transfer-fee-with-a-conscience', 'Afirmația că cel mai mare merit este al meu este un comunicat de presă fără eveniment.'],
+    ]) {
+      expect(analyzeWith(romanianGrammar, romanianGameLocale,
+        [noun!, 'public-press-release-present'], { end: true })).toMatchObject({
+        accepted: true, analysis: { complete: true, publicText: expected },
+      });
+    }
+  });
+
+  test.each([
+    'red-folded-chairman-contract-predicate-predicate-1',
+    'red-folded-chairman-contract-predicate-predicate-2',
+    'thunder-tribune-contract-predicate-predicate-1',
+    'football-tycoon-contract-predicate-predicate-1',
+    'football-tycoon-contract-predicate-predicate-2',
+    'football-tycoon-contract-predicate-predicate-3',
+  ])('preserves Romanian past agreement after adding English forms to %s', (family) => {
+    for (const [subject, copula] of [
+      ['national-consensus', 'era'], ['your-voters', 'erau'], ['you', 'erați'],
+    ]) {
+      const result = analyzeWith(romanianGrammar, romanianGameLocale,
+        [subject!, `${family}-past`], { end: true });
+      expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
+      if (result.accepted) {
+        expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+      }
+    }
+  });
+
+  test.each([
+    ['modern-debate-studio-so-the-poll-can-explain-itself', 'so, with radius squared,', 'deci, cu raza la pătrat,', 'so'],
+    ['county-council-ballroom-so-the-invoice-can-be-framed', 'so, with a clean slate,', 'deci, cu o pagină albă,', 'so'],
+    ['midnight-call-in-studio-so-the-source-can-take-a-break', "so, after the source's break,", 'așa că, după pauza sursei,', 'so'],
+    ['palace-press-hall-so-the-protocol-can-remain-silent', "so, after the protocol's silence,", 'așa că, după tăcerea protocolului,', 'so'],
+    ['influencer-campaign-livestream-so-the-prophecy-can-be-monetized', 'so, after monetizing the prophecy,', 'așa că, după monetizarea profeției,', 'so'],
+    ['midnight-call-in-studio-with-the-hotline-open', 'with the hotline open beside', 'cu linia fierbinte deschisă lângă', 'with'],
+    ['influencer-campaign-livestream-with-the-sponsor-in-the-room', 'with the sponsor standing beside', 'cu sponsorul lângă', 'with'],
+  ])('leaves the required noun or clause slot open after %s', (id, english, romanian, kind) => {
+    for (const [locale, connector, prefix, noun, predicate] of [
+      [englishGameLocale, english, 'You are my opponent', 'your unanimous disagreement', 'belongs in a history museum'],
+      [romanianGameLocale, romanian, 'Dumneavoastră sunteți adversarul meu', 'dezacordul vostru unanim', 'are locul într-un muzeu de istorie'],
+    ] as const) {
+      const ids = ['you', 'is', 'my-opponent', id, 'national-consensus',
+        ...(kind === 'so' ? ['belongs-in-a-party-museum'] : [])];
+      expect(analyzeWith(grammarFor(locale), locale, ids, { end: true })).toMatchObject({
+        accepted: true,
+        analysis: {
+          complete: true,
+          publicText: `${prefix} ${connector} ${noun}${kind === 'so' ? ` ${predicate}` : ''}.`,
+        },
+      });
+    }
+  });
+
+  test('renders the press-arrival ending with a grammatical Romanian preposition', () => {
+    expect(analyzeWith(romanianGrammar, romanianGameLocale,
+      ['you', 'belongs-in-a-party-museum', 'before-the-cameras-return'])).toMatchObject({
+      accepted: true,
+      analysis: {
+        complete: true,
+        publicText: 'Dumneavoastră aveți locul într-un muzeu de istorie înaintea apariției presei.',
+      },
+    });
+  });
+
   test('renders Romanian text and picks the singular or plural form by subject number', () => {
     const singular = analyzeWith(romanianGrammar, romanianGameLocale, singleSubjectClause, { end: true });
     const plural = analyzeWith(romanianGrammar, romanianGameLocale, compoundSubjectClause, { end: true });
@@ -150,6 +218,38 @@ describe('Romanian grammar binding', () => {
     );
   });
 
+  test.each([
+    [englishGameLocale, 'are'],
+    [romanianGameLocale, 'sunt'],
+  ] as const)('agrees with the boxing-gloves subject in $0.locale', (locale, expected) => {
+    const result = analyzeWith(
+      grammarFor(locale),
+      locale,
+      ['civic-cypher-boxing-ring-boxing-gloves-stuffed-with-polling-memos', 'is', 'national-consensus'],
+      { end: true },
+    );
+    expect(result.accepted).toBe(true);
+    if (!result.accepted) return;
+    expect(result.analysis.renderedPhrases[0]?.grammaticalNumber).toBe('plural');
+    expect(result.analysis.renderedPhrases[1]?.text).toBe(expected);
+  });
+
+  test.each(['past', 'present', 'future'])('contracts the crowd-noise verb with indefinite objects in %s', (tense) => {
+    for (const [nounId, expected] of [
+      ['a-neighborhood-apparatchik', 'într-un nomenclaturist de cartier'],
+      ['a-sow', 'într-o scroafă'],
+    ]) {
+      const result = analyzeWith(
+        romanianGrammar,
+        romanianGameLocale,
+        ['you', `civic-cypher-boxing-ring-mixed-the-crowd-noise-into-${tense}`, nounId],
+        { end: true },
+      );
+      expect(result.accepted).toBe(true);
+      if (result.accepted) expect(result.analysis.publicText).toContain(expected);
+    }
+  });
+
   test('agrees with a plural noun subject', () => {
     const result = analyzeWith(
       romanianGrammar,
@@ -161,7 +261,7 @@ describe('Romanian grammar binding', () => {
     if (!result.accepted) return;
     expect(result.analysis.renderedPhrases[0]?.grammaticalNumber).toBe('plural');
     expect(result.analysis.publicText).toBe(
-      'Foarfecile voastre de ceremonie la clasa business sunt comunicate de presă fără evenimente.',
+      'Zborurile private pentru tăieri de panglici sunt comunicate de presă fără evenimente.',
     );
   });
 
@@ -199,6 +299,9 @@ describe('Romanian grammar binding', () => {
 
   test.each([
     ['apartment-block-geopolitician-contract-verb-maps-crisis-from-third-floor-present', 'privesc dezbaterea cu', 'priviți dezbaterea cu'],
+    ['red-folded-chairman-contract-verb-files-the-transition-present', 'ancorează afirmații universale în', 'ancorați afirmații universale în'],
+    ['thunder-tribune-contract-verb-announces-the-evidence-loudly-present', 'anunță dovezile prin', 'anunțați dovezile prin'],
+    ['football-tycoon-contract-verb-sells-sincerity-at-halftime-present', 'revendică meritul pentru', 'revendicați meritul pentru'],
     ['luxury-minister-contract-verb-measures-service-in-marble-present', 'croiesc harta după', 'croiți harta după'],
     ['marble-diplomat-contract-verb-serves-luxury-as-protocol-present', 'felicită exit-pollul înainte de', 'felicitați exit-pollul înainte de'],
   ])('distinguishes third-person plural from polite second person in %s', (id, plural, polite) => {

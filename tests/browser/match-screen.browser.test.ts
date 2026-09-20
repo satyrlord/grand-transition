@@ -15,6 +15,8 @@ import {
   grammarStrikeDurationMs,
   GrandTransitionMatch,
   matchCommandEventName,
+  timerTickEventName,
+  timerTickSeconds,
   type MatchCommandEvent,
 } from '../../src/app/screens/match-screen';
 import {
@@ -1005,11 +1007,11 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
           text: 'A complete statement. A closing line.', segment: 0,
           components: Array.from({ length: 12 }, (_, row) => ({
             narrationIndex: row, kind: 'clause', phraseText: `Public scored phrase ${row + 1}: the complete record remains available for inspection.`,
-            base: 5, restrictionFactor: 1, weaknessFactor: 1.5, comboFactor: 2,
-            amount: 15, weaknessTags: ['evidence', 'procedure'],
+            base: 5, restrictionFactor: 1, weaknessFactor: 2, comboFactor: 2,
+            amount: 20, weaknessTags: ['evidence', 'procedure'],
           })),
           emphasis: [{ kind: 'weakness', playerId: snapshot.players[index === 0 ? 1 : 0].playerId,
-            text: 'evidence · procedure', value: 1.5 }],
+            text: 'evidence · procedure', value: 2 }],
           outcome: null, impact: null, total: null, damage: null,
           pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
           cues: {},
@@ -1473,6 +1475,125 @@ test('updates and expires one 30-second turn', async () => {
   expect(
     commands.filter((event) => event.detail.type === 'expire-turn'),
   ).toHaveLength(1);
+});
+
+test('ticks the final five seconds of a timed turn once each', async () => {
+  vi.useFakeTimers();
+  localStorage.removeItem(settingsStorageKey);
+  const match = await startMatch();
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  const audio = (app as unknown as {
+    audio: { play: (cue: string) => boolean };
+  }).audio;
+  const play = vi.spyOn(audio, 'play').mockReturnValue(true);
+  const commands: MatchCommandEvent[] = [];
+  match.addEventListener(matchCommandEventName, (event) =>
+    commands.push(event),
+  );
+  let ticks = 0;
+  match.addEventListener(timerTickEventName, () => {
+    ticks += 1;
+  });
+
+  await vi.advanceTimersByTimeAsync(24_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="6"]')).not.toBeNull();
+  expect(ticks).toBe(0);
+
+  await vi.advanceTimersByTimeAsync(1_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="5"]')).not.toBeNull();
+  expect(ticks).toBe(1);
+
+  await vi.advanceTimersByTimeAsync(4_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="1"]')).not.toBeNull();
+  expect(play).toHaveBeenCalledWith('timer-tick');
+  expect(ticks).toBe(timerTickSeconds);
+
+  await vi.advanceTimersByTimeAsync(1_000);
+  await match.updateComplete;
+  expect(ticks).toBe(timerTickSeconds);
+  expect(play).toHaveBeenCalledTimes(timerTickSeconds);
+  expect(
+    commands.filter((event) => event.detail.type === 'expire-turn'),
+  ).toHaveLength(1);
+});
+
+test('keeps timer audio silent while the document is hidden', async () => {
+  vi.useFakeTimers();
+  localStorage.removeItem(settingsStorageKey);
+  const match = await startMatch();
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
+  const audio = (app as unknown as {
+    audio: { play: (cue: string) => boolean };
+  }).audio;
+  const play = vi.spyOn(audio, 'play').mockReturnValue(true);
+  const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(false);
+  try {
+    await vi.advanceTimersByTimeAsync(24_000);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="6"]')).not.toBeNull();
+
+    hidden.mockReturnValue(true);
+    document.dispatchEvent(new Event('visibilitychange'));
+    await vi.advanceTimersByTimeAsync(4_000);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="2"]')).not.toBeNull();
+    expect(play).not.toHaveBeenCalled();
+
+    hidden.mockReturnValue(false);
+    document.dispatchEvent(new Event('visibilitychange'));
+    await vi.advanceTimersByTimeAsync(1_000);
+    await match.updateComplete;
+    expect(match.querySelector('[data-timer="1"]')).not.toBeNull();
+    expect(play).toHaveBeenCalledExactlyOnceWith('timer-tick');
+  } finally {
+    hidden.mockRestore();
+    play.mockRestore();
+  }
+});
+
+test('requests no timer tick under Unlimited or while paused', async () => {
+  vi.useFakeTimers();
+  localStorage.removeItem(settingsStorageKey);
+  const match = await startMatch();
+  const app = document.querySelector(
+    'grand-transition-app',
+  ) as GrandTransitionApp;
+  let ticks = 0;
+  match.addEventListener(timerTickEventName, () => {
+    ticks += 1;
+  });
+
+  await vi.advanceTimersByTimeAsync(20_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+
+  match.querySelector<HTMLButtonElement>('.match-pause')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(30_000);
+  await match.updateComplete;
+  expect(ticks).toBe(0);
+
+  match.querySelector<HTMLButtonElement>('.interruption-primary')!.click();
+  await app.updateComplete;
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="10"]')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(5_000);
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="5"]')).not.toBeNull();
+  expect(ticks).toBe(1);
+
+  match.turnTimerSeconds = null;
+  await match.updateComplete;
+  expect(match.querySelector('[data-timer="unlimited"]')).not.toBeNull();
+  await vi.advanceTimersByTimeAsync(60_000);
+  await match.updateComplete;
+  expect(ticks).toBe(1);
 });
 
 test('conceals a paused match and resumes from the exact timer value', async () => {

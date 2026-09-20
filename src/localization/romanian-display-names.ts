@@ -38,6 +38,7 @@ export const romanianSceneNames: Readonly<Record<string, string>> = Object.freez
   'midnight-call-in-studio': 'Studioul din sufragerie',
   'palace-press-hall': 'Sala de presă a Palatului',
   'influencer-campaign-livestream': 'Live pe stream',
+  'civic-cypher-boxing-ring': 'Ringul civic',
 });
 
 // A weakness keeps its stable tag for scoring, content, and stored state. Only
@@ -52,7 +53,6 @@ export const romanianWeaknessNames: Readonly<Record<string, string>> = Object.fr
   consistency: 'Consecvență',
   context: 'Context',
   corruption: 'Corupție',
-  credibility: 'Credibilitate',
   decorum: 'Decență',
   delivery: 'Prestanță',
   elitism: 'Elitism',
@@ -64,6 +64,7 @@ export const romanianWeaknessNames: Readonly<Record<string, string>> = Object.fr
   maintenance: 'Întreținere',
   memory: 'Memorie',
   miners: 'Mineri',
+  modernity: 'Modernitate',
   nepotism: 'Nepotism',
   obsolete: 'Perimat',
   outcomes: 'Rezultate',

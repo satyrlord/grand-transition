@@ -157,7 +157,21 @@ describe('Hollywood Roast clause scoring', () => {
     expect(
       score(['national-consensus', 'belongs-in-a-party-museum'], ['restraint'])
         .finalDamage,
-    ).toBe(8);
+    ).toBe(10);
+  });
+
+  test('keeps the shipped score balance whole-numbered', () => {
+    expect([
+      basicScoringBalance.modifierPoints,
+      basicScoringBalance.basePointsMinimum,
+      basicScoringBalance.basePointsMultiplier,
+      basicScoringBalance.substanceGroupPoints,
+      basicScoringBalance.flavourGroupPoints,
+      basicScoringBalance.weaknessMultiplier,
+      basicScoringBalance.restrictedPhraseMultiplier,
+    ].every((value) => Number.isInteger(value))).toBe(true);
+    expect(basicScoringBalance.weaknessMultiplier).toBe(2);
+    expect(basicScoringBalance.restrictedPhraseMultiplier).toBe(1);
   });
 
   test('keeps scene and character restrictions out of damage', () => {
@@ -219,7 +233,7 @@ describe('Hollywood Roast clause scoring', () => {
       defenderWeaknessTags: ['consistency'],
       balance: scoringBalanceForMultiplier(multiplier),
     });
-    expect(result.finalDamage).toBe(17);
+    expect(result.finalDamage).toBe(22);
     expect(result.breakdown.filter((item) => item.kind === 'weakness-multiplier')).toHaveLength(1);
     expect(result.breakdown).toContainEqual(expect.objectContaining({ kind: 'clause-base', amount: 11 }));
   });
@@ -245,7 +259,7 @@ describe('Hollywood Roast clause scoring', () => {
       balance: basicScoringBalance,
     });
 
-    expect(result.finalDamage).toBe(11);
+    expect(result.finalDamage).toBe(14);
     expect(
       result.breakdown.filter((item) => item.kind === 'clause-base'),
     ).toHaveLength(1);
@@ -293,7 +307,7 @@ describe('Hollywood Roast clause scoring', () => {
       analysis: analysis(ids), phrases, defenderWeaknessTags: ['modifier-only'],
       balance: basicScoringBalance,
     });
-    expect(result.finalDamage).toBe(22); // ceil(11 * 1.5 + 5)
+    expect(result.finalDamage).toBe(27); // 11 * 2 + 5
     expect(result.breakdown.filter((item) => item.kind === 'weakness-match')).toHaveLength(3);
     expect(result.breakdown.filter((item) => item.kind === 'weakness-multiplier')).toHaveLength(1);
   });
@@ -354,7 +368,7 @@ describe('Hollywood Roast clause scoring', () => {
     ] as const;
     const result = score(ids, ['restraint']);
 
-    expect(result.finalDamage).toBe(8);
+    expect(result.finalDamage).toBe(10);
     expect(
       result.breakdown.filter((item) => item.kind === 'clause-base'),
     ).toHaveLength(1);

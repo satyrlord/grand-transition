@@ -33,6 +33,7 @@ test.each([
   ['midnight-call-in-studio', '.scene-motion--midnight', 'midnight-ticker-crawl'],
   ['palace-press-hall', '.scene-motion--palace', 'palace-press-sweep'],
   ['influencer-campaign-livestream', '.scene-motion--influencer', 'livestream-reaction-rise'],
+  ['civic-cypher-boxing-ring', '.scene-motion--cypher', 'civic-cypher-crowd-bounce'],
 ] as const)('renders distinct pointer-inert motion for %s', async (sceneId, selector, animationName) => {
   const ambience = await mount(sceneId);
   const motion = ambience.querySelector(selector)!;
@@ -57,6 +58,7 @@ test.each([
   ['midnight-call-in-studio', '.scene-motion--midnight'],
   ['palace-press-hall', '.scene-motion--palace'],
   ['influencer-campaign-livestream', '.scene-motion--influencer'],
+  ['civic-cypher-boxing-ring', '.scene-motion--cypher'],
 ] as const)('suspends %s motion for pause and reduced motion', async (sceneId, selector) => {
   const ambience = await mount(sceneId);
   const motion = ambience.querySelector(selector)!;

@@ -106,7 +106,7 @@ player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
 
 The shipped scoring balance is Milestone 010's arithmetic: 5 base points,
-2 substance points, 1 flavour point, 2 points per modifier, a 1.5 weakness
+2 substance points, 1 flavour point, 2 points per modifier, a 2 weakness
 multiplier, a 1 restriction multiplier, and a ceiling rounding step.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
@@ -165,8 +165,9 @@ Milestone 002 threshold remains 70 percent.
   `2135977951`. The repository `$simulate-matches` skill runs an explicitly
   requested workload outside normal CI and requires the number of matches as
   input. Every workload preserves the stated match invariants.
-  Milestone 026 adds a fixed-seed Node catalog workload for all 2,166 ordered
-  character-pair and scene setups, including mirrors and AI presentation timing.
+  Milestone 026 adds a fixed-seed Node catalog workload for every ordered
+  character-pair and scene setup, including mirrors and AI presentation timing.
+  Specification 032 expands the workload to 2,527 setups across seven scenes.
 - **AC-014-06:** Every named pure file meets its per-file threshold. Production
   source, bundle, and DOM contain no development logger, endpoint, debug or
   audit UI, simulation UI, or development-tool label.

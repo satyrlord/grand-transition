@@ -128,7 +128,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
         if (result.weaknessActivated) {
           await expect(
             scoreCard.locator('.score-factor--weakness').first(),
-          ).toHaveText('×1.5');
+          ).toHaveText('×2');
         }
         if (result.comebackBonus > 0) {
           await expect(

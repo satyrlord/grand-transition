@@ -24,7 +24,7 @@
   "weaknessTags": [
     "restraint",
     "sources",
-    "credibility"
+    "delivery"
   ],
   "comebacks": {
     "weak": "Fetch the phone. Even the dial tone has a stronger argument.",
@@ -757,6 +757,8 @@
       "id": "thunder-tribune-contract-predicate-predicate-1-past",
       "role": "predicate",
       "text": "was a broadcast with a missing source",
+      "singularText": "was a broadcast with a missing source",
+      "pluralText": "were a broadcast with a missing source",
       "tags": [
         "evidence"
       ],
@@ -782,7 +784,7 @@
       "singularText": "is a broadcast with a missing source",
       "pluralText": "are a broadcast with a missing source",
       "personalSingularText": "is a broadcast with a missing source",
-      "secondPersonText": "is a broadcast with a missing source",
+      "secondPersonText": "are a broadcast with a missing source",
       "tags": [
         "evidence"
       ],
@@ -826,7 +828,7 @@
     {
       "id": "thunder-tribune-contract-modifier-before-the-applause-can-object",
       "role": "modifier",
-      "text": "before-the-applause-can-object",
+      "text": "before the applause can object",
       "tags": [
         "restraint"
       ],
@@ -835,7 +837,7 @@
     {
       "id": "thunder-tribune-contract-modifier-under-a-loud-fact-check",
       "role": "modifier",
-      "text": "under-a-loud-fact-check",
+      "text": "under a loud fact-check",
       "tags": [
         "evidence"
       ],

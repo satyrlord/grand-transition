@@ -132,7 +132,7 @@ describe('reference round presentation', () => {
     const h = harness();
     h.controller.start({ ...h.input, components: {
       ...h.input.components,
-      two: [{ ...component(20), weaknessFactor: 1.5, weaknessTags: ['evidence'] }],
+      two: [{ ...component(20), weaknessFactor: 2, weaknessTags: ['evidence'] }],
     }, resolution: resolution({ one: publicPlayer, two: {
       ...publicOpponent, comebackActivated: true, comebackClosingLine: 'The record is closed.',
       score: { finalDamage: 20, unroundedTotal: 20, combo: null, breakdown: [
@@ -149,7 +149,7 @@ describe('reference round presentation', () => {
     expect(h.frame()?.emphasis).toContainEqual({ kind: 'combo', playerId: 'two', text: 'Your audit', value: 2 });
     voice.onSegment!(2); expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
     expect(h.frame()?.comebackActive).toBe(true);
-    expect(h.frame()?.emphasis).toContainEqual({ kind: 'weakness', playerId: 'one', text: 'evidence', value: 1.5 });
+    expect(h.frame()?.emphasis).toContainEqual({ kind: 'weakness', playerId: 'one', text: 'evidence', value: 2 });
     voice.onSegment!(2); voice.onEnd!(); voice.onEnd!();
     expect(h.frame()?.comebackActive).toBe(false);
     expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
@@ -185,7 +185,7 @@ describe('reference round presentation', () => {
         two: [{
           ...component(20),
           narrationIndex: 3,
-          weaknessFactor: 1.5,
+          weaknessFactor: 2,
           weaknessTags: ['evidence'],
         }],
       },
@@ -224,7 +224,7 @@ describe('reference round presentation', () => {
       kind: 'weakness',
       playerId: 'one',
       text: 'evidence',
-      value: 1.5,
+      value: 2,
     });
   });
 

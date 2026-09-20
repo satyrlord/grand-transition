@@ -31,6 +31,8 @@ const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
 export const returnToMainMenuEventName = 'return-to-main-menu';
+export const timerTickEventName = 'timer-tick';
+export const timerTickSeconds = 5;
 
 export type MatchPauseMode = 'manual' | 'running' | 'viewport' | 'hotseat-portrait' | 'landscape-recommended';
 
@@ -1381,6 +1383,7 @@ export class GrandTransitionMatch extends LitElement {
       this.dispatchMatchCommand('expire-turn', {});
       return;
     }
+    if (this.remainingSeconds <= timerTickSeconds) this.requestTimerTick();
     this.requestUpdate();
   }
 
@@ -1400,6 +1403,15 @@ export class GrandTransitionMatch extends LitElement {
       }),
     );
   };
+
+  private requestTimerTick(): void {
+    this.dispatchEvent(
+      new CustomEvent(timerTickEventName, {
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
 
   private readonly returnToMainMenu = (): void => {
     if (!this.snapshot?.victory) return;

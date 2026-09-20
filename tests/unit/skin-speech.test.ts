@@ -48,7 +48,7 @@ describe('skin voice assignments', () => {
     for (const id of femaleSpeechSkins) {
       const [ownerId, skinId = 'default'] = id.split('--');
       expect(skinSpeechProfile(character(ownerId!), skinId, 'piper', 'ro-RO')).toMatchObject({
-        voiceUri: 'piper:ro_RO-liana-high', language: 'ro-RO',
+        voiceUri: 'piper:ro_RO-liana-medium', language: 'ro-RO',
       });
     }
   });
@@ -57,7 +57,7 @@ describe('skin voice assignments', () => {
       const profile = skinSpeechProfile(character('government-ai', 'robot'), skin, 'piper', 'ro-RO');
       expect(profile.provider).toBe('neural');
       expect(profile.microsoftVoice).toBeUndefined();
-      expect(['piper:ro_RO-mihai-medium', 'piper:ro_RO-liana-high']).toContain(profile.voiceUri);
+      expect(['piper:ro_RO-mihai-medium', 'piper:ro_RO-liana-medium']).toContain(profile.voiceUri);
     }
   });
   test('only the game locale selects the voice; an English match keeps English speech', () => {

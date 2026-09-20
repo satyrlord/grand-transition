@@ -147,6 +147,12 @@
     animation: livestream-reaction-rise 5.5s ease-out infinite;
   }
 
+  .scene-motion--cypher {
+    fill: var(--broadcast-paper-light);
+    opacity: 0.04;
+    animation: civic-cypher-crowd-bounce 2.8s steps(2, jump-none) infinite;
+  }
+
   @keyframes studio-lamp-breathe {
     0%, 100% { opacity: 0.03; }
     50% { opacity: 0.15; }
@@ -177,6 +183,11 @@
     from { transform: translateY(70px); opacity: 0; }
     25%, 70% { opacity: 0.12; }
     to { transform: translateY(-70px); opacity: 0; }
+  }
+
+  @keyframes civic-cypher-crowd-bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.03; }
+    50% { transform: translateY(-8px); opacity: 0.1; }
   }
 
   .broadcast-stage-ambience[data-motion-suspended='true'] .scene-motion {

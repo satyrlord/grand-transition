@@ -2,6 +2,12 @@ import { lockInSetup } from './helpers/setup';
 import { expect, test } from '@playwright/test';
 import { stat } from 'node:fs/promises';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
+import chairman from '../src/content/characters/red-folded-chairman-phrase-cards.json' with { type: 'json' };
+import captain from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
+import { displayWeaknessName } from '../src/localization/romanian-display-names';
+
+const chairmanWeaknesses = chairman.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
+const captainWeaknesses = captain.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
 
 const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
@@ -81,8 +87,8 @@ for (const viewport of supportedViewports) {
       })
       .click();
     await expect(page.locator('.contestant-weaknesses')).toHaveText([
-      'Legacy · Modernity · Bureaucracy · Miners',
-      'Legacy · Modernity · Bureaucracy · Miners',
+      chairmanWeaknesses,
+      chairmanWeaknesses,
     ]);
     const rosterSources = await page
       .locator('.roster-headshot')
@@ -790,7 +796,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await captain.hover();
   const dossier = page.locator('.character-inspector');
   await expect(dossier).toContainText('Black Sea Captain');
-  await expect(dossier).toContainText('Decorum · Consistency · Former secret police');
+  await expect(dossier).toContainText(captainWeaknesses);
   await expect(dossier).toHaveAttribute('data-pinned', 'false');
 
   await captain.click({ button: 'right' });

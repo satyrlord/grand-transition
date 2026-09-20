@@ -500,7 +500,7 @@
     {
       "id": "football-tycoon-contract-noun-1-a-transfer-fee-with-a-conscience",
       "role": "noun",
-      "text": "the greatest credit is mine",
+      "text": "the claim that the greatest credit is mine",
       "tags": [
         "commercialism"
       ],
@@ -640,6 +640,8 @@
       "id": "football-tycoon-contract-predicate-predicate-1-past",
       "role": "predicate",
       "text": "was a victory where the greatest credit was mine",
+      "singularText": "was a victory where the greatest credit was mine",
+      "pluralText": "were a victory where the greatest credit was mine",
       "tags": [
         "commercialism"
       ],
@@ -710,6 +712,8 @@
       "id": "football-tycoon-contract-predicate-predicate-2-past",
       "role": "predicate",
       "text": "was a transfer wearing a moral ribbon",
+      "singularText": "was a transfer wearing a moral ribbon",
+      "pluralText": "were a transfer wearing a moral ribbon",
       "tags": [
         "accountability"
       ],
@@ -735,7 +739,7 @@
       "singularText": "is a transfer wearing a moral ribbon",
       "pluralText": "are a transfer wearing a moral ribbon",
       "personalSingularText": "is a transfer wearing a moral ribbon",
-      "secondPersonText": "is a transfer wearing a moral ribbon",
+      "secondPersonText": "are a transfer wearing a moral ribbon",
       "tags": [
         "accountability"
       ],
@@ -780,6 +784,8 @@
       "id": "football-tycoon-contract-predicate-predicate-3-past",
       "role": "predicate",
       "text": "was a penalty clause with a smile",
+      "singularText": "was a penalty clause with a smile",
+      "pluralText": "were a penalty clause with a smile",
       "tags": [
         "sincerity"
       ],
@@ -805,7 +811,7 @@
       "singularText": "is a penalty clause with a smile",
       "pluralText": "are a penalty clause with a smile",
       "personalSingularText": "is a penalty clause with a smile",
-      "secondPersonText": "is a penalty clause with a smile",
+      "secondPersonText": "are a penalty clause with a smile",
       "tags": [
         "sincerity"
       ],
@@ -849,7 +855,7 @@
     {
       "id": "football-tycoon-contract-modifier-beside-a-sponsor-shaped-trophy",
       "role": "modifier",
-      "text": "beside-a-sponsor-shaped-trophy",
+      "text": "beside a sponsor-shaped trophy",
       "tags": [
         "commercialism"
       ],

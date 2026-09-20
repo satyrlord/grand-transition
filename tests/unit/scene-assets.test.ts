@@ -37,13 +37,35 @@ describe('scene asset resolver', () => {
     expect(source).not.toMatch(/query: '\?url'/gu);
   });
 
+  test('ships the approved one-layer civic cypher source and no foreground', async () => {
+    const root = path.resolve('src/assets/scenes');
+    const bytes = await readFile(path.join(root, 'civic-cypher-boxing-ring.png'));
+    const hash = createHash('sha256').update(bytes).digest('hex');
+    expect(hash).toBe('1b377bdfc260c715909486744e6b5acdd71b755b288bd2d3f83e017c557f5db1');
+    const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
+    const scene = manifest.assets.find((asset: { id: string }) =>
+      asset.id === 'civic-cypher-boxing-ring');
+    expect(scene).toMatchObject({
+      ownerId: 'civic-cypher-boxing-ring',
+      layerRole: 'back',
+      source: { sha256: hash, width: 3840, height: 2160 },
+    });
+    expect(scene.sourceDescription).toContain('gpt-image-2.5-flare');
+    expect(scene.sourceDescription).toContain('text-only');
+    expect(scene.sourceDescription).toContain('reference-edited');
+    expect(scene.sourceDescription).toContain('composited at fixed clear positions');
+    expect(scene.sourceDescription).toContain('No upscaling');
+    expect(manifest.assets.some((asset: { id: string }) =>
+      asset.id.startsWith('civic-cypher-boxing-ring-'))).toBe(false);
+  });
+
   test('maps every manifest layer to AVIF-first and WebP fallback srcsets', () => {
-    expect(sceneAssetManifest).toHaveLength(12);
+    expect(sceneAssetManifest).toHaveLength(13);
     const variants = sceneAssetManifest.flatMap((asset) => [
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(120);
+    expect(variants).toHaveLength(130);
 
     for (const asset of sceneAssetManifest) {
       expect(asset.width).toBe(3840);
@@ -160,6 +182,11 @@ describe('scene asset resolver', () => {
         animationId: 'livestream-reaction-rise',
         effectIds: ['reaction-rise', 'donation-alert-pulse'],
       },
+      'civic-cypher-boxing-ring': {
+        layers: ['civic-cypher-boxing-ring'],
+        animationId: 'civic-cypher-crowd-bounce',
+        effectIds: ['crowd-bounce', 'microphone-swing'],
+      },
     } as const;
 
     for (const scene of sampleContent.scenes) {
@@ -169,7 +196,7 @@ describe('scene asset resolver', () => {
       expect(scene.animationId).toBe(expected[scene.id as keyof typeof expected].animationId);
       expect(scene.effectIds).toEqual(expected[scene.id as keyof typeof expected].effectIds);
     }
-    expect(new Set(sampleContent.scenes.map(({ animationId }) => animationId)).size).toBe(6);
-    expect(new Set(sampleContent.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(12);
+    expect(new Set(sampleContent.scenes.map(({ animationId }) => animationId)).size).toBe(7);
+    expect(new Set(sampleContent.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(14);
   });
 });

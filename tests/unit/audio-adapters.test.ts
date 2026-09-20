@@ -106,7 +106,10 @@ describe('audio adapters', () => {
     });
     await audio.enable();
     expect(audio.status).toBe('ready');
-    expect(load.mock.calls.map(([, format]) => format)).toEqual(Array.from({ length: 16 }, () => ['ogg', 'mp3']).flat());
+    expect(load.mock.calls.map(([, format]) => format)).toEqual(
+      Array.from({ length: musicTrackIds.length + effectIds.length }, () =>
+        ['ogg', 'mp3']).flat(),
+    );
     audio.dispose();
     const failed = audioHarness();
     failed.load.mockRejectedValue(new Error('missing'));

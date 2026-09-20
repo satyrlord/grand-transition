@@ -2,6 +2,182 @@
   "schemaVersion": 1,
   "assets": [
     {
+      "id": "civic-cypher-boxing-ring",
+      "ownerType": "scene",
+      "ownerId": "civic-cypher-boxing-ring",
+      "layerRole": "back",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon Romanian municipal boxing-ring cypher scene generated text-only with OpenAI gpt-image-2.5-flare at native 3840x2160, then reference-edited to clear the microphones. Original microphone artwork was contour-extracted, reduced, and composited at fixed clear positions with matching suspension cords. No upscaling.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "civic-cypher-boxing-ring.png",
+        "sha256": "1b377bdfc260c715909486744e6b5acdd71b755b288bd2d3f83e017c557f5db1",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 12583382,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/civic-cypher-boxing-ring-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 28549,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "02363fbf18d38d4fb4a31914e6582c3442a82d5fcf7d5cc3e5445d8a955e8e0d"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 30180,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "68b4b15de91584113b44fd860d6b11818c1b3fd268d96dfec373c644f1d7693d"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 95892,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "b112880007f5c7ecf2263db028c749b3ac16115fde98aa87ca11fe489f390ef0"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 104700,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "82e0accd2459ca24901a8d025248102b804599fa40a7580612ae00e228179c21"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 188146,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "98bd6ac0a294b1156a7c37dc5a68541453553ac90ac0a4cc1a1fe91bbe4bbc39"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 214106,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "e84f7e3a0c068d5b8697498f0b2c8860abc77d82426396cb687b7a30ae298cba"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 289470,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "d190162a4ddc478bc193c220e2c4de4fe4d583d09e87980981574e5d752fc479"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 338382,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "0f3a3178bfe896292a861127f40660b4bb408286ab46d3507e19aeeb1be655bb"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 343813,
+          "format": "avif",
+          "quality": 58,
+          "sha256": "68dea2756f05582abf4dcc667c9851991cee4d92e344dc1948a3f59adf99e28c"
+        },
+        {
+          "path": "variants/civic-cypher-boxing-ring-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 495322,
+          "format": "webp",
+          "quality": 82,
+          "sha256": "13ca6663529bcc9450bcca816d454576cda1bfb916c005d360c87521deadaebc"
+        }
+      ]
+    },
+    {
       "id": "county-council-ballroom",
       "ownerType": "scene",
       "ownerId": "county-council-ballroom",

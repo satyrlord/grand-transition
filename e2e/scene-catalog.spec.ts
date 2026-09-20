@@ -13,6 +13,7 @@ const scenes = [
   'midnight-call-in-studio',
   'palace-press-hall',
   'influencer-campaign-livestream',
+  'civic-cypher-boxing-ring',
 ] as const;
 
 const viewports = [

@@ -73,9 +73,10 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   editorial-cartoon direction across characters, moderators, scenes, furniture,
   fixtures, and props. Character skins and states follow the detailed rendering
   standard in Specification 023.
-  All six playable scenes use distinct local cartoon backgrounds and
-  transparent foreground plates through the same responsive scene asset
-  pipeline. Two debate studios include fixed fictional moderators and
+  All seven playable scenes use distinct local cartoon backgrounds through the
+  same responsive scene asset pipeline. Six use transparent foreground plates.
+  The desk-free Civic Cypher Boxing Ring uses one unobstructed back layer with
+  no moderator. Two debate studios include fixed fictional moderators and
   foreground standing desks.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
@@ -84,7 +85,7 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   5, 8, 11, and 14 compatibility bases. Settings offers a persisted ×1 through
   ×5 compatibility multiplier, defaulting to ×3, captured for both players in
   each new match and its replay. Each clause adds 2 points per modifier before weakness and noun-combo
-  multipliers. Each clause receives at most one 1.5 weakness multiplier.
+  multipliers. Each clause receives at most one 2 weakness multiplier.
   Restrictions do not add damage. The seeded Local Radio Caller, Party Strategist, and Palace
   Operator AI policies select valid actions for single-player matches. A local
   nine-rung ladder persists wins, losses, opponents, scenes, and completion.
@@ -114,11 +115,12 @@ Warm color remains limited to authored local materials and lighting.
 The approved specifications under `docs/specs/` are the only product and
 implementation authority. Two untracked original-game screenshots under
 the temporary folder are composition and interaction references only. They are
-not product assets or layout specifications. The 30 character skins and 12
+not product assets or layout specifications. The 30 character skins and 13
 scene layers have manifests and runtime variants. Twenty-eight complete
-character state packages, two declared selection-art fallbacks, six distinct
-scene music treatments, and nine effects are implemented. Milestone 028 owns
-their final acceptance. No testimonial or customer claim is recorded here.
+character state packages, two declared selection-art fallbacks, seven distinct
+scene music treatments, and ten effects are implemented. Milestone 028 owns
+their MVP acceptance. Specification 032 owns the seventh scene package.
+No testimonial or customer claim is recorded here.
 
 ## Product Principles
 

@@ -15,6 +15,7 @@ import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
 
 export const SCENE_MASTER_NAMES = Object.freeze([
+  'civic-cypher-boxing-ring.png',
   'county-council-ballroom.png',
   'county-council-ballroom-foreground.png',
   'midnight-call-in-studio.png',
@@ -40,6 +41,8 @@ const FINAL_SCENE_SOURCE_DESCRIPTIONS = Object.freeze(Object.fromEntries([
   [id, 'Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.'],
   [`${id}-foreground`, 'Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.'],
 ])));
+const CIVIC_CYPHER_SOURCE_DESCRIPTION =
+  'Original flat cel-shaded editorial-cartoon Romanian municipal boxing-ring cypher scene generated text-only with OpenAI gpt-image-2.5-flare at native 3840x2160, then reference-edited to clear the microphones. Original microphone artwork was contour-extracted, reduced, and composited at fixed clear positions with matching suspension cords. No upscaling.';
 const LICENSE_IDENTIFIER = 'LicenseRef-Grand-Transition-Original';
 const SHARED_SAFE_RECTANGLES = Object.freeze({
   protectedTopBand: Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 0.18 }),
@@ -333,7 +336,9 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
         ownerType: 'scene',
         ownerId: master.identity.ownerId,
         layerRole: master.identity.isForeground ? 'foreground' : 'back',
-        sourceDescription: FINAL_SCENE_SOURCE_DESCRIPTIONS[master.identity.id] ?? (master.identity.id === 'transition-era-television-studio'
+        sourceDescription: master.identity.id === 'civic-cypher-boxing-ring'
+          ? CIVIC_CYPHER_SOURCE_DESCRIPTION
+          : FINAL_SCENE_SOURCE_DESCRIPTIONS[master.identity.id] ?? (master.identity.id === 'transition-era-television-studio'
           ? 'Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2.5-sunburst, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.'
           : master.identity.id === 'modern-debate-studio'
             ? 'User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.'

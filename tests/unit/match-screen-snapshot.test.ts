@@ -525,17 +525,17 @@ describe('match-screen snapshot', () => {
               source: 'active',
             },
           ],
-          sentenceDamage: 47,
+          sentenceDamage: 62,
           comebackBonus: 18,
-          outgoingDamage: 65,
+          outgoingDamage: 80,
           weaknessActivated: true,
           comboMultiplier: 2,
           comebackActivated: true,
           comebackTier: 'strong',
           comebackClosingLine: 'And that closes the record.',
           score: {
-            unroundedTotal: 47,
-            finalDamage: 47,
+            unroundedTotal: 62,
+            finalDamage: 62,
             combo: {
               nounPhraseId: 'national-consensus',
               phraseIndex: 0,
@@ -561,7 +561,7 @@ describe('match-screen snapshot', () => {
               {
                 kind: 'weakness-multiplier',
                 operation: 'note',
-                factor: 1.5,
+                factor: 2,
               },
               {
                 kind: 'combo-multiplier',
@@ -576,7 +576,7 @@ describe('match-screen snapshot', () => {
                   'national-consensus',
                   'belongs-in-a-party-museum',
                 ],
-                amount: 45,
+                amount: 60,
               },
               {
                 kind: 'combo-chain',
@@ -594,12 +594,12 @@ describe('match-screen snapshot', () => {
               {
                 kind: 'unrounded-total',
                 operation: 'total',
-                amount: 47,
+                amount: 62,
               },
               {
                 kind: 'final-damage',
                 operation: 'ceil',
-                amount: 47,
+                amount: 62,
               },
             ],
           },
@@ -621,9 +621,9 @@ describe('match-screen snapshot', () => {
         phraseText: 'National consensus belongs in a party museum',
         base: 15,
         restrictionFactor: 1,
-        weaknessFactor: 1.5,
+        weaknessFactor: 2,
         comboFactor: 2,
-        amount: 45,
+        amount: 60,
         weaknessTags: ['restraint'],
       },
       {
@@ -650,8 +650,8 @@ describe('match-screen snapshot', () => {
       },
     ]);
     expect(snapshot.reaction.players[firstId]).toMatchObject({
-      comboBonusDamage: 22.5,
-      weaknessFactor: 1.5,
+      comboBonusDamage: 30,
+      weaknessFactor: 2,
       weaknesses: ['restraint'],
     });
   });

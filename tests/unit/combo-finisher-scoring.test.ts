@@ -75,7 +75,7 @@ describe('Hollywood Roast combos and finishers', () => {
         'before-the-next-election', 'by-emergency-ordinance'],
       first.comboState, ['consistency'],
     );
-    expect(result.score.finalDamage).toBe(23); // (5 + 2) * 1.5 * 2 + 2
+    expect(result.score.finalDamage).toBe(30); // (5 + 2) * 2 * 2 + 2
     expect(result.comboState.player!.previousNounIds).toEqual(['national-consensus']);
   });
 
@@ -109,7 +109,7 @@ describe('Hollywood Roast combos and finishers', () => {
       kind: 'finisher-bonus',
       operation: 'add',
       phraseId: 'by-emergency-ordinance',
-      amount: 3,
+      amount: 4,
     });
     expect(result.score.breakdown).toContainEqual(
       expect.objectContaining({
@@ -129,19 +129,19 @@ describe('Hollywood Roast combos and finishers', () => {
       ],
       {},
       [],
-      { ...basicScoringBalance, restrictedPhraseMultiplier: 1.5 },
+      { ...basicScoringBalance, restrictedPhraseMultiplier: 2 },
     );
     expect(result.score.breakdown).toContainEqual({
       kind: 'restriction-multiplier',
       operation: 'note',
       phraseIds: ['for-stabilitys-sake'],
-      factor: 1.5,
+      factor: 2,
     });
     expect(result.score.breakdown).toContainEqual({
       kind: 'finisher-bonus',
       operation: 'add',
       phraseId: 'for-stabilitys-sake',
-      amount: 5,
+      amount: 6,
     });
   });
 

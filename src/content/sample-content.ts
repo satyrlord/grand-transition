@@ -95,6 +95,19 @@ export function createSampleContent(
         0,
         scenePhraseIds('influencer-campaign-livestream'),
       ),
+      {
+        id: 'civic-cypher-boxing-ring',
+        openingPlayerIndex: 1,
+        nameKey: 'scene.civic-cypher-boxing-ring.name',
+        descriptionKey: 'scene.civic-cypher-boxing-ring.description',
+        backgroundLayers: [
+          { media: media('civic-cypher-boxing-ring'), depth: 0 },
+        ],
+        animationId: 'civic-cypher-crowd-bounce',
+        music: media('civic-cypher-boxing-ring-theme'),
+        phrasePool: [...scenePhraseIds('civic-cypher-boxing-ring')],
+        effectIds: ['crowd-bounce', 'microphone-swing'],
+      },
     ],
     locales: [...gameLocaleBundles],
   });

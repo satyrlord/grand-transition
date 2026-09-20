@@ -11,13 +11,13 @@ export type BasePointsMultiplier = z.infer<typeof basePointsMultiplierSchema>;
 // balance below is the only configuration the application uses.
 export const basicScoringBalanceSchema = z
   .object({
-    modifierPoints: z.number().min(0),
-    basePointsMinimum: z.number().min(0),
+    modifierPoints: z.number().int().min(0),
+    basePointsMinimum: z.number().int().min(0),
     basePointsMultiplier: basePointsMultiplierSchema,
-    substanceGroupPoints: z.number().min(0),
-    flavourGroupPoints: z.number().min(0),
-    weaknessMultiplier: z.number().min(1),
-    restrictedPhraseMultiplier: z.number().min(1),
+    substanceGroupPoints: z.number().int().min(0),
+    flavourGroupPoints: z.number().int().min(0),
+    weaknessMultiplier: z.number().int().min(1),
+    restrictedPhraseMultiplier: z.number().int().min(1),
     rounding: z.literal('ceil'),
   })
   .strict();
@@ -31,7 +31,7 @@ export const basicScoringBalance: BasicScoringBalance =
     basePointsMultiplier: 3,
     substanceGroupPoints: 2,
     flavourGroupPoints: 1,
-    weaknessMultiplier: 1.5,
+    weaknessMultiplier: 2,
     restrictedPhraseMultiplier: 1,
     rounding: 'ceil',
   });

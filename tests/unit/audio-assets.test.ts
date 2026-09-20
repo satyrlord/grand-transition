@@ -127,25 +127,27 @@ describe('audio asset inventory', () => {
     await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify(manifest));
     await expect(tools.validateAudio(root)).rejects.toThrow('inventory is incomplete');
   });
-  test('ships one distinct manifest-backed treatment per scene and nine effects, with no room tone', () => {
+  test('ships one distinct manifest-backed treatment per scene and ten effects, with no room tone', () => {
     const manifest = JSON.parse(original);
     const music = manifest.assets.filter((asset: { kind: string }) => asset.kind === 'music');
-    expect(music).toHaveLength(7);
-    expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'effect')).toHaveLength(9);
-    expect(manifest.assets).toHaveLength(16);
+    expect(music).toHaveLength(8);
+    expect(manifest.assets.filter((asset: { kind: string }) => asset.kind === 'effect')).toHaveLength(10);
+    expect(manifest.assets).toHaveLength(18);
     expect(manifest.assets.some((asset: { id: string }) => asset.id.includes('room-tone'))).toBe(false);
-    expect(new Set(music.map((asset: { id: string }) => asset.id)).size).toBe(7);
+    expect(new Set(music.map((asset: { id: string }) => asset.id)).size).toBe(8);
     const sceneMusic = new Map(music.map((asset: { id: string; sceneId: string }) => [asset.sceneId, asset.id]));
     expect(sceneMusic.get('menu')).toBe('menu-theme');
     for (const scene of sampleContent.scenes) {
       expect(sceneMusic.get(scene.id), scene.id).toBe(scene.music.assetId);
     }
     const playableMusic = music.filter((asset: { sceneId: string }) => asset.sceneId !== 'menu');
-    expect(new Set(playableMusic.map((asset: { sourceSha256: string }) => asset.sourceSha256)).size).toBe(6);
+    expect(new Set(playableMusic.map((asset: { sourceSha256: string }) => asset.sourceSha256)).size).toBe(7);
     expect(playableMusic.every((asset: { license: string }) =>
       ['CC0-1.0', 'CC-BY-3.0', 'CC-BY-4.0', 'Public domain'].includes(asset.license))).toBe(true);
     expect(playableMusic.find((asset: { sceneId: string }) =>
       asset.sceneId === 'influencer-campaign-livestream')?.treatment).toMatch(/trap/iu);
+    expect(playableMusic.find((asset: { sceneId: string }) =>
+      asset.sceneId === 'civic-cypher-boxing-ring')?.treatment).toMatch(/boom-bap/iu);
   });
 
   test('keeps the established Scene 1 recording bytes unchanged', () => {
@@ -171,7 +173,9 @@ describe('audio asset inventory', () => {
         expect(document, `${asset.id} title`).toContain(title);
         expect(document, `${asset.id} creator`).toContain(asset.owner);
         expect(document, `${asset.id} source`).toContain(asset.source);
-        expect(document, `${asset.id} license`).toContain('CC0');
+        expect(document, `${asset.id} license`).toContain(
+          asset.license.startsWith('CC0') ? 'CC0' : 'CC BY 4.0',
+        );
       }
     }
   });

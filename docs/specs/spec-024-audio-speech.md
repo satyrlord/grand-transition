@@ -40,10 +40,10 @@ specifies complete-phrase loops, waveform seam correction, and the Scene 6
 arrangement. Other recordings keep their existing endpoint fades. The build
 adds no accompaniment.
 
-Nine effects use the original project license: role-select, commit, light hit,
-heavy hit, weakness, combo, continuation break, comeback, and grammar mistake.
-Scenes contain no background hum or room-tone audio. Scene lighting and other
-visual effects remain independent of audio.
+Ten effects use the original project license: role-select, commit, light hit,
+heavy hit, weakness, combo, continuation break, comeback, grammar mistake, and
+the turn-timer tick. Scenes contain no background hum or room-tone audio. Scene
+lighting and other visual effects remain independent of audio.
 
 Each asset has a WAV master and Ogg Vorbis plus MP3 runtime variants at 48 kHz.
 Music targets -16 LUFS integrated, plus or minus 1 LU.
@@ -93,7 +93,10 @@ Comeback produces its dedicated cartoon-impact cue immediately and does not
 repeat that cue during narration. Damage 1 through 15 uses light hit. Damage 16
 or more uses heavy hit. Zero is silent. Narration markers schedule applied
 combo and weakness cues. Each event fires once per delivery. Stale callbacks
-cannot repeat it.
+cannot repeat it. Progression through the final five seconds of a timed turn
+produces one timer-tick each second. The tick follows the Effects volume, stops
+with the turn timer, and never plays under Unlimited. Milestone 016 owns the
+countdown that requests it.
 
 Audio status changes refresh title Settings only. They must not replace a match
 snapshot, close a disclosed waiting sentence, or restart presentation.
@@ -366,7 +369,9 @@ skins through real match completion and records native versus neural calls.
 - **AC-024-01:** Audio validation proves formats, levels, provenance, and hashes.
   Asset unit tests cover rejection paths and the music-and-effects-only inventory.
 - **AC-024-02:** Audio adapter tests prove gains, source reuse, crossfade,
-  cleanup, and failure. Production tests measure effect onset below 100 ms.
+  cleanup, and failure. Browser tests prove one timer-tick per second across the
+  final five seconds of a timed turn and none under Unlimited. Production tests
+  measure effect onset below 100 ms.
 - **AC-024-03:** Neural asset validation proves identity, hashes, and bounds.
   Production browsers generate real PCM under the exact CSP from local assets.
   Human skins use the selected neural engine and make no platform speech call.
