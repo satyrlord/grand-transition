@@ -11,8 +11,9 @@ music package
 Add `civic-cypher-boxing-ring` as the seventh playable scene. It is selectable
 in custom Single Player and Multiplayer setup. It appends to the six founding
 scene identities and supersedes Milestone 028's exact six-scene catalog count.
-The version-1 Ladder progress document retains its seeded permutation of the six
-founding scenes. The additional scene does not invalidate saved Ladder progress.
+The Ladder includes it automatically through Milestone 022's catalog-driven
+scene permutation. Loading older version-1 progress reconciles its six-scene
+order by appending this scene deterministically without losing ladder results.
 
 The English display name is `Civic Cypher Boxing Ring`. The Romanian display
 name is `Ringul civic`. The scene description, all game prose, and every
@@ -98,9 +99,11 @@ measurements in the audio manifest. Credit the creator and license in both
   manifest at every supported desktop landscape viewport. Characters, sentence,
   nine shared phrases, actions, and the one-layer scene remain decoded, clear,
   pointer-inert, and free of page scroll.
-- **AC-032-06:** Version-1 Ladder progress keeps the six founding scene IDs and
-  remains valid when the seventh catalog scene exists. Custom setup can still
-  select the seventh scene.
+- **AC-032-06:** New Ladder progress includes all seven current scene IDs exactly
+  once. Loading valid six-scene version-1 progress appends the seventh scene,
+  persists the reconciled order, and preserves the selected character,
+  opponents, rung, wins, losses, and completion. Custom setup can also select
+  the seventh scene.
 
 ## Objective verifiers
 

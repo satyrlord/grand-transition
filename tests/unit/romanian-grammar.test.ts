@@ -138,8 +138,23 @@ describe('Romanian grammar binding', () => {
   });
 
   test('renders Romanian text and picks the singular or plural form by subject number', () => {
-    const singular = analyzeWith(romanianGrammar, romanianGameLocale, singleSubjectClause, { end: true });
-    const plural = analyzeWith(romanianGrammar, romanianGameLocale, compoundSubjectClause, { end: true });
+    // `rebrands` no longer splits number in Romanian (`reinventează` in both
+    // forms), so this agreement check uses `promises`, which splits in both
+    // locales (`promises`/`promise`, `promite`/`promit`).
+    const singularIds = [
+      'national-consensus',
+      'promises',
+      'national-salvation-committee',
+    ] as const;
+    const pluralIds = [
+      'televised-revolution',
+      'and',
+      'national-salvation-committee',
+      'promises',
+      'national-consensus',
+    ] as const;
+    const singular = analyzeWith(romanianGrammar, romanianGameLocale, singularIds, { end: true });
+    const plural = analyzeWith(romanianGrammar, romanianGameLocale, pluralIds, { end: true });
     expect(singular.accepted).toBe(true);
     expect(plural.accepted).toBe(true);
     if (!singular.accepted || !plural.accepted) return;
@@ -149,8 +164,8 @@ describe('Romanian grammar binding', () => {
       romanianGameLocale,
       phrase('national-salvation-committee').textKey,
     );
-    const singularVerb = message(romanianGameLocale, 'phrase.rebrands.singular');
-    const pluralVerb = message(romanianGameLocale, 'phrase.rebrands.plural');
+    const singularVerb = message(romanianGameLocale, 'phrase.promises.singular');
+    const pluralVerb = message(romanianGameLocale, 'phrase.promises.plural');
     expect(singularVerb).not.toBe(pluralVerb);
 
     expect(singular.analysis.renderedPhrases[1]?.text).toBe(singularVerb);
@@ -163,11 +178,11 @@ describe('Romanian grammar binding', () => {
     expect(plural.analysis.publicText).not.toContain(singularVerb);
 
     // The same semantic clause picks the same number forms in English.
-    const englishPlural = analyzeWith(englishGrammar, englishGameLocale, compoundSubjectClause, { end: true });
+    const englishPlural = analyzeWith(englishGrammar, englishGameLocale, pluralIds, { end: true });
     expect(englishPlural.accepted).toBe(true);
     if (englishPlural.accepted) {
       expect(englishPlural.analysis.renderedPhrases[3]?.text).toBe(
-        message(englishGameLocale, 'phrase.rebrands.plural'),
+        message(englishGameLocale, 'phrase.promises.plural'),
       );
     }
   });

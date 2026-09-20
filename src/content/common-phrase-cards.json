@@ -1038,7 +1038,7 @@
   {
     "id": "national-strategy",
     "role": "noun",
-    "text": "your national strategy on a receipt",
+    "text": "your national strategy on a napkin",
     "tags": [
       "competence"
     ],
@@ -1394,9 +1394,9 @@
   {
     "id": "rebrands",
     "role": "verb",
-    "text": "rebrands",
-    "singularText": "rebrands",
-    "pluralText": "rebrand",
+    "text": "reinvents",
+    "singularText": "reinvents",
+    "pluralText": "reinvent",
     "tags": [
       "modernity",
       "credibility"
@@ -1423,9 +1423,9 @@
   {
     "id": "rebranded",
     "role": "verb",
-    "text": "rebranded",
-    "singularText": "rebranded",
-    "pluralText": "rebranded",
+    "text": "reinvented",
+    "singularText": "reinvented",
+    "pluralText": "reinvented",
     "tags": [
       "modernity",
       "credibility"
@@ -1452,9 +1452,9 @@
   {
     "id": "will-rebrand",
     "role": "verb",
-    "text": "will rebrand",
-    "singularText": "will rebrand",
-    "pluralText": "will rebrand",
+    "text": "will reinvent",
+    "singularText": "will reinvent",
+    "pluralText": "will reinvent",
     "tags": [
       "modernity",
       "credibility"
@@ -3068,13 +3068,14 @@
   {
     "id": "was-posted-on-social-media",
     "role": "predicate",
-    "text": "was posted on social media",
-    "singularText": "was posted on social media",
-    "pluralText": "were posted on social media",
-    "personalSingularText": "was posted on social media",
-    "secondPersonText": "were posted on social media",
+    "text": "cheered for a Russian attack",
+    "singularText": "cheered for a Russian attack",
+    "pluralText": "cheered for a Russian attack",
+    "personalSingularText": "cheered for a Russian attack",
+    "secondPersonText": "cheered for a Russian attack",
     "tags": [
-      "media"
+      "authenticity",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -3095,13 +3096,14 @@
   {
     "id": "is-posted-on-social-media",
     "role": "predicate",
-    "text": "is posted on social media",
-    "singularText": "is posted on social media",
-    "pluralText": "are posted on social media",
-    "personalSingularText": "is posted on social media",
-    "secondPersonText": "are posted on social media",
+    "text": "cheers for a Russian attack",
+    "singularText": "cheers for a Russian attack",
+    "pluralText": "cheer for a Russian attack",
+    "personalSingularText": "cheers for a Russian attack",
+    "secondPersonText": "cheer for a Russian attack",
     "tags": [
-      "media"
+      "authenticity",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -3122,13 +3124,14 @@
   {
     "id": "will-be-posted-on-social-media",
     "role": "predicate",
-    "text": "will be posted on social media",
-    "singularText": "will be posted on social media",
-    "pluralText": "will be posted on social media",
-    "personalSingularText": "will be posted on social media",
-    "secondPersonText": "will be posted on social media",
+    "text": "will cheer for a Russian attack",
+    "singularText": "will cheer for a Russian attack",
+    "pluralText": "will cheer for a Russian attack",
+    "personalSingularText": "will cheer for a Russian attack",
+    "secondPersonText": "will cheer for a Russian attack",
     "tags": [
-      "media"
+      "authenticity",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -11044,7 +11047,7 @@
     "id": "county-council-ballroom-yet-between-the-council-toasts",
     "role": "conjunction",
     "connectorKind": "yet",
-    "text": "yet, between the toasts,",
+    "text": "yet, over drinks,",
     "tags": [],
     "rarity": "common",
     "sceneIds": [
@@ -12927,7 +12930,7 @@
   {
     "id": "general-annex-that-annexes-the-annex",
     "role": "noun",
-    "text": "a bad joke in the annex",
+    "text": "an annex longer than the law",
     "tags": [
       "bureaucracy"
     ],
@@ -12996,7 +12999,7 @@
   {
     "id": "general-cabinet-of-spare-cabinets",
     "role": "noun",
-    "text": "a cabinet of spare clean slates",
+    "text": "an office full of directors with nothing to do",
     "tags": [
       "bureaucracy"
     ],
@@ -13047,7 +13050,7 @@
   {
     "id": "general-signature-in-a-sealed-envelope",
     "role": "noun",
-    "text": "a signature measured ten times",
+    "text": "a signature toured through three counters",
     "tags": [
       "bureaucracy"
     ],
@@ -13081,7 +13084,7 @@
   {
     "id": "general-audit-trail-with-a-shortcut",
     "role": "noun",
-    "text": "an audit trail through concrete reality",
+    "text": "an inspection announced a month early",
     "tags": [
       "bureaucracy"
     ],
@@ -13098,7 +13101,7 @@
   {
     "id": "general-waiting-room-with-a-waiting-room",
     "role": "noun",
-    "text": "a waiting room for what you are losing",
+    "text": "a waiting room with no chairs",
     "tags": [
       "bureaucracy"
     ],
@@ -13132,7 +13135,7 @@
   {
     "id": "general-camera-that-never-blinks",
     "role": "noun",
-    "text": "a camera for one final question",
+    "text": "a camera switched off when the scandal starts",
     "tags": [
       "media"
     ],
@@ -13149,7 +13152,7 @@
   {
     "id": "general-microphone-under-oath",
     "role": "noun",
-    "text": "a microphone for a bad joke",
+    "text": "a microphone left on during the honesty break",
     "tags": [
       "media"
     ],
@@ -13200,7 +13203,7 @@
   {
     "id": "general-caller-with-a-script",
     "role": "noun",
-    "text": "a caller asking what you are losing",
+    "text": "a viewer reading his outrage off a script",
     "tags": [
       "media"
     ],
@@ -13251,7 +13254,7 @@
   {
     "id": "general-commercial-break-manifesto",
     "role": "noun",
-    "text": "a manifesto for one final question",
+    "text": "a campaign manifesto between two detergent ads",
     "tags": [
       "media"
     ],
@@ -13268,7 +13271,7 @@
   {
     "id": "general-ratings-thermometer",
     "role": "noun",
-    "text": "a ratings thermometer for a booming economy",
+    "text": "an audience record faked with a pen",
     "tags": [
       "media"
     ],
@@ -13285,7 +13288,7 @@
   {
     "id": "general-press-release-in-disguise",
     "role": "noun",
-    "text": "a press release with a clean slate",
+    "text": "a party press release dressed up as news",
     "tags": [
       "media"
     ],
@@ -13319,7 +13322,7 @@
   {
     "id": "general-teleprompter-of-denial",
     "role": "noun",
-    "text": "a teleprompter for the synergy of facts",
+    "text": "a teleprompter denying the footage behind it",
     "tags": [
       "media"
     ],
@@ -13336,7 +13339,7 @@
   {
     "id": "general-witness-under-studio-lights",
     "role": "noun",
-    "text": "a witness with one final question",
+    "text": "a witness booked on every channel",
     "tags": [
       "media"
     ],
@@ -13353,7 +13356,7 @@
   {
     "id": "general-correction-after-closing-credits",
     "role": "noun",
-    "text": "a correction after two markers",
+    "text": "a denial aired after sign-off",
     "tags": [
       "media"
     ],
@@ -13370,7 +13373,7 @@
   {
     "id": "general-bridge-to-nowhere-with-a-ribbon",
     "role": "noun",
-    "text": "a bridge built from the twists of reality",
+    "text": "a bridge finished before its access road",
     "tags": [
       "infrastructure"
     ],
@@ -13387,7 +13390,7 @@
   {
     "id": "general-pothole-with-a-commemorative-plaque",
     "role": "noun",
-    "text": "a pothole measured by a radius",
+    "text": "a pothole older than the mayor's mandate",
     "tags": [
       "infrastructure"
     ],
@@ -13404,7 +13407,7 @@
   {
     "id": "general-road-map-to-reserved-parking",
     "role": "noun",
-    "text": "a road map before one final question",
+    "text": "a road map with no drivable roads",
     "tags": [
       "infrastructure"
     ],
@@ -13472,7 +13475,7 @@
   {
     "id": "general-public-staircase-to-nowhere",
     "role": "noun",
-    "text": "a public staircase toward a clean slate",
+    "text": "a public staircase ending in a wall",
     "tags": [
       "infrastructure"
     ],
@@ -13506,7 +13509,7 @@
   {
     "id": "general-budget-road-on-a-napkin",
     "role": "noun",
-    "text": "a budget road through concrete reality",
+    "text": "a road paved only on paper",
     "tags": [
       "infrastructure"
     ],
@@ -13540,7 +13543,7 @@
   {
     "id": "general-sidewalk-with-a-press-badge",
     "role": "noun",
-    "text": "a sidewalk for a country you love",
+    "text": "a sidewalk narrower than its curb",
     "tags": [
       "infrastructure"
     ],
@@ -13557,7 +13560,7 @@
   {
     "id": "general-warehouse-of-unopened-bottles",
     "role": "noun",
-    "text": "a warehouse of popcorn and soft drinks",
+    "text": "a brand-new warehouse with a broken roof",
     "tags": [
       "infrastructure"
     ],
@@ -13608,7 +13611,7 @@
   {
     "id": "general-infrastructure-ribbon",
     "role": "noun",
-    "text": "an infrastructure ribbon for a bad joke",
+    "text": "a ribbon stretched over a sinkhole",
     "tags": [
       "infrastructure"
     ],
@@ -13625,7 +13628,7 @@
   {
     "id": "general-sealed-bid-with-an-answer-sheet",
     "role": "noun",
-    "text": "a sealed bid with the synergy of facts",
+    "text": "a sealed bid the committee already knows",
     "tags": [
       "procurement"
     ],
@@ -13642,7 +13645,7 @@
   {
     "id": "general-supplier-with-the-only-pen",
     "role": "noun",
-    "text": "a supplier with a country you love",
+    "text": "a supplier subscribed to city-hall contracts",
     "tags": [
       "procurement"
     ],
@@ -13659,7 +13662,7 @@
   {
     "id": "general-contract-before-the-need",
     "role": "noun",
-    "text": "a contract before one final question",
+    "text": "a contract signed before the budget passed",
     "tags": [
       "procurement"
     ],
@@ -13676,7 +13679,7 @@
   {
     "id": "general-invoice-for-a-future-invoice",
     "role": "noun",
-    "text": "an invoice for what you do not know",
+    "text": "an invoice for issuing another invoice",
     "tags": [
       "procurement"
     ],
@@ -13693,7 +13696,7 @@
   {
     "id": "general-tender-with-a-private-dress-code",
     "role": "noun",
-    "text": "a tender with a bad joke",
+    "text": "a tender tailored for the house firm",
     "tags": [
       "procurement"
     ],
@@ -13710,7 +13713,7 @@
   {
     "id": "general-winning-bid-in-a-family-envelope",
     "role": "noun",
-    "text": "a winning bid with two markers",
+    "text": "a winning bid filed after the deadline",
     "tags": [
       "procurement"
     ],
@@ -13727,7 +13730,7 @@
   {
     "id": "general-procurement-magic-word",
     "role": "noun",
-    "text": "a procurement word from concrete reality",
+    "text": "an urgent procurement of office ornaments",
     "tags": [
       "procurement"
     ],
@@ -13744,7 +13747,7 @@
   {
     "id": "general-audit-trail-to-reserved-parking",
     "role": "noun",
-    "text": "an audit trail for the greatest credit",
+    "text": "an inspection checking only the contract covers",
     "tags": [
       "procurement"
     ],
@@ -13761,7 +13764,7 @@
   {
     "id": "general-consultant-with-three-business-cards",
     "role": "noun",
-    "text": "a consultant with a radius squared",
+    "text": "a consultant paid by both bidders",
     "tags": [
       "procurement"
     ],
@@ -13778,7 +13781,7 @@
   {
     "id": "general-public-purchase-of-a-private-service",
     "role": "noun",
-    "text": "a public purchase of popcorn",
+    "text": "a public purchase delivered to the director's villa",
     "tags": [
       "procurement"
     ],
@@ -13795,7 +13798,7 @@
   {
     "id": "general-price-comparison-with-one-price",
     "role": "noun",
-    "text": "a price comparison after a bad joke",
+    "text": "a price comparison of three bids from one firm",
     "tags": [
       "procurement"
     ],
@@ -13812,7 +13815,7 @@
   {
     "id": "general-delivery-note-for-no-delivery",
     "role": "noun",
-    "text": "a delivery note for one final question",
+    "text": "a delivery note for goods that never existed",
     "tags": [
       "procurement"
     ],
@@ -13829,7 +13832,7 @@
   {
     "id": "general-maintenance-contract-for-the-ribbon",
     "role": "noun",
-    "text": "a maintenance contract measured ten times",
+    "text": "a maintenance contract for a dismantled elevator",
     "tags": [
       "procurement"
     ],
@@ -13846,7 +13849,7 @@
   {
     "id": "general-budget-line-with-a-sponsor",
     "role": "noun",
-    "text": "a budget line with the economy booming",
+    "text": "a budget line negotiated over dinner",
     "tags": [
       "procurement"
     ],
@@ -13863,7 +13866,7 @@
   {
     "id": "general-warehouse-of-emergency-gifts",
     "role": "noun",
-    "text": "a warehouse of what you are losing",
+    "text": "a warehouse of gifts billed as aid",
     "tags": [
       "procurement"
     ],
@@ -13880,7 +13883,7 @@
   {
     "id": "general-coalition-with-a-spare-coalition",
     "role": "noun",
-    "text": "a coalition with a clean slate",
+    "text": "a coalition negotiating with its own opposition",
     "tags": [
       "consistency"
     ],
@@ -13897,7 +13900,7 @@
   {
     "id": "general-mandate-in-pencil",
     "role": "noun",
-    "text": "a mandate measured ten times",
+    "text": "a mandate launched by quitting the party",
     "tags": [
       "consistency"
     ],
@@ -13914,7 +13917,7 @@
   {
     "id": "general-national-interest-with-a-footnote",
     "role": "noun",
-    "text": "a national interest for a country you love",
+    "text": "a national interest valid until the jobs are split",
     "tags": [
       "consistency"
     ],
@@ -13931,7 +13934,7 @@
   {
     "id": "general-cabinet-of-temporary-permanent-ministers",
     "role": "noun",
-    "text": "a cabinet with the greatest credit",
+    "text": "a career interim government",
     "tags": [
       "consistency"
     ],
@@ -13948,7 +13951,7 @@
   {
     "id": "general-party-platform-on-castors",
     "role": "noun",
-    "text": "a party platform for one final question",
+    "text": "a party platform rewritten after every alliance",
     "tags": [
       "consistency"
     ],
@@ -13965,7 +13968,7 @@
   {
     "id": "general-opposition-with-a-reservation",
     "role": "noun",
-    "text": "an opposition after a bad joke",
+    "text": "an opposition saving itself a seat in government",
     "tags": [
       "consistency"
     ],
@@ -13982,7 +13985,7 @@
   {
     "id": "general-parliamentary-umbrella",
     "role": "noun",
-    "text": "a parliamentary umbrella for winter",
+    "text": "a parliamentary alliance broken at the first vote",
     "tags": [
       "consistency"
     ],
@@ -13999,7 +14002,7 @@
   {
     "id": "general-ministerial-chair-with-a-nameplate",
     "role": "noun",
-    "text": "a ministerial chair with two markers",
+    "text": "a ministerial chair promised to three parties",
     "tags": [
       "consistency"
     ],
@@ -14016,7 +14019,7 @@
   {
     "id": "general-emergency-cabinet-of-ordinary-days",
     "role": "noun",
-    "text": "an emergency cabinet of concrete reality",
+    "text": "a government stable until tomorrow's meeting",
     "tags": [
       "consistency"
     ],
@@ -14033,7 +14036,7 @@
   {
     "id": "general-reform-in-a-velvet-folder",
     "role": "noun",
-    "text": "a reform in a clean-slate folder",
+    "text": "a reform withdrawn by its own author",
     "tags": [
       "consistency"
     ],
@@ -14050,7 +14053,7 @@
   {
     "id": "general-public-service-with-a-private-door",
     "role": "noun",
-    "text": "a public service for a country you love",
+    "text": "a public service relocated after every reshuffle",
     "tags": [
       "consistency"
     ],
@@ -14067,7 +14070,7 @@
   {
     "id": "general-coalition-proposal-before-breakfast",
     "role": "noun",
-    "text": "a coalition proposal before popcorn",
+    "text": "a coalition proposal rejected once the ministries were split",
     "tags": [
       "consistency"
     ],
@@ -14084,7 +14087,7 @@
   {
     "id": "general-policy-with-a-quiet-exit",
     "role": "noun",
-    "text": "a policy with the synergy of facts",
+    "text": "an official policy denied the same day",
     "tags": [
       "consistency"
     ],
@@ -14118,7 +14121,7 @@
   {
     "id": "general-committee-for-the-next-committee",
     "role": "noun",
-    "text": "a committee for what you are losing",
+    "text": "an alliance committee with no allies left",
     "tags": [
       "consistency"
     ],
@@ -15206,7 +15209,7 @@
   {
     "id": "general-lemonade-microchip",
     "role": "noun",
-    "text": "a lemonade microchip",
+    "text": "a microchip made of lemonade",
     "tags": [
       "credibility"
     ],
@@ -18561,11 +18564,11 @@
   {
     "id": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee-past",
     "role": "predicate",
-    "text": "was a freestyle rehearsed by committee",
-    "singularText": "was a freestyle rehearsed by committee",
-    "pluralText": "were freestyles rehearsed by committee",
-    "personalSingularText": "was a freestyle rehearsed by committee",
-    "secondPersonText": "were a freestyle rehearsed by committee",
+    "text": "was a verse rehearsed by committee",
+    "singularText": "was a verse rehearsed by committee",
+    "pluralText": "were verses rehearsed by committee",
+    "personalSingularText": "was a verse rehearsed by committee",
+    "secondPersonText": "were a verse rehearsed by committee",
     "tense": "past",
     "tenseFamily": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee",
     "tags": ["authenticity", "bureaucracy"],
@@ -18576,11 +18579,11 @@
   {
     "id": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee-present",
     "role": "predicate",
-    "text": "is a freestyle rehearsed by committee",
-    "singularText": "is a freestyle rehearsed by committee",
-    "pluralText": "are freestyles rehearsed by committee",
-    "personalSingularText": "is a freestyle rehearsed by committee",
-    "secondPersonText": "are a freestyle rehearsed by committee",
+    "text": "is a verse rehearsed by committee",
+    "singularText": "is a verse rehearsed by committee",
+    "pluralText": "are verses rehearsed by committee",
+    "personalSingularText": "is a verse rehearsed by committee",
+    "secondPersonText": "are a verse rehearsed by committee",
     "tense": "present",
     "tenseFamily": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee",
     "tags": ["authenticity", "bureaucracy"],
@@ -18591,11 +18594,11 @@
   {
     "id": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee-future",
     "role": "predicate",
-    "text": "will be a freestyle rehearsed by committee",
-    "singularText": "will be a freestyle rehearsed by committee",
-    "pluralText": "will be freestyles rehearsed by committee",
-    "personalSingularText": "will be a freestyle rehearsed by committee",
-    "secondPersonText": "will be a freestyle rehearsed by committee",
+    "text": "will be a verse rehearsed by committee",
+    "singularText": "will be a verse rehearsed by committee",
+    "pluralText": "will be verses rehearsed by committee",
+    "personalSingularText": "will be a verse rehearsed by committee",
+    "secondPersonText": "will be a verse rehearsed by committee",
     "tense": "future",
     "tenseFamily": "civic-cypher-boxing-ring-was-a-freestyle-rehearsed-by-committee",
     "tags": ["authenticity", "bureaucracy"],
@@ -18702,7 +18705,7 @@
   {
     "id": "civic-cypher-boxing-ring-but-after-the-beat-changed",
     "role": "conjunction",
-    "text": "but, after the beat changed,",
+    "text": "but, after the track changed,",
     "connectorKind": "but",
     "tags": [],
     "rarity": "common",

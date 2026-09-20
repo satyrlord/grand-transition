@@ -72,7 +72,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: { complete: true },
     });
     if (complete.accepted) {
-      expect(complete.analysis.renderedPhrases[3]?.text).toBe('rebrand');
+      expect(complete.analysis.renderedPhrases[3]?.text).toBe('reinvent');
     }
   });
 
@@ -108,13 +108,13 @@ describe('Hollywood Roast English grammar', () => {
       analyze([add('you'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You rebrand your unanimous disagreement' },
+      analysis: { publicText: 'You reinvent your unanimous disagreement' },
     });
     expect(
       analyze([add('my-opponent'), add('rebrands'), add('national-consensus')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'My opponent rebrands your unanimous disagreement' },
+      analysis: { publicText: 'My opponent reinvents your unanimous disagreement' },
     });
 
     for (const [predicateId, expected] of [
@@ -142,12 +142,12 @@ describe('Hollywood Roast English grammar', () => {
     for (const [predicateId, expected] of [
       [
         'was-posted-on-social-media',
-        'A liberal was posted on social media',
+        'A liberal cheered for a Russian attack',
       ],
-      ['is-posted-on-social-media', 'A liberal is posted on social media'],
+      ['is-posted-on-social-media', 'A liberal cheers for a Russian attack'],
       [
         'will-be-posted-on-social-media',
-        'A liberal will be posted on social media',
+        'A liberal will cheer for a Russian attack',
       ],
       [
         'harassed-innocent-people-on-social-media',
@@ -172,7 +172,7 @@ describe('Hollywood Roast English grammar', () => {
       analyze([add('you'), add('is-posted-on-social-media')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You are posted on social media' },
+      analysis: { publicText: 'You cheer for a Russian attack' },
     });
     expect(
       analyze([
@@ -194,7 +194,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: {
         state: 'ENDED',
         publicText:
-          'A liberal is posted on social media and most of your followers are bots.',
+          'A liberal cheers for a Russian attack and most of your followers are bots.',
       },
     });
   });
@@ -408,7 +408,7 @@ describe('Hollywood Roast English grammar', () => {
         state: 'CLAUSE_COMPLETE',
         nextRoles: ['modifier', 'conjunction', 'ending'],
         publicText:
-          'Your unanimous disagreement rebrands a televised revolution before the promises lose their warranty behind doors transparent only in the brochure',
+          'Your unanimous disagreement reinvents a televised revolution before the promises lose their warranty behind doors transparent only in the brochure',
       },
     });
     expect(

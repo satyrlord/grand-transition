@@ -69,26 +69,36 @@ A ladder has nine rungs: three Local Radio Caller, three Party Strategist, and
 three Palace Operator opponents in that order. The ladder selects opponents
 without replacement from the other 18 characters in the 19-character catalog. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
-permutation of the six founding scenes and then repeat. Additional post-MVP
-scenes remain selectable in custom Single Player and Multiplayer without
-changing the version-1 ladder document's six-scene tuple or invalidating saved
-progress.
+permutation of every unique playable scene in the current catalog and then
+repeat. Scene identifiers are stable opaque strings; ladder behavior does not
+depend on a numeric identifier, catalog position, scene count, or scene content.
+A new ladder rejects an empty scene catalog or duplicate scene identifiers.
+
+Version-1 progress stores a nonempty, variable-length scene order. When the
+playable catalog changes, loading progress removes unavailable scene IDs,
+preserves the relative order of surviving IDs, deterministically shuffles and
+appends every newly available ID, and persists the reconciled progress. This
+does not change the selected character, opponents, rung, wins, losses, or
+completion. The scene for the current rung is then selected from the reconciled
+order. At least one playable scene must remain.
 
 A win advances one rung. A loss keeps the same rung and opponent. Abandoning a
 match keeps the rung and records no result. Completion follows the ninth win.
 
-Progress version 1 stores selected character ID, seed, nine opponent IDs, scene
-order, rung index 0 through 9, win and loss counts, and completion. Reset removes
-that progress after confirmation. Corrupt progress uses the Milestone 020
+Progress version 1 stores selected character ID, seed, nine opponent IDs, the
+nonempty variable-length scene order, rung index 0 through 9, win and loss
+counts, and completion. Reset removes that progress after confirmation. Corrupt progress uses the Milestone 020
 fallback and never invents advancement.
 
 The storage key is `grand-transition.ladder-progress.v1`. Storage failure keeps
 the exact progress in session memory and shows a session-only notice. Corrupt or
 unsupported bytes produce no progress and remain unchanged until the player
 starts a new ladder or confirms Reset.
-Syntactically valid progress that names a character or scene outside the current
-playable catalog is also invalid. It produces no progress, reports
-`invalid-data`, preserves the stored bytes, and cannot advance a rung.
+Syntactically valid progress that names a character outside the current playable
+catalog is invalid. It produces no progress, reports `invalid-data`, preserves
+the stored bytes, and cannot advance a rung. Scene IDs outside the current
+catalog are reconciled under the scene-rotation contract instead of invalidating
+otherwise valid progress.
 
 The Main Menu offers “Ladder” under Milestone 015. Selecting it creates local
 progress when absent or resumes saved progress. Custom Single Player adds Party Strategist and
@@ -127,9 +137,13 @@ complete,” not a prior difficulty.
   nonlethal multipliers and never reverse a protected priority.
 - **AC-022-04:** All delay endpoints match their exact ranges without changing
   the selected command or node count.
-- **AC-022-05:** Fixed character and seed reproduce nine unique opponents and
-  scene order. Win, loss, abandon, resume, completion, corruption, and reset
-  each have a golden progress snapshot.
+- **AC-022-05:** Fixed character, seed, and scene catalog reproduce nine unique
+  opponents and one permutation containing every catalog scene exactly once.
+  Fixtures cover one scene, the shipped catalog, more scenes than ladder rungs,
+  reordered inputs, an empty catalog, duplicate IDs, additions, removals, and
+  idempotent reconciliation. Win, loss, abandon, resume, completion,
+  corruption, and reset each have a golden progress snapshot. Reconciliation
+  preserves all non-scene progress fields and persists the updated scene order.
 - **AC-022-06:** Playwright completes all nine rungs, persists after each win,
   reloads at the same rung, and shows no locked or completed state incorrectly.
 
@@ -141,7 +155,8 @@ complete,” not a prior difficulty.
   transitions, codec snapshots, corruption and stale-catalog fallback, resume,
   and reset.
 - `tests/browser/screen-shell.browser.test.ts` verifies difficulty selection,
-  ladder setup, persistence, completion, and confirmed reset.
+  ladder setup, scene-catalog reconciliation, persistence, completion, and
+  confirmed reset.
 - `e2e/advanced-ai-ladder.spec.ts` verifies AC-022-06 in the production build
   with ladder seed 5 and Palace Operator as the automated human player.
 - The Impeccable records and `npm run ci` complete milestone evidence.

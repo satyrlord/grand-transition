@@ -19,7 +19,10 @@ import {
   createLadderProgress,
   recordLadderResult,
 } from '../../src/engine/ladder';
-import { encodeLadderProgress } from '../../src/persistence/codecs/ladder-progress-codec';
+import {
+  decodeLadderProgress,
+  encodeLadderProgress,
+} from '../../src/persistence/codecs/ladder-progress-codec';
 import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress';
 
 afterEach(() => {
@@ -741,6 +744,48 @@ test('Main Menu selects each mode without replacing saved ladder progress', asyn
     expect(localStorage.getItem(ladderProgressStorageKey)).toBe(saved);
     await page.getByRole('button', { name: 'Back', exact: true }).click();
   }
+});
+
+test('reconciles saved Ladder scenes with the current catalog', async () => {
+  const previousSceneIds = sampleContent.scenes
+    .map(({ id }) => id)
+    .filter((id) => id !== 'civic-cypher-boxing-ring')
+    .concat('retired-scene');
+  const previousProgress = recordLadderResult(createLadderProgress(
+    'black-sea-captain',
+    22_026,
+    sampleContent.characters.map(({ id }) => id),
+    previousSceneIds,
+  ), 'win');
+  localStorage.setItem(
+    ladderProgressStorageKey,
+    encodeLadderProgress(previousProgress),
+  );
+
+  await mountApp();
+
+  const decoded = decodeLadderProgress(
+    localStorage.getItem(ladderProgressStorageKey)!,
+  );
+  expect(decoded.ok).toBe(true);
+  if (!decoded.ok) return;
+  expect(decoded.value).toMatchObject({
+    selectedCharacterId: previousProgress.selectedCharacterId,
+    opponentIds: previousProgress.opponentIds,
+    rungIndex: 1,
+    wins: 1,
+    losses: 0,
+    completed: false,
+  });
+  expect(new Set(decoded.value.sceneOrder)).toEqual(
+    new Set(sampleContent.scenes.map(({ id }) => id)),
+  );
+  const currentSceneIds = new Set(sampleContent.scenes.map(({ id }) => id));
+  const retainedSceneOrder = previousProgress.sceneOrder.filter(
+    (sceneId) => currentSceneIds.has(sceneId),
+  );
+  expect(decoded.value.sceneOrder.slice(0, retainedSceneOrder.length))
+    .toEqual(retainedSceneOrder);
 });
 
 test('shows completed progress without starting a locked rung', async () => {
