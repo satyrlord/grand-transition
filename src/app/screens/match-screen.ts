@@ -26,6 +26,7 @@ import './interruption-screen';
 import '../../components/character-presenter';
 import '../../components/scene-ambience';
 import type { TurnTimerSeconds } from './interruption-screen';
+import { ApplicationTurnClock } from '../turn-clock';
 
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
@@ -70,14 +71,12 @@ export class GrandTransitionMatch extends LitElement {
   declare autoRevealWaitingSentence: boolean;
   declare presentation: RoundPresentationFrame | null;
   private previewText: string | null;
-  private remainingSeconds: number | null;
   private commandPending: boolean;
   private revealedWaitingPlayerId: string | null;
   private hoveredWaitingPlayerId: string | null;
   private focusedWaitingPlayerId: string | null;
   private automaticWaitingPlayerId: string | null;
 
-  private timerId: number | undefined;
   private automaticRevealTimerId: number | undefined;
   private timerSequence = -1;
   private discardedPortraitSequence = -1;
@@ -88,6 +87,13 @@ export class GrandTransitionMatch extends LitElement {
   private presentationAnnouncementKeys = new Set<string>();
   private postPresentationRevision: number | null = null;
   private sentenceScrollKey: string | null = null;
+  private readonly turnClock = new ApplicationTurnClock({
+    onTick: (remainingSeconds) => {
+      if (remainingSeconds <= timerTickSeconds) this.requestTimerTick();
+      this.requestUpdate();
+    },
+    onExpire: () => this.dispatchMatchCommand('expire-turn', {}),
+  });
   constructor() {
     super();
     updateWhenLocaleChanges(this);
@@ -103,7 +109,6 @@ export class GrandTransitionMatch extends LitElement {
     this.autoRevealWaitingSentence = false;
     this.presentation = null;
     this.previewText = null;
-    this.remainingSeconds = null;
     this.commandPending = false;
     this.revealedWaitingPlayerId = null;
     this.hoveredWaitingPlayerId = null;
@@ -124,7 +129,7 @@ export class GrandTransitionMatch extends LitElement {
     window.removeEventListener('resize', this.followLatestScore);
     this.clearGrammarStrike();
     this.requestUpdate();
-    this.stopTimer();
+    this.turnClock.dispose();
     this.clearAutomaticWaitingSentenceReveal();
     this.clearPresentationAnnouncements();
     super.disconnectedCallback();
@@ -250,7 +255,7 @@ export class GrandTransitionMatch extends LitElement {
     const first = players[0]!;
     const second = players[1]!;
     const activeDraftPlayer = this.snapshot.players.find((player) => player.isActive)!;
-    const timerValue = this.remainingSeconds;
+    const timerValue = this.turnClock.remainingSeconds;
     const timerLabel =
       timerValue === null
         ? msg('Unlimited turn timer')
@@ -1327,17 +1332,16 @@ export class GrandTransitionMatch extends LitElement {
   private syncTimer(): void {
     if (!this.snapshot) return;
     if (this.snapshot.roundReview) {
-      this.stopTimer();
+      this.turnClock.pause();
       return;
     }
     const { sequence, durationSeconds } = this.snapshot.timer;
     if (sequence === this.timerSequence) return;
-    this.stopTimer();
     this.timerSequence = sequence;
-    this.remainingSeconds =
-      durationSeconds === null ? null : this.turnTimerSeconds;
-    if (this.remainingSeconds === null || this.pauseMode !== 'running') return;
-    this.startTimer();
+    this.turnClock.reset(
+      durationSeconds === null ? null : this.turnTimerSeconds,
+      this.pauseMode === 'running',
+    );
   }
 
   private syncTurnTimerSetting(): void {
@@ -1348,50 +1352,20 @@ export class GrandTransitionMatch extends LitElement {
     ) {
       return;
     }
-    this.stopTimer();
-    this.remainingSeconds = this.turnTimerSeconds;
-    if (this.remainingSeconds !== null && this.pauseMode === 'running') {
-      this.startTimer();
-    }
+    this.turnClock.reset(
+      this.turnTimerSeconds,
+      this.pauseMode === 'running',
+    );
   }
 
   private syncPauseMode(): void {
     if (this.pauseMode !== 'running') {
-      this.stopTimer();
+      this.turnClock.pause();
       this.previewText = null;
       return;
     }
     if (this.snapshot?.roundReview) return;
-    if (
-      this.remainingSeconds !== null &&
-      this.remainingSeconds > 0 &&
-      this.timerId === undefined
-    ) {
-      this.startTimer();
-    }
-  }
-
-  private startTimer(): void {
-    this.timerId = window.setInterval(() => this.tickTimer(), 1_000);
-  }
-
-  private tickTimer(): void {
-    if (this.remainingSeconds === null || this.remainingSeconds <= 0) return;
-    this.remainingSeconds -= 1;
-    if (this.remainingSeconds === 0) {
-      this.stopTimer();
-      this.dispatchMatchCommand('expire-turn', {});
-      return;
-    }
-    if (this.remainingSeconds <= timerTickSeconds) this.requestTimerTick();
-    this.requestUpdate();
-  }
-
-  private stopTimer(): void {
-    if (this.timerId !== undefined) {
-      window.clearInterval(this.timerId);
-      this.timerId = undefined;
-    }
+    this.turnClock.resume();
   }
 
   private readonly pause = (): void => {

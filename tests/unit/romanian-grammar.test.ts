@@ -16,6 +16,7 @@ import {
 import {
   prepareRomanianGrammarPhrase,
   romanianGrammarAdapter,
+  romanianRenderedForms,
 } from '../../src/engine/grammar/romanian-grammar-adapter';
 import {
   romanianNestedObjectAnchorByFamily,
@@ -627,6 +628,26 @@ describe('Romanian grammar binding', () => {
     for (const card of sampleContent.phrases) {
       if (card.role === 'verb' || card.role === 'predicate') {
         expect(() => romanianGrammar.prepare(card, romanianGameLocale)).not.toThrow();
+      }
+    }
+  });
+
+  test('owns every rendered form emitted by representative Romanian clauses', () => {
+    for (const ids of [
+      ['common-noun-028', 'common-verb-001-past', 'common-noun-036'],
+      ['common-noun-001', 'common-verb-028-past', 'common-noun-028'],
+      ['common-noun-001', 'common-verb-053-present', 'common-noun-033'],
+      compoundSubjectClause,
+    ] as const) {
+      const result = analyzeWith(romanianGrammar, romanianGameLocale, ids, {
+        end: true,
+      });
+      expect(result.accepted).toBe(true);
+      if (!result.accepted) continue;
+      for (const rendered of result.analysis.renderedPhrases) {
+        expect(
+          romanianRenderedForms(phrase(rendered.phraseId), romanianGameLocale),
+        ).toContain(rendered.text);
       }
     }
   });

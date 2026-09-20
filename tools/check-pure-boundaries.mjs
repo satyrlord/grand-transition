@@ -355,6 +355,18 @@ function inspectSource(
     }
     if (
       specifier.startsWith('.') &&
+      isGeneratedLocalizationFile(
+        path.resolve(path.dirname(filePath), specifier),
+        rootDirectory,
+      )
+    ) {
+      failures.push(
+        `${relativePath}: forbidden generated interface localization dependency "${specifier}"`,
+      );
+      continue;
+    }
+    if (
+      specifier.startsWith('.') &&
       !dependencyIsAllowed(specifier, filePath, rootDirectory, policy)
     ) {
       failures.push(
@@ -400,10 +412,9 @@ function pathIsInside(candidatePath, directoryPath) {
   );
 }
 
-// `${policy.root}/generated/` holds lit-localize output: Lit message templates
-// for the interface catalog, which are generated rather than hand-written and
-// are validated by `npm run localization:validate` instead of by the
-// pure-module policy.
+// This directory holds lit-localize output for the interface catalog. Generated
+// files are validated by `npm run localization:validate` and are not scanned as
+// pure-module sources. Checked pure sources still cannot depend on them.
 const generatedLocalizationDirectories = [
   path.join('src', 'localization', 'generated'),
 ];

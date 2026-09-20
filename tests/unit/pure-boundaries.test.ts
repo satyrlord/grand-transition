@@ -49,6 +49,104 @@ describe('pure-module boundaries', () => {
     }
   });
 
+  test.each([
+    [
+      path.join('src', 'engine', 'invalid.ts'),
+      "import { templates } from '../localization/generated/ro-RO';\nexport { templates };\n",
+    ],
+    [
+      path.join('src', 'ai', 'invalid.ts'),
+      "export { templates } from '../localization/generated/ro-RO';\n",
+    ],
+    [
+      path.join('src', 'content', 'invalid.ts'),
+      "import { templates } from '../localization/generated/ro-RO';\nexport { templates };\n",
+    ],
+    [
+      path.join('src', 'localization', 'invalid.ts'),
+      "export { templates } from './generated/ro-RO';\n",
+    ],
+    [
+      path.join('src', 'persistence', 'codecs', 'invalid.ts'),
+      "import { templates } from '../../localization/generated/ro-RO';\nexport { templates };\n",
+    ],
+  ])(
+    'rejects a pure dependency on generated interface localization: %s',
+    async (relativePath, source) => {
+      const fixtureRoot = await mkdtemp(
+        path.join(os.tmpdir(), 'grand-transition-boundaries-'),
+      );
+      try {
+        const sourcePath = path.join(fixtureRoot, relativePath);
+        const generatedPath = path.join(
+          fixtureRoot,
+          'src',
+          'localization',
+          'generated',
+          'ro-RO.ts',
+        );
+        await mkdir(path.dirname(sourcePath), { recursive: true });
+        await mkdir(path.dirname(generatedPath), { recursive: true });
+        await writeFile(sourcePath, source, 'utf8');
+        await writeFile(generatedPath, 'export const templates = {};\n', 'utf8');
+
+        let failure: CommandError | undefined;
+        try {
+          await execFileAsync(process.execPath, [
+            checkerPath,
+            '--root',
+            fixtureRoot,
+          ]);
+        } catch (error) {
+          failure = error as CommandError;
+        }
+
+        expect(failure).toBeDefined();
+        expect(`${failure?.stdout ?? ''}${failure?.stderr ?? ''}`).toContain(
+          'forbidden generated interface localization dependency',
+        );
+      } finally {
+        await rm(fixtureRoot, { force: true, recursive: true });
+      }
+    },
+  );
+
+  test('allows application code to import generated interface localization', async () => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
+    );
+    try {
+      const files = new Map([
+        [
+          path.join('src', 'app', 'interface-localization.ts'),
+          "export { templates } from '../localization/generated/ro-RO';\n",
+        ],
+        [
+          path.join('src', 'localization', 'generated', 'ro-RO.ts'),
+          "import { html } from 'lit';\nexport const templates = { html };\n",
+        ],
+        [path.join('src', 'engine', 'valid.ts'), 'export const value = 1;\n'],
+      ]);
+      for (const [relativePath, source] of files) {
+        const filePath = path.join(fixtureRoot, relativePath);
+        await mkdir(path.dirname(filePath), { recursive: true });
+        await writeFile(filePath, source, 'utf8');
+      }
+
+      const result = await execFileAsync(process.execPath, [
+        checkerPath,
+        '--root',
+        fixtureRoot,
+      ]);
+
+      expect(result.stdout).toContain(
+        'Pure-module boundary check passed: checked 1 file(s).',
+      );
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  });
+
   test('runs the boundary check during validation', async () => {
     const packageJson = JSON.parse(await readFile(packagePath, 'utf8')) as {
       scripts: Record<string, string>;
