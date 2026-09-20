@@ -2027,7 +2027,7 @@
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='noun']
     > button.phrase-card {
-    --phrase-role-color: rgb(230 200 60);
+    --phrase-role-color: rgb(72 172 104);
   }
 
   .match-screen[data-phrase-color-coding='on']
@@ -2063,7 +2063,7 @@
   .match-screen[data-phrase-color-coding='on']
     .phrase-slot[data-role='conjunction']
     > button.phrase-card {
-    --phrase-role-color: rgb(72 172 104);
+    --phrase-role-color: rgb(139 90 177);
   }
 
   button.phrase-card:focus-visible,

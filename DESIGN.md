@@ -22,13 +22,13 @@ colors:
   timer-alert: '#ff5f58'
   waiting-gray: '#8b8b8b'
   reaction-apricot: '#ffb07a'
-  phrase-noun: 'rgb(230 200 60)'
+  phrase-noun: 'rgb(72 172 104)'
   phrase-verb: 'rgb(235 145 48)'
   phrase-predicate: 'rgb(201 55 48)'
   phrase-modifier: 'rgb(53 124 199)'
   phrase-ending: 'rgb(139 90 177)'
   phrase-continuation: 'rgb(154 161 170)'
-  phrase-conjunction: 'rgb(72 172 104)'
+  phrase-conjunction: 'rgb(139 90 177)'
 typography:
   feature-display:
     fontFamily: 'var(--font-feature, "Poiret One"), Arial, sans-serif'
@@ -392,8 +392,8 @@ reaction, focus, timer, and phrase-role colors only for their named states.
   headings, active borders, signal rails, and channel plaques.
 - **Bright Television Blue:** Selected state and precise interactive emphasis
   for blue-owned controls.
-- **Phrase role colors:** Yellow noun, orange verb, red predicate, blue
-  modifier, purple ending, gray continuation, and green conjunction. They blend
+- **Phrase role colors:** Green noun, orange verb, red predicate, blue
+  modifier, purple ending, gray continuation, and purple conjunction. They blend
   into phrase text only when Phrase color coding is on.
 
 ### Neutral
