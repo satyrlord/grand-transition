@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -103,6 +103,75 @@ async function assertMasterSet(characterRoot, masterNames) {
   }
 }
 
+export function selectedCharacterAssetIds(only, masterNames = CHARACTER_MASTER_NAMES) {
+  if (only === undefined) return null;
+  const ids = new Set(masterNames.map(assetId));
+  if (!Array.isArray(only) || only.length === 0 || only.some((id) => !ids.has(id)) ||
+    new Set(only).size !== only.length) {
+    throw new Error('Selected character IDs must be a non-empty list of distinct known asset IDs.');
+  }
+  return new Set(only);
+}
+
+async function verifiedCachedAssets(characterRoot, masters, selected, layout) {
+  const manifest = JSON.parse(await readFile(path.join(characterRoot, 'character-manifest.json'), 'utf8'));
+  const expectedIds = masters.map(({ id }) => id);
+  if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets) ||
+    manifest.assets.length !== expectedIds.length ||
+    new Set(manifest.assets.map((asset) => asset?.id)).size !== expectedIds.length ||
+    manifest.assets.some((asset) => !expectedIds.includes(asset?.id))) {
+    throw new Error('Selective character builds require a complete existing character manifest.');
+  }
+  const cache = new Map();
+  for (const master of masters) {
+    if (selected.has(master.id)) continue;
+    const asset = manifest.assets.find((entry) => entry.id === master.id);
+    if (asset.ownerType !== 'character' || asset.ownerId !== ownerId(master.id) ||
+      asset.skinId !== skinId(master.id) || asset.facing !== layout[master.id].facing ||
+      asset.stateId !== 'selection' || asset.poseId !== 'selection' || asset.expressionId !== 'selection' ||
+      asset.source?.path !== master.fileName || asset.source.width !== 2048 ||
+      asset.source.height !== 2048 || asset.source.format !== 'png' ||
+      asset.source.bytes !== master.input.length || asset.source.sha256 !== sha256(master.input)) {
+      throw new Error(`Cached character source "${master.id}" changed or has invalid metadata; select it for rebuilding.`);
+    }
+    const expected = CHARACTER_VARIANT_SIZES.flatMap((width) =>
+      CHARACTER_VARIANT_FORMATS.map((format) => ({
+        path: `variants/${master.id}-${width}x${width}.${format}`,
+        width,
+        height: width,
+        format,
+      })));
+    if (!Array.isArray(asset.variants) || asset.variants.length !== expected.length ||
+      new Set(asset.variants.map((variant) => variant?.path)).size !== expected.length) {
+      throw new Error(`Cached character "${master.id}" has an invalid variant inventory.`);
+    }
+    for (const requirement of expected) {
+      const variant = asset.variants.find((entry) => entry?.path === requirement.path);
+      if (!variant || variant.width !== requirement.width || variant.height !== requirement.height ||
+        variant.format !== requirement.format || !Number.isInteger(variant.bytes) ||
+        variant.bytes <= 0 || variant.bytes > CHARACTER_BYTE_BUDGETS[requirement.format] ||
+        !/^[a-f0-9]{64}$/u.test(variant.sha256)) {
+        throw new Error(`Cached character variant "${requirement.path}" has invalid metadata.`);
+      }
+      const output = await readFile(path.join(characterRoot, requirement.path));
+      let metadata;
+      try {
+        metadata = await sharp(output).metadata();
+      } catch (error) {
+        throw new Error(`Cached character variant "${requirement.path}" failed byte, hash, dimension, or format validation.`, { cause: error });
+      }
+      if (output.length !== variant.bytes || sha256(output) !== variant.sha256 ||
+        metadata.width !== requirement.width || metadata.height !== requirement.height ||
+        metadata.format !== (requirement.format === 'avif' ? 'heif' : 'webp') ||
+        (requirement.format === 'avif' && metadata.compression !== 'av1')) {
+        throw new Error(`Cached character variant "${requirement.path}" failed byte, hash, dimension, or format validation.`);
+      }
+    }
+    cache.set(master.id, asset);
+  }
+  return cache;
+}
+
 export async function mapWithConcurrency(values, concurrency, work) {
   const results = Array.from({ length: values.length });
   let nextIndex = 0;
@@ -125,7 +194,9 @@ export async function mapWithConcurrency(values, concurrency, work) {
 export async function buildCharacterAssets({
   characterRoot = path.resolve('src', 'assets', 'characters'),
   masterNames = CHARACTER_MASTER_NAMES,
+  only,
 } = {}) {
+  const selected = selectedCharacterAssetIds(only, masterNames);
   const resolvedRoot = path.resolve(characterRoot);
   await assertMasterSet(resolvedRoot, masterNames);
   const layout = await readCharacterLayout(resolvedRoot, masterNames);
@@ -135,6 +206,7 @@ export async function buildCharacterAssets({
     if (layout[id].sourceSha256 !== sha256(input)) throw new Error(`${id}: source changed after the facing review.`);
     return { fileName, id, input };
   }));
+  const cached = selected ? await verifiedCachedAssets(resolvedRoot, masters, selected, layout) : new Map();
   const temporaryRoot = await mkdtemp(
     path.join(resolvedRoot, '.character-assets-build-'),
   );
@@ -145,6 +217,12 @@ export async function buildCharacterAssets({
       masters,
       3,
       async ({ fileName, id, input }) => {
+      const cachedAsset = cached.get(id);
+      if (cachedAsset) {
+        await Promise.all(cachedAsset.variants.map((variant) =>
+          copyFile(path.join(resolvedRoot, variant.path), path.join(temporaryRoot, variant.path))));
+        return cachedAsset;
+      }
       const variants = await Promise.all(
         CHARACTER_VARIANT_SIZES.flatMap((width) =>
           CHARACTER_VARIANT_FORMATS.map(async (format) => {
@@ -205,8 +283,14 @@ export async function buildCharacterAssets({
 
 const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
-  const characterRoot = process.argv[2] ? path.resolve(process.argv[2]) : undefined;
-  buildCharacterAssets({ characterRoot })
+  const args = process.argv.slice(2);
+  const characterRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()) : undefined;
+  const validOptions = args.length === 0 || (args.length === 2 && args[0] === '--only');
+  const only = args.length === 0 ? undefined : args[1]?.split(',');
+  Promise.resolve().then(() => {
+    if (!validOptions) throw new Error('Use build-character-assets.mjs [character-root] [--only id1,id2].');
+    return buildCharacterAssets({ characterRoot, only });
+  })
     .then((manifest) => process.stdout.write(`Built ${manifest.assets.length} character masters and ${manifest.assets.length * CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length} variants.\n`))
     .catch((error) => {
       process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
