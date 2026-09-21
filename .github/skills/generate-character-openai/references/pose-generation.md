@@ -111,7 +111,10 @@ Record one complete-skin review.
 Skip this section in selection mode.
 Stage from the current shipping character tree.
 Replace only files in the declared work unit.
-Use repository builders for variants and manifests.
+Run `node tools/build-character-package.mjs <staged-character-root> --skin <skin-id>`.
+Use this targeted builder for one regenerated skin.
+Do not run the full-tree builders for one work unit.
+The targeted builder validates all reused manifest entries and variants.
 Do not edit generated variants or manifests by hand.
 
 Validate the staged package before installation.

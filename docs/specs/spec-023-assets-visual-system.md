@@ -854,6 +854,13 @@ convention-added portrait does not enter this fixed baseline automatically. It
 can use its source PNG until Milestone 028 promotes it through the final asset
 pipeline.
 
+`tools/build-character-package.mjs` owns a targeted one-skin rebuild in a
+staged character tree. It rebuilds only the selected portrait's ten variants
+and that skin's thirty state variants. It reuses all other variant bytes only
+after source, manifest, hash, format, dimension, and byte-budget validation.
+It rebuilds both global manifests, runs the complete character validators, and
+refuses direct use against the shipping character root.
+
 Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
 portrait frame through `tools/brand-assets.mjs`. Their separate
 `src/assets/brand/brand-manifest.json` records source hashes, ownership, license,

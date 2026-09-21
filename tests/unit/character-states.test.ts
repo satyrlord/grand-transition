@@ -8,7 +8,7 @@ import shippedSelection from '../../src/assets/characters/character-manifest.jso
 // @ts-expect-error The asset tools are native ECMAScript modules.
 import { measurePackageBytes, validateStateManifest } from '../../tools/validate-character-states.mjs';
 // @ts-expect-error The asset tools are native ECMAScript modules.
-import { buildCharacterStatePackage, buildCharacterStates, prepareCharacterStatePackage, stateAssetId, statePackages } from '../../tools/build-character-states.mjs';
+import { buildCharacterStatePackage, buildCharacterStates, prepareCharacterStatePackage, selectedStatePackageIds, stateAssetId, statePackages } from '../../tools/build-character-states.mjs';
 
 type SelectionEntry = Readonly<{ id: string; ownerId: string; skinId: string }>;
 
@@ -52,6 +52,16 @@ function fixture() {
 }
 
 describe('complete character state contract', () => {
+  test('selects distinct known state packages for targeted builds', () => {
+    const packages = statePackages(fixture().selection) as SelectionEntry[];
+    const first = packages[0]!.id;
+    expect(selectedStatePackageIds(undefined, packages)).toBeNull();
+    expect([...selectedStatePackageIds([first], packages)!]).toEqual([first]);
+    expect(() => selectedStatePackageIds([], packages)).toThrow(/non-empty/u);
+    expect(() => selectedStatePackageIds([first, first], packages)).toThrow(/distinct/u);
+    expect(() => selectedStatePackageIds(['missing'], packages)).toThrow(/known/u);
+  });
+
   test('derives 28 state packages from all 19 characters and exactly two fallbacks', () => {
     const { manifest, selection } = fixture();
     expect(contract.characterIds).toHaveLength(19);

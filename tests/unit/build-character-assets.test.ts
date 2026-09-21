@@ -9,11 +9,13 @@ import * as characterBuilder from '../../tools/build-character-assets.mjs';
 
 type BuiltCharacterManifest = {
   assets: Array<{
+    id: string;
     ownerId: string;
     skinId: string;
     stateId: string;
     facing: 'left' | 'right';
-    variants: Array<{ sha256: string }>;
+    source: { sha256: string };
+    variants: Array<{ path: string; sha256: string }>;
   }>;
 };
 
@@ -22,6 +24,7 @@ const { buildCharacterAssets, mapWithConcurrency } = characterBuilder as {
   buildCharacterAssets: (options: {
     characterRoot: string;
     masterNames: readonly string[];
+    only?: string[];
   }) => Promise<BuiltCharacterManifest>;
 };
 
@@ -141,5 +144,52 @@ describe('character asset builder', () => {
       });
     },
     180_000,
+  );
+
+  test(
+    'rebuilds only selected character variants and rejects a stale reused cache',
+    async () => {
+      const masterNames = ['alpha.png', 'beta--alternate.png'];
+      const baseline = await buildCharacterAssets({ characterRoot: fixture, masterNames });
+      const beta = baseline.assets.find(({ id }) => id === 'beta--alternate')!;
+      const betaVariant = path.join(fixture, beta.variants[0]!.path);
+      const betaBytes = await readFile(betaVariant);
+
+      await writeMaster('alpha.png', '#335577');
+      const layoutPath = path.join(fixture, 'portrait-layout.json');
+      const layout = JSON.parse(await readFile(layoutPath, 'utf8')) as {
+        portraits: Record<string, { facing: string; sourceSha256: string }>;
+      };
+      layout.portraits.alpha!.sourceSha256 = createHash('sha256')
+        .update(await readFile(path.join(fixture, 'alpha.png')))
+        .digest('hex');
+      await writeFile(layoutPath, JSON.stringify(layout));
+      await writeFile(path.join(fixture, 'variants/alpha-128x128.avif'), 'replace selected cache');
+
+      const selected = await buildCharacterAssets({
+        characterRoot: fixture,
+        masterNames,
+        only: ['alpha'],
+      });
+      expect(await readFile(betaVariant)).toEqual(betaBytes);
+      expect(await readFile(path.join(fixture, 'variants/alpha-128x128.avif'), 'utf8'))
+        .not.toBe('replace selected cache');
+      expect(selected.assets.find(({ id }) => id === 'alpha')!.source.sha256)
+        .toBe(layout.portraits.alpha!.sourceSha256);
+
+      await writeFile(betaVariant, 'stale reused cache');
+      await writeMaster('alpha.png', '#446688');
+      layout.portraits.alpha!.sourceSha256 = createHash('sha256')
+        .update(await readFile(path.join(fixture, 'alpha.png')))
+        .digest('hex');
+      await writeFile(layoutPath, JSON.stringify(layout));
+      await expect(buildCharacterAssets({
+        characterRoot: fixture,
+        masterNames,
+        only: ['alpha'],
+      })).rejects.toThrow(/Cached character variant/u);
+      await writeFile(betaVariant, betaBytes);
+    },
+    240_000,
   );
 });
