@@ -10,6 +10,28 @@ import {
 import { sampleContent } from '../../src/game-content';
 
 describe('scene asset resolver', () => {
+  test('ships regenerated studio layers from native 4K Flare sources without upscaling', async () => {
+    const root = path.resolve('src/assets/scenes');
+    const expected = [
+      ['modern-debate-studio', '6ec7559a6d9be4418666ed4e7367f4f3d7206af4ceb89f709834d9822c830c20'],
+      ['modern-debate-studio-desks', 'bc6e11b259d99fe763e362c1c956fc3cb79fe5a6583a68892155822e7d599901'],
+      ['transition-era-television-studio-desks', '687e4920f87819df31e2203ee1f14afef27ddb8849dd34187364fffeff9f081a'],
+    ] as const;
+    const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
+
+    for (const [id, expectedHash] of expected) {
+      const bytes = await readFile(path.join(root, `${id}.png`));
+      const hash = createHash('sha256').update(bytes).digest('hex');
+      const scene = manifest.assets.find((asset: { id: string }) => asset.id === id);
+      expect(hash).toBe(expectedHash);
+      expect(scene.source).toMatchObject({ sha256: hash, width: 3840, height: 2160 });
+      expect(scene.sourceDescription).toContain('gpt-image-2.5-flare');
+      expect(scene.sourceDescription).toContain('native 3840x2160');
+      expect(scene.sourceDescription).toContain('No upscaling');
+      expect(scene.sourceDescription).not.toContain('upscaled from');
+    }
+  });
+
   test('ships the selected native 4K OpenAI background instead of the previous upscale', async () => {
     const root = path.resolve('src/assets/scenes');
     const bytes = await readFile(path.join(root, 'transition-era-television-studio.png'));

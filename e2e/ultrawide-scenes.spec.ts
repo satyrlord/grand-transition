@@ -30,7 +30,7 @@ for (const scene of [
       const geometry = await page.evaluate(async () => {
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         const images = [...document.querySelectorAll<HTMLImageElement>(
-          '.broadcast-stage-art, .broadcast-stage-props, .broadcast-stage-foreground',
+          '.broadcast-stage-art, .broadcast-stage-foreground',
         )];
         await Promise.all(images.map((image) => image.decode()));
         const back = images[0]!.getBoundingClientRect();

@@ -82,6 +82,20 @@ for (const scene of scenes) {
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene);
+    await expect(page.locator('.broadcast-stage-props')).toHaveCount(0);
+    const foreground = page.locator('.broadcast-stage-foreground');
+    if (scene === 'civic-cypher-boxing-ring') {
+      await expect(foreground).toHaveCount(0);
+    } else {
+      await expect(foreground).toHaveCount(1);
+      expect(await foreground.evaluate((image) => ({
+        clipPath: getComputedStyle(image).clipPath,
+        abovePortraits: Number(getComputedStyle(image).zIndex) > Number(getComputedStyle(
+          document.querySelector('.character-frame')!,
+        ).zIndex),
+        pointerInert: getComputedStyle(image).pointerEvents === 'none',
+      }))).toEqual({ clipPath: 'none', abovePortraits: true, pointerInert: true });
+    }
 
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);

@@ -75,7 +75,6 @@
 
   .broadcast-stage-art,
   .broadcast-stage-ambience,
-  .broadcast-stage-props,
   .broadcast-stage-foreground {
     position: absolute;
     top: auto;
@@ -202,18 +201,8 @@
     }
   }
 
-  .broadcast-stage-props {
-    z-index: 0;
-    clip-path: inset(0 0 38%);
-  }
-
   .broadcast-stage-foreground {
     z-index: 3;
-  }
-
-  .broadcast-stage-foreground[data-scene-asset='transition-era-television-studio-desks'],
-  .broadcast-stage-foreground[data-scene-asset='modern-debate-studio-desks'] {
-    clip-path: inset(62% 0 0);
   }
 
   /* Fit the protected four-by-three core to narrow landscape widths. */
@@ -224,7 +213,6 @@
 
     .broadcast-stage-art,
     .broadcast-stage-ambience,
-    .broadcast-stage-props,
     .broadcast-stage-foreground {
       left: calc(
         -100% * var(--scene-crop-core-x) / var(--scene-crop-core-width)
@@ -244,7 +232,6 @@
 
     .broadcast-stage-art,
     .broadcast-stage-ambience,
-    .broadcast-stage-props,
     .broadcast-stage-foreground {
       bottom: 50%;
       width: 100%;
@@ -2484,7 +2471,6 @@
     }
 
     .broadcast-stage-art,
-    .broadcast-stage-props,
     .broadcast-stage-foreground {
       opacity: 0.18;
     }
