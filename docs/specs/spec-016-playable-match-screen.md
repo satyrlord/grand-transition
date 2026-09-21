@@ -72,8 +72,9 @@ be visible beside either desk.
 
 Keep desk mass inside the lower third of the
 stage so the candidates remain dominant. Default characters and scene figures
-use normal adult height and body proportions. Use reduced stature only when an
-approved character contract explicitly requires it.
+remain recognizably adult with coherent anatomy. Playable portraits use the
+Milestone 023 funny big-head caricature proportions. Do not use child, chibi,
+or naturalistic prestige-portrait proportions.
 
 The match uses each player's setup skin ID only to select the portrait asset.
 Skin choice does not change character identity, phrases, weaknesses, grammar,

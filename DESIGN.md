@@ -203,11 +203,12 @@ shown in this world is human. A fully mechanical character is visibly a robot.
 ### Image language
 
 All generated representational raster art uses one flat cel-shaded editorial-
-cartoon language. Every character skin and state uses the detailed rendering
-standard in Specification 023: controlled dark contours, finer expressive
-interior lines, grouped hair detail, and broad cel shading with restrained
-local tonal variation. Use the original Local Baron, Thunder Tribune, and
-Velvet Mogul portraits for visual calibration. Fixed moderators, scene
+cartoon language. Every character skin and state uses the funny big-head
+rendering standard in Specification 023: an adult full-body silhouette with a
+visibly oversized head or mechanical face, an immediately comic expression,
+posture, or prop, controlled dark contours, large clean shapes, and broad
+hard-edged cel shading. Use `county-baron--municipal-patron` as the sole visual
+north star. Fixed moderators, scene
 architecture, furniture, fixtures, and props use the same construction. Exaggeration is
 deliberate. Materials read through silhouette, color, contour, and limited flat
 pattern instead of realistic surface detail.
@@ -367,9 +368,11 @@ Animal terms in names or titles are metaphorical political labels only. Do not
 use animal or hybrid anatomy in portraits, tokens, poses, states, scene art, or
 future roster content. Do not give a robot human anatomy.
 
-**The Adult Scale Rule.** Default characters and scene figures use normal adult
-height and body proportions. Use reduced stature only when an approved
-character contract explicitly requires it.
+**The Adult Caricature Rule.** Default characters and scene figures remain
+recognizably adult and use coherent human or mechanical anatomy. Playable
+characters use deliberately comic proportions with a visibly oversized head or
+mechanical face. Do not use a child, chibi, or naturalistic prestige-portrait
+proportion system.
 
 ## Colors
 

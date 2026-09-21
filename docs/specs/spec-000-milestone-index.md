@@ -39,9 +39,10 @@ complete an approved specification.
   architecture element, furniture item, fixture, and prop. Painted comic-book,
   painterly semi-realistic, realistic concept-art, photographic, and
   three-dimensional-render styles are prohibited.
-  All character skins and states use the single detailed rendering standard in
-  Milestone 023's character art direction. Do not simplify one skin into a
-  different drawing style.
+  All character skins and states use Milestone 023's funny big-head cartoon
+  standard. The `county-baron--municipal-patron` selection portrait is the sole
+  visual north star. Do not turn a skin into a serious or realistic prestige
+  portrait, even when it uses outlines and cel shading.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
   metadata. Public artifacts do not declare a real person as a visual or

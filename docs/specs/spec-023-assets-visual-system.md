@@ -50,11 +50,13 @@ The remaining roster uses its existing selection portrait until Milestone 028.
 Local Baron adds the selection-only `municipal-patron` skin under Milestone
 028. Its master is `county-baron--municipal-patron.png`, generated through the
 OpenAI API with `gpt-image-2.5-sunburst` at native 2048 by 2048 with native alpha
-and an authorized conforming portrait as a style reference. Its replacement
-passes the shared detailed character rendering standard. The owner-authorized
-background repair clears only alpha-1 pixels farther than four pixels from
-near-opaque content. Preserve every RGB value, all interior alpha, and all
-contour alpha. Keep the native border and contour validation rules unchanged.
+and an authorized conforming portrait as a style reference. Its replacement is
+the sole north star for the shared funny big-head character standard. The
+owner-authorized background repair clears only alpha-1 pixels farther than four
+pixels from near-opaque content. A later owner-authorized deterministic
+white-balance correction reduces the visible warm cast without regeneration,
+resizing, geometry changes, or alpha changes. Keep the native border and
+contour validation rules unchanged.
 For native character variants, clear only resize-generated outer-border alpha
 at or below 8. Reject stronger border coverage instead of clipping the figure.
 Encode 128- and 256-pixel native AVIF variants losslessly so compression cannot
@@ -291,10 +293,11 @@ Opponents face each other
 at the sides. Status frames the top, and speech spans the confrontation.
 Sentence construction owns the center.
 
-This direction supports immediate video-game readability. It reduces reliance
-on realistic facial and material detail that can expose generated artifacts or
-create an accidental close likeness. It does not replace originality, license,
-or provenance requirements.
+This direction supports immediate video-game readability and the deliberately
+silly tone of a browser game. It reduces reliance on realistic facial and
+material detail that can expose generated artifacts or create an accidental
+close likeness. It does not replace originality, license, or provenance
+requirements.
 
 Secondary actions use the perimeter. Do not put the scene above a separate
 three-column dashboard.
@@ -361,7 +364,7 @@ it from the approved direction.
 ### Character art direction
 
 The Algorithmic Prophet wears a small plain gray wizard hat. Keep the face,
-expression, gesture, clothing, and detailed character style consistent. This
+expression, gesture, clothing, and funny big-head character style consistent. This
 targeted, owner-requested headwear edit can use its existing portrait as the
 edit target. It is an exception to the baseline clean-room replacement rule.
 The shared selection master supplies roster, setup, and match portraits; rebuild
@@ -370,20 +373,30 @@ The master uses native OpenAI API transparency with `gpt-image-2.5-sunburst`.
 Its owner-authorized background cleanup clears only alpha-1 pixels farther than
 four pixels from near-opaque content. Preserve all RGB values and contour alpha.
 
-All default skins, alternate skins, and their state drawings use one detailed
-cel-shaded editorial-cartoon style. Use the original `county-baron`,
-`thunder-tribune`, and `velvet-mogul` selection portraits as the visual
-calibration set. Compare rendering at the same displayed figure height.
-Identity, species, age, build, clothing, pose, and expression can vary. Rendering
-technique cannot vary by skin.
+All default skins, alternate skins, and their state drawings use one funny
+big-head cel-shaded editorial-cartoon style. The
+`county-baron--municipal-patron` selection portrait is the sole visual north
+star for character proportions, comic tone, shape language, contour hierarchy,
+and cel shading. Compare rendering at the same displayed figure height. The
+north star does not waive alpha, provenance, color, anatomy, or other technical
+requirements. Identity, species, age, build, clothing, pose, and expression can
+vary. Rendering technique, comic tone, and exaggeration level cannot vary by
+skin.
 
-Use controlled dark silhouette contours with finer expressive interior lines.
+Every human portrait keeps a recognizably adult full-body silhouette and
+coherent anatomy while using a visibly oversized head. Every mechanical skin
+uses an equivalently oversized expressive face or display. The character must
+read as funny before the nameplate is visible through its face, posture,
+gesture, prop logic, or their combination. A serious prestige portrait,
+naturalistic head-to-body ratio, merely handsome or glamorous illustration, or
+straight realistic likeness fails even when it has outlines and cel shading.
+
+Use controlled dark silhouette contours with clear expressive interior lines.
 Retain readable eyelids, brows, nose and mouth construction, hand articulation,
-grouped hair detail, and purposeful clothing folds. Use broad cel-shaded value
-regions with restrained local tonal variation. For characters, the shared
-flat-color rules mean clear dominant shapes and value boundaries, not exact
-color quantization or the removal of all surface variation. This paragraph
-replaces that stricter interpretation for every skin and state drawing.
+grouped hair detail, and purposeful clothing folds. Keep these details
+subordinate to large clean shapes and broad hard-edged cel-shaded value regions.
+Do not use fine portrait modeling, realistic surface rendering, or tailoring
+detail to move a character toward prestige illustration.
 
 Reject heavy uniform marker outlines, minimalist vector or cut-paper rendering,
 featureless hair blocks, and simplified sticker-like figures. Also reject
@@ -395,11 +408,12 @@ Audit every selection portrait and available state drawing against this same
 standard. Regenerate only nonconforming drawings. Preserve conforming art,
 stable identifiers, character identity, pose purpose, and gameplay data.
 This targeted consistency repair supersedes the atomic baseline-regeneration
-rule above. A replacement must pass a comparison with the calibration set and
-its own skin's retained drawings before import. Transparency acceptance and
+rule above. A replacement must pass a comparison with the sole north star and
+its own newly accepted selection before import. Transparency acceptance and
 style conformance are separate checks. Agents can perform the image comparison
-and retain its observations. No skin has an individual style exception or
-requires a separate human sign-off.
+and retain its observations. No skin has an individual style exception. The
+product owner performs the required manual in-game archetype acceptance after
+agent integration and validation.
 
 Every playable character must communicate one distinct fictional political,
 media, civic, or bureaucratic archetype before the nameplate is visible. This
@@ -409,10 +423,28 @@ portrait.
 
 Character exaggeration must be intentional and stable. Each private study names
 the features that become larger, smaller, sharper, rounder, longer, shorter, or
-more angular. Do not enlarge all features equally. Do not preserve realistic
-portrait proportions by default. Alternate skins preserve each approved
-identity's proportions while applying the same rendering technique, contour
-hierarchy, shading density, texture, and shape rules as the default skin.
+more angular. The visibly oversized head or mechanical face is mandatory, but
+do not enlarge every facial feature equally. Alternate skins apply the same
+comic proportion system, rendering technique, contour hierarchy, shading
+density, texture, and shape rules as the default skin.
+
+Regenerate a complete skin package when any one of these conditions holds:
+
+- The selection or a state is too realistic, is not visibly funny, or lacks the
+  mandatory oversized head or mechanical face.
+- A shipping master was enlarged from an undersized generation instead of
+  being generated directly at the required OpenAI Flare or Sunburst API size.
+- A selection or state has a visible global yellow, amber, sepia, mustard,
+  beige, brown, or comparable warm wash. Passing the numeric color guard does
+  not override a visible north-star comparison failure.
+
+Replacing a selection requires replacing all five state masters for that skin.
+Do not use old realistic or differently proportioned state art with a new
+selection. Review and integrate only one playable archetype at a time. After
+agent validation and complete integration, the product owner manually tests
+and accepts that archetype in-game. Do not begin another archetype without
+express permission. Do not run `quality:quick` between archetypes; run it once
+after the complete regeneration program is accepted.
 
 Define each character through one coherent set of visual decisions:
 
@@ -1196,9 +1228,10 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   Its private input record contains the reference source, license, hash, role,
   and repair-task scope. An agent comparison of the complete regenerated baseline
   confirms one shared cel-shaded cartoon language, contour system, and flat-color
-  construction. Character packages follow the detailed character rendering
-  standard and use broad cel-shaded value regions without exact value-step
-  quantization. Other representational raster packages retain two or three
+  construction. Character packages follow the funny big-head rendering
+  standard, use `county-baron--municipal-patron` as their sole visual north
+  star, and use broad hard-edged cel-shaded value regions. Other representational
+  raster packages retain two or three
   hard-edged value levels. The review confirms consistent lighting, simplified
   materials, proportions, texture density, and exaggeration.
   Each archetype package contains its regenerated default and every baseline
@@ -1212,8 +1245,9 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   texture. Any painted comic-book, painterly
   semi-realistic, realistic concept-art, photographic, hyper-realistic,
   three-dimensional-render, or mixed-style result fails the milestone. A
-  character skin or state records the detailed character rendering standard
-  instead of exact value-step quantization. A
+  character skin or state records the funny big-head rendering standard,
+  immediate comic read, and comparison with
+  `county-baron--municipal-patron` instead of exact value-step quantization. A
   sample or selected subset does not satisfy this review.
 - **AC-023-17:** The asset color guard decodes every supported shipping raster in sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local
@@ -1288,3 +1322,15 @@ preserves RGB, contour alpha, stronger alpha, and no-op bytes. It removes only
 permitted detached alpha-1 pixels and rejects output that still fails the
 existing native thresholds. Verify with `tests/unit/openai-scene.test.ts`,
 `tests/unit/flare-api.test.ts`, and `tests/unit/native-alpha-preparation.test.ts`.
+
+**AC-023-21:** A source-size agent review compares every selectable selection
+portrait with `county-baron--municipal-patron` at equal displayed figure height.
+It records the oversized-head or mechanical-face read, immediate comic read,
+realism rejection, visible global warm-wash result, and native-size provenance.
+One failed condition marks the selection and all five state masters for package
+replacement. The private inventory records all 30 selections and the exact
+trigger for every replacement. Each replacement archetype has separate agent
+integration evidence and product-owner manual in-game acceptance before another
+archetype starts. Verify the current inventory with
+`research/character-generation/20260920-native-master-regeneration/SELECTION-AUDIT.md`
+and each completed cycle's private acceptance record.

@@ -38,6 +38,9 @@ foreground plate and one distinct music treatment.
 Any new generated interim portrait or scene follows the Milestone 023 flat
 cel-shaded editorial-cartoon direction. Interim status can reduce state count,
 variant count, and finish depth. It cannot use a different rendering style.
+Every playable portrait still uses the funny big-head character standard and
+the `county-baron--municipal-patron` visual north star. Interim status does not
+permit a realistic, humorless, or natural-proportion portrait.
 It also uses neutral sRGB white balance without a global yellow, amber, sepia,
 or other warm color wash. Local warm materials and lighting remain valid when
 the shared asset color guard can still measure neutral or cool anchors.
