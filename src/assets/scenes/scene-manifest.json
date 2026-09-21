@@ -1630,14 +1630,14 @@
       "ownerType": "scene",
       "ownerId": "modern-debate-studio",
       "layerRole": "back",
-      "sourceDescription": "User-approved original scene artwork, upscaled from 1672x941 to 3840x2160; all runtime variants derive from this master.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. A text-only composite was reference-edited to remove the standing desks and correct fictional moderator details while preserving the camera and set. The background was translated down 96 pixels without resampling, with top-edge continuation and lower-floor crop for moderator clearance. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio.png",
-        "sha256": "e6e2eee3fc7f94999e007f7ef325fade69681f79020b458bb52448e7dbe7783b",
+        "sha256": "6ec7559a6d9be4418666ed4e7367f4f3d7206af4ceb89f709834d9822c830c20",
         "width": 3840,
         "height": 2160,
-        "bytes": 5669106,
+        "bytes": 7070800,
         "format": "png"
       },
       "focalPoint": {
@@ -1718,91 +1718,91 @@
           "path": "variants/modern-debate-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 16172,
+          "bytes": 16188,
           "format": "avif",
           "quality": 70,
-          "sha256": "806880c7c95a9d4ac1bc0e9032371699f9c39af2a87782665f5824a3b637542a"
+          "sha256": "ed5cc93143acd7a32d5e5988dde9eda999049257d2c48dc94c44d374559f1b01"
         },
         {
           "path": "variants/modern-debate-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 18618,
+          "bytes": 17564,
           "format": "webp",
           "quality": 86,
-          "sha256": "79f62be2e33417591043709da99cb6a135d01deeef0cdfd70183f35568999c23"
+          "sha256": "2c14c6d6ab493d8723e5e62dd2faed7d6f9a77202ec3ff2c94126a360edc01eb"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 38599,
+          "bytes": 47545,
           "format": "avif",
           "quality": 70,
-          "sha256": "f009ba68349c9f1446a326058a84114de1c3e3fc5e9567676f7b0ea8c18940a9"
+          "sha256": "a25ba2f2c0eddeaf7b8bccb364d84311f69c12fe244bebf0bc5031fe4ba1481d"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 47998,
+          "bytes": 53846,
           "format": "webp",
           "quality": 86,
-          "sha256": "3c5693183213a940e835f956087f7698d15db44faa99051009a340a0559f61e7"
+          "sha256": "20b36149bf35870b0c873f459aa4af7cb846e30177206480756a13838092df46"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 60875,
+          "bytes": 85373,
           "format": "avif",
           "quality": 70,
-          "sha256": "e655b0e079687964b7e9ff6362b9fbea72a9acd5627c19e3866c6be0a59a8cff"
+          "sha256": "7fc4a4a600f097e71aa057adc910fe01f190f679a8ae4cad658026a7b108835e"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 79434,
+          "bytes": 105218,
           "format": "webp",
           "quality": 86,
-          "sha256": "311f99a24f140c4430e5d134b81cd2677910dec8a7d3b05cf77ab86050220dcb"
+          "sha256": "dd3d82c6813cd788439a158363aba0788cba72ed1000d05290de810972399a4a"
         },
         {
           "path": "variants/modern-debate-studio-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 84124,
+          "bytes": 125897,
           "format": "avif",
           "quality": 70,
-          "sha256": "16c8baee241c292f5df1a96a0d67fad4ed5ea0b5eefb1f4a4094c0f7676f8a1a"
+          "sha256": "65dc78c062e45658591c2b9c405cd7e6f7b2690a1eccd4d9b43459ab5d958f13"
         },
         {
           "path": "variants/modern-debate-studio-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 112920,
+          "bytes": 160918,
           "format": "webp",
           "quality": 86,
-          "sha256": "271a06fbee9489db927067e6db76aef7d3bea7e998c1dccc0d5f0e9eb0e2c5ec"
+          "sha256": "46bdebf1447ce49f21e633436dd7c7ee87dc018c49b32f278c3bdb1e9a528cae"
         },
         {
           "path": "variants/modern-debate-studio-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 142882,
+          "bytes": 220870,
           "format": "avif",
           "quality": 70,
-          "sha256": "e9e073d3538f30e04247cfdc1e40dee806b53c2f7e76fc4df7a7b077ed369c2e"
+          "sha256": "240aed5de8b1733763ef17d2b4dccd6e822fcce6215409f20b5866245babd97c"
         },
         {
           "path": "variants/modern-debate-studio-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 180466,
+          "bytes": 282828,
           "format": "webp",
           "quality": 86,
-          "sha256": "e144e5c296b3e5603603b59a18c1ae487f367f74438392ad3231e333dbbb9106"
+          "sha256": "4d56b10abe1bb05b263bec75117ea90b92f6fbb2b746fce109cd974e4850d873"
         }
       ]
     },
@@ -1811,14 +1811,14 @@
       "ownerType": "scene",
       "ownerId": "modern-debate-studio",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks reference-edited from the same OpenAI gpt-image-2.5-flare native 3840x2160 composite onto a green matte. The complete raster was translated down 161 pixels and each desk group was proportionally downsampled into codec-safe shared standing-desk coordinates. Repository green-matte conversion supplied antialiased alpha. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio-desks.png",
-        "sha256": "8fdd8e661b906f3ec00be28058300a937393825657b943c77a83282b79ca36fd",
+        "sha256": "bc6e11b259d99fe763e362c1c956fc3cb79fe5a6583a68892155822e7d599901",
         "width": 3840,
         "height": 2160,
-        "bytes": 261138,
+        "bytes": 1034426,
         "format": "png"
       },
       "focalPoint": {
@@ -1904,91 +1904,91 @@
           "path": "variants/modern-debate-studio-desks-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 2501,
+          "bytes": 4209,
           "format": "avif",
           "quality": 70,
-          "sha256": "8ecbada4a66ca23924479c53ae91a73b09a1c793771cfd4061eb1754fa7b508f"
+          "sha256": "9c3d08500363f973443737dd324583bc7c626653721ad463a6a32a376e897390"
         },
         {
           "path": "variants/modern-debate-studio-desks-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 3938,
+          "bytes": 7570,
           "format": "webp",
           "quality": 86,
-          "sha256": "d90718c762cc0ed6230090ac8f9fe2272f26d91bf4d0b16b90ca038ada1d4f4e"
+          "sha256": "c20f9e0598c63302ce4271b798334a171b2fe7d9afc9b41448d4dcbf1bc59162"
         },
         {
           "path": "variants/modern-debate-studio-desks-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 4056,
+          "bytes": 9027,
           "format": "avif",
           "quality": 70,
-          "sha256": "493ba7236d7d870e16a01dd8afb9df02e3aa7a161be69caafb0d803fb9efb6e1"
+          "sha256": "9b03529d8c9b2cfb48a43f1524bcd7476719ab2e437ab52f03d15ecbf0af52a3"
         },
         {
           "path": "variants/modern-debate-studio-desks-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 8084,
+          "bytes": 16924,
           "format": "webp",
           "quality": 86,
-          "sha256": "1c1eac2ffbb93db562422cbe306ebd431d10510fcd6e073327c35388e2d2683b"
+          "sha256": "59a44148c88e71feaa7a707e90d6123e2c3c274cd93e26637461c173b55ff732"
         },
         {
           "path": "variants/modern-debate-studio-desks-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 5976,
+          "bytes": 14872,
           "format": "avif",
           "quality": 70,
-          "sha256": "9d5ca134043d026089097633ad3d2373714d7aee2c963040f7ea1d30dafde455"
+          "sha256": "be8f7b6e6212037ffb740ddf4517745301f296c575d3c273549d8ea897de4267"
         },
         {
           "path": "variants/modern-debate-studio-desks-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 12430,
+          "bytes": 28290,
           "format": "webp",
           "quality": 86,
-          "sha256": "abf0db5222c5a3cbf9552080a03c313f01304c2ea3da7fa09ab771a95a306776"
+          "sha256": "52ddde899c082deea62fff4c1f68959272ec1f7df59550c9649204a0023d73a1"
         },
         {
           "path": "variants/modern-debate-studio-desks-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 7258,
+          "bytes": 20233,
           "format": "avif",
           "quality": 70,
-          "sha256": "f3dcf812b1a1abbbc2cc40ceae1235447a2190f5c6cb294a7a89491aaa75bf9e"
+          "sha256": "e927115d1364c606f9282ed08cd6bf6719af067dfec8f8181174aec140e3f92e"
         },
         {
           "path": "variants/modern-debate-studio-desks-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 19416,
+          "bytes": 40416,
           "format": "webp",
           "quality": 86,
-          "sha256": "7f745a1198dbad61874e0d47b9ca24e66500665b0a5f6c67572a14c0f116a0d9"
+          "sha256": "bf47b4a48aa8e3b712e2edcda747ddf09f8109665cf78aea32e06118fa84c1d7"
         },
         {
           "path": "variants/modern-debate-studio-desks-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 11225,
+          "bytes": 30174,
           "format": "avif",
           "quality": 70,
-          "sha256": "b93dea4b6c699f0ca2abc5188c9c63020f89d42ba907eee3e68f9f2e94827970"
+          "sha256": "f9ce60e7d2ea0b826a7b2fe28a5cce01523489d19f3e74d98526c23d1e4ea4f2"
         },
         {
           "path": "variants/modern-debate-studio-desks-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 31316,
+          "bytes": 58966,
           "format": "webp",
           "quality": 86,
-          "sha256": "84c1294493906a6533bc81a75b6921d5562c40798f9b19a057a7410b646a9c61"
+          "sha256": "ff2bdbfd880f0888f8b1d0e91ac3cca57601ff37aa011e1d133ab4f59430b147"
         }
       ]
     },
@@ -2178,14 +2178,14 @@
       "ownerType": "scene",
       "ownerId": "transition-era-television-studio",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks generated text-only with OpenAI gpt-image-2.5-flare on a native 3840x2160 green-matte canvas. Complete tabletop and prop groups were proportionally downsampled and fitted into codec-safe shared standing-desk coordinates; only the lower front panels were vertically extended to the canvas edge. Repository green-matte conversion supplied antialiased alpha. No upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "transition-era-television-studio-desks.png",
-        "sha256": "c8cfaa6e32c93b5b52816c386c39ff1e6923600c204c63df0f0598ef5a43f027",
+        "sha256": "687e4920f87819df31e2203ee1f14afef27ddb8849dd34187364fffeff9f081a",
         "width": 3840,
         "height": 2160,
-        "bytes": 411919,
+        "bytes": 1108441,
         "format": "png"
       },
       "focalPoint": {
@@ -2271,91 +2271,91 @@
           "path": "variants/transition-era-television-studio-desks-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 2817,
+          "bytes": 2799,
           "format": "avif",
           "quality": 70,
-          "sha256": "466a0b2286fe37063212d32d6cc4ca7390d32fae4cae92838c59a1894ed483e1"
+          "sha256": "a024ee32da56829768bbf80a145192f17eb1bc7d51b6537bf8540dcd48054a6c"
         },
         {
           "path": "variants/transition-era-television-studio-desks-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 4062,
+          "bytes": 4324,
           "format": "webp",
           "quality": 86,
-          "sha256": "b8a29c8204f11884233b7299c09b710ac48fd922d2f2ffa8dfd6bdc242c35619"
+          "sha256": "b915db281025d0c4ee6db57077b990be6f751ca3c596beb687b84af18c03c2fa"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 5179,
+          "bytes": 5380,
           "format": "avif",
           "quality": 70,
-          "sha256": "00c82273ab0f24d4f2befec549aaf8aebe263a860fde3395d75af19278f1603e"
+          "sha256": "4ddba4d8c1a191e71efb3316e08b3d5e7bd9ba524ebf06a61a465d41c554bb93"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 9480,
+          "bytes": 9528,
           "format": "webp",
           "quality": 86,
-          "sha256": "8349cf868fbb2b1b88e0933b60f4c68dda2e7eb03d6bd5b8513f7f32dada31e1"
+          "sha256": "9bad87fc87564e9733a74b039275e1ad64273933a127fd89beef102ce907e3d2"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 7436,
+          "bytes": 8398,
           "format": "avif",
           "quality": 70,
-          "sha256": "317d533a02b4549ecfd33a72869920026b628685c08025c969a3d8230dcf7dcc"
+          "sha256": "e92ababb1716d063bc30a75049125ba548a3bd42ffd9009a8a627275a69021f5"
         },
         {
           "path": "variants/transition-era-television-studio-desks-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 15178,
+          "bytes": 16432,
           "format": "webp",
           "quality": 86,
-          "sha256": "61f9a807867439100d5c4b4bf11335cad93b420567a1a3d3fccd0fb70eeb8734"
+          "sha256": "38e94ea3f1d24f29c4355ae2f855cff282925afa19ef68e65ff2c534e43428f9"
         },
         {
           "path": "variants/transition-era-television-studio-desks-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 9770,
+          "bytes": 12257,
           "format": "avif",
           "quality": 70,
-          "sha256": "8603b15d294fb3316954c5b6f5d8d2a293d12343c74b0a413c573e3012c74d02"
+          "sha256": "a4e4d5cc6a688d32adc7c0cdda4bda75225c2bb7ce69f18e654bf60b7d17b5ce"
         },
         {
           "path": "variants/transition-era-television-studio-desks-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 22982,
+          "bytes": 25606,
           "format": "webp",
           "quality": 86,
-          "sha256": "8fbc5ca840093e2cc949817f8cec3ca2422a18d3c1cfdb73b06632c2a8e583e8"
+          "sha256": "6b044aa5b7a2cb623034871e0dd423001c9b4f55b3acac2830f384017af0b144"
         },
         {
           "path": "variants/transition-era-television-studio-desks-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 15161,
+          "bytes": 18282,
           "format": "avif",
           "quality": 70,
-          "sha256": "0abe43d7953170e8e67d51ef784cf9fd5ba12eca99c987b21ae5ef9f889b3214"
+          "sha256": "c1966217f35ff6f878051c0e2aa9b4c2db13a2c84a965f002613af75dd533008"
         },
         {
           "path": "variants/transition-era-television-studio-desks-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 36924,
+          "bytes": 38454,
           "format": "webp",
           "quality": 86,
-          "sha256": "f91d1e8d48eb1e37567e0e3fc78b6144f39bdafde994057b6d1d16d5759edd8f"
+          "sha256": "856fb6e4800150d1af4c67aee21c8c8bea81857a4e45b429b1d029281e4397a6"
         }
       ]
     }

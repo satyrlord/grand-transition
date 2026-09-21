@@ -145,7 +145,6 @@
     .broadcast-stage::after { width: var(--mobile-scene-width); height: var(--mobile-scene-height); }
     .broadcast-stage-art,
     .broadcast-stage-ambience,
-    .broadcast-stage-props,
     .broadcast-stage-foreground {
       top: var(--mobile-hud-height);
       bottom: auto;

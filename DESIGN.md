@@ -549,12 +549,10 @@ through each state change.
 The interface uses controlled stage depth. The title and setup use painted
 proscenium or tonal broadcast fields. In the match, the selected studio and its
 fixed fictional moderator form the deep field. Transparent portraits occupy
-the opponent planes. Each of the two studio foreground plates is split at the 62-percent desk-top
-line. Its upper props render behind the portraits, and its lower desk fronts
-render in front. Both clipped planes use the same image and crop. This keeps
-hands and character props visible. Speech and the sentence tower occupy the
-tactical plane. The other four scenes render their complete native outlines
-in front of the portraits, without a horizontal clipping boundary.
+the opponent planes. Every foreground plate, including the two studio desk
+plates, renders once and complete in front of the portraits. Desks and their
+microphones or bottles share one coherent furniture plane without a horizontal
+clipping boundary. Speech and the sentence tower occupy the tactical plane.
 
 Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark

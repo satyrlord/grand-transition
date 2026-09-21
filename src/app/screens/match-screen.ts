@@ -386,13 +386,8 @@ export class GrandTransitionMatch extends LitElement {
               arenaReaction?.kind === 'grammar-mistake' &&
                 arenaReaction.playerId === second.playerId,
             )}
-            ${foregroundLayers.map((layer) => html`
-              ${layer.assetId === 'transition-era-television-studio-desks' ||
-                layer.assetId === 'modern-debate-studio-desks'
-                ? this.renderSceneLayer(layer, 'broadcast-stage-props')
-                : nothing}
-              ${this.renderSceneLayer(layer, 'broadcast-stage-foreground')}
-            `)}
+            ${foregroundLayers.map((layer) =>
+              this.renderSceneLayer(layer, 'broadcast-stage-foreground'))}
           </section>
 
           <section
@@ -1400,7 +1395,7 @@ export class GrandTransitionMatch extends LitElement {
 
   private renderSceneLayer(
     layer: MatchSceneLayerView,
-    imageClass: 'broadcast-stage-art' | 'broadcast-stage-props' | 'broadcast-stage-foreground',
+    imageClass: 'broadcast-stage-art' | 'broadcast-stage-foreground',
   ): TemplateResult {
     const manifestLayer = layer.kind === 'manifest' ? layer : null;
     return html`

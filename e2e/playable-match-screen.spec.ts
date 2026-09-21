@@ -345,7 +345,6 @@ test('the longest desktop match state fits and exposes every required fact', asy
     portrait: Number(
       getComputedStyle(document.querySelector('.character-portrait')!).zIndex,
     ),
-    props: Number(getComputedStyle(document.querySelector('.broadcast-stage-props')!).zIndex),
     foreground: Number(
       getComputedStyle(document.querySelector('.broadcast-stage-foreground')!)
         .zIndex,
@@ -355,22 +354,17 @@ test('the longest desktop match state fits and exposes every required fact', asy
     ),
   }));
   expect(sceneStack.background).toBeLessThan(sceneStack.portrait);
-  expect(sceneStack.props).toBeLessThan(sceneStack.portrait);
   expect(sceneStack.portrait).toBeLessThan(sceneStack.foreground);
   expect(sceneStack.foreground).toBeLessThan(sceneStack.playerHud);
-  const splitPlate = await page.evaluate(() => {
-    const props = document.querySelector<HTMLImageElement>('.broadcast-stage-props')!;
+  const completePlate = await page.evaluate(() => {
     const desks = document.querySelector<HTMLImageElement>('.broadcast-stage-foreground')!;
     return {
-      sharedResource: props.currentSrc === desks.currentSrc,
-      sameGeometry: JSON.stringify(props.getBoundingClientRect()) === JSON.stringify(desks.getBoundingClientRect()),
-      propsClip: getComputedStyle(props).clipPath,
+      propsAbsent: document.querySelector('.broadcast-stage-props') === null,
       desksClip: getComputedStyle(desks).clipPath,
-      inert: [props, desks].every((image) => getComputedStyle(image).pointerEvents === 'none'),
+      inert: getComputedStyle(desks).pointerEvents === 'none',
     };
   });
-  expect(splitPlate).toEqual({ sharedResource: true, sameGeometry: true,
-    propsClip: 'inset(0px 0px 38%)', desksClip: 'inset(62% 0px 0px)', inert: true });
+  expect(completePlate).toEqual({ propsAbsent: true, desksClip: 'none', inert: true });
   expect(
     await page.evaluate(() => {
       const background = document

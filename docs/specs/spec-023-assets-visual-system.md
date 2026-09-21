@@ -506,12 +506,12 @@ playable body. It must not cover a playable face, signature hand gesture, or
 required prop. Hypertext Markup Language (HTML) content must also stay outside
 those three playable-character features.
 
-Render each of the two studio foreground plates in complementary clipped planes using the
-same asset, dimensions, and responsive crop. The upper plane ends at the
-62-percent desk-top line and renders behind playable characters. The lower
-plane starts at that line and renders in front of their lower bodies. Thus
-desk bottles and microphones cannot cover a required hand or character prop.
-Both planes remain pointer-inert and reuse the same runtime image request.
+Render each studio foreground plate once, complete and unclipped, above the
+playable portraits. Its standing desks, microphones, bottles, desktop, trim,
+and fronts share one physical furniture plane. Do not duplicate one raster into
+contradictory front and rear planes. Keep each plate pointer-inert. Position its
+props so faces, signature hand gestures, and required character props remain
+readable while the furniture preserves physically coherent occlusion.
 
 Use 20 percent of master width and 34 percent of master height as the normal
 left-player face center. Mirror it at 80 percent of master width for the right
@@ -962,22 +962,32 @@ A 72-pixel downward translation, dark top-edge continuation, and lower-floor
 crop keep the complete head within its original safe region. No upscaling is
 applied. Generic source metadata records this
 origin without the private prompt. All ten AVIF and WebP background variants
-derive from that master. The existing separate foreground desk layer remains
-in place. It is not represented as newly generated art.
+derive from that master. The separate foreground desk layer is original flat
+cel-shaded art generated text-only with `gpt-image-2.5-flare` on a native 3840
+by 2160 green-matte canvas. Fit its two desk groups to the shared standing-desk
+coordinates with proportional downsampling of each complete tabletop and prop
+group. Keep a horizontal margin inside both extraction zones so AVIF and WebP
+alpha fringes remain inside those zones. Extend only the lower front-panel
+segment to the canvas edge, then use the repository green-matte conversion to
+supply antialiased alpha. Do not upscale it.
 
-Upscale the Modern Debate Studio replacement background from 1672 by 941 with
-Lanczos3 interpolation and sigma 0.5 sharpening. The final 16:9 canvas corrects
-the input's small aspect-ratio rounding difference. This is an upscale, not
-native 4K generation. The approved replacement backgrounds and desk upscales
-are a specific exception to the clean-room input restrictions in AC-023-12 and
-AC-023-15. Do not generalize this exception to other baseline assets. Use
-linear interpolation for the transparent desks to prevent ringing at
-partial-alpha edges. Preserve each approved moderator, set, and composition at
-every runtime size. Every runtime variant must use its declared final
+Generate the Modern Debate Studio at native 3840 by 2160 with
+`gpt-image-2.5-flare`. Start from a text-only composite, then use reference
+edits of that new composite to create the deskless background, preserve its
+fictional moderator direction, and isolate the matching desk layer on a green
+matte. Translate the final background down 96 pixels without resampling, using
+top-edge continuation and a lower-floor crop for runtime moderator clearance.
+The final desk raster can be translated to the shared 62-percent desk line
+before proportional fitting into codec-safe horizontal margins and green-matte
+conversion. Do not use the old
+1672 by 941 background or 1920 by 1080 desk master as generation input, and do
+not upscale either asset. Preserve the approved moderator, set, and composition
+at every runtime size. Every runtime variant must use its declared final
 background. All four studio layers provide 640 by 360,
 1280 by 720, 1920 by 1080, 2560 by 1440, and 3840 by 2160 AVIF and WebP files.
 Every variant derives from its final 3840 by 2160 PNG master. Record the
-actual generation or upscale origin in generic PNG provenance metadata.
+actual generation and deterministic finishing origin in generic PNG provenance
+metadata.
 
 County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and
 Influencer Campaign Livestream use native 3840 by 2160 OpenAI source art.

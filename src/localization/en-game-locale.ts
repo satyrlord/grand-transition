@@ -18,7 +18,7 @@ export function createEnglishGameLocale(
         'A late-2000s municipal television forum with tall debate desks, heavy curtains, faux marble, and a severe fictional moderator.',
       'scene.modern-debate-studio.name': 'Modern Debate Studio',
       'scene.modern-debate-studio.description':
-        'A modern television debate forum with microphone-free standing desks, paired waters, and a bespectacled fictional moderator seated to the right.',
+        'A modern television debate forum with microphone-free standing desks, paired waters, and a bespectacled fictional moderator seated at center stage.',
       'scene.county-council-ballroom.name': 'County Council Ballroom',
       'scene.county-council-ballroom.description':
         'A municipal ballroom prepared for procurement speeches, ribbon banners, and suspiciously new equipment.',

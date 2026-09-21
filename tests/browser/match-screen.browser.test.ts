@@ -364,18 +364,13 @@ test('renders an immutable complete match snapshot and previews without changing
   const scenePictures = [
     ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
   ];
-  expect(scenePictures).toHaveLength(3);
-  const propsLayer = match.querySelector<HTMLImageElement>('.broadcast-stage-props')!;
-  expect(propsLayer.src).toBe(foregroundLayer!.src);
-  expect(propsLayer.srcset).toBe(foregroundLayer!.srcset);
-  expect(propsLayer.sizes).toBe(foregroundLayer!.sizes);
+  expect(scenePictures).toHaveLength(2);
+  expect(match.querySelector('.broadcast-stage-props')).toBeNull();
   document.head.append(style);
   try {
-    expect(getComputedStyle(propsLayer).clipPath).toBe('inset(0px 0px 38%)');
-    expect(getComputedStyle(foregroundLayer!).clipPath).toBe('inset(62% 0px 0px)');
-    expect(getComputedStyle(propsLayer).pointerEvents).toBe('none');
+    expect(getComputedStyle(foregroundLayer!).clipPath).toBe('none');
+    expect(getComputedStyle(foregroundLayer!).pointerEvents).toBe('none');
     const characterPlane = match.querySelector<HTMLElement>('.character-frame')!;
-    expect(Number(getComputedStyle(propsLayer).zIndex)).toBeLessThan(Number(getComputedStyle(characterPlane).zIndex));
     expect(Number(getComputedStyle(characterPlane).zIndex)).toBeLessThan(Number(getComputedStyle(foregroundLayer!).zIndex));
   } finally {
     style.remove();
