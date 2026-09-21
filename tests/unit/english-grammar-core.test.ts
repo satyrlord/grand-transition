@@ -84,7 +84,7 @@ describe('Hollywood Roast English grammar', () => {
       ],
       [
         ['common-noun-053', 'common-predicate-011-present'],
-        'My opponent makes their own voters change the channel',
+        'Holy Water from the Danube makes its own voters change the channel',
       ],
       [
         ['common-noun-028', 'common-predicate-011-present'],
@@ -114,7 +114,7 @@ describe('Hollywood Roast English grammar', () => {
       analyze([add('common-noun-053'), add('common-verb-010-present'), add('common-noun-001')]),
     ).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'My opponent reinvents your unanimous disagreement' },
+      analysis: { publicText: 'Holy Water from the Danube reinvents your unanimous disagreement' },
     });
 
     for (const [predicateId, expected] of [
@@ -142,24 +142,24 @@ describe('Hollywood Roast English grammar', () => {
     for (const [predicateId, expected] of [
       [
         'common-predicate-003-past',
-        'A liberal cheered for a Russian attack',
+        'A foreigner cheered for a Russian attack',
       ],
-      ['common-predicate-003-present', 'A liberal cheers for a Russian attack'],
+      ['common-predicate-003-present', 'A foreigner cheers for a Russian attack'],
       [
         'common-predicate-003-future',
-        'A liberal will cheer for a Russian attack',
+        'A foreigner will cheer for a Russian attack',
       ],
       [
         'common-predicate-004-past',
-        'A liberal harassed innocent people on social media',
+        'A foreigner harassed innocent people on social media',
       ],
       [
         'common-predicate-004-present',
-        'A liberal harasses innocent people on social media',
+        'A foreigner harasses innocent people on social media',
       ],
       [
         'common-predicate-004-future',
-        'A liberal will harass innocent people on social media',
+        'A foreigner will harass innocent people on social media',
       ],
     ] as const) {
       expect(analyze([add('common-noun-044'), add(predicateId)])).toMatchObject({
@@ -194,7 +194,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: {
         state: 'ENDED',
         publicText:
-          'A liberal cheers for a Russian attack and most of your followers are bots.',
+          'A foreigner cheers for a Russian attack and most of your followers are bots.',
       },
     });
   });
@@ -271,7 +271,7 @@ describe('Hollywood Roast English grammar', () => {
         complete: true,
         agreement: { subject: 'plural' },
         publicText:
-          'My opponent and you made your own voters change the channel',
+          'Holy Water from the Danube and you made your own voters change the channel',
       },
     });
   });
@@ -289,7 +289,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: {
         complete: true,
         publicText:
-          'You made your own voters change the channel and my opponent made their own voters change the channel',
+          'You made your own voters change the channel and Holy Water from the Danube made its own voters change the channel',
       },
     });
   });
@@ -481,7 +481,7 @@ test('completes the approved cemetery-turnout sentence as a modifier', () => {
   ]);
   expect(result).toMatchObject({ accepted: true, analysis: {
     complete: true,
-    publicText: 'My opponent can lose an election to an empty ballot with 110% turnout at the cemetery',
+    publicText: 'Holy Water from the Danube can lose an election to an empty ballot with 110% turnout at the cemetery',
   } });
 });
 

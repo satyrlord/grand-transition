@@ -203,7 +203,7 @@ in setup and score explanations. Phrase references use `the former secret
 police`; the past miners phrase reads `brought the miners to Bucharest`.
 The miners tense family keeps `miners` and `legacy` tags. Its concise wording
 does not describe deception and has no `credibility` tag.
-`common-noun-030` reads `your electoral district`, and
+`common-noun-030` reads `foreign agents`, and
 `common-noun-040` reads `your partner with a reserved public office`.
 The Chairman's ancient-history ending reads
 `and the Dacs come from the Tracs.` Its ancestry reference has only the
@@ -275,8 +275,8 @@ simulation, and browser validation must pass before it can ship.
   includes agreement-aware copular forms for `is`, `was`,
   `will be`, and `should have been`. It also includes generic ideological and
   animal-metaphor noun fragments such as
-  `a communist`, `a liberal`, `a globalist`, `a sovereignist`, `a fascist`,
-  `a pig`, `a Nazi`, `a witch`, `EU funds`, and `my opponent`. It includes
+  `a communist`, `a foreigner`, `a globalist`, `a sovereignist`, `a fascist`,
+  `a pig`, `a Nazi`, `a witch`, `EU funds`, and `Holy Water from the Danube`. It includes
   past-tense relation cards such as `stole`, `denounced`, and `appropriated`,
   negated copular forms `was not`, `is not`, and `will never be`, and the
   predicate `was a snitch`.

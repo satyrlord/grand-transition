@@ -112,8 +112,8 @@ describe('Romanian grammar binding', () => {
     ['common-conjunction-023', 'with the sponsor standing beside', 'cu sponsorul lângă', 'common-conjunction-005'],
   ])('leaves the required noun or clause slot open after %s', (id, english, romanian, kind) => {
     for (const [locale, connector, prefix, noun, predicate] of [
-      [englishGameLocale, english, 'You are my opponent', 'your unanimous disagreement', 'belongs in a history museum'],
-      [romanianGameLocale, romanian, 'Dumneavoastră sunteți adversarul meu', 'dezacordul vostru unanim', 'are locul într-un muzeu de istorie'],
+      [englishGameLocale, english, 'You are Holy Water from the Danube', 'your unanimous disagreement', 'belongs in a history museum'],
+      [romanianGameLocale, romanian, 'Dumneavoastră sunteți apa sfântă a Dunării', 'dezacordul vostru unanim', 'are locul într-un muzeu de istorie'],
     ] as const) {
       const ids = ['common-noun-028', 'common-verb-023-present', 'common-noun-053', id, 'common-noun-001',
         ...(kind === 'common-conjunction-004' ? ['common-predicate-010-present'] : [])];

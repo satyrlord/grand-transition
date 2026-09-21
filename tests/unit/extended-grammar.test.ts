@@ -228,7 +228,7 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         state: 'ENDED',
-        publicText: 'My opponent interrupts this debate with a public apology.',
+        publicText: 'Holy Water from the Danube interrupts this debate with a public apology.',
       },
     });
   });

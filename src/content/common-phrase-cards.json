@@ -2474,7 +2474,8 @@
   {
     "id": "common-noun-030",
     "role": "noun",
-    "text": "your electoral district",
+    "text": "foreign agents",
+    "grammaticalNumber": "plural",
     "tags": [],
     "scoreGroups": {
       "substance": [
@@ -4065,7 +4066,7 @@
   {
     "id": "common-noun-044",
     "role": "noun",
-    "text": "a liberal",
+    "text": "a foreigner",
     "referentKind": "personal",
     "tags": [
       "modernity",
@@ -4747,8 +4748,7 @@
   {
     "id": "common-noun-053",
     "role": "noun",
-    "text": "my opponent",
-    "referentKind": "personal",
+    "text": "Holy Water from the Danube",
     "tags": [],
     "scoreGroups": {
       "substance": [
