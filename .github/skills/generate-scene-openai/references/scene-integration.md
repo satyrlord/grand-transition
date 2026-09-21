@@ -11,7 +11,7 @@ Use the helper to prepare the exact shipping size:
 ```powershell
 node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
   --input tmp/scene-generation/run/candidate.png `
-  --review research/scene-generation/run/review.json `
+  --review tmp/scene-generation/run/review.json `
   --scene modern-debate-studio --out tmp/scene-generation/run/prepared.png
 ```
 
@@ -49,7 +49,7 @@ Record the final stamped hash after these operations alongside the raw and prepa
 For a green-matte fallback, convert through the existing converter:
 
 ```text
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file research/scene-generation/run/prompt.txt
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
 ```
 
 Inspect alpha edges against dark and light backgrounds.

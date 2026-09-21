@@ -73,7 +73,6 @@ tests/unit/__snapshots__/
 .vitest-attachments/
 output/
 docs/reviews/
-HISTORY.md
 tools/*
 !tools/sidekick-assets.mjs
 !tools/final-content-volumes.ts

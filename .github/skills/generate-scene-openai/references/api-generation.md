@@ -49,7 +49,7 @@ Validate an authorized portrait edit locally before generation:
 
 ```powershell
 node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate `
-  --prompt research/character-generation/run/prompt.txt `
+  --prompt tmp/character-generation/run/prompt.txt `
   --reference src/assets/characters/algorithmic-prophet.png `
   --out tmp/character-generation/run --size 2048x2048 --background transparent --dry-run
 ```
@@ -58,7 +58,7 @@ Use the existing target only when the edit request and asset contract permit ref
 For a text-only 4K scene, omit references:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --prompt research/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --background opaque --dry-run
+node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --prompt tmp/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --background opaque --dry-run
 ```
 
 Add `--exact-size` for a smaller opaque source with supported native dimensions, such as 1024 by 1024.
