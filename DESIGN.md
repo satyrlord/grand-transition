@@ -203,7 +203,8 @@ shown in this world is human. A fully mechanical character is visibly a robot.
 ### Image language
 
 All generated representational raster art uses one flat cel-shaded editorial-
-cartoon language. Every character skin and state uses the funny big-head
+cartoon language. The approved playable-character finish is the **office
+clip-art style**. Every character skin and state uses the funny big-head
 rendering standard in Specification 023: an adult full-body silhouette with a
 visibly oversized head or mechanical face, an immediately comic expression,
 posture, or prop, controlled dark contours, large clean shapes, and broad
@@ -212,6 +213,10 @@ north star. Fixed moderators, scene
 architecture, furniture, fixtures, and props use the same construction. Exaggeration is
 deliberate. Materials read through silhouette, color, contour, and limited flat
 pattern instead of realistic surface detail.
+
+The office clip-art style is not generic stock clip art. It rejects pasted
+photographic faces, sticker-like vector simplification, chibi bodies, and mixed
+face-and-body rendering.
 
 Light uses designed hard-edged shadow and highlight shapes. A restrained paper
 or screen-print texture can sit over large shapes without modeling volume.

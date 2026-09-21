@@ -1,9 +1,13 @@
 ---
 name: generate-scene-openai
-description: Generate, edit, inspect, and integrate Grand Transition scene and character raster art. Use the Flare API for transparent assets, exact-size masters, and output above 1080p. Use the internal image tool for small opaque drafts.
+description: Generate, edit, inspect, and integrate Grand Transition scene raster art and shared Flare assets. Use generate-character-openai for playable character selections and pose packages. Use Flare for transparent assets, exact-size masters, and output above 1080p.
 ---
 
 # Generate and edit raster art with OpenAI
+
+For playable character selection and pose work, use
+[generate-character-openai](../generate-character-openai/SKILL.md).
+This skill retains the shared API, review, alpha, and integration modules.
 
 ## Establish the artwork task
 

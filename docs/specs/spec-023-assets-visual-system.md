@@ -363,6 +363,13 @@ it from the approved direction.
 
 ### Character art direction
 
+The product term **office clip-art style** names the approved playable-character
+finish. It means a funny adult political-office caricature with restrained
+oversized-head proportions, readable formal clothing, one immediate visual
+joke, controlled dark contours, expressive interior lines, large clean shapes,
+and broad hard-edged cel shading. It does not permit generic stock clip art,
+sticker-like vector art, pasted photographic faces, or mixed rendering styles.
+
 The Algorithmic Prophet wears a small plain gray wizard hat. Keep the face,
 expression, gesture, clothing, and funny big-head character style consistent. This
 targeted, owner-requested headwear edit can use its existing portrait as the
@@ -390,6 +397,13 @@ read as funny before the nameplate is visible through its face, posture,
 gesture, prop logic, or their combination. A serious prestige portrait,
 naturalistic head-to-body ratio, merely handsome or glamorous illustration, or
 straight realistic likeness fails even when it has outlines and cel shading.
+
+For an approved real-person-inspired likeness, keep photographs in private
+identity study only. First create a private, non-shipping face design that
+translates the identity into the office clip-art style. The final full-body
+Flare request can use that stylized face design and Municipal Patron as separate
+identity and style references. Do not give the final full-body request a
+photograph. Reject photographic skin modeling pasted onto a simplified body.
 
 Use controlled dark silhouette contours with clear expressive interior lines.
 Retain readable eyelids, brows, nose and mouth construction, hand articulation,

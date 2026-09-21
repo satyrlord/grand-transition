@@ -1,8 +1,10 @@
 # Author visual content
 
-For scene and character raster generation or editing, use
+For playable character raster generation or editing, use
+[generate-character-openai](../../generate-character-openai/SKILL.md).
+For scene raster generation or editing, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-Its Flare API route owns transparent output, exact-size masters, and output above 1080p.
+The shared Flare API route owns transparent output, exact-size masters, and output above 1080p.
 Its internal-tool route serves small opaque drafts.
 An authorized artwork edit includes permitted target references and standard bounded native-alpha preparation.
 Follow its character or scene integration module before replacing shipping assets.
