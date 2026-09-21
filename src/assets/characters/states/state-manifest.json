@@ -2098,8 +2098,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1680429,
-        "sha256": "5e2479212c077adeb5b7210868a888c42317582dfdbafbacde8100d7c09c772c"
+        "bytes": 1812036,
+        "sha256": "3ba6373e5074055b28271c6efa4b78d9ea6879533dc4db3950eff699c4533d24"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2118,48 +2118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7872,
-          "sha256": "10ee0eb25c82bb11c9a1234ee776716d9e498d87e6020422dae1b4123c5ce6b5"
+          "bytes": 8831,
+          "sha256": "d375a57bf02f3386c29ea605dde40d9cbf912224d656e9e88c8e703cec3d93ae"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10146,
-          "sha256": "eaf8568d2bdec8c429659ee2ee7189b012a94a8d6c59f5cb98411841a8816aea"
+          "bytes": 11924,
+          "sha256": "7c04e9fa9aafe6b8085d4673091937b1b152d7ddeceb41bee37f338db9f631d4"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19216,
-          "sha256": "66d94ed4cc7261dd0cafc6f7d050d235e418e6ffcc4ecd438c69f1994dceefb9"
+          "bytes": 21422,
+          "sha256": "a251709441e36eba881b2a735cf78894a808c527f7ed368913ef3194b355ee75"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24418,
-          "sha256": "917b2d84bd5140ac5195d59f18c47cb7e74c3084a8256599221e2612d120271e"
+          "bytes": 28368,
+          "sha256": "7586708f942954920288b5ca09a807d012f66183d8f6157fdadfca416aa7904c"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31390,
-          "sha256": "5462b9983b6721c4c9d2d929bbbc82faeaea331b6c785eb3a60044a099fe32b7"
+          "bytes": 33140,
+          "sha256": "d086f6d5849589a2262bd743121a7248e8894d87217137f05272662f5c4c957c"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 39408,
-          "sha256": "6c2ce45c01d1df963922baf04c672f5e3052856b85061b8ca5fe430f744a8b16"
+          "bytes": 44748,
+          "sha256": "b18cd417fc897c94c2dde1b225ef30da543795ad49cfce5f9cf087af37214e53"
         }
       ]
     },
@@ -2178,8 +2178,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1738557,
-        "sha256": "580dd6307ae6e19e0eee391a104d2319cdab761e23fb082df0ae9078f2e8c932"
+        "bytes": 1971247,
+        "sha256": "5412caea3f6636f3ac4c0cd627374f280f1160761ce6bd5819e2bbc69fd80db5"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2198,48 +2198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8888,
-          "sha256": "8431b62b67b602347a70b25200a91364bf36d0e468cd95c100cb88a217579d77"
+          "bytes": 9669,
+          "sha256": "a8c7701201c701430064fc20a36b641256f6f402cd91913ee8ec7236098ac664"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11398,
-          "sha256": "41ef73200ad8a1a855466a3ac6a416245e6d132ca622a90d3c1a1700a164f086"
+          "bytes": 12774,
+          "sha256": "cf382dbae63e80c27a1717ff58a771a4f1417c5299b26738fa8522db6b603ced"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21946,
-          "sha256": "c216bcf4ff61fc19b4d61aa6d115a6d1c8575a785f8882232edbeb9a71b54ce4"
+          "bytes": 22783,
+          "sha256": "280f6cdd29c309ada85feff1f7b4a1aab5096be887172a12922f4f78fd8dd2cb"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 26966,
-          "sha256": "ee5da7f4435a3b6daa5ebb4edc04ba7c191c636c3e6eda8fbcb27153ff612dd5"
+          "bytes": 29592,
+          "sha256": "c125bbbf3c219fbae41962c6bdfaec0b06501a0bb12d89c4ad9699b18f017ad2"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 35076,
-          "sha256": "c461f5f2020c03d7ac29df35f919e198c1dc5868cf9914b0c3333ee2eb2b421c"
+          "bytes": 36571,
+          "sha256": "01b2f3c4393a45a92f7536114fc47005b9550bd002f6004ff5593132f32e288c"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43294,
-          "sha256": "1a50e488212401cc2a13ef22a314161d7e96cdc996dcb5eb52c4bb6f58d977a1"
+          "bytes": 47572,
+          "sha256": "fd28e85285d1b0c9d299071a224c3a72bd9e686587802ad3be59d47bc9096d33"
         }
       ]
     },
@@ -2258,8 +2258,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1634353,
-        "sha256": "a5fdd390e378ccc9f5d9b032831e2a8b8aa796b0052006a00f903b1ef0c26775"
+        "bytes": 1927334,
+        "sha256": "04cc87a272b26ff5a77bdf104b3d3fb37f498905d593b6fcbea719bf0506c3da"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2278,48 +2278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8197,
-          "sha256": "fc9e3ab5906db410c3e3f8eb36d713ad595277d2a78f1e9e5140288e1eee0a07"
+          "bytes": 9489,
+          "sha256": "9aa9b4dc2e6b84dd7c89cd92a6268d9e2e37357e9c5b62681b500d23b2f46339"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10582,
-          "sha256": "3fc12400e31ee42d1a7c931689e7ea485315b660efa0aaa15de4989f18761c85"
+          "bytes": 12220,
+          "sha256": "c9426ee61e87c4bc5e6aa6c3067e9d545efd080ff488e0e47c20f73a2b566c64"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20146,
-          "sha256": "c8c436853a2273d2e9ad2664c514d107615fa88efe395c7dd072407c0f387d0f"
+          "bytes": 21930,
+          "sha256": "4bef8a9749f5cfe4173ffd79121693dff5ceb2a3edd7976b22cd1da5b3b9bc4f"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25222,
-          "sha256": "873c6a95d26ceee6a0561742f2916909f6711cd256b75aafbeb90d195bea176e"
+          "bytes": 28612,
+          "sha256": "597cb17d276e4edd255ceb5cc2b20a99a79e177f2a598338e68a1b01a38eb56e"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 32267,
-          "sha256": "27a7b1c76ab501e13b9f482afa4b3e3e54aafd4b52a1576f260f656d934f0a1e"
+          "bytes": 35362,
+          "sha256": "91f7c0634abbc2a2b6857a8bd161f7da93553e9e43112a9ad27ad984d1e5f593"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40664,
-          "sha256": "7e368e6add9faa317590b0fe3c107919a7d49d7f8a87fbd0e1069f48a7142189"
+          "bytes": 45548,
+          "sha256": "8f80c87cdff1db0381359416374b15b1ada8c0b08f4624a091e10c62d8c374f5"
         }
       ]
     },
@@ -2338,8 +2338,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1858831,
-        "sha256": "ab14eac25c5c0e0a7da1af1155dc4f1923037afaec7390455dda33ffae282b5c"
+        "bytes": 1938014,
+        "sha256": "2f3d22eee445495e638fcd60f0e944e6eb3f1195a356e7b03cd47d8808b59600"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2358,48 +2358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8701,
-          "sha256": "44f171166a6e8457da16d61ed56c5259f564f92611541e2606223832e5109c30"
+          "bytes": 9151,
+          "sha256": "b3ca1998388a4b53989034b2a924ed0f0507aa8c765a0ba410efb20526bcdc10"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10852,
-          "sha256": "79658b9d65dba52af107dd34bddc37dc0ca8b320351a85550d9667139376bd3a"
+          "bytes": 12146,
+          "sha256": "315637eea23a4df8b90864e70a3615349ae441eddcd3e8ab9c09d68fadc55a2e"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21070,
-          "sha256": "b4f3b3609ce27a9a60ecebeb6945997c2639d87615218a63629c4d02e7f12b48"
+          "bytes": 21902,
+          "sha256": "280816df01730f57f079bba2549ab97616b040942eebee9dff2f1fcc5a8a5cf5"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25656,
-          "sha256": "ec3f0a4e592d1b4cb2f879f8f7706b437d458adde6857d801880059e15442622"
+          "bytes": 27974,
+          "sha256": "b71222f14f6c5bd8583bd07f79de18b72fe6b4d1037afd1e9cb00dcb1ee9a3ba"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34539,
-          "sha256": "0344844afc51c0328d42b43bd13d6198afff48f7511eb18276e7094587cf7510"
+          "bytes": 35376,
+          "sha256": "70d436472fbeb0c12042638725e7cb6e1fb9d9d9ec10045637789d4e3cf015b8"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41442,
-          "sha256": "fdb524b04dc67151ee7ea9727e1f6f5abc1a045270f6527d546f1667dcd1f8b7"
+          "bytes": 44860,
+          "sha256": "58f81a1e879906d896b233b10b5adfa319bb00893402de5a99fd188a4af7b993"
         }
       ]
     },
@@ -2418,8 +2418,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1691869,
-        "sha256": "c898ceb097d6c3be33ce7d6ed80e57d7d9b0280360a563d63031650aa887a47d"
+        "bytes": 1715029,
+        "sha256": "575a72842568ce5cd7982ebcd423e8f8b3b765e138cd48dc5b9ed7c23c291989"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2438,48 +2438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8033,
-          "sha256": "7d47b177cb2d125db2d9db6084b3277bd5ae210964b7e8f635f2e5dc9aee4ea8"
+          "bytes": 8267,
+          "sha256": "60d54812c101e02c0efbcf807bc55833696428cf07adc1fe1579ddca8fb09241"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9974,
-          "sha256": "43a456911d4d97a02e0ab4e3b0ce8d5e5a6092b016a856a34ca899829ee088a2"
+          "bytes": 10836,
+          "sha256": "35b0e17c77354d869a082adb8e66da29b0d577d6e656b91fd0105a193874f357"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19574,
-          "sha256": "e1a280a9871612c2d9918a52a6642e5869bbb2ff30cae0ef8e8f1899622ce8c0"
+          "bytes": 19828,
+          "sha256": "6866a26eabc0d75ae7ad395c052df32c4793849b0f92245ed4af4b2eb30fe2f9"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23850,
-          "sha256": "de3155804f298e4f5cf94ef0289a35df1e228061b92f859aeaa569326f8e584c"
+          "bytes": 25568,
+          "sha256": "40456de920c77b626dd24ae63c442ed20d3bc68470038801a35c01b3f8fc4188"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31518,
-          "sha256": "3c4bafbd710db165d95bc2368fdb91b1aa79f5bd6ee5b8a6eb3fde93a92ba8da"
+          "bytes": 31177,
+          "sha256": "3fa0fe30372f5d8d9c4cedd7831b6581ce758b9b68d0966296bcfb040ed1aa7c"
         },
         {
           "path": "states/variants/apartment-block-geopolitician--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38168,
-          "sha256": "e07f21e0f9d9fb6ca5f9e2e583e5f21c6f766bd1bafd2951db4f575b0d09599c"
+          "bytes": 40542,
+          "sha256": "ae7a880ba60eee442fb98b7fc50f8579e12f33c313558b78facc27e472af1222"
         }
       ]
     },

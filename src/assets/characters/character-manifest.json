@@ -143,8 +143,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1578061,
-        "sha256": "aeca61848fbf3662e780412c60c3f6881afcbdb99606cb03bcd670bd9bcbc477"
+        "bytes": 2005575,
+        "sha256": "d84dcc89de876a91e4283b9f00641e3723eb06a6f6f76b13762fdfafa41de8a0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -164,8 +164,8 @@
           "height": 128,
           "format": "avif",
           "quality": 70,
-          "bytes": 2779,
-          "sha256": "5e091342677e6192f0e016724f25b3a4379cc1d410a50a7aa4c6e97a050e543f"
+          "bytes": 3730,
+          "sha256": "6fca52ef6464848e72da4c6289184077def699729a1bb79fa6de393a8b76794e"
         },
         {
           "path": "variants/apartment-block-geopolitician-128x128.webp",
@@ -173,8 +173,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3324,
-          "sha256": "f4c7652b7170a6c332ffe0bb8e4a9809c2ab69ebbce243c5c6bf2f3a326ef520"
+          "bytes": 4530,
+          "sha256": "52b1ef9234fa8746ab1a4972f00f0fc41295da0524b88494b3a78454004d51ef"
         },
         {
           "path": "variants/apartment-block-geopolitician-256x256.avif",
@@ -182,8 +182,8 @@
           "height": 256,
           "format": "avif",
           "quality": 70,
-          "bytes": 5768,
-          "sha256": "c26fe681b80a63c8507192ad2af442e65dc3be1a84e30fbe281a175ca4694b07"
+          "bytes": 7353,
+          "sha256": "f4fb88093814f2ed00001b668b858292a3a174f49d70d9531b4fa3148c8f2e06"
         },
         {
           "path": "variants/apartment-block-geopolitician-256x256.webp",
@@ -191,8 +191,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7602,
-          "sha256": "223909ee57d40f70944a3444cc9c39ff12016f4f6576fbd75d6e8e95e7ceca81"
+          "bytes": 9746,
+          "sha256": "a139320319b37b57f3b961637a78c90f0e176b8d67608b600d93dc58d8f065d0"
         },
         {
           "path": "variants/apartment-block-geopolitician-320x320.avif",
@@ -200,8 +200,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 7476,
-          "sha256": "cebf352c2d885029024cf441259e64e17750f300250a11e49bf251fb33a99f68"
+          "bytes": 9207,
+          "sha256": "1916976585c8ead8300938b2554ba188ad40faf11f610dfb28a10654806298b5"
         },
         {
           "path": "variants/apartment-block-geopolitician-320x320.webp",
@@ -209,8 +209,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 9888,
-          "sha256": "212309f0caefda88cc52a9dddb046c5e1522d94f80ce8518d5537db66a8c4546"
+          "bytes": 12618,
+          "sha256": "6dee02681f21cb072f394d192fb0992b86b922815822ebca46051eaacd6c2e8c"
         },
         {
           "path": "variants/apartment-block-geopolitician-640x640.avif",
@@ -218,8 +218,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 18864,
-          "sha256": "7af5b54c7288432dc8643e008648f4e2e580ab96bd981304fef9c185f0915335"
+          "bytes": 22129,
+          "sha256": "e3b654960714395f550099804a5b4ce119d3a4e0c6574419fa2334a89cc1948e"
         },
         {
           "path": "variants/apartment-block-geopolitician-640x640.webp",
@@ -227,8 +227,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 24274,
-          "sha256": "4344291a0e3a538fa0126dd4ce7ae35ad0536212ce5eae0ee7cbe00f804db9e5"
+          "bytes": 29368,
+          "sha256": "dfd64ec01cd5a2f3d737a893dc4bf24dc2568c1524ce46e92c45120b52f2d90c"
         },
         {
           "path": "variants/apartment-block-geopolitician-960x960.avif",
@@ -236,8 +236,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 31249,
-          "sha256": "cfac8a2113f50dbb5418da1ff6d987212a90d823a439ae9ac2125a5e7e5ef509"
+          "bytes": 35467,
+          "sha256": "7364e372c1f2c435cc18f3606caee1aec3ac0b9cc4d3b23d9b7d09865bbbbb38"
         },
         {
           "path": "variants/apartment-block-geopolitician-960x960.webp",
@@ -245,8 +245,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 39306,
-          "sha256": "4c44d007dc3bc834e64e532609df21b385d0a0a3c0574170295ab43b9f757978"
+          "bytes": 46540,
+          "sha256": "43ce0f101c96f766c51696b7bd96c7b8c0c151456ba4d35c831ecdef24f87323"
         }
       ]
     },
