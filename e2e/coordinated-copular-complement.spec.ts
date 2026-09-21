@@ -27,7 +27,7 @@ for (const scenario of [
       { phraseId: 'common-verb-023-present', role: 'verb' },
       { phraseId: 'common-noun-053', role: 'noun' },
     ],
-    sentence: 'You are my opponent',
+    sentence: 'You are Holy Water from the Danube',
     total: 11,
   },
   {
