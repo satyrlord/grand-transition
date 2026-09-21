@@ -48,10 +48,12 @@ For substantial conditional procedures, link task modules with explicit loading 
 Load only the modules required by the task. Keep short skills self-contained.
 See [create-skill](skills/create-skill/SKILL.md) for authoring and validation.
 
-Scene and character raster work uses
+Playable character raster work uses
+[generate-character-openai](skills/generate-character-openai/SKILL.md).
+Scene raster work uses
 [generate-scene-openai](skills/generate-scene-openai/SKILL.md).
-Its repository-owned Flare API adapter supports native transparency and exact master dimensions.
-The skill also owns bounded alpha preparation, provenance, and staged asset integration.
+The scene skill owns the shared repository Flare API adapter.
+It also owns bounded alpha preparation, provenance, and staged asset integration.
 Installed generic image CLIs do not own this repository's Flare request contract.
 
 ## Model Context Protocol policy

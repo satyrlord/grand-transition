@@ -3,7 +3,9 @@
 Read this module before raster generation, editing, conversion, adoption, or provenance changes.
 Run repository commands from the repository root.
 
-For scene and character raster generation and editing, use
+For playable character raster generation and editing, use
+[generate-character-openai](../../generate-character-openai/SKILL.md).
+For scene raster generation and editing, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
 It selects the Flare API for transparency, exact-size masters, and output above 1080p.
 It uses the internal image tool for small opaque drafts.
