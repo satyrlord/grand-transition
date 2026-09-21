@@ -1332,5 +1332,5 @@ replacement. The private inventory records all 30 selections and the exact
 trigger for every replacement. Each replacement archetype has separate agent
 integration evidence and product-owner manual in-game acceptance before another
 archetype starts. Verify the current inventory with
-`research/character-generation/20260920-native-master-regeneration/SELECTION-AUDIT.md`
-and each completed cycle's private acceptance record.
+the current character regeneration inventory in `research/HISTORY.md` and each
+completed cycle's private acceptance record.

@@ -15,8 +15,9 @@ For characters, resolve the private study, approved rendering standard, facing d
 Apply the latest user-approved art direction, including scene-specific exceptions.
 Resolve missing required decisions before generation.
 
-Keep prompts and input records under ignored `research/` paths.
-Keep generated candidates and staged assets under ignored `tmp/` paths.
+Keep durable private directions and source notes as flat, topic-named Markdown
+files under ignored `research/`. Keep raw prompts, input records, generated
+candidates, reviews, and staged assets under ignored `tmp/` paths.
 Skill creation, review, and dry runs do not authorize generation.
 A request to create or edit artwork authorizes the required route and standard deterministic preparation within its scope.
 An authorized edit includes using its existing target as a reference when the asset contract permits that input.

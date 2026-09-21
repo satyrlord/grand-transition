@@ -30,7 +30,10 @@ Request transparent PNG output from a model that supports it.
 Use a green matte only for a model without native transparency or an approved conversion repair.
 Do not bake playable characters, required text, or controls into scene art.
 
-Write a UTF-8 prompt under `research/scene-generation/<run>/` or `research/character-generation/<run>/`.
+Write the UTF-8 working prompt under a task-specific directory in
+`tmp/scene-generation/` or `tmp/character-generation/`. Preserve any durable
+private direction or source fact separately in a flat, topic-named Markdown
+file under `research/` before temporary output is purged.
 Define one output asset, required objects, object counts, and prohibited content.
 For scenes, describe camera, focal regions, responsive crop, and interface clearance from the approved specification.
 For characters, define approved features, facing, full-body placement, safe margins, and the exact requested change.
