@@ -5,10 +5,11 @@ import {
   resolveCharacterFramesFromInventory,
 } from '../../src/app/character-state-assets';
 import { characterMotion } from '../../src/app/character-motion';
+import contract from '../../src/assets/characters/state-contract.json';
 
 function fixture() {
   const selection = resolveCharacterAsset('red-folded-chairman');
-  const assets = Object.keys(characterMotion).filter((id) => id !== 'selection').map((stateId) => {
+  const assets = contract.stateMasterIds.map((stateId) => {
     const id = selection.id + '--' + stateId;
     return {
       id, ownerId: selection.ownerId, skinId: selection.skinId, stateId,
@@ -28,14 +29,16 @@ function fixture() {
         ownerId: selection.ownerId, skinId: selection.skinId,
         states: Object.entries(characterMotion).map(([stateId, motion]) => ({
           stateId, ...motion,
-          assetId: stateId === 'selection' ? selection.id : selection.id + '--' + stateId,
+          assetId: stateId === 'selection' || contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] === 'selection'
+            ? selection.id
+            : selection.id + '--' + (contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] ?? stateId),
         })),
       }],
     },
   };
 }
 
-test('resolves nine immutable frames and reuses the selection sources', () => {
+test('resolves nine immutable frames from selection and exactly five state masters', () => {
   const { manifest, selection, urls } = fixture();
   const packages = createCharacterStatePackages(manifest, [selection], urls);
   expect(Object.isFrozen(packages)).toBe(true);
@@ -43,7 +46,7 @@ test('resolves nine immutable frames and reuses the selection sources', () => {
   expect(packages[0]!.frames).toHaveLength(9);
   for (const frame of packages[0]!.frames) {
     expect(Object.isFrozen(frame)).toBe(true);
-    if (frame.stateId === 'selection') {
+    if (frame.stateId === 'selection' || frame.stateId === 'idle') {
       expect(frame.avif).toBe(selection.avif);
       expect(frame.webp).toBe(selection.webp);
     } else {
@@ -62,15 +65,9 @@ test('variant order cannot choose a smaller fallback image', () => {
   expect(frames.every((frame) => frame.url.includes('960x960'))).toBe(true);
 });
 
-test('resolves declared state mappings that reuse selection and state assets', () => {
+test('resolves the required reused state mappings', () => {
   const { manifest, selection, urls } = fixture();
   const mappings = manifest.packages[0]!.states;
-  mappings.find(({ stateId }) => stateId === 'idle')!.assetId = selection.id;
-  mappings.find(({ stateId }) => stateId === 'comeback')!.assetId = `${selection.id}--delivery`;
-  mappings.find(({ stateId }) => stateId === 'grammar-mistake')!.assetId = `${selection.id}--weakness`;
-  manifest.assets = manifest.assets.filter(
-    ({ stateId }) => !['idle', 'comeback', 'grammar-mistake'].includes(stateId),
-  );
 
   const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
   expect(frames.find(({ stateId }) => stateId === 'idle')!.id).toBe(selection.id);

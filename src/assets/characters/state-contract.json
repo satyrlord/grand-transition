@@ -26,7 +26,15 @@
     "reluctant-theorem"
   ],
   "expectedPackageCount": 28,
-  "permittedStateAssetReuse": {
+  "expectedStateMasterCount": 140,
+  "stateMasterIds": [
+    "thinking",
+    "delivery",
+    "light-hit",
+    "heavy-hit",
+    "weakness"
+  ],
+  "stateAssetReuse": {
     "idle": "selection",
     "comeback": "delivery",
     "grammar-mistake": "weakness"

@@ -562,8 +562,10 @@ brass and navy rules make the arena feel built.
 The implemented build uses three brand rasters, seven scene backgrounds, six
 transparent foreground plates, and 30 transparent character portraits: 19
 defaults and 11 alternates. Twenty-eight skins have complete nine-state
-packages; the Local Baron municipal-patron skin and Reluctant Theorem use the
-declared selection-art fallback. All portrait skins are visual-only variations
+packages built from selection plus exactly five state masters. Idle reuses
+selection, Comeback reuses delivery, and grammar mistake reuses weakness. The
+Local Baron municipal-patron skin and Reluctant Theorem use the declared
+selection-art fallback. All portrait skins are visual-only variations
 and do not change the fictional character identity or prose.
 All shipping assets retain embedded generic source provenance. Required
 text and controls remain outside raster art.

@@ -24,11 +24,12 @@ panels, a ruler, a blank gradebook, a bell-shaped lower chassis, and a
 three-wheel teaching platform. Do not use an apron, frills, maid cap, skirt,
 vacuum, cleaning tool, or other domestic-service costume cue.
 
-Each skin has one transparent 2048-square selection master and eight state
-masters with the normal AVIF/WebP variants. The schoolteacher reuses the exact
-selection artwork for its idle master and gives the other seven states distinct
-poses and expressions. The current executable inventory contains 30 selection
-masters and 28 state packages containing 164 state masters. Keep the 27-entry
+Each non-fallback skin has one transparent 2048-square selection master and
+exactly five state masters with the normal AVIF/WebP variants: `thinking`,
+`delivery`, `light-hit`, `heavy-hit`, and `weakness`. Every package maps `idle`
+to selection, `comeback` to delivery, and `grammar-mistake` to weakness. The
+current executable inventory contains 30 selection masters and 28 state
+packages containing 140 state masters. Keep the 27-entry
 replacement-baseline record unchanged. Declare all reviewed selections in
 `portrait-layout.json` and keep the complete manifest inventories coherent.
 
@@ -770,11 +771,11 @@ Action plates use coherent authored icons and framing.
 
 Characters use three-quarter opponent-facing silhouettes and layered parts.
 Human characters use human anatomy, and robot characters use only mechanical
-anatomy. They use at least five expressions and six poses. They include idle,
-selection, thinking, delivery, and light and heavy hit states.
-
-They also include
-weakness, comeback, and grammar-mistake states.
+anatomy. Each non-fallback skin uses exactly six visual poses: selection plus
+the five state masters `thinking`, `delivery`, `light-hit`, `heavy-hit`, and
+`weakness`. These provide at least five expressions. The nine logical states
+map `idle` to selection, `comeback` to delivery, and `grammar-mistake` to
+weakness. A dedicated master for a reused state is invalid.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
 first. The Web Graphics Library (WebGL) or another graphics runtime needs a
 new specification with bundle, frame-time, and fallback proof.
@@ -1065,8 +1066,11 @@ milliseconds, and idle loops 2 through 8 seconds.
 `src/assets/characters/state-contract.json` records the 19 character IDs and
 the nine named states. Milestone 028 requires 28 packages and declares the two
 selection-art fallbacks. Derive default and alternate packages from the
-selection manifest. Do not maintain another skin list. Each additional
-master is `src/assets/characters/states/<portrait-stem>/<state-id>.png`.
+selection manifest. Do not maintain another skin list. Each package contains
+exactly five additional masters at
+`src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 140 state
+masters in total. The only valid master state IDs are `thinking`, `delivery`,
+`light-hit`, `heavy-hit`, and `weakness`.
 `states/state-manifest.json` owns state mappings and additional runtime assets.
 Selection references the existing baseline asset. Additional states have
 320, 640, and 960 square AVIF and WebP variants in `states/variants/`.
@@ -1122,8 +1126,10 @@ updating a card, reaction, or character state produces exactly 0 layout shift.
   from unchanged masters, and every file meets its per-file and package budget.
 - **AC-023-03:** Browser tests select AVIF when supported, fall back to WebP,
   reserve dimensions before decode, and load no unselected match package.
-- **AC-023-04:** Four characters expose all nine states with at least five
-  expressions and six poses. Missing mappings fail validation.
+- **AC-023-04:** All 28 state packages expose all nine logical states through
+  exactly five state masters plus selection, with at least five expressions and
+  six poses. Missing mappings, dedicated masters for reused states, and extra
+  source PNGs fail validation.
 - **AC-023-05:** All supported landscape variants keep declared focal regions
   visible and meet CLS limits.
 - **AC-023-06:** Motion procedures meet all timing and pointer requirements.

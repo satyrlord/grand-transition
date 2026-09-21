@@ -79,11 +79,13 @@ color. Preserve the existing alpha and color checks. Matches use the
 selection-art fallback, without a new pose or state package.
 
 All other selectable skins use the complete nine-state Milestone 023 package.
-The final state inventory therefore contains 28 skin packages. State mappings
-can reuse an image where Milestone 023 permits it, but each package still meets
-its minimum distinct-pose and expression counts. `county-baron--municipal-patron`
+The final state inventory therefore contains 28 skin packages and 140 state
+masters. Every package uses exactly five state masters plus selection. It maps
+idle to selection, comeback to delivery, and grammar mistake to weakness while
+meeting the six-pose and five-expression minimums. `county-baron--municipal-patron`
 and `reluctant-theorem` are the only selection-art fallback IDs. A validator
-rejects another missing package or an undeclared fallback.
+rejects another missing package, an undeclared fallback, or a dedicated master
+for a reused state.
 
 Eighteen archetypes are human. Government AI is a fully mechanical robot.
 Animal terms in a name or title are metaphorical political labels only and
