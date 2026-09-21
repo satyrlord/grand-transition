@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -44,27 +44,34 @@ export function statePackages(selectionManifest) {
 
 export function stateAssetId(skinId, stateId, availableStateIds) {
   if (stateId === 'selection') return skinId;
-  if (availableStateIds.has(stateId)) return `${skinId}--${stateId}`;
-  const reusedStateId = contract.permittedStateAssetReuse[stateId];
+  const reusedStateId = contract.stateAssetReuse[stateId];
   if (reusedStateId === 'selection') return skinId;
   if (reusedStateId && availableStateIds.has(reusedStateId)) {
     return `${skinId}--${reusedStateId}`;
+  }
+  if (contract.stateMasterIds.includes(stateId) && availableStateIds.has(stateId)) {
+    return `${skinId}--${stateId}`;
   }
   throw new Error(`${skinId}/${stateId}: required state master is missing and has no available declared reuse.`);
 }
 
 export async function prepareCharacterStatePackage(characterRoot, skin) {
+  const stateRoot = path.join(characterRoot, 'states', skin.id);
+  const expectedFiles = contract.stateMasterIds.map((stateId) => `${stateId}.png`).toSorted();
+  const actualFiles = (await readdir(stateRoot, { withFileTypes: true }))
+    .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
+    .map((entry) => entry.name)
+    .toSorted();
+  if (actualFiles.length !== expectedFiles.length || actualFiles.some((file, index) => file !== expectedFiles[index])) {
+    throw new Error(`${skin.id}: state master inventory must contain exactly ${expectedFiles.join(', ')}.`);
+  }
   const sources = [];
   const availableStateIds = new Set();
-  for (const state of contract.states.filter(({ id }) => id !== 'selection')) {
+  for (const stateId of contract.stateMasterIds) {
+    const state = contract.states.find(({ id }) => id === stateId);
+    if (!state) throw new Error(`${skin.id}/${stateId}: state master is absent from the timing contract.`);
     const relativePath = `states/${skin.id}/${state.id}.png`;
-    let input;
-    try {
-      input = await readFile(path.join(characterRoot, relativePath));
-    } catch (error) {
-      if (error?.code === 'ENOENT' && contract.permittedStateAssetReuse[state.id]) continue;
-      throw error;
-    }
+    const input = await readFile(path.join(characterRoot, relativePath));
     const metadata = await sharp(input).metadata();
     if (metadata.format !== 'png' || metadata.width !== 2048 || metadata.height !== 2048 || !metadata.hasAlpha) {
       throw new Error(`${relativePath}: state master must be a transparent 2048x2048 PNG.`);

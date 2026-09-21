@@ -12,7 +12,7 @@ export type CharacterStatePackage = Readonly<{
 const stateVariantUrls = import.meta.glob('../assets/characters/states/variants/*.{avif,webp}', {
   eager: true, import: 'default', query: '?url&no-inline',
 }) as Record<string, string>;
-const permittedStateAssetReuse = contract.permittedStateAssetReuse as Partial<
+const stateAssetReuse = contract.stateAssetReuse as Partial<
   Record<CharacterStateId, CharacterStateId>
 >;
 
@@ -102,19 +102,17 @@ export function createCharacterStatePackages(
         return Object.freeze({ id: selection.id, stateId, url: selection.url, sizes: matchCharacterImageSizes, avif: selection.avif, webp: selection.webp });
       }
       const assetId = requiredString(mapping.assetId, key + ': state asset ID');
-      const reusedStateId = permittedStateAssetReuse[stateId];
-      const reusedAssetId = reusedStateId === 'selection'
+      const reusedStateId = stateAssetReuse[stateId];
+      const expectedAssetId = reusedStateId === 'selection'
         ? selection.id
-        : reusedStateId ? selection.id + '--' + reusedStateId : null;
-      if (assetId === selection.id && reusedAssetId === selection.id) {
-        return Object.freeze({ id: selection.id, stateId, url: selection.url, sizes: matchCharacterImageSizes, avif: selection.avif, webp: selection.webp });
-      }
-      if (assetId !== selection.id + '--' + stateId && assetId !== reusedAssetId) {
+        : reusedStateId ? selection.id + '--' + reusedStateId : selection.id + '--' + stateId;
+      if (assetId !== expectedAssetId) {
         throw new Error(key + ': incorrect asset mapping for ' + stateId);
       }
-      const expectedAssetStateId = assetId === selection.id + '--' + stateId
-        ? stateId
-        : reusedStateId;
+      if (assetId === selection.id) {
+        return Object.freeze({ id: selection.id, stateId, url: selection.url, sizes: matchCharacterImageSizes, avif: selection.avif, webp: selection.webp });
+      }
+      const expectedAssetStateId = reusedStateId ?? stateId;
       const asset = assets.get(assetId);
       if (!asset || asset.ownerId !== ownerId || asset.skinId !== skinId ||
         asset.stateId !== expectedAssetStateId) {

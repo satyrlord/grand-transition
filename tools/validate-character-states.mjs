@@ -30,6 +30,8 @@ export function validateStateManifest(manifest, selectionManifest) {
     requireFact(isRecord(asset) && typeof asset.id === 'string' && !assets.has(asset.id), 'Character state asset IDs must be present and unique.');
     assets.set(asset.id, asset);
   }
+  requireFact(manifest.assets.length === contract.expectedStateMasterCount,
+    `Character state manifest must contain exactly ${contract.expectedStateMasterCount} state masters.`);
   const seenPackages = new Set();
   const usedAssets = new Set();
   for (const group of manifest.packages) {
@@ -45,16 +47,15 @@ export function validateStateManifest(manifest, selectionManifest) {
       requireFact(records.length === 1, `${skin.id}: missing or duplicate ${state.id} mapping.`);
       const record = records[0];
       requireFact(record.durationMs === state.durationMs && record.loop === state.loop, `${skin.id}/${state.id}: incorrect motion timing or loop mode.`);
-      const ownAssetId = state.id === 'selection' ? skin.id : `${skin.id}--${state.id}`;
-      const reusedStateId = contract.permittedStateAssetReuse[state.id];
-      const reusedAssetId = reusedStateId === 'selection'
+      const reusedStateId = contract.stateAssetReuse[state.id];
+      const expectedAssetId = state.id === 'selection' || reusedStateId === 'selection'
         ? skin.id
-        : reusedStateId ? `${skin.id}--${reusedStateId}` : null;
-      requireFact(record.assetId === ownAssetId || record.assetId === reusedAssetId,
+        : reusedStateId ? `${skin.id}--${reusedStateId}` : `${skin.id}--${state.id}`;
+      requireFact(record.assetId === expectedAssetId,
         `${skin.id}/${state.id}: incorrect asset mapping.`);
       if (record.assetId === skin.id) continue;
       const assetId = record.assetId;
-      const expectedAssetStateId = assetId === ownAssetId ? state.id : reusedStateId;
+      const expectedAssetStateId = reusedStateId ?? state.id;
       const asset = assets.get(assetId);
       requireFact(asset && asset.ownerType === 'character' && asset.ownerId === skin.ownerId && asset.skinId === skin.skinId &&
         asset.stateId === expectedAssetStateId,
@@ -131,6 +132,18 @@ export async function validateCharacterStates({ characterRoot = path.resolve('sr
   }
   const actualFiles = await readdir(path.join(root, 'states/variants'));
   requireFact(actualFiles.length === expectedFiles.size && actualFiles.every((file) => expectedFiles.has(file)), 'State runtime directory contains missing or extra files.');
+  const expectedMasters = new Set(manifest.assets.map(({ source }) => source.path));
+  const actualMasters = new Set();
+  for (const skin of statePackages(selection)) {
+    const stateRoot = path.join(root, 'states', skin.id);
+    for (const entry of await readdir(stateRoot, { withFileTypes: true })) {
+      if (entry.isFile() && path.extname(entry.name).toLowerCase() === '.png') {
+        actualMasters.add(`states/${skin.id}/${entry.name}`);
+      }
+    }
+  }
+  requireFact(actualMasters.size === expectedMasters.size && [...actualMasters].every((file) => expectedMasters.has(file)),
+    'State master directories contain missing or extra PNG files.');
   const sceneManifest = JSON.parse(await readFile(path.join(sceneRoot, 'scene-manifest.json'), 'utf8'));
   const worstBytes = measurePackageBytes(manifest, selection, sceneManifest);
   requireFact(worstBytes <= 3 * 1024 * 1024, `Selected scene and two character packages exceed 3 MiB: ${worstBytes} bytes.`);

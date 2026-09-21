@@ -18,13 +18,13 @@ function fixture() {
   };
   const requiredPackages = statePackages(selection) as SelectionEntry[];
   const assets = requiredPackages.flatMap((skin) =>
-    contract.states.filter((state) => state.id !== 'selection').map((state) => {
-      const id = `${skin.id}--${state.id}`;
+    contract.stateMasterIds.map((stateId) => {
+      const id = `${skin.id}--${stateId}`;
       return {
         id, ownerType: 'character', ownerId: skin.ownerId, skinId: skin.skinId,
-        stateId: state.id, poseId: state.id, expressionId: state.id,
+        stateId, poseId: stateId, expressionId: stateId,
         sourceDescription: 'Original test fixture.', licenseIdentifier: 'LicenseRef-Test',
-        source: { path: `states/${skin.id}/${state.id}.png`, width: 2048, height: 2048, format: 'png', bytes: 100, sha256: 'a'.repeat(64) },
+        source: { path: `states/${skin.id}/${stateId}.png`, width: 2048, height: 2048, format: 'png', bytes: 100, sha256: 'a'.repeat(64) },
         focalPoint: { x: 0.5, y: 0.32 },
         crop: { x: 0, y: 0, width: 1, height: 1, strategy: 'full-body-safe-margin-v1' },
         variants: [320, 640, 960].flatMap((width) => ['avif', 'webp'].map((format) => ({
@@ -42,7 +42,9 @@ function fixture() {
         ownerId: skin.ownerId, skinId: skin.skinId,
         states: contract.states.map((state) => ({
           stateId: state.id, durationMs: state.durationMs, loop: state.loop,
-          assetId: state.id === 'selection' ? skin.id : `${skin.id}--${state.id}`,
+          assetId: state.id === 'selection' || contract.stateAssetReuse[state.id as keyof typeof contract.stateAssetReuse] === 'selection'
+            ? skin.id
+            : `${skin.id}--${contract.stateAssetReuse[state.id as keyof typeof contract.stateAssetReuse] ?? state.id}`,
         })),
       })),
     },
@@ -60,6 +62,11 @@ describe('complete character state contract', () => {
     expect(statePackages(selection)).toHaveLength(28);
     expect(manifest.packages).toHaveLength(28);
     expect(manifest.packages.every(({ states }) => states.length === 9)).toBe(true);
+    expect(contract.stateMasterIds).toEqual([
+      'thinking', 'delivery', 'light-hit', 'heavy-hit', 'weakness',
+    ]);
+    expect(contract.expectedStateMasterCount).toBe(140);
+    expect(manifest.assets).toHaveLength(140);
 
     const minimumMasters = new Set([
       'thinking',
@@ -70,7 +77,7 @@ describe('complete character state contract', () => {
     ]);
     expect(stateAssetId('fixture', 'idle', minimumMasters)).toBe('fixture');
     expect(stateAssetId('fixture', 'idle', new Set([...minimumMasters, 'idle'])))
-      .toBe('fixture--idle');
+      .toBe('fixture');
     expect(stateAssetId('fixture', 'comeback', minimumMasters)).toBe('fixture--delivery');
     expect(stateAssetId('fixture', 'grammar-mistake', minimumMasters)).toBe('fixture--weakness');
     expect(() => stateAssetId('fixture', 'thinking', new Set())).toThrow(/required state master/u);
@@ -95,7 +102,7 @@ describe('complete character state contract', () => {
     selection.assets[1]!.variants = variants(960, 1, 1);
     expect(measurePackageBytes(manifest, selection, scenes)).toBe(320);
   });
-  test('accepts all nine mappings for every required final state package', () => {
+  test('accepts all nine mappings backed by exactly five masters per package', () => {
     const { manifest, selection } = fixture();
     expect(validateStateManifest(manifest, selection)).toBe(manifest);
   });
@@ -124,28 +131,17 @@ describe('complete character state contract', () => {
     expect(measurePackageBytes(manifest, selection, scenes)).toBeGreaterThan(3 * 1024 * 1024);
   });
 
-  test('allows only the declared state-to-asset reuse while preserving pose diversity', () => {
+  test('requires the declared state-to-asset reuse while preserving pose diversity', () => {
     const { manifest, selection } = fixture();
     const group = manifest.packages[0]!;
     const skinId = selection.assets.find(
       ({ ownerId, skinId }) => ownerId === group.ownerId && skinId === group.skinId,
     )!.id;
-    const reuse = new Map([
-      ['idle', 'selection'],
-      ['comeback', 'delivery'],
-      ['grammar-mistake', 'weakness'],
-    ]);
-    for (const [stateId, sourceStateId] of reuse) {
-      const mapping = group.states.find((state) => state.stateId === stateId)!;
-      mapping.assetId = sourceStateId === 'selection'
-        ? skinId
-        : `${skinId}--${sourceStateId}`;
-      manifest.assets = manifest.assets.filter(
-        ({ id }) => id !== `${skinId}--${stateId}`,
-      );
-    }
     expect(validateStateManifest(manifest, selection)).toBe(manifest);
 
+    group.states.find(({ stateId }) => stateId === 'idle')!.assetId = `${skinId}--idle`;
+    expect(() => validateStateManifest(manifest, selection)).toThrow(/incorrect asset mapping/u);
+    group.states.find(({ stateId }) => stateId === 'idle')!.assetId = skinId;
     group.states.find(({ stateId }) => stateId === 'light-hit')!.assetId = `${skinId}--delivery`;
     expect(() => validateStateManifest(manifest, selection)).toThrow(/incorrect asset mapping/u);
   });
@@ -281,6 +277,12 @@ describe('complete character state contract', () => {
           create: { width: 2048, height: 2048, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
         }).composite([{ input: figure }]).png().toFile(path.join(sourceRoot, `${stateId}.png`));
       }
+
+      await sharp({
+        create: { width: 2048, height: 2048, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
+      }).png().toFile(path.join(sourceRoot, 'idle.png'));
+      await expect(prepareCharacterStatePackage(root, skin)).rejects.toThrow(/exactly/u);
+      await rm(path.join(sourceRoot, 'idle.png'));
 
       const prepared = await prepareCharacterStatePackage(root, skin);
       const first = await buildCharacterStatePackage(prepared, firstVariants);
