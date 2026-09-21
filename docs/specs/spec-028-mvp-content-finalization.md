@@ -65,18 +65,26 @@ The Black Sea Captain remains default-only in the current
 approved roster.
 
 Local Baron (`county-baron`) adds the `municipal-patron` portrait with native
-transparency and the shared detailed character style. Filename discovery
+transparency and the shared funny big-head character style. It is the sole
+visual north star for every playable selection and state. Filename discovery
 exposes it in setup and carries it into matches.
 Keep its default portrait, character identity, phrases, balance, and voice
 unchanged. It uses the selection-art fallback, without a new state package.
 
 The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the
-shared Milestone 023 detailed cel-shaded editorial-cartoon style. It holds a
+shared Milestone 023 cel-shaded editorial-cartoon style. It holds a
 single money envelope with original generic banknote edges and no markings.
 The portrait uses the approved green-matte conversion fallback after native
 transparency fails validation. Banknote edges are pale blue to avoid the key
 color. Preserve the existing alpha and color checks. Matches use the
 selection-art fallback, without a new pose or state package.
+
+Milestone 023's later funny big-head consistency program marks Reluctant
+Theorem for complete selection-and-pose replacement. Keep the current fallback
+and current package counts until that one-archetype cycle is expressly
+authorized, integrated, validated, and manually accepted. That integration
+removes `reluctant-theorem` from the fallback list and adds its five state
+masters; do not change the executable inventory in advance.
 
 All other selectable skins use the complete nine-state Milestone 023 package.
 The final state inventory therefore contains 28 skin packages and 140 state
