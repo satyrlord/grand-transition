@@ -39,4 +39,4 @@ Noun combos do not multiply a finisher.
 ## Objective verifiers
 
 `tests/unit/combo-finisher-scoring.test.ts` and
-`tests/unit/draft-actions.test.ts` verify AC-011-01 through AC-011-03.
+`tests/unit/draft-actions.test.ts` do checks of AC-011-01 through AC-011-03.

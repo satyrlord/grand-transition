@@ -34,7 +34,7 @@
     "test:coverage:full": "node tools/run-test-phase.mjs test:coverage full",
     "test:browser:full": "node tools/run-test-phase.mjs test:browser full",
     "test:e2e:full": "node tools/run-test-phase.mjs test:e2e full",
-    "markdown:lint": "markdownlint-cli2 \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"docs/*.md\" \"docs/specs/**/*.md\" \"docs/assets/**/*.md\" \".github/**/*.md\"",
+    "markdown:lint": "markdownlint-cli2 \"AGENTS.md\" \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"CREDITS.md\" \"LICENSE.md\" \"docs/*.md\" \"docs/specs/**/*.md\" \"docs/assets/**/*.md\" \".github/**/*.md\"",
     "validate": "npm run markdown:lint && npm run assets:validate && npm run content:validate && npm run localization:validate && npm run boundaries:check && npm run lint && npm run typecheck",
     "quality:quick": "node tools/run-quality-gate.mjs quick",
     "quality:full": "node tools/run-quality-gate.mjs full",

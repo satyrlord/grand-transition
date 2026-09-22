@@ -2,6 +2,11 @@
 
 These agents do independent, read-only reviews. The root coordinator owns
 the plan, implementation authority, integration, and final decision.
+The table uses these abbreviations:
+
+- AI: artificial intelligence.
+- UI: user interface.
+- CSP: Content Security Policy.
 
 | Agent | Review scope |
 | --- | --- |
@@ -11,6 +16,6 @@ the plan, implementation authority, integration, and final decision.
 | [`release-reviewer`](release-reviewer.agent.md) | Quality gate, production artifact, CSP, Pages subpath, performance, and browser evidence. |
 
 Every finding must include a location, broken contract, direct evidence,
-impact, smallest remedy, and an objective verification step. A review agent
-has read-only tools. Route authorized repairs to the coordinator or an executor
-with the necessary tools.
+effect, smallest repair, and an objective check.
+A review agent has read-only tools.
+Give authorized repairs to the coordinator or an executor with the necessary tools.

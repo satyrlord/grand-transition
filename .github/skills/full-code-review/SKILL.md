@@ -9,8 +9,10 @@ Use read-only mode by default. Repair only when the user explicitly requests it.
 
 ## Establish scope
 
-Inspect status, staged and unstaged diffs, untracked files, and recent history.
-Classify each changed path and preserve unrelated work.
+Examine status, staged and unstaged diffs, untracked files, and recent history.
+Classify each changed path.
+Keep unrelated work.
+
 For a diff review, read every changed file.
 For a checkout review, inventory and read every file in the selected scope.
 Read its specification owner, callers, consumers, tests, generated outputs, and
@@ -19,23 +21,23 @@ Map each changed contract to direct evidence.
 
 ## Review contracts
 
-Check each applicable area:
+Examine each applicable area:
 
 - Keep pure engine, grammar, artificial intelligence (AI), replay, and codec
   rules deterministic. Keep them free of Lit or Document Object Model (DOM) imports.
 - Keep immutable snapshots and typed commands at the user interface (UI) boundary.
-- Check grammar, board, scoring, combo, continuation, comeback, simultaneous
+- Examine grammar, board, scoring, combo, continuation, comeback, simultaneous
   damage, sudden death, and AI rules against their owners.
 - Keep hidden hotseat information out of visible text, labels, stale DOM,
   speech, logs, and exports.
-- Check content for valid schemas, localization, reachability, fictional
+- Examine content for valid schemas, localization, reachability, fictional
   characters, editorial safety, and provenance.
-- Preserve pointer controls, the supported landscape matrix, the blocking
+- Keep pointer controls, the supported landscape matrix, the blocking
   viewport gate, and visible explanations in UI changes.
-- Preserve safe persistence failure behavior.
-  Check asset and deployment paths, the Pages base path, production network
+- Keep safe persistence failure behavior.
+  Examine asset and deployment paths, the Pages base path, production network
   rules, and Content Security Policy (CSP) rules.
-- Preserve seeds in generated failure output.
+- Keep seeds in generated failure output.
 
 ## Report and repair
 
@@ -46,10 +48,14 @@ Treat prior review comments and tool warnings as hypotheses.
 
 Repair only confirmed findings within explicit authority.
 Add focused regression evidence.
-Use [run-quality-gate](../run-quality-gate/SKILL.md).
-For high-risk work, request a clean-context final review.
+
+Run `npm run quality:quick` for routine verification.
+If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey user restrictions on checks. Report checks that you did not run.
+For high-risk work, request an independent final review from an agent that did not implement the change.
 
 Account for every selected path, affected contract, and applicable test surface.
 
-The review is complete when every selected path has a status, every confirmed
-finding has a verifier, and all applicable checks are identified.
+The review is complete when every selected path has a status and every confirmed finding has a verification step.
+Identify all applicable checks.
+An authorized repair is complete when each repaired finding passes its verification step.

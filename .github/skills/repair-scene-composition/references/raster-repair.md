@@ -2,6 +2,10 @@
 
 Read this module before raster generation, editing, conversion, adoption, or provenance changes.
 Run repository commands from the repository root.
+API means application programming interface.
+CLI means command-line interface.
+PNG means Portable Network Graphics.
+sRGB means standard red, green, and blue.
 
 For playable character raster generation and editing, use
 [generate-character-openai](../../generate-character-openai/SKILL.md).
@@ -11,12 +15,11 @@ It selects the Flare API for transparency, exact-size masters, and output above 
 It uses the internal image tool for small opaque drafts.
 Its repository helper owns the API request. Do not patch an installed image CLI.
 
-## Preserve the raster contract
+## Keep the raster contract
 
-Preserve the Milestone 023 flat cel-shaded editorial-cartoon direction across
-the complete scene package. Use the same bold contour weight, flat colors, and
-two-or-three-level hard-edged
-shading. Keep shape exaggeration and restrained print texture consistent across
+Keep the Milestone 023 flat cel-shaded editorial-cartoon direction across
+the complete scene package. Use the same bold contour weight and flat colors.
+Use two or three hard-edged shading levels. Keep shape exaggeration and restrained print texture consistent across
 characters, moderators, architecture, furniture, fixtures, and props. Reject
 painted comic-book, painterly semi-realistic,
 realistic concept-art, photographic, three-dimensional-render, and mixed-style
@@ -36,9 +39,10 @@ blue filter.
 
 Use a real alpha channel for transparent layers. Reject a baked checkerboard.
 Prefer native transparent PNG output when the selected model supports it.
-Preserve its alpha and decoded colors except for the approved bounded alpha-1 preparation.
-Follow [native alpha preparation](../../generate-scene-openai/references/native-alpha.md) before adoption.
-Inspect it against light and dark backgrounds.
+Keep its alpha and decoded colors except for the approved bounded alpha-1 preparation.
+
+Use [native alpha preparation](../../generate-scene-openai/references/native-alpha.md) before adoption.
+Examine it against light and dark backgrounds.
 Stamp factual provenance, then use `adopt-native` in
 [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs).
 This path records native-alpha metadata without color keying or pixel changes.
@@ -49,7 +53,7 @@ Do not put the key color in subjects generated through that fallback.
 Convert the matte to alpha with
 [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs). Use `adopt` to
 place an existing alpha asset under the same workflow. Run `validate` over the
-complete asset root. The converter must preserve partial-alpha edge coverage
+complete asset root. The converter must keep partial-alpha edge coverage
 and reconstruct foreground color from the known green matte. A hard source
 contour receives the converter's bounded binomial edge pass.
 
@@ -62,26 +66,26 @@ Graphics (PNG) masters. Native output can contain intentional green material. Ap
 the Milestone 023 alpha-at-most-16 exception only to lossy AV1 Image File
 Format (AVIF) and WebP variants.
 
-Run `node tools/validate-asset-color.mjs validate <asset-root>` after adoption or conversion
-and before visual approval. The color guard ignores transparent pixels and the
+After adoption or conversion, run `node tools/validate-asset-color.mjs validate <asset-root>`.
+Run this check before visual approval. The color guard ignores transparent pixels and the
 temporary green matte. It
 rejects broad yellow bias across muted or neutral pixels. An asset without a
-measurable neutral or cool anchor requires manual review.
+measurable neutral or cool anchor must have a manual review.
 
 Do not use average red, green, and blue (RGB) values as the only color test.
 Validate a private prompt directly with `node
 tools/validate-generation-prompt.mjs <prompt-file>`. The green conversion
 workflow runs the same prompt guard before it writes a shipping raster.
 
-Keep temporary renders in the temporary folder. Keep character descriptions and
-custom prompts in the research folder. For a complete character
+Keep temporary renders and working prompts in the temporary folder.
+Keep durable character descriptions and source directions in the research folder. For a complete character
 source tree, use `npm run assets:convert-green -- <green-root> <output-root>
 --prompt-root <prompt-root>`. Keep matching relative names between both roots.
 The converter verifies every private prompt and embeds only a generic source
 record. It does not embed private study data.
 
 For a scene tree whose prompts are beside its temporary renders, omit
-`--prompt-root`. All conversion modes verify a supplied prompt and embed only a
+`--prompt-root`. All conversion modes do a check of a supplied prompt and embed only a
 generic source record. Use `provenance <png> --source <origin>` when a raster
 has a verified generic source origin. This command replaces an existing exact
 prompt with that source record.

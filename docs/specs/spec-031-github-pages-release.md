@@ -5,6 +5,10 @@
 **Owns:** GitHub Pages workflow, production publication, and smoke evidence  
 **Production-file budget:** 5
 
+## Terms
+
+- CI: continuous integration.
+
 ## Deliver
 
 Enable the approved default-branch Pages workflow with minimum permissions. It
@@ -12,9 +16,8 @@ must install the tool versions in the lockfile, run `npm run ci`, upload only
 `dist/`, and deploy only after success. Complete the release documentation.
 
 The repository is `satyrlord/grand-transition`, the default branch is `main`,
-and the base is `/grand-transition/`. A rename, transfer, root-site move, or
-branch change requires coordinated specification, Vite, Playwright, and workflow
-updates.
+and the base is `/grand-transition/`. Coordinated specification, Vite, Playwright, and workflow updates are
+necessary after a rename, transfer, root-site move, or branch change.
 
 The workflow installs Node.js 24 and runs `npm ci`. It installs Playwright
 Chromium, Firefox, and WebKit with dependencies. It runs `npm run ci` and
@@ -93,7 +96,7 @@ AC-031-01 through AC-031-06.
 - **AC-031-06:** A recovery rehearsal on a non-production Pages artifact proves
   revert, rebuild, gate, deploy, and smoke order without bypass.
 - **AC-031-07:** The tester workflow runs for `main` pushes and manual dispatch
-  from `main`, and its deploy job requires the successful build job. Pull
+  from `main`, and its deploy job can run only after the build job succeeds. Pull
   requests and non-`main` workflow dispatches do not deploy.
 - **AC-031-08:** The tester workflow installs the lockfile dependencies, runs
   the current production build, and uploads only `dist/`. It does not run the
@@ -106,7 +109,7 @@ AC-031-01 through AC-031-06.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 A pull request runs but does not deploy. `main` deploys the tested artifact.
 The published `/grand-transition/` URL passes asset, refresh, CSP, speech-state,

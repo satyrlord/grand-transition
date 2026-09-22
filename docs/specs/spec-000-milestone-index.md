@@ -3,6 +3,15 @@
 **Status:** Approved  
 **Authority:** Specification-set index and delivery sequence
 
+## Terms
+
+- AI: artificial intelligence.
+- MVP: minimum viable product.
+- PC: personal computer.
+- UI: user interface.
+- CSS: Cascading Style Sheets.
+- IDs: identifiers.
+
 ## Purpose
 
 This file and its linked approved milestone specifications are the complete
@@ -20,7 +29,7 @@ complete an approved specification.
 ## Product-wide contracts
 
 - Build an original browser-based competitive sentence-dueling game. Its match
-  mechanics follow _Oh...Sir! The Hollywood Roast_. They include one common
+  mechanics use the rules of _Oh...Sir! The Hollywood Roast_. They include one common
   phrase board, two private hand cards, and tactical phrase removal. They also
   include grammar, clause scoring, weaknesses, noun combos, and finishers.
 
@@ -28,9 +37,8 @@ complete an approved specification.
   also necessary. The default timer is 30 seconds. The local choices are 15
   seconds and Unlimited.
 - Use only original Grand Transition characters, scenes, identities, art,
-  audio, branding, and source. Phrase text can be invented or real. A phrase
-  that refers to real speech, a real slogan, or a real event keeps its real
-  wording, so its meaning survives translation into another language.
+  audio, branding, and source. Phrase text can be invented or real. A phrase that refers to real speech, a real slogan, or a real event keeps its
+  real wording. This keeps its meaning during translation.
   Reference-game mechanics are authority for behavior, not permission to copy
   protected expression.
 - All generated representational raster art uses the shared cel-shaded
@@ -40,8 +48,8 @@ complete an approved specification.
   painterly semi-realistic, realistic concept-art, photographic, and
   three-dimensional-render styles are prohibited.
   All character skins and states use Milestone 023's funny big-head cartoon
-  standard. The `county-baron--municipal-patron` selection portrait is the sole
-  visual north star. Do not turn a skin into a serious or realistic prestige
+  standard. The `county-baron--municipal-patron` selection portrait is the only
+  visual reference. Do not turn a skin into a serious or realistic prestige
   portrait, even when it uses outlines and cel shading.
 - Use fictional composite archetypes. Do not name or identify a real person in
   shipped content, specifications, editorial rationale, source notes, or asset
@@ -54,13 +62,14 @@ complete an approved specification.
   content. Public institutions and documented historical events can appear
   directly and accurately when the result does not identify a real person.
 - Public political speech, slogans, memes, and documented events can appear in
-  common phrases, character phrases, endings, and comebacks. A phrase that
-  refers to real speech stays accurate: keep the real wording, in its original
-  language or as a faithful rendering whose meaning is preserved. The revised
-  common catalog requires every predicate, modifier, and ending to be inspired
-  by a verifiably real quote, with private source evidence. The visible card may
+  common phrases, character phrases, endings, and comebacks. Keep a phrase that refers to real speech accurate. Keep its real wording in
+  the original language or use a faithful translation that keeps its
+  meaning. Every predicate, modifier, and ending in the revised common catalog must have
+inspiration from a verifiably real quote, with private source evidence. The visible card may
   be an original fictional adaptation, but it must not be presented as the real
-  person's words. An invented phrase remains permitted for the other roles.
+  person's words.
+
+  An invented phrase remains permitted for the other roles.
   Milestone 027 owns source verification and private traceability. Character
   identity stays fictional across skins.
 - Do not use a real political party's name, acronym, or logo. Use only generic
@@ -100,35 +109,35 @@ complete an approved specification.
   files, and required updates to owning specifications do not count against it.
 - Stop and split the milestone before implementation if its production scope
   cannot fit the budget without mixing responsibilities.
-- Milestone 001 is complete when its focused bootstrap checks pass. Each later
-  milestone also requires cumulative `npm run ci` from a clean checkout.
+- Milestone 001 is complete when its focused bootstrap checks pass. Cumulative `npm run ci` from a clean checkout is also necessary for each later
+milestone.
 - Temporary original assets are permitted only where stated. Do not add future
   compatibility or scaffolding.
 - The user reviews the game after each milestone outside its completion gates.
   Human sign-off, user-run play, visual or listening reviews, and a mandatory
   decision interview are not prerequisites for completion. Optional
-  user review notes can be retained, but are not required evidence.
-- Agents verify implementation through code and source inspection, automated
+  user review notes can be kept, but are not required evidence.
+- Agents do checks of implementation through code and source inspection, automated
   checks, measurements, and production-browser checks. Record what was actually
   checked without claiming human approval or a subjective listening result.
   Quality, style, privacy, accuracy, licensing, and automated acceptance
   requirements remain in force.
 - Resolve routine creative and implementation choices from the existing
   contracts and record material assumptions. Ask only when an unresolved input
-  blocks the work. Do not require a separate interview or approval
-  for a routine choice already covered by the task and contracts.
+  blocks the work. Do not make a separate interview or approval necessary for a routine choice
+already covered by the task and contracts.
 
 ## Specification completeness contract
 
 Normative words have these meanings:
 
 - **Must** and **must not** state requirements.
-- **Default** states the value used when no valid saved or explicit value
+- **Default** specifies the value used when no valid saved or explicit value
   exists.
 - **Range** includes both endpoints unless the text says otherwise.
-- A typed failure does not change the input state, consume randomness, or append
-  to command history unless its owning specification explicitly says that it
-  does.
+- Unless its owning specification explicitly specifies otherwise, a typed failure
+  does not change the input state, consume randomness, or append to command
+  history.
 - An acceptance criterion with several assertions is one criterion only when
   all assertions use the same setup and action.
 
@@ -155,11 +164,11 @@ An evidence record contains the milestone and acceptance identifiers. It also
 contains the commit or working-tree identifier and the production build
 command. Include the test command or reproducible inspection and the operating system.
 When applicable, include the browser, browser version, viewport, input seed,
-and setup. Include the expected result, actual result, and links to retained
+and setup. Include the expected result, actual result, and links to kept
 evidence.
 
 Automated evidence must be reproducible from a clean checkout. Agent inspection
-records the inspected source or artifact, method, observed result, and limits.
+records the examined source or artifact, method, observed result, and limits.
 Optional user feedback is separate from required completion evidence.
 Do not record private hand content, personal data, machine secrets, or hidden
 speech text.
@@ -168,10 +177,11 @@ speech text.
 
 Browser UI support uses the content viewport in CSS pixels. Milestone 018
 owns the exact geometry, portrait warning, hotseat restrictions, and compact
-layout contract. Landscape requires width greater than height and at least
-640 by 320. Portrait requires height greater than width and at least 360 by
-640. Square viewports are unsupported. Landscape is the intended layout;
-1920 by 1080 on PC remains recommended. The application does not inspect or
+layout contract. Landscape must have width greater than height and measure at least 640 by 320.
+Portrait must have height greater than width and measure at least 360 by 640. Square viewports are unsupported.
+
+Landscape is the intended layout.
+1920 by 1080 on PC remains recommended. The application does not examine or
 block an operating system or device class.
 
 The acceptance matrix is:
@@ -189,7 +199,7 @@ At each supported viewport:
 
 - Required text and controls must not overlap or clip. Compact layouts can
   use vertical page scrolling to keep required content reachable. The desktop
-  matrix retains its no-page-scroll layout.
+  matrix keeps its no-page-scroll layout.
 - The page must not scroll horizontally. A board, sentence, dialog, or log can
   scroll inside a named container when its owning specification permits it.
 - Synthetic UI strings that are 40 percent longer than the longest shipped
@@ -198,10 +208,11 @@ At each supported viewport:
 An unsupported viewport replaces the application with a blocking compatibility
 screen. It names both minimum sizes, recommends landscape, and provides no
 bypass. Portrait presents a dismissible landscape recommendation once per page
-session and disables hotseat. An active hotseat match in portrait requires a
-return to landscape. All blocking conditions conceal match facts and preserve
-exact remaining turn time. Automatic resume requires all blocks to clear;
-manual Pause remains active until explicit Resume.
+session and disables hotseat. An active hotseat match in portrait cannot continue until landscape returns. All blocking conditions conceal match facts and keep
+exact remaining turn time.
+
+Automatic resume occurs only after all blocks clear.
+Manual Pause remains active until explicit Resume.
 
 ## External validation tools
 
@@ -219,17 +230,17 @@ Each must complete these two separate validations against the implemented slice
 in its production browser build:
 
 1. Run `$impeccable audit` for performance, theming, supported desktop and phone
-   layout, and implementation integrity. Run and verify the
-   bundled detector. Record the score and positive findings. Record each
+   layout, and implementation integrity. Run the
+   bundled detector. Examine its result. Record the score and positive findings. Record each
    priority 0 through priority 3 (P0-P3) issue and its disposition.
 2. After audit repairs, run `$impeccable critique` on the same stable target.
-   Follow the Impeccable orchestration contract in the installed skill. Include
+   Obey the Impeccable orchestration contract in the installed skill. Include
    isolated design and detector or browser assessments when the installed skill
    supports them. Record heuristic
    scores, cognitive-load and persona findings, design strengths, priorities,
    the persisted snapshot, and every issue disposition.
 
-For both validations, inspect the affected supported orientation states together
+For both validations, examine the affected supported orientation states together
 in a bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
 Record accepted or deferred P2 and P3 findings with rationale and an owning
 future milestone. An unavailable built surface blocks these validations. A
@@ -251,7 +262,7 @@ source-only review does not satisfy them.
    sentences are legal and rendered.
 7. [Grammar mistakes and sentence endings](spec-007-extended-grammar.md).
    Budget: 6. Wrong cards, incomplete endings, finishers, and continuations
-   follow the final reference rules.
+   obey the final reference rules.
 8. [Hollywood Roast board generation](spec-008-board-generation.md). Budget: 6.
    Fixed seeds create the common nine-slot board and private hands.
 9. [Draft actions](spec-009-draft-actions.md). Budget: 7. Shared and private
@@ -265,7 +276,7 @@ source-only review does not satisfy them.
 13. [Match lifecycle](spec-013-match-lifecycle.md). Budget: 7. Headless matches
     reach a deterministic terminal state.
 14. [Replay and simulation](spec-014-replay-and-simulation.md). Budget: 8.
-    Replays are exact and generated matches preserve invariants.
+    Replays are exact and generated matches keep invariants.
 15. [Lit screen shell](spec-015-lit-screen-shell.md). Budget: 8. Title and setup
     screens dispatch typed commands.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
@@ -297,7 +308,7 @@ source-only review does not satisfy them.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial rules](spec-027-balance-editorial.md). Budget: 5.
-    The revised content implementation is verified; broader editorial evidence
+    The revised content implementation is verified. Broader editorial evidence
     remains pending. Additional Milestone 028 artwork is not a prerequisite.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
     The revised exact common, character, and scene volumes are implemented and
@@ -305,19 +316,19 @@ source-only review does not satisfy them.
     evidence remain pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
     Budget: 8 per delivery package. Complete: Romanian interface, game
-    content, grammar, replay locale, Mihai medium and Liana medium speech;
+    content, grammar, replay locale, Mihai medium and Liana medium speech.
     Ro_VITS evaluated and rejected as the Romanian voice.
 30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
     and compatibility gates pass.
 31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The
     tested artifact deploys and passes smoke tests.
 32. [Civic Cypher Boxing Ring](spec-032-civic-cypher-boxing-ring.md). Budget: 8.
-    A seventh bilingual playable scene adds original Romanian hip-hop battle
-    art, a complete scene phrase pool, local boom-bap music, focused
-    production-browser evidence, and automatic inclusion in the catalog-driven
-    Ladder scene order.
+    A seventh bilingual playable scene adds original Romanian hip-hop battle art,
+    a complete scene phrase pool, and local boom-bap music. It includes
+    focused production-browser evidence. The catalog-driven Ladder scene order
+    includes the new scene automatically.
 
-Each milestone follows its explicit **Depends on** field. Milestone filenames,
+Each milestone obeys its explicit **Depends on** field. Milestone filenames,
 headings, acceptance IDs, and references use the same numeric identifier. This
 order limits the context and files needed for each implementation session.
 

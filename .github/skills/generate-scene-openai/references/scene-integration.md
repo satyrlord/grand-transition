@@ -1,9 +1,11 @@
 # Integrate accepted scene art
 
+PNG means Portable Network Graphics.
+
 ## Prepare the master
 
 Use this procedure only after the candidate review passes.
-For transparent output, first follow [native alpha preparation](native-alpha.md).
+For transparent output, first use [native alpha preparation](native-alpha.md).
 Use the reviewed prepared-native image as the source when that step changed alpha.
 Read `tools/scene-resolution.mjs`, `tools/build-scene-assets.mjs`, and the selected scene's existing manifest entry.
 Use the helper to prepare the exact shipping size:
@@ -19,22 +21,24 @@ The helper reads the shipping dimensions from `sceneMasterSize`.
 Generation requests use supported source dimensions. They do not redefine these shipping dimensions.
 It supports the masters declared in `SCENE_MASTER_NAMES`, including the two
 `-desks` layers and the four foundation `-foreground` layers.
-For a new ID, implement its approved pipeline contract before preparation.
+For a new identifier, implement its approved pipeline contract before preparation.
 Do not bypass the master inventory check.
 
 Pass `--size WIDTHxHEIGHT` when the candidate is not 3840 by 2160.
-The helper preserves original bytes when the source already matches the master dimensions.
+The helper keeps original bytes when the source already matches the master dimensions.
 For a larger source, it uses centered Lanczos3 cover fitting without enlargement.
 It rejects undersized sources, including insufficient internal-tool outputs.
-Inspect the prepared image again for crop loss and edge defects.
+Examine the prepared image again for crop loss and edge defects.
 Its private preparation record includes source and output hashes and dimensions.
+
 All six current scenes use 3840 by 2160 background and foreground masters.
-Generate replacements at those dimensions and preserve their native pixels.
+Generate replacements at those dimensions and keep their native pixels.
 Flare cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
 A 4K source does not authorize changing another scene's shipping-resolution contract.
 
-For native transparent art, preserve the reviewed decoded pixels and alpha during metadata registration.
-Stamp generic provenance, then register the native source without matte conversion:
+For native transparent art, keep the reviewed decoded pixels and alpha during metadata registration.
+Stamp generic provenance.
+Then register the native source without matte conversion:
 
 ```text
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs provenance tmp/scene-generation/run/prepared.png --source "Verified model, route, dimensions, and operations."
@@ -42,7 +46,7 @@ node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-
 ```
 
 Replace the example source text with verified facts.
-The script retains its historical filename for existing callers.
+The script keeps its historical filename for existing callers.
 Native adoption changes metadata only. It does not perform background cleanup, normalize alpha, or flatten colors.
 Record the final stamped hash after these operations alongside the raw and prepared hashes.
 
@@ -52,10 +56,10 @@ For a green-matte fallback, convert through the existing converter:
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
 ```
 
-Inspect alpha edges against dark and light backgrounds.
+Examine alpha edges against dark and light backgrounds.
 Reject missing partial alpha, opaque corners, and detached shadows.
 Reject green residue in key-derived art. Native art can contain intentional green material.
-Use `adopt` only to retain a verified legacy alpha source under its existing workflow.
+Use `adopt` only to keep a verified legacy alpha source under its existing workflow.
 Keep back and foreground layers aligned on the same normalized canvas.
 
 Stamp a verified generic origin on the final PNG with the converter's `provenance` command and `--source`.
@@ -78,9 +82,10 @@ node tools/validate-asset-color.mjs validate tmp/scene-generation/run/scenes
 ```
 
 Run these commands in order. Do not validate while the builder is still writing variants.
-Inspect all changed manifest fields and every runtime size.
-Preserve ownership, license, focal regions, safe rectangles, source hashes, and byte budgets.
+Examine all changed manifest fields and every runtime size.
+Keep ownership, license, focal regions, safe rectangles, source hashes, and byte budgets.
 Do not edit generated variants or the generated manifest by hand.
+
 Do not change `tools/scene-replacement-baseline.json` to permit a rejected old source.
 That file records prohibited historical source hashes. It is not an approval
 register.
@@ -92,22 +97,27 @@ Use per-asset factual provenance. Do not relabel untouched studio assets.
 Make that change during the authorized replacement task, not during skill installation.
 
 Install the verified masters, generated variants, and generated manifest as one coherent package under `src/assets/scenes/`.
-Recheck the shipping tree before installation to preserve work added after staging began.
-Preserve unrelated changes and unused-candidate isolation.
-For new scene identities, follow [update-game-content](../../update-game-content/SKILL.md) for catalog and localization ownership.
+Do another check of the shipping tree before installation to keep work added after staging began.
+Keep unrelated changes.
+Keep unused candidates outside shipping assets.
+For new scene identities, use [update-game-content](../../update-game-content/SKILL.md) for catalog and localization ownership.
 
-## Verify runtime use
+## Do a check of runtime use
 
 Run affected scene tests, asset checks, and the production build.
 Use [verify-game](../../verify-game/SKILL.md) for the supported landscape viewport matrix.
 Run browsers headlessly.
-Inspect the production composition with real characters and interface content.
-Check setup previews, character sides, phrase rows, long speech, focal crops, foreground occlusion, and loaded variant sizes.
+
+Examine the production composition with real characters and interface content.
+Examine setup previews, character sides, phrase rows, long speech, focal crops, foreground occlusion, and loaded variant sizes.
 Wait for image decode before pixel assertions.
 Do not call an isolated image a verified game scene.
 
-Run [run-quality-gate](../../run-quality-gate/SKILL.md) as required for the resulting asset or behavior change.
+Run `npm run quality:quick` for routine verification.
+If the user explicitly requests the full gate, use [run-quality-gate](../../run-quality-gate/SKILL.md).
+Obey user restrictions on checks. Report checks that you did not run.
+
 Update affected specifications, tests, and factual source descriptions.
-Review the final diff once.
+Examine the final diff once.
 Report unavailable visual or browser checks separately from passing automated checks.
 Do not publish or commit unless the user requests it.

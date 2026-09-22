@@ -6,6 +6,10 @@
 breakdown
 **Production-file budget:** 5
 
+## Terms
+
+- AI: artificial intelligence.
+
 ## Clause scoring
 
 Only complete grammar clauses score. A clause is `NOUN + PREDICATE` or
@@ -16,7 +20,9 @@ A modifier belongs to the preceding complete clause. It does not create a new
 clause and does not replace the clause relation. Its tags can activate a
 weakness in that clause. Its character or scene restriction affects draw
 eligibility only. Each modifier adds 2 points to each clause to which it
-belongs, including clauses produced by compound subjects or objects. Repeated
+belongs, including clauses produced by compound subjects or objects.
+
+Repeated
 modifier occurrences each receive these points. Noun combos do not treat a
 modifier as a noun.
 
@@ -42,7 +48,9 @@ The multiplier has five values: 1, 2, 3, 4, and 5. Its default is 3, which
 produces base tiers of 5, 8, 11, and 14. Settings → Play owns the selector under
 Milestone 020. Capture the selection when each custom or Ladder match starts
 and use it for both players, AI evaluation, and score presentation until that
-match ends. Later settings changes apply to the next match. The setting affects
+match ends. Later settings changes apply to the next match.
+
+The setting affects
 compatibility points only: the fixed 5 points, explicit custom matrix values,
 modifier points, weakness factor, and combo rules do not change. Character and
 scene restrictions never change damage. They control eligibility only.
@@ -64,8 +72,8 @@ nearest-half rounding.
 An incomplete sentence and a continued fragment deal zero outgoing damage.
 
 A phrase with an empty `tags` array never matches a weakness. Neutral grammar
-words and neutral content use empty tags under Milestone 005. They retain their
-normal grammar and clause compatibility behavior; they do not add weakness
+words and neutral content use empty tags under Milestone 005. They keep their
+normal grammar and clause compatibility behavior. They do not add weakness
 events or activate a weakness multiplier. Tagged phrases in the same clause
 can still activate that multiplier.
 
@@ -104,12 +112,16 @@ can still activate that multiplier.
 
 ## Objective verifiers
 
-`tests/unit/basic-scoring.test.ts` verifies AC-010-01 through AC-010-06.
-`tests/unit/match-coordinator.test.ts` verifies captured match multipliers and
+`tests/unit/basic-scoring.test.ts` does checks of AC-010-01 through AC-010-06.
+`tests/unit/match-coordinator.test.ts` does checks of captured match multipliers and
 matching completed-history replays.
-The modifier scenario in `e2e/coordinated-copular-complement.spec.ts` verifies
+The modifier scenario in `e2e/coordinated-copular-complement.spec.ts` does checks of
 the production clause receipt and final damage for AC-010-06.
-`npm test -- tests/unit/replay-and-simulation.test.ts -t "current-catalog 500-match calibration"`
-verifies AC-010-07 with the documented default simulation policy.
+The `current-catalog 500-match calibration` case in
+`tests/unit/replay-and-simulation.test.ts` does checks of AC-010-07 with the
+documented default simulation policy. Milestone 002 restricts this case to the
+explicitly requested full gate.
+
+Direct test commands do not run it.
 `tests/unit/basic-scoring.test.ts` and
-`e2e/coordinated-copular-complement.spec.ts` verify AC-010-08.
+`e2e/coordinated-copular-complement.spec.ts` do checks of AC-010-08.

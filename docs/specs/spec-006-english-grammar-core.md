@@ -7,7 +7,7 @@
 
 ## Rule authority
 
-The final match rules follow _Oh...Sir! The Hollywood Roast_. The implementation
+The final match rules use the rules of _Oh...Sir! The Hollywood Roast_. The implementation
 uses Grand Transition phrases, fictional characters, scenes, and original or
 licensed media. It does
 not copy reference-game prose, source, art, audio, or branding.
@@ -37,7 +37,7 @@ selectable draft action and does not enter the grammar adapter.
 `NOUN + AND + NOUN` is one compound subject. It remains incomplete and accepts
 another `and`, a predicate, or a verb followed by an object. Compound subjects
 use plural verb and predicate forms. A compound subject that contains a
-second-person noun retains second-person agreement. A single noun uses its
+second-person noun keeps second-person agreement. A single noun uses its
 declared number, person, and referent kind.
 
 After `NOUN + VERB + NOUN`, `and` can add another noun object. The sentence
@@ -55,7 +55,8 @@ After a combined copular predicate that declares
 `allowsCoordinatedNounComplement`, `and + NOUN` is also a complete coordinated
 complement that shares the predicate's copula. Thus, `your brother + is a
 snitch + and + a pig` renders and completes as `Your brother is a snitch and a pig.`
-The same noun prefix remains able to start the existing new-subject branch when a predicate or a verb follows it.
+When a predicate or verb follows, the same noun prefix can start the existing
+new-subject branch.
 Predicates without this declaration continue to treat `and + NOUN` only as a new subject
 and remain incomplete until its relation follows.
 
@@ -82,7 +83,7 @@ A finisher cannot end the front
 subordinate clause. The sentence is incomplete while either required clause is
 unfinished.
 
-The conjunction corpus follows the coordinating and subordinating categories
+The conjunction corpus uses the coordinating and subordinating categories
 on the [conjunction grammar reference](<https://en.wikipedia.org/wiki/Conjunction_(grammar)>).
 The game excludes connectors that need negation, inversion, paired cards,
 time-clause forms, or clause shapes that the grammar does not model.
@@ -137,25 +138,25 @@ text.
 - **AC-006-05:** Wrong locale, missing message, and wrong role return stable
   typed evidence without changing game state.
 - **AC-006-06:** Tests prove one and several modifiers after complete predicate
-  and object clauses. They prove rejection before clause completion and preserve
+  and object clauses. They prove rejection before clause completion and keep
   the required main clause after front `because`.
 - **AC-006-07:** Tests prove the exact coordinated copular-complement sentence,
-  preserve its ambiguous new-subject continuation, and prove that an unrelated
+  keep its ambiguous new-subject continuation, and prove that an unrelated
   predicate followed by `and + NOUN` remains incomplete.
 
 ## Objective verifiers
 
 `tests/unit/english-grammar-core.test.ts` and
-`tests/unit/extended-grammar.test.ts` verify AC-006-01 through AC-006-06.
-`tests/browser/seamless-match-flow.browser.test.ts` verifies that the rendered
+`tests/unit/extended-grammar.test.ts` do checks of AC-006-01 through AC-006-06.
+`tests/browser/seamless-match-flow.browser.test.ts` shows that the rendered
 second-person result and coordinated copular complement reach the visible
-sentence bubble. `e2e/coordinated-copular-complement.spec.ts` verifies
+sentence bubble. `e2e/coordinated-copular-complement.spec.ts` does checks of
 AC-006-07 through production controls and the production sentence bubble.
 
 ## Review repair regression
 
 **AC-006-08:** While a `with` complement is pending, only its noun can advance the
 construction. Reject `with + because` before the ordinary connector branches.
-Retain the existing valid `and`, `but`, and `yet` bridges to `because`.
-`tests/unit/english-grammar-core.test.ts` verifies rejection, the preserved
+Keep the existing valid `and`, `but`, and `yet` bridges to `because`.
+`tests/unit/english-grammar-core.test.ts` does checks of rejection, the kept
 prefix, and the malformed six-card construction remaining unscoreable.

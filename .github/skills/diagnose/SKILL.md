@@ -5,22 +5,25 @@ description: Diagnose difficult Grand Transition failures and performance regres
 
 # Diagnose a failure
 
+Use diagnosis-only mode unless the user requests a repair.
 Use the smallest test sequence that can disprove a suspected cause.
+Obey user restrictions on edits and tests.
+If testing is prohibited, use existing evidence and report the unverified cause.
 
 ## Build the test sequence
 
 Read the symptom, expected specification, source, tests, configuration, and
 environment.
 Record the seed and replay path when they affect the result.
-Record each relevant environment value: browser and version, viewport, locale,
+Record each related environment value: browser and version, viewport, locale,
 mode, scene, character pair, build type, and exact command.
 
 Choose the first applicable check in this order:
 
-1. Run a focused pure-rule test.
+1. Run a focused pure-rule test when it matches the symptom.
 2. Run a content or codec test when it matches the symptom.
-3. Run a component-browser test when it matches the symptom.
-4. Run a production Playwright flow when the failure needs a browser.
+3. Run a component-browser test in headless mode when it matches the symptom.
+4. Run a production Playwright flow in headless mode when the failure needs a browser.
 5. Run a deterministic artificial intelligence (AI) simulation, asset
    validator, or measured performance
    procedure when the failure needs that tool.
@@ -29,7 +32,7 @@ Do not use the untracked prototype as production evidence.
 
 ## Reproduce and isolate
 
-Confirm that the test sequence distinguishes failure from correct behavior.
+Make sure that the test sequence distinguishes failure from correct behavior.
 Write three to five ranked causes that a test can disprove.
 For each cause, define one test and its predicted result.
 Change one controlled variable at a time.
@@ -49,7 +52,7 @@ Repair the root cause.
 Rerun the original test sequence.
 Remove temporary instrumentation.
 
-Evidence must distinguish the cause from relevant alternatives.
+Evidence must distinguish the cause from related alternatives.
 If no valid test sequence is possible, report each attempt and the missing file
 or access.
 Do not claim a root cause.

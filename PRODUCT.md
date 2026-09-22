@@ -14,8 +14,7 @@ production result is a static browser build.
 
 ## Users
 
-Inferred from the approved specifications: the primary users are people who
-are at least 18 years old and want a local tactical political word game. They
+The approved specifications suggest this primary user group: adults who want a local tactical political word game. They are at least 18 years old. They
 play alone against artificial
 intelligence (AI) or with another
 person in a hotseat session.
@@ -44,8 +43,7 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The interface ships English and Romanian, selected independently in title
   Settings and persisted. Romanian interface mode displays translated archetype
   and scene names. Game content, grammar, and local speech support English and
-  Romanian. English is the default interface language; Romanian is the default
-  game language.
+  Romanian. English is the default interface language. Romanian is the default game language.
 - A pure deterministic reducer owns game truth. Lit is view-only.
 - Content is data-driven. Interface prose and localizable grammar and
   phrase content have separate owners.
@@ -61,18 +59,19 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
   architecture contracts, replaceable ports, pure-module boundary enforcement,
   and the secured static production shell.
 - The implemented content includes Zod 4 schemas and English and Romanian
-  game-locale bundles. It also includes 19 fictional characters, 18 human and one
-  fully mechanical, Romanian-politics phrase content that is either invented or
-  a real, accurately reproduced line, and separate transparent
-  default portraits. Eight archetypes have eleven alternate skins in total. Skins
+  game-locale bundles. It also includes 19 fictional characters: 18 human and one fully mechanical.
+  Romanian-politics phrases are invented or accurately repeat real speech. Each character has a
+  separate transparent default portrait.
+
+  Eight archetypes have eleven alternate skins in total.
+  Skins
   are visual-only variations that do not change game identity or prose.
   The final asset contract permits one default skin and zero through eight
   alternate skins per archetype.
 
   Final representational raster art uses one shared cel-shaded
   editorial-cartoon direction across characters, moderators, scenes, furniture,
-  fixtures, and props. Character skins and states follow the detailed rendering
-  standard in Specification 023.
+  fixtures, and props. Character skins and states obey the detailed rendering standard in Specification 023.
   All seven playable scenes use distinct local cartoon backgrounds through the
   same responsive scene asset pipeline. Six use transparent foreground plates.
   The desk-free Civic Cypher Boxing Ring uses one unobstructed back layer with
@@ -81,12 +80,16 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 - The implemented rules include Hollywood Roast grammar, compound subjects,
   endings, incomplete states, immediate grammar mistakes, and one common board.
   They also include private hands, clause scoring, noun combos, continuations,
-  comebacks, cliffhangers, replay, and simulation. Default clause scoring uses
-  5, 8, 11, and 14 compatibility bases. Settings offers a persisted ×1 through
-  ×5 compatibility multiplier, defaulting to ×3, captured for both players in
-  each new match and its replay. Each clause adds 2 points per modifier before weakness and noun-combo
+  comebacks, cliffhangers, replay, and simulation.
+
+  Default clause scoring uses
+  5, 8, 11, and 14 compatibility bases. Settings offers a persisted ×1 through ×5 compatibility
+  multiplier, with ×3 as the default. Each new match and its replay record this multiplier for both
+  players. Each clause adds 2 points per modifier before weakness and noun-combo
   multipliers. Each clause receives at most one 2 weakness multiplier.
-  Restrictions do not add damage. The seeded Local Radio Caller, Party Strategist, and Palace
+  Restrictions do not add damage.
+
+  The seeded Local Radio Caller, Party Strategist, and Palace
   Operator AI policies select valid actions for single-player matches. A local
   nine-rung ladder persists wins, losses, opponents, scenes, and completion.
 - Every completed exchange blocks drafting while each character recites one
@@ -99,24 +102,23 @@ The minimum viable product (MVP) supports local single-player and hotseat play.
 ## Brand Commitments
 
 The approved name is "Grand Transition: A Verbal Republic." The subject is
-political and social satire. Character identities and brands stay fictional,
-real-person names stay out of shipped content, and a phrase drawn from real
-speech stays accurate. It must not copy protected
+political and social satire. Character identities and brands stay fictional. Shipped content excludes real-person names. A phrase from real speech stays accurate. It must not copy protected
 works or make unsupported claims about real people.
 The approved final image language is a flat cel-shaded editorial cartoon.
 
 Painted comic-book, painterly semi-realistic, realistic concept-art,
 photographic, and three-dimensional-render output is outside the brand. A
 global yellow, amber, sepia, or other warm color wash is also outside the brand.
-Warm color remains limited to authored local materials and lighting.
+Warm color stays limited to authored local materials and lighting.
 
-## Evidence on Hand
+## Available evidence
 
 The approved specifications under `docs/specs/` are the only product and
 implementation authority. Two untracked original-game screenshots under
 the temporary folder are composition and interaction references only. They are
-not product assets or layout specifications. The 30 character skins and 13
-scene layers have manifests and runtime variants. Twenty-eight complete
+not product assets or layout specifications.
+
+The 30 character skins and 13 scene layers have manifests and runtime variants. Twenty-eight complete
 character state packages, two declared selection-art fallbacks, seven distinct
 scene music treatments, and ten effects are implemented. Milestone 028 owns
 their MVP acceptance. Specification 032 owns the seventh scene package.
@@ -126,22 +128,25 @@ No testimonial or customer claim is recorded here.
 
 - Make every tactical state and modifier understandable.
 - Keep grammar, content, and locale-neutral rules in their owning layers.
-- Preserve privacy from the first surface that exercises it.
+- Protect privacy on every applicable screen.
 - Prefer original, legible political-theater character over generic game or
   dashboard presentation.
 - Deliver the product in small, dependency-ordered milestones.
 
 ## Supported Layout
 
-Support landscape browser content viewports of at least 640 by 320 CSS
-pixels with width greater than height, and portrait viewports of at least
-360 by 640 with height greater than width. Landscape is the intended layout;
-recommend 1920 by 1080 on PC. Apply the same geometry rules to every device.
+Support landscape browser content viewports of at least 640 by 320 Cascading Style Sheets (CSS)
+pixels. Their width must exceed their height. Support portrait viewports of at least 360 by 640 CSS
+pixels. Their height must exceed their width.
+
+Landscape is the intended layout. Recommend 1920 by
+1080 on a personal computer (PC). Apply the same geometry rules to every device.
 Block square and below-minimum viewports without a bypass.
 
 Portrait shows a dismissible landscape recommendation once per page session.
 Its nine-row common phrase pool fills the content width below the scene. The
 private hand and actions follow the pool, with vertical scrolling permitted.
-Single Player and Ladder remain available. Multiplayer hotseat requires
-landscape; rotation conceals and pauses an active hotseat match until landscape
-returns. All orientation interruptions preserve match state and manual Pause.
+
+Single Player and Ladder stay available. Multiplayer hotseat needs landscape. Rotation conceals and
+pauses an active hotseat match until landscape returns. All orientation interruptions keep match
+state and manual Pause.

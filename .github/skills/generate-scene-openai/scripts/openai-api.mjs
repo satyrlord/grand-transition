@@ -1,4 +1,5 @@
-// Repository-owned Flare transport. Never read credentials or print provider bodies here.
+// Repository-owned Flare transport. Do not read credentials here.
+// Do not print provider response bodies.
 export const MODEL = 'gpt-image-2.5-flare';
 const API_ROOT = 'https://api.openai.com/v1/images/';
 
@@ -58,7 +59,7 @@ export async function sendFlareRequest(request, key, fetcher = globalThis.fetch)
       body: request.body,
     });
   } catch {
-    throw new FlareRequestError('network-outcome-unknown', 'The image request did not complete. Billing may be uncertain. No retry was made.');
+    throw new FlareRequestError('network-outcome-unknown', 'The image request did not complete. The billing result is unknown. The helper did not retry the request.');
   }
   if (!response.ok) {
     // The provider body can contain private data. Do not log, store, or forward it.
@@ -66,7 +67,7 @@ export async function sendFlareRequest(request, key, fetcher = globalThis.fetch)
     const status = response.status;
     const code = status === 401 || status === 403 ? 'authentication-or-access'
       : status === 429 ? 'rate-or-quota' : status >= 500 ? 'provider-failure' : 'request-rejected';
-    throw new FlareRequestError(code, `OpenAI rejected the image request (HTTP ${status}). No retry was made.`, status);
+    throw new FlareRequestError(code, `OpenAI rejected the image request (HTTP ${status}). The helper did not retry the request.`, status);
   }
   try {
     const result = await response.json();
@@ -75,6 +76,6 @@ export async function sendFlareRequest(request, key, fetcher = globalThis.fetch)
         image.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/u.test(image)) throw new Error();
     return Buffer.from(image, 'base64');
   } catch {
-    throw new FlareRequestError('invalid-response', 'OpenAI returned no usable image payload. No retry was made.');
+    throw new FlareRequestError('invalid-response', 'OpenAI returned no usable image payload. The helper did not retry the request.');
   }
 }

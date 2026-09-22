@@ -5,33 +5,31 @@ description: Refactor Grand Transition without changing product behavior or cont
 
 # Refactor without behavior change
 
-Use this skill only for an authorized change that preserves behavior and
+Use this skill only for an authorized change that keeps behavior and
 contracts.
 
 ## Establish the invariant
 
 Read `AGENTS.md`, owning specifications, affected source, callers, consumers,
 tests, and repository status.
-State the exact behavior, contracts, files, and validation that must remain
+Give the exact behavior, contracts, files, and validation that must remain
 unchanged.
 Exclude feature work, balance changes, content edits, dependency upgrades,
 coverage-policy changes, and unrelated cleanup.
 
-Select one measure to compare before and after the refactor. Examples include
-imports, branches, duplicate owners, changed files, dependency edges, and caller
-knowledge.
+Select one measure to compare before and after the refactor. Possible measures are import count, branch count, duplicate owners, changed files, dependencies, and information required by callers.
 Add focused regression evidence before a high-risk structural change.
 
 ## Protect boundaries
 
-Preserve pure-rule dependency direction.
-Preserve immutable state and commands.
-Preserve seeded randomness and replay determinism.
-Preserve grammar-adapter boundaries and locale and content identifiers.
+Keep pure-rule dependency direction.
+Keep immutable state and commands.
+Keep seeded randomness and replay determinism.
+Keep grammar-adapter boundaries and locale and content identifiers.
 
-Preserve active-hand privacy and persistence codecs.
-Preserve Lit event contracts and supported landscape behavior.
-Preserve asset manifests, Vite base paths, Content Security Policy (CSP),
+Keep active-hand privacy and persistence codecs.
+Keep Lit event contracts and supported landscape behavior.
+Keep asset manifests, Vite base paths, Content Security Policy (CSP),
 fixtures, and workflow pins.
 
 ## Refactor in coherent steps
@@ -45,8 +43,10 @@ Route that work to
 [add-feature](../add-feature/SKILL.md).
 
 Use [dead-code-audit](../dead-code-audit/SKILL.md) for broad reachability work.
-Use [run-quality-gate](../run-quality-gate/SKILL.md) for final evidence.
+Run `npm run quality:quick` for routine verification.
+If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey user restrictions on checks. Report checks that you did not run.
 
-The refactor is complete when behavior and contracts remain unchanged, the
-selected measure improves, every changed line serves the refactor, and all
-applicable checks pass.
+The refactor is complete when behavior and contracts remain unchanged and the selected measure improves.
+Every changed line must serve the refactor.
+All applicable checks must pass.

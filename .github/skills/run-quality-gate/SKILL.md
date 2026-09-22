@@ -1,20 +1,23 @@
 ---
 name: run-quality-gate
-description: Run or repair the full Grand Transition quality gate. Use for verification, CI failures, merge or release readiness, builds, tests, assets, content, localization, or deployment checks.
+description: Run or repair the full Grand Transition quality gate only when the user explicitly requests this skill or full-gate execution.
 ---
 
 # Run the full quality gate
 
 ## Select the mode
 
-- Every run of this skill executes the full gate. Run `npm run quality:full`.
-- Verify mode runs the gate and reports evidence. This mode is the default.
+- Use this skill to execute the full gate only after an explicit user request.
+- An authorized full-gate run executes `npm run quality:full`.
+- Verification mode runs the gate and reports evidence. This mode is the default.
 - Repair mode fixes failed checks only when the user requests repair.
 - Release mode collects complete release-readiness evidence.
 
-Do not substitute `npm run quality:quick` or a direct test command for this
-gate. This skill invocation is the explicit full-gate request that `AGENTS.md`
-and the approved specifications require.
+Do not substitute `npm run quality:quick` or a direct test command for an authorized full-gate run.
+A reference from another skill does not establish an explicit user request.
+Automatic skill selection does not establish that request.
+Without that request, use `npm run quality:quick` for routine verification within the user's scope.
+If the user prohibits testing, report the missing evidence without running a check.
 
 Do not add suppressions, exclusions, disabled rules, changed pins, invented
 commands, or lower thresholds without explicit approval.
@@ -29,12 +32,12 @@ Read `package.json`.
 Read the lockfile, Vite, TypeScript, lint, test, Playwright, asset, and locale
 configuration.
 Read GitHub workflows.
-Inspect status and preserve unrelated work.
+Examine status and keep unrelated work.
 Map the change to focused tests and final checks.
 
-The approved milestone specifications require script names, but a name is not
+The approved milestone specifications specify script names, but a name is not
 an executable gate until it exists.
-If bootstrap is incomplete, report the missing script as `BLOCKED`.
+If a required script is missing, report that check as `BLOCKED`.
 Do not invent an equivalent command and call it a pass.
 
 ## Run checks
@@ -51,24 +54,29 @@ Do not repeat successful phases without a change, failure, or unresolved concern
 Run `npm run validate` when configuration or repository guidance changes affect
 its checks.
 
-Release mode requires the complete gate and the Milestone 030 and 031 evidence.
+In release mode, run the full gate. Collect the Milestone 030 and 031 evidence.
 Run `git diff --check`.
-Inspect final status and diff.
+Examine final status and diff.
 
-In verify mode, continue after a failure when later checks are safe and
-independent. In repair mode, capture the exact diagnostic, repair the smallest
-authorized cause, rerun the failed check, then continue.
+In verification mode, continue after a failure when later checks are safe and
+independent. In repair mode, record the exact diagnostic.
+Repair the smallest authorized cause.
+Rerun the failed check.
+Then continue.
 
 ## Report
 
 Report each check as `PASS`, `FAIL`, `BLOCKED`, or `N-A`.
 Include its command or procedure and result.
 Separate pre-existing failures from scoped regressions.
-List changed files, or state `none`.
+List changed files, or write `none`.
 Give each blocker its smallest next action.
-When the user limits the scope or forbids a check, report that check as `N-A`
-with the reason, and do not claim an overall pass.
+
+If the user limits scope or prohibits a check, report that check as `N-A`.
+Give the reason.
+Do not claim an overall pass.
 Claim an overall pass only when every applicable configured check passes.
 
-The gate report is complete when every applicable check has a status, every
-failure has an owner or next action, and no check is hidden.
+The gate report is complete when every applicable check has a status.
+Each failure must have an owner or next action.
+Include every check in the report.

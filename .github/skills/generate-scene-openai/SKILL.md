@@ -1,43 +1,47 @@
 ---
 name: generate-scene-openai
-description: Generate, edit, inspect, and integrate Grand Transition scene raster art and shared Flare assets. Use generate-character-openai for playable character selections and pose packages. Use Flare for transparent assets, exact-size masters, and output above 1080p.
+description: Generate, edit, examine, and integrate Grand Transition scene raster art and shared Flare assets. Use generate-character-openai for playable character selections and pose packages. Use Flare for transparent assets, exact-size masters, and output above 1080p.
 ---
 
 # Generate and edit raster art with OpenAI
 
 For playable character selection and pose work, use
 [generate-character-openai](../generate-character-openai/SKILL.md).
-This skill retains the shared API, review, alpha, and integration modules.
+This skill owns the shared application programming interface (API), review, alpha, and integration modules.
 
 ## Establish the artwork task
 
 Read `AGENTS.md`, `DESIGN.md`, and Specifications 016, 018, 023, and 026.
 Read the affected character or scene definition, current art, manifest, renderer, and tests.
-Inspect repository status before edits.
-Resolve the asset ID, output role, dimensions, transparency, composition, and interface clearance from those contracts.
+Examine repository status before edits.
+
+Resolve the asset identifier (ID), output role, and dimensions from those contracts.
+Resolve transparency, composition, and interface clearance from the same contracts.
 For characters, resolve the private study, approved rendering standard, facing direction, and complete silhouette.
 Apply the latest user-approved art direction, including scene-specific exceptions.
 Resolve missing required decisions before generation.
 
-Keep durable private directions and source notes as flat, topic-named Markdown
-files under ignored `research/`. Keep raw prompts, input records, generated
+Keep durable private directions and source notes directly under ignored `research/`.
+Use Markdown filenames that identify each topic. Keep raw prompts, input records, generated
 candidates, reviews, and staged assets under ignored `tmp/` paths.
+
 Skill creation, review, and dry runs do not authorize generation.
 A request to create or edit artwork authorizes the required route and standard deterministic preparation within its scope.
 An authorized edit includes using its existing target as a reference when the asset contract permits that input.
-Preserve clean-room scene restrictions and explicit route, reference, cost, or attempt limits.
+Keep clean-room scene restrictions and explicit route, reference, cost, or attempt limits.
 Do not ask for the same authorization again.
 
 ## Load the task modules
 
 Load only required modules. If scope changes, read newly required modules before their affected actions.
 
-- Before prompt work, generation, or an API dry run, read
-  [generation preparation](references/generation-preparation.md), including for an existing prompt. This module owns input authorization and the pre-generation color guard.
+- Before prompt work, generation, or an API dry run, read [generation preparation](references/generation-preparation.md).
+  This requirement also applies to an existing prompt.
+  This module controls input authorization and the color check before generation.
 - Before an API dry run or authorized API generation, read
   [API generation](references/api-generation.md). Internal generation does not need this module.
-- Before inspecting or approving any candidate, read
-  [candidate inspection and review](references/candidate-review.md), including existing candidates and previews from either route.
+- Before examining or approving any candidate, read [candidate inspection and review](references/candidate-review.md).
+  This requirement includes existing candidates and previews from either route.
 - Before preparing or integrating transparent output, read
   [native alpha preparation](references/native-alpha.md). This module owns the bounded background cleanup and provenance sequence.
 - Before scene master preparation or integration, read
@@ -66,16 +70,20 @@ Apply transparency and exact master requirements before the pixel-count boundary
 Resolve the shipping master size separately from the API source request size.
 Use the declared master size directly only when Flare supports those dimensions.
 Character masters use transparent 2048 by 2048 output.
-Use 3840 by 2160 for a requested 4K landscape scene.
-For a 1920-by-1080 shipping scene, request a 3840-by-2160 source, then apply the reviewed scene preparation.
+
+Current scene masters use 3840 by 2160 output, also called 4K.
+Read `tools/scene-resolution.mjs` for the current master dimensions.
+If an approved contract specifies a smaller master, use the scene preparation procedure after generation.
+
 Do not request native 1920-by-1080 API output. Its height is not a multiple of 16.
 Use `plan --size WIDTHxHEIGHT` with `--background transparent` or `--exact-size` when applicable.
 The `--size` value describes the generation source. Planning rejects unsupported API dimensions.
+
 An explicit internal-tool request takes precedence. Report actual output limitations without promising exact master dimensions.
 
-Use native transparent PNG output for isolated scene foreground layers and character portraits.
+Use native transparent Portable Network Graphics (PNG) output for isolated scene foreground layers and character portraits.
 Use `--background transparent` on the supported API route.
-Preserve the returned alpha except for the bounded preparation in the native alpha module.
+Keep the returned alpha except for the bounded preparation in the native alpha module.
 Use green-matte conversion only for an approved fallback.
 
 ## Bound generation and approval
@@ -87,15 +95,17 @@ Report the result and required next action.
 The repository API adapter makes no automatic retries.
 Do not repeat a timed-out or interrupted request when billing or completion is uncertain.
 
-Inspect raw output before deterministic preparation. Require a passing current-hash review before master integration.
+Examine raw output before deterministic preparation.
+Before master integration, get a review pass for the current file hash.
 
 ## Integrate and finish
 
-Follow the loaded integration procedure only within authorized scope and after candidate review passes.
+Use the loaded integration procedure only within authorized scope and after candidate review passes.
 Keep rejected candidates out of `src/assets/`.
-Preserve stable asset IDs for replacements.
+Keep stable asset IDs for replacements.
 For new identities, update the authorized specification, catalog, localization, resolver, and tests.
-Integration completion requires valid shipping assets, factual source records, connected runtime usage, and passing applicable checks.
-For a preview-only request, save and inspect the image without importing it.
+Integration is complete when shipping assets are valid, source records are factual, runtime usage is connected, and applicable checks pass.
+
+For a preview-only request, save and examine the image without importing it.
 Record product-owner visual acceptance only when the user supplies it.
 Report provider route, model when known, input mode, actual dimensions, checks, and unresolved limitations.

@@ -77,21 +77,21 @@ export function assertColorControlledPrompt(filePath, prompt) {
     .map(({ label }) => label);
   const issues = [];
   if (missing.length > 0) {
-    issues.push(`missing ${missing.join(', ')}`);
+    issues.push(`is missing ${missing.join(', ')}`);
   }
   if (hasPositiveMatch(prompt, warmLightingPattern)) {
     issues.push(
-      'contains unqualified warm studio lighting; use neutral studio lighting and keep warmth local',
+      'contains unqualified warm studio lighting. Use neutral studio lighting. Keep warm colors local',
     );
   }
   if (hasPositiveMatch(prompt, globalWarmGradePattern)) {
     issues.push(
-      'contains a global warm color grade; put global warm grades only in negative controls',
+      'contains a global warm color grade. Put global warm grades only in negative controls',
     );
   }
   if (issues.length > 0) {
     throw new Error(
-      `${filePath}: generation prompt color guard failed: ${issues.join('; ')}.`,
+      `${filePath}: generation prompt color guard failed. The prompt ${issues.join('. The prompt ')}.`,
     );
   }
 }

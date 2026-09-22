@@ -162,7 +162,7 @@ components:
 
 <!-- markdownlint-disable MD036 -->
 
-**Creative North Star: "The Civic Roast Arena"**
+**Design reference: "The Civic Roast Arena"**
 
 <!-- markdownlint-enable MD036 -->
 
@@ -187,7 +187,7 @@ can occupy either player position.
 
 Eight archetypes have eleven alternate skins
 in total. A skin is a visual-only variation that does not change game identity
-or prose. Later character art must preserve the declared species and cannot use
+or prose. Later character art must keep the declared species and cannot use
 animal or hybrid anatomy. One archetype can have one default skin and zero
 through eight alternate skins.
 
@@ -204,12 +204,14 @@ shown in this world is human. A fully mechanical character is visibly a robot.
 
 All generated representational raster art uses one flat cel-shaded editorial-
 cartoon language. The approved playable-character finish is the **office
-clip-art style**. Every character skin and state uses the funny big-head
-rendering standard in Specification 023: an adult full-body silhouette with a
-visibly oversized head or mechanical face, an immediately comic expression,
-posture, or prop, controlled dark contours, large clean shapes, and broad
-hard-edged cel shading. Use `county-baron--municipal-patron` as the sole visual
-north star. Fixed moderators, scene
+clip-art style**. Every character skin and state uses the funny big-head rendering standard in Specification 023. This standard has these features:
+
+- An adult full-body silhouette with a visibly oversized head or mechanical face.
+- An immediately comic expression, posture, or prop.
+- Controlled dark contours.
+- Large clean shapes.
+- Broad hard-edged cel shading.
+ Use `county-baron--municipal-patron` as the sole visual reference. Fixed moderators, scene
 architecture, furniture, fixtures, and props use the same construction. Exaggeration is
 deliberate. Materials read through silhouette, color, contour, and limited flat
 pattern instead of realistic surface detail.
@@ -225,7 +227,7 @@ global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
 
 Warm
 color is local to authored brass, wood, cream, skin, oxide-red, or lamp shapes.
-Navy and charcoal shadows retain cool or neutral separation.
+Navy and charcoal shadows keep cool or neutral separation.
 Painted comic-book, painterly semi-realistic, realistic concept-art,
 photographic, hyper-realistic, and three-dimensional-render styles are not part
 of this system. Do not use soft blended shading, photographic reflections,
@@ -257,8 +259,7 @@ available height is smaller or the roster grows.
 
 At the recommended match viewport, a municipal television studio and one fixed
 blonde fictional moderator fill the deep field. Two transparent editorial
-caricatures face each other from the left and right thirds. Each selected skin
-follows the shared public character direction and its private study. One
+caricatures face each other from the left and right thirds. Each selected skin obeys the shared public character direction and its private study. One
 transparent foreground plate puts tall standing desks in front of both
 selected portraits.
 
@@ -272,7 +273,7 @@ covering either face. The live sentence and nine shared phrases form one
 central vertical construction tower. The two private choices sit low in the
 active player's reach. Secondary actions use the side and bottom perimeter.
 
-Only the active player states “Your turn,” and that portrait keeps a persistent
+Only the active player shows “Your turn,” and that portrait keeps a persistent
 brass stage light.
 
 ### Visitor path
@@ -280,7 +281,7 @@ brass stage light.
 Compare Pride at the top edge. Read the speech and current sentence across the
 confrontation. Scan the center phrase path, then the active private choices.
 Use a perimeter action only when the sentence state makes it relevant.
-Availability, weakness, ownership, and disabled reasons remain available in
+Availability, weakness, ownership, and disabled reasons stay available in
 semantic attributes and accessible names. The compact phrase rows show phrase
 text only.
 
@@ -289,7 +290,9 @@ text only.
 Pointer preview stages the candidate phrase in the central construction and
 speech record without changing game truth. A turn change moves one
 360-millisecond light-and-position claim to the incoming portrait, then leaves
-that side persistently brighter. A completed exchange recites one public insult at a time, last finisher first.
+that side persistently brighter.
+
+A completed exchange recites one public insult at a time, last finisher first.
 The current speaker owns the offset bubble. Scored lines, exact multipliers,
 bonuses, and totals appear inline at that player's lower stage edge. Applied
 weakness and Pride-loss text belongs near the affected character. There is no
@@ -297,9 +300,9 @@ central score panel or repeated Clause label. A long score log follows its
 latest line while keeping prior lines available to keyboard scrolling.
 
 During delivery, the speaker bubble expands within its reserved footprint.
-After Total, a target-side broadcast record names the affected player through
-the strike and Pride tally, then replaces that record with exact Pride loss and
-remaining Pride. Held, incomplete, and broken continuations use the same public
+After Total, a target-side broadcast record names the affected player through the strike and Pride
+tally. Exact Pride loss and remaining Pride then replace that record. Held, incomplete, and broken
+continuations use the same public
 record language without tactical instruction. Entering a cliffhanger shows a
 compact reset record inside the reserved speech footprint and keeps
 `Cliffhanger · Round N` in the stage status. The record does not cover the
@@ -312,39 +315,46 @@ exchange then shows persistent Victory until the player returns to the title.
 ### Cross-surface reach
 
 Title and setup use the same display voice, framed records, paper, oxblood,
-navy, brass, and direct stage language as active play. The match remains the
+navy, brass, and direct stage language as active play. The match stays the
 only visible surface during play. Victory keeps the final arena visible and
-returns to the title only after an explicit action. The title-only match-history
-modal uses the same framed broadcast record and keeps technical data in a named
-scroll region. The title-only Settings modal uses three open columns in
+returns to the title only after an explicit action.
+
+The title-only match-history modal uses the same framed broadcast record and keeps technical data in a named
+scroll region.
+
+The title-only Settings modal uses three open columns in
 reading order: Play, Sound, and Speech. Brass heading rules separate the
 groups within one square navy record. Play leads with five scoring-multiplier
-choices and keeps timer and Auto-complete nearby. Ordinary speech controls
-precede GPU voices and its associated help. Shared voice privacy text and
-credits occupy a full-width footer. The header and Close remain visible when
-the body scrolls. Selected choices retain their brass fill and inset marker
+choices and keeps timer and Auto-complete nearby.
+
+Ordinary speech controls precede `GPU voices` and its associated help. GPU means graphics processing unit. Shared voice privacy text and
+credits occupy a full-width footer. The header and Close stay visible when
+the body scrolls.
+
+Selected choices keep their brass fill and inset marker
 during hover, with a separate keyboard focus ring. Forced colors uses system
-selection and focus colors. Pause and unsupported viewport
-states replace the active surface
+selection and focus colors.
+
+Pause and unsupported viewport states replace the active surface
 with a centered transmission slate that exposes no game facts.
 
-### Honest risk
+### Layout risks
 
 The integrated arena can become crowded or too similar to its references. Keep
 both characters, the full sentence path, and all required controls
-readable. Check 1024 by 720 and four-to-three landscape viewports. Keep core tactical content
+readable. Examine 1024 by 720 and four-to-three landscape viewports. Keep core tactical content
 at 11 pixels or larger.
 
 Use original proportions, ornament, iconography, art,
 and type. Do not reduce the stage to a header to solve density. Do not rebuild
 the lower half as a dashboard.
 
-### Direction seed
+### Direction source
 
-The user pinned this direction on 2026-08-25 after removing the earlier mock.
-The durable description in this record defines spatial hierarchy: opponent
+The user approved this direction on 2026-08-25 after removing the earlier mock.
+The description in this record defines spatial hierarchy: opponent
 framing, top-edge status, wide speech, central sentence construction, and
-perimeter actions. It remains valid after the earlier mock was removed.
+perimeter actions. It stays valid after the earlier mock was removed.
 
 **Key Characteristics:**
 
@@ -373,7 +383,7 @@ Animal terms in names or titles are metaphorical political labels only. Do not
 use animal or hybrid anatomy in portraits, tokens, poses, states, scene art, or
 future roster content. Do not give a robot human anatomy.
 
-**The Adult Caricature Rule.** Default characters and scene figures remain
+**The Adult Caricature Rule.** Default characters and scene figures stay
 recognizably adult and use coherent human or mechanical anatomy. Playable
 characters use deliberately comic proportions with a visibly oversized head or
 mechanical face. Do not use a child, chibi, or naturalistic prestige-portrait
@@ -407,7 +417,7 @@ reaction, focus, timer, and phrase-role colors only for their named states.
 ### Neutral
 
 - **Broadcast Black, Broadcast Ink, and Broadcast Panel:** The stage surround,
-  navy fascia, HUD containers, roster tiles, and dark status fields.
+  navy fascia, heads-up display (HUD) containers, roster tiles, and dark status fields.
 - **Broadcast Paper and Broadcast Paper Light:** Speech records, sentence
   paper, phrase cards, selected-player records, and readable light text on
   navy.
@@ -432,7 +442,7 @@ compact visible row shows phrase text only.
 ## Typography
 
 The implementation uses exactly four self-hosted sans-serif font families.
-Their roles are exclusive and remain distinct across the title, setup, match,
+Their roles are exclusive and stay distinct across the title, setup, match,
 Pause, and compatibility states.
 
 1. **Feature display family:** Poiret One Regular 400 owns the title, title and
@@ -442,7 +452,7 @@ Pause, and compatibility states.
    through 0.95-pixel stroke to major actions.
 2. **Speech family:** Nunito Variable at weight 900 owns delivered speech, the
    current construction, and sentence previews. Render it in visual uppercase.
-   Preserve authored case in source text, accessible names, and speech output.
+   Keep authored case in source text, accessible names, and speech output.
 3. **Interface family:** Rubik Variable owns phrase lists, private phrases,
    setup fields, labels, validation, disabled states, score explanations,
    selection panels, and compatibility text. Use the bundled 600 weight for
@@ -452,7 +462,7 @@ Pause, and compatibility states.
    technical-record data only. Do not use it for Pride, damage, scores, rounds,
    statistics, or body text.
 
-The design selects all four font families. Verify them together in the built arena.
+The design selects all four font families. Examine them together in the built arena.
 The four roles must stay visibly distinct. Do not use outlines or fake weights
 outside the Poiret One feature-display treatment.
 
@@ -461,8 +471,10 @@ and Share Tech Mono. All four use the SIL Open Font License 1.1. The feature
 family loads Basic Latin and Latin Extended so Romanian display glyphs do not
 fall back per character. Nunito and Rubik load Basic Latin and Latin Extended
 subsets so Romanian phrase and speech glyphs do not fall back per character.
+
 The feature, speech, and interface fallbacks are Arial and then sans-serif.
 The timer fallback is Cascadia Mono, Consolas, and then monospace.
+
 The Poiret One Latin Extended asset is a local derivative that adds the absent
 Romanian `Ț` and `ț` Unicode mappings to existing comma-below T outlines.
 Its source, generation method, and license are recorded in
@@ -477,15 +489,20 @@ render their owned content without synthetic weights, except for the approved
 Poiret One feature-display treatment. Metric fallbacks must keep the same
 information visible before and after font load.
 
-The production comparison in `e2e/visual-system-fonts.spec.ts` covers all four
-roles at 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080.
+The production comparison in `e2e/visual-system-fonts.spec.ts` covers all four roles at these viewport sizes:
+
+- 1024 by 720.
+- 1024 by 768.
+- 1280 by 720.
+- 1400 by 1050.
+- 1920 by 1080.
+
 It uses a long character name, long English speech and phrase text, Romanian
 diacritics, digits, punctuation, and disabled action text. The local-font and
 blocked-WOFF2 runs record actual browser font use, computed weights, complete
 text bounds, source case, and the production entry hash. Both modes passed on
 Windows with Chromium 151.0.7922.34 on September 6, 2026. The same production
-suite verifies that each served font-license notice is byte-identical to its
-Fontsource package notice. This comparison establishes font fit. It does not
+suite makes sure that each served font-license notice is byte-identical to its Fontsource package notice. This comparison establishes font fit. It does not
 establish final scene-art acceptance.
 
 ### Hierarchy
@@ -505,12 +522,14 @@ the interface face for the timer or the timer face for other numbers.
 ## Layout
 
 Desktop functional states fill one landscape viewport. Compact landscape and
-portrait retain all required content through responsive layout and vertical
-scrolling under Milestone 018. The title uses a centered
-marquee and a vertical signal rail. Setup uses two selected-character stages
+portrait keep all required content through responsive layout and vertical
+scrolling under Milestone 018.
+
+The title uses a centered marquee and a vertical signal rail. Setup uses two selected-character stages
 around a central roster, with Difficulty and Scene settings plus actions
-on the lower edge. The
-match keeps one integrated arena. Opponents occupy the side thirds. Name and
+on the lower edge.
+
+The match keeps one integrated arena. Opponents occupy the side thirds. Name and
 Pride frames use the top corners.
 
 Round, timer, and Pause use the top center.
@@ -525,42 +544,44 @@ and native controls where settings are available.
 At 1280 by 720 and 1400 by 1050, scale and reposition within the same hierarchy.
 At 1024 by 720 and 1024 by 768, the title, setup, and match keep the same
 hierarchy without page scroll. Decorative scene detail yields before required
-text, faces, phrase slots, or controls. Compact phone layouts preserve the
+text, faces, phrase slots, or controls. Compact phone layouts keep the
 same actions and public facts with readable touch controls.
 
-The desktop evidence matrix is 1024 by 720, 1024 by 768, 1280 by
-720, 1400 by 1050, and 1920 by 1080 CSS pixels. Milestone 018 adds phone
+The desktop evidence matrix uses Cascading Style Sheets (CSS) pixels. Its sizes are 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080. Milestone 018 adds phone
 evidence and minimums of 640 by 320 for landscape and 360 by 640 for portrait.
 Square and below-minimum viewports show the transmission-unavailable slate.
-Landscape is the intended layout; 1920 by 1080 on PC remains recommended.
+Landscape is the intended layout. The recommended personal computer (PC) viewport is 1920 by 1080.
 
 Portrait puts the scene above nine full-width shared phrase rows. The pool
 fills the available content width edge-to-edge with internal text padding.
 Private choices and action controls follow below. The page scrolls vertically
-without horizontal overflow. Compact setup reflows its stages and roster;
-Settings and other dialogs retain reachable controls in scrollable content.
+without horizontal overflow. Compact setup reflows its stages and roster.
+Settings and other dialogs keep reachable controls in scrollable content.
 
-On first supported portrait entry in a page session, a modal states
-“Landscape recommended” and provides “Continue in portrait”. It conceals and
+On first supported portrait entry in a page session, a modal shows “Landscape recommended” and gives “Continue in portrait”. It conceals and
 pauses an active match until dismissed or supported landscape returns.
 Multiplayer hotseat is disabled in portrait. An active hotseat match rotated
 to portrait shows a concealed rotate-to-landscape slate until landscape
-returns. Manual Pause remains active through orientation changes.
+returns. Manual Pause stays active through orientation changes.
 
 **Construction and speaker alignment.** The phrase path keeps the center axis.
 The speech record follows the active speaker to prevent moderator attribution.
-Inline scoring follows that same player's side. Preserve clear text and faces
+Inline scoring follows that same player's side. Keep clear text and faces
 through each state change.
 
-## Elevation & Depth
+## Elevation and depth
 
 The interface uses controlled stage depth. The title and setup use painted
 proscenium or tonal broadcast fields. In the match, the selected studio and its
-fixed fictional moderator form the deep field. Transparent portraits occupy
+fixed fictional moderator form the deep field.
+
+Transparent portraits occupy
 the opponent planes. Every foreground plate, including the two studio desk
 plates, renders once and complete in front of the portraits. Desks and their
 microphones or bottles share one coherent furniture plane without a horizontal
-clipping boundary. Speech and the sentence tower occupy the tactical plane.
+clipping boundary.
+
+Speech and the sentence tower occupy the tactical plane.
 
 Top and perimeter controls sit on the broadcast frame. Low-contrast
 masks protect text without turning the scene into stacked panels. Short dark
@@ -575,8 +596,9 @@ selection, Comeback reuses delivery, and grammar mistake reuses weakness. The
 Local Baron municipal-patron skin and Reluctant Theorem use the declared
 selection-art fallback. All portrait skins are visual-only variations
 and do not change the fictional character identity or prose.
-All shipping assets retain embedded generic source provenance. Required
-text and controls remain outside raster art.
+
+All shipping assets keep embedded generic source provenance. Required
+text and controls stay outside raster art.
 
 **The Built Broadcast Rule.** Use shallow shadow, inset rules, and tonal fascia
 to separate live broadcast regions. Do not use translucent glass panels or
@@ -628,8 +650,8 @@ portrait window.
 The 30 selectable portrait skins stay in one equal-width six-by-five
 selection grid, with any future incomplete row centered, and never overlap the
 match settings. The grid scrolls vertically inside its roster region when
-required. Each portrait choice retains its owning archetype and selected skin.
-The desktop page does not scroll. Compact setup follows Milestone 018.
+required. Each portrait choice keeps its owning archetype and selected skin.
+The desktop page does not scroll. Compact setup obeys Milestone 018.
 
 Native selects keep difficulty and scene
 terms in a compact lower register. A nonmodal character dossier appears on
@@ -637,9 +659,10 @@ hover or keyboard focus and stays pinned only after right-click.
 
 Each selected-character stage owns one persistent lock control. The roster
 continues to edit player one until that side locks, then moves to player two.
-The active side keeps its stage light; the waiting side cannot be selected.
+The active side keeps its stage light. The waiting side cannot be selected.
+
 After both sides lock, Start match becomes available and either player can
-unlock for a new choice while preserving the other lock. Single Player uses
+unlock for a new choice while keeping the other lock. Single Player uses
 the same handoff with one person operating both sides. Ladder treats its fixed
 opponent as already locked.
 
@@ -660,7 +683,7 @@ back image contains a playable character.
 
 Every back scene and foreground plate uses the playable portraits' bold
 contour weight, flat colors, and hard-edged two-or-three-level shading. They
-also share deliberate shape exaggeration and restrained print texture. Preserve
+also share deliberate shape exaggeration and restrained print texture. Keep
 distinct historical materials and scene identities through silhouette, color,
 and limited pattern. Do not use painterly, semi-realistic, photographic, or
 three-dimensional-render people, furniture, bottles, lamps, floors, or
@@ -670,7 +693,9 @@ Separate transparent portraits render the two selected characters over it and
 can exchange sides or mirror without changing the scene. A transparent
 foreground plate renders over the portraits. In the two debate studios, it
 clips their lower bodies behind two tall standing desks. The desk fronts
-continue below the lower stage frame. The four foundation scenes use
+continue below the lower stage frame.
+
+The four foundation scenes use
 complete standing desks outside the central interaction rectangle. Plain desk
 fronts can sit behind side-action HTML controls. Do not show extracted bottom contours or any portrait's lower
 raster contour.
@@ -683,10 +708,10 @@ The portrait art continues below the desk occlusion to the lower stage edge.
 Do not let desk mass exceed the lower third of the stage.
 A centered stage sign owns round, timer, and Pause. Opposing top-edge frames own
 the complete character name in two reserved lines and the visible Pride label
-and meter, and remain
+and meter, and stay
 outside the portrait bounds.
 
-Only the active strip states “Your turn.” Its portrait stays bright under a
+Only the active strip shows “Your turn.” Its portrait stays bright under a
 persistent brass stage light while the waiting portrait stays subdued. One
 360-millisecond directional light-and-position transfer marks a turn change.
 Speech and reaction records cross the middle play field. They own delivered
@@ -696,19 +721,24 @@ text, public response, and damage without covering a face.
 
 All seven scenes use their own manifest backgrounds. Six use transparent
 foreground plates. The desk-free Civic Cypher Boxing Ring uses one unobstructed
-back layer with no moderator. The County Council Ballroom, Midnight Call-In
-Studio, Palace Press Hall, and Influencer Campaign Livestream have no fixed moderator. Their foreground
+back layer with no moderator.
+
+The County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and Influencer Campaign Livestream have no fixed moderator. Their foreground
 desks keep the shared central interaction rectangle clear and cover both
-candidates' lower bodies. Side-action HTML remains above the plain desk fronts.
+candidates' lower bodies. Side-action HTML stays above the plain desk fronts.
+
 The title curtain is not a gameplay fallback.
 
-Portrait frames share the background's bottom-aligned scene canvas. Their
-square source planes start at 24 percent of scene height, measure 80 percent
-of scene height, and center at 20 and 80 percent of scene width. This places
-faces above the studio desks. The speech record occupies the central 32
+Portrait frames share the background's bottom-aligned scene canvas. Their square source planes start
+at 24 percent of scene height and measure 80 percent of scene height. Their centers are at 20 and 80
+percent of scene width. This places
+faces above the studio desks.
+
+The speech record occupies the central 32
 percent of scene width and 18 through 34 percent of scene height. Both physical
-moderators sit at the center between speech and the phrase pool. The pool starts
-at 52 percent of scene height and has an 88-percent-opaque dark background. It
+moderators sit at the center between speech and the phrase pool.
+
+The pool starts at 52 percent of scene height and has an 88-percent-opaque dark background. It
 can cover moderator furniture, but never a moderator face.
 
 The center axis combines the wide current or preview sentence and nine shared
@@ -724,13 +754,13 @@ toward the current speaker, and the other character stays idle.
 
 Inline score lines appear at the speaker's lower stage edge. They show the
 rendered phrase, base, applied weakness and combo factors, and resulting value.
-Finisher and Comeback rows remain separate. The total appears after narration.
+Finisher and Comeback rows stay separate. The total appears after narration.
 Applied Pride loss and the damaged stance follow the audience hold. The next
 round starts automatically after both deliveries.
 
 After a terminal exchange, Victory names the match winner and completed round
 count. It exposes only `Return to main menu` and has no automatic dismissal.
-The dimmed stage remains visible behind it. The record uses no backdrop blur.
+The dimmed stage stays visible behind it. The record uses no backdrop blur.
 
 ### Match history record
 
@@ -744,7 +774,7 @@ an explicit empty state. No other screen exposes match history.
 ### Phrase cards
 
 The two private phrase controls show phrase text only and sit at the active
-player's lower perimeter. An icon-only inline SVG Reshuffle control follows
+player's lower perimeter. An icon-only inline Scalable Vector Graphics (SVG) Reshuffle control follows
 them. The common board is one central near-black vertical list of nine compact
 rows. Each
 row shows phrase text only, separated by a thin oxblood rule.
@@ -762,21 +792,22 @@ percent for rare phrases. The card background does not change.
 Tutorial mode is optional and defaults off in main-menu Settings. When enabled,
 every grammar-accepted next visible phrase uses a restrained green inset glow
 with a 2400-millisecond opacity pulse. Role colors, text, geometry, and focus
-outlines stay intact. Reduced motion keeps the glow steady. Forced colors uses
+outlines stay intact.
+
+Reduced motion keeps the glow steady. Forced colors uses
 an inset dotted system-color outline. No glow appears during blocked drafting
 or for continuation cards. Milestones 016 and 020 own this behavior.
 
 In forced colors, shared and private phrase surfaces use Canvas with CanvasText
 or disabled GrayText. Both player records use system surfaces and text without
-dimming filters. The active-turn badge uses Highlight and HighlightText; phrase
+dimming filters. The active-turn badge uses Highlight and HighlightText. Phrase
 focus uses a separate outer Highlight outline. Pride meters use Highlight for
 the filled value on Canvas.
 
 The arena reports public outcomes with exact values. It
 reveals each selected character's weakness names before play and calls out an
-applied weakness during scoring. Beyond the optional grammar indication, it
-does not identify the next legal role, explain how weaknesses work, recommend
-tactics, expose disabled-action
+applied weakness during scoring. The optional grammar indication does not identify the next legal
+role or explain how weaknesses work. The interface does not recommend tactics, show disabled-action
 reasons, or add tutorial progress.
 
 ### Speech, perimeter actions, and stage status
@@ -808,7 +839,7 @@ border. Pause sits at the top-center match status. The venue and broadcast
 identity are part of the scene or frame, not a separate dashboard strap.
 During a Local Radio Caller turn, the public board and sentence stay visible.
 
-The public phrase buttons remain visibly unavailable and outside the focus
+The public phrase buttons stay visibly unavailable and outside the focus
 order. The private hand and player actions become one named thinking record
 until the seeded presentation delay finishes.
 The match surface does not permit browser text selection. Pointer dragging,
@@ -821,43 +852,51 @@ Manual Pause replaces the complete match with a navy transmission-held slate.
 The slate has compact Turn timer, Auto-complete, Sound Music, Sound Voices, and
 Phrase color coding controls. The two Sound choices use paired On and Off
 buttons inside one framed group. It has one brass-framed Resume action and no
-game facts. Unsupported viewports use the
+game facts.
+
+Unsupported viewports use the
 same broadcast language without settings or a Resume action. The compatibility
-slate states the landscape and portrait minimums from Milestone 018 and the
-landscape recommendation. The recommended PC viewport remains 1920 by 1080.
+slate gives the landscape and portrait minimums from Milestone 018 and the
+landscape recommendation. The recommended PC viewport stays 1920 by 1080.
 
 ### Comeback action
 
 The Comeback button is always visible beneath End in the active-side perimeter
 rail. Its surface is divided into three permanent brass-bordered cells and is
 the only comeback-charge display. The blue fill progresses continuously and
-reaches each boundary at 20, 40, and 60 charge. A complete sentence and one full
-tier enable the button; activation uses the strongest filled tier immediately.
-Spending lowers the same fill to the remaining charge. Its accessible name
-reports tier, bonus, and exact charge. Forced colors preserve the cells and
+reaches each boundary at 20, 40, and 60 charge.
+
+A complete sentence and one full tier enable the button. Activation uses the strongest filled tier immediately.
+Spending lowers the same fill to the remaining charge.
+
+Its accessible name reports tier, bonus, and exact charge. Forced colors keep the cells and
 fill, and reduced motion removes the fill transition.
 
 An approved character-owned Comeback sidekick is a separate static transparent
 prop layer. It stays hidden while speech prepares and throughout the main
-insult. When the separate Comeback closing-line audio segment starts, it slides
-from the narrator's outer viewport border and rests in the lower central lane
-on the speech and common-phrase axis, completes its entrance within the short
-closing line, anchors its visible feet or object base to the viewport bottom,
-remains above scene art and below interface
-records, and exits immediately when that speech ends so score rows cannot cover
-it. Player two mirrors the same
-right-facing master. Sidekicks use about one-
-third of the visible portrait height. Reduced motion replaces travel with an
+insult.
+
+When the separate Comeback closing-line audio segment starts, the sidekick slides from the
+narrator's outer viewport border. It rests in the lower central lane on the speech and common-phrase
+axis. Its entrance finishes within the short closing line.
+
+Its visible feet or object base align
+with the viewport bottom. It stays above scene art and below interface records. It exits immediately
+when that speech ends, so score rows cannot cover it.
+
+Player two mirrors the same
+right-facing master. Sidekicks use about one-third of the visible portrait height. Reduced motion replaces travel with an
 immediate appearance. Characters without an approved asset show no placeholder.
 
 Every Comeback sidekick uses a deliberately cartoony, anthropomorphic design.
-Human concepts become compact stringless minions, animal concepts become
-expressive pets, and object, plant, or vehicle concepts retain a recognizable
-base silhouette while gaining an integrated face or clear human-like character
-acting. Use bold connected shapes, thick near-opaque contours, and simplified
-details that survive the native-alpha contract. Do not ship a realistic inert
-object, realistic animal, puppet strings, marionette joints, hairline rigging,
-detached haze, or fine semi-transparent ornament as a sidekick.
+Human concepts become compact stringless minions. Animal concepts become expressive pets. Object,
+plant, or vehicle concepts keep a recognizable base silhouette with an integrated face or clear
+human-like character acting.
+
+Use bold connected shapes, thick near-opaque contours, and simplified
+details that survive the native-alpha contract. Do not ship realistic inert objects or realistic
+animals as sidekicks. Do not use puppet strings, marionette joints, hairline rigging, detached haze,
+or fine semi-transparent ornament.
 
 ## Preferred and prohibited patterns
 
@@ -865,18 +904,17 @@ detached haze, or fine semi-transparent ornament as a sidekick.
 
 - **Do** make the scene, opponents, center construction, speech, and perimeter
   controls read as one confrontation.
-- **Do** let the title and contestant register use the same broadcast palette,
-  square framing, brass rules, and live semantic text as the match.
+- **Do** use the match's broadcast palette, square framing, brass rules, and live semantic text for the title and contestant register.
 - **Do** keep the selected-character stages complete and the roster tiles
   tightly cropped. The two surfaces have different image jobs.
 - **Do** use the painted arena as atmosphere and keep all game truth in text,
   meters, lists, buttons, and dialogs.
-- **Do** preserve each roster character's human or fully mechanical species.
+- **Do** keep each roster character's human or fully mechanical species.
   Keep animal metaphors in names or titles out of character anatomy.
 - **Do** keep the 1024 by 720 path dense but readable: top status, speech,
   center construction, active choices, then perimeter actions.
 - **Do** keep core tactical content at 11 pixels or larger.
-- **Do** preserve every material weakness, disabled reason, and phrase state in
+- **Do** keep every material weakness, disabled reason, and phrase state in
   semantic attributes and accessible names. Keep the visible phrase rows free
   of metadata.
 - **Do** keep pointer preview temporary and keep reducer-owned game truth

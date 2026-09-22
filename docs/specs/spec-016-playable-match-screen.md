@@ -6,6 +6,15 @@
 interface (UI)
 **Production-file budget:** 10
 
+## Terms
+
+- AI: artificial intelligence.
+- CSS: Cascading Style Sheets.
+- DOM: Document Object Model.
+- HTML: Hypertext Markup Language.
+- SVG: Scalable Vector Graphics.
+- ID: identifier.
+
 ## Deliver
 
 Build the match surface as an original televised civic debate. Use one
@@ -50,12 +59,15 @@ button is itself the only comeback-charge display. Keep its three cells visible
 from the start of the draft and fill them progressively as charge increases.
 Do not render a separate comeback meter elsewhere.
 
-Render the scene in this order: studio and moderator, selected portraits,
-foreground standing desks, then Hypertext Markup Language (HTML) game content.
+Render the studio and moderator first, followed by selected portraits and
+foreground standing desks. Render Hypertext Markup Language (HTML) game
+content last.
 Scene 3 through Scene 6 render their complete transparent foreground plate
 above both portraits. Use the native alpha outline without a horizontal CSS
-clip. The two studio desk assets follow the same complete-plate rule: desks,
-microphones, and bottles render together above the portraits. Do not split one
+clip. The two studio desk assets obey the same complete-plate rule: desks,
+microphones, and bottles render together above the portraits.
+
+Do not split one
 foreground raster into contradictory front and rear planes.
 Both studio moderators remain physically seated at the center, with their
 heads visible between speech and the common phrase pool. The slightly
@@ -80,9 +92,9 @@ The match uses each player's setup skin ID only to select the portrait asset.
 Skin choice does not change character identity, phrases, weaknesses, grammar,
 scoring, match history identity, or any reducer input.
 
-Use one complete compact archetype name in the reserved two-line nameplate
-that Milestone 023 defines, a visible Pride label, and a Pride bar for each
-portrait. Both top Pride frames are
+For each portrait, use one complete compact archetype name in the reserved
+two-line nameplate that Milestone 023 defines. Add a visible Pride label and a
+Pride bar. Both top Pride frames are
 rectangular, with square
 corners and parallel vertical ends. The compact strip can omit the leading
 article from the full English name. Text and controls must not intersect a face,
@@ -111,12 +123,12 @@ provenance-bearing rendered back scene, transparent foreground desk plate,
 four transparent interim Portable Network Graphics (PNG) portraits, and paper
 material.
 
-The phrase path follows the compact original-game interaction precedent. The
+The phrase path uses the compact original-game interaction precedent. The
 nine common rows show phrase text only. The two private choices also show phrase
 text only. Do not show role labels, ownership labels, weaknesses, disabled
 reasons, hint copy, or card metadata inside either phrase list. Keep role,
 ownership, availability, weakness, and disabled data in semantic
-attributes and accessible names. The compact visuals must preserve
+attributes and accessible names. The compact visuals must keep
 assistive-technology state.
 
 Unavailable common phrases stay in their fixed rows with subdued text. A
@@ -132,17 +144,21 @@ and focus do not change the bubble. A wrong selection applies
 its grammar mistake immediately without a confirmation action.
 
 It also triggers one strong arena reaction. The offending portrait recoils,
-the Pride strip flashes, and a broadcast strike states the player name and
+the Pride strip flashes, and a broadcast strike shows the player name and
 exact 3 Pride loss. Place the strike below the speech record and its tail.
-the two records must not overlap at supported landscape sizes, including
+The two records must not overlap at supported landscape sizes, including
 ultrawide sizes. Remove the strike after 3000 milliseconds or the next accepted
-match action, whichever occurs first. Snapshot refreshes must not extend that
+match action, whichever occurs first.
+
+Snapshot refreshes must not extend that
 duration. A new mistake starts a new duration. Pause, viewport interruption,
 round review, and disconnection discard the visible strike without replay.
-Reconnecting the same element must not retain the discarded strike or its
+Reconnecting the same element must not keep the discarded strike or its
 stage and player reaction markers.
-It does not block the timer, require confirmation,
-or change the sentence. When the browser requests reduced motion, keep the
+It does not block the timer or change the sentence. Confirmation is not
+necessary.
+
+When the browser requests reduced motion, keep the
 complete strike record but suppress the recoil, flash, and transfer motion.
 
 The title Settings modal includes an optional `Tutorial` checkbox, defaulting
@@ -151,15 +167,19 @@ valid next shared and visible private phrase choices receive a subtle green
 glow. Reuse the grammar adapter result for appending that phrase to the active
 player's construction, including incomplete but accepted prefixes. Recompute
 after each snapshot change. Continuations do not append a phrase and do not
-glow. Empty, removed, and grammatically invalid choices do not glow. Invalid
-choices remain selectable and retain their normal mistake result.
+glow.
+
+Empty, removed, and grammatically invalid choices do not glow. Invalid
+choices remain selectable and keep their normal mistake result.
 
 Use a bounded inset glow with a smooth 2400-millisecond opacity pulse. Do not
 change phrase colors, text contrast, layout, or focus outlines. Reduced motion
-uses a steady glow; forced colors uses a steady inset dotted system-color
-outline. Accessible names identify a grammatically valid next choice. Hide
+uses a steady glow. Forced colors uses a steady inset dotted system-color
+outline. Accessible names identify a grammatically valid next choice.
+
+Hide
 the indication during pending commands, AI turns, Pause, viewport interruption,
-round presentation, and victory. Use only the viewer-scoped snapshot; never
+round presentation, and victory. Use only the viewer-scoped snapshot. Never
 expose another player's private hand. This preference does not enter game
 state, commands, replay, AI choices, scoring, or match history.
 
@@ -193,55 +213,69 @@ After a comeback ends a turn, that character's gray bubble
 shows the complete sentence with the selected closing line until the exchange
 resolves. Do not show two equal speech cards.
 
-The wide bubble retains the complete current or preview sentence. It can use
+The wide bubble keeps the complete current or preview sentence. It can use
 up to three responsive speech sizes. Keep the fixed speech-record geometry and
 moderator clearance. When a sentence exceeds the available height, its named,
 keyboard-focusable text region uses native vertical scrolling. Wheel and
 keyboard input must reach the first and last words without page scrolling.
+
 Do not truncate text, use a sentence ellipsis, or shrink the current speech
 type sizes to fit more words. Short sentences remain fully visible without a
 scrollbar. Start the text region at the top when the displayed sentence,
-speaker, or round changes. Other view updates preserve its scroll position.
+speaker, or round changes. Other view updates keep its scroll position.
 A new construction
-clears the prior round text from the wide bubble before its first phrase. Its
+clears the prior round text from the wide bubble before its first phrase.
+
+Its
 current text replaces all prior round text after the first accepted phrase.
 
 After every exchange, keep the arena visible during the Milestone 025 narrated
 sequence. The current narrator owns the wide bubble, including its Comeback
 line. Offset that bubble toward the speaker as defined by Milestone 025. Disable draft input and stop the turn timer until both deliveries finish.
-When that narrator used a Comeback and owns an approved sidekick asset, keep the
-asset hidden during speech preparation and the complete main insult. When the
-speech adapter reports the start marker for the separate Comeback closing-line
-segment, slide it from the narrator's outer viewport border into the lower
-central lane on the speech and common-phrase axis. Complete that entrance before
+If the narrator used a Comeback and owns an approved sidekick asset, use these
+visibility rules. Keep the asset hidden during speech preparation and the
+complete main insult.
+
+Use the speech adapter's start marker for the separate Comeback closing-line
+segment to start the entrance. Slide the sidekick from the narrator's outer
+viewport border into the lower central lane. This lane follows the speech and
+common-phrase axis. Complete that entrance before
 the short closing line can finish. Anchor its visible feet or object base to the
-viewport bottom. Player one enters from the left. Player two uses the same
-mirrored asset and enters from the right. The sidekick is at most one-third of
-the visible portrait height,
-renders above portraits and scene foreground art but below speech, scoring, and
-controls, and exits immediately when that speaker's final audio chunk ends so
-the total and score rows cannot cover it. Silent delivery
+viewport bottom.
+
+Player one enters from the left. Player two uses the same
+mirrored asset and enters from the right. The sidekick is at most one-third of the visible portrait height. It renders
+above portraits and scene foreground art but below speech, scoring, and
+controls. When that speaker's final audio chunk ends, it exits immediately.
+
+The total and score rows cannot cover it. Silent delivery
 enters when its simulated Comeback segment begins and uses the same remaining
 visible interval. An archetype without an
 approved asset renders no sidekick and leaves no empty placeholder.
-Compact layouts derive sidekick scale from the compact portrait frame and keep
-the visible base at the viewport floor, independent of the scrolling stage's
-content height. Both entrances start fully outside their owning viewport edge.
+Compact layouts derive sidekick scale from the compact portrait frame. They
+keep the visible base at the viewport floor, independent of the scrolling
+stage's content height.
+
+Both entrances start fully outside their owning viewport edge.
 In compact landscape, place the sidekick in the right common-phrase column.
 While it is visible, reserve a separate floor lane below the score receipt and
-any public emphasis. Bound the score receipt and retain its keyboard-focusable
+any public emphasis. Bound the score receipt and keep its keyboard-focusable
 native scroll region so every scored phrase remains reachable. Speech remains
-in the left column. Keep the sidekick below interface text and controls.
+in the left column.
+
+Keep the sidekick below interface text and controls.
 Verifier: `tests/browser/match-screen.browser.test.ts` checks both sides across
 the supported viewport matrix, including the source-alpha base offset.
 Each scored clause owns one inline line beside its speaker, without a Clause
 heading or a central panel. The line contains its complete phrase text, base,
 applied restriction, weakness, and combo factors, and resulting value. Finisher
-and Comeback use separate rows. Do not create rows for note-only items.
+and Comeback use separate rows.
+
+Do not create rows for note-only items.
 
 Reveal rows at the narration markers, then the full total at narration end.
 Apply displayed damage and character reaction afterward. Keep applied public
-weakness names with their row. Reduced motion retains the same facts. There is
+weakness names with their row. Reduced motion keeps the same facts. There is
 no normal result modal, 800-millisecond aggregate animation, or Continue action.
 Milestone 019 owns persistent Victory after both terminal deliveries finish.
 
@@ -276,13 +310,15 @@ Resume, and a secondary “Back to menu” action. Turn timer offers 15 seconds,
 
 Auto-complete offers On and Off. Its default is On. Phrase color coding offers
 On and Off. Its default is On. Sound offers separate Music and Voices On and
-Off choices. Music is On when the stored Music volume is above zero. Turning
-Music Off stores zero Music volume and turning it back On restores the last
-non-zero Music volume in the page session, or the 10 percent default when no
-such value exists. Voices maps to the stored Speech enabled setting.
+Off choices.
+
+Music is On when the stored Music volume is above zero. Turning Music Off stores zero Music volume. Turning it back On restores the
+last non-zero Music volume in the page session. If no such value exists, it
+restores the 10 percent default. Voices maps to the stored Speech enabled setting.
 
 When Phrase color coding is On, noun cards use green. Verb cards use orange.
 Predicate cards use red. Modifier cards use blue. Ending cards use purple.
+
 Continuation cards use gray. Conjunction cards use purple.
 
 Phrase text stays white. A common, uncommon, or
@@ -312,7 +348,9 @@ after Resume and does not change the authoritative sentence or phrase action.
 Changing Phrase color coding applies after Resume and does not change game
 truth, phrase actions, accessible phrase text, or the timer. Turn timer and
 Auto-complete remain in the application shell and persist through the strict
-Milestone 020 settings document. Phrase color coding remains session-only and
+Milestone 020 settings document.
+
+Phrase color coding remains session-only and
 returns to On after a reload because that document does not contain it.
 Changing Music or Voices applies through the same settings document. Music
 changes the mixer without changing Effects volume. Turning Voices Off cancels
@@ -350,7 +388,9 @@ timer-refill abuse.
   In forced colors, shared and private phrase surfaces use `Canvas` and
   enabled phrase text uses `CanvasText`, including hover and either Phrase
   color coding setting. Disabled phrases use `GrayText`. Both player records
-  use system surfaces and text without dimming filters. The active-turn badge
+  use system surfaces and text without dimming filters.
+
+  The active-turn badge
   uses `Highlight` and `HighlightText`. Pride meters use `Highlight` for the
   filled value on `Canvas`. Keyboard focus stays distinct from
   the Tutorial outline. Verifier: `e2e/match-forced-colors.spec.ts`.
@@ -359,9 +399,11 @@ timer-refill abuse.
   and Unlimited requests none. Manual Pause hides the complete match, freezes
   the exact millisecond value, blocks commands, and resumes without changing
   state or adding time. Viewport, hotseat portrait, and landscape guidance
-  preserve the same exact value.
+  keep the same exact value.
   The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
-  Sound Voices On, and Phrase color coding On. Selecting 15, 30, or Unlimited
+  Sound Voices On, and Phrase color coding On.
+
+  Selecting 15, 30, or Unlimited
   takes effect on Resume. Unlimited does not expire the turn,
   and its complete label stays inside the top-center timer frame at every
   supported viewport.
@@ -408,35 +450,40 @@ timer-refill abuse.
   SVG Reshuffle control move to the active side without changing the
   `redraw-hand` command contract.
 - **AC-016-12:** The complete current sentence remains readable inside the wide
-  bubble at every supported evidence viewport. Test the longest retained
-  current-catalog example, a synthetic sentence that is 40 percent longer, and
-  a larger bounded fixture. When needed, native vertical scrolling inside the
+  bubble at every supported evidence viewport. Do tests with the longest kept current-catalog example. Include a synthetic
+  sentence that is 40 percent longer and a larger bounded fixture. When needed, native vertical scrolling inside the
   named text region reaches the first and last words. Keyboard focus and
   scrolling work without game commands or page scrolling. There is no
-  horizontal clipping, sentence truncation, or sentence ellipsis. Measure the
-  first and last text ranges at their scroll positions against the speech
-  record, not only the text element's own scroll dimensions. The outer record,
+  horizontal clipping, sentence truncation, or sentence ellipsis.
+
+  Measure the first and last text ranges at their scroll positions against the
+  speech record. The text element's own scroll dimensions are not sufficient
+  evidence. The outer record,
   moderator clearance, and existing three speech sizes remain unchanged.
   Short text needs no scrolling. New text, speaker, or round resets the region
-  to the top; unrelated view updates preserve its scroll position.
-  `tests/browser/match-screen.browser.test.ts` verifies these boundaries with
+  to the top.
+
+  Unrelated view updates keep its scroll position.
+  `tests/browser/match-screen.browser.test.ts` does checks of these boundaries with
   the current authored long sentence and enlarged text at all four viewports.
 - **AC-016-13:** Each narrator receives its own public bubble and ordered inline
   component scores, then total and damage, as defined by Milestone 025. Applied
   factors and public weakness names remain visible with their component. Both
   deliveries finish before automatic progression or persistent Victory.
 - **AC-016-14:** A wrong common or private phrase triggers one 150 through
-  600-millisecond arena reaction. It identifies the offending player and exact
-  3 Pride loss, moves no layout, preserves immediate turn passage, and clears
-  after 3000 milliseconds or on the next accepted action, whichever is first.
+  600-millisecond arena reaction. It identifies the offending player and exact 3 Pride loss. It moves no layout
+  and keeps immediate turn passage. It clears after 3000 milliseconds or
+  on the next accepted action, whichever is first.
   The strike stays below the speech record and its tail without overlap.
-  Reduced-motion mode preserves the complete
+  Reduced-motion mode keeps the complete
   record without recoil, flashing, or transfer motion.
 - **AC-016-15:** Tutorial is off by default. Enabling it highlights every
   grammar-accepted next phrase in the shared board and visible private hand.
   Invalid and continuation cards remain selectable without a glow. The
   indication updates after picks and remains absent during blocked interaction.
-  Reduced motion and forced colors preserve a steady indication. No private
+  Reduced motion and forced colors keep a steady indication.
+
+  No private
   hand leaks or game-rule changes occur. Verifiers:
   `tests/unit/match-screen-snapshot.test.ts`,
   `tests/browser/match-screen.browser.test.ts`, and `e2e/tutorial-mode.spec.ts`.
@@ -452,9 +499,11 @@ timer-refill abuse.
   fill is progressive: 20 charge fills the first cell, 40 reaches the second
   cell boundary, and 60 fills the button. Spending a tier lowers the fill to the
   remaining charge. Its accessible name reports the available tier, bonus, and
-  exact charge. During a Comeback delivery, an available character-owned
-  sidekick enters from the owning border only when the Comeback phrase segment
-  starts, mirrors for player two, and exits at speech completion. Missing
+  exact charge.
+
+  During a Comeback delivery, an available character-owned sidekick enters from
+  the owning border only when the Comeback phrase segment starts. It mirrors
+  for player two and exits at speech completion. Missing
   sidekicks are valid during the manually approved rollout. Verifiers:
   `tests/unit/match-screen-snapshot.test.ts` and
   `tests/unit/sidekick-assets.test.ts` and
@@ -470,7 +519,7 @@ timer-refill abuse.
   With it Off, the text remains white
   with no role or rarity color. The card background stays unchanged. The
   feature keeps visible phrase rows text-only and does not change accessible
-  labels, phrase actions, game truth, or timer behavior. Browser tests verify
+  labels, phrase actions, game truth, or timer behavior. Browser tests do checks of
   the default, both Pause choices, and the rendered role and rarity data.
 
 ## Impeccable UI validation
@@ -480,7 +529,7 @@ timer-refill abuse.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 Playwright completes both sides of a hotseat draft, refresh, mistake, Pause,
 resume, and end at 1024x720, 1280x720, and 1920x1080. Browser tests prove

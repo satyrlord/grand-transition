@@ -12,18 +12,19 @@ description: Audit, diagnose, repair, or regenerate a Grand Transition gameplay 
 - Use regeneration mode when coherent repair requires new scene assets.
 
 Audit mode is read-only. Repair authority includes asset regeneration when it
-preserves the approved art direction and product contract. Ask before a change
+keeps the approved art direction and product contract. Ask before a change
 to the art direction, scene identity, character identity, or editorial boundary.
 A repository skill never expands the authority in the user request.
 
 Treat a user rejection as decisive visual evidence. Stop the rejected repair
-path. Do not defend it with green tests or earlier screenshots.
+path. Do not use passing tests or earlier screenshots to override that rejection.
 
 ## Load guidance when required
 
 Read the modules at these gates. Load only the modules required by the current task.
 If the scope changes, load the newly required module before that action.
-If a required module is unavailable, report the missing path before proceeding with its dependent action.
+If a required module is unavailable, stop its dependent action.
+Report the missing path.
 
 | Gate | Required module |
 | --- | --- |
@@ -40,21 +41,20 @@ Keep that decision within the selected mode's authority.
 Read `AGENTS.md`, `PRODUCT.md`, `DESIGN.md`, and Specifications 016, 018, 023,
 and 026. Read the scene content data, asset schema, rendering source,
 Cascading Style Sheets (CSS), affected tests, and current repository status.
-Preserve unrelated work.
+Keep unrelated work.
 
 Use [design-grand-transition-ui](../design-grand-transition-ui/SKILL.md) for the
 owning interface workflow.
-Preserve the Milestone 023 flat cel-shaded editorial-cartoon direction in every mode.
+Keep the Milestone 023 flat cel-shaded editorial-cartoon direction in every mode.
 
 ## Apply an authorized repair
 
-State the measured cause and repair scope before the first edit. In repair mode,
+Give the measured cause and repair scope before the first edit. In repair mode,
 apply the complete evidence-backed fix without stopping at a suggestion.
 
 Keep required text and controls in semantic Hypertext Markup Language (HTML).
-Keep decorative rasters pointer-inert. Preserve swappable character portraits.
-Do not bake playable characters into a scene unless an approved specification
-requires it.
+Keep decorative rasters pointer-inert. Keep swappable character portraits.
+Do not include playable characters in scene pixels unless an approved specification requires it.
 
 Update all affected specifications, content data, localization, design records,
 source, and tests. Do not record subjective approval that the user did not give.

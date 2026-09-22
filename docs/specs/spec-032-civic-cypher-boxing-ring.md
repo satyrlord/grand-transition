@@ -6,6 +6,15 @@
 music package  
 **Production-file budget:** 8
 
+## Terms
+
+- AI: artificial intelligence.
+- AVIF: AV1 Image File Format.
+- ID: identifier.
+- IDs: identifiers.
+- sRGB: standard red, green, and blue.
+- kHz: kilohertz.
+
 ## Deliver
 
 Add `civic-cypher-boxing-ring` as the seventh playable scene. It is selectable
@@ -29,19 +38,18 @@ fragments establish the ring without putting a long rope across either portrait
 plane.
 
 The setting is a worn Romanian municipal sports hall with post-socialist
-construction rather than a glossy American commercial arena. Use concrete
-bleachers, painted steel, patched acoustic panels, old practical ceiling
-fixtures, exposed cable runs, repaired equipment, original unbranded boom
-boxes, speakers, vinyl crates with blank sleeves, and coiled audio cables.
+construction rather than a glossy American commercial arena. Use concrete bleachers, painted steel, patched acoustic panels, old practical
+ceiling fixtures, exposed cable runs, and repaired equipment. Add original
+unbranded boom boxes, speakers, vinyl crates with blank sleeves, and coiled
+audio cables.
 Exactly two wired stage microphones hang from the ceiling outside the central
 interaction region and playable-character focal rectangles.
 
 The deep background contains a visibly enthusiastic adult cartoon crowd. It
 reads as predominantly Romanian and Eastern European rather than as a United
-States sports-arena audience. Use varied faces, ages, builds, hair, and ordinary
-1990s-inspired streetwear without racial caricature, repeated faces, dominant
-baseball-cap styling, varsity uniforms, sports jerseys, flags, readable text,
-or real branding. Keep the crowd low-contrast and behind the portrait planes.
+States sports-arena audience. Use varied faces, ages, builds, hair, and ordinary 1990s-inspired streetwear.
+Do not use racial caricature, repeated faces, dominant baseball-cap styling,
+varsity uniforms, sports jerseys, flags, readable text, or real branding. Keep the crowd low-contrast and behind the portrait planes.
 
 Apply Milestone 023's flat cel-shaded editorial-cartoon language, neutral sRGB
 white balance, crop core, safe rectangles, and byte budgets. The accepted
@@ -49,6 +57,7 @@ source starts with a text-only `gpt-image-2.5-flare` 3840 by 2160 opaque generat
 An approved reference edit clears the original microphones. Contour-extracted
 original microphone artwork is reduced and composited at fixed clear positions
 with matching suspension cords. No upscaling is used.
+
 The microphone bodies occupy `x=492-528` and `x=3312-3348`, with `y=510-650`,
 on the 3840 by 2160 master. Both stay inside the crop core and outside the
 protected regions. Upper cords stay outside the top band and bend inward below
@@ -61,9 +70,9 @@ the overlay without changing layout or scene content.
 
 ## Content and audio contract
 
-The scene owns exactly 34 cards: 10 nouns, 9 verbs in three complete tense
-families, 6 predicates in two complete tense families, 3 modifiers, 3 endings,
-and 3 scene-specific conjunctions. It owns no continuation. The global `[...]`
+The scene owns exactly 34 cards. It has 10 nouns, 9 verbs in three complete
+tense families, and 6 predicates in two complete tense families. It also has 3
+modifiers, 3 endings, and 3 scene-specific conjunctions. It owns no continuation. The global `[...]`
 continuation remains separately eligible. Predicate, modifier, and ending
 source evidence stays in the private research folder under Milestones 027 and
 028. Shipped text names no real person, party, or brand.
@@ -74,7 +83,9 @@ and uses Alex Morgan's _Boom Bap Old School Hip-Hop Beat_, published under CC BY
 and cyphers and marks the track as AI-generated. Ship the complete 129.480-second
 recording as a locally stored 48 kHz WAV master plus Ogg Vorbis and MP3 runtime
 variants. Normalize it to the shared music target and apply only the bounded
-waveform correction required for a continuous loop. Record the source page,
+waveform correction required for a continuous loop.
+
+Record the source page,
 direct download, source hash, license, treatment, edit, output hashes, and
 measurements in the audio manifest. Credit the creator and license in both
 `README.md` and `CREDITS.md`. Add no room tone or runtime network request.
@@ -88,10 +99,10 @@ measurements in the audio manifest. Credit the creator and license in both
   opaque back master and ten valid runtime variants. No foreground asset or
   desk layer is declared for this scene. Asset, alpha-provenance, color, crop,
   and byte-budget checks pass.
-- **AC-032-03:** Visual inspection confirms the Romanian municipal sports-hall
-  setting, predominantly Romanian and Eastern European crowd, boxing-ring and
-  hip-hop identity, exactly two hanging microphones, no moderator or desks, and
-  clear playable-character and interface regions.
+- **AC-032-03:** Visual inspection shows the Romanian municipal sports-hall setting,
+  predominantly Romanian and Eastern European crowd, and boxing-ring and
+  hip-hop identity. It shows exactly two hanging microphones, no moderator
+  or desks, and clear playable-character and interface regions.
 - **AC-032-04:** Scene selection routes the distinct local boom-bap treatment.
   All three formats pass hash, codec, 48 kHz, loudness, peak, duration, and loop
   checks. Automated checks do not establish subjective musical fit.
@@ -101,27 +112,27 @@ measurements in the audio manifest. Credit the creator and license in both
   pointer-inert, and free of page scroll.
 - **AC-032-06:** New Ladder progress includes all seven current scene IDs exactly
   once. Loading valid six-scene version-1 progress appends the seventh scene,
-  persists the reconciled order, and preserves the selected character,
+  persists the reconciled order, and keeps the selected character,
   opponents, rung, wins, losses, and completion. Custom setup can also select
   the seventh scene.
 
 ## Objective verifiers
 
-- `npm run content:validate` verifies AC-032-01.
+- `npm run content:validate` does checks of AC-032-01.
 - `tools/validate-scene-assets.mjs`, `tools/validate-asset-color.mjs`,
   `tests/unit/build-scene-assets.test.ts`, and
-  `tests/unit/scene-assets.test.ts` verify AC-032-02 and the measurable parts of
+  `tests/unit/scene-assets.test.ts` do checks of AC-032-02 and the measurable parts of
   AC-032-03.
-- The retained private generation review and source-scale inspection verify the
+- The kept private generation review and source-scale inspection do checks of the
   subjective parts of AC-032-03.
 - `npm run audio:validate`, `tests/unit/audio-assets.test.ts`, and
-  `tests/unit/audio-adapters.test.ts` verify AC-032-04.
-- `e2e/scene-catalog.spec.ts` verifies AC-032-05 headlessly.
-- `tests/unit/ladder.test.ts` verifies AC-032-06.
-- `tests/unit/catalog-foundation*.test.ts` verifies all 2,527 ordered character
+  `tests/unit/audio-adapters.test.ts` do checks of AC-032-04.
+- `e2e/scene-catalog.spec.ts` does checks of AC-032-05 headlessly.
+- `tests/unit/ladder.test.ts` does checks of AC-032-06.
+- `tests/unit/catalog-foundation*.test.ts` does checks of all 2,527 ordered character
   and scene setups, including the seventh scene and mirror matches.
 
-## Verify and stop
+## Checks and stop conditions
 
 Run focused content, locale, asset, audio, ladder, ambience, scene-resolver, and
 production scene-catalog checks. Build the production artifact. Do not run the

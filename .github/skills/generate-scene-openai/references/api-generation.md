@@ -1,12 +1,18 @@
-# Generate through the Flare API
+# Generate through the Flare application programming interface
 
-## API branch
+## Select the API branch
+
+API means application programming interface.
+PNG means Portable Network Graphics.
+CLI means command-line interface.
+SDK means software development kit.
+JSON means JavaScript Object Notation.
 
 Use this branch for transparent output, exact-size masters, or output above 2,073,600 pixels.
 Use `gpt-image-2.5-flare`, high quality, PNG output, and explicit dimensions.
 The repository helper uses Node 24 `fetch` through `scripts/openai-api.mjs`.
 It constructs requests directly for OpenAI's image generation and edit endpoints.
-Do not modify an installed image CLI or require its size tables, SDK, Python, or `uv`.
+Do not modify an installed image CLI. Do not depend on its size tables, SDK, Python, or `uv`.
 
 The helper reads only `OPENAI_API_KEY` from the ignored, untracked `.env.local` file.
 Never print the file or key, expose it in command arguments, or add it to browser code.
@@ -18,15 +24,19 @@ The [OpenAI image generation guide](https://developers.openai.com/api/docs/guide
 documents Flare's size and transparency contract.
 Dimensions must be multiples of 16. The maximum edge is 3840 and the maximum aspect ratio is 3:1.
 The total pixel count must be between 655,360 and 8,294,400, inclusive.
+
 These limits apply to generation sources, not the shipping dimensions declared by the asset pipeline.
-For a 1920-by-1080 shipping scene, generate at 3840 by 2160 and use the reviewed scene downsampling procedure.
+Current scene masters use 3840 by 2160 pixels.
+Read `tools/scene-resolution.mjs` before selecting source dimensions.
+If an approved contract specifies a smaller master, use the reviewed scene preparation procedure.
+
 Do not request native 1920 by 1080. Its height is not a multiple of 16.
-Recheck the official guide before changing the supported model or request contract.
+Do another check of the official guide before changing the supported model or request contract.
 Do not silently reduce a requested size after an API error.
 
 Set `--background transparent` for transparent PNG output.
 Use `--background opaque` for opaque output. Use `auto` only when the background is unconstrained.
-Inspect returned dimensions and alpha before integration.
+Examine returned dimensions and alpha before integration.
 
 ## Plan without generation
 
@@ -62,21 +72,27 @@ node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --pro
 ```
 
 Add `--exact-size` for a smaller opaque source with supported native dimensions, such as 1024 by 1024.
-The 3840-by-2160 scene request also supplies current 1920-by-1080 shipping masters through reviewed downsampling.
+The 3840-by-2160 request matches the current scene master dimensions.
+The scene builder creates smaller runtime variants.
+
 Dry runs construct the actual request locally without reading the key or contacting OpenAI.
 They check prompt controls, supported dimensions, background, reference decode, and request fields.
 A passing dry run establishes local request validity. It does not establish provider access or successful remote generation.
 Remove `--dry-run` only for an authorized artwork request.
 
 For permitted reference mode, add one `--reference <local-image>` per image.
-References must be static PNG, JPEG, or WebP files, each smaller than 50 MB, with at most 16 inputs.
+Use no more than 16 reference images.
+Each image must be a static PNG, JPEG, or WebP file smaller than 50 megabytes (MB).
+JPEG is the Joint Photographic Experts Group image format.
+
 Reference mode uses a multipart edit request. Text-only mode uses a JSON generation request.
-Both preserve the authored prompt without augmentation.
+Both keep the authored prompt without augmentation.
 
 The helper reserves a new output directory before sending the request.
-It writes `request-record.json`, then preserves the original API bytes as `candidate.png`.
+It writes `request-record.json`, then keeps the original API bytes as `candidate.png`.
 It records the source hash in `generation.json` and performs full image decode.
-Inspect `inspection.json` and the reported status before continuing.
+Examine `inspection.json` and the reported status before continuing.
+
 Failed dimension or alpha checks leave the raw candidate available for diagnosis.
 They do not authorize another generation automatically.
 An invalid alpha report uses the `alpha-review-required` state.
@@ -86,4 +102,5 @@ The adapter sends one request and never retries automatically.
 It records sanitized request status without provider error bodies.
 Do not reuse a run directory for another paid attempt.
 After a timeout or interruption, stop if completion or billing is uncertain.
-Report the run directory and sanitized failure status. Resolve uncertainty before another request.
+Report the run directory and failure status without private data.
+Resolve uncertainty before another request.

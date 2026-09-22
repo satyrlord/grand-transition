@@ -135,7 +135,7 @@ export async function inspectImage(bytes, expectedSize = NATIVE_SIZE) {
 
 export function assertReview(review, facts) {
   if (review.sha256 !== facts.sha256 || !nonempty(review.reviewer) || !Array.isArray(review.issues) || review.issues.length) {
-    throw new Error('Require a current image review with no unresolved issues.');
+    throw new Error('Get a current image review with no unresolved issues.');
   }
   for (const name of REVIEW_CHECKS) {
     if (review.checks?.[name]?.pass !== true || !nonempty(review.checks[name].evidence)) {
@@ -219,7 +219,7 @@ async function main() {
       if (values.background === 'transparent') facts.alpha = await inspectNativeAlpha(bytes);
     } catch {
       await status({ state: 'candidate-invalid', code: 'dimensions-or-decode', automaticRetries: 0 });
-      throw new Error('The saved candidate failed dimension or decode checks. Inspect it before any new request.');
+      throw new Error('The saved candidate failed dimension or decode checks. Before a new request, examine the saved candidate.');
     }
     await writeJson(path.join(out, 'inspection.json'), facts);
     const valid = facts.alpha?.valid ?? true;
@@ -249,7 +249,7 @@ async function main() {
     await mkdir(path.dirname(out), { recursive: true });
     await writeFile(out, output, { flag: 'wx' });
     await writeJson(`${out}.preparation.json`, record);
-    console.log(JSON.stringify({ prepared: out, ...record.output, shippingApproval: 'requires final alpha, provenance, and runtime checks' }));
+    console.log(JSON.stringify({ prepared: out, ...record.output, shippingApproval: 'Final alpha, provenance, and runtime checks must pass.' }));
   } else throw new Error('Required arguments are missing. Read the skill API procedure.');
 }
 

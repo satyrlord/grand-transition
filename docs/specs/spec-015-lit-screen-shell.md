@@ -3,12 +3,22 @@
 **Status:** Approved  
 **Depends on:** 014  
 **Replacement:** The interactive title replaces Milestone 001's placeholder
-ban on controls, navigation, and game state. It retains the exact title,
+ban on controls, navigation, and game state. It keeps the exact title,
 subtitle, and status text.
 
 **Owns:** Application shell, screen flow, setup user interface (UI), and
 view-state boundary
 **Production-file budget:** 8
+
+## Terms
+
+- PNG: Portable Network Graphics.
+- AVIF: AV1 Image File Format.
+- GPU: graphics processing unit.
+- URL: Uniform Resource Locator.
+- ID: identifier.
+- IDs: identifiers.
+- KiB: kibibytes.
 
 ## Deliver
 
@@ -26,7 +36,7 @@ Mirror characters are valid. Screens use light DOM.
 
 The title emblem uses genuine transparent alpha with a Portable Network
 Graphics fallback. Milestone 023 promotes the 640-square emblem and the title
-proscenium to manifest-resolved AVIF and WebP variants. Both retain their
+proscenium to manifest-resolved AVIF and WebP variants. Both keep their
 authored PNG fallback. The production entry preloads both AVIF files before
 the application module. Browsers without AVIF support use WebP.
 
@@ -48,32 +58,40 @@ The shell has `title` and `setup` view states. The Main Menu offers
 “Single Player”, “Multiplayer”, and “Ladder”. Each button emits a typed
 `show-setup` command with mode `ai`, `hotseat`, or `ladder`, respectively,
 and opens setup in that mode. Multiplayer means two people on this device.
-Milestone 018 disables its action and hotseat setup submission in portrait;
-its command handlers reject these actions too. Single Player and Ladder remain
+Milestone 018 disables its action and hotseat setup submission in portrait.
+
+Its command handlers reject these actions too. Single Player and Ladder remain
 available in either supported orientation.
 The scene and character builder has no mode selector. “Back” returns to the
-Main Menu and preserves setup values. Selecting a menu mode updates the mode;
+Main Menu and keeps setup values. Selecting a menu mode updates the mode.
+
 Ladder restores its saved player, opponent, and scene under Milestone 022.
 Changing modes does not delete Ladder progress. Invalid menu modes do not
 navigate or change setup. A valid setup submit emits one typed `start-match` command.
 Milestone 016 owns the rendered match destination.
 
-When both Speech enabled and GPU voices are on, the main menu shows a compact
-brass-and-ink voice loader below its actions during GPU preparation and loading.
+When Speech enabled and GPU voices are both on, the main menu shows a compact
+brass-and-ink voice loader below its actions. The loader appears during GPU
+preparation and loading.
 The meter has an accessible name and a numeric value only when download
 progress is known. It uses restrained motion that stops with reduced motion,
 and remains legible in forced colors. Loading does not move the menu actions.
-Preparation never blocks the menu: all three native mode buttons stay enabled
-and their command handler accepts activation while GPU voices are idle,
-checking, or loading. A match started before preparation finishes plays with the
-local Piper voices for that match, and Milestone 024 selects the ready GPU
-voices from the next match. Settings and Match history remain usable, and
-changing any other setting neither cancels nor restarts preparation. Ready
+
+Preparation never blocks the menu. While GPU voices are idle, checking, or
+loading, all three native mode buttons stay enabled and their command handler
+accepts activation. A match that starts before preparation finishes uses local Piper voices
+throughout that match. Milestone 024 selects ready GPU voices from the next
+match. Settings and Match history remain usable, and
+changing any other setting neither cancels nor restarts preparation.
+
+Ready
 removes the loader. Unavailable removes the loader and shows a compact local
 Piper fallback notice. Turning either
 Speech enabled or GPU voices off removes GPU status
 immediately. No GPU status is shown while speech is off. Milestone 024 owns
-preparation, timeout, and fallback behavior; Milestone 020 owns the preferences.
+preparation, timeout, and fallback behavior.
+
+Milestone 020 owns the preferences.
 
 Each title or setup transition moves keyboard focus to the destination heading.
 The heading is programmatically focusable but does not enter the normal Tab
@@ -81,7 +99,7 @@ sequence.
 
 A confirmed “Back to menu”
 action from the concealed Pause screen discards the active match and returns to
-title. It preserves the setup values for a later setup visit.
+title. It keeps the setup values for a later setup visit.
 
 Setup fields are player-one character and skin, player-two character and
 skin, and scene. Mode belongs to the Main Menu and remains in the setup payload. The lower fieldset is labeled “Match settings.” Defaults are
@@ -130,9 +148,11 @@ boundary or overlap the match-settings strip.
 The roster starts with player one as its selection target. Player one can
 change character and skin until using the separate player-one lock control,
 which reads `Confirm selection`. A roster choice never surrenders the turn.
-Locking player one moves the target to player two, who can then change
-character and skin until using the player-two lock control, which reads
-`Confirm selection` too. Before that transition, player two's stage, skin
+Locking player one moves the target to player two. Player two can then change
+character and skin until using the player-two lock control.
+
+That control also
+reads `Confirm selection`. Before that transition, player two's stage, skin
 controls, and lock control are unavailable. Each selected-player stage shows
 its selected skin. Mirror choices remain valid.
 
@@ -146,14 +166,13 @@ the other is not, that player's control reads `Selection confirmed`.
 Start match stays disabled and submission is rejected until both players are
 locked in. Before both locks exist, a locked player cannot unlock. When both
 players are locked, either lock control becomes a `Change selection` control.
-Unlocking one player disables Start match, preserves the other player's lock and
+Unlocking one player disables Start match, keeps the other player's lock and
 both selections, and returns the selection target only to the unlocked player.
 The player must lock in again before the match can start.
 
 Single Player uses the same sequence. The person operating player one selects
-and locks both the human and computer characters. Ladder requires only the
-person's lock because the current rung's opponent is fixed and treated as
-locked. Ladder never permits selection or unlocking of that opponent.
+and locks both the human and computer characters. Only the person's lock is necessary in Ladder because the current rung's
+opponent is fixed and treated as locked. Ladder never permits selection or unlocking of that opponent.
 
 Previous and
 next arrow buttons cycle only that player's available skins and wrap at both
@@ -176,25 +195,27 @@ The panel
 contains public content only and does not trap focus.
 
 Validation occurs on submit and after an invalid field changes. Each visible
-error names the field, problem, and valid recovery. The shell preserves valid input.
+error names the field, problem, and valid recovery. The shell keeps valid input.
 Each error is programmatically associated with its control. An invalid mode
-shows a focusable alert that directs the player back to the Main Menu. An invalid submit
+shows a focusable alert that directs the player back to the Main Menu.
+
+An invalid submit
 moves focus to the first invalid control. Submission is never disabled only to
 hide validation.
 
 ## Acceptance criteria
 
-- **AC-015-01:** Title and setup follow the two-state graph. Browser Back does
+- **AC-015-01:** Title and setup use the two-state graph. Browser Back does
   not create an unsupported URL route. A confirmed paused-match exit returns to
   title. A later setup visit restores the values. Each title or setup transition
   moves focus to the destination heading.
 - **AC-015-13:** Each Main Menu mode opens the correct setup. Setup has no mode
   selector. All three mode buttons stay available during GPU preparation and
-  open their setup. Switching modes preserves
+  open their setup. Switching modes keeps
   Ladder progress and supported viewports keep all menu actions visible.
 - **AC-015-02:** Defaults create the exact typed setup payload, including both
   default skin IDs. A mirror match with different skins succeeds.
-- **AC-015-03:** Every invalid class produces one visible error and preserves
+- **AC-015-03:** Every invalid class produces one visible error and keeps
   other values. It moves focus to the first invalid control. It associates each
   error with its control and emits no command.
 - **AC-015-04:** A valid submit emits one bubbling, composed
@@ -239,7 +260,7 @@ hide validation.
 - **AC-015-11:** Both selected-player stages cycle their available skins with
   visible previous and next arrows, right-click, Left Arrow, and Right Arrow.
   The controls cycle and wrap across one default skin and up to eight alternate
-  skins. Cycling changes only the owning player's skin ID. It preserves the two
+  skins. Cycling changes only the owning player's skin ID. It keeps the two
   character IDs and all phrase content. It prevents the stage context menu and
   does not change the roster portrait catalog. Selecting a roster skin directly
   updates the owning character and skin together.
@@ -247,13 +268,15 @@ hide validation.
   editable. Roster and skin changes stay on the current player until that
   player's separate lock control is used. Player two becomes editable only
   after player one locks. Start match remains disabled and direct submission
-  emits no command until both players are locked. When both are locked, either
-  player can unlock; Start match disables, the other lock stays set, and only
-  the unlocked player can reselect and lock again. Ladder treats its fixed
-  opponent as locked but still requires the person's lock. Click, right-click,
+  emits no command until both players are locked. When both are locked, either player can unlock.
+
+  Start match becomes disabled,
+  and the other lock stays set. Only the unlocked player can reselect and lock
+  again. Ladder treats its fixed opponent as locked. The person's lock remains
+necessary. Click, right-click,
   and keyboard handlers reject changes to locked or waiting players.
   `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts`
-  verify the lock sequence and input guards.
+  do checks of the lock sequence and input guards.
 
 ## Impeccable UI validation
 
@@ -262,7 +285,7 @@ hide validation.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 Browser component tests prove immutable properties, bubbling and composed typed
 events, validation, and setup command creation. The app
@@ -275,4 +298,4 @@ surface, AI behavior, persistence, or final styling.
 wrappers transparent. Selected portraits, labels, weakness records, controls,
 and focus markers stay visible. Canvas colors belong to actual surfaces and
 controls. `e2e/review-accessibility.spec.ts` and production evidence
-verify this at 1024 by 720, 1280 by 720, and 1920 by 1080.
+do checks of this at 1024 by 720, 1280 by 720, and 1920 by 1080.

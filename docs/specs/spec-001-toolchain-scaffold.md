@@ -5,9 +5,13 @@
 **Owns:** Toolchain, package commands, and initial project layout  
 **Production-file budget:** 8
 
+## Terms
+
+- CSP: Content Security Policy.
+
 ## Deliver
 
-Bootstrap Node.js 24 Long-Term Support (LTS), npm 12, strict TypeScript 7, Vite
+Set up Node.js 24 Long-Term Support (LTS), npm 12, strict TypeScript 7, Vite
 8, and Lit 3. Add the approved directory structure and a title
 placeholder. Commit the lockfile.
 Add only `dev`, `preview`, `build`, and `typecheck` scripts in this slice.
@@ -47,14 +51,14 @@ Keep screens under `src/app/screens` and pure grammar under
 
 - **AC-001-01:** A clean `npm ci` uses Node.js 24 and npm 12, succeeds without
   changing `package-lock.json`, and installs the resolved versions in that
-  file. Verify with the clean-install check.
+  file. Do the check with the clean-install check.
 - **AC-001-02:** `npm run typecheck` and `npm run build` exit with code 0.
 - **AC-001-03:** Development and production preview show the exact title,
   subtitle, and status with one `main` and one `h1`, and produce no console
-  or page error. Verify in Chromium at 1024 by 720, 1280 by 720, and 1920 by
+  or page error. Do the check in Chromium at 1024 by 720, 1280 by 720, and 1920 by
   1080.
 
-## Verify and stop
+## Checks and stop conditions
 
 `npm ci`, `npm run typecheck`, and `npm run build` pass. The development and
 built root pages render without a console error. Stop before lint, tests, game

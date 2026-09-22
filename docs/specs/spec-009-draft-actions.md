@@ -6,6 +6,10 @@
 timeout, continuation, and comeback selection
 **Production-file budget:** 7
 
+## Terms
+
+- IDs: identifiers.
+
 ## Turn flow
 
 The scene-defined opener starts the first round. The opener alternates in each
@@ -66,4 +70,4 @@ Public logs name the action and card source, not an unselected private phrase.
 
 ## Objective verifiers
 
-`tests/unit/draft-actions.test.ts` verifies AC-009-01 through AC-009-05.
+`tests/unit/draft-actions.test.ts` does checks of AC-009-01 through AC-009-05.

@@ -36,7 +36,7 @@ sentence or score.
 ## Acceptance criteria
 
 - **AC-007-01:** A wrong common or private phrase is consumed, deals exactly 3
-  self-damage, preserves the sentence, does not charge a comeback, and passes
+  self-damage, keeps the sentence, does not charge a comeback, and passes
   one pick.
 - **AC-007-02:** No product state, command, visible label, or confirmation uses
   a special foul system.
@@ -48,4 +48,4 @@ sentence or score.
 ## Objective verifiers
 
 `tests/unit/draft-actions.test.ts`, `tests/unit/match-lifecycle.test.ts`, and
-`tests/browser/match-screen.browser.test.ts` verify AC-007-01 through AC-007-04.
+`tests/browser/match-screen.browser.test.ts` do checks of AC-007-01 through AC-007-04.

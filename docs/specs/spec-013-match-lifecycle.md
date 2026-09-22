@@ -53,11 +53,11 @@ created only from setup.
 - **AC-013-03:** Both locked insults resolve before knockout selection.
 - **AC-013-04:** Double knockout restores the exact cliffhanger state.
 - **AC-013-05:** Higher, lower, zero, equal-nonzero, and equal-zero cliffhanger
-  score pairs follow the formula without another tie-break.
+  score pairs use the formula without another tie-break.
 - **AC-013-06:** The terminal state records the winner and the exact
   development evidence fields above. The public command type has no rematch or
   post-match command.
 
 ## Objective verifiers
 
-`tests/unit/match-lifecycle.test.ts` verifies AC-013-01 through AC-013-06.
+`tests/unit/match-lifecycle.test.ts` does checks of AC-013-01 through AC-013-06.

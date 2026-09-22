@@ -17,7 +17,7 @@ a separate break rule.
 The catalog contains one unrestricted continuation card,
 and its visible cue is `[...]`.
 
-A surviving continuation preserves the player's prior noun-combo state. A
+A surviving continuation keeps the player's prior noun-combo state. A
 broken continuation clears that player's combos. Sudden-death cliffhangers do
 not deal continuation cards.
 
@@ -50,7 +50,7 @@ received during the same exchange.
 
 ## Acceptance criteria
 
-- **AC-012-01:** Damage 0 and 15 preserve a carry. Damage 16 breaks it.
+- **AC-012-01:** Damage 0 and 15 keep a carry. Damage 16 breaks it.
 - **AC-012-02:** A strong comeback breaks a carry because its 18 damage bonus
   crosses the 16-damage threshold.
 - **AC-012-03:** Charge thresholds, cap, strongest-tier use, spending, and
@@ -65,5 +65,5 @@ received during the same exchange.
 
 ## Objective verifiers
 
-`tests/unit/continuation-comeback-resolution.test.ts` verifies AC-012-01 through
+`tests/unit/continuation-comeback-resolution.test.ts` does checks of AC-012-01 through
 AC-012-06.
