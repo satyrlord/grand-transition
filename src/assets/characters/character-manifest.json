@@ -381,7 +381,7 @@
       "ownerType": "character",
       "ownerId": "coalition-acrobat",
       "skinId": "default",
-      "facing": "left",
+      "facing": "right",
       "stateId": "selection",
       "poseId": "selection",
       "expressionId": "selection",
@@ -392,8 +392,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1202336,
-        "sha256": "3e9df8856fb64add02e78b10de9f778963425dfdcc248e2d574d6c9c0ea346be"
+        "bytes": 3221659,
+        "sha256": "da2d9db6c8783903b544e8960c6bff3a749880e93c41891b6ebc5cf424eed230"
       },
       "focalPoint": {
         "x": 0.5,
@@ -412,9 +412,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 2806,
-          "sha256": "0834e09ea1a4c702f9d4441282efc39ac4d521ad34c62a11509d21a9680c7030"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 12871,
+          "sha256": "5b8d0fed06ea03a1adb2c57d4df58aaed073d1d4c237560cf4dc96311b32cf5c"
         },
         {
           "path": "variants/coalition-acrobat-128x128.webp",
@@ -422,17 +423,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3326,
-          "sha256": "7d7f130bf51c88904117abeaa52634a9751957462464d81a4b14cb4cce773c41"
+          "bytes": 3878,
+          "sha256": "c071cdf4ad1e2b34b70aae582872a62803e3f852860a6ad86f670968b6bb0694"
         },
         {
           "path": "variants/coalition-acrobat-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 5352,
-          "sha256": "6b7a6fb7c9e20b7412a9cda426ab3930ee64812aeda65ecafbf686e5796e3f0e"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 32900,
+          "sha256": "2f77a8c18dfdeaa58383bd6133d41d6c8958463656a8592a643e86129acd975d"
         },
         {
           "path": "variants/coalition-acrobat-256x256.webp",
@@ -440,8 +442,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7072,
-          "sha256": "6e5e192659a54c7b080eca59896ec4317f6796710ea83a7eb13217571f10fa41"
+          "bytes": 8560,
+          "sha256": "350b2391025ace856758bb30274d85a11531aac8b723f817fa2649e7a70c5bc8"
         },
         {
           "path": "variants/coalition-acrobat-320x320.avif",
@@ -449,8 +451,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 6748,
-          "sha256": "c165d0a5749df7da9a088aa5edaeac61673b09bdaa64df5deca0c231648261a5"
+          "bytes": 7556,
+          "sha256": "bb9d8440ff777dd8ee5d7f60d95af1b0c446d9043bbd1f7242ea927e7725abb2"
         },
         {
           "path": "variants/coalition-acrobat-320x320.webp",
@@ -458,8 +460,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 9144,
-          "sha256": "4915259be0c9fcdc3419d51e158cafa2b61f4a0464ad1a2bce25bbc1ee49bc69"
+          "bytes": 11700,
+          "sha256": "5c105ea2d339586e85b90b45f48dfc524a3ea33ea53184182a2bfe9d991191ca"
         },
         {
           "path": "variants/coalition-acrobat-640x640.avif",
@@ -467,8 +469,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 16590,
-          "sha256": "6e40d18b5fd05fff4a2e59123863eb65d05ce486f9ce09a52d9552674a68d842"
+          "bytes": 18859,
+          "sha256": "eb57452463610792c8341801705361fafec0fda54c26ef136d8de838e87a68eb"
         },
         {
           "path": "variants/coalition-acrobat-640x640.webp",
@@ -476,8 +478,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 21768,
-          "sha256": "98a003961de60ccf7a5a90e6fa8e0faa9c83fbe7265a648de367aa89af23eb77"
+          "bytes": 28020,
+          "sha256": "c26c3fc622a5d923de59eed60dc72f8b7e876a85de486373290ef2fc9d85364d"
         },
         {
           "path": "variants/coalition-acrobat-960x960.avif",
@@ -485,8 +487,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 25982,
-          "sha256": "779be1c57e6e04235888070f5f02781ac3f44fe35ff5bd647a3ada968da6a6da"
+          "bytes": 30872,
+          "sha256": "9b6c8042725105706d33f1b54a8dbd1867b9e3e249da1ade394614ef16c7109c"
         },
         {
           "path": "variants/coalition-acrobat-960x960.webp",
@@ -494,8 +496,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 34292,
-          "sha256": "ce9f705da869bbc08f36c7db7fea8dc6c36d6a79917c43ecd47790d0f231bd57"
+          "bytes": 47004,
+          "sha256": "d96417410cb86f33fb5b71913a44797b60723d96a395cc8a55cb54a64196f35e"
         }
       ]
     },
