@@ -41,14 +41,18 @@ Do not create networking abstractions for out-of-scope online play.
 For each candidate, report its files, existing cost, evidence, proposed owner,
 responsibility changes, benefit, risk, contract impact, verifier, and strength.
 Use `Strong`, `Worth exploring`, or `Speculative` for strength.
-Rank candidates and report the strongest candidate first.
+Rank candidates.
+Report the strongest candidate first.
 In analysis mode, stop before detailed design or edits.
 
 For an authorized proposal, define responsibilities and exclusions.
 Compare credible alternatives.
 Update an owning specification only when its contract changes.
 Add boundary tests.
-Use [run-quality-gate](../run-quality-gate/SKILL.md).
+
+Run `npm run quality:quick` for routine verification.
+If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey user restrictions on checks. Report checks that you did not run.
 
 The analysis is complete when each candidate has evidence, a strength, and a
 verifier. An authorized change is complete when ownership, contracts, tests, and

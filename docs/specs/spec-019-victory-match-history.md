@@ -5,6 +5,11 @@
 **Owns:** Terminal browser presentation and persistent local match history  
 **Production-file budget:** 10
 
+## Terms
+
+- UI: user interface.
+- ID: identifier.
+
 ## Replacement contract
 
 This milestone replaces the zero-post-match rules in Milestone 017. It also
@@ -14,8 +19,8 @@ export, sharing, leaderboards, accounts, and network services remain outside
 the product UI.
 
 Milestone 029 extends history with recorded match language and a localized
-interface. It preserves original public sentences and scores across language
-changes. Record its exact version here before codec implementation; the existing
+interface. It keeps original public sentences and scores across language
+changes. Record its exact version here before codec implementation. The existing
 English history contract remains supported.
 
 ## Terminal victory state
@@ -28,15 +33,16 @@ must not clear the terminal match or change screens as a side effect of the
 terminal command.
 
 Keep the final arena, public sentence, characters, and Pride values visible.
-After both terminal deliveries and damage, show a victory record in the same square,
-near-black, brass, oxblood, television-blue, and warm-paper visual language.
+After both terminal deliveries and damage, show a victory record. Use the same
+square, near-black, brass, oxblood, television-blue, and warm-paper visual
+language.
 Show `Victory`, the winning character name, both final Pride values, the final
 exchange damage records, and the completed round count. The record has one
 `Return to main menu` action. It has no automatic timeout, Continue action,
 rematch action, replay action, history action, or hidden dismissal path.
 
 The victory state remains until the user selects `Return to main menu`. That
-action clears the active terminal match and shows the title screen. It preserves
+action clears the active terminal match and shows the title screen. It keeps
 the current setup selections for the next setup visit. Browser Back, Escape,
 resize, reduced motion, and a temporary unsupported viewport must not erase the
 terminal state.
@@ -69,8 +75,9 @@ contains:
 
 New entries also contain optional `speechDiagnostics`, with its own schema
 version 1. Older entries without this field remain valid. Milestone 024 owns
-the event inventory and privacy limits. Diagnostics are observation metadata;
-they do not enter the replay, scoring, or deterministic match-log contracts.
+the event inventory and privacy limits. Diagnostics are observation metadata.
+They do not enter the replay, scoring, or deterministic match-log contracts.
+
 Update the existing entry by match ID during terminal narration and after its
 completion. Do not append another match entry. Coalesce terminal updates over
 250 milliseconds and flush final completion or navigation immediately.
@@ -79,11 +86,12 @@ The entry must not contain unselected private cards, hidden hotseat text,
 browser identifiers, machine facts, secrets, analytics identifiers, or remote
 data. Storage creates no network request. Do not expire, truncate, rotate, or
 remove valid entries. The product has no clear-history control. Entries remain
-until the user explicitly clears the site data or browser storage. An entry
-whose replay and match-log documents use the same other version is not a valid
-entry: ignore it before validating retained-entry identity and completion time,
-keep every entry that still decodes, and do not
-rewrite the stored bytes until the next stored update.
+until the user explicitly clears the site data or browser storage.
+
+An entry whose replay and match-log documents use the same other version is
+invalid. Ignore it before validating kept-entry identity and completion
+time. Keep every entry that still decodes. Do not rewrite the stored bytes
+until the next stored update.
 
 The app must append exactly one entry for each completed match, including when
 the terminal state re-renders or the viewport changes. Show history newest
@@ -100,7 +108,9 @@ time, winner and opponent character names, scene, mode, seed, round count, and
 final Pride. Show the public sentence and actual rendered phrases used by each
 player in every round before the technical record. An expandable technical
 record shows the public round breakdowns, commands, events, and normalized
-match-log data. The list can scroll inside the modal without causing page
+match-log data.
+
+The list can scroll inside the modal without causing page
 scroll. Never invent or reconstruct phrase text that an entry does not contain.
 For a current-version entry, keep the exact recorded public text even when the
 live catalog has since revised that phrase.
@@ -108,11 +118,12 @@ live catalog has since revised that phrase.
 Milestone 029 owns the recorded match language. Every entry carries it inside
 its normalized replay and match-log setup as the captured `gameLocale`, and it
 is the language of the recorded public text. Annotate each recorded sentence
-with that language for assistive technology. The history controls use the
-current interface language, and the displayed character and scene names use the
-current interface display names, but changing either language selection must
-never translate, rescore, or otherwise alter the recorded public text, and
-never changes the entry's stored bytes.
+with that language for assistive technology. The history controls use the current interface language. Displayed character
+and scene names use the current interface display names.
+
+Changing either
+language selection must never translate, rescore, or otherwise change the
+recorded public text. It never changes the entry's stored bytes.
 
 For entries with speech diagnostics, the technical record contains `matchLog`
 and `speechDiagnostics` objects. A recording status without final playback or
@@ -142,9 +153,10 @@ or the user clears the invalid site data.
   interruption, reduced motion, Escape, and browser Back. Only `Return to main
   menu` clears it and shows the title screen.
 - **AC-019-03:** The first terminal transition appends exactly one versioned
-  entry. Reload restores every valid entry in newest-first display order, and an
-  entry whose replay and match-log documents use the same other version is
-  ignored without a persistence failure and without rewriting the stored bytes.
+  entry. Reload restores every valid entry in newest-first display order. The
+  application ignores an entry whose replay and match-log documents use the
+  same other version. It reports no persistence failure and does not rewrite
+  the stored bytes.
   A mismatched pair remains invalid data.
   Re-render and viewport changes do not add a duplicate.
 - **AC-019-04:** History contains the exact seed, setup, public replay, public
@@ -155,7 +167,7 @@ or the user clears the invalid site data.
   populated, expanded, overflow, Close, Escape, focus-return, and focus-trap
   states are keyboard and pointer operable.
 - **AC-019-06:** Quota, security, unavailable-storage, malformed-data, and
-  unsupported-version failures preserve victory. They retain the new entry for
+  unsupported-version failures keep victory. They keep the new entry for
   the page session and show the persistence notice. They do not overwrite
   invalid stored bytes.
 - **AC-019-07:** The production Pages-subpath build reaches victory and returns
@@ -175,14 +187,14 @@ issue disposition.
 
 ## Objective verifiers
 
-Pure unit tests verify the history version 1 codec, the single replay and
-match-log document version, and the ignored-entry path. They verify exact replay
+Pure unit tests do checks of the history version 1 codec, the single replay and
+match-log document version, and the ignored-entry path. They do checks of exact replay
 and log data, duplicate
 prevention, the privacy scan, order, and every storage failure. Vitest Browser Mode
-verifies the direct lethal paths, persistent victory interaction, title-only
-modal, keyboard behavior, focus, reload, and storage notice. Playwright verifies
-the fixed-seed production flow at the Pages subpath, valid persistence after
-reload, zero runtime network calls, and zero page or console errors.
+does checks of the direct lethal paths, persistent victory interaction, title-only
+modal, keyboard behavior, focus, reload, and storage notice. Playwright does checks of the fixed-seed production flow at the Pages subpath
+and valid persistence after reload. It also does checks for zero runtime
+network calls and zero page or console errors.
 
 `npm run ci` and the Impeccable evidence complete the milestone.
 
@@ -190,5 +202,5 @@ reload, zero runtime network calls, and zero page or console errors.
 
 **AC-019-08:** Display stored mode `ai` as `Single player` and `hotseat` as `Hotseat`.
 This mapping does not change stored history/replay schemas or add a Ladder
-discriminator. Browser history tests verify both labels and retained storage
+discriminator. Browser history tests do checks of both labels and kept storage
 values and replay behavior.

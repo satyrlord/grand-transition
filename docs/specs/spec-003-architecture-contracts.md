@@ -5,6 +5,12 @@
 **Owns:** Module boundaries, immutable state, commands, and external ports  
 **Production-file budget:** 8
 
+## Terms
+
+- API: application programming interface.
+- ID: identifier.
+- IDs: identifiers.
+
 ## Deliver
 
 Define immutable `GameState`, `GameCommand`, reducer result, typed rule error,
@@ -27,12 +33,12 @@ turn, board, hand, score, replay, or rules.
 `src/app/turn-clock.ts` owns elapsed-time accounting for the browser turn
 timer, including exact pause and resume boundaries and once-only expiration.
 The match screen binds its visible-second changes to rendering and typed
-events. The reducer remains the sole owner of timeout consequences.
+events. The reducer remains the only owner of timeout consequences.
 
 `src/app/match-coordinator.ts` owns application-level command sequencing,
 automatic round resolution, completion writes, and AI scheduling. It receives
 the current immutable state and returns the next state with review facts.
-It does not retain a second active snapshot. The shell owns screen projection,
+It does not keep a second active snapshot. The shell owns screen projection,
 navigation, focus, pause state, viewport events, and browser adapters. The
 coordinator receives logging, clocks, and persistence dependencies explicitly.
 It does not import Lit, screens, assets, or browser globals.
@@ -105,31 +111,31 @@ localization, can import or re-export it. Application code can import it.
 - **AC-003-01:** Compile-time tests reject mutation of every top-level state
   field and representative nested board, player, and history values.
 - **AC-003-02:** A successful reducer call returns a different snapshot and
-  preserves the input byte-for-byte. It advances only through the supplied
+  keeps the input byte-for-byte. It advances only through the supplied
   random source and appends the accepted command once.
 - **AC-003-03:** A rejected command returns its stable code and facts and leaves
   state, seed, and history unchanged.
 - **AC-003-04:** Boundary fixtures prove one rejection for a Lit import. They
-  prove one rejection for each owned browser API class. They also prove one
-  rejected dependency from a pure module to application code and reject
-  generated interface localization dependencies from each checked pure root,
-  covering both imports and re-exports.
+  prove one rejection for each owned browser API class. They also prove one rejected dependency from a pure module to application
+  code. They reject generated interface localization dependencies from each
+  checked pure root, including imports and re-exports.
   A fixture proves that application imports of generated interface localization
   remain allowed while generated files remain outside the pure-source scan.
+
   Fixtures prove each allowed dependency direction. The normal pure roots pass.
   A fixture also rejects browser access or an application import in localization
   when an engine module imports that localization module.
 - **AC-003-05:** Test-local storage and speech fakes satisfy their ports without
   importing Lit or DOM types into pure modules. A production speech adapter is
   not required before Milestone 024.
-- **AC-003-07:** Coordinator tests preserve deterministic command history,
+- **AC-003-07:** Coordinator tests keep deterministic command history,
   rejected-command immutability, round review facts, and completion writes.
   AI commands apply only after the presentation delay and a separate task.
   Cancellation, loss of eligibility, or replacement of the active snapshot
   prevents a queued command from applying. Boundary tests keep reducer calls,
   AI policy selection, and completion record construction outside the Lit shell.
 
-## Verify and stop
+## Checks and stop conditions
 
 Contract tests prove immutable input and typed success or failure. Boundary
 tests reject Lit, DOM, and forbidden dependency directions from pure modules.
@@ -142,8 +148,9 @@ components.
 Computed specifiers fail even when their destination cannot be resolved.
 Computed `globalThis` properties must be single string literals. Nonliteral
 properties fail. Literal access to forbidden browser APIs on `globalThis` also fails,
-including escaped string spellings. Check expressions inside template strings
+including escaped string spellings. Examine expressions inside template strings
 and code after them, including nested templates and object expressions.
+
 Comments and ordinary strings remain
-permitted. `tests/unit/pure-boundaries.test.ts` verifies these rejection and
+permitted. `tests/unit/pure-boundaries.test.ts` does checks of these rejection and
 positive cases.

@@ -3,16 +3,16 @@
 ## Build one evidence packet
 
 Record the source canvas, viewport, browser, crop mode, layer order, layer
-dimensions, and every CSS transform. Inspect each raster alone. Inspect the
+dimensions, and every Cascading Style Sheets (CSS) transform. Examine each raster alone. Examine the
 final composite with real interface content.
 
 Use the user-supplied screenshot as evidence. Capture new screenshots only when
 the user permits testing. Never substitute a development mock for the production
 composition.
 
-Measure relative geometry. Include human head size, eye line, shoulder width,
-visible torso, desk top, desk width, moderator scale, prop size, interface-safe
-regions, and visible layer seams. Normalize measurements to the scene viewport.
+Measure relative geometry. Include human head size, eye line, shoulder width, and visible torso.
+Include the desk-top position, desk width, moderator scale, and prop size.
+Include interface-safe regions and visible layer seams. Normalize measurements to the scene viewport.
 Do not judge proportions from asset dimensions alone.
 
 ## Identify the owning cause
@@ -52,7 +52,7 @@ true:
 
 Do not stack more transforms on an incoherent scene. Build one coherent master
 composition. Derive the back scene, character planes, and foreground occlusion
-layers from that master. Preserve identical camera, canvas, lighting, and focal
+layers from that master. Keep identical camera, canvas, lighting, and focal
 coordinates across all derived assets.
 
 ## Use one coordinate system
@@ -66,7 +66,7 @@ transform origin, translation, scale, and clipping.
 
 Do not compare two layers until they use the same visible coordinate system.
 
-## Inspect the complete scene
+## Examine the complete scene
 
 Use this checklist for each viewport and character pair.
 
@@ -78,24 +78,24 @@ Use this checklist for each viewport and character pair.
   glasses, and papers. Regenerate from one master when they lack one reference.
 - **Desk fit:** Compare each desk top with the nearest waist, elbow, chest, and
   chin. Repair the foreground layer or character plane when the fit is wrong.
-- **Occlusion:** Check each face, hand, prop, and torso. Repair z-order, crop,
+- **Occlusion:** Examine each face, hand, prop, and torso. Repair z-order, crop,
   or the foreground asset when its mass hides required anatomy.
-- **Interface clearance:** Check status, speech, phrases, actions, and review.
+- **Interface clearance:** Examine status, speech, phrases, actions, and review.
   Repair scene composition or interface layout when focal regions conflict.
-- **Responsive crop:** Check focal points at all supported viewports. Repair
+- **Responsive crop:** Examine focal points at all supported viewports. Repair
   asset focal points or runtime mapping when crop changes the composition.
-- **Edge quality:** Check for halos, checkerboards, cut contours, and shadow
+- **Edge quality:** Look for halos, checkerboards, cut contours, and shadow
   seams. Regenerate or rebuild the alpha layer when an edge is invalid.
-- **Color and white balance:** Check neutral anchors, navy and charcoal shadows,
+- **Color and white balance:** Examine neutral anchors, navy and charcoal shadows,
   paper, skin, brass, and other named warm regions separately. Reject a
   scene-wide yellow, amber, sepia, beige, or brown cast. Keep local warm light
   from becoming a complete color grade.
-- **Hierarchy:** Check candidate dominance, moderator depth, and prop emphasis.
+- **Hierarchy:** Examine candidate dominance, moderator depth, and prop emphasis.
   Repair the master composition, light, or runtime scale when mass is wrong.
-- **Stability:** Check layout shift and animated movement. Repair markup,
+- **Stability:** Examine layout shift and animated movement. Repair markup,
   manifest data, or CSS when dimensions or transform ownership are wrong.
 
-## Check human proportions
+## Examine human proportions
 
 Measure each visible person independently.
 
@@ -115,16 +115,16 @@ The desk must not make an ordinary adult appear seated, child-sized, or reduced
 in stature. Use a different rule only for a character whose approved contract
 requires a different body scale.
 
-## Check props and furniture
+## Examine props and furniture
 
 Compare microphones, glasses, paper sheets, folders, and desk trim with the
 nearest hand, head, and torso. A prop that has a plausible isolated size can
 still be wrong relative to the person or camera.
 
-Check the visible mass of foreground furniture. It must support the scene. It
+Examine the visible mass of foreground furniture. It must support the scene. It
 must not become the primary subject or hide the character performance.
 
-## Check interface-safe regions
+## Examine interface-safe regions
 
 Map these regions on the same scene screenshot:
 
@@ -144,9 +144,9 @@ face, required hand gesture, owned prop, or moderator focal expression.
 Use this order:
 
 1. Remove invalid or contradictory runtime transforms.
-2. Test one evidence-backed placement model.
+2. If testing is permitted, test one placement model supported by evidence.
 3. Regenerate the defective layer if its intrinsic composition is wrong.
-4. Regenerate the complete package if layer repair cannot preserve one camera
+4. Regenerate the complete package if layer repair cannot keep one camera
    and proportion system.
 
 Do not continue local scaling after the regeneration gate is true. Repeated
@@ -159,23 +159,24 @@ each layer as an independent composition.
 
 ## Validate transparent layers
 
-Inspect the file structure and the rendered composite.
+Examine the file structure and the rendered composite.
 
-- Confirm an alpha-capable pixel format.
-- Confirm alpha zero at required outer corners.
-- Confirm transparent regions and an opaque or native near-opaque interior.
-- Confirm clean antialiased edges.
-- Confirm that no checkerboard is baked into color channels.
-- Confirm `Alpha Workflow` matches native generation or legacy keying.
-- For native output, confirm `native-alpha-v1` and `generated-alpha-v1` metadata.
-- For legacy keying, confirm `green-chroma-key-v1` and `Chroma Key=#00FF00`.
-- For legacy keying, confirm that no opaque chroma-green pixel remains.
-- Confirm neutral sRGB white balance and no global warm color wash.
-- Confirm that warm color stays inside named local materials or lights.
-- Confirm that shadows belong to the correct layer.
-- Confirm that clipped edges continue outside the visible frame when needed.
+- Make sure that the pixel format supports alpha.
+- Make sure that alpha is zero at the required outer corners.
+- Make sure that transparent regions and an opaque or native near-opaque interior are present.
+- Examine antialiased edges for defects.
+- Make sure that no checkerboard is baked into color channels.
+- Make sure that `Alpha Workflow` matches native generation or legacy keying.
+- For native output, do a check of `native-alpha-v1` and `generated-alpha-v1` metadata.
+- For legacy keying, do a check of `green-chroma-key-v1` and `Chroma Key=#00FF00`.
+- For legacy keying, make sure that no opaque chroma-green pixel remains.
+- Make sure that sRGB white balance is neutral.
+- Make sure that no global warm color wash is present.
+- Make sure that warm color stays inside named local materials or lights.
+- Make sure that shadows belong to the correct layer.
+- Make sure that clipped edges continue outside the visible frame when needed.
 
-A structural alpha pass does not prove a clean visual edge. Inspect the layer on
+A structural alpha pass does not prove a clean visual edge. Examine the layer on
 light, dark, and final-scene backgrounds.
 
 ## Write the scene report

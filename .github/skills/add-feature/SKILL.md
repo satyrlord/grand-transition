@@ -16,9 +16,9 @@ do not stop after a document change.
 
 ## Read the owners
 
-Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, each applicable
-approved milestone specification, repository status, owning source, callers,
-tests, and tool configuration. Identify affected engine, grammar, artificial
+Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, and each applicable approved milestone specification.
+Examine repository status.
+Read the source, callers, tests, and tool configuration that control the behavior. Identify affected engine, grammar, artificial
 intelligence (AI), content,
 localization, user interface (UI), persistence, asset, security, performance, and
 deployment contracts.
@@ -27,11 +27,11 @@ Each changed behavior must have one owner and one objective verifier.
 
 ## Define and implement
 
-Record user value, exact behavior, exclusions, failure behavior, privacy
-effects, acceptance criteria, and any manual evidence. Update the
+Record the user benefit, exact behavior, and exclusions.
+Record failure behavior, privacy effects, acceptance criteria, and manual evidence. Update the
 smallest owning specification when behavior changes.
 
-Implement the complete authorized slice in the owning layer.
+Implement the complete authorized change in the layer that owns the behavior.
 Keep rules out of Lit components.
 Route randomness through the seed.
 Keep game-language prose out of rule logic.
@@ -42,11 +42,13 @@ developer and user documentation. For visible behavior, add real-browser
 evidence. For speech or audio quality, separate objective checks from manual
 listening.
 
-## Verify
+## Verification
 
-Run focused checks first. Run the full gate with
-[run-quality-gate](../run-quality-gate/SKILL.md). Use
-[verify-game](../verify-game/SKILL.md) for production-browser evidence.
+Run focused checks first.
+Run `npm run quality:quick` for routine verification.
+If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey user restrictions on checks. Report checks that you did not run.
+Use [verify-game](../verify-game/SKILL.md) for evidence from the production browser build.
 
 Definition mode is complete when all affected contracts agree. Implementation
 and repair are complete when specifications, source, tests, documentation, and

@@ -5,6 +5,14 @@
 **Owns:** Release quality, compatibility, security, and completion  
 **Production-file budget:** 8
 
+## Terms
+
+- JSON: JavaScript Object Notation.
+- KiB: kibibytes.
+- kB: kilobytes.
+- ms: milliseconds.
+- CLS: cumulative layout shift.
+
 ## Deliver
 
 Complete final performance, browser, security, dependency,
@@ -52,25 +60,26 @@ selected final-art scene. Run five cold-cache and five warm-cache trials.
 | Initial JavaScript            | At most 350 KiB total after gzip, excluding media                                 |
 | Selected audio decode         | At most 500 milliseconds before first enabled playback                            |
 
-Use browser performance entries and a retained trace for timing. Use generated
+Use browser performance entries and a kept trace for timing. Use generated
 gzip bytes for the JavaScript total. Do not substitute development-server
 measurements. The shared viewport matrix uses final art and longest shipped
 content.
 
 Keep each minified JavaScript chunk at or below the default Vite warning limit
 of 500 kB. Split content JSON and third-party dependencies into separate chunks.
-Do not raise the warning limit. Verify the built files in
+Do not raise the warning limit. Do checks of the built files in
 `e2e/static-app-security.spec.ts`. This per-chunk check does not replace the
 total gzip budget above.
 
 Resolve the browser matrix on the release date and record exact versions.
 Continuous integration uses installed Chromium, Firefox, WebKit, mobile
 Chromium, and mobile WebKit. Use automated production flows for exact supported
-Safari and Chrome versions when those runtimes are available. Record coverage
-of the oldest supported Safari major, current macOS Safari, current iOS Safari,
-and current Android Chrome separately from Playwright engine or device
-emulation. Unavailable runtime evidence remains explicitly unverified.
-Physical-device and manual observations are optional; they are not a milestone
+Safari and Chrome versions when those runtimes are available. Record coverage of the oldest supported Safari major, current macOS Safari,
+current iOS Safari, and current Android Chrome. Keep these results separate
+from Playwright engine or device emulation.
+
+Unavailable runtime evidence remains explicitly unverified.
+Physical-device and manual observations are optional. They are not a milestone
 completion requirement and cannot substitute for a failed automated check.
 
 A release deviation names the failed criterion, measured result, user impact,
@@ -81,7 +90,7 @@ runtime-network failure cannot be waived.
 ## Acceptance criteria
 
 - **AC-030-01:** Five cold and five warm trials meet every performance table
-  threshold and retain machine-readable results and trace links.
+  threshold and keep machine-readable results and trace links.
 - **AC-030-02:** The exact browser matrix passes title-to-match-completion, reload,
   persistence fallback, privacy, speech-unavailable, and
   longest-content flows without uncaught error.
@@ -124,7 +133,7 @@ Only the artifact that passes the complete gate can proceed to publication.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 `npm ci` and `npm run ci` pass cleanly. The browser projects that this
 specification names have no uncaught error. Performance targets pass or approved deviations

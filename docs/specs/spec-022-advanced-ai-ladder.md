@@ -6,6 +6,11 @@
 timing, and ladder flow
 **Production-file budget:** 12
 
+## Terms
+
+- ID: identifier.
+- IDs: identifiers.
+
 ## Deliver
 
 Add Party Strategist and Palace Operator search depth, denial, lethal choice,
@@ -40,9 +45,9 @@ players and Local Radio Caller behavior do not change.
 
 Commit or turn expiry on an incomplete construction is also a dead end while
 a safe drafting action remains. Keep incomplete submission available when no
-safe drafting action remains. A complete Commit or Comeback retains its normal
-score. Apply this protection before Palace reply search so ending an empty
-sentence cannot outrank drafting merely by reducing the opponent's denial value.
+safe drafting action remains. A complete Commit or Comeback keeps its normal
+score. Apply this protection before Palace reply search. Ending an empty sentence
+cannot outrank drafting merely because it reduces the opponent's denial value.
 
 Palace Operator sorts first-ply actions by deterministic utility and keeps a
 beam of 12. It evaluates up to the opponent's best 8 legal replies for each.
@@ -70,14 +75,16 @@ three Palace Operator opponents in that order. The ladder selects opponents
 without replacement from the other 18 characters in the 19-character catalog. It uses
 the ladder seed and stable character-ID order. Scenes rotate through a seeded
 permutation of every unique playable scene in the current catalog and then
-repeat. Scene identifiers are stable opaque strings; ladder behavior does not
+repeat. Scene identifiers are stable opaque strings.
+
+Ladder behavior does not
 depend on a numeric identifier, catalog position, scene count, or scene content.
 A new ladder rejects an empty scene catalog or duplicate scene identifiers.
 
-Version-1 progress stores a nonempty, variable-length scene order. When the
-playable catalog changes, loading progress removes unavailable scene IDs,
-preserves the relative order of surviving IDs, deterministically shuffles and
-appends every newly available ID, and persists the reconciled progress. This
+Version-1 progress stores a nonempty, variable-length scene order. When the playable catalog changes, loading progress removes unavailable scene
+IDs and keeps the relative order of surviving IDs. It deterministically
+shuffles and appends every newly available ID, then persists the reconciled
+progress. This
 does not change the selected character, opponents, rung, wins, losses, or
 completion. The scene for the current rung is then selected from the reconciled
 order. At least one playable scene must remain.
@@ -85,9 +92,9 @@ order. At least one playable scene must remain.
 A win advances one rung. A loss keeps the same rung and opponent. Abandoning a
 match keeps the rung and records no result. Completion follows the ninth win.
 
-Progress version 1 stores selected character ID, seed, nine opponent IDs, the
-nonempty variable-length scene order, rung index 0 through 9, win and loss
-counts, and completion. Reset removes that progress after confirmation. Corrupt progress uses the Milestone 020
+Progress version 1 stores selected character ID, seed, nine opponent IDs, and
+the nonempty variable-length scene order. It also stores rung index 0 through
+9, win and loss counts, and completion. Reset removes that progress after confirmation. Corrupt progress uses the Milestone 020
 fallback and never invents advancement.
 
 The storage key is `grand-transition.ladder-progress.v1`. Storage failure keeps
@@ -95,7 +102,7 @@ the exact progress in session memory and shows a session-only notice. Corrupt or
 unsupported bytes produce no progress and remain unchanged until the player
 starts a new ladder or confirms Reset.
 Syntactically valid progress that names a character outside the current playable
-catalog is invalid. It produces no progress, reports `invalid-data`, preserves
+catalog is invalid. It produces no progress, reports `invalid-data`, keeps
 the stored bytes, and cannot advance a rung. Scene IDs outside the current
 catalog are reconciled under the scene-rotation contract instead of invalidating
 otherwise valid progress.
@@ -105,14 +112,16 @@ progress when absent or resumes saved progress. Custom Single Player adds Party 
 Palace Operator to the existing Difficulty select. Ladder setup keeps the
 player character selectable until the first recorded
 result. The player must lock that character before Start ladder or Continue
-ladder becomes available. The current opponent is fixed, treated as already
+ladder becomes available.
+
+The current opponent is fixed, treated as already
 locked, and cannot be selected or unlocked. The current scene is also fixed
 from progress.
 
 After a recorded win or loss, the roster disables other archetypes. Only skins
 of the saved player character remain selectable. Rejected archetype selection
 must not update that player's skin. `tests/browser/screen-shell.browser.test.ts`
-verifies this after both result types.
+does checks of this after both result types.
 
 The existing
 Match settings strip shows rung, wins, losses, and completion. The opponent status names the current
@@ -143,21 +152,21 @@ complete,” not a prior difficulty.
   reordered inputs, an empty catalog, duplicate IDs, additions, removals, and
   idempotent reconciliation. Win, loss, abandon, resume, completion,
   corruption, and reset each have a golden progress snapshot. Reconciliation
-  preserves all non-scene progress fields and persists the updated scene order.
+  keeps all non-scene progress fields and persists the updated scene order.
 - **AC-022-06:** Playwright completes all nine rungs, persists after each win,
   reloads at the same rung, and shows no locked or completed state incorrectly.
 
 ## Objective verifiers
 
-- `tests/unit/advanced-ai.test.ts` verifies AC-022-01 through AC-022-04,
+- `tests/unit/advanced-ai.test.ts` does checks of AC-022-01 through AC-022-04,
   deterministic advanced-policy matches, and delay bounds.
-- `tests/unit/ladder.test.ts` verifies AC-022-05 progress generation,
+- `tests/unit/ladder.test.ts` does checks of AC-022-05 progress generation,
   transitions, codec snapshots, corruption and stale-catalog fallback, resume,
   and reset.
-- `tests/browser/screen-shell.browser.test.ts` verifies difficulty selection,
+- `tests/browser/screen-shell.browser.test.ts` does checks of difficulty selection,
   ladder setup, scene-catalog reconciliation, persistence, completion, and
   confirmed reset.
-- `e2e/advanced-ai-ladder.spec.ts` verifies AC-022-06 in the production build
+- `e2e/advanced-ai-ladder.spec.ts` does checks of AC-022-06 in the production build
   with ladder seed 5 and Palace Operator as the automated human player.
 - The Impeccable records and `npm run ci` complete milestone evidence.
 
@@ -168,7 +177,7 @@ complete,” not a prior difficulty.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 Fixtures prove lethal preference, lethal blocking, and designed personality
 differences. Fixed seeds are deterministic. Timed tests record their environment
@@ -180,14 +189,14 @@ passes. Stop before final roster balance or production presentation.
 **AC-022-07:** Self-knockout protection uses the accepted outcome independently of its
 normalized grammar-risk feature. Palace continuation-break evaluation reads
 the opponent's current draft carry intention, not the carry entering the round.
-`tests/unit/advanced-ai.test.ts` verifies current carry without prior carry,
+`tests/unit/advanced-ai.test.ts` does checks of current carry without prior carry,
 prior carry without current carry, the exact break threshold, actual resolution,
 and the Pride-3 safe-alternative fixture.
 
 **AC-022-08:** Both advanced difficulties start sentences instead of selecting
-an empty continuation, extend fragments while safe phrases remain, and retain
+an empty continuation, extend fragments while safe phrases remain, and keep
 continuation for blocked nonempty fragments. They do not submit an incomplete
-sentence while safe drafting remains. Fixed-seed full matches verify
+sentence while safe drafting remains. Fixed-seed full matches do checks of
 that each player completes sentences and neither player carries an empty
-construction. `tests/unit/advanced-ai.test.ts` verifies these choices through
+construction. `tests/unit/advanced-ai.test.ts` does checks of these choices through
 accepted reducer outcomes.

@@ -1,17 +1,20 @@
 ---
 name: verify-game
-description: Verify Grand Transition in its production browser build. Use for gameplay, landscape layout, persistence, speech, assets, security, performance, or GitHub Pages subpath evidence.
+description: Do a check of Grand Transition in its production browser build. Use for gameplay, landscape layout, persistence, speech, assets, security, performance, or GitHub Pages subpath evidence.
 ---
 
-# Verify the production game
+# Do a check of the production game
 
 Remain read-only unless the user explicitly requests repair.
+Obey user restrictions on tests.
+If testing is prohibited, report the missing evidence without starting browsers or commands.
 
 ## Prepare the artifact
 
 Read `AGENTS.md`, changed contracts, `package.json`, Vite and Playwright
 configuration, and workflows.
 Build through the repository command.
+Run automated browsers in headless mode.
 Serve the actual production output at the configured strict local origin and
 `/grand-transition/` base path.
 Use deterministic seeds, characters, scenes, settings, timers, and artificial
@@ -27,19 +30,19 @@ development server.
 
 Exercise applicable AI and hotseat matches through visible controls and valid
 gestures.
-Verify pointer input, sentence legality, redraw, grammar
+Do a check of pointer input, sentence legality, redraw, grammar
 fault, continuation, comeback, and simultaneous damage.
-Verify both narrated deliveries, inline scores, automatic progression, and
+Do a check of both narrated deliveries, inline scores, automatic progression, and
 sudden death.
-Verify persistent victory and the explicit return to the title under Milestone 019.
+Do a check of persistent victory and the explicit return to the title under Milestone 019.
 
-Verify title-only match history, exact public records, and storage-failure behavior.
-For Ladder, verify the Milestone 022 Continue ladder action and progress persistence.
-Verify settings persistence under Milestone 020.
-Verify speech support and cancellation only when the Milestone 024 adapter exists.
+Do a check of title-only match history, exact public records, and storage-failure behavior.
+For Ladder, do a check of the Milestone 022 Continue ladder action and progress persistence.
+Do a check of settings persistence under Milestone 020.
+Do a check of speech support and cancellation only when the Milestone 024 adapter exists.
 
 Record unimplemented speech behavior as blocked when it is part of the requested scope.
-Verify hidden-hand privacy, the supported landscape matrix, the blocking
+Do a check of hidden-hand privacy, the supported landscape matrix, the blocking
 viewport gate, and Pages asset paths.
 
 Use direct assertions for state, persisted values, roles, and names.
@@ -59,7 +62,7 @@ prove subjective quality.
 ## Close the run
 
 Keep temporary evidence in an ignored run-specific path.
-Close browsers and servers.
+Close only the browsers and servers started for this verification.
 Report every contract as `PASS`, `FAIL`, `BLOCKED`, or `N-A`.
 Report limitations and manual checks.
 Do not claim more than the recorded build and environment prove.

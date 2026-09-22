@@ -1,13 +1,13 @@
 ---
 name: generate-character-openai
-description: Generate, inspect, accept, and integrate one declared Grand Transition character work unit. Use for office clip-art style selection masters, five-pose packages, identity control, 2048-square Flare output, or safe regeneration resumes.
+description: Generate, examine, accept, and integrate one declared Grand Transition character work unit. Use for office clip-art style selection masters, five-pose packages, identity control, 2048-square Flare output, or safe regeneration resumes.
 ---
 
 # Generate character art with OpenAI
 
 ## Use Simplified Technical English
 
-Follow the writing rules in `.github/PROSE.md`.
+Obey the writing rules in `.github/PROSE.md`.
 Use short sentences and approved technical terms.
 Put one instruction in each sentence.
 Put each condition before its action.
@@ -16,22 +16,24 @@ Use the same term for the same item.
 Image prompts can contain necessary visual terms.
 Cycle records and operator instructions must use Simplified Technical English.
 
-## Define one atomic work unit
+## Define one work unit
 
-A **work unit** contains one owner ID and an explicit list of skin IDs.
+A **work unit** contains one owner identifier (ID) and an explicit list of skin IDs.
 One invocation owns only the declared work unit.
 The work unit can be independent or part of a larger program.
-This skill does not infer a larger program.
-This skill does not start another work unit.
+Do not infer a larger program from one work unit.
+Do not start another work unit.
 
 Select one mode before work starts:
 
-- **Review mode** inspects files and makes no asset changes.
+- **Review mode** examines files and makes no asset changes.
 - **Selection mode** creates and locks accepted selection masters only.
 - **Package mode** completes selection, five poses, integration, and focused checks.
 
-Record the mode, owner ID, skin IDs, and request limits in the cycle record.
-Stop if any required scope value is missing.
+Record the mode, owner ID, and skin IDs in the cycle record.
+For selection or package mode, record the request limits.
+Stop if a required value is missing.
+Generation limits are not necessary for review mode.
 Do not infer a correction allowance.
 
 ## Read the active contracts
@@ -40,9 +42,9 @@ Read `AGENTS.md`, `DESIGN.md`, and the applicable approved specifications.
 Read the canonical art-direction note in the private character-study folder.
 Read each affected private character study.
 Read the current regeneration plan when it applies.
-Inspect the selection manifest, state contract, and checkout.
+Examine the selection manifest, state contract, and checkout.
 
-Resolve the canonical north star from the owning art contracts.
+Resolve the approved style reference from the controlling art contracts.
 Resolve all identity content from the declared work unit and affected studies.
 Do not hard-code character content in this skill.
 Treat all other character assets as prohibited identity content.
@@ -64,10 +66,11 @@ Do not transfer identity content from another character.
 
 ## Load the required procedures
 
-Before selection work, read [selection generation](references/selection-generation.md).
-Before pose work, read [pose generation](references/pose-generation.md).
+Before selection generation or selection review, read [selection generation](references/selection-generation.md).
+Before pose generation or pose review, read [pose generation](references/pose-generation.md).
 
-Load these shared procedures at their named gates:
+API means application programming interface.
+Load these shared procedures before their specified actions:
 
 - Before prompt work, read [generation preparation](../generate-scene-openai/references/generation-preparation.md).
 - Before a Flare request, read [API generation](../generate-scene-openai/references/api-generation.md).
@@ -75,15 +78,16 @@ Load these shared procedures at their named gates:
 - Before alpha preparation, read [native alpha preparation](../generate-scene-openai/references/native-alpha.md).
 - Before integration, read [character integration](../generate-scene-openai/references/character-integration.md).
 
-Here, API means Application Programming Interface.
-Recheck the gates when the mode or work stage changes.
+Do another check of module selection when the mode or work stage changes.
+Obey user restrictions on edits and tests.
+If a required check is prohibited, report the incomplete stage without claiming a pass.
 A missing procedure blocks its dependent action.
+In review mode, use only examination and reporting steps.
 
 ## Use the correct route
 
 Use `gpt-image-2.5-flare` for every shipping master.
-Use high quality and exact 2048 by 2048 PNG output.
-PNG means Portable Network Graphics.
+Use high quality and exact 2048 by 2048 Portable Network Graphics (PNG) output.
 Use the repository helper for each Flare request.
 Never enlarge an undersized result.
 
@@ -99,20 +103,21 @@ Stop when the request limit is exhausted.
 ## Make every resume idempotent
 
 Read the cycle record before each action.
-Verify every recorded Secure Hash Algorithm 256 (SHA-256) value.
+Do a check of every recorded Secure Hash Algorithm 256 (SHA-256) value.
 Reuse each accepted file when its hash and review match.
 Do not regenerate an accepted selection or pose.
 Do not repeat a completed request.
 Do not repeat an uncertain request.
 
-If a deterministic output exists, verify its source hash and output hash.
+If a deterministic output exists, do a check of its source hash and output hash.
 Reuse the output when both hashes match.
 Stop when a recorded file has an unexpected hash.
 
 Before integration, stage from the current shipping tree.
 Replace only files in the declared work unit.
-Preserve every unrelated source byte.
-If the complete package is already installed, verify it and make no change.
+Keep every unrelated source byte.
+If the complete package is already installed, compare its hashes with the accepted package.
+Make no change when the hashes match.
 
 ## Enforce the gates
 
@@ -122,13 +127,13 @@ Lock the accepted selection hash before pose generation.
 Use that locked selection as the sole pose reference.
 
 Generate exactly five pose masters in the approved order.
-Inspect each pose before the next request.
+Examine each pose before the next request.
 Stop after any failed acceptance check.
 Do not spend an unauthorized correction.
 
 ## Finish one invocation
 
-Review mode ends after the requested report.
+Review mode ends when the report gives each selected file a status and evidence for each finding.
 Selection mode ends after each declared selection is accepted and locked.
 Package mode ends after the declared package passes focused checks.
 

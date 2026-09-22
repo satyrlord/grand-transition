@@ -5,6 +5,11 @@
 **Owns:** Static-runtime security and the GitHub Pages subpath contract  
 **Production-file budget:** 5
 
+## Terms
+
+- WASM: WebAssembly.
+- API: application programming interface.
+
 ## Deliver
 
 Set the Vite and Playwright base Uniform Resource Locator (URL) to
@@ -27,22 +32,27 @@ Language (HTML), remote font, image, or audio.
 The local neural speech policy permits same-origin static asset
 fetches for audio, model weights, voice embeddings, vocabulary, and WASM. These
 requests omit credentials and reject redirects. No phrase leaves the device.
+
 Local module workers and WASM compilation are permitted. Generic JavaScript
 `unsafe-eval` remains forbidden. No XMLHttpRequest, WebSocket, EventSource,
 analytics, cloud speech, or arbitrary runtime API request is permitted.
 The owner-authorized robot exception uses only the exact installed Microsoft
 David, Mark, or Zira voice with `localService=true`. No remote platform voice is
-selected. Human skins continue to use the local neural worker.
+selected.
+
+Human skins continue to use the local neural worker.
 
 The entry module disables Zod's optional runtime code generation before it
 imports application schemas. A caught capability probe still violates the policy in Firefox.
 The production audio test checks that navigation and playback produce no such
 console error. This configuration does not change schema validation results.
 Chunk grouping must keep Zod in the vendor chunk, separate from application
-schema initialization. The vendor group has higher priority than application
-groups so their recursive dependency capture cannot move Zod into a chunk
-that constructs schemas before the entry module configures it. The production
-navigation and reload test also requires zero `securitypolicyviolation` events.
+schema initialization.
+
+The vendor group has higher priority than application groups. Their recursive
+dependency capture cannot move Zod into a chunk that constructs schemas before
+the entry module configures it. The production navigation and reload test also fails if any
+`securitypolicyviolation` event occurs.
 
 Use one `index.html` and in-memory screen state. Do not depend on server route
 rewrites. The build generates `dist/`. Do not commit it.
@@ -65,7 +75,7 @@ rewrites. The build generates `dist/`. Do not commit it.
   XMLHttpRequest, WebSocket, or EventSource. It also
   finds no remote font, analytics, unsafe HTML sink, or inline script.
 
-## Verify and stop
+## Checks and stop conditions
 
 The built shell loads from the subpath. Production has the CSP. Development
 does not have the CSP. The browser test detects a broken base path or external

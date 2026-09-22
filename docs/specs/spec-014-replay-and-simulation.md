@@ -9,8 +9,15 @@ Milestone 019 owns local, public, browser-stored match history. Keep development
 tools and imports non-player-facing.
 
 Milestone 029 owns the Romanian locale extension. It records the match game
-locale in the replay and match-log setup and raises the document version to `2`;
-the public text, scoring, and privacy contracts above are unchanged.
+locale in the replay and match-log setup and raises the document version to `2`.
+The public text, scoring, and privacy contracts above are unchanged.
+
+## Terms
+
+- UI: user interface.
+- ID: identifier.
+- IDs: identifiers.
+- MiB: mebibytes.
 
 ## Deliver
 
@@ -88,47 +95,51 @@ multiplier and the current catalog.
 The setup also records `gameLocale` with one of the shipped game locale
 identifiers, `en` or `ro-RO`. The field is required, an unknown value returns
 `invalid-replay`, and it is the locale identifier the match captured at
-creation under Milestone 029. It is an identifier, not translated text. A replay
-uses the game-locale bundle the caller supplies and checks it against the
-recorded identifier, so a match always reproduces in its captured language and
-replaying it under another locale fails as `invalid-replay` instead of silently
-re-rendering the recorded sentences in a different language. Version `1`
+creation under Milestone 029. It is an identifier, not translated text. A replay uses the caller-supplied game-locale bundle and checks it against the
+recorded identifier. A match always reproduces in its captured language.
+
+A
+replay under another locale fails as `invalid-replay`. It does not silently
+render the recorded sentences in another language. Version `1`
 documents carry no `gameLocale` field and fail as `unsupported-version`.
 
 The local match log uses `kind: grand-transition-match-log`, the replay schema
-version, setup, seed, round summaries, public selections, public
-breakdowns, public rule events, each player's rendered public sentence and
-ordered used phrases for every round, and the winner.
+version, setup, seed, and round summaries. It includes public selections,
+public breakdowns, public rule events, and the winner. For every round, it
+includes each player's rendered public sentence and ordered used phrases.
 Each used phrase keeps its stable identifier, rendered text, and active or
 carried source. Every match log records the complete public sentence set. The
 log omits unselected private cards,
 player-entered text, browser identifiers, timestamps finer than the calendar
 date, and machine data.
 
-The shipped scoring balance is Milestone 010's arithmetic: 5 base points,
-2 substance points, 1 flavour point, 2 points per modifier, a 2 weakness
-multiplier, a 1 restriction multiplier, and a ceiling rounding step.
+The shipped scoring balance uses Milestone 010's arithmetic. It has 5 base
+points, 2 substance points, 1 flavour point, and 2 points per modifier. It
+applies a 2 weakness multiplier, a 1 restriction multiplier, and a ceiling
+rounding step.
 
 Malformed JSON returns `invalid-json`. A wrong kind returns `wrong-document`.
 Missing or invalid fields return `invalid-replay`. Any version other than `2`
 returns `unsupported-version`.
 
 A replay import or standalone match-log import that no longer matches the
-current catalog fails as `invalid-replay`. Each recorded phrase ID in a
-standalone match-log import must exist, and its recorded text must match one
-current locale agreement form, including Romanian plural, polite second-person,
-and personal-object forms. The selected grammar-locale binding owns that
-phrase-specific set; persistence validates membership without implementing
-locale grammar. The application rejects it before a storage
+current catalog fails as `invalid-replay`. Each recorded phrase ID in a standalone match-log import must exist. Its
+recorded text must match one current locale agreement form, including Romanian
+plural, polite second-person, and personal-object forms. The selected grammar-locale binding owns that
+phrase-specific set. Persistence validates membership without implementing
+locale grammar.
+
+The application rejects it before a storage
 write or partial match start, and a rejected document makes no state change.
-Milestone 019 owns match logs embedded in browser history: a current-version
-entry keeps its exact recorded public text instead of reconstructing or
-revalidating it against the current catalog. A stored match history entry is
+Milestone 019 owns match logs embedded in browser history. A current-version
+entry keeps its exact recorded public text without reconstruction or
+validation against the current catalog. A stored match history entry is
 ignored when its replay and match-log documents use the same
-other version. A mismatched pair is invalid. The entries that still decode stay
-available, the ignored
-entry is not rewritten, not reconstructed, and not shown, and no persistence
-failure is reported for it.
+other version. A mismatched pair is invalid.
+
+Entries that still decode stay available. The application does not rewrite,
+reconstruct, or show an ignored entry. It reports no persistence failure for
+that entry.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 Optional `--output <path>` writes normalized JSON. Without it, the command
@@ -150,9 +161,11 @@ Milestone 002 threshold remains 70 percent.
   document without the field fails as `unsupported-version`. A replay reproduces its own captured
   multiplier and exact final state even when the caller supplies a different
   balance. A replay whose commands no longer match the current catalog fails as
-  `invalid-replay` without a partial match start, and a match history entry
-  whose replay and match log use the same other document version is ignored
-  while the entries that still decode stay available. A mismatched pair fails
+  `invalid-replay` without a partial match start.
+
+  The application ignores a
+  match history entry whose replay and match log use the same other document
+  version. Entries that still decode stay available. A mismatched pair fails
   as invalid data. A standalone match-log import with an unknown phrase ID or
   retired phrase text fails before a storage write.
 - **AC-014-02:** Each replay and match-log failure code has one focused fixture
@@ -165,8 +178,7 @@ Milestone 002 threshold remains 70 percent.
   matches and 50 Chromium matches with seed and replay-path evidence. A
   permanent fixture covers every required regression seed, including
   `2135977951`. The repository `$simulate-matches` skill runs an explicitly
-  requested workload outside normal CI and requires the number of matches as
-  input. Every workload preserves the stated match invariants.
+  requested workload outside normal CI and uses the number of matches as a necessary input. Every workload keeps the stated match invariants.
   Milestone 026 adds a fixed-seed Node catalog workload for every ordered
   character-pair and scene setup, including mirrors and AI presentation timing.
   Specification 032 expands the workload to 2,527 setups across seven scenes.
@@ -190,10 +202,10 @@ Milestone 002 threshold remains 70 percent.
   directories. Reject a symlink or junction that leads outside the repository
   without creating directories at its destination.
 
-## Verify and stop
+## Checks and stop conditions
 
 Replay reproduces exact final state. Corrupt or unsupported replay and
-match-log documents fail safely. Generated matches preserve all stated
+match-log documents fail safely. Generated matches keep all stated
 invariants. A completed development match leaves one machine-readable text log
 in the ignored repository directory.
 
@@ -207,23 +219,26 @@ not part of normal CI and does not replace targeted seed fixtures or the
 
 ## Objective verifiers
 
-`tests/unit/replay-and-simulation.test.ts` verifies AC-014-01 through
-AC-014-05 in Node and Chromium. `tests/unit/simulation-cli.test.ts` verifies the
+`tests/unit/replay-and-simulation.test.ts` does checks of AC-014-01 through
+AC-014-05 in Node and Chromium. `tests/unit/simulation-cli.test.ts` does checks of the
 command-line boundaries, errors, summary, and output bytes. The per-file
-thresholds in `vitest.browser.config.ts` verify AC-014-06.
+thresholds in `vitest.browser.config.ts` do checks of AC-014-06.
 `tests/browser/development-game-logger.browser.test.ts`,
 `tests/unit/game-log-writer.test.ts`, and the development match-log and
-production scans in `e2e/static-app-security.spec.ts` verify AC-014-03,
+production scans in `e2e/static-app-security.spec.ts` do checks of AC-014-03,
 AC-014-06, and AC-014-07.
 
 ## Review repair regression
 
 **AC-014-08:** Before creating a directory or writing bytes, validate every JSON Lines
-record. Require one complete header, one or more actions with consecutive
-sequence values starting at one, and one final completion record. Only blank
-trailing lines are permitted. Reject malformed JSON, missing/extra fields,
-unknown record types, records after completion, inconsistent player IDs,
-and nested fields outside explicit public allowlists. Header mode is `hotseat`
+record. The document must contain one complete header and one or more actions with
+consecutive sequence values starting at one. It must contain one final
+completion record. Only blank
+trailing lines are permitted. Reject malformed JSON, missing or extra fields, unknown record types, and
+records after completion. Reject inconsistent player IDs and nested fields
+outside explicit public allowlists.
+
+Header mode is `hotseat`
 or `ai`, with two distinct player IDs. Rejected private selections omit card
 and phrase facts. Completion has a terminal results state and a header player
 as winner. This validation does not replay historical commands.

@@ -1,16 +1,16 @@
 # Milestone 028: Minimum Viable Product Content Finalization
 
-**Status:** Approved; revised content implementation verified; finalization evidence pending\
+**Status:** Approved. Revised content implementation verified. Finalization evidence pending\
 **Depends on:** 027\
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
 **Production-file budget:** 20
 
 Milestone 027 can finish with the current artwork and the exact common-catalog
-volumes defined here. This milestone retains the additional pose images, scene
-layers, motion, and final media packages; their delivery does not block
+volumes defined here. This milestone keeps the additional pose images, scene
+layers, motion, and final media packages. Their delivery does not block
 Milestone 027. The earlier completion evidence remains historical. The revised
-phrase-volume implementation is verified by the focused content gate; final
+phrase-volume implementation is verified by the focused content gate. Final
 art, audio, variety, and broader milestone evidence remain separate concerns.
 
 The phrase-data package uses the common authoring file and the 19 character
@@ -19,6 +19,19 @@ codec, common phrases, and character phrases have separate build chunks so the
 expanded catalog remains below the existing per-chunk size limit.
 Character-state image URLs and scene manifest data also have separate build
 chunks. Keep the limit unchanged.
+
+## Terms
+
+- UI: user interface.
+- HTML: Hypertext Markup Language.
+- SVG: Scalable Vector Graphics.
+- CI: continuous integration.
+- URL: Uniform Resource Locator.
+- URLs: Uniform Resource Locators.
+- ID: identifier.
+- IDs: identifiers.
+- sRGB: standard red, green, and blue.
+- BPM: beats per minute.
 
 ## Deliver
 
@@ -40,8 +53,8 @@ plus the single unrestricted common continuation, for exactly 35 phrase-pool
 IDs. The continuation is global and is not scene-owned.
 
 Each of the 19 characters owns exactly 40 character-restricted cards, for 760
-character-restricted cards in total: 10 nouns, 9 verbs, 12 predicates, 5
-endings, 3 modifiers, and 1 character-specific conjunction. No character owns a
+character-restricted cards in total. Each character owns 10 nouns, 9 verbs, 12
+predicates, 5 endings, 3 modifiers, and 1 character-specific conjunction. No character owns a
 continuation.
 
 Every archetype has one default portrait skin and zero through eight alternate
@@ -53,7 +66,7 @@ fully mechanical chassis.
 The setup roster presents all 30 selectable skins as portrait choices in one
 six-column grid. The current catalog therefore renders five complete rows of
 six portraits. Selecting an alternate portrait selects its owning character
-and skin together; the existing stage skin controls remain available for
+and skin together. The existing stage skin controls remain available for
 cycling and wraparound.
 
 A skin changes only visual presentation. It does not
@@ -65,8 +78,8 @@ The Black Sea Captain remains default-only in the current
 approved roster.
 
 Local Baron (`county-baron`) adds the `municipal-patron` portrait with native
-transparency and the shared funny big-head character style. It is the sole
-visual north star for every playable selection and state. Filename discovery
+transparency and the shared funny big-head character style. It is the only
+visual reference for every playable selection and state. Filename discovery
 exposes it in setup and carries it into matches.
 Keep its default portrait, character identity, phrases, balance, and voice
 unchanged. It uses the selection-art fallback, without a new state package.
@@ -76,7 +89,7 @@ shared Milestone 023 cel-shaded editorial-cartoon style. It holds a
 single money envelope with original generic banknote edges and no markings.
 The portrait uses the approved green-matte conversion fallback after native
 transparency fails validation. Banknote edges are pale blue to avoid the key
-color. Preserve the existing alpha and color checks. Matches use the
+color. Keep the existing alpha and color checks. Matches use the
 selection-art fallback, without a new pose or state package.
 
 Milestone 023's later funny big-head consistency program marks Reluctant
@@ -84,7 +97,7 @@ Theorem for complete selection-and-pose replacement. Keep the current fallback
 and current package counts until that one-archetype cycle is expressly
 authorized, integrated, validated, and manually accepted. That integration
 removes `reluctant-theorem` from the fallback list and adds its five state
-masters; do not change the executable inventory in advance.
+masters. Do not change the executable inventory in advance.
 
 All other selectable skins use the complete nine-state Milestone 023 package.
 The final state inventory therefore contains 28 skin packages and 140 state
@@ -130,7 +143,9 @@ color is local to authored materials and lighting, not a complete scene grade.
   the scene through text prompts without image references. The set contains
   heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
   It contains lighting trusses, harsh lamps, and two tall standing desks. Each
-  desk has one microphone and one plain unbranded water bottle. One fixed blonde
+  desk has one microphone and one plain unbranded water bottle.
+
+  One fixed blonde
   fictional moderator sits at a physical wood-and-brass desk. A central raised
   platform holds that desk. Her complete head remains above the common phrase
   pool, which can partly cover the desk. Exactly four full-height columns frame the studio.
@@ -181,20 +196,22 @@ and the global continuation. All six packages use
 `palace-press-hall-foreground`, and
 `influencer-campaign-livestream-foreground`. Each transparent foreground stays
 within the shared scene plane and keeps the central interaction rectangle
-clear. Broad standing-desk fronts cover both candidates' lower bodies. Plain
+clear. Broad standing-desk fronts cover both candidates' lower bodies.
+
+Plain
 fronts can occupy side-action rectangles beneath the HTML controls. Do not cut
 holes or truncate the fronts to clear those controls. Background layers contain
 no duplicate standing desks. Render these four foreground plates above portraits
 without the two studio plates' horizontal prop clipping.
 
 Scene motion remains decorative and pointer-inert. Transition-era lamps keep
-`transition-era-studio-lights`; Modern Debate keeps
+`transition-era-studio-lights`. Modern Debate keeps
 `modern-debate-light-lines`. The four final foundation animations are
 `county-ballroom-chandelier-glint`, `midnight-ticker-crawl`,
 `palace-press-light-sweep`, and `livestream-reaction-rise`. Pause, document
 hiding, offscreen presentation, and reduced motion stop each overlay without
 changing the static scene or layout.
-Browser checks verify that every overlay contains SVG graphics with nonzero
+Browser checks show that every overlay contains SVG graphics with nonzero
 rendered bounds, as well as the required motion and suspension states.
 
 The six scene music IDs are `<scene-id>-theme`. Each ID resolves to a distinct
@@ -208,12 +225,12 @@ The final treatments use these independently pinned CC0 recordings and edits:
 
 | Scene | Recording | Treatment and source window |
 | --- | --- | --- |
-| Transition-Era Television Studio | Chris Breemer's recording of Bartók's _Buciumeana_ | Existing folk-derived piano treatment, unchanged; 181.3 through 225.0 seconds |
-| Modern Debate Studio | Joth, _Funked Up_ | Rhodes, guitar, and bass groove; complete 66.207-second phrase with encoder padding removed |
-| County Council Ballroom | bobjt, _Apparitions Ball_ | Slightly uncanny ballroom waltz; opening 37.8 seconds |
-| Midnight Call-In Studio | Alex McCulloch (Pro Sensory), _jazz improvisation looped_ | Low-key improvised late-night jazz; opening 60.0 seconds |
-| Palace Press Hall | RonyDkid, _Intro Music_ | Light pizzicato intrigue; complete 82.286-second phrase |
-| Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty trap beat; 132.414-second arrangement of two complete 32-bar phrases at 116 BPM, with an eight-bar filtered breakdown |
+| Transition-Era Television Studio | Chris Breemer's recording of Bartók's _Buciumeana_ | Existing folk-derived piano treatment, unchanged. 181.3 through 225.0 seconds |
+| Modern Debate Studio | Joth, _Funked Up_ | Rhodes, guitar, and bass groove. Complete 66.207-second phrase with encoder padding removed |
+| County Council Ballroom | bobjt, _Apparitions Ball_ | Slightly uncanny ballroom waltz. Opening 37.8 seconds |
+| Midnight Call-In Studio | Alex McCulloch (Pro Sensory), _jazz improvisation looped_ | Low-key improvised late-night jazz. Opening 60.0 seconds |
+| Palace Press Hall | RonyDkid, _Intro Music_ | Light pizzicato intrigue. Complete 82.286-second phrase |
+| Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty trap beat. 132.414-second arrangement of two complete 32-bar phrases at 116 BPM, with an eight-bar filtered breakdown |
 
 `README.md` and `CREDITS.md` provide the source-page links and license credits.
 The manifest pins the direct downloads and source hashes. Validation rejects a
@@ -279,7 +296,9 @@ editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
 scene verb leaves the same grammatical noun place as a common verb. Every
 scene-restricted predicate, modifier, and ending has the same verifiable
-real-quote provenance requirement as the common corpus. The three
+real-quote provenance requirement as the common corpus.
+
+The three
 scene-restricted conjunctions are distinct scene-specific choices reviewed
 against the owning scene's themes. No scene-restricted card is shared between
 scenes.
@@ -304,7 +323,9 @@ editorial approval apply to each complete family: if one tense is not funny or
 otherwise fails review, revise all three tense cards together. Every
 character verb leaves the same grammatical noun place as a common verb. Every
 character-owned predicate, modifier, and ending has the same verifiable
-real-quote provenance requirement as the common corpus. Its one conjunction is
+real-quote provenance requirement as the common corpus.
+
+Its one conjunction is
 personalized to the character as far as grammar permits. Character cards are
 unique to their owner and never carry a continuation.
 
@@ -325,14 +346,14 @@ treatment and every named Milestone 024 effect remains reachable.
 Setup keeps native scene selection and its keyboard behavior. The selected
 scene name has a wrapping visual text layer inside the control so a
 40-percent-expanded name stays readable on compact viewports. The duplicate
-visual layer is hidden from assistive technology; the native option owns the
+visual layer is hidden from assistive technology. The native option owns the
 accessible value. Expansion evidence must exercise the selected option, not
 the separate Scene field label.
 
 The loaded catalog has unique authored phrase text across common and owned
 pools. Each character and tier has unique comeback text. Existing grammar
-checks verify phrase reachability, agreement forms, and representative complete
-sentences. Normal CI verifies the catalog and its existing deterministic match
+checks do checks of phrase reachability, agreement forms, and representative complete
+sentences. Normal CI does checks of the catalog and its existing deterministic match
 fixtures. This milestone adds no separate simulation workload, selection
 coverage percentage, or frequency threshold.
 
@@ -360,8 +381,8 @@ contract, with passing content, grammar, provenance, and normal CI checks.
   reachability, agreement, representative sentence, and normal CI checks pass.
 - **AC-028-06:** All roster and scene variants pass shared viewport geometry
   with longest names and 40-percent-expanded UI strings. Production setup
-  presents all 30 selectable portraits in six columns and five current rows;
-  every portrait choice remains contained, keyboard-focusable, and selectable
+  presents all 30 selectable portraits in six columns and five current rows.
+  Every portrait choice remains contained, keyboard-focusable, and selectable
   for either player target.
 - **AC-028-07:** All 19 characters provide one default skin and zero through
   eight alternate skins. A ninth alternate fails validation. A human alternate
@@ -398,23 +419,25 @@ must be inspired by a verifiably real quote. Its private record contains a
 publicly retrievable source URL, the exact quote, original language, context,
 and mapping to the card. The shipped text can be a faithful quote or an
 original fictional adaptation, but it must never present an adaptation as the
-real speaker's words. An approved public-figure likeness may be used only as
+real speaker's words.
+
+An approved public-figure likeness may be used only as
 visual-only parody in a portrait skin. Private study data stays in the
 Git-ignored research folder and does not ship.
 
 The same quote-provenance rule applies to all scene-restricted predicates,
 modifiers, and endings. Scene-restricted conjunctions are not required to be
-neutral; they are selected for the owning scene's themes and personalized as
+neutral. They are selected for the owning scene's themes and personalized as
 far as grammar permits. Scene-restricted cards remain fictional in identity and
 do not share a card across scenes.
 
 The final content review also targets an approximate 50/50 split of authentic
-adaptations and purely fictional lines within each newly generated common and
-character expansion. A source-inspired original joke is still fictional when
-the visible wording does not retain the documented quote or its meaning. Keep
+adaptations and purely fictional lines. This applies within each newly generated
+common and character expansion. A source-inspired original joke is still fictional when
+the visible wording does not keep the documented quote or its meaning. Keep
 the classification lists and source basis in the private research folder.
 
-Character-owned conjunctions are not required to be neutral; they are selected
+Character-owned conjunctions are not required to be neutral. They are selected
 for the owning character's voice and themes and personalized as far as grammar
 permits. Character-restricted cards remain unique to their owner and do not
 carry a continuation.
@@ -422,8 +445,8 @@ carry a continuation.
 The common corpus and all 19 character authoring files receive the
 speech-inspired humor pass defined in Milestone 027. This includes distinctive
 endings and all three comeback tiers. Real slogans, real speech, and documented
-memes keep their real wording and meaning when used directly. The pass preserves
-useful grammar fragments and existing stable identities; it does not waive the
+memes keep their real wording and meaning when used directly. The pass keeps
+useful grammar fragments and existing stable identities. It does not waive the
 exact final volumes, quote provenance, or existing content and grammar checks.
 
 Shipped generation provenance
@@ -452,22 +475,24 @@ summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statu
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 The previous completion was verified on 2026-09-14 with `CI=1 npm run ci`
-(exit 0): 975 unit
-tests, 694 browser tests, passing coverage, and 259 Playwright cases (257 passed
-initially and two passed on retry). The two retry cases then passed three runs
+(exit 0). The evidence included 975 unit tests, 694 browser tests, passing
+coverage, and 259 Playwright cases. Of those Playwright cases, 257 passed
+initially and two passed on retry. The two retry cases then passed three runs
 each with retries disabled after making the Pause locator exact. No gameplay
-assertion or asset threshold was relaxed. Final logs are retained in
+assertion or asset threshold was relaxed.
+
+Final logs are kept in
 `tmp/spec028-ci-verified.log` and `tmp/spec028-final-confirmation.log`.
 Impeccable audit and independent critique evidence, dispositions, and limitations
 are recorded in `.impeccable/review/spec-028-acceptance.md`.
 
 That evidence covers the previous finalization target. The current focused
-content gate verifies the revised exact common, character, and scene volumes,
+content gate does checks of the revised exact common, character, and scene volumes,
 tense families, continuation rules, uniqueness, and grammar. Quote provenance,
 whole-family humor, and owner-personalized conjunction quality remain private or
-subjective editorial evidence; automated checks do not prove them. Final art,
+subjective editorial evidence. Automated checks do not prove them. Final art,
 audio, variety, and release evidence remain outside this focused verification.
 Stop before release optimization or deployment.

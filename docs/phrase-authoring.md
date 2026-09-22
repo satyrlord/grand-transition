@@ -1,17 +1,17 @@
 # Add or remove a phrase card
 
 This tutorial is the complete procedure for changing the phrase catalog. A
-phrase card is one JSON entry in the shared corpus or in one character's card
+phrase card is one JavaScript Object Notation (JSON) entry in the shared corpus or in one character's card
 file.
 
 Adding or removing a card is normally a content-only change. The loader, Zod
 validators, and catalog-wide grammar guards read the JSON directly. If a test
 uses the card as a fixture, update that test when removing the card.
 
-Approved behavior still lives in `docs/specs/`. When this tutorial disagrees
+The approved specifications in `docs/specs/` define behavior. When this tutorial disagrees
 with a specification, the specification governs.
 
-## Where cards live
+## Card locations
 
 | Intent | File | Effect |
 | --- | --- | --- |
@@ -26,40 +26,40 @@ cards are discovered by convention.
 The catalog then derives `characterPhraseIds`, `commonPhraseIds`, the locale
 keys (`phrase.<id>`, `phrase.<id>.singular`, `phrase.<id>.plural`,
 `phrase.<id>.personal-singular`, `phrase.<id>.second-person`), and each scene's
-phrase pool. Never edit those derived lists, and never add a card to a curated
-list in TypeScript.
+phrase pool. Do not edit those derived lists. Do not add a card to a curated list in TypeScript.
 
 Romanian translations are authored separately under `src/content/ro/`.
-They are not generated from English text. Romanian grammar metadata lives in
+They are not generated from English text. Romanian grammar metadata is in
 `src/content/ro/grammar-metadata.ts`.
 
 ## Add a card
 
 1. Choose the owning file from the table above.
-2. Add one card object. Start from the example below. Give it the next unused
-   stable numeric slot for its owner and role; do not derive the ID from its
-   text or renumber existing cards. Replace the text with a unique value and
-   keep the surrounding JSON valid, including the comma between entries.
-3. Fill the fields that the role requires (see the field table).
-4. Apply the role's provenance rule. Every common or character-owned
-   `predicate`, `modifier`, and `ending` must be inspired by a verifiably real
-   quote. Record its public
+2. Add one card object. Start from the example below. Give it the next unused stable numeric slot
+   for its owner and role. Do not derive the identifier (ID) from its text. Do not renumber existing
+   cards.
+
+   Replace the text with a unique value. Keep the surrounding JSON valid, including the comma
+   between entries.
+3. Fill the fields that are necessary for the role (see the field table).
+4. Apply the role's provenance rule. A verifiable real quote must inspire every common or character-owned `predicate`, `modifier`, and `ending`. Record its public
    source URL, quoted wording, language, context, and card ID in the private
-   research folder. The visible card can be a faithful quote or an original
-   fictional adaptation; never present an adaptation as the real speaker's
-   words. Other roles can be invented or accurately drawn from real speech. A
-   direct real phrase repeats its real wording and meaning; it never becomes an
+   research folder.
+
+   The visible card can be a faithful quote or an original fictional adaptation. Do
+   not present an adaptation as the real speaker's words.
+
+   Other roles can be invented or accurately
+   drawn from real speech. A direct real phrase repeats its real wording and meaning. Do not use an
    inaccurate paraphrase.
 5. Add matching Romanian translations and required agreement forms under
    `src/content/ro/`. For verbs and predicates, include the required plural and
    second-person forms in `relation-inflections.json`.
 6. For a new verb family or personal noun, add its Romanian object metadata in
-   `src/content/ro/grammar-metadata.ts`. Follow existing entries for the same
-   grammatical construction.
+   `src/content/ro/grammar-metadata.ts`. Use existing entries for the same grammatical construction as examples.
 7. Run `npm run content:validate`.
 8. Run `npm run validate` and `npm run quality:quick`.
-9. Optional: open `npm run dev` and play the card, or run
-   `npm run simulate -- --seed 1 --matches 1`.
+9. Optional: run `npm run dev`. Then play the card. Alternatively, run `npm run simulate -- --seed 1 --matches 1`.
 
 ```json
 {
@@ -75,21 +75,21 @@ They are not generated from English text. Romanian grammar metadata lives in
 }
 ```
 
-A card that is restricted to one scene adds `"sceneIds": ["<scene-id>"]`. Cards
-inside a character file never declare `characterIds`; ownership comes from the
-file. Only an entry inside a scene selection needs `sceneIds`, and a card cannot
+A card that is restricted to one scene adds `"sceneIds": ["<scene-id>"]`. Cards inside a character
+file never declare `characterIds`. The file defines ownership. Only an entry inside a scene
+selection needs `sceneIds`, and a card cannot
 belong to both a character and a scene. A final scene-specific card belongs to
-one scene only. Each scene has exactly 34 scene-restricted cards: 10 nouns, 9
-verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions. It has no
-scene-restricted continuation; the global `[...]` continuation is added to the
-eligible scene pool separately.
+one scene only.
+
+Each scene has exactly 34 scene-restricted cards: 10 nouns, 9
+verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions. It has no scene-restricted continuation. The eligible scene pool separately includes the global `[...]` continuation.
 
 ## Remove a card
 
-1. Delete the card object and keep the surrounding JSON valid.
+1. Delete the card object. Keep the surrounding JSON valid.
 2. Remove its Romanian messages and relation forms. Remove grammar metadata
    only when no remaining card uses the noun ID or verb family.
-3. Confirm that no other file still names the identifier:
+3. Make sure that no other file still names the identifier:
    `rg "<phrase-id>" src tests e2e tools docs`.
    Content JSON, tests, and `e2e/` specs are the only expected places. Structural
    tests use a small set of long-lived foundation cards (`common-noun-028`,
@@ -97,30 +97,29 @@ eligible scene pool separately.
    `common-predicate-010-present`, and similar) as grammar, scoring, and layout
    fixtures. If you remove one of those, update the referencing test in the same
    change.
-4. Confirm that the owner still satisfies the per-character, per-scene, and
+4. Make sure that the owner still satisfies the per-character, per-scene, and
    common-corpus counts listed below.
 5. Run the same commands as for an addition.
 
-Never reuse a removed identifier for different text, and never renumber other
-cards. Identifiers are stable for stored replays and match history.
+Do not reuse a removed identifier for different text. Do not renumber other cards. Identifiers are stable for stored replays and match history.
 
 ## Card fields
 
 | Field | Required | Rule |
 | --- | --- | --- |
-| `id` | Always | Content-neutral `<owner>-<role>-<slot>` identifier, with a tense suffix for relations; unique in the whole catalog and stable forever. |
+| `id` | Always | Content-neutral `<owner>-<role>-<slot>` identifier, with a tense suffix for relations. Unique in the whole catalog and stable forever. |
 | `role` | Always | `noun`, `verb`, `predicate`, `modifier`, `conjunction`, `ending`, or `continuation`. |
 | `text` | Always | The player-visible English phrase. Unique across both corpora after normalization. |
 | `tags` | Always | Weakness tags this card can punish. Use `[]` for a neutral card. |
 | `rarity` | Always | `common`, `uncommon`, or `rare`. |
 | `scoreGroups` | Nouns | `substance` and `flavour` groups that place the noun in scoring. |
-| `tense`, `tenseFamily` | Verbs, predicates | Both are required together; forbidden on other roles. Add or extend the complete family described below. |
-| `scorePreferences` or `customScores` | Verbs, predicates | At least one is required; forbidden on other roles. |
+| `tense`, `tenseFamily` | Verbs, predicates | Both are required together. Forbidden on other roles. Add or extend the complete family described below. |
+| `scorePreferences` or `customScores` | Verbs, predicates | At least one is required. Forbidden on other roles. |
 | `connectorKind` | Conjunctions | `and`, `because`, `but`, `so`, `yet`, or `with`. |
-| `finisherBonus` | Endings | Integer from 1 to 20; forbidden on other roles. |
+| `finisherBonus` | Endings | Integer from 1 to 20. Forbidden on other roles. |
 | `singularText`, `pluralText` | Optional | Add both or neither. Used where subject agreement changes the form. |
 | `personalSingularText`, `secondPersonText` | Optional | Add both or neither, and only after `singularText` plus `pluralText`. |
-| `grammaticalNumber`, `grammaticalPerson`, `referentKind` | Optional | Nouns only. Plural text needs `plural`; otherwise verbs stay singular. Second-person nouns need personal referents. |
+| `grammaticalNumber`, `grammaticalPerson`, `referentKind` | Optional | Nouns only. Plural text needs `plural`. Otherwise, verbs stay singular. Second-person nouns need personal referents. |
 | `allowsCoordinatedNounComplement` | Optional | `true` on a predicate that accepts a coordinated noun complement. |
 | `sceneIds` | Optional | Restricts a shared card to named scenes. |
 
@@ -131,7 +130,7 @@ Each verb or predicate family has distinct past, present, and future cards with
 the same role and content-neutral `<owner>-<role>-<slot>` `tenseFamily`.
 Their card IDs append `-past`, `-present`, or `-future`. Their rarities are `common`, `uncommon`, and
 `rare`, respectively. When adding a new family, add all three cards. When
-extending an existing family, first check which tense it needs.
+extending an existing family, first identify which tense it needs.
 
 The final common verb pool uses 50 complete three-tense families. Review the
 family as one humor and editorial unit. If one tense is not funny or fails
@@ -168,16 +167,17 @@ whole-family humor and editorial review to those 9 cards.
   verifiable real quote in the private research folder. Record the source URL,
   exact quote, original language, context, and card ID. Mark whether the
   shipped text is a faithful quote or an original fictional adaptation. An
-  adaptation preserves the source inspiration but is not presented as the real
+  adaptation keeps the source inspiration but is not presented as the real
   speaker's words.
 - Common and character-owned nouns, verbs, and conjunctions can be invented or
   accurately drawn from real speech. A direct real phrase, slogan, or documented
   meme keeps its real wording and meaning. Accuracy is the requirement, because
   a faithful Romanian adaptation depends on it.
-- Keep characters, identities, and brands fictional. No real person, no real
-  party name, acronym, or logo, no protected expression copied from another game
-  or work, no unsafe HTML, and no real logo or copyrighted broadcast graphic in
-  referenced media. Public institutions and historical events can appear directly
+- Keep characters, identities, and brands fictional. Do not name a real person or real party. Do not
+  use a real party acronym or logo. Do not copy protected expressions from another game or work.
+
+   Do not use unsafe Hypertext Markup Language (HTML). Do not use real logos or copyrighted broadcast
+  graphics in referenced media. Public institutions and historical events can appear directly
   and accurately.
 - A real phrase records its wording, its language, and its source in the private
   research folder, as required by
@@ -196,10 +196,10 @@ composition is recorded in
 | --- | --- |
 | Common nouns | exactly 300 |
 | Common verbs | exactly 150: 50 past, 50 present, and 50 future |
-| Common predicates | exactly 99; every card is quote-inspired |
-| Common modifiers | exactly 50; every card is quote-inspired |
-| Common endings | exactly 50; every card is quote-inspired |
-| Common conjunctions | exactly 5; as neutral as possible with empty tags |
+| Common predicates | exactly 99. Every card is quote-inspired |
+| Common modifiers | exactly 50. Every card is quote-inspired |
+| Common endings | exactly 50. Every card is quote-inspired |
+| Common conjunctions | exactly 5. As neutral as possible with empty tags |
 | Scene-restricted cards per scene | exactly 34: 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions |
 | Scene-restricted continuations | exactly zero per scene |
 | Eligible scene-pool IDs | exactly 35 per scene, including the global continuation |
@@ -211,7 +211,7 @@ Update the catalog counts quoted in
 [`docs/specs/spec-005-content-schemas.md`](specs/spec-005-content-schemas.md) when
 a change alters the approved composition.
 
-## Verify the change
+## Verification
 
 ```text
 npm run content:validate
@@ -221,20 +221,18 @@ npm run quality:quick
 
 `npm run content:validate` runs the schema suite in
 `tests/unit/content-schemas.test.ts` and the Milestone 028 final-volume check.
-They reject malformed or duplicate cards, check the encoded content boundaries,
-and enforce final pool ranges. Manual editorial review follows Milestone 027.
+They reject malformed or duplicate cards, enforce the encoded content boundaries,
+and enforce final pool ranges. Manual editorial review obeys Milestone 027.
 `npm run validate` adds Markdown, asset, localization,
 pure-boundary, lint, and type checks.
 
 The catalog-wide grammar guarantees then exercise the card in complete
 sentences:
 
-- `tests/unit/english-grammar-core.test.ts` prepares and completes clauses for
-  every shipped ending, noun, and modifier, so a card that cannot reach a
-  complete sentence fails here.
+- `tests/unit/english-grammar-core.test.ts` prepares and completes clauses for every shipped ending, noun, and modifier. A card fails this test if it cannot form a complete sentence.
 - `tests/unit/catalog-foundation*.test.ts` plays every character and scene
   combination with fixed seeds.
-- `tests/unit/romanian-grammar.test.ts` checks Romanian relation forms and
+- `tests/unit/romanian-grammar.test.ts` examines Romanian relation forms and
   object metadata across the shipped catalog.
 - `npm run simulate -- --seed 1 --matches 1` runs one deterministic headless
   match. Use the `$simulate-matches` skill for larger workloads.
@@ -256,5 +254,4 @@ grammar metadata must stay synchronized with the catalog.
 - [`docs/specs/spec-027-balance-editorial.md`](specs/spec-027-balance-editorial.md):
   content boundaries, balance bands, and the Milestone 014 replay contract.
 - [`docs/specs/spec-029-romanian-localization-and-speech.md`](specs/spec-029-romanian-localization-and-speech.md):
-  complete Romanian localization; Ro_VITS evaluated and rejected, so Mihai
-  medium and Liana medium remain the only Romanian voices.
+  complete Romanian localization. The evaluation rejected Ro_VITS. Mihai medium and Liana medium stay the only Romanian voices.

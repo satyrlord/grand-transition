@@ -5,6 +5,12 @@
 **Owns:** Production-quality outcome reactions without tactical instruction
 **Production-file budget:** 8
 
+## Terms
+
+- CSP: Content Security Policy.
+- TTS: text-to-speech.
+- IDs: identifiers.
+
 ## Reference loop
 
 Use the original Hollywood Roast presentation loop. Do not use a between-round
@@ -29,13 +35,16 @@ TTS audio and its timing metadata for the corresponding events.
 3. Expand the current narrator's public bubble and hold its reciting stance.
    Keep the other character idle. Expansion occurs inside the reserved 32-percent
    scene-width footprint and does not move surrounding layout. Synthesis
-   preparation is distinct from reciting and has no visible progress record. If
-   this narrator used a Comeback and owns an approved sidekick, its static image
-   stays hidden for the main insult and slides in from the owning outer border
-   only when the speech adapter reports the start marker for the separate
-   Comeback closing-line segment. It leaves when the final audio chunk reports
+   preparation is distinct from reciting and has no visible progress record.
+
+  If this narrator used a Comeback and owns an approved sidekick, its static
+   image stays hidden for the main insult. The speech adapter reports the
+   start marker for the separate Comeback closing-line segment. Only then does
+   the sidekick slide in from the owning outer border. It leaves when the final audio chunk reports
    completion. A silent delivery enters when the simulated Comeback segment
-   begins. Pause preserves the
+   begins.
+
+  Pause keeps the
    current visibility state, cancellation removes it, and reduced motion uses
    an immediate appearance without directional travel.
 4. Reveal inline component scores and bonuses at their narration markers.
@@ -48,7 +57,9 @@ TTS audio and its timing metadata for the corresponding events.
    Show persistent Victory only after the terminal deliveries and damage finish.
    Entering the first cliffhanger starts its draft immediately and shows one
    compact public record naming both players and their exact restored Pride.
-   Its 520-millisecond motion does not stop the timer or block controls. Keep the
+   Its 520-millisecond motion does not stop the timer or block controls.
+
+  Keep the
    record until the next accepted action and keep `Cliffhanger · Round N` visible
    for the complete cliffhanger round. Keep the record inside the reserved speech
    footprint so the moderator's head remains visible between speech and the board.
@@ -61,7 +72,7 @@ unfinished insults.
 
 Use a 400-millisecond audience hold after a completed delivery. Narration
 markers and completion come from generated audio, not an overall fixed timer.
-Pause, visibility interruption, navigation, and disposal must preserve or
+Pause, visibility interruption, navigation, and disposal must keep or
 cancel the sequence explicitly without replaying stale callbacks. Reduced
 motion keeps every score and state transition while suppressing movement.
 
@@ -73,8 +84,8 @@ Align the speech bubble toward its current speaker. Its center is offset by
 11 percent of scene width from the viewport center, left for red and right for
 blue. The tail ends near the speaker. Keep faces, names, and controls clear.
 
-Show each rendered scored line with its base, applied multipliers, result, and
-public weakness names inline, near the speaking player's lower stage edge.
+Show each rendered scored line inline near the speaking player's lower stage edge.
+Include its base, applied multipliers, result, and public weakness names.
 Finisher and Comeback bonuses stay inline with their text. Combo emphasis stays
 with that speaker's score. Weakness and applied Pride loss appear near the
 affected character. Use legible outlined stage text, without a central panel.
@@ -84,6 +95,7 @@ A new score line scrolls into view. Total, bonus changes, and viewport resize
 must not hide the latest line. Previous lines remain available through a
 keyboard-focusable scroll region. A polite live log announces new score facts.
 Damage text names the affected player and exact Pride loss for assistive tools.
+
 An incomplete construction and a held continuation name the player and show
 zero Pride damage during the thinking hold. A broken continuation is announced
 with the affected player, exact Pride loss, and exact remaining Pride when the
@@ -97,16 +109,16 @@ That is a heavy hit, not a five-Pride hit.
 
 ## Deliver
 
-Complete strong outcome reactions for score, damage, combo, weakness,
-continuation, comeback, grammar mistakes, Pride changes, and sudden death in
-the two-character, one-scene vertical slice.
+Complete strong outcome reactions in the two-character, one-scene vertical
+slice. Include score, damage, combo, weakness, continuation, comeback, grammar
+mistakes, Pride changes, and sudden death.
 
 Match reactions report what happened and do not teach tactics. Milestone 016
 separately permits an optional tutorial glow for grammar-accepted next phrases
 during drafting. It is suppressed during these reactions' round presentation.
 Do not add an onboarding flow, guided match, objective, recovery instruction,
-card-role or weakness explanation, shortcut guide, skip action, replay action,
-or progress state.
+or card-role or weakness explanation. Do not add a shortcut guide, skip
+action, replay action, or progress state.
 
 Presentation uses civic-debate motifs such as folders, lower thirds, stamps,
 microphone plaques, voting panels, tickers, switchboards, and archive labels.
@@ -119,7 +131,7 @@ carry body text.
 Each reaction names only the public event, affected player, exact public value
 change, and any applied public weakness name. It can use portrait motion, stage
 light, authored sound, a compact broadcast record, or a combination of these.
-It must not state the next legal role or recommend a card. It must not explain a
+It must not give the next legal role or recommend a card. It must not explain a
 weakness. It must not give the reason that makes an action unavailable. It must
 not tell the player how to recover.
 
@@ -129,23 +141,28 @@ records instead use the bounded 3000-millisecond lifetime and interruption
 rules in Milestone 016. This limit also applies with reduced motion.
 It must not stop
 the timer, block a control, move layout, expose a private phrase, or add an
-intermediate surface. Each reaction uses one fixed motion sequence. When the
+intermediate surface.
+
+Each reaction uses one fixed motion sequence. When the
 browser requests reduced motion, keep the public outcome record and suppress
 movement and flashing.
 
 The narrated exchange is a protected hold. Clause, finisher, and Comeback rows
 appear at generated narration markers. A clause marker belongs to its first
 clause-completing phrase. Repeated phrase IDs do not merge markers. Applied
-factor and public weakness names remain with that component. Bonus cues follow
+factor and public weakness names remain with that component.
+
+Bonus cues follow
 the completed phrase. Total appears after the final audio sample.
 
 After the 400-millisecond audience hold, show a target-side Pride-impact record
 for the 200-millisecond strike and the 400-millisecond Pride tally. Name the
-affected player without revealing damage early. At the count midpoint, replace
-that record with the exact Pride loss and exact remaining Pride, then begin the
-next speaker at the end of the count. Direct self-damage knockout names its
+affected player without revealing damage early. At the count midpoint, replace that record with the exact Pride loss and exact
+remaining Pride. At the end of the count, begin the next speaker. Direct self-damage knockout names its
 grammar-mistake or turn-timeout cause and holds the damage stance for 520
-milliseconds. A silent valid delivery advances one authored segment per second.
+milliseconds.
+
+A silent valid delivery advances one authored segment per second.
 Incomplete or continued text uses a 2000-millisecond thinking hold.
 This silent timing is a fallback, not an estimate of spoken word timing.
 
@@ -163,7 +180,7 @@ report resolved public facts only and never preview a card or future score.
 
 ## Objective verifiers
 
-`tests/unit/round-presentation.test.ts` verifies the ordered clock, Pause,
+`tests/unit/round-presentation.test.ts` does checks of the ordered clock, Pause,
 silent fallback, distinct continuation outcomes, target-side impact facts,
 late-clause weakness timing, and stale-event rejection.
 `tests/unit/basic-scoring.test.ts` checks clause anchors without changing scoring.
@@ -171,8 +188,10 @@ late-clause weakness timing, and stale-event rejection.
 checks both speakers, totals, displayed Pride, automatic progression, and delayed
 Victory at all supported viewports. `e2e/seamless-match-flow.spec.ts` checks the
 first cliffhanger record and persistent round heading. `e2e/audio-speech.spec.ts`
-adds real local neural speech under production CSP. The local reference assembly
-is inspected read-only. No proprietary code or recordings are shipped.
+adds real local neural speech under production CSP.
+
+The local reference assembly
+is examined read-only. No proprietary code or recordings are shipped.
 
 ## Acceptance criteria
 
@@ -187,12 +206,12 @@ is inspected read-only. No proprietary code or recordings are shipped.
   without movement or flashing.
 - **AC-025-04:** All supported viewports keep each reaction, sentence,
   phrase row, and required action readable without overlap. Compact layouts
-  retain required content through vertical scrolling under Milestone 018.
+  keep required content through vertical scrolling under Milestone 018.
 - **AC-025-05:** The optional grammar indication owned by Milestone 016 is
   absent during round presentation. No onboarding, guided objective, recovery
   instruction, additional highlighted target, skip, replay, or progress state
   ships. Verifier: `e2e/tutorial-mode.spec.ts`.
-- **AC-025-06:** Source inspection and the production reaction flows verify
+- **AC-025-06:** Source inspection and the production reaction flows do checks of
   that each reaction reports only public outcomes and does not teach tactics.
   Verifiers: `tests/unit/round-presentation.test.ts`,
   `e2e/round-presentation.spec.ts`, and `e2e/tutorial-mode.spec.ts`.
@@ -204,12 +223,13 @@ is inspected read-only. No proprietary code or recordings are shipped.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 Every public tactical and scoring event has a clear outcome reaction. The
-automated presentation and audio flows verify event order, timing, public
+automated presentation and audio flows do checks of event order, timing, public
 wording, and layout. Source inspection checks that no tactical instruction
 beyond Milestone 016's optional grammar indication ships. `npm run ci` passes.
-The user can review motion, sound, and speech separately after completion;
-subjective quality is not inferred from these automated checks. Stop before
+The user can review motion, sound, and speech separately after completion.
+
+Subjective quality is not inferred from these automated checks. Stop before
 broad content production.

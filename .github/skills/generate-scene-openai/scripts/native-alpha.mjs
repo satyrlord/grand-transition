@@ -16,7 +16,7 @@ async function decode(bytes) {
   }
   const { data, info } = await sharp(bytes, { failOn: 'warning' }).ensureAlpha().raw()
     .toBuffer({ resolveWithObject: true });
-  if (info.channels !== 4) throw new Error('Native-alpha preparation requires decoded RGBA pixels.');
+  if (info.channels !== 4) throw new Error('For native-alpha preparation, use decoded RGBA pixels.');
   return { data, width: info.width, height: info.height, hasAlpha: metadata.hasAlpha === true };
 }
 
@@ -69,13 +69,13 @@ function inspectRaster({ data, width, height, hasAlpha }) {
   };
 }
 
-// Inspection reports invalid candidate topology without changing the input.
+// Inspection reports invalid candidate topology. It does not change the input.
 export async function inspectNativeAlpha(bytes) {
   return inspectRaster(await decode(bytes));
 }
 
 // This operation changes only detached alpha-1 values. It performs no matte
-// extraction, colour correction, edge erosion, resizing, or file writes.
+// extraction, color correction, edge erosion, resizing, or file writes.
 export async function prepareNativeAlpha(bytes) {
   const raster = await decode(bytes);
   const before = inspectRaster(raster);

@@ -6,38 +6,55 @@
 and the Ro_VITS rejection
 **Production-file budget:** 8 per delivery package
 
+## Terms
+
+- CSP: Content Security Policy.
+- GPU: graphics processing unit.
+- CPU: central processing unit.
+- WASM: WebAssembly.
+- OS: operating system.
+- PCM: pulse-code modulation.
+- URI: Uniform Resource Identifier.
+- NFC: Normalization Form C.
+- IDs: identifiers.
+- MB: megabytes.
+- MiB: mebibytes.
+
 ## Deliver and phase order
 
-Add Romanian as a complete playable language beside English. Translate the
-interface, then the game content, implement Romanian grammar, and generate
-Romanian speech locally. English remains the default interface language and
+Add Romanian as a complete playable language beside English. Translate the interface. Then translate the game content. Implement Romanian
+grammar. Generate Romanian speech locally.
+
+English remains the default interface language and
 Romanian becomes the default game language. Phase 1 replaces the
 English-only interface restriction in Milestones 000, 003, and 005. Phase 2
 replaces their English-only game-content restriction. This milestone extends
 Milestones 014, 019, 020, and 024 for language selection, stored match language,
 and Romanian speech. Their other behavior and failure contracts still apply.
 
-1. **Phase 1: Romanian interface.** Translate every interface message and the
-   displayed character, scene, and weakness labels, add the independently saved
-   `Interface language` selection, and set the document language. The game language remains
+1. **Phase 1: Romanian interface.** Translate every interface message and the displayed character, scene, and
+  weakness labels. Add the independently saved `Interface language` selection.
+  Set the document language. The game language remains
    English. Complete automated checks and
    production-browser verification for the Romanian interface.
-2. **Phase 2: Romanian game content, grammar, and speech.** Translate the game
-   content, add the independently saved `Game language` selection, implement
-   Romanian grammar and deterministic play, and deliver Romanian speech with
-   Piper Mihai medium and Piper Liana medium. Complete automated checks,
+2. **Phase 2: Romanian game content, grammar, and speech.** Translate the game content. Add the independently saved `Game language`
+  selection. Implement Romanian grammar and deterministic play. Deliver
+  Romanian speech with Piper Mihai medium and Piper Liana medium.
+
+  Complete automated checks,
    Romanian source and editorial checks, and production-browser verification.
    The user can review language and audible quality separately after completion.
-3. **Ro_VITS: evaluated and rejected.** Ro_VITS was compared with the accepted
-   Phase 2 voices and rejected: no ONNX/WASM browser artifact, ~437 MB per
-   checkpoint against the 120 MiB assembled-model budget, `connect-src 'self'` CSP
-   forbids hosted inference, and checkpoint/data/speaker licensing is
-   unresolved. Piper Mihai medium and Piper Liana medium remain the only
+3. **Ro_VITS: evaluated and rejected.** Evaluation rejected Ro_VITS after comparison with the accepted Phase 2 voices.
+  It has no ONNX/WASM browser artifact. Each ~437 MB checkpoint exceeds the
+  120 MiB assembled-model budget. The `connect-src 'self'` CSP forbids hosted
+  inference.
+
+  Checkpoint, data, and speaker licensing is unresolved. Piper Mihai medium and Piper Liana medium remain the only
    Romanian voices. This milestone authorizes no further model replacement.
 
-Complete the phases in order. Each phase is a separately testable slice: start
-one only after the preceding phase's acceptance criteria and cumulative
-`npm run ci` pass, and stop before the next phase's work.
+Complete the phases in order. Each phase is separately testable. Start a phase only after the preceding
+phase's acceptance criteria and cumulative `npm run ci` pass. Stop before the
+next phase's work.
 
 Define dependency-ordered delivery packages before each phase's code changes.
 Phase 1 packages cover interface message resources, interface language
@@ -45,7 +62,9 @@ selection and persistence, and interface presentation integration. Phase 2
 packages cover Romanian content, Romanian grammar and artificial intelligence
 (AI), replay and history locale versioning, speech assets and inference, and
 presentation integration. Split a package before implementation if it exceeds
-eight production files. Translation data files count toward the budget. Binary
+eight production files. Translation data files count toward the budget.
+
+Binary
 model assets, licenses, and manifests form separate versioned asset packages,
 as in Milestone 024. Tests, small fixtures, and required specification updates
 do not count toward the budget.
@@ -66,47 +85,54 @@ Settings modal:
 It offers the autonyms `English` and `Română`. Translate its label with the
 interface language. The selection applies immediately to title and setup
 content and persists independently. Set the document language to the interface
-locale. Preserve modal focus and the current control after selection. The
-drop-down stays in title Settings; Pause does not expose it. A running match or
+locale. Keep modal focus and the current control after selection.
+
+The
+drop-down stays in title Settings. Pause does not expose it. A running match or
 ladder cannot change the selection, and returning to the title restores access
 through the existing settings flow.
 
 The game language remains `en` in Phase 1, and every match created in Phase 1
 captures `en` as its game locale. The `Game language` drop-down and the
-`gameLocale` field arrive in Phase 2; do not add them early. Phase 1 changes no
-speech behavior: the existing English voices, skin assignments, and speech
-settings remain in force, and no Romanian model is downloaded or loaded.
+`gameLocale` field arrive in Phase 2. Do not add them early. Phase 1 changes no speech behavior. The existing English voices, skin
+assignments, and speech settings remain in force. It downloads and loads no
+Romanian model.
 
 ## Phase 1: Interface translation
 
-Translate all shipped interface text: controls, headings, instructions,
-tooltips, accessible names, notices, errors, score explanations, history
-labels, and the fictional-satire disclaimer. Phase 1 also translates all 19
+Translate all shipped interface text. Include controls, headings,
+instructions, tooltips, accessible names, notices, errors, score explanations,
+history labels, and the fictional-satire disclaimer. Phase 1 also translates all 19
 character archetype names, all six scene names, and the weakness labels as
 interface display names keyed by stable identifiers. These displayed names and
-labels follow `interfaceLocale` in setup, play, history, and score explanations
+labels use `interfaceLocale` in setup, play, history, and score explanations
 under every game-language selection. The English content bundle, match state,
-speech text, replay, and stored history remain unchanged. Descriptions, phrases,
+speech text, replay, and stored history remain unchanged.
+
+Descriptions, phrases,
 agreement forms, endings, comebacks, and grammar text stay in English until
-Phase 2. Preserve the Grand Transition
+Phase 2. Keep the Grand Transition
 product name, stable identifiers, source identifiers, and license text. Render
-interface numeric values with the interface locale; stored numbers and scoring
+interface numeric values with the interface locale. Stored numbers and scoring
 remain locale-neutral.
 
-Phase 2 does not supersede the Phase 1 name rule. A character archetype name, a
-scene name, and a weakness label are interface copy: they keep following
-`interfaceLocale` in setup, play, history, and score explanations whatever game
-language is selected, because the interface language reads them aloud and
-renders them inside interface sentences. `Game language` keeps owning game
-prose, grammar, speech, and stored match text. The interface display tables stay
+Phase 2 does not supersede the Phase 1 name rule. A character archetype name, scene name, and weakness label are interface copy.
+They use `interfaceLocale` in setup, play, history, and score explanations
+under every game-language selection. The interface language controls their
+spoken output and their rendering inside interface sentences. `Game language` keeps owning game
+prose, grammar, speech, and stored match text.
+
+The interface display tables stay
 the interface copy. The Romanian character and scene labels must equal the
 Romanian game-content names of the same stable identifiers.
 
 Interface translations stay in Lit message resources. The character, scene, and
 weakness label tables stay in a locale-specific display-name resource. Do not
 put translated text or Romanian morphology in locale-neutral rules. Validate
-complete interface key coverage for `en` and `ro-RO`; shared semantic interface keys
-must exist in both languages. Missing, duplicate, unsafe, or incomplete
+complete interface key coverage for `en` and `ro-RO`. Shared semantic interface keys
+must exist in both languages.
+
+Missing, duplicate, unsafe, or incomplete
 interface translations fail localization validation. A missing Romanian
 message must not silently display English in an accepted build.
 
@@ -114,18 +140,19 @@ Use standard Romanian with `ă`, `â`, `î`, `ș`, and `ț`. Normalize Unicode t
 and convert legacy cedilla forms to comma-below forms at the authoring boundary.
 The feature-display font must render those Romanian letters without switching
 faces inside a word. The title mode actions read `Un jucător`, `Doi jucători`,
-and `Campanie`; use those names wherever the interface lists the modes.
-Romanian selection locks read `Confirmă alegerea`;
-available unlocks read `Schimbă alegerea`. Binary Pause choices read `Da` and
+and `Campanie`. Use those names wherever the interface lists the modes.
+
+Romanian selection locks read `Confirmă alegerea`.
+Available unlocks read `Schimbă alegerea`. Binary Pause choices read `Da` and
 `Nu`. The phrase highlighting control reads `Colorarea expresiilor`, the Pause
 heading reads `Pauză`, and the turn-ending action reads `Gata`.
 
 Annotate English game text with the `en` game locale whenever the interface
-language is Romanian. A displayed character archetype name, scene name, or
-weakness label is interface copy, so it inherits the document language and is
-never annotated with a game locale. Phase 1
+language is Romanian. A displayed character archetype name, scene name, or weakness label is
+interface copy. It inherits the document language and is never annotated with
+a game locale. Phase 1
 records no Romanian game locale, so no other game text is annotated `ro-RO`
-yet. Locale validation must check the Romanian
+yet. Locale validation must do a check of the Romanian
 disclaimer's meaning through reviewed content and focused assertions, rather
 than requiring English words in it.
 
@@ -135,17 +162,19 @@ Add an `interfaceLocale: 'en' | 'ro-RO'` field to the strict settings document
 and increment its schema version from `1` to `2`. It defaults to `en`. A stored
 document written before the field existed is rejected as `unsupported-version`
 and falls back to the defaults, as any other settings shape change does.
-Preserve every other value on an accepted document, including the retained
-speech voice URI and GPU voice preference, tutorial preference, and base points
-multiplier. Unknown locale values return `invalid-data`; unknown schema versions
+Keep every other value on an accepted document. This includes the kept
+speech voice URI, GPU voice preference, tutorial preference, and base points
+multiplier.
+
+Unknown locale values return `invalid-data`. Unknown schema versions
 return `unsupported-version`. Use the existing defaults and storage fallback
 without overwriting invalid stored data until the next explicit setting change.
-Translate the existing fallback notice and preserve its meaning and dismissal
+Translate the existing fallback notice and keep its meaning and dismissal
 behavior.
 
 History controls use the current interface language. Do not translate or
 rescore a stored match when the interface language changes. Phase 1 does not
-change the replay, match-log, or history formats; Phase 2 owns their locale
+change the replay, match-log, or history formats. Phase 2 owns their locale
 field. Locale metadata adds no private text to public history, logs, or
 evidence.
 
@@ -159,25 +188,27 @@ The new verifier paths below are implementation targets, not existing evidence.
   fixtures fail at their field paths. Verifiers:
   `npm run localization:validate` and
   `tests/unit/romanian-localization.test.ts`.
-- **AC-029-02:** The `Interface language` drop-down defaults to English, offers
-  `English` and `Română`, translates its label with the interface language,
-  applies immediately to title and setup content, and retains focus and the
-  current control after selection. Its selection survives reload. Adding
-  `interfaceLocale` preserves the base points multiplier, tutorial preference,
-  speech voice URI, and GPU voice preference, and a document stored before the
-  field existed is rejected as `unsupported-version`. Invalid values, unknown
+- **AC-029-02:** The `Interface language` drop-down defaults to English and offers `English`
+  and `Română`. Its label uses the interface language. The selection applies
+  immediately to title and setup content. Focus and the current control remain
+  unchanged after selection. Its selection survives reload.
+
+  Adding `interfaceLocale` keeps the base points multiplier, tutorial
+  preference, speech voice URI, and GPU voice preference. A document stored
+  before the field existed is rejected as `unsupported-version`. Invalid values, unknown
   versions, and blocked or quota storage match this contract. Verifiers:
   `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.
-- **AC-029-03:** Every Romanian interface string is present and used: controls,
-  headings, instructions, tooltips, accessible names, notices, errors, history
-  labels, score explanations, the disclaimer, all 19 archetype display names,
-  all six scene display names, and every shipped weakness label, with no English
-  fallback for a missing Romanian message or display name. The document language
+- **AC-029-03:** Every Romanian interface string is present and used. These strings include
+  controls, headings, instructions, tooltips, accessible names, notices,
+  errors, history labels, score explanations, and the disclaimer. They also
+  include all 19 archetype display names, all six scene display names, and
+  every shipped weakness label. A missing Romanian message or display name has
+  no English fallback. The document language
   is the interface locale,
   interface numbers use the interface locale, and English game text is
   annotated `en`. Verifier: `e2e/romanian-localization.spec.ts`.
-- **AC-029-04:** The translated settings-storage fallback notice preserves the
+- **AC-029-04:** The translated settings-storage fallback notice keeps the
   original meaning and dismissal behavior and appears in the selected interface
   language. Verifier: `tests/browser/settings-persistence.browser.test.ts`.
 - **AC-029-05:** Romanian interface screens, the longest Romanian interface
@@ -185,7 +216,7 @@ The new verifier paths below are implementation targets, not existing evidence.
   matrix with keyboard and forced-color checks. The drop-down appears locally
   labeled in title Settings and is absent from Pause. Changing the interface
   language cannot alter an English match's stored results, replay, or history
-  text; the history presentation uses the current interface display names.
+  text. The history presentation uses the current interface display names.
   Verifiers: `e2e/romanian-localization.spec.ts` and
   `e2e/visual-system-fonts.spec.ts`, followed by the shared Impeccable audit
   and critique procedures on the production build.
@@ -193,13 +224,15 @@ The new verifier paths below are implementation targets, not existing evidence.
 ## Phase 2: Game language selection
 
 Add a `gameLocale: 'en' | 'ro-RO'` field to the strict settings document and
-increment its schema version from `2` to `3`. It defaults to `ro-RO`, so a new
-installation plays Romanian game content under an English interface, and the
-two languages stay independently selectable in both directions. A stored
+increment its schema version from `2` to `3`. It defaults to `ro-RO`. A new installation plays Romanian game content under
+an English interface. The two languages stay independently selectable in both
+directions. A stored
 document written before the field existed is rejected as `unsupported-version`
-and falls back to the defaults. Preserve the accepted `interfaceLocale` and
+and falls back to the defaults.
+
+Keep the accepted `interfaceLocale` and
 every other value on an accepted document. Unknown locale values return
-`invalid-data`; unknown schema versions return `unsupported-version`.
+`invalid-data`. Unknown schema versions return `unsupported-version`.
 
 Phase 2 adds the second, independently saved drop-down to the title Settings
 modal:
@@ -214,16 +247,20 @@ modal:
 Each drop-down offers the autonyms `English` and `Română`. Translate its label
 with the interface language. Support all four language combinations. Changing
 one selection must not change the other. Each selection applies immediately
-to its title and setup content and persists independently. Set the document
+to its title and setup content and persists independently.
+
+Set the document
 language to the interface locale. Annotate game text with the game locale when
-it differs from the document language. Preserve modal focus and the current
-control after selection. Speech always follows the game language; do not
+it differs from the document language. Keep modal focus and the current
+control after selection. Speech always uses the game language. Do not
 expose a voice picker or a third language selector for speech.
 
 The match captures its game locale at creation. It uses that locale for game
 content, grammar, and speech through setup completion, play, Pause, narrated
 results, and Victory. Interface messages use the selected interface locale.
-Both drop-downs remain in title Settings; Pause exposes neither. A running
+Both drop-downs remain in title Settings. Pause exposes neither.
+
+A running
 match or ladder cannot change either selection. Returning to the title
 restores access to both drop-downs.
 
@@ -231,35 +268,36 @@ restores access to both drop-downs.
 
 Translate all shipped game text: character and scene names and descriptions,
 phrases, agreement forms, endings, comebacks, and constructed sentences.
-Preserve the Grand Transition product name, stable identifiers, source
+Keep the Grand Transition product name, stable identifiers, source
 identifiers, and license text. Render numbers within game prose with the
-game locale where applicable; stored numbers and scoring remain
+game locale where applicable. Stored numbers and scoring remain
 locale-neutral.
 
 Game prose and grammar resources stay in locale-specific content bundles. Do
 not put translated text or Romanian morphology in locale-neutral rules.
 Validate complete game-content coverage for `en` and `ro-RO` independently.
-A weakness keeps its stable tag for scoring, content, and stored state. The
-displayed weakness label is interface copy rather than game text, so setup and
-score explanations show it in the selected interface language under every game
-language. Milestone 005 pins the English `securitate` label.
-Shared semantic keys must exist in both languages; language-specific
-inflection data can have different shapes. Do not require an English
-inflection shape for Romanian. The English catalog stays the authored
-reference for locale parity even though Romanian is the default game language,
-so a Romanian inflection form never requires a matching English form.
+A weakness keeps its stable tag for scoring, content, and stored state. The displayed weakness label is interface copy.
+
+Setup and score explanations
+show it in the selected interface language under every game language. Milestone 005 pins the English `securitate` label.
+Shared semantic keys must exist in both languages. Language-specific
+inflection data can have different shapes. Do not make an English inflection shape mandatory for Romanian.
+
+Although Romanian is the default game language, the English catalog stays the
+authored reference for locale parity. A matching English form is never necessary for a Romanian inflection form.
 
 Use standard Romanian with `ă`, `â`, `î`, `ș`, and `ț`. Normalize Unicode to NFC
 and convert legacy cedilla forms to comma-below forms at the authoring boundary.
 
-Adapt idioms and satire into natural Romanian while preserving the phrase's
+Adapt idioms and satire into natural Romanian while keeping the phrase's
 role, target, strength, tense, and scoring meaning. A phrase that draws on real
-speech keeps its real meaning. A common predicate, modifier, or ending that is
-an original adaptation of a verifiably real quote preserves the source
-inspiration while remaining fictional in both languages. The English catalog
-must keep direct real phrases accurate and retain the private source mapping
+speech keeps its real meaning. An original adaptation of a verifiably real quote keeps its source
+inspiration and remains fictional in both languages. This applies to common
+predicates, modifiers, and endings. The English catalog
+must keep direct real phrases accurate and keep the private source mapping
 before any phrase reaches translation.
-Preserve stable phrase,
+
+Keep stable phrase,
 character, scene, weakness, and score-group IDs, restrictions, rarity, and
 balance values. Do not add or remove cards to avoid translation difficulties.
 The existing editorial exclusions apply to each translation.
@@ -276,29 +314,30 @@ the same playable phrase roles, clause branches, continuations, and finishing
 actions, with Romanian rendering and agreement.
 
 Author the grammatical gender, number, person, article, case, preposition, and
-inflection information needed by the shipped Romanian corpus. Cover verb and
-predicate agreement, compound subjects, coordinated objects and copular
-complements, shared and new subjects, adjective agreement, and personal-object
-constructions where the translated relation requires them. Never derive these
+inflection information needed by the shipped Romanian corpus. Cover verb and predicate agreement, compound subjects, coordinated objects and
+copular complements, shared and new subjects, and adjective agreement. Where the translated relation makes them necessary, cover personal-object constructions. Never derive these
 forms from English suffixes or a character's portrait. A valid construction
-must render a complete grammatical Romanian sentence and preserve its semantic
+must render a complete grammatical Romanian sentence and keep its semantic
 clause decomposition for scoring.
+
 Each Romanian verb and predicate card supplies the plural and polite
-second-person forms it needs, even when the English card uses one form for
-several persons or numbers. Locale-specific inflection keys are valid only
+second-person forms it needs. This also applies when the English card uses one
+form for several persons or numbers. Locale-specific inflection keys are valid only
 when their relation card exists, and content validation rejects missing,
 duplicate, or unexpected forms. Romanian object relations specify whether the
-following noun is a direct object, a prepositional object, or a complement;
-personal direct objects receive the required marking and clitic. These rules
+following noun is a direct object, a prepositional object, or a complement.
+Personal direct objects receive the required marking and clitic.
+
+These rules
 apply to every playable tense and noun pairing.
 
 Use the selected adapter for drafting, completion, AI search, sentence display,
 and speech. The same game locale, content revision, seed, and command sequence must
 reproduce the same state and scores. Matched English and Romanian semantic
-clause fixtures must receive equal scores and weakness/combo effects. Do not
-require identical AI command sequences across languages when legal rendering
-or available completions differ. Each AI difficulty and the ladder must finish
+clause fixtures must receive equal scores and weakness/combo effects. When legal rendering or available completions differ, do not make identical AI
+command sequences mandatory across languages. Each AI difficulty and the ladder must finish
 Romanian matches without invalid-command loops.
+
 The Romanian grammar binding also owns every permitted rendered form for each
 phrase, including agreement, contractions, personal-object marking, and
 clitics. Standalone match-log validation consumes that set without duplicating
@@ -315,17 +354,19 @@ Version the replay, match-log, and history formats that need a locale field.
 Record the match game locale and the content/grammar identity needed for exact
 reproduction. Pin each new schema number and source fixture in
 Milestones 014 and 019 before implementing its codec. English replay and
-match-log documents resolve to English. Existing history entries retain their original public text.
+match-log documents resolve to English. Existing history entries keep their original public text.
 
 The shipped design records `gameLocale` in the replay setup and raises the
-replay and match-log document version from `1` to `2`; Milestone 014 owns both
+replay and match-log document version from `1` to `2`. Milestone 014 owns both
 statements. The match-log document version is the replay version, and the
 history entry keeps its own version `1` because the embedded documents already
 carry the locale. A version `1` replay or match log fails as
 `unsupported-version`, and an entry whose pair uses version `1` is ignored
-without rewriting the stored bytes. Replaying checks the recorded identifier
-against the game-locale bundle the caller supplies and fails as `invalid-replay`
-on a mismatch, so a recorded match can never replay in another language. The
+without rewriting the stored bytes. Replaying checks the recorded identifier against the caller-supplied
+game-locale bundle.
+
+A mismatch fails as `invalid-replay`. A recorded match can
+never replay in another language. The
 `en` bundle resolves an English document and the `ro-RO` bundle a Romanian one.
 
 History controls and displayed character and scene names use the current
@@ -349,16 +390,18 @@ pronunciation resources. It replaces the larger high tier to reduce the local
 asset download from about 108.9 MiB to 60.6 MiB (recorded 2026-09-20).
 
 Map English George, David, and Mark skin assignments to Mihai. Map Emma and
-Zira assignments to Liana. This preserves authored presentation profiles;
-do not infer a voice from an image. Romanian robot skins also use these local
-neural voices. The installed Microsoft exception remains English-only. Do not
+Zira assignments to Liana. This keeps authored presentation profiles.
+Do not infer a voice from an image. Romanian robot skins also use these local
+neural voices.
+
+The installed Microsoft exception remains English-only. Do not
 send Romanian text to English voices or add a cloud or platform fallback.
 An unavailable Romanian voice completes presentation silently.
 
-Retain automatic skin selection and the existing speech enablement, volume,
+Keep automatic skin selection and the existing speech enablement, volume,
 rate, pitch, trusted-gesture, Pause, cancellation, and timeout contracts. Match
-the existing character pitch control through a measured Romanian implementation;
-do not ignore the value. Preserve exact public phrase and Comeback content.
+the existing character pitch control through a measured Romanian implementation.
+Do not ignore the value. Keep exact public phrase and Comeback content.
 Expose model-derived timing needed by Milestone 025, or another verified
 audio-based alignment method approved in that owning contract. Do not estimate
 score markers from character counts or reveal scores before spoken segments.
@@ -368,42 +411,51 @@ the production CSP. Ship weights, model configuration, Romanian pronunciation
 resources, runtime files, and notices from the application origin under the
 existing `/grand-transition/` base. No phrase leaves the device. Load only the
 selected Romanian voice when needed for Romanian game speech. Changing the
-interface language must not select or download a speech model. Changing the
+interface language must not select or download a speech model.
+
+Changing the
 game language alone must not download both voices. Speech remains on by default.
 
 Extend the existing speech build and validation commands to cover Romanian.
 Before importing assets, pin upstream revisions, exact file names, SHA-256
-hashes, sample rates, input/output tensors, sizes, pronunciation dependencies,
-and license notices. Each assembled Romanian model must remain below
+hashes, and sample rates. Also pin input/output tensors, sizes, pronunciation
+dependencies, and license notices. Each assembled Romanian model must remain below
 120 MiB so both medium-tier voices fit. Each shipped file must remain
 below 100 MiB to fit regular Git hosting. Split larger models into ordered
 static parts, at most 96 MiB each, and reassemble the exact model bytes before
-inference. Validate every part and the assembled model size and SHA-256 hash.
+inference.
+
+Validate every part and the assembled model size and SHA-256 hash.
 Revalidate the package manifest when the worker initializes so a new deployment
 cannot reuse an outdated voice inventory. Hash-pinned files may use the browser
-cache. Mihai retains its single model file. The English Piper and GPU packages keep
-their own budgets. Keep
+cache. Mihai keeps its single model file. The English Piper and GPU packages keep
+their own budgets.
+
+Keep
 the English Piper profiles and their behavior intact. Long input must be split
 at valid boundaries and delivered in full, without token-limit truncation.
 
 Mihai's repository is labeled MIT and its voice card lists CC0 training data.
-Liana is published under CC BY-NC 4.0. Verify the pinned files' terms and
-provenance before redistribution. Credit upstream owners, retain license
+Liana is published under CC BY-NC 4.0. Do checks of the pinned files' terms and
+provenance before redistribution. Credit upstream owners, keep license
 texts, and identify changes. Do not relabel third-party weights as project MIT
-code. Verify the runtime and pronunciation licenses separately, including
-GPL source obligations if Piper or eSpeak NG components are distributed.
+code.
+
+Do separate checks of the runtime and pronunciation licenses. If Piper or
+eSpeak NG components are distributed, include GPL source obligations.
 
 ## Phase 2 acceptance criteria
 
 The new verifier paths below are implementation targets, not existing evidence.
 
 - **AC-029-06:** The `Interface language` drop-down defaults to English and the
-  `Game language` drop-down defaults to Romanian. Both independently preserve
+  `Game language` drop-down defaults to Romanian. Both independently keep
   all four language combinations after selection and reload. Changing either
-  leaves the other unchanged. Adding `gameLocale` preserves the accepted
-  `interfaceLocale`, the base points multiplier, and the tutorial preference,
-  and a document stored before the field existed is rejected as
-  `unsupported-version`. Invalid values in either field, unknown versions, and
+  leaves the other unchanged. Adding `gameLocale` keeps the accepted `interfaceLocale`, the base points
+  multiplier, and the tutorial preference. A document stored before the field
+  existed is rejected as `unsupported-version`.
+
+  Invalid values in either field, unknown versions, and
   blocked or quota storage match this contract. Verifiers:
   `tests/unit/settings.test.ts` and
   `tests/browser/settings-persistence.browser.test.ts`.
@@ -417,7 +469,7 @@ The new verifier paths below are implementation targets, not existing evidence.
   singular/plural and person/gender boundaries, missing inflections, incomplete
   clauses, invalid roles, and rejected-command immutability. Verifier:
   `tests/unit/romanian-grammar.test.ts`.
-- **AC-029-09:** Matched semantic fixtures preserve scoring, weaknesses, combos,
+- **AC-029-09:** Matched semantic fixtures keep scoring, weaknesses, combos,
   and finishers. Fixed Romanian seeds reproduce state and complete each AI
   difficulty, hotseat, and the ladder. Repeating fixed game-locale fixtures
   with each interface language asserts identical grammar results, AI decisions,
@@ -433,7 +485,7 @@ The new verifier paths below are implementation targets, not existing evidence.
   `tests/unit/romanian-speech-assets.test.ts`.
 - **AC-029-12:** Each skin profile selects the required Romanian voice when
   game language is Romanian, with either interface language. A Romanian
-  interface with English game language retains English speech. Real
+  interface with English game language keeps English speech. Real
   inference covers short and long sentences, all diacritics, pitch and rate
   boundaries, PCM output, complete delivery, and score alignment. Verifiers:
   `tests/unit/skin-speech.test.ts` and `e2e/romanian-speech.spec.ts`.
@@ -457,14 +509,16 @@ The new verifier paths below are implementation targets, not existing evidence.
   added words, unintelligible output, and incorrect grammar remain defects.
   Verifiers: `tests/unit/romanian-localization.test.ts`,
   `tests/unit/romanian-grammar.test.ts`, `e2e/romanian-speech.spec.ts`, and the
-  source-review evidence. Listening is optional; automatic checks do not prove
+  source-review evidence.
+
+  Listening is optional. Automatic checks do not prove
   perceived naturalness or complete pronunciation quality.
 - **AC-029-16:** Measure cold download, cold initialization, warm synthesis,
   peak memory, and cancellation for both voices on the least-capable supported
   production environment. Record CPU, RAM, OS, browser/version, workload,
   repetitions, median, and worst result. No accepted fixture may exceed the
-  existing 60-second synthesis timeout. Verifier: retained production benchmark
-  report; unavailable device or browser measurements remain unverified.
+  existing 60-second synthesis timeout. Verifier: kept production benchmark
+  report. Unavailable device or browser measurements remain unverified.
 
 ## Ro_VITS: evaluated and rejected (recorded 2026-09-18)
 
@@ -476,13 +530,13 @@ Piper Liana medium remain the only Romanian voices.
   only, with no ONNX/WASM export or conversion path. Desktop Python inference
   alone does not establish browser suitability.
 - Each ~437 MB generator checkpoint is more than three times the 120 MiB
-  assembled-model budget; the shipped Piper models meet it (~60 MiB and
+  assembled-model budget. The shipped Piper models meet it (~60 MiB and
   ~60.6 MiB), with every shipped file below 100 MiB.
 - The `connect-src 'self'` production CSP forbids hosted inference, and
   runtime network calls are prohibited.
-- Licensing is unresolved: the Apache 2.0 card label does not clear the SWARA
-  CC BY-NC 4.0 data terms plus signed agreement, the unstated `bas`/`sgs`
-  speaker provenance, or the training-stack terms. Piper notices already ship
+- Licensing is unresolved. The Apache 2.0 card label does not clear the SWARA CC
+  BY-NC 4.0 data terms and signed agreement. It also does not clear the
+  unstated `bas`/`sgs` speaker provenance or the training-stack terms. Piper notices already ship
   in `public/tts/ro/NOTICE.txt`.
 - No partial or complete replacement is recommended and no subjective quality
   claim is made either way. Any future voice work needs a separately approved
@@ -491,11 +545,13 @@ Piper Liana medium remain the only Romanian voices.
 
 ## Evidence and stop conditions
 
-Use the shared evidence record format. Retain only public test text and audio.
+Use the shared evidence record format. Keep only public test text and audio.
 Build the production app and run the automated Romanian flows with each
 interface language selection. In Phase 2, enable speech with a trusted gesture
-and run the fixed public corpus with each voice and profile. Verify displayed
-text, inference output, score markers, and completion. Record pass, fail, or
+and run the fixed public corpus with each voice and profile. Do checks of displayed
+text, inference output, score markers, and completion.
+
+Record pass, fail, or
 blocked for every sample and each criterion above. Optional user listening can
 add observations about audible words and naturalness after phase completion.
 
@@ -507,10 +563,10 @@ completion. Do not treat automated transcription or a green aggregate gate as
 proof of native-language naturalness or physical audible output.
 
 Milestone 029 is complete: Ro_VITS is rejected above, and Piper Mihai medium
-and Piper Liana medium remain the only Romanian voices. The female voice moved
-from Liana high to Liana medium on 2026-09-20 at the same pinned revision,
-reducing the assembled model from about 108.9 MiB to 60.6 MiB while remaining
-within the 120 MiB assembled-model budget and 100 MiB shipped-file budget.
+and Piper Liana medium remain the only Romanian voices. The female voice moved from Liana high to Liana medium on 2026-09-20 at the
+same pinned revision. This reduced the assembled model from about 108.9 MiB to
+60.6 MiB. It remained within the 120 MiB assembled-model budget and 100 MiB
+shipped-file budget.
 Any further model replacement needs
 a separately approved implementation package and updated contracts. No phase
 authorizes publication, voice cloning, additional languages, cloud speech, or

@@ -16,8 +16,10 @@ Keep the arena visible from setup through match completion. When both
 constructions lock, apply the pure scoring command in the same interaction.
 Present those resolved public facts through Milestone 025. Draft input and the
 turn timer remain blocked until both characters finish narration and damage.
-Then automatically prepare the next normal or cliffhanger round, clear old
-receipts and sentence text, and focus the new round heading.
+Then automatically prepare the next normal or cliffhanger round.
+
+Clear old
+receipts and sentence text. Move focus to the new round heading.
 
 A terminal round finishes both deliveries before persistent Victory. A direct
 self-damage knockout uses its damage reaction before Victory and does not
@@ -36,7 +38,7 @@ record the terminal state before presentation finishes.
 - **AC-017-02:** Both deliveries finish before the next normal or cliffhanger
   round. Old receipts clear and focus moves to the round heading automatically.
 - **AC-017-03:** Terminal narration and damage finish before persistent Victory.
-  Return to main menu follows Milestone 019 and preserves setup selections.
+  Return to main menu obeys Milestone 019 and keeps setup selections.
 - **AC-017-04:** Production has no resolution-results element, rematch command,
   replay control, or development-only match tools.
 - **AC-017-05:** A fixed-seed production match presents each exchange and reaches
@@ -49,14 +51,13 @@ bundled detector. Record the score and all priority findings.
 
 After audit repairs, run `$impeccable critique` on the same stable states.
 Record heuristic scores, strengths, priorities, the persisted snapshot, and
-each issue disposition. The removed surface does not require a replacement
-composition.
+each issue disposition. A replacement composition for the removed surface is not necessary.
 
 ## Objective verifiers
 
-`tests/browser/seamless-match-flow.browser.test.ts` verifies AC-017-01 through
-AC-017-03. `tests/unit/match-lifecycle.test.ts` verifies the pure scoring,
+`tests/browser/seamless-match-flow.browser.test.ts` does checks of AC-017-01 through
+AC-017-03. `tests/unit/match-lifecycle.test.ts` does checks of the pure scoring,
 cliffhanger, terminal-state, and command contracts behind AC-017-02 through
-AC-017-04. `e2e/seamless-match-flow.spec.ts` verifies AC-017-01 through
+AC-017-04. `e2e/seamless-match-flow.spec.ts` does checks of AC-017-01 through
 AC-017-05 in the production build. The Impeccable evidence and `npm run ci`
 complete the milestone evidence.

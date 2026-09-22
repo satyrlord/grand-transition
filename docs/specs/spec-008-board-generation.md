@@ -53,8 +53,8 @@ draw uses the common round pool plus phrases restricted to that character. A
 available. Rarity data supplies the remaining draw weight without repeating a
 phrase identifier within one hand.
 
-If the hand-first draw leaves no valid board for its connector roll, repeat the
-complete hand-first deal with the next seed. Stop after 32 attempts and return
+If the hand-first draw leaves no valid board for its connector roll, repeat
+the complete deal with the next seed. Stop after 32 attempts and return
 the typed board failure. The same input seed reproduces the same accepted deal
 and next seed.
 
@@ -85,5 +85,5 @@ hands are dealt again at the next round.
 ## Objective verifiers
 
 `tests/unit/board-generation.test.ts` and
-`tests/unit/draft-actions.test.ts` verify AC-008-01 through AC-008-06.
-`tests/browser/screen-shell.browser.test.ts` verifies AC-008-07.
+`tests/unit/draft-actions.test.ts` do checks of AC-008-01 through AC-008-06.
+`tests/browser/screen-shell.browser.test.ts` does checks of AC-008-07.

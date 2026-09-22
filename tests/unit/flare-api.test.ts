@@ -56,7 +56,7 @@ test.each([400, 401, 403, 429, 500])('HTTP %s errors do not expose provider bodi
 test('uncertain network failure and invalid image responses are not retried', async () => {
   const fetcher = vi.fn().mockRejectedValue(new Error('synthetic-key included in upstream error'));
   await expect(sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher))
-    .rejects.toThrow('Billing may be uncertain');
+    .rejects.toThrow('The billing result is unknown');
   expect(fetcher).toHaveBeenCalledTimes(1);
   const invalid = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: [{ url: 'https://invalid.example/image' }] })));
   await expect(sendFlareRequest(buildFlareRequest(options), 'synthetic-key', invalid)).rejects.toThrow('no usable image payload');

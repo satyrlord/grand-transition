@@ -5,16 +5,16 @@ description: Run a caller-specified number of deterministic Grand Transition hea
 
 # Simulate matches
 
-## Require the input
+## Get the input
 
-Require `match_count` as a positive safe integer. Do not select a default match
-count. If the caller does not give `match_count`, stop and ask for it.
+`match_count` must be a positive safe integer. Do not select a default match
+count. If the caller does not give `match_count`, ask for that value before starting the workload.
 
 Accept an optional unsigned 32-bit `seed`. Use `20260823` only when the caller
 does not give a seed. Accept an optional output path only when the caller asks
 for a saved JavaScript Object Notation (JSON) report.
 
-## Preserve scope
+## Keep scope
 
 This workflow is read-only unless the caller requests a separate repair. Do not
 change rules, content, tests, thresholds, or time limits because of a simulation
@@ -30,7 +30,7 @@ npm run simulate -- --seed <seed> --matches <match_count>
 ```
 
 Add `--output <path>` only when the caller requests a saved report. For a long
-workload, give progress updates while the process remains active. Do not reduce
+workload, give progress reports while the process remains active. Do not reduce
 the match count after the run starts.
 
 ## Report evidence

@@ -6,6 +6,13 @@
 behavior
 **Production-file budget:** 8
 
+## Terms
+
+- AI: artificial intelligence.
+- ID: identifier.
+- IDs: identifiers.
+- ms: milliseconds.
+
 ## Deliver
 
 Implement valid-action enumeration, basic utility evaluation, seeded
@@ -98,7 +105,7 @@ Enumeration composes every available shared-card and active private-card
 selection. It includes unused redraw, reducer-accepted end-step commit, and an
 affordable Comeback after a complete construction. It includes
 `expire-turn` only after the presentation timer expires. Pass each composed
-command through the match reducer and retain every accepted command. Thus an
+command through the match reducer and keep every accepted command. Thus an
 available but grammar-invalid card remains an accepted grammar-risk candidate.
 Do not duplicate grammar legality in the AI layer.
 
@@ -106,8 +113,8 @@ The AI enumerates all legal commands. It chooses the highest utility. Equal
 utility uses one seeded draw over candidates sorted by command type and stable
 target ID. It can refresh only when both
 replacement-hand expected utilities exceed the current hand by at least 0.15.
-For redraw comparison, normalize over the union of current and possible
-replacement candidates so both utility values use the same scale.
+For redraw comparison, normalize over the union of current and possible replacement candidates.
+Use the same scale for both utility values.
 
 The current-hand value is the mean utility of its private cards. The seeded
 redraw result supplies exactly two replacement cards. Each replacement utility
@@ -152,9 +159,9 @@ phrase text.
   inside the inclusive range, and reduced delay is exactly 100.
 - **AC-021-06:** A 1,000-match simulation completes without illegal command,
   stalled phase, privacy leak, or timer overrun.
-- **AC-021-07:** Custom setup requires the person to select and lock both the
-  player-one and player-two characters, then starts player one against the
-  player-two Local Radio Caller. At each supported setup viewport, Single Player shows
+- **AC-021-07:** In custom setup, the person must select and lock both the player-one and
+player-two characters. It then starts player one against the player-two
+  Local Radio Caller. At each supported setup viewport, Single Player shows
   Difficulty and Scene as two selects in one horizontal row. Difficulty has
   exactly one option, “Local Radio Caller.” The complete Difficulty and Scene
   labels fit, the Match settings fieldset and actions do not change height, and
@@ -170,18 +177,18 @@ phrase text.
 
 ## Objective verifiers
 
-- `tests/unit/easy-ai.test.ts` verifies AC-021-01 through AC-021-05.
-- `tests/unit/replay-and-simulation.test.ts` verifies AC-021-04 and the generated
+- `tests/unit/easy-ai.test.ts` does checks of AC-021-01 through AC-021-05.
+- `tests/unit/replay-and-simulation.test.ts` does checks of AC-021-04 and the generated
   match invariants behind AC-021-06.
-- `npm run simulate -- --seed 21 --matches 1000` verifies AC-021-06 and
+- `npm run simulate -- --seed 21 --matches 1000` does checks of AC-021-06 and
   reports privacy, timing, and maximum-delay facts.
-- `tests/unit/match-screen-snapshot.test.ts` verifies the privacy projection in
+- `tests/unit/match-screen-snapshot.test.ts` does checks of the privacy projection in
   AC-021-06 and AC-021-07.
 - `tests/browser/screen-shell.browser.test.ts` and
-  `tests/browser/match-screen.browser.test.ts` verify the custom setup and
+  `tests/browser/match-screen.browser.test.ts` do checks of the custom setup and
   thinking-state parts of AC-021-07.
-- `e2e/easy-ai.spec.ts` verifies AC-021-07 in the production build.
-- `tests/browser/match-screen.browser.test.ts` and `e2e/easy-ai.spec.ts` verify
+- `e2e/easy-ai.spec.ts` does checks of AC-021-07 in the production build.
+- `tests/browser/match-screen.browser.test.ts` and `e2e/easy-ai.spec.ts` do checks of
   AC-021-08.
 - The Impeccable records and `npm run ci` complete milestone evidence.
 
@@ -192,7 +199,7 @@ phrase text.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
-## Verify and stop
+## Checks and stop conditions
 
 The Local Radio Caller AI chooses a valid action when one exists. It respects
 simulated timer bounds and repeats choices for a fixed state and seed.
@@ -205,7 +212,9 @@ search, other difficulties, personality tuning, or ladder progress.
 its draft is null. Its terminal resolution supplies grammar-mistake and damage
 facts. Rejected commands remain absent. Every difficulty excludes an immediate
 grammar-mistake self-knockout when another accepted command avoids immediate
-self-knockout. If all commands cause immediate self-knockout, retain ordinary
-deterministic ordering. Preserve nonterminal deliberate mistakes, seeds, and
-delays. `tests/unit/easy-ai.test.ts` and `tests/unit/advanced-ai.test.ts` verify
+self-knockout. If all commands cause immediate self-knockout, keep ordinary
+deterministic ordering.
+
+Keep nonterminal deliberate mistakes, seeds, and
+delays. `tests/unit/easy-ai.test.ts` and `tests/unit/advanced-ai.test.ts` do checks of
 seed 5, turn 8, Pride 3, terminal risk, and a reducer-verified safe commit.

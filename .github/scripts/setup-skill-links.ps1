@@ -14,11 +14,11 @@ if (-not $canonicalSkills.StartsWith(
     $repositoryRoot,
     [System.StringComparison]::OrdinalIgnoreCase
   )) {
-  throw 'The canonical skill directory is outside the repository.'
+  throw 'The primary skill directory is outside the repository.'
 }
 
 if (-not (Test-Path -LiteralPath $canonicalSkills -PathType Container)) {
-  throw 'The canonical skill directory does not exist.'
+  throw 'The primary skill directory does not exist.'
 }
 
 foreach ($discoveryRootName in '.agents', '.codex') {
@@ -39,7 +39,7 @@ foreach ($discoveryRootName in '.agents', '.codex') {
       throw "Unexpected existing skill path: $skillLink"
     }
 
-    Write-Output "Verified $skillLink"
+    Write-Output "The skill link target is correct: $skillLink"
     continue
   }
 

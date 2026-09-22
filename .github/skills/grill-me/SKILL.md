@@ -10,16 +10,16 @@ Remain read-only unless the user explicitly authorizes document edits.
 ## Prepare the decision tree
 
 Read `AGENTS.md`, approved specifications, the working-tree implementation, tests,
-and relevant primary sources.
+and related primary sources.
 Resolve every fact that repository evidence or an authoritative source can
 answer.
 Do not ask the user to rediscover facts.
 
 List only unresolved choices.
-Order choices from parent to child.
+Order dependent choices after the choices that control them.
 Put the choice that is hardest to reverse or has the most dependencies first.
-Check applicable game rules, balance, artificial intelligence (AI), grammar,
-content safety, and real-phrase accuracy. Check localization, privacy, browser
+Examine applicable game rules, balance, artificial intelligence (AI), grammar,
+content safety, and real-phrase accuracy. Examine localization, privacy, browser
 support,
 assets, performance, delivery, and verification effects.
 
@@ -27,16 +27,16 @@ assets, performance, delivery, and verification effects.
 
 For the active branch:
 
-1. State the active contract and evidence gap.
+1. Give the active contract and evidence gap.
 2. Give two or three materially distinct choices when alternatives exist.
 3. Explain the important effect of each choice.
 4. Recommend one choice with a clear reason and verifier.
 5. Ask exactly one decision question.
-6. Record the answer and its downstream effects before moving to a child branch.
+6. Record the answer and its effects before moving to a dependent choice.
 
 If an answer exposes a real dependency, add it to the tree. Do not add
-speculative branches. Reopen a settled branch only when new conflicting evidence
-appears, and cite that evidence.
+speculative branches. Reopen a settled branch only when new evidence conflicts with the decision.
+Cite that evidence.
 
 ## Record authorized decisions
 
