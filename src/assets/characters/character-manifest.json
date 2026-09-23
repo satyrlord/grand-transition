@@ -642,8 +642,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1895944,
-        "sha256": "65ab62576a2282c50e1eccc995eb189f3aca83660eae0fceac4c6e190c589dbd"
+        "bytes": 3275377,
+        "sha256": "6e6c94e27e0eac3e10b7ee3263f1c3c749ff6aa8612598adaad4c56ffcceebdb"
       },
       "focalPoint": {
         "x": 0.5,
@@ -662,9 +662,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3420,
-          "sha256": "d4865214c49e1bb03b83fbf6b2e337dc6d6d631117cac602fd1db7e1a558ef94"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 13898,
+          "sha256": "4339696cfe39e929f4af32aea1ddeacd08ab9f2a5faf5206df4fcc4ca3a723f0"
         },
         {
           "path": "variants/county-baron-128x128.webp",
@@ -672,17 +673,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4086,
-          "sha256": "a6e240251824a8140d3fb8af3662c49e5ccfc3f790f0069d978b23cc01b537ca"
+          "bytes": 4042,
+          "sha256": "e99cc4e18b7497c0cbc21d1233396c6dcf20980bcb8b69e4ab66292be423556c"
         },
         {
           "path": "variants/county-baron-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 7075,
-          "sha256": "14049b08ba21a2c80185c13e98223b753993ecb7566db45a73d9938d885b071d"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 36096,
+          "sha256": "55dc5ff7b4f99505d5c15499e7aa496b6a8b2e1a396cde5da2ffc0e39f9d34a0"
         },
         {
           "path": "variants/county-baron-256x256.webp",
@@ -690,17 +692,18 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 8826,
-          "sha256": "079b486da1719be6e037d4bdb38236456e162d26255a2811376306d0b266e12d"
+          "bytes": 8834,
+          "sha256": "73f6e1366eb9860587ef5dcac283e015a237a2d004cadd8a57eeb7e2ea6b433e"
         },
         {
           "path": "variants/county-baron-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 8566,
-          "sha256": "226650e866bb82a7479a8daaa04a2197e9e722988fa4d409733c348d59fc6a78"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 50450,
+          "sha256": "ff1926127cd84fbbe2ab7cf0e3847349620f755f8771531c9d0748ed7d5ca3ba"
         },
         {
           "path": "variants/county-baron-320x320.webp",
@@ -708,8 +711,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 11468,
-          "sha256": "e84bac44ffe96b2a599c77624c3e98f41fba8a91ce2cf0fbaf6101f640ffff9a"
+          "bytes": 11862,
+          "sha256": "4e6e651658898c6d7963d03a36f83c9081cfbfb93e76931e6e4c398354e2a699"
         },
         {
           "path": "variants/county-baron-640x640.avif",
@@ -717,8 +720,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 20615,
-          "sha256": "d8398ad26e2ffc929e7fafbf9cb14d65006d729adb5efa69b85270b80cbd7c31"
+          "bytes": 19901,
+          "sha256": "1fec4edb0ca3192ffd773f6d76212a7b23c540459f173f2cedb3b71892f680bf"
         },
         {
           "path": "variants/county-baron-640x640.webp",
@@ -726,8 +729,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 27078,
-          "sha256": "03c9ad6e03e2852b0a35fd1cc507b37cd7cb51d75516b71f60e85f2327f51b20"
+          "bytes": 28254,
+          "sha256": "62056f11def6576d389de89aa896a97c4dba08bf06e8c7cb23d0c5d8825c3dd2"
         },
         {
           "path": "variants/county-baron-960x960.avif",
@@ -735,8 +738,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 33015,
-          "sha256": "b4cc74281cd727918a32d79d09f59e20fae2062b94444e731fb03f050a69c612"
+          "bytes": 32595,
+          "sha256": "e2f0f5b2d766658d330962dfa4efc69ebf7cacaf00a117288b3289de6ce30a2e"
         },
         {
           "path": "variants/county-baron-960x960.webp",
@@ -744,8 +747,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 42844,
-          "sha256": "1eec8f0a5161fb78fe9287e2b464f64fcd8742f5d93b724f653faae35a484995"
+          "bytes": 46816,
+          "sha256": "70c60c838c5580ba5cea1afb9da283f80bb50029d1578499bc5db1753e2b9be1"
         }
       ]
     },
