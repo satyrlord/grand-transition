@@ -134,6 +134,7 @@ It gives no persistence failure for that entry.
 
 Add `npm run simulate -- --seed <uint32> --matches <positive-integer>`.
 The optional `--output <path>` writes normalized JSON.
+Milestone 022 adds the optional `--difficulty` option.
 Without it, the command writes a short summary to the standard output.
 Incorrect arguments stop the command with a nonzero exit code, and they name the incorrect option.
 

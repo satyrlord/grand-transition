@@ -22,7 +22,9 @@ Also run tests at each blocking viewport limit that the applicable specification
 
 ## Locators
 
-Interaction tests find an element through a stable test identifier (ID).
+Milestone 002 controls this rule.
+New or changed interaction tests find an element through a stable test identifier (ID).
+Role and label locators in tests that nobody changed stay until someone edits those tests.
 Do not use its shown text, its role name, or its Cascading Style Sheets (CSS) class as the locator.
 If a control has no `data-testid`, add one.
 Give the ID a stable kebab-case name that identifies its owner and its purpose, for example `lock-player-one`.

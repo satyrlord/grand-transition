@@ -18,6 +18,17 @@ This file and its linked approved milestone specifications are the full authorit
 Each milestone owns one narrow capability, and it has an objective stop condition.
 Load this index, the selected milestone, and the full transitive closure of its **Depends on** chain.
 A milestone uses each earlier contract in that closure, unless it replaces the contract directly and names the replacement.
+When a subsequent approved milestone changes a count, an option set, or a limit that an earlier milestone gives, the subsequent milestone controls it.
+The earlier specification must name the subsequent owner at the changed text.
+If a conflict has no such name, the subsequent approved milestone controls it until someone corrects the earlier text.
+
+Each specification uses one of these status values on its third line:
+
+- `Approved`: the contract applies, and the work is open.
+- `Approved, complete`: the contract applies, and each acceptance criterion has its evidence.
+- `Approved, evidence pending: <AC IDs>`: the contract applies, and the listed acceptance criteria do not have their evidence.
+
+Each status value starts with `Approved`, so each specification in this set is an approved specification.
 
 `docs/specs/` is the only authority for the application.
 General product information and contributor information can be in `README.md`, but no specification can use it as a source.
@@ -145,6 +156,9 @@ When they apply, include the browser, the browser version, the viewport, the inp
 Include the expected result, the result that occurred, and links to kept evidence.
 
 A person must be able to get the same automated evidence from a clean checkout.
+Evidence records and logs are machine-local and git-ignored, for example in `.impeccable/review/` and `tmp/`.
+A specification can cite them as the records of one machine.
+A clean checkout gets the same automated evidence again through the cited commands.
 Agent inspection records the examined source or artifact, the method, the result that the agent saw, and the limits.
 Optional feedback from the user is different from the evidence that is necessary to complete the milestone.
 Do not record private hand content, personal data, machine secrets, or hidden speech text.

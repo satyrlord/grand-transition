@@ -192,3 +192,10 @@ They extend fragments while safe phrases are available, and they keep the contin
 They do not send an incomplete sentence while safe drafting is available.
 Full matches with fixed seeds make sure that each player completes sentences and that no player carries an empty construction.
 `tests/unit/advanced-ai.test.ts` does checks of these choices through accepted reducer outcomes.
+
+**AC-022-09:** This milestone adds the optional `--difficulty <id>` option to the Milestone 014 command `npm run simulate`.
+The permitted IDs are `local-radio-caller`, `party-strategist`, and `palace-operator`.
+Without the option, the simulation uses `local-radio-caller`.
+A different value stops the command with a nonzero exit code, and the message names `--difficulty`.
+Each advanced policy uses the presentation delay limits of this milestone.
+`tests/unit/simulation-cli.test.ts` does checks of the rejection and of the two advanced policies.

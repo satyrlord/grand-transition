@@ -1,7 +1,7 @@
 # Milestone 029: Romanian Localization and Speech
 
-**Status:** Complete
-**Depends on:** 028\
+**Status:** Approved, complete  
+**Depends on:** 028  
 **Owns:** Full Romanian localization, Romanian grammar, local Romanian voices,
 and the Ro_VITS rejection
 **Production-file budget:** 8 per delivery package
@@ -125,7 +125,7 @@ download or load a Romanian model.
 Translate all the interface text that the game ships. Include controls,
 headings, instructions, tooltips, accessible names, notices, errors, score
 explanations, history labels, and the fictional-satire disclaimer. Phase 1
-also translates all 19 character archetype names, all six scene names, and
+also translates all 19 character archetype names, each scene name, and
 the weakness labels. These are interface display names, and stable
 identifiers are their keys. These names and labels use `interfaceLocale` in
 setup, play, history, and score explanations with each game-language
@@ -235,7 +235,7 @@ evidence of this time.
   it. These strings include
   controls, headings, instructions, tooltips, accessible names, notices,
   errors, history labels, score explanations, and the disclaimer. They also
-  include all 19 archetype display names, all six scene display names, and
+  include all 19 archetype display names, each scene display name, and
   each weakness label that the game ships. A missing Romanian message or
   display name has no English fallback. The document language
   is the interface locale.

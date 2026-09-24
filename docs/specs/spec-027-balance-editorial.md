@@ -1,6 +1,6 @@
 # Milestone 027: Balance and Editorial Rules
 
-**Status:** Approved. Revised content implementation verified. Editorial evidence pending
+**Status:** Approved, evidence pending: AC-027-05, AC-027-07, AC-027-08
 
 **Depends on:** 025
 **Owns:** Content tone, safety approval, repetition, and balance evidence  
