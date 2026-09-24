@@ -1,11 +1,14 @@
 # Review a milestone before release
 
-Read [the repository instructions](../../AGENTS.md), the approved specification
-set, and the complete working-tree diff. Use the
-[full-code-review workflow](../skills/full-code-review/SKILL.md) and the
+Read [the repository instructions](../../AGENTS.md), the approved specifications,
+and the full diff of the working tree.
+Use the [full-code-review workflow](../skills/full-code-review/SKILL.md) and the
 [release-reviewer](../agents/release-reviewer.agent.md).
 
-Keep the review read-only. Account for every changed path and affected contract.
-Report only reproducible findings.
-Give the severity, exact locations, direct evidence, effect, smallest repair, and an objective check.
-List skipped work, assumptions, findings with the least certainty, and the largest area without review evidence.
+Do not change files during the review.
+Give a status to each changed path and each changed contract.
+Give only findings that you can reproduce.
+For each finding, give the severity, the locations, the evidence, the effect, and the smallest repair.
+Also give a check that gives a measured result.
+In the report, give the work that you did not do and the facts that you did not examine.
+Also give the findings with the smallest quantity of evidence, and the largest area that has no review evidence.

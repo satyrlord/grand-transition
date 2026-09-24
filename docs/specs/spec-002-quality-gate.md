@@ -14,120 +14,99 @@
 
 ## Deliver
 
-Configure Oxlint with TypeScript 7 type-aware linting, markdownlint-cli2,
-Vitest, coverage, Vitest Browser Mode, Playwright, and the required package
-scripts. Use only the `markdownlint-cli2` command for Markdown checks. Add
-minimal smoke tests and a non-deploying pull-request workflow. `validate` and
-`ci` use the order below.
+Configure Oxlint with TypeScript 7 type-aware linting, markdownlint-cli2, Vitest, coverage, Vitest Browser Mode, Playwright, and the necessary package scripts.
+For Markdown checks, use only the `markdownlint-cli2` command.
+Add small smoke tests and a pull-request workflow that does not deploy.
+`validate` and `ci` use the sequence below.
 
-Expose `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`,
-`lint`, and `typecheck`. Expose `test`, `test:coverage`, `test:browser`,
-`test:e2e`, `markdown:lint`, `content:validate`, and `balance:validate`. Also
-expose `localization:validate`, `boundaries:check`, `validate`, and `ci`.
+Give the scripts `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`, and `typecheck`.
+Give the scripts `test`, `test:coverage`, `test:browser`, `test:e2e`, `markdown:lint`, `content:validate`, and `balance:validate`.
+Also give the scripts `localization:validate`, `boundaries:check`, `validate`, and `ci`.
 
-`assets:build` builds both scene and fixed-baseline character manifests and
-their deterministic AVIF and WebP variants. It also runs Milestone 024 audio
-generation. `assets:validate` validates both
-packages before it runs the shared provenance, alpha, and color checks.
-`validate` runs markdownlint-cli2, assets, content, localization, pure
-boundaries, typed lint, and types in that order. Asset validation checks the
-scaffold, raster provenance and alpha workflow, and the global-color-cast guard.
+`assets:build` builds the scene manifest, the fixed-baseline character manifest, and their deterministic AVIF and WebP variants.
+It also runs the audio generation of Milestone 024.
+`assets:validate` validates the two packages before it runs the shared provenance, alpha, and color checks.
+`validate` runs markdownlint-cli2, assets, content, localization, pure boundaries, typed lint, and types in that sequence.
+Asset validation examines the scaffold, the raster provenance and alpha workflow, and the global-color-cast guard.
 
-It also validates the audio manifest and actual encoded measurements.
-It validates the pinned neural speech identity, complete file inventory,
-hashes, and size bounds. The production build validates audio and neural speech
-assets before bundling them.
+It also validates the audio manifest and the measurements of the encoded files.
+It validates the pinned neural speech identity, the full file inventory, the hashes, and the size limits.
+The production build validates the audio assets and the neural speech assets before it bundles them.
 
-`quality:quick` runs `validate`, unit tests, browser tests, coverage, and
-end-to-end tests in that order. It excludes the slowest tests until their cumulative elapsed time reaches 20
-percent of the latest recorded full gate. These tests are the current-catalog
-500-match calibration, the content-balance matrix, and the nine-rung
-production ladder flow. They also include the isolated character content
-lifecycle with its two production builds. The calibration and content-balance matrix
-are excluded from Node, Browser Mode, and coverage runs.
+`quality:quick` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests in that sequence.
+It does not run the slowest tests until their cumulative elapsed time gets to 20 percent of the last recorded full gate.
+These tests are the current-catalog 500-match calibration, the content-balance matrix, and the nine-rung production ladder flow.
+They also include the isolated character content lifecycle with its two production builds.
+The Node runs, the Browser Mode runs, and the coverage runs do not include the calibration and the content-balance matrix.
 
-The ladder flow and the content lifecycle are excluded only from Playwright.
-All other checks remain the
-same as the full gate.
+Only Playwright does not include the ladder flow and the content lifecycle.
+All other checks stay the same as the full gate.
 
-`quality:full` runs every check in the same order, including the excluded
-calibration, content-balance matrix, ladder flow, and content lifecycle.
-`ci` aliases
-`quality:full`. Continuous integration uses the full gate. An agent uses
-`quality:quick` for routine validation and must not invoke `quality:full` or
-`ci` unless the user explicitly requests the full quality-gate skill. A quick
-pass is not full-gate or release evidence.
+`quality:full` runs all the checks in the same sequence.
+This includes the calibration, the content-balance matrix, the ladder flow, and the content lifecycle.
+`ci` is an alias of `quality:full`.
+Continuous integration uses the full gate.
+An agent uses `quality:quick` for the usual validation.
+It must not run `quality:full` or `ci` unless the user tells it directly to use the full quality-gate skill.
+A pass of `quality:quick` is not full-gate evidence and is not release evidence.
 
-The calibration, content-balance matrix, nine-rung ladder flow, and content
-lifecycle run only when the full gate is explicitly requested.
-`quality:quick` and every direct test invocation select quick behavior. This
-includes `npm run test`, `npm run test:browser`, `npm run test:coverage`, and
-`npm run test:e2e`. The slowest set cannot run by accident or because the mode
-variable is absent.
-The direct test scripts set quick mode in their phase runner even when full-mode
-environment variables are inherited. The full gate calls `balance:validate`
-and the internal
-`test:full`, `test:browser:full`, `test:coverage:full`, and `test:e2e:full`
-scripts after validation.
+The calibration, the content-balance matrix, the nine-rung ladder flow, and the content lifecycle run only in the full gate.
+The full gate runs only when the user tells the agent directly to run it.
+`quality:quick` and each test command that you run directly select the `quick` mode.
+This includes `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
+The slowest set cannot run by accident, or because the mode variable is missing.
+The test scripts that you run directly set the `quick` mode in their phase runner, also when they get full-mode environment variables from their parent.
+After the validation, the full gate calls `balance:validate` and the internal `test:full`, `test:browser:full`, `test:coverage:full`, and `test:e2e:full` scripts.
 
-`balance:validate` is not an agent-runnable standalone check. The validator
-fails before loading the catalog unless both full-gate environment markers are
-present. Its 500-match matrix and 64 structural samples are fixed in the
-validator. No workload-size environment override is supported. Only
-`run-quality-gate.mjs full` supplies the runner marker.
-End-to-end tests build the production output before preview.
+`balance:validate` is not a check that an agent can run alone.
+The validator fails before it loads the catalog, unless the two full-gate environment markers are present.
+The validator contains its 500-match matrix and its 64 structural samples as fixed values.
+No environment setting can change the workload.
+Only `run-quality-gate.mjs full` gives the runner marker.
+End-to-end tests build the production output before the preview.
 
-Pure tests use Vitest in Node and `*.test.ts`. Components use Vitest Browser
-Mode with Playwright, not only a simulated DOM. Full flows use Playwright and
-role, label, or visible-text locators. Generated failures print the fast-check
-seed and replay path. Pull requests validate but do not deploy.
+Pure tests use Vitest in Node and `*.test.ts`.
+Components use Vitest Browser Mode with Playwright, not only a simulated DOM.
+Full flows use Playwright and role, label, or visible-text locators.
+Generated failures print the fast-check seed and the replay path.
+Pull requests validate, but they do not deploy.
 
-Collect production TypeScript coverage from the real-browser component suite.
-Enforce global minimums of 70 percent for statements, branches, functions, and
-lines.
+Collect the production TypeScript coverage from the component suite in a real browser.
+Make sure that the global minimum values are 70 percent for statements, branches, functions, and lines.
 
 ## Failure and coverage contract
 
-- Coverage includes every production TypeScript file under `src/` and excludes
-  only declaration files. A later milestone can add a stricter named threshold,
-  but cannot reduce these global values.
-- The typed-lint rejection fixture contains one unhandled promise and must fail
-  with the `no-floating-promises` rule.
-- The scaffold rejection fixture contains
-  `src/assets/invalid.txt` and must fail with a message that names the
-  disallowed `.txt` extension.
-- A fast-check rejection record must contain both its numeric seed and replay
-  path.
+- Coverage includes each production TypeScript file in `src/`, and it does not include only the declaration files.
+  A subsequent milestone can add a stricter named limit, but it cannot decrease these global values.
+- The typed-lint rejection fixture contains one unhandled promise, and it must fail with the `no-floating-promises` rule.
+- The scaffold rejection fixture contains `src/assets/invalid.txt`.
+  It must fail with a message that names the `.txt` extension that is not permitted.
+- A fast-check rejection record must contain its numeric seed and its replay path.
 
 ## Acceptance criteria
 
-- **AC-002-01:** Every required script exists and the `validate`, quick, and
-  full quality-gate phase orders match this specification. Do the check in
-  `tests/unit/quality-gate.test.ts`.
-- **AC-002-02:** Unit tests run in Node, component tests run in Chromium through
-  Vitest Browser Mode, and end-to-end tests run against a built preview.
-- **AC-002-03:** All four global coverage values are at least 70 percent and
-  production TypeScript is not removed from the coverage set.
-- **AC-002-04:** The typed-lint, invalid-asset, and fast-check fixtures fail with
-  the exact evidence described above.
-- **AC-002-05:** The pull-request workflow runs the quality gate with read-only
-  repository access and contains no deployment job.
-- **AC-002-06:** Markdown checks use `markdownlint-cli2`. The quality gate has
-  no formatter script or formatter configuration. Do the check in
-  `tests/unit/quality-gate.test.ts` and with a repository-wide search.
-- **AC-002-07:** Asset validation rejects a broad yellow color cast over muted or neutral pixels.
-  It accepts local warm materials when a neutral or cool anchor remains.
-  An image without a measurable neutral or cool anchor fails automated color
-  validation. Repair or regenerate it under the color contract and rerun the
-  validator. A review note cannot waive this failure.
-  Do the check in `tests/unit/asset-color-guard.test.ts` and through
-  `npm run assets:validate`.
+- **AC-002-01:** Each necessary script is in `package.json`.
+  The phase sequences of `validate`, of `quality:quick`, and of `quality:full` agree with this specification.
+  Do the check in `tests/unit/quality-gate.test.ts`.
+- **AC-002-02:** Unit tests run in Node, component tests run in Chromium through Vitest Browser Mode, and end-to-end tests run against a built preview.
+- **AC-002-03:** All four global coverage values are 70 percent or more, and production TypeScript is not removed from the coverage set.
+- **AC-002-04:** The typed-lint, invalid-asset, and fast-check fixtures fail with the evidence above.
+- **AC-002-05:** The pull-request workflow runs the quality gate with read-only repository access, and it contains no deployment job.
+- **AC-002-06:** Markdown checks use `markdownlint-cli2`.
+  The quality gate has no formatter script and no formatter configuration.
+  Do the check in `tests/unit/quality-gate.test.ts` and with a search of the full repository.
+- **AC-002-07:** Asset validation does not accept a broad yellow color cast over muted or neutral pixels.
+  It accepts local warm materials when a neutral or cool anchor stays.
+  An image without a neutral or cool anchor that the tool can measure fails the automated color validation.
+  Repair it or generate it again in the color contract, and run the validator again.
+  A review note cannot cancel this failure.
+  Do the check in `tests/unit/asset-color-guard.test.ts` and through `npm run assets:validate`.
 
 ## Checks and stop conditions
 
-Every required script exists. `npm run ci` passes from a clean checkout
-and fails when a smoke fixture is intentionally invalid. Stop before product
-interfaces, rules, or Pages deployment.
+Each necessary script is in `package.json`.
+`npm run ci` passes from a clean checkout, and it fails when a smoke fixture is incorrect on purpose.
+Stop before product interfaces, rules, or Pages deployment.
 
 ## References
 
@@ -137,35 +116,33 @@ interfaces, rules, or Pages deployment.
 
 ## Review repair regression
 
-**AC-002-08:** The Node unit suite uses at most two file workers. Raster fixture setup must
-settle before teardown removes output. This changes no test timeout,
-assertion, coverage threshold, or inventory. When a role can occur more than once, end-to-end fixtures select one explicit
-card. Before viewport geometry measurements, they move the pointer to a
-neutral point.
-Playwright uses two local workers and one CI worker so concurrent raster
-decoding and screenshots do not starve the complete ladder flow.
+**AC-002-08:** The Node unit suite uses two file workers or fewer.
+The raster fixture setup must complete before the teardown removes the output.
+This changes no test timeout, assertion, coverage limit, or inventory.
+When a role can occur more than one time, end-to-end fixtures select one card by name.
+Before viewport geometry measurements, they move the pointer to a neutral point.
+Playwright uses two local workers and one CI worker.
+Thus, concurrent raster decoding and screenshots do not stop the full ladder flow.
 
-Each large
-viewport case has its own test budget. Transient reaction checks use a paused
-browser clock and advance it explicitly. They do not depend on host speed.
-Automated match drivers read lifecycle state and screen indicators together.
-They handle completed results before requesting another draft decision.
+Each large viewport case has its own test budget.
+Checks of temporary reactions use a paused browser clock, and they advance it directly.
+The speed of the host does not change their results.
+Automated match drivers read the lifecycle state and the screen indicators together.
+They process the completed results before they request a different draft decision.
 
-The foundation scene browser test waits for image decoding before checking
-the selected source and decoded dimensions. Keep the default test timeout.
+The browser test for the foundation scenes waits for image decoding before it examines the selected source and the decoded dimensions.
+Keep the default test timeout.
 
-Do checks of complete setup/cleanup through the default `npm test` command and
-`tests/unit/validate-character-assets.test.ts`. The reduced-motion and long-
-sentence E2E cases keep all assertions and pass with retries disabled.
+Do checks of the full setup and cleanup through the default `npm test` command and `tests/unit/validate-character-assets.test.ts`.
+The E2E cases for reduced motion and long sentences keep all their assertions, and they pass with retries disabled.
 
-**AC-002-09:** `quality:quick` excludes only the documented slowest cumulative
-20-percent set. `quality:full` and `ci` include that set. The quality-gate
-runner exports the selected mode to all child phases. Do checks of the scripts and
-runner in `tests/unit/quality-gate.test.ts`. The calibration, ladder, and
-content-lifecycle tests
-select their full-only behavior from that mode.
+**AC-002-09:** `quality:quick` does not include only the documented slowest set, which is 20 percent of the cumulative test time.
+`quality:full` and `ci` include that set.
+The quality-gate runner exports the selected mode to all the child phases.
+Do checks of the scripts and the runner in `tests/unit/quality-gate.test.ts`.
+The calibration, ladder, and content-lifecycle tests select their full-only behavior from that mode.
 
-**AC-002-10:** The content-balance validator is included only in the full gate.
-Direct execution fails before content loading, and its workload cannot be
-reduced through environment variables. Do checks of the runner wiring and direct
-invocation rejection in `tests/unit/quality-gate.test.ts`.
+**AC-002-10:** Only the full gate includes the content-balance validator.
+When a person runs it directly, it fails before it loads the content.
+Environment variables cannot decrease its workload.
+In `tests/unit/quality-gate.test.ts`, do checks of the runner connections, and make sure that a run that a person starts directly fails.

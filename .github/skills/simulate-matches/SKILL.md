@@ -1,44 +1,52 @@
 ---
 name: simulate-matches
-description: Run a caller-specified number of deterministic Grand Transition headless matches. Use for simulation workloads, balance samples, stress runs, or requests to simulate an exact number of matches.
+description: Run a number of deterministic Grand Transition headless matches that the caller gives. Use for simulation workloads, balance samples, load tests, or an instruction to simulate a given number of matches.
 ---
 
 # Simulate matches
 
-## Get the input
+## Get the inputs
 
-`match_count` must be a positive safe integer. Do not select a default match
-count. If the caller does not give `match_count`, ask for that value before starting the workload.
+`match_count` must be a positive safe integer.
+Do not select a default match count.
+If the caller does not give `match_count`, get that value from the caller before you start the workload.
 
-Accept an optional unsigned 32-bit `seed`. Use `20260823` only when the caller
-does not give a seed. Accept an optional output path only when the caller asks
-for a saved JavaScript Object Notation (JSON) report.
+These inputs are optional:
 
-## Keep scope
+- `seed`: an unsigned 32-bit integer. When the caller does not give a seed, use `20260823`.
+- `difficulty`: an artificial intelligence (AI) difficulty.
+  The values are `local-radio-caller`, `party-strategist`, and `palace-operator`.
+  Use it only when the caller gives it.
+- Output path: use it only when the caller tells you to save a JavaScript Object Notation (JSON) report.
 
-This workflow is read-only unless the caller requests a separate repair. Do not
-change rules, content, tests, thresholds, or time limits because of a simulation
-result. Do not add the requested workload to normal continuous integration.
+## Keep the scope
+
+Do not change files in this workflow.
+The caller can give a different instruction for a repair.
+Do not change rules, content, tests, limits, or time limits because of a simulation result.
+Do not add the workload to the usual continuous integration (CI) checks.
+If the caller tells you not to run the workload, give the command that you did not run in the report.
 
 ## Run the workload
 
-Read `docs/specs/spec-014-replay-and-simulation.md` and the current `simulate`
-script in `package.json`. Run this command from the repository root:
+Read `docs/specs/spec-014-replay-and-simulation.md` and the `simulate` script in `package.json`.
+Run this command from the repository root:
 
 ```text
 npm run simulate -- --seed <seed> --matches <match_count>
 ```
 
-Add `--output <path>` only when the caller requests a saved report. For a long
-workload, give progress reports while the process remains active. Do not reduce
-the match count after the run starts.
+Add `--difficulty <difficulty>` only when the caller gives a difficulty.
+Add `--output <path>` only when the caller tells you to save a report.
+During a long workload, give status reports while the process continues.
+Do not decrease the match count after the run starts.
 
-## Report evidence
+## Give the evidence
 
-Report the requested match count, seed, completed match count, total rounds,
-winner totals, elapsed time, and output path when present. If a match fails,
-report the exact failing seed and replay path. Do not report a partial workload
-as complete.
+Give the requested match count, the seed, the number of completed matches, and the total number of rounds.
+Also give the winner totals, the elapsed time, and the output path when there is one.
+If a match fails, stop.
+Give the seed and the replay path of the failed match.
+When some matches did not run, the workload is not completed. Give that status in the report.
 
-The workflow succeeds when all requested matches finish and you report the
-evidence. If one match fails, stop and report its exact seed and replay path.
+The workflow is completed when all the requested matches stop and the report gives the evidence.

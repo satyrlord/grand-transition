@@ -12,12 +12,12 @@
 
 ## Deliver
 
-Set the Vite and Playwright base Uniform Resource Locator (URL) to
-`/grand-transition/`. Inject the exact production-only Content Security Policy
-(CSP) defined below. Add a production preview smoke test for
-the entry page, assets, refresh behavior, and forbidden remote connections.
+Set the Vite and Playwright base Uniform Resource Locator (URL) to `/grand-transition/`.
+Put the production-only Content Security Policy (CSP) below into the HTML, without changes.
+Add a production preview smoke test for the entry page, the assets, and the refresh behavior.
+The test must also examine the remote connections that the policy does not let the page make.
 
-Production injects this policy:
+Production puts this policy into the HTML:
 
 ```text
 default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self';
@@ -26,61 +26,57 @@ img-src 'self' data: blob:; media-src 'self'; font-src 'self';
 connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'
 ```
 
-Development omits it for Vite Hot Module Replacement (HMR). Production permits
-no inline script, `unsafe-eval`, imported style text, unsafe Hypertext Markup
-Language (HTML), remote font, image, or audio.
-The local neural speech policy permits same-origin static asset
-fetches for audio, model weights, voice embeddings, vocabulary, and WASM. These
-requests omit credentials and reject redirects. No phrase leaves the device.
+Development does not use it, because of Vite Hot Module Replacement (HMR).
+In production, these items are not permitted: inline script, `unsafe-eval`, imported style text, Hypertext Markup Language (HTML) that is not safe, and a remote font, image, or audio.
+The local neural speech policy lets the game fetch static assets from the same origin for audio, model weights, voice embeddings, vocabulary, and WASM.
+These requests do not send credentials, and they do not accept redirects.
+No phrase goes out of the device.
 
-Local module workers and WASM compilation are permitted. Generic JavaScript
-`unsafe-eval` remains forbidden. No XMLHttpRequest, WebSocket, EventSource,
-analytics, cloud speech, or arbitrary runtime API request is permitted.
-The owner-authorized robot exception uses only the exact installed Microsoft
-David, Mark, or Zira voice with `localService=true`. No remote platform voice is
-selected.
+Local module workers and WASM compilation are permitted.
+Generic JavaScript `unsafe-eval` stays not permitted.
+No XMLHttpRequest, WebSocket, EventSource, analytics, cloud speech, or other runtime API request is permitted.
+The robot exception that the owner approved uses only the installed Microsoft David, Mark, or Zira voice with `localService=true`.
+The game does not select a remote platform voice.
 
 Human skins continue to use the local neural worker.
 
-The entry module disables Zod's optional runtime code generation before it
-imports application schemas. A caught capability probe still violates the policy in Firefox.
-The production audio test checks that navigation and playback produce no such
-console error. This configuration does not change schema validation results.
-Chunk grouping must keep Zod in the vendor chunk, separate from application
-schema initialization.
+Before the entry module imports the application schemas, it disables the optional runtime code generation of Zod.
+In Firefox, a capability probe that the code catches continues to break the policy.
+The production audio test makes sure that navigation and playback cause no such console error.
+This configuration does not change the results of schema validation.
+Chunk grouping must keep Zod in the vendor chunk, isolated from the initialization of the application schemas.
 
-The vendor group has higher priority than application groups. Their recursive
-dependency capture cannot move Zod into a chunk that constructs schemas before
-the entry module configures it. The production navigation and reload test also fails if any
-`securitypolicyviolation` event occurs.
+The vendor group comes before the application groups.
+Their recursive dependency capture cannot move Zod into a chunk that makes schemas before the entry module configures Zod.
+The production navigation and reload test also fails if a `securitypolicyviolation` event occurs.
 
-Use one `index.html` and in-memory screen state. Do not depend on server route
-rewrites. The build generates `dist/`. Do not commit it.
+Use one `index.html` and screen state in memory.
+Do not use route rewrites on the server.
+The build makes `dist/`. Do not commit it.
 
 ## Acceptance criteria
 
-- **AC-004-01:** Chromium opens
-  `http://127.0.0.1:4173/grand-transition/`, receives status 200, and loads
-  only local script, style, and font assets. Reloading the same URL keeps the
-  title visible.
-- **AC-004-02:** Production contains one CSP meta element whose normalized
-  content exactly matches this specification. Development at port 5174 contains
-  no CSP meta element.
-- **AC-004-03:** A fetch probe to `https://network.invalid/csp-probe` is
-  rejected before a network route receives it.
-- **AC-004-04:** Production navigation and reload have no failed request,
-  external request, console error, or uncaught page error.
-- **AC-004-05:** `git ls-files dist` returns no path. A production source scan
-  finds only the manifested same-origin audio and neural asset fetches, with no
-  XMLHttpRequest, WebSocket, or EventSource. It also
-  finds no remote font, analytics, unsafe HTML sink, or inline script.
+- **AC-004-01:** Chromium opens `http://127.0.0.1:4173/grand-transition/` and gets status 200.
+  It loads only local script, style, and font assets.
+  When Chromium loads the same URL again, the title stays visible.
+- **AC-004-02:** Production contains one CSP meta element.
+  Its normalized content agrees with this specification without a difference.
+  Development at port 5174 contains no CSP meta element.
+- **AC-004-03:** The browser does not accept a fetch probe to `https://network.invalid/csp-probe` before a network route gets it.
+- **AC-004-04:** Production navigation and reload have no failed request, external request, console error, or uncaught page error.
+- **AC-004-05:** `git ls-files dist` gives no path.
+  A production source scan finds only the audio fetches and neural asset fetches in the manifests, from the same origin.
+  It finds no XMLHttpRequest, WebSocket, or EventSource.
+  It also finds no remote font, analytics, HTML sink that is not safe, or inline script.
 
 ## Checks and stop conditions
 
-The built shell loads from the subpath. Production has the CSP. Development
-does not have the CSP. The browser test detects a broken base path or external
-request.
-`npm run ci` passes. Stop before deployment or game behavior.
+The built shell loads from the subpath.
+Production has the CSP.
+Development does not have the CSP.
+The browser test finds a broken base path or an external request.
+`npm run ci` passes.
+Stop before deployment or game behavior.
 
 ## Reference
 

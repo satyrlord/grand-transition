@@ -1,7 +1,7 @@
 # Grand Transition specialist agents
 
-These agents do independent, read-only reviews. The root coordinator owns
-the plan, implementation authority, integration, and final decision.
+These agents review work independently, and they do not change files.
+The root coordinator controls the plan, the approval for implementation, the integration, and the last decision.
 The table uses these abbreviations:
 
 - AI: artificial intelligence.
@@ -15,7 +15,7 @@ The table uses these abbreviations:
 | [`content-reviewer`](content-reviewer.agent.md) | Phrase data, localization, satire safety, provenance, and asset metadata. |
 | [`release-reviewer`](release-reviewer.agent.md) | Quality gate, production artifact, CSP, Pages subpath, performance, and browser evidence. |
 
-Every finding must include a location, broken contract, direct evidence,
-effect, smallest repair, and an objective check.
-A review agent has read-only tools.
-Give authorized repairs to the coordinator or an executor with the necessary tools.
+Each finding must include a location, the contract that the defect breaks, the evidence, and the effect.
+It must also include the smallest repair and a check that gives a measured result.
+A review agent has only tools that read files.
+Give approved repairs to the coordinator, or to an executor that has the necessary tools.

@@ -1,51 +1,59 @@
 # Examine and review a candidate
 
+Read this module before you examine a candidate or give approval for it.
+
 ## Examine the saved image
 
-Do a check of decoded pixel dimensions before resizing.
-Examine the full candidate and source-scale crops with the image viewer.
-Compare visible content with every requirement in the private brief.
-Run the color guard and record specific observations.
-A correct pixel count and the generator's self-description do not establish content correctness.
-Examine an existing image without generation, using its required target dimensions:
+Do a check of the decoded pixel dimensions before you resize the image.
+Examine the full candidate and crops at source scale with the image viewer.
+Compare the content that you can see with each requirement in the private brief.
+Run the color guard, and record the result that you saw for each item.
+A correct pixel count does not show that the content is correct.
+The description that the generator gives of its output also does not show that the content is correct.
+To examine an image on the disk without generation, use its necessary target dimensions:
 
 ```text
 node .github/skills/generate-scene-openai/scripts/scene-image.mjs inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
 node tools/validate-asset-color.mjs validate tmp/scene-generation/run
 ```
 
-For transparent output, add `--background transparent` and read [native alpha preparation](native-alpha.md).
-Use that procedure before final approval when the raw image contains eligible alpha-1 residue.
-Keep inspection-only crops and rejected candidates outside the directory used for color validation.
-Repeat color validation on the complete staged asset tree before integration.
+For transparent output, add `--background transparent`, and read [native alpha preparation](native-alpha.md).
+When the raw image contains alpha-1 residue that the procedure can remove, use that procedure before the last approval.
+Keep crops for inspection and rejected candidates out of the directory for color validation.
+Before integration, do the color validation again on the full staged asset tree.
 
-For internal outputs, compare actual dimensions with the request and the intended use.
-A preview can remain below its requested size if reported accurately. An
-undersized master cannot pass preparation.
+For internal outputs, compare the measured dimensions with the request and with the use that the contract gives.
+A preview can stay smaller than its requested size if the report gives the accurate size.
+An undersized master cannot pass preparation.
 
-## Review visible content
+## Review the content that you can see
 
-Use this review for either provider route.
-Open the image and examine source-scale crops when the viewer reduces it.
-Record pass or fail with concrete observations for all seven checks:
+Use this review for the two provider routes.
+Open the image.
+When the viewer makes the image smaller, examine crops at source scale.
+For all seven checks, record a pass or a fail with the results that you saw:
 
-- `sceneIdentity`: Correct scene identity and objects, or correct character identity, features, clothing, and requested edit.
-- `style`: The latest approved art direction, materials, proportions, and linework.
-- `composition`: Camera, perspective, scale, focal positions, and crop allowance.
-- `layering`: Scene boundaries and occlusion, or complete isolated character silhouette with usable native alpha.
-- `interfaceClearance`: Usable scene interface regions, or safe character margins and complete extremities at runtime size.
-- `artifacts`: No unintended text, malformed anatomy, duplicate props, blur, seams, or matte corruption.
-- `color`: Passing color validation and visible neutral anchors.
+- `sceneIdentity`: The scene identity and objects are correct.
+  For a character, the identity, features, clothing, and requested edit are correct.
+- `style`: The art direction that the user approved last, and the materials, proportions, and linework.
+- `composition`: The camera, perspective, scale, focal positions, and crop space.
+- `layering`: The scene boundaries and occlusion.
+  For a character, the full isolated silhouette with native alpha that the game can use.
+- `interfaceClearance`: Scene interface regions that the game can use.
+  For a character, safe margins and full extremities at runtime size.
+- `artifacts`: No text that the brief did not include, and no incorrect anatomy.
+  Also no prop two times, no blur, no seams, and no matte damage.
+- `color`: The color validation passes, and you can see neutral anchors.
 
 Write a private JavaScript Object Notation (JSON) record with `sha256`, `reviewer`, `checks`, and `issues`.
-Copy the hash from the inspected file.
-Each named check uses `{ "pass": true, "evidence": "Specific observed result." }` only after inspection.
-Put unresolved defects in the `issues` array.
+Copy the hash from the file that you examined.
+After the inspection, give each named check the value `{ "pass": true, "evidence": "Specific observed result." }`.
+Put the open defects in the `issues` array.
 
-A passing review has no unresolved issues.
-Scene master preparation rejects missing checks, failures, and stale hashes.
+A review that passes has no open issues.
+Scene master preparation does not accept missing checks, failures, or hashes that do not agree with the file.
 Apply the same review record to character integration.
-For inapplicable scene details, record concrete character evidence under the stable check name.
+When a scene item does not apply to a character, record the character evidence with the stable check name.
 
-Do not describe an agent's review as product-owner approval.
-If viewing or a required check is unavailable, leave the candidate unapproved.
+Do not identify a review by an agent as approval by the product owner.
+If you cannot see the image, or if a necessary check is not available, do not give approval for the candidate.

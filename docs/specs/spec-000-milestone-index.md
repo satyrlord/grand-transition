@@ -14,175 +14,152 @@
 
 ## Purpose
 
-This file and its linked approved milestone specifications are the complete
-product and implementation authority. Each milestone owns one narrow capability
-and has an objective stop condition. Load this index, the selected milestone,
-and the complete transitive closure of its **Depends on** chain. A milestone
-inherits every earlier contract in that closure unless it explicitly replaces
-the contract and names the replacement.
+This file and its linked approved milestone specifications are the full authority for the product and its implementation.
+Each milestone owns one narrow capability, and it has an objective stop condition.
+Load this index, the selected milestone, and the full transitive closure of its **Depends on** chain.
+A milestone uses each earlier contract in that closure, unless it replaces the contract directly and names the replacement.
 
-`docs/specs/` is the only source of truth for the application. General product
-and contributor information can appear in `README.md`, but no specification can
-depend on it. A statement outside `docs/specs/` does not override, refine, or
-complete an approved specification.
+`docs/specs/` is the only authority for the application.
+General product information and contributor information can be in `README.md`, but no specification can use it as a source.
+A statement in a file that is not in `docs/specs/` does not replace, change, or complete an approved specification.
 
 ## Product-wide contracts
 
-- Build an original browser-based competitive sentence-dueling game. Its match
-  mechanics use the rules of _Oh...Sir! The Hollywood Roast_. They include one common
-  phrase board, two private hand cards, and tactical phrase removal. They also
-  include grammar, clause scoring, weaknesses, noun combos, and finishers.
+- Build a new competitive sentence-duel game for the browser.
+  Its match mechanics use the rules of _Oh...Sir! The Hollywood Roast_.
+  They include one common phrase board, two private hand cards, and tactical phrase removal.
+  They also include grammar, clause scoring, weaknesses, noun combos, and finishers.
 
-  Continuations, comebacks, Pride damage, timer choices, and cliffhangers are
-  also necessary. The default timer is 30 seconds. The local choices are 15
-  seconds and Unlimited.
-- Use only original Grand Transition characters, scenes, identities, art,
-  audio, branding, and source. Phrase text can be invented or real. A phrase that refers to real speech, a real slogan, or a real event keeps its
-  real wording. This keeps its meaning during translation.
-  Reference-game mechanics are authority for behavior, not permission to copy
-  protected expression.
-- All generated representational raster art uses the shared cel-shaded
-  editorial-cartoon direction that Milestone 023 owns. This rule applies to
-  every character, skin, state, moderator, scene, foreground plate,
-  architecture element, furniture item, fixture, and prop. Painted comic-book,
-  painterly semi-realistic, realistic concept-art, photographic, and
-  three-dimensional-render styles are prohibited.
-  All character skins and states use Milestone 023's funny big-head cartoon
-  standard. The `county-baron--municipal-patron` selection portrait is the only
-  visual reference. Do not turn a skin into a serious or realistic prestige
-  portrait, even when it uses outlines and cel shading.
-- Use fictional composite archetypes. Do not name or identify a real person in
-  shipped content, specifications, editorial rationale, source notes, or asset
-  metadata. Public artifacts do not declare a real person as a visual or
-  rhetorical model. Complete private character studies stay in the Git-ignored
-  research folder, and private study data does not ship.
+  Continuations, comebacks, Pride damage, timer choices, and cliffhangers are also necessary.
+  The default timer is 30 seconds.
+  The local choices are 15 seconds and Unlimited.
+- Use only new Grand Transition characters, scenes, identities, art, audio, branding, and source code.
+  Phrase text can be an invented phrase or a real phrase.
+  A phrase that refers to real speech, a real slogan, or a real event keeps its real wording.
+  This keeps its meaning during translation.
+  The mechanics of the reference game are an authority for behavior, not a permission to copy protected expression.
+- All generated representational raster art uses the shared cel-shaded editorial-cartoon direction that Milestone 023 owns.
+  This rule applies to each character, skin, state, moderator, scene, foreground plate, architecture element, furniture item, fixture, and prop.
+  Painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, and three-dimensional-render styles are not permitted.
+  All character skins and states use the funny big-head cartoon standard of Milestone 023.
+  The `county-baron--municipal-patron` selection portrait is the only visual reference.
+  Do not change a skin into a prestige portrait that is not funny or that is realistic.
+  This rule also applies when the skin uses outlines and cel shading.
+- Use fictional composite archetypes.
+  Do not name or identify a real person in shipped content, specifications, editorial rationale, source notes, or asset metadata.
+  Public artifacts do not identify a real person as a visual model or a rhetorical model.
+  Full private character studies stay in the research folder, which Git ignores, and private study data does not ship.
 
-  A public-figure likeness may be used only as visual-only parody in a portrait
-  skin. It must not change fictional character identity or player-visible
-  content. Public institutions and documented historical events can appear
-  directly and accurately when the result does not identify a real person.
-- Public political speech, slogans, memes, and documented events can appear in
-  common phrases, character phrases, endings, and comebacks. Keep a phrase that refers to real speech accurate. Keep its real wording in
-  the original language or use a faithful translation that keeps its
-  meaning. Every predicate, modifier, and ending in the revised common catalog must have
-inspiration from a verifiably real quote, with private source evidence. The visible card may
-  be an original fictional adaptation, but it must not be presented as the real
-  person's words.
+  A portrait skin can use the likeness of a public figure only as visual-only parody.
+  It must not change the fictional character identity or the content that the player sees.
+  Public institutions and documented historical events can show directly and accurately when the result does not identify a real person.
+- Public political speech, slogans, memes, and documented events can be in common phrases, character phrases, endings, and comebacks.
+  Keep a phrase that refers to real speech accurate.
+  Keep its real wording in the initial language, or use an accurate translation that keeps its meaning.
+  Each predicate, modifier, and ending in the revised common catalog must have a real quote as its source.
+  A person must be able to examine that quote, and the source evidence stays private.
+  The visible card can be a new fictional adaptation, but the game must not show it as the words of the real person.
 
-  An invented phrase remains permitted for the other roles.
-  Milestone 027 owns source verification and private traceability. Character
-  identity stays fictional across skins.
-- Do not use a real political party's name, acronym, or logo. Use only generic
-  ideological or social-family labels, such as Conservative, Peasant,
-  Democratic, Liberal, Communist, Socialist, or Ethnic Party.
-- The game is political satire for adults aged 18 and older. Phrase cards do
-  not carry individual age-rating metadata.
-- English is the default interface language and Romanian is the default game
-  language. Milestone 029 adds a complete Romanian
-  interface, game content, grammar, and speech. Interface messages and
-  locale-specific game bundles have separate owners. Localized grammar and
-  phrase prose must not enter locale-neutral rules.
-- The pure deterministic reducer owns game truth. Lit is view-only. Content is
-  data-driven and validated. Runtime network calls are prohibited.
-- Readability has priority over spectacle. The player must understand the turn,
-  available actions, information ownership, and current Pride.
-- Privacy, security, performance, original-asset, and static GitHub Pages
-  requirements apply from the first milestone that can exercise them. Later
-  work must not regress them.
-- Online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards,
-  chat, servers, live-service systems, public content sharing, blockchain,
-  tokens, and real-money purchases are out of scope.
-- Milestone 029 approves post-MVP Romanian localization and local speech.
-  Specification 032 approves the first post-MVP scene extension. Other
-  post-MVP candidates include additional content, controller support,
-  local content packs, recorded voice,
-  replays, and local simulation tools. Milestone 019 approves local match
-  history. Do not implement another candidate without a new approved
-  specification.
+  An invented phrase stays permitted for the other roles.
+  Milestone 027 controls the source verification and the private traceability.
+  The character identity stays fictional across skins.
+- Do not use the name, acronym, or logo of a real political party.
+  Use only generic ideological or social-family labels, for example Conservative, Peasant, Democratic, Liberal, Communist, Socialist, or Ethnic Party.
+- The game is political satire for adults with an age of 18 or more.
+  Phrase cards do not carry age-rating metadata for each card.
+- English is the default interface language, and Romanian is the default game language.
+  Milestone 029 adds a full Romanian interface, game content, grammar, and speech.
+  Interface messages and the game bundles for each locale have different owners.
+  Localized grammar and phrase text must not go into locale-neutral rules.
+- The pure deterministic reducer controls the game state.
+  Lit is only for views.
+  Data controls the content, and the content is validated.
+  Runtime network calls are not permitted.
+- Readability is more important than spectacle.
+  The player must understand the turn, the available actions, the information ownership, and the Pride of that time.
+- The privacy, security, performance, new-asset, and static GitHub Pages requirements apply from the first milestone that can use them.
+  Subsequent work must not make them worse.
+- These items are not in the scope: online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards, and chat.
+  Servers, live-service systems, public content sharing, blockchain, tokens, and real-money purchases are also not in the scope.
+- Milestone 029 gives approval for the post-MVP Romanian localization and local speech.
+  Specification 032 gives approval for the first post-MVP scene extension.
+  Other post-MVP candidates include more content, controller support, local content packs, recorded voice, replays, and local simulation tools.
+  Milestone 019 gives approval for the local match history.
+  Do not add a different candidate without a new approved specification.
 
 ## Delivery rules
 
-- Complete milestones in numeric order unless an approved specification changes
-  the dependency graph.
-- Do not implement work owned by a later milestone.
-- Keep each milestone to its stated production-file budget. Tests, small fixture
-  files, and required updates to owning specifications do not count against it.
-- Stop and split the milestone before implementation if its production scope
-  cannot fit the budget without mixing responsibilities.
-- Milestone 001 is complete when its focused bootstrap checks pass. Cumulative `npm run ci` from a clean checkout is also necessary for each later
-milestone.
-- Temporary original assets are permitted only where stated. Do not add future
-  compatibility or scaffolding.
-- The user reviews the game after each milestone outside its completion gates.
-  Human sign-off, user-run play, visual or listening reviews, and a mandatory
-  decision interview are not prerequisites for completion. Optional
-  user review notes can be kept, but are not required evidence.
-- Agents do checks of implementation through code and source inspection, automated
-  checks, measurements, and production-browser checks. Record what was actually
-  checked without claiming human approval or a subjective listening result.
-  Quality, style, privacy, accuracy, licensing, and automated acceptance
-  requirements remain in force.
-- Resolve routine creative and implementation choices from the existing
-  contracts and record material assumptions. Ask only when an unresolved input
-  blocks the work. Do not make a separate interview or approval necessary for a routine choice
-already covered by the task and contracts.
+- Complete the milestones in numeric sequence, unless an approved specification changes the dependency graph.
+- Do not do work that a subsequent milestone owns.
+- Keep each milestone in its stated production-file budget.
+  Tests, small fixture files, and necessary updates to the owner specifications do not count against it.
+- If the production scope of a milestone cannot fit the budget without a mix of responsibilities, stop and divide the milestone before the implementation.
+- Milestone 001 is completed when its related bootstrap checks pass.
+  For each subsequent milestone, a cumulative `npm run ci` from a clean checkout is also necessary.
+- Temporary new assets are permitted only where the specification says so.
+  Do not add compatibility code or scaffolding for the future.
+- The user examines the game after each milestone.
+  This step is not one of the gates that complete the milestone.
+  Human sign-off, play by the user, visual reviews, listening reviews, and a mandatory decision interview are not necessary before a milestone is completed.
+  Optional review notes from the user can stay, but they are not necessary evidence.
+- Agents examine the implementation through code inspection and source inspection, automated checks, measurements, and production-browser checks.
+  Record the items that you examined.
+  Do not say that a person approved the result when this did not occur.
+  Do not say that a person listened to the audio when this did not occur.
+  The requirements for quality, style, privacy, accurate content, licensing, and automated acceptance continue to apply.
+- Use the contracts to make usual creative decisions and implementation decisions, and record important assumptions.
+  Tell the user about an open input only when it blocks the work.
+  Do not make a different interview or approval necessary for a usual decision that the task and the contracts include.
 
 ## Specification completeness contract
 
 Normative words have these meanings:
 
 - **Must** and **must not** state requirements.
-- **Default** specifies the value used when no valid saved or explicit value
-  exists.
-- **Range** includes both endpoints unless the text says otherwise.
-- Unless its owning specification explicitly specifies otherwise, a typed failure
-  does not change the input state, consume randomness, or append to command
-  history.
-- An acceptance criterion with several assertions is one criterion only when
-  all assertions use the same setup and action.
+- **Default** gives the value that the game uses when there is no correct saved value or explicit value.
+- **Range** includes the two endpoints, unless the text gives a different rule.
+- A typed failure does not change the input state, use randomness, or add to the command history.
+  Its owner specification can give a different rule directly.
+- An acceptance criterion with more than one assertion is one criterion only when all the assertions use the same setup and action.
 
-Each milestone specification must contain:
+Each milestone specification must contain these items:
 
-1. Exact inputs, outputs, defaults, ranges, state transitions, and owned failure
-   codes for behavior that it introduces.
-2. A numbered acceptance section. Identifiers use
-   **AC-NNN-01**, **AC-NNN-02**, and so on.
-3. At least one positive path, each material boundary, each owned failure path,
-   and each security or privacy constraint that applies.
-4. One named verifier for each criterion. A verifier is a test file, command,
-   reproducible agent inspection, or recorded measurement.
-5. An evidence record when the criterion depends on a browser, operating
-   system, performance profile, asset or audio inspection, or published service.
+1. The inputs, outputs, defaults, ranges, state transitions, and owned failure codes of the behavior that it adds.
+2. A numbered acceptance section.
+   Identifiers use **AC-NNN-01**, **AC-NNN-02**, and more.
+3. One or more positive paths, each important boundary, each owned failure path, and each applicable security constraint or privacy constraint.
+4. One named verifier for each criterion.
+   A verifier is a test file, a command, an agent inspection that a different person can do again, or a recorded measurement.
+5. An evidence record when the criterion is related to a browser, an operating system, or a performance profile.
+   An evidence record is also necessary for an asset inspection, an audio inspection, or a published service.
 
-The phrase “tests cover” is not sufficient unless the specification enumerates
-the states or boundaries that the tests must cover. A green general gate does
-not replace a missing focused verifier.
+The words “tests cover” are not sufficient, unless the specification gives the states or boundaries that the tests must include.
+A general gate that passes does not replace a missing related verifier.
 
 ## Shared evidence contract
 
-An evidence record contains the milestone and acceptance identifiers. It also
-contains the commit or working-tree identifier and the production build
-command. Include the test command or reproducible inspection and the operating system.
-When applicable, include the browser, browser version, viewport, input seed,
-and setup. Include the expected result, actual result, and links to kept
-evidence.
+An evidence record contains the milestone identifier and the acceptance identifiers.
+It also contains the commit identifier or the working-tree identifier, and the production build command.
+Include the test command or the inspection that a different person can do again, and the operating system.
+When they apply, include the browser, the browser version, the viewport, the input seed, and the setup.
+Include the expected result, the result that occurred, and links to kept evidence.
 
-Automated evidence must be reproducible from a clean checkout. Agent inspection
-records the examined source or artifact, method, observed result, and limits.
-Optional user feedback is separate from required completion evidence.
-Do not record private hand content, personal data, machine secrets, or hidden
-speech text.
+A person must be able to get the same automated evidence from a clean checkout.
+Agent inspection records the examined source or artifact, the method, the result that the agent saw, and the limits.
+Optional feedback from the user is different from the evidence that is necessary to complete the milestone.
+Do not record private hand content, personal data, machine secrets, or hidden speech text.
 
 ## Shared browser and interface measurements
 
-Browser UI support uses the content viewport in CSS pixels. Milestone 018
-owns the exact geometry, portrait warning, hotseat restrictions, and compact
-layout contract. Landscape must have width greater than height and measure at least 640 by 320.
-Portrait must have height greater than width and measure at least 360 by 640. Square viewports are unsupported.
+Browser UI support uses the content viewport in CSS pixels.
+Milestone 018 controls the geometry, the portrait warning, the hotseat restrictions, and the compact layout contract.
+In landscape, the width must be more than the height, and the viewport must be 640 by 320 or more.
+In portrait, the height must be more than the width, and the viewport must be 360 by 640 or more.
+Square viewports are not supported.
 
-Landscape is the intended layout.
-1920 by 1080 on PC remains recommended. The application does not examine or
-block an operating system or device class.
+Landscape is the primary layout.
+The game continues to recommend 1920 by 1080 on a PC.
+The application does not examine or block an operating system or a device class.
 
 The acceptance matrix is:
 
@@ -197,140 +174,139 @@ The acceptance matrix is:
 
 At each supported viewport:
 
-- Required text and controls must not overlap or clip. Compact layouts can
-  use vertical page scrolling to keep required content reachable. The desktop
-  matrix keeps its no-page-scroll layout.
-- The page must not scroll horizontally. A board, sentence, dialog, or log can
-  scroll inside a named container when its owning specification permits it.
-- Synthetic UI strings that are 40 percent longer than the longest shipped
-  English string must wrap without loss of meaning.
+- Necessary text and controls must not overlap or clip.
+  Compact layouts can use vertical page scrolling, so that the user can get to the necessary content.
+  The desktop matrix keeps its layout without page scroll.
+- The page must not scroll horizontally.
+  A board, a sentence, a dialog, or a log can scroll in a named container when its owner specification lets it scroll.
+- Synthetic UI strings that are 40 percent longer than the longest shipped English string must wrap without a loss of meaning.
 
-An unsupported viewport replaces the application with a blocking compatibility
-screen. It names both minimum sizes, recommends landscape, and provides no
-bypass. Portrait presents a dismissible landscape recommendation once per page
-session and disables hotseat. An active hotseat match in portrait cannot continue until landscape returns. All blocking conditions conceal match facts and keep
-exact remaining turn time.
+An unsupported viewport replaces the application with a blocking compatibility screen.
+It names the two minimum dimensions, recommends landscape, and gives no path around the block.
+Portrait shows a landscape recommendation that the user can close, one time in each page session, and it disables hotseat.
+An active hotseat match in portrait cannot continue until landscape comes back.
+All blocking conditions hide the match facts, and they keep the remaining turn time without a change.
 
-Automatic resume occurs only after all blocks clear.
-Manual Pause remains active until explicit Resume.
+The game continues automatically only after all the blocks clear.
+Manual Pause stays active until the user selects Resume.
 
 ## External validation tools
 
-The specifications own every minimum product and acceptance requirement.
-Impeccable and other installed skills are review tools, not additional product
-authority. Each Impeccable evidence record must include the skill version and
-detector version. A tool update does not change an approved acceptance
-criterion. If a required tool is unavailable, record the block. Do not replace
-its result with a source-only opinion.
+The specifications control each minimum product requirement and each acceptance requirement.
+Impeccable and other installed skills are review tools, not more product authority.
+Each Impeccable evidence record must include the skill version and the detector version.
+A tool update does not change an approved acceptance criterion.
+If a necessary tool is not available, record the block.
+Do not replace its result with an opinion that comes only from the source code.
 
 ## Impeccable user interface validation
 
-Milestones 001 and 015 through 031 affect the user-visible user interface (UI).
-Each must complete these two separate validations against the implemented slice
-in its production browser build:
+Milestones 001 and 015 through 031 change the user interface (UI) that the user can see.
+Each of them must complete these two different validations against the slice in the code, in its production browser build:
 
-1. Run `$impeccable audit` for performance, theming, supported desktop and phone
-   layout, and implementation integrity. Run the
-   bundled detector. Examine its result. Record the score and positive findings. Record each
-   priority 0 through priority 3 (P0-P3) issue and its disposition.
-2. After audit repairs, run `$impeccable critique` on the same stable target.
-   Obey the Impeccable orchestration contract in the installed skill. Include
-   isolated design and detector or browser assessments when the installed skill
-   supports them. Record heuristic
-   scores, cognitive-load and persona findings, design strengths, priorities,
-   the persisted snapshot, and every issue disposition.
+1. Run `$impeccable audit` for performance, theming, supported desktop and phone layout, and implementation integrity.
+   Run the bundled detector.
+   Examine its result.
+   Record the score and the positive findings.
+   Record each priority 0 through priority 3 (P0-P3) issue and the decision about it.
+2. After the audit repairs, run `$impeccable critique` on the same stable target.
+   Obey the Impeccable orchestration contract in the installed skill.
+   When the installed skill can do them, include isolated design reviews, detector reviews, and browser reviews.
+   Record the heuristic scores, the cognitive-load findings and persona findings, the design strengths, and the priorities.
+   Also record the stored snapshot and the decision about each issue.
 
-For both validations, examine the affected supported orientation states together
-in a bounded pass. Fix all confirmed P0 and P1 findings before milestone completion.
-Record accepted or deferred P2 and P3 findings with rationale and an owning
-future milestone. An unavailable built surface blocks these validations. A
-source-only review does not satisfy them.
+For the two validations, examine the related supported orientation states together in a bounded pass.
+Repair all the P0 and P1 findings that have evidence before the milestone is completed.
+Some P2 and P3 findings are accepted, or moved to a subsequent milestone.
+Record these findings with the rationale and an owner milestone.
+A built surface that is not available blocks these validations.
+A review that uses only the source code does not satisfy them.
 
 ## Dependency sequence
 
 1. [Toolchain scaffold](spec-001-toolchain-scaffold.md). Budget: 8. The empty
    application builds and runs.
-2. [Quality-gate scaffold](spec-002-quality-gate.md). Budget: 8. All required
-   checks exist and run in order.
+2. [Quality-gate scaffold](spec-002-quality-gate.md). Budget: 8. All the necessary
+   checks are in the configuration, and they run in sequence.
 3. [Architecture contracts](spec-003-architecture-contracts.md). Budget: 8.
-   Pure modules and typed ports have enforced boundaries.
+   Pure modules and typed ports have boundaries that a check makes sure of.
 4. [Static app security](spec-004-static-app-security.md). Budget: 5. The
-   production shell works safely at the Pages subpath.
+   production shell operates safely at the Pages subpath.
 5. [Content schemas](spec-005-content-schemas.md). Budget: 8. Sample game data
    is typed and validated.
 6. [English grammar core](spec-006-english-grammar-core.md). Budget: 7. Minimum
-   sentences are legal and rendered.
+   sentences are correct and rendered.
 7. [Grammar mistakes and sentence endings](spec-007-extended-grammar.md).
-   Budget: 6. Wrong cards, incomplete endings, finishers, and continuations
-   obey the final reference rules.
+   Budget: 6. Incorrect cards, incomplete endings, finishers, and continuations
+   obey the last reference rules.
 8. [Hollywood Roast board generation](spec-008-board-generation.md). Budget: 6.
-   Fixed seeds create the common nine-slot board and private hands.
+   Fixed seeds make the common nine-slot board and the private hands.
 9. [Draft actions](spec-009-draft-actions.md). Budget: 7. Shared and private
    phrase drafting is complete.
 10. [Hollywood Roast clause scoring](spec-010-basic-scoring.md). Budget: 5.
-    Clause compatibility, restrictions, and weaknesses explain damage.
+    Clause compatibility, restrictions, and weaknesses give the explanation of damage.
 11. [Hollywood Roast combos and finishers](spec-011-combos-and-finishers.md).
-    Budget: 5. Per-clause noun combos and finishers resolve.
+    Budget: 5. Noun combos for each clause, and finishers, resolve.
 12. [Continuations and comebacks](spec-012-continuations-and-comebacks.md).
     Budget: 6. Carry and comeback thresholds resolve.
 13. [Match lifecycle](spec-013-match-lifecycle.md). Budget: 7. Headless matches
-    reach a deterministic terminal state.
+    get to a deterministic terminal state.
 14. [Replay and simulation](spec-014-replay-and-simulation.md). Budget: 8.
-    Replays are exact and generated matches keep invariants.
+    Replays are accurate, and generated matches keep the invariants.
 15. [Lit screen shell](spec-015-lit-screen-shell.md). Budget: 8. Title and setup
-    screens dispatch typed commands.
+    screens send typed commands.
 16. [Playable match screen](spec-016-playable-match-screen.md). Budget: 10. A
     hotseat draft is playable with temporary art.
 17. [Seamless match flow](spec-017-seamless-match-flow.md). Budget: 4. Browser
-    matches present each nonterminal exchange before automatic progression.
+    matches show each exchange that is not terminal before automatic progression.
     Milestone 019 replaces its terminal and post-match rules.
 18. [Landscape and portrait layout support](spec-018-landscape-layout-support.md). Budget: 8.
     The viewport gate and supported orientation contracts pass.
 19. [Victory and persistent match history](spec-019-victory-match-history.md).
-    Budget: 10. Every terminal path shows a persistent victory state and stores
+    Budget: 10. Each terminal path shows a persistent victory state and stores
     a local public match record.
 20. [Settings and persistence](spec-020-settings-persistence.md). Budget: 8.
-    Local options persist or fail safely.
+    The game keeps local options, or it fails safely.
 21. [Entry-level artificial intelligence](spec-021-easy-ai.md). Budget: 8. A
-    deterministic valid-action AI completes custom matches.
+    deterministic AI that uses only correct actions completes custom matches.
 22. [Advanced AI and ladder](spec-022-advanced-ai-ladder.md). Budget: 12. Three
-    difficulties and the ladder work.
+    difficulties and the ladder operate.
 23. [Asset pipeline and visual system](spec-023-assets-visual-system.md).
-    Budget: 10. The fixed 27-character and four-scene raster baseline is
-    regenerated in one shared cel-shaded editorial-cartoon style. Four characters
-    and one scene also receive their complete state and motion packages.
-24. [Audio and speech](spec-024-audio-speech.md). Budget: 8 per approved code
-    package, with separate audio asset packages. Audio and optional public
+    Budget: 10. The game generates again the fixed raster baseline of 27 characters and
+    four scenes in one shared cel-shaded editorial-cartoon style. Four characters
+    and one scene also get their full state packages and motion packages.
+24. [Audio and speech](spec-024-audio-speech.md). Budget: 8 for each approved code
+    package, with different audio asset packages. Audio and optional public
     speech have safe controls.
 25. [Match presentation reactions](spec-025-match-presentation-reactions.md).
-    Budget: 8. The vertical slice reports strong public outcomes without teaching
+    Budget: 8. The vertical slice gives strong public outcomes, and it does not teach
     tactics.
 26. [Playable MVP catalog foundation](spec-026-mvp-content-expansion.md).
     Budget: 40. All 19 characters and 6 scenes are playable before the ladder.
 27. [Balance and editorial rules](spec-027-balance-editorial.md). Budget: 5.
-    The revised content implementation is verified. Broader editorial evidence
-    remains pending. Additional Milestone 028 artwork is not a prerequisite.
+    The revised content implementation has verification. The broader editorial evidence
+    stays pending. The other Milestone 028 artwork is not a prerequisite.
 28. [MVP content finalization](spec-028-mvp-content-finalization.md). Budget: 20.
-    The revised exact common, character, and scene volumes are implemented and
-    focused-validated. Quote provenance, art, audio treatment, and variety
-    evidence remain pending.
+    The code contains the revised common, character, and scene volumes, and the
+    related checks pass. The quote provenance, the art, the audio treatment, and the
+    variety evidence stay pending.
 29. [Romanian localization and speech](spec-029-romanian-localization-and-speech.md).
-    Budget: 8 per delivery package. Complete: Romanian interface, game
-    content, grammar, replay locale, Mihai medium and Liana medium speech.
-    Ro_VITS evaluated and rejected as the Romanian voice.
-30. [Release hardening](spec-030-release-hardening.md). Budget: 8. Final quality
+    Budget: 8 for each delivery package. Completed: Romanian interface, game
+    content, grammar, replay locale, and Mihai medium and Liana medium speech.
+    Milestone 029 examined Ro_VITS and did not accept it as the Romanian voice.
+30. [Release hardening](spec-030-release-hardening.md). Budget: 8. The last quality gates
     and compatibility gates pass.
 31. [GitHub Pages release](spec-031-github-pages-release.md). Budget: 5. The
-    tested artifact deploys and passes smoke tests.
+    tested artifact deploys, and it passes the smoke tests.
 32. [Civic Cypher Boxing Ring](spec-032-civic-cypher-boxing-ring.md). Budget: 8.
-    A seventh bilingual playable scene adds original Romanian hip-hop battle art,
-    a complete scene phrase pool, and local boom-bap music. It includes
-    focused production-browser evidence. The catalog-driven Ladder scene order
+    A seventh bilingual playable scene adds new Romanian hip-hop battle art,
+    a full scene phrase pool, and local boom-bap music. It includes
+    related production-browser evidence. The catalog-driven Ladder scene order
     includes the new scene automatically.
 
-Each milestone obeys its explicit **Depends on** field. Milestone filenames,
-headings, acceptance IDs, and references use the same numeric identifier. This
-order limits the context and files needed for each implementation session.
+Each milestone obeys its **Depends on** field.
+Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.
+This sequence limits the context and the files that each implementation session must use.
 
 ## Contract ownership
 
@@ -352,4 +328,5 @@ order limits the context and files needed for each implementation session.
 | Visual assets and presentation       | 023, 025-026, 028  |
 | Audio and speech                     | 024, 028-029       |
 | Full content, safety, and balance    | 026-028            |
+| Post-MVP scene extension             | 032                |
 | Release quality and deployment       | 030-031            |

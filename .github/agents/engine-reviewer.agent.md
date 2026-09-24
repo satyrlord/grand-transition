@@ -19,18 +19,16 @@ mcp-servers:
 
 # Engine reviewer
 
-Read `AGENTS.md` and the applicable approved specifications. Review the selected
-scope without edits.
+Read `AGENTS.md` and the applicable approved specifications.
+Review the selected scope without edits.
 
-Trace commands from entry point through the immutable reducer and grammar adapter.
-Continue through board generation, scoring, continuation, comeback, artificial
-intelligence (AI), replay, and persistence ports. Examine determinism,
-simultaneous resolution, typed rule errors, seeded randomness,
-and hotseat isolation. Examine the prohibition on Lit or Document Object Model
-(DOM) imports in pure rules. Examine direct tests and fast-check replay
-evidence.
+Follow commands from their entry point through the immutable reducer and the grammar adapter.
+Continue through board generation, scoring, continuation, comeback, artificial intelligence (AI), replay, and the persistence ports.
+Examine determinism, simultaneous resolution, typed rule errors, seeded randomness, and hotseat privacy.
+Make sure that pure rules do not import Lit or the Document Object Model (DOM).
+Examine the tests for the engine and the fast-check replay evidence.
 
-Report only confirmed findings.
-For each finding, give the severity, exact path, location, broken contract, evidence, and effect on the user.
+Give only findings that have evidence.
+For each finding, give the severity, the path, the location, the contract that the defect breaks, the evidence, and the effect on the user.
 Give the smallest repair and one command or procedure to validate it.
-If the review finds no defect, give the largest engine path without review evidence.
+If the review finds no defect, give the largest engine path that has no review evidence.

@@ -7,28 +7,27 @@
 
 ## Continuations
 
-A player can select a continuation at any sentence point. It ends that player's
-participation in the round and deals zero outgoing damage. Remove the
-continuation card before the next round. If the opponent deals 0 through 15
-damage, restore the exact carried fragment. Opponent damage of 16 or more breaks
-it. A strong comeback adds 18 damage, so it crosses the same threshold without
-a separate break rule.
+A player can select a continuation at each sentence point.
+It ends the participation of that player in the round, and it deals zero outgoing damage.
+Remove the continuation card before the next round.
+If the opponent deals 0 through 15 damage, put the carried fragment back without a change.
+Opponent damage of 16 or more breaks it.
+A strong comeback adds 18 damage, so it goes above the same limit without a different break rule.
 
-The catalog contains one unrestricted continuation card,
-and its visible cue is `[...]`.
+The catalog contains one continuation card that all scenes and characters can use.
+Its visible cue is `[...]`.
 
-A surviving continuation keeps the player's prior noun-combo state. A
-broken continuation clears that player's combos. Sudden-death cliffhangers do
-not deal continuation cards.
+A continuation that is not broken keeps the previous noun-combo state of the player.
+A broken continuation clears the combos of that player.
+Sudden-death cliffhangers do not deal continuation cards.
 
 ## Comebacks
 
-Opponent outgoing damage charges a three-part meter. Self-damage from grammar
-mistakes or timeouts does not charge it. Each 20 received damage fills one tier,
-up to 60.
+Outgoing damage from the opponent charges a meter with three parts.
+Self-damage from grammar mistakes or timeouts does not charge it.
+Each 20 damage that the player gets fills one tier, and the maximum is 60.
 
-When the sentence is complete and at least one tier is full, one comeback action
-uses the strongest filled tier:
+When the sentence is complete and one or more tiers are full, one comeback action uses the strongest filled tier:
 
 | Filled charge | Tier   | Charge spent | Added damage |
 | ------------- | ------ | ------------ | ------------ |
@@ -36,34 +35,31 @@ uses the strongest filled tier:
 | 40-59         | Medium | 40           | 10           |
 | 60            | Strong | 60           | 18           |
 
-Each tier selects exactly one insult owned only by that character. The weak
-4-damage line is a light insult, the medium 10-damage line is a medium insult,
-and the strong 18-damage line is a devastating insult. There are no shared or
-common comeback lines.
+Each tier selects one insult that only that character has.
+The weak line with 4 damage is a light insult.
+The medium line with 10 damage is a medium insult.
+The strong line with 18 damage is a devastating insult.
+There are no shared comeback lines and no common comeback lines.
 
-The comeback appends that insult to the visible public sentence as a separate
-phrase. It ends the sentence and adds its damage after scored clauses and
-finishers. Show the complete sentence and closing line in the speaker's text
-bubble after selection. The line does not enter grammar, clause scoring, noun
-combos, finishers, or continuation state. Spend the tier before adding damage
-received during the same exchange.
+The comeback adds that insult to the end of the visible public sentence as an isolated phrase.
+It ends the sentence, and it adds its damage after the scored clauses and the finishers.
+After the selection, show the full sentence and the closing line in the text bubble of the speaker.
+The line does not go into the grammar, the clause scoring, the noun combos, the finishers, or the continuation state.
+Spend the tier before you add the damage that the player gets during the same exchange.
 
 ## Acceptance criteria
 
-- **AC-012-01:** Damage 0 and 15 keep a carry. Damage 16 breaks it.
-- **AC-012-02:** A strong comeback breaks a carry because its 18 damage bonus
-  crosses the 16-damage threshold.
-- **AC-012-03:** Charge thresholds, cap, strongest-tier use, spending, and
-  same-exchange refill use the exact table.
+- **AC-012-01:** Damage 0 and damage 15 keep a carry. Damage 16 breaks it.
+- **AC-012-02:** A strong comeback breaks a carry, because its damage bonus of 18 goes above the limit of 16 damage.
+- **AC-012-03:** The charge limits, the maximum charge, and the use of the strongest tier use the table above.
+  The spending and the new charge during the same exchange also use the table above.
 - **AC-012-04:** Self-damage does not charge a comeback.
-- **AC-012-05:** Closing-line selection is deterministic and stays outside
-  grammar and combos. The selected line is appended to the visible public
-  sentence and appears in the speaker's text bubble.
-- **AC-012-06:** Every character has one exclusive insult per tier. The light,
-  medium, and devastating lines add exactly 4, 10, and 18 damage. No comeback
-  key is common, shared, or reused.
+- **AC-012-05:** The selection of the closing line is deterministic, and it stays out of the grammar and the combos.
+  The game adds the selected line to the visible public sentence, and the line shows in the text bubble of the speaker.
+- **AC-012-06:** Each character has one insult for each tier, and no other character has that insult.
+  The light, medium, and devastating lines add 4, 10, and 18 damage.
+  No comeback key is common, shared, or used again.
 
 ## Objective verifiers
 
-`tests/unit/continuation-comeback-resolution.test.ts` does checks of AC-012-01 through
-AC-012-06.
+`tests/unit/continuation-comeback-resolution.test.ts` does checks of AC-012-01 through AC-012-06.

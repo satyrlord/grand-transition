@@ -1,25 +1,23 @@
 # Author visual content
 
-For playable character raster generation or editing, use
+Read this module before visual work, media work, or asset-metadata work.
+For raster generation or edits of playable characters, use
 [generate-character-openai](../../generate-character-openai/SKILL.md).
-For scene raster generation or editing, use
+For raster generation or edits of scenes, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-The shared Flare application programming interface (API) provides transparent output, exact-size masters, and output above 1080p.
-Its internal image tool provides small opaque drafts.
-An authorized artwork edit includes permitted target references and standard bounded native-alpha preparation.
-Before you replace shipping assets, use its character or scene integration module.
+The shared Flare application programming interface (API) gives transparent output, masters with accurate dimensions, and output larger than 1080p.
+The internal image tool gives small opaque drafts.
+An approved artwork edit includes the permitted target references and the standard bounded native-alpha preparation.
+Before you replace shipping assets, use the character integration module or the scene integration module.
 
-All generated representational raster art follows the shared cel-shaded
-editorial-cartoon direction in Milestone 023. Apply it to every character,
-skin, state, moderator, scene, foreground plate, architecture element,
-furniture item, fixture, and prop. Reject painted comic-book, painterly
-semi-realistic, realistic concept-art, photographic, three-dimensional-render,
-and mixed-style output.
+All generated representational raster art uses the shared cel-shaded editorial-cartoon direction in Milestone 023.
+Apply it to each character, skin, state, moderator, scene, foreground plate, architecture element, furniture item, fixture, and prop.
+Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 
-For every character skin and state, use Milestone 023's detailed character
-rendering standard. Audit against its visual calibration set at equal figure
-height. Keep expressive interior linework and grouped hair detail.
-Do not impose minimalist vector construction or exact color quantization.
+For each character skin and state, use the funny big-head rendering standard of Milestone 023.
+Do an audit against `county-baron--municipal-patron`, the only visual reference, at equal figure height.
+Keep expressive interior lines and grouped hair detail.
+Do not use minimalist vector construction, sticker-like figures, or exact value-step quantization.
 
-Examine asset owner, source, license, dimensions, crop, and format.
-Run asset validation when media changed.
+Examine the owner, source, license, dimensions, crop, and format of each asset.
+When media changed, run the asset validation.

@@ -2,11 +2,10 @@
 
 ## Project structure and module organization
 
-Approved files under `docs/specs/` are the only source of truth for the app.
-README, agent documents, guidance, and untracked files in the temporary folder
-are context only.
-Put Lit screens in `src/app/` and components in `src/components/`. Put pure
-rules in `src/engine/` and artificial intelligence (AI) in `src/ai/`.
+The approved files in `docs/specs/` control the app. No other file controls it.
+The README, agent documents, guidance, and untracked files in the temporary folder give only context.
+Put Lit screens in `src/app/` and components in `src/components/`.
+Put pure rules in `src/engine/` and artificial intelligence (AI) in `src/ai/`.
 
 Put data in `src/content/` and media in `src/assets/`.
 Keep temporary renders in the temporary folder.
@@ -17,108 +16,110 @@ Put component tests in `tests/browser/` and end-to-end flows in `e2e/`.
 ## Build, test, and development commands
 
 If the temporary folder contains a Hypertext Markup Language (HTML) prototype, examine it with
-`py -m http.server 8000` from that folder. The configured command groups are:
+`py -m http.server 8000` from that folder. These are the command groups in `package.json`:
 
 ```text
-npm run dev | preview | build
-npm run lint | typecheck
-npm run assets:build | assets:validate | validate
+npm run dev | preview | prod | build
+npm run lint | typecheck | boundaries:check | markdown:lint
+npm run assets:build | assets:validate | assets:convert-green | validate
+npm run audio:build | audio:validate | speech:build | speech:validate
+npm run content:validate | simulate
 npm run localization:extract | localization:build | localization:validate
 npm run test | test:coverage | test:browser | test:e2e
+npm run test:full | test:coverage:full | test:browser:full | test:e2e:full
 npm run quality:quick | quality:full | ci
 ```
 
-`validate` includes markdownlint-cli2, assets, content, localization, pure-boundary
-checks, lint, and types.
+`validate` includes markdownlint-cli2, assets, content, localization, pure-boundary checks, lint, and types.
 Interface translation uses Lit localization.
 After you change interface messages, run `localization:extract`.
-Run `localization:build` to regenerate `src/localization/generated/` from the `xliff/` catalogs.
+To generate `src/localization/generated/` again from the `xliff/` catalogs, run `localization:build`.
 
-Agents use `quality:quick` for routine validation. It
-omits only the documented slowest cumulative 20-percent test set. `quality:full`
-and its `ci` alias are the complete gate.
-An agent runs the full gate only when the user explicitly invokes the full quality-gate skill.
-Continuous integration (CI) still uses the full gate.
+Agents use `quality:quick` for the usual validation.
+It does not run only the documented slowest test set, which is 20 percent of the cumulative test time.
+`quality:full` and its `ci` alias are the full gate.
+An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
+Continuous integration (CI) continues to use the full gate.
 
-Direct test commands never run the slowest set.
-These commands include `npm run test`, `npm run test:browser`,
-`npm run test:coverage`, and `npm run test:e2e`.
-Do not report a pass until the scripts exist and run.
+These test commands do not run the slowest set: `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
+Do not say that a check passed until the scripts are in `package.json` and run.
 
-The content-balance workload is long-running and full-gate-only. Agents must not
-invoke `npm run balance:validate` or `tools/validate-content-balance.ts`
-directly. The validator rejects direct execution and runs only when
-`npm run quality:full` supplies the full-gate runner context. Quick validation
-must not start this workload.
+The content-balance workload operates for a long time, and only the full gate runs it.
+Agents must not run `npm run balance:validate` or `tools/validate-content-balance.ts` directly.
+The validator stops when a person runs it directly.
+It runs only when `npm run quality:full` gives the full-gate runner context.
+`npm run quality:quick` must not start this workload.
 
-Apply the same restriction to future long-running checks.
+Apply the same restriction to each new check that operates for a long time.
 Before you add a package script for such a check, add the check to the full gate.
-Add an executable guard that rejects direct execution.
+Add an executable guard that stops the check when a person runs it directly.
 
 ## AI workflow
 
-Use [`.github/AI_TOOLING.md`](.github/AI_TOOLING.md) as the index for repository
-AI guidance. Select a matching workflow from
-[`.github/skills/SKILLS.md`](.github/skills/SKILLS.md) before material work.
-Repository skills do not expand the user's authority. Reviews, audits, and
-diagnosis are read-only unless the user requests a change. Use the specialist
-review agents under `.github/agents/` for an independent, bounded review when
-the affected domain warrants it.
+Use [`.github/AI_TOOLING.md`](.github/AI_TOOLING.md) as the index for the AI guidance of the repository.
+Before important work, select the applicable workflow from [`.github/skills/SKILLS.md`](.github/skills/SKILLS.md).
+Repository skills do not increase the approval that the user gave.
+Reviews, audits, and diagnosis do not change files unless the user tells you to make a change.
+When the domain of the change makes it necessary, use the specialist review agents in `.github/agents/`.
+They review a limited scope independently.
 
-Codex and Copilot agents can use the Microsoft Learn Model Context Protocol
-(MCP) server. Use it when current Microsoft or Azure information materially
-helps the task.
-Search first. If complete context is necessary, read the applicable official page.
-Do not make this server necessary for unrelated work.
+Codex agents and Copilot agents can use the Microsoft Learn Model Context Protocol (MCP) server.
+Use it when new Microsoft or Azure information is important for the task.
+Search first.
+If the full context is necessary, read the applicable page from Microsoft.
+Do not make this server necessary for work that is not related to Microsoft or Azure.
 
 ## Code style and names
 
-Use Node.js 24 Long-Term Support (LTS), npm, TypeScript 7 strict mode, Vite 8, and Lit 3. Use two
-spaces, `kebab-case` filenames, `PascalCase` types and classes, and `camelCase`
-functions.
+Use Node.js 24 Long-Term Support (LTS), npm, TypeScript 7 strict mode, Vite 8, and Lit 3.
+Use two spaces, `kebab-case` file names, `PascalCase` types and classes, and `camelCase` functions.
 
-Lit is view-only: components receive immutable snapshots and emit
-typed commands. Keep rules free of Lit and Document Object Model (DOM) imports. Use light DOM for
-screens. Put interface prose in Lit messages and grammar text in locale-specific
-phrase packs. Do not add unnecessary complexity.
+Use Lit only for views.
+Components receive immutable snapshots and send typed commands.
+Keep rules free of Lit imports and Document Object Model (DOM) imports.
+Use the light DOM for screens.
+Put interface text in Lit messages, and put grammar text in phrase packs for each locale.
+Do not add code that is not necessary.
 
 ## Test guidelines
 
-Name tests after behavior, for example `continuation-break.test.ts`. Add a
-regression test for every rule defect. Keep fast-check seeds and replay
-paths unchanged.
+Give each test a name that tells its behavior, for example `continuation-break.test.ts`.
+Add a regression test for each rule defect.
+Do not change fast-check seeds and replay paths.
 
 Run Lit tests in Vitest Browser Mode.
 Run full-build tests with Playwright.
-Run tests of main user interface (UI) states at the supported landscape viewport matrix.
-Manually examine visual
-quality and audible speech.
+Run tests of the primary user interface (UI) states at the supported landscape viewport matrix.
+Examine the visual quality and the speech that you hear manually.
 
 ## Commit and pull request guidelines
 
-History uses short imperative subjects: `Add tmp directory to gitignore`,
-`Clarify persistence, asset pipeline, and speech privacy contracts`. Pull
-requests must cite specification sections, list checks and deviations, and
-include evidence for visible changes. Update all affected specs when
-architecture or behavior changes.
+Commit subjects use the Conventional Commits format.
+Use a type, an optional list of scopes, and a short imperative description in lowercase.
+Examples are `docs(guidance): rewrite AI guidance in Simplified Technical English` and
+`feat(assets,docs): regenerate county-baron art with big-head standard`.
+Pull requests must give the specification sections, the checks, and the differences from the specifications.
+For changes that the user can see, pull requests must include evidence.
+When the architecture or the behavior changes, update all the related specifications.
 
 ## Assets, security, and deployment
 
-Use original, licensed art, audio, fonts, and fictional characters.
-Phrase text can be invented or real.
-Keep the real wording of phrases from real speech for accuracy and translation.
+Use art, audio, and fonts that are new or that have a license, and use fictional characters.
+Phrase text can be an invented phrase or a real phrase.
+For correct translation, keep the real wording of phrases from real speech.
 
-Do not scrape assets. Do not commit secrets. Do not add runtime network calls.
-Generate AVIF and WebP image variants and metadata through the approved Sharp tool. Keep controls and
-required text outside Canvas.
+Do not copy assets from websites.
+Do not commit secrets.
+Do not add network calls at runtime.
+Generate AVIF and WebP image variants and metadata through the approved Sharp tool.
+Keep controls and necessary text out of the canvas.
 
-For a release, deploy only `dist/` through GitHub
-Actions after `npm run ci`. Milestone 031 separately permits a tester deployment
-after `npm run build`. That path does not establish release readiness.
-Keep the Vite `/grand-transition/` base path unchanged.
+For a release, deploy only `dist/` through GitHub Actions after `npm run ci`.
+Milestone 031 also lets you do a tester deployment after `npm run build`.
+That path is not evidence for a release.
+Do not change the Vite `/grand-transition/` base path.
 
-All generated representational raster art must agree with the shared cel-shaded
-editorial-cartoon direction in Milestone 023. Character skins and states use
-that milestone's detailed character rendering standard. Do not generate
-painted comic-book, painterly semi-realistic, realistic concept-art,
-photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.
+All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.
+Character skins and states use the funny big-head rendering standard of that milestone.
+The only visual reference for that standard is `county-baron--municipal-patron`.
+Do not generate painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.

@@ -1,53 +1,90 @@
 ---
 name: deslop
-description: Remove unsupported Grand Transition repository content without changing valid behavior, information, tests, or contracts. Use only when the user explicitly requests cleanup.
+description: Remove unsupported Grand Transition repository content without a change to correct behavior, information, tests, or contracts. Use only when the user tells you directly to clean the repository.
 ---
 
 # Remove unsupported repository content
 
 ## Select the mode
 
-- Use audit mode to report unsupported content without edits.
-- Use cleanup mode only when the user explicitly authorizes edits.
+- Use audit mode to find unsupported content without edits.
+- Use cleanup mode only when the user tells you directly to edit files.
 
-In this skill, "slop" means content that conflicts with its controlling contract, behavior, repository rule, or valid comparable file. A warning starts an inspection. It
-does not prove a defect.
+In this skill, "slop" is content that does not agree with one of these items:
 
-## Establish evidence
+- Its controlling contract.
+- The behavior of the code.
+- A repository rule.
+- A correct file of the same type.
 
-Inventory each in-scope file. Classify it as source, test, specification,
-documentation, content, localization, configuration, generated, vendored,
-locked, fixture, media, or binary content.
-Select the owner and one valid comparable file for each file group.
-Read each candidate, its owner, and its comparable file.
-Record an unchanged baseline for tests and generated output when a configured
-command exists.
+A warning does not show that there is a defect.
+When you get a warning, examine the content.
 
-## Review by content type
+In audit mode, do not change files.
+In cleanup mode, change only the files in the scope that the user approved.
+If the user changes the scope, select the mode again before the next edit.
+If the user tells you not to run checks, give each check that you did not run in the report.
 
-- Code: remove only confirmed defects.
-  Candidates include debug output, obsolete comments, duplicate policy, unused items, hidden failures, and abstractions without a clear benefit.
-- Prose: remove repeated meaning, stale facts, vague claims, filler, and
-  assumptions from another product. Keep exact rules, history, sources, and
-  user voice.
-- Prose repairs: apply the [technical writing checks](../../PROSE.md) within the
-  authorized scope. In audit mode, report language findings without edits.
-- Data and configuration: compare schemas, loaders, validators, consumers, and
-  siblings. Keep identifiers, balance, locale parity, provenance, and pinned package versions
-  unless their owning contract supports a change.
-- Tests: require a distinct defect signal. Coverage, file size, test count,
-  mocks, or a code smell name are not proof.
+## Get the evidence
 
-Protect generated assets, private masters, binaries, lockfiles, fixtures,
-licenses, and ignored evidence. Keep unrelated uncommitted work.
-Route reachability questions to [dead-code-audit](../dead-code-audit/SKILL.md).
+Record each file in the scope.
+Give each file one of these types:
 
-Remove only the smallest proven set of unsupported content.
-Run focused checks after each related edit group.
-Obey user restrictions on checks. Report checks that you did not run.
-Re-read the complete scope.
-Report changed and unchanged counts, exclusions, existing failures, and
-unverified behavior.
+- Source code.
+- Test.
+- Specification.
+- Documentation.
+- Content.
+- Localization.
+- Configuration.
+- Generated file.
+- Vendored file.
+- Locked file.
+- Fixture.
+- Media.
+- Binary file.
 
-Audit mode is complete when every candidate has a status, evidence, and a verification step.
-Cleanup is complete when every removal has direct evidence and all applicable focused checks pass.
+For each group of files, select the owner and one correct file of the same type.
+Read each candidate, its owner, and the correct file of the same type.
+When the repository has a command for tests or generated output, record the output before you edit.
+
+## Examine each content type
+
+- Code: remove only defects that have evidence.
+  Examine debug output, comments that do not agree with the code, and policy that the code gives two times.
+  Examine items that the code does not use.
+  Also examine failures that the code does not show, and abstractions that do not decrease work for the callers.
+- Prose: remove meaning that the text gives more than one time, and facts that are not correct at this time.
+  Remove sentences that are not clear, text that gives no information, and rules from other products.
+  Keep accurate rules, history, sources, and the voice of the user.
+- Prose repairs: in the approved scope, apply the [technical writing checks](../../PROSE.md).
+  In audit mode, give the language findings in the report without edits.
+- Data and configuration: compare the schemas, loaders, validators, consumers, and files of the same type.
+  Keep identifiers, balance, locale parity, provenance, and pinned package versions.
+  Change them only when the contract that controls them gives approval for the change.
+- Tests: find a defect signal that is different from the other tests.
+  Coverage, file length, test count, mocks, and the name of a code smell do not show a defect.
+
+Do not change generated assets, private masters, binary files, lockfiles, fixtures, licenses, or ignored evidence.
+Keep uncommitted work that is not related to the task.
+For reachability, use [dead-code-audit](../dead-code-audit/SKILL.md).
+
+## Remove the content
+
+Remove only the smallest set of unsupported content that has evidence.
+After each group of related edits, run the related checks.
+Obey the user's limits on checks.
+In the report, give each check that you did not run.
+Read the full scope again.
+
+## Complete the task
+
+In the report, give these items:
+
+- The number of changed files and the number of files that you did not change.
+- The files that you did not examine.
+- The failures that occurred before your edits.
+- The behavior that you did not examine.
+
+Audit mode is completed when each candidate has a status, evidence, and a verification step.
+Cleanup mode is completed when each removal has evidence and all the related checks pass.

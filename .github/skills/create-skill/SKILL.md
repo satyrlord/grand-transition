@@ -1,68 +1,101 @@
 ---
 name: create-skill
-description: Create, import, adapt, revise, or review a Grand Transition repository skill. Use when a workflow must become reusable repository guidance.
+description: Make, import, adapt, change, or audit a Grand Transition repository skill. Use when a workflow must become repository guidance that agents use again, or when the user tells you to examine the skills.
 ---
 
-# Create or revise a repository skill
+# Make or change a repository skill
 
 ## Select the mode
 
-Use review mode for an audit without edit authority. Report findings without edits.
-Use revision mode when the user requests a skill change or repair.
-Keep each revision within the requested scope.
+- Use audit mode when the user tells you to examine skills without edits.
+- Use revision mode when the user tells you to make, import, adapt, change, or repair a skill.
 
-## Establish the need
+In audit mode, do not change files. Give the findings in the report.
+In revision mode, change only these files:
 
-Read `AGENTS.md`, `.github/AI_TOOLING.md`, the skill catalog, and the owning
-product documents. Make sure that no existing skill already owns the action. A
-skill must change future decisions or reduce repeated discovery. Do not create
-a skill for generic model capability, one isolated task, or rules already owned
-by a specification.
+- The selected skill packages in `.github/skills/`.
+- The skill catalog in `.github/skills/SKILLS.md`.
+- Documents that have a link to a changed skill.
 
-For an import, inventory the complete source package. Keep only reusable
-workflow logic. Remove foreign names, paths, commands, tools, products,
-thresholds, and permission assumptions.
+If the user changes the scope, select the mode again before the next edit.
+If the user tells you not to edit files or not to run checks, obey that instruction.
+In the report, give each edit or check that you did not do.
+
+## Make sure that the skill is necessary
+
+Read `AGENTS.md`, `.github/AI_TOOLING.md`, the skill catalog, and the specifications that own the workflow.
+Make sure that no skill in the catalog does the same work.
+A skill must change the decisions of an agent.
+As an alternative, it must decrease the work that agents do again in each task.
+Do not make a skill for a general model function.
+Do not make a skill for one task that will not occur again.
+Do not make a skill for rules that a specification controls.
+
+For an import, record all the files in the source package.
+Keep only the workflow steps that the repository can use again.
+Remove names, paths, commands, tools, products, limits, and approval rules from other projects.
 
 ## Build the package
 
-Use a lowercase, hyphenated folder under `.github/skills/`. Put specific
-selection conditions in the `SKILL.md` metadata header. Keep the entry point concise. Use
-`references/` only for details that apply to a selected branch.
-Use `scripts/` only for repeatable deterministic work.
-Use `assets/` only for output material.
+Use a folder name in `.github/skills/` that has only lowercase letters, numbers, and hyphens.
+Put accurate conditions for skill selection in the `description` field of the `SKILL.md` metadata.
+Keep the entry point short.
+Put information in `references/` only when it applies to one selected branch.
+Put a script in `scripts/` only for work that occurs again and gives the same output each time.
+Put a file in `assets/` only when the skill output uses it.
 
-For substantial conditional procedures, keep scope, authority, routing, and
-shared completion rules in `SKILL.md`. Link each module directly from that file.
-Specify when each module must load, also after a task changes scope.
-Keep shared requirements in the entry point. Load only modules required by the task.
-Keep short, self-contained skills in one file when splitting adds no useful choice.
+For a long procedure with conditions, keep these items in `SKILL.md`:
 
-Apply the [technical writing checks](../../PROSE.md) to the complete package.
+- The scope and the approval rules.
+- The branch selection.
+- The conditions that complete each branch.
+- A link to each module.
+
+For each module, give the condition that makes it necessary to read that module.
+Also give that condition for a change of scope during the task.
+Load only the modules that are necessary for the task.
+Keep a short skill in one file when more files do not give a better selection.
 
 ## Write the text
 
-- Use short, direct sentences.
-- Use active voice and imperative verbs for instructions.
+Apply the [technical writing checks](../../PROSE.md) to all the files in the package.
+Obey these rules:
+
+- Use short sentences.
+- Use the active voice.
+- Start each instruction with an imperative verb.
 - Put one instruction in each sentence.
-- Use one term for each concept.
-- Define abbreviations at first use.
-- Replace vague, idiomatic, and ambiguous terms with specific terms.
-- Do not use incomplete lists, combined alternatives, or unnecessary jargon.
+- Use one term for one concept.
+- Give the full term when an abbreviation first occurs.
+- Use words from the ASD-STE100 dictionary, or terms from the project glossary.
+- Do not stop a list before its last item.
+- Do not put two alternatives in one word, for example `and/or`.
 
-Define the required inputs, authorization boundary, output, and completion criterion for each branch.
-Specify which files each mode can change.
-Specify how to proceed when the user changes scope or prohibits edits or tests.
-Keep automatic discovery enabled unless the user requests explicit invocation only.
-Add `agents/openai.yaml` with quoted strings and a default prompt that names the
-skill. Update `SKILLS.md` and every direct link.
+For each branch, give these items:
 
-## Validate
+- The necessary inputs.
+- The approval limit.
+- The files that the branch can change.
+- The output.
+- The condition that completes the branch.
 
-Inventory every package file before validation. Examine each branch for its trigger,
-inputs, authority, owner, procedure, output, and completion criterion.
-Compare commands and paths with the current checkout.
-Distinguish approved future work from implemented behavior.
-Remove stale workflow rules that conflict with the owning specification.
+Give the procedure for a change of scope.
+Give the procedure for a user instruction that prevents edits or tests.
+Keep automatic selection of the skill on.
+Turn it off only when the user tells you to start the skill only by its name.
+Add `agents/openai.yaml` with quoted strings.
+Give it a default prompt that includes the skill name.
+Update `SKILLS.md` and each link to the skill.
+
+## Validate the package
+
+Record each file in the package before validation.
+For each branch, examine the selection condition, the inputs, the approval, and the owner.
+Also examine the procedure, the output, and the condition that completes the branch.
+Compare each command and path with the checkout.
+Identify approved requirements that the code does not obey at this time.
+Keep them apart from the behavior that the code has at this time.
+Remove workflow rules that do not agree with the specification that controls the workflow.
 
 Validate each changed skill package with the repository runner:
 
@@ -71,23 +104,36 @@ node .github/skills/create-skill/scripts/validate-skill.mjs <skill-folder>...
 ```
 
 The runner finds `quick_validate.py` in the installed `skill-creator` package.
-It first tries an isolated `uv` environment with PyYAML.
-If that environment is unavailable, it tries an installed Python interpreter with PyYAML.
+It tries an isolated `uv` environment with PyYAML first.
+If that environment is not available, it tries an installed Python interpreter with PyYAML.
+The runner does not change the system Python installation.
+Set `CODEX_HOME` when the package is not in its default user location.
+Do not put an absolute path from the computer of a user in the repository.
+If the runner shows a `BLOCKED` message, give that message and its next step in the report.
+Do not give a pass for a blocked run.
 
-The runner does not change the system Python installation. Set `CODEX_HOME` when the package is outside its default
-user location. Do not put a user-specific absolute path in the repository.
-Report the runner's `BLOCKED` message and its next action instead of a pass.
+Examine links, terms from other products, placeholder text, and added scripts.
+Make sure that the metadata files agree.
+A pass from the validator does not show that the workflow helps the agent.
 
-Examine links, terms from other products, unfinished placeholders, and added scripts.
-Make sure that metadata files agree. A validator pass does not prove that the workflow is useful.
+For a change to skill selection, try requests that are typical for the skill.
+Do a check of module selection and of the coverage of all the necessary steps.
+Include a request that changes the scope.
+Include a request that prevents edits or tests.
+Measure the text that the agent loads and the length of the entry point as different values.
+Identify character counts and word counts as approximate token counts.
 
-For routing changes, test representative requests.
-Do a check of module selection and coverage of required steps.
-Include a request that changes scope and a request that prohibits edits or testing.
-Measure loaded guidance separately from entry-point size. Label character or word counts as proxies for tokens.
+## Complete the task
 
-Review mode is complete when every package file has a disposition and each
-finding has evidence and a verification step.
-Revision mode is complete when the trigger is precise and the workflow uses
-verified repository contracts. All resources must be reachable. Metadata must
-agree, and validation must pass.
+Before you complete audit mode, make sure of these conditions:
+
+- Each file in the package has a status.
+- Each finding has evidence and a verification step.
+
+Before you complete revision mode, make sure of these conditions:
+
+- The selection condition is accurate.
+- The workflow uses repository contracts that you examined.
+- The skill can get to all its files.
+- The metadata files agree.
+- The validation passes.

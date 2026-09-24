@@ -24,134 +24,146 @@
 
 ## Government AI robot skins
 
-Government AI has three original mechanical skins. The default skin is a lanky, obsolete civic robot with a trapezoid amber
-display and crooked antenna. It has a patched cream-and-blue chassis, blank
-form folder, long limbs, and oversized work boots. The `alternate` skin is a broad analytical records robot with a
-hexagonal cyan display, tapered aluminum cabinet chassis, blank dossier,
-three-tool drawer, and four-wheel undercarriage. Both keep the character's
-administrative function, dry temperament, and paperwork prop logic while using
-distinct original silhouettes and face systems.
+Government AI has three original mechanical skins. The default skin is a tall,
+thin, obsolete civic robot with a trapezoid amber display and a bent antenna.
+It has a patched cream-and-blue chassis, an empty form folder, long limbs, and
+oversized work boots. The `alternate` skin is a wide analytical records robot.
+It has a hexagonal cyan display, a tapered aluminum cabinet chassis, an empty
+dossier, a drawer with three tools, and an undercarriage with four wheels. The
+two skins keep the administrative function, the dry temperament, and the
+paperwork prop logic of the character. Each skin has its own original
+silhouette and face system.
 
-The `schoolteacher` skin is a severe female-coded communist robot
-schoolteacher, voiced by Microsoft Zira. It uses a rounded enamel mechanical face, angular brass spectacles, three
-antenna vanes, and burgundy academic chassis panels. It also uses a ruler, a
-blank gradebook, a bell-shaped lower chassis, and a three-wheel teaching
-platform. Do not use an apron, frills, maid cap, skirt,
-vacuum, cleaning tool, or other domestic-service costume cue.
+The `schoolteacher` skin is a strict, female-coded communist robot
+schoolteacher, with the voice Microsoft Zira. It uses a rounded enamel
+mechanical face, angular brass spectacles, three antenna vanes, and burgundy
+academic chassis panels. It also uses a ruler, an empty gradebook, a
+bell-shaped lower chassis, and a teaching platform with three wheels. Do not
+use an apron, frills, a maid cap, or a skirt.
+Do not use a vacuum, a cleaning tool, or a different domestic-service costume cue.
 
 Each non-fallback skin has one transparent 2048-square selection master. It has
-exactly five state masters with the normal AVIF/WebP variants: `thinking`,
-`delivery`, `light-hit`, `heavy-hit`, and `weakness`. Every package maps `idle`
+five state masters with the usual AVIF/WebP variants: `thinking`,
+`delivery`, `light-hit`, `heavy-hit`, and `weakness`. Each package maps `idle`
 to selection, `comeback` to delivery, and `grammar-mistake` to weakness. The
-current executable inventory contains 30 selection masters and 28 state
-packages containing 140 state masters. Keep the 27-entry
-replacement-baseline record unchanged. Declare all reviewed selections in
-`portrait-layout.json` and keep the complete manifest inventories coherent.
+executable inventory at this time contains 30 selection masters and 28 state
+packages, which contain 140 state masters. Keep the 27-entry
+replacement-baseline record with no changes. Declare all reviewed selections in
+`portrait-layout.json`, and keep the full manifest inventories coherent.
 
-The 2026-09-14 replacement selections use text-only OpenAI generation. Their
-state masters use only the new original selection masters as identity
-references. No superseded portrait or state raster is a generation input.
-All replacement masters use the native-first transparency workflow below.
-Keep uniform 32-pixel canvas padding around the smallest variant.
+The 2026-09-14 replacement selections use OpenAI generation from text only.
+Their state masters use only the new original selection masters as identity
+references. No portrait or state raster that a newer raster replaced is a
+generation input. All replacement masters use the native-first transparency
+workflow below. Keep a uniform canvas padding of 32 pixels around the smallest
+variant.
 
 Keep the fixed 27-entry selection manifest as the baseline inventory. Store
-additional slice states separately from filename-discovered portrait skins.
-State art must not create extra setup skins or enter the fixed replacement
-inventory. The runtime resolves one character, selected skin, and named state.
-Vite emits state-manifest data in a separate JavaScript chunk.
+more slice states in a different location from the portrait skins that the
+build finds from filenames. State art must not make more setup skins or go into
+the fixed replacement inventory. The runtime resolves one character, one
+selected skin, and one named state. Vite writes the state-manifest data in a
+different JavaScript chunk.
 
-Every generated
-JavaScript chunk stays within the existing 500,000-byte production gate.
-The remaining roster uses its existing selection portrait until Milestone 028.
+Each generated
+JavaScript chunk stays in the production gate of 500,000 bytes.
+The remaining roster uses its selection portrait until Milestone 028.
 
-Local Baron adds the selection-only `municipal-patron` skin under Milestone
-028. Its master is `county-baron--municipal-patron.png`, generated through the
-  OpenAI API with `gpt-image-2.5-sunburst`. Generation used native 2048 by
-  2048 dimensions, native alpha, and an authorized conforming portrait as a
-  style reference. Its replacement is
+Local Baron adds the selection-only `municipal-patron` skin in Milestone
+028. Its master is `county-baron--municipal-patron.png`. The OpenAI API
+generated it with `gpt-image-2.5-sunburst`. The generation used native 2048 by
+2048 dimensions, native alpha, and an approved conforming portrait as a
+style reference. Its replacement is
 the only visual reference for the shared funny big-head character standard. The
-owner-authorized background repair clears only alpha-1 pixels farther than four
-pixels from near-opaque content.
+background repair that the owner approved clears only alpha-1 pixels that are
+more than four pixels from near-opaque content.
 
-  A later owner-authorized deterministic
-white-balance correction reduces the visible warm cast without regeneration,
-resizing, geometry changes, or alpha changes. Keep the native border and
-contour validation rules unchanged.
-For native character variants, clear only resize-generated outer-border alpha
-at or below 8. Reject stronger border coverage instead of clipping the figure.
-Encode 128- and 256-pixel native AVIF variants losslessly so compression cannot
-restore border haze.
+Subsequently, the owner approved a deterministic
+white-balance correction. It decreases the visible warm cast without
+regeneration, resizing, geometry changes, or alpha changes. Keep the native
+border and contour validation rules with no changes.
+For native character variants, clear only the outer-border alpha that resizing
+generated at 8 or less. Reject stronger border coverage, and do not clip the
+figure. Encode the native AVIF variants of 128 and 256 pixels losslessly, so
+that compression cannot put border haze back.
 
-  Record the lossless setting in the selection manifest.
-Keep all existing byte budgets and the larger-image encoding settings.
-Decode larger native AVIF variants after encoding. If lossy compression restores
-nontransparent border pixels, encode that variant losslessly and record quality
-100 and `lossless: true` in the manifest. Keep the same byte budget and reject
-any variant that still fails alpha validation.
+Record the lossless setting in the selection manifest.
+Keep all the byte budgets and the encoding settings for larger images.
+Decode larger native AVIF variants after encoding. If lossy compression puts
+border pixels that are not transparent back, encode that variant losslessly.
+Then record quality 100 and `lossless: true` in the manifest. Keep the same
+byte budget, and reject each variant that continues to fail alpha validation.
 
-  Build the five AVIF/WebP sizes and record its reviewed left-facing direction
-and source hash. Keep the default portrait and baseline hashes unchanged.
+Build the five AVIF/WebP sizes, and record the reviewed left-facing direction
+and the source hash of the skin. Keep the default portrait and the baseline
+hashes with no changes.
 
-The roster exposes all 128-, 256-, 320-, 640-, and 960-pixel portrait variants.
-Its 21vw image size hint accounts for square-source cover fitting and the
-3.12 active headshot scale in the six-column grid. The browser selects the
-resolution for the viewport and device pixel ratio, up to the 960-pixel maximum.
-Selected setup stages use their own selection-art size hint. Match image size hints match the reserved portrait plane, min(80svh, 60vw).
-Supported viewports do not use the roster or setup hint for a larger match
-image.
+The roster shows all portrait variants of 128, 256, 320, 640, and 960 pixels.
+Its image size hint of 21vw includes the cover fit of the square source.
+It also includes the active headshot scale of 3.12 in the grid of six columns. The browser
+selects the resolution for the viewport and the device pixel ratio, up to the
+maximum of 960 pixels. Selected setup stages use their own size hint for the
+selection art. The match image size hints agree with the reserved portrait
+plane, min(80svh, 60vw).
+Supported viewports do not use the roster hint or the setup hint for a larger
+match image.
 
-`src/assets/characters/portrait-layout.json` records each baseline source's
-reviewed left or right facing direction and source hash. The builder rejects
-missing, invalid, or stale layout records and copies the facing direction into
-the selection manifest. Layout records do not create skins. Filename discovery
-still owns the skin catalog. State drawings share their selected skin's facing
-  direction. A later unmanifested interim portrait uses the right-facing default
-  until Milestone 028 promotes it.
+`src/assets/characters/portrait-layout.json` records the reviewed left or right
+facing direction and the source hash of each baseline source. The builder
+rejects missing, incorrect, or out-of-date layout records, and it copies the
+facing direction into the selection manifest. Layout records do not make skins.
+Filename discovery continues to control the skin catalog. State drawings use
+the facing direction of their selected skin. A subsequent temporary portrait
+that is not in the manifest uses the right-facing default until Milestone 028
+promotes it.
 
-Setup stages and matches mirror the drawing when its source direction differs
-from the opponent's direction. Both opponents face the confrontation. Mirror
-the drawing layer independently of the reaction transform. Recoil moves away
-from the opponent on either side, including when the source faces left. This
-also applies to selection-only fallback portraits and their turn-entry motion. Keep
-text, controls, and scene layers in their normal orientation.
+Setup stages and matches mirror the drawing when its source direction is
+different from the direction of the opponent. The two opponents face the
+confrontation. Mirror the drawing layer independently of the reaction
+transform. The reaction movement goes away from the opponent on each side, also when the
+source faces left. This also applies to selection-only fallback portraits and
+their turn-entry motion. Keep text, controls, and scene layers in their usual
+orientation.
 
 ## Deliver
 
 Build the Sharp pipeline, manifest validation, visual tokens, and responsive
-asset loading. Milestone 018 owns compact landscape and portrait layout
+asset loading. Milestone 018 controls the compact landscape and portrait layout
 adaptations. Portrait uses the same aligned scene planes in a scene region
 above its full-width phrase pool. Scene-canvas geometry applies to that region,
-not to the full scrolling page. The integrated scene-and-pool placement below
-remains the desktop landscape contract.
+not to the full page, which scrolls. The integrated scene-and-pool placement
+below stays the desktop landscape contract.
 
-Regenerate the fixed current character and scene asset baseline
-from scratch as original final-quality static art. Complete state and motion art
-for the four vertical-slice characters and one scene. Add core reactions,
-visual lighting effects, and transitions.
-Keep each code package within the ten-production-file budget. Keep each
+Generate again, from the start, the fixed character and scene asset baseline of
+this time, as original static art of release quality. Complete the state art
+and motion art for the four vertical-slice characters and one scene. Add core
+reactions, visual lighting effects, and transitions.
+Keep each code package in the budget of ten production files. Keep each
 character-state art package to one master and six runtime files.
 
 ### Comeback sidekick pilot
 
-Comeback sidekicks are optional character-owned transparent prop layers. Their
-filename is `<character-id>.png` under `src/assets/sidekicks/`. Runtime discovery
-must not use a hand-maintained character map. Each approved source is one
-static, right-facing, native-alpha square image. The match mirrors that same
-image for player two.
+Comeback sidekicks are optional transparent prop layers that a character
+controls. Their filename is `<character-id>.png` in `src/assets/sidekicks/`.
+Runtime discovery must not use a character map that a person edits by hand.
+Each approved source is one static, right-facing, native-alpha square image.
+The match mirrors that same image for player two.
 
 Sidekicks use the shared flat cel-shaded editorial-cartoon
-language but remain separate from selection skins and character-state packages.
-Every sidekick is cartoony and anthropomorphic. Human concepts are compact stringless minions. Animal concepts are expressive
-pets. Object, plant, or vehicle concepts keep their recognizable base
-silhouette.
+language, but they are different from selection skins and character-state
+packages. Each sidekick is cartoony and anthropomorphic. Human concepts are
+compact minions with no strings. Animal concepts are expressive pets. Object,
+plant, or vehicle concepts keep the base silhouette that a person can recognize.
 
-They gain an integrated face or clear human-like character acting. Use bold connected shapes, thick near-opaque contours, and simplified details.
-These remain legible at the runtime scale and pass native-alpha
-preparation. Do not use a realistic inert object or realistic animal. Do not use puppet
-strings, marionette joints, hairline rigging, detached haze, or fine
-semi-transparent ornament.
+They get an integrated face or clear expressions and gestures like a human character.
+Use bold connected shapes, thick near-opaque contours, and simplified details.
+These stay easy to read at the runtime scale, and they pass native-alpha
+preparation. Do not use a realistic object with no expression or a realistic
+animal. Do not use puppet strings, marionette joints, hairline rigging, haze
+that is not connected, or thin semi-transparent ornament.
 
-The playable rollout currently contains these manually approved files:
+At this time, the playable rollout contains these files that the user approved
+manually:
 
 - `algorithmic-prophet.png`.
 - `apartment-block-geopolitician.png`.
@@ -173,30 +185,31 @@ The playable rollout currently contains these manually approved files:
 - `thunder-tribune.png`.
 - `velvet-mogul.png`.
 
-Unknown character IDs deliberately resolve no sidekick. A
-missing sidekick is valid and must not block catalog loading, match setup, or a
-Comeback.
+Unknown character IDs intentionally resolve no sidekick. A
+missing sidekick is correct, and it must not stop catalog loading, match setup,
+or a Comeback.
 
-`src/assets/sidekicks/layout.json` records each PNG's source height and the
-exclusive last nontransparent pixel row. Derive these values from decoded
-native alpha. The view compensates for this transparent lower padding so the
-visible base reaches the viewport floor without changing the approved raster.
-`tests/unit/sidekick-assets.test.ts` does checks of the complete filename inventory
-and pixel bounds against every source PNG. Run
-`node tools/sidekick-assets.mjs build` after changing a source PNG. Run
+`src/assets/sidekicks/layout.json` records the source height of each PNG and
+the exclusive last pixel row that is not transparent. Get these values from
+decoded native alpha. The view compensates for this transparent lower padding,
+so that the visible base touches the viewport floor. The approved raster does
+not change.
+`tests/unit/sidekick-assets.test.ts` does checks of the full filename inventory
+and the pixel bounds against each source PNG. After you change a source PNG,
+run `node tools/sidekick-assets.mjs build`. Run
 `node tools/sidekick-assets.mjs validate` to validate the generated metadata.
 
 ## Regeneration baseline and decision recovery
 
 ### Fixed replacement baseline
 
-This milestone regenerates the explicit fixed character and scene Portable
-Network Graphics (PNG) baseline below. Do not derive the scope from a later
-directory scan. The baseline contains 27 character PNG files and four scene PNG
-files.
+This milestone generates again the fixed character and scene Portable
+Network Graphics (PNG) baseline below. The list is explicit. Do not get the
+scope from a subsequent directory scan. The baseline contains 27 character PNG
+files and four scene PNG files.
 
 The fixed character baseline contains 18 default portraits and these nine
-alternate portraits. Later roster additions do not change this baseline:
+alternate portraits. Characters that the project adds to the roster subsequently do not change this baseline:
 
 - `government-ai--alternate.png`.
 - `midnight-sensationalist--alternate.png`.
@@ -208,104 +221,107 @@ alternate portraits. Later roster additions do not change this baseline:
 - `velvet-mogul--silk-diplomat.png`.
 - `velvet-mogul--velvet-statesman.png`.
 
-Do not regenerate, ship, or count `black-sea-captain--alternate.png` in this
+Do not generate again, ship, or count `black-sea-captain--alternate.png` in
+this baseline.
+
+Do not generate again, ship, or count `presidential-sphinx.png` in this
 baseline.
 
-Do not regenerate, ship, or count `presidential-sphinx.png` in this baseline.
-
 `tools/scene-replacement-baseline.json` records the four replaced studio-layer
-hashes for inventory validation only. It is not an art input. Validation
-rejects reintroduction of those source hashes. Private generation records
-keep the new diagram and draft input graph and the authorized deterministic
-flat-color and geometry finishing procedure.
+hashes only for inventory validation. It is not an art input. Validation
+rejects those source hashes if they come back. Private generation records
+keep the new diagram, the draft input graph, and the approved deterministic
+finishing procedure for flat color and geometry.
 
-The scene baseline contains these current layers:
+The scene baseline contains these layers of this time:
 
 - `modern-debate-studio.png`.
 - `modern-debate-studio-desks.png`.
 - `transition-era-television-studio.png`.
 - `transition-era-television-studio-desks.png`.
 
-The current playable catalog also includes four opaque scene masters:
+The playable catalog of this time also includes four opaque scene masters:
 `county-council-ballroom.png`, `midnight-call-in-studio.png`,
 `palace-press-hall.png`, and `influencer-campaign-livestream.png`. These use the
-same 16:9 source canvas, resolution-specific runtime variants, crop core, and shared safe
-rectangles. Each has a focal point at `(0.5, 0.5)` and explicitly absent
-moderator and foreground-desk focal rectangles. Milestone 028 adds four
-foundation foreground layers. The asset pipeline validates all twelve scene
-masters.
+same 16:9 source canvas, runtime variants for each resolution, crop core, and
+shared safe rectangles. Each has a focal point at `(0.5, 0.5)`. For each, the
+moderator focal rectangle and the foreground-desk focal rectangle are
+explicitly absent. Milestone 028 adds four foreground layers for the foundation
+scenes. The asset pipeline validates all twelve scene masters.
 
-Keep the four-layer baseline as the studio
-regeneration boundary. Use the four opaque backgrounds as the foundation
-scenes under Milestone 026.
+Keep the four-layer baseline as the boundary for studio regeneration. Use the
+four opaque backgrounds as the foundation scenes of Milestone 026.
 
-An asset added after this fixed baseline does not enter Milestone 023
-automatically. Milestone 028 owns later portraits, skins, states, scene
-identities, and layers. Regenerating the fixed baseline does not move those
-future requirements into this milestone.
+An asset that the project adds after this fixed baseline does not go into
+Milestone 023 automatically. Milestone 028 controls subsequent portraits,
+skins, states, scene identities, and layers. When the fixed baseline is
+generated again, those future requirements do not move into this milestone.
 
-Regeneration is atomic for each represented archetype. Regenerate its default
-portrait and every baseline alternate skin in the same art pass. Review them as
-one package before accepting any file. Do not keep, accept, or ship a
-non-regenerated alternate skin beside a regenerated default skin. An alternate
-added after the fixed baseline remains under Milestone 028.
-Create it from scratch under the same locked art direction and completed
+Regeneration is atomic for each archetype in the baseline. Generate again its
+default portrait and each baseline alternate skin in the same art pass. Review
+them as one package before you accept a file. If the default skin is regenerated, do not keep, accept, or ship an
+alternate skin that is not regenerated. An alternate that the project adds after the fixed
+baseline stays in Milestone 028.
+Make it from the start with the same locked art direction and the completed
 character study.
 
-For targeted skin consistency repairs, conforming project portraits can be
-used as visual style references within the authorized repair task. Keep
+For targeted repairs of skin consistency, conforming project portraits can be
+visual style references in the approved repair task. Keep
 their source, license, hash, and role in the private input record. Use them to
-match rendering technique, not to replace the target character's identity.
-This style-reference path supersedes the input prohibition below
-for those repairs. It does not authorize references from unrelated external art.
+match the rendering technique. Do not use them to replace the identity of the
+target character. For those repairs, this style-reference path replaces the
+input prohibition below. It does not give approval for references from
+external art that is not related.
 
-Regenerate each baseline asset as new art. A current raster can be examined
-only to find a missing, lost, or conflicting decision. Do not give a current
-raster to an image generator. Do not trace it or edit it.
+Generate each baseline asset again as new art. You can examine a raster of this
+time only to find a decision that is missing or that does not agree with a different decision. Do not give
+a raster of this time to an image generator. Do not trace it or edit it.
 
 Do not composite it into a new master. Do not use
-it as an image-to-image, identity, composition, or style reference. Generation
-inputs are the approved public art direction and a
+it as an image-to-image, identity, composition, or style reference. The
+generation inputs are the approved public art direction and a
 complete private character study or approved scene specification.
 
 ### Character readiness
 
-Each of the 19 represented archetypes must have one complete private character
-study before regeneration starts for any of its skins. An existing prompt does
-not qualify as a complete study. The study must define the archetype,
-silhouette, proportions, face or mechanical
-display, and clothing or chassis. It must also define gesture rhythm, prop logic,
-palette, every baseline skin, state language, and exclusions. Record the
-contract sources and any material implementation assumptions in the private
-study. A separate product-owner sign-off is not required.
+Each of the 19 archetypes in the baseline must have one complete private
+character study before regeneration starts for one of its skins. A prompt that
+the project has does not count as a complete study. The study must give the
+archetype, silhouette, proportions, face or mechanical
+display, and clothing or chassis. It must also give the gesture rhythm, prop
+logic, palette, each baseline skin, state language, and exclusions. Record the
+contract sources and the important implementation assumptions in the private
+study. A different sign-off from the product owner is not necessary.
 
-The art agent audits the study before generation. Resolve routine missing
-details from the owning contracts and record material assumptions in the
-private study. A current raster or prompt can identify a discrepancy but does
-not override the art direction. Ask the user only when a required input cannot
-be resolved from the contracts and blocks generation. A mandatory interview or
-human approval is not part of readiness.
+The art agent audits the study before generation. Use the owner contracts to
+resolve usual missing details, and record important assumptions in the
+private study. A raster or prompt of this time can identify a difference, but
+it does not override the art direction. Tell the user about an input only when
+the contracts cannot resolve a necessary input and it blocks generation. A
+mandatory interview or human approval is not part of readiness.
 
 ### Scene readiness
 
-Each baseline scene layer must have a complete direction in its approved owning
-specification. The direction must define the camera, composition, layer
-boundary, moderator when present, architecture, furniture, props, lighting,
-palette, focal regions, interface-safe regions, and responsive crop. A prompt
-in the temporary folder is implementation evidence only and does not complete
-this direction.
+Each baseline scene layer must have a complete direction in its approved owner
+specification. The direction must give the camera, the composition, the layer
+boundary, the moderator when there is one, the architecture, the furniture,
+and the props. It must also give the lighting, the palette, the focal regions,
+the interface-safe regions, and the responsive crop. A prompt in the temporary
+folder is only implementation evidence, and it does not complete this
+direction.
 
-When scene information is missing, unclear, or contradictory, resolve routine
-details from the shared art and scene contracts. Record material assumptions. Update the owning specification when its durable direction
-changes. Ask only for a required input that cannot be resolved from those
-contracts and blocks generation. A separate interview or human sign-off is
-not required.
+When scene data is missing, not clear, or does not agree with other data, use the shared art and
+scene contracts to resolve usual details. Record important assumptions. When
+the durable direction of the owner specification changes, update that
+specification. Tell the user only about a necessary input that those contracts
+cannot resolve and that blocks generation. A different interview or human
+sign-off is not necessary.
 
-Use one locked art direction for the complete baseline. Review all regenerated
-assets together. A successful isolated portrait or scene does not establish
-visual consistency. The complete set must use one flat cel-shaded cartoon language, contour system,
-shape construction, and value-step limit. Material simplification, lighting
-logic, proportion system, texture density, and level of exaggeration must also agree.
+Use one locked art direction for the full baseline. Review all the regenerated assets together. One correct portrait or scene alone does not show
+visual consistency. The full set must use one flat cel-shaded cartoon language,
+contour system, shape construction, and value-step limit. Material
+simplification, lighting logic, proportion system, texture density, and level
+of exaggeration must also agree.
 
 Each of the four Milestone 023 vertical-slice characters has one default skin
 and zero through eight alternate skins. One archetype has no more than eight
@@ -313,367 +329,397 @@ alternate skins. The Black Sea Captain has no alternate skin in this baseline.
 Default portraits use `<character-id>.png`.
 
 Alternate portraits use
-`<character-id>--<skin-id>.png`. Asset discovery derives the skin catalog from
+`<character-id>--<skin-id>.png`. Asset discovery gets the skin catalog from
 this filename convention. It does not use a TypeScript skin registry.
 
-The default skin is first. The setup roster exposes every discovered selectable skin as one portrait
-choice. If no skin is selected, the default remains the archetype's first
-fallback.
+The default skin is first. The setup roster shows each selectable skin that
+discovery finds as one portrait choice. If no skin is selected, the default
+stays the first fallback of the archetype.
 
-Setup stages and matches use the selected skin. All skins for one character share its character
-identity and phrase content.
+Setup stages and matches use the selected skin. All skins for one character
+share its character identity and phrase content.
 
 ## Overall art direction
 
 The only approved direction for generated representational raster art is a flat
-cel-shaded editorial cartoon. It combines exaggerated political caricature,
+cel-shaded editorial cartoon. It is a mix of exaggerated political caricature,
 theatrical staging, late-2000s post-socialist broadcast graphics, bureaucracy,
-decayed luxury, and restrained modern overlays. Use an integrated arena
+decayed luxury, and limited modern overlays. Use an integrated arena
 composition. One authored scene fills the play field.
 
 Opponents face each other
-at the sides. Status frames the top, and speech spans the confrontation.
-Sentence construction owns the center.
+at the sides. Status is at the top, and speech goes across the confrontation.
+Sentence construction controls the center.
 
-This direction supports immediate video-game readability and the deliberately
-silly tone of a browser game. It reduces reliance on realistic facial and
-material detail that can expose generated artifacts or create an accidental
-close likeness. It does not replace originality, license, or provenance
-requirements.
+This direction helps the player read the game immediately, and it agrees with
+the intentionally silly tone of a browser game. It decreases the use of
+realistic facial detail and material detail. That detail can show generated
+artifacts or make an accidental close likeness. It does not replace the
+requirements for originality, license, or provenance.
 
-Secondary actions use the perimeter. Do not put the scene above a separate
-three-column dashboard.
+Secondary actions use the perimeter. Do not put the scene above a different
+dashboard with three columns.
 
-Use the same flat cel-shaded construction for every character, skin, state,
+Use the same flat cel-shaded construction for each character, skin, state,
 robot, fixed moderator, scene, and foreground plate. Apply it to each
 architecture element, furniture item, lighting fixture, and prop. No
 representational raster can use a
 secondary or blended rendering style.
 
-Construct each asset with these mandatory rules:
+Make each asset with these mandatory rules:
 
-- Use bold dark contours around the main silhouette and important internal
+- Use bold dark contours around the main silhouette and the important internal
   forms. Keep one consistent relative contour weight across people, robots,
   furniture, props, and architecture.
-- Build forms from large, clean, flat color shapes. Each local color can use a
+- Make forms from large, clean, flat color shapes. Each local color can use a
   base value, one hard-edged shadow value, and one optional hard-edged highlight
   value. Do not use soft modeled transitions.
-- Use deliberate caricature. Exaggerate selected head, face, body, posture,
-  gesture, prop, furniture, and architectural shapes while keeping coherent
-  human or mechanical anatomy, functional perspective, and readable occlusion.
-- Show material differences through silhouette, color, contour, and limited
-  flat pattern. Do not simulate skin pores, fabric weave, polished metal,
-  glossy plastic, marble depth, or other microtexture.
-- Express light with designed hard-edged shadow and highlight shapes. Do not use
-  photographic light falloff, soft airbrushing, bloom, depth of field,
+- Use intentional caricature. Exaggerate the selected shapes of the head, face,
+  body, posture, gesture, prop, furniture, and architecture. Keep coherent
+  human or mechanical anatomy, functional perspective, and occlusion that is
+  easy to read.
+- Show material differences through silhouette, color, contour, and a small
+  quantity of flat pattern. Do not simulate skin pores, fabric weave, polished
+  metal, glossy plastic, marble depth, or other microtexture.
+- Show light with designed hard-edged shadow shapes and highlight shapes. Do not
+  use photographic light falloff, soft airbrushing, bloom, depth of field,
   volumetric light, or ray-traced reflection.
 - A sparse low-contrast paper or screen-print texture can cover large shapes.
-  It must not model volume, imitate realistic material, obscure contours, or
-  create generated clutter.
+  It must not model volume, imitate realistic material, hide contours, or
+  make generated clutter.
 
-Painted comic-book rendering, painterly semi-realism, realistic concept art,
-photographic or stock-photo rendering, hyper-realism, and
-three-dimensional-render styling are prohibited. Also reject soft blended
-shading, glossy model-like surfaces, realistic portrait finish, inconsistent
-outline weight, tiny decorative noise, accidental symbols, malformed anatomy,
-and nonsensical construction detail.
+These styles are not permitted: painted comic-book rendering, painterly
+semi-realism, and realistic concept art. Photographic or stock-photo
+rendering, hyper-realism, and three-dimensional-render styling are also
+not permitted. Also reject these results:
 
-Designed shapes and color can keep a scene's era, palette, architecture,
-and materials. The scene must remain visibly part of the same flat cartoon
-world as its characters.
+- Soft blended shading, glossy surfaces that look like a model, and a realistic
+  portrait finish.
+- Outline weight that is not consistent and tiny decorative noise.
+- Accidental symbols, malformed anatomy, and construction detail that has no
+  sense.
 
-This structure is adapted from user-supplied original-game references. It is a
-composition and interaction precedent, not a parity target. Keep the cartoon
-stage as authored art and rebuild every game value, phrase, and control as HTML
-components. Use original characters and product truth. Do not copy another
-game's art, brands, names, exact ornament, fonts, proportions, unsupported
-actions, or rasterized interface text. Do not use generic dashboard cards and
-stock fantasy frames.
+Designed shapes and color can keep the era, palette, architecture,
+and materials of a scene. The scene must stay visibly part of the same flat
+cartoon world as its characters.
+
+This structure comes from references from the source game that the user gave. It is
+an example for composition and interaction. It is not a target for parity. Keep
+the cartoon stage as authored art, and make each game value, phrase, and
+control again as HTML components. Use original characters and product truth.
+Do not copy the art, brands, names, ornament, fonts, or proportions of a
+different game. Also do not copy its unsupported actions or its rasterized
+interface text. Do not use generic dashboard cards and stock fantasy frames.
 
 Use a dark institutional palette with navy, charcoal, paper,
 oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
 
 ### Color and white balance
 
-Use neutral sRGB white balance and an ungraded color treatment. Do not apply a
-global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash. Warm
-color is local to an authored material or light, such as brass, wood, cream,
-skin, oxide red, or a lamp. Navy and charcoal shadows must keep their cool or
-neutral separation, and declared neutral anchors must not become yellow. Do not
-cancel a warm cast with a global blue filter. Reject the asset and regenerate
-it from the approved direction.
+Use neutral sRGB white balance and a color treatment with no grade. Do not
+apply a global yellow, amber, sepia, golden-hour, mustard, beige, or brown
+wash. Warm color is local to an authored material or light, for example brass,
+wood, cream, skin, oxide red, or a lamp. Navy and charcoal shadows must keep
+their cool or neutral separation, and declared neutral anchors must not become
+yellow. Do not cancel a warm cast with a global blue filter. Reject the asset,
+and generate it again from the approved direction.
 
 ### Character art direction
 
-The product term **office clip-art style** names the approved playable-character
-finish. It means a funny adult political-office caricature with restrained
-oversized-head proportions, readable formal clothing, and one immediate visual
-joke. It uses controlled dark contours, expressive interior lines, large clean
-shapes, and broad hard-edged cel shading. It does not permit generic stock clip art,
-sticker-like vector art, pasted photographic faces, or mixed rendering styles.
+The product term **office clip-art style** is the name of the approved
+playable-character finish. It is a funny adult political-office caricature. It
+has limited oversized-head proportions, formal clothing that is easy to
+read, and one immediate visual joke. It uses controlled dark contours,
+expressive interior lines, large clean shapes, and broad hard-edged cel
+shading. It does not let the art use generic stock clip art or vector art that looks
+like a sticker. It also does not let the art use photographic faces that are
+pasted on or mixed rendering styles.
 
-The Algorithmic Prophet wears a small plain gray wizard hat. Keep the face,
-expression, gesture, clothing, and funny big-head character style consistent. This
-targeted, owner-requested headwear edit can use its existing portrait as the
-edit target. It is an exception to the baseline clean-room replacement rule.
-The shared selection master supplies roster, setup, and match portraits.
+The Algorithmic Prophet has a small plain gray wizard hat. Keep the face,
+expression, gesture, clothing, and funny big-head character style consistent.
+The owner gave the instruction for this targeted headwear edit. It can use its portrait as the
+edit target. It is an exception to the clean-room replacement rule of the
+baseline. The shared selection master gives the roster, setup, and match
+portraits.
 
-Rebuild
-all five AVIF and WebP sizes from the reviewed transparent 2048-square master.
+Make all five AVIF and WebP sizes again
+from the reviewed transparent 2048-square master.
 The master uses native OpenAI API transparency with `gpt-image-2.5-sunburst`.
-Its owner-authorized background cleanup clears only alpha-1 pixels farther than
-four pixels from near-opaque content. Keep all RGB values and contour alpha.
+The background cleanup that the owner approved clears only alpha-1 pixels
+that are more than four pixels from near-opaque content. Keep all RGB values
+and the contour alpha.
 
 All default skins, alternate skins, and their state drawings use one funny
 big-head cel-shaded editorial-cartoon style. The
 `county-baron--municipal-patron` selection portrait is the only visual north
 star for character proportions, comic tone, shape language, contour hierarchy,
-and cel shading. Compare rendering at the same displayed figure height. The
-visual reference does not waive alpha, provenance, color, anatomy, or other technical
-requirements. Identity, species, age, build, clothing, pose, and expression can
-vary. Rendering technique, comic tone, and exaggeration level cannot vary by
-skin.
+and cel shading. Compare the rendering at the same displayed figure height. The
+visual reference does not cancel the alpha, provenance, color, anatomy, or
+other technical requirements. Identity, species, age, build, clothing, pose,
+and expression can be different. Rendering technique, comic tone, and
+exaggeration level cannot be different for each skin.
 
-Every human portrait keeps a recognizably adult full-body silhouette and
-coherent anatomy while using a visibly oversized head. Every mechanical skin
-uses an equivalently oversized expressive face or display. The character must
-read as funny before the nameplate is visible through its face, posture,
-gesture, prop logic, or their combination. A serious prestige portrait,
-naturalistic head-to-body ratio, merely handsome or glamorous illustration, or
-straight realistic likeness fails even when it has outlines and cel shading.
+Each human portrait keeps a full-body silhouette that is recognizably adult
+and coherent anatomy, with a head that is visibly oversized. Each mechanical
+skin uses an oversized, expressive face or display.
+Before the nameplate is visible, the character must look funny through its
+face, posture, gesture, prop logic, or a combination of them. These results
+fail, also when they have outlines and cel shading:
 
-For an approved real-person-inspired likeness, keep photographs in private
-identity study only. First create a private, non-shipping face design that
-translates the identity into the office clip-art style. The final full-body
-Flare request can use that stylized face design and Municipal Patron as separate
-identity and style references. Do not give the final full-body request a
-photograph. Reject photographic skin modeling pasted onto a simplified body.
+- A prestige portrait that is not funny.
+- A naturalistic head-to-body ratio.
+- An illustration that is only handsome or glamorous.
+- A straight realistic likeness.
+
+For an approved likeness that a real person inspired, keep photographs only
+in the private identity study. First make a private face design that does not
+ship. This design changes the identity into the office clip-art style. The
+last full-body Flare request can use that stylized face design and Municipal
+Patron as different identity and style references. Do not give the last
+full-body request a photograph. Reject photographic skin modeling that is
+pasted onto a simplified body.
 
 Use controlled dark silhouette contours with clear expressive interior lines.
-Keep readable eyelids, brows, nose and mouth construction, hand articulation,
-grouped hair detail, and purposeful clothing folds. Keep these details
-subordinate to large clean shapes and broad hard-edged cel-shaded value regions.
-Do not use fine portrait modeling, realistic surface rendering, or tailoring
-detail to move a character toward prestige illustration.
+Keep eyelids, brows, and the construction of the nose and mouth easy to read.
+Also keep hand articulation, grouped hair detail, and purposeful clothing
+folds easy to read. Keep these
+details less important than the large clean shapes and the broad hard-edged
+cel-shaded value regions. Do not use detailed portrait modeling, realistic surface
+rendering, or tailoring detail.
+These move a character to prestige illustration.
 
 Reject heavy uniform marker outlines, minimalist vector or cut-paper rendering,
-featureless hair blocks, and simplified sticker-like figures. Also reject
-anime facial rendering, painterly realism, photographic texture, and glossy
-three-dimensional shading. Do not mistake a youthful face, exaggerated build,
-or mechanical anatomy for a different style when the rendering remains consistent.
+hair blocks with no features, and simplified figures that look like stickers.
+Also reject anime facial rendering, painterly realism, photographic texture,
+and glossy three-dimensional shading. A young face, an exaggerated build, or
+mechanical anatomy is not a different style when the rendering stays
+consistent.
 
-Audit every selection portrait and available state drawing against this same
-standard. Regenerate only nonconforming drawings. Keep conforming art,
-stable identifiers, character identity, pose purpose, and gameplay data.
-This targeted consistency repair supersedes the atomic baseline-regeneration
-rule above. A replacement must pass a comparison with the only visual reference and
-its own newly accepted selection before import.
+Audit each selection portrait and each available state drawing against this
+same standard. Generate again only the drawings that do not conform. Keep the
+conforming art, the stable identifiers, the character identity, the pose
+purpose, and the gameplay data.
+This targeted consistency repair replaces the atomic baseline-regeneration
+rule above. Before import, a replacement must pass a comparison with the only
+visual reference and with its own newly accepted selection.
 
 Transparency acceptance and
-style conformance are separate checks. Agents can perform the image comparison
-and keep its observations. No skin has an individual style exception. The
-product owner performs the required manual in-game archetype acceptance after
-agent integration and validation.
+style conformance are different checks. Agents can do the image comparison
+and keep their observations. No skin has an individual style exception. After
+agent integration and validation, the product owner does the necessary manual
+acceptance of the archetype in the game.
 
-Every playable character must communicate one distinct fictional political,
-media, civic, or bureaucratic archetype before the nameplate is visible. This
-is a mandatory direction for all characters and all skins. Do not use a generic
-politician, generic presenter, generic official, generic robot, or placeholder
-portrait.
+Each playable character must show one fictional political, media, civic, or
+bureaucratic archetype that is different from the others, before the nameplate
+is visible. This is a mandatory direction for all characters and all skins. Do
+not use a generic politician, generic presenter, generic official, generic
+robot, or placeholder portrait.
 
 Character exaggeration must be intentional and stable. Each private study names
 the features that become larger, smaller, sharper, rounder, longer, shorter, or
 more angular. The visibly oversized head or mechanical face is mandatory, but
-do not enlarge every facial feature equally. Alternate skins apply the same
-comic proportion system, rendering technique, contour hierarchy, shading
-density, texture, and shape rules as the default skin.
+do not make all facial features larger by the same quantity. Alternate skins
+apply the same comic proportion system, rendering technique, contour
+hierarchy, shading density, texture, and shape rules as the default skin.
 
-Regenerate a complete skin package when any one of these conditions holds:
+Generate a full skin package again when one of these conditions is true:
 
-- The selection or a state is too realistic, is not visibly funny, or lacks the
-  mandatory oversized head or mechanical face.
-- A shipping master was enlarged from an undersized generation instead of
-  being generated directly at the required OpenAI Flare or Sunburst API size.
+- The selection or a state is too realistic, is not visibly funny, or does not
+  have the mandatory oversized head or mechanical face.
+- The project made a shipping master larger from a generation that was too small.
+  A shipping master must come directly from the OpenAI Flare or Sunburst API
+  at the necessary dimensions.
 - A selection or state has a visible global yellow, amber, sepia, mustard,
-  beige, brown, or comparable warm wash. Passing the numeric color guard does
-  not override a visible visual-reference comparison failure.
+  beige, brown, or equivalent warm wash. When the image passes the numeric color
+  guard, this does not override a visible failure of the comparison with the
+  visual reference.
 
 If you replace a selection, replace all five state masters for that skin.
-Do not use old realistic or differently proportioned state art with a new
-selection. Review and integrate only one playable archetype at a time. After
-agent validation and complete integration, the product owner manually tests
-and accepts that archetype in-game. Do not begin another archetype without
-express permission.
+Do not use previous state art that is realistic or that has different
+proportions with a new selection. Review and integrate only one playable archetype at a time.
+After agent validation and full integration, the product owner manually does
+tests of that archetype in the game and accepts it. Do not start a different
+archetype without explicit permission.
 
-Do not run `quality:quick` between archetypes. Run it once
-after the complete regeneration program is accepted.
+Do not run `quality:quick` between archetypes. Run it one time
+after the user accepts all the regenerated archetypes.
 
-Define each character through one coherent set of visual decisions:
+Give each character one coherent set of visual decisions:
 
-- a dominant full-body silhouette and body proportion.
-- a distinct head shape, face design, hair design, or mechanical face system.
-- role-specific clothing or chassis construction.
-- a signature posture and gesture rhythm.
-- one meaningful prop, one coherent prop system with one dominant object and
-  at most one supporting object, or an explicit no-prop rule.
-- one character accent color within the shared institutional palette.
+- A dominant full-body silhouette and body proportion.
+- A head shape, face design, hair design, or mechanical face system that is
+  different from the other characters.
+- Clothing or chassis construction for the role.
+- A signature posture and gesture rhythm.
+- One meaningful prop, one coherent prop system, or an explicit no-prop rule.
+  A prop system has one dominant object and one secondary object or none.
+- One character accent color in the shared institutional palette.
 
-The silhouette, posture, face system, and prop logic must remain legible at the
-smallest supported match size. At least three of these traits must distinguish
-the character from every other character with a similar social role. Do not
-depend on one color or one handheld object for recognition.
+At the smallest supported match size, the silhouette, posture, face system,
+and prop logic must stay easy to read. Three or more of these traits must make
+the character different from each other character with an equivalent social role.
+Recognition must not come from only one color or one handheld object.
 
-The default skin establishes the archetype. An alternate human skin can change
-gender, age, hair, and clothing, but it must keep the archetype's role,
-temperament, gesture rhythm, and prop logic. An alternate robot skin can change
-the chassis, but it must keep the same administrative function, expression
-system, temperament, and prop logic. Every pose and expression must look like
-the same fictional character under a new game condition.
+The default skin sets the archetype. An alternate human skin can change
+gender, age, hair, and clothing. But it must keep the role, temperament,
+gesture rhythm, and prop logic of the archetype. An alternate robot skin can
+change the chassis. But it must keep the same administrative function,
+expression system, temperament, and prop logic. Each pose and expression must
+look like the same fictional character in a new game condition.
 
 Each character is human or fully mechanical. Animal words in names, titles,
-insults, or metaphors must not produce animal anatomy. Human character masters
+insults, or metaphors must not cause animal anatomy. Human character masters
 and runtime variants reject animal heads, ears, muzzles, beaks, feathers,
 tails, wings, paws, fur, scales, and human-animal hybrids. Robot characters
 reject human, animal, and hybrid anatomy.
 
-Character-specific visual descriptions and other private study data belong only
-in the Git-ignored research folder. The research folder supplies approved
-private generation briefs, but it is not a published product contract and
-never ships. Public specifications, shipped prompts, source notes, and asset
+Visual descriptions of each character and other private study data are only in
+the Git-ignored research folder. The research folder gives approved private
+generation briefs, but it is not a published product contract, and it does not
+ship. Public specifications, shipped prompts, source notes, and asset
 metadata use fictional names and generic source descriptions. They do not
-include real-person names. Research can inform original, transformative work,
-but it does not permit copying one photograph, artwork, logo, or exact pose.
+include real-person names. Research can help original, transformative work,
+but it does not let you copy one photograph, artwork, logo, or pose.
 
 ### Scene art direction
 
 Use the flat cel-shaded editorial-cartoon direction for Transition-Era
-Television Studio. Keep the blonde adult moderator's identity direction in the
-private generation brief. Use an attentive, mildly exasperated adult
-caricature, navy jacket, and light blouse. Reject anime, childlike, doll-like,
-and geometric-placeholder faces. Generate through text prompts only, without
-image references.
+Television Studio. Keep the identity direction of the blonde adult moderator
+in the private generation brief. Use an attentive adult caricature that is a
+small quantity angry, with a navy jacket and a light blouse. Reject anime,
+childlike, doll-like, and geometric-placeholder faces. Generate only through
+text prompts, without image references.
 
 Keep the shared camera, layer separation, focal regions,
-color controls, and interface clearance below. Generation success does not
-establish output conformance. The agent checks the artifact against these
-contracts and keeps the observed result.
+color controls, and interface clearance below. A correct generation does not
+show that the output conforms. The agent compares the artifact with these
+contracts, and it keeps the result that it saw.
 
-All four fixed scene layers use one straight-on orthographic 16:9 camera. Center
-the camera on the stage center axis. Keep its view level and perpendicular to
-the stage. Do not use camera pitch, yaw, roll, lens distortion, or perspective
-convergence. Keep vertical and horizontal architectural lines parallel.
+All four fixed scene layers use one straight-on orthographic 16:9 camera.
+Center the camera on the center axis of the stage. Keep its view level and
+perpendicular to the stage. Do not use camera pitch, yaw, roll, lens
+distortion, or perspective convergence. Keep vertical and horizontal
+architectural lines parallel.
 
-Place both standing-character eye lines on one shared horizontal band. An
-orthographic scene does not make a more distant subject smaller. Show depth
-with overlap, layer order, color, and hard-edged value changes instead of
-perspective scale. The back scene and its foreground desk plate must use the
-same canvas, stage origin, camera, scale, and alignment.
+Put the eye lines of the two standing characters on one shared horizontal
+band. An orthographic scene does not make a subject smaller when it is farther
+away. Show depth with overlap, layer order, color, and hard-edged value
+changes, not with perspective scale. The back scene and its foreground desk
+plate must use the same canvas, stage origin, camera, scale, and alignment.
 
-Use one mirrored duel grid for both scene packages. Divide the stage into a
+Use one mirrored duel grid for the two scene packages. Divide the stage into a
 left opponent zone, a clear central confrontation zone, and a right opponent
-zone. Center each playable portrait and standing desk within its outer zone.
-Keep playable character bodies and standing-desk mass out of the central
-zone. The physical moderator occupies its dedicated central window between
-the speech record and common phrase pool.
+zone. Center each playable portrait and standing desk in its outer zone.
+Keep the bodies of playable characters and the mass of the standing desks out
+of the central zone. The physical moderator is in the dedicated central window
+between the speech record and the common phrase pool.
 
-Both physical moderators sit at the stage center. Keep each complete head
-above the common phrase pool. The pool may cover moderator furniture and the
-lower body. Its background uses 88 percent opacity so furniture remains
-visible while phrase text stays legible. Keep the foreground standing desks
-in the opponent zones.
+The two physical moderators sit at the stage center. Keep each full head
+above the common phrase pool. The pool can cover the moderator furniture and
+the lower body. Its background uses 88 percent opacity, so that the furniture
+stays visible and the phrase text stays easy to read. Keep the foreground
+standing desks in the opponent zones.
 
 The
-back scene owns the moderator, architecture, fixed furniture, and rear props.
-The transparent foreground plate owns both standing desks and their attached
-or placed props. Neither layer contains a playable character.
+back scene controls the moderator, the architecture, the fixed furniture, and
+the rear props. The transparent foreground plate controls the two standing
+desks and the props that are attached to them or put on them. No layer contains
+a playable character.
 
-Use one central moderator focal point at 50 percent of master width and
-43 percent of master height. Keep each moderator as a seated person in the
-studio. Do not replace a moderator with a screen image or floating head. Use
-one authored scale across viewport ratios. Keep the full head inside the
-central focal rectangle, above the common phrase pool at 52 percent of scene
-height.
+Use one central moderator focal point at 50 percent of the master width and
+43 percent of the master height. Keep each moderator as a person in a chair in the
+studio. Do not replace a moderator with a screen image or a floating head. Use
+one authored scale across viewport ratios. Keep the full head in the central
+focal rectangle. The head is above the common phrase pool, which is at 52
+percent of the scene height.
 
-The transition-era moderator keeps her physical wood-and-brass desk.
+The transition-era moderator keeps her physical desk of wood and brass.
 The modern moderator keeps his beige chair, crossed legs, and a low table.
 
-Playable character layers have visual priority over moderator bodies and
-moderator furniture. A playable character or standing desk can cover part of a
-moderator body, chair, platform, or desk, but the complete moderator face must
-remain visible. A foreground standing desk can cover only the lower part of a
-playable body. It must not cover a playable face, signature hand gesture, or
-required prop. Hypertext Markup Language (HTML) content must also stay outside
-those three playable-character features.
+Playable character layers have visual priority over the bodies and the
+furniture of the moderators. A playable character or standing desk can cover
+part of the body, chair, platform, or desk of a moderator. But the full face
+of the moderator must stay visible. A foreground standing desk can cover only
+the lower part of a playable body. It must not cover a playable face, a
+signature hand gesture, or a necessary prop. Hypertext Markup Language (HTML)
+content must also stay away from those three features of playable characters.
 
-Render each studio foreground plate once, complete and unclipped, above the
-playable portraits. Its standing desks, microphones, bottles, desktop, trim,
-and fronts share one physical furniture plane. Do not duplicate one raster into
-contradictory front and rear planes. Keep each plate pointer-inert. Position its
-props so faces, signature hand gestures, and required character props remain
-readable while the furniture keeps physically coherent occlusion.
+Render each studio foreground plate one time, complete and not clipped, above
+the playable portraits. Its standing desks, microphones, bottles, desktop,
+trim, and fronts are in one physical furniture plane. Do not copy one raster
+into front and rear planes that do not agree. Keep each plate pointer-inert.
+Put its props at positions where faces, signature hand gestures, and necessary
+character props stay easy to read. The furniture must keep physically coherent
+occlusion.
 
-Use 20 percent of master width and 34 percent of master height as the normal
-left-player face center. Mirror it at 80 percent of master width for the right
-player. Protect the left face rectangle from 14 through 26 percent of width and
-22 through 46 percent of height. Mirror it from 74 through 86 percent of width
-for the right face. An approved character-height rule can move a face vertically inside its
-protected rectangle. No part of the face can leave that rectangle at a named
-acceptance viewport.
+The usual face center of the left player is at 20 percent of the master width
+and 34 percent of the master height. Mirror it at 80 percent of the master
+width for the right player. The protected left face rectangle is from 14 through 26
+percent of the width and 22 through 46 percent of the height.
+For the right face, mirror it from 74 through 86 percent of the width. An approved
+character-height rule can move a face vertically in its protected rectangle.
+At a named acceptance viewport, no part of the face can go out of that
+rectangle.
 
 Measure vertical anchors from the top edge of the 16:9 canvas. Use these
-vertical references as percentages of canvas height:
+vertical references as percentages of the canvas height:
 
 - Normal-adult standing eye line: 34 percent.
 - Seated-moderator focal center: 43 percent.
 - Standing-desk top: 62 percent.
-- Main floor break: 72 percent. Apply the same normalized anchors to the
-16:9 master and every runtime variant.
+- Main floor break: 72 percent.
+
+Apply the same normalized anchors to the 16:9 master and to each runtime
+variant.
 
 Runtime portrait frames use the same bottom-aligned scene canvas as the back
-and foreground layers. Each square portrait frame is 80 percent of scene height and starts at 24
-percent of scene height. It centers at 20 or 80 percent of scene width. Keep the complete square source without an additional
-letterbox offset. The speech record stays within the central 32 percent of
-scene width, from 18 through 34 percent of scene height.
+and foreground layers. Each square portrait frame is 80 percent of the scene
+height, and it starts at 24 percent of the scene height. Its center is at 20 or
+80 percent of the scene width. Keep the full square source without a
+letterbox offset. The speech record stays in the central 32 percent
+of the scene width, from 18 through 34 percent of the scene height.
 
-Validate visible
-character anatomy and speech together, not only the image element bounds.
-Oversized sentence text scrolls vertically inside that fixed speech record
-under AC-016-12. Its text region remains keyboard-focusable and contains every
-word. Do not enlarge the record or reduce the existing speech type sizes for longer
-sentences. Do not move the board or moderator for longer sentences.
+Validate the visible
+character anatomy and the speech together, not only the bounds of the image
+element. Oversized sentence text scrolls vertically in that fixed speech record,
+as AC-016-12 gives. Its text region can get keyboard focus, and it contains each
+word. For longer sentences, do not make the record larger, and do not make the
+speech type sizes smaller. Do not move the board or the moderator for longer
+sentences.
 
 An approved character-height contract can move a playable face above or below
 the normal-adult eye-line reference. Keep the character on the same floor and
-desk-occlusion system. Do not rescale the scene or move the desks to erase an
-approved height difference. Desk fronts continue below the canvas edge so that
-their lower contours never appear.
+desk-occlusion system. Do not scale the scene again or move the desks to remove
+an approved height difference. Desk fronts continue below the canvas edge, so
+that their lower contours do not show.
 
-Use one shared focal and interface-safe model for both scene packages. Mirror
-the playable-character regions. Keep the moderator centered in both studios.
-The speech record ends above the moderator focal rectangle. The common phrase
-pool begins below it and may cover the moderator desk, chair, or lower body.
+Use one shared model for focal regions and interface-safe regions for the two
+scene packages. Mirror the playable-character regions. Keep the moderator at
+the center in the two studios. The speech record ends above the moderator
+focal rectangle. The common phrase pool starts below it, and it can cover the
+desk, chair, or lower body of the moderator.
 
-Record all focal and interface-safe regions as normalized rectangles in the
-normalized 16:9 master coordinate system. Apply the same rectangles to each runtime
-variant before crop. A scene-specific decorative element cannot move, shrink,
-or cover a shared interface-safe region.
+Record all focal regions and interface-safe regions as normalized rectangles
+in the normalized 16:9 master coordinate system. Apply the same rectangles to
+each runtime variant before the crop. A decorative element of one scene cannot
+move, make smaller, or cover a shared interface-safe region.
 
-Use fixed per-layer normalized rectangles for every focal class. Do not use a
-shared envelope with scene-specific overrides.
-For each back or foreground layer, record the rectangle coordinates.
-If the focal class is absent from that layer, record that absence.
+For each focal class, use fixed normalized rectangles for each layer. Do not use
+a shared envelope with overrides for each scene.
+For each back layer or foreground layer, record the rectangle coordinates.
+If the focal class is not in that layer, record that it is missing.
 
-Reserve these character-layer focal rectangles in every back and foreground
+Keep these character-layer focal rectangles in each back and foreground
 scene layer. The left raised signature-gesture rectangle is
 `x=22, y=18, width=10, height=18`. The mirrored right rectangle is
 `x=68, y=18, width=10, height=18`. The left torso and required-prop rectangle is
 `x=14, y=46, width=12, height=20`. The mirrored right rectangle is
-`x=74, y=46, width=12, height=20`. Scene art does not own these rectangles and
-must keep them free of a face, required prop, identifier, or high-contrast
-ornament.
+`x=74, y=46, width=12, height=20`. Scene art does not control these rectangles.
+It must keep them free of a face, a necessary prop, an identifier, or
+high-contrast ornament.
 
-Use these per-layer focal rectangles. All values are percentages of master
-width and height.
+Use these focal rectangles for each layer. All values are percentages of the
+master width and height.
 
 | Scene layer | Moderator face | Left desk top and props | Right desk top and props |
 | --- | --- | --- | --- |
@@ -682,207 +728,225 @@ width and height.
 | Transition-era foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 | Modern foreground | Absent | `x=26, y=56, width=6, height=16` | `x=68, y=56, width=6, height=16` |
 
-Desk extraction zones are mask-search bounds, not focal rectangles. Use
+Desk extraction zones are bounds for the mask search. They are not focal
+rectangles. Use
 `x=12.5, y=54, width=19.5, height=46` for the left standing desk and
-`x=68, y=54, width=19.5, height=46` for the right standing desk. A valid desk
-mask contains changed pixels only inside its extraction zone. It
+`x=68, y=54, width=19.5, height=46` for the right standing desk. A correct desk
+mask contains changed pixels only in its extraction zone. It
 touches its desk top and prop focal rectangle.
 
-It forms one connected
+It is one connected
 desk-and-prop component.
-Exclude the moderator desk, moderator body, architecture, floor, and rear props
-even when they appear inside an extraction zone.
-The composite input, deskless input, back output, foreground output, and report
-output must resolve to five different paths. Reject a path collision before a
-tool writes a file.
+Do not include the moderator desk, the moderator body, the architecture, the
+floor, or the rear props.
+This rule applies also when they show in an extraction zone.
+The composite input, the input with no desks, the back output, the foreground
+output, and the result output must resolve to five different paths. Reject a
+path collision before a tool writes a file.
 
-Use these shared interface-safe rectangles, with all coordinates measured as
-percentages of master width and height:
+Use these shared interface-safe rectangles. All coordinates are percentages of
+the master width and height:
 
-- protected top band: `x=12.5-87.5`, `y=0-18`.
-- central interaction region: `x=32-68`, `y=18-94`.
-- lower-left action region: `x=12.5-24`, `y=66-94`.
-- lower-right action region: `x=76-87.5`, `y=66-94`.
+- Protected top band: `x=12.5-87.5`, `y=0-18`.
+- Central interaction region: `x=32-68`, `y=18-94`.
+- Lower-left action region: `x=12.5-24`, `y=66-94`.
+- Lower-right action region: `x=76-87.5`, `y=66-94`.
 
-Move speech bubbles toward their speakers. Set the red bubble to x=23-55 and
-the blue bubble to x=45-77 in scene coordinates. Keep both bubbles in the upper
-vertical band and point each tail toward its speaker. Do not cover a character
-face, required gesture, prop, or moderator focal rectangle.
+Move speech bubbles to their speakers. Set the red bubble to x=23-55 and
+the blue bubble to x=45-77 in scene coordinates. Keep the two bubbles in the
+top vertical band, and point each tail to its speaker. Do not cover a
+character face, a necessary gesture, a prop, or the moderator focal rectangle.
 
 The central interaction region contains a reserved moderator window at
-`x=46-54`, `y=35-49`. No live text or control may cover that window. Its
-moderator face is the only face permitted within the central region. Use
-low-detail background shapes behind live text. Do not put another face,
-required prop, scene identifier, text-like mark,
-or high-contrast ornament in it. A desk front can cross a lower action region
-only as a plain flat surface without a prop or important ornament.
+`x=46-54`, `y=35-49`. No live text or control can cover that window. Its
+moderator face is the only face that is permitted in the central region. Use
+background shapes with a small quantity of detail behind live text.
+Do not put a different face or a necessary prop in it.
+Also do not put a scene identifier, a mark that looks like text, or
+high-contrast ornament in it. A desk front can go across a lower action
+region only as a plain flat surface without a prop or important ornament.
 
-Scene 3 through Scene 6 use complete foreground plates above the portraits,
+Scene 3 through Scene 6 use full foreground plates above the portraits,
 without horizontal CSS clipping. Their central interaction rectangle must be
-fully transparent in the source and each runtime variant. Transparency is not necessary in the lower action rectangles. Plain desk
-fronts must continue behind the HTML controls and cover the candidates' lower
-bodies. Do not erase these
+fully transparent in the source and in each runtime variant. Transparency is
+not necessary in the lower action rectangles. Plain desk
+fronts must continue behind the HTML controls and cover the lower bodies of the
+candidates. Do not erase these
 surfaces to clear an action rectangle.
 
-For each of these four foreground plates, validate both lower-body strips, in source-canvas percentages:
+For each of these four foreground plates, validate the two lower-body strips,
+in source-canvas percentages:
 
 - Left: `x=18, y=74, width=4, height=18`.
 - Right: `x=78, y=74, width=4, height=18`.
 
-Each row must
-have at least 90 percent near-opaque pixels, using the shared native-alpha
-opacity threshold. This check rejects severed, missing, or displaced fronts
-in sources and variants. It does not replace visual checks of desk height,
-perspective, contours, or the final portrait occlusion at each viewport.
+In each row, 90 percent or more of the pixels must be near-opaque, with the
+shared native-alpha opacity threshold. This check rejects fronts that are cut,
+missing, or moved, in sources and variants. It does not replace the visual
+checks of the desk height, perspective, contours, or last portrait occlusion at
+each viewport.
 
-Protect the central 75 percent of master width as the four-by-three crop core.
-All moderators, standing desks, attached props, focal regions, and
-interface-safe regions must stay inside that core. The outer 12.5 percent on
-each side is decorative bleed and can be removed. It must not contain a required
-subject, prop, architectural identifier, or layer-alignment marker.
+The central 75 percent of the master width is the protected four-by-three crop
+core. All moderators, standing desks, attached props, focal regions, and
+interface-safe regions must stay in that core. The outer 12.5 percent on
+each side is decorative bleed, and the crop can remove it. It must not contain
+a necessary subject, prop, architectural identifier, or layer-alignment marker.
 
-Use the complete master at 16:9. For aspect ratios between 16:9 and 4:3, remove
-equal amounts from the left and right decorative bleed. At 4:3, remove the full
-12.5 percent from each side. Do not use letterboxing or crop inside the
-protected core at any named acceptance viewport.
+Use the full master at 16:9. For aspect ratios between 16:9 and 4:3, remove
+equal quantities from the left and right decorative bleed. At 4:3, remove the
+full 12.5 percent from each side. At the named acceptance viewports, do not use
+letterboxing, and do not crop in the protected core.
 
-For ratios wider than 16:9, scale all scene planes uniformly to viewport
-width and center the vertical crop. Keep the back, ambience, props, and
-foreground aligned without side bars or image distortion. Keep portrait size
-based on viewport height and horizontal portrait anchors based on scene width.
-Move and shorten the speech record above the cropped moderator face region.
-Do checks of coverage at 2560 by 1080, 3424 by 1427, and 5120 by 1440.
+For ratios wider than 16:9, scale all scene planes uniformly to the viewport
+width, and center the vertical crop. Keep the back, the ambience, the props,
+and the foreground aligned, without side bars or image distortion. Keep the
+portrait size based on the viewport height and the horizontal portrait anchors
+based on the scene width. Move the speech record above the cropped moderator
+face region and make it shorter.
+Do checks of the coverage at 2560 by 1080, 3424 by 1427, and 5120 by 1440.
 
 For a supported landscape ratio narrower than 4:3, fit the protected 4:3 core
-to the full viewport width. Do not crop its left or right edge. Fill the extra
-height with authored scene continuation instead of black bars or repeated
-texture. The back layer extends ceiling shapes above and floor shapes below.
+to the full viewport width. Do not crop its left or right edge. Fill the
+remaining height with authored continuation of the scene, not with black bars
+or a texture that repeats. The back layer extends ceiling shapes above and floor
+shapes below.
 
-The foreground layer remains transparent above the standing desks and extends
-plain desk fronts below them. Do not add a new subject, prop, identifier, or
-ornament in an extension area. Use one scale and vertical alignment for both
-layers, and keep all focal and interface-safe regions.
+The foreground layer stays transparent above the standing desks, and it
+extends plain desk fronts below them. Do not add a new subject, prop,
+identifier, or ornament in an extension area. Use one scale and one vertical
+alignment for the two layers, and keep all focal regions and interface-safe
+regions.
 
 Each scene uses the same flat cel-shaded cartoon construction as the playable
-characters. Simplify and deliberately exaggerate architecture, curtains,
+characters. Simplify and intentionally exaggerate architecture, curtains,
 screens, platforms, desks, chairs, lamps, microphones, bottles, and decorative
 objects. Keep one coherent camera, perspective system, floor plane, human
-scale, and layer boundary. Functional perspective does not permit realistic
-rendering.
+scale, and layer boundary. Functional perspective does not make realistic
+rendering correct.
 
-Every fixed moderator obeys the same human caricature, contour, flat-color,
+Each fixed moderator obeys the same human caricature, contour, flat-color,
 value-step, and texture rules as playable human characters. Foreground plates
-must match their back scenes in contour weight, palette, hard-edged lighting,
-shape language, and texture density. A realistic moderator, glossy desk,
-photographic prop, or softly rendered background fails the complete scene
-package.
+must agree with their back scenes in contour weight, palette, hard-edged
+lighting, shape language, and texture density. A realistic moderator, a glossy
+desk, a photographic prop, or a softly rendered background causes the full
+scene package to fail.
 
 ### Vertical-slice integration
 
-The pre-pipeline match slice uses a rendered municipal studio with one fixed
-fictional moderator. It uses transparent interim portraits for the Red-Folded
-Chairman, Thunder Tribune, Black Sea Captain, and Government AI. It also uses
-one transparent foreground plate with two tall standing desks. The back scene
-must not contain a playable character. The desk plate clips the lower portrait
-bodies without fixing either
-selected character into the scene. Milestone 023 replaces or promotes these
-interim files through the approved manifest and variant pipeline without
-changing the selected-character contract.
+The match slice before the pipeline uses a rendered municipal studio with one
+fixed fictional moderator. It uses transparent temporary portraits for the
+Red-Folded Chairman, Thunder Tribune, Black Sea Captain, and Government AI. It
+also uses one transparent foreground plate with two tall standing desks. The
+back scene must not contain a playable character. The desk plate clips the
+lower portrait bodies, but it does not attach the
+selected characters to the scene. Milestone 023 replaces or promotes these
+temporary files through the approved manifest and variant pipeline, and it
+does not change the selected-character contract.
 
-Interim portrait planes use a tall two-to-three canvas and continue below the
-foreground desks. Their lower raster edges must not appear in the composite.
-Each portrait uses the shared character art direction and its private study.
-On a 1024 by 1536 interim plane, the opaque full-body silhouette spans 95
-through 98 percent of the canvas height. A portrait must not use a fixed face
-crop or fixed head width.
+Temporary portrait planes use a tall two-to-three canvas, and they continue
+below the foreground desks. Their lower raster edges must not show in the
+composite. Each portrait uses the shared character art direction and its
+private study. On a temporary plane of 1024 by 1536, the opaque full-body
+silhouette is 95 through 98 percent of the canvas height. A portrait must not
+use a fixed face crop or a fixed head width.
 
-The redesign must select exactly four self-hosted sans-serif font families. The
-present Barlow Condensed, Cormorant SC, Georgia, and system-monospace
-combination is implementation evidence, not visual authority.
+The redesign must select four self-hosted sans-serif font families. The
+Barlow Condensed, Cormorant SC, Georgia, and system-monospace combination that
+the game used before is implementation evidence. It is not a visual authority.
 
 1. Poiret One Regular 400 is the selected Art Deco feature-display family. It
-   owns the game title, main menu, character names, Pause, End, Comeback, and
-   other decisive features. Use `0.06em` tracking.
+   controls the game title, the main menu, character names, Pause, End,
+   Comeback, and other decisive features. Use `0.06em` tracking.
 
-   Apply a responsive 0.9 through 1.4-pixel synthetic stroke to large feature
-   text. Apply a 0.65 through 0.95-pixel stroke to major actions. This synthetic emboldening is an approved
-   exception because Poiret One has no bold master. Use it only at medium and
-   large sizes.
+   Apply a responsive synthetic stroke of 0.9 through 1.4 pixels to large
+   feature text. Apply a stroke of 0.65 through 0.95 pixels to major actions.
+   This synthetic emboldening is an approved exception, because Poiret One has
+   no bold master. Use it only at medium and large sizes.
 
    Fascinate and Fascinate Inline are permanently disqualified. Do
-   not propose, test, install, or use either family.
-2. Nunito Black 900 is the selected rounded speech family. It owns delivered
-   speech, the current construction, and sentence previews. Render it in visual
-   uppercase. Keep the authored case for source text, accessibility, and
-   speech output. Do not use Fredoka Bold for this speech role.
+   not propose, test, install, or use these two families.
+2. Nunito Black 900 is the selected rounded speech family. It controls the
+   delivered speech, the construction of this time, and sentence previews.
+   Render it in visual uppercase. Keep the authored case for source text,
+   accessibility, and speech output. Do not use Fredoka Bold for this speech
+   role.
 3. Rubik is the selected rounded interface family. Use regular 400, semibold
-   600, and bold 700. It owns phrase lists, private phrases, setup fields,
-   labels, validation, disabled reasons, score explanations, and compatibility
-   text. Its tabular figures own Pride,
+   600, and bold 700. It controls phrase lists, private phrases, setup fields,
+   labels, validation, the causes of disabled states, score explanations, and
+   compatibility text. Its tabular figures control Pride,
    damage, scores, and rounds.
-4. Share Tech Mono is the selected retro liquid-crystal-display family. It owns
-   the timer and normalized technical-record data only. Do not use it for any
-   other number or text.
+4. Share Tech Mono is the selected retro liquid-crystal-display family. It
+   controls only the timer and normalized technical-record data. Do not use it
+   for other numbers or text.
 
 The implementation uses `@fontsource/poiret-one`,
 `@fontsource-variable/nunito`, `@fontsource-variable/rubik`, and
 `@fontsource/share-tech-mono`. Each package includes the SIL Open Font License
-1.1. Keep each package's complete notice under `public/licenses/fonts/`
-and ship it unchanged in `dist/licenses/fonts/`. Disable Git newline conversion
-for these notices so Windows checkouts keep the package bytes.
+1.1. Keep the full notice of each package in `public/licenses/fonts/`,
+and ship it with no changes in `dist/licenses/fonts/`. Disable Git newline
+conversion for these notices, so that Windows checkouts keep the package bytes.
 Poiret One, Nunito, and Rubik load Basic Latin and Latin Extended coverage
 with explicit Unicode subset declarations.
 
-The feature,
-speech, and interface metric fallback is Arial and then sans-serif. The timer
+The metric fallback for the feature,
+speech, and interface families is Arial and then sans-serif. The timer
 fallback is Cascadia Mono, Consolas, and then monospace.
 
 The shipped Poiret One Latin Extended WOFF2 is a local SIL Open Font License
-derivative of the Fontsource file. It maps Romanian `Ț` and `ț` to the source
-font's existing comma-below T outlines. Keep its source and build method in
-`docs/assets/poiret-one-romanian-font.md`. Ship the complete Poiret One license notice.
+derivative of the Fontsource file. It maps Romanian `Ț` and `ț` to the
+comma-below T outlines that the source font has. Keep its source and its build
+method in `docs/assets/poiret-one-romanian-font.md`. Ship the full Poiret One
+license notice.
 
 Do checks of all four selected families together in the built arena. The
-Art Deco feature family must cover English and Romanian interface display text,
-including Romanian diacritics. The timer family needs
-digits, timer punctuation, and normalized technical-record data glyphs. The speech and interface families must cover
-localized grammar and phrase content, including Romanian diacritics.
+Art Deco feature family must include English and Romanian interface display
+text, with Romanian diacritics. The timer family must have
+digits, timer punctuation, and glyphs for normalized technical-record data.
+The speech family and the interface family must include localized grammar and
+phrase content, with Romanian diacritics.
 
-Do tests with uppercase and mixed-case English names, the longest localized speech and
-phrase, digits, punctuation, and disabled text. Include the 1024 by 720 viewport. Except
-for the approved Poiret One treatment, reject a family if it needs condensed
-spacing or outline effects to fit. Also reject it if it needs synthetic weights
-or text smaller than 11 pixels.
+Do tests with these items:
 
-Match nameplates reserve two lines for the complete compact character name.
+- Uppercase and mixed-case English names.
+- The longest localized speech and phrase.
+- Digits, punctuation, and disabled text.
+
+Include the 1024 by 720 viewport. Other than
+for the approved Poiret One treatment, reject a family if it must have
+condensed spacing or outline effects to fit. Also reject it if it must have
+synthetic weights or text smaller than 11 pixels.
+
+Match nameplates keep two lines for the full compact character name.
 They do not use an ellipsis. The turn-status slot keeps one fixed minimum
-width and its layout space while hidden. Switching between waiting, active,
-and thinking states must not reflow a character name.
+width, and it keeps its layout space while it is hidden. A change between the
+waiting, active, and thinking states must not reflow a character name.
 
-Shared phrase rows allow two lines without an ellipsis. Their font size depends on both viewport width and height and stays at least 11 pixels. Wrapping a long
-phrase does not change the reserved nine-row board geometry.
+Shared phrase rows can have two lines without an ellipsis. Their font size
+changes with the viewport width and height, and it stays at 11 pixels or more.
+When a long phrase goes on two lines, the reserved geometry of the nine-row board does not
+change.
 
 Record the selected families, weights, licenses,
 metric fallbacks, and use rules in this specification. Record them in the design
-record for later font changes. The wide speech bubble uses light
+record for subsequent font changes. The wide speech bubble uses light
 paper. The compact phrase path uses a near-black broadcast plate and thin
-oxblood row rules. It uses Rubik phrase text without visible role, ownership,
-weakness, disabled-reason, or hint metadata.
+oxblood row rules. It uses Rubik phrase text without visible metadata for
+role, ownership, weakness, the cause of a disabled state, or hints.
 
 Action plates use coherent authored icons and framing.
 
-Characters use three-quarter opponent-facing silhouettes and layered parts.
-Human characters use human anatomy, and robot characters use only mechanical
-anatomy. Each non-fallback skin uses exactly six visual poses: selection plus
-the five state masters `thinking`, `delivery`, `light-hit`, `heavy-hit`, and
-`weakness`. These provide at least five expressions. The nine logical states
-map `idle` to selection, `comeback` to delivery, and `grammar-mistake` to
-weakness.
+Characters use three-quarter silhouettes that face the opponent, and layered
+parts. Human characters use human anatomy, and robot characters use only
+mechanical anatomy. Each non-fallback skin uses six visual poses: the
+selection and the five state masters `thinking`, `delivery`, `light-hit`,
+`heavy-hit`, and `weakness`. These give five or more expressions. The nine
+logical states map `idle` to selection, `comeback` to delivery, and
+`grammar-mistake` to weakness.
 
-A dedicated master for a reused state is invalid.
+A dedicated master for a state that a package uses again is not correct.
 Use Cascading Style Sheets (CSS), sprite sheets, and two-dimensional Canvas
-first. The Web Graphics Library (WebGL) or another graphics runtime needs a
-new specification with bundle, frame-time, and fallback proof.
+first. The Web Graphics Library (WebGL) or a different graphics runtime must
+have a new specification with proof of bundle, frame time, and fallback.
 
 Keep temporary renders and lossless working rasters in the temporary folder.
 Keep private character studies and custom prompts in the research folder.
@@ -890,9 +954,9 @@ Sharp generates committed AV1 Image File Format (AVIF) and
 WebP runtime variants. The manifest records dimensions, crop, owner, source,
 and license.
 
-Import through the manifest. Load setup art first and only the
-selected match package next. Keep each scene variant in an external asset file.
-Do not inline a scene or character variant in the initial JavaScript bundle.
+Import through the manifest. Load setup art first, and then only the
+selected match package. Keep each scene variant in an external asset file.
+Do not put a scene or character variant inline in the initial JavaScript bundle.
 
 Use self-hosted licensed Web Open Font Format 2 (WOFF2) fonts with metric
 fallbacks.
@@ -900,506 +964,579 @@ fallbacks.
 The live character inventory uses
 `src/assets/characters/character-manifest.json`. Its 30 entries map one default
 or alternate skin to the canonical `selection` state, pose, and expression.
-The fixed replacement baseline is a 27-entry subset.
+The fixed replacement baseline is a subset of 27 entries.
 `tools/character-replacement-baseline.json` records the replaced
-source hashes for inventory verification only. It is not a generation input.
+source hashes only for inventory verification. It is not a generation input.
 
-`tools/build-character-assets.mjs` creates 128, 256, 320, 640, and 960 square
-AVIF and WebP variants. `tools/validate-character-assets.mjs` does checks of the
-fixed inventory, new source hashes, provenance-compatible transparent masters,
-manifest fields, byte limits, and every generated file. A later
-convention-added portrait does not enter this fixed baseline automatically. It
-can use its source PNG until Milestone 028 promotes it through the final asset
-pipeline.
+`tools/build-character-assets.mjs` makes square AVIF and WebP variants of 128,
+256, 320, 640, and 960. `tools/validate-character-assets.mjs` does checks of these items:
 
-`tools/build-character-package.mjs` owns a targeted one-skin rebuild in a
-staged character tree. It rebuilds only the selected portrait's ten variants
-and that skin's thirty state variants. It reuses all other variant bytes only
-after source, manifest, hash, format, dimension, and byte-budget validation.
-It rebuilds both global manifests, runs the complete character validators, and
-refuses direct use against the shipping character root.
+- The fixed inventory and the new source hashes.
+- The transparent masters that agree with provenance.
+- The manifest fields, the byte limits, and each generated file.
+
+ A
+subsequent portrait that the filename convention adds does not go into this
+fixed baseline automatically. It can use its source PNG until Milestone 028
+promotes it through the release asset pipeline.
+
+`tools/build-character-package.mjs` controls a targeted rebuild of one skin in
+a staged character tree. It builds again only the ten variants of the selected
+portrait and the thirty state variants of that skin. It uses all other variant
+bytes again only after validation of the source, manifest, hash, format,
+dimension, and byte budget. It builds the two global manifests again, runs the
+full character validators, and does not operate directly on the shipping
+character root.
 
 Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
-portrait frame through `tools/brand-assets.mjs`. Their separate
-`src/assets/brand/brand-manifest.json` records source hashes, ownership, license,
-dimensions, centered focal points, full-canvas crops, and AVIF/WebP variants.
-The emblem runtime size is 640 square. The proscenium keeps 1672 by 941 pixels,
-and the portrait frame keeps 1086 by 1448 pixels. These interface assets do
-not enter the fixed character and scene replacement inventory.
+portrait frame through `tools/brand-assets.mjs`. Their
+`src/assets/brand/brand-manifest.json` is a different manifest. It records the
+source hashes, ownership, license, dimensions, centered focal points,
+full-canvas crops, and AVIF/WebP variants.
+The runtime dimensions of the emblem are 640 square. The proscenium keeps 1672
+by 941 pixels, and the portrait frame keeps 1086 by 1448 pixels. These
+interface assets do not go into the fixed character and scene replacement
+inventory.
 
 Runtime views resolve these files through the brand manifest. The title uses
-AVIF first, WebP second, and the original PNG as its final fallback. Its two
-AVIF preloads derive from the manifest before the application module. A browser
-without AVIF support skips them and loads WebP. Each title format's combined
-package remains at most 300 KiB.
+AVIF first, WebP second, and the source PNG as its last fallback. The build
+gets its two AVIF preloads from the manifest before the app module. A
+browser that does not support AVIF does not use them, and it loads WebP. For
+each title format, the combined package stays at 300 KiB or less.
 
 The build and asset-validation scripts validate
-the brand and state manifests as well as the baseline scene and character
-manifests. The asset-build script reproduces all four packages with Sharp.
+the brand and state manifests and also the baseline scene and character
+manifests. The asset-build script makes all four packages again with Sharp.
 
 ### Flare generation and preparation workflow
 
-Use `gpt-image-2.5-flare` for transparent assets, exact-size masters, and
-requests above 2,073,600 pixels. Use the internal tool for small opaque
-drafts without an exact-size contract. Resolve character masters to 2048 by
-2048 before choosing their route. Resolve scene dimensions from the scene
-pipeline. An explicit user-selected route takes precedence, but an undersized
-result does not satisfy a master contract.
+Use `gpt-image-2.5-flare` for transparent assets, masters that must have
+accurate dimensions, and requests above 2,073,600 pixels. Use the internal tool
+for small opaque drafts that do not have a contract for accurate dimensions.
+Resolve character masters to 2048 by 2048 before you select their route.
+Resolve scene dimensions from the scene pipeline. A route that the user selects
+explicitly has priority, but a result that is too small does not satisfy a
+master contract.
 
-Generation dimensions must also
-meet Flare's multiple-of-16 rule. For a 1920-by-1080 shipping scene, request
-a 3840-by-2160 source and use reviewed downsampling. Do not request unsupported
-native 1920-by-1080 output or change the shipping dimensions to match a provider.
+The generation dimensions must also
+obey the Flare rule for multiples of 16. For a shipping scene of 1920 by 1080,
+request a source of 3840 by 2160, and use reviewed downsampling. Do not request
+unsupported native output of 1920 by 1080.
+Do not change the shipping dimensions to agree with a provider.
 
-The repository-owned image helper uses Node.js and the OpenAI Image API.
-It does not depend on or modify the installed generic image CLI. Text requests
-use the generation endpoint. Authorized references use multipart image edits.
-Keep the model, high quality, PNG format, explicit dimensions, and background
-mode in the request record.
+The image helper of the repository uses Node.js and the OpenAI Image API.
+It does not use or change the installed generic image CLI. Text requests
+use the generation endpoint. Approved references use multipart image edits.
+Keep the model, the high quality, the PNG format, the explicit dimensions, and
+the background mode in the request record.
 
-Validate dimensions and construct the actual
-request during a dry run, without credentials, network calls, or output writes.
+During a dry run, validate the dimensions and make the real
+request, without credentials, network calls, or output writes.
 Flare dimensions obey the [official image generation guide](https://developers.openai.com/api/docs/guides/image-generation).
 
 Read credentials only from the ignored, untracked `.env.local` file. Use the
-fixed OpenAI endpoint. Do not follow redirects or forward raw provider errors.
-Record safe HTTP status and failure categories. Do not retry automatically.
+fixed OpenAI endpoint. Do not follow redirects, and do not send raw provider
+errors forward. Record the safe HTTP status and the failure categories. Do not
+try again automatically.
 
-Keep an interrupted request's outcome uncertain until evidence resolves it.
-Keep returned bytes and their hash before dimension and alpha inspection.
-Do not equate a successful HTTP response with a usable asset.
+When a request is interrupted, keep its result as not known until evidence
+resolves it. Keep the bytes that the API sends and their hash before the dimension and
+alpha inspection. A correct HTTP response does not show that the asset is
+usable.
 
-An authorized image creation or repair includes the correct generation route
-and the standard preparation below. Do not request the same approval again.
-Workflow maintenance and dry runs do not authorize image generation.
-Keep one candidate and one corrective generation per asset unless the user
-sets another limit. Examine measurable defects before spending a correction.
+An approved image creation or repair includes the correct generation route
+and the standard preparation below. Do not get the same approval again.
+Workflow maintenance and dry runs do not give approval for image generation.
+Keep one candidate and one corrective generation for each asset, unless the
+user sets a different limit. Examine measurable defects before you use a
+correction.
 
-Standard native preparation can clear only alpha-1 pixels farther than four
-pixels from near-opaque content, using Chebyshev distance and alpha at least
-250. Keep all RGB values and every other alpha value. Keep original
-bytes when no cleanup is needed. Apply the existing native-alpha acceptance
-thresholds afterward. Reject the result if those checks still fail. Do not
-broaden cleanup to stronger alpha, contours, colors, or silhouettes.
+Standard native preparation can clear only alpha-1 pixels that are more than
+four pixels from near-opaque content. It uses Chebyshev distance, and
+near-opaque content has alpha 250 or more. Keep all RGB values and all other
+alpha values. When no cleanup is necessary, keep the initial bytes. After
+this, apply the native-alpha acceptance thresholds. If those checks continue to
+fail, reject the result. Do not make the cleanup apply to stronger alpha,
+contours, colors, or silhouettes.
 
-Keep the original candidate, prepared output, cleanup count, method, and
-before-and-after alpha evidence. Record each output hash, including the later
-metadata-stamping hash. Review the prepared image on light and dark backgrounds.
-An image viewer that displays RGB hidden under transparency does not prove a
-visible halo. Visual review remains separate from alpha acceptance.
+Keep the initial candidate, the prepared output, the cleanup count, and the
+method. Also keep the alpha evidence from before and after the cleanup. Record each
+output hash, including the hash after the subsequent metadata stamp. Review the
+prepared image on light and dark backgrounds. An image viewer that shows the
+RGB that transparency hides does not show a visible halo. The visual
+review stays different from alpha acceptance.
 
-For characters, build the reviewed master and complete runtime variants in a
-staging tree. Finish the build before validation. Validate source hashes, byte
-budgets, alpha, and color before replacing the shipping package. This includes
-the AVIF decoded-border check above. Scene preparation uses the same native
-alpha rules and keeps its declared geometry and resolution checks.
+For characters, build the reviewed master and the full runtime variants in a
+staging tree. Complete the build before validation. Before you replace the
+shipping package, validate the source hashes, byte budgets, alpha, and color.
+This includes the AVIF decoded-border check above. Scene preparation uses the
+same native alpha rules, and it keeps its declared geometry checks and
+resolution checks.
 
-Prefer native transparent PNG generation for new transparent scene and
-character assets when the selected model supports it. GPT Image 2.5 Sunburst
-and Flare support the API `background: "transparent"` option with PNG or WebP.
-Keep the original decoded colors and alpha except for standard preparation above.
-Do not add a colored matte,
-normalize alpha, or flatten colors merely to fit the older keying process.
-Examine actual transparency, contour quality, and light/dark composites.
+For new transparent scene assets and character assets, use native transparent
+PNG generation first, when the selected model can do it. GPT Image 2.5 Sunburst
+and Flare have the API `background: "transparent"` option with PNG or WebP.
+Keep the initial decoded colors and alpha, other than the standard
+preparation above. Do not add a colored matte,
+normalize alpha, or make colors flat only to fit the older keying process.
+Examine the real transparency, the contour quality, and the light and dark
+composites.
 
-Register native output with `adopt-native` in the existing alpha utility.
+Register native output with `adopt-native` in the alpha utility.
 Record `Alpha Workflow=native-alpha-v1` and
-`Alpha Source=generated-alpha-v1`. Do not record a chroma key or matte
-reconstruction claim for native output. Native near-opaque interior pixels
-can use alpha 250 through 255, limiting background contribution to about two
-percent. At least half of nontransparent pixels (alpha above 0) must
-meet that near-opacity threshold.
+`Alpha Source=generated-alpha-v1`. For native output, do not record a statement
+about a chroma key or matte reconstruction. Native near-opaque interior pixels
+can use alpha 250 through 255. This limits the background contribution to
+approximately two percent. Half or more of the pixels that are not transparent
+(alpha above 0) must be at that near-opacity threshold or above it.
 
 Transparent corners and contour coverage
-with alpha from 1 through 249 remain required. A substantially translucent
-interior does not pass.
+with alpha from 1 through 249 continue to be necessary. An interior that is
+very translucent does not pass.
 
-Every native-alpha outer-border pixel must be fully transparent. At least 90
-percent of partial-alpha pixels must be within four pixels of near-opaque
-content. This confines partial alpha to the immediate antialiased contour and
-rejects detached specks, full-canvas veils, and surrounding haze.
+Each native-alpha outer-border pixel must be fully transparent. 90 percent or
+more of the partial-alpha pixels must be four pixels or less from near-opaque
+content. This keeps partial alpha only on the antialiased contour. It rejects
+particles that are not connected, veils across the full canvas, and haze around
+the subject.
 
-Keep `green-chroma-key-v1` for existing assets, models without native
-transparency, and approved matte repairs. Its generation intermediate uses a flat
+Keep `green-chroma-key-v1` for the assets that the project has, for models
+without native transparency, and for approved matte repairs. Its generation
+intermediate uses a flat
 `#00FF00` matte. Transparent art does not use that key color intentionally.
-The deterministic converter replaces the matte with genuine alpha and embeds
-the workflow identifier and key color in the shipping Portable Network Graphics
-(PNG) file. It samples the matte from border-connected green pixels. It uses
-green-channel dominance and sample distance to classify the matte, foreground,
-and uncertain contour.
+The deterministic converter replaces the matte with real alpha.
+It embeds the workflow identifier and the key color in the shipping Portable
+Network Graphics (PNG) file. It samples the matte from green pixels that
+connect to the border. It uses the dominance of the green channel and the
+sample distance to classify each pixel. A pixel is matte, foreground, or
+contour that is not clearly matte or foreground.
 
 It uses the sample in the known-matte compositing
-equation. It estimates uncertain coverage from nearby foreground samples and
-reconstructs foreground red, green, and blue values.
+equation. It estimates the coverage of those contour pixels from foreground samples
+near it, and it reconstructs the red, green, and blue values of the foreground.
 
 If the source has a binary
-contour, one three-by-three binomial pass creates a bounded partial-alpha edge.
-The pass copies the nearest foreground color into new edge pixels. The converter records
+contour, one three-by-three binomial pass makes a bounded partial-alpha edge.
+The pass copies the nearest foreground color into new edge pixels. The
+converter records
 `Alpha Source=soft-green-key-v1`,
 `Alpha Matte=green-dominance-neighbor-matte-v1`, and
 `Foreground Reconstruction=known-green-unmix-v1`.
 
-An existing genuine-alpha asset can use the `adopt` path. It records
-`Alpha Source=adopted-alpha-v1` and does not claim soft-key conversion.
-An existing opaque raster can use `provenance <png> --source <origin>` when its
-verified source origin exists and its generation prompt does not. Do not invent
-a source or prompt.
+An asset that has real alpha can use the `adopt` path. It records
+`Alpha Source=adopted-alpha-v1`, and it does not say that it used soft-key
+conversion. An opaque raster can use `provenance <png> --source <origin>` when
+its verified source origin is known and its generation prompt is not
+available. Do not invent a source or a prompt.
 
-Asset validation rejects every PNG that lacks an embedded
-generation source. It also rejects a character PNG that embeds its exact custom
+Asset validation rejects each PNG that does not have an embedded
+generation source. It also rejects a character PNG that embeds its custom
 prompt. Key-derived shipping assets contain no chroma-key residue.
 Native-alpha subjects can contain intentional green material.
-Key-derived lossy AVIF and WebP runtime variants can keep chroma-coded RGB only where
-alpha is 16 of 255 or lower.
+Key-derived lossy AVIF and WebP runtime variants can keep chroma-coded RGB only
+where the alpha is 16 of 255 or lower.
 
 A key-derived chroma-green runtime pixel above that bounded
-compression fringe fails validation. Key-derived PNG masters keep the zero-residue rule.
+compression fringe fails validation. Key-derived PNG masters keep the
+zero-residue rule.
 
-Validation also rejects every alpha-bearing PNG that lacks its workflow or
-alpha-source metadata or has nonzero outer corners. Key metadata is also necessary for legacy key-derived assets. Their validation
+Validation also rejects each alpha-bearing PNG that does not have its workflow
+metadata or alpha-source metadata, or that has outer corners that are not zero.
+Legacy key-derived assets must also have key metadata. Their validation
 rejects opaque chroma-green pixels.
 A soft-key conversion also fails when it has no
-partial-alpha pixels or lacks its matte and foreground reconstruction metadata.
+partial-alpha pixels or does not have its matte and foreground reconstruction
+metadata.
 
-`npm run assets:convert-green -- <green-root> <output-root>` converts a complete
-green-render tree whose prompts are beside the renders. For character art, use
+`npm run assets:convert-green -- <green-root> <output-root>` converts a full
+green-render tree that has its prompts adjacent to the renders. For character
+art, use
 `npm run assets:convert-green -- <green-root> <output-root> --prompt-root
-<prompt-root>`. The green renders stay in the temporary folder, and the matching
-relative prompt files stay in the research folder. The converter does checks of each
-prompt but embeds only a generic source record in all conversion modes.
+<prompt-root>`. The green renders stay in the temporary folder, and the
+relative prompt files that agree with them stay in the research folder. The
+converter does checks of each prompt, but it embeds only a generic source
+record in all conversion modes.
 
 It does
-not embed private study data. The converter keeps each Portable Network
-Graphics file's relative path. The input and output roots must be different.
+not embed private study data. The converter keeps the relative path of each
+Portable Network Graphics file. The input root and the output root must be
+different.
 
 ## Asset and motion contract
 
-All six scenes use 3840 by 2160 background and foreground masters.
+All six scenes use background masters and foreground masters of 3840 by 2160.
 
 Use the blonde adult editorial-cartoon moderator for Transition-Era Television
 Studio through the OpenAI API. Generate the background with
-`gpt-image-2.5-sunburst`, high quality, from text only at native 3840 by 2160.
-A 72-pixel downward translation, dark top-edge continuation, and lower-floor
-crop keep the complete head within its original safe region. No upscaling is
-applied. Generic source metadata records this
+`gpt-image-2.5-sunburst`, high quality, only from text, at native 3840 by 2160.
+These operations keep the full head in its initial safe region:
+
+- A translation of 72 pixels down.
+- A dark continuation at the top edge.
+- A crop of the lower floor.
+
+ The
+background is not upscaled. Generic source metadata records this
 origin without the private prompt.
 
 All ten AVIF and WebP background variants
-derive from that master. The separate foreground desk layer is original flat
-cel-shaded art generated text-only with `gpt-image-2.5-flare` on a native 3840
-by 2160 green-matte canvas. Fit its two desk groups to the shared standing-desk
-coordinates with proportional downsampling of each complete tabletop and prop
-group. Keep a horizontal margin inside both extraction zones so AVIF and WebP
-alpha fringes remain inside those zones. Extend only the lower front-panel
-segment to the canvas edge, then use the repository green-matte conversion to
-supply antialiased alpha.
+come from that master. The foreground desk layer is a different layer. It is
+original flat cel-shaded art. `gpt-image-2.5-flare` generated it only from
+text on a native 3840 by 2160 green-matte canvas. Fit its two desk groups to
+the shared standing-desk coordinates. Use proportional downsampling of each
+full tabletop and prop group. Keep a horizontal margin in the two extraction
+zones. Thus, the AVIF and WebP alpha fringes stay in those zones. Extend only
+the lower segment of the front panel to the canvas edge. Then use the
+green-matte conversion of the repository to give antialiased alpha.
 
 Do not upscale it.
 
 Generate the Modern Debate Studio at native 3840 by 2160 with
-`gpt-image-2.5-flare`. Start from a text-only composite. Use reference edits of that new composite to
-create the deskless background. Keep its fictional moderator direction.
-Isolate the matching desk layer on a green matte.
+`gpt-image-2.5-flare`. Start from a composite that is only from text. Use
+reference edits of that new composite to make the background with no desks.
+Keep its fictional moderator direction. Isolate the desk layer that agrees
+with it on a green matte.
 
-Translate the final background down 96 pixels without resampling, using
-top-edge continuation and a lower-floor crop for runtime moderator clearance.
-The final desk raster can be translated to the shared 62-percent desk line
-before proportional fitting into codec-safe horizontal margins and green-matte
-conversion. Do not use the old 1672 by 941 background or 1920 by 1080 desk master as
-generation input. Do not upscale either asset. Keep the approved moderator, set, and composition
-at every runtime size.
+Move the last background down 96 pixels without resampling.
+For the runtime clearance of the moderator, use a continuation at the top edge
+and a crop of the lower floor.
+The last desk raster can move to the shared desk line at 62 percent.
+This move occurs before the proportional fit and before the green-matte
+conversion. The fit uses horizontal margins that are safe for the codecs.
+Do not use the previous background of 1672 by 941 as generation input.
+Also do not use the previous desk master of 1920 by 1080. Do not
+upscale the two assets. Keep the approved moderator, set, and composition at
+each runtime size.
 
-Every runtime variant must use its declared final
-background. All four studio layers provide 640 by 360,
-1280 by 720, 1920 by 1080, 2560 by 1440, and 3840 by 2160 AVIF and WebP files.
-Every variant derives from its final 3840 by 2160 PNG master. Record the
-actual generation and deterministic finishing origin in generic PNG provenance
-metadata.
+Each runtime variant must use its declared last
+background. All four studio layers give AVIF and WebP files at these dimensions:
+
+- 640 by 360 and 1280 by 720.
+- 1920 by 1080 and 2560 by 1440.
+- 3840 by 2160.
+
+Each variant comes
+from its last PNG master of 3840 by 2160.
+In generic PNG provenance metadata, record the real generation origin and
+the deterministic finishing origin.
 
 County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and
-Influencer Campaign Livestream use native 3840 by 2160 OpenAI source art.
-Their source is `gpt-image-2.5-flare`, with one text-only composition per scene
-and reference edits for the deskless background. Foreground desk contours are
-extracted from the same opaque composition and fitted to the shared standing
-desk coordinates. The repository green-matte converter supplies antialiased
-alpha. Keep these actual operations in the PNG and manifest provenance.
+Influencer Campaign Livestream use native OpenAI source art of 3840 by 2160.
+Their source is `gpt-image-2.5-flare`, with one composition from text only for
+each scene and reference edits for the background with no desks. The
+foreground desk contours come from the same opaque composition, and they fit
+the shared standing-desk coordinates. The green-matte converter of the
+repository gives antialiased alpha. Keep these real operations in the PNG
+provenance and the manifest provenance.
 
-Their background and foreground masters provide AVIF and WebP runtime variants
-at five sizes. These are 640 by 360, 1280 by 720, 1920 by 1080, 2560 by 1440,
-and 3840 by 2160.
-Do not upscale their old 1920 by 1080 masters. All scenes use the same
+Their background masters and foreground masters give AVIF and WebP runtime
+variants at five sizes. These are 640 by 360, 1280 by 720, 1920 by 1080, 2560
+by 1440, and 3840 by 2160.
+Do not upscale their previous masters of 1920 by 1080. All scenes use the same
 normalized geometry. Character masters are transparent,
-square, and at least 2048 by 2048.
+square, and 2048 by 2048 or larger.
 
 Runtime character widths are 320, 640, and
 960.
 
-Small character token variants are 128 and 256 square pixels. Enlarged roster
+Small character token variants are 128 and 256 square pixels. Larger roster
 headshots also use the larger runtime character variants.
-The visible full-body silhouette occupies at least 12 percent of each square
-canvas and 92 through 99 percent of its height. This keeps slim characters
-readable while it keeps a safe margin for broad poses and props.
-Silhouette width can change with the pose.
+The visible full-body silhouette fills 12 percent or more of each square
+canvas and 92 through 99 percent of its height. This keeps thin characters
+easy to read, and it keeps a safe margin for wide poses and props.
+The silhouette width can change with the pose.
 
-Do not replace the occupied-area
-and height requirements with one fixed minimum width for all poses.
-Foreground scene plates use the same wide dimensions as their matching back
-scene and keep transparent outer corners.
+Do not replace the requirements for the filled area
+and the height with one fixed minimum width for all poses.
+Foreground scene plates use the same wide dimensions as the back
+scene that agrees with them, and they keep transparent outer corners.
 
-Every raster runtime size has AVIF and WebP output. The manifest contains the ID,
-owner type, owner ID, source description, and license identifier. It contains
-the SHA-256 source hash, format, pixel dimensions, and byte size. It also
-contains the focal point, crop rectangle, and generated variant paths.
+Each raster runtime size has AVIF and WebP output. The manifest contains the
+ID, the owner type, the owner ID, the source description, and the license
+identifier. It contains the SHA-256 source hash, the format, the pixel
+dimensions, and the byte size. It also contains the focal point, the crop
+rectangle, and the generated variant paths.
 
-The scene builder supports `--only id1,id2` for selected asset IDs. The default
-build encodes every layer. A selected build reuses an unselected layer only
-when its master hash and source metadata match the existing manifest. Before encoding, do checks of each reused variant's expected path, declared
-quality, byte size, and hash. Also do checks of its decoded dimensions,
-format, and current byte budget. Reject an
-unknown ID, incomplete manifest, changed source, or invalid cached variant.
+The scene builder has the option `--only id1,id2` for selected asset IDs. The
+default build encodes each layer. A selected build uses an unselected layer
+again only when its master hash and source metadata agree with the manifest.
+Before encoding, do checks of the expected path, the declared quality, the
+byte size, and the hash of each variant that the build uses again. Also do
+checks of its decoded dimensions, format, and byte budget of this time. Reject
+an unknown ID, an incomplete manifest, a changed source, or an incorrect cached
+variant.
 
-Rebuild the complete manifest from the current contracts and install the full
-package together. Do checks of this with `tests/unit/build-scene-assets.test.ts`.
+Build the full manifest again from the contracts of this time, and install the
+full package together. Do checks of this with
+`tests/unit/build-scene-assets.test.ts`.
 
 The scene builder installs variants and their manifest as one package. If
-installation fails, restore only the backups created by that build. Do not
-delete an existing file or directory whose backup move failed. After both new
-outputs are installed, a backup cleanup failure must leave the new package
-intact and report the failure. Do checks of these paths with
+installation fails, put back only the backups that that build made. Do not
+delete a file or directory when the move of its backup failed. After the two
+new outputs are installed, a backup cleanup failure must keep the new package
+with no changes and give the failure. Do checks of these paths with
 `tests/unit/scene-output-installation.test.ts`.
 
-Dimensions are present in markup before decode.
+The markup has the dimensions before decode.
 Validation rejects a crop, focal point, focal rectangle, or interface-safe
-rectangle that differs from the exact approved geometry. This includes values
-that remain inside the normalized canvas. The production build validates the scene
-and fixed character packages before Vite writes `dist/`.
+rectangle that is different from the approved geometry. This includes values
+that stay in the normalized canvas. The production build validates the scene
+package and the fixed character package before Vite writes `dist/`.
 
-The color guard decodes each raster in sRGB, ignores transparent pixels and the
-temporary green matte, and measures muted or neutral pixels. It uses the shared
-policy in `tools/asset-color-policy.json`. Intentional warm materials are not
-rejected by an average-red or average-green rule.
+The color guard decodes each raster in sRGB. It ignores transparent pixels and
+the temporary green matte, and it measures muted or neutral pixels. It uses the
+shared policy in `tools/asset-color-policy.json`. A rule for average red or
+average green does not reject intentional warm materials.
 
-At the largest size, one AVIF scene is at most 350 kibibytes (KiB). Its WebP
-fallback is at most 500 KiB. One AVIF character state is at most 250 KiB. Its
-WebP fallback is at most 350 KiB. The selected scene and both selected
-character image packages total at most 3 mebibytes (MiB) in their preferred
-formats.
+At the largest size, one AVIF scene is 350 kibibytes (KiB) or less. Its WebP
+fallback is 500 KiB or less. One AVIF character state is 250 KiB or less. Its
+WebP fallback is 350 KiB or less. In their preferred formats, the selected
+scene and the two selected character image packages have a total of 3
+mebibytes (MiB) or less.
 
 Setup does not preload unselected match packages.
-Package validation selects each asset's largest declared runtime dimensions
-for each format, including all 3840-pixel scene layers. It checks the larger
-AVIF or WebP package total against the limit.
+Package validation selects the largest declared runtime dimensions of each
+asset for each format. This includes all scene layers of 3840 pixels. It
+compares the larger total of the AVIF package or the WebP package with the
+limit.
 
-Each named character state maps to one pose and one expression. The set uses at
-least five distinct expressions and six distinct poses. When the manifest declares the combination, a unique image for each of the
+Each named character state maps to one pose and one expression. The set uses
+five or more different expressions and six or more different poses. When the
+manifest declares the combination, a unique image for each of the
 nine named states is not necessary.
-Normal reactions last 150 through 600 milliseconds, transitions at most 700
-milliseconds, and idle loops 2 through 8 seconds.
+Usual reactions are 150 through 600 milliseconds. Transitions are 700
+milliseconds or less. Idle loops are 2 through 8 seconds.
 
 ### State package and event projection
 
 `src/assets/characters/state-contract.json` records the 19 character IDs and
-the nine named states. Milestone 028 specifies 28 mandatory packages and declares the two
-selection-art fallbacks. Derive default and alternate packages from the
-selection manifest. Do not maintain another skin list. Each package contains
-exactly five additional masters at
+the nine named states. Milestone 028 gives the 28 mandatory packages, and it
+declares the two selection-art fallbacks. Get the default and alternate
+packages from the selection manifest. Do not keep a different skin list. Each
+package contains five more masters at
 `src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 140 state
 masters in total.
 
-The only valid master state IDs are `thinking`, `delivery`,
+The only correct master state IDs are `thinking`, `delivery`,
 `light-hit`, `heavy-hit`, and `weakness`.
-`states/state-manifest.json` owns state mappings and additional runtime assets.
-Selection references the existing baseline asset. Additional states have
-320, 640, and 960 square AVIF and WebP variants in `states/variants/`.
-Each asset keeps the baseline ownership, source, license, hash, focal-point,
-crop, dimension, alpha, and color contracts.
+`states/state-manifest.json` controls the state mappings and the additional
+runtime assets. Selection refers to the baseline asset. Additional states have
+square AVIF and WebP variants of 320, 640, and 960 in `states/variants/`.
+Each asset keeps the baseline contracts for ownership, source, license, hash,
+focal point, crop, dimension, alpha, and color.
 
 Use these fixed state durations, in milliseconds: idle 4000, selection 320,
 thinking 3000, and delivery 400. Use light hit 300, heavy hit 520, weakness
-500, comeback 500, and grammar mistake 520. Idle and thinking can loop. Transient
-movement plays once. Milestone 025 can hold the final pose through its owned
-narration or damage interval.
+500, comeback 500, and grammar mistake 520. Idle and thinking can loop.
+Transient movement plays one time. Milestone 025 can hold the last pose during
+the narration interval or damage interval that it controls.
 
-A new public event replaces the previous state.
-Do not queue stale events or change a game result for animation.
+A new public event replaces the state before it.
+Do not queue events that are out of date, and do not change a game result for
+animation.
 
-Show selection on match entry. The active picker, human or AI, thinks. The
-other character is idle. Ordinary picks and commits do not recite. Milestone
-025 holds the current narrator's delivery pose, then shows damage after its
-total.
+Show the selection when the match starts. The active picker, human or AI,
+thinks. The other character is idle. Usual picks and commits do not recite.
+Milestone 025 holds the delivery pose of the narrator of this time, and then it
+shows the damage after its total.
 
 Positive damage below 16 uses light hit. Damage 16 or more uses heavy
-hit, matching Milestone 024 sound thresholds. Grammar self-damage keeps its own
-state. These presentation rules do not change scoring. No state decision reads
-an unplayed private card or an AI candidate evaluation.
+hit, which agrees with the sound thresholds of Milestone 024. Grammar
+self-damage keeps its own state. These presentation rules do not change
+scoring. No state decision reads a private card that the player did not play
+or an AI candidate evaluation.
 
-Keep the current image visible until its replacement has decoded. A newer cue
-takes precedence over a pending decode. Missing or failed optional display data keeps the
-last decoded portrait visible. Production validation still rejects a missing
-required package. Load only the selected skins' state packages after match
-entry. Do not preload state packages in setup.
+Keep the image of this time visible until its replacement is decoded. A newer
+cue has priority over a pending decode. When optional display data is missing
+or fails, the last decoded portrait stays visible. Production validation
+continues to reject a missing necessary package. Load only the state packages
+of the selected skins after the match starts. Do not preload state packages in
+setup.
 
-Pause, viewport interruption, document hiding, and exit stop nonessential
-loops and discard pending transient motion. Resume at the current resting
-state without replaying an old reaction. Reduced motion keeps state and public
-outcome information visible and suppresses spatial movement and flashing.
-This includes private-hand and action-rail entrance motion on both player
-sides. Side-specific rules must not override the reduced-motion setting.
+Pause, viewport interruption, document hiding, and exit stop the loops that
+are not necessary, and they discard pending transient motion. Resume at the
+stable state of this time, and do not play a previous reaction again. Reduced
+motion keeps the state and the public result information visible, and it stops
+spatial movement and flashing.
+This includes the entrance motion of the private hand and the action rail on
+the two player sides. Rules for one side must not override the reduced-motion
+setting.
 
-All image and ambience layers are pointer-inert. State changes use reserved
-absolute image planes and cannot move a control or sentence.
+All image layers and ambience layers are pointer-inert. State changes use
+reserved absolute image planes, and they cannot move a control or a sentence.
 
-The transition-era studio adds a four-second low-amplitude lamp loop over its
-existing four outer lamp faces. Two sides have a two-second phase offset.
-The neutral overlay opacity ranges from 0.03 through 0.15. It uses the same
+The transition-era studio adds a four-second lamp loop with low amplitude over
+its four outer lamp faces. Two sides have a phase offset of two seconds.
+The opacity of the neutral overlay is 0.03 through 0.15. It uses the same
 16:9 coordinate plane and protected crop as the back scene. It adds no
-lamp, beam, prop, or runtime raster. Pause, hiding, leaving the viewport, and
-reduced motion remove this decorative overlay and keep the static lamps.
+lamp, beam, prop, or runtime raster. Pause, hiding, going out of the viewport,
+and reduced motion remove this decorative overlay, and they keep the static
+lamps.
 
-Initial page cumulative layout shift (CLS) is at most 0.05. Replacing or
-updating a card, reaction, or character state produces exactly 0 layout shift.
+The initial page cumulative layout shift (CLS) is 0.05 or less. When a card, a
+reaction, or a character state is replaced or updated, the layout shift is
+0.
 
 ## Acceptance criteria
 
-- **AC-023-01:** The manifest rejects every missing field, duplicate ID, bad
-  hash, unsupported format, wrong dimension, out-of-range crop, and missing
-  license at the asset path.
-- **AC-023-02:** Sharp reproduces byte-identical variant dimensions and paths
-  from unchanged masters, and every file meets its per-file and package budget.
-- **AC-023-03:** Browser tests select AVIF when supported, fall back to WebP,
-  reserve dimensions before decode, and load no unselected match package.
-- **AC-023-04:** All 28 state packages expose all nine logical states through
-  exactly five state masters plus selection, with at least five expressions and
-  six poses. Missing mappings, dedicated masters for reused states, and extra
-  source PNGs fail validation.
-- **AC-023-05:** All supported landscape variants keep declared focal regions
-  visible and meet CLS limits.
-- **AC-023-06:** Motion procedures meet all timing and pointer requirements.
-- **AC-023-07:** The font comparison covers all four exclusive roles,
-  specified content, and viewports. The evidence records the selected local
-  WOFF2 files, licenses, weights, metric fallbacks, and use rules.
-  Fallback rendering causes no hidden or clipped text. Visual uppercase does not change source,
-  accessible, or spoken sentence text.
-- **AC-023-08:** A synthetic near-green matte fixture has known foreground
-  colors. It converts to a transparent background, opaque interior, and
-  partial-alpha contour. The reconstructed contour color stays within the
-  alpha-aware eight-bit Canvas round-trip tolerance. A
-  binary green-matte fixture gains a partial-alpha edge. Asset validation
-  rejects a soft-key output with missing method metadata or no partial alpha.
+- **AC-023-01:** The manifest rejects these items at the asset path:
 
-  Native adoption keeps decoded RGBA pixels and records native provenance
-  without key metadata. Native fixtures accept alpha-250 through 255 interiors and green
-  material. Empty, substantially translucent, edgeless, border-contaminated,
-  detached-alpha, and surrounding-haze fixtures fail.
+  - A missing field, a duplicate ID, or an incorrect hash.
+  - An unsupported format or an incorrect dimension.
+  - A crop out of range or a missing license.
+
+- **AC-023-02:** From masters with no changes, Sharp makes the variant
+  dimensions and paths again with the same bytes. Each file is in its budget for each
+  file and in the package budget.
+- **AC-023-03:** Browser tests select AVIF when the browser can use it, and
+  they use WebP as the fallback. They keep the dimensions before decode, and
+  they load no unselected match package.
+- **AC-023-04:** All 28 state packages show all nine logical states through
+  five state masters and the selection. They have five or more expressions
+  and six or more poses. These fail validation: missing mappings, dedicated
+  masters for states that a package uses again, and source PNGs that are not
+  in the inventory.
+- **AC-023-05:** All supported landscape variants keep the declared focal
+  regions visible, and they are in the CLS limits.
+- **AC-023-06:** Motion procedures obey all timing requirements and pointer
+  requirements.
+- **AC-023-07:** The font comparison includes all four exclusive roles, the
+  content that this specification gives, and the viewports. The evidence
+  records the selected local WOFF2 files, licenses, weights, metric fallbacks,
+  and use rules.
+  Fallback rendering causes no hidden or clipped text. Visual uppercase does
+  not change the source, accessible, or spoken sentence text.
+- **AC-023-08:** A synthetic near-green matte fixture has known foreground
+  colors. It converts to a transparent background, an opaque interior, and a
+  partial-alpha contour. The reconstructed contour color stays in the
+  alpha-aware eight-bit Canvas round-trip tolerance. A
+  binary green-matte fixture gets a partial-alpha edge. Asset validation
+  rejects a soft-key output that has no method metadata or no partial alpha.
+
+  Native adoption keeps the decoded RGBA pixels, and it records native
+  provenance without key metadata. Native fixtures accept interiors with alpha
+  250 through 255 and green material. These fixtures fail: empty, very
+  translucent, edgeless, border-contaminated, detached-alpha, and
+  surrounding-haze.
 - **AC-023-09:** Each of the four vertical-slice characters has one default skin
   and zero through eight alternate skins. A ninth alternate fails validation.
   Filename discovery is deterministic, and the default is first. Foundation
-  characters can keep only their default interim portrait until Milestone 028.
-  The roster resolves every available selectable skin. Setup and match views
-  resolve an available requested skin without changing character or phrase
-  data.
-- **AC-023-10:** Each final character is recognizable without its nameplate by
-  its silhouette, posture, face system, and prop logic. Default and alternate
-  skins keep one fictional archetype across all named states. The research
-  folder contains the character-specific study and remains excluded from Git,
-  builds, and published artifacts. Public files contain no real-person name or
-  private study data.
-- **AC-023-11:** Character-tree conversion resolves every matching prompt from
-  a separate research root. A missing or empty prompt fails before conversion.
-  A prompt without the shared neutral-white-balance and local-warm-color
-  controls also fails before conversion. Required positive controls do not count
-  when they occur in a negative-control section. A prohibited global warm grade
-  remains invalid when the prompt also contains the required controls. The
-  shipping raster contains a generic source record but does not contain the
-  exact prompt or private study data.
-- **AC-023-12:** The regeneration inventory contains exactly the 27 character
-  and four scene PNG files in the fixed baseline. Each replacement has a new
-  source hash and a generation-input record. The input record contains no
-  current raster. A missing baseline replacement or an extra asset claimed as a
-  Milestone 023 replacement fails the inventory.
+  characters can keep only their default temporary portrait until Milestone
+  028. The roster resolves each available selectable skin. Setup views and
+  match views resolve an available requested skin, and they do not change the
+  character data or the phrase data.
+- **AC-023-10:** Each release character is recognizable without its nameplate
+  by its silhouette, posture, face system, and prop logic. Default skins and
+  alternate skins keep one fictional archetype across all named states. The
+  research folder contains the study for each character, and it stays out of
+  Git, builds, and published artifacts. Public files contain no real-person name
+  or private study data.
+- **AC-023-11:** Character-tree conversion resolves each prompt that agrees with
+  a render from a different research root. A missing or empty prompt fails
+  before conversion. A prompt without the shared controls for neutral white
+  balance and local warm color also fails before conversion. Necessary positive
+  controls do not count when they are in a negative-control section. A
+  global warm grade, which is not permitted, stays incorrect when the prompt also contains the
+  necessary controls. The shipping raster contains a generic source record, but
+  it does not contain the prompt or private study data.
+- **AC-023-12:** The regeneration inventory contains only the 27 character
+  PNG files and four scene PNG files in the fixed baseline. Each replacement has
+  a new source hash and a generation-input record. The input record contains no
+  raster of this time. A missing baseline replacement causes an inventory failure. An asset that is
+  not in the baseline but says it is a Milestone 023 replacement also causes an
+  inventory failure.
 
-  The Black Sea Captain alternate is not a valid replacement. A nonbaseline
-  asset remains under Milestone 028 and does not fail this inventory. The fixed character manifest,
-  replacement-hash ledger, builder, and validator provide the objective
-  inventory evidence. Focused builder and validator tests reject an unchanged
-  source hash, missing license, or missing runtime variant.
-- **AC-023-13:** All 19 represented archetypes have a complete private character
-  study before generation. An existing prompt alone fails readiness. The agent
-  records the required direction from contracts and material assumptions. A user response is necessary only for an unresolved input that blocks
-generation.
-- **AC-023-14:** Each baseline scene layer has complete camera, composition,
-  layer, subject, prop, lighting, focal-region, interface-safe-region, and crop
-  direction in its owning approved specification. A temporary prompt alone
-  fails readiness. The agent resolves routine details from the contracts.
-  Only a required input that blocks generation needs a user response.
-- **AC-023-15:** No current baseline raster is a generation, tracing, editing,
-  compositing, identity, composition, or style input for its baseline replacement.
+  The Black Sea Captain alternate is not a correct replacement. An asset that is
+  not in the baseline stays in Milestone 028, and it does not cause an inventory
+  failure. The fixed character manifest,
+  the replacement-hash ledger, the builder, and the validator give the objective
+  inventory evidence. Focused builder tests and validator tests reject a source
+  hash with no changes, a missing license, or a missing runtime variant.
+- **AC-023-13:** All 19 archetypes in the baseline have a complete private
+  character study before generation. A prompt alone fails readiness. The agent
+  records the necessary direction from the contracts and the important
+  assumptions. A user response is necessary only for an input that is not
+  resolved and that blocks generation.
+- **AC-023-14:** Each baseline scene layer has a complete direction in its
+  approved owner specification. The direction includes camera, composition,
+  layer, subject, prop, lighting, focal region, interface-safe region, and crop. A temporary prompt
+  alone fails readiness. The agent uses the contracts to resolve usual details.
+  Only a necessary input that blocks generation must have a user response.
+- **AC-023-15:** No baseline raster of this time is an input for its baseline
+  replacement. This includes generation, tracing, editing, compositing,
+  identity, composition, and style inputs.
   A targeted skin-consistency repair can use a conforming project portrait as
-  a style reference through the exception for the authorized repair above.
+  a style reference through the exception for the approved repair above.
   Its private input record contains the reference source, license, hash, role,
-  and repair-task scope. An agent comparison of the complete regenerated baseline
-  confirms one shared cel-shaded cartoon language, contour system, and flat-color
-  construction. Character packages obey the funny big-head rendering standard, use `county-baron--municipal-patron` as their only visual north
-  star, and use broad hard-edged cel-shaded value regions.
+  and repair-task scope. An agent compares the full regenerated baseline. The comparison shows one shared cel-shaded cartoon language, contour
+  system, and flat-color construction. Character packages obey the funny
+  big-head rendering standard. They use `county-baron--municipal-patron` as
+  their only visual north star, and they use broad hard-edged cel-shaded value
+  regions.
 
   Other representational
   raster packages keep two or three
   hard-edged value levels. The review shows consistent lighting, simplified
   materials, proportions, texture density, and exaggeration.
-  Each archetype package contains its regenerated default and every baseline
-  alternate. No package mixes old and regenerated skins.
-- **AC-023-16:** An agent inventory review examines all 27 character PNG files and all four
-  scene PNG files individually at source size. It also examines them together
-  in representative stage compositions. It records pass or fail for contour
-  weight, flat color shapes, value-step
+  Each archetype package contains its regenerated default and each regenerated
+  baseline alternate. No package mixes previous skins and regenerated skins.
+- **AC-023-16:** An agent inventory review examines all 27 character PNG files
+  and all four scene PNG files one at a time at source size. It also examines
+  them together in representative stage compositions. It records pass or fail
+  for contour weight, flat color shapes, value-step
   count, and hard-edged lighting. It also records white balance, global color
-  cast, deliberate exaggeration, simplified material treatment, and restrained
-  texture. Any painted comic-book, painterly
+  cast, intentional exaggeration, simplified material treatment, and limited
+  texture. A result in one of these styles causes the milestone to fail:
+  painted comic-book, painterly
   semi-realistic, realistic concept-art, photographic, hyper-realistic,
-  three-dimensional-render, or mixed-style result fails the milestone.
+  three-dimensional-render, or mixed-style.
 
-  A
-  character skin or state records the funny big-head rendering standard,
-  immediate comic read, and comparison with
-  `county-baron--municipal-patron` instead of exact value-step quantization. A
-  sample or selected subset does not satisfy this review.
-- **AC-023-17:** The asset color guard decodes every supported shipping raster in sRGB. It
+  For a
+  character skin or state, the review records the funny big-head rendering
+  standard, the immediate comic read, and the comparison with
+  `county-baron--municipal-patron`. It does not record an accurate value-step
+  quantization. A sample or a selected subset does not satisfy this review.
+- **AC-023-17:** The asset color guard decodes each supported shipping raster in
+  sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local
   brass, cream, skin, wood, oxide-red, and lamp colors when neutral or cool
-  anchors remain. An image without a measurable neutral or cool anchor fails
-  automated color validation. Repair or regenerate it under the shared color
-  contract and rerun the validator. A review note cannot waive the failure.
+  anchors stay. An image without a measurable neutral or cool anchor fails
+  automated color validation. Repair it or generate it again with the shared
+  color contract, and run the validator again. A review note cannot cancel the
+  failure.
 
-  A small cool anchor does not permit a broad yellow
-  cast across near-neutral pixels. The guard reports the asset path and measured
-  values. Its neutral, near-neutral, yellow-wash, local-warm-accent, and
+  A small cool anchor does not make correct a broad yellow
+  cast across near-neutral pixels. The guard gives the asset path and the
+  measured values. Its neutral, near-neutral, yellow-wash, local-warm-accent, and
   green-matte fixtures pass in `tests/unit/asset-color-guard.test.ts`.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on the affected title, setup, and match surfaces.
-2. After audit repairs, run `$impeccable critique` on the changed slice.
+1. Run `$impeccable audit` on the title, setup, and match surfaces that the
+   change touches.
+2. After the audit repairs, run `$impeccable critique` on the changed slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index
-to those later changes.
+to those subsequent changes.
 
 ## Checks and stop conditions
 
-Validation proves formats, sizes, crops, ownership, licenses, and color policy.
-Browser tests show correct variants without layout shift at target viewports.
-The moderator-clearance checks in `e2e/playable-match-screen.spec.ts` do checks of
-image readiness and geometry in the same browser evaluation. Loaded images with positive intrinsic and rendered dimensions are necessary
-for pixel reads. A
-delayed replacement portrait must wait for readiness. A real overlap must
-still fail the clearance assertion.
+Validation shows formats, sizes, crops, ownership, licenses, and color policy.
+Browser tests show correct variants without layout shift at the target
+viewports. The moderator-clearance checks in `e2e/playable-match-screen.spec.ts`
+do checks of image readiness and geometry in the same browser evaluation. Pixel
+reads must have loaded images with positive intrinsic dimensions and positive
+rendered dimensions. A
+replacement portrait that is late must wait for readiness. A real overlap must
+continue to fail the clearance assertion.
 
-Foreground browser checks use the approved extraction zones. Visible pixels in
-both desk-top and prop focal regions are necessary to pass. They reject pixels
-outside those zones. A regenerated silhouette does not have to touch the old raster's exact outer
-edge to pass.
+Foreground browser checks use the approved extraction zones. To pass, the
+desk-top focal region and the prop focal region must have visible pixels. The
+checks reject pixels out of those zones. A regenerated silhouette
+does not have to touch the outer edge of the previous raster to pass.
 
-Leave the remaining roster, audio, speech, and presentation reactions to their
-owning milestones.
+The remaining roster, audio, speech, and presentation reactions stay with their
+owner milestones.
 
 ## Reference
 
@@ -1407,51 +1544,56 @@ owning milestones.
 
 ## Review repair regression
 
-**AC-023-18:** Scene and character AVIF/WebP validation uses the same chroma-green rule.
-Alpha above 16, green at least 180, and red and blue at most 80 fails.
-Alpha at most 16 keeps the bounded lossy-fringe exception. Validate every
-resolved tree prompt's content before creating output directories or converting
-an image. A later invalid or empty prompt leaves all outputs unchanged.
+**AC-023-18:** Scene and character AVIF/WebP validation uses the same
+chroma-green rule. A pixel fails when its alpha is above 16, its green is 180
+or more, and its red and blue are 80 or less.
+Alpha of 16 or less keeps the bounded exception for lossy fringes. Validate
+the content of each resolved tree prompt before you make output directories or
+convert an image. A subsequent incorrect or empty prompt keeps all outputs with
+no changes.
 
-`tests/unit/validate-scene-assets.test.ts` rejects visible chroma green even
-when manifest bytes/hashes match. `tests/unit/green-chroma-key.test.ts` does checks of
-a valid first prompt and invalid/empty second prompt create or change no output.
-Existing character variant checks keep the same limits.
+`tests/unit/validate-scene-assets.test.ts` rejects visible chroma green, also
+when the manifest bytes and hashes agree. `tests/unit/green-chroma-key.test.ts`
+does checks that a correct first prompt and an incorrect or empty second prompt
+make or change no output.
+The character variant checks keep the same limits.
 
-**AC-023-19:** Roster headshots expose the complete AVIF and WebP variant sets.
+**AC-023-19:** Roster headshots show the full AVIF and WebP variant sets.
 The evidence viewports are 1024 by 720, 1024 by 768, 1280 by 720, 1920 by
-1080, 3424 by 1427, and 5120 by 1440. At each viewport, use tests with device pixel
-ratios 1 and 2. The loaded source has enough pixels for the square image after
-cover fitting and active crop scaling. Otherwise, it uses the largest
-available 960-pixel variant.
+1080, 3424 by 1427, and 5120 by 1440. At each viewport, do tests with device
+pixel ratios 1 and 2. The loaded source has sufficient pixels for the square
+image after the cover fit and the active crop scale. If not, it uses the
+largest available variant of 960 pixels.
 
 All 30 selectable portraits
-keep their canonical skin and existing composition.
+keep their canonical skin and their composition.
 Do the check with `e2e/roster-resolution.spec.ts` and
 `tests/browser/screen-shell.browser.test.ts`.
 
-**AC-023-20:** The Flare workflow routes transparent and exact-size requests
-to the API before the draft pixel boundary. Offline tests construct native
-2048-square requests without an installed CLI. They do checks of multipart reference
-bytes, fixed-origin credentials, sanitized HTTP failures, and zero automatic
-retries. Dry runs create no files and do not read credentials. Native preparation
-keeps RGB, contour alpha, stronger alpha, and no-op bytes.
+**AC-023-20:** The Flare workflow sends transparent requests and requests for
+accurate dimensions to the API before the draft pixel boundary. Offline tests
+make native 2048-square requests without an installed CLI. They do checks of
+the multipart reference bytes, the credentials for the fixed origin, the
+sanitized HTTP failures, and zero automatic retries. Dry runs make no files, and
+they do not read credentials. Native preparation keeps RGB, contour alpha,
+stronger alpha, and the bytes when there is no change.
 
 It removes only
-permitted detached alpha-1 pixels and rejects output that still fails the
-existing native thresholds. Do the check with `tests/unit/openai-scene.test.ts`,
+the permitted alpha-1 pixels that are not connected, and it rejects output that
+continues to fail the native thresholds. Do the check with
+`tests/unit/openai-scene.test.ts`,
 `tests/unit/flare-api.test.ts`, and `tests/unit/native-alpha-preparation.test.ts`.
 
-**AC-023-21:** A source-size agent review compares every selectable selection
+**AC-023-21:** A source-size agent review compares each selectable selection
 portrait with `county-baron--municipal-patron` at equal displayed figure height.
-It records the oversized-head or mechanical-face read, immediate comic read,
-realism rejection, visible global warm-wash result, and native-size provenance.
-One failed condition marks the selection and all five state masters for package
-replacement. The private inventory records all 30 selections and the exact
-trigger for every replacement. Each replacement archetype has separate agent
-integration evidence and product-owner manual in-game acceptance before another
-archetype starts.
+It records the oversized-head or mechanical-face read, the immediate comic
+read, the realism result, the visible global warm-wash result, and the
+native-size provenance. When one condition fails, the selection and all five
+state masters get a mark for package replacement. The private inventory
+records all 30 selections and the cause of each replacement. Each replacement
+archetype has its own agent integration evidence and a manual acceptance in the
+game by the product owner before a different archetype starts.
 
-For the current inventory check, use the current character regeneration
-inventory in `research/HISTORY.md`. Also use each completed cycle's private
-acceptance record.
+For the inventory check of this time, use the character regeneration
+inventory of this time in `research/HISTORY.md`. Also use the private
+acceptance record of each completed cycle.
