@@ -1,82 +1,97 @@
 ---
 name: run-quality-gate
-description: Run or repair the full Grand Transition quality gate only when the user explicitly requests this skill or full-gate execution.
+description: Run or repair the full Grand Transition quality gate. Use only when the user tells you directly to use this skill or to run the full gate.
 ---
 
 # Run the full quality gate
 
 ## Select the mode
 
-- Use this skill to execute the full gate only after an explicit user request.
-- An authorized full-gate run executes `npm run quality:full`.
-- Verification mode runs the gate and reports evidence. This mode is the default.
-- Repair mode fixes failed checks only when the user requests repair.
-- Release mode collects complete release-readiness evidence.
+- Use verification mode by default. It runs the gate and gives the evidence.
+- Use repair mode only when the user tells you to repair failed checks.
+- Use release mode when the user tells you to collect all the release evidence.
 
-Do not substitute `npm run quality:quick` or a direct test command for an authorized full-gate run.
-A reference from another skill does not establish an explicit user request.
-Automatic skill selection does not establish that request.
-Without that request, use `npm run quality:quick` for routine verification within the user's scope.
-If the user prohibits testing, report the missing evidence without running a check.
+Run the full gate only when the user tells you directly to run it.
+An approved full-gate run uses `npm run quality:full`.
+Do not use `npm run quality:quick` or a test command, for example `npm run test`, as an alternative to that run.
+A reference from a different skill does not give approval for the full gate.
+Automatic skill selection also does not give approval for the full gate.
+Without approval from the user, run `npm run quality:quick` for the usual verification in the scope of the user.
+If the user tells you not to run tests, give the missing evidence in the report.
+Do not run a check in that condition.
 
-Do not add suppressions, exclusions, disabled rules, changed pins, invented
-commands, or lower thresholds without explicit approval.
+In verification mode and release mode, do not change files.
+In repair mode, change only the files that are necessary to repair the failed checks.
+If the user changes the scope, select the mode again before the next edit.
+Get approval from the user before you add one of these items:
 
-Continuous integration runs the same full gate independently. A quick pass is
-never full-gate or release evidence.
+- A lint suppression, a test exclusion, or a disabled rule.
+- A changed pin or a new command.
+- A lower limit.
 
-## Discover the configured gate
+Continuous integration (CI) runs the same full gate independently.
+A pass of `npm run quality:quick` is not full-gate evidence and is not release evidence.
 
-Read `AGENTS.md` and approved delivery specifications.
+## Find the gate configuration
+
+Read `AGENTS.md` and the approved delivery specifications.
 Read `package.json`.
-Read the lockfile, Vite, TypeScript, lint, test, Playwright, asset, and locale
-configuration.
-Read GitHub workflows.
-Examine status and keep unrelated work.
-Map the change to focused tests and final checks.
+Read the lockfile and the Vite, TypeScript, lint, test, Playwright, asset, and locale configuration.
+Read the GitHub workflows.
+Examine the status, and keep work that is not related to the gate.
+For each change, find the related checks and the last checks.
 
-The approved milestone specifications specify script names, but a name is not
-an executable gate until it exists.
-If a required script is missing, report that check as `BLOCKED`.
-Do not invent an equivalent command and call it a pass.
+The approved milestone specifications give script names.
+A script name is not an executable check until the script is in `package.json`.
+If a necessary script is missing, give that check the status `BLOCKED`.
+Do not make an equivalent command and give it the status `PASS`.
 
-## Run checks
+## Run the checks
 
-Run applicable focused checks first. Then run `npm run quality:full` once.
-This command owns the phase order in `package.json`.
-Run changed-skill validation when a skill package changed.
-Do not invoke `npm run balance:validate` directly. The full gate supplies the
-required runner marker.
+Run the applicable related checks first.
+Then run `npm run quality:full` one time.
+This command controls the phase sequence in `package.json`.
+When a skill package changed, validate that package.
+Do not run `npm run balance:validate` directly.
+The full gate gives the runner marker that the balance validator must have.
 
-The Playwright web-server command builds the production artifact before preview.
-The gate also runs the documented slowest set, so allow the full duration.
-Do not repeat successful phases without a change, failure, or unresolved concern.
-Run `npm run validate` when configuration or repository guidance changes affect
-its checks.
+The Playwright web server builds the production artifact before the preview starts.
+The full gate also runs the slowest test set, so let the run continue until it stops.
+Do not run a phase that passed again unless there is a change, a failure, or an open problem.
+When a change to configuration or to the files in `.github/` changes the checks in `npm run validate`, run that command.
 
-In release mode, run the full gate. Collect the Milestone 030 and 031 evidence.
+The runner stops at the first phase that fails.
+In verification mode, you can run each subsequent phase through its `:full` script.
+Do this only when the phase is safe and does not use the output of the failed phase.
+The balance validator runs only through the full-gate runner.
+
+In release mode, run the full gate.
+Collect the evidence for Milestone 030 and Milestone 031.
 Run `git diff --check`.
-Examine final status and diff.
+Examine the last status and the last diff.
 
-In verification mode, continue after a failure when later checks are safe and
-independent. In repair mode, record the exact diagnostic.
-Repair the smallest authorized cause.
-Rerun the failed check.
+In repair mode, record the full diagnostic message.
+Repair the smallest approved cause.
+Run the failed check again.
 Then continue.
 
-## Report
+## Give the report
 
-Report each check as `PASS`, `FAIL`, `BLOCKED`, or `N-A`.
-Include its command or procedure and result.
-Separate pre-existing failures from scoped regressions.
-List changed files, or write `none`.
-Give each blocker its smallest next action.
+Give each check one of these statuses: `PASS`, `FAIL`, `BLOCKED`, or `N-A`.
+For each check, give its command or procedure and its result.
+Keep failures that occurred before your work apart from regressions in the scope.
+Give the changed files, or write `none`.
+For each blocker, give the smallest next step.
 
-If the user limits scope or prohibits a check, report that check as `N-A`.
-Give the reason.
-Do not claim an overall pass.
-Claim an overall pass only when every applicable configured check passes.
+If the user decreases the scope or prevents a check, give that check the status `N-A`.
+Give the cause.
+In that condition, do not give a pass for the full gate.
+Give a pass for the full gate only when each applicable check in the configuration passes.
 
-The gate report is complete when every applicable check has a status.
-Each failure must have an owner or next action.
-Include every check in the report.
+## Complete the task
+
+The gate report is completed when these conditions occur:
+
+- Each applicable check has a status.
+- Each failure has an owner or a next step.
+- The report includes each check.

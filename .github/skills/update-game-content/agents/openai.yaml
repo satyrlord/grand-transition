@@ -1,6 +1,6 @@
 interface:
   display_name: 'Update Game Content'
-  short_description: 'Change validated and safe game content'
-  default_prompt: 'Use $update-game-content to revise Grand Transition content and its validation evidence.'
+  short_description: 'Change game content that is correct and safe'
+  default_prompt: 'Use $update-game-content to change Grand Transition content and its validation evidence.'
 policy:
   allow_implicit_invocation: true

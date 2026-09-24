@@ -42,6 +42,7 @@ playwright-report/
 # Local AI skill discovery links
 .agents/
 .codex/*
+.claude/*
 !.codex/config.toml
 
 # IDE and editor files

@@ -8,42 +8,39 @@ selection
 
 ## Deliver
 
-All available common-board and private-hand cards remain selectable. The user
-interface must not classify an available card as reserved, denied, or owned by
-the other character.
+All available common-board cards and private-hand cards stay selectable.
+The user interface must not identify an available card as reserved, denied, or owned by the other character.
 
-Selecting a phrase that does not fit the current grammar state is a grammar
-mistake. The selection has these exact effects:
+When a player selects a phrase that does not agree with the grammar state, the selection is a grammar mistake.
+The selection has only these results:
 
 1. Remove the selected card from its source.
-2. Leave the existing sentence unchanged.
-3. Deal 3 immediate self-damage.
+2. Do not change the sentence.
+3. Deal 3 self-damage immediately.
 4. Do not add comeback charge.
-5. End only the current pick and pass control.
+5. End only the pick at this time, and give control to the other player.
 
-There is no separate mistake command, confirmation, special action name, or
-invalid-sentence state. A later valid pick can continue the unchanged sentence.
+There is no different mistake command, confirmation, special action name, or incorrect-sentence state.
+A subsequent correct pick can continue the sentence that did not change.
 
-The player can end a sentence at any time. A complete sentence scores normally.
-An incomplete sentence ends with a hesitation presentation, deals zero outgoing
-damage, deals no self-damage, and clears that player's noun combos.
+The player can always end a sentence.
+A complete sentence gets its usual score.
+An incomplete sentence ends with a hesitation presentation.
+It deals zero outgoing damage and no self-damage, and it clears the noun combos of that player.
 
-Selecting a legal ending finishes the sentence immediately. Selecting a
-continuation at any point ends that player's participation in the round and
-carries the current fragment. The continuation card itself does not enter the
-sentence or score.
+When a player selects a correct ending, the sentence ends immediately.
+When a player selects a continuation, the participation of that player in the round ends.
+This rule applies at all points in the round.
+The continuation moves the fragment of this time to the next round.
+The continuation card does not go into the sentence, and it does not score.
 
 ## Acceptance criteria
 
-- **AC-007-01:** A wrong common or private phrase is consumed, deals exactly 3
-  self-damage, keeps the sentence, does not charge a comeback, and passes
-  one pick.
-- **AC-007-02:** No product state, command, visible label, or confirmation uses
-  a special foul system.
-- **AC-007-03:** Ending each incomplete grammar prefix deals zero outgoing and
-  self-damage and clears noun combos.
-- **AC-007-04:** A legal ending and a continuation both finish the player's
-  round participation through normal card selection.
+- **AC-007-01:** An incorrect common or private phrase is consumed and deals 3 self-damage.
+  It keeps the sentence, does not charge a comeback, and passes one pick.
+- **AC-007-02:** No product state, command, visible label, or confirmation uses a special foul system.
+- **AC-007-03:** When the player ends each incomplete grammar prefix, the ending deals zero outgoing damage and zero self-damage, and it clears noun combos.
+- **AC-007-04:** A correct ending and a continuation each end the round participation of the player through usual card selection.
 
 ## Objective verifiers
 

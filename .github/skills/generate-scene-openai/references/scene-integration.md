@@ -1,14 +1,15 @@
 # Integrate accepted scene art
 
-PNG means Portable Network Graphics.
+Read this module before scene master preparation or integration.
+PNG: Portable Network Graphics.
 
 ## Prepare the master
 
 Use this procedure only after the candidate review passes.
 For transparent output, first use [native alpha preparation](native-alpha.md).
-Use the reviewed prepared-native image as the source when that step changed alpha.
-Read `tools/scene-resolution.mjs`, `tools/build-scene-assets.mjs`, and the selected scene's existing manifest entry.
-Use the helper to prepare the exact shipping size:
+When that step changed alpha, use the reviewed prepared-native image as the source.
+Read `tools/scene-resolution.mjs`, `tools/build-scene-assets.mjs`, and the manifest entry of the selected scene.
+Use the helper to prepare the shipping dimensions:
 
 ```powershell
 node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
@@ -18,23 +19,24 @@ node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
 ```
 
 The helper reads the shipping dimensions from `sceneMasterSize`.
-Generation requests use supported source dimensions. They do not redefine these shipping dimensions.
-It supports the masters declared in `SCENE_MASTER_NAMES`, including the two
-`-desks` layers and the four foundation `-foreground` layers.
-For a new identifier, implement its approved pipeline contract before preparation.
-Do not bypass the master inventory check.
+Generation requests use supported source dimensions.
+They do not change these shipping dimensions.
+The helper accepts the masters in `SCENE_MASTER_NAMES`.
+These masters include the two `-desks` layers and the four foundation `-foreground` layers.
+For a new identifier, add the code for its approved pipeline contract before preparation.
+Do not go around the master inventory check.
 
-Pass `--size WIDTHxHEIGHT` when the candidate is not 3840 by 2160.
-The helper keeps original bytes when the source already matches the master dimensions.
-For a larger source, it uses centered Lanczos3 cover fitting without enlargement.
-It rejects undersized sources, including insufficient internal-tool outputs.
+When the candidate is not 3840 by 2160 pixels, give `--size WIDTHxHEIGHT`.
+When the source has the master dimensions, the helper keeps the initial bytes.
+For a larger source, it uses centered Lanczos3 cover fitting, and it does not make the image larger.
+It does not accept undersized sources, and this includes internal-tool outputs that are not sufficient.
 Examine the prepared image again for crop loss and edge defects.
-Its private preparation record includes source and output hashes and dimensions.
+Its private preparation record includes the source hash, the output hash, and the dimensions.
 
-All six current scenes use 3840 by 2160 background and foreground masters.
-Generate replacements at those dimensions and keep their native pixels.
-Flare cannot generate native 1920 by 1080 because 1080 is not a multiple of 16.
-A 4K source does not authorize changing another scene's shipping-resolution contract.
+All seven scenes at this time use background masters and foreground masters of 3840 by 2160 pixels.
+Generate replacements at those dimensions, and keep their native pixels.
+Flare cannot generate native output of 1920 by 1080 pixels, because 1080 is not a multiple of 16.
+A 4K source does not give approval to change the shipping-resolution contract of a different scene.
 
 For native transparent art, keep the reviewed decoded pixels and alpha during metadata registration.
 Stamp generic provenance.
@@ -45,34 +47,36 @@ node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs proven
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-native tmp/scene-generation/run/prepared.png
 ```
 
-Replace the example source text with verified facts.
-The script keeps its historical filename for existing callers.
-Native adoption changes metadata only. It does not perform background cleanup, normalize alpha, or flatten colors.
-Record the final stamped hash after these operations alongside the raw and prepared hashes.
+Replace the example source text with facts that you examined.
+The script keeps its historical file name for the callers that use it.
+Native adoption changes only metadata.
+It does not do background cleanup, alpha normalization, or color changes.
+After these operations, record the last stamped hash next to the raw hash and the prepared hash.
 
-For a green-matte fallback, convert through the existing converter:
+For a green-matte fallback, use the converter in the repository:
 
 ```text
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
 ```
 
 Examine alpha edges against dark and light backgrounds.
-Reject missing partial alpha, opaque corners, and detached shadows.
-Reject green residue in key-derived art. Native art can contain intentional green material.
-Use `adopt` only to keep a verified legacy alpha source under its existing workflow.
-Keep back and foreground layers aligned on the same normalized canvas.
+Do not accept missing partial alpha, opaque corners, or detached shadows.
+Do not accept green residue in art from a color key.
+Native art can contain green material that is part of the design.
+Use `adopt` only to keep a legacy alpha source that you examined in its workflow.
+Keep the back layers and the foreground layers aligned on the same normalized canvas.
 
-Stamp a verified generic origin on the final PNG with the converter's `provenance` command and `--source`.
-Include the OpenAI route, model when known, original dimensions, and actual finishing operations in that source text.
-Do not embed the private prompt or reference descriptions.
-Keep original generation bytes, input hashes, review evidence, and preparation records outside shipping assets.
+Stamp a generic source that you examined on the last PNG with the `provenance` command of the converter and `--source`.
+In that source text, include the OpenAI route, the model when you know it, the initial dimensions, and the finishing operations.
+Do not embed the private prompt or descriptions of references.
+Keep the initial generation bytes, input hashes, review evidence, and preparation records out of the shipping assets.
 
 ## Build the scene package
 
-Copy the complete current scene asset tree into a task-specific staging directory under `tmp/`.
-Replace only the approved master or coherent layer pair in that staged tree.
-Keep the previous shipping package intact until staged checks pass.
-Run the scene builder against that complete staged tree:
+Copy the full scene asset tree into a staging directory for the task in `tmp/`.
+In that staged tree, replace only the approved master or the approved layer pair.
+Keep the previous shipping package until the staged checks pass.
+Run the scene builder on that full staged tree:
 
 ```text
 node tools/build-scene-assets.mjs tmp/scene-generation/run/scenes
@@ -81,43 +85,46 @@ node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs valida
 node tools/validate-asset-color.mjs validate tmp/scene-generation/run/scenes
 ```
 
-Run these commands in order. Do not validate while the builder is still writing variants.
-Examine all changed manifest fields and every runtime size.
-Keep ownership, license, focal regions, safe rectangles, source hashes, and byte budgets.
-Do not edit generated variants or the generated manifest by hand.
+Run these commands in this sequence.
+Do not validate while the builder writes variants.
+Examine all the changed manifest fields and each runtime size.
+Keep the ownership, license, focal regions, safe rectangles, source hashes, and byte budgets.
+Do not edit generated variants or the generated manifest manually.
 
-Do not change `tools/scene-replacement-baseline.json` to permit a rejected old source.
-That file records prohibited historical source hashes. It is not an approval
-register.
+Do not change `tools/scene-replacement-baseline.json` to accept a rejected previous source.
+That file records historical source hashes that are not permitted.
+It is not a record of approvals.
 
-The builder records scene-specific generation and upscale origins.
-A newly generated replacement must not inherit its predecessor's source claim.
-Update the owning builder metadata, Specification 023 source statement, and focused tests before rebuilding.
-Use per-asset factual provenance. Do not relabel untouched studio assets.
-Make that change during the authorized replacement task, not during skill installation.
+The builder records the generation origin and the upscale origin of each scene.
+A new replacement must not keep the source text of the asset that it replaces.
+Before you build again, update the builder metadata, the source text in Specification 023, and the related tests.
+Use provenance with facts for each asset.
+Do not change the labels of studio assets that the task did not change.
+Make that change during the approved replacement task, not during skill installation.
 
-Install the verified masters, generated variants, and generated manifest as one coherent package under `src/assets/scenes/`.
-Do another check of the shipping tree before installation to keep work added after staging began.
-Keep unrelated changes.
-Keep unused candidates outside shipping assets.
-For new scene identities, use [update-game-content](../../update-game-content/SKILL.md) for catalog and localization ownership.
+Install the masters that you examined, the generated variants, and the generated manifest as one package in `src/assets/scenes/`.
+Before installation, do a check of the shipping tree again to keep work that a person added after the staging started.
+Keep changes that are not related to the task.
+Keep candidates that you do not use out of the shipping assets.
+For new scene identities, use [update-game-content](../../update-game-content/SKILL.md) for the catalog and the localization.
 
 ## Do a check of runtime use
 
-Run affected scene tests, asset checks, and the production build.
-Use [verify-game](../../verify-game/SKILL.md) for the supported landscape viewport matrix.
-Run browsers headlessly.
+Run the scene tests that the change touches, the asset checks, and the production build.
+For the supported landscape viewport matrix, use [verify-game](../../verify-game/SKILL.md).
+Run the browsers in headless mode.
 
 Examine the production composition with real characters and interface content.
-Examine setup previews, character sides, phrase rows, long speech, focal crops, foreground occlusion, and loaded variant sizes.
-Wait for image decode before pixel assertions.
-Do not call an isolated image a verified game scene.
+Examine setup previews, character sides, phrase rows, long speech, focal crops, foreground occlusion, and the loaded variant sizes.
+Wait until the images decode before you make pixel assertions.
+Do not identify an isolated image as a game scene that you examined.
 
-Run `npm run quality:quick` for routine verification.
-If the user explicitly requests the full gate, use [run-quality-gate](../../run-quality-gate/SKILL.md).
-Obey user restrictions on checks. Report checks that you did not run.
+Run `npm run quality:quick` for the usual verification.
+If the user tells you directly to run the full gate, use [run-quality-gate](../../run-quality-gate/SKILL.md).
+Obey the user's limits on checks.
+In the report, give each check that you did not run.
 
-Update affected specifications, tests, and factual source descriptions.
-Examine the final diff once.
-Report unavailable visual or browser checks separately from passing automated checks.
-Do not publish or commit unless the user requests it.
+Update the related specifications, tests, and source descriptions.
+Examine the last diff one time.
+In the report, keep visual checks or browser checks that you did not run apart from the automated checks that passed.
+Do not publish or commit unless the user tells you to.

@@ -6,19 +6,19 @@
 and variety evidence
 **Production-file budget:** 20
 
-Milestone 027 can finish with the current artwork and the exact common-catalog
-volumes defined here. This milestone keeps the additional pose images, scene
-layers, motion, and final media packages. Their delivery does not block
-Milestone 027. The earlier completion evidence remains historical. The revised
-phrase-volume implementation is verified by the focused content gate. Final
-art, audio, variety, and broader milestone evidence remain separate concerns.
+Milestone 027 can be completed with the artwork of this time and the common-catalog volumes that this milestone gives.
+This milestone keeps the other pose images, scene layers, motion, and last media packages.
+Their delivery does not block Milestone 027.
+The evidence for the previous finalization target stays historical.
+The related content gate gives verification of the revised phrase-volume implementation.
+The last art, audio, variety, and the broader milestone evidence are different items.
 
-The phrase-data package uses the common authoring file and the 19 character
-authoring files. Replay behavior is a separate Milestone 014 package. The replay
-codec, common phrases, and character phrases have separate build chunks so the
-expanded catalog remains below the existing per-chunk size limit.
-Character-state image URLs and scene manifest data also have separate build
-chunks. Keep the limit unchanged.
+The phrase-data package uses the common authoring file and the 19 character authoring files.
+Replay behavior is a different Milestone 014 package.
+The replay codec, the common phrases, and the character phrases have different build chunks.
+Thus, the extended catalog stays below the size limit for each chunk.
+The character-state image URLs and the scene manifest data also have different build chunks.
+Do not change the limit.
 
 ## Terms
 
@@ -35,193 +35,159 @@ chunks. Keep the limit unchanged.
 
 ## Deliver
 
-Finalize all 19 playable fictional archetypes and 6 playable scenes from
-Milestone 026. Complete their English phrase volume, art, scene audio treatment,
-and variety requirements. Use the existing schemas, pipelines, and presentation
-contracts.
+Complete all 19 playable fictional archetypes and 6 playable scenes from Milestone 026.
+Complete their English phrase volume, art, scene audio treatment, and variety requirements.
+Use the schemas, pipelines, and presentation contracts of the repository.
 
-The shared common authoring corpus has exactly 655 cards: 300 nouns, 150 verbs,
-99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
-The verb pool contains 50 past-tense, 50 present-tense, and 50 future-tense
-cards. Every predicate, modifier, and ending is inspired by a verifiably real
-quote, with private provenance evidence. The only continuation is the visible
-cue `[...]`.
+The shared common authoring corpus has 655 cards: 300 nouns, 150 verbs, 99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
+The verb pool contains 50 past-tense cards, 50 present-tense cards, and 50 future-tense cards.
+Each predicate, modifier, and ending has a real quote that a person can examine as its source, with private provenance evidence.
+The only continuation is the visible cue `[...]`.
 
-Each of the six scenes owns exactly 34 scene-restricted cards, for 204
-scene-restricted cards in total. Its eligible scene pool contains those 34 cards
-plus the single unrestricted common continuation, for exactly 35 phrase-pool
-IDs. The continuation is global and is not scene-owned.
+Each of the six scenes owns 34 scene-restricted cards, for 204 scene-restricted cards in total.
+Its eligible scene pool contains those 34 cards and the single common continuation that all scenes can use, for 35 phrase-pool IDs.
+The continuation is global, and no scene owns it.
 
-Each of the 19 characters owns exactly 40 character-restricted cards, for 760
-character-restricted cards in total. Each character owns 10 nouns, 9 verbs, 12
-predicates, 5 endings, 3 modifiers, and 1 character-specific conjunction. No character owns a
-continuation.
+Each of the 19 characters owns 40 character-restricted cards, for 760 character-restricted cards in total.
+Each character owns 10 nouns, 9 verbs, 12 predicates, 5 endings, 3 modifiers, and 1 conjunction for the character.
+No character owns a continuation.
 
-Every archetype has one default portrait skin and zero through eight alternate
-skins through the Milestone 023 filename convention. The final catalog contains
-30 selectable skins: 19 defaults and 11 alternates. A human alternate can use
-any gender. There is no gender quota. A fully mechanical alternate uses another
-fully mechanical chassis.
+Each archetype has one default portrait skin and zero through eight alternate skins through the file-name convention of Milestone 023.
+The last catalog contains 30 selectable skins: 19 default skins and 11 alternate skins.
+A human alternate can use each gender.
+There is no gender quota.
+A fully mechanical alternate uses a different fully mechanical chassis.
 
-The setup roster presents all 30 selectable skins as portrait choices in one
-six-column grid. The current catalog therefore renders five complete rows of
-six portraits. Selecting an alternate portrait selects its owning character
-and skin together. The existing stage skin controls remain available for
-cycling and wraparound.
+The setup roster shows all 30 selectable skins as portrait choices in one grid with six columns.
+Thus, the catalog of this time renders five full rows of six portraits.
+When the player selects an alternate portrait, the game selects the character that owns it and the skin together.
+The stage skin controls stay available to move through the skins and to go back to the first skin after the last skin.
 
-A skin changes only visual presentation. It does not
-add or change phrases, weaknesses, comeback lines, balance data, or character
-identity. Additional alternate clothing is allowed. An archetype can remain
-default-only.
+A skin changes only the visual presentation.
+It does not add or change phrases, weaknesses, comeback lines, balance data, or the character identity.
+More alternate clothing is permitted.
+An archetype can keep only its default skin.
 
-The Black Sea Captain remains default-only in the current
-approved roster.
+The Black Sea Captain keeps only its default skin in the approved roster of this time.
 
-Local Baron (`county-baron`) adds the `municipal-patron` portrait with native
-transparency and the shared funny big-head character style. It is the only
-visual reference for every playable selection and state. Filename discovery
-exposes it in setup and carries it into matches.
-Keep its default portrait, character identity, phrases, balance, and voice
-unchanged. It uses the selection-art fallback, without a new state package.
+Local Baron (`county-baron`) adds the `municipal-patron` portrait with native transparency and the shared funny big-head character style.
+It is the only visual reference for each playable selection and state.
+File-name discovery shows it in the setup and carries it into matches.
+Do not change its default portrait, character identity, phrases, balance, and voice.
+It uses the selection-art fallback, without a new state package.
 
-The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the
-shared Milestone 023 cel-shaded editorial-cartoon style. It holds a
-single money envelope with original generic banknote edges and no markings.
-The portrait uses the approved green-matte conversion fallback after native
-transparency fails validation. Banknote edges are pale blue to avoid the key
-color. Keep the existing alpha and color checks. Matches use the
-selection-art fallback, without a new pose or state package.
+The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the shared cel-shaded editorial-cartoon style of Milestone 023.
+It holds one money envelope with new generic banknote edges and no markings.
+The portrait uses the approved green-matte conversion fallback, because native transparency failed validation.
+The banknote edges are pale blue so that they are not the key color.
+Keep the alpha checks and the color checks.
+Matches use the selection-art fallback, without a new pose package or state package.
 
-Milestone 023's later funny big-head consistency program marks Reluctant
-Theorem for complete selection-and-pose replacement. Keep the current fallback
-and current package counts until that one-archetype cycle is expressly
-authorized, integrated, validated, and manually accepted. That integration
-removes `reluctant-theorem` from the fallback list and adds its five state
-masters. Do not change the executable inventory in advance.
+The subsequent funny big-head consistency program of Milestone 023 identifies the Reluctant Theorem for a full replacement of the selection and the poses.
+Keep the fallback and the package counts of this time until the user gives approval directly for that one-archetype cycle.
+The cycle must also be integrated, validated, and accepted manually.
+That integration removes `reluctant-theorem` from the fallback list, and it adds its five state masters.
+Do not change the executable inventory before then.
 
-All other selectable skins use the complete nine-state Milestone 023 package.
-The final state inventory therefore contains 28 skin packages and 140 state
-masters. Every package uses exactly five state masters plus selection. It maps
-idle to selection, comeback to delivery, and grammar mistake to weakness while
-meeting the six-pose and five-expression minimums. `county-baron--municipal-patron`
-and `reluctant-theorem` are the only selection-art fallback IDs. A validator
-rejects another missing package, an undeclared fallback, or a dedicated master
-for a reused state.
+All other selectable skins use the full nine-state package of Milestone 023.
+Thus, the last state inventory contains 28 skin packages and 140 state masters.
+Each package uses five state masters and the selection, and no more.
+It maps idle to the selection, comeback to delivery, and grammar mistake to weakness.
+It agrees with the minimum values of six poses and five expressions.
+`county-baron--municipal-patron` and `reluctant-theorem` are the only selection-art fallback IDs.
+A validator does not accept a different missing package or a fallback that the inventory does not declare.
+It also does not accept a dedicated master for a state that the package uses again.
 
-Eighteen archetypes are human. Government AI is a fully mechanical robot.
-Animal terms in a name or title are metaphorical political labels only and
-never define anatomy, species, or hybrid traits.
+Eighteen archetypes are human.
+Government AI is a fully mechanical robot.
+Animal words in a name or a title are only metaphorical political labels.
+They do not set the anatomy, the species, or hybrid traits.
 
-## Required roster
+## Necessary roster
 
-Milestone 026 owns the 19 stable character identities, species, weaknesses, and
-play styles. This milestone does not replace those identities. It completes
-their final phrase, skin, state, provenance, and audio contracts.
+Milestone 026 controls the 19 stable character identities, species, weaknesses, and play styles.
+This milestone does not replace those identities.
+It completes their last phrase, skin, state, provenance, and audio contracts.
 
-## Required scenes
+## Necessary scenes
 
-Milestone 026 owns the six stable scene identities and phrase themes. Every
-final scene package uses the same flat cel-shaded editorial-cartoon language as
-the playable portraits. This rule applies to fixed moderators, architecture,
-furniture, lights, bottles, microphones, and all other props. Use the same
-contour weight, flat colors, and two-or-three-level hard-edged
-shading across each complete package.
+Milestone 026 controls the six stable scene identities and phrase themes.
+Each last scene package uses the same flat cel-shaded editorial-cartoon language as the playable portraits.
+This rule applies to fixed moderators, architecture, furniture, lights, bottles, microphones, and all other props.
+Use the same contour weight, flat colors, and hard-edged shading with two or three levels across each full package.
 
-Keep shape exaggeration and restrained
-print texture consistent.
-Each scene keeps its distinct era and materials through silhouette, color, and
-limited pattern. Do not use painted comic-book, painterly semi-realistic,
-realistic concept-art, photographic, hyper-realistic, or
-three-dimensional-render output. Use neutral sRGB white balance without a
-global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
+Keep the shape exaggeration and the small quantity of print texture the same.
+Each scene keeps its different era and materials through silhouette, color, and a small quantity of pattern.
+Do not use painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, or three-dimensional-render output.
+Use neutral sRGB white balance without a global yellow, amber, sepia, golden-hour, mustard, beige, or brown wash.
 
-Warm
-color is local to authored materials and lighting, not a complete scene grade.
+Warm color is local to authored materials and light, not a color grade for the full scene.
 
-- **Transition-Era Television Studio:** Use the flat cel-shaded editorial-cartoon
-  direction in Specification 023 for this late-2000s municipal studio. Generate
-  the scene through text prompts without image references. The set contains
-  heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
-  It contains lighting trusses, harsh lamps, and two tall standing desks. Each
-  desk has one microphone and one plain unbranded water bottle.
+- **Transition-Era Television Studio:** Use the flat cel-shaded editorial-cartoon direction in Specification 023 for this municipal studio from the late 2000s.
+  Generate the scene through text prompts without image references.
+  The set contains heavy blue and burgundy curtains, faux-marble columns, and patterned carpet.
+  It contains lighting trusses, harsh lamps, and two tall standing desks.
+  Each desk has one microphone and one plain water bottle without a brand.
 
-  One fixed blonde
-  fictional moderator sits at a physical wood-and-brass desk. A central raised
-  platform holds that desk. Her complete head remains above the common phrase
-  pool, which can partly cover the desk. Exactly four full-height columns frame the studio.
+  One fixed blonde fictional moderator sits at a physical desk of wood and brass.
+  A raised platform at the center holds that desk.
+  Her full head stays above the common phrase pool, which can cover a part of the desk.
+  Four full-height columns, and no more, frame the studio.
 
-  The playable characters remain separate portrait layers. Its phrase themes
-  are transition, public television, revolution, archive, emergency broadcast,
-  and national salvation.
-- **Modern Debate Studio:** A contemporary presidential-style television set
-  uses broad blue video panels and red and blue vertical accents. It has
-  overhead softboxes, a practical broadcast truss, and a dark stage floor with
-  sparse hard-edged flat reflection shapes. It has two angular standing desks.
-  Each desk has one plain tap-water bottle and one distinct sparkling-water
-  bottle. The scene has no microphones.
+  The playable characters stay different portrait layers.
+  Its phrase themes are transition, public television, revolution, archive, emergency broadcast, and national salvation.
+- **Modern Debate Studio:** A presidential-style television set of this time uses broad blue video panels and red and blue vertical accents.
+  It has overhead softboxes, a practical broadcast truss, and a dark stage floor with a small number of flat reflection shapes with hard edges.
+  It has two angular standing desks.
+  Each desk has one plain tap-water bottle and one different sparkling-water bottle.
+  The scene has no microphones.
 
-  One fixed
-  fictional male moderator sits with crossed legs in a beige studio chair at
-  the stage center, behind a low charcoal table with papers. His complete head
-  remains above the common phrase pool. The pool can partly cover his furniture. He wears
-  rectangular glasses, faces the camera, and has a normal human head with a
-  slightly tall forehead and comically small facial features.
+  One fixed fictional male moderator sits with crossed legs in a beige studio chair at the stage center, behind a low charcoal table with papers.
+  His full head stays above the common phrase pool.
+  The pool can cover a part of his furniture.
+  He wears rectangular glasses, and he faces the camera.
+  His usual human head has a forehead that is a small quantity too tall, and small facial features that are funny.
 
-  The playable
-  characters remain separate portrait layers. Its phrase themes are polling,
-  fact checks, campaign strategy, swing voters, media training, and closing
-  statements.
-- **County Council Ballroom:** The scene contains municipal ornament, plastic
-  flowers, fake marble, ribbon banners, catering, and suspiciously new equipment.
-  Its phrase themes are procurement, relatives, contracts, infrastructure, and
-  development funds.
-- **Midnight Call-In Studio:** The scene contains a neon ticker, chroma-key
-  skyline, telephones, breaking-news banners, a Short Message Service (SMS)
-  crawl, and an ad clock. Its phrase themes are ratings, sources, callers,
-  footage, commercials, and hidden tapes.
-- **Palace Press Hall:** The scene contains a vast room, tall doors, sparse
-  podiums, a polished floor, photographers, and empty space. Its phrase themes
-  are statements, silence, coalition, protocol, mandate, and national interest.
-- **Influencer Campaign Livestream:** The scene contains ring lights, vertical
-  screens, donation alerts, wellness props, merchandise, and floating reactions.
-  Its phrase themes are algorithms, sovereignty, podcast evidence, ancient
-  energy, clips, and shadow bans.
+  The playable characters stay different portrait layers.
+  Its phrase themes are polling, fact checks, campaign strategy, swing voters, media training, and closing statements.
+- **County Council Ballroom:** The scene contains municipal ornament, plastic flowers, fake marble, ribbon banners, catering, and new equipment that looks suspicious.
+  Its phrase themes are procurement, relatives, contracts, infrastructure, and development funds.
+- **Midnight Call-In Studio:** The scene contains a neon ticker, a chroma-key skyline, telephones, breaking-news banners, a Short Message Service (SMS) crawl, and an advertisement clock.
+  Its phrase themes are ratings, sources, callers, footage, commercials, and hidden tapes.
+- **Palace Press Hall:** The scene contains a very large room, tall doors, a small number of podiums, a polished floor, photographers, and empty space.
+  Its phrase themes are statements, silence, coalition, protocol, mandate, and national interest.
+- **Influencer Campaign Livestream:** The scene contains ring lights, vertical screens, donation alerts, wellness props, merchandise, and floating reactions.
+  Its phrase themes are algorithms, sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
-Each scene has a layered master, landscape crops, lighting, motion, music
-treatment, and exactly 35 eligible phrase-pool IDs: 34 scene-restricted cards
-and the global continuation. All six packages use
-3840x2160 back and foreground masters, with 640, 1280, 1920, 2560, and
-3840-pixel-wide runtime variants in both formats. The four foundation foreground IDs are
-`county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`,
-`palace-press-hall-foreground`, and
-`influencer-campaign-livestream-foreground`. Each transparent foreground stays
-within the shared scene plane and keeps the central interaction rectangle
-clear. Broad standing-desk fronts cover both candidates' lower bodies.
+Each scene has a layered master, landscape crops, light, motion, and a music treatment.
+It also has 35 eligible phrase-pool IDs: 34 scene-restricted cards and the global continuation.
+All six packages use back masters and foreground masters of 3840x2160.
+They have runtime variants with widths of 640, 1280, 1920, 2560, and 3840 pixels in the two formats.
+The four foundation foreground IDs are `county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`, `palace-press-hall-foreground`, and `influencer-campaign-livestream-foreground`.
+Each transparent foreground stays in the shared scene plane, and it keeps the central interaction rectangle clear.
+Broad standing-desk fronts cover the bottom of the bodies of the two candidates.
 
-Plain
-fronts can occupy side-action rectangles beneath the HTML controls. Do not cut
-holes or truncate the fronts to clear those controls. Background layers contain
-no duplicate standing desks. Render these four foreground plates above portraits
-without the two studio plates' horizontal prop clipping.
+Plain fronts can be in the side-action rectangles below the HTML controls.
+Do not cut holes in the fronts or truncate them to keep those controls clear.
+Background layers contain no duplicate standing desks.
+Render these four foreground plates above the portraits, without the horizontal prop clipping of the two studio plates.
 
-Scene motion remains decorative and pointer-inert. Transition-era lamps keep
-`transition-era-studio-lights`. Modern Debate keeps
-`modern-debate-light-lines`. The four final foundation animations are
-`county-ballroom-chandelier-glint`, `midnight-ticker-crawl`,
-`palace-press-light-sweep`, and `livestream-reaction-rise`. Pause, document
-hiding, offscreen presentation, and reduced motion stop each overlay without
-changing the static scene or layout.
-Browser checks show that every overlay contains SVG graphics with nonzero
-rendered bounds, as well as the required motion and suspension states.
+Scene motion stays decorative, and it does not receive pointer events.
+The transition-era lamps keep `transition-era-studio-lights`.
+Modern Debate keeps `modern-debate-light-lines`.
+The four last foundation animations are `county-ballroom-chandelier-glint`, `midnight-ticker-crawl`, `palace-press-light-sweep`, and `livestream-reaction-rise`.
+Pause, document hiding, offscreen presentation, and reduced motion stop each overlay, and they do not change the static scene or the layout.
+Browser checks show that each overlay contains SVG graphics with rendered bounds that are not zero.
+They also show the necessary motion states and suspension states.
 
-The six scene music IDs are `<scene-id>-theme`. Each ID resolves to a distinct
-local WAV master and distinct Ogg Vorbis and MP3 runtime variants. The audio
-manifest records its source, license, edit, hashes, and measured levels. Scene
-entry routes the selected scene ID to its matching music treatment. No scene
-uses a shared placeholder track, and scenes add no room-tone audio. The
-Milestone 024 effects remain unchanged and reachable.
+The six scene music IDs are `<scene-id>-theme`.
+Each ID resolves to a different local WAV master and to different Ogg Vorbis and MP3 runtime variants.
+The audio manifest records its source, license, edit, hashes, and measured levels.
+When a scene starts, the game sends the selected scene ID to the related music treatment.
+No scene uses a shared placeholder track, and scenes add no room-tone audio.
+The Milestone 024 effects do not change, and the game can get to them.
 
-The final treatments use these independently pinned CC0 recordings and edits:
+The last treatments use these CC0 recordings and edits, each pinned independently:
 
 | Scene | Recording | Treatment and source window |
 | --- | --- | --- |
@@ -232,22 +198,21 @@ The final treatments use these independently pinned CC0 recordings and edits:
 | Palace Press Hall | RonyDkid, _Intro Music_ | Light pizzicato intrigue. Complete 82.286-second phrase |
 | Influencer Campaign Livestream | iamoneabe, _Try me!_ | Gritty trap beat. 132.414-second arrangement of two complete 32-bar phrases at 116 BPM, with an eight-bar filtered breakdown |
 
-`README.md` and `CREDITS.md` provide the source-page links and license credits.
-The manifest pins the direct downloads and source hashes. Validation rejects a
-music license other than public domain, CC0, or CC BY and rejects non-HTTPS or
-unpinned provenance.
+`README.md` and `CREDITS.md` give the source-page links and the license credits.
+The manifest pins the direct downloads and the source hashes.
+Validation does not accept a music license that is not public domain, CC0, or CC BY.
+It also does not accept provenance that is not HTTPS or that is not pinned.
 
-Scenes 2, 5, and 6 use complete musical phrases. Their masters close the
-waveform seam with a five-millisecond raised-cosine correction and have no
-endpoint fade to silence. Scene 6 keeps the source beat and varies the first
-eight bars of its second phrase with a smoothly blended low-pass treatment.
-This is an arrangement of the existing recording, not newly composed material.
-Validation checks decoded duration and the sample discontinuity at the loop
-boundary in all three formats. These signal checks do not establish musical
-fit or subjective listening approval.
+Scenes 2, 5, and 6 use full musical phrases.
+Their masters close the waveform seam with a raised-cosine correction of five milliseconds, and they have no endpoint fade to silence.
+Scene 6 keeps the source beat.
+It changes the first eight bars of its second phrase with a low-pass treatment that blends smoothly.
+This is an arrangement of the recording, not newly composed material.
+Validation examines the decoded duration and the sample discontinuity at the loop boundary in all three formats.
+These signal checks do not show a musical fit or a subjective listening approval.
 
-The revised unrestricted general common authoring corpus has exactly 655 cards.
-Counts exclude cards with `sceneIds` and character-owned files.
+The revised general common authoring corpus, which all scenes and characters can use, has 655 cards.
+The counts do not include cards with `sceneIds` or the character-owned files.
 
 | Role         | Required  |
 | ------------ | --------: |
@@ -259,206 +224,174 @@ Counts exclude cards with `sceneIds` and character-owned files.
 | Ending       |        50 |
 | Continuation |         1 |
 
-The 150 verbs contain exactly 50 past-tense, 50 present-tense, and 50
-  future-tense cards. The cards form 50 complete three-tense families. Humor and
-editorial approval apply to the complete family: if one tense is not funny or
-otherwise fails review, revise all three tense cards together.
-Every verb card must leave a grammatical place for the noun card that follows
-it. A phrase that already names one object needs a relation to the next noun.
-Review all three tense forms together when that relation changes.
+The 150 verbs contain 50 past-tense cards, 50 present-tense cards, and 50 future-tense cards.
+The cards make 50 full three-tense families.
+Humor approval and editorial approval apply to the full family.
+If one tense is not funny, or if it fails the review for a different cause, change all three tense cards together.
+Each verb card must keep a grammatical position for the noun card that comes after it.
+A phrase that names one object must have a relation to the next noun.
+When that relation changes, examine all three tense forms together.
 
-Every common predicate, modifier, and ending maps to a verifiably real quote in
-the private research folder. The provenance record includes a publicly
-retrievable source URL, the quoted wording, language, context, and affected
-card ID. The visible text may be a faithful quote or an original fictional
-adaptation, but an adaptation is never presented as the real speaker's words.
-The five common conjunctions are as neutral as possible and use empty
-weakness-tag arrays. The single continuation is unrestricted and always renders
-`[...]`.
+Each common predicate, modifier, and ending maps to a real quote that a person can examine in the private research folder.
+The provenance record includes a public source URL, the quoted wording, the language, the context, and the related card ID.
+The visible text can be an accurate quote or a new fictional adaptation.
+The game does not show an adaptation as the words of the real speaker.
+The five common conjunctions are as neutral as possible, and they use empty weakness-tag arrays.
+The single continuation is available to all scenes and characters, and it always renders `[...]`.
 
-Each scene has this exact scene-restricted role composition:
+Each scene has this scene-restricted role composition:
 
-| Role         | Per scene |
-| ------------ | --------: |
-| Noun         |        10 |
-| Verb         |         9 |
-| Predicate    |         6 |
-| Modifier     |         3 |
-| Ending       |         3 |
-| Conjunction  |         3 |
-| Continuation |         0 |
-| **Total**    |    **34** |
+| Role         | Each scene |
+| ------------ | ---------: |
+| Noun         |         10 |
+| Verb         |          9 |
+| Predicate    |          6 |
+| Modifier     |          3 |
+| Ending       |          3 |
+| Conjunction  |          3 |
+| Continuation |          0 |
+| **Total**    |     **34** |
 
-The 9 scene verbs contain exactly 3 past-tense, 3 present-tense, and 3
-future-tense cards arranged as 3 complete three-tense families. The 6 scene
-predicates contain 2 complete three-tense families. Humor and
-editorial approval apply to each complete family: if one tense is not funny or
-otherwise fails review, revise all three tense cards together. Every
-scene verb leaves the same grammatical noun place as a common verb. Every
-scene-restricted predicate, modifier, and ending has the same verifiable
-real-quote provenance requirement as the common corpus.
+The 9 scene verbs contain 3 past-tense cards, 3 present-tense cards, and 3 future-tense cards in 3 full three-tense families.
+The 6 scene predicates contain 2 full three-tense families.
+Humor approval and editorial approval apply to each full family.
+If one tense is not funny, or if it fails the review for a different cause, change all three tense cards together.
+Each scene verb keeps the same grammatical noun position as a common verb.
+Each scene-restricted predicate, modifier, and ending has the same requirement for real-quote provenance as the common corpus.
 
-The three
-scene-restricted conjunctions are distinct scene-specific choices reviewed
-against the owning scene's themes. No scene-restricted card is shared between
-scenes.
+The three scene-restricted conjunctions are different choices for the scene.
+The review examines them against the themes of the scene that owns them.
+No scene-restricted card is in two scenes.
 
-Each character has this exact character-restricted role composition:
+Each character has this character-restricted role composition:
 
-| Role         | Per character |
-| ------------ | ------------: |
-| Noun         |            10 |
-| Verb         |             9 |
-| Predicate    |            12 |
-| Modifier     |             3 |
-| Ending       |             5 |
-| Conjunction  |             1 |
-| Continuation |             0 |
-| **Total**    |        **40** |
+| Role         | Each character |
+| ------------ | -------------: |
+| Noun         |             10 |
+| Verb         |              9 |
+| Predicate    |             12 |
+| Modifier     |              3 |
+| Ending       |              5 |
+| Conjunction  |              1 |
+| Continuation |              0 |
+| **Total**    |         **40** |
 
-The 9 character verbs contain exactly 3 past-tense, 3 present-tense, and 3
-future-tense cards arranged as 3 complete three-tense families. The 12
-character predicates contain 4 complete three-tense families. Humor and
-editorial approval apply to each complete family: if one tense is not funny or
-otherwise fails review, revise all three tense cards together. Every
-character verb leaves the same grammatical noun place as a common verb. Every
-character-owned predicate, modifier, and ending has the same verifiable
-real-quote provenance requirement as the common corpus.
+The 9 character verbs contain 3 past-tense cards, 3 present-tense cards, and 3 future-tense cards in 3 full three-tense families.
+The 12 character predicates contain 4 full three-tense families.
+Humor approval and editorial approval apply to each full family.
+If one tense is not funny, or if it fails the review for a different cause, change all three tense cards together.
+Each character verb keeps the same grammatical noun position as a common verb.
+Each character-owned predicate, modifier, and ending has the same requirement for real-quote provenance as the common corpus.
 
-Its one conjunction is
-personalized to the character as far as grammar permits. Character cards are
-unique to their owner and never carry a continuation.
+Its one conjunction is personalized to the character as much as the grammar lets it be.
+Character cards are unique to their owner, and they do not carry a continuation.
 
-Each scene pool contains the exact 10 nouns, 9 verbs, 6 predicates, 3 modifiers,
-3 endings, and 3 conjunctions above, plus the universal `[...]` continuation.
-It contains exactly 35 unique IDs. No character or scene owns another
-continuation.
+Each scene pool contains the 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3 endings, and 3 conjunctions above, and the universal `[...]` continuation.
+It contains 35 unique IDs.
+No character or scene owns a different continuation.
 
-Each character has exactly one unique comeback line in each tier and three total.
-A comeback line cannot be reused by another character or tier. There is no
-common or shared comeback pool.
-Every character and scene meets the complete Milestone 023 state, variant,
-license, and manifest contract. Every scene has distinct music
-treatment and every named Milestone 024 effect remains reachable.
+Each character has one unique comeback line in each tier, and three in total.
+A different character or tier cannot use a comeback line again.
+There is no common comeback pool and no shared comeback pool.
+Each character and scene agrees with the full state, variant, license, and manifest contract of Milestone 023.
+Each scene has a different music treatment, and the game can get to each named effect of Milestone 024.
 
 ## Variety contract
 
-Setup keeps native scene selection and its keyboard behavior. The selected
-scene name has a wrapping visual text layer inside the control so a
-40-percent-expanded name stays readable on compact viewports. The duplicate
-visual layer is hidden from assistive technology. The native option owns the
-accessible value. Expansion evidence must exercise the selected option, not
-the separate Scene field label.
+The setup keeps the native scene selection and its keyboard behavior.
+The selected scene name has a visual text layer that wraps in the control.
+Thus, a name that is 40 percent longer stays easy to read on compact viewports.
+Assistive technology does not get the duplicate visual layer.
+The native option owns the accessible value.
+The expansion evidence must use the selected option, not the different Scene field label.
 
-The loaded catalog has unique authored phrase text across common and owned
-pools. Each character and tier has unique comeback text. Existing grammar
-checks do checks of phrase reachability, agreement forms, and representative complete
-sentences. Normal CI does checks of the catalog and its existing deterministic match
-fixtures. This milestone adds no separate simulation workload, selection
-coverage percentage, or frequency threshold.
+The loaded catalog has unique authored phrase text across the common pools and the owned pools.
+Each character and tier has unique comeback text.
+The grammar checks do checks of phrase reachability, agreement forms, and typical complete sentences.
+The usual CI does checks of the catalog and its deterministic match fixtures.
+This milestone adds no different simulation workload, selection coverage percentage, or frequency limit.
 
-These exact role totals can change only through an approved change to this
-contract, with passing content, grammar, provenance, and normal CI checks.
+These role totals can change only through an approved change to this contract, with passing content, grammar, provenance, and usual CI checks.
 
 ## Acceptance criteria
 
-- **AC-028-01:** The catalog contains exactly 19 required character IDs and
-  six required scene IDs, with no duplicate English identity.
-  Character names and scene names are unique within their respective groups
-  after case and whitespace normalization. Validation identifies the second
-  duplicate locale key.
-- **AC-028-02:** The shared common corpus contains exactly 300 nouns, 150
-  verbs, 99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one
-  continuation. The verb count is exactly 50 past-tense, 50 present-tense, and
-  50 future-tense cards. Boundary fixtures fail one below and above, and the
-  verb-family review treats all three tenses as one editorial unit.
-- **AC-028-03:** Every character and scene passes grammar reachability, board
-  generation, simulated match, asset, crop, state, audio, license, locale, and
-  shared color-policy validation.
-- **AC-028-04:** Comeback keys are unique across character and tier and resolve
-  in every locale.
-- **AC-028-05:** Authored phrase and comeback text is unique. Existing grammar
-  reachability, agreement, representative sentence, and normal CI checks pass.
-- **AC-028-06:** All roster and scene variants pass shared viewport geometry
-  with longest names and 40-percent-expanded UI strings. Production setup
-  presents all 30 selectable portraits in six columns and five current rows.
-  Every portrait choice remains contained, keyboard-focusable, and selectable
-  for either player target.
-- **AC-028-07:** All 19 characters provide one default skin and zero through
-  eight alternate skins. A ninth alternate fails validation. A human alternate
-  can use any gender, and no gender quota applies. A robot alternate remains
-  fully mechanical. Every skin passes the shared asset, alpha, provenance,
-  color, viewport, and package checks while the character's phrase and balance
-  records remain identical across skins.
-- **AC-028-08:** Every common predicate, modifier, and ending has a private
-  provenance record that points to a publicly verifiable real quote. The record
-  includes the source URL, quoted wording, language, context, and affected card
-  ID. The visible card is either a faithful quote or an original fictional
-  adaptation that is not attributed to the real speaker. All five common
-  conjunctions have neutral wording and empty weakness-tag arrays, and the one
-  continuation always renders `[...]`.
-- **AC-028-09:** Each scene has exactly 10 nouns, 9 verbs, 6 predicates, 3
-  modifiers, 3 endings, 3 conjunctions, and zero scene-restricted continuations.
-  Its verbs contain 3 past-tense, 3 present-tense, and 3 future-tense cards in
-  three complete families. Its eligible pool contains exactly 35 IDs after the
-  global continuation is added. Scene predicates, modifiers, and endings pass
-  verifiable quote-provenance review. Scene conjunctions are distinct,
-  scene-specific, and reviewed against their owning scene's themes.
-- **AC-028-10:** Each character has exactly 10 nouns, 9 verbs, 12 predicates,
-  5 endings, 3 modifiers, and 1 personalized conjunction, with zero
-  character-owned continuations. Its verbs contain 3 past-tense, 3 present-
-  tense, and 3 future-tense cards in three complete families. Character
-  predicates, modifiers, and endings pass verifiable quote-provenance review.
+- **AC-028-01:** The catalog contains the 19 necessary character IDs and the six necessary scene IDs, and no other IDs.
+  It has no duplicate English identity.
+  After the normalization of case and whitespace, the character names are unique, and the scene names are unique.
+  Validation identifies the second duplicate locale key.
+- **AC-028-02:** The shared common corpus contains 300 nouns, 150 verbs, 99 predicates, 50 modifiers, 5 conjunctions, 50 endings, and one continuation.
+  The verbs are 50 past-tense cards, 50 present-tense cards, and 50 future-tense cards.
+  Boundary fixtures fail one below and one above each value.
+  The verb-family review uses all three tenses as one editorial unit.
+- **AC-028-03:** Each character and each scene passes the validation of grammar reachability, board generation, simulated matches, assets, crops, and states.
+  It also passes the validation of audio, licenses, locales, and the shared color policy.
+- **AC-028-04:** Comeback keys are unique across characters and tiers, and they resolve in each locale.
+- **AC-028-05:** The authored phrase text and comeback text is unique.
+  The grammar reachability, agreement, typical sentence, and usual CI checks pass.
+- **AC-028-06:** All roster variants and scene variants pass the shared viewport geometry with the longest names and UI strings that are 40 percent longer.
+  The production setup shows all 30 selectable portraits in six columns and five rows of this time.
+  Each portrait choice stays contained, it can get keyboard focus, and the two player targets can select it.
+- **AC-028-07:** All 19 characters give one default skin and zero through eight alternate skins.
+  A ninth alternate fails validation.
+  A human alternate can use each gender, and no gender quota applies.
+  A robot alternate stays fully mechanical.
+  Each skin passes the shared asset, alpha, provenance, color, viewport, and package checks.
+  The phrase records and balance records of the character stay the same across skins.
+- **AC-028-08:** Each common predicate, modifier, and ending has a private provenance record that points to a real quote that a person can examine publicly.
+  The record includes the source URL, the quoted wording, the language, the context, and the related card ID.
+  The visible card is an accurate quote, or a new fictional adaptation that the game does not attribute to the real speaker.
+  All five common conjunctions have neutral wording and empty weakness-tag arrays.
+  The one continuation always renders `[...]`.
+- **AC-028-09:** Each scene has 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3 endings, 3 conjunctions, and zero scene-restricted continuations.
+  Its verbs contain 3 past-tense cards, 3 present-tense cards, and 3 future-tense cards in three full families.
+  With the global continuation, its eligible pool contains 35 IDs.
+  Scene predicates, modifiers, and endings pass the review of quote provenance.
+  Scene conjunctions are different choices for the scene, and the review examines them against the themes of the scene that owns them.
+- **AC-028-10:** Each character has 10 nouns, 9 verbs, 12 predicates, 5 endings, 3 modifiers, and 1 personalized conjunction, with zero character-owned continuations.
+  Its verbs contain 3 past-tense cards, 3 present-tense cards, and 3 future-tense cards in three full families.
+  Character predicates, modifiers, and endings pass the review of quote provenance.
 
 ## Content research boundary
 
-All character identities remain fictional. Common and character-owned nouns,
-verbs, and conjunctions can be invented or accurately real under the general
-content rules. Every common or character-owned predicate, modifier, and ending
-must be inspired by a verifiably real quote. Its private record contains a
-publicly retrievable source URL, the exact quote, original language, context,
-and mapping to the card. The shipped text can be a faithful quote or an
-original fictional adaptation, but it must never present an adaptation as the
-real speaker's words.
+All character identities stay fictional.
+Common and character-owned nouns, verbs, and conjunctions can be invented phrases or accurate real phrases in the general content rules.
+Each common or character-owned predicate, modifier, and ending must have a real quote that a person can examine as its source.
+Its private record contains a public source URL, the quote without a change, the initial language, the context, and the mapping to the card.
+The shipped text can be an accurate quote or a new fictional adaptation.
+But the game must not show an adaptation as the words of the real speaker.
 
-An approved public-figure likeness may be used only as
-visual-only parody in a portrait skin. Private study data stays in the
-Git-ignored research folder and does not ship.
+A portrait skin can use an approved likeness of a public figure only as visual-only parody.
+Private study data stays in the research folder, which Git ignores, and it does not ship.
 
-The same quote-provenance rule applies to all scene-restricted predicates,
-modifiers, and endings. Scene-restricted conjunctions are not required to be
-neutral. They are selected for the owning scene's themes and personalized as
-far as grammar permits. Scene-restricted cards remain fictional in identity and
-do not share a card across scenes.
+The same quote-provenance rule applies to all scene-restricted predicates, modifiers, and endings.
+Scene-restricted conjunctions do not have to be neutral.
+The project selects them for the themes of the scene that owns them.
+It personalizes them as much as the grammar lets it.
+Scene-restricted cards stay fictional in identity, and two scenes do not share a card.
 
-The final content review also targets an approximate 50/50 split of authentic
-adaptations and purely fictional lines. This applies within each newly generated
-common and character expansion. A source-inspired original joke is still fictional when
-the visible wording does not keep the documented quote or its meaning. Keep
-the classification lists and source basis in the private research folder.
+The last content review also has a target of approximately 50/50 between authentic adaptations and fully fictional lines.
+This applies in each newly generated common expansion and character expansion.
+A new joke from a source stays fictional when the visible wording does not keep the documented quote or its meaning.
+Keep the classification lists and the source in the private research folder.
 
-Character-owned conjunctions are not required to be neutral. They are selected
-for the owning character's voice and themes and personalized as far as grammar
-permits. Character-restricted cards remain unique to their owner and do not
-carry a continuation.
+Character-owned conjunctions do not have to be neutral.
+The project selects them for the voice and the themes of the character that owns them.
+It personalizes them as much as the grammar lets it.
+Character-restricted cards stay unique to their owner, and they do not carry a continuation.
 
-The common corpus and all 19 character authoring files receive the
-speech-inspired humor pass defined in Milestone 027. This includes distinctive
-endings and all three comeback tiers. Real slogans, real speech, and documented
-memes keep their real wording and meaning when used directly. The pass keeps
-useful grammar fragments and existing stable identities. It does not waive the
-exact final volumes, quote provenance, or existing content and grammar checks.
+The common corpus and all 19 character authoring files get the speech-inspired humor pass of Milestone 027.
+This includes different endings and all three comeback tiers.
+Real slogans, real speech, and documented memes keep their real wording and meaning when a card quotes them directly.
+The pass keeps useful grammar fragments and the stable identities.
+It does not cancel the last volumes, the quote provenance, or the content checks and grammar checks.
 
-Shipped generation provenance
-uses a generic source description and does not name a real person. Do not use a
-real person as a comparison or target in player-visible content. Do not copy
-photographs, protected prose, or protected expression from another game or
-work. Real slogans and real speech are permitted and stay accurate. Do not use
-real political party
-names, acronyms, or logos.
+The shipped generation provenance uses a generic source description, and it does not name a real person.
+In content that the player sees, do not compare a character with a real person, and do not use a real person as a target.
+Do not copy photographs, protected text, or protected expression from a different game or work.
+Real slogans and real speech are permitted, and they stay accurate.
+Do not use real political party names, acronyms, or logos.
 
-Use only generic ideological or social-family party
-labels.
+Use only generic ideological or social-family party labels.
 
 Shared institutional themes can use
 [Article 115 of the Romanian
@@ -469,30 +402,27 @@ summary](https://romania.representation.ec.europa.eu/news/raportul-privind-statu
 
 ## Impeccable user interface validation
 
-1. Run `$impeccable audit` across affected roster and scene user interface (UI)
-   variants.
-2. After audit repairs, run `$impeccable critique` across the same content slice.
+1. Run `$impeccable audit` across the roster and scene user interface (UI) variants that the change touches.
+2. After the audit repairs, run `$impeccable critique` across the same content slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Checks and stop conditions
 
-The previous completion was verified on 2026-09-14 with `CI=1 npm run ci`
-(exit 0). The evidence included 975 unit tests, 694 browser tests, passing
-coverage, and 259 Playwright cases. Of those Playwright cases, 257 passed
-initially and two passed on retry. The two retry cases then passed three runs
-each with retries disabled after making the Pause locator exact. No gameplay
-assertion or asset threshold was relaxed.
+The previous finalization had verification on 2026-09-14 with `CI=1 npm run ci` (exit 0).
+This is a record of that date only.
+The evidence included 975 unit tests, 694 browser tests, passing coverage, and 259 Playwright cases.
+Of those Playwright cases, 257 passed on the first run and two passed on a retry.
+After the Pause locator was made accurate, the two retry cases passed three runs each with retries disabled.
+The team did not decrease a gameplay assertion or an asset limit.
 
-Final logs are kept in
-`tmp/spec028-ci-verified.log` and `tmp/spec028-final-confirmation.log`.
-Impeccable audit and independent critique evidence, dispositions, and limitations
-are recorded in `.impeccable/review/spec-028-acceptance.md`.
+The last logs are in `tmp/spec028-ci-verified.log` and `tmp/spec028-final-confirmation.log`.
+`.impeccable/review/spec-028-acceptance.md` records the Impeccable audit evidence, the critique evidence from a different reviewer, the decisions, and the limits.
 
-That evidence covers the previous finalization target. The current focused
-content gate does checks of the revised exact common, character, and scene volumes,
-tense families, continuation rules, uniqueness, and grammar. Quote provenance,
-whole-family humor, and owner-personalized conjunction quality remain private or
-subjective editorial evidence. Automated checks do not prove them. Final art,
-audio, variety, and release evidence remain outside this focused verification.
+That evidence is for the previous finalization target.
+The content gate of this time does checks of the revised common, character, and scene volumes and of the tense families.
+It also does checks of the continuation rules, the uniqueness, and the grammar.
+Quote provenance, the humor of full families, and the quality of conjunctions that are personalized for each owner stay private or subjective editorial evidence.
+Automated checks do not show them.
+The last art, audio, variety, and release evidence stay out of this related verification.
 Stop before release optimization or deployment.

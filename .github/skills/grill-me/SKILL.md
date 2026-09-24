@@ -1,55 +1,56 @@
 ---
 name: grill-me
-description: Challenge a Grand Transition plan one decision at a time before implementation. Use when the user requests a decision interview. Cover unresolved product, architecture, balance, content, UI, verification, and delivery choices.
+description: Challenge a Grand Transition plan one decision at a time before implementation. Use when the user tells you to interview them about decisions. Include open product, architecture, balance, content, user interface, verification, and delivery decisions.
 ---
 
 # Challenge a plan one decision at a time
 
-Remain read-only unless the user explicitly authorizes document edits.
+## Select the mode
+
+- Use interview mode by default. Do not change files in this mode.
+- Use record mode only when the user tells you directly to edit documents.
+
+In record mode, change only the specifications that own the decisions.
+If the user changes the scope, select the mode again before the next edit.
 
 ## Prepare the decision tree
 
-Read `AGENTS.md`, approved specifications, the working-tree implementation, tests,
-and related primary sources.
-Resolve every fact that repository evidence or an authoritative source can
-answer.
-Do not ask the user to rediscover facts.
+Read `AGENTS.md`, the approved specifications, the source code in the working tree, the tests, and the related primary sources.
+Use repository evidence and approved sources to find all the facts that they can give.
+Do not tell the user to find facts that you can find.
 
-List only unresolved choices.
-Order dependent choices after the choices that control them.
-Put the choice that is hardest to reverse or has the most dependencies first.
-Examine applicable game rules, balance, artificial intelligence (AI), grammar,
-content safety, and real-phrase accuracy. Examine localization, privacy, browser
-support,
-assets, performance, delivery, and verification effects.
+Record only the open decisions.
+Put each decision after the decisions that control it.
+Put first the decisions that are not easy to change and the decisions with the most dependencies.
+Examine the applicable game rules, balance, artificial intelligence (AI), grammar, and content safety.
+Make sure that real phrases stay accurate.
+Also examine the effects on localization, privacy, supported browsers, assets, performance, delivery, and verification.
 
 ## Resolve one branch
 
-For the active branch:
+For the active branch, do these steps:
 
-1. Give the active contract and evidence gap.
-2. Give two or three materially distinct choices when alternatives exist.
-3. Explain the important effect of each choice.
-4. Recommend one choice with a clear reason and verifier.
-5. Ask exactly one decision question.
-6. Record the answer and its effects before moving to a dependent choice.
+1. Give the active contract and the evidence that is missing.
+2. When there are alternatives, give two or three alternatives that have important differences.
+3. Give the important effect of each alternative.
+4. Recommend one alternative. Give the evidence for the recommendation and a verification step.
+5. Give the user one decision to make.
+6. Record the decision of the user and its effects before you go to a decision that it controls.
 
-If an answer exposes a real dependency, add it to the tree. Do not add
-speculative branches. Reopen a settled branch only when new evidence conflicts with the decision.
-Cite that evidence.
+If a decision shows a new dependency, add it to the tree.
+Do not add branches that have no evidence.
+Open a closed branch again only when new evidence does not agree with the decision.
+Give that evidence.
 
-## Record authorized decisions
+## Record the approved decisions
 
-Identify one owning specification for each durable decision.
-If the user gives edit authority, update only that owner and each approved
-specification that conflicts with the decision.
-If the user does not authorize edits, report the exact future document change.
-Do not create a parallel decision log unless the repository contract requires
-one.
+Identify one owner specification for each decision that the project must keep.
+In record mode, update only that owner and each approved specification that does not agree with the decision.
+In interview mode, give the necessary document changes in the report.
+Do not make a different decision log unless a repository contract makes it necessary.
 
-The decision review is complete when the user resolves or explicitly defers
-each inventoried branch.
-For each deferral, name its owner, reason, dependency, and verification step.
-Route authorized implementation to
-[add-feature](../add-feature/SKILL.md),
-[refactor](../refactor/SKILL.md), or [diagnose](../diagnose/SKILL.md).
+## Complete the task
+
+The interview is completed when the user makes a decision for each recorded branch or tells you to keep it open.
+For each branch that stays open, give its owner, the cause, the dependency, and a verification step.
+For approved implementation, use [add-feature](../add-feature/SKILL.md), [refactor](../refactor/SKILL.md), or [diagnose](../diagnose/SKILL.md).

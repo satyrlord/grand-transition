@@ -6,58 +6,55 @@
 **Owns:** Browser lifecycle and automatic between-round progression
 **Production-file budget:** 4
 
-Milestone 019 owns persistent Victory and history. Use the Milestone 025
-reference loop for between-round progression and terminal presentation. Do not
-use a results modal or mandatory Continue action.
+Milestone 019 controls the persistent Victory and the history.
+Use the Milestone 025 reference loop for the progression between rounds and the terminal presentation.
+Do not use a results modal or a mandatory Continue action.
 
 ## Deliver
 
-Keep the arena visible from setup through match completion. When both
-constructions lock, apply the pure scoring command in the same interaction.
-Present those resolved public facts through Milestone 025. Draft input and the
-turn timer remain blocked until both characters finish narration and damage.
-Then automatically prepare the next normal or cliffhanger round.
+Keep the arena visible from the setup until the match is completed.
+When the two constructions lock, apply the pure scoring command in the same interaction.
+Show those resolved public facts through Milestone 025.
+Draft input and the turn timer stay blocked until the two characters complete the narration and the damage.
+Then prepare the next usual round or cliffhanger round automatically.
 
-Clear old
-receipts and sentence text. Move focus to the new round heading.
+Clear the previous receipts and the sentence text.
+Move the focus to the new round heading.
 
-A terminal round finishes both deliveries before persistent Victory. A direct
-self-damage knockout uses its damage reaction before Victory and does not
-narrate unfinished insults. The engine outcome and one history record do not
-depend on presentation timing. Leaving a nonterminal match cancels presentation.
+A terminal round completes the two deliveries before the persistent Victory.
+A knockout from self-damage during the draft uses its damage reaction before Victory, and it does not narrate insults that are not complete.
+The engine outcome and the one history record are not related to the time of the presentation.
+When the player goes out of a match that is not terminal, the presentation stops.
 
-Do not register a resolution-results custom element, rematch command, or replay
-control. Development-only replay, simulation, and text logs from Milestone 014
-remain infrastructure without production controls. The development logger can
-record the terminal state before presentation finishes.
+Do not register a resolution-results custom element, a rematch command, or a replay control.
+The development-only replay, simulation, and text logs from Milestone 014 stay infrastructure without production controls.
+The development logger can record the terminal state before the presentation ends.
 
 ## Acceptance criteria
 
-- **AC-017-01:** The final draft action starts the public narration sequence
-  over the arena, with input and turn timer blocked and no results modal.
-- **AC-017-02:** Both deliveries finish before the next normal or cliffhanger
-  round. Old receipts clear and focus moves to the round heading automatically.
-- **AC-017-03:** Terminal narration and damage finish before persistent Victory.
-  Return to main menu obeys Milestone 019 and keeps setup selections.
-- **AC-017-04:** Production has no resolution-results element, rematch command,
-  replay control, or development-only match tools.
-- **AC-017-05:** A fixed-seed production match presents each exchange and reaches
-  a later round, cliffhanger, winner, and main-menu return.
+- **AC-017-01:** The last draft action starts the public narration sequence over the arena.
+  Input and the turn timer are blocked, and there is no results modal.
+- **AC-017-02:** The two deliveries end before the next usual round or cliffhanger round.
+  The previous receipts clear, and the focus moves to the round heading automatically.
+- **AC-017-03:** The terminal narration and the damage end before the persistent Victory.
+  `Return to main menu` obeys Milestone 019, and it keeps the setup selections.
+- **AC-017-04:** Production has no resolution-results element, rematch command, replay control, or development-only match tools.
+- **AC-017-05:** A production match with a fixed seed shows each exchange.
+  It gets to a subsequent round, a cliffhanger, a winner, and the `Return to main menu` action.
 
 ## Impeccable user interface validation
 
-Run `$impeccable audit` on the active match and setup-return states. Run the
-bundled detector. Record the score and all priority findings.
+Run `$impeccable audit` on the active match state and the setup-return state.
+Run the bundled detector.
+Record the score and all the important findings.
 
-After audit repairs, run `$impeccable critique` on the same stable states.
-Record heuristic scores, strengths, priorities, the persisted snapshot, and
-each issue disposition. A replacement composition for the removed surface is not necessary.
+After the audit repairs, run `$impeccable critique` on the same stable states.
+Record the heuristic scores, the strengths, the important items, the stored snapshot, and the decision about each issue.
+A replacement composition for the removed surface is not necessary.
 
 ## Objective verifiers
 
-`tests/browser/seamless-match-flow.browser.test.ts` does checks of AC-017-01 through
-AC-017-03. `tests/unit/match-lifecycle.test.ts` does checks of the pure scoring,
-cliffhanger, terminal-state, and command contracts behind AC-017-02 through
-AC-017-04. `e2e/seamless-match-flow.spec.ts` does checks of AC-017-01 through
-AC-017-05 in the production build. The Impeccable evidence and `npm run ci`
-complete the milestone evidence.
+`tests/browser/seamless-match-flow.browser.test.ts` does checks of AC-017-01 through AC-017-03.
+`tests/unit/match-lifecycle.test.ts` does checks of the pure scoring, cliffhanger, terminal-state, and command contracts that are the base of AC-017-02 through AC-017-04.
+`e2e/seamless-match-flow.spec.ts` does checks of AC-017-01 through AC-017-05 in the production build.
+The Impeccable evidence and `npm run ci` complete the evidence for the milestone.

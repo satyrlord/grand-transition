@@ -28,7 +28,7 @@ async function requireUnusedPath(file) {
     if (error.code === 'ENOENT') return;
     throw error;
   }
-  throw new Error('The output path already exists. Keep each run and its evidence separate.');
+  throw new Error('The output path is in use. Use a different output path for each run and its evidence.');
 }
 
 function imageDimensions(size) {
@@ -127,7 +127,7 @@ export async function inspectImage(bytes, expectedSize = NATIVE_SIZE) {
   const metadata = await sharp(bytes, { failOn: 'warning' }).metadata();
   if (metadata.format !== 'png' || (metadata.pages ?? 1) !== 1 ||
       metadata.width !== expectedSize.width || metadata.height !== expectedSize.height) {
-    throw new Error(`Expected a ${expectedSize.width}x${expectedSize.height} PNG. Received ${metadata.width}x${metadata.height} ${metadata.format}.`);
+    throw new Error(`The image must be a ${expectedSize.width}x${expectedSize.height} PNG. The image is a ${metadata.width}x${metadata.height} ${metadata.format}.`);
   }
   await sharp(bytes, { failOn: 'warning' }).raw().toBuffer();
   return { sha256: sha256(bytes), width: metadata.width, height: metadata.height, bytes: bytes.length, format: metadata.format };
@@ -135,7 +135,7 @@ export async function inspectImage(bytes, expectedSize = NATIVE_SIZE) {
 
 export function assertReview(review, facts) {
   if (review.sha256 !== facts.sha256 || !nonempty(review.reviewer) || !Array.isArray(review.issues) || review.issues.length) {
-    throw new Error('Get a current image review with no unresolved issues.');
+    throw new Error('Get an image review for the image at this time, with no open issues.');
   }
   for (const name of REVIEW_CHECKS) {
     if (review.checks?.[name]?.pass !== true || !nonempty(review.checks[name].evidence)) {
@@ -145,7 +145,7 @@ export function assertReview(review, facts) {
 }
 
 export async function prepareImage(bytes, review, scene, expectedSize = NATIVE_SIZE) {
-  if (!SCENE_MASTER_NAMES.includes(`${scene}.png`)) throw new Error('The scene master ID is not declared by the scene builder.');
+  if (!SCENE_MASTER_NAMES.includes(`${scene}.png`)) throw new Error('The scene builder does not declare this scene master ID.');
   const source = await inspectImage(bytes, expectedSize);
   assertReview(review, source);
   const size = sceneMasterSize(scene);
@@ -250,7 +250,7 @@ async function main() {
     await writeFile(out, output, { flag: 'wx' });
     await writeJson(`${out}.preparation.json`, record);
     console.log(JSON.stringify({ prepared: out, ...record.output, shippingApproval: 'Final alpha, provenance, and runtime checks must pass.' }));
-  } else throw new Error('Required arguments are missing. Read the skill API procedure.');
+  } else throw new Error('Necessary arguments are missing. Read the API procedure of the skill.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

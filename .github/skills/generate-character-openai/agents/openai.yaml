@@ -1,6 +1,6 @@
 interface:
-  display_name: "Generate Character Art with OpenAI"
-  short_description: "Generate office clip-art characters and five-pose packages"
-  default_prompt: "Use $generate-character-openai for one declared character work unit. Set review, selection, or package mode. Resume by verified hashes. Never repeat completed or uncertain requests."
+  display_name: 'Generate Character Art with OpenAI'
+  short_description: 'Generate office clip-art characters and five-pose packages'
+  default_prompt: 'Use $generate-character-openai for one given character work unit. Set review, selection, or package mode. Continue only from hashes that you examined. Do not send a completed request or a request without a recorded result again.'
 policy:
   allow_implicit_invocation: true

@@ -17,304 +17,349 @@ interface (UI)
 
 ## Deliver
 
-Build the match surface as an original televised civic debate. Use one
-text-free rendered broadcast back scene with one fixed fictional moderator.
-Use one transparent portrait for each selected skin. Use one transparent
-foreground plate with two tall standing desks. The back scene
+Make the match surface as a new televised civic debate that the project designs. Use one
+rendered broadcast back scene with no text and with one fixed fictional
+moderator. Use one transparent portrait for each selected skin. Use one
+transparent foreground plate with two tall standing desks. The back scene
 contains no playable character. Each raster has embedded generation provenance.
 
 The moderator, studio, desks, props, and playable portraits use one flat
 cel-shaded editorial-cartoon language. Use bold controlled contours, large flat
-color shapes, and two or three hard-edged value levels. Do not combine
-cartoon characters with painted comic-book, painterly semi-realistic, realistic
-concept-art, photographic, hyper-realistic, or three-dimensional-render scene
-layers.
+color shapes, and two or three hard-edged value levels. When scene layers are together with cartoon characters, do not use these
+styles for the scene layers:
 
-Keep all names, values, phrases, states, and controls in HTML. Show the
-board, private hand, sentence, turn timer, Pride, comeback, hand
-refresh, sentence end, grammar-mistake feedback, and continuation selection.
-Support pointer use. Center the timer and dedicated Pause button together in
-the top-center stage frame during drafting and sudden death.
+- Painted comic-book or painterly semi-realistic.
+- Realistic concept-art or photographic.
+- Hyper-realistic or three-dimensional-render.
+
+Keep all names, values, phrases, states, and controls in HTML. Show these
+items:
+
+- The board, the private hand, and the sentence.
+- The turn timer, Pride, and comeback.
+- Hand refresh and sentence end.
+- Grammar-mistake feedback and continuation selection.
+
+Let the player use a pointer. During drafting and sudden death, put the timer
+and the dedicated Pause button together at the center of the top-center stage
+frame.
 
 On desktop, use one integrated arena composition. The authored scene fills the
-play field instead of sitting above a separate dashboard. Put one opponent at
-each side. Put the live sentence and phrase path on the center axis. Put the
-player names and Pride meters at the top edges. Put the round, timer, and Pause
-state at the top center.
+play field. It is not above a different dashboard. Put one opponent at
+each side. Put the live sentence and the phrase path on the center axis. Put the
+player names and Pride meters at the top edges. Put the round, the timer, and
+the Pause state at the top center.
 
-Milestone 018 owns compact landscape and portrait adaptations. In portrait,
-the common pool moves below the scene, fills the content width, and precedes
-the private hand and actions. Compact layouts can use vertical page scrolling.
-The following integrated composition remains the desktop landscape contract.
+Milestone 018 controls the compact landscape and portrait adaptations. In
+portrait, the common pool moves below the scene, fills the content width, and
+comes before the private hand and actions. Compact layouts can use vertical
+page scrolling. The integrated composition that follows stays the desktop
+landscape contract.
 
-A wide speech record occupies the protected central scene region without
-covering either face or gesture. Align its bounds and both portrait frames to
-the Milestone 023 scene canvas at every supported aspect ratio. Keep the two
+A wide speech record is in the protected central scene region, and it does not
+cover a face or a gesture. At each supported aspect ratio, align its bounds and
+the two portrait frames to the Milestone 023 scene canvas. Keep the two
 private choices and all nine common phrases in the central
-and lower play field. Put infrequent actions at the side or bottom edges.
+and lower play field. Put the actions that the player does not use frequently
+at the side edges or the bottom edges.
 
-The End and Comeback rail follows the active side's board margin. Anchor the red
-rail to the left margin. Anchor the blue rail to the right margin. The Comeback
-button is itself the only comeback-charge display. Keep its three cells visible
-from the start of the draft and fill them progressively as charge increases.
-Do not render a separate comeback meter elsewhere.
+The End and Comeback rail follows the board margin of the active side. Attach
+the red rail to the left margin. Attach the blue rail to the right margin. The
+Comeback button is the only display of the comeback charge. Keep its three
+cells visible from the start of the draft, and fill them gradually as the
+charge increases. Do not show a comeback meter at a different location.
 
-Render the studio and moderator first, followed by selected portraits and
-foreground standing desks. Render Hypertext Markup Language (HTML) game
+Render the studio and the moderator first. Then render the selected portraits
+and the foreground standing desks. Render Hypertext Markup Language (HTML) game
 content last.
-Scene 3 through Scene 6 render their complete transparent foreground plate
-above both portraits. Use the native alpha outline without a horizontal CSS
-clip. The two studio desk assets obey the same complete-plate rule: desks,
+Scene 3 through Scene 6 render their full transparent foreground plate
+above the two portraits. Use the native alpha outline without a horizontal CSS
+clip. The two studio desk assets obey the same full-plate rule: desks,
 microphones, and bottles render together above the portraits.
 
-Do not split one
-foreground raster into contradictory front and rear planes.
-Both studio moderators remain physically seated at the center, with their
-heads visible between speech and the common phrase pool. The slightly
-transparent pool uses an 88% opaque background and can cover their furniture
-and lower bodies. Its text remains
-fully opaque. Do not scale or relocate moderators separately at viewport
-breakpoints.
+Do not divide one
+foreground raster into front and rear planes that do not agree.
+The two studio moderators stay in their chairs at the center, and their heads are
+visible between the speech and the common phrase pool. The pool is not fully
+opaque. It uses an 88% opaque background, and it can cover the furniture
+and the lower bodies of the moderators. Its text stays
+fully opaque. At viewport breakpoints, do not scale or move the moderators
+independently.
 
-The desks clip the lower bodies without fixing either selected character into
-the scene. Their fronts continue below the lower stage frame so the extracted
-bottom contours are not visible. Each portrait plane continues below the desk
-occlusion and near the lower stage edge. A hard lower portrait contour must not
-be visible beside either desk.
+The desks clip the lower bodies, but they do not attach the selected characters
+to the scene. The fronts of the desks continue below the lower stage frame, so
+that the extracted bottom contours are not visible. Each portrait plane
+continues below the desk occlusion and near the lower stage edge. A hard lower
+portrait contour must not be visible adjacent to a desk.
 
-Keep desk mass inside the lower third of the
-stage so the candidates remain dominant. Default characters and scene figures
-remain recognizably adult with coherent anatomy. Playable portraits use the
-Milestone 023 funny big-head caricature proportions. Do not use child, chibi,
-or naturalistic prestige-portrait proportions.
+Keep the desk mass in the lower third of the
+stage, so that the candidates stay dominant. Default characters and scene
+figures stay recognizably adult, with coherent anatomy. Playable portraits use
+the funny big-head caricature proportions of Milestone 023. Do not use child,
+chibi, or naturalistic prestige-portrait proportions.
 
-The match uses each player's setup skin ID only to select the portrait asset.
-Skin choice does not change character identity, phrases, weaknesses, grammar,
-scoring, match history identity, or any reducer input.
+The match uses the setup skin ID of each player only to select the portrait
+asset. The skin choice does not change these items: character identity,
+phrases, weaknesses, grammar, scoring, match history identity, or reducer
+input.
 
-For each portrait, use one complete compact archetype name in the reserved
-two-line nameplate that Milestone 023 defines. Add a visible Pride label and a
-Pride bar. Both top Pride frames are
+For each portrait, use one complete compact archetype name in the two-line
+nameplate that Milestone 023 keeps for it. Add a visible Pride label and a
+Pride bar. The two top Pride frames are
 rectangular, with square
-corners and parallel vertical ends. The compact strip can omit the leading
-article from the full English name. Text and controls must not intersect a face,
-hand, or required prop. The integrated composition must keep scene, opponents,
-sentence construction, and controls visible as one readable confrontation.
+corners and parallel vertical ends. The compact strip can remove the article at
+the start of the full English name. Text and controls must not go across a face,
+a hand, or a necessary prop. The integrated composition must keep the scene,
+the opponents, the sentence construction, and the controls visible as one
+confrontation that is easy to read.
 
-The active player must be clear in both the public arena and the phrase path.
-Only the active name strip shows “Your turn.” A persistent brass stage light
-keeps its portrait and Pride strip bright. Color and light subdue the inactive
-side, but it remains fully opaque. A turn change uses
-one 360-millisecond directional light-and-position transfer on the incoming
-portrait.
+The active player must be clear in the public arena and in the phrase path.
+Only the name strip of the active player shows “Your turn.” A persistent brass
+stage light keeps its portrait and Pride strip bright. Color and light make the
+waiting side less bright, but it stays fully opaque. A turn change uses
+one directional transfer of light and position of 360 milliseconds on the
+portrait of the next player.
 
-The visual direction uses the spatial logic in the user-supplied original-game
-references. Opposing characters share one full-stage play field. Status frames
-the top edge, and speech spans the confrontation. Sentence choices occupy the
-center. Secondary actions remain at the perimeter. Translate
-that logic into an original late-2000s post-socialist municipal broadcast.
+The visual direction uses the spatial logic in the references from the source
+game that the user gave. The opposing characters share one full-stage play field.
+Status is at the top edge, and speech goes across the confrontation. Sentence
+choices are at the center. Secondary actions stay at the perimeter. Change
+that logic into a new late-2000s post-socialist municipal broadcast.
 
 Do
-not copy the reference art, exact ornament, fonts, labels, proportions, or
-interface assets. Use the approved roster names, original characters,
-exact product content, and implemented actions. Milestone 023 owns final asset
-variants, font selection, and manifest delivery. This milestone can use the
-provenance-bearing rendered back scene, transparent foreground desk plate,
-four transparent interim Portable Network Graphics (PNG) portraits, and paper
-material.
+not copy the art, ornament, fonts, labels, proportions, or interface assets of
+the references. Use the approved roster
+names and the characters that the project made.
+Use the product content with no changes and the actions in the code.
+Milestone 023 controls the last asset variants, the font
+selection, and the manifest delivery. This milestone can use the rendered back
+scene with provenance and the transparent foreground desk plate.
+It can also use four transparent temporary Portable Network Graphics (PNG)
+portraits and paper material.
 
-The phrase path uses the compact original-game interaction precedent. The
-nine common rows show phrase text only. The two private choices also show phrase
-text only. Do not show role labels, ownership labels, weaknesses, disabled
-reasons, hint copy, or card metadata inside either phrase list. Keep role,
-ownership, availability, weakness, and disabled data in semantic
-attributes and accessible names. The compact visuals must keep
+The phrase path uses the compact interaction example of the source game. The
+nine common rows show only phrase text. The two private choices also show only
+phrase text. In the two phrase lists, do not show role labels, ownership
+labels, weaknesses, the cause of a disabled phrase, hint copy, or card
+metadata. Keep the role, ownership, availability, weakness, and disabled data
+in semantic attributes and accessible names. The compact visuals must keep the
 assistive-technology state.
 
-Unavailable common phrases stay in their fixed rows with subdued text. A
-selected common phrase leaves one visibly empty row with an accessible state
-label. Every available common or private phrase uses the same selection action.
+Unavailable common phrases stay in their fixed rows with less bright text. A
+selected common phrase changes into one row that is visibly empty and that has
+an accessible state label. Each available common or private phrase uses the
+same selection action.
 
-When Auto-complete is on, pointer hover and keyboard focus preview a valid
-result. The wide speech bubble shows the preview. A wrong phrase does not change
-the current sentence. Auto-complete is on by default.
+When Auto-complete is on, pointer hover and keyboard focus show a preview of a
+correct result. The wide speech bubble shows the preview. An incorrect phrase
+does not change the sentence of this time. Auto-complete is on by default.
 
 When it is off, phrase hover
-and focus do not change the bubble. A wrong selection applies
-its grammar mistake immediately without a confirmation action.
+and focus do not change the bubble. When the player selects an incorrect
+phrase, the game applies its grammar mistake immediately, without a
+confirmation action.
 
-It also triggers one strong arena reaction. The offending portrait recoils,
-the Pride strip flashes, and a broadcast strike shows the player name and
-exact 3 Pride loss. Place the strike below the speech record and its tail.
-The two records must not overlap at supported landscape sizes, including
-ultrawide sizes. Remove the strike after 3000 milliseconds or the next accepted
-match action, whichever occurs first.
+The mistake also starts one strong arena reaction:
 
-Snapshot refreshes must not extend that
-duration. A new mistake starts a new duration. Pause, viewport interruption,
-round review, and disconnection discard the visible strike without replay.
-Reconnecting the same element must not keep the discarded strike or its
-stage and player reaction markers.
-It does not block the timer or change the sentence. Confirmation is not
+- The portrait of the player that made the mistake moves back.
+- The Pride strip flashes.
+- A broadcast strike shows the player name and the 3 Pride loss.
+
+Put the strike below the
+speech record and its tail. The two records must not overlap at supported
+landscape dimensions, which include ultrawide dimensions. Remove the strike
+after 3000 milliseconds or at the next accepted match action.
+Use the event that occurs first.
+
+Snapshot refreshes must not make that
+duration longer. A new mistake starts a new duration. Pause, viewport
+interruption, round review, and disconnection discard the visible strike, and
+the strike does not play again. When the same element connects again, it must
+not keep the discarded strike or its stage and player reaction markers.
+The strike does not stop the timer or change the sentence. Confirmation is not
 necessary.
 
-When the browser requests reduced motion, keep the
-complete strike record but suppress the recoil, flash, and transfer motion.
+When the browser sets reduced motion, keep the
+full strike record, but do not show the rearward movement, the flash, or the
+transfer motion.
 
-The title Settings modal includes an optional `Tutorial` checkbox, defaulting
-to unchecked and persisted by Milestone 020. When enabled, all grammatically
-valid next shared and visible private phrase choices receive a subtle green
-glow. Reuse the grammar adapter result for appending that phrase to the active
-player's construction, including incomplete but accepted prefixes. Recompute
-after each snapshot change. Continuations do not append a phrase and do not
-glow.
+The title Settings modal includes an optional `Tutorial` checkbox. Its default
+is off, and Milestone 020 saves it. When the player enables it, each next shared
+phrase choice and visible private phrase choice that is grammatically correct
+gets a subtle green glow. Use the grammar adapter result again to add that
+phrase to the construction of the active player. This includes prefixes that
+are incomplete but accepted. Calculate the glow again after each snapshot
+change. Continuations do not add a phrase, and they do not glow.
 
-Empty, removed, and grammatically invalid choices do not glow. Invalid
-choices remain selectable and keep their normal mistake result.
+Empty choices, removed choices, and choices that are not grammatically correct
+do not glow. The player can select incorrect choices, and they keep their usual
+mistake result.
 
-Use a bounded inset glow with a smooth 2400-millisecond opacity pulse. Do not
-change phrase colors, text contrast, layout, or focus outlines. Reduced motion
-uses a steady glow. Forced colors uses a steady inset dotted system-color
-outline. Accessible names identify a grammatically valid next choice.
+Use a bounded inset glow with a smooth opacity pulse of 2400 milliseconds. Do
+not change phrase colors, text contrast, layout, or focus outlines. Reduced
+motion uses a stable glow. Forced colors use a stable inset dotted
+system-color outline. Accessible names identify a next choice that is
+grammatically correct.
 
 Hide
 the indication during pending commands, AI turns, Pause, viewport interruption,
-round presentation, and victory. Use only the viewer-scoped snapshot. Never
-expose another player's private hand. This preference does not enter game
-state, commands, replay, AI choices, scoring, or match history.
+round presentation, and victory. Use only the snapshot for the viewer. Do not
+show the private hand of a different player. This preference does not go into
+game state, commands, replay, AI choices, scoring, or match history.
 
-Apart from this optional grammar indication, do not add
-guided first turns, card-role explanations, or weakness
-hints. Do not add disabled-action help, strategy prompts, expert shortcuts, or
-recovery instructions. Existing semantic
-names and native control behavior remain, but the product does not add a
-separate help layer.
+Other than this optional grammar indication, do not add
+guided first turns, explanations of card roles, or weakness
+hints. Do not add help for disabled actions, strategy prompts, expert
+shortcuts, or recovery instructions. The semantic
+names and the native control behavior stay, but the product does not add a
+different help layer.
 
-The active player owns the wide white speech bubble. It shows the current or
-preview sentence and points toward that player. The waiting character owns one
-compact gray bubble that normally shows an ellipsis. When a public sentence
-exists, pointer hover, keyboard focus, click, and tap expand the same gray
-bubble. They reveal the complete text.
+The active player controls the wide white speech bubble. It shows the sentence
+of this time or the preview sentence, and it points to that player. The waiting
+character controls one compact gray bubble that usually shows an ellipsis. When
+there is a public sentence, pointer hover, keyboard focus, click, and tap
+expand the same gray bubble. They show the full text.
 
-Use the current public sentence first. After a new round resets construction,
-use the most recent valid completed public sentence. An incomplete sentence remains visible only for
-its exchange review. It does not enter a later round bubble. Accepted
-construction text stays public after a turn change, including text that came
-from a private card. Before either sentence exists, reveal `No sentence yet.`
+Use the public sentence of this time first. After a new round resets the
+construction, use the last correct completed public sentence. An incomplete
+sentence stays visible only for
+its exchange review. It does not go into a bubble in a subsequent round.
+Accepted construction text stays public after a turn change. This includes text
+that came from a private card. Before there is a sentence, show
+`No sentence yet.`
 
-Hover and focus keep the text open for that interaction. Click or tap pins it
+Hover and focus keep the text open for that interaction. Click or tap keeps it
 open until the user
-activates elsewhere or the match state changes. Repeated activation of the
-bubble keeps it open. Its body grows to contain the complete text, and its tail
-does not clip the text. The ellipsis then returns. This preview does not change
-game truth.
+activates a different location or the match state changes. When the user
+activates the bubble again, it stays open. Its body becomes larger to contain
+the full text, and its tail does not clip the text. Then the ellipsis shows
+again. This preview does not change the game truth.
 
-After a comeback ends a turn, that character's gray bubble
+After a comeback ends a turn, the gray bubble of that character
 shows the complete sentence with the selected closing line until the exchange
-resolves. Do not show two equal speech cards.
+ends. Do not show two equal speech cards.
 
-The wide bubble keeps the complete current or preview sentence. It can use
-up to three responsive speech sizes. Keep the fixed speech-record geometry and
-moderator clearance. When a sentence exceeds the available height, its named,
-keyboard-focusable text region uses native vertical scrolling. Wheel and
-keyboard input must reach the first and last words without page scrolling.
+The wide bubble keeps the full sentence of this time or the full preview
+sentence. It can use a maximum of three responsive speech sizes. Keep the fixed
+geometry of the speech record and the clearance of the moderator.
+A sentence can be taller than the available height.
+Then its named text region uses native vertical scrolling.
+This region can get keyboard focus. Wheel input and
+keyboard input must get to the first word and the last word without page
+scrolling.
 
-Do not truncate text, use a sentence ellipsis, or shrink the current speech
-type sizes to fit more words. Short sentences remain fully visible without a
-scrollbar. Start the text region at the top when the displayed sentence,
-speaker, or round changes. Other view updates keep its scroll position.
+Do not cut text or use a sentence ellipsis.
+Do not make the speech type sizes smaller to fit more words. Short sentences stay fully visible without a
+scrollbar. When the sentence that the screen shows, the speaker, or the round
+changes, start the text region at the top. Other view updates keep its scroll
+position.
 A new construction
-clears the prior round text from the wide bubble before its first phrase.
+removes the text of the round before it from the wide bubble before its first
+phrase.
 
-Its
-current text replaces all prior round text after the first accepted phrase.
+After the first accepted phrase, its
+text replaces all the text of the round before it.
 
-After every exchange, keep the arena visible during the Milestone 025 narrated
-sequence. The current narrator owns the wide bubble, including its Comeback
-line. Offset that bubble toward the speaker as defined by Milestone 025. Disable draft input and stop the turn timer until both deliveries finish.
-If the narrator used a Comeback and owns an approved sidekick asset, use these
-visibility rules. Keep the asset hidden during speech preparation and the
-complete main insult.
+After each exchange, keep the arena visible during the narrated sequence of
+Milestone 025. The narrator of this time controls the wide bubble, and its
+Comeback line. Move that bubble to the speaker, as Milestone 025 gives.
+Disable draft input, and stop the turn timer until the two deliveries end.
+If the narrator used a Comeback and has an approved sidekick asset, use these
+visibility rules. Keep the asset hidden during speech preparation and during
+the full main insult.
 
-Use the speech adapter's start marker for the separate Comeback closing-line
-segment to start the entrance. Slide the sidekick from the narrator's outer
-viewport border into the lower central lane. This lane follows the speech and
-common-phrase axis. Complete that entrance before
-the short closing line can finish. Anchor its visible feet or object base to the
+Use the start marker of the speech adapter for the Comeback closing-line
+segment to start the entrance. This segment is different from the main insult.
+Move the sidekick from the outer viewport border of the narrator into the lower
+central lane. This lane follows the axis of the speech and of the common
+phrases. Complete that entrance before
+the short closing line can end. Attach its visible feet or object base to the
 viewport bottom.
 
-Player one enters from the left. Player two uses the same
-mirrored asset and enters from the right. The sidekick is at most one-third of the visible portrait height. It renders
-above portraits and scene foreground art but below speech, scoring, and
-controls. When that speaker's final audio chunk ends, it exits immediately.
+Player one comes in from the left. Player two uses the same
+mirrored asset and comes in from the right. The sidekick height is one-third or
+less of the visible portrait height. It renders
+above portraits and scene foreground art, but below speech, scoring, and
+controls. When the last audio chunk of that speaker ends, the sidekick goes out
+immediately.
 
-The total and score rows cannot cover it. Silent delivery
-enters when its simulated Comeback segment begins and uses the same remaining
-visible interval. An archetype without an
-approved asset renders no sidekick and leaves no empty placeholder.
-Compact layouts derive sidekick scale from the compact portrait frame. They
-keep the visible base at the viewport floor, independent of the scrolling
-stage's content height.
+The total and score rows cannot cover it. In a silent delivery, the sidekick
+comes in when its simulated Comeback segment starts, and it uses the same
+remaining visible interval. An archetype without an
+approved asset renders no sidekick and shows no empty placeholder.
+Compact layouts get the sidekick scale from the compact portrait frame. They
+keep the visible base at the viewport floor. The content height of the stage,
+which scrolls, does not change this position.
 
-Both entrances start fully outside their owning viewport edge.
-In compact landscape, place the sidekick in the right common-phrase column.
-While it is visible, reserve a separate floor lane below the score receipt and
-any public emphasis. Bound the score receipt and keep its keyboard-focusable
-native scroll region so every scored phrase remains reachable. Speech remains
-in the left column.
+The two entrances start fully out of view, past the viewport edge of their owner.
+In compact landscape, put the sidekick in the right common-phrase column.
+While it is visible, keep a different floor lane below the score receipt and
+the public emphasis. Keep the score receipt in bounds. Keep its native scroll
+region, which can get keyboard focus, so that the player can get to each scored
+phrase. Speech stays in the left column.
 
 Keep the sidekick below interface text and controls.
-Verifier: `tests/browser/match-screen.browser.test.ts` checks both sides across
-the supported viewport matrix, including the source-alpha base offset.
-Each scored clause owns one inline line beside its speaker, without a Clause
-heading or a central panel. The line contains its complete phrase text, base,
-applied restriction, weakness, and combo factors, and resulting value. Finisher
-and Comeback use separate rows.
+Verifier: `tests/browser/match-screen.browser.test.ts` does checks of the two
+sides across the supported viewport matrix, and of the source-alpha base offset.
+Each scored clause has one inline line adjacent to its speaker, without a
+Clause heading or a central panel. The line contains its complete phrase text,
+its base value, and the applied restriction, weakness, and combo factors. It
+also contains the result value. Finisher
+and Comeback use different rows.
 
-Do not create rows for note-only items.
+Do not make rows for items that are only notes.
 
-Reveal rows at the narration markers, then the full total at narration end.
-Apply displayed damage and character reaction afterward. Keep applied public
+Show rows at the narration markers, and then the full total at the end of the
+narration. After that, apply the damage that the screen shows and the character
+reaction. Keep the applied public
 weakness names with their row. Reduced motion keeps the same facts. There is
-no normal result modal, 800-millisecond aggregate animation, or Continue action.
-Milestone 019 owns persistent Victory after both terminal deliveries finish.
+no usual result modal, no aggregate animation of 800 milliseconds, and no
+Continue action.
+Milestone 019 controls the persistent Victory after the two terminal deliveries
+end.
 
-The private choices sit at the active player's lower perimeter. A compact
+The private choices are at the lower perimeter of the active player. A compact
 Reshuffle control follows them. The control uses an authored inline SVG icon,
-has an accessible name, and has no visible explanatory copy. The underlying
-command remains `redraw-hand`.
+has an accessible name, and has no visible explanation text. The command below
+it stays `redraw-hand`.
 
 ## Desktop interaction contract
 
-This milestone proves the 1024 by 720 desktop reference, 1280 by 720 common, and 1920 by
-1080 recommended surfaces. At each viewport, all nine shared slots, both
-private slots, current sentence, Pride, round, timer, Pause button, and
-available actions are visible without page scrolling.
+This milestone shows the 1024 by 720 desktop reference, the 1280 by 720 common
+surface, and the 1920 by
+1080 recommended surface. At each viewport, these items are visible without
+page scrolling:
 
-The 1400 by 1050 viewport is additional four-to-three composition evidence. It
-must keep the same arena hierarchy, both character faces, and the complete
-sentence and draft controls visible without page scrolling.
+- All nine shared slots and the two private slots.
+- The sentence of this time, Pride, and the round.
+- The timer, the Pause button, and the available actions.
 
-Cards with an unavailable state remain readable and name the reason. All
-available cards use the same selection action. Private phrase text can wrap to
-multiple lines and must remain complete. Do not truncate it with an ellipsis.
+The 1400 by 1050 viewport is more evidence for a four-to-three
+composition. It must keep the same arena hierarchy, the two character faces,
+and the complete sentence and draft controls visible without page scrolling.
 
-For timed turns, the visible value updates once per second. Zero dispatches one
-`expire-turn` command and disables all further actions until the new snapshot
-arrives.
+Cards with an unavailable state stay easy to read, and they name the cause. All
+available cards use the same selection action. Private phrase text can go on
+two or more lines, and it must stay complete. Do not cut it with an ellipsis.
 
-Pause replaces the complete match DOM with a full-screen “Paused” surface. It
-provides Turn timer, Auto-complete, Sound, and Phrase color coding settings,
-Resume, and a secondary “Back to menu” action. Turn timer offers 15 seconds,
+For timed turns, the visible value changes one time each second. At zero, the
+screen sends one `expire-turn` command, and it disables all other actions until
+the new snapshot comes.
+
+Pause replaces the full match DOM with a full-screen “Paused” surface. It
+gives the Turn timer, Auto-complete, Sound, and Phrase color coding settings,
+Resume, and a secondary “Back to menu” action. Turn timer gives 15 seconds,
 30 seconds, and Unlimited. Its default is 30 seconds.
 
-Auto-complete offers On and Off. Its default is On. Phrase color coding offers
-On and Off. Its default is On. Sound offers separate Music and Voices On and
-Off choices.
+Auto-complete gives On and Off. Its default is On. Phrase color coding gives
+On and Off. Its default is On. Sound gives different On and Off choices for
+Music and Voices.
 
-Music is On when the stored Music volume is above zero. Turning Music Off stores zero Music volume. Turning it back On restores the
-last non-zero Music volume in the page session. If no such value exists, it
-restores the 10 percent default. Voices maps to the stored Speech enabled setting.
+Music is On when the stored Music volume is more than zero. When the player
+sets Music to Off, the game stores zero Music volume. When the player sets it
+to On again, the game uses the last Music volume that was not zero in the page
+session. If there is no such value, the game uses the default of 10 percent.
+Voices maps to the stored Speech enabled setting.
 
 When Phrase color coding is On, noun cards use green. Verb cards use orange.
 Predicate cards use red. Modifier cards use blue. Ending cards use purple.
@@ -322,193 +367,209 @@ Predicate cards use red. Modifier cards use blue. Ending cards use purple.
 Continuation cards use gray. Conjunction cards use purple.
 
 Phrase text stays white. A common, uncommon, or
-rare card uses the 40, 50, or 60 percent role-color blend respectively. The
-browser renders one text layer, so the blend does not increase its visual
-weight. The card background stays unchanged, and the color does not replace the
-accessible role data.
+rare card uses the 40, 50, or 60 percent role-color blend, in that order. The
+browser renders one text layer, so the blend does not make the text look
+heavier. The card background does not change, and the color does not replace
+the accessible role data.
 
-The browser setting controls when the UI dispatches the pure `expire-turn`
-command. It does not change the reducer's deterministic 30-second baseline or
-the timeout-damage rules. Unlimited does not schedule that command.
+The browser setting controls when the UI sends the pure `expire-turn`
+command. It does not change the deterministic 30-second baseline of the
+reducer or the timeout-damage rules. Unlimited does not schedule that command.
 
-The application turn clock stores the remaining duration in milliseconds.
-The match screen renders its whole-second projection and maps its final-five
-ticks and once-only expiration to existing typed events. Manual Pause,
+The app turn clock stores the remaining duration in milliseconds.
+The match screen renders its projection in whole seconds. It maps its ticks in
+the last five seconds and its single expiration to the typed events of the
+project. Manual Pause,
 viewport interruption, hotseat portrait guidance, and landscape guidance stop
-elapsed-time accounting at the exact interruption boundary.
+the count of elapsed time at the moment of the interruption.
 
-The countdown requests one audible turn-timer tick for each of its final five
-seconds, including the second that displays one, and requests none under
-Unlimited. It requests no tick while the timer is stopped.
+The countdown sends one turn-timer tick that the player can hear for each of its last five
+seconds. This includes the second that shows one. With Unlimited, it sends no
+tick. It sends no tick while the timer does not run.
 
-Changing a timer value while paused starts the current turn at the selected
-value after Resume and applies that value to later turns. Unlimited shows no
-countdown and does not dispatch `expire-turn`. Changing Auto-complete applies
-after Resume and does not change the authoritative sentence or phrase action.
-Changing Phrase color coding applies after Resume and does not change game
-truth, phrase actions, accessible phrase text, or the timer. Turn timer and
-Auto-complete remain in the application shell and persist through the strict
-Milestone 020 settings document.
+If the player changes a timer value during Pause, the turn of this time starts
+with the selected value after Resume. Subsequent turns also use that value.
+Unlimited shows no countdown and does not send `expire-turn`. A change to
+Auto-complete applies after Resume, and it does not change the authoritative
+sentence or phrase action.
+A change to Phrase color coding applies after Resume. It does not change the
+game truth, phrase actions, accessible phrase text, or the timer. Turn timer and
+Auto-complete stay in the app shell. The strict Milestone 020 settings
+document saves them.
 
-Phrase color coding remains session-only and
-returns to On after a reload because that document does not contain it.
-Changing Music or Voices applies through the same settings document. Music
-changes the mixer without changing Effects volume. Turning Voices Off cancels
-active narration and prevents later narration until it is turned On.
+Phrase color coding stays only for the session.
+It goes back to On after a reload, because that document does not contain it.
+Changes to Music or Voices apply through the same settings document. Music
+changes the mixer, and it does not change the Effects volume. When the player
+sets Voices to Off, the active narration stops, and no subsequent narration
+plays until the player sets Voices to On.
 
 “Back to menu” replaces
-the Pause notice with a concealed confirmation that defaults to “Stay paused.”
-“End match” discards the active match and returns to the title menu. No exit
-action sends a match command or records a result. The Pause and confirmation
-states reveal no board, hand, sentence, player, score, or timer value. They stop
-all match input and freeze the exact remaining turn time.
+the Pause notice with a concealed confirmation. Its default is “Stay paused.”
+“End match” discards the active match and goes back to the title menu. No exit
+action sends a match command or records a result. The Pause state and the
+confirmation state show no board, hand, sentence, player, score, or timer
+value. They stop all match input, and they stop the remaining turn time at its
+value.
 
 If the timer setting
-does not change, Resume restores the unchanged match and restarts the timer
-from that value. Repeated pauses do not add time unless the player selects a
-different timer value. Pause has no quota because local players own the
-interruption.
-Concealment and exact timer preservation prevent state inspection or
-timer-refill abuse.
+does not change, Resume shows the match with no changes and starts the timer
+again from that value. When the player pauses the match two or more times, the
+game does not add time, unless the player selects a different timer value.
+Pause has no quota, because the local players control the interruption.
+Concealment and the preservation of the timer value prevent state inspection
+and abuse that adds time to the timer.
 
 ## Acceptance criteria
 
-- **AC-016-01:** The representative longest-content state fits at 1024 by 720,
-  1280 by 720, and 1920 by 1080. It has no page scroll, overlap, clipping,
-  truncated archetype names, or hidden required action. Complete compact names
-  fit within the two lines that Milestone 023 reserves.
-- **AC-016-02:** Pointer controls dispatch each typed command once. Rapid
-  activation cannot double-select a card.
+- **AC-016-01:** The representative state with the longest content fits at
+  1024 by 720, 1280 by 720, and 1920 by 1080. It has no page scroll, overlap,
+  clipping, cut archetype names, or hidden necessary action. Complete compact
+  names fit in the two lines that Milestone 023 keeps.
+- **AC-016-02:** Pointer controls send each typed command one time. Fast
+  activation cannot select a card two times.
 - **AC-016-03:** With Auto-complete On, phrase hover or focus changes only the
   visible preview text. With Auto-complete Off, hover and focus do not change
-  it. Phrase selection remains available in both states.
-- **AC-016-04:** The common and private phrase lists show phrase text only.
-  Unavailable and empty rows remain visually distinct, every state has an
+  it. Phrase selection stays available in the two states.
+- **AC-016-04:** The common and private phrase lists show only phrase text.
+  Unavailable rows and empty rows stay visually different. Each state has an
   accessible label, and available phrases use one selection action.
-  In forced colors, shared and private phrase surfaces use `Canvas` and
-  enabled phrase text uses `CanvasText`, including hover and either Phrase
-  color coding setting. Disabled phrases use `GrayText`. Both player records
+  In forced colors, shared and private phrase surfaces use `Canvas`, and
+  enabled phrase text uses `CanvasText`. This includes hover and each Phrase
+  color coding setting. Disabled phrases use `GrayText`. The two player records
   use system surfaces and text without dimming filters.
 
   The active-turn badge
   uses `Highlight` and `HighlightText`. Pride meters use `Highlight` for the
-  filled value on `Canvas`. Keyboard focus stays distinct from
+  filled value on `Canvas`. Keyboard focus stays different from
   the Tutorial outline. Verifier: `e2e/match-forced-colors.spec.ts`.
-- **AC-016-05:** A timed turn updates once per second and zero emits one
-  expiration command. Each of its final five seconds requests one timer tick,
-  and Unlimited requests none. Manual Pause hides the complete match, freezes
-  the exact millisecond value, blocks commands, and resumes without changing
-  state or adding time. Viewport, hotseat portrait, and landscape guidance
-  keep the same exact value.
-  The Pause settings default to 30 seconds, Auto-complete On, Sound Music On,
-  Sound Voices On, and Phrase color coding On.
+- **AC-016-05:** A timed turn changes one time each second, and zero sends one
+  expiration command. Each of its last five seconds sends one timer tick,
+  and Unlimited sends no tick. Manual Pause hides the full match and stops the
+  millisecond value. It stops commands, and it resumes without a change to the
+  state and without added time. Viewport guidance, hotseat portrait guidance,
+  and landscape guidance keep the same value.
+  The Pause settings have these defaults: 30 seconds, Auto-complete On, Sound
+  Music On, Sound Voices On, and Phrase color coding On.
 
-  Selecting 15, 30, or Unlimited
-  takes effect on Resume. Unlimited does not expire the turn,
-  and its complete label stays inside the top-center timer frame at every
+  When the player selects 15, 30, or Unlimited,
+  the change applies at Resume. Unlimited does not make the turn expire.
+  Its full label stays in the top-center timer frame at each
   supported viewport.
 
-  Its exit confirmation remains concealed, defaults to staying paused, and
-  returns to the title only after “End match.” Pause moves keyboard focus to
-  Resume. Resume returns focus to Pause in the unchanged match.
-- **AC-016-06:** Playwright completes both hotseat sides, hand refresh, an
+  Its exit confirmation stays concealed. Its default is to stay paused, and it
+  goes back to the title only after “End match.” Pause moves keyboard focus to
+  Resume. Resume moves focus back to Pause in the match, which has no changes.
+- **AC-016-06:** Playwright completes the two hotseat sides, hand refresh, an
   immediate grammar mistake, complete and incomplete endings, and continuation
   selection with deterministic state.
 - **AC-016-07:** Production-browser screenshots at 1024 by 720, 1280 by 720,
   1400 by 1050, and 1920 by 1080 show the approved integrated arena hierarchy.
-  The decorative raster contains no interface truth, and every visible game
-  value remains testable.
-- **AC-016-08:** Exactly one player strip shows “Your turn.” Its portrait and
-  Pride bar remain brighter than the fully opaque waiting side. The centered
-  top-center timer and Pause control remain visible. The
+  The decorative raster contains no interface truth, and the tests can do
+  checks of each visible game value.
+- **AC-016-08:** Only one player strip shows “Your turn.” Its portrait and
+  Pride bar stay brighter than the waiting side, which is fully opaque. The
+  centered top-center timer and the Pause control stay visible. The
   360-millisecond transfer moves to the next player after one pick.
 - **AC-016-09:** The selected Red-Folded Chairman, Thunder Tribune, and Black
-  Sea Captain portraits load from local assets in either player position.
-  Unapproved sample characters and a baked two-character stage are absent.
-- **AC-016-10:** The Transition-Era Television Studio back layer contains one
-  fixed fictional moderator and no playable character. It renders behind both
-  separate portraits. One transparent desk plate renders in front of both
-  portraits and below all game content. Pixel inspection proves that the desk
-  plate and each portrait have transparent outer corners. Each portrait has
-  opaque anatomy below the desk top, no broad opaque bottom row, and no
-  chroma-key matte pixels. Production screenshots prove that the moderator face
-  remains clear during drafting.
-- **AC-016-11:** The active side owns one wide white current-sentence bubble.
-  The waiting side owns one compact gray ellipsis bubble. Pointer hover,
-  keyboard focus, click, and touch input reveal the waiting character's current
-  sentence. They reveal the most recent valid completed sentence when no current
-  sentence exists. The same auto-sizing bubble shows the text.
+  Sea Captain portraits load from local assets in each player position.
+  Sample characters that do not have approval and a baked stage with two
+  characters are not on the screen.
+- **AC-016-10:** The back layer of the Transition-Era Television Studio
+  contains one fixed fictional moderator and no playable character. It renders
+  behind the two portraits, which are different images. One transparent desk
+  plate renders in front of the two portraits and below all game content. Pixel
+  inspection shows that the desk plate and each portrait have transparent outer
+  corners. Each portrait has opaque anatomy below the desk top, no wide opaque
+  bottom row, and no chroma-key matte pixels. Production screenshots show that
+  the face of the moderator stays clear during drafting.
+- **AC-016-11:** The active side controls one wide white bubble for the
+  sentence of this time.
+  The waiting side controls one compact gray ellipsis bubble. Pointer hover,
+  keyboard focus, click, and touch input show the sentence of this time of the
+  waiting character. When there is no sentence of this time, they show the last
+  correct completed sentence. The same bubble, which changes its dimensions
+  automatically, shows the text.
 
-  An incomplete ending does not persist into the next
-  round. The wide bubble clears prior round text before the new construction
-  starts, then shows only the new current or preview sentence. Before either
-  waiting-side sentence exists, the gray bubble reveals `No sentence yet.`
+  An incomplete ending does not stay into the next
+  round. The wide bubble removes the text of the round before it before the new
+  construction starts. Then it shows only the new sentence or the new preview
+  sentence. Before there is a sentence for the waiting side, the gray bubble
+  shows `No sentence yet.`
 
-  Repeated click or touch activation keeps it open. No text is clipped by the
-  bubble body or tail. The match permits no browser text selection. All
-  paths leave game truth unchanged. The private choices and compact
-  SVG Reshuffle control move to the active side without changing the
-  `redraw-hand` command contract.
-- **AC-016-12:** The complete current sentence remains readable inside the wide
-  bubble at every supported evidence viewport. Do tests with the longest kept current-catalog example. Include a synthetic
-  sentence that is 40 percent longer and a larger bounded fixture. When needed, native vertical scrolling inside the
-  named text region reaches the first and last words. Keyboard focus and
-  scrolling work without game commands or page scrolling. There is no
-  horizontal clipping, sentence truncation, or sentence ellipsis.
+  When the player clicks or touches the bubble again, it stays open. The
+  bubble body and the tail do not clip text. The match does not let the browser
+  select text. No path changes the game truth. The private choices and the
+  compact SVG Reshuffle control move to the active side, and the
+  `redraw-hand` command contract does not change.
+- **AC-016-12:** The full sentence of this time stays easy to read in the wide
+  bubble at each supported evidence viewport. Do tests with the longest kept
+  example from the catalog of this time. Include a synthetic
+  sentence that is 40 percent longer and a larger bounded fixture. When it is
+  necessary, native vertical scrolling in the named text region gets to the
+  first word and the last word. Keyboard focus and scrolling operate without
+  game commands or page scrolling. There is no horizontal clipping, sentence
+  truncation, or sentence ellipsis.
 
   Measure the first and last text ranges at their scroll positions against the
-  speech record. The text element's own scroll dimensions are not sufficient
-  evidence. The outer record,
-  moderator clearance, and existing three speech sizes remain unchanged.
-  Short text needs no scrolling. New text, speaker, or round resets the region
-  to the top.
+  speech record. The scroll dimensions of the text element alone are not
+  sufficient evidence. The outer record, the clearance of the moderator, and the
+  three speech sizes do not change.
+  Short text does not scroll. New text, a new speaker, or a new round resets the
+  region to the top.
 
-  Unrelated view updates keep its scroll position.
-  `tests/browser/match-screen.browser.test.ts` does checks of these boundaries with
-  the current authored long sentence and enlarged text at all four viewports.
-- **AC-016-13:** Each narrator receives its own public bubble and ordered inline
-  component scores, then total and damage, as defined by Milestone 025. Applied
-  factors and public weakness names remain visible with their component. Both
-  deliveries finish before automatic progression or persistent Victory.
-- **AC-016-14:** A wrong common or private phrase triggers one 150 through
-  600-millisecond arena reaction. It identifies the offending player and exact 3 Pride loss. It moves no layout
-  and keeps immediate turn passage. It clears after 3000 milliseconds or
-  on the next accepted action, whichever is first.
-  The strike stays below the speech record and its tail without overlap.
-  Reduced-motion mode keeps the complete
-  record without recoil, flashing, or transfer motion.
-- **AC-016-15:** Tutorial is off by default. Enabling it highlights every
-  grammar-accepted next phrase in the shared board and visible private hand.
-  Invalid and continuation cards remain selectable without a glow. The
-  indication updates after picks and remains absent during blocked interaction.
-  Reduced motion and forced colors keep a steady indication.
+  View updates that are not related keep its scroll position.
+  `tests/browser/match-screen.browser.test.ts` does checks of these boundaries
+  with the authored long sentence of this time and larger text at all four
+  viewports.
+- **AC-016-13:** Each narrator gets its own public bubble and ordered inline
+  component scores, and then the total and the damage, as Milestone 025 gives.
+  Applied factors and public weakness names stay visible with their component.
+  The two deliveries end before automatic progression or persistent Victory.
+- **AC-016-14:** An incorrect common or private phrase starts one arena reaction
+  of 150 through 600 milliseconds. It identifies the player that made the
+  mistake and the 3 Pride loss. It moves no layout, and the turn goes to the
+  other player immediately. The game removes it after 3000 milliseconds or at the next
+  accepted action. The game uses the event that occurs first.
+  The strike stays below the speech record and its tail, with no overlap.
+  Reduced-motion mode keeps the full
+  record without the rearward movement, flashing, or transfer motion.
+- **AC-016-15:** Tutorial is off by default. When the player enables it, the
+  game highlights each next phrase that the grammar accepts in the shared board
+  and in the visible private hand.
+  The player can select incorrect cards and continuation cards, and they have
+  no glow. The indication changes after picks, and it is not visible during
+  blocked interaction.
+  Reduced motion and forced colors keep a stable indication.
 
-  No private
-  hand leaks or game-rule changes occur. Verifiers:
+  The private hand stays private, and the game rules do not change. Verifiers:
   `tests/unit/match-screen-snapshot.test.ts`,
   `tests/browser/match-screen.browser.test.ts`, and `e2e/tutorial-mode.spec.ts`.
-  No other guided turn, tactical hint, card-role explanation, weakness
-  explanation, disabled-action reason, strategy prompt, or shortcut layer ships.
-- **AC-016-16:** A scored weakness shows its exact 2 factor and unique public
-  weakness names in the affected inline component. Unscored matching tags show
-  no weakness record.
-- **AC-016-17:** Comeback appends its closing line to the complete public insult.
-  Its narrator's bubble displays that full text during delivery and total.
+  The game ships no other guided turn, tactical hint, card-role explanation,
+  weakness explanation, disabled-action cause, strategy prompt, or shortcut
+  layer.
+- **AC-016-16:** A scored weakness shows its factor of 2 and the unique public
+  weakness names in its inline component. Tags that agree but have no score
+  show no weakness record.
+- **AC-016-17:** Comeback adds its closing line to the full public insult.
+  The bubble of its narrator shows that full text during the delivery and the
+  total.
 - **AC-016-18:** The Comeback action is one segmented button and the only
-  comeback-charge display. It shows three cells before charge is available. The
-  fill is progressive: 20 charge fills the first cell, 40 reaches the second
-  cell boundary, and 60 fills the button. Spending a tier lowers the fill to the
-  remaining charge. Its accessible name reports the available tier, bonus, and
-  exact charge.
+  display of the comeback charge. It shows three cells before charge is
+  available. The fill increases gradually: 20 charge fills the first cell, 40
+  gets to the boundary of the second cell, and 60 fills the button. When the
+  player uses a tier, the fill decreases to the remaining charge. Its accessible
+  name gives the available tier, the bonus, and the charge value.
 
-  During a Comeback delivery, an available character-owned sidekick enters from
-  the owning border only when the Comeback phrase segment starts. It mirrors
-  for player two and exits at speech completion. Missing
-  sidekicks are valid during the manually approved rollout. Verifiers:
+  During a Comeback delivery, an available sidekick of the character comes in
+  from the border of its owner only when the Comeback phrase segment starts. The game
+  mirrors it for player two, and it goes out when the speech is completed.
+  During the rollout that the user gives approval for manually, missing
+  sidekicks are correct. Verifiers:
   `tests/unit/match-screen-snapshot.test.ts` and
   `tests/unit/sidekick-assets.test.ts` and
   `tests/browser/match-screen.browser.test.ts`.
-- **AC-016-19:** With Phrase color coding On, every available phrase keeps one
+- **AC-016-19:** With Phrase color coding On, each available phrase keeps one
   text layer. The blend uses 40 percent for common, 50 percent for uncommon, or
   60 percent for rare.
 
@@ -516,25 +577,26 @@ timer-refill abuse.
   Endings are purple.
 
   Continuations are gray. Conjunctions are purple.
-  With it Off, the text remains white
-  with no role or rarity color. The card background stays unchanged. The
-  feature keeps visible phrase rows text-only and does not change accessible
-  labels, phrase actions, game truth, or timer behavior. Browser tests do checks of
-  the default, both Pause choices, and the rendered role and rarity data.
+  With it Off, the text stays white
+  with no role color or rarity color. The card background does not change. The
+  feature keeps visible phrase rows text-only. It does not change accessible
+  labels, phrase actions, game truth, or timer behavior. Browser tests do checks
+  of the default, the two Pause choices, and the rendered role and rarity data.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on all affected match and draft states.
-2. After audit repairs, run `$impeccable critique` on the same match slice.
+1. Run `$impeccable audit` on all the match and draft states that the change
+   touches.
+2. After the audit repairs, run `$impeccable critique` on the same match slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Checks and stop conditions
 
-Playwright completes both sides of a hotseat draft, refresh, mistake, Pause,
-resume, and end at 1024x720, 1280x720, and 1920x1080. Browser tests prove
-command mapping, immutable rerendering, exact timer preservation, and loaded
-stage art. Production screenshots include the supported landscape matrix and
-the 1400 by 1050 composition viewport. No rule is duplicated in a component.
-`npm run ci` passes. Stop before final asset-pipeline variants or artificial
-intelligence (AI).
+Playwright completes the two sides of a hotseat draft, refresh, mistake, Pause,
+resume, and end at 1024x720, 1280x720, and 1920x1080. Browser tests show
+command mapping, immutable rendering again, the preservation of the timer
+value, and loaded stage art. Production screenshots include the supported
+landscape matrix and the 1400 by 1050 composition viewport. No component
+contains a copy of a rule. `npm run ci` passes. Stop before the last
+asset-pipeline variants or artificial intelligence (AI).

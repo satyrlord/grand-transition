@@ -2,8 +2,8 @@
 
 **Status:** Approved  
 **Depends on:** 021
-**Owns:** Playable 19-character roster and six-scene data required by the
-single-player ladder
+**Owns:** Playable 19-character roster and six-scene data that the
+single-player ladder uses
 **Production-file budget:** 40
 
 ## Terms
@@ -15,51 +15,43 @@ single-player ladder
 
 ## Deliver
 
-Add the complete minimum viable product (MVP) character and scene identities
-before the advanced artificial intelligence (AI) ladder. The catalog contains
-19 playable fictional archetypes and 6 playable scenes. It supplies enough
-validated English grammar content for every character and scene to complete a
-deterministic match. Final phrase volume, final art, alternate skins, audio,
-presentation states, and variety evidence remain in Milestone 028.
+Add all the character identities and scene identities of the minimum viable product (MVP) before the advanced artificial intelligence (AI) ladder.
+The catalog contains 19 playable fictional archetypes and 6 playable scenes.
+It gives sufficient validated English grammar content, so that each character and each scene can complete a deterministic match.
+The last phrase volume, the last art, the alternate skins, the audio, the presentation states, and the variety evidence stay in Milestone 028.
 
-Each new character is convention-driven. Add one complete
-`src/content/characters/<character-id>-phrase-cards.json` file and one approved
-interim `src/assets/characters/<character-id>.png` portrait. Do not add a
-TypeScript registry, locale table, setup option, or renderer map for a
-character. Existing approved alternate skins remain valid. Retire an alternate
-skin only through an approved content decision.
+Each new character uses the naming convention.
+Add one full `src/content/characters/<character-id>-phrase-cards.json` file and one approved temporary `src/assets/characters/<character-id>.png` portrait.
+Do not add a TypeScript registry, a locale table, a setup entry, or a renderer map for a character.
+The approved alternate skins stay correct.
+Remove an alternate skin only through an approved content decision.
 
-An alternate skin for a new foundation character is not necessary until
-Milestone 028. When alternate skins
-exist, one character has no more than eight.
+An alternate skin for a new foundation character is not necessary until Milestone 028.
+When there are alternate skins, one character has eight or fewer.
 
-Interim portraits are original local assets with recorded provenance. They use
-the existing transparent setup and match presentation. They are not final
-Milestone 023 or Milestone 028 art. Each of the six playable scenes has its own
-local background in the scene manifest. The four foundation scenes use opaque
-backgrounds without fixed moderators or foreground plates.
+Temporary portraits are new local assets with recorded provenance.
+They use the transparent setup presentation and match presentation of the game.
+They are not the last art of Milestone 023 or Milestone 028.
+Each of the six playable scenes has its own local background in the scene manifest.
+The four foundation scenes use opaque backgrounds without fixed moderators or foreground plates.
 
-They share the
-Milestone 023 crop core, interface-safe regions, dimensions, and AVIF/WebP
-variants. Gameplay must not use title artwork or a shared neutral fallback.
-Final layered presentation and audio remain in Milestone 028. It supersedes
-each foundation scene's interim opaque background with one transparent
-foreground plate and one distinct music treatment.
+They share the crop core, the interface-safe regions, the dimensions, and the AVIF/WebP variants of Milestone 023.
+Gameplay must not use the title artwork or a shared neutral fallback.
+The last layered presentation and the audio stay in Milestone 028.
+Milestone 028 replaces the temporary opaque background of each foundation scene with one transparent foreground plate and one different music treatment.
 
-Any new generated interim portrait or scene uses the Milestone 023 flat
-cel-shaded editorial-cartoon direction. Interim status can reduce state count,
-variant count, and finish depth. It cannot use a different rendering style.
-Every playable portrait still uses the funny big-head character standard and
-the `county-baron--municipal-patron` visual reference. Interim status does not
-permit a realistic, humorless, or natural-proportion portrait.
+Each new generated temporary portrait or scene uses the flat cel-shaded editorial-cartoon direction of Milestone 023.
+The temporary status can decrease the state count, the variant count, and the finish depth.
+It cannot use a different rendering style.
+Each playable portrait continues to use the funny big-head character standard and the `county-baron--municipal-patron` visual reference.
+The temporary status does not permit a realistic portrait, a portrait without humor, or a portrait with natural proportions.
 
-It also uses neutral sRGB white balance without a global yellow, amber, sepia,
-or other warm color wash. Local warm materials and lighting remain valid when
-the shared asset color guard can still measure neutral or cool anchors.
+It also uses neutral sRGB white balance without a global yellow, amber, sepia, or other warm color wash.
+Local warm materials and light stay correct when the shared asset color guard can continue to measure neutral or cool anchors.
 
-## Required roster
+## Necessary roster
 
-The stable roster order, identifier, weakness tags, and play style are:
+The stable roster sequence, the identifier, the weakness tags, and the play style are:
 
 | Order | Identifier | Character | Weakness tags | Play style |
 | --- | --- | --- | --- | --- |
@@ -83,160 +75,144 @@ The stable roster order, identifier, weakness tags, and play style are:
 | 18 | `government-ai` | Government AI | nepotism, corruption, spending, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
 | 19 | `reluctant-theorem` | The Reluctant Theorem | indecision, urgency, and delivery | careful clause construction, evidence targeting, and decisive finishers. |
 
-Keep the remaining character identifiers in their listed relative order. Do not
-reuse the unused roster-order value.
+Keep the other character identifiers in the relative sequence of the table.
+Do not use the roster-order value that no character uses again.
 
-The Reluctant Theorem is a distinct human archetype. Its fictional identity
-turns civic problems into mathematical proofs and procedural qualifications.
-It owns its phrases, three Comebacks, and default portrait. It is not a skin
-of another archetype. Append it with source roster order 20. Keep the
-retired order gap and every existing identifier.
+The Reluctant Theorem is a different human archetype.
+Its fictional identity changes civic problems into mathematical proofs and procedural qualifications.
+It owns its phrases, three Comebacks, and its default portrait.
+It is not a skin of a different archetype.
+Add it at the end with the source roster-order value 20.
+Keep the missing sequence value of the retired character, and keep each identifier.
 
-Local Baron keeps the stable `county-baron` identifier and derived content,
-locale, and asset identifiers. The display-name change keeps saved setups
-and replay references.
+Local Baron keeps the stable `county-baron` identifier and the derived content, locale, and asset identifiers.
+The change of the display name keeps the saved setups and the replay references.
 
-The other 18 characters are human. Animal terms are political metaphors only.
+The other 18 characters are human.
+Animal words are only political metaphors.
 No character uses human-animal or robot-animal hybrid anatomy.
 
-## Required scenes
+## Necessary scenes
 
-The stable scene order, identifier, and phrase themes are:
+The stable scene sequence, the identifier, and the phrase themes are:
 
-1. `transition-era-television-studio`: transition, public television,
-   revolution, archives, emergency broadcasts, and national salvation.
-2. `modern-debate-studio`: polling, fact checks, campaign strategy, swing
-   voters, media training, and closing statements.
-3. `county-council-ballroom`: procurement, relatives, contracts,
-   infrastructure, and development funds.
-4. `midnight-call-in-studio`: ratings, sources, callers, footage, commercials,
-   and hidden tapes.
-5. `palace-press-hall`: statements, silence, coalition, protocol, mandate, and
-   national interest.
-6. `influencer-campaign-livestream`: algorithms, sovereignty, podcast
-   evidence, ancient energy, clips, and shadow bans.
+1. `transition-era-television-studio`: transition, public television, revolution, archives, emergency broadcasts, and national salvation.
+2. `modern-debate-studio`: polling, fact checks, campaign strategy, swing voters, media training, and closing statements.
+3. `county-council-ballroom`: procurement, relatives, contracts, infrastructure, and development funds.
+4. `midnight-call-in-studio`: ratings, sources, callers, footage, commercials, and hidden tapes.
+5. `palace-press-hall`: statements, silence, coalition, protocol, mandate, and national interest.
+6. `influencer-campaign-livestream`: algorithms, sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
-Each scene resolves a complete eligible pool through the current common
-catalog. Its scene-specific phrase volume remains deferred to Milestone 028,
-which owns the exact 34-card scene-restricted composition and the global
-continuation rule.
+Each scene gets a full eligible pool through the common catalog of this time.
+The phrase volume for each scene stays in Milestone 028.
+Milestone 028 controls the 34-card scene-restricted composition and the global continuation rule.
 
 ## Playable data contract
 
-Each foundation character has 3 through 32 unique owned phrases. Its foundation
-pool has at least one noun, one modifier, and one ending. The complete common
-pool supplies the other grammar roles needed for a match. Each character owns
-one unique weak, medium, and strong Comeback line. All content passes the Milestone
-005 schema, locale, grammar, restriction, weakness, and
-deterministic-discovery contracts. Milestone 027 owns editorial and safety
-review.
+Each foundation character has 3 through 32 unique owned phrases.
+Its foundation pool has one or more nouns, one or more modifiers, and one or more endings.
+The full common pool gives the other grammar roles that are necessary for a match.
+Each character owns one unique weak Comeback line, one unique medium Comeback line, and one unique strong Comeback line.
+All content passes the schema, locale, grammar, restriction, weakness, and deterministic-discovery contracts of Milestone 005.
+Milestone 027 controls the editorial review and the safety review.
 
-Every ordered character and scene setup can prepare a round, complete a seeded
-headless match, and keep private-hand secrecy. The foundation does not tune
-release balance. Milestone 028 raises phrase counts and scene-specific volume to
-the exact final targets: 40 character-owned cards per character and 34
-scene-restricted cards per scene.
-Milestone 027 owns final balance and editorial evidence.
+Each ordered setup of a character and a scene can prepare a round, complete a seeded headless match, and keep the private hand secret.
+The foundation does not tune the release balance.
+Milestone 028 increases the phrase counts and the volume for each scene to the last targets.
+These targets are 40 character-owned cards for each character and 34 scene-restricted cards for each scene.
+Milestone 027 controls the last balance evidence and the editorial evidence.
 
 ## Acceptance criteria
 
-- **AC-026-01:** The catalog contains exactly the 19 ordered character IDs and
-  6 ordered scene IDs above, with 18 humans and one fully mechanical robot.
-- **AC-026-02:** Each character loads from one matching JSON file and one
-  matching default portrait without a character registry, locale table, setup
-  option, or renderer map. Each portrait passes the shared asset, alpha,
-  provenance, and color-policy checks.
-- **AC-026-03:** Each character meets the foundation role minimum and owns three unique
-  Comebacks. It passes grammar, weakness, restriction, and locale validation,
-  plus Milestone 027 editorial and safety review.
-- **AC-026-04:** Each character can prepare and complete one fixed-seed match
-  in each scene without an illegal action, stalled phase, private-card leak, or
-  timer overrun.
-- **AC-026-05:** Adding and removing one synthetic convention-driven character
-  leaves no stale setup, match, locale, or production-build reference.
-- **AC-026-06:** Production-browser setup can select every character and scene.
-  The 19 identity records, longest names, six-scene selector, and selected
-  interim portrait remain usable at every supported viewport. Milestone 018
-  permits compact roster reflow and vertical page scroll. The foundation
-  default-only view uses one compact fighting-game character-selection grid with
-  six, six, six, and one portraits in its current rows. The completed catalog
-  downstream in Milestone 028 exposes all 30 selectable portrait skins in five
-  rows of six.
+- **AC-026-01:** The catalog contains the 19 ordered character IDs and the 6 ordered scene IDs above, and no other IDs.
+  It has 18 humans and one fully mechanical robot.
+- **AC-026-02:** Each character loads from one related JSON file and one related default portrait, without a character registry, locale table, setup entry, or renderer map.
+  Each portrait passes the shared asset, alpha, provenance, and color-policy checks.
+- **AC-026-03:** Each character agrees with the foundation role minimum values, and it owns three unique Comebacks.
+  It passes the grammar, weakness, restriction, and locale validation, and the editorial review and safety review of Milestone 027.
+- **AC-026-04:** Each character can prepare and complete one match with a fixed seed in each scene.
+  The match has no incorrect action, stopped phase, private-card leak, or timer overrun.
+- **AC-026-05:** The test adds and removes one synthetic character that uses the naming convention.
+  After the removal, no setup, match, locale, or production-build reference to that character stays.
+- **AC-026-06:** The production-browser setup can select each character and each scene.
+  The 19 identity records, the longest names, the six-scene selector, and the selected temporary portrait stay usable at each supported viewport.
+  Milestone 018 lets the layout use compact roster reflow and vertical page scroll.
+  The foundation view with only default portraits uses one compact fighting-game character-selection grid.
+  Its rows of this time have six, six, six, and one portraits.
+  The completed catalog in Milestone 028 shows all 30 selectable portrait skins in five rows of six.
 
-  Any incomplete row is centered. The named roster region uses
-  contained vertical scrolling when its rows exceed the available height or
-  when later portraits are added. It is keyboard-focusable and does not scroll
-  the page or cover the roster heading, note, settings, or actions. Visible and
-  accessible roster counts derive from discovered characters and portraits and
-  update when convention-driven content is added or removed.
+  The layout centers each incomplete row.
+  When its rows are higher than the available height, or when the project adds portraits, the named roster region uses contained vertical scrolling.
+  It can get keyboard focus.
+  It does not scroll the page, and it does not cover the roster heading, the note, the settings, or the actions.
+  The visible roster counts and the accessible roster counts come from the characters and portraits that the loader finds.
+  They update when the project adds or removes content that uses the naming convention.
 
 ## Objective verifiers
 
-- Content, Node discovery, and grammar tests do checks of AC-026-01 through
-  AC-026-03 and AC-026-05.
-- Asset validation does checks of the shared alpha, provenance, and color-policy
-  checks for interim portraits and scene assets.
-- `tests/unit/catalog-foundation.test.ts` and its four sibling shards share
-  `tests/unit/helpers/catalog-foundation-workload.ts` and do checks of AC-026-04 for
-  all 2,166
-  ordered character-pair and scene setups, including mirrors. The workload uses
-  fixed seeds and Local Radio Caller presentation timing. It checks completion,
-  action legality, private-hand secrecy, and timer bounds. The shards split the
-  per-character cases across sibling files so one file cannot bound the unit
-  phase. The seeds and assertions are unchanged.
-- `e2e/catalog-foundation.spec.ts` selects every character for both player
-  positions and every scene at all four supported matrix viewports. It does checks of
-  selected names, decoded portraits, geometry, and available actions for
-  AC-026-02 and AC-026-06. `e2e/scene-catalog.spec.ts` does checks of each scene's
-  distinct production background and match geometry.
-- `e2e/content-lifecycle.spec.ts` does checks of AC-026-05 through an isolated
-  production add-and-remove lifecycle, including dynamic roster counts and a
-  centered incomplete row.
-- The Impeccable records and `npm run ci` complete milestone evidence.
+- Content tests, Node discovery tests, and grammar tests do checks of AC-026-01 through AC-026-03 and AC-026-05.
+- Asset validation does the shared alpha, provenance, and color-policy checks for temporary portraits and scene assets.
+- `tests/unit/catalog-foundation.test.ts` and its four sibling shards share `tests/unit/helpers/catalog-foundation-workload.ts`.
+  They do checks of AC-026-04 for all 2,166 ordered setups of a character pair and a scene, and this includes mirror matches.
+  The workload uses fixed seeds and the presentation time of Local Radio Caller.
+  It makes sure that each match is completed.
+  It also does checks of the correct actions, the secrecy of the private hand, and the timer limits.
+  The shards divide the cases for each character across sibling files, so that one file cannot limit the unit phase.
+  The seeds and the assertions do not change.
+- `e2e/catalog-foundation.spec.ts` selects each character for the two player positions and each scene at all four supported matrix viewports.
+  It does checks of the selected names, the decoded portraits, the geometry, and the available actions for AC-026-02 and AC-026-06.
+  `e2e/scene-catalog.spec.ts` does checks of the different production background and the match geometry of each scene.
+- `e2e/content-lifecycle.spec.ts` does checks of AC-026-05 through an isolated production lifecycle that adds and removes a character.
+  This includes dynamic roster counts and a centered incomplete row.
+- The Impeccable records and `npm run ci` complete the evidence for the milestone.
 
 ## Impeccable user interface validation
 
-1. Run `$impeccable audit` on the complete roster, scene selection, and interim
-   match fallback states.
-2. After audit repairs, run `$impeccable critique` on the same catalog slice.
+1. Run `$impeccable audit` on the full roster, the scene selection, and the states of the temporary match fallback.
+2. After the audit repairs, run `$impeccable critique` on the same catalog slice.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Checks and stop conditions
 
-All 19 characters and 6 scenes load by convention, validate, and complete
-seeded matches. Production setup selects each catalog entry without overflow or
-stale references. `npm run ci` passes. Stop before advanced AI, final art,
-alternate-skin completion, audio, presentation reactions, final phrase volume,
-variety review, or release balance.
+All 19 characters and 6 scenes load by naming convention, pass validation, and complete seeded matches.
+The production setup selects each catalog entry without overflow or references to removed items.
+`npm run ci` passes.
+Stop before these items:
+
+- The advanced AI.
+- The last art and the alternate skins.
+- The audio and the presentation reactions.
+- The last phrase volume and the variety review.
+- The release balance.
 
 ## Review repair regression
 
-**AC-026-07:** The complete catalog validator enforces each foundation character's
-3 through 32 owned phrases and its noun, modifier, and ending minimum. Isolated source
-parsing does not replace this check. `tests/unit/content-schemas.test.ts`
-rejects two-noun pools, missing modifier/ending, and counts above 32 at the
-owning character path. Synthetic discovery characters must meet the same
-  complete-catalog minimum. The complete current catalog must pass this
-  contract. Valid additions that meet these minima must also pass.
+**AC-026-07:** The validator of the full catalog makes sure that each foundation character owns 3 through 32 phrases.
+It also makes sure of the minimum values for nouns, modifiers, and endings.
+Parsing an isolated source does not replace this check.
+`tests/unit/content-schemas.test.ts` does not accept pools with two nouns, or pools without a modifier or an ending.
+It also does not accept counts above 32 at the path of the character that owns them.
+Synthetic discovery characters must agree with the same minimum values of the full catalog.
+The full catalog of this time must pass this contract.
+Correct new characters that agree with these minimum values must also pass.
 
-The approved Thunder Tribune modifier is `thunder-tribune-modifier-001`, rendered as
-`with 110% turnout at the cemetery`. It belongs only to that character and
-satisfies the foundation modifier minimum. Its card pool keeps all prior
-phrases and IDs. Do checks of the complete approved sentence in
-`tests/unit/english-grammar-core.test.ts`.
+The approved Thunder Tribune modifier is `thunder-tribune-modifier-001`, which renders as `with 110% turnout at the cemetery`.
+Only that character owns it, and it satisfies the foundation modifier minimum.
+Its card pool keeps all previous phrases and IDs.
+Do checks of the full approved sentence in `tests/unit/english-grammar-core.test.ts`.
 
-The Algorithmic Prophet owns 25 cards, including eight cards drawn from
-beverage memory, nature omens, national rankings, and ceremonial
-courage. These add two nouns, two modifiers, and four endings to the existing
-four-card pool. Existing identifiers and text remain stable. New cards belong
-only to this character's private pool. Public wording and editorial notes contain
-no real-person references or source attribution, and no protected expression is
-copied from another work.
+The Algorithmic Prophet owns 25 cards.
+Eight of these cards come from beverage memory, nature omens, national rankings, and ceremonial courage.
+These cards add two nouns, two modifiers, and four endings to the initial pool of four cards.
+The identifiers and the text of the initial cards do not change.
+The new cards are only in the private pool of this character.
+The public wording and the editorial notes contain no real-person references or source attribution.
+They contain no protected expression that a person copied from a different work.
 
-Private
-research records the sources. The current catalog is English.
-Romanian adaptation remains in Milestone 029. Milestone 014 owns the current
-replay document contract. Milestone 027 owns the card-agnostic content
-verification that covers this character's ownership, role minima, and complete
-constructions.
+Private research records the sources.
+The catalog of this time is English.
+The Romanian adaptation stays in Milestone 029.
+Milestone 014 controls the replay document contract of this time.
+Milestone 027 controls the content verification that does not examine single cards.
+That verification includes the ownership, the role minimum values, and the full constructions of this character.

@@ -3,8 +3,8 @@
 **Status:** Approved  
 **Depends on:** 014  
 **Replacement:** The interactive title replaces Milestone 001's placeholder
-ban on controls, navigation, and game state. It keeps the exact title,
-subtitle, and status text.
+ban on controls, navigation, and game state. It keeps the title,
+subtitle, and status text without a change.
 
 **Owns:** Application shell, screen flow, setup user interface (UI), and
 view-state boundary
@@ -22,280 +22,266 @@ view-state boundary
 
 ## Deliver
 
-Build light Document Object Model (DOM) title and setup screens, a screen
-controller, an application shell, and typed command events. Support hotseat
-mode, character choices, and scene choices with mirror matches allowed. Later
-milestones add artificial intelligence (AI), speech, and saved options when
-their behavior exists.
+Build the title screen and the setup screen in the light Document Object Model (DOM).
+Also build a screen controller, an application shell, and typed command events.
+Add hotseat mode, character choices, and scene choices, and let the player select mirror matches.
+Subsequent milestones add artificial intelligence (AI), speech, and saved options when their behavior is in the code.
 
-The title screen shows the generated original game emblem, the live game name,
-three mode actions, and the fictional-composite satire disclaimer. It inherits
-the final match and Pause visual system. Setup uses native controls and prevents
-only invalid combinations.
-Mirror characters are valid. Screens use light DOM.
+The title screen shows the generated new game emblem, the live game name, three mode actions, and the satire disclaimer about fictional composites.
+It uses the last visual system of the match and of Pause.
+Setup uses native controls, and it prevents only incorrect combinations.
+Mirror characters are correct.
+Screens use the light DOM.
 
-The title emblem uses genuine transparent alpha with a Portable Network
-Graphics fallback. Milestone 023 promotes the 640-square emblem and the title
-proscenium to manifest-resolved AVIF and WebP variants. Both keep their
-authored PNG fallback. The production entry preloads both AVIF files before
-the application module. Browsers without AVIF support use WebP.
+The title emblem uses real transparent alpha with a Portable Network Graphics fallback.
+Milestone 023 changes the 640-square emblem and the title proscenium to AVIF and WebP variants that the manifest resolves.
+The two keep their authored PNG fallback.
+The production entry preloads the two AVIF files before the application module.
+Browsers that cannot use AVIF use WebP.
 
-Their combined runtime size is at most 300 KiB. Markup
-reserves the emblem's square dimensions before decode. Until the emblem loads,
-that space shows a decorative brass broadcast-signal poster. The decoded emblem
-replaces it without layout shift.
+Their combined runtime size is 300 KiB or less.
+The markup reserves the square dimensions of the emblem before the decode.
+Until the emblem loads, that space shows a decorative brass broadcast-signal poster.
+The decoded emblem replaces it without a layout shift.
 
-This focused title slice does not complete
-Milestone 023's manifest, AVIF, or full asset-pipeline work.
+This title slice does not complete the manifest, AVIF, or full asset-pipeline work of Milestone 023.
 
-Shadow DOM is limited to
-isolated leaf controls with explicit style and event contracts. Components
-never duplicate authoritative state.
+Only isolated leaf controls can use the shadow DOM, and their style contracts and event contracts must be clear in the code.
+Components do not have a duplicate of the authoritative state.
 
 ## Screen and setup contract
 
-The shell has `title` and `setup` view states. The Main Menu offers
-“Single Player”, “Multiplayer”, and “Ladder”. Each button emits a typed
-`show-setup` command with mode `ai`, `hotseat`, or `ladder`, respectively,
-and opens setup in that mode. Multiplayer means two people on this device.
-Milestone 018 disables its action and hotseat setup submission in portrait.
+The shell has the `title` view state and the `setup` view state.
+The Main Menu gives “Single Player”, “Multiplayer”, and “Ladder”.
+Each button sends a typed `show-setup` command with the mode `ai`, `hotseat`, or `ladder`, in that sequence.
+It opens the setup in that mode.
+Multiplayer means two persons on this device.
+In portrait, Milestone 018 disables its action and the submission of the hotseat setup.
 
-Its command handlers reject these actions too. Single Player and Ladder remain
-available in either supported orientation.
-The scene and character builder has no mode selector. “Back” returns to the
-Main Menu and keeps setup values. Selecting a menu mode updates the mode.
+Its command handlers also do not accept these actions.
+Single Player and Ladder stay available in the two supported orientations.
+The scene and character builder has no mode selector.
+“Back” goes back to the Main Menu, and it keeps the setup values.
+When the player selects a menu mode, the mode changes.
 
-Ladder restores its saved player, opponent, and scene under Milestone 022.
-Changing modes does not delete Ladder progress. Invalid menu modes do not
-navigate or change setup. A valid setup submit emits one typed `start-match` command.
-Milestone 016 owns the rendered match destination.
+Ladder shows its saved player, opponent, and scene again in Milestone 022.
+A change of mode does not delete the Ladder progress.
+Incorrect menu modes do not navigate or change the setup.
+A correct setup submission sends one typed `start-match` command.
+Milestone 016 controls the rendered match destination.
 
-When Speech enabled and GPU voices are both on, the main menu shows a compact
-brass-and-ink voice loader below its actions. The loader appears during GPU
-preparation and loading.
-The meter has an accessible name and a numeric value only when download
-progress is known. It uses restrained motion that stops with reduced motion,
-and remains legible in forced colors. Loading does not move the menu actions.
+When Speech enabled and GPU voices are on, the main menu shows a compact voice loader of brass and ink below its actions.
+The loader shows during the GPU preparation and loading.
+The meter has an accessible name, and it has a numeric value only when the game knows the download progress.
+It uses a small quantity of motion that stops with reduced motion, and it stays easy to read in forced colors.
+Loading does not move the menu actions.
 
-Preparation never blocks the menu. While GPU voices are idle, checking, or
-loading, all three native mode buttons stay enabled and their command handler
-accepts activation. A match that starts before preparation finishes uses local Piper voices
-throughout that match. Milestone 024 selects ready GPU voices from the next
-match. Settings and Match history remain usable, and
-changing any other setting neither cancels nor restarts preparation.
+The preparation does not block the menu.
+While the GPU voices are idle, in a check, or loading, all three native mode buttons stay enabled, and their command handler accepts activation.
+A match that starts before the preparation is completed uses local Piper voices for the full match.
+Milestone 024 selects the prepared GPU voices from the next match.
+Settings and Match history stay usable.
+A change to a different setting does not stop or start the preparation again.
 
-Ready
-removes the loader. Unavailable removes the loader and shows a compact local
-Piper fallback notice. Turning either
-Speech enabled or GPU voices off removes GPU status
-immediately. No GPU status is shown while speech is off. Milestone 024 owns
-preparation, timeout, and fallback behavior.
+When the voices are prepared, the loader goes away.
+When the voices are not available, the loader goes away, and the menu shows a compact notice about the local Piper fallback.
+When the user turns off Speech enabled or GPU voices, the GPU status goes away immediately.
+The menu shows no GPU status while speech is off.
+Milestone 024 controls the preparation, timeout, and fallback behavior.
 
-Milestone 020 owns the preferences.
+Milestone 020 controls the preferences.
 
-Each title or setup transition moves keyboard focus to the destination heading.
-The heading is programmatically focusable but does not enter the normal Tab
-sequence.
+Each title transition or setup transition moves the keyboard focus to the heading of the destination.
+Code can put focus on the heading, but the heading is not in the usual Tab sequence.
 
-A confirmed “Back to menu”
-action from the concealed Pause screen discards the active match and returns to
-title. It keeps the setup values for a later setup visit.
+After a confirmation, a “Back to menu” action from the hidden Pause screen removes the active match, and it goes back to the title.
+It keeps the setup values for a subsequent setup visit.
 
-Setup fields are player-one character and skin, player-two character and
-skin, and scene. Mode belongs to the Main Menu and remains in the setup payload. The lower fieldset is labeled “Match settings.” Defaults are
-hotseat, the first two catalog characters, each character's first skin, and the
-first scene.
-The application session starts with the 30-second browser default. Timer
-changes occur only on the paused match surface owned by Milestone 016. They
-remain in the application shell for later matches in the same page session and
-do not enter the setup snapshot or start-match payload.
+The setup fields are the player-one character and skin, the player-two character and skin, and the scene.
+The mode is part of the Main Menu, and it stays in the setup payload.
+The label of the bottom fieldset is “Match settings.”
+The defaults are hotseat, the first two catalog characters, the first skin of each character, and the first scene.
+The application session starts with the browser default of 30 seconds.
+Timer changes occur only on the paused match surface that Milestone 016 controls.
+They stay in the application shell for subsequent matches in the same page session.
+They do not go into the setup snapshot or the start-match payload.
 
-Mirror
-characters are valid. Missing IDs, unknown IDs, or an unsupported mode are
-invalid.
+Mirror characters are correct.
+Missing IDs, unknown IDs, or an unsupported mode are incorrect.
 
-Setup presents one shared character-portrait roster between two selected-character
-stages. The left stage owns player one and uses the oxblood identity. The right
-stage owns player two and uses the television-blue identity. Each stage shows
-the selected character's portrait, name, and complete public weakness
-list. The list updates in the same render as the selection and remains visible
-before match start. Mirror selections show the same character and list on both
-sides.
+The setup shows one shared roster of character portraits between two selected-character stages.
+The left stage is for player one, and it uses the oxblood identity.
+The right stage is for player two, and it uses the television-blue identity.
+Each stage shows the portrait, the name, and the full public weakness list of the selected character.
+The list updates in the same render as the selection, and it stays visible before the match starts.
+Mirror selections show the same character and list on the two sides.
 
-Each roster portrait uses an exact 3:4 vertical canvas. Every character skin
-uses a tight headshot crop from the top of the head through the upper chest.
-For a fully mechanical character, the crop includes the antenna, face panel,
-shoulders, and upper torso. The face panel is centered on the inner portrait
-window.
+Each roster portrait uses a vertical canvas with the ratio 3:4.
+Each character skin uses a tight headshot crop from the top of the head to the top of the chest.
+For a fully mechanical character, the crop includes the antenna, the face panel, the shoulders, and the top of the torso.
+The face panel is at the center of the inner portrait window.
 
-The crop
-does not show the complete body. Each item uses one authored heavy dark-oak
-frame and a restrained aged-gold inner liner. No portrait paints outside that
-inner window. Each item shows no visible character label.
+The crop does not show the full body.
+Each item uses one authored heavy frame of dark oak and a thin inner liner of aged gold.
+No portrait paints out of that inner window.
+Each item shows no visible character label.
 
-The hover, focus, or
-pinned dossier supplies the visible character name. The accessible name keeps
-the complete character name, portrait skin label, public weaknesses, and
-current player-one or player-two selection state. Selecting a portrait updates
-both the owning character and skin on the current player target. It does not
-advance the target. The selected stage does not fade or mask the lower body.
+The dossier, which shows on hover, on focus, or when it is pinned, gives the visible character name.
+The accessible name keeps the full character name, the label of the portrait skin, and the public weaknesses.
+It also keeps the selection state for player one or player two.
+When the player selects a portrait, the game updates the character and the skin of the player that is the target of that time.
+It does not advance the target.
+The selected stage does not fade or mask the bottom of the body.
 
-Milestone 026 expands the roster to a six-column grid with contained vertical
-scrolling and centered incomplete rows. The current catalog exposes 30 portrait
-choices in six columns and five rows. A roster item cannot cross the roster
-boundary or overlap the match-settings strip.
+Milestone 026 extends the roster to a six-column grid with contained vertical scrolling and centered incomplete rows.
+The catalog of this time shows 30 portrait choices in six columns and five rows.
+A roster item cannot go across the roster boundary, and it cannot overlap the match-settings strip.
 
-The roster starts with player one as its selection target. Player one can
-change character and skin until using the separate player-one lock control,
-which reads `Confirm selection`. A roster choice never surrenders the turn.
-Locking player one moves the target to player two. Player two can then change
-character and skin until using the player-two lock control.
+The roster starts with player one as its selection target.
+Player one can change the character and the skin until player one uses the different player-one lock control.
+That control shows `Confirm selection`.
+A roster choice does not give the turn to the other player.
+When player one locks, the target moves to player two.
+Then player two can change the character and the skin until player two uses the player-two lock control.
 
-That control also
-reads `Confirm selection`. Before that transition, player two's stage, skin
-controls, and lock control are unavailable. Each selected-player stage shows
-its selected skin. Mirror choices remain valid.
+That control also shows `Confirm selection`.
+Before that transition, the stage, the skin controls, and the lock control of player two are not available.
+Each selected-player stage shows its selected skin.
+Mirror choices stay correct.
 
-Both lock controls carry their own stable identity,
-`data-testid="lock-player-one"` and `data-testid="lock-player-two"`, because
-their visible copy is the same in both states and both languages. Tests and
-assistive technology tell the two controls apart by that identity and by the
-stage each one belongs to, never by their wording. Once a player is locked and
-the other is not, that player's control reads `Selection confirmed`.
+The two lock controls have their own stable identity, `data-testid="lock-player-one"` and `data-testid="lock-player-two"`.
+The cause is that their visible text is the same in the two states and in the two languages.
+Tests and assistive technology identify the two controls through that identity and through the stage of each control.
+They do not identify the controls through their wording.
+When one player is locked and the other player is not locked, the control of the locked player shows `Selection confirmed`.
 
-Start match stays disabled and submission is rejected until both players are
-locked in. Before both locks exist, a locked player cannot unlock. When both
-players are locked, either lock control becomes a `Change selection` control.
-Unlocking one player disables Start match, keeps the other player's lock and
-both selections, and returns the selection target only to the unlocked player.
-The player must lock in again before the match can start.
+Start match stays disabled, and the game does not accept a submission until the two players are locked.
+Before the two locks are set, a locked player cannot unlock.
+When the two players are locked, each lock control becomes a `Change selection` control.
+When one player unlocks, Start match becomes disabled.
+The lock of the other player and the two selections stay, and the selection target goes back only to the unlocked player.
+The player must lock again before the match can start.
 
-Single Player uses the same sequence. The person operating player one selects
-and locks both the human and computer characters. Only the person's lock is necessary in Ladder because the current rung's
-opponent is fixed and treated as locked. Ladder never permits selection or unlocking of that opponent.
+Single Player uses the same sequence.
+The person who operates player one selects and locks the human character and the computer character.
+In Ladder, only the lock of the person is necessary.
+The cause is that the opponent of the rung of that time is fixed, and the game shows it as locked.
+Ladder does not let the player select or unlock that opponent.
 
-Previous and
-next arrow buttons cycle only that player's available skins and wrap at both
-ends. Right-clicking the selected-player stage cycles to the next skin and
-prevents the browser context menu. When the stage has keyboard focus, Left
-Arrow cycles to the previous skin and Right Arrow cycles to the next skin. Skin
-controls use visible side arrows, accessible names, and an announced current
-skin name. They support one default skin and as many as eight alternate skins
-for one archetype. The active roster marker stays on the selected portrait
-skin, while the dossier continues to denote the owning archetype.
+The previous and next arrow buttons move through only the available skins of that player.
+After the last skin, they go back to the first skin.
+A right-click on the selected-player stage goes to the next skin, and it prevents the browser context menu.
+When the stage has keyboard focus, Left Arrow goes to the previous skin and Right Arrow goes to the next skin.
+The skin controls use visible side arrows, accessible names, and an announced name of the skin of that time.
+They operate with one default skin and eight or fewer alternate skins for one archetype.
+The active roster marker stays on the selected portrait skin, and the dossier continues to identify the archetype that owns the skin.
 
-Hovering a roster character or moving keyboard focus to it shows
-a custom nonmodal floating panel with that character's name and complete public
-weakness list. Leaving hover or focus closes a transient panel. Right-clicking
-a roster character prevents the browser context menu and pins the panel. Escape
-or pointer or keyboard activation outside the roster and panel closes a pinned
-panel.
+When the pointer hovers on a roster character, or when keyboard focus goes to it, the game shows a custom nonmodal floating panel.
+The panel shows the name and the full public weakness list of that character.
+When the hover or the focus goes away, a temporary panel closes.
+A right-click on a roster character prevents the browser context menu and pins the panel.
+Escape, or a pointer activation or keyboard activation out of the roster and the panel, closes a pinned panel.
 
-The panel
-contains public content only and does not trap focus.
+The panel contains only public content, and it does not trap the focus.
 
-Validation occurs on submit and after an invalid field changes. Each visible
-error names the field, problem, and valid recovery. The shell keeps valid input.
-Each error is programmatically associated with its control. An invalid mode
-shows a focusable alert that directs the player back to the Main Menu.
+Validation occurs on submission and after an incorrect field changes.
+Each visible error names the field, the problem, and the correct recovery.
+The shell keeps the correct input.
+Code connects each error with its control.
+An incorrect mode shows an alert that can get focus and that tells the player to go back to the Main Menu.
 
-An invalid submit
-moves focus to the first invalid control. Submission is never disabled only to
-hide validation.
+An incorrect submission moves the focus to the first incorrect control.
+The game does not disable submission only to hide the validation.
 
 ## Acceptance criteria
 
-- **AC-015-01:** Title and setup use the two-state graph. Browser Back does
-  not create an unsupported URL route. A confirmed paused-match exit returns to
-  title. A later setup visit restores the values. Each title or setup transition
-  moves focus to the destination heading.
-- **AC-015-13:** Each Main Menu mode opens the correct setup. Setup has no mode
-  selector. All three mode buttons stay available during GPU preparation and
-  open their setup. Switching modes keeps
-  Ladder progress and supported viewports keep all menu actions visible.
-- **AC-015-02:** Defaults create the exact typed setup payload, including both
-  default skin IDs. A mirror match with different skins succeeds.
-- **AC-015-03:** Every invalid class produces one visible error and keeps
-  other values. It moves focus to the first invalid control. It associates each
-  error with its control and emits no command.
-- **AC-015-04:** A valid submit emits one bubbling, composed
-  `start-match` event and immutable payload. Rapid double submit emits once.
-- **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by
-  1080. Back does not discard setup values.
-- **AC-015-06:** Components cannot mutate snapshots or own Pride, timer, board,
-  hands, or game phase. The shell is the only authoritative snapshot owner.
-- **AC-015-07:** Defaults, each changed character, and a mirror selection show
-  the exact catalog weakness tags for the two players. They remain visible at
-  every supported setup viewport without clipping. Milestone 018 permits
-  vertical page scroll in compact layouts.
-- **AC-015-08:** Pointer hover and keyboard focus show the correct transient
-  character panel. Right-click shows the same panel without a browser context
-  menu and keeps it open after pointer exit. Escape and outside activation close
-  it. The panel names only the catalog character and exact public weakness tags,
-  stays inside each supported viewport, and never traps focus.
-- **AC-015-09:** The title uses the approved generated emblem plus live title,
-  subtitle, action, status, and disclaimer text. Title and setup use only the
-  four font families owned by Milestone 023. Do not include Barlow Condensed,
-  Georgia, or any other excluded entry-screen font as a production dependency
-  or computed entry-screen family. The emblem has genuine transparent outer
-  corners and no visible rectangular matte. Production preloads and renders the
-  two preferred-format title assets, reserves emblem dimensions, and keeps their combined
-  runtime size at or below 300 KiB. A delayed emblem shows the brass loading
-  poster and then replaces it without layout shift.
-- **AC-015-10:** Every roster item has a computed 3:4 frame. Each human or fully
-  mechanical character renders a tight headshot with no complete body. Each
-  discovered selectable skin has one portrait choice. The robot headshot
-  includes its antenna, centers its face panel, and cannot paint outside the
-  inner portrait window. The current 30-portrait roster uses the contained
-  six-column grid and centered incomplete rows.
+- **AC-015-01:** The title and the setup use the graph with two states.
+  Browser Back does not make an unsupported URL route.
+  An exit from a paused match after a confirmation goes back to the title.
+  A subsequent setup visit shows the values again.
+  Each title transition or setup transition moves the focus to the heading of the destination.
+- **AC-015-13:** Each Main Menu mode opens the correct setup.
+  The setup has no mode selector.
+  All three mode buttons stay available during the GPU preparation, and they open their setup.
+  A change of mode keeps the Ladder progress, and the supported viewports keep all the menu actions visible.
+- **AC-015-02:** The defaults make the typed setup payload without a change, and this includes the two default skin IDs.
+  A mirror match with different skins passes.
+- **AC-015-03:** Each incorrect class gives one visible error, and it keeps the other values.
+  It moves the focus to the first incorrect control.
+  It connects each error with its control, and it sends no command.
+- **AC-015-04:** A correct submission sends one bubbling, composed `start-match` event and an immutable payload.
+  A fast double submission sends the event one time.
+- **AC-015-05:** Pointer flows pass at 1024 by 720, 1280 by 720, and 1920 by 1080.
+  Back does not remove the setup values.
+- **AC-015-06:** Components cannot change snapshots, and they cannot own Pride, the timer, the board, the hands, or the game phase.
+  The shell is the only owner of the authoritative snapshot.
+- **AC-015-07:** The defaults, each changed character, and a mirror selection show the catalog weakness tags of the two players without a change.
+  They stay visible at each supported setup viewport without clipping.
+  Milestone 018 lets compact layouts use vertical page scroll.
+- **AC-015-08:** Pointer hover and keyboard focus show the correct temporary character panel.
+  A right-click shows the same panel without a browser context menu, and it keeps the panel open after the pointer goes away.
+  Escape and an activation out of the panel close it.
+  The panel names only the catalog character and the public weakness tags without a change.
+  It stays in each supported viewport, and it does not trap the focus.
+- **AC-015-09:** The title uses the approved generated emblem, and live title, subtitle, action, status, and disclaimer text.
+  The title and the setup use only the four font families that Milestone 023 controls.
+  Do not include Barlow Condensed or Georgia as a production dependency or as a computed entry-screen family.
+  Do not include a different entry-screen font that the project does not use in these places.
+  The emblem has real transparent outer corners and no visible rectangular matte.
+  Production preloads and renders the two title assets in the preferred format, and it reserves the emblem dimensions.
+  It keeps their combined runtime size at 300 KiB or less.
+  A delayed emblem shows the brass loading poster, and then the emblem replaces it without a layout shift.
+- **AC-015-10:** Each roster item has a computed 3:4 frame.
+  Each human or fully mechanical character renders a tight headshot without the full body.
+  Each selectable skin that the loader finds has one portrait choice.
+  The robot headshot includes its antenna, and it puts its face panel at the center.
+  It cannot paint out of the inner portrait window.
+  The roster of this time with 30 portraits uses the contained six-column grid and centered incomplete rows.
 
-  Both selected-player stages
-  render the complete portrait inside the selected-stage bounds without a lower
-  fade. The generated frame overlay loads with valid transparency. No roster
-  item shows a visible character label. Each portrait choice uses its
-  discovered skin portrait.
+  The two selected-player stages render the full portrait in the bounds of the selected stage, without a fade at the bottom.
+  The generated frame overlay loads with correct transparency.
+  No roster item shows a visible character label.
+  Each portrait choice uses the portrait of its skin that the loader found.
 
-  A selected-player stage uses its
-  selected skin portrait.
-- **AC-015-11:** Both selected-player stages cycle their available skins with
-  visible previous and next arrows, right-click, Left Arrow, and Right Arrow.
-  The controls cycle and wrap across one default skin and up to eight alternate
-  skins. Cycling changes only the owning player's skin ID. It keeps the two
-  character IDs and all phrase content. It prevents the stage context menu and
-  does not change the roster portrait catalog. Selecting a roster skin directly
-  updates the owning character and skin together.
-- **AC-015-14:** Multiplayer and Single Player start with only player one
-  editable. Roster and skin changes stay on the current player until that
-  player's separate lock control is used. Player two becomes editable only
-  after player one locks. Start match remains disabled and direct submission
-  emits no command until both players are locked. When both are locked, either player can unlock.
+  A selected-player stage uses the portrait of its selected skin.
+- **AC-015-11:** The two selected-player stages move through their available skins with the visible previous and next arrows, a right-click, Left Arrow, and Right Arrow.
+  The controls move through one default skin and eight or fewer alternate skins.
+  After the last skin, they go back to the first skin.
+  This changes only the skin ID of the player that owns the stage.
+  It keeps the two character IDs and all the phrase content.
+  It prevents the stage context menu, and it does not change the roster portrait catalog.
+  When the player selects a roster skin directly, the game updates the owner character and the skin together.
+- **AC-015-14:** Multiplayer and Single Player start with only player one in edit mode.
+  Roster changes and skin changes stay on the player of that time until that player uses the different lock control of that player.
+  Player two goes into edit mode only after player one locks.
+  Start match stays disabled until the two players are locked.
+  Until then, a submission that code sends directly sends no command.
+  When the two players are locked, each player can unlock.
 
-  Start match becomes disabled,
-  and the other lock stays set. Only the unlocked player can reselect and lock
-  again. Ladder treats its fixed opponent as locked. The person's lock remains
-necessary. Click, right-click,
-  and keyboard handlers reject changes to locked or waiting players.
-  `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts`
-  do checks of the lock sequence and input guards.
+  Start match becomes disabled, and the other lock stays set.
+  Only the unlocked player can select again and lock again.
+  Ladder shows its fixed opponent as locked.
+  The lock of the person stays necessary.
+  The click handlers, right-click handlers, and keyboard handlers do not accept changes to locked players or waiting players.
+  `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts` do checks of the lock sequence and the input guards.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on the built title and setup screens.
-2. After audit repairs, run `$impeccable critique` on both screen states.
+1. Run `$impeccable audit` on the built title screen and setup screen.
+2. After the audit repairs, run `$impeccable critique` on the two screen states.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Checks and stop conditions
 
-Browser component tests prove immutable properties, bubbling and composed typed
-events, validation, and setup command creation. The app
-shell alone owns authoritative state. `npm run ci` passes. Stop before the match
-surface, AI behavior, persistence, or final styling.
+Browser component tests show immutable properties, typed bubbling and composed events, validation, and the setup command.
+Only the app shell owns the authoritative state.
+`npm run ci` passes.
+Stop before the match surface, the AI behavior, the persistence, or the last styling.
 
 ## Review repair regression
 
-**AC-015-12:** Forced-colors mode keeps full-stage pointer targets and skin-selector
-wrappers transparent. Selected portraits, labels, weakness records, controls,
-and focus markers stay visible. Canvas colors belong to actual surfaces and
-controls. `e2e/review-accessibility.spec.ts` and production evidence
-do checks of this at 1024 by 720, 1280 by 720, and 1920 by 1080.
+**AC-015-12:** Forced-colors mode keeps the full-stage pointer targets and the skin-selector wrappers transparent.
+Selected portraits, labels, weakness records, controls, and focus markers stay visible.
+Canvas colors are on real surfaces and controls.
+`e2e/review-accessibility.spec.ts` and production evidence do checks of this at 1024 by 720, 1280 by 720, and 1920 by 1080.

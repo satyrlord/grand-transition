@@ -8,21 +8,26 @@ development evidence
 
 ## Match flow
 
-Each player starts with 100 Pride and zero comeback charge. The scene supplies
-the first-round opener index. The opener alternates each later round. Both
-players finish or continue before their locked insults resolve.
+Each player starts with 100 Pride and zero comeback charge.
+The scene gives the opener index for the first round.
+The opener changes to the other player in each subsequent round.
+The two players end or continue before their locked insults resolve.
 
-Apply grammar-mistake and terminal-timeout self-damage immediately. Apply both
-locked insult results in one exchange. Clamp Pride to zero. Add comeback charge
-only from opponent outgoing damage. Resolve continuation survival after damage.
+Apply grammar-mistake self-damage and terminal-timeout self-damage immediately.
+Apply the results of the two locked insults in one exchange.
+Clamp Pride to zero.
+Add comeback charge only from the outgoing damage of the opponent.
+Resolve continuation survival after the damage.
 
-One player at zero Pride loses. If both reach zero in the same exchange, start
-a cliffhanger.
+When one player is at zero Pride, the other player is the winner.
+If the two players get to zero in the same exchange, start a cliffhanger.
 
 ## Cliffhanger
 
-Restore both players to 100 Pride. Clear comeback charge, noun combos, and
-continuations. Do not deal continuation cards. Play one exchange.
+Set the Pride of the two players to 100 again.
+Clear comeback charge, noun combos, and continuations.
+Do not deal continuation cards.
+Play one exchange.
 
 If one score is higher, that player deals 100 damage. The lower score deals:
 
@@ -31,32 +36,30 @@ floor(100 * lower score / higher score)
 ```
 
 If one score is zero, the higher score deals 100 and the zero score deals zero.
-Equal nonzero scores knock out both players and start another cliffhanger.
-Equal zero scores start another cliffhanger round. There is no added statistic,
-fault-count, phrase-count, opener, or other tie-break.
+Equal scores that are not zero cause a knockout of the two players and start one more cliffhanger.
+Equal zero scores start one more cliffhanger round.
+There is no added statistic, fault-count, phrase-count, opener, or other tie-break.
 
 ## Development evidence
 
-The pure terminal state records the winner. Development-only evidence records
-total score, best insult, highest damage, longest complete sentence, weakness
-activations, highest noun combo, grammar mistakes, and comebacks. These records
-support tests, simulation, and balance work. They are not a player-facing
-result, statistics, replay, or post-match feature.
+The pure terminal state records the winner.
+Development-only evidence records the total score, the best insult, the highest damage, and the longest complete sentence.
+It also records weakness activations, the highest noun combo, grammar mistakes, and comebacks.
+These records are for tests, simulation, and balance work.
+They are not a result, statistics, a replay, or a post-match feature for the player.
 
-The lifecycle has no rematch command and no post-match command. A new match is
-created only from setup.
+The lifecycle has no rematch command and no post-match command.
+Only the setup makes a new match.
 
 ## Acceptance criteria
 
-- **AC-013-01:** Setup produces 100 Pride, zero charge, and a 30-second pick.
-- **AC-013-02:** Grammar self-damage is immediate and does not charge comeback.
-- **AC-013-03:** Both locked insults resolve before knockout selection.
-- **AC-013-04:** Double knockout restores the exact cliffhanger state.
-- **AC-013-05:** Higher, lower, zero, equal-nonzero, and equal-zero cliffhanger
-  score pairs use the formula without another tie-break.
-- **AC-013-06:** The terminal state records the winner and the exact
-  development evidence fields above. The public command type has no rematch or
-  post-match command.
+- **AC-013-01:** Setup gives 100 Pride, zero charge, and a 30-second pick.
+- **AC-013-02:** Grammar self-damage occurs immediately, and it does not charge the comeback.
+- **AC-013-03:** The two locked insults resolve before the knockout selection.
+- **AC-013-04:** A double knockout sets the accurate cliffhanger state.
+- **AC-013-05:** The cliffhanger score pairs that are higher, lower, zero, equal and not zero, and equal and zero use the formula without a different tie-break.
+- **AC-013-06:** The terminal state records the winner and the development evidence fields above, and no other fields.
+  The public command type has no rematch command or post-match command.
 
 ## Objective verifiers
 

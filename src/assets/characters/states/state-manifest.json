@@ -3698,8 +3698,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1540845,
-        "sha256": "f537c53a46ceb9132d59e3ae2d5f0263c1de688933e3ca59cef76d28d61c2a2e"
+        "bytes": 3591388,
+        "sha256": "e21afc1a79ed3e4b1ada55ddeb81822f1f597e06d2cd4f0c4a874fae5d3d8ea2"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3718,48 +3718,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8638,
-          "sha256": "3411c85ef827a6330ea7ab745439f454ca22ae4dc43697fe896b7d4b26d5e00a"
+          "bytes": 8793,
+          "sha256": "a8911697c3bc7287008f0a9e45682ca2d5004cc261c505555d34ced59eec2798"
         },
         {
           "path": "states/variants/diaspora-oracle--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11300,
-          "sha256": "d04de571f6764692a91d8d7e7bb6f6a7b5b8a51fc28e9ccc5875d079f468f41f"
+          "bytes": 13680,
+          "sha256": "1fe4f09b1ebc8622f2b43b011a0e0a42b550abc303db9129aab6c51f3558d2cc"
         },
         {
           "path": "states/variants/diaspora-oracle--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20547,
-          "sha256": "fb44bc42642927b14ebae2d0774e7ac67305f535509279ba9025c0c08116c1ec"
+          "bytes": 21615,
+          "sha256": "8ccfa87baaab3f165d65bdbb5406d3ba911c5fc001d25be69759c593437903ca"
         },
         {
           "path": "states/variants/diaspora-oracle--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 26508,
-          "sha256": "fa98192cad2ee6d7f5a4a5bcee81d1bd76b84aa889d367ca79a4f211517b6c36"
+          "bytes": 33104,
+          "sha256": "72aec770fb47abdb320bb157c515e71acdb386bcb31c8ec5e45d398a955d4198"
         },
         {
           "path": "states/variants/diaspora-oracle--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 32863,
-          "sha256": "d8b0b9a538385e4b349316ac23f70b8643fdb967789913322b15092eca062a38"
+          "bytes": 35225,
+          "sha256": "5bc0f1c7e4fe1ccc9c6e0161d11331ad1e1dd5434bfbfae6ad46fe7cc2014180"
         },
         {
           "path": "states/variants/diaspora-oracle--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 42830,
-          "sha256": "de54038c4a87dea46996d9051af74e6b6d9e4c38fafd7160b12d7f8a99c23ae2"
+          "bytes": 54540,
+          "sha256": "f810257ff279b84c74e14ebb44287136ef07eca0597dbf1b092752eb56e673c6"
         }
       ]
     },
@@ -3778,8 +3778,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1941487,
-        "sha256": "dd9dbb8df76431f4396cfe43929d76bb152803389e431aa26c1c20664083c425"
+        "bytes": 4053994,
+        "sha256": "18827ee934271c9a04521db2d1acb37156e9c535b103830a0818cb0a7617af55"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3798,48 +3798,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 10779,
-          "sha256": "ea14496ffeeec9acda8d20dadc36ef19c257ae85cd66be50755c26acb76240e9"
+          "bytes": 67294,
+          "sha256": "95bbaa5bf341ad3af3f0cadbde16671d81b6abd1507922d1f9e3afdfd0d78890"
         },
         {
           "path": "states/variants/diaspora-oracle--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13470,
-          "sha256": "e7376799e7a5df33f73177fe420df8c1c3d99346fca9db6859868d51781e2cfd"
+          "bytes": 17612,
+          "sha256": "cbd00de82d69377133b6676d1887ffdc062f67749230ea14473598850ad8d88f"
         },
         {
           "path": "states/variants/diaspora-oracle--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 24938,
-          "sha256": "3762ddb6763f1d30330e87c508473ff798630072156ccfbf0890d894eb78a24e"
+          "bytes": 27219,
+          "sha256": "d24b6c1fe2c3144322706e6a2a98aebc4d7bb89a825ecc2a56dd9a6ac0240e2a"
         },
         {
           "path": "states/variants/diaspora-oracle--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31928,
-          "sha256": "8100bf1ef71702763d34655907e912fafee242f6e0b3a140cbf6d40081cc8353"
+          "bytes": 41318,
+          "sha256": "5c2104ab5266bace667c03c1d7f362d3f6d4271129053a2f3d04ff35f14bfec8"
         },
         {
           "path": "states/variants/diaspora-oracle--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 40394,
-          "sha256": "b17a1de261d2df76a95c8560ed50452317d97829196dcd113cced08d00c9124e"
+          "bytes": 44809,
+          "sha256": "d46380679e283b26c21c27ea5441a6ef8b88c2d06fbbe1590fd993700e546d5b"
         },
         {
           "path": "states/variants/diaspora-oracle--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 52022,
-          "sha256": "44bd04992342ca57d3a7203968050237afc847aee0a8e108ccf34ad184455dbf"
+          "bytes": 69754,
+          "sha256": "7f42ed31acec7911ed0c4cd7b6bf49dd9e9f8bb2619376ecaad15170c4510759"
         }
       ]
     },
@@ -3858,8 +3858,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1606662,
-        "sha256": "1bf8081a564cc8b6131c701cb6aec823451add0a90910b61eaf5e3f3d18d6028"
+        "bytes": 3408477,
+        "sha256": "3bd153aabaf546d81c4df5a4909b55b4f883a4fe7cf2cf8580e5ea845b7ccf4c"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3878,48 +3878,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9280,
-          "sha256": "2becf644cb2a3ed485d8ba46a9479a1940e35a6f62da0957110f518051cc520b"
+          "bytes": 8984,
+          "sha256": "ca79a65f5724ac9c99bb4dd71d86fa4b7c3438a3a2396dbd9211ac7c71b5b8d2"
         },
         {
           "path": "states/variants/diaspora-oracle--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11924,
-          "sha256": "b85eb1f90fa07bbe36e65e1bec0b1a31a33c510ca3e83cd2bcb86675e345cf40"
+          "bytes": 13236,
+          "sha256": "a73bced063d997239386d3760fe68ac6114eecc07d6083e93d0bdbc10dfd1538"
         },
         {
           "path": "states/variants/diaspora-oracle--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22187,
-          "sha256": "e8ab07f9d913f3ede517f69500f9760e03cb83b2a20a5a6bd0e2955b17f9dc19"
+          "bytes": 21993,
+          "sha256": "81593644018a7d23f350b05d4496006f4a2855296cd371b5804bf85584f2558e"
         },
         {
           "path": "states/variants/diaspora-oracle--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28372,
-          "sha256": "498a1ac309fca1417e055473e262c9fcb8dd1b3d4ae9eb3bfc2c562210faf484"
+          "bytes": 30968,
+          "sha256": "e9e5e4336486b09f14545481784df39f2b399d1d3ab1f6b471e8b19a0d64c6c5"
         },
         {
           "path": "states/variants/diaspora-oracle--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34982,
-          "sha256": "1b8c0bd722717a98ed5b0820bf15445829498a149ee7acf3c734bdabdf211695"
+          "bytes": 36279,
+          "sha256": "e8c591618d049d8bff38207292e55fc31f789da5b6f941810b758a8125408bc8"
         },
         {
           "path": "states/variants/diaspora-oracle--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 45866,
-          "sha256": "4b44f402fe4bccc66a22c9a175c5c16f9eccb0633aa7921ed4f260aaa03b9f94"
+          "bytes": 51898,
+          "sha256": "b650c5cf7b6a320717391a6e1c4a4d4f4d992872faaf13154c2e640b874fe2b0"
         }
       ]
     },
@@ -3938,8 +3938,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1718000,
-        "sha256": "183cf967d0b5500a91315a0c6d6c6aaf069fc1ddea1d9632906fc6696812d037"
+        "bytes": 3665034,
+        "sha256": "6cb0ec406370e0cbd427c3e102dd55baf6958b42cf3ffeb9a9e3b3679a777a07"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3958,48 +3958,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9511,
-          "sha256": "fb5fa76067c624c0a2197308e8ef93956300dabd264fedf79d90acf415a97d99"
+          "bytes": 9476,
+          "sha256": "fd668c1d3a433db9fe281cd4392108921a1d270226ee756a1ac8a1945f9b301e"
         },
         {
           "path": "states/variants/diaspora-oracle--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12096,
-          "sha256": "4e3d511e268c25ca3feeb43bb46594ef7333a2c9cb45588d1dc517410df95fc1"
+          "bytes": 13934,
+          "sha256": "3d042a3da5b53c8b6321584b350e43a310b560b70e00467d274f7d6df41e2e6a"
         },
         {
           "path": "states/variants/diaspora-oracle--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22868,
-          "sha256": "9a17ec1d0f630635ab450bd535fd3fea85eb3a26db33774f69ca17a94e5fa24b"
+          "bytes": 22651,
+          "sha256": "8797e748ba43fa1cdb705c7be307b0ccd73fdfb14dedf5e1cf5e2a0940e49b1b"
         },
         {
           "path": "states/variants/diaspora-oracle--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28718,
-          "sha256": "e60a70a81e8804fea4e26682e5f9cf00756d85c0ca578e1c48c13c7aa9279c53"
+          "bytes": 32972,
+          "sha256": "2d90ee4606cc6c52280d1923f3ff76312085c31e1887f0bde277d1a099942afd"
         },
         {
           "path": "states/variants/diaspora-oracle--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36809,
-          "sha256": "9571840dc462bc90e5d356ac1c8d7446f786d649580f680fba41b21d8a4f51c8"
+          "bytes": 37180,
+          "sha256": "cfd1a793e5218fccddba2c637adaed26508490bbe23fbc1879c1946e0a9e7aab"
         },
         {
           "path": "states/variants/diaspora-oracle--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 46290,
-          "sha256": "81e270d4b4b4a182149b43f4c40c842d1a7fa59b10ae043a722a1547593aae1d"
+          "bytes": 55196,
+          "sha256": "913e4503e2800b145e8bd0193aabd1f02d68d63b776714ada4330e1db01e1bb5"
         }
       ]
     },
@@ -4018,8 +4018,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1707559,
-        "sha256": "d663c7ce43046650b8d57e95c1e1f7d4f790e1268008a5422d7725f54baf8e30"
+        "bytes": 3430490,
+        "sha256": "77c78977bb011fd83d17f46bdbc9d6f5b56ff6155aaa44234dcaf4a0886938cd"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4038,48 +4038,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8788,
-          "sha256": "d706913cfaeb65ef94f622a5e775ce42f62a453460b541769e74c26e738218d1"
+          "bytes": 8390,
+          "sha256": "a6ca72867de5581139816e1a86a484cd1fc30f7471e476aa05d18a842acb6aa7"
         },
         {
           "path": "states/variants/diaspora-oracle--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11318,
-          "sha256": "133057b016d441d84a836cfb19d8893f0db9e87e5b7d841341d9da4b99ba9747"
+          "bytes": 13620,
+          "sha256": "94e4711d6b4e1c22594f239ae1babd30b5a7d13789b5e8ac27be92eaf60b840c"
         },
         {
           "path": "states/variants/diaspora-oracle--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21177,
-          "sha256": "1c5a258984463158171dc1aff90391cc346a9c8e2cf6dcc467e11b086822f7a8"
+          "bytes": 19589,
+          "sha256": "e08f95aab6e963851c17def1ec6d33ca7e1f4420dbbd7cb72c345820f7ac3cc9"
         },
         {
           "path": "states/variants/diaspora-oracle--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27440,
-          "sha256": "e7c6ffa820ecfb01d432afca6157c1716d6833353caae98e5000aca2bb41fb9e"
+          "bytes": 31364,
+          "sha256": "bde883edcb96cea39d5d68dacb355114dc29637911889b058372221322f39f25"
         },
         {
           "path": "states/variants/diaspora-oracle--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34231,
-          "sha256": "955a18ea8ad6c3ae3bcb32b29715683950aa86890c4d5c33ece8f70db733a05b"
+          "bytes": 32739,
+          "sha256": "3958e98838f5925b64c1a8288fa2985a74d47e15ff3cc9026289ebe1d10b4f83"
         },
         {
           "path": "states/variants/diaspora-oracle--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 44136,
-          "sha256": "888e214007e6385331d99ed6bcb66a1f6902a38ea43594dc454dbfc1f22749f3"
+          "bytes": 52300,
+          "sha256": "07e692b54aaeba91e70f15b43388adf6952ce7f6ae8f804782a48cd6da1d0fb4"
         }
       ]
     },

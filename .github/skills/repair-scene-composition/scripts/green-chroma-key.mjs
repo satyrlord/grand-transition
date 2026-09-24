@@ -491,7 +491,7 @@ async function convert(inputPath, outputPath, promptFile) {
         }
       }
       if (queueEnd === 0) {
-        throw new Error('No border-connected green matte was found.');
+        throw new Error('The image has no green matte that touches the border.');
       }
 
       const matte = [0, 0, 0];

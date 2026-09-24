@@ -14,221 +14,212 @@
 
 ## Deliver
 
-Complete this milestone against the current playable artwork and the revised
-common and character-catalog contract in Milestone 028. The phrase-volume checks use Milestone 028's exact role totals. Its additional
-character-pose images, scene layers, motion, and final media packages are not
-prerequisites for this milestone. Those asset deliveries remain in Milestone 028. The earlier
-completion evidence remains historical and does not satisfy the revised
-content-catalog target.
+Complete this milestone against the playable artwork of this time and the revised contract for the common catalog and the character catalog in Milestone 028.
+The phrase-volume checks use the role totals of Milestone 028.
+The other character-pose images, scene layers, motion, and last media packages of Milestone 028 are not prerequisites for this milestone.
+Those asset deliveries stay in Milestone 028.
+The previous evidence that this milestone was completed stays historical.
+It does not satisfy the revised content-catalog target.
 
-Use the existing deterministic CI simulations, catalog uniqueness checks, and
-content boundary rules. Adjust only
-validated balance data and content. Record methods, seeds, results, and reasons.
+Use the deterministic CI simulations, the catalog uniqueness checks, and the content boundary rules that are in the repository.
+Change only validated balance data and content.
+Record the methods, the seeds, the results, and the causes.
 
-Writing is institutionally specific, modular, sharp without slurs, absurd but
-meaningful, distinct by character, and intelligible to international English
-players. Enough English context for Romanian proper nouns is necessary to make the joke
-understandable.
+The text refers to institutions clearly, and it is modular, sharp without slurs, and absurd but meaningful.
+Each character has a different voice, and international English players can understand the text.
+Romanian proper nouns must have sufficient English context so that the user can understand the joke.
 
-These English comprehension checks apply to the English catalog. Milestone
-029 owns natural Romanian adaptation and Romanian editorial checks. Both locales
-must meet the same fictional-identity, accuracy, tone, safety, and
-scoring-meaning rules.
+These English comprehension checks apply to the English catalog.
+Milestone 029 controls the natural Romanian adaptation and the Romanian editorial checks.
+The two locales must obey the same rules for fictional identity, accurate text, tone, safety, and scoring meaning.
 
 ## Speech-inspired humor
 
-Common and character-owned prose can quote real political speech, real
-slogans, and documented memes. It can include entirely new lines under the
-role-specific provenance rule below. Prefer a concrete image,
-contradiction, reversal, or short escalating punchline over an administrative
-label. Keep simple grammar
-connectors, copulas, and useful neutral referents short. For humor, a complete joke in every fragment is not necessary.
+Common and character-owned text can quote real political speech, real slogans, and documented memes.
+It can include new lines in the provenance rule for each role below.
+Use a concrete image, a contradiction, a reversal, or a short escalating punchline, not an administrative label.
+Keep simple grammar connectors, copulas, and useful neutral referents short.
+For humor, it is not necessary that each fragment is a full joke.
 
-Every predicate, modifier, and ending in the revised common and
-character-owned catalogs must have inspiration from a verifiably real quote. The requirement
-is about the source basis, not about copying public wording into the game. A
-direct real phrase repeats the real wording and meaning so another language can
-adapt it faithfully. An original fictional adaptation keeps the source
-inspiration without claiming that the real speaker said the adapted line. This
-includes every scene-restricted common card and every character-owned card.
-Record the distinction privately.
+Each predicate, modifier, and ending in the revised common catalog and character-owned catalog must have a real quote as its source.
+A person must be able to examine that quote.
+The requirement is about the source, not about copying public wording into the game.
+A real phrase that a card quotes directly gives the real wording and meaning again, so a different language can adapt it accurately.
+A new fictional adaptation keeps the source as its inspiration, and it does not say that the real speaker said the adapted line.
+This includes each scene-restricted common card and each character-owned card.
+Record the difference privately.
 
-For each generated common or character expansion, target an approximate 50/50 split between authentic adaptations and purely fictional lines.
-An authentic adaptation keeps a documented quote or
-its meaning visible in the shipped wording. A source-inspired original joke
-without that kept wording remains fictional. Measure each expansion set
-separately and record the card lists and source basis in the private research
-folder. Tense-family cards share one classification.
+For each generated common expansion or character expansion, use a target of approximately 50/50 between authentic adaptations and fully fictional lines.
+An authentic adaptation keeps a documented quote, or its meaning, visible in the shipped wording.
+A new joke from a source that does not keep that wording stays fictional.
+Measure each expansion set independently.
+Record the card lists and the source in the private research folder.
+The cards of one tense family share one classification.
 
-Research each human archetype through its recorded private references. Do checks of
-the source and context of every real phrase. A meme, parody article,
-or unrelated quotation in a page's suggested links is not evidence of what
-the referenced speaker said. Record uncertainty when a source supports a
-recent remark rather than an established iconic line.
+Research each human archetype through its recorded private references.
+Do checks of the source and the context of each real phrase.
+These items are not evidence of the words of the referenced speaker:
 
-Keep the source URL, real wording, and its language in the private research
-folder. Include an English meaning gloss and the affected phrase or comeback
-IDs.
-For every common or character-owned predicate, modifier, and ending, also
-record the quote context. Mark whether the shipped text is a faithful quote or
-an original fictional adaptation. The source must be publicly verifiable.
-Government AI remains a fictional robot
-without a politician reference.
+- A meme.
+- A parody article.
+- A quotation in the suggested links of a page that is not related to the speaker.
 
-Each human archetype has at least two distinct speech-inspired endings and
-three escalating comeback lines. They share the fictional archetype across
-its skins. Keep
-stable card IDs when rewriting text. New cards have unique IDs. Review all
-agreement forms when relation text changes.
+Some sources show only a remark from a short time ago, not an iconic line with good documentation.
+For these sources, record the uncertainty.
 
-Recheck weakness tags against the
-new visible meaning. Keep family tags on family references. Do not change
-score values or draw rarity merely to make a line funnier.
-Any text, tag, agreement, comeback, phrase-order, or pool change obeys the
-Milestone 014 replay contract. The replay document version identifies only the document shape.
+Keep the source URL, the real wording, and its language in the private research folder.
+Include an English meaning gloss and the IDs of the related phrases or comebacks.
+For each common or character-owned predicate, modifier, and ending, also record the context of the quote.
+Record if the shipped text is an accurate quote or a new fictional adaptation.
+A person must be able to examine the source publicly.
+Government AI stays a fictional robot without a reference to a politician.
 
-Content
-revisions change the catalog in place. They do not add a version or keep a
-snapshot of the preceding catalog.
+Each human archetype has two or more different speech-inspired endings and three escalating comeback lines.
+They share the fictional archetype across its skins.
+Keep the stable card IDs when you write the text again.
+New cards have unique IDs.
+When relation text changes, examine all the agreement forms.
 
-Validate the loaded catalog, cross-corpus text uniqueness, locale derivation,
-ending grammar, comeback ownership, and representative complete sentences.
-Run deterministic matches across the roster and review rendered examples for
-readability and character voice. These checks do checks of the editorial pass.
-They complement the existing CI checks and the manual content review below.
+Examine the weakness tags again against the new visible meaning.
+Keep family tags on family references.
+Do not change score values or draw rarity only to make a line funnier.
+Each change to the text, the tags, the agreement, the comebacks, the phrase sequence, or the pool obeys the Milestone 014 replay contract.
+The replay document version identifies only the document shape.
 
-Content verification stays card-agnostic so that adding or removing a card is a
-content-only change. `tests/unit/english-grammar-core.test.ts` does checks of complete
-ending constructions, noun and modifier reachability, and representative
-agreement for every shipped card. `tests/unit/content-schemas.test.ts` does checks of
-cross-corpus text uniqueness, locale-key derivation, exclusive comeback text,
-per-character role minima, and the content boundaries. Grammar, scoring, and
-layout suites reuse a small set of long-lived foundation cards as fixtures. No
-test asserts a card's ownership, count, or text as a content requirement.
+Content revisions change the catalog directly.
+They do not add a version, and they do not keep a snapshot of the previous catalog.
+
+Validate the loaded catalog, the text uniqueness across the corpora, and the locale derivation.
+Also validate the ending grammar, the comeback ownership, and typical complete sentences.
+Run deterministic matches across the roster, and examine the rendered examples for readability and character voice.
+These checks do checks of the editorial pass.
+They add to the CI checks and to the manual content review below.
+
+The content verification does not examine single cards.
+Thus, when you add or remove a card, the change is a content-only change.
+`tests/unit/english-grammar-core.test.ts` does checks of complete ending constructions, noun reachability, and modifier reachability.
+It also does checks of typical agreement for each shipped card.
+`tests/unit/content-schemas.test.ts` does checks of the text uniqueness across the corpora, the locale-key derivation, and the exclusive comeback text.
+It also does checks of the role minimum values for each character and of the content boundaries.
+Grammar, scoring, and layout suites use a small set of foundation cards as fixtures again.
+No test asserts the ownership, count, or text of a card as a content requirement.
 
 ## Content boundary
 
-Permit political parody, public-record criticism, fictional institutions,
-composite scandals, bureaucracy, media satire, contradiction, and vanity satire.
-Real speech, real slogans, and documented events are permitted and stay accurate.
-Hard-edged allegations can target fictional
-personas. Reject player-visible real-person references, real-party names and acronyms,
-and protected traits as insults. Reject sexual humiliation, threats, protected
-expression copied from another game or work, real logos, and copyrighted
-broadcast art.
+These topics are permitted:
 
-Examine every record against this boundary. Keep the source
-evidence for real phrases in the private research folder.
+- Political parody.
+- Public-record criticism.
+- Fictional institutions.
+- Composite scandals.
+- Bureaucracy.
+- Media satire.
+- Contradiction.
+- Vanity satire.
 
-The review shows that each character identity is fictional. Phrase text is
-invented or an accurately reproduced real line. Where the common-role contract makes it necessary, the text can also be an original fictional adaptation of a
-verifiably real quote. It rejects named
-or identifiable real-person comparisons, targets, and
-player-visible disclosures. An approved public-figure likeness may be used only
-as visual-only parody in a portrait skin. Private study data stays in the
-Git-ignored research folder and does not ship.
+Real speech, real slogans, and documented events are permitted, and they stay accurate.
+Hard-edged allegations can have fictional personas as their target.
+Do not accept real-person references that the player can see, real-party names and acronyms, or protected traits as insults.
+Do not accept sexual humiliation, threats, protected expression that a person copied from a different game or work, real logos, or copyrighted broadcast art.
 
-Shipped generation provenance
-uses a generic source description and does not name a real person. This
-rule does not permit real-person allegations or player-visible names. The
-review also rejects real political party names, acronyms, and logos. It permits
-generic ideological or social-family labels.
+Examine each record against this boundary.
+Keep the source evidence for real phrases in the private research folder.
 
-Keep the seed, workload, completed matches, resolved rounds, failures, and
-environment from the existing simulation and CI checks. No separate matchup
-matrix or win-rate report is required. Automatic development logs contain no
-personal data and never leave the local device.
+The review shows that each character identity is fictional.
+Phrase text is an invented phrase or a real line that the game gives accurately.
+Where the common-role contract makes it necessary, the text can also be a new fictional adaptation of a real quote that a person can examine.
+The review does not accept a line that compares a character with a named or identifiable real person.
+It also does not accept such a person as a target, or a disclosure about such a person that the player can see.
+A portrait skin can use an approved likeness of a public figure only as visual-only parody.
+Private study data stays in the research folder, which Git ignores, and it does not ship.
 
-Milestone 024 adds bounded speech diagnostics to the final development-log
-record. Write the completed log after terminal narration finishes or is
-interrupted. Keep the existing local endpoint, file-size limit, and retention
-rules. Historical logs without diagnostics remain valid.
+The shipped generation provenance uses a generic source description, and it does not name a real person.
+This rule does not let the text contain real-person allegations or names that the player can see.
+The review also does not accept real political party names, acronyms, and logos.
+Generic ideological or social-family labels are permitted.
+
+From the simulation checks and the CI checks, keep the seed, the workload, the completed matches, and the resolved rounds.
+Also keep the failures and the environment.
+A different matchup matrix or win-rate report is not necessary.
+Automatic development logs contain no personal data, and they do not go out of the local device.
+
+Milestone 024 adds bounded speech diagnostics to the last development-log record.
+Write the completed log after the terminal narration is completed or stopped.
+Keep the local endpoint, the file-size limit, and the retention rules.
+Historical logs without diagnostics stay correct.
 
 ## Simulation and editorial thresholds
 
-Neutral phrases use empty weakness tags as specified in Milestone 005.
-A card's visible meaning is independent of its character ownership or private
-research rationale. Family references keep their authored weakness tags.
-The historical weakness tag `securitate` displays as `Former secret police`
-in setup and match labels. Its stable content identifier remains unchanged.
+Neutral phrases use empty weakness tags as Milestone 005 gives.
+The visible meaning of a card does not change with its character ownership or its private research rationale.
+Family references keep their authored weakness tags.
+The historical weakness tag `securitate` shows as `Former secret police` in the setup labels and the match labels.
+Its stable content identifier does not change.
 
-Milestone 014 owns the existing bounded deterministic CI simulations and replay
-checks. Milestone 010 owns bounded scoring and pacing fixtures. This milestone
-uses these existing checks without a separate balance or variety workload.
+Milestone 014 controls the bounded deterministic CI simulations and the replay checks.
+Milestone 010 controls the bounded scoring fixtures and the match-length fixtures.
+This milestone uses these checks without a different balance workload or variety workload.
 
-Owned rule fixtures do checks of combo, weakness, finisher, continuation, comeback,
-grammar mistakes, sudden death, and incomplete constructions. An absent event
-in a sampled workload does not replace a rule fixture or create a release
-failure. Milestone 028
-uses authored text uniqueness, grammar reachability, and the normal CI checks
-for content variety.
+Owned rule fixtures do checks of combo, weakness, finisher, continuation, comeback, grammar mistakes, sudden death, and incomplete constructions.
+When an event does not occur in a sampled workload, this does not replace a rule fixture, and it does not cause a release failure.
+Milestone 028 uses authored text uniqueness, grammar reachability, and the usual CI checks for content variety.
 
-Every satirical line targets a fictional institution or persona behavior
-rather than empty abuse. It matches at least one authored character or scene
-trait. It reads clearly for an international English player. Neutral grammatical fragments
-such as connectors and copulas are exempt from the target and trait checks.
-Safety and clarity still apply.
+Each satirical line has the behavior of a fictional institution or persona as its target, not empty abuse.
+It agrees with one or more authored character traits or scene traits.
+An international English player can read it clearly.
+Neutral grammatical fragments, for example connectors and copulas, do not have to obey the target check and the trait check.
+The safety rules and the clarity rules continue to apply to them.
 
-A Romanian proper noun needs adjacent English
-context that explains why it matters. The five common conjunction cards are
-neutral grammatical fragments with empty weakness-tag arrays and do not target
-an institution or persona.
+A Romanian proper noun must have English context next to it that tells why it is important.
+The five common conjunction cards are neutral grammatical fragments with empty weakness-tag arrays.
+They do not have an institution or persona as their target.
 
 ## Acceptance criteria
 
-- **AC-027-01:** The existing Milestone 014 deterministic CI simulations pass
-  their invariants and replay checks, with the required seed evidence.
-- **AC-027-02:** Milestone 010 bounded scoring and pacing fixtures pass. Fixed
-  seeds reproduce recorded public match facts and report totals.
-- **AC-027-03:** Owned rule fixtures pass without invariant failures. Authored
-  phrases remain reachable through the existing grammar and normal CI checks.
-- **AC-027-04:** Authored phrase text is unique across the catalog, and comeback
-  text is unique across character and tier. Representative complete sentences
-  pass the existing grammar tests.
-- **AC-027-05:** Every shipped line respects the content boundary. No line names
-  or identifies a real person or a real party, and no line carries a
-  protected-trait insult, a threat, or sexual humiliation.
-- **AC-027-06:** Automatic development logs contain no personal or private-hand
-  data, make no remote request, and remain excluded from production.
-- **AC-027-07:** Every satirical line targets a fictional institution or persona behavior. It
-  matches at least one authored character or scene trait. An international
-  English reader can understand it without external knowledge.
-  Neutral grammatical fragments have the stated target and trait exemption.
-- **AC-027-08:** Every common or character-owned predicate, modifier, and ending has a private
-  provenance record that points to a publicly verifiable real quote. The record
-  distinguishes a faithful quote from an original fictional adaptation and does
-  not expose a real person's identity in shipped prose. The review treats each verb's past, present, and future cards as one humor and
-  editorial unit. If one tense fails review, the complete family changes
-  together. The five common
-  conjunctions remain neutral and carry empty weakness-tag arrays.
+- **AC-027-01:** The Milestone 014 deterministic CI simulations pass their invariants and replay checks, with the necessary seed evidence.
+- **AC-027-02:** The Milestone 010 bounded scoring fixtures and match-length fixtures pass.
+  Fixed seeds give the same recorded public match facts and report totals.
+- **AC-027-03:** Owned rule fixtures pass without invariant failures.
+  Authored phrases stay reachable through the grammar checks and the usual CI checks.
+- **AC-027-04:** Authored phrase text is unique across the catalog, and comeback text is unique across characters and tiers.
+  Typical complete sentences pass the grammar tests.
+- **AC-027-05:** Each shipped line obeys the content boundary.
+  No line names or identifies a real person or a real party.
+  No line carries a protected-trait insult, a threat, or sexual humiliation.
+- **AC-027-06:** Automatic development logs contain no personal data or private-hand data.
+  They make no remote request, and production does not include them.
+- **AC-027-07:** Each satirical line has the behavior of a fictional institution or persona as its target.
+  It agrees with one or more authored character traits or scene traits.
+  An international English reader can understand it without external knowledge.
+  Neutral grammatical fragments do not have to obey the target check and the trait check.
+- **AC-027-08:** Each common or character-owned predicate, modifier, and ending has a private provenance record.
+  The record points to a real quote that a person can examine publicly.
+  The record keeps an accurate quote apart from a new fictional adaptation.
+  It does not show the identity of a real person in shipped text.
+  The review uses the past, present, and future cards of each verb as one humor unit and one editorial unit.
+  If one tense fails the review, the full family changes together.
+  The five common conjunctions stay neutral, and they carry empty weakness-tag arrays.
 
-  Each scene
-  has three scene-specific conjunctions, and each character has one
-  character-specific conjunction. Both are reviewed against their owning
-  context. No scene-restricted or character-owned continuation, or cross-owner
-  card reuse, is approved.
+  Each scene has three conjunctions for the scene, and each character has one conjunction for the character.
+  The review examines each of them against the context of its owner.
+  The review does not give approval to a scene-restricted or character-owned continuation, or to a card that two owners use.
 
-Milestone 014
-owns the deterministic CI evidence for AC-027-01. Milestone 010 owns the bounded
-scoring and pacing evidence for AC-027-02. Owned rule fixtures provide the rule
-evidence in AC-027-03. The
-development logger tests and production scans named in Milestone 014 do checks of
-AC-027-06.
+Milestone 014 controls the deterministic CI evidence for AC-027-01.
+Milestone 010 controls the bounded scoring evidence and match-length evidence for AC-027-02.
+Owned rule fixtures give the rule evidence in AC-027-03.
+The development logger tests and the production scans that Milestone 014 names do checks of AC-027-06.
 
 ## Impeccable UI validation
 
-1. Run `$impeccable audit` on user interface (UI) states affected by final
-   balance or copy edits.
-2. After audit repairs, run `$impeccable critique` on those same affected states.
+1. Run `$impeccable audit` on the user interface (UI) states that the last balance edits or text edits change.
+2. After the audit repairs, run `$impeccable critique` on those same states.
 
 Apply the shared Impeccable evidence and severity gate in the milestone index.
 
 ## Checks and stop conditions
 
-The implemented catalog passes the exact volume, tense, uniqueness, and grammar
-checks in the focused content gate. Private quote provenance, whole-family
-humor review, and owner-specific conjunction review remain editorial evidence.
-Automated checks do not prove those subjective or private records. The revised
-content implementation is therefore verified, while this milestone's broader
-editorial evidence remains pending. Stop before release optimization or
-infrastructure changes.
+The catalog in the code passes the volume, tense, uniqueness, and grammar checks in the related content gate.
+Private quote provenance, the humor review of full families, and the conjunction review for each owner stay editorial evidence.
+Automated checks do not show those subjective records or private records.
+Thus, the revised content implementation has verification, but the broader editorial evidence of this milestone stays pending.
+Stop before release optimization or infrastructure changes.

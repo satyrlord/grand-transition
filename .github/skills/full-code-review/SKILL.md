@@ -1,61 +1,78 @@
 ---
 name: full-code-review
-description: Review a Grand Transition diff, branch, milestone, or checkout for correctness, safety, architecture, tests, and maintainability. Repair confirmed findings only when the user requests it.
+description: Review a Grand Transition diff, branch, milestone, or checkout for correct behavior, safety, architecture, tests, and maintainability. Repair the findings only when the user tells you to.
 ---
 
 # Review Grand Transition code
 
-Use read-only mode by default. Repair only when the user explicitly requests it.
+## Select the mode
 
-## Establish scope
+- Use review mode unless the user tells you directly to repair findings.
+- Use repair mode only after that instruction.
 
-Examine status, staged and unstaged diffs, untracked files, and recent history.
-Classify each changed path.
-Keep unrelated work.
+In review mode, do not change files.
+In repair mode, change only the files that are necessary to repair the findings that have evidence.
+If the user changes the scope, select the mode again before the next edit.
+If the user tells you not to run checks, give each check that you did not run in the report.
 
-For a diff review, read every changed file.
-For a checkout review, inventory and read every file in the selected scope.
-Read its specification owner, callers, consumers, tests, generated outputs, and
-deployment inputs.
-Map each changed contract to direct evidence.
+## Find the scope
 
-## Review contracts
+Examine the status, the staged diff, the unstaged diff, the untracked files, and the last commits.
+Give each changed path a type.
+Keep work that is not related to the review.
+
+For a diff review, read each changed file.
+For a checkout review, record and read each file in the selected scope.
+Also read the specification owner, callers, consumers, tests, generated outputs, and deployment inputs.
+For each changed contract, find the evidence.
+
+## Examine the contracts
 
 Examine each applicable area:
 
-- Keep pure engine, grammar, artificial intelligence (AI), replay, and codec
-  rules deterministic. Keep them free of Lit or Document Object Model (DOM) imports.
+- Keep pure engine, grammar, artificial intelligence (AI), replay, and codec rules deterministic.
+  Keep them free of Lit imports and Document Object Model (DOM) imports.
 - Keep immutable snapshots and typed commands at the user interface (UI) boundary.
-- Examine grammar, board, scoring, combo, continuation, comeback, simultaneous
-  damage, sudden death, and AI rules against their owners.
-- Keep hidden hotseat information out of visible text, labels, stale DOM,
-  speech, logs, and exports.
-- Examine content for valid schemas, localization, reachability, fictional
-  characters, editorial safety, and provenance.
-- Keep pointer controls, the supported landscape matrix, the blocking
-  viewport gate, and visible explanations in UI changes.
-- Keep safe persistence failure behavior.
-  Examine asset and deployment paths, the Pages base path, production network
-  rules, and Content Security Policy (CSP) rules.
-- Keep seeds in generated failure output.
+- Compare the rules for grammar, board, scoring, combo, continuation, and comeback with their owners.
+  Also compare the rules for simultaneous damage, sudden death, and AI with their owners.
+- Keep private hotseat information out of shown text, labels, speech, logs, and exports.
+  Also keep it out of DOM nodes that stay after their state changes.
+- Examine the content for correct schemas, localization, reachability, fictional characters, editorial safety, and provenance.
+- In UI changes, keep pointer controls, the supported landscape matrix, the blocking viewport gate, and the shown explanations.
+- Keep the safe failure behavior of persistence.
+- Examine the asset paths, the deployment paths, the Pages base path, and the production network rules.
+- Examine the Content Security Policy (CSP) rules.
+- Keep the seeds in the output of generated test failures.
 
-## Report and repair
+## Give the findings
 
-Order confirmed findings by user impact and release risk.
-For each finding, report its path and location, broken contract, evidence,
-impact, smallest remedy, and verifier.
-Treat prior review comments and tool warnings as hypotheses.
+Give only findings that have evidence.
+Put them in sequence from the largest effect on users and release risk to the smallest.
+For each finding, give these items:
 
-Repair only confirmed findings within explicit authority.
-Add focused regression evidence.
+- The path and the location.
+- The contract that the defect breaks.
+- The evidence.
+- The effect.
+- The smallest repair.
+- The verification step.
 
-Run `npm run quality:quick` for routine verification.
-If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
-Obey user restrictions on checks. Report checks that you did not run.
-For high-risk work, request an independent final review from an agent that did not implement the change.
+Use comments from previous reviews and tool warnings only as possible findings.
+Examine each one before you put it in the report.
 
-Account for every selected path, affected contract, and applicable test surface.
+## Repair the findings
 
-The review is complete when every selected path has a status and every confirmed finding has a verification step.
-Identify all applicable checks.
-An authorized repair is complete when each repaired finding passes its verification step.
+In repair mode, repair only findings that have evidence and that the user approved.
+Add a regression test for each repair.
+Run `npm run quality:quick` for the usual verification.
+If the user tells you directly to run the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey the user's limits on checks.
+In the report, give each check that you did not run.
+For high-risk work, get a last review from an agent that did not make the change.
+
+## Complete the task
+
+Give a status to each selected path, each changed contract, and each applicable test area.
+Identify all the applicable checks.
+Review mode is completed when each selected path has a status and each finding has a verification step.
+Repair mode is completed when each repaired finding passes its verification step.

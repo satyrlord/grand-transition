@@ -18,7 +18,7 @@ if (-not $canonicalSkills.StartsWith(
 }
 
 if (-not (Test-Path -LiteralPath $canonicalSkills -PathType Container)) {
-  throw 'The primary skill directory does not exist.'
+  throw 'The primary skill directory is missing.'
 }
 
 foreach ($discoveryRootName in '.agents', '.codex') {
@@ -36,7 +36,7 @@ foreach ($discoveryRootName in '.agents', '.codex') {
     )
 
     if ($existing.LinkType -ne 'Junction' -or $resolved -ne $canonicalSkills) {
-      throw "Unexpected existing skill path: $skillLink"
+      throw "A different item is at the skill link path: $skillLink"
     }
 
     Write-Output "The skill link target is correct: $skillLink"
@@ -45,5 +45,5 @@ foreach ($discoveryRootName in '.agents', '.codex') {
 
   New-Item -ItemType Junction -Path $skillLink -Target $canonicalSkills |
     Out-Null
-  Write-Output "Created $skillLink"
+  Write-Output "Made the skill link: $skillLink"
 }

@@ -1,6 +1,6 @@
 interface:
-  display_name: "Generate Scene Art with OpenAI"
-  short_description: "Generate Flare scene art and shared raster assets"
-  default_prompt: "Use $generate-scene-openai to generate or edit Grand Transition scene art. Route transparency, exact masters, and output above 1080p through the repository Flare API helper. Use $generate-character-openai for playable character selections and pose packages."
+  display_name: 'Generate Scene Art with OpenAI'
+  short_description: 'Generate Flare scene art and shared raster assets'
+  default_prompt: 'Use $generate-scene-openai to generate or edit Grand Transition scene art. Use the repository Flare API helper for transparency, masters with accurate dimensions, and output larger than 1080p. Use $generate-character-openai for playable character selections and pose packages.'
 policy:
   allow_implicit_invocation: true

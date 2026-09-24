@@ -1,55 +1,70 @@
 ---
 name: add-feature
-description: Add or change Grand Transition product behavior and durable contracts. Use for approved features, milestone work, behavior changes, or repairs that change a specification contract.
+description: Add or change Grand Transition product behavior and its specification contracts. Use for approved features, milestone work, behavior changes, and repairs that change a specification contract.
 ---
 
 # Add or change a feature
 
 ## Select the mode
 
-- Use definition mode when the user requests only a specification or decision.
-- Use implementation mode when the user requests working behavior.
-- Use repair mode when a confirmed defect requires a contract change or clarification.
+- Use definition mode when the user tells you to write only a specification or a decision.
+- Use implementation mode when the user tells you to add the behavior to the product.
+- Use repair mode when a defect makes a contract change necessary.
 
-Do not edit product code in definition mode. In implementation or repair mode,
-do not stop after a document change.
+In definition mode, change only specifications and related documentation.
+Do not change source code, tests, content, or assets in definition mode.
+In implementation and repair mode, change all the files that the approved scope includes.
+Do not stop after only a document change in these two modes.
+
+If the user changes the scope, select the mode again before the next edit.
+If the user tells you not to edit files, give the necessary changes in the report.
 
 ## Read the owners
 
-Read `AGENTS.md`, `docs/specs/spec-000-milestone-index.md`, and each applicable approved milestone specification.
-Examine repository status.
-Read the source, callers, tests, and tool configuration that control the behavior. Identify affected engine, grammar, artificial
-intelligence (AI), content,
-localization, user interface (UI), persistence, asset, security, performance, and
-deployment contracts.
+Read `AGENTS.md` and `docs/specs/spec-000-milestone-index.md`.
+Read each applicable approved milestone specification.
+Examine the repository status.
+Read the source code, callers, tests, and tool configuration that control the behavior.
+Identify each contract that the change touches.
+Examine the engine, grammar, artificial intelligence (AI), content, and localization contracts.
+Also examine the user interface (UI), persistence, asset, security, performance, and deployment contracts.
 
-Each changed behavior must have one owner and one objective verifier.
+Give each changed behavior one owner and one verification step that gives a measured result.
 
-## Define and implement
+## Define and implement the change
 
-Record the user benefit, exact behavior, and exclusions.
-Record failure behavior, privacy effects, acceptance criteria, and manual evidence. Update the
-smallest owning specification when behavior changes.
+Record the result for the user, the accurate behavior, and the items that the change does not include.
+Record the failure behavior, the privacy effects, the acceptance criteria, and the manual evidence.
+When the behavior changes, update the smallest specification that controls it.
 
-Implement the complete authorized change in the layer that owns the behavior.
+Make the full approved change in the layer that controls the behavior.
 Keep rules out of Lit components.
-Route randomness through the seed.
-Keep game-language prose out of rule logic.
-Do not add networking or compatibility work without an approved contract.
+Get each random value from the seeded generator.
+Keep game-language text out of the rule code.
+Do not add network or compatibility work without an approved contract.
 
-Add the narrowest tests that fail for the changed behavior. Update affected
-developer and user documentation. For visible behavior, add real-browser
-evidence. For speech or audio quality, separate objective checks from manual
-listening.
+Add the smallest tests that fail for the changed behavior.
+Update the related developer and user documentation.
+For behavior that the user can see, add evidence from a browser test.
+For speech or audio quality, keep the automated checks apart from the manual listening test.
 
-## Verification
+## Do the verification
 
-Run focused checks first.
-Run `npm run quality:quick` for routine verification.
-If the user explicitly requests the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
-Obey user restrictions on checks. Report checks that you did not run.
-Use [verify-game](../verify-game/SKILL.md) for evidence from the production browser build.
+Run the checks for the changed behavior first.
+Run `npm run quality:quick` for the usual verification.
+If the user tells you directly to run the full gate, use [run-quality-gate](../run-quality-gate/SKILL.md).
+Obey the user's limits on checks.
+In the report, give each check that you did not run.
+For evidence from the production browser build, use [verify-game](../verify-game/SKILL.md).
 
-Definition mode is complete when all affected contracts agree. Implementation
-and repair are complete when specifications, source, tests, documentation, and
-verification agree.
+## Complete the task
+
+Give the changed files, the check results, and the open risks in the report.
+Definition mode is completed when all the related contracts agree.
+Implementation and repair mode are completed when these items agree:
+
+- Specifications.
+- Source code.
+- Tests.
+- Documentation.
+- Verification results.

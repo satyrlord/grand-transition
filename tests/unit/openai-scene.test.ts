@@ -111,7 +111,7 @@ describe('OpenAI scene generation and credit controls', () => {
     const result = spawnSync(process.execPath, [helper, 'generate', '--background', 'transparent',
       '--size', '2048x2048', '--prompt', 'missing-prompt', '--out', dir], { encoding: 'utf8' });
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('output path already exists');
+    expect(result.stderr).toContain('output path is in use');
     expect(result.stderr).not.toContain('ENOENT');
   });
 
@@ -129,7 +129,7 @@ describe('OpenAI scene generation and credit controls', () => {
     await writeFile(record, 'existing evidence');
     const collision = spawnSync(process.execPath, [helper, 'prepare-native', '--input', input, '--out', out], { encoding: 'utf8' });
     expect(collision.status).toBe(1);
-    expect(collision.stderr).toContain('output path already exists');
+    expect(collision.stderr).toContain('output path is in use');
     expect(await readFile(input)).toEqual(bytes);
     expect(await readFile(record, 'utf8')).toBe('existing evidence');
     await expect(readFile(out)).rejects.toThrow();
@@ -150,7 +150,7 @@ describe('OpenAI scene generation and credit controls', () => {
     const small = await raster(1672, 941);
     await expect(inspectImage(small)).rejects.toThrow('3840x2160');
     await expect(inspectImage(small.subarray(0, 40))).rejects.toThrow();
-    expect(() => assertReview(reviewFor('old'), { sha256: 'new' })).toThrow('current image review');
+    expect(() => assertReview(reviewFor('old'), { sha256: 'new' })).toThrow('image review for the image at this time');
     const review = reviewFor('same');
     delete review.checks.style;
     expect(() => assertReview(review, { sha256: 'same' })).toThrow('style');
@@ -166,7 +166,7 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(foundation.record.operation).toBe('preserve-native-pixels');
     const hd = await raster(1920, 1080), hdFacts = await inspectImage(hd, { width: 1920, height: 1080 });
     await expect(prepareImage(hd, reviewFor(hdFacts.sha256), 'modern-debate-studio', { width: 1920, height: 1080 })).rejects.toThrow('Do not upscale');
-    await expect(prepareImage(bytes, reviewFor(facts.sha256), 'undeclared-scene')).rejects.toThrow('not declared');
+    await expect(prepareImage(bytes, reviewFor(facts.sha256), 'undeclared-scene')).rejects.toThrow('does not declare this scene master ID');
   });
 
   test('reads only the ignored OpenAI credential file and rejects tracked credentials', async () => {
