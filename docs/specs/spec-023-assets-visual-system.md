@@ -1,6 +1,6 @@
 # Milestone 023: Asset Pipeline and Visual System
 
-**Status:** Complete
+**Status:** Approved, complete
 
 **Depends on:** 022  
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
@@ -247,7 +247,7 @@ same 16:9 source canvas, runtime variants for each resolution, crop core, and
 shared safe rectangles. Each has a focal point at `(0.5, 0.5)`. For each, the
 moderator focal rectangle and the foreground-desk focal rectangle are
 explicitly absent. Milestone 028 adds four foreground layers for the foundation
-scenes. The asset pipeline validates all twelve scene masters.
+scenes. The asset pipeline validates each scene master in the scene manifest.
 
 Keep the four-layer baseline as the boundary for studio regeneration. Use the
 four opaque backgrounds as the foundation scenes of Milestone 026.
@@ -1164,7 +1164,10 @@ different.
 
 ## Asset and motion contract
 
-All six scenes use background masters and foreground masters of 3840 by 2160.
+Each scene uses a back master of 3840 by 2160.
+A scene with a foreground plate uses a foreground master of the same dimensions.
+Milestone 026 controls the foundation scenes.
+Milestone 032 controls the seventh scene, which has no foreground plate.
 
 Use the blonde adult editorial-cartoon moderator for Transition-Era Television
 Studio through the OpenAI API. Generate the background with

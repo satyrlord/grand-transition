@@ -156,7 +156,8 @@ It identifies phrase IDs as different from equal public scoring tags or equal pu
 - **AC-021-07:** In the custom setup, the person must select and lock the player-one character and the player-two character.
   Then the setup starts player one against the player-two Local Radio Caller.
   At each supported setup viewport, Single Player shows Difficulty and Scene as two selects in one horizontal row.
-  Difficulty has one option, and no more: “Local Radio Caller.”
+  The default Difficulty is “Local Radio Caller.”
+  Milestone 022 controls the other Difficulty options.
   The full Difficulty and Scene labels fit, and the Match settings fieldset and the actions do not change height.
   Hotseat does not show Difficulty.
 

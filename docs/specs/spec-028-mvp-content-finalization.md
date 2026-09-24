@@ -1,7 +1,7 @@
 # Milestone 028: Minimum Viable Product Content Finalization
 
-**Status:** Approved. Revised content implementation verified. Finalization evidence pending\
-**Depends on:** 027\
+**Status:** Approved, evidence pending: AC-028-08, AC-028-09, AC-028-10  
+**Depends on:** 027  
 **Owns:** Final minimum viable product (MVP) phrase volume, art, audio content,
 and variety evidence
 **Production-file budget:** 20
@@ -350,6 +350,9 @@ These role totals can change only through an approved change to this contract, w
 - **AC-028-10:** Each character has 10 nouns, 9 verbs, 12 predicates, 5 endings, 3 modifiers, and 1 personalized conjunction, with zero character-owned continuations.
   Its verbs contain 3 past-tense cards, 3 present-tense cards, and 3 future-tense cards in three full families.
   Character predicates, modifiers, and endings pass the review of quote provenance.
+  These role counts give exactly 40 character-restricted cards for each shipped character.
+  `tools/final-content-volumes.ts` rejects each different count through `npm run content:validate`.
+  Synthetic discovery characters keep the range of 3 through 40 from Milestone 026.
 
 ## Content research boundary
 
@@ -416,7 +419,7 @@ Of those Playwright cases, 257 passed on the first run and two passed on a retry
 After the Pause locator was made accurate, the two retry cases passed three runs each with retries disabled.
 The team did not decrease a gameplay assertion or an asset limit.
 
-The last logs are in `tmp/spec028-ci-verified.log` and `tmp/spec028-final-confirmation.log`.
+The logs of that run were in `tmp/`, which is machine-local, and they are no longer kept.
 `.impeccable/review/spec-028-acceptance.md` records the Impeccable audit evidence, the critique evidence from a different reviewer, the decisions, and the limits.
 
 That evidence is for the previous finalization target.

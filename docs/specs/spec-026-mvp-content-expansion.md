@@ -109,7 +109,8 @@ Milestone 028 controls the 34-card scene-restricted composition and the global c
 
 ## Playable data contract
 
-Each foundation character has 3 through 32 unique owned phrases.
+Each foundation character has 3 through 40 unique owned phrases.
+Milestone 028 controls the count of each shipped character.
 Its foundation pool has one or more nouns, one or more modifiers, and one or more endings.
 The full common pool gives the other grammar roles that are necessary for a match.
 Each character owns one unique weak Comeback line, one unique medium Comeback line, and one unique strong Comeback line.
@@ -188,11 +189,11 @@ Stop before these items:
 
 ## Review repair regression
 
-**AC-026-07:** The validator of the full catalog makes sure that each foundation character owns 3 through 32 phrases.
+**AC-026-07:** The validator of the full catalog makes sure that each foundation character owns 3 through 40 phrases.
 It also makes sure of the minimum values for nouns, modifiers, and endings.
 Parsing an isolated source does not replace this check.
 `tests/unit/content-schemas.test.ts` does not accept pools with two nouns, or pools without a modifier or an ending.
-It also does not accept counts above 32 at the path of the character that owns them.
+It also does not accept counts above 40 at the path of the character that owns them.
 Synthetic discovery characters must agree with the same minimum values of the full catalog.
 The full catalog of this time must pass this contract.
 Correct new characters that agree with these minimum values must also pass.
@@ -202,17 +203,15 @@ Only that character owns it, and it satisfies the foundation modifier minimum.
 Its card pool keeps all previous phrases and IDs.
 Do checks of the full approved sentence in `tests/unit/english-grammar-core.test.ts`.
 
-The Algorithmic Prophet owns 25 cards.
-Eight of these cards come from beverage memory, nature omens, national rankings, and ceremonial courage.
-These cards add two nouns, two modifiers, and four endings to the initial pool of four cards.
+The Algorithmic Prophet has cards from beverage memory, nature omens, national rankings, and ceremonial courage.
+Milestone 028 controls the card count of this character.
 The identifiers and the text of the initial cards do not change.
 The new cards are only in the private pool of this character.
 The public wording and the editorial notes contain no real-person references or source attribution.
 They contain no protected expression that a person copied from a different work.
 
 Private research records the sources.
-The catalog of this time is English.
-The Romanian adaptation stays in Milestone 029.
+Milestone 029 controls the Romanian adaptation.
 Milestone 014 controls the replay document contract of this time.
 Milestone 027 controls the content verification that does not examine single cards.
 That verification includes the ownership, the role minimum values, and the full constructions of this character.

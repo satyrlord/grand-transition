@@ -67,9 +67,16 @@ End-to-end tests build the production output before the preview.
 
 Pure tests use Vitest in Node and `*.test.ts`.
 Components use Vitest Browser Mode with Playwright, not only a simulated DOM.
-Full flows use Playwright and role, label, or visible-text locators.
+Full flows use Playwright.
+Interaction tests find a control through a stable `data-testid` ID when the test is new or changed.
+They also use a test ID when the visible text of the control changes with locale or state.
+Role and label locators in tests that nobody changed stay until someone edits those tests.
+`getByRole` asserts accessibility semantics: a role, an accessible name, or a labeled relation.
 Generated failures print the fast-check seed and the replay path.
 Pull requests validate, but they do not deploy.
+Each workflow pins each third-party action to a full commit SHA, with its release tag in a comment.
+Milestone 031 gave this rule first for the deployment workflow.
+Dependabot keeps the `github-actions` pins current through `.github/dependabot.yml`.
 
 Collect the production TypeScript coverage from the component suite in a real browser.
 Make sure that the global minimum values are 70 percent for statements, branches, functions, and lines.
@@ -92,6 +99,7 @@ Make sure that the global minimum values are 70 percent for statements, branches
 - **AC-002-03:** All four global coverage values are 70 percent or more, and production TypeScript is not removed from the coverage set.
 - **AC-002-04:** The typed-lint, invalid-asset, and fast-check fixtures fail with the evidence above.
 - **AC-002-05:** The pull-request workflow runs the quality gate with read-only repository access, and it contains no deployment job.
+  It pins each third-party action to a full commit SHA with a tag comment, and `.github/dependabot.yml` updates the `github-actions` pins.
 - **AC-002-06:** Markdown checks use `markdownlint-cli2`.
   The quality gate has no formatter script and no formatter configuration.
   Do the check in `tests/unit/quality-gate.test.ts` and with a search of the full repository.
@@ -116,13 +124,16 @@ Stop before product interfaces, rules, or Pages deployment.
 
 ## Review repair regression
 
-**AC-002-08:** The Node unit suite uses two file workers or fewer.
+**AC-002-08:** In CI, the Node unit suite uses two file workers or fewer.
 The raster fixture setup must complete before the teardown removes the output.
 This changes no test timeout, assertion, coverage limit, or inventory.
 When a role can occur more than one time, end-to-end fixtures select one card by name.
 Before viewport geometry measurements, they move the pointer to a neutral point.
-Playwright uses two local workers and one CI worker.
+In CI, Playwright uses one worker.
 Thus, concurrent raster decoding and screenshots do not stop the full ladder flow.
+The local worker counts are a choice for each machine, and the comments in `vitest.config.ts` and `playwright.config.ts` give them.
+They are not part of this contract.
+Verifiers: `vitest.config.ts` and `playwright.config.ts`, with `CI=1`.
 
 Each large viewport case has its own test budget.
 Checks of temporary reactions use a paused browser clock, and they advance it directly.

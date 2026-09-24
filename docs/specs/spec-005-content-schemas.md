@@ -251,8 +251,8 @@ Content, localization, asset, simulation, and browser validation must pass befor
 
 ## Acceptance criteria
 
-- **AC-005-01:** The shipped four-character scene catalog passes all strict record checks and aggregate checks.
-  It contains only the Red-Folded Chairman, Thunder Tribune, Black Sea Captain, and Government AI.
+- **AC-005-01:** The shipped catalog passes all strict record checks and aggregate checks.
+  Milestone 026 controls the roster, and Milestone 028 controls the counts.
 - **AC-005-02:** Each numeric boundary passes at the two endpoints, and it fails at values out of the range.
 - **AC-005-03:** Duplicate IDs, duplicate English phrase text that the player sees, and unresolved references fail at the accurate path.
   Restriction violations, duplicate set values, and missing board roles also fail at the accurate path.
