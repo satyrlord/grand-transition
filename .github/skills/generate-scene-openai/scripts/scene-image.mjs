@@ -68,7 +68,7 @@ function assertApiSize(size, options) {
   const plan = selectRoute(size, options);
   if (plan.route === 'internal')
     throw new Error(
-      'Use the internal image generator for small opaque drafts. No API request is permitted.',
+      'Use the local image generation tool for small opaque drafts. No API request is permitted. Without a local image generation tool, add --exact-size.',
     );
   return plan;
 }

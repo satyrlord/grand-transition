@@ -29,7 +29,7 @@ Do not go around the master inventory check.
 When the candidate is not 3840 by 2160 pixels, give `--size WIDTHxHEIGHT`.
 When the source has the master dimensions, the helper keeps the initial bytes.
 For a larger source, it uses centered Lanczos3 cover fitting, and it does not make the image larger.
-It does not accept undersized sources, and this includes internal-tool outputs that are not sufficient.
+It does not accept undersized sources, and this includes outputs of a local image generation tool that are not sufficient.
 Examine the prepared image again for crop loss and edge defects.
 Its private preparation record includes the source hash, the output hash, and the dimensions.
 

@@ -5,7 +5,9 @@ Read this module before you examine a candidate or give approval for it.
 ## Examine the saved image
 
 Do a check of the decoded pixel dimensions before you resize the image.
-Examine the full candidate and crops at source scale with the image viewer.
+Examine the full candidate and crops at source scale with a tool that shows images.
+An image viewer or a file-read tool that shows image files can do this.
+A session without a local image generation tool can do the full review with such a tool.
 Compare the content that you can see with each requirement in the private brief.
 Run the color guard, and record the result that you saw for each item.
 A correct pixel count does not show that the content is correct.
@@ -22,13 +24,13 @@ When the raw image contains alpha-1 residue that the procedure can remove, use t
 Keep crops for inspection and rejected candidates out of the directory for color validation.
 Before integration, do the color validation again on the full staged asset tree.
 
-For internal outputs, compare the measured dimensions with the request and with the use that the contract gives.
+For outputs of a local image generation tool, compare the measured dimensions with the request and with the use that the contract gives.
 A preview can stay smaller than its requested size if the report gives the accurate size.
 An undersized master cannot pass preparation.
 
 ## Review the content that you can see
 
-Use this review for the two provider routes.
+Use this review for all the generation routes.
 Open the image.
 When the viewer makes the image smaller, examine crops at source scale.
 For all seven checks, record a pass or a fail with the results that you saw:
@@ -57,3 +59,4 @@ When a scene item does not apply to a character, record the character evidence w
 
 Do not identify a review by an agent as approval by the product owner.
 If you cannot see the image, or if a necessary check is not available, do not give approval for the candidate.
+In that condition, give the candidate path and the automated results to the user for review.
